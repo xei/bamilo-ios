@@ -14,7 +14,7 @@
 
 @property (nonatomic, strong)UIScrollView* scrollView;
 @property (nonatomic, strong)JAPageControl* pageControl;
-@property (nonatomic, strong)NSArray* buttonsArray;
+@property (nonatomic, assign)BOOL isInfinite;
 
 @end
 
@@ -23,6 +23,10 @@
 - (void)load;
 {
     [super load];
+
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        self.isInfinite = YES;
+    }
     
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
@@ -52,9 +56,13 @@
     
     CGFloat currentX = 0;
     
-    NSMutableArray* buttonsMutableArray = [NSMutableArray new];
-    for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
-        RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
+    NSMutableArray* componentsArray = [[self.teaserGrouping.teaserComponents array] mutableCopy];
+    if (self.isInfinite && 1 < self.teaserGrouping.teaserComponents.count) {
+        [componentsArray insertObject:[self.teaserGrouping.teaserComponents lastObject] atIndex:0];
+        [componentsArray addObject:[self.teaserGrouping.teaserComponents firstObject]];
+    }
+    for (int i = 0; i < componentsArray.count; i++) {
+        RITeaserComponent* component = [componentsArray objectAtIndex:i];
         
         NSString* imageUrl;
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
@@ -69,21 +77,38 @@
                                                                                                self.scrollView.bounds.origin.y,
                                                                                                self.scrollView.bounds.size.width,
                                                                                                self.scrollView.bounds.size.height)];
-            clickableView.tag = i;
+            NSInteger realIndex = i;
+            if (self.isInfinite && 1 < self.teaserGrouping.teaserComponents.count) {
+                if (0 == i) {
+                    //notice we are using self.teaserGrouping.teaserComponents.count-1 and not componentsArray.count-1
+                    //looking at the REAL array count, not the fake one's.
+                    realIndex = self.teaserGrouping.teaserComponents.count-1;
+                } else if (componentsArray.count-1 == i){
+                    realIndex = 0;
+                } else {
+                    realIndex = i-1;
+                }
+            }
+            clickableView.tag = realIndex;
             [clickableView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
             [clickableView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
             [self.scrollView addSubview:clickableView];
             
-            [buttonsMutableArray addObject:clickableView];
-            
             currentX += clickableView.frame.size.width;
         }
     }
-    self.buttonsArray = [buttonsMutableArray copy];
     
     [self.scrollView setContentSize:CGSizeMake(currentX,
                                                self.scrollView.frame.size.height)];
     
+    if (self.isInfinite && 1 < self.teaserGrouping.teaserComponents.count) {
+        [self.scrollView scrollRectToVisible:CGRectMake(self.scrollView.bounds.size.width,
+                                                        self.scrollView.bounds.origin.y,
+                                                        self.scrollView.bounds.size.width,
+                                                        self.scrollView.bounds.size.height)
+                                          animated:NO];
+    }
+
     CGFloat pageControlBottomMargin = 3.0f; //value by design
     CGFloat pageControlHeight = 10.0f;
     [self.pageControl removeFromSuperview];
@@ -97,11 +122,45 @@
     self.pageControl.currentPage = 0;
 }
 
+
+#pragma mark - Scrollview delegate
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    if (self.isInfinite && 1 < self.teaserGrouping.teaserComponents.count) {
+        
+        CGFloat contentOffsetWhenFullyScrolledRight = self.scrollView.frame.size.width * (self.teaserGrouping.teaserComponents.count+1);
+        
+        if (scrollView.contentOffset.x == contentOffsetWhenFullyScrolledRight) {
+            
+            [self.scrollView scrollRectToVisible:CGRectMake(self.scrollView.bounds.size.width,
+                                                            self.scrollView.bounds.origin.y,
+                                                            self.scrollView.bounds.size.width,
+                                                            self.scrollView.bounds.size.height)
+                                              animated:NO];
+            
+        }
+        else if (scrollView.contentOffset.x == 0)
+        {
+            [self.scrollView scrollRectToVisible:CGRectMake(self.scrollView.contentSize.width - (self.scrollView.frame.size.width * 2),
+                                                            self.scrollView.bounds.origin.y,
+                                                            self.scrollView.bounds.size.width,
+                                                            self.scrollView.bounds.size.height)
+                                        animated:NO];
+        }
+    }
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    //add 0.5 to make sure we scroll the indicators with the middle of the page
-    self.pageControl.currentPage = (scrollView.contentOffset.x / scrollView.frame.size.width) + 0.5f;
+    CGFloat infinityOffset = 0.0f;
+    if (self.isInfinite && 1 < self.teaserGrouping.teaserComponents.count) {
+        //subtract 1 to make up for the fake image offset (fake images that are used for infinite scrolling)
+        infinityOffset = 1.0f;
+    }
     
+    //add 0.5 to make sure we scroll the indicators with the middle of the page
+    self.pageControl.currentPage = (scrollView.contentOffset.x / scrollView.frame.size.width) + 0.5f - infinityOffset;
 }
 
 - (UIView *) hitTest:(CGPoint)point withEvent:(UIEvent *)event {
@@ -118,6 +177,15 @@
     if (point.x > self.scrollView.frame.origin.x && point.x < (self.scrollView.frame.origin.x + self.scrollView.frame.size.width))
     {
         NSInteger page = self.scrollView.contentOffset.x / self.scrollView.frame.size.width;
+        if (self.isInfinite && 1 < self.teaserGrouping.teaserComponents.count) {
+            if (0 == page) {
+                page = self.teaserGrouping.teaserComponents.count-1;
+            } else if (self.teaserGrouping.teaserComponents.count+1 == page){
+                page = 0;
+            } else {
+                page -= 1;
+            }
+        }
         [self teaserPressedForIndex:page];
     }
 }
