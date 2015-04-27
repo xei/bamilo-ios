@@ -7,19 +7,19 @@
 //
 
 #import "JATeaserPageView.h"
-#import "RITeaserGroup.h"
+
 #import "JAMainTeaserView.h"
-#import "JATopSellersTeaserView.h"
-#import "JATopBrandsTeaserView.h"
 #import "JASmallTeaserView.h"
 #import "JACampaignsTeaserView.h"
-#import "JATopCategoriesTeaserView.h"
-#import "JAPopularBrandsTeaserView.h"
+#import "JAShopTeaserView.h"
+#import "JABrandTeaserView.h"
+#import "JAShopsWeekTeaserView.h"
+#import "JAFeatureStoresTeaserView.h"
+#import "JATopSellersTeaserView.h"
 
 @interface JATeaserPageView()
 
 @property (nonatomic, strong)UIScrollView* mainScrollView;
-@property (nonatomic, strong)UIScrollView* landscapeScrollView;
 
 @end
 
@@ -28,78 +28,48 @@
 - (void)loadTeasersForFrame:(CGRect)frame;
 {
     self.frame = frame;
-    BOOL isLandscape = frame.size.width>frame.size.height?YES:NO;
     
     self.accessibilityLabel = @"teaserPageScrollView";
     
-    self.backgroundColor = JABackgroundGrey;
+    self.backgroundColor = JAHomePageBackgroundGrey;
     
     [self.mainScrollView removeFromSuperview];
-    [self.landscapeScrollView removeFromSuperview];
     
-    if (NOTEMPTY(self.teaserCategory)) {
+    if (VALID_NOTEMPTY(self.teaserGroupings, NSArray)) {
         
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad && isLandscape) {
-            
-            self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
-                                                                                 self.bounds.origin.y,
-                                                                                 self.bounds.size.width / 2,
-                                                                                 self.bounds.size.height)];
-            [self addSubview:self.mainScrollView];
-            self.landscapeScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.mainScrollView.frame),
-                                                                                      self.bounds.origin.y,
-                                                                                      self.bounds.size.width / 2,
-                                                                                      self.bounds.size.height)];
-            [self addSubview:self.landscapeScrollView];
-            
-            CGFloat mainScrollY = self.bounds.origin.y; //shared between methods
-            
-            mainScrollY = [self loadMainTeasersInScrollView:self.mainScrollView yPosition:mainScrollY];
-            mainScrollY = [self loadBrandTeasersInScrollView:self.mainScrollView yPosition:mainScrollY];
-            mainScrollY = [self loadSmallTeasersInScrollView:self.mainScrollView yPosition:mainScrollY];
-            mainScrollY = [self loadCampaignsInScrollView:self.mainScrollView yPosition:mainScrollY];
-            
-            [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.frame.size.width,
-                                                           mainScrollY)];
-            
-            CGFloat landscapeScrollY = self.bounds.origin.y; //shared between methods
-            
-            landscapeScrollY = [self loadPopularCategoriesAndTopBrandsForLandscapeInScrollView:self.landscapeScrollView yPosition:landscapeScrollY];
-            landscapeScrollY = [self loadTopSellersInScrollView:self.landscapeScrollView yPosition:landscapeScrollY];
-            
-            [self.landscapeScrollView setContentSize:CGSizeMake(self.landscapeScrollView.frame.size.width,
-                                                                landscapeScrollY)];
-        } else {
-            
-            self.mainScrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
-            [self addSubview:self.mainScrollView];
-            
-            CGFloat mainScrollY = self.bounds.origin.y; //shared between methods
-            
-            mainScrollY = [self loadMainTeasersInScrollView:self.mainScrollView yPosition:mainScrollY];
-            if ([[self.teaserCategory.homePageLayout lowercaseString] isEqualToString:@"fashion"]) {
-                mainScrollY = [self loadBrandTeasersInScrollView:self.mainScrollView yPosition:mainScrollY];
-            } else if ([[self.teaserCategory.homePageLayout lowercaseString] isEqualToString:@"gm"]) {
-                mainScrollY = [self loadTopSellersInScrollView:self.mainScrollView yPosition:mainScrollY];
-            }
-            mainScrollY = [self loadSmallTeasersInScrollView:self.mainScrollView yPosition:mainScrollY];
-            mainScrollY = [self loadCampaignsInScrollView:self.mainScrollView yPosition:mainScrollY];
-            mainScrollY = [self loadPopularCategoriesInScrollView:self.mainScrollView yPosition:mainScrollY];
-            mainScrollY = [self loadTopBrandsInScrollView:self.mainScrollView yPosition:mainScrollY];
-            
-            [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.frame.size.width,
-                                                           mainScrollY)];
+        self.mainScrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
+        [self addSubview:self.mainScrollView];
+        
+        CGFloat mainScrollY = self.bounds.origin.y; //shared between methods
+        
+        CGFloat centerScrollX = self.mainScrollView.frame.origin.x;
+        CGFloat centerScrollWidth = self.mainScrollView.frame.size.width;
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            centerScrollWidth = 640.0f; //value by design
+            centerScrollX = (self.mainScrollView.frame.size.width - centerScrollWidth) / 2;
         }
+        
+        mainScrollY = [self loadMainTeasersInScrollView:self.mainScrollView yPosition:mainScrollY];
+        mainScrollY = [self loadSmallTeasersInScrollView:self.mainScrollView yPosition:mainScrollY];
+        mainScrollY = [self loadCampaignTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
+        mainScrollY = [self loadShopTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
+        mainScrollY = [self loadBrandTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
+        mainScrollY = [self loadShopsWeekTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
+        mainScrollY = [self loadFeatureStoresTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
+        mainScrollY = [self loadTopSellersTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
+        
+        mainScrollY += 6.0f;
+        
+        [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.frame.size.width,
+                                                       mainScrollY)];
     }
 }
 
 - (CGFloat)loadMainTeasersInScrollView:(UIScrollView*)scrollView
                              yPosition:(CGFloat)yPosition
 {
-    for (RITeaserGroup* teaserGroup in self.teaserCategory.teaserGroups) {
-        
-        if (0 == [teaserGroup.type integerValue]) {
-            
+    for (RITeaserGrouping* teaserGrouping in self.teaserGroupings) {
+        if ([teaserGrouping.type isEqualToString:@"main_teasers"]) {
             //found it
             
             JAMainTeaserView* mainTeaserView = [[JAMainTeaserView alloc] initWithFrame:CGRectMake(scrollView.bounds.origin.x,
@@ -107,7 +77,7 @@
                                                                                                   scrollView.bounds.size.width,
                                                                                                   1)]; //height is set by the view itself
             [scrollView addSubview:mainTeaserView];
-            [mainTeaserView setTeasers:teaserGroup.teasers];
+            mainTeaserView.teaserGrouping = teaserGrouping;
             [mainTeaserView load];
             
             yPosition += mainTeaserView.frame.size.height;
@@ -118,75 +88,11 @@
     return yPosition;
 }
 
-- (CGFloat)loadBrandTeasersInScrollView:(UIScrollView*)scrollView
-                              yPosition:(CGFloat)yPosition
-{
-    BOOL foundTeaser = NO;
-    //brand teasers
-    for (RITeaserGroup* teaserGroup in self.teaserCategory.teaserGroups) {
-        
-        if (4 == [teaserGroup.type integerValue]) {
-            
-            //found it
-            foundTeaser = YES;
-            
-            JATopBrandsTeaserView* topSellersTeaserView = [[JATopBrandsTeaserView alloc] initWithFrame:CGRectMake(scrollView.bounds.origin.x,
-                                                                                                                  yPosition,
-                                                                                                                  scrollView.bounds.size.width,
-                                                                                                                  1)]; //height is set by the view itself
-            [scrollView addSubview:topSellersTeaserView];
-            topSellersTeaserView.groupTitle = teaserGroup.title;
-            [topSellersTeaserView setTeasers:teaserGroup.teasers];
-            [topSellersTeaserView load];
-            
-            yPosition += topSellersTeaserView.frame.size.height;
-            
-            break;
-        }
-    }
-    
-    BOOL isLandscape = self.frame.size.width>self.frame.size.height?YES:NO;
-    if (NO == foundTeaser && isLandscape) {
-        yPosition += 6.0f;
-    }
-    
-    return yPosition;
-}
-
-- (CGFloat)loadTopSellersInScrollView:(UIScrollView*)scrollView
-                            yPosition:(CGFloat)yPosition
-{
-    //top sellers
-    for (RITeaserGroup* teaserGroup in self.teaserCategory.teaserGroups) {
-        
-        if (2 == [teaserGroup.type integerValue] && VALID_NOTEMPTY(teaserGroup.teasers, NSOrderedSet)) {
-            //found it
-            JATopSellersTeaserView* topSellersTeaserView = [[JATopSellersTeaserView alloc] initWithFrame:CGRectMake(scrollView.bounds.origin.x,
-                                                                                                                    yPosition,
-                                                                                                                    scrollView.bounds.size.width,
-                                                                                                                    1)]; //height is set by the view itself
-            [scrollView addSubview:topSellersTeaserView];
-            topSellersTeaserView.groupTitle = teaserGroup.title;
-            [topSellersTeaserView setTeasers:teaserGroup.teasers];
-            BOOL isLandscape = self.frame.size.width>self.frame.size.height?YES:NO;
-            topSellersTeaserView.isLandscape = isLandscape;
-            [topSellersTeaserView load];
-            
-            yPosition += topSellersTeaserView.frame.size.height;
-            
-            break;
-        }
-    }
-    return yPosition;
-}
-
 - (CGFloat)loadSmallTeasersInScrollView:(UIScrollView*)scrollView
                               yPosition:(CGFloat)yPosition
 {
-    for (RITeaserGroup* teaserGroup in self.teaserCategory.teaserGroups) {
-        
-        if (1 == [teaserGroup.type integerValue]) {
-            
+    for (RITeaserGrouping* teaserGrouping in self.teaserGroupings) {
+        if ([teaserGrouping.type isEqualToString:@"small_teasers"]) {
             //found it
             
             JASmallTeaserView* smallTeaserView = [[JASmallTeaserView alloc] initWithFrame:CGRectMake(scrollView.bounds.origin.x,
@@ -194,8 +100,7 @@
                                                                                                      scrollView.bounds.size.width,
                                                                                                      1)]; //height is set by the view itself
             [scrollView addSubview:smallTeaserView];
-            smallTeaserView.groupTitle = teaserGroup.title;
-            [smallTeaserView setTeasers:teaserGroup.teasers];
+            smallTeaserView.teaserGrouping = teaserGrouping;
             [smallTeaserView load];
             
             yPosition += smallTeaserView.frame.size.height;
@@ -206,29 +111,21 @@
     return yPosition;
 }
 
-- (CGFloat)loadCampaignsInScrollView:(UIScrollView*)scrollView
-                           yPosition:(CGFloat)yPosition
+- (CGFloat)loadCampaignTeasersInScrollView:(UIScrollView*)scrollView
+                                 xPosition:(CGFloat)xPosition
+                                 yPosition:(CGFloat)yPosition
+                                     width:(CGFloat)width
 {
-    for (RITeaserGroup* teaserGroup in self.teaserCategory.teaserGroups) {
-        
-        if (6 == [teaserGroup.type integerValue]) {
-            
+    for (RITeaserGrouping* teaserGrouping in self.teaserGroupings) {
+        if ([teaserGrouping.type isEqualToString:@"campaigns"]) {
             //found it
             
-            CGFloat marginNegation = 0;
-            BOOL isLandscape = self.frame.size.width>self.frame.size.height?YES:NO;
-            if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad && isLandscape) {
-                marginNegation = 6;
-            }
-            
-            JACampaignsTeaserView* campaignsTeaserView = [[JACampaignsTeaserView alloc] initWithFrame:CGRectMake(scrollView.bounds.origin.x,
+            JACampaignsTeaserView* campaignsTeaserView = [[JACampaignsTeaserView alloc] initWithFrame:CGRectMake(xPosition,
                                                                                                                  yPosition,
-                                                                                                                 scrollView.bounds.size.width + marginNegation,
+                                                                                                                 width,
                                                                                                                  1)]; //height is set by the view itself
             [scrollView addSubview:campaignsTeaserView];
-            campaignsTeaserView.groupTitle = teaserGroup.title;
-            [campaignsTeaserView setTeasers:teaserGroup.teasers];
-            campaignsTeaserView.isLandscape = isLandscape;
+            campaignsTeaserView.teaserGrouping = teaserGrouping;
             [campaignsTeaserView load];
             
             yPosition += campaignsTeaserView.frame.size.height;
@@ -239,137 +136,128 @@
     return yPosition;
 }
 
-- (CGFloat)loadPopularCategoriesInScrollView:(UIScrollView*)scrollView
+- (CGFloat)loadShopTeasersInScrollView:(UIScrollView*)scrollView
+                             xPosition:(CGFloat)xPosition
+                             yPosition:(CGFloat)yPosition
+                                 width:(CGFloat)width
+{
+    for (RITeaserGrouping* teaserGrouping in self.teaserGroupings) {
+        if ([teaserGrouping.type isEqualToString:@"shop_teasers"]) {
+            //found it
+            
+            JAShopTeaserView* shopTeaserView = [[JAShopTeaserView alloc] initWithFrame:CGRectMake(xPosition,
+                                                                                                  yPosition,
+                                                                                                  width,
+                                                                                                  1)]; //height is set by the view itself
+            [scrollView addSubview:shopTeaserView];
+            shopTeaserView.teaserGrouping = teaserGrouping;
+            [shopTeaserView load];
+            
+            yPosition += shopTeaserView.frame.size.height;
+            
+            break;
+        }
+    }
+    return yPosition;
+}
+
+- (CGFloat)loadBrandTeasersInScrollView:(UIScrollView*)scrollView
+                              xPosition:(CGFloat)xPosition
+                              yPosition:(CGFloat)yPosition
+                                  width:(CGFloat)width
+{
+    for (RITeaserGrouping* teaserGrouping in self.teaserGroupings) {
+        if ([teaserGrouping.type isEqualToString:@"shop_teasers"]) {
+            //found it
+            
+            JABrandTeaserView* brandTeaserView = [[JABrandTeaserView alloc] initWithFrame:CGRectMake(xPosition,
+                                                                                                     yPosition,
+                                                                                                     width,
+                                                                                                     1)]; //height is set by the view itself
+            [scrollView addSubview:brandTeaserView];
+            brandTeaserView.teaserGrouping = teaserGrouping;
+            [brandTeaserView load];
+            
+            yPosition += brandTeaserView.frame.size.height;
+            
+            break;
+        }
+    }
+    return yPosition;
+}
+
+- (CGFloat)loadShopsWeekTeasersInScrollView:(UIScrollView*)scrollView
+                                  xPosition:(CGFloat)xPosition
+                                  yPosition:(CGFloat)yPosition
+                                      width:(CGFloat)width
+{
+    for (RITeaserGrouping* teaserGrouping in self.teaserGroupings) {
+        if ([teaserGrouping.type isEqualToString:@"shop_of_week"]) {
+            //found it
+            
+            JAShopsWeekTeaserView* shopsWeekTeaserView = [[JAShopsWeekTeaserView alloc] initWithFrame:CGRectMake(xPosition,
+                                                                                                                 yPosition,
+                                                                                                                 width,
+                                                                                                                 1)]; //height is set by the view itself
+            [scrollView addSubview:shopsWeekTeaserView];
+            shopsWeekTeaserView.teaserGrouping = teaserGrouping;
+            [shopsWeekTeaserView load];
+            
+            yPosition += shopsWeekTeaserView.frame.size.height;
+            
+            break;
+        }
+    }
+    return yPosition;
+}
+
+- (CGFloat)loadFeatureStoresTeasersInScrollView:(UIScrollView*)scrollView
+                                      xPosition:(CGFloat)xPosition
+                                      yPosition:(CGFloat)yPosition
+                                          width:(CGFloat)width
+{
+    for (RITeaserGrouping* teaserGrouping in self.teaserGroupings) {
+        if ([teaserGrouping.type isEqualToString:@"featured_stores"]) {
+            //found it
+            
+            JAFeatureStoresTeaserView* featureStoresTeaserView = [[JAFeatureStoresTeaserView alloc] initWithFrame:CGRectMake(xPosition,
+                                                                                                                             yPosition,
+                                                                                                                             width,
+                                                                                                                             1)]; //height is set by the view itself
+            [scrollView addSubview:featureStoresTeaserView];
+            featureStoresTeaserView.teaserGrouping = teaserGrouping;
+            [featureStoresTeaserView load];
+            
+            yPosition += featureStoresTeaserView.frame.size.height;
+            
+            break;
+        }
+    }
+    return yPosition;
+}
+
+- (CGFloat)loadTopSellersTeasersInScrollView:(UIScrollView*)scrollView
+                                   xPosition:(CGFloat)xPosition
                                    yPosition:(CGFloat)yPosition
+                                       width:(CGFloat)width
 {
-    for (RITeaserGroup* teaserGroup in self.teaserCategory.teaserGroups) {
-        
-        if (3 == [teaserGroup.type integerValue]) {
-            
+    for (RITeaserGrouping* teaserGrouping in self.teaserGroupings) {
+        if ([teaserGrouping.type isEqualToString:@"top_sellers"]) {
             //found it
             
-            JATopCategoriesTeaserView* topCategoriesTeaserView = [[JATopCategoriesTeaserView alloc] initWithFrame:CGRectMake(scrollView.bounds.origin.x,
-                                                                                                                             yPosition,
-                                                                                                                             scrollView.bounds.size.width,
-                                                                                                                             1)]; //height is set by the view itself
-            [scrollView addSubview:topCategoriesTeaserView];
-            topCategoriesTeaserView.groupTitle = teaserGroup.title;
-            [topCategoriesTeaserView setTeasers:teaserGroup.teasers];
-            [topCategoriesTeaserView load];
+            JATopSellersTeaserView* topSellersTeaserView = [[JATopSellersTeaserView alloc] initWithFrame:CGRectMake(xPosition,
+                                                                                                                    yPosition,
+                                                                                                                    width,
+                                                                                                                    1)]; //height is set by the view itself
+            [scrollView addSubview:topSellersTeaserView];
+            topSellersTeaserView.teaserGrouping = teaserGrouping;
+            [topSellersTeaserView load];
             
-            yPosition += topCategoriesTeaserView.frame.size.height;
+            yPosition += topSellersTeaserView.frame.size.height;
             
             break;
         }
     }
-    return yPosition;
-}
-
-- (CGFloat)loadTopBrandsInScrollView:(UIScrollView*)scrollView
-                           yPosition:(CGFloat)yPosition
-{
-    for (RITeaserGroup* teaserGroup in self.teaserCategory.teaserGroups) {
-        
-        if (5 == [teaserGroup.type integerValue]) {
-            
-            //found it
-            
-            JAPopularBrandsTeaserView* popularBrandsTeaserView = [[JAPopularBrandsTeaserView alloc] initWithFrame:CGRectMake(scrollView.bounds.origin.x,
-                                                                                                                             yPosition,
-                                                                                                                             scrollView.bounds.size.width,
-                                                                                                                             1)]; //height is set by the view itself
-            [scrollView addSubview:popularBrandsTeaserView];
-            popularBrandsTeaserView.groupTitle = teaserGroup.title;
-            [popularBrandsTeaserView setTeasers:teaserGroup.teasers];
-            [popularBrandsTeaserView load];
-            
-            yPosition += popularBrandsTeaserView.frame.size.height;
-            
-            break;
-        }
-    }
-    return yPosition;
-}
-
-- (CGFloat)loadPopularCategoriesAndTopBrandsForLandscapeInScrollView:(UIScrollView*)scrollView
-                                                           yPosition:(CGFloat)yPosition
-{
-    RITeaserGroup* topCategoriesTeaserGroup;
-    RITeaserGroup* popularBrandsTeaserGroup;
-    
-    JATopCategoriesTeaserView* topCategoriesTeaserView;
-    for (RITeaserGroup* teaserGroup in self.teaserCategory.teaserGroups) {
-        
-        if (3 == [teaserGroup.type integerValue]) {
-            
-            //found it
-            topCategoriesTeaserGroup = teaserGroup;
-            break;
-        }
-    }
-    
-    JAPopularBrandsTeaserView* popularBrandsTeaserView;
-    for (RITeaserGroup* teaserGroup in self.teaserCategory.teaserGroups) {
-        
-        if (5 == [teaserGroup.type integerValue]) {
-            
-            //found it
-            popularBrandsTeaserGroup = teaserGroup;
-            break;
-        }
-    }
-    
-    CGRect topCategoriesRect;
-    CGRect popularBrandsRect;
-    
-    if (VALID_NOTEMPTY(topCategoriesTeaserGroup, RITeaserGroup) && VALID_NOTEMPTY(popularBrandsTeaserGroup, RITeaserGroup)) {
-        
-        topCategoriesRect = CGRectMake(scrollView.bounds.origin.x,
-                                       yPosition,
-                                       scrollView.bounds.size.width / 2 + 3, //manually removing the border because it would be too much hussle otherwise
-                                       1); //height is set by the view itself
-        popularBrandsRect = CGRectMake(CGRectGetMaxX(topCategoriesRect) - 6, //manually removing the border because it would be too much hussle otherwise
-                                       yPosition,
-                                       scrollView.bounds.size.width / 2 + 3, //manually removing the border because it would be too much hussle otherwise
-                                       1); //height is set by the view itself
-        
-    } else if (VALID_NOTEMPTY(topCategoriesTeaserGroup, RITeaserGroup)) {
-    
-        topCategoriesRect = CGRectMake(scrollView.bounds.origin.x,
-                                       yPosition,
-                                       scrollView.bounds.size.width,
-                                       1); //height is set by the view itself
-        
-    } else if (VALID_NOTEMPTY(popularBrandsTeaserGroup, RITeaserGroup)) {
-    
-        popularBrandsRect = CGRectMake(scrollView.bounds.origin.x,
-                                       yPosition,
-                                       scrollView.bounds.size.width,
-                                       1); //height is set by the view itself
-    }
-    
-    if (VALID_NOTEMPTY(topCategoriesTeaserGroup, RITeaserGroup)) {
-        topCategoriesTeaserView = [[JATopCategoriesTeaserView alloc] initWithFrame:topCategoriesRect];
-        [scrollView addSubview:topCategoriesTeaserView];
-        topCategoriesTeaserView.groupTitle = topCategoriesTeaserGroup.title;
-        [topCategoriesTeaserView setTeasers:topCategoriesTeaserGroup.teasers];
-        [topCategoriesTeaserView load];
-    }
-    
-    if (VALID_NOTEMPTY(popularBrandsTeaserGroup, RITeaserGroup)) {
-        popularBrandsTeaserView = [[JAPopularBrandsTeaserView alloc] initWithFrame:popularBrandsRect];
-        [scrollView addSubview:popularBrandsTeaserView];
-        popularBrandsTeaserView.groupTitle = popularBrandsTeaserGroup.title;
-        [popularBrandsTeaserView setTeasers:popularBrandsTeaserGroup.teasers];
-        [popularBrandsTeaserView load];
-    }
-
-    CGFloat maxHeight = MAX(topCategoriesTeaserView.frame.size.height, popularBrandsTeaserView.frame.size.height);
-    [topCategoriesTeaserView adjustHeight:maxHeight];
-    [popularBrandsTeaserView adjustHeight:maxHeight];
-    
-    yPosition += MAX(topCategoriesTeaserView.frame.size.height, popularBrandsTeaserView.frame.size.height);
-    
     return yPosition;
 }
 

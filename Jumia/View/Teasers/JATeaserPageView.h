@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RITeaserCategory.h"
+#import "RITeaserGrouping.h"
 
 @interface JATeaserPageView : UIView
 
-@property (nonatomic, strong)RITeaserCategory* teaserCategory;
+@property (nonatomic, strong)NSArray* teaserGroupings;
 
 - (void)loadTeasersForFrame:(CGRect)frame;
 

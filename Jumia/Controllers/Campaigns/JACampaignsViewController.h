@@ -10,10 +10,11 @@
 #import "JAPickerScrollView.h"
 #import "JAPicker.h"
 #import "JACampaignPageView.h"
+#import "RITeaserGrouping.h"
 
 @interface JACampaignsViewController : JABaseViewController <UIScrollViewDelegate, JAPickerScrollViewDelegate, JAPickerDelegate, JACampaignPageViewDelegate>
 
-@property (nonatomic, strong)NSArray* campaignTeasers;
+@property (nonatomic, strong)RITeaserGrouping* teaserGrouping;
 @property (nonatomic, strong)NSString* startingTitle;
 @property (nonatomic, strong)NSString* campaignId;
 @property (nonatomic, strong)NSString* campaignUrl;

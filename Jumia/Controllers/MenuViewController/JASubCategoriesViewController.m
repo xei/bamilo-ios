@@ -54,10 +54,7 @@ UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    CGFloat total = self.categories.count + 1;//add one for title
-    if (VALID_NOTEMPTY(self.currentCategory, RICategory)) {
-        total++;
-    }
+    CGFloat total = self.categories.count + 2;//add one for title and another one for backbutton
     return total;
 }
 

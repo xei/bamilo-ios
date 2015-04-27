@@ -7,30 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RITeaser.h"
-#import "RITeaserProduct.h"
-#import "RITeaserImage.h"
-#import "RITeaserText.h"
-
-#define kTeaserNotificationPushCatalogWithUrl @"TEASER_NOTIFICATION_PUSH_CATALOG_WITH_URL"
-#define kTeaserNotificationPushPDVWithUrl @"TEASER_NOTIFICATION_PUSH_PDV_WITH_URL"
-#define kTeaserNotificationPushShopWithUrl @"TEASER_NOTIFICATION_PUSH_SHOP_WITH_URL"
-#define kTeaserNotificationPushAllCategories @"TEASER_NOTIFICATION_PUSH_ALL_CATEGORIES"
-#define kTeaserNotificationPushCatalogWithUrlForCampaigns @"TEASER_NOTIFICATION_PUSH_PDV_WITH_URL_FOR_CAMPAIGNS"
+#import "RITeaserGrouping.h"
+#import "RITeaserComponent.h"
 
 @interface JATeaserView : UIView
 
-@property (nonatomic, strong)NSOrderedSet* teasers;
-@property (strong, nonatomic) NSString *groupTitle;
+@property (nonatomic, strong)RITeaserGrouping* teaserGrouping;
 
 - (void)load;
 
-- (void)teaserPressedWithTeaserImage:(RITeaserImage*)teaserImage
-                          targetType:(NSInteger)targetType;
-- (void)teaserPressedWithTeaserText:(RITeaserText*)teaserText;
-- (void)teaserPressedWithTeaserProduct:(RITeaserProduct*)teaserProduct;
-- (void)teaserPressedWithTitle:(NSString*)title
-             inCampaignTeasers:(NSArray*)campaignTeasers;
-- (void)teaserAllCategoriesPressed;
+- (void)teaserPressed:(UIControl*)control;
+- (void)teaserPressedForIndex:(NSInteger)index;
 
 @end

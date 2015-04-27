@@ -570,7 +570,7 @@
     {
         JAForgotPasswordViewController *forgotVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"forgotPasswordViewController"];
         
-        [forgotVC.navBarLayout setShowBackButton:YES];
+        forgotVC.navBarLayout.backButtonTitle = STRING_LOGIN;
         
         [self pushViewController:forgotVC animated:YES];
     }
@@ -729,7 +729,7 @@
         
         JAForgotPasswordViewController *forgotVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"forgotPasswordViewController"];
         
-        [forgotVC.navBarLayout setShowBackButton:YES];
+        forgotVC.navBarLayout.backButtonTitle = STRING_CHECKOUT;
         
         [self pushViewController:forgotVC animated:YES];
     }
@@ -765,7 +765,7 @@
         }
         else
         {
-            [addressesVC.navBarLayout setShowBackButton:YES];
+            addressesVC.navBarLayout.backButtonTitle = STRING_BACK;
             addressesVC.navBarLayout.showLogo = NO;
         }
 
@@ -809,7 +809,7 @@
             addAddressVC.navBarLayout.showCartButton = NO;
             if([showBackButton boolValue])
             {
-                [addAddressVC.navBarLayout setShowBackButton:YES];
+                addAddressVC.navBarLayout.backButtonTitle = STRING_CHECKOUT;
                 addAddressVC.navBarLayout.showLogo = NO;
             }
             else
@@ -849,7 +849,7 @@
         }
         else
         {
-            [editAddressVC.navBarLayout setShowBackButton:YES];
+            editAddressVC.navBarLayout.backButtonTitle = STRING_BACK;
             editAddressVC.navBarLayout.showLogo = NO;
         }
         
@@ -1274,16 +1274,22 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
                                                         object:nil];
     
-    NSArray* campaignTeasers = [notification.userInfo objectForKey:@"campaignTeasers"];
     NSString* title = [notification.userInfo objectForKey:@"title"];
-    NSString* campaignId = [notification.userInfo objectForKey:@"campaign_id"];
-    NSString* campaignUrl = [notification.userInfo objectForKey:@"campaign_url"];
     
-    if (VALID_NOTEMPTY(campaignTeasers, NSArray))
+    //this is used when the teaserGrouping is campaigns and we have to show more than one campaign
+    RITeaserGrouping* teaserGrouping = [notification.userInfo objectForKey:@"teaserGrouping"];
+
+    //this is used when the teaserGrouping is not campaigns, so we're only going to be showing one
+    NSString* campaignUrl = [notification.userInfo objectForKey:@"url"];
+    
+    //this is used in deeplinking
+    NSString* campaignId = [notification.userInfo objectForKey:@"campaign_id"];
+    
+    if (VALID_NOTEMPTY(teaserGrouping, RITeaserGrouping))
     {
         JACampaignsViewController* campaignsVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"campaignsViewController"];
         
-        campaignsVC.campaignTeasers = campaignTeasers;
+        campaignsVC.teaserGrouping = teaserGrouping;
         campaignsVC.startingTitle = title;
         
         [self pushViewController:campaignsVC animated:YES];
@@ -1368,29 +1374,30 @@
                                                         object:nil];
     
     NSString* url = [notification.userInfo objectForKey:@"url"];
+    NSString* uid = [notification.userInfo objectForKey:@"shop_id"];
 
+    JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
+    if([notification.userInfo objectForKey:@"show_back_button"])
+    {
+        viewController.navBarLayout.backButtonTitle = STRING_HOME;
+    }
+    if ([notification.userInfo objectForKey:@"show_back_button_title"]) {
+        viewController.navBarLayout.backButtonTitle = [notification.userInfo objectForKey:@"show_back_button_title"];
+    }
+    if([notification.userInfo objectForKey:@"title"])
+    {
+        viewController.navBarLayout.title = [notification.userInfo objectForKey:@"title"];
+    }
+    
     if (VALID_NOTEMPTY(url, NSString))
     {
-        
-        JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
         viewController.url = url;
-        
-        if([notification.userInfo objectForKey:@"show_back_button"])
-        {
-            [viewController.navBarLayout setShowBackButton:YES];
-        }
-        
-        if ([notification.userInfo objectForKey:@"show_back_button_title"]) {
-            viewController.navBarLayout.backButtonTitle = [notification.userInfo objectForKey:@"show_back_button_title"];
-        }
-        
-        if([notification.userInfo objectForKey:@"title"])
-        {
-            viewController.navBarLayout.title = [notification.userInfo objectForKey:@"title"];
-        }
-        
         [self pushViewController:viewController animated:YES];
 
+    } else if (VALID_NOTEMPTY(uid, NSString))
+    {
+        viewController.url = [NSString stringWithFormat:@"%@%@main/getstatic/?key=%@",[RIApi getCountryUrlInUse], RI_API_VERSION, uid];
+        [self pushViewController:viewController animated:YES];
     }
 
 }

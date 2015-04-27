@@ -315,5 +315,8 @@
 #define STRING_ADDRESSES_SAVED_AS_DEFAULT RILocalizedString(@"string_addresses_saved_as_default", nil)
 #define STRING_REVIEW_THIS_SELLER RILocalizedString(@"review_this_seller", nil)
 
+#define STRING_SHOPS_OF_THE_WEEK RILocalizedString(@"shops_of_the_week", nil)
+#define STRING_FEATURED_STORES RILocalizedString(@"featured_stores", nil)
+#define STRING_SEE_MORE_OFFERS RILocalizedString(@"see_more_offers", nil)
 
 #endif

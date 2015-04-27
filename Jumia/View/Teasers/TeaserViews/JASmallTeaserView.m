@@ -7,85 +7,112 @@
 //
 
 #import "JASmallTeaserView.h"
-#import "UIButton+WebCache.h"
+#import "UIImageView+WebCache.h"
 #import "JAClickableView.h"
 
-#define JATopBrandsTeaserViewHeight 55.0f
+@interface JASmallTeaserView()
+
+@property (nonatomic, strong)UIScrollView* scrollView;
+
+@end
 
 @implementation JASmallTeaserView
 
-- (void)load;
+- (void)load
 {
     [super load];
     
+    CGFloat totalHeight = 132; //value by design
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               self.frame.size.width,
-                              self.frame.size.width / 2)]; //images are squared and this will have two images
+                              totalHeight)];
     
-    CGFloat currentX = 0;
+    CGFloat margin = 6.0f; //value by design
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
+                                                                     self.bounds.origin.y + margin,
+                                                                     self.bounds.size.width,
+                                                                     self.bounds.size.height - 2*margin)];
+    self.scrollView.showsHorizontalScrollIndicator = NO;
+    [self addSubview:self.scrollView];
     
-    for (int i = 0; i < self.teasers.count; i++) {
-        RITeaser* teaser = [self.teasers objectAtIndex:i];
+    CGFloat componentWidth = 108; //value by design
+    CGFloat currentX = margin;
+    
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        totalHeight += margin; //the top margin is doubled on ipad, so add another margin to the total
+        componentWidth = 210; //value by design
+        currentX = margin*2; //the first margin is doubled
+    }
+    
+    for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
+        RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
         
-        RITeaserImage* teaserImage;
-        
-        if (1 == teaser.teaserImages.count) {
-            
-            teaserImage = [teaser.teaserImages firstObject];
-            
-        } else {
-            for (RITeaserImage* possibleTeaserImage in teaser.teaserImages) {
-                
-                NSString* deviceType;
-                if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-                    deviceType = @"tablet";
-                } else {
-                    deviceType = @"phone";
-                }
-                
-                if ([possibleTeaserImage.deviceType isEqualToString:deviceType]) {
-                    
-                    teaserImage = possibleTeaserImage;
-                    break;
-                }
-            }
-        }
         
         JAClickableView* clickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
-                                                                                           self.bounds.origin.y,
-                                                                                           self.bounds.size.width / self.teasers.count,
-                                                                                           self.bounds.size.height)];
-        UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setFrame:clickableView.bounds];
-        [button setEnabled:NO];
-        [button setBackgroundColor:UIColorFromRGB(0xffffff)];
-        [button setImageWithURL:[NSURL URLWithString:teaserImage.imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_grid"]];
-        [clickableView addSubview:button];
+                                                                                           self.scrollView.bounds.origin.y,
+                                                                                           componentWidth,
+                                                                                           self.scrollView.bounds.size.height)];
         clickableView.tag = i;
-        [clickableView addTarget:self action:@selector(teaserImagePressed:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:clickableView];
+        clickableView.backgroundColor = [UIColor whiteColor];
+        [clickableView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [self.scrollView addSubview:clickableView];
         
-        currentX += clickableView.frame.size.width;
-    }
-}
-
-- (void)teaserImagePressed:(UIControl*)control
-{
-    NSInteger index = control.tag;
-    
-    RITeaser* teaser = [self.teasers objectAtIndex:index];
-    
-    if (2 == [teaser.targetType integerValue]) {
-        [self teaserPressedWithTitle:@"" inCampaignTeasers:[NSArray arrayWithObject:teaser]];
-    } else {
-        RITeaserImage* teaserImage = [teaser.teaserImages firstObject];
+        CGFloat textMarginX = 4.0;
+        CGFloat textMarginY = 6.0;
+        UILabel* titleLabel = [UILabel new];
+        titleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
+        titleLabel.textColor = [UIColor blackColor];
+        titleLabel.text = component.title;
+        [titleLabel sizeToFit];
+        [titleLabel setFrame:CGRectMake(clickableView.bounds.origin.x + textMarginX,
+                                        clickableView.bounds.origin.y + textMarginY,
+                                        clickableView.bounds.size.width - textMarginX*2,
+                                        titleLabel.frame.size.height)];
+        [clickableView addSubview:titleLabel];
         
-        [self teaserPressedWithTeaserImage:teaserImage
-                                targetType:[teaser.targetType integerValue]];
+        UILabel* subTitleLabel = [UILabel new];
+        subTitleLabel.font = [UIFont fontWithName:kFontLightName size:9.0f];
+        subTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
+        subTitleLabel.text = component.subTitle;
+        [subTitleLabel sizeToFit];
+        [subTitleLabel setFrame:CGRectMake(clickableView.bounds.origin.x + textMarginX,
+                                           CGRectGetMaxY(titleLabel.frame),
+                                           clickableView.bounds.size.width - textMarginX*2,
+                                           subTitleLabel.frame.size.height)];
+        [clickableView addSubview:subTitleLabel];
+        
+        CGFloat imageWidth = clickableView.bounds.size.width;
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            titleLabel.textAlignment = NSTextAlignmentCenter;
+            subTitleLabel.textAlignment = NSTextAlignmentCenter;
+            imageWidth = 108; //value by design
+        }
+        
+        CGFloat imageHeight = 90; //value by design
+        NSString* imageUrl = component.imagePortraitUrl;
+        UIImageView* imageView = [UIImageView new];
+        [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
+        [imageView setFrame:CGRectMake((clickableView.bounds.size.width - imageWidth)/2,
+                                       clickableView.bounds.size.height - imageHeight,
+                                       imageWidth,
+                                       imageHeight)];
+        [clickableView addSubview:imageView];
+        
+        currentX += clickableView.frame.size.width + margin;
     }
     
-
+    [self.scrollView setContentSize:CGSizeMake(currentX,
+                                               self.scrollView.frame.size.height)];
+    
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        if (self.scrollView.contentSize.width < self.frame.size.width) {
+            [self.scrollView setFrame: CGRectMake((self.frame.size.width - self.scrollView.contentSize.width) / 2,
+                                                  self.scrollView.frame.origin.y,
+                                                  self.scrollView.contentSize.width,
+                                                  self.scrollView.frame.size.height)];
+        }
+    }
 }
 
 @end
