@@ -570,7 +570,7 @@
     {
         JAForgotPasswordViewController *forgotVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"forgotPasswordViewController"];
         
-        forgotVC.navBarLayout.backButtonTitle = STRING_LOGIN;
+        [forgotVC.navBarLayout setShowBackButton:YES];
         
         [self pushViewController:forgotVC animated:YES];
     }
@@ -729,7 +729,7 @@
         
         JAForgotPasswordViewController *forgotVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"forgotPasswordViewController"];
         
-        forgotVC.navBarLayout.backButtonTitle = STRING_CHECKOUT;
+        [forgotVC.navBarLayout setShowBackButton:YES];
         
         [self pushViewController:forgotVC animated:YES];
     }
@@ -765,7 +765,7 @@
         }
         else
         {
-            addressesVC.navBarLayout.backButtonTitle = STRING_BACK;
+            [addressesVC.navBarLayout setShowBackButton:YES];
             addressesVC.navBarLayout.showLogo = NO;
         }
 
@@ -809,7 +809,7 @@
             addAddressVC.navBarLayout.showCartButton = NO;
             if([showBackButton boolValue])
             {
-                addAddressVC.navBarLayout.backButtonTitle = STRING_CHECKOUT;
+                [addAddressVC.navBarLayout setShowBackButton:YES];
                 addAddressVC.navBarLayout.showLogo = NO;
             }
             else
@@ -849,7 +849,7 @@
         }
         else
         {
-            editAddressVC.navBarLayout.backButtonTitle = STRING_BACK;
+            [editAddressVC.navBarLayout setShowBackButton:YES];
             editAddressVC.navBarLayout.showLogo = NO;
         }
         
@@ -1377,7 +1377,7 @@
         
         if([notification.userInfo objectForKey:@"show_back_button"])
         {
-            viewController.navBarLayout.backButtonTitle = STRING_HOME;
+            [viewController.navBarLayout setShowBackButton:YES];
         }
         
         if ([notification.userInfo objectForKey:@"show_back_button_title"]) {
