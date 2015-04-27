@@ -14,6 +14,7 @@
 
 @property (nonatomic, strong)UIScrollView* scrollView;
 @property (nonatomic, strong)JAPageControl* pageControl;
+@property (nonatomic, strong)NSArray* buttonsArray;
 
 @end
 
@@ -28,14 +29,30 @@
                               self.frame.size.width,
                               self.frame.size.width * 47/128)]; //this 47/128 was defined by the design guidelines
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
+    CGFloat scrollViewWidth = self.bounds.size.width;
+    CGFloat scrollViewX = self.bounds.origin.x;
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        scrollViewWidth = 640.0f; //value by design
+        scrollViewX = (self.bounds.size.width - scrollViewWidth) / 2;
+    }
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(scrollViewX,
+                                                                     self.bounds.origin.y,
+                                                                     scrollViewWidth,
+                                                                     self.bounds.size.height)];
+    self.scrollView.clipsToBounds = NO;
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.pagingEnabled = YES;
     self.scrollView.delegate = self;
     [self addSubview:self.scrollView];
     
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                          action:@selector(touchedInScrollView:)];
+    self.userInteractionEnabled = YES;
+    [self addGestureRecognizer:tap];
+    
     CGFloat currentX = 0;
     
+    NSMutableArray* buttonsMutableArray = [NSMutableArray new];
     for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
         RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
         
@@ -57,9 +74,12 @@
             [clickableView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
             [self.scrollView addSubview:clickableView];
             
+            [buttonsMutableArray addObject:clickableView];
+            
             currentX += clickableView.frame.size.width;
         }
     }
+    self.buttonsArray = [buttonsMutableArray copy];
     
     [self.scrollView setContentSize:CGSizeMake(currentX,
                                                self.scrollView.frame.size.height)];
@@ -84,5 +104,22 @@
     
 }
 
+- (UIView *) hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    if ([self pointInside:point withEvent:event])
+    {
+        return self.scrollView;
+    }
+    return nil;
+}
+
+- (void)touchedInScrollView:(UITapGestureRecognizer *)tap
+{
+    CGPoint point = [tap locationInView:self];
+    if (point.x > self.scrollView.frame.origin.x && point.x < (self.scrollView.frame.origin.x + self.scrollView.frame.size.width))
+    {
+        NSInteger page = self.scrollView.contentOffset.x / self.scrollView.frame.size.width;
+        [self teaserPressedForIndex:page];
+    }
+}
 
 @end

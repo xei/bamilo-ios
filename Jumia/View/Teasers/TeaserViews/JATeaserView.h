@@ -17,5 +17,6 @@
 - (void)load;
 
 - (void)teaserPressed:(UIControl*)control;
+- (void)teaserPressedForIndex:(NSInteger)index;
 
 @end

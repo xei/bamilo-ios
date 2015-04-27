@@ -23,6 +23,11 @@
 {
     NSInteger index = control.tag;
     
+    [self teaserPressedForIndex:index];
+}
+
+- (void)teaserPressedForIndex:(NSInteger)index
+{
     RITeaserComponent* teaserComponent = [self.teaserGrouping.teaserComponents objectAtIndex:index];
     
     NSMutableDictionary* userInfo = [NSMutableDictionary new];
@@ -34,19 +39,19 @@
     NSString* notificationName;
     
     if ([teaserComponent.targetType isEqualToString:@"catalog"]) {
-    
+        
         notificationName = kDidSelectTeaserWithCatalogUrlNofication;
-
+        
     } else if ([teaserComponent.targetType isEqualToString:@"product_detail"]) {
-
+        
         notificationName = kDidSelectTeaserWithPDVUrlNofication;
-
+        
     } else if ([teaserComponent.targetType isEqualToString:@"static_page"]) {
         
         notificationName = kDidSelectTeaserWithShopUrlNofication;
         
     } else if ([teaserComponent.targetType isEqualToString:@"campaign"]) {
-
+        
         notificationName = kDidSelectCampaignNofication;
         
         //for the campaigns teaserGrouping we need all the campaign components
@@ -61,6 +66,7 @@
                                                             object:nil
                                                           userInfo:userInfo];
     }
+
 }
 
 @end

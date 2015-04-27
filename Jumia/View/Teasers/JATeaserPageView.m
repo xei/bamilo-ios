@@ -45,7 +45,7 @@
         CGFloat centerScrollX = self.mainScrollView.frame.origin.x;
         CGFloat centerScrollWidth = self.mainScrollView.frame.size.width;
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            centerScrollWidth = 640.0f;
+            centerScrollWidth = 640.0f; //value by design
             centerScrollX = (self.mainScrollView.frame.size.width - centerScrollWidth) / 2;
         }
         
