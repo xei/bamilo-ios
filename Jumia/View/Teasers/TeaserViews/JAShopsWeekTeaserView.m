@@ -17,27 +17,35 @@
     [super load];
     
     CGFloat totalHeight = 142.0f; //value by design
+    CGFloat horizontalMargin = 6.0f; //value by design
+    CGFloat middleMargin = 6.0f; //value by design
+    CGFloat topMargin = 6.0f; //value by design
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        totalHeight = 283.0f;
+        middleMargin = 12.0f; //value by design
+        topMargin = 12.0f; //value by design
+    }
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               self.frame.size.width,
                               totalHeight)];
     
-    CGFloat margin = 6.0f; //value by design
-    CGFloat componentWidth = (self.frame.size.width - margin*3)/2; //there are 3 margins and 2 components
+
+    CGFloat componentWidth = (self.frame.size.width - horizontalMargin*2 - middleMargin)/2;
     
-    CGFloat currentX = margin;
+    CGFloat currentX = horizontalMargin;
     for (int i = 0; i < 2; i++) {
         
         JAClickableView* clickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
-                                                                                           margin,
+                                                                                           topMargin,
                                                                                            componentWidth,
-                                                                                           totalHeight - margin)];
+                                                                                           totalHeight - topMargin)];
         clickableView.tag = i;
         clickableView.backgroundColor = [UIColor whiteColor];
         [clickableView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:clickableView];
         
-        currentX += clickableView.frame.size.width + margin;
+        currentX += clickableView.frame.size.width + middleMargin;
         
         if (i < self.teaserGrouping.teaserComponents.count) {
             
