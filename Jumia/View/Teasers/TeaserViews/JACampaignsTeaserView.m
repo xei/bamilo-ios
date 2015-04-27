@@ -51,7 +51,7 @@
         
         CGFloat labelTopMargin = 14.0f;
         
-        CGFloat halfWidth = self.bounds.size.width/2;
+        CGFloat halfWidth = mainClickableView.bounds.size.width/2;
         UILabel* titleLabel = [UILabel new];
         titleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
         titleLabel.textColor = [UIColor blackColor];
