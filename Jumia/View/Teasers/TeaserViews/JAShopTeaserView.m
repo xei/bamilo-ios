@@ -17,6 +17,9 @@
     [super load];
     
     CGFloat totalHeight = 129.0f; //value by design
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        totalHeight = 150.0f; //value by design
+    }
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               self.frame.size.width,
@@ -49,7 +52,6 @@
             UILabel* titleLabel = [UILabel new];
             titleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
             titleLabel.textColor = [UIColor blackColor];
-            titleLabel.textAlignment = NSTextAlignmentCenter;
             titleLabel.text = component.title;
             [titleLabel sizeToFit];
             [titleLabel setFrame:CGRectMake(clickableView.bounds.origin.x + textMarginX,
@@ -61,7 +63,6 @@
             UILabel* subTitleLabel = [UILabel new];
             subTitleLabel.font = [UIFont fontWithName:kFontLightName size:9.0f];
             subTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
-            subTitleLabel.textAlignment = NSTextAlignmentCenter;
             subTitleLabel.text = component.subTitle;
             [subTitleLabel sizeToFit];
             [subTitleLabel setFrame:CGRectMake(clickableView.bounds.origin.x + textMarginX,
@@ -70,13 +71,20 @@
                                                subTitleLabel.frame.size.height)];
             [clickableView addSubview:subTitleLabel];
             
+            CGFloat imageBottomMargin = 0.0f; //value by design
+            if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+                titleLabel.textAlignment = NSTextAlignmentCenter;
+                subTitleLabel.textAlignment = NSTextAlignmentCenter;
+                imageBottomMargin = 12.0f;
+            }
             NSString* imageUrl = component.imagePortraitUrl;
-            CGFloat imageHeight = 90; //value by design
+            CGFloat imageHeight = 96; //value by design
+            CGFloat imageWidth = imageHeight;
             UIImageView* imageView = [UIImageView new];
             [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
-            [imageView setFrame:CGRectMake(clickableView.bounds.origin.x,
-                                           clickableView.bounds.size.height - imageHeight,
-                                           clickableView.bounds.size.width,
+            [imageView setFrame:CGRectMake((clickableView.bounds.size.width - imageWidth) / 2,
+                                           clickableView.bounds.size.height - imageHeight - imageBottomMargin,
+                                           imageWidth,
                                            imageHeight)];
             [clickableView addSubview:imageView];
         }
