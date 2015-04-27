@@ -22,7 +22,13 @@
 {
     [super load];
     
-    CGFloat totalHeight = 60; //value by design
+    CGFloat topAreaHeight = 30.0f; //value by design
+    CGFloat bottomAreaHeight = 30.0f; //value by design
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        topAreaHeight = 35.0f;
+        bottomAreaHeight = 50.0f;
+    }
+    CGFloat totalHeight = topAreaHeight + bottomAreaHeight;
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               self.frame.size.width,
@@ -37,17 +43,20 @@
     [groupingTitleLabel setFrame:CGRectMake(groupingTitleLabelMargin,
                                             0.0f,
                                             self.frame.size.width - groupingTitleLabelMargin*2,
-                                            totalHeight / 2)];
+                                            topAreaHeight)];
     [self addSubview:groupingTitleLabel];
     
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
                                                                      CGRectGetMaxY(groupingTitleLabel.frame),
                                                                      self.bounds.size.width,
-                                                                     totalHeight / 2)];
+                                                                     bottomAreaHeight)];
     self.scrollView.showsHorizontalScrollIndicator = NO;
     [self addSubview:self.scrollView];
     
     CGFloat componentWidth = 88; //value by design
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        componentWidth = 94.0f; //value by design
+    }
     CGFloat currentX = 6.0f;
     
     for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
@@ -63,12 +72,7 @@
         [clickableView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.scrollView addSubview:clickableView];
         
-        NSString* imageUrl;
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            imageUrl = component.imageLandscapeUrl;
-        } else {
-            imageUrl = component.imagePortraitUrl;
-        }
+        NSString* imageUrl = component.imagePortraitUrl;
         UIImageView* imageView = [UIImageView new];
         [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
         [imageView setFrame:CGRectMake(clickableView.bounds.origin.x,

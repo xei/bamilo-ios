@@ -39,6 +39,12 @@
     CGFloat componentWidth = 108; //value by design
     CGFloat currentX = margin;
     
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        totalHeight += margin; //the top margin is doubled on ipad, so add another margin to the total
+        componentWidth = 210; //value by design
+        currentX = margin*2; //the first margin is doubled
+    }
+    
     for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
         RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
         
@@ -51,13 +57,6 @@
         clickableView.backgroundColor = [UIColor whiteColor];
         [clickableView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.scrollView addSubview:clickableView];
-        
-        NSString* imageUrl;
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            imageUrl = component.imageLandscapeUrl;
-        } else {
-            imageUrl = component.imagePortraitUrl;
-        }
         
         CGFloat textMarginX = 4.0;
         CGFloat textMarginY = 6.0;
@@ -83,12 +82,20 @@
                                            subTitleLabel.frame.size.height)];
         [clickableView addSubview:subTitleLabel];
         
+        CGFloat imageWidth = clickableView.bounds.size.width;
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            titleLabel.textAlignment = NSTextAlignmentCenter;
+            subTitleLabel.textAlignment = NSTextAlignmentCenter;
+            imageWidth = 108; //value by design
+        }
+        
         CGFloat imageHeight = 90; //value by design
+        NSString* imageUrl = component.imagePortraitUrl;
         UIImageView* imageView = [UIImageView new];
         [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
-        [imageView setFrame:CGRectMake(clickableView.bounds.origin.x,
+        [imageView setFrame:CGRectMake((clickableView.bounds.size.width - imageWidth)/2,
                                        clickableView.bounds.size.height - imageHeight,
-                                       clickableView.bounds.size.width,
+                                       imageWidth,
                                        imageHeight)];
         [clickableView addSubview:imageView];
         
@@ -97,6 +104,15 @@
     
     [self.scrollView setContentSize:CGSizeMake(currentX,
                                                self.scrollView.frame.size.height)];
+    
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        if (self.scrollView.contentSize.width < self.frame.size.width) {
+            [self.scrollView setFrame: CGRectMake((self.frame.size.width - self.scrollView.contentSize.width) / 2,
+                                                  self.scrollView.frame.origin.y,
+                                                  self.scrollView.contentSize.width,
+                                                  self.scrollView.frame.size.height)];
+        }
+    }
 }
 
 @end

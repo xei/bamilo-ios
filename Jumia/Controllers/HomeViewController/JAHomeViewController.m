@@ -134,6 +134,10 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
+    if (self.isLoaded) {
+        [self.teaserPageView loadTeasersForFrame:self.view.bounds];
+    }
+    
     [self hideLoading];
     
     if(VALID_NOTEMPTY(self.wizardView, JAHomeWizardView))
