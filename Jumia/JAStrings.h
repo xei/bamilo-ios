@@ -101,6 +101,9 @@
 #define STRING_CALL_TO_ORDER RILocalizedString(@"call_to_order", nil)
 #define STRING_ARTICLE RILocalizedString(@"string_article", nil)
 #define STRING_ARTICLES RILocalizedString(@"string_articles", nil)
+#define STRING_ITEM_CART RILocalizedString(@"string_item_cart", nil)
+#define STRING_ITEMS_CART RILocalizedString(@"string_items_cart", nil)
+
 #define STRING_ERROR_CHANGING_QUANTITY RILocalizedString(@"error_add_to_shopping_cart_quantity", nil)
 #define STRING_SHIPPING RILocalizedString(@"shipping", nil)
 #define STRING_FREE RILocalizedString(@"free_label", nil)

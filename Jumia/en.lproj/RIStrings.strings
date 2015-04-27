@@ -98,6 +98,8 @@
 "call_to_order" = "Call to Order";
 "string_article" = "1 article";
 "string_articles" = "%d articles";
+"string_item_cart" = "1 item";
+"string_items_cart" = "%d items";
 "error_add_to_shopping_cart_quantity" = "You cannot order more than the allowed quantity. Sorry.";
 "shipping" = "Shipping";
 "free_label" = "Free";
