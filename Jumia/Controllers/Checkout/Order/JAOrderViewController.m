@@ -308,9 +308,9 @@
     UILabel* articlesLabel = [UILabel new];
     articlesLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     articlesLabel.textColor = UIColorFromRGB(0x666666);
-    articlesLabel.text = [NSString stringWithFormat:STRING_ARTICLES, [self.checkout.cart.cartCount integerValue]];
+    articlesLabel.text = [NSString stringWithFormat:STRING_ITEMS_CART, [self.checkout.cart.cartCount integerValue]];
     if (1 == [self.checkout.cart.cartCount integerValue]) {
-        articlesLabel.text = STRING_ARTICLE;
+        articlesLabel.text = STRING_ITEM_CART;
     }
     [articlesLabel sizeToFit];
     articlesLabel.frame = CGRectMake(subtotalContentView.bounds.origin.x + 6.0f,

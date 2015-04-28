@@ -510,11 +510,11 @@
     NSInteger cartCount = [[[self cart] cartCount] integerValue];
     if(1 == cartCount)
     {
-        [self.articlesCount setText:STRING_ARTICLE];
+        [self.articlesCount setText:STRING_ITEM_CART];
     }
     else
     {
-        [self.articlesCount setText:[NSString stringWithFormat:STRING_ARTICLES, cartCount]];
+        [self.articlesCount setText:[NSString stringWithFormat:STRING_ITEMS_CART, cartCount]];
     }
     [self.articlesCount sizeToFit];
     [self.articlesCount setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.subtotalTitleSeparator.frame) + 10.0f, 50.f, self.articlesCount.frame.size.height)];

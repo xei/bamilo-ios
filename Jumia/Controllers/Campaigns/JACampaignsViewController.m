@@ -51,7 +51,7 @@
     self.campaignIndex = -1;
     
     self.navBarLayout.title = STRING_CAMPAIGNS;
-    self.navBarLayout.backButtonTitle = STRING_HOME;
+    //self.navBarLayout.backButtonTitle = STRING_HOME;
     
     self.pickerNamesAlreadySet = NO;
     
@@ -356,7 +356,6 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                             object:nil
                                                           userInfo:@{ @"sku" : sku ,
-                                                                      @"previousCategory" : STRING_CAMPAIGNS,
                                                                       @"show_back_button" : [NSNumber numberWithBool:YES]}];
     }
 }

@@ -162,7 +162,6 @@ UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger realIndex = indexPath.row;
-    NSString* backButtonTitle = [STRING_CATEGORIES uppercaseString];
     
     //ALWAYS has back cell
     if (0 == realIndex) {
@@ -181,8 +180,7 @@ UITableViewDelegate
                                                                 object:@{@"category":self.currentCategory}];
             return;
         }
-        backButtonTitle = self.currentCategory.name;
-    } else {
+           } else {
         if (0 == realIndex) {
             //do nothing
             return;

@@ -15,7 +15,6 @@
     self = [super init];
     if (self) {
         //defaults
-        self.backButtonTitle=STRING_BACK;
         self.doneButtonTitle=STRING_DONE;
         self.showMenuButton=YES;
         self.showCartButton=YES;
@@ -44,8 +43,6 @@
     if (VALID_NOTEMPTY(backButtonTitle, NSString)) {
         _backButtonTitle=backButtonTitle;
         self.showBackButton = YES;
-    } else {
-        _backButtonTitle = STRING_BACK;
     }
 }
 
