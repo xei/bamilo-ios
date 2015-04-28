@@ -26,7 +26,7 @@
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         priceY = JACatalogViewControllerGridCellPriceViewY_ipad;
     }
-    self.priceView.frame = CGRectMake(2.0f,
+    self.priceView.frame = CGRectMake(8.0f,
                                       priceY,
                                       self.frame.size.width - 4.0f,
                                       self.priceView.frame.size.height);

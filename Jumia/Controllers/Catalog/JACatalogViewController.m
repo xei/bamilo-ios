@@ -25,6 +25,7 @@
 #import "UIImageView+WebCache.h"
 #import "JACampaignBannerCell.h"
 #import "JACatalogBannerCell.h"
+#import "JAProductListFlowLayout.h"
 
 #define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
@@ -39,7 +40,7 @@
 
 @property (nonatomic, strong) JACatalogTopView* catalogTopView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (nonatomic, strong) UICollectionViewFlowLayout* flowLayout;
+@property (nonatomic, strong) JAProductListFlowLayout* flowLayout;
 @property (nonatomic, strong) NSMutableArray* productsArray;
 @property (nonatomic, strong) NSArray* filtersArray;
 @property (nonatomic, strong) NSArray* categoriesArray;
@@ -288,7 +289,8 @@
     [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogListCell_ipad_portrait" bundle:nil] forCellWithReuseIdentifier:@"listCell_ipad_portrait"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogListCell_ipad_landscape" bundle:nil] forCellWithReuseIdentifier:@"listCell_ipad_landscape"];
     
-    self.flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    self.flowLayout = [[JAProductListFlowLayout alloc] init];
+    self.flowLayout.manualCellSpacing = 0.0f;
     self.flowLayout.minimumLineSpacing = 0;
     self.flowLayout.minimumInteritemSpacing = 0;
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
@@ -840,24 +842,24 @@
         if(UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
             
             if (self.catalogTopView.gridSelected) {
-                width = 248.0f;
+                width = 254.0f;
                 height = JACatalogViewControllerGridCellHeight_ipad;
             } else {
-                width = 375.0f;
+                width = 381.0f;
                 height = JACatalogViewControllerListCellHeight_ipad;
             }
         } else {
             if (self.catalogTopView.gridSelected) {
-                width = 196.0f;
+                width = 204.0f;
                 height = JACatalogViewControllerGridCellHeight_ipad;
             } else {
-                width = 333.0f;
+                width = 339.0f;
                 height = JACatalogViewControllerListCellHeight_ipad;
             }
         }
     } else {
         if (self.catalogTopView.gridSelected) {
-            width = (self.collectionView.frame.size.width / 2) - 2;
+            width = 157.0f;
             height = JACatalogViewControllerGridCellHeight;
         } else {
             //use view instead of collection view, the list cell has the insets inside itself;
@@ -867,28 +869,6 @@
     }
     
     return CGSizeMake(width, height);
-}
-
-- (CGFloat)getLayoutMinimumSpacingForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    NSInteger spacing = 0.0f;
-    
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        
-        if(UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
-            
-        } else if(UIInterfaceOrientationIsLandscape(interfaceOrientation)){
-            
-        }
-    } else {
-        if (self.catalogTopView.gridSelected) {
-            
-        } else {
-            spacing = 3.0f;
-        }
-    }
-    
-    return spacing;
 }
 
 - (void)changeViewToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -920,8 +900,6 @@
     {
         self.numberOfCellsInScreen = [self getNumberOfCellsInScreenForInterfaceOrientation:interfaceOrientation];
         
-//        self.flowLayout.itemSize = [self getLayoutItemSizeForInterfaceOrientation:interfaceOrientation];
-        self.flowLayout.minimumInteritemSpacing = [self getLayoutMinimumSpacingForInterfaceOrientation:interfaceOrientation];
         [self.collectionView reloadData];
     }
     
