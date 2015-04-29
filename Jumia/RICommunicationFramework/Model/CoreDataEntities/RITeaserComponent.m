@@ -15,7 +15,7 @@
 @dynamic imageLandscapeUrl;
 @dynamic imagePortraitUrl;
 @dynamic name;
-@dynamic remainingTime;
+@dynamic endingDate;
 @dynamic subTitle;
 @dynamic targetType;
 @dynamic title;
@@ -51,8 +51,9 @@
             newTeaserComponent.name = [teaserComponentJSON objectForKey:@"name"];
         }
         
-        if ([teaserComponentJSON objectForKey:@"remaining_time"]) {
-            newTeaserComponent.remainingTime = [teaserComponentJSON objectForKey:@"remaining_time"];
+        if ([teaserComponentJSON objectForKey:@"unix_time"]) {
+            NSNumber* unixTime = [teaserComponentJSON objectForKey:@"unix_time"];
+            newTeaserComponent.endingDate = [NSDate dateWithTimeIntervalSince1970:[unixTime doubleValue]];
         }
         
         if ([teaserComponentJSON objectForKey:@"title"]) {

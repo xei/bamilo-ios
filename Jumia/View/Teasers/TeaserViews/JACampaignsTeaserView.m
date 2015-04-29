@@ -309,10 +309,10 @@
     
     RITeaserComponent* component = [self.teaserGrouping.teaserComponents firstObject];
     
-    if (ISEMPTY(component.remainingTime)) {
+    if (ISEMPTY(component.endingDate)) {
         self.clockLabel.text = @"00:00:00";
     } else {
-        NSInteger remainingSeconds = [component.remainingTime integerValue];
+        NSInteger remainingSeconds = (NSInteger)[component.endingDate timeIntervalSinceNow];
         remainingSeconds -= self.elapsedTimeInSeconds;
         
         NSInteger days = remainingSeconds / (24 * 3600);

@@ -252,6 +252,7 @@
         <relationship name="teaserGroups" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RITeaserGroup" inverseName="teaserCategory" inverseEntity="RITeaserGroup" syncable="YES"/>
     </entity>
     <entity name="RITeaserComponent" representedClassName="RITeaserComponent" syncable="YES">
+        <attribute name="endingDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="imageLandscapeUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="imagePortraitUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="maxPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -261,7 +262,6 @@
         <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="priceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="priceFormatted" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="remainingTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="targetType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
@@ -343,7 +343,7 @@
         <element name="RIStaticBlockIndex" positionX="-90" positionY="-126" width="128" height="90"/>
         <element name="RITeaser" positionX="-686" positionY="527" width="128" height="120"/>
         <element name="RITeaserCategory" positionX="-686" positionY="245" width="128" height="133"/>
-        <element name="RITeaserComponent" positionX="-659" positionY="-171" width="128" height="268"/>
+        <element name="RITeaserComponent" positionX="-686" positionY="-297" width="128" height="268"/>
         <element name="RITeaserGroup" positionX="-686" positionY="398" width="128" height="103"/>
         <element name="RITeaserGrouping" positionX="-873" positionY="-90" width="128" height="90"/>
         <element name="RITeaserImage" positionX="-486" positionY="558" width="128" height="118"/>
