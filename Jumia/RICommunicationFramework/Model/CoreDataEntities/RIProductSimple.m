@@ -44,8 +44,8 @@
             newProductSimple.priceFormatted = [RICountryConfiguration formatPrice:newProductSimple.price country:country];
         }
         
-        if ([meta objectForKey:@"price_euroConverted"]) {
-            newProductSimple.priceEuroConverted = [NSNumber numberWithFloat:[[meta objectForKey:@"price_euroConverted"] floatValue]];
+        if ([meta objectForKey:@"price_converted"]) {
+            newProductSimple.priceEuroConverted = [NSNumber numberWithFloat:[[meta objectForKey:@"price_converted"] floatValue]];
         }
         
         if ([meta objectForKey:@"special_price"]) {
@@ -53,8 +53,8 @@
             newProductSimple.specialPriceFormatted = [RICountryConfiguration formatPrice:newProductSimple.specialPrice country:country];
         }
         
-        if ([meta objectForKey:@"special_price_euroConverted"]) {
-            newProductSimple.specialPriceEuroConverted = [NSNumber numberWithFloat:[[meta objectForKey:@"special_price_euroConverted"] floatValue]];
+        if ([meta objectForKey:@"special_price_converted"]) {
+            newProductSimple.specialPriceEuroConverted = [NSNumber numberWithFloat:[[meta objectForKey:@"special_price_converted"] floatValue]];
         }
         
         if ([meta objectForKey:@"quantity"]) {
