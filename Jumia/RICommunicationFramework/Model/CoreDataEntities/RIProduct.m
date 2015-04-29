@@ -14,6 +14,7 @@
 #import "RICategory.h"
 #import "RISeller.h"
 #import "RIBanner.h"
+#import "RISpecification.h"
 
 @implementation RIBundle
 
@@ -100,6 +101,10 @@
 @dynamic offersTotal;
 @dynamic relatedProducts;
 @dynamic referredFromProduct;
+@dynamic bucketActive;
+@dynamic shortSummary;
+@dynamic summary;
+@dynamic specifications;
 
 @synthesize categoryIds;
 
@@ -414,6 +419,25 @@
         if ([dataDic objectForKey:@"brand"]) {
             newProduct.brand = [dataDic objectForKey:@"brand"];
         }
+        
+        if([dataDic objectForKey:@"bucket_active"]){
+           newProduct.bucketActive = [NSNumber numberWithBool:[[dataDic objectForKey:@"bucket_active"] boolValue]];
+        }
+        
+        if([dataDic objectForKey:@"summary"]){
+            NSDictionary *summary = [dataDic objectForKey:@"summary"];
+            if(VALID_NOTEMPTY(summary, NSDictionary)){
+                if([summary objectForKey:@"short_description"]){
+                    newProduct.shortSummary = [summary objectForKey:@"short_description"];
+                }
+                
+                if([summary objectForKey:@"description"]){
+                    newProduct.summary = [summary objectForKey:@"description"];
+                }
+            
+            }
+        }
+        
         if ([dataDic objectForKey:@"is_new"]) {
             newProduct.isNew = [NSNumber numberWithBool:[[dataDic objectForKey:@"is_new"] boolValue]];
         }
@@ -548,6 +572,18 @@
             }
         }
         
+        if([dataDic objectForKey:@"specifications"]){
+            NSArray* specificationsJSON = [dataDic objectForKey:@"specifications"];
+            for (NSDictionary *specifJSON in specificationsJSON){
+                if(VALID_NOTEMPTY(specifJSON, NSDictionary)){
+                    
+                    RISpecification *newSpecification = [RISpecification parseSpecification:specifJSON];
+                    [newProduct addSpecificationsObject:newSpecification];
+                
+                }
+            }
+        }
+        
         if ([dataDic objectForKey:@"variations"]) {
             NSDictionary* variationsJSON = [dataDic objectForKey:@"variations"];
             if (VALID_NOTEMPTY(variationsJSON, NSDictionary)) {
@@ -649,6 +685,8 @@
             }
         }
     }
+    
+    
     
     return newProduct;
 }
@@ -1037,6 +1075,9 @@
     }
     for (RIVariation* variation in product.variations) {
         [RIVariation saveVariation:variation];
+    }
+    for(RISpecification *specification in product.specifications){
+        [RISpecification saveSpecification:specification];
     }
 //    for (RIProduct* relatedProduct in product.relatedProducts) {
 //        [RIProduct saveProduct:relatedProduct];
