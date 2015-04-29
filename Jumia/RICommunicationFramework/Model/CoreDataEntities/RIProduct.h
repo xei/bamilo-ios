@@ -11,7 +11,7 @@
 #import "RIBanner.h"
 
 
-@class RIImage, RIProductSimple, RIVariation, RIBundle, RISeller;
+@class RIImage, RIProductSimple, RIVariation, RIBundle, RISeller, RISpecification;
 
 /*
  * IMPORTANT NOTICE
@@ -75,6 +75,11 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSString * offersMinPriceFormatted;
 @property (nonatomic, retain) NSSet *relatedProducts;
 @property (nonatomic, retain) RIProduct *referredFromProduct;
+@property (nonatomic, retain) NSNumber *bucketActive;
+@property (nonatomic, retain) NSString *shortSummary;
+@property (nonatomic, retain) NSString *summary;
+@property (nonatomic, retain) NSOrderedSet *specifications;
+
 
 //Not a coredata relationship
 @property (nonatomic, retain) NSOrderedSet *categoryIds;
@@ -282,6 +287,9 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 - (void)removeRelatedProductsObject:(RIProduct *)value;
 - (void)addRelatedProducts:(NSSet *)values;
 - (void)removeRelatedProducts:(NSSet *)values;
+- (void)addSpecificationsObject:(RISpecification *)value;
+- (void)removeSpecificationsObject:(RISpecification *)value;
+
 
 @end
 

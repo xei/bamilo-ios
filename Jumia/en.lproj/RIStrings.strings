@@ -75,6 +75,9 @@
 "string_rate_now" = "Rate Now";
 "related_items" = "Related Items";
 "product_features_title" = "Product Features";
+"description" = "Description";
+"key_features" = "Key Features";
+"product_desc_summary_title" = "Summary";
 "product_description_title" = "Product Description";
 "share_subject_ios" = "%@ Sharing";
 "share_checkout_this_product" = "Check out this product I found:";
@@ -208,7 +211,7 @@
 "string_format_off_label" = "%d%% OFF";
 "campaigns_label" = "Campaigns";
 
-"product_specifications" = "Specification";
+"product_specifications" = "Specifications";
 
 "go_shop_text" = "Shop Now";
 "promotion_tip_tap_text" = "Tap the box above to copy the code to the clipboard and keep it handy for checkout";
