@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "RITeaserGrouping.h"
+#import "JACampaignsTeaserView.h"
 
 @interface JATeaserPageView : UIView
 

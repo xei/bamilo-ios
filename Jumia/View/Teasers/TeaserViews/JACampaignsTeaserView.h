@@ -8,6 +8,8 @@
 
 #import "JATeaserView.h"
 
+#define kCampaignMainTeaserTimerEndedNotification @"NOTIFICATION_CAMPAIGN_MAIN_TEASER_TIMER_ENDED"
+
 @interface JACampaignsTeaserView : JATeaserView
 
 @property (nonatomic, assign)BOOL isLandscape;

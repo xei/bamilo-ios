@@ -402,7 +402,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="2zY-RW-R7t">
-                                <rect key="frame" x="6" y="44" width="756" height="916"/>
+                                <rect key="frame" x="0.0" y="44" width="768" height="916"/>
                                 <color key="backgroundColor" red="0.77863919010000004" green="0.77863919010000004" blue="0.77863919010000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="SfN-r7-2wQ">
                                     <size key="itemSize" width="50" height="50"/>
@@ -427,8 +427,8 @@
                         <constraints>
                             <constraint firstItem="2zY-RW-R7t" firstAttribute="top" secondItem="Kpg-FM-fBt" secondAttribute="bottom" constant="44" id="0Wt-3p-cwg"/>
                             <constraint firstItem="cBE-tR-q0p" firstAttribute="top" secondItem="2zY-RW-R7t" secondAttribute="bottom" id="FYN-5E-uHp"/>
-                            <constraint firstItem="2zY-RW-R7t" firstAttribute="leading" secondItem="X4L-oy-XJO" secondAttribute="leading" constant="6" id="aZV-dW-1qW"/>
-                            <constraint firstAttribute="trailing" secondItem="2zY-RW-R7t" secondAttribute="trailing" constant="6" id="yyq-X0-kzU"/>
+                            <constraint firstAttribute="trailing" secondItem="2zY-RW-R7t" secondAttribute="trailing" id="fiy-WU-6r3"/>
+                            <constraint firstItem="2zY-RW-R7t" firstAttribute="leading" secondItem="X4L-oy-XJO" secondAttribute="leading" id="sMX-yT-FVx"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>

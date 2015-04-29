@@ -16,7 +16,7 @@
 @property (nonatomic, retain) NSString * imageLandscapeUrl;
 @property (nonatomic, retain) NSString * imagePortraitUrl;
 @property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSString * remainingTime;
+@property (nonatomic, retain) NSDate * endingDate;
 @property (nonatomic, retain) NSString * subTitle;
 @property (nonatomic, retain) NSString * targetType;
 @property (nonatomic, retain) NSString * title;
