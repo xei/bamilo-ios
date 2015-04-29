@@ -99,7 +99,7 @@ JAActivityViewControllerDelegate
     self.navBarLayout.showBackButton = self.showBackButton;
     if (self.showBackButton && self.previousCategory.length > 0)
     {
-        self.navBarLayout.backButtonTitle = self.previousCategory;
+        [self.navBarLayout setShowBackButton:YES];
     }
     
     self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];

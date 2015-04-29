@@ -1064,7 +1064,6 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                             object:nil
                                                           userInfo:@{ @"url" : product.url,
-                                                                      @"previousCategory" : temp,
                                                                       @"fromCatalog" : @"YES",
                                                                       @"category" : self.category,
                                                                       @"show_back_button" : [NSNumber numberWithBool:YES]}];
@@ -1077,7 +1076,6 @@
                                                             object:nil
                                                           userInfo:@{ @"url" : product.url,
                                                                       @"fromCatalog" : @"YES",
-                                                                      @"previousCategory" : self.navBarLayout.title,
                                                                       @"show_back_button" : [NSNumber numberWithBool:YES]}];
         [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"Search_%@",product.name]];
     }

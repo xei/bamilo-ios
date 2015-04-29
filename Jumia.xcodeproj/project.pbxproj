@@ -192,6 +192,14 @@
 		6C60C86E1AB75F41008AD4AD /* RITrackingDebug_SHOP.COM.MM.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C60C86B1AB75D41008AD4AD /* RITrackingDebug_SHOP.COM.MM.plist */; };
 		6C6EBE281ABC6634006A3D46 /* RITracking_BAMILO.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C6EBE261ABC6600006A3D46 /* RITracking_BAMILO.plist */; };
 		6C6EBE2B1ABC66DB006A3D46 /* RITrackingDebug_BAMILO.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C6EBE291ABC66BE006A3D46 /* RITrackingDebug_BAMILO.plist */; };
+		6CA85FD21AE683D0001D1C94 /* RISpecification.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85FD11AE683D0001D1C94 /* RISpecification.m */; };
+		6CA85FD31AE683D0001D1C94 /* RISpecification.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85FD11AE683D0001D1C94 /* RISpecification.m */; };
+		6CA85FD41AE683D0001D1C94 /* RISpecification.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85FD11AE683D0001D1C94 /* RISpecification.m */; };
+		6CA85FD51AE683D0001D1C94 /* RISpecification.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85FD11AE683D0001D1C94 /* RISpecification.m */; };
+		6CA85FD81AE69195001D1C94 /* RISpecificationAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85FD71AE69195001D1C94 /* RISpecificationAttribute.m */; };
+		6CA85FD91AE69195001D1C94 /* RISpecificationAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85FD71AE69195001D1C94 /* RISpecificationAttribute.m */; };
+		6CA85FDA1AE69195001D1C94 /* RISpecificationAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85FD71AE69195001D1C94 /* RISpecificationAttribute.m */; };
+		6CA85FDB1AE69195001D1C94 /* RISpecificationAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85FD71AE69195001D1C94 /* RISpecificationAttribute.m */; };
 		6CF4AE7F1ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */; };
 		6CF4AE801ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */; };
 		6CF4AE811ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */; };
@@ -2576,8 +2584,13 @@
 		6C60C8591AB72325008AD4AD /* RITrackingDebug_DARAZ.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITrackingDebug_DARAZ.plist; sourceTree = "<group>"; };
 		6C60C8691AB75D0F008AD4AD /* RITracking_SHOP.COM.MM.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITracking_SHOP.COM.MM.plist; sourceTree = "<group>"; };
 		6C60C86B1AB75D41008AD4AD /* RITrackingDebug_SHOP.COM.MM.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITrackingDebug_SHOP.COM.MM.plist; sourceTree = "<group>"; };
+		6C6604C51AE55AB800B11B63 /* Model_1.7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.7.xcdatamodel; sourceTree = "<group>"; };
 		6C6EBE261ABC6600006A3D46 /* RITracking_BAMILO.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITracking_BAMILO.plist; sourceTree = "<group>"; };
 		6C6EBE291ABC66BE006A3D46 /* RITrackingDebug_BAMILO.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITrackingDebug_BAMILO.plist; sourceTree = "<group>"; };
+		6CA85FD01AE683D0001D1C94 /* RISpecification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RISpecification.h; sourceTree = "<group>"; };
+		6CA85FD11AE683D0001D1C94 /* RISpecification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RISpecification.m; sourceTree = "<group>"; };
+		6CA85FD61AE69195001D1C94 /* RISpecificationAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RISpecificationAttribute.h; sourceTree = "<group>"; };
+		6CA85FD71AE69195001D1C94 /* RISpecificationAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RISpecificationAttribute.m; sourceTree = "<group>"; };
 		6CC5C4B81A9634FE00E362F3 /* Model_1.5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.5.xcdatamodel; sourceTree = "<group>"; };
 		6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogBannerCell.xib; sourceTree = "<group>"; };
 		6CF4AE831ADEABBB0024EC34 /* JACatalogBannerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogBannerCell.h; sourceTree = "<group>"; };
@@ -4380,6 +4393,10 @@
 				B59DCA4119B4E92B00DE7960 /* RIField.m */,
 				B5B5FDA319D95B6D008B8059 /* RINewsletterCategory.h */,
 				B5B5FDA419D95B6D008B8059 /* RINewsletterCategory.m */,
+				6CA85FD01AE683D0001D1C94 /* RISpecification.h */,
+				6CA85FD11AE683D0001D1C94 /* RISpecification.m */,
+				6CA85FD61AE69195001D1C94 /* RISpecificationAttribute.h */,
+				6CA85FD71AE69195001D1C94 /* RISpecificationAttribute.m */,
 			);
 			path = CoreDataEntities;
 			sourceTree = "<group>";
@@ -7192,6 +7209,7 @@
 				4AFC7F91199BC0BE007D67F4 /* JASignInViewController.m in Sources */,
 				B5A302BE19811E9200F71726 /* RIConfiguration.m in Sources */,
 				4A1270F8198795AF004142F5 /* JASubCategoriesViewController.m in Sources */,
+				6CA85FD81AE69195001D1C94 /* RISpecificationAttribute.m in Sources */,
 				CE13787819A357B400CA0751 /* JACategoriesViewController.m in Sources */,
 				B58767FE19BB62B3001651D6 /* JAShippingCell.m in Sources */,
 				520A37CD1A48904B0046C8B1 /* JAMyOrdersViewController.m in Sources */,
@@ -7238,6 +7256,7 @@
 				CE9193BD19F503FB00F89840 /* JAFallbackView.m in Sources */,
 				CE283E591A6FA27A00F3E92D /* RISeller.m in Sources */,
 				CE445875198BD5D800CE7E8D /* JASmallTeaserView.m in Sources */,
+				6CA85FD21AE683D0001D1C94 /* RISpecification.m in Sources */,
 				4A7F7481198A4EDA00621C0D /* JACenterNavigationController.m in Sources */,
 				B59DCA5C19B7109300DE7960 /* JAAddNewAddressViewController.m in Sources */,
 				4A944FF8199290F200C02734 /* JARatingsViewController.m in Sources */,
@@ -7444,6 +7463,7 @@
 				CE9ADB6F1AB34C4600D56481 /* JASignInViewController.m in Sources */,
 				CE9ADB701AB34C4600D56481 /* RIConfiguration.m in Sources */,
 				CE9ADB711AB34C4600D56481 /* JASubCategoriesViewController.m in Sources */,
+				6CA85FD91AE69195001D1C94 /* RISpecificationAttribute.m in Sources */,
 				CE9ADB721AB34C4600D56481 /* JACategoriesViewController.m in Sources */,
 				CE9ADB741AB34C4600D56481 /* JAShippingCell.m in Sources */,
 				CE9ADB751AB34C4600D56481 /* JAMyOrdersViewController.m in Sources */,
@@ -7490,6 +7510,7 @@
 				CE9ADBA31AB34C4600D56481 /* JAFallbackView.m in Sources */,
 				CE9ADBA51AB34C4600D56481 /* RISeller.m in Sources */,
 				CE9ADBA61AB34C4600D56481 /* JASmallTeaserView.m in Sources */,
+				6CA85FD31AE683D0001D1C94 /* RISpecification.m in Sources */,
 				CE9ADBA71AB34C4600D56481 /* JACenterNavigationController.m in Sources */,
 				CE9ADBA81AB34C4600D56481 /* JAAddNewAddressViewController.m in Sources */,
 				CE9ADBA91AB34C4600D56481 /* JARatingsViewController.m in Sources */,
@@ -7688,6 +7709,7 @@
 				CE9ADD691AB6D6E900D56481 /* JASignInViewController.m in Sources */,
 				CE9ADD6A1AB6D6E900D56481 /* RIConfiguration.m in Sources */,
 				CE9ADD6B1AB6D6E900D56481 /* JASubCategoriesViewController.m in Sources */,
+				6CA85FDA1AE69195001D1C94 /* RISpecificationAttribute.m in Sources */,
 				CE9ADD6C1AB6D6E900D56481 /* JACategoriesViewController.m in Sources */,
 				CE9ADD6E1AB6D6E900D56481 /* JAShippingCell.m in Sources */,
 				CE9ADD6F1AB6D6E900D56481 /* JAMyOrdersViewController.m in Sources */,
@@ -7734,6 +7756,7 @@
 				CE9ADD9D1AB6D6E900D56481 /* JAFallbackView.m in Sources */,
 				CE9ADD9F1AB6D6E900D56481 /* RISeller.m in Sources */,
 				CE9ADDA01AB6D6E900D56481 /* JASmallTeaserView.m in Sources */,
+				6CA85FD41AE683D0001D1C94 /* RISpecification.m in Sources */,
 				CE9ADDA11AB6D6E900D56481 /* JACenterNavigationController.m in Sources */,
 				CE9ADDA21AB6D6E900D56481 /* JAAddNewAddressViewController.m in Sources */,
 				CE9ADDA31AB6D6E900D56481 /* JARatingsViewController.m in Sources */,
@@ -7932,6 +7955,7 @@
 				CE9ADF631AB6D78200D56481 /* JASignInViewController.m in Sources */,
 				CE9ADF641AB6D78200D56481 /* RIConfiguration.m in Sources */,
 				CE9ADF651AB6D78200D56481 /* JASubCategoriesViewController.m in Sources */,
+				6CA85FDB1AE69195001D1C94 /* RISpecificationAttribute.m in Sources */,
 				CE9ADF661AB6D78200D56481 /* JACategoriesViewController.m in Sources */,
 				CE9ADF681AB6D78200D56481 /* JAShippingCell.m in Sources */,
 				CE9ADF691AB6D78200D56481 /* JAMyOrdersViewController.m in Sources */,
@@ -7978,6 +8002,7 @@
 				CE9ADF971AB6D78200D56481 /* JAFallbackView.m in Sources */,
 				CE9ADF991AB6D78200D56481 /* RISeller.m in Sources */,
 				CE9ADF9A1AB6D78200D56481 /* JASmallTeaserView.m in Sources */,
+				6CA85FD51AE683D0001D1C94 /* RISpecification.m in Sources */,
 				CE9ADF9B1AB6D78200D56481 /* JACenterNavigationController.m in Sources */,
 				CE9ADF9C1AB6D78200D56481 /* JAAddNewAddressViewController.m in Sources */,
 				CE9ADF9D1AB6D78200D56481 /* JARatingsViewController.m in Sources */,
