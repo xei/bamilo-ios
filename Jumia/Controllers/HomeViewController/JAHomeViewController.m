@@ -60,9 +60,21 @@
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookHome]
                                               data:[trackingDictionary copy]];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(campaignTimerEnded)
+                                                 name:kCampaignMainTeaserTimerEndedNotification
+                                               object:nil];
+    
     self.isLoaded = NO;
     
     self.teaserPageView = [[JATeaserPageView alloc] init];
+}
+
+-(void)campaignTimerEnded
+{
+    if (self.isLoaded) {
+        [self.teaserPageView loadTeasersForFrame:self.view.bounds];
+    }
 }
 
 - (void)stopLoading

@@ -10,7 +10,6 @@
 
 #import "JAMainTeaserView.h"
 #import "JASmallTeaserView.h"
-#import "JACampaignsTeaserView.h"
 #import "JAShopTeaserView.h"
 #import "JABrandTeaserView.h"
 #import "JAShopsWeekTeaserView.h"

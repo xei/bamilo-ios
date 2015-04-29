@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D136" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C109" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="RIAddress" representedClassName="RIAddress" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
@@ -250,22 +250,8 @@
         <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="RITeaser" representedClassName="RITeaser" syncable="YES">
-        <attribute name="targetType" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <relationship name="teaserGroup" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RITeaserGroup" inverseName="teasers" inverseEntity="RITeaserGroup" syncable="YES"/>
-        <relationship name="teaserImages" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RITeaserImage" inverseName="teaser" inverseEntity="RITeaserImage" syncable="YES"/>
-        <relationship name="teaserProducts" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RITeaserProduct" inverseName="teaser" inverseEntity="RITeaserProduct" syncable="YES"/>
-        <relationship name="teaserTexts" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RITeaserText" inverseName="teaser" inverseEntity="RITeaserText" syncable="YES"/>
-    </entity>
-    <entity name="RITeaserCategory" representedClassName="RITeaserCategory" syncable="YES">
-        <attribute name="homePageDefault" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="homePageId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="homePageLayout" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="homePageTitle" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="md5" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="teaserGroups" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RITeaserGroup" inverseName="teaserCategory" inverseEntity="RITeaserGroup" syncable="YES"/>
-    </entity>
     <entity name="RITeaserComponent" representedClassName="RITeaserComponent" syncable="YES">
+        <attribute name="endingDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="imageLandscapeUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="imagePortraitUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="maxPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -275,52 +261,16 @@
         <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="priceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="priceFormatted" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="remainingTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="targetType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="teaserGrouping" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RITeaserGrouping" inverseName="teaserComponents" inverseEntity="RITeaserGrouping" syncable="YES"/>
     </entity>
-    <entity name="RITeaserGroup" representedClassName="RITeaserGroup" syncable="YES">
-        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <relationship name="teaserCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RITeaserCategory" inverseName="teaserGroups" inverseEntity="RITeaserCategory" syncable="YES"/>
-        <relationship name="teasers" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RITeaser" inverseName="teaserGroup" inverseEntity="RITeaser" syncable="YES"/>
-    </entity>
     <entity name="RITeaserGrouping" representedClassName="RITeaserGrouping" syncable="YES">
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="teaserComponents" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="RITeaserComponent" inverseName="teaserGrouping" inverseEntity="RITeaserComponent" syncable="YES"/>
-    </entity>
-    <entity name="RITeaserImage" representedClassName="RITeaserImage" syncable="YES">
-        <attribute name="deviceType" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="teaserDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="teaser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RITeaser" inverseName="teaserImages" inverseEntity="RITeaser" syncable="YES"/>
-    </entity>
-    <entity name="RITeaserProduct" representedClassName="RITeaserProduct" syncable="YES">
-        <attribute name="brand" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="maxPrice" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
-        <attribute name="maxPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="maxSavingPercentage" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="maxSpecialPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="maxSpecialPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="priceFormatted" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="specialPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="specialPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="teaser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RITeaser" inverseName="teaserProducts" inverseEntity="RITeaser" syncable="YES"/>
-    </entity>
-    <entity name="RITeaserText" representedClassName="RITeaserText" syncable="YES">
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="teaser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RITeaser" inverseName="teaserTexts" inverseEntity="RITeaser" syncable="YES"/>
     </entity>
     <entity name="RIURLCache" representedClassName="RIURLCache" syncable="YES">
         <attribute name="duration" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -354,18 +304,12 @@
         <element name="RISearchSuggestion" positionX="-648" positionY="27" width="128" height="105"/>
         <element name="RISection" positionX="-261" positionY="428" width="128" height="103"/>
         <element name="RISeller" positionX="-225" positionY="759" width="128" height="165"/>
-        <element name="RIStaticBlockIndex" positionX="-90" positionY="-126" width="128" height="90"/>
-        <element name="RITeaser" positionX="-686" positionY="527" width="128" height="120"/>
-        <element name="RITeaserCategory" positionX="-686" positionY="245" width="128" height="133"/>
-        <element name="RITeaserComponent" positionX="-659" positionY="-171" width="128" height="268"/>
-        <element name="RITeaserGroup" positionX="-686" positionY="398" width="128" height="103"/>
-        <element name="RITeaserGrouping" positionX="-873" positionY="-90" width="128" height="90"/>
-        <element name="RITeaserImage" positionX="-486" positionY="558" width="128" height="118"/>
-        <element name="RITeaserProduct" positionX="-504" positionY="693" width="128" height="270"/>
-        <element name="RITeaserText" positionX="-684" positionY="677" width="128" height="88"/>
-        <element name="RIURLCache" positionX="-504" positionY="126" width="128" height="90"/>
-        <element name="RIVariation" positionX="180" positionY="360" width="128" height="103"/>
         <element name="RISpecification" positionX="-675" positionY="-63" width="128" height="90"/>
         <element name="RISpecificationAttribute" positionX="-666" positionY="-54" width="128" height="90"/>
+        <element name="RIStaticBlockIndex" positionX="-90" positionY="-126" width="128" height="90"/>
+        <element name="RITeaserComponent" positionX="-686" positionY="-297" width="128" height="268"/>
+        <element name="RITeaserGrouping" positionX="-873" positionY="-90" width="128" height="90"/>
+        <element name="RIURLCache" positionX="-504" positionY="126" width="128" height="90"/>
+        <element name="RIVariation" positionX="180" positionY="360" width="128" height="103"/>
     </elements>
 </model>
