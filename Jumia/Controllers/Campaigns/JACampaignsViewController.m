@@ -51,7 +51,8 @@
     self.campaignIndex = -1;
     
     self.navBarLayout.title = STRING_CAMPAIGNS;
-    //self.navBarLayout.backButtonTitle = STRING_HOME;
+    [self.navBarLayout setShowBackButton:YES];
+    
     
     self.pickerNamesAlreadySet = NO;
     
