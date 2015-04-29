@@ -13,8 +13,9 @@
 @interface JACampaignsTeaserView()
 
 @property (nonatomic, strong)UILabel* clockLabel;
-@property (nonatomic, assign)NSInteger elapsedTimeInSeconds;
 @property (nonatomic, strong)NSTimer* timer;
+
+@property (nonatomic, strong)NSMutableArray* teaserComponentsToUse;
 
 @end
 
@@ -24,7 +25,19 @@
 {
     [super load];
     
-    if (VALID_NOTEMPTY(self.teaserGrouping.teaserComponents, NSOrderedSet)) {
+    self.teaserComponentsToUse = [NSMutableArray new];
+    for (RITeaserComponent* component in self.teaserGrouping.teaserComponents) {
+        if (VALID_NOTEMPTY(component.endingDate, NSDate)) {
+            NSInteger remainingSeconds = (NSInteger)[component.endingDate timeIntervalSinceNow];
+            if (0 < remainingSeconds) {
+                [self.teaserComponentsToUse addObject:component];
+            }
+        } else {
+            [self.teaserComponentsToUse addObject:component];
+        }
+    }
+    
+    if (VALID_NOTEMPTY(self.teaserComponentsToUse, NSMutableArray)) {
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             [self loadForIPad];
         } else {
@@ -39,7 +52,7 @@
     CGFloat mainAreaHeight = 103.0f; //value by design
     CGFloat moreButtonHeight = 24.0f;
     CGFloat totalHeight = mainAreaHeight;
-    if (1 < self.teaserGrouping.teaserComponents.count) {
+    if (1 < self.teaserComponentsToUse.count) {
         //add the height of the button
         totalHeight += moreButtonHeight;
     }
@@ -57,9 +70,7 @@
     [mainClickableView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:mainClickableView];
     
-    RITeaserComponent* mainCampaign = [self.teaserGrouping.teaserComponents firstObject];
-    
-    CGFloat labelTopMargin = 14.0f;
+    RITeaserComponent* mainCampaign = [self.teaserComponentsToUse firstObject];
     
     CGFloat halfWidth = mainClickableView.bounds.size.width/2;
     UILabel* titleLabel = [UILabel new];
@@ -68,26 +79,34 @@
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.text = mainCampaign.title;
     [titleLabel sizeToFit];
+
+    CGFloat labelTopMargin = 14.0f;
+    
+    [self.clockLabel removeFromSuperview];
+    self.clockLabel = [UILabel new];
+    if (VALID_NOTEMPTY(mainCampaign.endingDate, NSDate)) {
+        self.clockLabel.font = [UIFont fontWithName:kFontMediumName size:25.0f];
+    } else {
+        self.clockLabel.font = [UIFont fontWithName:kFontMediumName size:18.0f];
+        labelTopMargin = 16.0f;
+    }
+    
     [titleLabel setFrame:CGRectMake(margin,
                                     labelTopMargin,
                                     halfWidth - margin*2,
                                     titleLabel.frame.size.height)];
     [mainClickableView addSubview:titleLabel];
     
-    [self.clockLabel removeFromSuperview];
-    self.clockLabel = [UILabel new];
-    self.clockLabel.font = [UIFont fontWithName:kFontMediumName size:25.0f];
     self.clockLabel.textColor = UIColorFromRGB(0xcc0000);
     self.clockLabel.textAlignment = NSTextAlignmentCenter;
-    self.clockLabel.text = @"00:00:00";
+    self.clockLabel.text = @" ";
     [self.clockLabel sizeToFit];
     [self.clockLabel setFrame:CGRectMake(margin,
                                          CGRectGetMaxY(titleLabel.frame) + margin,
                                          halfWidth - margin*2,
                                          self.clockLabel.frame.size.height)];
     [mainClickableView addSubview:self.clockLabel];
-    
-    self.elapsedTimeInSeconds = 0;
+
     [self updateTimeLabelText];
     if (ISEMPTY(self.timer)) {
         self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0
@@ -119,7 +138,7 @@
     [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
     [mainClickableView addSubview:imageView];
     
-    if (1 < self.teaserGrouping.teaserComponents.count) {
+    if (1 < self.teaserComponentsToUse.count) {
         
         JAClickableView* moreView = [[JAClickableView alloc] initWithFrame:CGRectMake(self.bounds.origin.x + margin,
                                                                                       mainAreaHeight,
@@ -161,7 +180,7 @@
 {
     CGFloat margin = 6.0f; //value by design
     CGFloat moreOffersComponentWidth = 125.0f; //value by design
-    if (1 == self.teaserGrouping.teaserComponents.count) {
+    if (1 == self.teaserComponentsToUse.count) {
         moreOffersComponentWidth = 0.0f;
     }
     CGFloat mainAreaHeight = 132.0f; //value by design
@@ -186,7 +205,7 @@
     [mainClickableView addSubview:clockView];
     
     
-    RITeaserComponent* mainCampaign = [self.teaserGrouping.teaserComponents firstObject];
+    RITeaserComponent* mainCampaign = [self.teaserComponentsToUse firstObject];
     
     CGFloat labelTopMargin = 14.0f;
     
@@ -200,14 +219,17 @@
     
     [self.clockLabel removeFromSuperview];
     self.clockLabel = [UILabel new];
-    self.clockLabel.font = [UIFont fontWithName:kFontMediumName size:25.0f];
+    if (VALID_NOTEMPTY(mainCampaign.endingDate, NSDate)) {
+        self.clockLabel.font = [UIFont fontWithName:kFontMediumName size:25.0f];
+    } else {
+        self.clockLabel.font = [UIFont fontWithName:kFontMediumName size:18.0f];
+    }
     self.clockLabel.textColor = UIColorFromRGB(0xcc0000);
     self.clockLabel.textAlignment = NSTextAlignmentCenter;
-    self.clockLabel.text = @"00:00:00";
+    self.clockLabel.text = @" ";
     [self.clockLabel sizeToFit];
     [clockView addSubview:self.clockLabel];
-    
-    self.elapsedTimeInSeconds = 0;
+
     [self updateTimeLabelText];
     if (ISEMPTY(self.timer)) {
         self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0
@@ -264,7 +286,7 @@
                                    imageViewHeight)];
     
     
-    if (1 < self.teaserGrouping.teaserComponents.count) {
+    if (1 < self.teaserComponentsToUse.count) {
         
         JAClickableView* moreView = [[JAClickableView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(mainClickableView.frame),
                                                                                       self.bounds.origin.y,
@@ -305,18 +327,21 @@
 
 - (void)updateTimeLabelText
 {
-    self.elapsedTimeInSeconds++;
-    
-    RITeaserComponent* component = [self.teaserGrouping.teaserComponents firstObject];
+    RITeaserComponent* component = [self.teaserComponentsToUse firstObject];
     
     if (ISEMPTY(component.endingDate)) {
-        self.clockLabel.text = @"00:00:00";
+        self.clockLabel.text = @" ";
+        [self.timer invalidate];
     } else {
         NSInteger remainingSeconds = (NSInteger)[component.endingDate timeIntervalSinceNow];
-        remainingSeconds -= self.elapsedTimeInSeconds;
         
-        NSInteger days = remainingSeconds / (24 * 3600);
-        remainingSeconds = remainingSeconds % (24 * 3600); //keep the remainder
+        if (0 >= remainingSeconds) {
+            [self.timer invalidate];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kCampaignMainTeaserTimerEndedNotification object:nil];
+        }
+        
+//        NSInteger days = remainingSeconds / (24 * 3600);
+//        remainingSeconds = remainingSeconds % (24 * 3600); //keep the remainder
         NSInteger hours = remainingSeconds / 3600;
         remainingSeconds = remainingSeconds % 3600; //keep the remainder
         NSInteger minutes = remainingSeconds / 60;
@@ -324,12 +349,11 @@
         
         NSString* timeString = [NSString stringWithFormat:@"%02ld:%02ld:%02ld",(long)hours,(long)minutes,(long)remainingSeconds];
         
-        if (days > 0) {
-            timeString = [NSString stringWithFormat:@"%02ld:%@",(long)days,timeString];
-        }
+//        if (days > 0) {
+//            timeString = [NSString stringWithFormat:@"%02ld:%@",(long)days,timeString];
+//        }
         
         self.clockLabel.text = timeString;
-        [self.clockLabel sizeToFit];
     }
 }
 
