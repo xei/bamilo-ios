@@ -84,10 +84,17 @@
         NSLog(@"Connection failed with error: %@", error);
         self.failureBlock(RIApiResponseTimeOut, nil, error);
         [self clearRequestData];
-    }    else if(error.code == 503)
+    }
+    else if(error.code == 503)
     {
         NSLog(@"Connection failed with error: %@", error);
         self.failureBlock(RIApiResponseMaintenancePage, nil, error);
+        [self clearRequestData];
+    }
+    else if(error.code == 429)
+    {
+        NSLog(@"Connection failed with error: %@", error);
+        self.failureBlock(RIApiResponseKickoutView, nil, error);
         [self clearRequestData];
     }
     else

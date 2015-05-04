@@ -194,10 +194,7 @@ UICollectionViewDelegateFlowLayout>
 
 - (void)getAddressList
 {
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
-    {
-        [self showLoading];
-    }
+    [self showLoading];
     
     [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
         

@@ -148,7 +148,7 @@ UITextFieldDelegate>
 
 -(void)continueLoading
 {
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
     {
         [self showLoading];
     }
@@ -173,6 +173,10 @@ UITextFieldDelegate>
          if(RIApiResponseMaintenancePage == apiResponse)
          {
              [self showMaintenancePage:@selector(continueLoading) objects:nil];
+         }
+         else if(RIApiResponseKickoutView == apiResponse)
+         {
+             [self showKickoutView:@selector(continueLoading) objects:nil];
          }
          else
          {

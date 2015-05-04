@@ -151,7 +151,7 @@ JADynamicFormDelegate
 {
     self.numberOfRequests = 2;
     
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
     {
         [self showLoading];
     }
@@ -208,6 +208,10 @@ JADynamicFormDelegate
     else if(RIApiResponseMaintenancePage == self.apiResponse)
     {
         [self showMaintenancePage:@selector(makeRequests) objects:nil];
+    }
+    else if(RIApiResponseKickoutView == self.apiResponse)
+    {
+        [self showKickoutView:@selector(makeRequests) objects:nil];
     }
     else
     {

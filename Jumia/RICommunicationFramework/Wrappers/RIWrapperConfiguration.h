@@ -49,7 +49,8 @@ typedef NS_ENUM(NSInteger, RIApiResponse) {
     RIApiResponseUnknownError           = 4,
     RIApiResponseAPIError               = 5,
     RIApiResponseNoInternetConnection   = 6,
-    RIApiResponseMaintenancePage        = 7
+    RIApiResponseMaintenancePage        = 7,
+    RIApiResponseKickoutView            = 8
 };
 
 #ifndef UIColorFromRGB

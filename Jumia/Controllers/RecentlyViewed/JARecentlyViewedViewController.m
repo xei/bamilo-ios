@@ -131,6 +131,10 @@
                 if (RIApiResponseMaintenancePage == apiResponse) {
                     [self showMaintenancePage:@selector(viewDidLoad) objects:nil];
                 }
+                else if(RIApiResponseKickoutView == apiResponse)
+                {
+                    [self showKickoutView:@selector(viewDidLoad) objects:nil];
+                }
                 
             }];
         } else {

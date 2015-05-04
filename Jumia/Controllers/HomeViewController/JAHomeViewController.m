@@ -179,7 +179,6 @@
         
         self.teaserGroupings = teaserGroupings;
         
-        //$$$ CALL THIS THE CORRECT WAY
         self.teaserPageView.teaserGroupings = teaserGroupings;
         [self.teaserPageView loadTeasersForFrame:self.view.bounds];
         [self.view addSubview:self.teaserPageView];
@@ -212,6 +211,10 @@
         if(RIApiResponseMaintenancePage == apiResponse)
         {
             [self showMaintenancePage:@selector(requestTeasers) objects:nil];
+        }
+        else if(RIApiResponseKickoutView == apiResponse)
+        {
+            [self showKickoutView:@selector(requestTeasers) objects:nil];
         }
         else
         {

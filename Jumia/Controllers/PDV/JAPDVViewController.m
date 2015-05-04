@@ -330,7 +330,7 @@ JAActivityViewControllerDelegate
 
 - (void)loadCompleteProduct
 {
-    if(self.apiResponse == RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    if(self.apiResponse == RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
     {
         [self showLoading];
     }
@@ -356,6 +356,10 @@ JAActivityViewControllerDelegate
             if(RIApiResponseMaintenancePage == apiResponse)
             {
                 [self showMaintenancePage:@selector(loadCompleteProduct) objects:nil];
+            }
+            else if(RIApiResponseKickoutView == apiResponse)
+            {
+                [self showKickoutView:@selector(loadCompleteProduct) objects:nil];
             }
             else
             {
@@ -388,6 +392,10 @@ JAActivityViewControllerDelegate
             if(RIApiResponseMaintenancePage == apiResponse)
             {
                 [self showMaintenancePage:@selector(loadCompleteProduct) objects:nil];
+            }
+            else if(RIApiResponseKickoutView == apiResponse)
+            {
+                [self showKickoutView:@selector(loadCompleteProduct) objects:nil];
             }
             else
             {

@@ -126,7 +126,7 @@ JADatePickerDelegate
     [self.contentView addSubview:self.loginButton];
     self.registerViewCurrentY = CGRectGetMaxY(self.loginButton.frame) + 3.0f;
     
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
     {
         [self showLoading];
     }
@@ -199,6 +199,10 @@ JADatePickerDelegate
            if(RIApiResponseMaintenancePage == apiResponse)
            {
                [self showMaintenancePage:@selector(getRegisterForm) objects:nil];
+           }
+           else if(RIApiResponseKickoutView == apiResponse)
+           {
+               [self showKickoutView:@selector(getRegisterForm) objects:nil];
            }
            else
            {

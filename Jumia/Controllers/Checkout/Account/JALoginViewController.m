@@ -493,6 +493,10 @@ FBLoginViewDelegate
         {
             [self showMaintenancePage:@selector(getForms) objects:nil];
         }
+        else if(RIApiResponseKickoutView == self.apiResponse)
+        {
+            [self showKickoutView:@selector(getForms) objects:nil];
+        }
         else
         {
             BOOL hasNoConnection = NO;

@@ -130,7 +130,7 @@ FBLoginViewDelegate
     [self.signUpButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
     [self.loginView addSubview:self.signUpButton];
     
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
     {
         [self showLoading];
     }
@@ -190,6 +190,10 @@ FBLoginViewDelegate
          if(RIApiResponseMaintenancePage == apiResponse)
          {
              [self showMaintenancePage:@selector(getLoginForm) objects:nil];
+         }
+         else if(RIApiResponseKickoutView == apiResponse)
+         {
+             [self showKickoutView:@selector(getLoginForm) objects:nil];
          }
          else
          {

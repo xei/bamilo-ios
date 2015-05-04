@@ -70,7 +70,7 @@ JADynamicFormDelegate
 
 - (void)getForm
 {
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse==RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
     {
         [self showLoading];
     }
@@ -103,6 +103,10 @@ JADynamicFormDelegate
            if(RIApiResponseMaintenancePage == apiResponse)
            {
                [self showMaintenancePage:@selector(getForm) objects:nil];
+           }
+           else if(RIApiResponseKickoutView == apiResponse)
+           {
+               [self showKickoutView:@selector(getForm) objects:nil];
            }
            else
            {
