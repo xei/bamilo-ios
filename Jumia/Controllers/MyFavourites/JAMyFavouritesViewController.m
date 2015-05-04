@@ -241,6 +241,10 @@
         {
             [self showMaintenancePage:@selector(getFavorites) objects:nil];
         }
+        else if(RIApiResponseKickoutView == apiResponse)
+        {
+            [self showKickoutView:@selector(getFavorites) objects:nil];
+        }
         else
         {
             BOOL noConnection = NO;

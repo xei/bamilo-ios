@@ -213,7 +213,7 @@ JAPickerScrollViewDelegate
 
 - (void) loadOrders
 {
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
     {
         [self showLoading];
     }
@@ -280,6 +280,10 @@ JAPickerScrollViewDelegate
                if(RIApiResponseMaintenancePage == apiResponse)
                {
                    [self showMaintenancePage:@selector(loadOrders) objects:nil];
+               }
+               else if(RIApiResponseKickoutView == apiResponse)
+               {
+                   [self showKickoutView:@selector(loadOrders) objects:nil];
                }
                else
                {
@@ -447,7 +451,7 @@ JAPickerScrollViewDelegate
 
 - (void)loadOrderDetails
 {
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
     {
         [self showLoading];
     }
@@ -485,6 +489,10 @@ JAPickerScrollViewDelegate
                           if(RIApiResponseMaintenancePage == apiResponse)
                           {
                               [self showMaintenancePage:@selector(loadOrderDetails) objects:nil];
+                          }
+                          else if(RIApiResponseKickoutView == apiResponse)
+                          {
+                              [self showKickoutView:@selector(loadOrderDetails) objects:nil];
                           }
                           else if (RIApiResponseNoInternetConnection == apiResponse)
                           {

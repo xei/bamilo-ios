@@ -300,6 +300,10 @@
     {
         [self showMaintenancePage:@selector(loadCampaigns) objects:nil];
     }
+    else if(RIApiResponseKickoutView == apiResponse)
+    {
+        [self showKickoutView:@selector(loadCampaigns) objects:nil];
+    }
     else
     {
         if (RIApiResponseNoInternetConnection == apiResponse)

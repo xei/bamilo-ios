@@ -308,7 +308,7 @@
 
 - (void)getCategories
 {
-    if(RIApiResponseSuccess == self.apiResponse || RIApiResponseMaintenancePage == self.apiResponse)
+    if(RIApiResponseSuccess == self.apiResponse || RIApiResponseMaintenancePage == self.apiResponse || RIApiResponseKickoutView == self.apiResponse)
     {
         [self showLoading];
     }
@@ -361,6 +361,10 @@
          if(RIApiResponseMaintenancePage == apiResponse)
          {
              [self showMaintenancePage:@selector(getCategories) objects:nil];
+         }
+         else if(RIApiResponseKickoutView == apiResponse)
+         {
+             [self showKickoutView:@selector(getCategories) objects:nil];
          }
          else
          {
@@ -446,7 +450,7 @@
         if (VALID_NOTEMPTY(self.searchString, NSString))
         {
             // In case of this is a search
-            if(RIApiResponseSuccess == self.apiResponse || RIApiResponseMaintenancePage == self.apiResponse || RIApiResponseAPIError == self.apiResponse)
+            if(RIApiResponseSuccess == self.apiResponse || RIApiResponseMaintenancePage == self.apiResponse || RIApiResponseKickoutView == self.apiResponse || RIApiResponseAPIError == self.apiResponse)
             {
                 [self showLoading];
             }
@@ -578,6 +582,10 @@
                                                                                   {
                                                                                       [self showMaintenancePage:@selector(loadMoreProducts) objects:nil];
                                                                                   }
+                                                                                  else if(RIApiResponseKickoutView == apiResponse)
+                                                                                  {
+                                                                                      [self showKickoutView:@selector(loadMoreProducts) objects:nil];
+                                                                                  }
                                                                                   else
                                                                                   {
                                                                                       if (RIApiResponseNoInternetConnection == apiResponse)
@@ -604,7 +612,7 @@
         {
             if (NO == self.loadedEverything)
             {
-                if(RIApiResponseSuccess == self.apiResponse || RIApiResponseMaintenancePage == self.apiResponse || RIApiResponseAPIError == self.apiResponse)
+                if(RIApiResponseSuccess == self.apiResponse || RIApiResponseMaintenancePage == self.apiResponse || RIApiResponseKickoutView == self.apiResponse || RIApiResponseAPIError == self.apiResponse)
                 {
                     [self showLoading];
                 }
@@ -797,6 +805,10 @@
                                                                               if(RIApiResponseMaintenancePage == apiResponse)
                                                                               {
                                                                                   [self showMaintenancePage:@selector(loadMoreProducts) objects:nil];
+                                                                              }
+                                                                              else if(RIApiResponseKickoutView == apiResponse)
+                                                                              {
+                                                                                  [self showKickoutView:@selector(loadMoreProducts) objects:nil];
                                                                               }
                                                                               else
                                                                               {

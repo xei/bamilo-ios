@@ -354,20 +354,25 @@
 #pragma mark Home Screen
 - (void)showHomeScreen:(NSNotification*)notification
 {
-    if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification object], NSDictionary))
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JAHomeViewController class]])
     {
-        UIViewController *topViewController = [self topViewController];
-        if (![topViewController isKindOfClass:[JAHomeViewController class]])
+        if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification object], NSDictionary))
         {
-            JAHomeViewController *home = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"homeViewController"];
-            
-            [self setViewControllers:@[home]];
+            [self showRootViewController];
+        } else {
+            [self popToRootViewControllerAnimated:NO];
         }
+        
+        JAHomeViewController *home = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"homeViewController"];
+        [self pushViewController:home animated:NO];
     }
-    else
-    {
-        [self popToRootViewControllerAnimated:NO];
-    }
+}
+
+- (void)showRootViewController
+{
+    JABaseViewController* rootViewController = [[JABaseViewController alloc] init];
+    [self setViewControllers:@[rootViewController]];
 }
 
 - (void)showChooseCountry:(NSNotification*)notification

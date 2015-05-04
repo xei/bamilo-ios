@@ -565,6 +565,11 @@
 		CE06FCB71A88C3A5002FCD25 /* JACatalogTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE06FCB61A88C3A5002FCD25 /* JACatalogTopView.m */; };
 		CE06FCBB1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE06FCBA1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib */; };
 		CE06FCBC1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE06FCBA1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib */; };
+		CE0F130D1AF277F700F99356 /* JAKickoutView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0F130C1AF277F700F99356 /* JAKickoutView.m */; };
+		CE0F130E1AF277F700F99356 /* JAKickoutView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0F130C1AF277F700F99356 /* JAKickoutView.m */; };
+		CE0F130F1AF277F700F99356 /* JAKickoutView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0F130C1AF277F700F99356 /* JAKickoutView.m */; };
+		CE0F13101AF277F700F99356 /* JAKickoutView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0F130C1AF277F700F99356 /* JAKickoutView.m */; };
+		CE0F13111AF277F700F99356 /* JAKickoutView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0F130C1AF277F700F99356 /* JAKickoutView.m */; };
 		CE13787019A2304500CA0751 /* JACategoryFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13786F19A2304500CA0751 /* JACategoryFilterViewController.m */; };
 		CE13787819A357B400CA0751 /* JACategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE13787719A357B400CA0751 /* JACategoriesViewController.m */; };
 		CE13789519A4DC4E00CA0751 /* JARecentlyViewedListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE13789419A4DC4E00CA0751 /* JARecentlyViewedListCell.xib */; };
@@ -2957,6 +2962,8 @@
 		CE06FCB51A88C3A5002FCD25 /* JACatalogTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACatalogTopView.h; path = Catalog/JACatalogTopView.h; sourceTree = "<group>"; };
 		CE06FCB61A88C3A5002FCD25 /* JACatalogTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACatalogTopView.m; path = Catalog/JACatalogTopView.m; sourceTree = "<group>"; };
 		CE06FCBA1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JACatalogTopView_iphone.xib; path = Catalog/JACatalogTopView_iphone.xib; sourceTree = "<group>"; };
+		CE0F130B1AF277F700F99356 /* JAKickoutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAKickoutView.h; path = KickoutView/JAKickoutView.h; sourceTree = "<group>"; };
+		CE0F130C1AF277F700F99356 /* JAKickoutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAKickoutView.m; path = KickoutView/JAKickoutView.m; sourceTree = "<group>"; };
 		CE13786E19A2304500CA0751 /* JACategoryFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACategoryFilterViewController.h; sourceTree = "<group>"; };
 		CE13786F19A2304500CA0751 /* JACategoryFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACategoryFilterViewController.m; sourceTree = "<group>"; };
 		CE13787619A357B400CA0751 /* JACategoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACategoriesViewController.h; sourceTree = "<group>"; };
@@ -3818,6 +3825,7 @@
 		8C38E17F19CF164A0007F6F9 /* ErrorViews */ = {
 			isa = PBXGroup;
 			children = (
+				CE0F130A1AF277AC00F99356 /* KickoutPage */,
 				520A37BF1A4444110046C8B1 /* FilteredNoResultsView */,
 				CE9193BA19F503FB00F89840 /* FallbackView */,
 				B524311C19EC1151001E532C /* MaintenancePage */,
@@ -4870,6 +4878,15 @@
 				CEBEEE771A8CF205001998E5 /* JASortingView.m */,
 			);
 			name = Catalog;
+			sourceTree = "<group>";
+		};
+		CE0F130A1AF277AC00F99356 /* KickoutPage */ = {
+			isa = PBXGroup;
+			children = (
+				CE0F130B1AF277F700F99356 /* JAKickoutView.h */,
+				CE0F130C1AF277F700F99356 /* JAKickoutView.m */,
+			);
+			name = KickoutPage;
 			sourceTree = "<group>";
 		};
 		CE13787519A357B400CA0751 /* Categories */ = {
@@ -7027,6 +7044,7 @@
 				7d1d33afb7c6d4f0efa0644b /* JAExternalPaymentsViewController.m in Sources */,
 				52E8CC1E1A40947000D33FD9 /* JASizeGuideWizardView.m in Sources */,
 				334b2d58a1b29954afa8a3b3 /* JAPDVVariations.m in Sources */,
+				CE0F130E1AF277F700F99356 /* JAKickoutView.m in Sources */,
 				CE59BEFE1AE801DA0057F4E2 /* JABrandTeaserView.m in Sources */,
 				B5240E561A496E69006264E9 /* JAMyOrderDetailCell.m in Sources */,
 				0422832b3e819cb8751b64ec /* JARatingsView.m in Sources */,
@@ -7249,6 +7267,7 @@
 				4AE730BE198F8ADF000CA1DD /* JAPDVRelatedItem.m in Sources */,
 				B5C13EB01A402A9E00484398 /* ADJAttributionHandler.m in Sources */,
 				B50B03A3198A5441002046DF /* JAPaymentViewController.m in Sources */,
+				CE0F130D1AF277F700F99356 /* JAKickoutView.m in Sources */,
 				B5C2B0681A0911AB00B4872D /* JAPicker.m in Sources */,
 				B5C13EA41A402A9E00484398 /* ADJActivityPackage.m in Sources */,
 				B59DCA6119B710B100DE7960 /* RIRegion.m in Sources */,
@@ -7503,6 +7522,7 @@
 				CE9ADB9D1AB34C4600D56481 /* JAPDVRelatedItem.m in Sources */,
 				CE9ADB9E1AB34C4600D56481 /* ADJAttributionHandler.m in Sources */,
 				CE9ADB9F1AB34C4600D56481 /* JAPaymentViewController.m in Sources */,
+				CE0F130F1AF277F700F99356 /* JAKickoutView.m in Sources */,
 				CE9ADBA01AB34C4600D56481 /* JAPicker.m in Sources */,
 				CE9ADBA11AB34C4600D56481 /* ADJActivityPackage.m in Sources */,
 				CE9ADBA21AB34C4600D56481 /* RIRegion.m in Sources */,
@@ -7749,6 +7769,7 @@
 				CE9ADD971AB6D6E900D56481 /* JAPDVRelatedItem.m in Sources */,
 				CE9ADD981AB6D6E900D56481 /* ADJAttributionHandler.m in Sources */,
 				CE9ADD991AB6D6E900D56481 /* JAPaymentViewController.m in Sources */,
+				CE0F13101AF277F700F99356 /* JAKickoutView.m in Sources */,
 				CE9ADD9A1AB6D6E900D56481 /* JAPicker.m in Sources */,
 				CE9ADD9B1AB6D6E900D56481 /* ADJActivityPackage.m in Sources */,
 				CE9ADD9C1AB6D6E900D56481 /* RIRegion.m in Sources */,
@@ -7995,6 +8016,7 @@
 				CE9ADF911AB6D78200D56481 /* JAPDVRelatedItem.m in Sources */,
 				CE9ADF921AB6D78200D56481 /* ADJAttributionHandler.m in Sources */,
 				CE9ADF931AB6D78200D56481 /* JAPaymentViewController.m in Sources */,
+				CE0F13111AF277F700F99356 /* JAKickoutView.m in Sources */,
 				CE9ADF941AB6D78200D56481 /* JAPicker.m in Sources */,
 				CE9ADF951AB6D78200D56481 /* ADJActivityPackage.m in Sources */,
 				CE9ADF961AB6D78200D56481 /* RIRegion.m in Sources */,

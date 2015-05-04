@@ -153,7 +153,7 @@
 {
     self.requestDone = NO;
     
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    if(self.apiResponse==RIApiResponseKickoutView || self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
     {
         [self showLoading];
     }
@@ -272,6 +272,10 @@
         if(RIApiResponseMaintenancePage == apiResponse)
         {
             [self showMaintenancePage:@selector(continueLoading) objects:nil];
+        }
+        else if(RIApiResponseKickoutView == apiResponse)
+        {
+            [self showKickoutView:@selector(continueLoading) objects:nil];
         }
         else
         {

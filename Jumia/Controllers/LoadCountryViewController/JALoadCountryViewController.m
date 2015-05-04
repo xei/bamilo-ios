@@ -151,7 +151,7 @@
 
 - (void)continueProcessing
 {
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
     {
         [self showLoading];
     }
@@ -210,6 +210,10 @@
                              if(RIApiResponseMaintenancePage == apiResponse)
                              {
                                  [self showMaintenancePage:@selector(continueProcessing) objects:nil];
+                             }
+                             else if(RIApiResponseKickoutView == apiResponse)
+                             {
+                                 [self showKickoutView:@selector(continueProcessing) objects:nil];
                              }
                              else
                              {

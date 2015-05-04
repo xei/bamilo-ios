@@ -10,6 +10,7 @@
 #import "JAAppDelegate.h"
 #import "JANoConnectionView.h"
 #import "JAMaintenancePage.h"
+#import "JAKickoutView.h"
 #import "JAFallbackView.h"
 #import "JASearchView.h"
 
@@ -21,6 +22,7 @@
 @property (strong, nonatomic) JANoConnectionView *noConnectionView;
 @property (strong, nonatomic) JAMessageView *messageView;
 @property (strong, nonatomic) JAMaintenancePage *maintenancePage;
+@property (strong, nonatomic) JAKickoutView *kickoutView;
 @property (nonatomic, strong) JASearchView* searchView;
 
 @end
@@ -112,6 +114,12 @@
         [self.maintenancePage setupMaintenancePage:CGRectMake(0.0f, 0.0f, window.frame.size.height, window.frame.size.width) orientation:toInterfaceOrientation];
     }
     
+    if(VALID_NOTEMPTY(self.kickoutView, JAKickoutView)){
+        
+        
+        [self.kickoutView setupKickoutView:CGRectMake(0.0f, 0.0f, window.frame.size.height, window.frame.size.width) orientation:toInterfaceOrientation];
+    }
+    
     if (VALID_NOTEMPTY(self.searchView, JASearchView)) {
         [self.searchView resetFrame:CGRectMake(0.0f,
                                                0.0f,
@@ -176,6 +184,10 @@
     if(VALID_NOTEMPTY(self.maintenancePage, JAMaintenancePage)){
         
         [self.maintenancePage setupMaintenancePage:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height)orientation:self.interfaceOrientation];
+    }
+    if(VALID_NOTEMPTY(self.kickoutView, JAKickoutView)){
+        
+        [self.kickoutView setupKickoutView:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height)orientation:self.interfaceOrientation];
     }
     if (VALID_NOTEMPTY(self.searchView, JASearchView)) {
         [self.searchView resetFrame:CGRectMake(0.0f,
@@ -420,4 +432,57 @@
         }
     }
 }
+
+- (void)showKickoutView:(SEL)selector objects:(NSArray*)objects
+{
+    UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
+    
+    self.kickoutView = [[JAKickoutView alloc] init];
+    [self.kickoutView setupKickoutView:window.frame orientation:self.interfaceOrientation];
+    __block JABaseViewController *viewController = self;
+    [self.kickoutView setRetryBlock:^(BOOL dismiss)
+     {
+         if([viewController respondsToSelector:selector])
+         {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+             if(ISEMPTY(objects))
+             {
+                 [viewController performSelector:selector];
+             }
+             else if(1 == [objects count])
+             {
+                 [viewController performSelector:selector withObject:[objects objectAtIndex:0]];
+             }
+             else if(2 == [objects count])
+             {
+                 [viewController performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
+             }
+#pragma clang diagnostic pop
+         }
+     }];
+    
+    for (UIView* view in window.rootViewController.view.subviews) {
+        if ([view isKindOfClass:[JAKickoutView class]]) {
+            [view removeFromSuperview];
+        }
+    }
+    
+    [window.rootViewController.view addSubview:self.kickoutView];
+}
+
+- (void)removeKickoutView
+{
+    UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
+    for(UIView *view in window.rootViewController.view.subviews)
+    {
+        if([view isKindOfClass:[JAKickoutView class]])
+        {
+            [view removeFromSuperview];
+            break;
+        }
+    }
+}
+
+
 @end

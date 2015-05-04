@@ -20,6 +20,7 @@
 #define kUpdateSideMenuCartNotification @"NOTIFICATION_SIDE_MENU_UPDATE_CART"
 #define kExternalPaymentValue @"NOTIFICATION_EXTERNAL_PAYMENT_VALUE"
 #define kDeactivateExternalPaymentNotification @"NOTIFICATION_DEACTIVATE_EXTERNAL_PAYMENT_VALUE"
+#define kAppWillEnterForeground @"NOTIFICATION_APP_WILL_ENTER_FOREGROUND"
 //************
 
 //************ root view controller notifications
