@@ -264,6 +264,7 @@
 #define STRING_REVIEWS_LABEL RILocalizedString(@"reviews", nil)
 #define STRING_MORE RILocalizedString(@"more", nil)
 #define STRING_REVIEWS_EMPTY RILocalizedString(@"reviews_empty", nil)
+#define STRING_SELLER_REVIEWS_EMPTY RILocalizedString(@"reviews_empty_seller", nil)
 
 #define STRING_ORDER_SUMMARY RILocalizedString(@"order_summary_label", nil)
 #define STRING_EDIT RILocalizedString(@"string_edit", nil)

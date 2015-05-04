@@ -502,8 +502,8 @@
                             product.maxPrice = [productDic objectForKey:@"max_price"];
                         }
                         
-                        if ([productDic objectForKey:@"max_price_euroConverted"]) {
-                            product.maxPriceEuroConverted = [productDic objectForKey:@"max_price_euroConverted"];
+                        if ([productDic objectForKey:@"max_price_converted"]) {
+                            product.maxPriceEuroConverted = [productDic objectForKey:@"max_price_converted"];
                         }
                         
                         if ([productDic objectForKey:@"max_savings_percentage"]) {
@@ -516,8 +516,8 @@
                                                                                  country:[RICountryConfiguration getCurrentConfiguration]];
                         }
                                                 
-                        if ([productDic objectForKey:@"price_euroConverted"]) {
-                            product.priceEuroConverted = [productDic objectForKey:@"price_euroConverted"];
+                        if ([productDic objectForKey:@"price_converted"]) {
+                            product.priceEuroConverted = [productDic objectForKey:@"price_converted"];
                         }
                         
                         if ([productDic objectForKey:@"brand"]) {

@@ -446,8 +446,8 @@
             newProduct.maxPriceFormatted = [RICountryConfiguration formatPrice:newProduct.maxPrice country:country];
         }
         
-        if ([dataDic objectForKey:@"max_price_euroConverted"]) {
-            newProduct.maxPriceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_price_euroConverted"] floatValue]];
+        if ([dataDic objectForKey:@"max_price_converted"]) {
+            newProduct.maxPriceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_price_converted"] floatValue]];
         }
         
         if ([dataDic objectForKey:@"price"]) {
@@ -455,8 +455,8 @@
             newProduct.priceFormatted = [RICountryConfiguration formatPrice:newProduct.price country:country];
         }
 
-        if ([dataDic objectForKey:@"price_euroConverted"]) {
-            newProduct.priceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"price_euroConverted"] floatValue]];
+        if ([dataDic objectForKey:@"price_converted"]) {
+            newProduct.priceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"price_converted"] floatValue]];
         }
 
         if ([dataDic objectForKey:@"special_price"]) {
@@ -464,8 +464,8 @@
             newProduct.specialPriceFormatted = [RICountryConfiguration formatPrice:newProduct.specialPrice country:country];
         }
         
-        if ([dataDic objectForKey:@"special_price_euroConverted"]) {
-            newProduct.specialPriceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"special_price_euroConverted"] floatValue]];
+        if ([dataDic objectForKey:@"special_price_converted"]) {
+            newProduct.specialPriceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"special_price_converted"] floatValue]];
         }
         
         if ([dataDic objectForKey:@"max_special_price"]) {
@@ -473,8 +473,8 @@
             newProduct.maxSpecialPriceFormatted = [RICountryConfiguration formatPrice:newProduct.maxSpecialPrice country:country];
         }
         
-        if ([dataDic objectForKey:@"max_special_price_euroConverted"]) {
-            newProduct.maxSpecialPriceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_special_price_euroConverted"] floatValue]];
+        if ([dataDic objectForKey:@"max_special_price_converted"]) {
+            newProduct.maxSpecialPriceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_special_price_converted"] floatValue]];
         }
         
         if ([dataDic objectForKey:@"max_saving_percentage"]) {
@@ -657,8 +657,8 @@
                     newProduct.offersMinPrice = [NSNumber numberWithFloat:[[offersJSON objectForKey:@"min_price"] floatValue]];
                     newProduct.offersMinPriceFormatted = [RICountryConfiguration formatPrice:newProduct.offersMinPrice country:country];
                 }
-                if ([offersJSON objectForKey:@"min_price_euroConverted"]) {
-                    newProduct.offersMinPriceEuroConverted = [NSNumber numberWithFloat:[[offersJSON objectForKey:@"min_price_euroConverted"] floatValue]];
+                if ([offersJSON objectForKey:@"min_price_converted"]) {
+                    newProduct.offersMinPriceEuroConverted = [NSNumber numberWithFloat:[[offersJSON objectForKey:@"min_price_converted"] floatValue]];
                 }
                 if ([offersJSON objectForKey:@"total"]) {
                     newProduct.offersTotal = [NSNumber numberWithInteger:[[offersJSON objectForKey:@"total"] integerValue]];

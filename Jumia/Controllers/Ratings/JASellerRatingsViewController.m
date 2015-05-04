@@ -628,7 +628,7 @@ UITableViewDataSource
                                                width,
                                                self.centerView.frame.size.height)];
     
-    [self.emptyReviewsLabel setText:STRING_REVIEWS_EMPTY];
+    [self.emptyReviewsLabel setText:STRING_SELLER_REVIEWS_EMPTY];
     [self.emptyReviewsLabel sizeToFit];
     [self.emptyReviewsLabel setTextColor:UIColorFromRGB(0xcccccc)];
     
@@ -636,7 +636,7 @@ UITableViewDataSource
     CGFloat componentsHeight = self.emptyReviewsImageView.frame.size.height + marginBetweenImageAndLabel;
     
     CGFloat emptyReviewsLabelHorizontalMargin = 60.0f;
-    CGRect emptyReviewsLabelRect = [STRING_REVIEWS_EMPTY boundingRectWithSize:CGSizeMake(width - emptyReviewsLabelHorizontalMargin * 2, (self.emptyReviewsView.frame.size.height - componentsHeight))
+    CGRect emptyReviewsLabelRect = [STRING_SELLER_REVIEWS_EMPTY boundingRectWithSize:CGSizeMake(width - emptyReviewsLabelHorizontalMargin * 2, (self.emptyReviewsView.frame.size.height - componentsHeight))
                                                                       options:NSStringDrawingUsesLineFragmentOrigin
                                                                    attributes:@{NSFontAttributeName:self.emptyReviewsLabel.font} context:nil];
     componentsHeight += emptyReviewsLabelRect.size.height;

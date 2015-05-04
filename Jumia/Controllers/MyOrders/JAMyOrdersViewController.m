@@ -488,7 +488,14 @@ JAPickerScrollViewDelegate
                           }
                           else if (RIApiResponseNoInternetConnection == apiResponse)
                           {
-                              [self showErrorView:YES startingY:0.0f selector:@selector(loadOrderDetails) objects:nil];
+                              if (VALID_NOTEMPTY(self.trackOrderTextField.textField.text, NSString))
+                              {
+                                  [self showMessage:STRING_NO_CONNECTION success:NO];
+                                  
+                              }else{
+                                  
+                                  [self showErrorView:YES startingY:0.0f selector:@selector(loadOrderDetails) objects:nil];
+                              }
                           }
                           else
                           {
