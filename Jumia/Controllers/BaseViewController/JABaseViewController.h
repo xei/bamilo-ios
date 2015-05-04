@@ -62,5 +62,16 @@
  */
 - (void)removeMaintenancePage;
 
+/**
+ * Method to show kickout view
+ */
+- (void)showKickoutView:(SEL)selector objects:(NSArray*)objects;
+
+/**
+ * Method to remove kickout view
+ */
+- (void)removeKickoutView;
+
+
 @end
 

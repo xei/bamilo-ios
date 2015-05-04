@@ -324,5 +324,8 @@
 #define STRING_SHOPS_OF_THE_WEEK RILocalizedString(@"shops_of_the_week", nil)
 #define STRING_FEATURED_STORES RILocalizedString(@"featured_stores", nil)
 #define STRING_SEE_MORE_OFFERS RILocalizedString(@"see_more_offers", nil)
+#define STRING_KICKOUT_MESSAGE_1 RILocalizedString(@"kickout_message_1", nil)
+#define STRING_KICKOUT_MESSAGE_2 RILocalizedString(@"kickout_message_2", nil)
+#define STRING_KICKOUT_MESSAGE_3 RILocalizedString(@"kickout_message_3", nil)
 
 #endif
