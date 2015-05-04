@@ -824,7 +824,7 @@
         }
         else
         {
-            addAddressVC.navBarLayout.backButtonTitle = STRING_BACK;
+            [addAddressVC.navBarLayout setShowBackButton:YES];
             addAddressVC.navBarLayout.showLogo = NO;
         }
         
@@ -1265,9 +1265,9 @@
         catalog.navBarLayout.title = title;
         
         if ([notification.userInfo objectForKey:@"show_back_button_title"]) {
-            catalog.navBarLayout.backButtonTitle = [notification.userInfo objectForKey:@"show_back_button_title"];
+            [catalog.navBarLayout setShowBackButton:YES];
         } else {
-            catalog.navBarLayout.backButtonTitle = STRING_HOME;
+            [catalog.navBarLayout setShowBackButton:YES];;
         }
         
         [self pushViewController:catalog animated:YES];
@@ -1365,7 +1365,6 @@
         
         if([notification.userInfo objectForKey:@"show_back_button_title"])
         {
-            pdv.navBarLayout.backButtonTitle = [notification.userInfo objectForKey:@"show_back_button_title"];
             pdv.showBackButton = YES;
         }
         
@@ -1384,10 +1383,10 @@
     JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
     if([notification.userInfo objectForKey:@"show_back_button"])
     {
-        viewController.navBarLayout.backButtonTitle = STRING_HOME;
+        [viewController.navBarLayout setShowBackButton:YES];
     }
     if ([notification.userInfo objectForKey:@"show_back_button_title"]) {
-        viewController.navBarLayout.backButtonTitle = [notification.userInfo objectForKey:@"show_back_button_title"];
+        [viewController.navBarLayout setShowBackButton:YES];
     }
     if([notification.userInfo objectForKey:@"title"])
     {
@@ -1412,7 +1411,6 @@
     JACategoriesViewController* categoriesViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"categoriesViewController"];
     
     categoriesViewController.navBarLayout.title = STRING_ALL_CATEGORIES;
-    categoriesViewController.navBarLayout.backButtonTitle = STRING_HOME;
     
     NSDictionary* objectdic = notification.object;
     if (VALID_NOTEMPTY(objectdic, NSDictionary)) {

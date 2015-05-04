@@ -77,8 +77,8 @@
             newTeaserComponent.maxPriceFormatted = [RICountryConfiguration formatPrice:newTeaserComponent.maxPrice country:country];
         }
         
-        if ([teaserComponentJSON objectForKey:@"max_price_euroConverted"]) {
-            newTeaserComponent.maxPriceEuroConverted = [NSNumber numberWithFloat:[[teaserComponentJSON objectForKey:@"max_price_euroConverted"] floatValue]];
+        if ([teaserComponentJSON objectForKey:@"max_price_converted"]) {
+            newTeaserComponent.maxPriceEuroConverted = [NSNumber numberWithFloat:[[teaserComponentJSON objectForKey:@"max_price_converted"] floatValue]];
         }
         
         if ([teaserComponentJSON objectForKey:@"price"]) {
@@ -86,8 +86,8 @@
             newTeaserComponent.priceFormatted = [RICountryConfiguration formatPrice:newTeaserComponent.price country:country];
         }
         
-        if ([teaserComponentJSON objectForKey:@"price_euroConverted"]) {
-            newTeaserComponent.priceEuroConverted = [NSNumber numberWithFloat:[[teaserComponentJSON objectForKey:@"price_euroConverted"] floatValue]];
+        if ([teaserComponentJSON objectForKey:@"price_converted"]) {
+            newTeaserComponent.priceEuroConverted = [NSNumber numberWithFloat:[[teaserComponentJSON objectForKey:@"price_converted"] floatValue]];
         }
 
     }

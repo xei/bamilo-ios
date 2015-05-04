@@ -591,9 +591,9 @@
         }
     }
     
-    if ([json objectForKey:@"cartValue_euroConverted"]) {
-        if (![[json objectForKey:@"cartValue_euroConverted"] isKindOfClass:[NSNull class]]) {
-            cart.cartValueEuroConverted = [json objectForKey:@"cartValue_euroConverted"];
+    if ([json objectForKey:@"cartValue_converted"]) {
+        if (![[json objectForKey:@"cartValue_converted"] isKindOfClass:[NSNull class]]) {
+            cart.cartValueEuroConverted = [json objectForKey:@"cartValue_converted"];
         }
     }
     
@@ -604,9 +604,9 @@
         }
     }
     
-    if ([json objectForKey:@"cartCleanValue_euroConverted"]) {
-        if (![[json objectForKey:@"cartCleanValue_euroConverted"] isKindOfClass:[NSNull class]]) {
-            cart.cartCleanValueEuroConverted = [json objectForKey:@"cartCleanValue_euroConverted"];
+    if ([json objectForKey:@"cartCleanValue_converted"]) {
+        if (![[json objectForKey:@"cartCleanValue_converted"] isKindOfClass:[NSNull class]]) {
+            cart.cartCleanValueEuroConverted = [json objectForKey:@"cartCleanValue_converted"];
         }
     }
     
@@ -617,9 +617,9 @@
         }
     }
     
-    if ([json objectForKey:@"couponMoneyValue_euroConverted"]) {
-        if (![[json objectForKey:@"couponMoneyValue_euroConverted"] isKindOfClass:[NSNull class]]) {
-            cart.couponMoneyValueEuroConverted = [json objectForKey:@"couponMoneyValue_euroConverted"];
+    if ([json objectForKey:@"couponMoneyValue_converted"]) {
+        if (![[json objectForKey:@"couponMoneyValue_converted"] isKindOfClass:[NSNull class]]) {
+            cart.couponMoneyValueEuroConverted = [json objectForKey:@"couponMoneyValue_converted"];
         }
     }
     
@@ -630,9 +630,9 @@
         }
     }
     
-    if ([json objectForKey:@"extra_costs_euroConverted"]) {
-        if (![[json objectForKey:@"extra_costs_euroConverted"] isKindOfClass:[NSNull class]]) {
-            cart.extraCostsEuroConverted = [json objectForKey:@"extra_costs_euroConverted"];
+    if ([json objectForKey:@"extra_costs_converted"]) {
+        if (![[json objectForKey:@"extra_costs_converted"] isKindOfClass:[NSNull class]]) {
+            cart.extraCostsEuroConverted = [json objectForKey:@"extra_costs_converted"];
         }
     }
     
@@ -643,9 +643,9 @@
         }
     }
     
-    if ([json objectForKey:@"shipping_value_euroConverted"]) {
-        if (![[json objectForKey:@"shipping_value_euroConverted"] isKindOfClass:[NSNull class]]) {
-            cart.shippingValueEuroConverted = [json objectForKey:@"shipping_value_euroConverted"];
+    if ([json objectForKey:@"shipping_value_converted"]) {
+        if (![[json objectForKey:@"shipping_value_converted"] isKindOfClass:[NSNull class]]) {
+            cart.shippingValueEuroConverted = [json objectForKey:@"shipping_value_converted"];
         }
     }
     
@@ -656,9 +656,9 @@
         }
     }
     
-    if ([json objectForKey:@"vat_value_euroConverted"]) {
-        if (![[json objectForKey:@"vat_value_euroConverted"] isKindOfClass:[NSNull class]]) {
-            cart.vatValueEuroConverted = [json objectForKey:@"vat_value_euroConverted"];
+    if ([json objectForKey:@"vat_value_converted"]) {
+        if (![[json objectForKey:@"vat_value_converted"] isKindOfClass:[NSNull class]]) {
+            cart.vatValueEuroConverted = [json objectForKey:@"vat_value_converted"];
         }
     }
     
@@ -668,9 +668,9 @@
         }
     }
     
-    if ([json objectForKey:@"sum_costs_euroConverted"]) {
-        if (![[json objectForKey:@"sum_costs_euroConverted"] isKindOfClass:[NSNull class]]) {
-            cart.sumCostsEuroConverted = [json objectForKey:@"sum_costs_euroConverted"];
+    if ([json objectForKey:@"sum_costs_converted"]) {
+        if (![[json objectForKey:@"sum_costs_converted"] isKindOfClass:[NSNull class]]) {
+            cart.sumCostsEuroConverted = [json objectForKey:@"sum_costs_converted"];
         }
     }
     
@@ -680,9 +680,9 @@
         }
     }
     
-    if ([json objectForKey:@"sum_costs_value_euroConverted"]) {
-        if (![[json objectForKey:@"sum_costs_value_euroConverted"] isKindOfClass:[NSNull class]]) {
-            cart.sumCostsValueEuroConverted = [json objectForKey:@"sum_costs_value_euroConverted"];
+    if ([json objectForKey:@"sum_costs_value_converted"]) {
+        if (![[json objectForKey:@"sum_costs_value_converted"] isKindOfClass:[NSNull class]]) {
+            cart.sumCostsValueEuroConverted = [json objectForKey:@"sum_costs_value_converted"];
         }
     }
     
