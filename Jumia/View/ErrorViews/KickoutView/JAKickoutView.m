@@ -27,6 +27,29 @@ void(^retryBock)(BOOL dismiss);
     retryBock = completion;
 }
 
+- (void)retryConnection
+{
+    if (retryBock) {
+        retryBock(YES);
+    }
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self removeFromSuperview];
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(retryConnection)
+                                                     name:kAppWillEnterForeground
+                                                   object:nil];
+    }
+    return self;
+}
+
+
 - (void)setupKickoutView:(CGRect)frame orientation:(UIInterfaceOrientation)myOrientation
 {
     [self removeViews];
