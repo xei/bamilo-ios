@@ -32,6 +32,8 @@
 @dynamic ratingStars;
 @dynamic linkText;
 @dynamic linkUrl;
+@dynamic pattern;
+@dynamic patternMessage;
 
 + (RIField *)parseField:(NSDictionary *)fieldJSON;
 {
@@ -111,10 +113,23 @@
     
     NSDictionary* rules = [fieldJSON objectForKey:@"rules"];
     
-    if (VALID_NOTEMPTY(rules, NSDictionary)) {
+   if (VALID_NOTEMPTY(rules, NSDictionary)) {
         
         if ([rules objectForKey:@"regex"]) {
             newField.regex = [rules objectForKey:@"regex"];
+        }
+        
+        if([rules objectForKey:@"match"]){
+            NSDictionary *match = [rules objectForKey:@"match"];
+            if(VALID_NOTEMPTY(match, NSDictionary)){
+                
+                if([match objectForKey:@"pattern"]){
+                    newField.pattern = [match objectForKey:@"pattern"];
+                }
+                if([match objectForKey:@"message"]){
+                    newField.patternMessage = [match objectForKey:@"message"];
+                }
+            }
         }
         if ([rules objectForKey:@"min"]) {
             newField.min = [rules objectForKey:@"min"];

@@ -172,9 +172,9 @@
     }
     else
     {
-        if (self.field.regex.length > 0)
+        if (self.field.pattern.length > 0)
         {
-            if (![self validateInputWithString:self.textField.text andRegularExpression:self.field.regex])
+            if (![self validateInputWithString:self.textField.text andRegularExpression:self.field.pattern])
             {
                 [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
                 [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];

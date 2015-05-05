@@ -31,6 +31,8 @@
 @property (nonatomic, retain) NSOrderedSet *ratingStars;
 @property (nonatomic, retain) NSString * linkText;
 @property (nonatomic, retain) NSString * linkUrl;
+@property (nonatomic, retain) NSString * pattern;
+@property (nonatomic, retain) NSString * patternMessage;
 
 + (RIField *)parseField:(NSDictionary *)fieldJSON;
 + (void)saveField:(RIField *)field;
