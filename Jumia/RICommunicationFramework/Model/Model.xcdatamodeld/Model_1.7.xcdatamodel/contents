@@ -50,6 +50,7 @@
         <attribute name="decimalsSep" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="facebookAvailable" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="gaId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gtmId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="noDecimals" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="ratingIsEnabled" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -83,7 +84,6 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pattern" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="patternMessage" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="regex" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="required" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="requiredMessage" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
@@ -289,9 +289,9 @@
         <element name="RIAddress" positionX="90" positionY="666" width="128" height="373"/>
         <element name="RIApi" positionX="-308" positionY="227" width="128" height="150"/>
         <element name="RICategory" positionX="-261" positionY="27" width="128" height="150"/>
-        <element name="RICountryConfiguration" positionX="-513" positionY="-132" width="128" height="270"/>
+        <element name="RICountryConfiguration" positionX="-513" positionY="-132" width="128" height="285"/>
         <element name="RICustomer" positionX="279" positionY="650" width="128" height="208"/>
-        <element name="RIField" positionX="-299" positionY="681" width="128" height="345"/>
+        <element name="RIField" positionX="-299" positionY="681" width="128" height="330"/>
         <element name="RIFieldDataSetComponent" positionX="-63" positionY="837" width="128" height="73"/>
         <element name="RIFieldOption" positionX="-137" positionY="963" width="128" height="118"/>
         <element name="RIFieldRatingStars" positionX="-306" positionY="998" width="128" height="118"/>
