@@ -210,18 +210,18 @@
 }
 
 - (BOOL)validateInputWithString:(NSString *)aString
-           andRegularExpression:(NSString *)regExp
+           andRegularExpression:(NSString *)patternExp
 {
-    NSString * const regularExpression = regExp;
+    NSString * const regularExpression = patternExp;
     NSError *error = NULL;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regularExpression
+    NSRegularExpression *pattern = [NSRegularExpression regularExpressionWithPattern:regularExpression
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:&error];
     if (error) {
         NSLog(@"error %@", error);
     }
     
-    NSUInteger numberOfMatches = [regex numberOfMatchesInString:aString
+    NSUInteger numberOfMatches = [pattern numberOfMatchesInString:aString
                                                         options:0
                                                           range:NSMakeRange(0, [aString length])];
     return numberOfMatches > 0;
