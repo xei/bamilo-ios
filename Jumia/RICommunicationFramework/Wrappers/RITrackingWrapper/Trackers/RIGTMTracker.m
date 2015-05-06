@@ -11,8 +11,9 @@
 #import "TAGContainerOpener.h"
 #import "TAGManager.h"
 #import "TAGDataLayer.h"
+#import  "GAI.h"
 
-#define kGTMEventKey                            @"event"
+#define kGTMEventKey                            @"transaction"
 #define kGTMEventSourceKey                      @"source"
 #define kGTMEventCampaignKey                    @"campaign"
 #define kGTMEventAppVersionKey                  @"appVersion"
@@ -80,7 +81,7 @@
 #define kGTMEventInstallCampaignKey             @"installCampaign"
 #define kGTMEventInstallCreativeKey             @"installCreative"
 
-NSString * const kGTMToken = @"kGTMToken";
+NSString *kGTMToken = @"kGTMToken";
 
 @interface RIGTMTracker ()
 <TAGContainerOpenerNotifier>
@@ -160,23 +161,21 @@ NSString * const kGTMToken = @"kGTMToken";
     return self;
 }
 
-#pragma mark - RITracker protocol
-
-- (void)applicationDidLaunchWithOptions:(NSDictionary *)options
-{
++ (void)initWithGTMTrackerId:(NSString *)trackingId{
+    
     RIDebugLog(@"GTM tracker tracks application launch");
     
-    NSString *containerId = [RITrackingConfiguration valueForKey:kGTMToken];
+    //NSString *containerId = [RITrackingConfiguration valueForKey:trackingId];
     
-    if (!containerId) {
+    if (!trackingId) {
         RIRaiseError(@"Missing GTM container ID in tracking properties")
         return;
     }
     
-    self.tagManager = [TAGManager instance];
+     TAGManager *tagManager = [TAGManager instance];
     
     // Optional: Change the LogLevel to Verbose to enable logging at VERBOSE and higher levels.
-    [self.tagManager.logger setLogLevel:kTAGLoggerLogLevelNone];// kTAGLoggerLogLevelInfo];
+    [tagManager.logger setLogLevel:kTAGLoggerLogLevelNone];// kTAGLoggerLogLevelInfo];
     
     /*
      * Opens a container and returns a TAGContainerFuture.
@@ -186,11 +185,18 @@ NSString * const kGTMToken = @"kGTMToken";
      * @param openType The choice of how to open the container.
      * @param timeout The timeout period (default is 2.0 seconds).
      */
-    [TAGContainerOpener openContainerWithId:containerId   // Update with your Container ID.
-                                 tagManager:self.tagManager
+    [TAGContainerOpener openContainerWithId:trackingId   // Update with your Container ID.
+                                 tagManager:tagManager
                                    openType:kTAGOpenTypePreferFresh
                                     timeout:nil
-                                   notifier:self];
+                                   notifier:nil];
+
+}
+
+#pragma mark - RITracker protocol
+- (void)applicationDidLaunchWithOptions:(NSDictionary *)options{
+
+
 }
 
 - (void)containerAvailable:(TAGContainer *)container

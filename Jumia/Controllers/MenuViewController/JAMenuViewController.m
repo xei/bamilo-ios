@@ -42,11 +42,6 @@ UIAlertViewDelegate
 @property (strong, nonatomic) NSMutableArray *sourceArray;
 @property (strong, nonatomic) NSArray *categories;
 @property (weak, nonatomic) IBOutlet UITableView *tableViewMenu;
-@property (weak, nonatomic) IBOutlet UIImageView *imageViewCart;
-@property (weak, nonatomic) IBOutlet UILabel *cartLabelTitle;
-@property (weak, nonatomic) IBOutlet UILabel *cartLabelTotalCost;
-@property (weak, nonatomic) IBOutlet UILabel *cartLabelDetails;
-@property (weak, nonatomic) IBOutlet UILabel *cartItensNumber;
 @property (weak, nonatomic) IBOutlet JAClickableView *cartView;
 @property (nonatomic, assign) CGFloat yOffset;
 @property (nonatomic, strong) UIStoryboard *mainStoryboard;
@@ -98,61 +93,8 @@ UIAlertViewDelegate
                                                  name:kUpdateSideMenuCartNotification
                                                object:nil];
     
-    self.cartView.translatesAutoresizingMaskIntoConstraints = YES;
-    self.cartLabelTitle.translatesAutoresizingMaskIntoConstraints = YES;
-    self.cartLabelTotalCost.translatesAutoresizingMaskIntoConstraints = YES;
-    self.cartLabelDetails.translatesAutoresizingMaskIntoConstraints = YES;
+    
     self.tableViewMenu.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    [self.cartView addTarget:self
-                      action:@selector(cartViewPressed:)
-            forControlEvents:UIControlEventTouchUpInside];
-    self.cartLabelTitle.font = [UIFont fontWithName:kFontBoldName size:self.cartLabelTitle.font.pointSize];
-    self.cartLabelTitle.text = STRING_SHOPPING_CART;
-    [self.cartLabelTitle sizeToFit];
-    
-    self.cartLabelTotalCost.font = [UIFont fontWithName:kFontRegularName size:self.cartLabelTotalCost.font.pointSize];
-    self.cartLabelTotalCost.adjustsFontSizeToFitWidth = YES;
-    self.cartLabelDetails.font = [UIFont fontWithName:kFontLightName size:self.cartLabelDetails.font.pointSize];
-    if(!VALID_NOTEMPTY(self.cart, RICart) || 0 == [[self.cart cartCount] integerValue])
-    {
-        self.cartLabelTotalCost.text = STRING_YOUR_CART_IS_EMPTY;
-        self.cartLabelDetails.text = @"";
-        self.cartItensNumber.text = @"";
-    }
-    else
-    {
-        self.cartLabelTotalCost.text =  [self.cart cartValueFormatted];
-        self.cartLabelDetails.text = STRING_VAT_SHIPPING_INCLUDED;
-        self.cartItensNumber.text = [[self.cart cartCount] stringValue];
-    }
-    CGFloat labelMaxWidth = 256.0f - self.cartLabelTotalCost.frame.origin.x;
-    self.cartLabelTotalCost.numberOfLines = 2;
-    [self.cartLabelTotalCost setFrame:CGRectMake(self.cartLabelTotalCost.frame.origin.x,
-                                                 CGRectGetMaxY(self.cartLabelTitle.frame),
-                                                 labelMaxWidth,
-                                                 self.cartLabelTotalCost.frame.size.height)];
-    [self.cartLabelTotalCost sizeToFit];
-    [self.cartLabelTotalCost setFrame:CGRectMake(self.cartLabelTotalCost.frame.origin.x,
-                                                 self.cartLabelTotalCost.frame.origin.y,
-                                                 labelMaxWidth,
-                                                 self.cartLabelTotalCost.frame.size.height)];
-    
-    [self.cartLabelDetails sizeToFit];
-    [self.cartLabelDetails setFrame:CGRectMake(self.cartLabelDetails.frame.origin.x,
-                                               CGRectGetMaxY(self.cartLabelTotalCost.frame),
-                                               labelMaxWidth,
-                                               self.cartLabelDetails.frame.size.height)];
-    
-    [self.cartView setFrame:CGRectMake(self.cartView.frame.origin.x,
-                                       20.0f,
-                                       self.cartView.frame.size.width,
-                                       CGRectGetMaxY(self.cartLabelDetails.frame) + 6.0f)];
-    
-    [self.tableViewMenu setFrame:CGRectMake(self.tableViewMenu.frame.origin.x,
-                                            CGRectGetMaxY(self.cartView.frame),
-                                            self.tableViewMenu.frame.size.width,
-                                            self.view.frame.size.height - CGRectGetMaxY(self.cartView.frame))];
     
     // Added because of the footer space
     self.tableViewMenu.contentInset = UIEdgeInsetsMake(0, 0, -20, 0);
@@ -171,81 +113,9 @@ UIAlertViewDelegate
     }];
 }
 
--(void)updateCart:(NSNotification*)notification
-{
-    self.cart = nil;
-    
-    if(VALID_NOTEMPTY(notification, NSNotification))
-    {
-        NSDictionary *userInfo = notification.userInfo;
-        if([userInfo objectForKey:kUpdateCartNotificationValue])
-        {
-            self.cart = [userInfo objectForKey:kUpdateCartNotificationValue];
-        }
-    }
-    
-    if(!VALID_NOTEMPTY(self.cart, RICart) || 0 == [[self.cart cartCount] integerValue])
-    {
-        self.cartLabelTotalCost.text = STRING_YOUR_CART_IS_EMPTY;
-        self.cartLabelDetails.text = @"";
-        self.cartItensNumber.text = @"";
-    }
-    else
-    {
-        self.cartLabelTotalCost.text =  [self.cart cartValueFormatted];
-        self.cartLabelDetails.text = STRING_VAT_SHIPPING_INCLUDED;
-        self.cartItensNumber.text = [[self.cart cartCount] stringValue];
-    }
-    
-    CGFloat labelMaxWidth = 256.0f - self.cartLabelTotalCost.frame.origin.x;
-    self.cartLabelTotalCost.numberOfLines = 2;
-    [self.cartLabelTotalCost setFrame:CGRectMake(self.cartLabelTotalCost.frame.origin.x,
-                                                 self.cartLabelTotalCost.frame.origin.y,
-                                                 labelMaxWidth,
-                                                 self.cartLabelTotalCost.frame.size.height)];
-    [self.cartLabelTotalCost sizeToFit];
-    [self.cartLabelTotalCost setFrame:CGRectMake(self.cartLabelTotalCost.frame.origin.x,
-                                                 self.cartLabelTotalCost.frame.origin.y,
-                                                 labelMaxWidth,
-                                                 self.cartLabelTotalCost.frame.size.height)];
-    
-    [self.cartLabelDetails sizeToFit];
-    [self.cartLabelDetails setFrame:CGRectMake(self.cartLabelDetails.frame.origin.x,
-                                               CGRectGetMaxY(self.cartLabelTotalCost.frame),
-                                               labelMaxWidth,
-                                               self.cartLabelDetails.frame.size.height)];
-
-    [self.cartView setFrame:CGRectMake(self.cartView.frame.origin.x,
-                                       self.cartView.frame.origin.y,
-                                       self.cartView.frame.size.width,
-                                       CGRectGetMaxY(self.cartLabelDetails.frame) + 6.0f)];
-    
-    [self.tableViewMenu setFrame:CGRectMake(self.tableViewMenu.frame.origin.x,
-                                            CGRectGetMaxY(self.cartView.frame),
-                                            self.tableViewMenu.frame.size.width,
-                                            self.view.frame.size.height - CGRectGetMaxY(self.cartView.frame))];
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     //this is here to override super DO NOT CALL SUPER
-}
-
-- (void)cartViewPressed:(UIGestureRecognizer*)sender
-{
-    self.nextAction = JAMenuViewControllerOpenCart;
-    if(self.needsExternalPaymentMethod)
-    {
-        [[[UIAlertView alloc] initWithTitle:STRING_LOOSING_ORDER_TITLE
-                                    message:STRING_LOOSING_ORDER_MESSAGE
-                                   delegate:self
-                          cancelButtonTitle:STRING_CANCEL
-                          otherButtonTitles:STRING_OK, nil] show];
-    }
-    else
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCartNotification object:nil userInfo:nil];
-    }
 }
 
 - (void)didReceiveMemoryWarning

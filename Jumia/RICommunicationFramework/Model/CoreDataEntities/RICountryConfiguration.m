@@ -27,6 +27,7 @@
 @dynamic reviewRequiresLogin;
 @dynamic languages;
 @dynamic facebookAvailable;
+@dynamic gtmId;
 
 + (RICountryConfiguration *)parseCountryConfiguration:(NSDictionary *)json
 {
@@ -66,6 +67,10 @@
     
     if ([json objectForKey:@"cs_email"]) {
         newConfig.csEmail = [json objectForKey:@"cs_email"];
+    }
+    
+    if([json objectForKey:@"gtm_ios"]){
+        newConfig.gtmId = [json objectForKey:@"gtm_ios"];
     }
     
     if([json objectForKey:@"facebook_is_available"]){

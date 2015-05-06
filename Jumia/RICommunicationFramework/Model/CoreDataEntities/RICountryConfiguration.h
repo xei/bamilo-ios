@@ -19,6 +19,7 @@
 @property (nonatomic, retain) NSString * currencySymbol;
 @property (nonatomic, retain) NSString * decimalsSep;
 @property (nonatomic, retain) NSString * gaId;
+@property (nonatomic, retain) NSString * gtmId;
 @property (nonatomic, retain) NSNumber * noDecimals;
 @property (nonatomic, retain) NSString * phoneNumber;
 @property (nonatomic, retain) NSString * thousandsSep;
