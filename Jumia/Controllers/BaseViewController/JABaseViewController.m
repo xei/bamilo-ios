@@ -24,8 +24,9 @@
 @property (strong, nonatomic) JAMessageView *messageView;
 @property (strong, nonatomic) JAMaintenancePage *maintenancePage;
 @property (strong, nonatomic) JAKickoutView *kickoutView;
+@property (nonatomic, strong) UIView* searchBarBackground;
 @property (nonatomic, strong) UISearchBar* searchBar;
-@property (nonatomic, strong) UIControl* searchBackground;
+@property (nonatomic, strong) UIImageView* searchIconImageView;
 @property (nonatomic, strong) JASearchResultsView* searchResultsView;
 
 @end
@@ -138,10 +139,6 @@
         
         [self.kickoutView setupKickoutView:CGRectMake(0.0f, 0.0f, window.frame.size.height, window.frame.size.width) orientation:toInterfaceOrientation];
     }
-    
-    if (self.searchBarIsVisible) {
-        [self reloadSearchBar];
-    }
 }
 - (void)changeLoadingFrame:(CGRect)frame orientation:(UIInterfaceOrientation)orientation
 {
@@ -239,13 +236,22 @@
 
 - (void)showSearchBar
 {
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x,
-                                                                   self.view.bounds.origin.y,
-                                                                   self.view.bounds.size.width,
-                                                                   kSearchViewBarHeight)];
+    self.searchBarBackground = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x,
+                                                                        self.view.bounds.origin.y,
+                                                                        self.view.bounds.size.width,
+                                                                        kSearchViewBarHeight)];
+    self.searchBarBackground.backgroundColor = JANavBarBackgroundGrey;
+    [self.view addSubview:self.searchBarBackground];
+    
+    CGFloat horizontalMargin = 12.0f; //value by design
+    CGFloat verticalMargin = 3.0f; //value by design
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(self.searchBarBackground.bounds.origin.x + horizontalMargin,
+                                                                   self.searchBarBackground.bounds.origin.y + verticalMargin,
+                                                                   self.searchBarBackground.bounds.size.width - horizontalMargin*2,
+                                                                   self.searchBarBackground.bounds.size.height - verticalMargin*2)];
     self.searchBar.delegate = self;
-    self.searchBar.barTintColor = [UIColor whiteColor];
-    self.searchBar.placeholder = STRING_SEARCH;
+    self.searchBar.barTintColor = JANavBarBackgroundGrey;
+    self.searchBar.placeholder = STRING_SEARCH_PLACEHOLDER;
     self.searchBar.showsCancelButton = NO;
     
     [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor orangeColor]];
@@ -253,19 +259,40 @@
     UITextField *textFieldSearch = [self.searchBar valueForKey:@"_searchField"];
     textFieldSearch.font = [UIFont fontWithName:kFontRegularName size:textFieldSearch.font.pointSize];
     textFieldSearch.backgroundColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0f];
+    //remove magnifying lens
+    [textFieldSearch setLeftViewMode:UITextFieldViewModeNever];
     
     self.searchBar.layer.borderWidth = 1;
-    self.searchBar.layer.borderColor = [[UIColor whiteColor] CGColor];
+    self.searchBar.layer.borderColor = [JANavBarBackgroundGrey CGColor];
     
-    [self.view addSubview:self.searchBar];
+    [self.searchBarBackground addSubview:self.searchBar];
+    
+    UIImage* searchIcon = [UIImage imageNamed:@"searchIcon"];
+    self.searchIconImageView = [[UIImageView alloc] initWithImage:searchIcon];
+    self.searchIconImageView.frame = CGRectMake(CGRectGetMaxX(self.searchBar.frame) - horizontalMargin - searchIcon.size.width,
+                                                (self.searchBarBackground.frame.size.height - searchIcon.size.height) / 2,
+                                                searchIcon.size.width,
+                                                searchIcon.size.height);
+    [self.searchBarBackground addSubview:self.searchIconImageView];
 }
 
 - (void)reloadSearchBar
 {
-    self.searchBar.frame = CGRectMake(self.view.bounds.origin.x,
-                                      self.view.bounds.origin.y,
-                                      self.view.bounds.size.width,
-                                      kSearchViewBarHeight);
+    self.searchBarBackground.frame = CGRectMake(self.view.bounds.origin.x,
+                                                self.view.bounds.origin.y,
+                                                self.view.bounds.size.width,
+                                                kSearchViewBarHeight);
+    CGFloat horizontalMargin = 12.0f; //value by design
+    CGFloat verticalMargin = 2.0f; //value by design
+    self.searchBar.frame = CGRectMake(self.searchBarBackground.bounds.origin.x + horizontalMargin,
+                                      self.searchBarBackground.bounds.origin.y + verticalMargin,
+                                      self.searchBarBackground.bounds.size.width - horizontalMargin*2,
+                                      self.searchBarBackground.bounds.size.height - verticalMargin*2);
+    self.searchIconImageView.frame = CGRectMake(CGRectGetMaxX(self.searchBar.frame) - horizontalMargin - self.searchIconImageView.frame.size.width,
+                                                (self.searchBarBackground.frame.size.height - self.searchIconImageView.frame.size.height) / 2,
+                                                self.searchIconImageView.frame.size.width,
+                                                self.searchIconImageView.frame.size.height);
+    
     [self.searchResultsView reloadFrame:[self viewBounds]];
 }
 
@@ -279,6 +306,11 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     self.searchResultsView.searchText = searchText;
+    if (0 < searchText.length) {
+        self.searchIconImageView.hidden = YES;
+    } else {
+        self.searchIconImageView.hidden = NO;
+    }
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar;
@@ -293,6 +325,7 @@
 {
     self.searchBar.text = @"";
     [self.searchBar resignFirstResponder];
+    self.searchIconImageView.hidden = NO;
 //    //remove results
 //    [self.searchBar performSelector: @selector(resignFirstResponder)
 //                         withObject: nil
