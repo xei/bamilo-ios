@@ -14,7 +14,7 @@
 #define JACatalogViewControllerGridCellPriceViewY 181.0f
 #define JACatalogViewControllerGridCellPriceViewY_ipad 188.0f
 #define JACatalogViewControllerGridCellNewLabelY 15.0f
-#define JACatalogViewControllerGridCellNewLabelY_ipad 17.0f
+#define JACatalogViewControllerGridCellNewLabelY_ipad 22.0f
 
 @interface JACatalogGridCell : JACatalogCell
 
