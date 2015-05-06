@@ -18,6 +18,7 @@
 @property (nonatomic, strong)UIView* shippingAddressView;
 @property (nonatomic, strong)UIView* billingAddressView;
 @property (nonatomic, strong)UIView* shippingMethodView;
+@property (nonatomic, strong)NSNumber *extraCosts;
 
 @end
 
@@ -94,6 +95,8 @@
                                             subtotal:cart.cartValueFormatted
                                                extra:cart.extraCostsFormatted
                                          shippingFee:shippingFeeValue];
+        
+        self.extraCosts = cart.extraCostsFormatted;
         
         [self.cartView setFrame:CGRectMake(self.cartView.frame.origin.x,
                                            self.cartView.frame.origin.y,
@@ -358,6 +361,12 @@
         shippingFeeValueLabel.textAlignment = NSTextAlignmentRight;
         [self.cartView addSubview:shippingFeeValueLabel];
         
+        if([shippingFee isEqualToString:STRING_FREE]){
+            [shippingFeeValueLabel setHidden:YES];
+            [shippingFeeLabel setHidden:YES];
+            
+        }
+        
         currentY += shippingFeeValueLabel.frame.size.height + 7.0f;
     }
     
@@ -379,6 +388,12 @@
     extraValueLabel.textColor = UIColorFromRGB(0x4e4e4e);
     extraValueLabel.text = extra;
     extraValueLabel.textAlignment = NSTextAlignmentRight;
+    
+    if([self.extraCosts integerValue ] == 0){
+        [extraLabel setHidden:YES];
+        [extraValueLabel setHidden:YES];
+    }
+    
     [self.cartView addSubview:extraValueLabel];
     
     currentY += extraLabel.frame.size.height + 10.0f;

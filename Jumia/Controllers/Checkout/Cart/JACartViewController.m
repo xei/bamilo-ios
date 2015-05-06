@@ -809,6 +809,11 @@
                                                        self.cartScrollView.frame.origin.y + CGRectGetMaxY(self.callToOrderButton.frame) + 6.0f)];
     }
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CartWithItem"];
+    
+    if([self.cart.extraCosts integerValue] == 0){
+        [self.extraCostsLabel setHidden:YES];
+        [self.extraCostsValue setHidden:YES];
+    }
 }
 
 -(void)goToHomeScreen

@@ -490,6 +490,17 @@
                                            subtotalContentView.frame.size.width,
                                            CGRectGetMaxY(finalTotalLabel.frame) + 10.0f);
     
+    if([self.checkout.cart.extraCosts integerValue] == 0){
+        [extraCostsLabel setHidden:YES];
+        [extraCostsValueLabel setHidden:YES];
+    }
+    
+    if([self.checkout.cart.shippingValue integerValue] == 0){
+        [shippingLabel setHidden:YES];
+        [shippingValueLabel setHidden:YES];
+    
+    }
+
     return subtotalContentView.frame.size.height + 5.0f;
 }
 
