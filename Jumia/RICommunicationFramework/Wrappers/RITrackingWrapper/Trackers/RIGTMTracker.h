@@ -17,4 +17,6 @@ RIEcommerceEventTracking,
 RITrackingTiming
 >
 
++(void)initWithGTMTrackerId:(NSString *)trackingId;
+
 @end

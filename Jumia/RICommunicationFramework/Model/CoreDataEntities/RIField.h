@@ -18,7 +18,6 @@
 @property (nonatomic, retain) NSNumber * max;
 @property (nonatomic, retain) NSNumber * min;
 @property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSString * regex;
 @property (nonatomic, retain) NSNumber * required;
 @property (nonatomic, retain) NSString * requiredMessage;
 @property (nonatomic, retain) NSString * type;
@@ -31,6 +30,8 @@
 @property (nonatomic, retain) NSOrderedSet *ratingStars;
 @property (nonatomic, retain) NSString * linkText;
 @property (nonatomic, retain) NSString * linkUrl;
+@property (nonatomic, retain) NSString * pattern;
+@property (nonatomic, retain) NSString * patternMessage;
 
 + (RIField *)parseField:(NSDictionary *)fieldJSON;
 + (void)saveField:(RIField *)field;
