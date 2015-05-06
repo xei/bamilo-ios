@@ -1527,9 +1527,6 @@
     [self.navigationBarView.backButton addTarget:self
                                           action:@selector(back)
                                 forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationBarView.searchButton addTarget:self
-                                            action:@selector(search)
-                                  forControlEvents:UIControlEventTouchUpInside];
     
     self.navigationBarView.titleLabel.userInteractionEnabled = YES;
     UITapGestureRecognizer *touched = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goTop)];
@@ -1617,12 +1614,6 @@
 - (void)edit
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressEditNotification
-                                                        object:nil];
-}
-
-- (void)search
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressSearchButtonNotification
                                                         object:nil];
 }
 
