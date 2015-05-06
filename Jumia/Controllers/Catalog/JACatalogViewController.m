@@ -130,10 +130,10 @@
             self.undefinedBackup = undefinedSearchTerm;
             self.navBarLayout.subTitle = [NSString stringWithFormat:@"0 %@",STRING_ITEMS];
             [self reloadNavBar];
-            [self addUndefinedSearchView:undefinedSearchTerm frame:CGRectMake(6.0f,
-                                                                              self.catalogTopView.frame.origin.y,
-                                                                              self.view.frame.size.width - 12.0f,
-                                                                              self.view.frame.size.height)];
+            [self addUndefinedSearchView:self.undefinedBackup frame:CGRectMake(6.0f,
+                                                                               self.catalogTopView.frame.origin.y,
+                                                                               [self viewBounds].size.width - 12.0f,
+                                                                               [self viewBounds].size.height - self.catalogTopView.frame.origin.y)];
         }
         else
         {
@@ -151,12 +151,7 @@
     
         self.catalogTopView.hidden = YES;
         
-        CGRect frame = CGRectMake(0.0,
-                                  0.0,
-                                  self.view.frame.size.width,
-                                  self.view.frame.size.height);
-        
-        [self.filteredNoResultsView setupView:frame];
+        [self.filteredNoResultsView setupView:[self viewBounds]];
         
         [self.view addSubview:self.filteredNoResultsView];
     }
@@ -181,6 +176,8 @@
 
 - (void)viewDidLoad
 {
+    self.searchBarIsVisible = YES;
+    
     [super viewDidLoad];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(navBarClicked)
@@ -268,9 +265,9 @@
     self.isFirstLoadTracking = NO;
     
     self.catalogTopView = [JACatalogTopView getNewJACatalogTopView];
-    [self.catalogTopView setFrame:CGRectMake(0.0f,
-                                             0.0f,
-                                             self.view.frame.size.width,
+    [self.catalogTopView setFrame:CGRectMake([self viewBounds].origin.x,
+                                             [self viewBounds].origin.y,
+                                             [self viewBounds].size.width,
                                              self.catalogTopView.frame.size.height)];
     self.catalogTopView.gridSelected = NO;
     self.catalogTopView.delegate = self;
@@ -399,13 +396,13 @@
         [self.undefinedView removeFromSuperview];
         [self addUndefinedSearchView:self.undefinedBackup frame:CGRectMake(6.0f,
                                                                            self.catalogTopView.frame.origin.y,
-                                                                           self.view.frame.size.width - 12.0f,
-                                                                           self.view.frame.size.height)];
+                                                                           [self viewBounds].size.width - 12.0f,
+                                                                           [self viewBounds].size.height - self.catalogTopView.frame.origin.y)];
     }
     
     [self.catalogTopView setFrame:CGRectMake(self.catalogTopView.frame.origin.x,
                                              self.catalogTopView.frame.origin.y,
-                                             self.view.frame.size.width,
+                                             [self viewBounds].size.width,
                                              self.catalogTopView.frame.size.height)];
 }
 
@@ -875,7 +872,7 @@
             height = JACatalogViewControllerGridCellHeight;
         } else {
             //use view instead of collection view, the list cell has the insets inside itself;
-            width = self.view.frame.size.width;
+            width = [self viewBounds].size.width;
             height = JACatalogViewControllerListCellHeight;
         }
     }
@@ -1532,14 +1529,14 @@
         
         [self addUndefinedSearchView:self.undefinedBackup frame:CGRectMake(6.0f,
                                                                            self.catalogTopView.frame.origin.y,
-                                                                           self.view.frame.size.width - 12.0f,
-                                                                           self.view.frame.size.height)];
+                                                                           [self viewBounds].size.width - 12.0f,
+                                                                           [self viewBounds].size.height - self.catalogTopView.frame.origin.y)];
         [self.undefinedView didRotate];
     }
     
     [self.catalogTopView setFrame:CGRectMake(self.catalogTopView.frame.origin.x,
                                              self.catalogTopView.frame.origin.y,
-                                             self.view.frame.size.width,
+                                             [self viewBounds].size.width,
                                              self.catalogTopView.frame.size.height)];
     
     [self hideLoading];

@@ -12,7 +12,8 @@
 #import "JAMaintenancePage.h"
 #import "JAKickoutView.h"
 #import "JAFallbackView.h"
-#import "JASearchView.h"
+
+#define kSearchViewBarHeight 32.0f
 
 @interface JABaseViewController ()
 
@@ -23,11 +24,26 @@
 @property (strong, nonatomic) JAMessageView *messageView;
 @property (strong, nonatomic) JAMaintenancePage *maintenancePage;
 @property (strong, nonatomic) JAKickoutView *kickoutView;
-@property (nonatomic, strong) JASearchView* searchView;
+@property (nonatomic, strong) UIView* searchBarBackground;
+@property (nonatomic, strong) UISearchBar* searchBar;
+@property (nonatomic, strong) UIImageView* searchIconImageView;
+@property (nonatomic, strong) JASearchResultsView* searchResultsView;
 
 @end
 
 @implementation JABaseViewController
+
+- (CGRect)viewBounds
+{
+    CGFloat offset = 0.0f;
+    if (self.searchBarIsVisible) {
+        offset = kSearchViewBarHeight;
+    }
+    return CGRectMake(self.view.bounds.origin.x,
+                      self.view.bounds.origin.y + offset,
+                      self.view.bounds.size.width,
+                      self.view.bounds.size.height - offset);
+}
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
@@ -101,6 +117,10 @@
     self.loadingAnimation.center = self.loadingView.center;
     
     self.loadingView.alpha = 0.0f;
+
+    if (self.searchBarIsVisible) {
+        [self showSearchBar];
+    }
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -118,14 +138,6 @@
         
         
         [self.kickoutView setupKickoutView:CGRectMake(0.0f, 0.0f, window.frame.size.height, window.frame.size.width) orientation:toInterfaceOrientation];
-    }
-    
-    if (VALID_NOTEMPTY(self.searchView, JASearchView)) {
-        [self.searchView resetFrame:CGRectMake(0.0f,
-                                               0.0f,
-                                               window.frame.size.height,
-                                               window.frame.size.width)
-                        orientation:toInterfaceOrientation];
     }
 }
 - (void)changeLoadingFrame:(CGRect)frame orientation:(UIInterfaceOrientation)orientation
@@ -189,12 +201,8 @@
         
         [self.kickoutView setupKickoutView:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height)orientation:self.interfaceOrientation];
     }
-    if (VALID_NOTEMPTY(self.searchView, JASearchView)) {
-        [self.searchView resetFrame:CGRectMake(0.0f,
-                                               0.0f,
-                                               window.frame.size.width,
-                                               window.frame.size.height)
-                        orientation:self.interfaceOrientation];
+    if (self.searchBarIsVisible) {
+        [self reloadSearchBar];
     }
 }
 
@@ -206,20 +214,6 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnLeftSwipePanelNotification
                                                         object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showSearchView)
-                                                 name:kDidPressSearchButtonNotification
-                                               object:nil];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:kDidPressSearchButtonNotification
-                                                  object:nil];
 }
 
 - (NSUInteger)supportedInterfaceOrientations
@@ -238,15 +232,107 @@
                                                         object:self.navBarLayout];
 }
 
-- (void)showSearchView
+#pragma mark - Search Bar
+
+- (void)showSearchBar
 {
-    UIView* window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
-    if (self.searchView) {
-        [self.searchView removeFromSuperview];
-    }
-    self.searchView = [[JASearchView alloc] initWithFrame:window.bounds];
-    [window addSubview:self.searchView];
+    self.searchBarBackground = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x,
+                                                                        self.view.bounds.origin.y,
+                                                                        self.view.bounds.size.width,
+                                                                        kSearchViewBarHeight)];
+    self.searchBarBackground.backgroundColor = JANavBarBackgroundGrey;
+    [self.view addSubview:self.searchBarBackground];
+    
+    CGFloat horizontalMargin = 12.0f; //value by design
+    CGFloat verticalMargin = 3.0f; //value by design
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(self.searchBarBackground.bounds.origin.x + horizontalMargin,
+                                                                   self.searchBarBackground.bounds.origin.y + verticalMargin,
+                                                                   self.searchBarBackground.bounds.size.width - horizontalMargin*2,
+                                                                   self.searchBarBackground.bounds.size.height - verticalMargin*2)];
+    self.searchBar.delegate = self;
+    self.searchBar.barTintColor = JANavBarBackgroundGrey;
+    self.searchBar.placeholder = STRING_SEARCH_PLACEHOLDER;
+    self.searchBar.showsCancelButton = NO;
+    
+    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor orangeColor]];
+    
+    UITextField *textFieldSearch = [self.searchBar valueForKey:@"_searchField"];
+    textFieldSearch.font = [UIFont fontWithName:kFontRegularName size:textFieldSearch.font.pointSize];
+    textFieldSearch.backgroundColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0f];
+    //remove magnifying lens
+    [textFieldSearch setLeftViewMode:UITextFieldViewModeNever];
+    
+    self.searchBar.layer.borderWidth = 1;
+    self.searchBar.layer.borderColor = [JANavBarBackgroundGrey CGColor];
+    
+    [self.searchBarBackground addSubview:self.searchBar];
+    
+    UIImage* searchIcon = [UIImage imageNamed:@"searchIcon"];
+    self.searchIconImageView = [[UIImageView alloc] initWithImage:searchIcon];
+    self.searchIconImageView.frame = CGRectMake(CGRectGetMaxX(self.searchBar.frame) - horizontalMargin - searchIcon.size.width,
+                                                (self.searchBarBackground.frame.size.height - searchIcon.size.height) / 2,
+                                                searchIcon.size.width,
+                                                searchIcon.size.height);
+    [self.searchBarBackground addSubview:self.searchIconImageView];
 }
+
+- (void)reloadSearchBar
+{
+    self.searchBarBackground.frame = CGRectMake(self.view.bounds.origin.x,
+                                                self.view.bounds.origin.y,
+                                                self.view.bounds.size.width,
+                                                kSearchViewBarHeight);
+    CGFloat horizontalMargin = 12.0f; //value by design
+    CGFloat verticalMargin = 2.0f; //value by design
+    self.searchBar.frame = CGRectMake(self.searchBarBackground.bounds.origin.x + horizontalMargin,
+                                      self.searchBarBackground.bounds.origin.y + verticalMargin,
+                                      self.searchBarBackground.bounds.size.width - horizontalMargin*2,
+                                      self.searchBarBackground.bounds.size.height - verticalMargin*2);
+    self.searchIconImageView.frame = CGRectMake(CGRectGetMaxX(self.searchBar.frame) - horizontalMargin - self.searchIconImageView.frame.size.width,
+                                                (self.searchBarBackground.frame.size.height - self.searchIconImageView.frame.size.height) / 2,
+                                                self.searchIconImageView.frame.size.width,
+                                                self.searchIconImageView.frame.size.height);
+    
+    [self.searchResultsView reloadFrame:[self viewBounds]];
+}
+
+#pragma mark Search Bar && Search Results View Delegate
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [self.searchResultsView searchFor:searchBar.text];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    self.searchResultsView.searchText = searchText;
+    if (0 < searchText.length) {
+        self.searchIconImageView.hidden = YES;
+    } else {
+        self.searchIconImageView.hidden = NO;
+    }
+}
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar;
+{
+    self.searchResultsView = [[JASearchResultsView alloc] initWithFrame:[self viewBounds]];
+    self.searchResultsView.delegate = self;
+    [self.view addSubview:self.searchResultsView];
+    return YES;
+}
+
+- (void)searchResultsViewWillPop
+{
+    self.searchBar.text = @"";
+    [self.searchBar resignFirstResponder];
+    self.searchIconImageView.hidden = NO;
+//    //remove results
+//    [self.searchBar performSelector: @selector(resignFirstResponder)
+//                         withObject: nil
+//                         afterDelay: 0.1];
+}
+
+# pragma mark Loading View
 
 - (void) showLoading
 {
@@ -292,6 +378,8 @@
                                                         object:nil];
 }
 
+# pragma mark Message View
+
 - (void)showMessage:(NSString*)message success:(BOOL)success
 {
     UIViewController *rootViewController = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController;
@@ -335,6 +423,8 @@
 {
     [self.messageView removeFromSuperview];
 }
+
+# pragma mark Error Views
 
 - (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects
 {
@@ -483,6 +573,5 @@
         }
     }
 }
-
 
 @end

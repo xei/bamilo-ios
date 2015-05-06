@@ -219,7 +219,7 @@
         }
         else if (0 != [field.type rangeOfString:@"checkbox"].length)
         {
-            if([@"Alice_Module_Mobapi_Form_Ext1m4_Customer_RegistrationForm" isEqualToString:[self.form uid]] && [@"newsletter_categories_subscribed" isEqualToString:field.key])
+            if([[self.form uid] containsString:@"_Customer_RegistrationForm"] && [@"newsletter_categories_subscribed" isEqualToString:field.key])
             {
                 JACheckBoxComponent *check = [JACheckBoxComponent getNewJACheckBoxComponent];
                 [check setupWithField:field];

@@ -35,6 +35,9 @@
 
 - (void)viewDidLoad
 {
+    //has to be done before calling super
+    self.searchBarIsVisible = YES;
+    
     [super viewDidLoad];
     
     self.screenName = @"ShopMain";
@@ -73,7 +76,7 @@
 -(void)campaignTimerEnded
 {
     if (self.isLoaded) {
-        [self.teaserPageView loadTeasersForFrame:self.view.bounds];
+        [self.teaserPageView loadTeasersForFrame:[self viewBounds]];
     }
 }
 
@@ -86,7 +89,7 @@
 {
     [super viewWillAppear:animated];
     
-    [self.teaserPageView setFrame:self.view.bounds];
+    [self.teaserPageView setFrame:[self viewBounds]];
     
     [self requestTeasers];
     
@@ -99,7 +102,7 @@
     BOOL alreadyShowedWizardHome = [[NSUserDefaults standardUserDefaults] boolForKey:kJAHomeWizardUserDefaultsKey];
     if(alreadyShowedWizardHome == NO)
     {
-        self.wizardView = [[JAHomeWizardView alloc] initWithFrame:self.view.bounds];
+        self.wizardView = [[JAHomeWizardView alloc] initWithFrame:[self viewBounds]];
         [self.view addSubview:self.wizardView];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJAHomeWizardUserDefaultsKey];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -127,8 +130,8 @@
     {
         CGRect newFrame = CGRectMake(self.wizardView.frame.origin.x,
                                      self.wizardView.frame.origin.y,
-                                     self.view.frame.size.height + self.view.frame.origin.y,
-                                     self.view.frame.size.width - self.view.frame.origin.y);
+                                     [self viewBounds].size.height + [self viewBounds].origin.y,
+                                     [self viewBounds].size.width - [self viewBounds].origin.y);
         [self.wizardView reloadForFrame:newFrame];
     }
     
@@ -136,8 +139,8 @@
     {
         [self.fallbackView setupFallbackView:CGRectMake(self.fallbackView.frame.origin.x,
                                                         self.fallbackView.frame.origin.y,
-                                                        self.view.frame.size.height + self.view.frame.origin.y,
-                                                        self.view.frame.size.width - self.view.frame.origin.y)
+                                                        [self viewBounds].size.height + [self viewBounds].origin.y,
+                                                        [self viewBounds].size.width - [self viewBounds].origin.y)
                                  orientation:toInterfaceOrientation];
     }
     
@@ -147,20 +150,20 @@
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     if (self.isLoaded) {
-        [self.teaserPageView loadTeasersForFrame:self.view.bounds];
+        [self.teaserPageView loadTeasersForFrame:[self viewBounds]];
     }
     
     [self hideLoading];
     
     if(VALID_NOTEMPTY(self.wizardView, JAHomeWizardView))
     {
-        [self.wizardView reloadForFrame:self.view.bounds];
+        [self.wizardView reloadForFrame:[self viewBounds]];
         [self.view bringSubviewToFront:self.wizardView];
     }
     
     if(VALID_NOTEMPTY(self.fallbackView, JAFallbackView) && VALID_NOTEMPTY(self.fallbackView.superview, UIView))
     {
-        [self.fallbackView setupFallbackView:self.view.bounds orientation:self.interfaceOrientation];
+        [self.fallbackView setupFallbackView:[self viewBounds] orientation:self.interfaceOrientation];
     }
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
@@ -180,7 +183,7 @@
         self.teaserGroupings = teaserGroupings;
         
         self.teaserPageView.teaserGroupings = teaserGroupings;
-        [self.teaserPageView loadTeasersForFrame:self.view.bounds];
+        [self.teaserPageView loadTeasersForFrame:[self viewBounds]];
         [self.view addSubview:self.teaserPageView];
         
         if(self.firstLoading)
@@ -223,7 +226,7 @@
                 [self showErrorView:YES startingY:0.0f selector:@selector(requestTeasers) objects:nil];
             } else {
                 self.fallbackView = [JAFallbackView getNewJAFallbackView];
-                [self.fallbackView setupFallbackView:self.view.bounds orientation:self.interfaceOrientation];
+                [self.fallbackView setupFallbackView:[self viewBounds] orientation:self.interfaceOrientation];
                 [self.view addSubview:self.fallbackView];
             }
         }
@@ -232,7 +235,7 @@
 
 - (void)loadPromotion:(RIPromotion*)promotion
 {
-    JAPromotionPopUp* promotionPopUp = [[JAPromotionPopUp alloc] initWithFrame:self.view.bounds];
+    JAPromotionPopUp* promotionPopUp = [[JAPromotionPopUp alloc] initWithFrame:[self viewBounds]];
     [promotionPopUp loadWithPromotion:promotion];
     [self.view addSubview:promotionPopUp];
 }

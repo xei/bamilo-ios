@@ -1365,7 +1365,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZRY-qq-tSd">
-                                <rect key="frame" x="0.0" y="108" width="320" height="460"/>
+                                <rect key="frame" x="0.0" y="140" width="320" height="428"/>
                                 <color key="backgroundColor" red="0.77863919010000004" green="0.77863919010000004" blue="0.77863919010000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="SCu-ih-mcg">
                                     <size key="itemSize" width="50" height="50"/>
@@ -1388,10 +1388,10 @@
                         </subviews>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="ZRY-qq-tSd" firstAttribute="top" secondItem="lzj-49-Dyb" secondAttribute="bottom" constant="44" id="86T-nm-NSE"/>
                             <constraint firstItem="lOt-fd-9os" firstAttribute="top" secondItem="ZRY-qq-tSd" secondAttribute="bottom" id="YSJ-z2-uF1"/>
                             <constraint firstAttribute="trailing" secondItem="ZRY-qq-tSd" secondAttribute="trailing" id="gm0-ea-Zx4"/>
                             <constraint firstItem="ZRY-qq-tSd" firstAttribute="leading" secondItem="LT2-FN-Zb3" secondAttribute="leading" id="l0b-sY-AGx"/>
+                            <constraint firstItem="ZRY-qq-tSd" firstAttribute="top" secondItem="lzj-49-Dyb" secondAttribute="bottom" constant="76" id="oSf-vL-Gg7"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="0Ui-Gw-Yo9"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
@@ -110,18 +110,6 @@
                     <state key="selected" image="btn_cart_pressed"/>
                     <state key="highlighted" image="btn_cart_pressed"/>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PWX-Wq-jiL" userLabel="Search Button">
-                    <rect key="frame" x="232" y="0.0" width="44" height="44"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="44" id="62g-Ip-shL"/>
-                        <constraint firstAttribute="width" constant="44" id="Iax-u8-C1S"/>
-                    </constraints>
-                    <state key="normal" image="btn_search">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <state key="selected" image="btn_search_pressed"/>
-                    <state key="highlighted" image="btn_search_pressed"/>
-                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
@@ -133,7 +121,6 @@
                 <constraint firstAttribute="centerX" secondItem="fXf-f0-8rG" secondAttribute="centerX" id="J9i-aM-yPX"/>
                 <constraint firstItem="PtX-qp-OlV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Jri-U9-NZi"/>
                 <constraint firstItem="sTB-iA-iep" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="MCT-mN-Y6p"/>
-                <constraint firstAttribute="trailing" secondItem="PWX-Wq-jiL" secondAttribute="trailing" constant="44" id="R4m-ax-uik"/>
                 <constraint firstItem="2DQ-tD-tFT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="SU5-74-Hfi"/>
                 <constraint firstAttribute="trailing" secondItem="LuO-xH-Agb" secondAttribute="trailing" constant="45" id="Tf2-0m-ynz"/>
                 <constraint firstItem="LuO-xH-Agb" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="45" id="Vy9-xu-1KA"/>
@@ -141,10 +128,8 @@
                 <constraint firstItem="PtX-qp-OlV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Z5r-e8-JP7"/>
                 <constraint firstAttribute="bottom" secondItem="LuO-xH-Agb" secondAttribute="bottom" id="c74-Pa-2QZ"/>
                 <constraint firstItem="6d5-vj-SwK" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ddv-Dg-4Fi"/>
-                <constraint firstAttribute="bottom" secondItem="PWX-Wq-jiL" secondAttribute="bottom" id="gDm-Jh-f7b"/>
                 <constraint firstItem="FpF-tP-V2G" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="idF-gu-IlF"/>
                 <constraint firstItem="b26-Yt-ywH" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="6" id="pDn-nE-adX"/>
-                <constraint firstItem="PWX-Wq-jiL" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="q3W-V8-gUF"/>
                 <constraint firstItem="FpF-tP-V2G" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="wlv-Ly-oYT"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
@@ -158,7 +143,6 @@
                 <outlet property="editButton" destination="FpF-tP-V2G" id="dqY-Pk-cMw"/>
                 <outlet property="leftButton" destination="sTB-iA-iep" id="47c-Ol-3cv"/>
                 <outlet property="logoImageView" destination="fXf-f0-8rG" id="cz6-2p-pvM"/>
-                <outlet property="searchButton" destination="PWX-Wq-jiL" id="3jE-NE-fHI"/>
                 <outlet property="titleLabel" destination="LuO-xH-Agb" id="VAg-bp-1iX"/>
                 <outlet property="topTitleLabel" destination="3ze-21-wqt" id="tIG-jH-dZK"/>
             </connections>
@@ -172,8 +156,6 @@
         <image name="btn_cart_pressed" width="25" height="20"/>
         <image name="btn_menu" width="18" height="20"/>
         <image name="btn_menu_pressed" width="18" height="20"/>
-        <image name="btn_search" width="20" height="20"/>
-        <image name="btn_search_pressed" width="20" height="20"/>
         <image name="img_navbar_logo" width="83" height="20"/>
     </resources>
 </document>
