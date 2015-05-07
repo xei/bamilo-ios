@@ -80,7 +80,7 @@
                                                                        {
                                                                            if ([dic objectForKey:@"id"])
                                                                            {
-                                                                               if ([[dic objectForKey:@"id"] isEqualToString:@"Alice_Module_Mobapi_Form_Ext1m3_Customer_NewsletterManageForm"])
+                                                                               if ([@"managenewsletters" isEqualToString:formIndexID])
                                                                                {
                                                                                    NSArray *fields = [dic objectForKey:@"fields"];
                                                                                    
@@ -242,7 +242,7 @@
                                                               BOOL responseProcessed = NO;
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                               {
-                                                                  if([@"form-account-login" isEqualToString:form.uid])
+                                                                  if([@"login" isEqualToString:form.formIndex.uid])
                                                                   {
                                                                       responseProcessed = YES;
                                                                       RICustomer *customer = [RICustomer parseCustomerWithJson:[metadata objectForKey:@"user"] plainPassword:password loginMethod:@"normal"];
@@ -251,13 +251,13 @@
                                                                       [successDic setValue:customer forKey:@"customer"];
                                                                       successBlock([successDic copy]);
                                                                   }
-                                                                  else if([@"Alice_Module_Mobapi_Form_Ext1m4_Customer_RegistrationForm" isEqualToString:form.uid])
+                                                                  else if([@"register" isEqualToString:form.formIndex.uid])
                                                                   {
                                                                       responseProcessed = YES;
                                                                       RICustomer *customer = [RICustomer parseCustomerWithJson:metadata plainPassword:password loginMethod:@"normal"];
                                                                       successBlock(customer);
                                                                   }
-                                                                  else if([@"Alice_Module_Mobapi_Form_Ext1m1_Customer_RegisterSignupForm" isEqualToString:form.uid])
+                                                                  else if([@"registersignup" isEqualToString:form.formIndex.uid])
                                                                   {
                                                                       NSDictionary *data = [metadata objectForKey:@"data"];
                                                                       if(VALID_NOTEMPTY(data, NSDictionary))
@@ -267,13 +267,13 @@
                                                                           successBlock(customer);
                                                                       }
                                                                   }
-                                                                  else if([@"address-form" isEqualToString:form.uid])
+                                                                  else if([@"addressedit" isEqualToString:form.formIndex.uid] || [@"addresscreate" isEqualToString:form.formIndex.uid])
                                                                   {
                                                                       responseProcessed = YES;
                                                                       RICheckout *checkout = [RICheckout parseCheckout:metadata country:nil];
                                                                       successBlock(checkout);
                                                                   }
-                                                                  else if ([@"Alice_Module_Mobapi_Form_Ext1m3_Customer_NewsletterManageForm" isEqualToString:form.uid])
+                                                                  else if ([@"managenewsletters" isEqualToString:form.formIndex.uid])
                                                                   {
                                                                       [RICustomer updateCustomerNewsletterWithJson:metadata];
                                                                       responseProcessed = YES;
