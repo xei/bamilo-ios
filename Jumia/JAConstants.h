@@ -17,7 +17,6 @@
 #define kUserLoggedOutNotification @"NOTIFICATION_USER_LOGGED_OUT"
 #define kCancelLoadingNotificationName @"CANCEL_LOADING_NOTIFICATION"
 #define kCancelButtonPressedInMenuSearchBar @"PRESSED_BACK_BUTTON_NOTIFICATION"
-#define kUpdateSideMenuCartNotification @"NOTIFICATION_SIDE_MENU_UPDATE_CART"
 #define kExternalPaymentValue @"NOTIFICATION_EXTERNAL_PAYMENT_VALUE"
 #define kDeactivateExternalPaymentNotification @"NOTIFICATION_DEACTIVATE_EXTERNAL_PAYMENT_VALUE"
 #define kAppWillEnterForeground @"NOTIFICATION_APP_WILL_ENTER_FOREGROUND"

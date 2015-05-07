@@ -88,11 +88,6 @@ UIAlertViewDelegate
                                                  name:kUserLoggedOutNotification
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateCart:)
-                                                 name:kUpdateSideMenuCartNotification
-                                               object:nil];
-    
     
     self.tableViewMenu.translatesAutoresizingMaskIntoConstraints = YES;
     

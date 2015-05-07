@@ -1585,9 +1585,6 @@
         self.cart = nil;
         [self.navigationBarView updateCartProductCount:0];
     }
-    
-    // post side menu notification;
-    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateSideMenuCartNotification object:nil userInfo:userInfo];
 }
 
 #pragma mark - Navbar Button actions
