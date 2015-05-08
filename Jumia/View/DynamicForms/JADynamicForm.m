@@ -11,6 +11,7 @@
 #import "RIFieldDataSetComponent.h"
 #import "RIFieldOption.h"
 #import "JAAddRatingView.h"
+#import "JARadioRelatedComponent.h"
 
 @interface JADynamicForm ()
 <UITextFieldDelegate>
@@ -215,6 +216,23 @@
                 {
                     citiesComponent = radioComponent;
                 }
+            }
+        }
+        else if ([@"radio_related" isEqualToString:field.type])
+        {
+            //we only accept two options, no more, no less
+            if (2 == field.dataSet.count) {
+                
+                JARadioRelatedComponent* radioRelated = [JARadioRelatedComponent getNewJARadioRelatedComponent];
+                [radioRelated setupWithField:field];
+                
+                CGRect frame = radioRelated.frame;
+                frame.origin.y = startingY;
+                radioRelated.frame = frame;
+                startingY += radioRelated.frame.size.height;
+                
+                [self.formViews addObject:radioRelated];
+
             }
         }
         else if (0 != [field.type rangeOfString:@"checkbox"].length)
@@ -465,6 +483,11 @@
                 {
                     [parameters addEntriesFromDictionary:[radioComponent getValues]];
                 }
+            } else if([view isKindOfClass:[JARadioRelatedComponent class]])
+            {
+                JARadioRelatedComponent* radioRelatedComponent = (JARadioRelatedComponent*) view;
+                
+                [parameters addEntriesFromDictionary:[radioRelatedComponent getValues]];
             }
             else if ([view isKindOfClass:[JACheckBoxComponent class]])
             {

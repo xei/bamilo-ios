@@ -32,6 +32,7 @@
 @property (nonatomic, retain) NSString * linkUrl;
 @property (nonatomic, retain) NSString * pattern;
 @property (nonatomic, retain) NSString * patternMessage;
+@property (nonatomic, retain) NSString * relatedField;
 
 + (RIField *)parseField:(NSDictionary *)fieldJSON;
 + (void)saveField:(RIField *)field;
