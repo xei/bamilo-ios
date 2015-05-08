@@ -33,6 +33,7 @@
 @dynamic linkUrl;
 @dynamic pattern;
 @dynamic patternMessage;
+@dynamic relatedField;
 
 + (RIField *)parseField:(NSDictionary *)fieldJSON;
 {
@@ -69,11 +70,23 @@
     {
         NSArray *dataSetArray = [fieldJSON objectForKey:@"dataset"];
         
-        for (NSString *tempString in dataSetArray) {
-            RIFieldDataSetComponent *component = [RIFieldDataSetComponent parseDataSetComponent:tempString];
-            component.field = newField;
-            [newField addDataSetObject:component];
+        id exampleObject = [dataSetArray firstObject];
+        
+        if ([exampleObject isKindOfClass:[NSString class]]) {
+            for (NSString *tempString in dataSetArray) {
+                RIFieldDataSetComponent *component = [RIFieldDataSetComponent parseDataSetComponentWithString:tempString];
+                component.field = newField;
+                [newField addDataSetObject:component];
+            }
+        } else if ([exampleObject isKindOfClass:[NSDictionary class]]) {
+            for (NSDictionary* tempDictionary in dataSetArray) {
+                RIFieldDataSetComponent *component = [RIFieldDataSetComponent parseDataSetComponentWithDictionary:tempDictionary];
+                component.field = newField;
+                [newField addDataSetObject:component];
+            }
         }
+        
+
     }
     else if (VALID_NOTEMPTY([fieldJSON objectForKey:@"dataset"], NSDictionary))
     {
@@ -150,6 +163,10 @@
     
     if ([fieldJSON objectForKey:@"link_url"]) {
         newField.linkUrl = [fieldJSON objectForKey:@"link_url"];
+    }
+    
+    if ([fieldJSON objectForKey:@"related_field"]) {
+        newField.relatedField = [fieldJSON objectForKey:@"related_field"];
     }
     
     return newField;

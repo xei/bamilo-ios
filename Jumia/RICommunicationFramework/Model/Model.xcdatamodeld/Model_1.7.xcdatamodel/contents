@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D136" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C109" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="RIAddress" representedClassName="RIAddress" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
@@ -84,6 +84,7 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pattern" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="patternMessage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="relatedField" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="required" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="requiredMessage" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
@@ -95,6 +96,9 @@
         <relationship name="ratingStars" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIFieldRatingStars" inverseName="field" inverseEntity="RIFieldRatingStars" syncable="YES"/>
     </entity>
     <entity name="RIFieldDataSetComponent" representedClassName="RIFieldDataSetComponent" syncable="YES">
+        <attribute name="label" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pattern" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="patternMessage" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="field" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RIField" inverseName="dataSet" inverseEntity="RIField" syncable="YES"/>
     </entity>
@@ -291,8 +295,8 @@
         <element name="RICategory" positionX="-261" positionY="27" width="128" height="150"/>
         <element name="RICountryConfiguration" positionX="-513" positionY="-132" width="128" height="285"/>
         <element name="RICustomer" positionX="279" positionY="650" width="128" height="208"/>
-        <element name="RIField" positionX="-299" positionY="681" width="128" height="330"/>
-        <element name="RIFieldDataSetComponent" positionX="-63" positionY="837" width="128" height="73"/>
+        <element name="RIField" positionX="-299" positionY="681" width="128" height="345"/>
+        <element name="RIFieldDataSetComponent" positionX="-63" positionY="837" width="128" height="118"/>
         <element name="RIFieldOption" positionX="-137" positionY="963" width="128" height="118"/>
         <element name="RIFieldRatingStars" positionX="-306" positionY="998" width="128" height="118"/>
         <element name="RIForm" positionX="-504" positionY="362" width="128" height="118"/>

@@ -2383,6 +2383,16 @@
 		CEDEB9C7199BA8FA0022BAB5 /* slider-metal-trackBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9AB199BA8FA0022BAB5 /* slider-metal-trackBackground.png */; };
 		CEDEB9C8199BA8FA0022BAB5 /* slider-metal-trackBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9AC199BA8FA0022BAB5 /* slider-metal-trackBackground@2x.png */; };
 		CEDEB9C9199BA8FA0022BAB5 /* NMRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDEB9AE199BA8FA0022BAB5 /* NMRangeSlider.m */; };
+		CEE558621AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE558611AFCC2FB00FC87D4 /* JARadioRelatedComponent.m */; };
+		CEE558631AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE558611AFCC2FB00FC87D4 /* JARadioRelatedComponent.m */; };
+		CEE558641AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE558611AFCC2FB00FC87D4 /* JARadioRelatedComponent.m */; };
+		CEE558651AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE558611AFCC2FB00FC87D4 /* JARadioRelatedComponent.m */; };
+		CEE558661AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE558611AFCC2FB00FC87D4 /* JARadioRelatedComponent.m */; };
+		CEE5586E1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE5586D1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib */; };
+		CEE5586F1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE5586D1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib */; };
+		CEE558701AFCC39C00FC87D4 /* JARadioRelatedComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE5586D1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib */; };
+		CEE558711AFCC39C00FC87D4 /* JARadioRelatedComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE5586D1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib */; };
+		CEE558721AFCC39C00FC87D4 /* JARadioRelatedComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE5586D1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib */; };
 		CEE91B9C1989065A0078DFC9 /* JATeaserPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE91B9B1989065A0078DFC9 /* JATeaserPageView.m */; };
 		CEED472C1A7B973B006D9CE7 /* JAPDVBundles.m in Sources */ = {isa = PBXBuildFile; fileRef = CEED47261A7B973B006D9CE7 /* JAPDVBundles.m */; };
 		CEED472D1A7B973B006D9CE7 /* JAPDVBundles.m in Sources */ = {isa = PBXBuildFile; fileRef = CEED47261A7B973B006D9CE7 /* JAPDVBundles.m */; };
@@ -3272,6 +3282,9 @@
 		CEDEB9AC199BA8FA0022BAB5 /* slider-metal-trackBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-metal-trackBackground@2x.png"; sourceTree = "<group>"; };
 		CEDEB9AD199BA8FA0022BAB5 /* NMRangeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMRangeSlider.h; sourceTree = "<group>"; };
 		CEDEB9AE199BA8FA0022BAB5 /* NMRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMRangeSlider.m; sourceTree = "<group>"; };
+		CEE558601AFCC2FB00FC87D4 /* JARadioRelatedComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARadioRelatedComponent.h; sourceTree = "<group>"; };
+		CEE558611AFCC2FB00FC87D4 /* JARadioRelatedComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARadioRelatedComponent.m; sourceTree = "<group>"; };
+		CEE5586D1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JARadioRelatedComponent.xib; sourceTree = "<group>"; };
 		CEE91B9A1989065A0078DFC9 /* JATeaserPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATeaserPageView.h; sourceTree = "<group>"; };
 		CEE91B9B1989065A0078DFC9 /* JATeaserPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATeaserPageView.m; sourceTree = "<group>"; };
 		CEED47251A7B973B006D9CE7 /* JAPDVBundles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAPDVBundles.h; path = Bundles/JAPDVBundles.h; sourceTree = "<group>"; };
@@ -3890,6 +3903,9 @@
 				B5BDD98919FFAAF000C2C2CC /* JANewsletterComponent.m */,
 				B5BDD98A19FFAAF000C2C2CC /* JANewsletterComponent.xib */,
 				6C18BDAB1A1B4CA300626706 /* JANewsletterComponent~iPad.xib */,
+				CEE558601AFCC2FB00FC87D4 /* JARadioRelatedComponent.h */,
+				CEE558611AFCC2FB00FC87D4 /* JARadioRelatedComponent.m */,
+				CEE5586D1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib */,
 			);
 			path = DynamicForms;
 			sourceTree = "<group>";
@@ -5805,6 +5821,7 @@
 				CEAB63AC1A81053C00B6F26E /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-landscape-iPad.xib in Resources */,
 				4f946a6031dc658465b500d8 /* slider-default7-trackCrossedOver.png in Resources */,
 				BB9546B019F5515F00AC7D05 /* 11_catalog.feature in Resources */,
+				CEE5586F1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib in Resources */,
 				CEAB63521A81053C00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-retHD.xib in Resources */,
 				CEAB63EA1A81053C00B6F26E /* BMA4SiPhoneWebViewNotifView-nobuttons-retHD.xib in Resources */,
 				CEA86E0B1A49D247000032AD /* JACampaignProductCell_ipad_landscape.xib in Resources */,
@@ -6069,6 +6086,7 @@
 				CEAB63E51A81053C00B6F26E /* BMA4SiPhoneWebViewNotifView-nobuttons-landscape-retHD.xib in Resources */,
 				CEAB63A71A81053C00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons.xib in Resources */,
 				CE283E6A1A714FD300F3E92D /* JAOtherOffersView_Landscape~iPad.xib in Resources */,
+				CEE5586E1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib in Resources */,
 				BBB12A9C19DDA01E00656529 /* 09_home.feature in Resources */,
 				CEAB634D1A81053C00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-landscape.xib in Resources */,
 				CE2F577019913B6D000A9E09 /* JACatalogListCell.xib in Resources */,
@@ -6158,6 +6176,7 @@
 				CE9ADC461AB34C4600D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape-retHD.xib in Resources */,
 				CE9ADC471AB34C4600D56481 /* BMA4SiPhoneWebViewNotifView-iPad.xib in Resources */,
 				CE9ADC481AB34C4600D56481 /* JANewsletterComponent~iPad.xib in Resources */,
+				CEE558701AFCC39C00FC87D4 /* JARadioRelatedComponent.xib in Resources */,
 				CE9ADC491AB34C4600D56481 /* 13_related_items.feature in Resources */,
 				CE9ADC4A1AB34C4600D56481 /* init.rb in Resources */,
 				CE9ADC4B1AB34C4600D56481 /* 17_recently_viewed.feature in Resources */,
@@ -6555,6 +6574,7 @@
 				CE9ADEDD1AB6D6E900D56481 /* BMA4SiPhoneWebViewNotifView-nobuttons-landscape-retHD.xib in Resources */,
 				CE9ADEDE1AB6D6E900D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons.xib in Resources */,
 				CE9ADEDF1AB6D6E900D56481 /* JAOtherOffersView_Landscape~iPad.xib in Resources */,
+				CEE558711AFCC39C00FC87D4 /* JARadioRelatedComponent.xib in Resources */,
 				CE9ADEE01AB6D6E900D56481 /* 09_home.feature in Resources */,
 				CE9ADEE11AB6D6E900D56481 /* BMA4SiPhoneIntersticialTextNotifView-landscape.xib in Resources */,
 				CE9ADEE21AB6D6E900D56481 /* JACatalogListCell.xib in Resources */,
@@ -6637,6 +6657,7 @@
 				CE9AE03B1AB6D78200D56481 /* BMA4SiPhoneWebViewNotifView-iPad.xib in Resources */,
 				CE9AE03C1AB6D78200D56481 /* JANewsletterComponent~iPad.xib in Resources */,
 				CE9AE03D1AB6D78200D56481 /* 13_related_items.feature in Resources */,
+				CEE558721AFCC39C00FC87D4 /* JARadioRelatedComponent.xib in Resources */,
 				CE9AE03E1AB6D78200D56481 /* init.rb in Resources */,
 				CE9AE03F1AB6D78200D56481 /* 17_recently_viewed.feature in Resources */,
 				CE9AE0401AB6D78200D56481 /* BMA4SiPhoneTextNotifView-landscape-retHD.xib in Resources */,
@@ -7111,6 +7132,7 @@
 				185e4d8d406a3ebd18ee19ec /* RIFormIndex.m in Sources */,
 				B5CBFF671A10B33D0050C553 /* JARatingsViewMedium.m in Sources */,
 				3c19ddaf1c0aad1ad6bfad03 /* JADynamicForm.m in Sources */,
+				CEE558631AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */,
 				B5C13EC51A402A9E00484398 /* ADJUtil.m in Sources */,
 				7eb64a1c587a08b5852171a0 /* main.m in Sources */,
 				3193bc811c58a8831f67c283 /* UIButton+WebCache.m in Sources */,
@@ -7269,6 +7291,7 @@
 				B5C13EB01A402A9E00484398 /* ADJAttributionHandler.m in Sources */,
 				B50B03A3198A5441002046DF /* JAPaymentViewController.m in Sources */,
 				CE0F130D1AF277F700F99356 /* JAKickoutView.m in Sources */,
+				CEE558621AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */,
 				B5C2B0681A0911AB00B4872D /* JAPicker.m in Sources */,
 				B5C13EA41A402A9E00484398 /* ADJActivityPackage.m in Sources */,
 				B59DCA6119B710B100DE7960 /* RIRegion.m in Sources */,
@@ -7524,6 +7547,7 @@
 				CE9ADB9E1AB34C4600D56481 /* ADJAttributionHandler.m in Sources */,
 				CE9ADB9F1AB34C4600D56481 /* JAPaymentViewController.m in Sources */,
 				CE0F130F1AF277F700F99356 /* JAKickoutView.m in Sources */,
+				CEE558641AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */,
 				CE9ADBA01AB34C4600D56481 /* JAPicker.m in Sources */,
 				CE9ADBA11AB34C4600D56481 /* ADJActivityPackage.m in Sources */,
 				CE9ADBA21AB34C4600D56481 /* RIRegion.m in Sources */,
@@ -7771,6 +7795,7 @@
 				CE9ADD981AB6D6E900D56481 /* ADJAttributionHandler.m in Sources */,
 				CE9ADD991AB6D6E900D56481 /* JAPaymentViewController.m in Sources */,
 				CE0F13101AF277F700F99356 /* JAKickoutView.m in Sources */,
+				CEE558651AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */,
 				CE9ADD9A1AB6D6E900D56481 /* JAPicker.m in Sources */,
 				CE9ADD9B1AB6D6E900D56481 /* ADJActivityPackage.m in Sources */,
 				CE9ADD9C1AB6D6E900D56481 /* RIRegion.m in Sources */,
@@ -8018,6 +8043,7 @@
 				CE9ADF921AB6D78200D56481 /* ADJAttributionHandler.m in Sources */,
 				CE9ADF931AB6D78200D56481 /* JAPaymentViewController.m in Sources */,
 				CE0F13111AF277F700F99356 /* JAKickoutView.m in Sources */,
+				CEE558661AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */,
 				CE9ADF941AB6D78200D56481 /* JAPicker.m in Sources */,
 				CE9ADF951AB6D78200D56481 /* ADJActivityPackage.m in Sources */,
 				CE9ADF961AB6D78200D56481 /* RIRegion.m in Sources */,
