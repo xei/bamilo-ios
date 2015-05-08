@@ -1212,11 +1212,18 @@ JAActivityViewControllerDelegate
     // Share with Facebook Messenger and WhatsApp
     UIActivity *fbmActivity = [[AQSFacebookMessengerActivity alloc] init];
     UIActivity *whatsAppActivity = [[JBWhatsAppActivity alloc] init];
+    
+    NSArray *objectToShare = @[fbmActivity, whatsAppActivity];;
+    
     WhatsAppMessage *whatsappMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",STRING_SHARE_PRODUCT_MESSAGE, url] forABID:nil];
     
-    NSArray *aplicationActivities = @[fbmActivity, whatsAppActivity];
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_PRODUCT_MESSAGE, [NSURL URLWithString:url], whatsappMsg] applicationActivities:nil];
     
-    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_PRODUCT_MESSAGE, [NSURL URLWithString:url], whatsappMsg] applicationActivities:aplicationActivities];
+    if(!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")){
+       
+        activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_PRODUCT_MESSAGE, [NSURL URLWithString:url], whatsappMsg] applicationActivities:objectToShare];
+         
+    }
     
     
     activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
