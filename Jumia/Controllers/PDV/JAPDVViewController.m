@@ -889,13 +889,10 @@ JAActivityViewControllerDelegate
     
     if (isiPadInLandscape)
     {
-        [self.productInfoSection.productFeaturesMore addTarget:self
+        [self.productInfoSection.specificationsClickableView addTarget:self
                                                         action:@selector(gotoDetails)
                                               forControlEvents:UIControlEventTouchUpInside];
         
-        [self.productInfoSection.productDescriptionMore addTarget:self
-                                                           action:@selector(gotoDetails)
-                                                 forControlEvents:UIControlEventTouchUpInside];
         
         self.productInfoSection.frame = CGRectMake(6,
                                                    landscapeScrollViewY,
@@ -1031,14 +1028,25 @@ JAActivityViewControllerDelegate
         
         if(isiPadInLandscape)
         {
-            [self.bundleLayout setFrame:CGRectMake(self.bundleLayout.frame.origin.x,
-                                                   self.bundleLayout.frame.origin.y,
-                                                   self.imageSection.frame.size.width,
+            [self.bundleLayout setFrame:CGRectMake(6.0f,
+                                                   landscapeScrollViewY,
+                                                   self.imageSection.frame.size.width- 6.0f,
                                                    self.bundleLayout.frame.size.height)];
+            
+            [self.landscapeScrollView addSubview:self.bundleLayout];
+            
+            landscapeScrollViewY += (6.0f + self.bundleLayout.frame.size.height);
+
+        }else
+        {
+            self.bundleLayout.frame = CGRectMake(6.0f,
+                                                 mainScrollViewY,
+                                                 self.bundleLayout.frame.size.width,
+                                                 self.bundleLayout.frame.size.height);
+            [self.mainScrollView addSubview:self.bundleLayout];
+            
+            mainScrollViewY += (6.0f + self.bundleLayout.frame.size.height);
         }
-        
-        mainScrollViewY += (6.0f + self.bundleLayout.frame.size.height);
-        
     }
     
     /*******
