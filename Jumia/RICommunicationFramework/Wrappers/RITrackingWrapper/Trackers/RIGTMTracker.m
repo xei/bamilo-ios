@@ -165,14 +165,15 @@ NSString *kGTMToken = @"kGTMToken";
     
     RIDebugLog(@"GTM tracker tracks application launch");
     
-    //NSString *containerId = [RITrackingConfiguration valueForKey:trackingId];
     
-    if (!trackingId) {
-        RIRaiseError(@"Missing GTM container ID in tracking properties")
-        return;
+    if(VALID_NOTEMPTY(trackingId, NSString)){
+        if (!trackingId) {
+            RIRaiseError(@"Missing GTM container ID in tracking properties")
+            return;
+        }
     }
     
-     TAGManager *tagManager = [TAGManager instance];
+    TAGManager *tagManager = [TAGManager instance];
     
     // Optional: Change the LogLevel to Verbose to enable logging at VERBOSE and higher levels.
     [tagManager.logger setLogLevel:kTAGLoggerLogLevelNone];// kTAGLoggerLogLevelInfo];
