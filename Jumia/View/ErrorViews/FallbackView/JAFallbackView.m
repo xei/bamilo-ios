@@ -80,7 +80,7 @@
     }
     
     self.backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:fallbackBackgroundImageName]];
-    [self.backgroundImageView setFrame:frame];
+    [self.backgroundImageView setFrame:self.bounds];
     [self addSubview:self.backgroundImageView];
     
 
