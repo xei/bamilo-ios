@@ -344,11 +344,35 @@
         NSArray* fields = [formDict objectForKey:@"fields"];
         
         if (VALID_NOTEMPTY(fields, NSArray)) {
+            
+            NSMutableArray* unsortedFields = [NSMutableArray new];
             for (NSDictionary* fieldJSON in fields) {
                 RIField* newField = [RIField parseField:fieldJSON];
                 newField.form = newForm;
-                [newForm addFieldsObject:newField];
+                [unsortedFields addObject:newField];
             }
+            NSMutableArray* sortedFields = [NSMutableArray new];
+            for (RIField* field in unsortedFields) {
+                if (VALID_NOTEMPTY(field.relatedField, NSString)) {
+                    
+                    BOOL inserted = NO;
+                    //search for it on the already sorted
+                    for (int i = 0; i<sortedFields.count; i++) {
+                        RIField* comparisonField = [sortedFields objectAtIndex:i];
+                        if ([comparisonField.key isEqualToString:field.relatedField]) {
+                            [sortedFields insertObject:field atIndex:i+1]; //after the field in question
+                            inserted = YES;
+                            break;
+                        }
+                    }
+                    if (NO == inserted) {
+                        [sortedFields addObject:field];
+                    }
+                } else {
+                    [sortedFields addObject:field];
+                }
+            }
+            newForm.fields = [NSOrderedSet orderedSetWithArray:sortedFields];
         }
     }
     

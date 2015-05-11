@@ -343,7 +343,6 @@
          }
          else
          {
-             self.searchString = self.categoryName;
              self.navBarLayout.title = self.categoryName;
              
              [self loadMoreProducts];
@@ -617,6 +616,9 @@
                 self.isLoadingMoreProducts =YES;
                 
                 NSString* urlToUse = self.catalogUrl;
+                if (VALID_NOTEMPTY(self.categoryName, NSString)) {
+                    urlToUse = [NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, self.categoryName];
+                }
                 if (VALID_NOTEMPTY(self.category, RICategory) && VALID_NOTEMPTY(self.category.apiUrl, NSString)) {
                     urlToUse = self.category.apiUrl;
                 }
