@@ -396,8 +396,6 @@
 		B5A30303198121A400F71726 /* JABaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A30301198121A400F71726 /* JABaseViewController.m */; };
 		B5B21B4719ED943C00099E25 /* JAMaintenancePage.m in Sources */ = {isa = PBXBuildFile; fileRef = B524311E19EC1163001E532C /* JAMaintenancePage.m */; };
 		B5B21B4819ED944900099E25 /* JAMaintenancePage.xib in Resources */ = {isa = PBXBuildFile; fileRef = B524312019EC117F001E532C /* JAMaintenancePage.xib */; };
-		B5B3AB501A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB4E1A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib */; };
-		B5B3AB511A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB4E1A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib */; };
 		B5B3AB521A0779A000994BFA /* JAPDVProductInfo~iPad_Portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB4F1A0779A000994BFA /* JAPDVProductInfo~iPad_Portrait.xib */; };
 		B5B3AB531A0779A000994BFA /* JAPDVProductInfo~iPad_Portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB4F1A0779A000994BFA /* JAPDVProductInfo~iPad_Portrait.xib */; };
 		B5B3AB561A07A57400994BFA /* JAPDVVariations~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB541A07A57400994BFA /* JAPDVVariations~iPad.xib */; };
@@ -937,7 +935,6 @@
 		CE9ADC401AB34C4600D56481 /* JACampaignProductCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA86DFC1A49D247000032AD /* JACampaignProductCell_ipad_landscape.xib */; };
 		CE9ADC411AB34C4600D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB62EF1A81053B00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib */; };
 		CE9ADC421AB34C4600D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB63111A81053B00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape.xib */; };
-		CE9ADC431AB34C4600D56481 /* JAPDVProductInfo~iPad_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB4E1A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib */; };
 		CE9ADC441AB34C4600D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB62F41A81053B00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib */; };
 		CE9ADC451AB34C4600D56481 /* 00_choose_country.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA707B719EEB93C0094C565 /* 00_choose_country.feature */; };
 		CE9ADC461AB34C4600D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape-retHD.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB63221A81053B00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape-retHD.xib */; };
@@ -1414,7 +1411,6 @@
 		CE9ADE3A1AB6D6E900D56481 /* JACampaignProductCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA86DFC1A49D247000032AD /* JACampaignProductCell_ipad_landscape.xib */; };
 		CE9ADE3B1AB6D6E900D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB62EF1A81053B00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib */; };
 		CE9ADE3C1AB6D6E900D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB63111A81053B00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape.xib */; };
-		CE9ADE3D1AB6D6E900D56481 /* JAPDVProductInfo~iPad_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB4E1A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib */; };
 		CE9ADE3E1AB6D6E900D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB62F41A81053B00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib */; };
 		CE9ADE3F1AB6D6E900D56481 /* 00_choose_country.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA707B719EEB93C0094C565 /* 00_choose_country.feature */; };
 		CE9ADE401AB6D6E900D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape-retHD.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB63221A81053B00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape-retHD.xib */; };
@@ -1891,7 +1887,6 @@
 		CE9AE0341AB6D78200D56481 /* JACampaignProductCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA86DFC1A49D247000032AD /* JACampaignProductCell_ipad_landscape.xib */; };
 		CE9AE0351AB6D78200D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB62EF1A81053B00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib */; };
 		CE9AE0361AB6D78200D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB63111A81053B00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape.xib */; };
-		CE9AE0371AB6D78200D56481 /* JAPDVProductInfo~iPad_Landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB4E1A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib */; };
 		CE9AE0381AB6D78200D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB62F41A81053B00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib */; };
 		CE9AE0391AB6D78200D56481 /* 00_choose_country.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA707B719EEB93C0094C565 /* 00_choose_country.feature */; };
 		CE9AE03A1AB6D78200D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape-retHD.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEAB63221A81053B00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape-retHD.xib */; };
@@ -2833,7 +2828,6 @@
 		B5A302FD19811F8E00F71726 /* Jumia-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Jumia-Prefix.pch"; sourceTree = "<group>"; };
 		B5A30301198121A400F71726 /* JABaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JABaseViewController.m; sourceTree = "<group>"; };
 		B5A30302198121A400F71726 /* JABaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JABaseViewController.h; sourceTree = "<group>"; };
-		B5B3AB4E1A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JAPDVProductInfo~iPad_Landscape.xib"; sourceTree = "<group>"; };
 		B5B3AB4F1A0779A000994BFA /* JAPDVProductInfo~iPad_Portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JAPDVProductInfo~iPad_Portrait.xib"; sourceTree = "<group>"; };
 		B5B3AB541A07A57400994BFA /* JAPDVVariations~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JAPDVVariations~iPad.xib"; sourceTree = "<group>"; };
 		B5B5FDA319D95B6D008B8059 /* RINewsletterCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RINewsletterCategory.h; sourceTree = "<group>"; };
@@ -3736,7 +3730,6 @@
 				4A2FD840199119D900C65C1D /* JAPDVProductInfo.m */,
 				4A2FD841199119D900C65C1D /* JAPDVProductInfo.xib */,
 				B5B3AB4F1A0779A000994BFA /* JAPDVProductInfo~iPad_Portrait.xib */,
-				B5B3AB4E1A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib */,
 			);
 			path = ProductInfo;
 			sourceTree = "<group>";
@@ -5702,7 +5695,6 @@
 				CEAB63961A81053C00B6F26E /* BMA4SiPhoneWebViewNotifView-retHD.xib in Resources */,
 				BBBA4CC619E41F83004271B2 /* 15_my_favourites.feature in Resources */,
 				CEAB63C61A81053C00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-retHD.xib in Resources */,
-				B5B3AB511A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib in Resources */,
 				B5CFE99D1A0CF45C004CE545 /* JAAddRatingView.xib in Resources */,
 				BBBA4CD219E43993004271B2 /* 18_track_order.feature in Resources */,
 				CEAB63D81A81053C00B6F26E /* BMA4SiPhoneTextNotifView-nobuttons-landscape-retHD.xib in Resources */,
@@ -5904,7 +5896,6 @@
 				CEA86E0A1A49D247000032AD /* JACampaignProductCell_ipad_landscape.xib in Resources */,
 				CEAB63691A81053C00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib in Resources */,
 				CEAB63A11A81053C00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape.xib in Resources */,
-				B5B3AB501A0779A000994BFA /* JAPDVProductInfo~iPad_Landscape.xib in Resources */,
 				CEAB63731A81053C00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */,
 				BBA707B819EEB93C0094C565 /* 00_choose_country.feature in Resources */,
 				CEAB63BF1A81053C00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape-retHD.xib in Resources */,
@@ -6152,7 +6143,6 @@
 				CE9ADC401AB34C4600D56481 /* JACampaignProductCell_ipad_landscape.xib in Resources */,
 				CE9ADC411AB34C4600D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib in Resources */,
 				CE9ADC421AB34C4600D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape.xib in Resources */,
-				CE9ADC431AB34C4600D56481 /* JAPDVProductInfo~iPad_Landscape.xib in Resources */,
 				CE9ADC441AB34C4600D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */,
 				CE9ADC451AB34C4600D56481 /* 00_choose_country.feature in Resources */,
 				CE9ADC461AB34C4600D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape-retHD.xib in Resources */,
@@ -6390,7 +6380,6 @@
 				CE9ADE3A1AB6D6E900D56481 /* JACampaignProductCell_ipad_landscape.xib in Resources */,
 				CE9ADE3B1AB6D6E900D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib in Resources */,
 				CE9ADE3C1AB6D6E900D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape.xib in Resources */,
-				CE9ADE3D1AB6D6E900D56481 /* JAPDVProductInfo~iPad_Landscape.xib in Resources */,
 				CE9ADE3E1AB6D6E900D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */,
 				CE9ADE3F1AB6D6E900D56481 /* 00_choose_country.feature in Resources */,
 				CE9ADE401AB6D6E900D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape-retHD.xib in Resources */,
@@ -6630,7 +6619,6 @@
 				CE9AE0341AB6D78200D56481 /* JACampaignProductCell_ipad_landscape.xib in Resources */,
 				CE9AE0351AB6D78200D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-ret4.xib in Resources */,
 				CE9AE0361AB6D78200D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape.xib in Resources */,
-				CE9AE0371AB6D78200D56481 /* JAPDVProductInfo~iPad_Landscape.xib in Resources */,
 				CE9AE0381AB6D78200D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */,
 				CE9AE0391AB6D78200D56481 /* 00_choose_country.feature in Resources */,
 				CE9AE03A1AB6D78200D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape-retHD.xib in Resources */,
