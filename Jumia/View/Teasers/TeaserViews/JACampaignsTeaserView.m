@@ -367,7 +367,7 @@
     RITeaserComponent* component = [self.teaserComponentsToUse firstObject];
     
     if (ISEMPTY(component.endingDate)) {
-        self.clockLabel.text = @"";
+        self.clockLabel.text = @" ";
         [self.timer invalidate];
     } else {
         NSInteger remainingSeconds = (NSInteger)[component.endingDate timeIntervalSinceNow];
@@ -391,6 +391,7 @@
 //        }
         
         self.clockLabel.text = timeString;
+        [self.clockLabel sizeToFit];
     }
 }
 
