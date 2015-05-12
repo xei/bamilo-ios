@@ -50,6 +50,8 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
+    NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse *)response;
+    self.lastStatusCode = [httpResponse statusCode];
     [self.mutableData setLength:0];
 }
 
@@ -123,7 +125,12 @@
         }
         else
         {
-            self.failureBlock(RIApiResponseMaintenancePage, responseJSON, nil);
+            if (429 == self.lastStatusCode) {
+                self.lastStatusCode = 0;
+                self.failureBlock(RIApiResponseKickoutView, responseJSON, nil);
+            } else {
+                self.failureBlock(RIApiResponseMaintenancePage, responseJSON, nil);
+            }
         }
     } else {
         self.successBlock(RIApiResponseSuccess, responseJSON);
