@@ -14,7 +14,6 @@
 #import "RICustomer.h"
 #import "JAPromotionPopUp.h"
 #import "JAAppDelegate.h"
-#import "JAHomeWizardView.h"
 #import "JAFallbackView.h"
 
 @interface JAHomeViewController ()
@@ -24,7 +23,6 @@
 
 @property (nonatomic, assign) BOOL isLoaded;
 
-@property (nonatomic, strong)JAHomeWizardView *wizardView;
 @property (nonatomic, strong)JAFallbackView *fallbackView;
 
 @end
@@ -99,14 +97,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
                                                         object:nil];
     
-    BOOL alreadyShowedWizardHome = [[NSUserDefaults standardUserDefaults] boolForKey:kJAHomeWizardUserDefaultsKey];
-    if(alreadyShowedWizardHome == NO)
-    {
-        self.wizardView = [[JAHomeWizardView alloc] initWithFrame:[self viewBounds]];
-        [self.view addSubview:self.wizardView];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJAHomeWizardUserDefaultsKey];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
     [self hideLoading];
 }
 
@@ -125,15 +115,6 @@
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [self showLoading];
-    
-    if(VALID_NOTEMPTY(self.wizardView, JAHomeWizardView))
-    {
-        CGRect newFrame = CGRectMake(self.wizardView.frame.origin.x,
-                                     self.wizardView.frame.origin.y,
-                                     [self viewBounds].size.height + [self viewBounds].origin.y,
-                                     [self viewBounds].size.width - [self viewBounds].origin.y);
-        [self.wizardView reloadForFrame:newFrame];
-    }
     
     if(VALID_NOTEMPTY(self.fallbackView, JAFallbackView) && VALID_NOTEMPTY(self.fallbackView.superview, UIView))
     {
@@ -154,12 +135,6 @@
     }
     
     [self hideLoading];
-    
-    if(VALID_NOTEMPTY(self.wizardView, JAHomeWizardView))
-    {
-        [self.wizardView reloadForFrame:[self viewBounds]];
-        [self.view bringSubviewToFront:self.wizardView];
-    }
     
     if(VALID_NOTEMPTY(self.fallbackView, JAFallbackView) && VALID_NOTEMPTY(self.fallbackView.superview, UIView))
     {

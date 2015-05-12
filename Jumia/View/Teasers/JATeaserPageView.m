@@ -166,7 +166,7 @@
                                   width:(CGFloat)width
 {
     for (RITeaserGrouping* teaserGrouping in self.teaserGroupings) {
-        if ([teaserGrouping.type isEqualToString:@"shop_teasers"]) {
+        if ([teaserGrouping.type isEqualToString:@"brand_teasers"]) {
             //found it
             
             JABrandTeaserView* brandTeaserView = [[JABrandTeaserView alloc] initWithFrame:CGRectMake(xPosition,

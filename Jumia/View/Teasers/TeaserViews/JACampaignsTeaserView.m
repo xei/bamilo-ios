@@ -48,39 +48,46 @@
 
 - (void)loadForIPhone
 {
-    CGFloat margin = 6.0f; //value by design
+    CGFloat marginX = 6.0f; //value by design
+    CGFloat marginY = 12.0f; //value b design
     CGFloat mainAreaHeight = 103.0f; //value by design
     CGFloat moreButtonHeight = 24.0f;
     CGFloat totalHeight = mainAreaHeight;
     if (1 < self.teaserComponentsToUse.count) {
         //add the height of the button
         totalHeight += moreButtonHeight;
+    } else {
+        totalHeight += marginY;
     }
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               self.frame.size.width,
                               totalHeight)];
     
-    JAClickableView* mainClickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(self.bounds.origin.x + margin,
+    JAClickableView* mainClickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(self.bounds.origin.x + marginX,
                                                                                            self.bounds.origin.y,
-                                                                                           self.bounds.size.width - margin*2,
+                                                                                           self.bounds.size.width - marginX*2,
                                                                                            mainAreaHeight)];
     mainClickableView.tag = 0;
     mainClickableView.backgroundColor = [UIColor whiteColor];
     [mainClickableView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:mainClickableView];
+
+
+    UIView* clockView = [UIView new];
+    [mainClickableView addSubview:clockView];
     
     RITeaserComponent* mainCampaign = [self.teaserComponentsToUse firstObject];
     
-    CGFloat halfWidth = mainClickableView.bounds.size.width/2;
+    CGFloat labelTopMargin = 6.0f;
+    
     UILabel* titleLabel = [UILabel new];
     titleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.text = mainCampaign.title;
     [titleLabel sizeToFit];
-
-    CGFloat labelTopMargin = 14.0f;
+    [clockView addSubview:titleLabel];
     
     [self.clockLabel removeFromSuperview];
     self.clockLabel = [UILabel new];
@@ -88,25 +95,12 @@
         self.clockLabel.font = [UIFont fontWithName:kFontMediumName size:25.0f];
     } else {
         self.clockLabel.font = [UIFont fontWithName:kFontMediumName size:18.0f];
-        labelTopMargin = 16.0f;
     }
-    
-    [titleLabel setFrame:CGRectMake(margin,
-                                    labelTopMargin,
-                                    halfWidth - margin*2,
-                                    titleLabel.frame.size.height)];
-    [mainClickableView addSubview:titleLabel];
-    
     self.clockLabel.textColor = UIColorFromRGB(0xcc0000);
     self.clockLabel.textAlignment = NSTextAlignmentCenter;
-    self.clockLabel.text = @" ";
     [self.clockLabel sizeToFit];
-    [self.clockLabel setFrame:CGRectMake(margin,
-                                         CGRectGetMaxY(titleLabel.frame) + margin,
-                                         halfWidth - margin*2,
-                                         self.clockLabel.frame.size.height)];
-    [mainClickableView addSubview:self.clockLabel];
-
+    [clockView addSubview:self.clockLabel];
+    
     [self updateTimeLabelText];
     if (ISEMPTY(self.timer)) {
         self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0
@@ -116,18 +110,50 @@
                                                      repeats:YES];
     }
     
-    
     UILabel* subTitleLabel = [UILabel new];
     subTitleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
     subTitleLabel.textColor = [UIColor blackColor];
     subTitleLabel.textAlignment = NSTextAlignmentCenter;
     subTitleLabel.text = mainCampaign.subTitle;
     [subTitleLabel sizeToFit];
-    [subTitleLabel setFrame:CGRectMake(margin,
-                                       CGRectGetMaxY(self.clockLabel.frame) + margin,
-                                       halfWidth - margin*2,
+    [clockView addSubview:subTitleLabel];
+    
+    CGFloat clockViewWidth = MAX(subTitleLabel.frame.size.width, titleLabel.frame.size.width);
+    clockViewWidth = MAX(clockViewWidth, self.clockLabel.frame.size.width);
+    
+    CGFloat currentY = labelTopMargin;
+    CGFloat marginBetweenLabels = 6.0f;
+    
+    [titleLabel setFrame:CGRectMake(clockView.bounds.origin.x,
+                                    currentY,
+                                    clockViewWidth,
+                                    titleLabel.frame.size.height)];
+    
+    currentY += titleLabel.frame.size.height + marginBetweenLabels;
+    
+    [self.clockLabel setFrame:CGRectMake(clockView.bounds.origin.x,
+                                         currentY,
+                                         clockViewWidth,
+                                         self.clockLabel.frame.size.height)];
+    
+    if (0 < self.clockLabel.frame.size.height) {
+        currentY += self.clockLabel.frame.size.height + marginBetweenLabels;
+    }
+    
+    [subTitleLabel setFrame:CGRectMake(clockView.bounds.origin.x,
+                                       currentY,
+                                       clockViewWidth,
                                        subTitleLabel.frame.size.height)];
-    [mainClickableView addSubview:subTitleLabel];
+    
+    currentY += subTitleLabel.frame.size.height;
+
+    
+    CGFloat halfWidth = mainClickableView.bounds.size.width/2;
+    
+    [clockView setFrame:CGRectMake((halfWidth - clockViewWidth) / 2,
+                                   (mainAreaHeight - currentY) / 2,
+                                   clockViewWidth,
+                                   currentY)];
     
     NSString* imageUrl = mainCampaign.imagePortraitUrl;
     UIImageView* imageView = [UIImageView new];
@@ -138,11 +164,12 @@
     [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
     [mainClickableView addSubview:imageView];
     
+    
     if (1 < self.teaserComponentsToUse.count) {
         
-        JAClickableView* moreView = [[JAClickableView alloc] initWithFrame:CGRectMake(self.bounds.origin.x + margin,
+        JAClickableView* moreView = [[JAClickableView alloc] initWithFrame:CGRectMake(self.bounds.origin.x + marginX,
                                                                                       mainAreaHeight,
-                                                                                      self.bounds.size.width - margin*2,
+                                                                                      self.bounds.size.width - marginX*2,
                                                                                       moreButtonHeight)];
         moreView.tag = 0; //all the campaigns open when one of them is clicked
         moreView.backgroundColor = [UIColor clearColor];
@@ -178,21 +205,22 @@
 
 - (void)loadForIPad
 {
-    CGFloat margin = 6.0f; //value by design
+    CGFloat marginX = 6.0f; //value by design
+    CGFloat marginY = 10.0f; //value by design
     CGFloat moreOffersComponentWidth = 125.0f; //value by design
     if (1 == self.teaserComponentsToUse.count) {
         moreOffersComponentWidth = 0.0f;
     }
     CGFloat mainAreaHeight = 132.0f; //value by design
-    CGFloat totalHeight = mainAreaHeight + margin;
+    CGFloat totalHeight = mainAreaHeight + marginY;
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               self.frame.size.width,
                               totalHeight)];
     
-    CGFloat mainAreaWidth = self.frame.size.width - 2*margin - moreOffersComponentWidth;
+    CGFloat mainAreaWidth = self.frame.size.width - 2*marginX - moreOffersComponentWidth;
     
-    JAClickableView* mainClickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(self.bounds.origin.x + margin,
+    JAClickableView* mainClickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(self.bounds.origin.x + marginX,
                                                                                            self.bounds.origin.y,
                                                                                            mainAreaWidth,
                                                                                            mainAreaHeight)];
@@ -204,10 +232,9 @@
     UIView* clockView = [UIView new];
     [mainClickableView addSubview:clockView];
     
-    
     RITeaserComponent* mainCampaign = [self.teaserComponentsToUse firstObject];
     
-    CGFloat labelTopMargin = 14.0f;
+    CGFloat labelTopMargin = 6.0f;
     
     UILabel* titleLabel = [UILabel new];
     titleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
@@ -226,7 +253,6 @@
     }
     self.clockLabel.textColor = UIColorFromRGB(0xcc0000);
     self.clockLabel.textAlignment = NSTextAlignmentCenter;
-    self.clockLabel.text = @" ";
     [self.clockLabel sizeToFit];
     [clockView addSubview:self.clockLabel];
 
@@ -250,18 +276,31 @@
     CGFloat clockViewWidth = MAX(subTitleLabel.frame.size.width, titleLabel.frame.size.width);
     clockViewWidth = MAX(clockViewWidth, self.clockLabel.frame.size.width);
     
+    CGFloat currentY = labelTopMargin;
+    CGFloat marginBetweenLabels = 6.0f;
+    
     [titleLabel setFrame:CGRectMake(clockView.bounds.origin.x,
-                                    labelTopMargin,
+                                    currentY,
                                     clockViewWidth,
                                     titleLabel.frame.size.height)];
+    
+    currentY += titleLabel.frame.size.height + marginBetweenLabels;
+    
     [self.clockLabel setFrame:CGRectMake(clockView.bounds.origin.x,
-                                         CGRectGetMaxY(titleLabel.frame) + margin,
+                                         currentY,
                                          clockViewWidth,
                                          self.clockLabel.frame.size.height)];
+    
+    if (0 < self.clockLabel.frame.size.height) {
+        currentY += self.clockLabel.frame.size.height + marginBetweenLabels;
+    }
+    
     [subTitleLabel setFrame:CGRectMake(clockView.bounds.origin.x,
-                                       CGRectGetMaxY(self.clockLabel.frame) + margin,
+                                       currentY,
                                        clockViewWidth,
                                        subTitleLabel.frame.size.height)];
+    
+    currentY += subTitleLabel.frame.size.height;
     
     CGFloat imageViewHeight = 103.0f; //value by design
     CGFloat imageViewWidth = 153.0f; //value by design
@@ -274,12 +313,10 @@
     CGFloat totalEmptyArea = mainAreaWidth - totalOcuppiedWidth;
     CGFloat mainAreaViewsMargin = totalEmptyArea / 3;
     
-    CGFloat clockViewHeight = CGRectGetMaxY(subTitleLabel.frame);
-    
     [clockView setFrame:CGRectMake(mainAreaViewsMargin,
-                                   (mainAreaHeight - clockViewHeight) / 2,
+                                   (mainAreaHeight - currentY) / 2,
                                    clockViewWidth,
-                                   clockViewHeight)];
+                                   currentY)];
     [imageView setFrame:CGRectMake(CGRectGetMaxX(clockView.frame) + mainAreaViewsMargin,
                                    (mainAreaHeight - imageViewHeight) / 2,
                                    imageViewWidth,
@@ -354,6 +391,7 @@
 //        }
         
         self.clockLabel.text = timeString;
+        [self.clockLabel sizeToFit];
     }
 }
 
