@@ -98,6 +98,8 @@
                                                         object:nil];
     
     [self hideLoading];
+    
+    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
