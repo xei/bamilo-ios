@@ -490,7 +490,6 @@
 		BB4FB8D919E7FC4E006FEFF6 /* RICampaign.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF90D19DBF68400D8C51B /* RICampaign.m */; };
 		BB746F4019ED8D5A00341B33 /* JAClickableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376D219EBCA5800558B98 /* JAClickableView.m */; };
 		BB95469F19F51F2200AC7D05 /* JACatalogWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376E519F015C600558B98 /* JACatalogWizardView.m */; };
-		BB9546A019F51F4800AC7D05 /* JAHomeWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376E219F0050F00558B98 /* JAHomeWizardView.m */; };
 		BB9546A119F51F5700AC7D05 /* JAPDVWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376E819F023CA00558B98 /* JAPDVWizardView.m */; };
 		BB9546A219F51FE400AC7D05 /* JAWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376DC19EFC1E800558B98 /* JAWizardView.m */; };
 		BB9546A319F5510D00AC7D05 /* multi_step.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A019DC56BF003F0CA7 /* multi_step.rb */; };
@@ -746,7 +745,6 @@
 		CE9ADB771AB34C4600D56481 /* JAFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4848961A161979003C3D53 /* JAFiltersView.m */; };
 		CE9ADB7A1AB34C4600D56481 /* JACartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E2F198950C500C18F1E /* JACartViewController.m */; };
 		CE9ADB7B1AB34C4600D56481 /* JAPDVProductInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2FD840199119D900C65C1D /* JAPDVProductInfo.m */; };
-		CE9ADB7C1AB34C4600D56481 /* JAHomeWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376E219F0050F00558B98 /* JAHomeWizardView.m */; };
 		CE9ADB7D1AB34C4600D56481 /* RIField.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA4119B4E92B00DE7960 /* RIField.m */; };
 		CE9ADB7F1AB34C4600D56481 /* JAPaymentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DBF3719C0AF9600D4678A /* JAPaymentCell.m */; };
 		CE9ADB801AB34C4600D56481 /* JAPDVBundleSingleItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CEED47291A7B973B006D9CE7 /* JAPDVBundleSingleItem.m */; };
@@ -1222,7 +1220,6 @@
 		CE9ADD711AB6D6E900D56481 /* JAFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4848961A161979003C3D53 /* JAFiltersView.m */; };
 		CE9ADD741AB6D6E900D56481 /* JACartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E2F198950C500C18F1E /* JACartViewController.m */; };
 		CE9ADD751AB6D6E900D56481 /* JAPDVProductInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2FD840199119D900C65C1D /* JAPDVProductInfo.m */; };
-		CE9ADD761AB6D6E900D56481 /* JAHomeWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376E219F0050F00558B98 /* JAHomeWizardView.m */; };
 		CE9ADD771AB6D6E900D56481 /* RIField.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA4119B4E92B00DE7960 /* RIField.m */; };
 		CE9ADD791AB6D6E900D56481 /* JAPaymentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DBF3719C0AF9600D4678A /* JAPaymentCell.m */; };
 		CE9ADD7A1AB6D6E900D56481 /* JAPDVBundleSingleItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CEED47291A7B973B006D9CE7 /* JAPDVBundleSingleItem.m */; };
@@ -1698,7 +1695,6 @@
 		CE9ADF6B1AB6D78200D56481 /* JAFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4848961A161979003C3D53 /* JAFiltersView.m */; };
 		CE9ADF6E1AB6D78200D56481 /* JACartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E2F198950C500C18F1E /* JACartViewController.m */; };
 		CE9ADF6F1AB6D78200D56481 /* JAPDVProductInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2FD840199119D900C65C1D /* JAPDVProductInfo.m */; };
-		CE9ADF701AB6D78200D56481 /* JAHomeWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376E219F0050F00558B98 /* JAHomeWizardView.m */; };
 		CE9ADF711AB6D78200D56481 /* RIField.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA4119B4E92B00DE7960 /* RIField.m */; };
 		CE9ADF731AB6D78200D56481 /* JAPaymentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DBF3719C0AF9600D4678A /* JAPaymentCell.m */; };
 		CE9ADF741AB6D78200D56481 /* JAPDVBundleSingleItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CEED47291A7B973B006D9CE7 /* JAPDVBundleSingleItem.m */; };
@@ -2328,7 +2324,6 @@
 		CEBEEE7D1A8E13CF001998E5 /* JACatalogTopView_ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEBEEE7B1A8E13CF001998E5 /* JACatalogTopView_ipad.xib */; };
 		CEC376D319EBCA5800558B98 /* JAClickableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376D219EBCA5800558B98 /* JAClickableView.m */; };
 		CEC376DD19EFC1E800558B98 /* JAWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376DC19EFC1E800558B98 /* JAWizardView.m */; };
-		CEC376E319F0050F00558B98 /* JAHomeWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376E219F0050F00558B98 /* JAHomeWizardView.m */; };
 		CEC376E619F015C600558B98 /* JACatalogWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376E519F015C600558B98 /* JACatalogWizardView.m */; };
 		CEC376E919F023CA00558B98 /* JAPDVWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376E819F023CA00558B98 /* JAPDVWizardView.m */; };
 		CEC3F71219A5FBF800DE12F6 /* JAFavoriteListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3F71119A5FBF800DE12F6 /* JAFavoriteListCell.xib */; };
@@ -3220,8 +3215,6 @@
 		CEC376D219EBCA5800558B98 /* JAClickableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAClickableView.m; sourceTree = "<group>"; };
 		CEC376DB19EFC1E800558B98 /* JAWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAWizardView.h; path = Wizard/JAWizardView.h; sourceTree = "<group>"; };
 		CEC376DC19EFC1E800558B98 /* JAWizardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAWizardView.m; path = Wizard/JAWizardView.m; sourceTree = "<group>"; };
-		CEC376E119F0050F00558B98 /* JAHomeWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAHomeWizardView.h; path = Wizard/JAHomeWizardView.h; sourceTree = "<group>"; };
-		CEC376E219F0050F00558B98 /* JAHomeWizardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAHomeWizardView.m; path = Wizard/JAHomeWizardView.m; sourceTree = "<group>"; };
 		CEC376E419F015C600558B98 /* JACatalogWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACatalogWizardView.h; path = Wizard/JACatalogWizardView.h; sourceTree = "<group>"; };
 		CEC376E519F015C600558B98 /* JACatalogWizardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACatalogWizardView.m; path = Wizard/JACatalogWizardView.m; sourceTree = "<group>"; };
 		CEC376E719F023CA00558B98 /* JAPDVWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAPDVWizardView.h; path = Wizard/JAPDVWizardView.h; sourceTree = "<group>"; };
@@ -5431,8 +5424,6 @@
 			children = (
 				CEC376DB19EFC1E800558B98 /* JAWizardView.h */,
 				CEC376DC19EFC1E800558B98 /* JAWizardView.m */,
-				CEC376E119F0050F00558B98 /* JAHomeWizardView.h */,
-				CEC376E219F0050F00558B98 /* JAHomeWizardView.m */,
 				CEC376E419F015C600558B98 /* JACatalogWizardView.h */,
 				CEC376E519F015C600558B98 /* JACatalogWizardView.m */,
 				CEC376E719F023CA00558B98 /* JAPDVWizardView.h */,
@@ -6936,7 +6927,6 @@
 				BB9546A219F51FE400AC7D05 /* JAWizardView.m in Sources */,
 				BB9546A119F51F5700AC7D05 /* JAPDVWizardView.m in Sources */,
 				B5C13EB71A402A9E00484398 /* ADJEvent.m in Sources */,
-				BB9546A019F51F4800AC7D05 /* JAHomeWizardView.m in Sources */,
 				CEBEEE791A8CF20C001998E5 /* JACatalogTopView.m in Sources */,
 				BB95469F19F51F2200AC7D05 /* JACatalogWizardView.m in Sources */,
 				B5B21B4719ED943C00099E25 /* JAMaintenancePage.m in Sources */,
@@ -7244,7 +7234,6 @@
 				CE4848971A161979003C3D53 /* JAFiltersView.m in Sources */,
 				B5225E30198950C500C18F1E /* JACartViewController.m in Sources */,
 				4A2FD842199119D900C65C1D /* JAPDVProductInfo.m in Sources */,
-				CEC376E319F0050F00558B98 /* JAHomeWizardView.m in Sources */,
 				B59DCA4219B4E92B00DE7960 /* RIField.m in Sources */,
 				B58DBF3919C0AF9600D4678A /* JAPaymentCell.m in Sources */,
 				CEED47301A7B973B006D9CE7 /* JAPDVBundleSingleItem.m in Sources */,
@@ -7500,7 +7489,6 @@
 				CE9ADB771AB34C4600D56481 /* JAFiltersView.m in Sources */,
 				CE9ADB7A1AB34C4600D56481 /* JACartViewController.m in Sources */,
 				CE9ADB7B1AB34C4600D56481 /* JAPDVProductInfo.m in Sources */,
-				CE9ADB7C1AB34C4600D56481 /* JAHomeWizardView.m in Sources */,
 				CE9ADB7D1AB34C4600D56481 /* RIField.m in Sources */,
 				CE9ADB7F1AB34C4600D56481 /* JAPaymentCell.m in Sources */,
 				CE9ADB801AB34C4600D56481 /* JAPDVBundleSingleItem.m in Sources */,
@@ -7748,7 +7736,6 @@
 				CE9ADD711AB6D6E900D56481 /* JAFiltersView.m in Sources */,
 				CE9ADD741AB6D6E900D56481 /* JACartViewController.m in Sources */,
 				CE9ADD751AB6D6E900D56481 /* JAPDVProductInfo.m in Sources */,
-				CE9ADD761AB6D6E900D56481 /* JAHomeWizardView.m in Sources */,
 				CE9ADD771AB6D6E900D56481 /* RIField.m in Sources */,
 				CE9ADD791AB6D6E900D56481 /* JAPaymentCell.m in Sources */,
 				CE9ADD7A1AB6D6E900D56481 /* JAPDVBundleSingleItem.m in Sources */,
@@ -7996,7 +7983,6 @@
 				CE9ADF6B1AB6D78200D56481 /* JAFiltersView.m in Sources */,
 				CE9ADF6E1AB6D78200D56481 /* JACartViewController.m in Sources */,
 				CE9ADF6F1AB6D78200D56481 /* JAPDVProductInfo.m in Sources */,
-				CE9ADF701AB6D78200D56481 /* JAHomeWizardView.m in Sources */,
 				CE9ADF711AB6D78200D56481 /* RIField.m in Sources */,
 				CE9ADF731AB6D78200D56481 /* JAPaymentCell.m in Sources */,
 				CE9ADF741AB6D78200D56481 /* JAPDVBundleSingleItem.m in Sources */,
