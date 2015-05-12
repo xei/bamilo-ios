@@ -182,7 +182,7 @@
     CGFloat marginY = 10.0f; //value by design
     CGFloat moreOffersComponentWidth = 125.0f; //value by design
     if (1 == self.teaserComponentsToUse.count) {
-        moreOffersComponentWidth = 0.0f;
+        moreOffersComponentWidth = marginY;
     }
     CGFloat mainAreaHeight = 132.0f; //value by design
     CGFloat totalHeight = mainAreaHeight + marginY;
