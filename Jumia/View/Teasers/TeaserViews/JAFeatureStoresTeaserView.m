@@ -19,10 +19,7 @@
     if (VALID_NOTEMPTY(self.teaserGrouping.teaserComponents, NSOrderedSet)) {
         
         CGFloat groupingTitleLabelMargin = 16.0f;
-        CGFloat groupingTitleLabelHeight = 30.0f; //value by design
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            groupingTitleLabelHeight = 35.0f; //value by design
-        }
+        CGFloat groupingTitleLabelHeight = 50.0f; //value by design
         UILabel* groupingTitleLabel = [UILabel new];
         groupingTitleLabel.font = [UIFont fontWithName:kFontMediumName size:14.0f];
         groupingTitleLabel.textColor = [UIColor blackColor];

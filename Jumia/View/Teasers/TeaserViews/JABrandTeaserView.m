@@ -22,10 +22,9 @@
 {
     [super load];
     
-    CGFloat topAreaHeight = 30.0f; //value by design
+    CGFloat topAreaHeight = 50.0f; //value by design
     CGFloat bottomAreaHeight = 30.0f; //value by design
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        topAreaHeight = 35.0f;
         bottomAreaHeight = 50.0f;
     }
     CGFloat totalHeight = topAreaHeight + bottomAreaHeight;
