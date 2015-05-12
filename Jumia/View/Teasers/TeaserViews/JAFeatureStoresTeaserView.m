@@ -35,7 +35,8 @@
         [self addSubview:groupingTitleLabel];
         
         CGFloat currentY = groupingTitleLabel.frame.size.height;
-        CGFloat margin = 6.0f; //value by design
+        CGFloat marginX = 6.0f; //value by design
+        CGFloat marginY = 6.0f; //value by design
         CGFloat componentHeight = 44; //value by design
         NSInteger numberOfComponentsForLine = 2;
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
@@ -43,8 +44,8 @@
             numberOfComponentsForLine = self.teaserGrouping.teaserComponents.count / 2;
         }
         NSInteger numberOfMargins = numberOfComponentsForLine + 1;
-        CGFloat componentWidth = (self.bounds.size.width- margin * numberOfMargins)/numberOfComponentsForLine;
-        CGFloat currentX = margin;
+        CGFloat componentWidth = (self.bounds.size.width- marginX * numberOfMargins)/numberOfComponentsForLine;
+        CGFloat currentX = marginX;
         for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
             
             JAClickableView* clickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
@@ -56,13 +57,13 @@
             [clickableView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:clickableView];
             
-            currentX += clickableView.frame.size.width + margin;
+            currentX += clickableView.frame.size.width + marginX;
             if (0 == (i+1) % numberOfComponentsForLine) {
-                currentX = margin;
-                currentY += margin + componentHeight;
+                currentX = marginX;
+                currentY += marginY + componentHeight;
             } else if (i+1 == self.teaserGrouping.teaserComponents.count){
                 //if it it the last of them all but not the last slot in line, add the height anyway
-                currentY += margin + componentHeight;
+                currentY += marginY + componentHeight;
             }
             
             RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];

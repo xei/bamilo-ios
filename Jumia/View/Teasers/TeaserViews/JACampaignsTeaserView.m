@@ -178,21 +178,22 @@
 
 - (void)loadForIPad
 {
-    CGFloat margin = 6.0f; //value by design
+    CGFloat marginX = 6.0f; //value by design
+    CGFloat marginY = 10.0f; //value by design
     CGFloat moreOffersComponentWidth = 125.0f; //value by design
     if (1 == self.teaserComponentsToUse.count) {
         moreOffersComponentWidth = 0.0f;
     }
     CGFloat mainAreaHeight = 132.0f; //value by design
-    CGFloat totalHeight = mainAreaHeight + margin;
+    CGFloat totalHeight = mainAreaHeight + marginY;
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               self.frame.size.width,
                               totalHeight)];
     
-    CGFloat mainAreaWidth = self.frame.size.width - 2*margin - moreOffersComponentWidth;
+    CGFloat mainAreaWidth = self.frame.size.width - 2*marginX - moreOffersComponentWidth;
     
-    JAClickableView* mainClickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(self.bounds.origin.x + margin,
+    JAClickableView* mainClickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(self.bounds.origin.x + marginX,
                                                                                            self.bounds.origin.y,
                                                                                            mainAreaWidth,
                                                                                            mainAreaHeight)];
@@ -255,11 +256,11 @@
                                     clockViewWidth,
                                     titleLabel.frame.size.height)];
     [self.clockLabel setFrame:CGRectMake(clockView.bounds.origin.x,
-                                         CGRectGetMaxY(titleLabel.frame) + margin,
+                                         CGRectGetMaxY(titleLabel.frame) + marginY,
                                          clockViewWidth,
                                          self.clockLabel.frame.size.height)];
     [subTitleLabel setFrame:CGRectMake(clockView.bounds.origin.x,
-                                       CGRectGetMaxY(self.clockLabel.frame) + margin,
+                                       CGRectGetMaxY(self.clockLabel.frame) + marginY,
                                        clockViewWidth,
                                        subTitleLabel.frame.size.height)];
     
