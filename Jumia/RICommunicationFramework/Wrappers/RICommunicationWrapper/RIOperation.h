@@ -24,6 +24,7 @@ typedef enum {
 @property (strong, nonatomic) NSURLConnection *connection;
 @property (strong, nonatomic) NSMutableData *mutableData;
 @property (strong, nonatomic) NSMutableURLRequest *request;
+@property (assign, nonatomic) NSInteger lastStatusCode;
 @property (assign, nonatomic) RICommunicationWrapperParameterEncoding parameterEncoding;
 @property (assign, nonatomic) RIURLCacheType cacheType;
 @property (assign, nonatomic) RIURLCacheTime cacheTime;
