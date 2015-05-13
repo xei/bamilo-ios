@@ -82,7 +82,8 @@
                                                                      1.0f)];
         if (VALID_NOTEMPTY(self.banner, RIBanner)) {
             NSString* imageUrl;
-            if((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))) {
+            BOOL isLandscape = self.view.frame.size.width > self.view.frame.size.height?YES:NO;
+            if((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && isLandscape) {
                 imageUrl = self.banner.iPadImageUrl;
             } else {
                 imageUrl = self.banner.iPhoneImageUrl;
