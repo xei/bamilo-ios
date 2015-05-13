@@ -447,7 +447,7 @@ JAPickerScrollViewDelegate
                 [self.specificationTextLabel addSubview:self.specificationValueLabel];
             
                 
-                keyYMargin = keyYMargin + 26.0f;
+                keyYMargin = keyYMargin + self.specificationValueLabel.frame.size.height;
                 
             }
         }
