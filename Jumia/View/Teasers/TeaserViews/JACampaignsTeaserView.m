@@ -157,6 +157,7 @@
     
     NSString* imageUrl = mainCampaign.imagePortraitUrl;
     UIImageView* imageView = [UIImageView new];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
     [imageView setFrame:CGRectMake(halfWidth,
                                    self.bounds.origin.y,
                                    halfWidth,

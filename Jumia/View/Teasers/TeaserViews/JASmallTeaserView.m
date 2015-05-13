@@ -94,6 +94,7 @@
         CGFloat imageHeight = 85; //value by design
         NSString* imageUrl = component.imagePortraitUrl;
         UIImageView* imageView = [UIImageView new];
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
         [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
         [imageView setFrame:CGRectMake((clickableView.bounds.size.width - imageWidth)/2,
                                        clickableView.bounds.size.height - imageHeight,
