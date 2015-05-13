@@ -153,6 +153,8 @@
         
         [self.filteredNoResultsView setupView:[self viewBounds]];
         
+        [self.collectionView removeFromSuperview];
+        
         [self.view addSubview:self.filteredNoResultsView];
     }
 }
