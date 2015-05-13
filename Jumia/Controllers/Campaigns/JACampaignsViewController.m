@@ -48,6 +48,7 @@
 
 - (void)viewDidLoad
 {
+    self.searchBarIsVisible = YES;
     [super viewDidLoad];
     
     self.campaignIndex = -1;
@@ -58,9 +59,10 @@
     
     self.pickerNamesAlreadySet = NO;
     
-    self.pickerScrollView = [[JAPickerScrollView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x,
-                                                                                 self.view.bounds.origin.y,
-                                                                                 self.view.bounds.size.width,
+    CGRect bounds = [self viewBounds];
+    self.pickerScrollView = [[JAPickerScrollView alloc] initWithFrame:CGRectMake(bounds.origin.x,
+                                                                                 bounds.origin.y,
+                                                                                 bounds.size.width,
                                                                                  44.0f)];
     self.pickerScrollView.delegate = self;
     [self.view addSubview:self.pickerScrollView];
@@ -89,7 +91,7 @@
     [super viewWillAppear:animated];
     
     if (self.isLoaded) {
-        [self setupCampaings:self.view.frame.size.width height:self.view.frame.size.height interfaceOrientation:self.interfaceOrientation];
+        [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
     } else {
         [self loadCampaigns];
     }
@@ -111,17 +113,12 @@
     [self.pickerScrollView setHidden:YES];
     [self.scrollView setHidden:YES];
     
-    if(!((UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) && (UIInterfaceOrientationIsLandscape(toInterfaceOrientation))) && !((UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) && (UIInterfaceOrientationIsPortrait(toInterfaceOrientation))) ){
-        
-    [self setupCampaings:self.view.frame.origin.y + self.view.frame.size.height height:self.view.frame.size.width - self.view.frame.origin.y interfaceOrientation:toInterfaceOrientation];
-    
-    }
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [self setupCampaings:self.view.frame.size.width height:self.view.frame.size.height interfaceOrientation:self.interfaceOrientation];
+    [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
     
     [self.pickerScrollView setHidden:NO];
     [self.scrollView setHidden:NO];
@@ -137,13 +134,13 @@
     {
         self.pickerScrollView.startingIndex = self.campaignIndex;
     }
-    
-    [self.pickerScrollView setFrame:CGRectMake(self.view.bounds.origin.x,
-                                               self.view.bounds.origin.y,
+    CGRect bounds = [self viewBounds];
+    [self.pickerScrollView setFrame:CGRectMake(bounds.origin.x,
+                                               bounds.origin.y,
                                                width,
                                                self.pickerScrollView.frame.size.height)];
     
-    [self.scrollView setFrame:CGRectMake(self.view.bounds.origin.x,
+    [self.scrollView setFrame:CGRectMake(bounds.origin.x,
                                          CGRectGetMaxY(self.pickerScrollView.frame),
                                          width,
                                          height - self.pickerScrollView.frame.size.height)];
@@ -224,7 +221,7 @@
     
     self.isLoaded = YES;
     
-    [self setupCampaings:self.view.frame.size.width height:self.view.frame.size.height interfaceOrientation:self.interfaceOrientation];
+    [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
 }
 
 - (JACampaignPageView*)createCampaignPageAtX:(CGFloat)xPosition
