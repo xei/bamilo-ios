@@ -81,9 +81,11 @@
                                                                      1.0f,
                                                                      1.0f)];
         if (VALID_NOTEMPTY(self.banner, RIBanner)) {
-            NSString* imageUrl = self.banner.iPhoneImageUrl;
+            NSString* imageUrl;
             if((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))) {
                 imageUrl = self.banner.iPadImageUrl;
+            } else {
+                imageUrl = self.banner.iPhoneImageUrl;
             }
             if (VALID_NOTEMPTY(imageUrl, NSString)) {
                 __block UIImageView *blockedImageView = _bannerImage;
