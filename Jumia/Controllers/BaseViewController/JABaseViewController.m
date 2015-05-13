@@ -214,6 +214,23 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnLeftSwipePanelNotification
                                                         object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(sideMenuIsOpening)
+                                                 name:kOpenMenuNotification
+                                               object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenMenuNotification object:nil];
+}
+
+- (void)sideMenuIsOpening
+{
+    [self.searchResultsView popSearchResults];
 }
 
 - (NSUInteger)supportedInterfaceOrientations
