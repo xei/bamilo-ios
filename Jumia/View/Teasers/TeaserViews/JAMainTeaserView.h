@@ -11,4 +11,7 @@
 
 @interface JAMainTeaserView : JATeaserView <UIScrollViewDelegate>
 
+@property (nonatomic, readonly)NSInteger currentPage;
+- (void)scrollToIndex:(NSInteger)index;
+
 @end
