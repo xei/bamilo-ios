@@ -117,10 +117,6 @@
     self.loadingAnimation.center = self.loadingView.center;
     
     self.loadingView.alpha = 0.0f;
-
-    if (self.searchBarIsVisible) {
-        [self showSearchBar];
-    }
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -219,6 +215,10 @@
                                              selector:@selector(sideMenuIsOpening)
                                                  name:kOpenMenuNotification
                                                object:nil];
+    
+    if (self.searchBarIsVisible) {
+        [self showSearchBar];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
