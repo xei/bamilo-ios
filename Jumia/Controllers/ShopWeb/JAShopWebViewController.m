@@ -31,9 +31,11 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    self.searchBarIsVisible = YES;
+    
     [super viewWillAppear:animated];
     
-    [self.webView setFrame:self.view.bounds];
+    [self.webView setFrame:[self viewBounds]];
     
     if (NO == self.isLoaded) {
         NSURL* url = [NSURL URLWithString:self.url];

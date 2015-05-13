@@ -24,10 +24,7 @@
     
     if (VALID_NOTEMPTY(self.teaserGrouping.teaserComponents, NSOrderedSet)) {
         CGFloat groupingTitleLabelMargin = 16.0f;
-        CGFloat groupingTitleLabelHeight = 30.0f; //value by design
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            groupingTitleLabelHeight = 35.0f; //value by design
-        }
+        CGFloat groupingTitleLabelHeight = 50.0f; //value by design
         UILabel* groupingTitleLabel = [UILabel new];
         groupingTitleLabel.font = [UIFont fontWithName:kFontMediumName size:14.0f];
         groupingTitleLabel.textColor = [UIColor blackColor];
@@ -66,10 +63,11 @@
             [self.scrollView addSubview:clickableView];
             
             NSString* imageUrl = component.imagePortraitUrl;
-            CGFloat imageTopMargin = 7.0f; //value by design
-            CGFloat imageWidth = 100.0f; //value by design
-            CGFloat imageHeight = 71.0f; //value by design
+            CGFloat imageTopMargin = 0.0f;
+            CGFloat imageWidth = 71.0f;
+            CGFloat imageHeight = 89.0f;
             UIImageView* imageView = [UIImageView new];
+            imageView.contentMode = UIViewContentModeScaleAspectFit;
             [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
             [imageView setFrame:CGRectMake((clickableView.bounds.size.width - imageWidth) / 2,
                                            imageTopMargin,
@@ -77,17 +75,18 @@
                                            imageHeight)];
             [clickableView addSubview:imageView];
             
-            CGFloat textMarginY = 6.0;
+            CGFloat textMarginX = 6.0f;
+            CGFloat textMarginY = 0.0f;
             UILabel* nameLabel = [UILabel new];
             nameLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
             nameLabel.textColor = [UIColor blackColor];
             nameLabel.textAlignment = NSTextAlignmentCenter;
             nameLabel.text = component.name;
             [nameLabel sizeToFit];
-            [nameLabel setFrame:CGRectMake(imageView.frame.origin.x,
-                                            CGRectGetMaxY(imageView.frame) + textMarginY,
-                                            imageView.frame.size.width,
-                                            nameLabel.frame.size.height)];
+            [nameLabel setFrame:CGRectMake(textMarginX,
+                                           CGRectGetMaxY(imageView.frame) + textMarginY,
+                                           clickableView.bounds.size.width - textMarginX*2,
+                                           nameLabel.frame.size.height)];
             [clickableView addSubview:nameLabel];
             
             UILabel* priceLabel = [UILabel new];
@@ -96,10 +95,10 @@
             priceLabel.textAlignment = NSTextAlignmentCenter;
             priceLabel.text = component.priceFormatted;
             [priceLabel sizeToFit];
-            [priceLabel setFrame:CGRectMake(imageView.frame.origin.x,
-                                               CGRectGetMaxY(nameLabel.frame),
-                                               imageView.frame.size.width,
-                                               priceLabel.frame.size.height)];
+            [priceLabel setFrame:CGRectMake(nameLabel.frame.origin.x,
+                                            CGRectGetMaxY(nameLabel.frame),
+                                            nameLabel.frame.size.width,
+                                            priceLabel.frame.size.height)];
             [clickableView addSubview:priceLabel];
             
             currentX += clickableView.frame.size.width;

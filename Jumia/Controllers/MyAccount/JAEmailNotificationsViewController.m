@@ -220,10 +220,11 @@ JADynamicFormDelegate
                                                                      self.view.frame.size.width - 12.0f,
                                                                      self.view.frame.size.height)];
     self.dynamicForm = [[JADynamicForm alloc] initWithForm:self.form
-                                                  delegate:self
                                           startingPosition:0.0f
                                                  widthSize:self.scrollView.frame.size.width
                                         hasFieldNavigation:YES];
+    
+    [self.dynamicForm setDelegate:self];
     
     self.notificationsView = [[UIView alloc] initWithFrame:CGRectZero];
     self.notificationsView.layer.cornerRadius = 5.0f;

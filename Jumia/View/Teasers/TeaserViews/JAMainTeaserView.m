@@ -20,6 +20,11 @@
 
 @implementation JAMainTeaserView
 
+- (NSInteger)currentPage
+{
+    return self.pageControl.currentPage;
+}
+
 - (void)load;
 {
     [super load];
@@ -27,22 +32,30 @@
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         self.isInfinite = YES;
     }
-    
+    CGFloat ratio = 261.0f/640.0f; //this 261.0f/640.0f was defined by the design guidelines
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               self.frame.size.width,
-                              self.frame.size.width * 47/128)]; //this 47/128 was defined by the design guidelines
+                              self.frame.size.width * ratio)];
     
     CGFloat scrollViewWidth = self.bounds.size.width;
+    CGFloat scrollViewHeight = self.bounds.size.height;
     CGFloat scrollViewX = self.bounds.origin.x;
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         scrollViewWidth = 640.0f; //value by design
+        scrollViewHeight = scrollViewWidth * ratio;
         scrollViewX = (self.bounds.size.width - scrollViewWidth) / 2;
+        
     }
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(scrollViewX,
                                                                      self.bounds.origin.y,
                                                                      scrollViewWidth,
-                                                                     self.bounds.size.height)];
+                                                                     scrollViewHeight)];
+    [self setFrame:CGRectMake(self.frame.origin.x,
+                              self.frame.origin.y,
+                              self.frame.size.width,
+                              scrollViewHeight)];
+    
     self.scrollView.clipsToBounds = NO;
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.pagingEnabled = YES;
@@ -188,6 +201,22 @@
         }
         [self teaserPressedForIndex:page];
     }
+}
+
+- (void)scrollToIndex:(NSInteger)index
+{
+    //adjust index to the infinite scroll
+    if (self.isInfinite) {
+        index++;
+        if (index > self.teaserGrouping.teaserComponents.count) {
+            index = 0;
+        }
+    }
+    CGRect scrollViewRect = CGRectMake(self.scrollView.frame.size.width*index,
+                                       self.scrollView.frame.origin.y,
+                                       self.scrollView.frame.size.width,
+                                       self.scrollView.frame.size.height);
+    [self.scrollView scrollRectToVisible:scrollViewRect animated:NO];
 }
 
 @end

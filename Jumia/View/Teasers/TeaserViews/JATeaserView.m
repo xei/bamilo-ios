@@ -34,6 +34,8 @@
     [userInfo setObject:STRING_HOME forKey:@"show_back_button_title"];
     if (VALID_NOTEMPTY(teaserComponent.name, NSString)) {
         [userInfo setObject:teaserComponent.name forKey:@"title"];
+    } else if (VALID_NOTEMPTY(teaserComponent.title, NSString)) {
+        [userInfo setObject:teaserComponent.title forKey:@"title"];
     }
     
     NSString* notificationName;

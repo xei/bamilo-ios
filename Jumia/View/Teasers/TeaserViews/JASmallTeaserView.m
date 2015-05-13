@@ -22,27 +22,29 @@
 {
     [super load];
     
-    CGFloat totalHeight = 132; //value by design
+    CGFloat marginX= 6.0f; //value by design
+    CGFloat marginY= 10.0f; //value by design
+    CGFloat heightWithoutMargins = 120; //value by design
+    CGFloat totalHeight = heightWithoutMargins + marginY*2;
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               self.frame.size.width,
                               totalHeight)];
     
-    CGFloat margin = 6.0f; //value by design
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
-                                                                     self.bounds.origin.y + margin,
+                                                                     self.bounds.origin.y + marginY,
                                                                      self.bounds.size.width,
-                                                                     self.bounds.size.height - 2*margin)];
+                                                                     self.bounds.size.height - 2*marginY)];
     self.scrollView.showsHorizontalScrollIndicator = NO;
     [self addSubview:self.scrollView];
     
     CGFloat componentWidth = 108; //value by design
-    CGFloat currentX = margin;
+    CGFloat currentX = marginX;
     
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        totalHeight += margin; //the top margin is doubled on ipad, so add another margin to the total
+        totalHeight += marginY; //the top margin is doubled on ipad, so add another margin to the total
         componentWidth = 210; //value by design
-        currentX = margin*2; //the first margin is doubled
+        currentX = marginX*2; //the first margin is doubled
     }
     
     for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
@@ -89,9 +91,10 @@
             imageWidth = 108; //value by design
         }
         
-        CGFloat imageHeight = 90; //value by design
+        CGFloat imageHeight = 85; //value by design
         NSString* imageUrl = component.imagePortraitUrl;
         UIImageView* imageView = [UIImageView new];
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
         [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
         [imageView setFrame:CGRectMake((clickableView.bounds.size.width - imageWidth)/2,
                                        clickableView.bounds.size.height - imageHeight,
@@ -99,7 +102,7 @@
                                        imageHeight)];
         [clickableView addSubview:imageView];
         
-        currentX += clickableView.frame.size.width + margin;
+        currentX += clickableView.frame.size.width + marginX;
     }
     
     [self.scrollView setContentSize:CGSizeMake(currentX,

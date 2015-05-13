@@ -36,15 +36,21 @@
     if (VALID_NOTEMPTY(teaserComponentJSON, NSDictionary)) {
 
         if ([teaserComponentJSON objectForKey:@"image"]) {
-            newTeaserComponent.imagePortraitUrl = [teaserComponentJSON objectForKey:@"image"];
+            NSString* url = [teaserComponentJSON objectForKey:@"image"];
+            NSString* realURL = [url stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+            newTeaserComponent.imagePortraitUrl = realURL;
         }
         
         if ([teaserComponentJSON objectForKey:@"image_landscape"]) {
-            newTeaserComponent.imageLandscapeUrl = [teaserComponentJSON objectForKey:@"image_landscape"];
+            NSString* url = [teaserComponentJSON objectForKey:@"image_landscape"];
+            NSString* realURL = [url stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+            newTeaserComponent.imageLandscapeUrl = realURL;
         }
         
         if ([teaserComponentJSON objectForKey:@"image_portrait"]) {
-            newTeaserComponent.imagePortraitUrl = [teaserComponentJSON objectForKey:@"image_portrait"];
+            NSString* url = [teaserComponentJSON objectForKey:@"image_portrait"];
+            NSString* realURL = [url stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+            newTeaserComponent.imagePortraitUrl = realURL;
         }
 
         if ([teaserComponentJSON objectForKey:@"name"]) {
