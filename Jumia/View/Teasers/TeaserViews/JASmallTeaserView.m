@@ -22,14 +22,15 @@
 {
     [super load];
     
-    CGFloat totalHeight = 132; //value by design
+    CGFloat marginX= 6.0f; //value by design
+    CGFloat marginY= 10.0f; //value by design
+    CGFloat heightWithoutMargins = 120; //value by design
+    CGFloat totalHeight = heightWithoutMargins + marginY*2;
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               self.frame.size.width,
                               totalHeight)];
     
-    CGFloat marginX= 6.0f; //value by design
-    CGFloat marginY= 10.0f; //value by design
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
                                                                      self.bounds.origin.y + marginY,
                                                                      self.bounds.size.width,
@@ -90,9 +91,10 @@
             imageWidth = 108; //value by design
         }
         
-        CGFloat imageHeight = 90; //value by design
+        CGFloat imageHeight = 85; //value by design
         NSString* imageUrl = component.imagePortraitUrl;
         UIImageView* imageView = [UIImageView new];
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
         [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
         [imageView setFrame:CGRectMake((clickableView.bounds.size.width - imageWidth)/2,
                                        clickableView.bounds.size.height - imageHeight,

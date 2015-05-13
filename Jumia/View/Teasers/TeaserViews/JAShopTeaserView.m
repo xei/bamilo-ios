@@ -81,6 +81,7 @@
             CGFloat imageHeight = 96; //value by design
             CGFloat imageWidth = imageHeight;
             UIImageView* imageView = [UIImageView new];
+            imageView.contentMode = UIViewContentModeScaleAspectFit;
             [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
             [imageView setFrame:CGRectMake((clickableView.bounds.size.width - imageWidth) / 2,
                                            clickableView.bounds.size.height - imageHeight - imageBottomMargin,

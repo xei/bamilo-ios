@@ -19,6 +19,9 @@
 @interface JATeaserPageView()
 
 @property (nonatomic, strong)UIScrollView* mainScrollView;
+//we need to keep the main teaser because we have to access it to know about it's last position
+@property (nonatomic, strong)JAMainTeaserView* mainTeaserView;
+@property (nonatomic, assign)NSInteger mainTeaserLastIndex;
 
 @end
 
@@ -31,6 +34,8 @@
     self.accessibilityLabel = @"teaserPageScrollView";
     
     self.backgroundColor = JAHomePageBackgroundGrey;
+    
+    self.mainTeaserLastIndex = self.mainTeaserView.currentPage;
     
     [self.mainScrollView removeFromSuperview];
     
@@ -71,15 +76,16 @@
         if ([teaserGrouping.type isEqualToString:@"main_teasers"]) {
             //found it
             
-            JAMainTeaserView* mainTeaserView = [[JAMainTeaserView alloc] initWithFrame:CGRectMake(scrollView.bounds.origin.x,
+            self.mainTeaserView = [[JAMainTeaserView alloc] initWithFrame:CGRectMake(scrollView.bounds.origin.x,
                                                                                                   yPosition,
                                                                                                   scrollView.bounds.size.width,
                                                                                                   1)]; //height is set by the view itself
-            [scrollView addSubview:mainTeaserView];
-            mainTeaserView.teaserGrouping = teaserGrouping;
-            [mainTeaserView load];
+            [scrollView addSubview:self.mainTeaserView];
+            self.mainTeaserView.teaserGrouping = teaserGrouping;
+            [self.mainTeaserView load];
+            [self.mainTeaserView scrollToIndex:self.mainTeaserLastIndex];
             
-            yPosition += mainTeaserView.frame.size.height;
+            yPosition += self.mainTeaserView.frame.size.height;
             
             break;
         }

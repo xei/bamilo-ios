@@ -20,6 +20,11 @@
 
 @implementation JAMainTeaserView
 
+- (NSInteger)currentPage
+{
+    return self.pageControl.currentPage;
+}
+
 - (void)load;
 {
     [super load];
@@ -196,6 +201,22 @@
         }
         [self teaserPressedForIndex:page];
     }
+}
+
+- (void)scrollToIndex:(NSInteger)index
+{
+    //adjust index to the infinite scroll
+    if (self.isInfinite) {
+        index++;
+        if (index > self.teaserGrouping.teaserComponents.count) {
+            index = 0;
+        }
+    }
+    CGRect scrollViewRect = CGRectMake(self.scrollView.frame.size.width*index,
+                                       self.scrollView.frame.origin.y,
+                                       self.scrollView.frame.size.width,
+                                       self.scrollView.frame.size.height);
+    [self.scrollView scrollRectToVisible:scrollViewRect animated:NO];
 }
 
 @end

@@ -72,6 +72,7 @@
             }
             CGFloat imageSide = 40.0f; //value by design
             UIImageView* imageView = [UIImageView new];
+            imageView.contentMode = UIViewContentModeScaleAspectFit;
             [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
             [imageView setFrame:CGRectMake(clickableView.bounds.size.width - imageMargin - imageSide,
                                            clickableView.bounds.size.height - imageMargin - imageSide,
