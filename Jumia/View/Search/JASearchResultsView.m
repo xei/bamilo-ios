@@ -300,21 +300,22 @@
 
 - (void) keyboardWillHide:(NSNotification *)notification
 {
-    NSDictionary *userInfo = [notification userInfo];
-    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    CGFloat height = kbSize.height;
-    if(self.frame.size.width == kbSize.height)
-    {
-        height = kbSize.width;
-    }
-    self.currentKeyboardHeight = 0.0f;
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        [self.resultsTableView setFrame:CGRectMake(self.resultsTableView.frame.origin.x,
-                                                   self.resultsTableView.frame.origin.y,
-                                                   self.resultsTableView.frame.size.width,
-                                                   self.resultsTableView.frame.size.height + height)];
-    }];
+    [self popSearchResults];
+//    NSDictionary *userInfo = [notification userInfo];
+//    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+//    CGFloat height = kbSize.height;
+//    if(self.frame.size.width == kbSize.height)
+//    {
+//        height = kbSize.width;
+//    }
+//    self.currentKeyboardHeight = 0.0f;
+//    
+//    [UIView animateWithDuration:0.3 animations:^{
+//        [self.resultsTableView setFrame:CGRectMake(self.resultsTableView.frame.origin.x,
+//                                                   self.resultsTableView.frame.origin.y,
+//                                                   self.resultsTableView.frame.size.width,
+//                                                   self.resultsTableView.frame.size.height + height)];
+//    }];
 }
 
 #pragma mark - Search Actions

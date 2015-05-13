@@ -21,5 +21,6 @@
 
 - (void)reloadFrame:(CGRect)frame;
 - (void)searchFor:(NSString*)stringToSearch;
+- (void)popSearchResults;
 
 @end

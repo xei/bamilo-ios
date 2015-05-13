@@ -137,8 +137,12 @@ void(^retryBock)(BOOL dismiss);
     self.firstMessageLabel.textAlignment = NSTextAlignmentCenter;
     self.firstMessageLabel.font = [UIFont fontWithName:kFontMediumName size:15.0f];
     self.firstMessageLabel.textColor = UIColorFromRGB(0xffa200);
-    self.firstMessageLabel.text = STRING_KICKOUT_MESSAGE_1;
+    self.firstMessageLabel.text = [STRING_KICKOUT_MESSAGE_1 uppercaseString];
     [self.firstMessageLabel sizeToFit];
+    [self.firstMessageLabel setFrame:CGRectMake(self.firstMessageLabel.frame.origin.x,
+                                                self.firstMessageLabel.frame.origin.y,
+                                                labelWidth,
+                                                self.firstMessageLabel.frame.size.height)];
     [self.containerView addSubview:self.firstMessageLabel];
     
     currentY += verticalMarginBetweenComponents + self.firstMessageLabel.frame.size.height;
@@ -153,6 +157,10 @@ void(^retryBock)(BOOL dismiss);
     self.secondMessageLabel.textColor = UIColorFromRGB(0x4e4e4e);
     self.secondMessageLabel.text = STRING_KICKOUT_MESSAGE_2;
     [self.secondMessageLabel sizeToFit];
+    [self.secondMessageLabel setFrame:CGRectMake(self.secondMessageLabel.frame.origin.x,
+                                                 self.secondMessageLabel.frame.origin.y,
+                                                 labelWidth,
+                                                 self.secondMessageLabel.frame.size.height)];
     [self.containerView addSubview:self.secondMessageLabel];
     
     currentY += verticalMarginBetweenComponents + self.secondMessageLabel.frame.size.height;
@@ -167,6 +175,10 @@ void(^retryBock)(BOOL dismiss);
     self.thirdMessageLabel.textColor = UIColorFromRGB(0x4e4e4e);
     self.thirdMessageLabel.text = STRING_KICKOUT_MESSAGE_3;
     [self.thirdMessageLabel sizeToFit];
+    [self.thirdMessageLabel setFrame:CGRectMake(self.thirdMessageLabel.frame.origin.x,
+                                                self.thirdMessageLabel.frame.origin.y,
+                                                labelWidth,
+                                                self.thirdMessageLabel.frame.size.height)];
     [self.containerView addSubview:self.thirdMessageLabel];
     
     currentY += verticalMarginBetweenComponents + self.thirdMessageLabel.frame.size.height;
