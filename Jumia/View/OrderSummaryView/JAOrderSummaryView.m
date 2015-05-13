@@ -18,7 +18,7 @@
 @property (nonatomic, strong)UIView* shippingAddressView;
 @property (nonatomic, strong)UIView* billingAddressView;
 @property (nonatomic, strong)UIView* shippingMethodView;
-@property (nonatomic, strong)NSNumber *extraCosts;
+@property (nonatomic, strong)NSString *extraCosts;
 
 @end
 
