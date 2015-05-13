@@ -997,9 +997,7 @@
         if (0 == indexPath.row) {
             JACatalogBannerCell *bannerCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"bannerCell" forIndexPath:indexPath];
             [bannerCell loadWithImageView:self.bannerImage];
-            [bannerCell.bannerClickableView addTarget:self
-                                               action:@selector(clickableBannerPressed:)
-                                     forControlEvents:UIControlEventTouchUpInside];
+            bannerCell.tag = 0;
             return bannerCell;
         }
         realIndex--;
@@ -1012,7 +1010,7 @@
     [cell.favoriteButton addTarget:self
                             action:@selector(addToFavoritesPressed:)
                   forControlEvents:UIControlEventTouchUpInside];
-    cell.feedbackView.tag = realIndex;
+    cell.feedbackView.tag = indexPath.row;
     [cell.feedbackView addTarget:self
                           action:@selector(clickableViewPressedInCell:)
                 forControlEvents:UIControlEventTouchUpInside];
@@ -1023,32 +1021,41 @@
     
 }
 
--(void)clickableBannerPressed:(RIBanner *)banner
+-(void)clickableBannerPressed
 {
-    if(VALID_NOTEMPTY(self.banner, RIBanner))
-    {
-        banner = self.banner;
-        if([banner.targetType isEqualToString:@"product_detail"])
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                                object:nil
-                                                              userInfo:@{ @"url" :[NSURL URLWithString:banner.url],
-                                                                          @"show_back_button_title" : STRING_BACK}];
-        }else if ([banner.targetType isEqualToString:@"campaign"])
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectCampaignNofication
-                                                                object:nil
-                                                              userInfo:@{ @"url" :[NSURL URLWithString:banner.url],
-                                                                          @"show_back_button_title" : STRING_BACK}];
-        }else if ([banner.targetType isEqualToString:@"catalog"])
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithCatalogUrlNofication
-                                                                object:nil
-                                                              userInfo:@{ @"url" : [NSURL URLWithString:banner.url],
-                                                                          @"show_back_button_title" : STRING_BACK}];
-        }else if ([banner.targetType isEqualToString:@"static_page"])
-        {
+    if(VALID_NOTEMPTY(self.banner, RIBanner)) {
         
+        NSMutableDictionary* userInfo = [NSMutableDictionary new];
+        [userInfo setObject:STRING_BACK forKey:@"show_back_button_title"];
+        if (VALID_NOTEMPTY(self.banner.title, NSString)) {
+            [userInfo setObject:self.banner.title forKey:@"title"];
+        }
+        
+        NSString* notificationName;
+        
+        if ([self.banner.targetType isEqualToString:@"catalog"]) {
+            
+            notificationName = kDidSelectTeaserWithCatalogUrlNofication;
+            
+        } else if ([self.banner.targetType isEqualToString:@"product_detail"]) {
+            
+            notificationName = kDidSelectTeaserWithPDVUrlNofication;
+            
+        } else if ([self.banner.targetType isEqualToString:@"static_page"]) {
+            
+            notificationName = kDidSelectTeaserWithShopUrlNofication;
+            
+        } else if ([self.banner.targetType isEqualToString:@"campaign"]) {
+            
+            notificationName = kDidSelectCampaignNofication;
+
+        }
+        
+        if (VALID_NOTEMPTY(self.banner.url, NSString)) {
+            [userInfo setObject:self.banner.url forKey:@"url"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
+                                                                object:nil
+                                                              userInfo:userInfo];
         }
     }
 }
@@ -1060,7 +1067,20 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    RIProduct *product = [self.productsArray objectAtIndex:indexPath.row];
+    NSInteger realIndex = indexPath.row;
+    if (VALID_NOTEMPTY(self.banner, RIBanner)) {
+        if (0 == indexPath.row) {
+            //click banner
+            
+            [self clickableBannerPressed];
+            
+            return;
+        }
+        realIndex--;
+    }
+    
+    
+    RIProduct *product = [self.productsArray objectAtIndex:realIndex];
     
     NSInteger count = self.productsArray.count;
     
