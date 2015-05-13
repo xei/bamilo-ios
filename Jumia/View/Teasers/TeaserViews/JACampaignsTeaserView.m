@@ -331,7 +331,11 @@
                                                                                       moreOffersComponentWidth,
                                                                                       mainAreaHeight)];
         moreView.tag = 0; //all the campaigns open when one of them is clicked
-        moreView.backgroundColor = [UIColor clearColor];
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            moreView.backgroundColor = [UIColor whiteColor];
+        } else {
+            moreView.backgroundColor = [UIColor clearColor];
+        }
         [moreView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:moreView];
         
