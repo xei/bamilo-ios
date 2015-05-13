@@ -1,9 +1,9 @@
-/*
- RIStrings.strings
- Jumia
- 
- Created by Pedro Lopes on 13/09/14.
- Copyright (c) 2014 Rocket Internet. All rights reserved. */
+/* 
+   RIStrings.strings
+   Jumia
+   
+   Created by Pedro Lopes on 13/09/14.
+   Copyright (c) 2014 Rocket Internet. All rights reserved. */
 "string_update_necessary_title" = "بروزرسانی لازم است.";
 
 "string_update_necessary_message_ios" = "ما موردی یافتیم که باید برطرف می‌شد تا تجربه خرید شما از %@ را باز هم بهبود دهد! برای ادامه باید برنامه را بروزرسانی کنید.";
@@ -130,6 +130,12 @@
 
 "product_features_title" = "امکانات کالا";
 
+"description" = "توضیحات";
+
+"key_features" = "ویژگی های کلیدی";
+
+"product_desc_summary_title" = "خلاصه";
+
 "product_description_title" = "توضیحات کالا";
 
 "share_subject_ios" = "اشترک گذاری %@";
@@ -173,6 +179,10 @@
 "string_article" = "یک کالا";
 
 "string_articles" = "%d کالا";
+
+"string_item_cart" = "1 کالا";
+
+"string_items_cart" = "%d کالا";
 
 "error_add_to_shopping_cart_quantity" = "متاسفیم . شما نمی توانید بیش از تعداد مجاز سفارش دهید.";
 
@@ -360,7 +370,7 @@
 
 "campaigns_label" = "کمپین ها";
 
-"product_specifications" = "مشخصات فنی";
+"product_specifications" = "مشخصات کالا";
 
 "go_shop_text" = "خرید کنید";
 
@@ -437,6 +447,8 @@
 "more" = "بیشتر";
 
 "reviews_empty" = "این کالا هنوز امتیازی دریافت ننموده است!";
+
+"reviews_empty_seller" = "برای این تامین کننده هنوز هیچ نظری ثبت نشده است!";
 
 "order_summary_label" = "خلاصه سفارش";
 
@@ -531,3 +543,18 @@
 "review_this_seller" = "نظر خود را در مورد این تامین کننده بنویسید";
 
 "string_wizard_back_top" = "بر روی نوار وضعیت بزنید تا به بالا بروید";
+
+"shops_of_the_week" = "برندهای برتر";
+
+"featured_stores" = "مجموعه های منتخب";
+
+"see_more_offers" = "پیشنهادات دیگر";
+
+"kickout_message_1" = "از پیشنهادات ویژه ما استقبال زیادی شده است";
+
+"kickout_message_2" = "به اندازه ای که ظرفیت فروشگاه تکمیل گردیده و امکان خدمت رسانی به مشتریان جدید در این زمان امکان پذیر نمی باشد";
+
+"kickout_message_3" = "ما می خواهیم تجربه ی خریدی دلپذیر را برای شما فراهم آوریم، و به همین دلیل از شما تقاضا می کنیم که دقایقی دیگر مراجعه نمائید";
+
+"search_placeholder" = "جستجوی محصولات، برندها...";
+

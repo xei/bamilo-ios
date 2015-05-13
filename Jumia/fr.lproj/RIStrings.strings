@@ -4,14 +4,13 @@
    
    Created by Pedro Lopes on 13/09/14.
    Copyright (c) 2014 Rocket Internet. All rights reserved. */
-
 "string_update_necessary_title" = "Mise à jour nécessaire";
 
-"string_update_necessary_message_ios" = "Nous avons résolu un problème pour rendre votre expérience %@ encore meilleure. Mettez à jour dès maintenant!";
+"string_update_necessary_message_ios" = "Nous avons trouvé quelque chose que nous avions besoin de fixer pour faire votre shopping en % @ encore mieux! Vous aurez besoin de faire une mise à jour avant de continuer à utiliser l'application.";
 
 "string_update_available_title" = "Mise à jour disponible";
 
-"string_update_available_message_ios" = "Il existe une mise à jour prête à améliorer votre expérience %@! Mettez à jour maintenant!";
+"string_update_available_message_ios" = "Il y a une nouvelle mise à jour disponible que nous avons préparé pour faire votre chopping en% @ encore mieux! Assurez-vous que vous mettez à niveau aujourd'hui!";
 
 "string_update" = "Mise à jour!";
 
@@ -131,9 +130,15 @@
 
 "product_features_title" = "Spécificités du produit";
 
+"description" = "Déscription";
+
+"key_features" = "Fonctionnalités";
+
+"product_desc_summary_title" = "Résumé";
+
 "product_description_title" = "Description du produit";
 
-"share_subject_ios" = "Partage %@";
+"share_subject_ios" = "%@ Partagez";
 
 "share_checkout_this_product" = "Découvre vite le produit que j\'ai trouvé!";
 
@@ -174,6 +179,10 @@
 "string_article" = "1 Produit";
 
 "string_articles" = "%d Produits";
+
+"string_item_cart" = "1 article";
+
+"string_items_cart" = "%d articles";
 
 "error_add_to_shopping_cart_quantity" = "Vous ne pouvez pas commander plus que la quantité disponible. Désolé.";
 
@@ -439,6 +448,8 @@
 
 "reviews_empty" = "Ce produit n'a pas de avis!";
 
+"reviews_empty_seller" = "Ce vendeur n'a pas encore de commentaires !";
+
 "order_summary_label" = "Résumé de la commande";
 
 "string_edit" = "Modifier";
@@ -457,9 +468,9 @@
 
 "can_share_app_with_friends" = "Vous pouvez maintenant partager l'application avec vos amis";
 
-"install_app_ios" = "Installer l'iOS App de %@ en un instant";
+"install_app_ios" = "Installez le% @ iOS en un instant";
 
-"share_app_ios" = "Partagez l'App de %@";
+"share_app_ios" = "Partagez l'% @ App";
 
 "delivery_time" = "Délai de livraison:";
 
@@ -532,4 +543,18 @@
 "review_this_seller" = "Évaluer maintenant ce vendeur !";
 
 "string_wizard_back_top" = "Appuyez sur la barre d'état pour faire défiler le catalogue haut de la page";
+
+"shops_of_the_week" = "Magazin de la semaine";
+
+"featured_stores" = "Magasins en vedette";
+
+"see_more_offers" = "Voir plus d'offres";
+
+"kickout_message_1" = "Notre campagne était un grand succès";
+
+"kickout_message_2" = "Le magasin est actuellement plein, et on ne peut pas accueillir de nouveaux clients pour le moment.";
+
+"kickout_message_3" = "Nous voulons vous offrir la meilleure expérience de shopping possible, alors nous aimerions vous demander de réessayer plus tard.";
+
+"search_placeholder" = "Recherche de produits, marques ...";
 

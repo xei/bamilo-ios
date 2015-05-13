@@ -1,9 +1,9 @@
-/*
- RIStrings.strings
- Jumia
- 
- Created by Pedro Lopes on 13/09/14.
- Copyright (c) 2014 Rocket Internet. All rights reserved. */
+/* 
+   RIStrings.strings
+   Jumia
+   
+   Created by Pedro Lopes on 13/09/14.
+   Copyright (c) 2014 Rocket Internet. All rights reserved. */
 "string_update_necessary_title" = "Update လိုအပ္ပါသည္";
 
 "string_update_necessary_message_ios" = "%@ ကို ပိုမို အဆင္ေျပစြာ အသံုးျပဳႏုိင္ရန္ ျပင္ဆင္မွဳ ျပဳလုပ္ရန္ လိုအပ္ပါသည္! ဤ app ကို ဆက္လက္ အသံုးမျပဳခင္ update ျပဳလုပ္ေပးပါ။";
@@ -130,7 +130,17 @@
 
 "product_features_title" = "ကုန္ပစၥည္း၏ ထူးျခားခ်က္မ်ား";
 
+"description" = "ေဖာ္ျပခ်က္";
+
+"key_features" = "ေယဘုယ် အခ်က္အလက္မ်ား";
+
+"product_desc_summary_title" = "အႏွစ္ခ်ဳပ္";
+
 "product_description_title" = "ကုန္ပစၥည္း၏ အခ်က္အလက္မ်ား";
+
+"share_subject_ios" = "%@ မွ်ေ၀ျခင္း";
+
+"share_checkout_this_product" = "ဒီပစၥည္း တကယ္ေကာင္းတယ္ သံုးၾကည္႕လိုက္ပါ:";
 
 "rating_question" = "ဒီပစၥည္းကို အသံုးျပဳျပီးပါျပီလား? သံုးသပ္ခ်က္ ေပးႏုိင္ပါသည္!";
 
@@ -164,11 +174,15 @@
 
 "voucher_message_hint" = "ကူပြန္ကုဒ္ကို ဤေနရာတြင္ ျဖည္႕ပါ";
 
-"call_to_order" = "ေအာ္ဒါမွာရန္ ဖုန္းဆက္မည္";
+"call_to_order" = "စံုစမ္းရန္";
 
 "string_article" = "ပစၥည္း 1 ခု";
 
 "string_articles" = "ပစၥည္း %d ခု";
+
+"string_item_cart" = "ပစၥည္း 1 ခု";
+
+"string_items_cart" = "ပစၥည္း %d ခု";
 
 "error_add_to_shopping_cart_quantity" = "၀မ္းနည္းပါသည္။ သတ္မွတ္ထားေသာ အေရအတြက္ထက္ ပို၍ မွာယူလုိ႕ မရပါ။";
 
@@ -356,7 +370,7 @@
 
 "campaigns_label" = "အထူး အစီအစဥ္မ်ား";
 
-"product_specifications" = "အေသးစိတ္ အခ်က္အလက္";
+"product_specifications" = "အေသးစိတ္ အခ်က္အလက္မ်ား";
 
 "go_shop_text" = "ယခု ေစ်း၀ယ္ရန္";
 
@@ -434,6 +448,8 @@
 
 "reviews_empty" = "ဤကုန္ပစၥည္းတြင္ ထင္ျမင္ခ်က္မ်ား မရွိေသးပါ";
 
+"reviews_empty_seller" = "ဤေရာင္းသူကို အမွတ္ေပးထားျခင္း မရွိေသးပါ!";
+
 "order_summary_label" = "ေအာ္ဒါ အက်ဥ္းခ်ဳပ္";
 
 "string_edit" = "ျပင္ဆင္ရန္";
@@ -451,6 +467,10 @@
 "share_the_app" = "App ကို မွ်ေ၀ရန္";
 
 "can_share_app_with_friends" = "သင္၏ သူငယ္ခ်င္းမ်ားကို ဤapp မွ်ေ၀ႏုိင္ပါသည္";
+
+"install_app_ios" = "%@ iOS App ကို သြင္းရန္";
+
+"share_app_ios" = "%@ App ကို မွ်ေ၀ရန္";
 
 "delivery_time" = "ပို႕ေဆာင္ရန္ ၾကာခ်ိန္";
 
@@ -523,3 +543,17 @@
 "review_this_seller" = "ဤ ေရာင္းခ်သူကို ထင္ျမင္ခ်က္ေပးရန္!";
 
 "string_wizard_back_top" = "အေပၚသို႕ ျပန္သြားရန္ status bar ကို ႏွိပ္ပါ";
+
+"shops_of_the_week" = "ဤအပတ္၏ အေရာင္းရဆံုးမ်ား";
+
+"featured_stores" = "အေရာင္းဆိုင္မ်ား";
+
+"see_more_offers" = "အျခား အစီအစဥ္မ်ားကို ၾကည္႕ရွဳရန္";
+
+"kickout_message_1" = "ကြ်ႏုပ္တုိ႕၏ အထူးအစီအစဥ္ ေအာင္ျမင္စြာ ျပီးဆံုးပါျပီ";
+
+"kickout_message_2" = "၀ဘ္ဆိုဒ္တြင္ လတ္တေလာ လူျပည္႕ေနပါသျဖင့္ လူသစ္မ်ားထပ္မံလက္ခံ၍ မရေတာ့ပါ";
+
+"kickout_message_3" = "၀ဘ္ဆိုဒ္ကို ပိုမိုေကာင္းမြန္ေအာင္ ျပင္ဆင္ေနသျဖင့္ ေနာက္တစ္ၾကိမ္ ထပ္ၾကိဳးစားၾကည္႕ပါ";
+
+"search_placeholder" = "အမွတ္တံဆိပ္ျဖင့္ ကုန္ပစၥည္းမ်ားရွာေဖြရန္";
