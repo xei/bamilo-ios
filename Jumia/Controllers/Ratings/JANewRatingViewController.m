@@ -354,10 +354,10 @@ UIAlertViewDelegate
         NSInteger count = 0;
         CGFloat initialContentY = 0;
         self.ratingsDynamicForm = [[JADynamicForm alloc] initWithForm:self.ratingsForm
-                                                             delegate:nil
                                                      startingPosition:initialContentY
                                                             widthSize:centerViewWidth
                                                    hasFieldNavigation:YES];
+        
         self.ratingsContentView = [UIView new];
         for (UIView *view in self.ratingsDynamicForm.formViews)
         {
@@ -388,7 +388,6 @@ UIAlertViewDelegate
     if (self.reviewsForm) {
         CGFloat initialContentY = 0;
         self.reviewsDynamicForm = [[JADynamicForm alloc] initWithForm:self.reviewsForm
-                                                             delegate:nil
                                                      startingPosition:initialContentY
                                                             widthSize:centerViewWidth
                                                    hasFieldNavigation:YES];

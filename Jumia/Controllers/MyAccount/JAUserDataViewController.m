@@ -162,10 +162,11 @@ JADynamicFormDelegate
        successBlock:^(RIForm *form)
      {
          self.changePasswordForm = [[JADynamicForm alloc] initWithForm:form
-                                                              delegate:self
                                                       startingPosition:self.currentY
                                                              widthSize:self.changePasswordView.frame.size.width
                                                     hasFieldNavigation:YES];
+         
+         self.changePasswordForm.delegate = self;
          
          self.numberOfRequests--;
          [self removeErrorView];

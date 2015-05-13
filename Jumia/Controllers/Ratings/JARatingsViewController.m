@@ -747,7 +747,6 @@ UITableViewDataSource
         NSInteger count = 0;
         CGFloat initialContentY = 0;
         self.ratingsDynamicForm = [[JADynamicForm alloc] initWithForm:self.ratingsForm
-                                                             delegate:nil
                                                      startingPosition:initialContentY
                                                             widthSize:width
                                                    hasFieldNavigation:YES];
@@ -781,7 +780,6 @@ UITableViewDataSource
     if (self.reviewsForm) {
         CGFloat initialContentY = 0;
         self.reviewsDynamicForm = [[JADynamicForm alloc] initWithForm:self.reviewsForm
-                                                             delegate:nil
                                                      startingPosition:initialContentY
                                                             widthSize:width
                                                    hasFieldNavigation:YES];
