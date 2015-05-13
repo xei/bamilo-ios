@@ -81,6 +81,7 @@ JAActivityViewControllerDelegate
 
 - (void)viewDidLoad
 {
+    self.searchBarIsVisible = YES;
     [super viewDidLoad];
     self.apiResponse = RIApiResponseSuccess;
     if(VALID_NOTEMPTY(self.product.sku, NSString))
@@ -602,27 +603,25 @@ JAActivityViewControllerDelegate
     
     self.hasLoaddedProduct = YES;
     
-    [self.mainScrollView setFrame:CGRectMake(0.0f,
-                                             0.0f,
-                                             self.view.frame.size.width,
-                                             self.view.frame.size.height)];
+    [self.mainScrollView setFrame:[self viewBounds]];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
         if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
         {
-            CGFloat scrollViewsWidth = (self.view.frame.size.width / 2);
-            [self.mainScrollView setFrame:CGRectMake(0.0f,
-                                                     0.0f,
+            CGRect bounds = [self viewBounds];
+            CGFloat scrollViewsWidth = bounds.size.width / 2;
+            [self.mainScrollView setFrame:CGRectMake(bounds.origin.x,
+                                                     bounds.origin.y,
                                                      scrollViewsWidth,
-                                                     self.view.frame.size.height)];
+                                                     bounds.size.height)];
             [self.mainScrollView setHidden:NO];
             
             [self.landscapeScrollView setFrame:CGRectMake(scrollViewsWidth,
-                                                          0.0f,
+                                                          bounds.origin.y,
                                                           scrollViewsWidth,
-                                                          self.view.frame.size.height)];
+                                                          bounds.size.height)];
             [self.landscapeScrollView setHidden:NO];
         }
         else
@@ -656,16 +655,16 @@ JAActivityViewControllerDelegate
     if(isiPadInLandscape)
     {
         [self.ctaView setFrame:CGRectMake(self.mainScrollView.frame.size.width,
-                                          0.0f,
+                                          self.mainScrollView.frame.origin.y,
                                           self.landscapeScrollView.frame.size.width,
                                           self.ctaView.frame.size.height)];
         [self.view addSubview:self.ctaView];
         
         // The JAButton
         [self.landscapeScrollView setFrame:CGRectMake(self.mainScrollView.frame.size.width,
-                                                      self.ctaView.frame.size.height,
+                                                      CGRectGetMaxY(self.ctaView.frame),
                                                       self.landscapeScrollView.frame.size.width,
-                                                      self.view.frame.size.height - self.ctaView.frame.size.height)];
+                                                      self.mainScrollView.frame.size.height - self.ctaView.frame.size.height)];
         
     }
     else
