@@ -40,6 +40,8 @@
 
 @property (nonatomic, assign)BOOL isLoaded;
 
+@property (nonatomic, strong)NSMutableArray* activeCampaignComponents;
+
 @end
 
 @implementation JACampaignsViewController
@@ -178,21 +180,35 @@
     }
     else if (VALID_NOTEMPTY(self.teaserGrouping, RITeaserGrouping) && VALID_NOTEMPTY(self.teaserGrouping.teaserComponents, NSOrderedSet))
     {
+        self.activeCampaignComponents = [NSMutableArray new];
         for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++)
         {
-            JACampaignPageView* campaignPageView = [self createCampaignPageAtX:currentX];
-            currentX += campaignPageView.frame.size.width;
-
+            
             RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
             if (VALID_NOTEMPTY(component, RITeaserComponent)) {
                 
-                if (VALID_NOTEMPTY(component.name, NSString)) {
-                    [optionList addObject:component.name];
-                    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"Campaign"];
-                    [[RITrackingWrapper sharedInstance]trackScreenWithName:component.name];
+                BOOL isActive = YES;
+                //its active unless there is an ending date AND that date has passed
+                if (VALID_NOTEMPTY(component.endingDate, NSDate)) {
+                    NSInteger remainingSeconds = (NSInteger)[component.endingDate timeIntervalSinceNow];
+                    if (0 >= remainingSeconds) {
+                        isActive = NO;
+                    }
+                }
+                
+                if (isActive) {
+                    JACampaignPageView* campaignPageView = [self createCampaignPageAtX:currentX];
+                    currentX += campaignPageView.frame.size.width;
                     
-                    if ([component.name isEqualToString:self.startingTitle]) {
-                        startingIndex = i;
+                    if (VALID_NOTEMPTY(component.name, NSString)) {
+                        [optionList addObject:component.name];
+                        [self.activeCampaignComponents addObject:component];
+                        [[RITrackingWrapper sharedInstance]trackScreenWithName:@"Campaign"];
+                        [[RITrackingWrapper sharedInstance]trackScreenWithName:component.name];
+                        
+                        if ([component.name isEqualToString:self.startingTitle]) {
+                            startingIndex = i;
+                        }
                     }
                 }
             }
@@ -233,9 +249,9 @@
             
             if (VALID_NOTEMPTY(self.campaignId, NSString)) {
                 [self loadPage:campaignPageView withCampaignId:self.campaignId];
-            } else if (VALID_NOTEMPTY(self.teaserGrouping, RITeaserGrouping) && VALID_NOTEMPTY(self.teaserGrouping.teaserComponents, NSOrderedSet)) {
+            } else if (VALID_NOTEMPTY(self.activeCampaignComponents, NSMutableArray)) {
                 
-                RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:index];
+                RITeaserComponent* component = [self.activeCampaignComponents objectAtIndex:index];
                 
                 if (VALID_NOTEMPTY(component, RITeaserComponent) && VALID_NOTEMPTY(component.url, NSString)) {
                     [self loadPage:campaignPageView withCampaignUrl:component.url];
