@@ -113,6 +113,9 @@
                 newProductSimple.variation = [NSString stringWithFormat:@"%ld",(long)[(NSNumber*)variationValue integerValue]];
             }
         }
+        else if ([meta objectForKey:@"variation"]) {
+            newProductSimple.variation = [meta objectForKey:@"variation"];
+        }
     }
     
     NSDictionary* attributes = [productSimpleJSON objectForKey:@"attributes"];
