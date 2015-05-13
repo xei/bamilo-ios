@@ -120,6 +120,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:RISectionRequestStartedNotificationName object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:RISectionRequestEndedNotificationName object:nil];
     
