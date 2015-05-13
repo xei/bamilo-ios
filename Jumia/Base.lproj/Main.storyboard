@@ -1416,28 +1416,41 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hex-qc-hx0">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="92"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JDq-0q-JN1">
+                                <rect key="frame" x="0.0" y="44" width="320" height="461"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Ou-Ho-oX1">
-                                        <rect key="frame" x="12" y="8" width="296" height="17"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
-                                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="296" translatesAutoresizingMaskIntoConstraints="NO" id="OX5-pJ-b6R">
-                                        <rect key="frame" x="12" y="29" width="296" height="17"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fmt-yo-59t">
+                                        <rect key="frame" x="0.0" y="47" width="320" height="368"/>
+                                    </scrollView>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hex-qc-hx0">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="92"/>
+                                        <subviews>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Ou-Ho-oX1">
+                                                <rect key="frame" x="12" y="8" width="296" height="17"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
+                                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="296" translatesAutoresizingMaskIntoConstraints="NO" id="OX5-pJ-b6R">
+                                                <rect key="frame" x="12" y="29" width="296" height="17"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
+                            </scrollView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GOb-c9-X4a" customClass="JAPickerScrollView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fmt-yo-59t">
-                                <rect key="frame" x="0.0" y="92" width="320" height="412"/>
-                            </scrollView>
                         </subviews>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="uZs-Bp-S8W" appends="YES" id="cmf-0d-FXg"/>
+                            <outletCollection property="gestureRecognizers" destination="neK-xE-reB" appends="YES" id="7Sn-ij-Vr4"/>
+                        </connections>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="Lff-Xd-XGy"/>
@@ -1447,9 +1460,21 @@
                         <outlet property="contenteScrollView" destination="fmt-yo-59t" id="rqz-ks-AaQ"/>
                         <outlet property="labelBrand" destination="0Ou-Ho-oX1" id="GQI-UY-c5q"/>
                         <outlet property="labelName" destination="OX5-pJ-b6R" id="jO2-vy-B6i"/>
+                        <outlet property="mainScrollView" destination="JDq-0q-JN1" id="lTL-TZ-VSp"/>
+                        <outlet property="pickerScrollView" destination="GOb-c9-X4a" id="0tf-q5-wCh"/>
                         <outlet property="topView" destination="hex-qc-hx0" id="VAR-qI-8KL"/>
                     </connections>
                 </viewController>
+                <swipeGestureRecognizer direction="left" id="uZs-Bp-S8W" userLabel="Left Swipe Gesture Recognizer">
+                    <connections>
+                        <action selector="swipeLeft:" destination="4DA-Wb-YGP" id="W02-mN-Gcp"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="right" id="neK-xE-reB" userLabel="Right Swipe Gesture Recognizer">
+                    <connections>
+                        <action selector="swipeRight:" destination="4DA-Wb-YGP" id="uRf-hN-T3d"/>
+                    </connections>
+                </swipeGestureRecognizer>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y3U-xA-b18" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1128" y="1527"/>
