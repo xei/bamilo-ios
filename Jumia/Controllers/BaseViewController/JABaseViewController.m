@@ -206,9 +206,6 @@
 {
     [super viewWillAppear:animated];
     
-    self.requestNumber = 0;
-    [self hideLoading];
-    
     [self reloadNavBar];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnLeftSwipePanelNotification
