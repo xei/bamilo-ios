@@ -53,6 +53,12 @@
         for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
             RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
             
+            NSString *priceToPresent = component.specialPriceFormatted;
+            
+            if (!priceToPresent || [priceToPresent isEqualToString:@""]) {
+                priceToPresent = component.priceFormatted;
+            }
+            
             JAClickableView* clickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
                                                                                                self.scrollView.bounds.origin.y,
                                                                                                componentWidth,
@@ -93,7 +99,7 @@
             priceLabel.font = [UIFont fontWithName:kFontRegularName size:10.0f];
             priceLabel.textColor = UIColorFromRGB(0xcc0000);
             priceLabel.textAlignment = NSTextAlignmentCenter;
-            priceLabel.text = component.priceFormatted;
+            priceLabel.text = priceToPresent;
             [priceLabel sizeToFit];
             [priceLabel setFrame:CGRectMake(nameLabel.frame.origin.x,
                                             CGRectGetMaxY(nameLabel.frame),

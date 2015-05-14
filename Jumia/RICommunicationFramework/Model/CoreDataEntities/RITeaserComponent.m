@@ -27,6 +27,9 @@
 @dynamic maxPrice;
 @dynamic maxPriceFormatted;
 @dynamic teaserGrouping;
+@dynamic specialPrice;
+@dynamic specialPriceEuroConverted;
+@dynamic specialPriceFormatted;
 
 + (RITeaserComponent*)parseTeaserComponent:(NSDictionary*)teaserComponentJSON
                                    country:(RICountryConfiguration*)country
@@ -94,6 +97,15 @@
         
         if ([teaserComponentJSON objectForKey:@"price_converted"]) {
             newTeaserComponent.priceEuroConverted = [NSNumber numberWithFloat:[[teaserComponentJSON objectForKey:@"price_converted"] floatValue]];
+        }
+        
+        if ([teaserComponentJSON objectForKey:@"special_price"]) {
+            newTeaserComponent.specialPrice = [NSNumber numberWithFloat:[[teaserComponentJSON objectForKey:@"special_price"] floatValue]];
+            newTeaserComponent.specialPriceFormatted = [RICountryConfiguration formatPrice:newTeaserComponent.specialPrice country:country];
+        }
+        
+        if ([teaserComponentJSON objectForKey:@"special_price_converted"]) {
+            newTeaserComponent.specialPriceEuroConverted = [NSNumber numberWithFloat:[[teaserComponentJSON objectForKey:@"special_price_converted"] floatValue]];
         }
 
     }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C109" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D136" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="RIAddress" representedClassName="RIAddress" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
@@ -267,6 +267,9 @@
         <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="priceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="priceFormatted" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="specialPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="specialPriceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="specialPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="targetType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
@@ -313,7 +316,7 @@
         <element name="RISpecification" positionX="-675" positionY="-63" width="128" height="90"/>
         <element name="RISpecificationAttribute" positionX="-666" positionY="-54" width="128" height="90"/>
         <element name="RIStaticBlockIndex" positionX="-90" positionY="-126" width="128" height="90"/>
-        <element name="RITeaserComponent" positionX="-686" positionY="-297" width="128" height="268"/>
+        <element name="RITeaserComponent" positionX="-686" positionY="-297" width="128" height="315"/>
         <element name="RITeaserGrouping" positionX="-873" positionY="-90" width="128" height="90"/>
         <element name="RIURLCache" positionX="-504" positionY="126" width="128" height="90"/>
         <element name="RIVariation" positionX="180" positionY="360" width="128" height="103"/>
