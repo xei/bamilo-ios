@@ -127,6 +127,12 @@
                                                                            formIndex.form = newForm;
                                                                            //form index was already on database, it just lacked the form variable. let's save the context without adding any other NSManagedObject
                                                                            [[RIDataBaseWrapper sharedInstance] saveContext];
+                                                                       } else {
+                                                                           //create a temporary form index just so that form can be identified. we only need to keep the id
+                                                                           NSMutableDictionary* formIndexJSON = [NSMutableDictionary new];
+                                                                           [formIndexJSON setObject:formIndexID forKey:@"id"];
+                                                                           RIFormIndex* tempFormIndex = [RIFormIndex parseFormIndex:formIndexJSON];
+                                                                           newForm.formIndex = tempFormIndex;
                                                                        }
                                                                        
                                                                        dispatch_async(dispatch_get_main_queue(), ^{
