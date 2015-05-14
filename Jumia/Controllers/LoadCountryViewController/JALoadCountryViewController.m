@@ -56,7 +56,7 @@
     
     self.coverView = [[UIView alloc] initWithFrame:self.view.bounds];
     self.coverView.backgroundColor = [UIColor blackColor];
-    self.coverView.alpha = 0.5;
+    self.coverView.alpha = 0.2;
     [self.view addSubview:self.coverView];
     
     UIImage* image = [UIImage imageNamed:@"loadingAnimationFrame1"];
