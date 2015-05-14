@@ -449,6 +449,10 @@
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [self showLoading];
     
+    self.selectedIndex = self.pickerScrollView.selectedIndex;
+    
+    self.pickerScrollView.startingIndex = self.selectedIndex;
+    
     CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     CGFloat newHeight = self.view.frame.size.width - self.view.frame.origin.y;
     
@@ -458,6 +462,11 @@
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    self.animatedScroll = NO;
+    
+    [self selectedIndex:self.selectedIndex];
+    [self.pickerScrollView setNeedsLayout];
+
     [self setupViews:self.view.frame.size.width height:self.view.frame.size.height];
     
     [self hideLoading];
@@ -484,6 +493,7 @@
                                                         0.0f,
                                                         self.mainScrollView.frame.size.width,
                                                         self.mainScrollView.frame.size.height) animated:self.animatedScroll];
+    self.animatedScroll = YES;
 }
 
 @end
