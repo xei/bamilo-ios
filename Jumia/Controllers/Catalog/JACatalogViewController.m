@@ -154,9 +154,12 @@
     
         self.catalogTopView.hidden = YES;
         
+        [self.bannerImage setHidden:YES];
+        
+        [self.collectionView setHidden:YES];
+        
         [self.filteredNoResultsView setupView:[self viewBounds]];
         
-        [self.collectionView removeFromSuperview];
         
         [self.view addSubview:self.filteredNoResultsView];
     }
@@ -169,6 +172,11 @@
 -(void)pressedEditFiltersButton:(JAFilteredNoResultsView *)view
 {
     [self.filteredNoResultsView removeFromSuperview];
+    
+    [self.collectionView setHidden:NO];
+    
+    [self.bannerImage setHidden:NO];
+    
     self.catalogTopView.hidden = NO;
     
     [self filterButtonPressed];
