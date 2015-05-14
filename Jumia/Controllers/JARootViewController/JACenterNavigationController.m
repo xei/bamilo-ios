@@ -1656,6 +1656,11 @@
 
 - (void)openCart
 {
+    if ([[self topViewController] isKindOfClass:[JALoadCountryViewController class]]) {
+        //inore the notification
+        return;
+    }
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
                                                         object:nil];
     
@@ -1672,6 +1677,11 @@
 
 - (void)openMenu
 {
+    if ([[self topViewController] isKindOfClass:[JALoadCountryViewController class]]) {
+        //inore the notification
+        return;
+    }
+    
     NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];;
     
     if(VALID_NOTEMPTY(self.cart, RICart))
