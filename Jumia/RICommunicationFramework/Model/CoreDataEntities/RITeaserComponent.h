@@ -28,6 +28,9 @@
 @property (nonatomic, retain) NSNumber * maxPrice;
 @property (nonatomic, retain) NSString * maxPriceFormatted;
 @property (nonatomic, retain) RITeaserGrouping *teaserGrouping;
+@property (nonatomic, retain) NSNumber * specialPrice;
+@property (nonatomic, retain) NSNumber * specialPriceEuroConverted;
+@property (nonatomic, retain) NSString * specialPriceFormatted;
 
 + (RITeaserComponent*)parseTeaserComponent:(NSDictionary*)teaserComponentJSON
                                    country:(RICountryConfiguration*)country;
