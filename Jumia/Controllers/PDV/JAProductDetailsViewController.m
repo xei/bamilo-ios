@@ -43,11 +43,6 @@
 @property (nonatomic, strong) JAPriceView *priceView;
 
 @property (nonatomic, strong) NSMutableArray *specificationContentViewArray;
-@property (nonatomic, strong) UIView *specificationSeparator;
-@property (nonatomic, strong) UILabel *specificationTitleLabel;
-@property (nonatomic, strong) UILabel *specificationTextLabel;
-@property (nonatomic, strong) UILabel *specificationKeyLabel;
-@property (nonatomic, strong) UILabel *specificationValueLabel;
 
 
 @end
@@ -126,7 +121,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
                                                         object:nil];
     
-
+    
     [self setupViews:self.view.frame.size.width height:self.view.frame.size.height];
     
     NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
@@ -322,7 +317,6 @@
 - (void)setupSpecificationView {
     CGFloat width = self.contenteScrollView.frame.size.width;
     CGFloat margin = 6.0f;
-    CGFloat height = 44.0f;
     CGFloat startingY = 6.0f;
     
     NSOrderedSet *listSpecifications = self.product.specifications;
@@ -349,96 +343,94 @@
         [self.specificationScrollView addSubview:currentContentView];
         
         
-        self.specificationTitleLabel = [[UILabel alloc]init];
+        UILabel* specificationTitleLabel = [[UILabel alloc]init];
         
         
         self.featuresView.layer.cornerRadius = 5.0f;
         
-        [self.specificationTitleLabel setFrame:CGRectMake(margin,
-                                                          2.0f,
-                                                          currentContentView.frame.size.width - 12.0f,
-                                                          23.0f)];
-        [currentContentView addSubview:self.specificationTitleLabel];
+        [specificationTitleLabel setFrame:CGRectMake(margin,
+                                                     2.0f,
+                                                     currentContentView.frame.size.width - 12.0f,
+                                                     23.0f)];
+        [currentContentView addSubview:specificationTitleLabel];
         
         
-        [self.specificationTitleLabel setText:specification.headLabel];
-        [self.specificationTitleLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
-        [self.specificationTitleLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
-        [self.specificationTitleLabel setBackgroundColor:[UIColor clearColor]];
+        [specificationTitleLabel setText:specification.headLabel];
+        [specificationTitleLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
+        [specificationTitleLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
+        [specificationTitleLabel setBackgroundColor:[UIColor clearColor]];
         
         
         
-        self.specificationSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                               26.0f,
-                                                                               currentContentView.frame.size.width,
-                                                                               1.0f)];
-        [self.specificationSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
-        [currentContentView addSubview:self.specificationSeparator];
+        UIView* specificationSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                                  26.0f,
+                                                                                  currentContentView.frame.size.width,
+                                                                                  1.0f)];
+        [specificationSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+        [currentContentView addSubview:specificationSeparator];
         
         
-        self.specificationTextLabel = [[UILabel alloc] init];
-        [currentContentView addSubview:self.specificationTextLabel];
+        UIView* specificationTextView = [[UILabel alloc] init];
+        [currentContentView addSubview:specificationTextView];
         
-        [self.specificationTextLabel setFrame:CGRectMake(margin,
-                                                         CGRectGetMaxY(self.specificationSeparator.frame) + 1.0f,
-                                                         currentContentView.frame.size.width - (2 * margin),
-                                                         0.0f)];
-        [self.specificationTextLabel setNumberOfLines:0];
-        [self.specificationTextLabel setTextColor:UIColorFromRGB(0x666666)];
-        [self.specificationTextLabel setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
+        [specificationTextView setFrame:CGRectMake(margin,
+                                                   CGRectGetMaxY(specificationSeparator.frame) + 1.0f,
+                                                   currentContentView.frame.size.width - (2 * margin),
+                                                   0.0f)];
         
-        CGFloat keyYMargin = 6.0f;
+        CGFloat currentY = 6.0f;
         NSMutableArray *specificationAttributes = specification.specificationAttributes;
         for (RISpecificationAttribute *specificationAttribute in  specificationAttributes) {
+            UILabel* specificationKeyLabel = [[UILabel alloc] init];
+            
             if (VALID_NOTEMPTY(specificationAttribute.key, NSString)) {
-                self.specificationKeyLabel = [[UILabel alloc] init];
                 
-                
-                [self.specificationKeyLabel setFrame:CGRectMake(margin,
-                                                                keyYMargin,
-                                                                self.specificationTextLabel.frame.size.width / 2,
-                                                                12.0f)];
+                [specificationKeyLabel setFrame:CGRectMake(margin,
+                                                           currentY,
+                                                           specificationTextView.frame.size.width / 2,
+                                                           12.0f)];
                 
                 
                 
-                [self.specificationKeyLabel setNumberOfLines:0];
-                [self.specificationKeyLabel setTextColor:UIColorFromRGB(0x666666)];
-                [self.specificationKeyLabel setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
-                [self.specificationKeyLabel setText:specificationAttribute.key];
-                [self.specificationKeyLabel sizeToFit];
-                [self.specificationTextLabel addSubview:self.specificationKeyLabel];
+                [specificationKeyLabel setNumberOfLines:0];
+                [specificationKeyLabel setTextColor:UIColorFromRGB(0x666666)];
+                [specificationKeyLabel setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
+                [specificationKeyLabel setText:specificationAttribute.key];
+                [specificationKeyLabel sizeToFit];
+                [specificationTextView addSubview:specificationKeyLabel];
             }
             
+            UILabel* specificationValueLabel = [[UILabel alloc] init];
+            
             if (VALID_NOTEMPTY(specificationAttribute.value, NSString)) {
-                self.specificationValueLabel = [[UILabel alloc] init];
                 
-                [self.specificationValueLabel setFrame:CGRectMake((self.specificationTextLabel.frame.size.width / 2) + 6.0f,
-                                                                  keyYMargin,
-                                                                  (self.specificationTextLabel.frame.size.width / 2) - 12.0f,
-                                                                  12.0f)];
-                
-                
-                [self.specificationValueLabel setNumberOfLines:0];
-                [self.specificationValueLabel setTextColor:UIColorFromRGB(0x666666)];
-                [self.specificationValueLabel setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
-                [self.specificationValueLabel setText:specificationAttribute.value];
-                [self.specificationValueLabel sizeToFit];
-                [self.specificationTextLabel addSubview:self.specificationValueLabel];
+                [specificationValueLabel setFrame:CGRectMake((specificationTextView.frame.size.width / 2) + 6.0f,
+                                                             currentY,
+                                                             (specificationTextView.frame.size.width / 2) - 12.0f,
+                                                             12.0f)];
                 
                 
-                keyYMargin = keyYMargin + self.specificationValueLabel.frame.size.height;
+                [specificationValueLabel setNumberOfLines:0];
+                [specificationValueLabel setTextColor:UIColorFromRGB(0x666666)];
+                [specificationValueLabel setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
+                [specificationValueLabel setText:specificationAttribute.value];
+                [specificationValueLabel sizeToFit];
+                [specificationTextView addSubview:specificationValueLabel];
+                
             }
+            
+            currentY += MAX(specificationTitleLabel.frame.size.height, specificationValueLabel.frame.size.height);
         }
         
-        height = height + CGRectGetMaxY(self.specificationValueLabel.frame) + 2.0f;
+        [specificationTextView setFrame:CGRectMake(specificationTextView.frame.origin.x,
+                                                   specificationTextView.frame.origin.y,
+                                                   specificationTextView.frame.size.width,
+                                                   currentY)];
         
         [currentContentView setFrame:CGRectMake(margin,
                                                 startingY,
                                                 self.contenteScrollView.frame.size.width - 12.f,
-                                                height)];
-        
-        startingY = startingY + currentContentView.frame.size.height + 6.0f;
-        height = 44.0f;
+                                                currentY + 34.0f)];
     }
     
     [self.mainScrollView addSubview:self.specificationScrollView];
@@ -466,7 +458,7 @@
     
     [self selectedIndex:self.selectedIndex];
     [self.pickerScrollView setNeedsLayout];
-
+    
     [self setupViews:self.view.frame.size.width height:self.view.frame.size.height];
     
     [self hideLoading];
