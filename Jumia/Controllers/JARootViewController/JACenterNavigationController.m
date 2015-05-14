@@ -1059,9 +1059,9 @@
         if ([notification.userInfo objectForKey:@"filtersArray"]) {
             mainFiltersViewController.filtersArray = [notification.userInfo objectForKey:@"filtersArray"];
         }
-        if ([notification.userInfo objectForKey:@"categoriesArray"]) {
-            mainFiltersViewController.categoriesArray = [notification.userInfo objectForKey:@"categoriesArray"];
-        }
+//        if ([notification.userInfo objectForKey:@"categoriesArray"]) {
+//            mainFiltersViewController.categoriesArray = [notification.userInfo objectForKey:@"categoriesArray"];
+//        }
         if ([notification.userInfo objectForKey:@"selectedCategory"]) {
             mainFiltersViewController.selectedCategory = [notification.userInfo objectForKey:@"selectedCategory"];
         }
