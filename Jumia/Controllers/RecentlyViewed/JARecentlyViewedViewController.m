@@ -139,6 +139,7 @@
             }];
         } else {
             [self hideLoading];
+            self.productsArray = nil;
         }
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         
