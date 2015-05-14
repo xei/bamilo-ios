@@ -27,6 +27,8 @@
 @property (assign, nonatomic) BOOL isRequestDone;
 @property (assign, nonatomic) RIApiResponse apiResponse;
 
+@property (nonatomic, strong)UIImageView* loadingBaseAnimation;
+@property (nonatomic, strong)UIView* coverView;
 
 @end
 
@@ -50,11 +52,47 @@
     
     // Do any additional setup after loading the view.
     self.screenName = @"SplashScreen";
+    
+    
+    self.coverView = [[UIView alloc] initWithFrame:self.view.bounds];
+    self.coverView.backgroundColor = [UIColor blackColor];
+    self.coverView.alpha = 0.2;
+    [self.view addSubview:self.coverView];
+    
+    UIImage* image = [UIImage imageNamed:@"loadingAnimationFrame1"];
+    
+    int lastFrame = 24;
+    if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"] || [[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+    {
+        lastFrame = 6;
+    }else if([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
+    {
+        lastFrame = 8;
+    }
+    self.loadingBaseAnimation = [[UIImageView alloc] initWithFrame:CGRectMake(0,
+                                                                              0,
+                                                                              image.size.width,
+                                                                              image.size.height)];
+    self.loadingBaseAnimation.animationDuration = 1.0f;
+    NSMutableArray* animationFrames = [NSMutableArray new];
+    for (int i = 1; i <= lastFrame; i++) {
+        NSString* frameName = [NSString stringWithFormat:@"loadingAnimationFrame%d", i];
+        UIImage* frame = [UIImage imageNamed:frameName];
+        [animationFrames addObject:frame];
+    }
+    self.loadingBaseAnimation.animationImages = [animationFrames copy];
+    self.loadingBaseAnimation.center = CGPointMake(self.view.center.x, self.view.center.y - 64.0f);
+    
+    [self.view addSubview:self.loadingBaseAnimation];
+    [self.loadingBaseAnimation startAnimating];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self.coverView setFrame:self.view.bounds];
+    self.loadingBaseAnimation.center = CGPointMake(self.view.center.x, self.view.center.y - 64.0f);
     
     self.isPopupOpened = NO;
     
@@ -149,14 +187,21 @@
         self.customerRequestId = nil;
     }
     
-    [self hideLoading];
+//    [self hideLoading];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    [self.coverView setFrame:self.view.bounds];
+    self.loadingBaseAnimation.center = CGPointMake(self.view.center.x, self.view.center.y - 64.0f);
 }
 
 - (void)continueProcessing
 {
     if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
     {
-        [self showLoading];
+//        [self showLoading];
     }
     
     self.isRequestDone = NO;
@@ -182,7 +227,7 @@
                                      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_NECESSARY_TITLE message:[NSString stringWithFormat:STRING_UPDATE_NECESSARY_MESSAGE, APP_NAME] delegate:self cancelButtonTitle:STRING_OK_UPDATE otherButtonTitles:nil];
                                      [alert setTag:kForceUpdateAlertViewTag];
                                      [alert show];
-                                     [self hideLoading];
+//                                     [self hideLoading];
                                  }
                                  else
                                  {
@@ -190,7 +235,7 @@
                                      [alert setTag:kUpdateAvailableAlertViewTag];
                                      [alert show];
                                      
-                                     [self hideLoading];
+//                                     [self hideLoading];
                                  }
                              }
                              else
@@ -203,7 +248,7 @@
                              [self removeErrorView];
                              //show loading has to be added here, in case the no connection error view was shown
                              // and the loading was removed because of that
-                             [self showLoading];
+//                             [self showLoading];
                          }
                                    andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage)
                          {
@@ -228,7 +273,7 @@
                                  
                                  [self showErrorView:noInternet startingY:0.0f selector:@selector(continueProcessing) objects:nil];
                              }
-                             [self hideLoading];
+//                             [self hideLoading];
                          }];
 }
 
@@ -360,7 +405,7 @@
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventChangeCountry]
                                               data:[trackingDictionary copy]];
     
-    [self hideLoading];
+//    [self hideLoading];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCountryNotification object:nil userInfo:self.pushNotification];
 }

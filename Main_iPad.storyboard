@@ -212,11 +212,11 @@
                         <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="WCQ-FN-RpZ" secondAttribute="trailing" constant="6" id="1il-b8-Lpg"/>
+                            <constraint firstItem="W55-Nh-Zce" firstAttribute="top" secondItem="kUg-3l-Umh" secondAttribute="top" constant="6" id="Bmu-VZ-oEz"/>
                             <constraint firstItem="WCQ-FN-RpZ" firstAttribute="leading" secondItem="kUg-3l-Umh" secondAttribute="leading" constant="6" id="Bvq-gO-OeC"/>
-                            <constraint firstItem="W55-Nh-Zce" firstAttribute="top" secondItem="WCQ-FN-RpZ" secondAttribute="top" id="N3g-mn-9j8"/>
                             <constraint firstAttribute="trailing" secondItem="W55-Nh-Zce" secondAttribute="trailing" constant="6" id="Sjh-a6-mqK"/>
-                            <constraint firstItem="TZY-g8-xda" firstAttribute="top" secondItem="W55-Nh-Zce" secondAttribute="bottom" constant="526" id="T6H-O5-XsY"/>
                             <constraint firstItem="W55-Nh-Zce" firstAttribute="leading" secondItem="kUg-3l-Umh" secondAttribute="leading" constant="6" id="WZI-BH-1Md"/>
+                            <constraint firstItem="WCQ-FN-RpZ" firstAttribute="top" secondItem="kUg-3l-Umh" secondAttribute="top" constant="6" id="a4F-ia-xS3"/>
                         </constraints>
                     </view>
                     <connections>
@@ -473,52 +473,51 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Vo-eM-0eZ">
-                                <rect key="frame" x="0.0" y="44" width="768" height="980"/>
-                                <subviews>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="40W-lP-GsL">
-                                        <rect key="frame" x="0.0" y="156" width="768" height="412"/>
-                                    </scrollView>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F4h-U4-iL5">
-                                        <rect key="frame" x="0.0" y="44" width="768" height="92"/>
-                                        <subviews>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3hX-DX-Ezt">
-                                                <rect key="frame" x="12" y="8" width="734" height="17"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
-                                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="296" translatesAutoresizingMaskIntoConstraints="NO" id="hma-HF-PCz">
-                                                <rect key="frame" x="12" y="29" width="734" height="17"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
-                                </subviews>
-                            </scrollView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eyu-sF-hkK" customClass="JAPickerScrollView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eyu-sF-hkK" customClass="JAPickerScrollView">
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="vX9-T6-HpW"/>
+                                </constraints>
                             </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Vo-eM-0eZ">
+                                <rect key="frame" x="0.0" y="44" width="768" height="556"/>
+                            </scrollView>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="2Vo-eM-0eZ" firstAttribute="top" secondItem="Eyu-sF-hkK" secondAttribute="bottom" id="68r-cg-fgY"/>
+                            <constraint firstItem="2Vo-eM-0eZ" firstAttribute="leading" secondItem="3Xw-Lm-tS5" secondAttribute="leading" id="RNg-VG-xLu"/>
+                            <constraint firstAttribute="bottom" secondItem="2Vo-eM-0eZ" secondAttribute="bottom" id="YPb-ex-6oc"/>
+                            <constraint firstItem="Eyu-sF-hkK" firstAttribute="leading" secondItem="3Xw-Lm-tS5" secondAttribute="leading" id="Yby-rH-fRm"/>
+                            <constraint firstItem="Eyu-sF-hkK" firstAttribute="top" secondItem="3Xw-Lm-tS5" secondAttribute="top" id="cRw-76-fuK"/>
+                            <constraint firstAttribute="trailing" secondItem="2Vo-eM-0eZ" secondAttribute="trailing" id="fqz-pO-U5d"/>
+                            <constraint firstAttribute="trailing" secondItem="Eyu-sF-hkK" secondAttribute="trailing" id="zNI-GJ-GHb"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="L83-xW-Mje" appends="YES" id="beA-xu-X3c"/>
+                            <outletCollection property="gestureRecognizers" destination="kVZ-pg-eX3" appends="YES" id="uuy-ut-Hmn"/>
+                        </connections>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="3US-kp-dnc"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="768" height="600"/>
                     <connections>
-                        <outlet property="contenteScrollView" destination="40W-lP-GsL" id="BYy-wp-iQm"/>
-                        <outlet property="labelBrand" destination="3hX-DX-Ezt" id="8Wo-s9-Y80"/>
-                        <outlet property="labelName" destination="hma-HF-PCz" id="gNU-fR-aO6"/>
                         <outlet property="mainScrollView" destination="2Vo-eM-0eZ" id="1PK-oR-iIj"/>
                         <outlet property="pickerScrollView" destination="Eyu-sF-hkK" id="CCe-7n-L4D"/>
-                        <outlet property="topView" destination="F4h-U4-iL5" id="FpJ-hV-giO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dB9-SK-UYi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="left" id="L83-xW-Mje" userLabel="Left Swipe Gesture Recognizer">
+                    <connections>
+                        <action selector="swipeLeft:" destination="QVy-CK-tzA" id="jiN-vy-scy"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="right" id="kVZ-pg-eX3" userLabel="Right Swipe Gesture Recognizer">
+                    <connections>
+                        <action selector="swipeRight:" destination="QVy-CK-tzA" id="9qn-qq-rXh"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1443.8399999999999" y="2606.0800000000004"/>
         </scene>

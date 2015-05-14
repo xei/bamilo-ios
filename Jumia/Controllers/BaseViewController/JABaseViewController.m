@@ -24,17 +24,16 @@
 @property (strong, nonatomic) JAMessageView *messageView;
 @property (strong, nonatomic) JAMaintenancePage *maintenancePage;
 @property (strong, nonatomic) JAKickoutView *kickoutView;
-@property (nonatomic, strong) UIView* searchBarBackground;
-@property (nonatomic, strong) UISearchBar* searchBar;
-@property (nonatomic, strong) UIImageView* searchIconImageView;
-@property (nonatomic, strong) JASearchResultsView* searchResultsView;
+@property (nonatomic, strong) UIView *searchBarBackground;
+@property (nonatomic, strong) UISearchBar *searchBar;
+@property (nonatomic, strong) UIImageView *searchIconImageView;
+@property (nonatomic, strong) JASearchResultsView *searchResultsView;
 
 @end
 
 @implementation JABaseViewController
 
-- (CGRect)viewBounds
-{
+- (CGRect)viewBounds {
     CGFloat offset = 0.0f;
     if (self.searchBarIsVisible) {
         offset = kSearchViewBarHeight;
@@ -45,28 +44,25 @@
                       self.view.bounds.size.height - offset);
 }
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
-{
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        JANavigationBarLayout* defaultLayout = [[JANavigationBarLayout alloc] init];
+        JANavigationBarLayout *defaultLayout = [[JANavigationBarLayout alloc] init];
         self.navBarLayout = defaultLayout;
     }
     return self;
 }
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
-        JANavigationBarLayout* defaultLayout = [[JANavigationBarLayout alloc] init];
+        JANavigationBarLayout *defaultLayout = [[JANavigationBarLayout alloc] init];
         self.navBarLayout = defaultLayout;
     }
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     self.firstLoading = YES;
@@ -92,14 +88,13 @@
                                                                           action:@selector(cancelLoading)];
     [self.loadingView addGestureRecognizer:tap];
     
-    UIImage* image = [UIImage imageNamed:@"loadingAnimationFrame1"];
+    UIImage *image = [UIImage imageNamed:@"loadingAnimationFrame1"];
     
     int lastFrame = 24;
-    if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"] || [[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
-    {
+    if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"] || [[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"]) {
         lastFrame = 6;
-    }else if([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
-    {
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"]) {
         lastFrame = 8;
     }
     self.loadingAnimation = [[UIImageView alloc] initWithFrame:CGRectMake(0,
@@ -107,10 +102,10 @@
                                                                           image.size.width,
                                                                           image.size.height)];
     self.loadingAnimation.animationDuration = 1.0f;
-    NSMutableArray* animationFrames = [NSMutableArray new];
+    NSMutableArray *animationFrames = [NSMutableArray new];
     for (int i = 1; i <= lastFrame; i++) {
-        NSString* frameName = [NSString stringWithFormat:@"loadingAnimationFrame%d", i];
-        UIImage* frame = [UIImage imageNamed:frameName];
+        NSString *frameName = [NSString stringWithFormat:@"loadingAnimationFrame%d", i];
+        UIImage *frame = [UIImage imageNamed:frameName];
         [animationFrames addObject:frame];
     }
     self.loadingAnimation.animationImages = [animationFrames copy];
@@ -119,47 +114,36 @@
     self.loadingView.alpha = 0.0f;
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [self changeLoadingFrame:[[UIScreen mainScreen] bounds] orientation:toInterfaceOrientation];
     
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
-    if(VALID_NOTEMPTY(self.maintenancePage, JAMaintenancePage)){
-        
-        
+    if (VALID_NOTEMPTY(self.maintenancePage, JAMaintenancePage)) {
         [self.maintenancePage setupMaintenancePage:CGRectMake(0.0f, 0.0f, window.frame.size.height, window.frame.size.width) orientation:toInterfaceOrientation];
     }
     
-    if(VALID_NOTEMPTY(self.kickoutView, JAKickoutView)){
-        
-        
+    if (VALID_NOTEMPTY(self.kickoutView, JAKickoutView)) {
         [self.kickoutView setupKickoutView:CGRectMake(0.0f, 0.0f, window.frame.size.height, window.frame.size.width) orientation:toInterfaceOrientation];
     }
 }
-- (void)changeLoadingFrame:(CGRect)frame orientation:(UIInterfaceOrientation)orientation
-{
+
+- (void)changeLoadingFrame:(CGRect)frame orientation:(UIInterfaceOrientation)orientation {
     CGFloat screenWidth = frame.size.width;
     CGFloat screenHeight = frame.size.height;
     
-    if(UIInterfaceOrientationIsPortrait(orientation))
-    {
-        if(screenWidth > screenHeight)
-        {
+    if (UIInterfaceOrientationIsPortrait(orientation)) {
+        if (screenWidth > screenHeight) {
             self.loadingView.frame  = CGRectMake(0, 0, screenHeight, screenWidth);
         }
-        else
-        {
+        else {
             self.loadingView.frame  = CGRectMake(0, 0, screenWidth, screenHeight);
         }
     }
-    else
-    {
-        if(screenWidth > screenHeight)
-        {
+    else {
+        if (screenWidth > screenHeight) {
             self.loadingView.frame  = CGRectMake(0, 0, screenWidth, screenHeight);
         }
-        else
-        {
+        else {
             self.loadingView.frame  = CGRectMake(0, 0, screenHeight, screenWidth);
         }
     }
@@ -167,21 +151,18 @@
     self.loadingAnimation.center = self.loadingView.center;
 }
 
--(void)dealloc
-{
+- (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     
     CGRect viewFrame = self.view.frame;
     CGFloat screenWidth = viewFrame.size.width;
     CGFloat screenHeight = viewFrame.size.height;
     
-    if(VALID_NOTEMPTY(self.noConnectionView, JANoConnectionView))
-    {
+    if (VALID_NOTEMPTY(self.noConnectionView, JANoConnectionView)) {
         self.noConnectionView.frame = CGRectMake(self.noConnectionView.frame.origin.x,
                                                  self.noConnectionView.frame.origin.y,
                                                  screenWidth,
@@ -189,21 +170,18 @@
         [self.view bringSubviewToFront:self.noConnectionView];
     }
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
-    if(VALID_NOTEMPTY(self.maintenancePage, JAMaintenancePage)){
-        
-        [self.maintenancePage setupMaintenancePage:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height)orientation:self.interfaceOrientation];
+    if (VALID_NOTEMPTY(self.maintenancePage, JAMaintenancePage)) {
+        [self.maintenancePage setupMaintenancePage:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height) orientation:self.interfaceOrientation];
     }
-    if(VALID_NOTEMPTY(self.kickoutView, JAKickoutView)){
-        
-        [self.kickoutView setupKickoutView:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height)orientation:self.interfaceOrientation];
+    if (VALID_NOTEMPTY(self.kickoutView, JAKickoutView)) {
+        [self.kickoutView setupKickoutView:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height) orientation:self.interfaceOrientation];
     }
     if (self.searchBarIsVisible) {
         [self reloadSearchBar];
     }
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [self reloadNavBar];
@@ -221,38 +199,32 @@
     }
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenMenuNotification object:nil];
 }
 
-- (void)sideMenuIsOpening
-{
+- (void)sideMenuIsOpening {
     [self.searchResultsView popSearchResults];
 }
 
-- (NSUInteger)supportedInterfaceOrientations
-{
+- (NSUInteger)supportedInterfaceOrientations {
     NSUInteger supportedInterfaceOrientations = UIInterfaceOrientationMaskPortrait;
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
-    {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         supportedInterfaceOrientations = UIInterfaceOrientationMaskAll;
     }
     return supportedInterfaceOrientations;
 }
 
-- (void)reloadNavBar
-{
+- (void)reloadNavBar {
     [[NSNotificationCenter defaultCenter] postNotificationName:kChangeNavigationBarNotification
                                                         object:self.navBarLayout];
 }
 
 #pragma mark - Search Bar
 
-- (void)showSearchBar
-{
+- (void)showSearchBar {
     self.searchBarBackground = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x,
                                                                         self.view.bounds.origin.y,
                                                                         self.view.bounds.size.width,
@@ -264,18 +236,18 @@
     CGFloat verticalMargin = 3.0f; //value by design
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(self.searchBarBackground.bounds.origin.x + horizontalMargin,
                                                                    self.searchBarBackground.bounds.origin.y + verticalMargin,
-                                                                   self.searchBarBackground.bounds.size.width - horizontalMargin*2,
-                                                                   self.searchBarBackground.bounds.size.height - verticalMargin*2)];
+                                                                   self.searchBarBackground.bounds.size.width - horizontalMargin * 2,
+                                                                   self.searchBarBackground.bounds.size.height - verticalMargin * 2)];
     self.searchBar.delegate = self;
     self.searchBar.barTintColor = JANavBarBackgroundGrey;
     self.searchBar.placeholder = STRING_SEARCH_PLACEHOLDER;
     self.searchBar.showsCancelButton = NO;
     
-    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor orangeColor]];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTintColor:[UIColor orangeColor]];
     
     UITextField *textFieldSearch = [self.searchBar valueForKey:@"_searchField"];
     textFieldSearch.font = [UIFont fontWithName:kFontRegularName size:textFieldSearch.font.pointSize];
-    textFieldSearch.backgroundColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0f];
+    textFieldSearch.backgroundColor = [UIColor colorWithRed:242.0 / 255.0 green:242.0 / 255.0 blue:242.0 / 255.0 alpha:1.0f];
     //remove magnifying lens
     [textFieldSearch setLeftViewMode:UITextFieldViewModeNever];
     
@@ -284,7 +256,7 @@
     
     [self.searchBarBackground addSubview:self.searchBar];
     
-    UIImage* searchIcon = [UIImage imageNamed:@"searchIcon"];
+    UIImage *searchIcon = [UIImage imageNamed:@"searchIcon"];
     self.searchIconImageView = [[UIImageView alloc] initWithImage:searchIcon];
     self.searchIconImageView.frame = CGRectMake(CGRectGetMaxX(self.searchBar.frame) - horizontalMargin - searchIcon.size.width,
                                                 (self.searchBarBackground.frame.size.height - searchIcon.size.height) / 2,
@@ -293,8 +265,7 @@
     [self.searchBarBackground addSubview:self.searchIconImageView];
 }
 
-- (void)reloadSearchBar
-{
+- (void)reloadSearchBar {
     self.searchBarBackground.frame = CGRectMake(self.view.bounds.origin.x,
                                                 self.view.bounds.origin.y,
                                                 self.view.bounds.size.width,
@@ -303,8 +274,8 @@
     CGFloat verticalMargin = 2.0f; //value by design
     self.searchBar.frame = CGRectMake(self.searchBarBackground.bounds.origin.x + horizontalMargin,
                                       self.searchBarBackground.bounds.origin.y + verticalMargin,
-                                      self.searchBarBackground.bounds.size.width - horizontalMargin*2,
-                                      self.searchBarBackground.bounds.size.height - verticalMargin*2);
+                                      self.searchBarBackground.bounds.size.width - horizontalMargin * 2,
+                                      self.searchBarBackground.bounds.size.height - verticalMargin * 2);
     self.searchIconImageView.frame = CGRectMake(CGRectGetMaxX(self.searchBar.frame) - horizontalMargin - self.searchIconImageView.frame.size.width,
                                                 (self.searchBarBackground.frame.size.height - self.searchIconImageView.frame.size.height) / 2,
                                                 self.searchIconImageView.frame.size.width,
@@ -315,17 +286,16 @@
 
 #pragma mark Search Bar && Search Results View Delegate
 
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-{
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [self.searchResultsView searchFor:searchBar.text];
 }
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     self.searchResultsView.searchText = searchText;
     if (0 < searchText.length) {
         self.searchIconImageView.hidden = YES;
-    } else {
+    }
+    else {
         self.searchIconImageView.hidden = NO;
     }
 }
@@ -338,90 +308,79 @@
     return YES;
 }
 
-- (void)searchResultsViewWillPop
-{
+- (void)searchResultsViewWillPop {
     self.searchBar.text = @"";
     [self.searchBar resignFirstResponder];
     self.searchIconImageView.hidden = NO;
-//    //remove results
-//    [self.searchBar performSelector: @selector(resignFirstResponder)
-//                         withObject: nil
-//                         afterDelay: 0.1];
+    //    //remove results
+    //    [self.searchBar performSelector: @selector(resignFirstResponder)
+    //                         withObject: nil
+    //                         afterDelay: 0.1];
 }
 
 # pragma mark Loading View
 
-- (void) showLoading
-{
+- (void)showLoading {
     self.requestNumber++;
     
     [self changeLoadingFrame:[[UIScreen mainScreen] bounds] orientation:self.interfaceOrientation];
     
-    if(1 == self.requestNumber) {
+    if (1 == self.requestNumber) {
         [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view addSubview:self.loadingView];
         [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view addSubview:self.loadingAnimation];
         
         [self.loadingAnimation startAnimating];
         
         [UIView animateWithDuration:0.4f
-                         animations:^{
+                         animations: ^{
                              self.loadingView.alpha = 0.5f;
                              self.loadingAnimation.alpha = 0.5f;
                          }];
     }
 }
 
-- (void) hideLoading
-{
+- (void)hideLoading {
     self.requestNumber--;
     if (self.requestNumber < 0) {
         self.requestNumber = 0;
     }
-    if(0 == self.requestNumber) {
+    if (0 == self.requestNumber) {
         [UIView animateWithDuration:0.4f
-                         animations:^{
+                         animations: ^{
                              self.loadingView.alpha = 0.0f;
                              self.loadingAnimation.alpha = 0.0f;
-                         } completion:^(BOOL finished) {
+                         } completion: ^(BOOL finished) {
                              [self.loadingView removeFromSuperview];
                              [self.loadingAnimation removeFromSuperview];
                          }];
     }
 }
 
-- (void) cancelLoading
-{
+- (void)cancelLoading {
     [[NSNotificationCenter defaultCenter] postNotificationName:kCancelLoadingNotificationName
                                                         object:nil];
 }
 
 # pragma mark Message View
 
-- (void)showMessage:(NSString*)message success:(BOOL)success
-{
+- (void)showMessage:(NSString *)message success:(BOOL)success {
     UIViewController *rootViewController = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController;
     
-    if(!VALID_NOTEMPTY(self.messageView, JAMessageView))
-    {
+    if (!VALID_NOTEMPTY(self.messageView, JAMessageView)) {
         self.messageView = [JAMessageView getNewJAMessageView];
         [self.messageView setupView];
     }
     
-    if(!VALID_NOTEMPTY([self.messageView superview], UIView))
-    {
+    if (!VALID_NOTEMPTY([self.messageView superview], UIView)) {
         UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
         CGFloat width = rootViewController.view.frame.size.width;
-        if(UIInterfaceOrientationIsLandscape(orientation))
-        {
-            if(width < rootViewController.view.frame.size.height)
-            {
+        if (UIInterfaceOrientationIsLandscape(orientation)) {
+            if (width < rootViewController.view.frame.size.height) {
                 width = rootViewController.view.frame.size.height;
             }
         }
-        else
-        {
-            if(width > rootViewController.view.frame.size.height)
-            {
+        else {
+            if (width > rootViewController.view.frame.size.height) {
                 width = rootViewController.view.frame.size.height;
             }
         }
@@ -436,45 +395,58 @@
     [self.messageView setTitle:message success:success];
 }
 
-- (void)removeMessageView
-{
+- (void)removeMessageView {
     [self.messageView removeFromSuperview];
 }
 
 # pragma mark Error Views
 
-- (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects
-{
-    if(VALID_NOTEMPTY(self.noConnectionView, JANoConnectionView))
-    {
+- (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray *)objects {
+    if (VALID_NOTEMPTY(self.noConnectionView, JANoConnectionView)) {
         [self.noConnectionView removeFromSuperview];
     }
     
     self.noConnectionView = [JANoConnectionView getNewJANoConnectionView];
     [self.noConnectionView setupNoConnectionViewForNoInternetConnection:isNoInternetConnection];
-    self.noConnectionView.frame = CGRectMake(self.view.frame.origin.x,
-                                             startingY,
-                                             self.view.frame.size.width,
-                                             self.view.frame.size.height);
+    
+    CGRect noConnectionViewFrame = CGRectMake(0.0f,
+                                              0.0f,
+                                              [[UIScreen mainScreen] bounds].size.width,
+                                              [[UIScreen mainScreen] bounds].size.height);
+    
+    if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
+        if (noConnectionViewFrame.size.width > noConnectionViewFrame.size.height) {
+            noConnectionViewFrame  = CGRectMake(0.0f, startingY, noConnectionViewFrame.size.height, noConnectionViewFrame.size.width - startingY);
+        }
+        else {
+            noConnectionViewFrame  = CGRectMake(0.0f, startingY, noConnectionViewFrame.size.width, noConnectionViewFrame.size.height - startingY);
+        }
+    }
+    else {
+        if (noConnectionViewFrame.size.width > noConnectionViewFrame.size.height) {
+            noConnectionViewFrame  = CGRectMake(0.0f, startingY, noConnectionViewFrame.size.width, noConnectionViewFrame.size.height - startingY);
+        }
+        else {
+            noConnectionViewFrame  = CGRectMake(0.0f, startingY, noConnectionViewFrame.size.height, noConnectionViewFrame.size.width - startingY);
+        }
+    }
+    
+    [self.noConnectionView setFrame:noConnectionViewFrame];
     
     // This is to avoid a retain cycle
     __block JABaseViewController *viewController = self;
-    [self.noConnectionView setRetryBlock:^(BOOL dismiss)
+    [self.noConnectionView setRetryBlock: ^(BOOL dismiss)
      {
-         if([viewController respondsToSelector:selector])
-         {
+         if ([viewController respondsToSelector:selector]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-             if(ISEMPTY(objects))
-             {
+             if (ISEMPTY(objects)) {
                  [viewController performSelector:selector];
              }
-             else if(1 == [objects count])
-             {
+             else if (1 == [objects count]) {
                  [viewController performSelector:selector withObject:[objects objectAtIndex:0]];
              }
-             else if(2 == [objects count])
-             {
+             else if (2 == [objects count]) {
                  [viewController performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
              }
 #pragma clang diagnostic pop
@@ -484,41 +456,35 @@
     [self.view addSubview:self.noConnectionView];
 }
 
-- (void)removeErrorView
-{
+- (void)removeErrorView {
     [self.noConnectionView removeFromSuperview];
 }
 
-- (void)showMaintenancePage:(SEL)selector objects:(NSArray*)objects
-{
+- (void)showMaintenancePage:(SEL)selector objects:(NSArray *)objects {
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
     
     self.maintenancePage = [JAMaintenancePage getNewJAMaintenancePage];
     [self.maintenancePage setupMaintenancePage:window.frame orientation:self.interfaceOrientation];
     __block JABaseViewController *viewController = self;
-    [self.maintenancePage setRetryBlock:^(BOOL dismiss)
+    [self.maintenancePage setRetryBlock: ^(BOOL dismiss)
      {
-         if([viewController respondsToSelector:selector])
-         {
+         if ([viewController respondsToSelector:selector]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-             if(ISEMPTY(objects))
-             {
+             if (ISEMPTY(objects)) {
                  [viewController performSelector:selector];
              }
-             else if(1 == [objects count])
-             {
+             else if (1 == [objects count]) {
                  [viewController performSelector:selector withObject:[objects objectAtIndex:0]];
              }
-             else if(2 == [objects count])
-             {
+             else if (2 == [objects count]) {
                  [viewController performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
              }
 #pragma clang diagnostic pop
          }
      }];
     
-    for (UIView* view in window.rootViewController.view.subviews) {
+    for (UIView *view in window.rootViewController.view.subviews) {
         if ([view isKindOfClass:[JAMaintenancePage class]]) {
             [view removeFromSuperview];
         }
@@ -527,50 +493,42 @@
     [window.rootViewController.view addSubview:self.maintenancePage];
 }
 
-- (void)removeMaintenancePage
-{
+- (void)removeMaintenancePage {
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
-    for(UIView *view in window.rootViewController.view.subviews)
-    {
-        if([view isKindOfClass:[JAMaintenancePage class]])
-        {
+    for (UIView *view in window.rootViewController.view.subviews) {
+        if ([view isKindOfClass:[JAMaintenancePage class]]) {
             [view removeFromSuperview];
             break;
         }
     }
 }
 
-- (void)showKickoutView:(SEL)selector objects:(NSArray*)objects
-{
+- (void)showKickoutView:(SEL)selector objects:(NSArray *)objects {
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
     
     self.kickoutView = [[JAKickoutView alloc] init];
     [self.kickoutView setupKickoutView:window.frame orientation:self.interfaceOrientation];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     __block JABaseViewController *viewController = self;
-    [self.kickoutView setRetryBlock:^(BOOL dismiss)
+    [self.kickoutView setRetryBlock: ^(BOOL dismiss)
      {
-         if([viewController respondsToSelector:selector])
-         {
+         if ([viewController respondsToSelector:selector]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-             if(ISEMPTY(objects))
-             {
+             if (ISEMPTY(objects)) {
                  [viewController performSelector:selector];
              }
-             else if(1 == [objects count])
-             {
+             else if (1 == [objects count]) {
                  [viewController performSelector:selector withObject:[objects objectAtIndex:0]];
              }
-             else if(2 == [objects count])
-             {
+             else if (2 == [objects count]) {
                  [viewController performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
              }
 #pragma clang diagnostic pop
          }
      }];
     
-    for (UIView* view in window.rootViewController.view.subviews) {
+    for (UIView *view in window.rootViewController.view.subviews) {
         if ([view isKindOfClass:[JAKickoutView class]]) {
             [view removeFromSuperview];
         }
@@ -579,14 +537,11 @@
     [window.rootViewController.view addSubview:self.kickoutView];
 }
 
-- (void)removeKickoutView
-{
+- (void)removeKickoutView {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
-    for(UIView *view in window.rootViewController.view.subviews)
-    {
-        if([view isKindOfClass:[JAKickoutView class]])
-        {
+    for (UIView *view in window.rootViewController.view.subviews) {
+        if ([view isKindOfClass:[JAKickoutView class]]) {
             [view removeFromSuperview];
             break;
         }
