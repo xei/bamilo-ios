@@ -167,7 +167,7 @@ FBLoginViewDelegate
     [RIForm getForm:@"login"
        successBlock:^(RIForm *form)
      {
-         self.dynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self values:[self getEmail] startingPosition:0.0f hasFieldNavigation:YES];
+         self.dynamicForm = [[JADynamicForm alloc] initWithForm:form values:[self getEmail] startingPosition:0.0f hasFieldNavigation:YES];
          [self.dynamicForm setDelegate:self];
          
          for(UIView *view in self.dynamicForm.formViews)

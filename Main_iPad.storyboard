@@ -212,11 +212,11 @@
                         <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="WCQ-FN-RpZ" secondAttribute="trailing" constant="6" id="1il-b8-Lpg"/>
+                            <constraint firstItem="W55-Nh-Zce" firstAttribute="top" secondItem="kUg-3l-Umh" secondAttribute="top" constant="6" id="Bmu-VZ-oEz"/>
                             <constraint firstItem="WCQ-FN-RpZ" firstAttribute="leading" secondItem="kUg-3l-Umh" secondAttribute="leading" constant="6" id="Bvq-gO-OeC"/>
-                            <constraint firstItem="W55-Nh-Zce" firstAttribute="top" secondItem="WCQ-FN-RpZ" secondAttribute="top" id="N3g-mn-9j8"/>
                             <constraint firstAttribute="trailing" secondItem="W55-Nh-Zce" secondAttribute="trailing" constant="6" id="Sjh-a6-mqK"/>
-                            <constraint firstItem="TZY-g8-xda" firstAttribute="top" secondItem="W55-Nh-Zce" secondAttribute="bottom" constant="526" id="T6H-O5-XsY"/>
                             <constraint firstItem="W55-Nh-Zce" firstAttribute="leading" secondItem="kUg-3l-Umh" secondAttribute="leading" constant="6" id="WZI-BH-1Md"/>
+                            <constraint firstItem="WCQ-FN-RpZ" firstAttribute="top" secondItem="kUg-3l-Umh" secondAttribute="top" constant="6" id="a4F-ia-xS3"/>
                         </constraints>
                     </view>
                     <connections>

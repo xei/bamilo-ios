@@ -327,6 +327,9 @@ JAPickerScrollViewDelegate
     }
     
     [self setupSpecificationView];
+    UIView *lastView = self.specificationContentViewArray.lastObject;
+    [self.specificationScrollView setContentSize:CGSizeMake(self.specificationScrollView.frame.size.width,
+                                                            CGRectGetMaxY(lastView.frame) + self.pickerScrollView.frame.size.height - 12.0f)];
     
     }
 
@@ -444,7 +447,7 @@ JAPickerScrollViewDelegate
                 [self.specificationTextLabel addSubview:self.specificationValueLabel];
             
                 
-                keyYMargin = keyYMargin + 26.0f;
+                keyYMargin = keyYMargin + self.specificationValueLabel.frame.size.height;
                 
             }
         }

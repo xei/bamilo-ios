@@ -145,7 +145,7 @@ JAPickerDelegate>
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"NewAddress"];
 }
 
-- (void) getForms
+- (void)getForms
 {
     if(RIApiResponseSuccess == self.apiResponse)
     {
@@ -156,11 +156,44 @@ JAPickerDelegate>
     self.numberOfGetFormRequests = 2;
     self.loadFailed = NO;
     
+    
+    typedef void (^GetBillingDynamicFormBlock)(void);
+    GetBillingDynamicFormBlock getBillingDynamicFormBlock = ^void{
+        [RIForm getForm:@"addresscreate"
+         extraArguments:nil
+           successBlock:^(RIForm *form)
+         {
+             self.billingDynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:self.billingAddressViewCurrentY widthSize:self.billingContentView.frame.size.width hasFieldNavigation:NO];
+             
+             [self.billingDynamicForm setDelegate:self];
+             
+             for(UIView *view in self.billingDynamicForm.formViews)
+             {
+                 [self.billingContentView addSubview:view];
+             }
+             self.numberOfGetFormRequests--;
+             
+         }failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
+         {
+             if(!self.loadFailed)
+             {
+                 self.apiResponse = apiResponse;
+             }
+             
+             self.loadFailed = YES;
+             self.numberOfGetFormRequests--;
+         }];
+    };
+    
     [RIForm getForm:@"addresscreate"
      extraArguments:self.extraParameters
        successBlock:^(RIForm *form)
-     {
-         self.shippingDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self startingPosition:self.shippingAddressViewCurrentY widthSize:self.shippingContentView.frame.size.width hasFieldNavigation:NO];
+    {
+         self.shippingDynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:self.shippingAddressViewCurrentY widthSize:self.shippingContentView.frame.size.width hasFieldNavigation:NO];
+        
+        [self.shippingDynamicForm setDelegate:self];
+        
+         getBillingDynamicFormBlock();
          
          for(UIView *view in self.shippingDynamicForm.formViews)
          {
@@ -171,29 +204,7 @@ JAPickerDelegate>
      }
        failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
      {
-         if(!self.loadFailed)
-         {
-             self.apiResponse = apiResponse;
-         }
-         
-         self.loadFailed = YES;
-         self.numberOfGetFormRequests--;
-     }];
-    
-    [RIForm getForm:@"addresscreate"
-     extraArguments:nil
-       successBlock:^(RIForm *form)
-     {
-         self.billingDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self startingPosition:self.billingAddressViewCurrentY widthSize:self.billingContentView.frame.size.width hasFieldNavigation:NO];
-         
-         for(UIView *view in self.billingDynamicForm.formViews)
-         {
-             [self.billingContentView addSubview:view];
-         }
-         self.numberOfGetFormRequests--;
-     }
-       failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
-     {
+         getBillingDynamicFormBlock();
          if(!self.loadFailed)
          {
              self.apiResponse = apiResponse;
@@ -387,7 +398,7 @@ JAPickerDelegate>
     }
 }
 
-- (void) setupStepView:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+- (void)setupStepView:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
     CGFloat stepViewLeftMargin = 73.0f;
     NSString *stepBackgroundImageName = @"headerCheckoutStep2";

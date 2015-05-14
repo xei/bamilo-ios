@@ -57,9 +57,9 @@
 
 -(id)initWithForm:(RIForm*)form startingPosition:(CGFloat)startingY;
 
--(id)initWithForm:(RIForm*)form delegate:(id<JADynamicFormDelegate>)delegate startingPosition:(CGFloat)startingY widthSize:(CGFloat)widthComponent hasFieldNavigation:(BOOL)hasFieldNavigation;
+-(id)initWithForm:(RIForm*)form startingPosition:(CGFloat)startingY widthSize:(CGFloat)widthComponent hasFieldNavigation:(BOOL)hasFieldNavigation;
 
--(id)initWithForm:(RIForm*)form delegate:(id<JADynamicFormDelegate>)delegate values:(NSDictionary*)values startingPosition:(CGFloat)startingY hasFieldNavigation:(BOOL)hasFieldNavigation;
+-(id)initWithForm:(RIForm*)form values:(NSDictionary*)values startingPosition:(CGFloat)startingY hasFieldNavigation:(BOOL)hasFieldNavigation;
 
 -(void)validateFields:(NSDictionary*)errors;
 
