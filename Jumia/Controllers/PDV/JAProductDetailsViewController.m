@@ -431,6 +431,8 @@
                                                 startingY,
                                                 self.contenteScrollView.frame.size.width - 12.f,
                                                 currentY + 34.0f)];
+        
+        startingY += currentContentView.frame.size.height + 6.0f;
     }
     
     [self.mainScrollView addSubview:self.specificationScrollView];
