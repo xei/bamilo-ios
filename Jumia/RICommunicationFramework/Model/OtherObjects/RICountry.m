@@ -248,13 +248,13 @@
         uniqueCountry.isLive = NO;
 #endif
         return uniqueCountry;
-    } else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"]) {
+    } else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
         uniqueCountry.name = RI_UNIQUE_COUNTRY_NAME_BAMILO;
         uniqueCountry.countryIso = RI_UNIQUE_COUNTRY_ISO_BAMILO;
         uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO;
         uniqueCountry.isLive = YES;
 #if defined(STAGING) && STAGING
-        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO_STAGING;
+//        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO_STAGING;
         uniqueCountry.isLive = NO;
 #endif
         return uniqueCountry;

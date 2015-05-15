@@ -88,7 +88,7 @@
     self.welcomeLabel.textColor = [UIColor whiteColor];
     self.welcomeLabel.font = [UIFont fontWithName:kFontRegularName size:18.0f];
     self.welcomeLabel.text = STRING_FALLBACK_WELCOME;
-    if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"]) {
+    if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
             self.welcomeLabel.text = @" ";
     }
     [self.welcomeLabel sizeToFit];
@@ -103,7 +103,7 @@
                                                               self.welcomeLabel.frame.size.width,
                                                               1)];
     self.separator.backgroundColor = [UIColor whiteColor];
-    if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"]) {
+    if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
         self.separator.backgroundColor = [UIColor clearColor];
     }
     [self addSubview:self.separator];
@@ -115,7 +115,7 @@
     self.countryLabel.textColor = [UIColor blackColor];
     self.countryLabel.font = [UIFont fontWithName:kFontRegularName size:24.0f];
     self.countryLabel.text = [RIApi getCountryNameInUse];
-    if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"]) {
+    if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
         self.countryLabel.text = @"";
     }
     [self.countryLabel sizeToFit];
@@ -143,7 +143,7 @@
     [self addSubview:self.countryLabel];
     
     CGFloat availableHeight = self.frame.size.height;
-    if (NO == [[APP_NAME uppercaseString] isEqualToString:@"BAMILO"]) {
+    if (NO == [[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
         self.firstSloganLabel = [[UILabel alloc] init];
         self.firstSloganLabel.numberOfLines = -1;
         self.firstSloganLabel.textAlignment = NSTextAlignmentCenter;

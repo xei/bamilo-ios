@@ -33,7 +33,7 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
                                                                   attributes:attributes];
 
         BOOL specialPriceOnTheLeftRelatingToRTL = specialPriceOnTheLeft;
-        if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"]) {
+        if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
             specialPriceOnTheLeftRelatingToRTL = !specialPriceOnTheLeft;
         }
         if (specialPriceOnTheLeftRelatingToRTL)

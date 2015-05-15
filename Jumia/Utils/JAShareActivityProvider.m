@@ -133,7 +133,7 @@
         {
             shareObject = [NSString stringWithFormat:@"%@ %@", [NSString stringWithFormat:STRING_INSTALL_APP, APP_NAME], kAppStoreUrlShop];
             
-        }else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
+        }else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
         {
             shareObject = [NSString stringWithFormat:@"%@ %@", [NSString stringWithFormat:STRING_INSTALL_APP, APP_NAME], kAppStoreUrlBamilo];
         }
