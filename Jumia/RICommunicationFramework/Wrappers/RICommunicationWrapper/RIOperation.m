@@ -128,8 +128,11 @@
             if (429 == self.lastStatusCode) {
                 self.lastStatusCode = 0;
                 self.failureBlock(RIApiResponseKickoutView, responseJSON, nil);
-            } else {
+            } else if (503 == self.lastStatusCode){
+                self.lastStatusCode = 0;
                 self.failureBlock(RIApiResponseMaintenancePage, responseJSON, nil);
+            } else {
+                self.failureBlock(RIApiResponseAPIError, responseJSON, nil);
             }
         }
     } else {
