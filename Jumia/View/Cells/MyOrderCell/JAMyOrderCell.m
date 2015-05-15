@@ -66,6 +66,7 @@
     [finalString setAttributes:highlightAttributes range:orderNumberLabelRange];
     
     [self.orderNumberLabel setAttributedText:finalString];
+    [self.orderNumberLabel sizeToFit];
 }
 
 + (CGFloat)getCellHeight
