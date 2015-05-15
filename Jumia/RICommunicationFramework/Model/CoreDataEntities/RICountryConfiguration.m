@@ -140,7 +140,8 @@
 
 + (NSString*)formatPrice:(NSNumber*)price country:(RICountryConfiguration*)country
 {
-    NSString *formattedPrice = [price stringValue];
+    NSDecimalNumber* decimalNumber = [NSDecimalNumber decimalNumberWithDecimal:[price decimalValue]];
+    NSString* formattedPrice = [decimalNumber stringValue];
     
     NSString* noFraction = @"";
     NSString* fraction = @"";
