@@ -187,164 +187,163 @@
     scrollViewY += self.topView.frame.size.height + 6.0f;
     
     /////// TOP SELLERS ///////
-    
-    self.topSellersView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                   scrollViewY,
-                                                                   self.scrollView.frame.size.width,
-                                                                   137.f)];
-    self.topSellersView.layer.cornerRadius = 5.0f;
-    self.topSellersView.backgroundColor = [UIColor whiteColor];
-    self.topSellersView.clipsToBounds = YES;
-    [self.scrollView addSubview:self.topSellersView];
-    
-    UILabel* topSellersTitle = [[UILabel alloc] initWithFrame:CGRectMake(self.topSellersView.bounds.origin.x + 6.0f,
-                                                                         self.topSellersView.bounds.origin.y,
-                                                                         self.topSellersView.bounds.size.width - 6.0f*2,
-                                                                         26.0f)];
-    topSellersTitle.text = STRING_TOP_SELLERS;
-    topSellersTitle.font = [UIFont fontWithName:kFontRegularName size:11.0f];
-    topSellersTitle.textColor = UIColorFromRGB(0x4e4e4e);
-    [self.topSellersView addSubview:topSellersTitle];
-    
-    UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(self.topSellersView.bounds.origin.x,
-                                                                CGRectGetMaxY(topSellersTitle.frame),
-                                                                self.topSellersView.bounds.size.width,
-                                                                1.0f)];
-    lineView.backgroundColor = UIColorFromRGB(0xfaa41a);
-    [self.topSellersView addSubview:lineView];
-    
-    UIScrollView* productScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.topSellersView.bounds.origin.x,
-                                                                                     CGRectGetMaxY(lineView.frame),
-                                                                                     self.topSellersView.bounds.size.width,
-                                                                                     self.topSellersView.bounds.size.height - lineView.frame.size.height - topSellersTitle.frame.size.height)];
-    productScrollView.showsHorizontalScrollIndicator = NO;
-    [self.topSellersView addSubview:productScrollView];
-    
-    CGFloat currentX = productScrollView.bounds.origin.x;
-    
     RIFeaturedBox *featuredBox = searchResult.featuredBox;
-    for (int i = 0; i < featuredBox.products.count; i++) {
-        RISearchTypeProduct* product = [featuredBox.products objectAtIndex:i];
-        if (product.imagesArray.count > 0)
-        {
-            JAPDVSingleRelatedItem *singleItem = [JAPDVSingleRelatedItem getNewPDVSingleRelatedItem];
-            
-            CGRect tempFrame = singleItem.frame;
-            tempFrame.origin.x = currentX;
-            singleItem.frame = tempFrame;
-            
-            if (product.imagesArray.count > 0) {
-                NSString *url = [product.imagesArray firstObject];
-                [singleItem.imageViewItem setImageWithURL:[NSURL URLWithString:url]
-                                         placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
-            } else {
-                [singleItem.imageViewItem setImage:[UIImage imageNamed:@"placeholder_scrollable"]];
+    if (0 < featuredBox.products.count) {
+        self.topSellersView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                       scrollViewY,
+                                                                       self.scrollView.frame.size.width,
+                                                                       137.f)];
+        self.topSellersView.layer.cornerRadius = 5.0f;
+        self.topSellersView.backgroundColor = [UIColor whiteColor];
+        self.topSellersView.clipsToBounds = YES;
+        [self.scrollView addSubview:self.topSellersView];
+        
+        UILabel* topSellersTitle = [[UILabel alloc] initWithFrame:CGRectMake(self.topSellersView.bounds.origin.x + 6.0f,
+                                                                             self.topSellersView.bounds.origin.y,
+                                                                             self.topSellersView.bounds.size.width - 6.0f*2,
+                                                                             26.0f)];
+        topSellersTitle.text = STRING_TOP_SELLERS;
+        topSellersTitle.font = [UIFont fontWithName:kFontRegularName size:11.0f];
+        topSellersTitle.textColor = UIColorFromRGB(0x4e4e4e);
+        [self.topSellersView addSubview:topSellersTitle];
+        
+        UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(self.topSellersView.bounds.origin.x,
+                                                                    CGRectGetMaxY(topSellersTitle.frame),
+                                                                    self.topSellersView.bounds.size.width,
+                                                                    1.0f)];
+        lineView.backgroundColor = UIColorFromRGB(0xfaa41a);
+        [self.topSellersView addSubview:lineView];
+        
+        UIScrollView* productScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.topSellersView.bounds.origin.x,
+                                                                                         CGRectGetMaxY(lineView.frame),
+                                                                                         self.topSellersView.bounds.size.width,
+                                                                                         self.topSellersView.bounds.size.height - lineView.frame.size.height - topSellersTitle.frame.size.height)];
+        productScrollView.showsHorizontalScrollIndicator = NO;
+        [self.topSellersView addSubview:productScrollView];
+        
+        CGFloat currentX = productScrollView.bounds.origin.x;
+        
+        for (int i = 0; i < featuredBox.products.count; i++) {
+            RISearchTypeProduct* product = [featuredBox.products objectAtIndex:i];
+            if (product.imagesArray.count > 0)
+            {
+                JAPDVSingleRelatedItem *singleItem = [JAPDVSingleRelatedItem getNewPDVSingleRelatedItem];
+                
+                CGRect tempFrame = singleItem.frame;
+                tempFrame.origin.x = currentX;
+                singleItem.frame = tempFrame;
+                
+                if (product.imagesArray.count > 0) {
+                    NSString *url = [product.imagesArray firstObject];
+                    [singleItem.imageViewItem setImageWithURL:[NSURL URLWithString:url]
+                                             placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
+                } else {
+                    [singleItem.imageViewItem setImage:[UIImage imageNamed:@"placeholder_scrollable"]];
+                }
+                
+                singleItem.labelBrand.text = product.brand;
+                singleItem.labelName.text = product.name;
+                singleItem.productUrl = product.url;
+                singleItem.labelPrice.text = product.priceFormatted;
+                
+                singleItem.tag = i;
+                [singleItem addTarget:self
+                               action:@selector(productSelected:)
+                     forControlEvents:UIControlEventTouchUpInside];
+                
+                [productScrollView addSubview:singleItem];
+                
+                currentX += 110.0f;
             }
-            
-            singleItem.labelBrand.text = product.brand;
-            singleItem.labelName.text = product.name;
-            singleItem.productUrl = product.url;
-            singleItem.labelPrice.text = product.priceFormatted;
-            
-            singleItem.tag = i;
-            [singleItem addTarget:self
-                           action:@selector(productSelected:)
-                 forControlEvents:UIControlEventTouchUpInside];
-            
-            [productScrollView addSubview:singleItem];
-            
-            currentX += 110.0f;
         }
+        
+        [productScrollView setContentSize:CGSizeMake(currentX,
+                                                     productScrollView.frame.size.height)];
+        
+        scrollViewY += self.topSellersView.frame.size.height + 6.0f;
     }
-    
-    [productScrollView setContentSize:CGSizeMake(currentX,
-                                                 productScrollView.frame.size.height)];
-    
-    scrollViewY += self.topSellersView.frame.size.height + 6.0f;
-    
-    
     
     /////// TOP BRANDS ///////
-    
-    self.topBrandsView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                  scrollViewY,
-                                                                  self.scrollView.frame.size.width,
-                                                                  137.f)];
-    self.topBrandsView.layer.cornerRadius = 5.0f;
-    self.topBrandsView.backgroundColor = [UIColor whiteColor];
-    self.topBrandsView.clipsToBounds = YES;
-    [self.scrollView addSubview:self.topBrandsView];
-    
-    UILabel* topBrandsTitle = [[UILabel alloc] initWithFrame:CGRectMake(self.topBrandsView.bounds.origin.x + 6.0f,
-                                                                        self.topBrandsView.bounds.origin.y,
-                                                                        self.topBrandsView.bounds.size.width - 6.0f*2,
-                                                                        26.0f)];
-    topBrandsTitle.text = STRING_TOP_BRANDS;
-    topBrandsTitle.font = [UIFont fontWithName:kFontRegularName size:11.0f];
-    topBrandsTitle.textColor = UIColorFromRGB(0x4e4e4e);
-    [self.topBrandsView addSubview:topBrandsTitle];
-    
-    UIView* brandsLineView = [[UIView alloc] initWithFrame:CGRectMake(self.topBrandsView.bounds.origin.x,
-                                                                      CGRectGetMaxY(topBrandsTitle.frame),
-                                                                      self.topBrandsView.bounds.size.width,
-                                                                      1.0f)];
-    brandsLineView.backgroundColor = UIColorFromRGB(0xfaa41a);
-    [self.topBrandsView addSubview:brandsLineView];
-    
-    UIScrollView* brandsScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.topBrandsView.bounds.origin.x,
-                                                                                    CGRectGetMaxY(brandsLineView.frame),
-                                                                                    self.topBrandsView.bounds.size.width,
-                                                                                    self.topBrandsView.bounds.size.height - brandsLineView.frame.size.height - topBrandsTitle.frame.size.height)];
-    brandsScrollView.showsHorizontalScrollIndicator = NO;
-    [self.topBrandsView addSubview:brandsScrollView];
-    
-    CGFloat brandsCurrentX = brandsScrollView.bounds.origin.x;
-    
     RIFeaturedBrandBox *featuredBrandBox = searchResult.featuredBrandBox;
-    for (int i = 0; i < featuredBrandBox.brands.count; i++) {
-        RIBrand* brand = [featuredBrandBox.brands objectAtIndex:i];
-        if (brand.image.length > 0)
-        {
-            JABrandView *brandView = [[JABrandView alloc] initWithFrame:CGRectMake(brandsCurrentX, 0, 110, 110)];
-            brandView.backgroundColor = [UIColor clearColor];
-            brandView.brandUrl = brand.url;
-            brandView.brandName = brand.name;
-            
-            UIImageView *brandImage = [[UIImageView alloc] initWithFrame:CGRectMake(30, 20, 50, 40)];
-            
-            if (brand.image.length > 0) {
-                [brandImage setImageWithURL:[NSURL URLWithString:brand.image]
-                           placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
-            } else {
-                [brandImage setImage:[UIImage imageNamed:@"placeholder_scrollable"]];
+    if (0 < featuredBrandBox.brands.count) {
+        self.topBrandsView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                      scrollViewY,
+                                                                      self.scrollView.frame.size.width,
+                                                                      137.f)];
+        self.topBrandsView.layer.cornerRadius = 5.0f;
+        self.topBrandsView.backgroundColor = [UIColor whiteColor];
+        self.topBrandsView.clipsToBounds = YES;
+        [self.scrollView addSubview:self.topBrandsView];
+        
+        UILabel* topBrandsTitle = [[UILabel alloc] initWithFrame:CGRectMake(self.topBrandsView.bounds.origin.x + 6.0f,
+                                                                            self.topBrandsView.bounds.origin.y,
+                                                                            self.topBrandsView.bounds.size.width - 6.0f*2,
+                                                                            26.0f)];
+        topBrandsTitle.text = STRING_TOP_BRANDS;
+        topBrandsTitle.font = [UIFont fontWithName:kFontRegularName size:11.0f];
+        topBrandsTitle.textColor = UIColorFromRGB(0x4e4e4e);
+        [self.topBrandsView addSubview:topBrandsTitle];
+        
+        UIView* brandsLineView = [[UIView alloc] initWithFrame:CGRectMake(self.topBrandsView.bounds.origin.x,
+                                                                          CGRectGetMaxY(topBrandsTitle.frame),
+                                                                          self.topBrandsView.bounds.size.width,
+                                                                          1.0f)];
+        brandsLineView.backgroundColor = UIColorFromRGB(0xfaa41a);
+        [self.topBrandsView addSubview:brandsLineView];
+        
+        UIScrollView* brandsScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.topBrandsView.bounds.origin.x,
+                                                                                        CGRectGetMaxY(brandsLineView.frame),
+                                                                                        self.topBrandsView.bounds.size.width,
+                                                                                        self.topBrandsView.bounds.size.height - brandsLineView.frame.size.height - topBrandsTitle.frame.size.height)];
+        brandsScrollView.showsHorizontalScrollIndicator = NO;
+        [self.topBrandsView addSubview:brandsScrollView];
+        
+        CGFloat brandsCurrentX = brandsScrollView.bounds.origin.x;
+        
+        for (int i = 0; i < featuredBrandBox.brands.count; i++) {
+            RIBrand* brand = [featuredBrandBox.brands objectAtIndex:i];
+            if (brand.image.length > 0)
+            {
+                JABrandView *brandView = [[JABrandView alloc] initWithFrame:CGRectMake(brandsCurrentX, 0, 110, 110)];
+                brandView.backgroundColor = [UIColor clearColor];
+                brandView.brandUrl = brand.url;
+                brandView.brandName = brand.name;
+                
+                UIImageView *brandImage = [[UIImageView alloc] initWithFrame:CGRectMake(30, 20, 50, 40)];
+                
+                if (brand.image.length > 0) {
+                    [brandImage setImageWithURL:[NSURL URLWithString:brand.image]
+                               placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
+                } else {
+                    [brandImage setImage:[UIImage imageNamed:@"placeholder_scrollable"]];
+                }
+                
+                [brandView addSubview:brandImage];
+                
+                UILabel *brandLabel = [[UILabel alloc] initWithFrame:CGRectMake(3, 80, 104, 20)];
+                brandLabel.textAlignment = NSTextAlignmentCenter;
+                brandLabel.font = [UIFont fontWithName:kFontLightName
+                                                  size:13.0f];
+                brandLabel.textColor = UIColorFromRGB(0x666666);
+                brandLabel.text = brand.name;
+                
+                [brandView addSubview:brandLabel];
+                
+                brandView.tag = i;
+                [brandView addTarget:self
+                              action:@selector(brandSelected:)
+                    forControlEvents:UIControlEventTouchUpInside];
+                
+                [brandsScrollView addSubview:brandView];
+                brandsCurrentX += 110.0f;
             }
-            
-            [brandView addSubview:brandImage];
-            
-            UILabel *brandLabel = [[UILabel alloc] initWithFrame:CGRectMake(3, 80, 104, 20)];
-            brandLabel.textAlignment = NSTextAlignmentCenter;
-            brandLabel.font = [UIFont fontWithName:kFontLightName
-                                              size:13.0f];
-            brandLabel.textColor = UIColorFromRGB(0x666666);
-            brandLabel.text = brand.name;
-            
-            [brandView addSubview:brandLabel];
-            
-            brandView.tag = i;
-            [brandView addTarget:self
-                          action:@selector(brandSelected:)
-                forControlEvents:UIControlEventTouchUpInside];
-            
-            [brandsScrollView addSubview:brandView];
-            brandsCurrentX += 110.0f;
         }
+        
+        [brandsScrollView setContentSize:CGSizeMake(brandsCurrentX,
+                                                    brandsScrollView.frame.size.height)];
+        
+        scrollViewY += self.topBrandsView.frame.size.height + 6.0f;    
     }
-    
-    [brandsScrollView setContentSize:CGSizeMake(brandsCurrentX,
-                                                brandsScrollView.frame.size.height)];
-    
-    scrollViewY += self.topBrandsView.frame.size.height + 6.0f;
-    
     
     /////// NOTICE VIEW ///////
     
