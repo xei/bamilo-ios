@@ -259,7 +259,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
             keyRIEventOpenApp = @"8upm01";
 
         
-        }else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
+        }else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
         {
             
             keyRIEventLoginSuccess = @"y3ehk5";
@@ -617,7 +617,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     {
         launchEvent = [ADJEvent eventWithEventToken:@"8upm01"];
         
-    }else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
+    }else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
     {
         launchEvent = [ADJEvent eventWithEventToken:@"3qdwyi"];
     }
@@ -640,7 +640,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     {
         event = [ADJEvent eventWithEventToken:@"x9cr8q"];
         
-    }else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
+    }else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
     {
         event = [ADJEvent eventWithEventToken:@"tly4ql"];
     }
@@ -683,7 +683,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     {
         eventKey = @"cdta89";
         
-    }else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
+    }else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
     {
         eventKey = @"pakn7o";
     }
@@ -703,7 +703,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         {
             eventKey =@"sg766z";
             
-        }else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
+        }else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
         {
             eventKey =@"cndznn";
         }

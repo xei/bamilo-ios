@@ -206,6 +206,8 @@
 		6CF4AE861ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */; };
 		6CF4AE871ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */; };
 		6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */; };
+		6C6EBE281ABC6634006A3D46 /* RITracking_بامیلو.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C6EBE261ABC6600006A3D46 /* RITracking_بامیلو.plist */; };
+		6C6EBE2B1ABC66DB006A3D46 /* RITrackingDebug_بامیلو.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C6EBE291ABC66BE006A3D46 /* RITrackingDebug_بامیلو.plist */; };
 		6ad0a1988b1e51c37142c75b /* JACartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E2F198950C500C18F1E /* JACartViewController.m */; };
 		6be80f134e67002eecb79292 /* RILanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3027619811E9200F71726 /* RILanguage.m */; };
 		6e0b7de87382100c6d8b4606 /* JAOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59D195E19C33122004843C3 /* JAOrderViewController.m */; };
@@ -2593,6 +2595,8 @@
 		6CA85FD11AE683D0001D1C94 /* RISpecification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RISpecification.m; sourceTree = "<group>"; };
 		6CA85FD61AE69195001D1C94 /* RISpecificationAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RISpecificationAttribute.h; sourceTree = "<group>"; };
 		6CA85FD71AE69195001D1C94 /* RISpecificationAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RISpecificationAttribute.m; sourceTree = "<group>"; };
+		6C6EBE261ABC6600006A3D46 /* RITracking_بامیلو.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RITracking_بامیلو.plist"; sourceTree = "<group>"; };
+		6C6EBE291ABC66BE006A3D46 /* RITrackingDebug_بامیلو.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RITrackingDebug_بامیلو.plist"; sourceTree = "<group>"; };
 		6CC5C4B81A9634FE00E362F3 /* Model_1.5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.5.xcdatamodel; sourceTree = "<group>"; };
 		6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogBannerCell.xib; sourceTree = "<group>"; };
 		6CF4AE831ADEABBB0024EC34 /* JACatalogBannerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogBannerCell.h; sourceTree = "<group>"; };
@@ -3076,7 +3080,7 @@
 		CE97D2ED19AE1ED50090D01C /* JANavigationBarLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANavigationBarLayout.m; sourceTree = "<group>"; };
 		CE9ADD2B1AB34C4600D56481 /* Daraz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Daraz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE9ADF251AB6D6E900D56481 /* Shop.com.mm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shop.com.mm.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE9AE11F1AB6D78200D56481 /* Bamilo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bamilo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE9AE11F1AB6D78200D56481 /* بامیلو.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "بامیلو.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE9AE1211AB823C100D56481 /* my */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = my; path = my.lproj/RIStrings.strings; sourceTree = "<group>"; };
 		CE9AE1251AB8251000D56481 /* zawgyione2008.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = zawgyione2008.ttf; sourceTree = "<group>"; };
 		CE9AE1271AB8281400D56481 /* JAFont.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAFont.h; sourceTree = "<group>"; };
@@ -4183,7 +4187,7 @@
 				CE3AF8FC19DBF4EB00D8C51B /* Jumia-cal.app */,
 				CE9ADD2B1AB34C4600D56481 /* Daraz.app */,
 				CE9ADF251AB6D6E900D56481 /* Shop.com.mm.app */,
-				CE9AE11F1AB6D78200D56481 /* Bamilo.app */,
+				CE9AE11F1AB6D78200D56481 /* بامیلو.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4530,8 +4534,8 @@
 				6C60C8591AB72325008AD4AD /* RITrackingDebug_DARAZ.plist */,
 				6C60C8691AB75D0F008AD4AD /* RITracking_SHOP.COM.MM.plist */,
 				6C60C86B1AB75D41008AD4AD /* RITrackingDebug_SHOP.COM.MM.plist */,
-				6C6EBE261ABC6600006A3D46 /* RITracking_BAMILO.plist */,
-				6C6EBE291ABC66BE006A3D46 /* RITrackingDebug_BAMILO.plist */,
+				6C6EBE261ABC6600006A3D46 /* RITracking_بامیلو.plist */,
+				6C6EBE291ABC66BE006A3D46 /* RITrackingDebug_بامیلو.plist */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -5598,7 +5602,7 @@
 			);
 			name = Bamilo;
 			productName = Jumia;
-			productReference = CE9AE11F1AB6D78200D56481 /* Bamilo.app */;
+			productReference = CE9AE11F1AB6D78200D56481 /* بامیلو.app */;
 			productType = "com.apple.product-type.application";
 		};
 		ffe4ef9be990e92ee61945b7 /* Jumia-cal */ = {
@@ -6735,7 +6739,7 @@
 				CE9AE09E1AB6D78200D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-ret4.xib in Resources */,
 				CE9AE09F1AB6D78200D56481 /* JACatalogGridCell.xib in Resources */,
 				CE9AE0A01AB6D78200D56481 /* JATextFieldComponent.xib in Resources */,
-				6C6EBE2B1ABC66DB006A3D46 /* RITrackingDebug_BAMILO.plist in Resources */,
+				6C6EBE2B1ABC66DB006A3D46 /* RITrackingDebug_بامیلو.plist in Resources */,
 				CE9AE0A11AB6D78200D56481 /* 15_my_favourites.feature in Resources */,
 				CE9AE0A21AB6D78200D56481 /* JASwitchCell.xib in Resources */,
 				CE9AE0A31AB6D78200D56481 /* JAUndefinedSearchView.xib in Resources */,
@@ -6829,7 +6833,7 @@
 				CE9AE0FA1AB6D78200D56481 /* BMA4SiPhoneTextNotifView.xib in Resources */,
 				CE9AE0FC1AB6D78200D56481 /* Main_iPad.storyboard in Resources */,
 				CE9AE0FD1AB6D78200D56481 /* BMA4SiPhoneIntersticialTextNotifView-retHD.xib in Resources */,
-				6C6EBE281ABC6634006A3D46 /* RITracking_BAMILO.plist in Resources */,
+				6C6EBE281ABC6634006A3D46 /* RITracking_بامیلو.plist in Resources */,
 				CE9AE0FE1AB6D78200D56481 /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib in Resources */,
 				CE9AE0FF1AB6D78200D56481 /* BMA4SiPhoneTextNotifView-nobuttons-landscape.xib in Resources */,
 				CE9AE1001AB6D78200D56481 /* slider-default-trackCrossedOver.png in Resources */,
@@ -8985,8 +8989,8 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = Bamilo;
-				PROVISIONING_PROFILE = "83f53783-a654-427a-8316-c594edece2ea";
+				PRODUCT_NAME = "بامیلو";
+				PROVISIONING_PROFILE = "9b3b07c3-90b7-4f89-8108-e876783770cb";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9020,8 +9024,8 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = Bamilo;
-				PROVISIONING_PROFILE = "83f53783-a654-427a-8316-c594edece2ea";
+				PRODUCT_NAME = "بامیلو";
+				PROVISIONING_PROFILE = "9b3b07c3-90b7-4f89-8108-e876783770cb";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9055,8 +9059,8 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = Bamilo;
-				PROVISIONING_PROFILE = "83f53783-a654-427a-8316-c594edece2ea";
+				PRODUCT_NAME = "بامیلو";
+				PROVISIONING_PROFILE = "9b3b07c3-90b7-4f89-8108-e876783770cb";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9090,8 +9094,8 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = Bamilo;
-				PROVISIONING_PROFILE = "83f53783-a654-427a-8316-c594edece2ea";
+				PRODUCT_NAME = "بامیلو";
+				PROVISIONING_PROFILE = "9b3b07c3-90b7-4f89-8108-e876783770cb";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};

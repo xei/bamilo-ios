@@ -533,7 +533,6 @@
     if(!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")){
 
         appActivities = @[fbmActivity, whatsAppActivity];
-        
     }
     
            if ([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
@@ -554,7 +553,7 @@
 
                     activityController = [[JAActivityViewController alloc] initWithActivityItems:@[shareTheAppString, [NSURL URLWithString:kAppStoreUrlShop], whatsAppMsg] applicationActivities:appActivities];
                                                         
-            }else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
+            }else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
                 {
                     whatsAppMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",shareTheAppString, kAppStoreUrlBamilo]  forABID:nil];
 

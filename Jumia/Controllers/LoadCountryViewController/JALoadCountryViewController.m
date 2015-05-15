@@ -65,7 +65,7 @@
     if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"] || [[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
     {
         lastFrame = 6;
-    }else if([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
+    }else if([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
     {
         lastFrame = 8;
     }

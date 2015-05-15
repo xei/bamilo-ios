@@ -35,7 +35,7 @@
         [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontLightNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontBoldNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontMediumNameKey];
-    } else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"]) {
+    } else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontRegularNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontLightNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontBoldNameKey];
@@ -62,7 +62,7 @@
     {
         [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"9b9785a49d8763ce4f7d1041e15970cc"];
     }
-    else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
     {
         [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"b69eae07b51d81f272e9ae78312967a8"];
     }
@@ -80,7 +80,7 @@
     {
         [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@""];
     }
-    else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
     {
         [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@""];
     }
@@ -110,7 +110,7 @@
     {
         [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"d4fd2d8b265e80e20a34fc19ccc55d64"];
     }
-    else if ([[APP_NAME uppercaseString] isEqualToString:@"BAMILO"])
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
     {
         [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"64935d72b0c34cd51a7a806f7bb70e4a"];
     }
