@@ -80,6 +80,7 @@
     RITeaserComponent* mainCampaign = [self.teaserComponentsToUse firstObject];
     
     CGFloat labelTopMargin = 6.0f;
+    CGFloat halfWidth = mainClickableView.bounds.size.width/2;
     
     UILabel* titleLabel = [UILabel new];
     titleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
@@ -110,10 +111,11 @@
                                                      repeats:YES];
     }
     
-    UILabel* subTitleLabel = [UILabel new];
+    UILabel* subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, halfWidth, 1)];
     subTitleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
     subTitleLabel.textColor = [UIColor blackColor];
     subTitleLabel.textAlignment = NSTextAlignmentCenter;
+    subTitleLabel.numberOfLines=2;
     subTitleLabel.text = mainCampaign.subTitle;
     [subTitleLabel sizeToFit];
     [clockView addSubview:subTitleLabel];
@@ -146,9 +148,6 @@
                                        subTitleLabel.frame.size.height)];
     
     currentY += subTitleLabel.frame.size.height;
-
-    
-    CGFloat halfWidth = mainClickableView.bounds.size.width/2;
     
     [clockView setFrame:CGRectMake((halfWidth - clockViewWidth) / 2,
                                    (mainAreaHeight - currentY) / 2,
@@ -177,18 +176,22 @@
         [moreView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:moreView];
         
-        UILabel* moreLabel = [UILabel new];
-        moreLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
-        moreLabel.textColor = UIColorFromRGB(0x06739e);
-        moreLabel.text = STRING_SEE_MORE_OFFERS;
-        [moreLabel sizeToFit];
-        [moreView addSubview:moreLabel];
+        CGFloat marginBetweenLabelAndImage = 12.0f;
         
         UIImage* arrowImage = [UIImage imageNamed:@"campaignTeaserMoreArrow"];
         UIImageView* arrowImageView = [[UIImageView alloc] initWithImage:arrowImage];
         [moreView addSubview:arrowImageView];
         
-        CGFloat marginBetweenLabelAndImage = 12.0f;
+        CGFloat moreLabelMaxWidth = moreView.frame.size.width - arrowImage.size.width - marginBetweenLabelAndImage;
+        
+        UILabel* moreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, moreLabelMaxWidth, 1)];
+        moreLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
+        moreLabel.textColor = UIColorFromRGB(0x06739e);
+        moreLabel.numberOfLines=2;
+        moreLabel.text = STRING_SEE_MORE_OFFERS;
+        [moreLabel sizeToFit];
+        [moreView addSubview:moreLabel];
+        
         CGFloat labelPlusImageWidth = moreLabel.frame.size.width + arrowImage.size.width + marginBetweenLabelAndImage;
         
         [moreLabel setFrame:CGRectMake((moreView.frame.size.width - labelPlusImageWidth) / 2,
@@ -266,10 +269,12 @@
                                                      repeats:YES];
     }
     
-    UILabel* subTitleLabel = [UILabel new];
+    CGFloat imageViewWidth = 153.0f; //value by design
+    UILabel* subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, imageViewWidth, 1)];
     subTitleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
     subTitleLabel.textColor = [UIColor blackColor];
     subTitleLabel.textAlignment = NSTextAlignmentCenter;
+    subTitleLabel.numberOfLines=2;
     subTitleLabel.text = mainCampaign.subTitle;
     [subTitleLabel sizeToFit];
     [clockView addSubview:subTitleLabel];
@@ -304,7 +309,6 @@
     currentY += subTitleLabel.frame.size.height;
     
     CGFloat imageViewHeight = 103.0f; //value by design
-    CGFloat imageViewWidth = 153.0f; //value by design
     NSString* imageUrl = mainCampaign.imagePortraitUrl;
     UIImageView* imageView = [UIImageView new];
     [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
@@ -339,18 +343,22 @@
         [moreView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:moreView];
         
-        UILabel* moreLabel = [UILabel new];
-        moreLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
-        moreLabel.textColor = UIColorFromRGB(0x06739e);
-        moreLabel.text = STRING_SEE_MORE_OFFERS;
-        [moreLabel sizeToFit];
-        [moreView addSubview:moreLabel];
+        CGFloat marginBetweenLabelAndImage = 12.0f;
         
         UIImage* arrowImage = [UIImage imageNamed:@"campaignTeaserMoreArrow"];
         UIImageView* arrowImageView = [[UIImageView alloc] initWithImage:arrowImage];
         [moreView addSubview:arrowImageView];
         
-        CGFloat marginBetweenLabelAndImage = 12.0f;
+        CGFloat moreLabelMaxWidth = moreView.frame.size.width - arrowImage.size.width - marginBetweenLabelAndImage;
+        
+        UILabel* moreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, moreLabelMaxWidth, 1)];
+        moreLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
+        moreLabel.textColor = UIColorFromRGB(0x06739e);
+        moreLabel.numberOfLines=-1;
+        moreLabel.text = STRING_SEE_MORE_OFFERS;
+        [moreLabel sizeToFit];
+        [moreView addSubview:moreLabel];
+        
         CGFloat labelPlusImageWidth = moreLabel.frame.size.width + arrowImage.size.width + marginBetweenLabelAndImage;
         
         [moreLabel setFrame:CGRectMake((moreView.frame.size.width - labelPlusImageWidth) / 2,
