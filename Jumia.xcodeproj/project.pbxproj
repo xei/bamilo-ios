@@ -188,8 +188,8 @@
 		6C60C8671AB748BB008AD4AD /* RITrackingDebug_DARAZ.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C60C8591AB72325008AD4AD /* RITrackingDebug_DARAZ.plist */; };
 		6C60C86D1AB75F3E008AD4AD /* RITracking_SHOP.COM.MM.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C60C8691AB75D0F008AD4AD /* RITracking_SHOP.COM.MM.plist */; };
 		6C60C86E1AB75F41008AD4AD /* RITrackingDebug_SHOP.COM.MM.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C60C86B1AB75D41008AD4AD /* RITrackingDebug_SHOP.COM.MM.plist */; };
-		6C6EBE281ABC6634006A3D46 /* RITracking_BAMILO.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C6EBE261ABC6600006A3D46 /* RITracking_BAMILO.plist */; };
-		6C6EBE2B1ABC66DB006A3D46 /* RITrackingDebug_BAMILO.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C6EBE291ABC66BE006A3D46 /* RITrackingDebug_BAMILO.plist */; };
+		6C6EBE281ABC6634006A3D46 /* RITracking_بامیلو.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C6EBE261ABC6600006A3D46 /* RITracking_بامیلو.plist */; };
+		6C6EBE2B1ABC66DB006A3D46 /* RITrackingDebug_بامیلو.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C6EBE291ABC66BE006A3D46 /* RITrackingDebug_بامیلو.plist */; };
 		6CA85FD21AE683D0001D1C94 /* RISpecification.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85FD11AE683D0001D1C94 /* RISpecification.m */; };
 		6CA85FD31AE683D0001D1C94 /* RISpecification.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85FD11AE683D0001D1C94 /* RISpecification.m */; };
 		6CA85FD41AE683D0001D1C94 /* RISpecification.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85FD11AE683D0001D1C94 /* RISpecification.m */; };
@@ -206,8 +206,6 @@
 		6CF4AE861ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */; };
 		6CF4AE871ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */; };
 		6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */; };
-		6C6EBE281ABC6634006A3D46 /* RITracking_بامیلو.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C6EBE261ABC6600006A3D46 /* RITracking_بامیلو.plist */; };
-		6C6EBE2B1ABC66DB006A3D46 /* RITrackingDebug_بامیلو.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C6EBE291ABC66BE006A3D46 /* RITrackingDebug_بامیلو.plist */; };
 		6ad0a1988b1e51c37142c75b /* JACartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5225E2F198950C500C18F1E /* JACartViewController.m */; };
 		6be80f134e67002eecb79292 /* RILanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3027619811E9200F71726 /* RILanguage.m */; };
 		6e0b7de87382100c6d8b4606 /* JAOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59D195E19C33122004843C3 /* JAOrderViewController.m */; };
@@ -2345,6 +2343,11 @@
 		CED30C24199CAA5C00C67F4B /* JAGenericFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C23199CAA5C00C67F4B /* JAGenericFilterViewController.m */; };
 		CED30C27199CBF0E00C67F4B /* JAColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C26199CBF0E00C67F4B /* JAColorView.m */; };
 		CED30C2A199CC8F200C67F4B /* JAColorFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C29199CC8F200C67F4B /* JAColorFilterCell.m */; };
+		CEDBF8611B0A01B60073971A /* UIImage+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDBF8601B0A01B60073971A /* UIImage+Mirror.m */; };
+		CEDBF8621B0A01B60073971A /* UIImage+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDBF8601B0A01B60073971A /* UIImage+Mirror.m */; };
+		CEDBF8631B0A01B60073971A /* UIImage+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDBF8601B0A01B60073971A /* UIImage+Mirror.m */; };
+		CEDBF8641B0A01B60073971A /* UIImage+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDBF8601B0A01B60073971A /* UIImage+Mirror.m */; };
+		CEDBF8651B0A01B60073971A /* UIImage+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDBF8601B0A01B60073971A /* UIImage+Mirror.m */; };
 		CEDEB983199A51E30022BAB5 /* RIFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDEB982199A51E30022BAB5 /* RIFilter.m */; };
 		CEDEB986199A6F430022BAB5 /* JAMainFiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDEB985199A6F430022BAB5 /* JAMainFiltersViewController.m */; };
 		CEDEB98E199BA4140022BAB5 /* JAPriceFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDEB98D199BA4140022BAB5 /* JAPriceFilterViewController.m */; };
@@ -2589,14 +2592,12 @@
 		6C60C8591AB72325008AD4AD /* RITrackingDebug_DARAZ.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITrackingDebug_DARAZ.plist; sourceTree = "<group>"; };
 		6C60C8691AB75D0F008AD4AD /* RITracking_SHOP.COM.MM.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITracking_SHOP.COM.MM.plist; sourceTree = "<group>"; };
 		6C60C86B1AB75D41008AD4AD /* RITrackingDebug_SHOP.COM.MM.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITrackingDebug_SHOP.COM.MM.plist; sourceTree = "<group>"; };
-		6C6EBE261ABC6600006A3D46 /* RITracking_BAMILO.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITracking_BAMILO.plist; sourceTree = "<group>"; };
-		6C6EBE291ABC66BE006A3D46 /* RITrackingDebug_BAMILO.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITrackingDebug_BAMILO.plist; sourceTree = "<group>"; };
+		6C6EBE261ABC6600006A3D46 /* RITracking_بامیلو.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RITracking_بامیلو.plist"; sourceTree = "<group>"; };
+		6C6EBE291ABC66BE006A3D46 /* RITrackingDebug_بامیلو.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RITrackingDebug_بامیلو.plist"; sourceTree = "<group>"; };
 		6CA85FD01AE683D0001D1C94 /* RISpecification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RISpecification.h; sourceTree = "<group>"; };
 		6CA85FD11AE683D0001D1C94 /* RISpecification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RISpecification.m; sourceTree = "<group>"; };
 		6CA85FD61AE69195001D1C94 /* RISpecificationAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RISpecificationAttribute.h; sourceTree = "<group>"; };
 		6CA85FD71AE69195001D1C94 /* RISpecificationAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RISpecificationAttribute.m; sourceTree = "<group>"; };
-		6C6EBE261ABC6600006A3D46 /* RITracking_بامیلو.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RITracking_بامیلو.plist"; sourceTree = "<group>"; };
-		6C6EBE291ABC66BE006A3D46 /* RITrackingDebug_بامیلو.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RITrackingDebug_بامیلو.plist"; sourceTree = "<group>"; };
 		6CC5C4B81A9634FE00E362F3 /* Model_1.5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.5.xcdatamodel; sourceTree = "<group>"; };
 		6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogBannerCell.xib; sourceTree = "<group>"; };
 		6CF4AE831ADEABBB0024EC34 /* JACatalogBannerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogBannerCell.h; sourceTree = "<group>"; };
@@ -3239,6 +3240,8 @@
 		CED30C26199CBF0E00C67F4B /* JAColorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAColorView.m; sourceTree = "<group>"; };
 		CED30C28199CC8F200C67F4B /* JAColorFilterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAColorFilterCell.h; sourceTree = "<group>"; };
 		CED30C29199CC8F200C67F4B /* JAColorFilterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAColorFilterCell.m; sourceTree = "<group>"; };
+		CEDBF85F1B0A01B60073971A /* UIImage+Mirror.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Mirror.h"; path = "Categories/UIImage+Mirror.h"; sourceTree = "<group>"; };
+		CEDBF8601B0A01B60073971A /* UIImage+Mirror.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Mirror.m"; path = "Categories/UIImage+Mirror.m"; sourceTree = "<group>"; };
 		CEDEB981199A51E30022BAB5 /* RIFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIFilter.h; sourceTree = "<group>"; };
 		CEDEB982199A51E30022BAB5 /* RIFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIFilter.m; sourceTree = "<group>"; };
 		CEDEB984199A6F430022BAB5 /* JAMainFiltersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMainFiltersViewController.h; sourceTree = "<group>"; };
@@ -4672,6 +4675,8 @@
 		B5C1E33419BA1E3D009C422C /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				CEDBF85F1B0A01B60073971A /* UIImage+Mirror.h */,
+				CEDBF8601B0A01B60073971A /* UIImage+Mirror.m */,
 				B5C1E33519BA1E73009C422C /* UIImageView+JA.h */,
 				B5C1E33619BA1E73009C422C /* UIImageView+JA.m */,
 			);
@@ -6997,6 +7002,7 @@
 				3f31c314fcacf615881a795c /* RILocalizationWrapper.m in Sources */,
 				24b4052a11ae5d2c331ce0de /* JANoConnectionView.m in Sources */,
 				81b3a64b4fe2078961216565 /* JACatalogListCell.m in Sources */,
+				CEDBF8621B0A01B60073971A /* UIImage+Mirror.m in Sources */,
 				b65e6cef037b082f736bb259 /* JASignInViewController.m in Sources */,
 				295494b4735267cda90182f3 /* RIConfiguration.m in Sources */,
 				5ac7bf2fc57469353240789a /* JASubCategoriesViewController.m in Sources */,
@@ -7378,6 +7384,7 @@
 				B5B5FDA819D95D8E008B8059 /* RICustomer.m in Sources */,
 				B5A3025919811E8A00F71726 /* SDWebImageDecoder.m in Sources */,
 				CE3AF91A19DD8BC400D8C51B /* RIPromotion.m in Sources */,
+				CEDBF8611B0A01B60073971A /* UIImage+Mirror.m in Sources */,
 				CEE91B9C1989065A0078DFC9 /* JATeaserPageView.m in Sources */,
 				4A4ABF0C198B903B00342D92 /* JACountryCell.m in Sources */,
 				4A19C51419D019100070D194 /* Reachability.m in Sources */,
@@ -7633,6 +7640,7 @@
 				CE9ADC061AB34C4600D56481 /* RICustomer.m in Sources */,
 				CE9ADC071AB34C4600D56481 /* SDWebImageDecoder.m in Sources */,
 				CE9ADC081AB34C4600D56481 /* RIPromotion.m in Sources */,
+				CEDBF8631B0A01B60073971A /* UIImage+Mirror.m in Sources */,
 				CE9ADC091AB34C4600D56481 /* JATeaserPageView.m in Sources */,
 				CE9ADC0A1AB34C4600D56481 /* JACountryCell.m in Sources */,
 				CE9ADC0B1AB34C4600D56481 /* Reachability.m in Sources */,
@@ -7880,6 +7888,7 @@
 				CE9ADE001AB6D6E900D56481 /* RICustomer.m in Sources */,
 				CE9ADE011AB6D6E900D56481 /* SDWebImageDecoder.m in Sources */,
 				CE9ADE021AB6D6E900D56481 /* RIPromotion.m in Sources */,
+				CEDBF8641B0A01B60073971A /* UIImage+Mirror.m in Sources */,
 				CE9ADE031AB6D6E900D56481 /* JATeaserPageView.m in Sources */,
 				CE9ADE041AB6D6E900D56481 /* JACountryCell.m in Sources */,
 				CE9ADE051AB6D6E900D56481 /* Reachability.m in Sources */,
@@ -8127,6 +8136,7 @@
 				CE9ADFFA1AB6D78200D56481 /* RICustomer.m in Sources */,
 				CE9ADFFB1AB6D78200D56481 /* SDWebImageDecoder.m in Sources */,
 				CE9ADFFC1AB6D78200D56481 /* RIPromotion.m in Sources */,
+				CEDBF8651B0A01B60073971A /* UIImage+Mirror.m in Sources */,
 				CE9ADFFD1AB6D78200D56481 /* JATeaserPageView.m in Sources */,
 				CE9ADFFE1AB6D78200D56481 /* JACountryCell.m in Sources */,
 				CE9ADFFF1AB6D78200D56481 /* Reachability.m in Sources */,
