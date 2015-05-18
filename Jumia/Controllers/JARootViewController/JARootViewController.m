@@ -89,15 +89,28 @@
     }
     else
     {
-        if(VALID_NOTEMPTY(self.selectedCountry, RICountry) || [RIApi checkIfHaveCountrySelected])
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification
-                                                                object:self.selectedCountry];
-        }
-        else
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowChooseCountryScreenNotification
-                                                                object:nil];
+        RICountry* uniqueCountry = [RICountry getUniqueCountry];
+        if (VALID_NOTEMPTY(uniqueCountry, RICountry)) {
+            if ([RIApi checkIfHaveCountrySelected] && [[RIApi getCountryUrlInUse] isEqualToString:uniqueCountry.url]) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification
+                                                                    object:nil];
+            } else {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification
+                                                                    object:uniqueCountry];
+            }
+        } else {
+            
+            if(VALID_NOTEMPTY(self.selectedCountry, RICountry) || [RIApi checkIfHaveCountrySelected])
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification
+                                                                    object:self.selectedCountry];
+            }
+            else
+            {
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowChooseCountryScreenNotification
+                                                                    object:nil];
+            }
         }
     }
 }

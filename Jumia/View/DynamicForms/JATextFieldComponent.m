@@ -41,6 +41,7 @@
     self.field = field;
     [self.textField setPlaceholder:field.label];
     
+    self.textField.font = [UIFont fontWithName:kFontRegularName size:self.textField.font.pointSize];
     [self.textField setTextColor:UIColorFromRGB(0x666666)];
     [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
     
@@ -70,6 +71,7 @@
 
     [self.textField setPlaceholder:label];
     
+    self.textField.font = [UIFont fontWithName:kFontRegularName size:self.textField.font.pointSize];
     [self.textField setTextColor:UIColorFromRGB(0x666666)];
     [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
     
@@ -122,6 +124,7 @@
 
 -(void)setError:(NSString*)error
 {
+    self.textField.font = [UIFont fontWithName:kFontRegularName size:self.textField.font.pointSize];
     [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
     [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];
     
@@ -139,6 +142,7 @@
 
 -(void)cleanError
 {
+    self.textField.font = [UIFont fontWithName:kFontRegularName size:self.textField.font.pointSize];
     [self.textField setTextColor:UIColorFromRGB(0x666666)];
     [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
     
@@ -158,6 +162,7 @@
 
 - (BOOL)isValid
 {
+    self.textField.font = [UIFont fontWithName:kFontRegularName size:self.textField.font.pointSize];
     if ([self.field.required boolValue] && !VALID_NOTEMPTY(self.textField.text, NSString))
     {
         [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
@@ -167,9 +172,9 @@
     }
     else
     {
-        if (self.field.regex.length > 0)
+        if (self.field.pattern.length > 0)
         {
-            if (![self validateInputWithString:self.textField.text andRegularExpression:self.field.regex])
+            if (![self validateInputWithString:self.textField.text andRegularExpression:self.field.pattern])
             {
                 [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
                 [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];
@@ -205,18 +210,18 @@
 }
 
 - (BOOL)validateInputWithString:(NSString *)aString
-           andRegularExpression:(NSString *)regExp
+           andRegularExpression:(NSString *)patternExp
 {
-    NSString * const regularExpression = regExp;
+    NSString * const regularExpression = patternExp;
     NSError *error = NULL;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regularExpression
+    NSRegularExpression *pattern = [NSRegularExpression regularExpressionWithPattern:regularExpression
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:&error];
     if (error) {
         NSLog(@"error %@", error);
     }
     
-    NSUInteger numberOfMatches = [regex numberOfMatchesInString:aString
+    NSUInteger numberOfMatches = [pattern numberOfMatchesInString:aString
                                                         options:0
                                                           range:NSMakeRange(0, [aString length])];
     return numberOfMatches > 0;

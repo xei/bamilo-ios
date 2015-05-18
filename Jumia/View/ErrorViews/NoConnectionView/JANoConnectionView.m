@@ -59,17 +59,28 @@ void(^retryBock)(BOOL dismiss);
     self.backgroundColor = UIColorFromRGB(0xc8c8c8);
     self.noNetworkView.layer.cornerRadius = 5.0f;
 
+    self.retryButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.retryButton.titleLabel.font.pointSize];
     [self.retryButton setTitle:STRING_TRY_AGAIN forState:UIControlStateNormal];
     [self.retryButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     
+    self.textLabel.font = [UIFont fontWithName:kFontRegularName size:self.textLabel.font.pointSize];
     self.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.noConnectionDetailsLabel.font = [UIFont fontWithName:kFontRegularName size:self.noConnectionDetailsLabel.font.pointSize];
     self.noConnectionDetailsLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.genericErrorLabel.font = [UIFont fontWithName:kFontRegularName size:self.genericErrorLabel.font.pointSize];
     self.genericErrorLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.genericDetailLabel.font = [UIFont fontWithName:kFontRegularName size:self.genericDetailLabel.font.pointSize];
     self.genericDetailLabel.textColor = UIColorFromRGB(0x4e4e4e);
     
     CGRect buttonTextLabelRect = [self.textLabel.text boundingRectWithSize: CGSizeMake(self.retryButton.frame.size.width, self.retryButton.frame.size.height)
                                   options:NSStringDrawingUsesLineFragmentOrigin
                                   attributes: @{NSFontAttributeName:self.textLabel.font} context:nil];
+    
+    CGRect buttonLabel = [self.retryButton.titleLabel.text boundingRectWithSize: CGSizeMake(1000.0f, self.retryButton.frame.size.height)
+                                                                        options:NSStringDrawingUsesLineFragmentOrigin
+                                                                     attributes:@{NSFontAttributeName:self.textLabel.font} context:nil];
+    
+    
     
     [self.textLabel setFrame:(CGRectMake((self.retryButton.frame.size.width - buttonTextLabelRect.size.width)/2,
                                          self.textLabel.frame.origin.y,
@@ -82,10 +93,21 @@ void(^retryBock)(BOOL dismiss);
     {
         offset = 50.0f;
     }
-    self.animationView = [[UIImageView alloc] initWithFrame:CGRectMake(self.textLabel.frame.origin.x - offset - tryAgainImage.size.width ,
-                                                                       (self.retryButton.frame.size.height - tryAgainImage.size.height)/2,
-                                                                       tryAgainImage.size.width,
-                                                                       tryAgainImage.size.height)];
+    self.animationView = [[UIImageView alloc] init];
+                           
+    CGFloat spaceBetweenLabelandImage = 12.0f;
+    CGFloat labelAndImageTotalWidth = tryAgainImage.size.width + spaceBetweenLabelandImage + buttonLabel.size.width;
+    
+    [self.animationView setFrame:CGRectMake((self.retryButton.frame.size.width - labelAndImageTotalWidth)/2,
+                                           (self.retryButton.frame.size.height - tryAgainImage.size.height)/2,
+                                           tryAgainImage.size.width,
+                                           tryAgainImage.size.height)];
+    
+    [self.retryButton.titleLabel setFrame:(CGRectMake(self.animationView.frame.origin.x + spaceBetweenLabelandImage,
+                                                      self.textLabel.frame.origin.y,
+                                                      buttonLabel.size.width,
+                                                      buttonLabel.size.height))];
+    
 
     [self.animationView setImage:tryAgainImage];
     

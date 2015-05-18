@@ -11,11 +11,15 @@
 #import "RIFieldDataSetComponent.h"
 #import "RIFieldOption.h"
 #import "JAAddRatingView.h"
+#import "JARadioRelatedComponent.h"
 
 @interface JADynamicForm ()
 <UITextFieldDelegate>
 
 @property (nonatomic, strong) UITextField* currentTextField;
+
+@property (nonatomic, strong) JARadioComponent *regionsComponent;
+@property (nonatomic, strong) JARadioComponent *citiesComponent;
 
 @end
 
@@ -34,30 +38,36 @@
     return self;
 }
 
--(id)initWithForm:(RIForm*)form delegate:(id<JADynamicFormDelegate>)delegate startingPosition:(CGFloat)startingY widthSize:(CGFloat)widthComponent hasFieldNavigation:(BOOL)hasFieldNavigation
+-(id)initWithForm:(RIForm*)form startingPosition:(CGFloat)startingY widthSize:(CGFloat)widthComponent hasFieldNavigation:(BOOL)hasFieldNavigation
 {
     self = [super init];
     if(self)
     {
         self.hasFieldNavigation = YES;
         self.form = form;
-        self.delegate = delegate;
         [self generateForm:[[[form fields] array] copy] values:nil startingY:startingY widthSize:widthComponent];
     }
     return self;
 }
 
--(id)initWithForm:(RIForm*)form delegate:(id<JADynamicFormDelegate>)delegate values:(NSDictionary*)values startingPosition:(CGFloat)startingY hasFieldNavigation:(BOOL)hasFieldNavigation
+-(id)initWithForm:(RIForm*)form values:(NSDictionary*)values startingPosition:(CGFloat)startingY hasFieldNavigation:(BOOL)hasFieldNavigation
 {
     self = [super init];
     if(self)
     {
         self.hasFieldNavigation = hasFieldNavigation;
         self.form = form;
-        self.delegate = delegate;
         [self generateForm:[[[form fields] array] copy] values:values startingY:startingY widthSize:308.0f];
     }
     return self;
+}
+
+- (void)setDelegate:(id<JADynamicFormDelegate>)delegate
+{
+    _delegate = delegate;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(downloadRegions:cities:)]) {
+        [self.delegate performSelector:@selector(downloadRegions:cities:) withObject:self.regionsComponent withObject:self.citiesComponent];
+    }
 }
 
 - (void)generateForm:(NSArray*)fields values:(NSDictionary*)values startingY:(CGFloat)startingY widthSize:(CGFloat)widthComponent
@@ -73,8 +83,6 @@
     RIField *yearField = nil;
     NSInteger birthdayFieldPosition = -1;
     JABirthDateComponent *birthDateComponent = [JABirthDateComponent getNewJABirthDateComponent];
-    JARadioComponent *regionsComponent = nil;
-    JARadioComponent *citiesComponent = nil;
     
     NSInteger lastTextFieldIndex = 0;
     self.formViews = [[NSMutableArray alloc] init];
@@ -209,17 +217,34 @@
                 
                 if([radioComponent isComponentWithKey:@"fk_customer_address_region"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
                 {
-                    regionsComponent = radioComponent;
+                    self.regionsComponent = radioComponent;
                 }
                 else if([radioComponent isComponentWithKey:@"fk_customer_address_city"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
                 {
-                    citiesComponent = radioComponent;
+                    self.citiesComponent = radioComponent;
                 }
             }
         }
-        else if ([@"checkbox" isEqualToString:field.type])
+        else if ([@"radio_related" isEqualToString:field.type])
         {
-            if([@"Alice_Module_Mobapi_Form_Ext1m4_Customer_RegistrationForm" isEqualToString:[self.form uid]] && [@"newsletter_categories_subscribed" isEqualToString:field.key])
+            //we only accept two options, no more, no less
+            if (2 == field.dataSet.count) {
+                
+                JARadioRelatedComponent* radioRelated = [JARadioRelatedComponent getNewJARadioRelatedComponent];
+                [radioRelated setupWithField:field];
+                
+                CGRect frame = radioRelated.frame;
+                frame.origin.y = startingY;
+                radioRelated.frame = frame;
+                startingY += radioRelated.frame.size.height;
+                
+                [self.formViews addObject:radioRelated];
+
+            }
+        }
+        else if (0 != [field.type rangeOfString:@"checkbox"].length)
+        {
+            if(!([[self.form uid] rangeOfString:@"_Customer_RegistrationForm"].location==NSNotFound) && [@"newsletter_categories_subscribed" isEqualToString:field.key])
             {
                 JACheckBoxComponent *check = [JACheckBoxComponent getNewJACheckBoxComponent];
                 [check setupWithField:field];
@@ -258,8 +283,6 @@
                     frame.origin.y = startingY;
                     check.frame = frame;
                     startingY += check.frame.size.height;
-                    
-                    check.labelText.text = field.label;
 
                     [check setTag:tag];
                     [self.formViews addObject:check];
@@ -324,10 +347,6 @@
     if(VALID_NOTEMPTY(values, NSDictionary))
     {
         [self setValues:values];
-    }
-    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(downloadRegions:cities:)]) {
-        [self.delegate performSelector:@selector(downloadRegions:cities:) withObject:regionsComponent withObject:citiesComponent];
     }
 }
 
@@ -467,6 +486,11 @@
                 {
                     [parameters addEntriesFromDictionary:[radioComponent getValues]];
                 }
+            } else if([view isKindOfClass:[JARadioRelatedComponent class]])
+            {
+                JARadioRelatedComponent* radioRelatedComponent = (JARadioRelatedComponent*) view;
+                
+                [parameters addEntriesFromDictionary:[radioRelatedComponent getValues]];
             }
             else if ([view isKindOfClass:[JACheckBoxComponent class]])
             {

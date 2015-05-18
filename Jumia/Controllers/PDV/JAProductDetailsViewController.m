@@ -11,13 +11,19 @@
 #import "JAPriceView.h"
 #import "JAAppDelegate.h"
 #import "RIProduct.h"
+#import "JAPickerScrollView.h"
+#import "RISpecification.h"
+#import "RISpecificationAttribute.h"
 
-@interface JAProductDetailsViewController ()
+@interface JAProductDetailsViewController () <JAPickerScrollViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *topView;
-@property (weak, nonatomic) IBOutlet UILabel *labelName;
-@property (weak, nonatomic) IBOutlet UILabel *labelBrand;
-@property (weak, nonatomic) IBOutlet UIScrollView *contenteScrollView;
+@property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
+
+@property (strong, nonatomic) UIView *topView;
+@property (strong, nonatomic) UILabel *labelName;
+@property (strong, nonatomic) UILabel *labelBrand;
+@property (strong, nonatomic) UIScrollView *contenteScrollView;
+
 @property (strong, nonatomic) UIView *featuresView;
 @property (strong, nonatomic) UILabel *featuresTitleLabel;
 @property (strong, nonatomic) UIView *featuresSeparator;
@@ -27,7 +33,17 @@
 @property (strong, nonatomic) UIView *descriptionSeparator;
 @property (strong, nonatomic) UILabel *descriptionTextLabel;
 
+@property (strong, nonatomic) UIScrollView *specificationScrollView;
+
+
+@property (weak, nonatomic) IBOutlet JAPickerScrollView *pickerScrollView;
+@property (strong, nonatomic) NSArray *sortList;
+@property (assign, nonatomic) BOOL animatedScroll;
+
 @property (nonatomic, strong) JAPriceView *priceView;
+
+@property (nonatomic, strong) NSMutableArray *specificationContentViewArray;
+
 
 @end
 
@@ -35,16 +51,20 @@
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
-    if(VALID_NOTEMPTY(self.product.sku, NSString))
-    {
+    self.animatedScroll = YES;
+    
+    self.sortList = [NSArray arrayWithObjects:STRING_SUMMARY, STRING_SPECIFICATIONS, nil];
+    
+    [self.mainScrollView setPagingEnabled:YES];
+    [self.mainScrollView setScrollEnabled:NO];
+    
+    if (VALID_NOTEMPTY(self.product.sku, NSString)) {
         self.screenName = [NSString stringWithFormat:@"PDSSecondScreen / %@", self.product.sku];
     }
-    else
-    {
+    else {
         self.screenName = @"PDSSecondScreen";
     }
     
@@ -53,21 +73,54 @@
     
     self.view.backgroundColor = JABackgroundGrey;
     
+    self.pickerScrollView.delegate = self;
+    self.pickerScrollView.startingIndex = self.selectedIndex;
+    [self.pickerScrollView setOptions:self.sortList];
+    
+    self.mainScrollView.backgroundColor = UIColorFromRGB(0xc8c8c8);
+    
+    self.contenteScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     self.contenteScrollView.backgroundColor = UIColorFromRGB(0xc8c8c8);
-    self.contenteScrollView.translatesAutoresizingMaskIntoConstraints = YES;
     
-    self.topView.translatesAutoresizingMaskIntoConstraints = YES;
+    self.topView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                            0.0f,
+                                                            self.view.frame.size.width,
+                                                            92.0f)];
+    [self.topView setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.mainScrollView addSubview:self.topView];
     
+    self.labelBrand = [[UILabel alloc] initWithFrame:CGRectMake(12.0f,
+                                                                8.0f,
+                                                                self.view.frame.size.width - (2 * 12),
+                                                                17.0f)];
+    self.labelBrand.font = [UIFont fontWithName:kFontMediumName size:14.0f];
     self.labelBrand.text = self.product.brand;
-    self.labelBrand.translatesAutoresizingMaskIntoConstraints = YES;
+    self.labelBrand.numberOfLines = 1;
+    self.labelBrand.lineBreakMode = NSLineBreakByTruncatingTail;
+    [self.topView addSubview:self.labelBrand];
     
+    self.labelName = [[UILabel alloc] initWithFrame:CGRectMake(12.0f,
+                                                               CGRectGetMaxY(self.labelBrand.frame) + 4.0f,
+                                                               self.view.frame.size.width - (2 * 12),
+                                                               17.0f)];
+    self.labelName.font = [UIFont fontWithName:kFontMediumName size:14.0f];
+    self.labelName.numberOfLines = 0;
+    self.labelName.lineBreakMode = NSLineBreakByWordWrapping;
     self.labelName.text = self.product.name;
-    self.labelName.translatesAutoresizingMaskIntoConstraints = YES;
+    [self.topView addSubview:self.labelName];
+    
+    self.specificationScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+    self.specificationScrollView.backgroundColor = UIColorFromRGB(0xc8c8c8);
+    
+    [self.mainScrollView addSubview:self.contenteScrollView];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
+                                                        object:nil];
+    
     
     [self setupViews:self.view.frame.size.width height:self.view.frame.size.height];
     
@@ -75,15 +128,19 @@
     [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
 }
 
--(void)viewDidAppear:(BOOL)animated
-{
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"ProductSpecs"];
 }
 
-- (void) setupViews:(CGFloat)width height:(CGFloat)height
-{
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)setupViews:(CGFloat)width height:(CGFloat)height {
     [self.labelBrand setFrame:CGRectMake(12.0f,
                                          6.0f,
                                          width - 24.0f,
@@ -96,8 +153,7 @@
                                         height)];
     [self.labelName sizeToFit];
     
-    if(VALID(self.priceView, JAPriceView))
-    {
+    if (VALID(self.priceView, JAPriceView)) {
         [self.priceView removeFromSuperview];
     }
     
@@ -114,12 +170,10 @@
     [self.topView addSubview:self.priceView];
     
     CGFloat topViewMinHeight = CGRectGetMaxY(self.priceView.frame);
-    if(topViewMinHeight < 38.0f)
-    {
+    if (topViewMinHeight < 38.0f) {
         topViewMinHeight = 38.0f;
     }
     topViewMinHeight += 6.0f;
-    
     
     [self.topView setFrame:CGRectMake(0.0f,
                                       0.0f,
@@ -129,21 +183,17 @@
     [self.contenteScrollView setFrame:CGRectMake(0.0f,
                                                  topViewMinHeight,
                                                  width,
-                                                 height - topViewMinHeight - CGRectGetMinY(self.topView.frame))];
+                                                 height - topViewMinHeight - CGRectGetMinY(self.topView.frame) - self.pickerScrollView.frame.size.height)];
     
-    if(VALID(self.featuresView, UIView))
-    {
-        for(UIView *subView in self.featuresView.subviews)
-        {
+    if (VALID(self.featuresView, UIView)) {
+        for (UIView *subView in self.featuresView.subviews) {
             [subView removeFromSuperview];
         }
         [self.featuresView removeFromSuperview];
     }
     
-    if(VALID(self.descriptionView, UIView))
-    {
-        for(UIView *subView in self.descriptionView.subviews)
-        {
+    if (VALID(self.descriptionView, UIView)) {
+        for (UIView *subView in self.descriptionView.subviews) {
             [subView removeFromSuperview];
         }
         [self.descriptionView removeFromSuperview];
@@ -158,8 +208,7 @@
     [self.contenteScrollView addSubview:self.featuresView];
     
     CGFloat horizontalMargin = 6.0f;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-    {
+    if (UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
         horizontalMargin = 10.0f;
     }
     
@@ -168,9 +217,9 @@
                                                                         self.featuresView.frame.size.width - (2 * horizontalMargin),
                                                                         21.0f)];
     [self.featuresTitleLabel setNumberOfLines:1];
-    [self.featuresTitleLabel setText:STRING_PRODUCT_FEATURES];
+    [self.featuresTitleLabel setText:STRING_KEY_FEATURES];
     [self.featuresTitleLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
-    [self.featuresTitleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
+    [self.featuresTitleLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
     [self.featuresView addSubview:self.featuresTitleLabel];
     
     self.featuresSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
@@ -186,12 +235,11 @@
                                                                        0.0f)];
     [self.featuresTextLabel setNumberOfLines:0];
     [self.featuresTextLabel setTextColor:UIColorFromRGB(0x666666)];
-    [self.featuresTextLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:12.0f]];
+    [self.featuresTextLabel setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
     [self.featuresView addSubview:self.featuresTextLabel];
     
-    if (VALID_NOTEMPTY(self.product.attributeShortDescription, NSString))
-    {
-        [self.featuresTextLabel setText:self.product.attributeShortDescription];
+    if (VALID_NOTEMPTY(self.product.shortSummary, NSString)) {
+        [self.featuresTextLabel setText:self.product.shortSummary];
         [self.featuresTextLabel sizeToFit];
         [self.featuresView setFrame:CGRectMake(6.0f,
                                                6.0f,
@@ -211,9 +259,9 @@
                                                                                self.descriptionView.frame.size.width - (2 * horizontalMargin),
                                                                                21.0f)];
         [self.descriptionTitleLabel setNumberOfLines:1];
-        [self.descriptionTitleLabel setText:STRING_PRODUCT_DESCRIPTION];
+        [self.descriptionTitleLabel setText:STRING_DESCRIPTION];
         [self.descriptionTitleLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
-        [self.descriptionTitleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f]];
+        [self.descriptionTitleLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
         [self.descriptionView addSubview:self.descriptionTitleLabel];
         
         self.descriptionSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
@@ -228,11 +276,11 @@
                                                                               self.descriptionView.frame.size.width - (2 * horizontalMargin),
                                                                               0.0f)];
         [self.descriptionTextLabel setTextColor:UIColorFromRGB(0x666666)];
-        [self.descriptionTextLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
+        [self.descriptionTextLabel setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
         [self.descriptionTextLabel setNumberOfLines:0];
         [self.descriptionView addSubview:self.descriptionTextLabel];
         
-        [self.descriptionTextLabel setText:self.product.descriptionString];
+        [self.descriptionTextLabel setText:self.product.summary];
         [self.descriptionTextLabel sizeToFit];
         [self.descriptionView setFrame:CGRectMake(6.0f,
                                                   CGRectGetMaxY(self.featuresView.frame) + 6.0f,
@@ -242,9 +290,8 @@
         [self.contenteScrollView setContentSize:CGSizeMake(width,
                                                            CGRectGetMaxY(self.descriptionView.frame) + 6.0f)];
     }
-    else
-    {
-        [self.featuresTextLabel setText:self.product.descriptionString];
+    else {
+        [self.featuresTextLabel setText:self.product.summary];
         [self.featuresTextLabel sizeToFit];
         [self.featuresView setFrame:CGRectMake(6.0f,
                                                6.0f,
@@ -254,31 +301,193 @@
         [self.contenteScrollView setContentSize:CGSizeMake(width,
                                                            CGRectGetMaxY(self.featuresView.frame) + 6.0f)];
     }
+    
+    if (VALID_NOTEMPTY(self.specificationContentViewArray, NSMutableArray)) {
+        for (UIView *contentView in self.specificationContentViewArray) {
+            [contentView removeFromSuperview];
+        }
+    }
+    
+    [self setupSpecificationView];
+    UIView *lastView = self.specificationContentViewArray.lastObject;
+    [self.specificationScrollView setContentSize:CGSizeMake(self.specificationScrollView.frame.size.width,
+                                                            CGRectGetMaxY(lastView.frame) + self.pickerScrollView.frame.size.height - 12.0f)];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{    
+- (void)setupSpecificationView {
+    CGFloat width = self.contenteScrollView.frame.size.width;
+    CGFloat margin = 6.0f;
+    CGFloat startingY = 6.0f;
+    
+    NSOrderedSet *listSpecifications = self.product.specifications;
+    
+    
+    [self.specificationScrollView setFrame:CGRectMake(width,
+                                                      0.0f,
+                                                      self.contenteScrollView.frame.size.width,
+                                                      self.contenteScrollView.frame.size.height + self.priceView.frame.size.height + self.pickerScrollView.frame.size.height + 24.0f)];
+    
+    self.specificationContentViewArray = [NSMutableArray new];
+    for (RISpecification *specification in listSpecifications) {
+        UIView *currentContentView = [[UIView alloc] init];
+        [self.specificationContentViewArray addObject:currentContentView];
+        
+        [currentContentView setFrame:CGRectMake(margin,
+                                                startingY,
+                                                self.contenteScrollView.frame.size.width - 12.f,
+                                                0.0f)];
+        
+        currentContentView.translatesAutoresizingMaskIntoConstraints = YES;
+        currentContentView.layer.cornerRadius = 5.0f;
+        [currentContentView setBackgroundColor:UIColorFromRGB(0xffffff)];
+        [self.specificationScrollView addSubview:currentContentView];
+        
+        
+        UILabel* specificationTitleLabel = [[UILabel alloc]init];
+        
+        
+        self.featuresView.layer.cornerRadius = 5.0f;
+        
+        [specificationTitleLabel setFrame:CGRectMake(margin,
+                                                     2.0f,
+                                                     currentContentView.frame.size.width - 12.0f,
+                                                     23.0f)];
+        [currentContentView addSubview:specificationTitleLabel];
+        
+        
+        [specificationTitleLabel setText:specification.headLabel];
+        [specificationTitleLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
+        [specificationTitleLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
+        [specificationTitleLabel setBackgroundColor:[UIColor clearColor]];
+        
+        
+        
+        UIView* specificationSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                                  26.0f,
+                                                                                  currentContentView.frame.size.width,
+                                                                                  1.0f)];
+        [specificationSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+        [currentContentView addSubview:specificationSeparator];
+        
+        
+        UIView* specificationTextView = [[UILabel alloc] init];
+        [currentContentView addSubview:specificationTextView];
+        
+        [specificationTextView setFrame:CGRectMake(margin,
+                                                   CGRectGetMaxY(specificationSeparator.frame) + 1.0f,
+                                                   currentContentView.frame.size.width - (2 * margin),
+                                                   0.0f)];
+        
+        CGFloat currentY = 6.0f;
+        NSMutableArray *specificationAttributes = specification.specificationAttributes;
+        for (RISpecificationAttribute *specificationAttribute in  specificationAttributes) {
+            UILabel* specificationKeyLabel = [[UILabel alloc] init];
+            
+            if (VALID_NOTEMPTY(specificationAttribute.key, NSString)) {
+                
+                [specificationKeyLabel setFrame:CGRectMake(margin,
+                                                           currentY,
+                                                           specificationTextView.frame.size.width / 2,
+                                                           12.0f)];
+                
+                
+                
+                [specificationKeyLabel setNumberOfLines:0];
+                [specificationKeyLabel setTextColor:UIColorFromRGB(0x666666)];
+                [specificationKeyLabel setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
+                [specificationKeyLabel setText:specificationAttribute.key];
+                [specificationKeyLabel sizeToFit];
+                [specificationTextView addSubview:specificationKeyLabel];
+            }
+            
+            UILabel* specificationValueLabel = [[UILabel alloc] init];
+            
+            if (VALID_NOTEMPTY(specificationAttribute.value, NSString)) {
+                
+                [specificationValueLabel setFrame:CGRectMake((specificationTextView.frame.size.width / 2) + 6.0f,
+                                                             currentY,
+                                                             (specificationTextView.frame.size.width / 2) - 12.0f,
+                                                             12.0f)];
+                
+                
+                [specificationValueLabel setNumberOfLines:0];
+                [specificationValueLabel setTextColor:UIColorFromRGB(0x666666)];
+                [specificationValueLabel setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
+                [specificationValueLabel setText:specificationAttribute.value];
+                [specificationValueLabel sizeToFit];
+                [specificationTextView addSubview:specificationValueLabel];
+                
+            }
+            
+            currentY += MAX(specificationTitleLabel.frame.size.height, specificationValueLabel.frame.size.height);
+        }
+        
+        [specificationTextView setFrame:CGRectMake(specificationTextView.frame.origin.x,
+                                                   specificationTextView.frame.origin.y,
+                                                   specificationTextView.frame.size.width,
+                                                   currentY)];
+        
+        [currentContentView setFrame:CGRectMake(margin,
+                                                startingY,
+                                                self.contenteScrollView.frame.size.width - 12.f,
+                                                currentY + 34.0f)];
+        
+        startingY += currentContentView.frame.size.height + 6.0f;
+    }
+    
+    [self.mainScrollView addSubview:self.specificationScrollView];
+    [self.mainScrollView setContentSize:CGSizeMake(self.contenteScrollView.frame.size.width * 2,
+                                                   CGRectGetMaxY(self.mainScrollView.frame) - 24.0f)];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [self showLoading];
+    
+    self.selectedIndex = self.pickerScrollView.selectedIndex;
+    
+    self.pickerScrollView.startingIndex = self.selectedIndex;
     
     CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     CGFloat newHeight = self.view.frame.size.width - self.view.frame.origin.y;
+    
     [self setupViews:newWidth height:newHeight];
     
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    self.animatedScroll = NO;
+    
+    [self selectedIndex:self.selectedIndex];
+    [self.pickerScrollView setNeedsLayout];
+    
     [self setupViews:self.view.frame.size.width height:self.view.frame.size.height];
     
     [self hideLoading];
-
+    
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+#pragma mark Swipe Actions
+- (IBAction)swipeRight:(id)sender {
+    [self.pickerScrollView scrollRightAnimated:YES];
+}
+
+- (IBAction)swipeLeft:(id)sender {
+    [self.pickerScrollView scrollLeftAnimated:YES];
+}
+
+#pragma mark JAPickerScrollView
+- (void)selectedIndex:(NSInteger)index {
+    [self.mainScrollView scrollRectToVisible:CGRectMake(index * self.mainScrollView.frame.size.width,
+                                                        0.0f,
+                                                        self.mainScrollView.frame.size.width,
+                                                        self.mainScrollView.frame.size.height) animated:self.animatedScroll];
+    self.animatedScroll = YES;
 }
 
 @end

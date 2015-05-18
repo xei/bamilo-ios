@@ -19,6 +19,7 @@
 
 -(void)loadWithShippingMethod:(RIShippingMethod *)shippingMethod
 {
+    self.label.font = [UIFont fontWithName:kFontLightName size:self.label.font.pointSize];
     [self.label setText:[shippingMethod label]];
 }
 

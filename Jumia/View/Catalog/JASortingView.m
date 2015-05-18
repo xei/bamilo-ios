@@ -37,7 +37,7 @@
     self.doneClickableView.layer.cornerRadius = 5.0f;
     self.doneClickableView.backgroundColor = [UIColor whiteColor];
     [self.doneClickableView setTitle:STRING_CANCEL forState:UIControlStateNormal];
-    [self.doneClickableView setFont:[UIFont fontWithName:@"HelveticaNeue" size:17.0f]];
+    [self.doneClickableView setFont:[UIFont fontWithName:kFontRegularName size:17.0f]];
     [self.doneClickableView setTitleColor:UIColorFromRGB(0x06739e) forState:UIControlStateNormal];
     [self.doneClickableView addTarget:self action:@selector(animateOut) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.doneClickableView];
@@ -168,7 +168,7 @@
     if (0 == indexPath.row) {
         [clickView setTitle:[STRING_SORT_BY uppercaseString] forState:UIControlStateNormal];
         [clickView setTitleColor:UIColorFromRGB(0x666666) forState:UIControlStateNormal];
-        [clickView setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
+        [clickView setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
         clickView.userInteractionEnabled = NO;
         
         return cell;
@@ -181,7 +181,7 @@
     NSString* option = [kJASORTINGVIEW_OPTIONS_ARRAY objectAtIndex:realIndex];
     [clickView setTitle:option forState:UIControlStateNormal];
     [clickView setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    [clickView setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:17.0f]];
+    [clickView setFont:[UIFont fontWithName:kFontLightName size:17.0f]];
     
     if (realIndex == self.selectedIndex) {
         UIImage* checkImage = [UIImage imageNamed:@"selectionCheckmark"];

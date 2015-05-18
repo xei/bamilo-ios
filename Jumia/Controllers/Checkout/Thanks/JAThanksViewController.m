@@ -48,25 +48,28 @@
     }
     
     self.contentView.layer.cornerRadius = 5.0f;
+    self.thankYouLabel.font = [UIFont fontWithName:kFontRegularName size:self.thankYouLabel.font.pointSize];
     self.thankYouLabel.textColor = UIColorFromRGB(0x666666);
     self.thankYouLabel.text = STRING_THANK_YOU_ORDER_TITLE;
+    self.successMessage.font = [UIFont fontWithName:kFontLightName size:self.successMessage.font.pointSize];
     self.successMessage.textColor = UIColorFromRGB(0x666666);
     self.successMessage.text = STRING_ORDER_SUCCESS;
 
     NSString* baseString = STRING_ORDER_TRACK_SUCCESS;
     NSDictionary* baseAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    [UIFont fontWithName:@"HelveticaNeue-Light" size:12], NSFontAttributeName,
+                                    [UIFont fontWithName:kFontLightName size:12], NSFontAttributeName,
                                     UIColorFromRGB(0x666666), NSForegroundColorAttributeName, nil];
     
     NSString* particleString = STRING_ORDER_TRACK_LINK;
     NSRange particleStringRange = [baseString rangeOfString:particleString];
     NSDictionary* highlightAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         [UIFont fontWithName:@"HelveticaNeue-Light" size:12], NSFontAttributeName,
+                                         [UIFont fontWithName:kFontLightName size:12], NSFontAttributeName,
                                          UIColorFromRGB(0x55a1ff), NSForegroundColorAttributeName, nil];
     
     NSMutableAttributedString* finalString = [[NSMutableAttributedString alloc] initWithString:baseString attributes:baseAttributes];
     [finalString setAttributes:highlightAttributes range:particleStringRange];
     
+    self.trackOrderMessage.font = [UIFont fontWithName:kFontLightName size:self.trackOrderMessage.font.pointSize];
     self.trackOrderMessage.attributedText = finalString;
     
     self.goToTrackOrdersButton = [[UIButton alloc] init];
@@ -74,11 +77,13 @@
     [self.contentView addSubview:self.goToTrackOrdersButton];
     
     //STRING_ORDER_TRACK_LINK
+    self.orderNumberField.font = [UIFont fontWithName:kFontBoldName size:self.orderNumberField.font.pointSize];
     [self.orderNumberField setText:self.orderNumber];
     self.orderNumberField.textColor = UIColorFromRGB(0x4e4e4e);
     
     [self.orderCopyButton addTarget:self action:@selector(copyOrderNumber) forControlEvents:UIControlEventTouchUpInside];
     
+    self.continueShoppingButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.continueShoppingButton.titleLabel.font.pointSize];
     [self.continueShoppingButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
     [self.continueShoppingButton setTitle:STRING_CONTINUE_SHOPPING forState:UIControlStateNormal];
     

@@ -238,18 +238,18 @@
     [itemCell addSubview:imageView];
     
     UILabel* nameLabel = [UILabel new];
-    nameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    nameLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     nameLabel.textColor = UIColorFromRGB(0x666666);
     nameLabel.text = cartItem.name;
     [nameLabel sizeToFit];
     nameLabel.frame = CGRectMake(CGRectGetMaxX(imageView.frame) + 8.0f,
-                                 itemCell.bounds.origin.y + 15.0f,
+                                 itemCell.bounds.origin.y + 6.0f,
                                  itemCell.frame.size.width - imageView.frame.size.width - 8.0f*2,
                                  nameLabel.frame.size.height);
     [itemCell addSubview:nameLabel];
     
     UILabel* quantityLabel = [UILabel new];
-    quantityLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    quantityLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     quantityLabel.textColor = UIColorFromRGB(0x666666);
     quantityLabel.text = [NSString stringWithFormat:STRING_QUANTITY, cartItem.quantity];
     [quantityLabel sizeToFit];
@@ -260,7 +260,7 @@
     [itemCell addSubview:quantityLabel];
     
     UILabel* priceLabel = [UILabel new];
-    priceLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    priceLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     priceLabel.textColor = UIColorFromRGB(0x666666);
     priceLabel.text = cartItem.priceFormatted;
     if (VALID_NOTEMPTY(cartItem.specialPriceFormatted, NSString)) {
@@ -274,7 +274,7 @@
     [itemCell addSubview:priceLabel];
     
     UILabel* sizeLabel = [UILabel new];
-    sizeLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    sizeLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     sizeLabel.textColor = UIColorFromRGB(0x666666);
     sizeLabel.text = cartItem.variation;
     [sizeLabel sizeToFit];
@@ -306,11 +306,11 @@
     UIView* subtotalContentView = [self placeContentViewWithTitle:STRING_SUBTOTAL atYPosition:yPosition scrollView:scrollView];
     
     UILabel* articlesLabel = [UILabel new];
-    articlesLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    articlesLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     articlesLabel.textColor = UIColorFromRGB(0x666666);
-    articlesLabel.text = [NSString stringWithFormat:STRING_ARTICLES, [self.checkout.cart.cartCount integerValue]];
+    articlesLabel.text = [NSString stringWithFormat:STRING_ITEMS_CART, [self.checkout.cart.cartCount integerValue]];
     if (1 == [self.checkout.cart.cartCount integerValue]) {
-        articlesLabel.text = STRING_ARTICLE;
+        articlesLabel.text = STRING_ITEM_CART;
     }
     [articlesLabel sizeToFit];
     articlesLabel.frame = CGRectMake(subtotalContentView.bounds.origin.x + 6.0f,
@@ -325,7 +325,7 @@
     
     UILabel* totalLabel = [UILabel new];
     totalLabel.textAlignment = NSTextAlignmentRight;
-    totalLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    totalLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     totalLabel.textColor = UIColorFromRGB(0x666666);
     totalLabel.text = self.checkout.cart.subTotalFormatted;
     [totalLabel sizeToFit];
@@ -357,7 +357,7 @@
     }
     
     UILabel* vatLabel = [UILabel new];
-    vatLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    vatLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     vatLabel.textColor = UIColorFromRGB(0x666666);
     vatLabel.text = [NSString stringWithFormat:STRING_TAX_INC, STRING_VAT];
     [vatLabel sizeToFit];
@@ -374,7 +374,7 @@
     if(VALID_NOTEMPTY(priceRuleKeysString, NSString) && VALID_NOTEMPTY(priceRuleValuesString, NSString))
     {
         UILabel *priceRulesLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [priceRulesLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f]];
+        [priceRulesLabel setFont:[UIFont fontWithName:kFontLightName size:13.0f]];
         [priceRulesLabel setTextColor:UIColorFromRGB(0x666666)];
         [priceRulesLabel setText:priceRuleKeysString];
         [priceRulesLabel setNumberOfLines:0];
@@ -390,7 +390,7 @@
         
         UILabel *priceRulesValue = [[UILabel alloc] initWithFrame:CGRectZero];
         [priceRulesValue setTextAlignment:NSTextAlignmentRight];
-        [priceRulesValue setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f]];
+        [priceRulesValue setFont:[UIFont fontWithName:kFontLightName size:13.0f]];
         [priceRulesValue setTextColor:UIColorFromRGB(0x666666)];
         [priceRulesValue setText:priceRuleValuesString];
         [priceRulesValue setNumberOfLines:0];
@@ -409,7 +409,7 @@
     
     
     UILabel* shippingLabel = [UILabel new];
-    shippingLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    shippingLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     shippingLabel.textColor = UIColorFromRGB(0x666666);
     shippingLabel.text = STRING_SHIPPING;
     [shippingLabel sizeToFit];
@@ -421,7 +421,7 @@
     
     UILabel* shippingValueLabel = [UILabel new];
     shippingValueLabel.textAlignment = NSTextAlignmentRight;
-    shippingValueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    shippingValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     shippingValueLabel.textColor = UIColorFromRGB(0x666666);
     shippingValueLabel.text = self.checkout.cart.shippingValueFormatted;
     if (0 == [self.checkout.cart.shippingValue integerValue]) {
@@ -435,7 +435,7 @@
     [subtotalContentView addSubview:shippingValueLabel];
     
     UILabel* extraCostsLabel = [UILabel new];
-    extraCostsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    extraCostsLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     extraCostsLabel.textColor = UIColorFromRGB(0x666666);
     extraCostsLabel.text = STRING_EXTRA_COSTS;
     [extraCostsLabel sizeToFit];
@@ -447,7 +447,7 @@
     
     UILabel* extraCostsValueLabel = [UILabel new];
     extraCostsValueLabel.textAlignment = NSTextAlignmentRight;
-    extraCostsValueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    extraCostsValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     extraCostsValueLabel.textColor = UIColorFromRGB(0x666666);
     extraCostsValueLabel.text = self.checkout.cart.extraCostsFormatted;
     [extraCostsValueLabel sizeToFit];
@@ -463,7 +463,7 @@
                                            CGRectGetMaxY(extraCostsLabel.frame) + 10.0f);
     
     UILabel* finalTotalLabel = [UILabel new];
-    finalTotalLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:13.0f];
+    finalTotalLabel.font = [UIFont fontWithName:kFontBoldName size:13.0f];
     finalTotalLabel.textColor = UIColorFromRGB(0x666666);
     finalTotalLabel.text = STRING_TOTAL;
     [finalTotalLabel sizeToFit];
@@ -475,7 +475,7 @@
     
     UILabel* finalTotalValueLabel = [UILabel new];
     finalTotalValueLabel.textAlignment = NSTextAlignmentRight;
-    finalTotalValueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:13.0f];
+    finalTotalValueLabel.font = [UIFont fontWithName:kFontBoldName size:13.0f];
     finalTotalValueLabel.textColor = UIColorFromRGB(0x666666);
     finalTotalValueLabel.text = self.checkout.cart.cartValueFormatted;
     [finalTotalValueLabel sizeToFit];
@@ -490,6 +490,17 @@
                                            subtotalContentView.frame.size.width,
                                            CGRectGetMaxY(finalTotalLabel.frame) + 10.0f);
     
+    if([self.checkout.cart.extraCosts integerValue] == 0){
+        [extraCostsLabel setHidden:YES];
+        [extraCostsValueLabel setHidden:YES];
+    }
+    
+    if([self.checkout.cart.shippingValue integerValue] == 0){
+        [shippingLabel setHidden:YES];
+        [shippingValueLabel setHidden:YES];
+    
+    }
+
     return subtotalContentView.frame.size.height + 5.0f;
 }
 
@@ -520,7 +531,7 @@
     [self addEditButtonToContentView:addressContentView withSelector:selector];
     
     UILabel* addressLabel = [UILabel new];
-    addressLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    addressLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     addressLabel.textColor = UIColorFromRGB(0x666666);
     addressLabel.text = address;
     addressLabel.numberOfLines = 0;
@@ -626,7 +637,7 @@
     [self addEditButtonToContentView:shippingContentView withSelector:@selector(editButtonForShippingMethod)];
     
     UILabel* shippingMethodLabel = [UILabel new];
-    shippingMethodLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
+    shippingMethodLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
     shippingMethodLabel.textColor = UIColorFromRGB(0x666666);
     shippingMethodLabel.text = self.checkout.orderSummary.shippingMethod;
     shippingMethodLabel.numberOfLines = 0;
@@ -652,7 +663,7 @@
     [self addEditButtonToContentView:paymentContentView withSelector:@selector(editButtonForPaymentMethod)];
     
     UILabel* paymentTitleLabel = [UILabel new];
-    paymentTitleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
+    paymentTitleLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
     paymentTitleLabel.textColor = UIColorFromRGB(0x666666);
     paymentTitleLabel.text = self.checkout.orderSummary.paymentMethod;
     paymentTitleLabel.numberOfLines = 0;
@@ -671,7 +682,7 @@
     if (VALID_NOTEMPTY(self.checkout.orderSummary.discountCouponCode, NSString)) {
         
         UILabel* couponTitleLabel = [UILabel new];
-        couponTitleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
+        couponTitleLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
         couponTitleLabel.textColor = UIColorFromRGB(0x666666);
         couponTitleLabel.text = STRING_COUPON;
         couponTitleLabel.numberOfLines = 0;
@@ -683,7 +694,7 @@
         [paymentContentView addSubview:couponTitleLabel];
         
         UILabel* couponCodeLabel = [UILabel new];
-        couponCodeLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+        couponCodeLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         couponCodeLabel.textColor = UIColorFromRGB(0x666666);
         couponCodeLabel.text = self.checkout.orderSummary.discountCouponCode;
         couponCodeLabel.numberOfLines = 0;
@@ -757,7 +768,7 @@
                                                                     contentView.bounds.size.width - 2*6.0f,
                                                                     26.0f)];
     titleLabel.text = title;
-    titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
+    titleLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
     titleLabel.textColor = UIColorFromRGB(0x4e4e4e);
     [contentView addSubview:titleLabel];
     
@@ -782,7 +793,7 @@
                       withSelector:(SEL)selector
 {
     if (selector) {
-        UIFont *editFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:10.0f];
+        UIFont *editFont = [UIFont fontWithName:kFontLightName size:10.0f];
         UIButton* editButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [editButton setTitle:STRING_EDIT forState:UIControlStateNormal];
         [editButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
@@ -813,7 +824,7 @@
 
 - (void)continueNextStep
 {
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
     {
         [self showLoading];
     }
@@ -850,6 +861,10 @@
         if(RIApiResponseMaintenancePage == apiResponse)
         {
             [self showMaintenancePage:@selector(continueNextStep) objects:nil];
+        }
+        else if(RIApiResponseKickoutView == apiResponse)
+        {
+            [self showKickoutView:@selector(continueNextStep) objects:nil];
         }
         else
         {

@@ -4,15 +4,13 @@
    
    Created by Pedro Lopes on 13/09/14.
    Copyright (c) 2014 Rocket Internet. All rights reserved. */
-"string_jumia" = "Jumia";
-
 "string_update_necessary_title" = "Atualização necessária";
 
-"string_update_necessary_message" = "Encontramos algo que foi necessário corrigir para que a experiência de comprar no Jumia seja ainda melhor! Para continuar a usar a aplicação, deverá atualizá-la.";
+"string_update_necessary_message_ios" = "Encontramos algo que é preciso corrigir para melhorar a sua experiência de compra em %@! Terá de atualizar a aplicação para a continuar a utilizar.";
 
 "string_update_available_title" = "Atualização disponível";
 
-"string_update_available_message" = "Há uma nova atualização disponível para que a experiência de comprar no Jumia seja ainda melhor! Faça já a atualização!";
+"string_update_available_message_ios" = "Existe uma nova atualização que vai tornar a experiência de compra ainda melhor em %@! Não se esqueça de atualizar hoje!";
 
 "string_update" = "Atualize!";
 
@@ -54,7 +52,7 @@
 
 "categories_toplevel_title" = "Todas as Categorias";
 
-"string_apply" = "Aplicar";
+"string_apply" = "Submeter";
 
 "search_label" = "Pesquisar";
 
@@ -82,7 +80,7 @@
 
 "string_size" = "Tamanho";
 
-"string_rating" = "Avaliação";
+"string_rating" = "1 Avaliação";
 
 "string_ratings" = "%d Notas";
 
@@ -124,7 +122,7 @@
 
 "add_to_shopping_cart" = "Adicionar ao Carrinho";
 
-"string_variations" = "Variações";
+"string_variations" = "Tamanhos";
 
 "string_rate_now" = "Avaliar Agora";
 
@@ -132,19 +130,25 @@
 
 "product_features_title" = "Características do Produto";
 
+"description" = "Descrição";
+
+"key_features" = "Características Principais";
+
+"product_desc_summary_title" = "Resumo";
+
 "product_description_title" = "Descrição do Produto";
 
-"share_subject" = "Partilha do Jumia";
+"share_subject_ios" = "%@ Partilhar";
 
 "share_checkout_this_product" = "Veja este produto que encontrámos!";
 
 "rating_question" = "Experimentou este produto? Avalie-o agora!";
 
-"writereview_send" = "Enviar Avaliação";
+"writereview_send" = "Enviar Comentário";
 
-"submit_title" = "Avaliação enviada";
+"submit_title" = "Comentário enviado";
 
-"write_comment" = "Escreva uma Avaliação";
+"write_comment" = "Escreva um Comentário";
 
 "string_posted_by" = "Publicado por %@, %@";
 
@@ -168,13 +172,17 @@
 
 "voucher_remove" = "Remover";
 
-"voucher_message_hint" = "Insira o código do seu cupão aqui";
+"voucher_message_hint" = "Insira aqui o código do seu cupão";
 
-"call_to_order" = "Ligar";
+"call_to_order" = "Ligar para encomendar";
 
 "string_article" = "1 artigo";
 
 "string_articles" = "%d artigos";
+
+"string_item_cart" = "1 artigo";
+
+"string_items_cart" = "%d artigos";
 
 "error_add_to_shopping_cart_quantity" = "Pedimos desculpa mas não é permitido encomendar mais artigos do que a quantidade disponível.";
 
@@ -226,7 +234,7 @@
 
 "checkout_header_step_2" = "2. Morada";
 
-"action_label_add_address" = "Adicionar Morada";
+"action_label_add_address" = "Adicionar Nova Morada";
 
 "billing_same_label" = "Faturar na mesma morada";
 
@@ -270,7 +278,7 @@
 
 "order_track_products" = "Produtos:";
 
-"string_error_no_results_for_tracking_id" = "Não foram encontrados resultados para o número da encomenda especificado.\nPor favor verifique e tente novamente.";
+"string_error_no_results_for_tracking_id" = "Não foram encontrados resultados para o número da encomenda especificado.\nPor favor verifique o número e tente novamente.";
 
 "track_your_order" = "Localize a Sua Encomenda";
 
@@ -282,7 +290,7 @@
 
 "string_loosing_order_title" = "Aviso";
 
-"string_loosing_order_message" = "Se terminar o processo de check-out, a sua encomenda será anulada.";
+"string_loosing_order_message" = "Se terminar o processo de checkout, a sua encomenda será anulada.";
 
 "recentsearch_no_searches" = "Não Existem Pesquisas Recentes";
 
@@ -312,7 +320,7 @@
 
 "sound" = "Som";
 
-"sound_summary" = "Toca sons para notificações";
+"sound_summary" = "Ativar som de notificações";
 
 "personal_data_label" = "Os Seus Dados Pessoais";
 
@@ -324,9 +332,9 @@
 
 "thank_you_order_title" = "Obrigado!";
 
-"order_success" = "A sua encomenda foi registada com sucesso\n com o número:";
+"order_success" = "A sua encomenda foi registada com sucesso com o número:";
 
-"order_track_success" = "Pode acompanhar a sua encomenda ao clicar \nem estado da encomenda, nesta aplicação";
+"order_track_success" = "Pode acompanhar a sua encomenda ao clicar em estado da encomenda";
 
 "order_track_link" = "estado da encomenda";
 
@@ -358,7 +366,7 @@
 
 "campaing_timer_end" = "Termina em:";
 
-"string_format_off_label" = "-%d%%";
+"string_format_off_label" = "%d%% OFF";
 
 "campaigns_label" = "Campanhas";
 
@@ -380,7 +388,7 @@
 
 "string_something_broken" = "Algo parece estar a funcionar mal. Por favor tente novamente.";
 
-"form_data_not_transferred" = "Houve erros nos dados submetidos, por favor verifique os campos.";
+"form_data_not_transferred" = "Existem erros nos dados submetidos, por favor verifique os campos.";
 
 "my_order_confirm_button" = "Confirmar Encomenda";
 
@@ -420,7 +428,7 @@
 
 "fallback_books" = "Livros";
 
-"fallback_bottom_text" = "de qualquer lugar, a qualquer hora";
+"fallback_bottom_text" = "em qualquer lugar, a qualquer hora";
 
 "fallback_bottom_text2" = "E muito mais para navegar ou comprar";
 
@@ -440,11 +448,13 @@
 
 "reviews_empty" = "Este Produto ainda não tem avaliações!";
 
+"reviews_empty_seller" = "Este vendedor ainda não tem comentários!";
+
 "order_summary_label" = "Resumo da Encomenda";
 
 "string_edit" = "Editar";
 
-"track_your_order_tip" = "Procure pelo número da sua encomenda e todos os dados da encomenda serão exibidos aqui";
+"track_your_order_tip" = "Procure pelo número da sua encomenda e todos os dados serão exibidos aqui";
 
 "size_guide_label" = "Guia de Tamanhos";
 
@@ -458,15 +468,15 @@
 
 "can_share_app_with_friends" = "Já pode partilhar a aplicação com os seus amigos";
 
-"install_jumia_ios" = "Instale a App iOS do Jumia num instante";
+"install_app_ios" = "Instala a Aplicação para iOS num instante";
 
-"share_jumia_app" = "Partilhe a App do Jumia";
+"share_app_ios" = "Partilha a Aplicação";
 
 "delivery_time" = "Prazo de entrega:";
 
 "product_outof_stock" = "O artigo está esgotado";
 
-"products_outof_stock" = "Os artigos estão fora de stock";
+"products_outof_stock" = "Os artigos estão esgotados";
 
 "login_remember_user_email" = "Lembrar o meu email";
 
@@ -490,7 +500,7 @@
 
 "my_order_no_orders_label" = "Não efetuou nenhuma encomenda.";
 
-"like_us_on_facebook" = "Curta a nossa página no Facebook";
+"like_us_on_facebook" = "Goste da nossa página no Facebook";
 
 "bundle_title" = "Produtos frequentemente comprados juntos";
 
@@ -500,7 +510,7 @@
 
 "other_sellers" = "Outros Vendedores";
 
-"same_product_from_other_sellers" = "Mesmo produto de outros vendedores";
+"same_product_from_other_sellers" = "O mesmo produto de outros vendedores";
 
 "from" = "A partir de";
 
@@ -510,17 +520,17 @@
 
 "number_offers_from_ios" = "%@ Ofertas de";
 
-"write_full_review" = "Escrever uma avaliação completa";
+"write_full_review" = "Escrever um comentário";
 
 "product_sold_by" = "Vendido por:";
 
-"sort_by" = "Ordena por";
+"sort_by" = "Ordenar por";
 
 "fee_include" = "(%@ incl.)";
 
-"login_to_review" = "Por favor faz login para avaliar";
+"login_to_review" = "Por favor faça login para comentar";
 
-"login_to_rate" = "Por favor faz login para classificar";
+"login_to_rate" = "Por favor faça login para avaliar";
 
 "my_order_item_label" = "artigo";
 
@@ -528,8 +538,22 @@
 
 "string_more_choices" = "Mais Escolhas";
 
-"string_addresses_saved_as_default" = "Endereços guardados por omissão";
+"string_addresses_saved_as_default" = "Endereços guardados como predefinidos";
 
-"review_this_seller" = "Avalia este vendedor agora!";
+"review_this_seller" = "Avalie este vendedor agora!";
 
-"string_wizard_back_top" = "Pressiona a barra para subir";
+"string_wizard_back_top" = "Pressione a barra para voltar ao início do catálogo";
+
+"shops_of_the_week" = "Lojas da Semana";
+
+"featured_stores" = "Lojas em Destaque";
+
+"see_more_offers" = "Veja mais ofertas";
+
+"kickout_message_1" = "A nossa campanha está a ser um grande sucesso";
+
+"kickout_message_2" = "A loja está atuamente lotada e não podemos aceitar novos clientes neste momento.";
+
+"kickout_message_3" = "Queremos proporcionar-lhe a melhor experiência de compra possível, por isso gostaríamos de lhe pedir para tentar novamente mais tarde.";
+
+"search_placeholder" = "Pesquise por Produtos, Marcas...";

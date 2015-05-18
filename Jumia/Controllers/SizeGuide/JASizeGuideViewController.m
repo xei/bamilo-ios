@@ -26,7 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navBarLayout.backButtonTitle = STRING_BACK;
+    [self.navBarLayout setShowBackButton:YES];
     self.navBarLayout.title = STRING_SIZE_GUIDE;
 }
 

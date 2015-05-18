@@ -47,7 +47,7 @@
     self.titleLabel.numberOfLines = -1;
     [self formatStringInLabel:self.titleLabel
                          text:promotion.title
-                     fontName:@"HelveticaNeue"
+                     fontName:kFontRegularName
                      fontSize:12.0f];
     [self.titleLabel sizeToFit];
     [self.titleLabel setFrame:CGRectMake(genericRect.origin.x,
@@ -62,7 +62,7 @@
     self.descriptionLabel.numberOfLines = -1;
     [self formatStringInLabel:self.descriptionLabel
                          text:promotion.descriptionMessage
-                     fontName:@"HelveticaNeue-Medium"
+                     fontName:kFontMediumName
                      fontSize:17.0f];
     [self.descriptionLabel setFrame:CGRectMake(genericRect.origin.x,
                                                currentY,
@@ -85,7 +85,7 @@
                                                                      self.couponButton.frame.size.width,
                                                                      self.couponButton.frame.size.height)];
     self.couponCodeLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    self.couponCodeLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:13.0f];
+    self.couponCodeLabel.font = [UIFont fontWithName:kFontBoldName size:13.0f];
     self.couponCodeLabel.textAlignment = NSTextAlignmentCenter;
     self.couponCodeLabel.text = promotion.couponCode;
     [self.containerView addSubview:self.couponCodeLabel];
@@ -94,7 +94,7 @@
     self.couponEndDateLabel = [[UILabel alloc] initWithFrame:genericRect];
     self.couponEndDateLabel.textAlignment = NSTextAlignmentCenter;
     self.couponEndDateLabel.numberOfLines = -1;
-    self.couponEndDateLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+    self.couponEndDateLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
     self.couponEndDateLabel.textColor = UIColorFromRGB(0x4e4e4e);
     self.couponEndDateLabel.text = [NSString stringWithFormat:@"%@. %@ %@",STRING_PROMOTION_TIP_TAP, STRING_CAMPAIGN_TIMER_END, promotion.endDate];
     [self.couponEndDateLabel sizeToFit];
@@ -114,7 +114,7 @@
     [self.shopNowButton setBackgroundImage:shopButtonImage forState:UIControlStateNormal];
     [self.shopNowButton setBackgroundImage:shopButtonImageHighlighted forState:UIControlStateHighlighted];
     [self.shopNowButton setTitle:STRING_GO_SHOP forState:UIControlStateNormal];
-    [self.shopNowButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:11.0f]];
+    [self.shopNowButton.titleLabel setFont:[UIFont fontWithName:kFontLightName size:11.0f]];
     [self.shopNowButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.shopNowButton addTarget:self action:@selector(dismissView) forControlEvents:UIControlEventTouchUpInside];
     [self.containerView addSubview:self.shopNowButton];
@@ -125,7 +125,7 @@
     self.termsAndConditionsLabel.numberOfLines = -1;
     [self formatStringInLabel:self.termsAndConditionsLabel
                          text:promotion.termsAndConditions
-                     fontName:@"HelveticaNeue-Light"
+                     fontName:kFontLightName
                      fontSize:9.0f];
     [self.termsAndConditionsLabel sizeToFit];
     [self.termsAndConditionsLabel setFrame:CGRectMake(genericRect.origin.x,
@@ -164,7 +164,7 @@
         NSString* afterText = [text substringWithRange:afterBoldRange];
         
         NSDictionary* boldAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        [UIFont fontWithName:@"HelveticaNeue-Bold" size:fontSize], NSFontAttributeName,
+                                        [UIFont fontWithName:kFontBoldName size:fontSize], NSFontAttributeName,
                                         nil];
         finalString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@%@", beforeText, boldText, afterText]
                                                              attributes:attributes];

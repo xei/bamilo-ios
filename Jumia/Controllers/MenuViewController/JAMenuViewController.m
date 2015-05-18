@@ -42,11 +42,6 @@ UIAlertViewDelegate
 @property (strong, nonatomic) NSMutableArray *sourceArray;
 @property (strong, nonatomic) NSArray *categories;
 @property (weak, nonatomic) IBOutlet UITableView *tableViewMenu;
-@property (weak, nonatomic) IBOutlet UIImageView *imageViewCart;
-@property (weak, nonatomic) IBOutlet UILabel *cartLabelTitle;
-@property (weak, nonatomic) IBOutlet UILabel *cartLabelTotalCost;
-@property (weak, nonatomic) IBOutlet UILabel *cartLabelDetails;
-@property (weak, nonatomic) IBOutlet UILabel *cartItensNumber;
 @property (weak, nonatomic) IBOutlet JAClickableView *cartView;
 @property (nonatomic, assign) CGFloat yOffset;
 @property (nonatomic, strong) UIStoryboard *mainStoryboard;
@@ -93,28 +88,8 @@ UIAlertViewDelegate
                                                  name:kUserLoggedOutNotification
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateCart:)
-                                                 name:kUpdateSideMenuCartNotification
-                                               object:nil];
     
-    [self.cartView addTarget:self
-                      action:@selector(cartViewPressed:)
-            forControlEvents:UIControlEventTouchUpInside];
-    self.cartLabelTitle.text = STRING_SHOPPING_CART;
-    
-    if(!VALID_NOTEMPTY(self.cart, RICart) || 0 == [[self.cart cartCount] integerValue])
-    {
-        self.cartLabelTotalCost.text = STRING_YOUR_CART_IS_EMPTY;
-        self.cartLabelDetails.text = @"";
-        self.cartItensNumber.text = @"";
-    }
-    else
-    {
-        self.cartLabelTotalCost.text =  [self.cart cartValueFormatted];
-        self.cartLabelDetails.text = STRING_VAT_SHIPPING_INCLUDED;
-        self.cartItensNumber.text = [[self.cart cartCount] stringValue];
-    }
+    self.tableViewMenu.translatesAutoresizingMaskIntoConstraints = YES;
     
     // Added because of the footer space
     self.tableViewMenu.contentInset = UIEdgeInsetsMake(0, 0, -20, 0);
@@ -133,53 +108,9 @@ UIAlertViewDelegate
     }];
 }
 
--(void)updateCart:(NSNotification*)notification
-{
-    self.cart = nil;
-    
-    if(VALID_NOTEMPTY(notification, NSNotification))
-    {
-        NSDictionary *userInfo = notification.userInfo;
-        if([userInfo objectForKey:kUpdateCartNotificationValue])
-        {
-            self.cart = [userInfo objectForKey:kUpdateCartNotificationValue];
-        }
-    }
-    
-    if(!VALID_NOTEMPTY(self.cart, RICart) || 0 == [[self.cart cartCount] integerValue])
-    {
-        self.cartLabelTotalCost.text = STRING_YOUR_CART_IS_EMPTY;
-        self.cartLabelDetails.text = @"";
-        self.cartItensNumber.text = @"";
-    }
-    else
-    {
-        self.cartLabelTotalCost.text =  [self.cart cartValueFormatted];
-        self.cartLabelDetails.text = STRING_VAT_SHIPPING_INCLUDED;
-        self.cartItensNumber.text = [[self.cart cartCount] stringValue];
-    }
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     //this is here to override super DO NOT CALL SUPER
-}
-
-- (void)cartViewPressed:(UIGestureRecognizer*)sender
-{
-    self.nextAction = JAMenuViewControllerOpenCart;
-    if(self.needsExternalPaymentMethod)
-    {
-        [[[UIAlertView alloc] initWithTitle:STRING_LOOSING_ORDER_TITLE
-                                    message:STRING_LOOSING_ORDER_MESSAGE
-                                   delegate:self
-                          cancelButtonTitle:STRING_CANCEL
-                          otherButtonTitles:STRING_OK, nil] show];
-    }
-    else
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCartNotification object:nil userInfo:nil];
-    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -216,7 +147,11 @@ UIAlertViewDelegate
     [cell addSubview:clickView];
     
     [clickView addTarget:self action:@selector(menuCellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
-    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17.0f];
+    CGFloat fontSize = 17.0f;
+    if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"]) {
+        fontSize = 14.0f;
+    }
+    cell.textLabel.font = [UIFont fontWithName:kFontLightName size:fontSize];
     cell.textLabel.text = [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"];
     
     cell.imageView.image = [UIImage imageNamed:[[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"image"]];
@@ -270,16 +205,22 @@ UIAlertViewDelegate
         }
         else
         {
-            if (8 == indexPath.row)
+            BOOL hasOneLessIndex = ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"] || [[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]);
+            if (8 == indexPath.row ||
+                (hasOneLessIndex && 7 == indexPath.row))
             {
                 if ([RICustomer checkIfUserIsLogged])
                 {
+                    [self showLoading];
+                    
                     __block NSString *custumerId = [RICustomer getCustomerId];
                     [[FBSession activeSession] closeAndClearTokenInformation];
                     [FBSession setActiveSession:nil];
                     
                     [RICustomer logoutCustomerWithSuccessBlock:^
                      {
+                         [self hideLoading];
+                         
                          NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                          [trackingDictionary setValue:custumerId forKey:kRIEventLabelKey];
                          [trackingDictionary setValue:@"LogoutSuccess" forKey:kRIEventActionKey];
@@ -299,6 +240,8 @@ UIAlertViewDelegate
                          
                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject)
                      {
+                         [self hideLoading];
+                         
                          [self userDidLogout];
                          
                          [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
@@ -356,24 +299,34 @@ UIAlertViewDelegate
                              @"selected": @"ico_myaccount_pressed" },
                           @{ @"name": STRING_MY_ORDERS,
                              @"image": @"ico_trackorder",
-                             @"selected": @"ico_trackorder_pressed" },
-                          @{ @"name": STRING_CHOOSE_COUNTRY,
-                             @"image": @"ico_choosecountry",
-                             @"selected": @"ico_choosecountry_pressed" },
-                          @{ @"name": STRING_LOGIN,
-                             @"image": @"ico_sign",
-                             @"selected": @"ico_signpressed" }] mutableCopy];
+                             @"selected": @"ico_trackorder_pressed" }
+                          ] mutableCopy];
     
+    
+    if(NO == [[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"] &&
+       NO == [[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
+    {
+        NSDictionary* chooseCountry = @{ @"name": STRING_CHOOSE_COUNTRY,
+                                        @"image": @"ico_choosecountry",
+                                        @"selected": @"ico_choosecountry_pressed" };
+        [self.sourceArray addObject:chooseCountry];
+    }
+
+    NSDictionary* loginDic;
     if ([RICustomer checkIfUserIsLogged])
     {
-        NSDictionary *dic = @{ @"name": STRING_LOGOUT,
-                               @"image": @"ico_sign",
-                               @"selected": @"ico_signpressed" };
-        
-        [self.sourceArray removeLastObject];
-        [self.sourceArray addObject:dic];
-        [self.tableViewMenu reloadData];
+        loginDic = @{ @"name": STRING_LOGOUT,
+                      @"image": @"ico_sign",
+                      @"selected": @"ico_signpressed" };
     }
+    else
+    {
+        loginDic = @{ @"name": STRING_LOGIN,
+                      @"image": @"ico_sign",
+                      @"selected": @"ico_signpressed" };
+    }
+    [self.sourceArray addObject:loginDic];
+    [self.tableViewMenu reloadData];
 }
 
 #pragma mark - Login and Logout

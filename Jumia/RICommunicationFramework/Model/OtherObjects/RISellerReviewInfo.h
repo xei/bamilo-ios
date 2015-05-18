@@ -27,6 +27,8 @@
 @property (strong, nonatomic) NSNumber *minDeliveryTime;
 @property (strong, nonatomic) NSNumber *maxDeliveryTime;
 @property (nonatomic, strong) NSNumber* averageReviews;
+@property (nonatomic, strong) NSNumber *currentPage;
+@property (nonatomic, strong) NSNumber *totalPages;
 
 
 + (NSString *)getSellerReviewForProductWithUrl:(NSString *)url

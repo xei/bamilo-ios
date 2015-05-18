@@ -34,14 +34,17 @@
     self.backgroundContentView.layer.cornerRadius = 5.0f;
     
     self.clickableView.layer.cornerRadius = 5.0f;
+    self.priceLabel.font = [UIFont fontWithName:kFontBoldName size:self.priceLabel.font.pointSize];
     self.priceLabel.textColor = UIColorFromRGB(0xcc0000);
     self.priceLabel.text = productOffer.priceFormatted;
-    
+
+    self.sellerLabel.font = [UIFont fontWithName:kFontBoldName size:self.sellerLabel.font.pointSize];
     self.sellerLabel.textColor = UIColorFromRGB(0x666666);
     self.sellerLabel.text = productOffer.seller.name;
     
     [self.clickableView addTarget:self action:@selector(gotoCatalogSeller) forControlEvents:UIControlEventTouchUpInside];
     
+    self.deliveryLabel.font = [UIFont fontWithName:kFontLightName size:self.deliveryLabel.font.pointSize];
     self.deliveryLabel.textColor = UIColorFromRGB(0x666666);
     self.deliveryLabel.text = [NSString stringWithFormat:@"%@ %ld - %ld %@", STRING_DELIVERY_WITHIN, (long)[productOffer.minDeliveryTime integerValue], (long)[productOffer.maxDeliveryTime integerValue], STRING_DAYS];
     
@@ -54,6 +57,7 @@
     [self.ratingsView setRating:[productOffer.seller.reviewAverage integerValue]];
     [self.backgroundContentView addSubview:self.ratingsView];
     
+    self.ratingLabel.font = [UIFont fontWithName:kFontLightName size:self.ratingLabel.font.pointSize];
     self.ratingLabel.textColor = UIColorFromRGB(0xcccccc);
     
     if (1 == [productOffer.seller.reviewTotal integerValue]) {
@@ -62,6 +66,7 @@
         self.ratingLabel.text = [NSString stringWithFormat:STRING_REVIEWS, [productOffer.seller.reviewTotal integerValue]];
     }
     
+    self.addToCartButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.addToCartButton.titleLabel.font.pointSize];
     [self.addToCartButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.addToCartButton setTitle:STRING_ADD_TO_SHOPPING_CART forState:UIControlStateNormal];
 }

@@ -8,8 +8,8 @@
 
 #import "JAMyOrderDetailView.h"
 
-#define kNormalFont [UIFont fontWithName:@"HelveticaNeue-Light" size:13]
-#define kHighlightedFont [UIFont fontWithName:@"HelveticaNeue" size:13]
+#define kNormalFont [UIFont fontWithName:kFontLightName size:13]
+#define kHighlightedFont [UIFont fontWithName:kFontRegularName size:13]
 
 @implementation JAMyOrderDetailView
 

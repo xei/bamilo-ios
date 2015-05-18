@@ -6,11 +6,10 @@
   Copyright (c) 2014 Rocket Internet. All rights reserved.
 */
 
-"string_jumia" = "Jumia";
 "string_update_necessary_title" = "Update necessary";
-"string_update_necessary_message" = "We found something that we needed to fix to make shopping experience in Jumia even better! You will need to update before continue using the app.";
+"string_update_necessary_message_ios" = "We found something that we needed to fix to make shopping experience in %@ even better! You will need to update before continue using the app.";
 "string_update_available_title" = "Update available";
-"string_update_available_message" = "There is a new update available that we prepared to make shopping experience in Jumia even better! Make sure you upgrade today!";
+"string_update_available_message_ios" = "There is a new update available that we prepared to make shopping experience in %@ even better! Make sure you upgrade today!";
 "string_update" = "Update!";
 "string_ok_update" = "Ok, Update!";
 "string_no_thanks" = "No, thanks.";
@@ -76,8 +75,11 @@
 "string_rate_now" = "Rate Now";
 "related_items" = "Related Items";
 "product_features_title" = "Product Features";
+"description" = "Description";
+"key_features" = "Key Features";
+"product_desc_summary_title" = "Summary";
 "product_description_title" = "Product Description";
-"share_subject" = "Jumia Sharing";
+"share_subject_ios" = "%@ Sharing";
 "share_checkout_this_product" = "Check out this product I found:";
 "rating_question" = "You have used this Product? Rate it now!";
 "writereview_send" = "Send Review";
@@ -99,6 +101,8 @@
 "call_to_order" = "Call to Order";
 "string_article" = "1 article";
 "string_articles" = "%d articles";
+"string_item_cart" = "1 item";
+"string_items_cart" = "%d items";
 "error_add_to_shopping_cart_quantity" = "You cannot order more than the allowed quantity. Sorry.";
 "shipping" = "Shipping";
 "free_label" = "Free";
@@ -207,7 +211,7 @@
 "string_format_off_label" = "%d%% OFF";
 "campaigns_label" = "Campaigns";
 
-"product_specifications" = "Specification";
+"product_specifications" = "Specifications";
 
 "go_shop_text" = "Shop Now";
 "promotion_tip_tap_text" = "Tap the box above to copy the code to the clipboard and keep it handy for checkout";
@@ -254,6 +258,8 @@
 "reviews" = "Reviews";
 "more" = "More";
 "reviews_empty" = "This Product has no reviews, yet!";
+"reviews_empty_seller" = "This Seller has no reviews, yet!";
+
 
 "order_summary_label" = "Order Summary";
 "string_edit" = "Edit";
@@ -266,8 +272,8 @@
 "app_sharing" = "App Sharing";
 "share_the_app" = "Share the App";
 "can_share_app_with_friends" = "You can now share the app with your friends";
-"install_jumia_ios" = "Install the Jumia iOS App in an instant";
-"share_jumia_app" = "Share the Jumia App";
+"install_app_ios" = "Install the %@ iOS App in an instant";
+"share_app_ios" = "Share the %@ App";
 
 "delivery_time" = "Delivery time:";
 
@@ -313,3 +319,10 @@
 "string_addresses_saved_as_default" = "Addresses saved as default";
 "review_this_seller" = "Review this seller now!";
 "string_wizard_back_top" = "Tap the status bar to scroll the catalog back to top";
+"shops_of_the_week" = "Shops of the Week";
+"featured_stores" = "Featured Stores";
+"see_more_offers" = "See More Offers";
+"kickout_message_1" = "Our campaign is being a great success";
+"kickout_message_2" = "So much that the shop is currently full, and we cannot welcome new customers at the moment";
+"kickout_message_3" = "We want to provide you with the best possible shopping experience, so we would like to ask you to try again later";
+"search_placeholder" = "Search for Products, Brands...";

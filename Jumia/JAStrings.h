@@ -9,11 +9,10 @@
 #ifndef Jumia_JAStrings_h
 #define Jumia_JAStrings_h
 
-#define STRING_JUMIA RILocalizedString(@"string_jumia", nil)
 #define STRING_UPDATE_NECESSARY_TITLE RILocalizedString(@"string_update_necessary_title", nil)
-#define STRING_UPDATE_NECESSARY_MESSAGE RILocalizedString(@"string_update_necessary_message", nil)
+#define STRING_UPDATE_NECESSARY_MESSAGE RILocalizedString(@"string_update_necessary_message_ios", nil)
 #define STRING_UPDATE_AVAILABLE_TITLE RILocalizedString(@"string_update_available_title", nil)
-#define STRING_UPDATE_AVAILABLE_MESSAGE RILocalizedString(@"string_update_available_message", nil)
+#define STRING_UPDATE_AVAILABLE_MESSAGE RILocalizedString(@"string_update_available_message_ios", nil)
 #define STRING_UPDATE RILocalizedString(@"string_update", nil) 
 #define STRING_OK_UPDATE RILocalizedString(@"string_ok_update", nil)
 #define STRING_NO_THANKS RILocalizedString(@"string_no_thanks", nil)
@@ -79,8 +78,11 @@
 #define STRING_RATE_NOW RILocalizedString(@"string_rate_now", nil)
 #define STRING_RELATED_ITEMS RILocalizedString(@"related_items", nil)
 #define STRING_PRODUCT_FEATURES RILocalizedString(@"product_features_title", nil)
+#define STRING_DESCRIPTION RILocalizedString(@"description", nil)
+#define STRING_KEY_FEATURES RILocalizedString(@"key_features", nil)
+#define STRING_SUMMARY RILocalizedString(@"product_desc_summary_title", nil)
 #define STRING_PRODUCT_DESCRIPTION RILocalizedString(@"product_description_title", nil)
-#define STRING_SHARE_OBJECT RILocalizedString(@"share_subject", nil)
+#define STRING_SHARE_OBJECT RILocalizedString(@"share_subject_ios", nil)
 #define STRING_SHARE_PRODUCT_MESSAGE RILocalizedString(@"share_checkout_this_product", nil)
 #define STRING_RATE_PRODUCT RILocalizedString(@"rating_question", nil)
 #define STRING_SEND_REVIEW RILocalizedString(@"writereview_send", nil)
@@ -102,6 +104,9 @@
 #define STRING_CALL_TO_ORDER RILocalizedString(@"call_to_order", nil)
 #define STRING_ARTICLE RILocalizedString(@"string_article", nil)
 #define STRING_ARTICLES RILocalizedString(@"string_articles", nil)
+#define STRING_ITEM_CART RILocalizedString(@"string_item_cart", nil)
+#define STRING_ITEMS_CART RILocalizedString(@"string_items_cart", nil)
+
 #define STRING_ERROR_CHANGING_QUANTITY RILocalizedString(@"error_add_to_shopping_cart_quantity", nil)
 #define STRING_SHIPPING RILocalizedString(@"shipping", nil)
 #define STRING_FREE RILocalizedString(@"free_label", nil)
@@ -259,6 +264,7 @@
 #define STRING_REVIEWS_LABEL RILocalizedString(@"reviews", nil)
 #define STRING_MORE RILocalizedString(@"more", nil)
 #define STRING_REVIEWS_EMPTY RILocalizedString(@"reviews_empty", nil)
+#define STRING_SELLER_REVIEWS_EMPTY RILocalizedString(@"reviews_empty_seller", nil)
 
 #define STRING_ORDER_SUMMARY RILocalizedString(@"order_summary_label", nil)
 #define STRING_EDIT RILocalizedString(@"string_edit", nil)
@@ -271,8 +277,8 @@
 #define STRING_APP_SHARING RILocalizedString(@"app_sharing", nil)
 #define STRING_SHARE_THE_APP RILocalizedString(@"share_the_app", nil)
 #define STRING_CAN_SHARE_APP_WITH_FRIENDS RILocalizedString(@"can_share_app_with_friends", nil)
-#define STRING_SHARE_JUMIA_APP RILocalizedString(@"share_jumia_app", nil)
-#define STRING_INSTALL_JUMIA_IOS RILocalizedString(@"install_jumia_ios", nil)
+#define STRING_SHARE_APP RILocalizedString(@"share_app_ios", nil)
+#define STRING_INSTALL_APP RILocalizedString(@"install_app_ios", nil)
 
 #define STRING_DELIVERY_TIME RILocalizedString(@"delivery_time", nil)
 #define STRING_PRODCUT_OUT_OF_STOCK RILocalizedString(@"product_outof_stock", nil)
@@ -316,5 +322,12 @@
 #define STRING_ADDRESSES_SAVED_AS_DEFAULT RILocalizedString(@"string_addresses_saved_as_default", nil)
 #define STRING_REVIEW_THIS_SELLER RILocalizedString(@"review_this_seller", nil)
 
+#define STRING_SHOPS_OF_THE_WEEK RILocalizedString(@"shops_of_the_week", nil)
+#define STRING_FEATURED_STORES RILocalizedString(@"featured_stores", nil)
+#define STRING_SEE_MORE_OFFERS RILocalizedString(@"see_more_offers", nil)
+#define STRING_KICKOUT_MESSAGE_1 RILocalizedString(@"kickout_message_1", nil)
+#define STRING_KICKOUT_MESSAGE_2 RILocalizedString(@"kickout_message_2", nil)
+#define STRING_KICKOUT_MESSAGE_3 RILocalizedString(@"kickout_message_3", nil)
+#define STRING_SEARCH_PLACEHOLDER RILocalizedString(@"search_placeholder", nil)
 
 #endif

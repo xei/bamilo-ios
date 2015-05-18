@@ -15,9 +15,25 @@
 + (NSString*)getCountriesWithSuccessBlock:(void (^)(id countries))successBlock
                           andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
-    NSString *countryListURL = RI_COUNTRIES_URL;
+    NSString *countryListURL;
+    
+    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
+    {
+        countryListURL = RI_COUNTRIES_URL_JUMIA;
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
+    {
+        countryListURL = RI_COUNTRIES_URL_DARAZ;
+    }
 #if defined(STAGING) && STAGING
-    countryListURL = RI_COUNTRIES_URL_ALL;
+    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
+    {
+        countryListURL = RI_COUNTRIES_URL_JUMIA_STAGING;
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
+    {
+        countryListURL = RI_COUNTRIES_URL_DARAZ_STAGING;
+    }
 #endif
     return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:countryListURL]
                                                              parameters:nil
@@ -216,6 +232,35 @@
         }
     }
     return country;
+}
+
++ (RICountry*)getUniqueCountry
+{
+    RICountry* uniqueCountry = [[RICountry alloc] init];
+    if([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+    {
+        uniqueCountry.name = RI_UNIQUE_COUNTRY_NAME_SHOP;
+        uniqueCountry.countryIso = RI_UNIQUE_COUNTRY_ISO_SHOP;
+        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_SHOP;
+        uniqueCountry.isLive = YES;
+#if defined(STAGING) && STAGING
+//        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_SHOP_STAGING;
+        uniqueCountry.isLive = NO;
+#endif
+        return uniqueCountry;
+    } else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
+        uniqueCountry.name = RI_UNIQUE_COUNTRY_NAME_BAMILO;
+        uniqueCountry.countryIso = RI_UNIQUE_COUNTRY_ISO_BAMILO;
+        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO;
+        uniqueCountry.isLive = YES;
+#if defined(STAGING) && STAGING
+//        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO_STAGING;
+        uniqueCountry.isLive = NO;
+#endif
+        return uniqueCountry;
+    } else {
+        return nil;
+    }
 }
 
 @end

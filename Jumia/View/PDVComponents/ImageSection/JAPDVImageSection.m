@@ -94,9 +94,11 @@
         }
     }
     
+    self.productNameLabel.font = [UIFont fontWithName:kFontMediumName size:self.productNameLabel.font.pointSize];
     self.productNameLabel.text = product.brand;
     self.productNameLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    
+
+    self.productDescriptionLabel.font = [UIFont fontWithName:kFontRegularName size:self.productDescriptionLabel.font.pointSize];
     self.productDescriptionLabel.text = product.name;
     self.productDescriptionLabel.translatesAutoresizingMaskIntoConstraints = YES;
     
@@ -123,6 +125,7 @@
     
     [self loadWithImages:[product.images array]];
     
+    self.discountLabel.font = [UIFont fontWithName:kFontBoldName size:self.discountLabel.font.pointSize];
     if (VALID_NOTEMPTY(product.maxSavingPercentage, NSString))
     {
         self.discountLabel.text = [NSString stringWithFormat:@"-%@%%", product.maxSavingPercentage];
@@ -196,7 +199,7 @@
         currentY += 20.0f;
         
         self.soldByLabel = [UILabel new];
-        self.soldByLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+        self.soldByLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
         self.soldByLabel.textColor = UIColorFromRGB(0x666666);
         self.soldByLabel.text = STRING_SOLD_BY;
         [self.soldByLabel sizeToFit];
@@ -207,7 +210,7 @@
         [self addSubview:self.soldByLabel];
         
         self.numberOfSellerReviewsLabel = [UILabel new];
-        self.numberOfSellerReviewsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:9.0f];
+        self.numberOfSellerReviewsLabel.font = [UIFont fontWithName:kFontLightName size:9.0f];
         self.numberOfSellerReviewsLabel.textColor = UIColorFromRGB(0xcccccc);
         self.numberOfSellerReviewsLabel.text = [NSString stringWithFormat:STRING_REVIEWS, [product.seller.reviewTotal integerValue]];
         [self.numberOfSellerReviewsLabel sizeToFit];
@@ -233,7 +236,7 @@
         self.sellerButton = [UIButton new];
         [self.sellerButton setTitle:product.seller.name forState:UIControlStateNormal];
         [self.sellerButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateNormal];
-        self.sellerButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+        self.sellerButton.titleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
         [self.sellerButton sizeToFit];
         CGFloat finalButtonWidth = self.sellerButton.frame.size.width;
         CGFloat finalButtonHeight = self.sellerButton.frame.size.height;
@@ -268,7 +271,7 @@
         RIProductSimple* firstSimple = [product.productSimples firstObject];
         if (0 != [firstSimple.minDeliveryTime integerValue] && 0 != [firstSimple.maxDeliveryTime integerValue]) {
             self.sellerDeliveryLabel = [UILabel new];
-            self.sellerDeliveryLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+            self.sellerDeliveryLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
             self.sellerDeliveryLabel.textColor = UIColorFromRGB(0x666666);
             self.sellerDeliveryLabel.text = [NSString stringWithFormat:@"%@ %ld - %ld %@", STRING_DELIVERY_WITHIN, (long)[firstSimple.minDeliveryTime integerValue], (long)[firstSimple.maxDeliveryTime integerValue], STRING_DAYS];
             [self.sellerDeliveryLabel sizeToFit];
@@ -328,7 +331,7 @@
         currentY += 20.0f;
         
         self.soldByLabel = [UILabel new];
-        self.soldByLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+        self.soldByLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
         self.soldByLabel.textColor = UIColorFromRGB(0x666666);
         self.soldByLabel.text = STRING_SOLD_BY;
         [self.soldByLabel sizeToFit];
@@ -340,7 +343,7 @@
         
         
         self.numberOfSellerReviewsLabel = [UILabel new];
-        self.numberOfSellerReviewsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:9.0f];
+        self.numberOfSellerReviewsLabel.font = [UIFont fontWithName:kFontLightName size:9.0f];
         self.numberOfSellerReviewsLabel.textColor = UIColorFromRGB(0xcccccc);
         self.numberOfSellerReviewsLabel.text = [NSString stringWithFormat:STRING_REVIEWS, [product.seller.reviewTotal integerValue]];
         [self.numberOfSellerReviewsLabel sizeToFit];
@@ -366,7 +369,7 @@
         self.sellerButton = [UIButton new];
         [self.sellerButton setTitle:product.seller.name forState:UIControlStateNormal];
         [self.sellerButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateNormal];
-        self.sellerButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+        self.sellerButton.titleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
         [self.sellerButton sizeToFit];
         CGFloat finalButtonWidth = self.sellerButton.frame.size.width;
         CGFloat finalButtonHeight = self.sellerButton.frame.size.height;
@@ -401,7 +404,7 @@
         RIProductSimple* firstSimple = [product.productSimples firstObject];
         if (0 != [firstSimple.minDeliveryTime integerValue] && 0 != [firstSimple.maxDeliveryTime integerValue]) {
             self.sellerDeliveryLabel = [UILabel new];
-            self.sellerDeliveryLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+            self.sellerDeliveryLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
             self.sellerDeliveryLabel.textColor = UIColorFromRGB(0x666666);
             self.sellerDeliveryLabel.text = [NSString stringWithFormat:@"%@ %ld - %ld %@", STRING_DELIVERY_WITHIN, (long)[firstSimple.minDeliveryTime integerValue], (long)[firstSimple.maxDeliveryTime integerValue], STRING_DAYS];
             [self.sellerDeliveryLabel sizeToFit];
@@ -429,6 +432,7 @@
                                               self.imageScrollView.frame.size.height)];
     
     [self.sizeImageViewSeparator setBackgroundColor:UIColorFromRGB(0xcccccc)];
+    self.sizeLabel.font = [UIFont fontWithName:kFontLightName size:self.sizeLabel.font.pointSize];
     [self.sizeLabel setTextColor:UIColorFromRGB(0x55a1ff)];
     
     [self.sizeImageViewSeparator setFrame:CGRectMake(self.sizeImageViewSeparator.frame.origin.x,

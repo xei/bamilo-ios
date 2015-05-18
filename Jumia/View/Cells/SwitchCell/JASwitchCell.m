@@ -21,6 +21,7 @@
 {
     self.backgroundColor = UIColorFromRGB(0xffffff);
     
+    self.label.font = [UIFont fontWithName:kFontRegularName size:self.label.font.pointSize];
     [self.label setText:text];
     [self.switchView setAccessibilityLabel:text];
     

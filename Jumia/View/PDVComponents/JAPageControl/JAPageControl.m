@@ -33,11 +33,14 @@
         UIView* dot = [self.subviews objectAtIndex:i];
         dot.hidden = YES;
         UIImage* dotImage;
-        if (i == self.currentPage) {
-            dotImage = [UIImage imageNamed:@"image_indicator_selected"];
-        } else {
-            dotImage = [UIImage imageNamed:@"image_indicator"];
+        NSString* imageIndicatorString = @"image_indicator";
+        if (self.hasSmallDots) {
+            imageIndicatorString = @"small_image_indicator";
         }
+        if (i == self.currentPage) {
+            imageIndicatorString = [imageIndicatorString stringByAppendingString:@"_selected"];
+        }
+        dotImage = [UIImage imageNamed:imageIndicatorString];
         UIImageView* dotImageView = [[UIImageView alloc] initWithImage:dotImage];
         [self.dotsArray addObject:dotImageView];
     }

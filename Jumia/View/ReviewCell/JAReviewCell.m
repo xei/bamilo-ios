@@ -45,7 +45,7 @@
         
         UILabel* titleLabel = [UILabel new];
         [titleLabel setTextColor:UIColorFromRGB(0x666666)];
-        [titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
+        [titleLabel setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
         [titleLabel setText:title];
         [titleLabel sizeToFit];
         [titleLabel setFrame:CGRectMake(currentX,
@@ -127,7 +127,7 @@
     [self.titleLabel removeFromSuperview];
     self.titleLabel = [UILabel new];
     [self.titleLabel setTextColor:UIColorFromRGB(0x666666)];
-    [self.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:12.0f]];
+    [self.titleLabel setFont:[UIFont fontWithName:kFontMediumName size:12.0f]];
     [self.titleLabel setText:title];
     [self.titleLabel sizeToFit];
     [self.titleLabel setFrame:CGRectMake(kJAReviewCellHorizontalMargins,
@@ -139,7 +139,7 @@
     [self.descriptionLabel removeFromSuperview];
     self.descriptionLabel = [UILabel new];
     [self.descriptionLabel setTextColor:UIColorFromRGB(0x666666)];
-    [self.descriptionLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
+    [self.descriptionLabel setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
     [self.descriptionLabel setText:comment];
     [self.descriptionLabel setNumberOfLines:0];
     [self.descriptionLabel setFrame:CGRectMake(kJAReviewCellHorizontalMargins,
@@ -152,7 +152,7 @@
     [self.authorDateLabel removeFromSuperview];
     self.authorDateLabel = [UILabel new];
     [self.authorDateLabel setTextColor:UIColorFromRGB(0x666666)];
-    [self.authorDateLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:10.0f]];
+    [self.authorDateLabel setFont:[UIFont fontWithName:kFontLightName size:10.0f]];
     NSString* authorDateString;
     if (userName.length > 0) {
         authorDateString = [NSString stringWithFormat:STRING_POSTED_BY, userName, dateString];
@@ -191,7 +191,7 @@
     NSInteger numberOfRatingLines = ceilf(review.ratingStars.count / 3);
     
     UILabel* ratingLabel = [UILabel new];
-    [ratingLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
+    [ratingLabel setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
     [ratingLabel setText:@"A"];
     [ratingLabel sizeToFit];
     JARatingsView* ratingsView = [JARatingsView getNewJARatingsView];
@@ -229,7 +229,7 @@
     CGFloat totalHeight = previousHeight;
     
     UILabel* titleLabel = [UILabel new];
-    [titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:12.0f]];
+    [titleLabel setFont:[UIFont fontWithName:kFontMediumName size:12.0f]];
     [titleLabel setText:title];
     [titleLabel sizeToFit];
     
@@ -237,7 +237,7 @@
     
     UILabel* descriptionLabel = [UILabel new];
     [descriptionLabel setTextColor:UIColorFromRGB(0x666666)];
-    [descriptionLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
+    [descriptionLabel setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
     [descriptionLabel setText:comment];
     [descriptionLabel setNumberOfLines:0];
     [descriptionLabel setFrame:CGRectMake(0.0f,
@@ -250,7 +250,7 @@
     
     UILabel* authorDateLabel = [UILabel new];
     [authorDateLabel setTextColor:UIColorFromRGB(0x666666)];
-    [authorDateLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:10.0f]];
+    [authorDateLabel setFont:[UIFont fontWithName:kFontLightName size:10.0f]];
     [authorDateLabel setText:@"A"];
     [authorDateLabel setFrame:CGRectMake(0.0f,
                                          0.0f,

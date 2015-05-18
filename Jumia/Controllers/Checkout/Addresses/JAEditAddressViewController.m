@@ -113,7 +113,9 @@ JAPickerDelegate>
     [RIForm getForm:@"addressedit"
        successBlock:^(RIForm *form)
      {
-         self.dynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self values:[self getAddressValues] startingPosition:self.addressViewCurrentY hasFieldNavigation:NO];
+         self.dynamicForm = [[JADynamicForm alloc] initWithForm:form values:[self getAddressValues] startingPosition:self.addressViewCurrentY hasFieldNavigation:NO];
+         
+         [self.dynamicForm setDelegate:self];
          
          for(UIView *view in self.dynamicForm.formViews)
          {
@@ -189,6 +191,7 @@ JAPickerDelegate>
         self.stepView.translatesAutoresizingMaskIntoConstraints = YES;
         self.stepIcon.translatesAutoresizingMaskIntoConstraints = YES;
         self.stepLabel.translatesAutoresizingMaskIntoConstraints = YES;
+        self.stepLabel.font = [UIFont fontWithName:kFontBoldName size:self.stepLabel.font.pointSize];
         [self.stepLabel setText:STRING_CHECKOUT_ADDRESS];
         [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
     }
@@ -403,7 +406,7 @@ JAPickerDelegate>
     self.contentView.layer.cornerRadius = 5.0f;
     
     self.headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, self.contentView.frame.size.width, 26.0f)];
-    [self.headerLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
+    [self.headerLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
     [self.headerLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.headerLabel setText:STRING_EDIT_ADDRESS];
     [self.headerLabel setBackgroundColor:[UIColor clearColor]];

@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JABaseViewController.h"
 
 @class RIProduct;
 
 @interface JAProductDetailsViewController : JABaseViewController
 
 @property (nonatomic, strong) RIProduct *product;
+@property (nonatomic, assign) NSInteger selectedIndex;
+@property (nonatomic, strong)NSString* startingTrackOrderNumber;
 
 @end

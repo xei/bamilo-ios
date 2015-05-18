@@ -58,6 +58,13 @@
 + (NSString *)getCountryPhoneNumber;
 
 /**
+ * Method to create the unique country for apps with only one country
+ *
+ * @return the country object
+ */
++ (RICountry*)getUniqueCountry;
+
+/**
  * Method to cancel the request
  *
  * @param the operationID that was returned by the getCountriesWithSuccessBlock:andFailureBlock method

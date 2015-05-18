@@ -344,6 +344,11 @@
                                              selector:@selector(showSellerCatalog:)
                                                  name:kOpenSellerPage
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showSpecificationsScreen:)
+                                                 name:kOpenSpecificationsScreen
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -354,20 +359,25 @@
 #pragma mark Home Screen
 - (void)showHomeScreen:(NSNotification*)notification
 {
-    if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification object], NSDictionary))
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JAHomeViewController class]])
     {
-        UIViewController *topViewController = [self topViewController];
-        if (![topViewController isKindOfClass:[JAHomeViewController class]])
+        if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification object], NSDictionary))
         {
-            JAHomeViewController *home = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"homeViewController"];
-            
-            [self setViewControllers:@[home]];
+            [self showRootViewController];
+        } else {
+            [self popToRootViewControllerAnimated:NO];
         }
+        
+        JAHomeViewController *home = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"homeViewController"];
+        [self pushViewController:home animated:NO];
     }
-    else
-    {
-        [self popToRootViewControllerAnimated:NO];
-    }
+}
+
+- (void)showRootViewController
+{
+    JABaseViewController* rootViewController = [[JABaseViewController alloc] init];
+    [self setViewControllers:@[rootViewController]];
 }
 
 - (void)showChooseCountry:(NSNotification*)notification
@@ -570,7 +580,7 @@
     {
         JAForgotPasswordViewController *forgotVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"forgotPasswordViewController"];
         
-        forgotVC.navBarLayout.backButtonTitle = STRING_LOGIN;
+        [forgotVC.navBarLayout setShowBackButton:YES];
         
         [self pushViewController:forgotVC animated:YES];
     }
@@ -636,6 +646,41 @@
         }
     }
 }
+
+- (void)showSpecificationsScreen:(NSNotification*)notification
+{
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JAProductDetailsViewController class]])
+    {
+        JAProductDetailsViewController *productDetails = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"JAProductDetailsViewController"];
+        
+        NSString* orderNumber = notification.object;
+        if (VALID_NOTEMPTY(orderNumber, NSString))
+        {
+            productDetails.selectedIndex = 0;
+            productDetails.startingTrackOrderNumber = orderNumber;
+        }
+        
+        NSDictionary *userInfo = notification.userInfo;
+        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"selected_index"], NSNumber))
+        {
+            productDetails.selectedIndex = [[userInfo objectForKey:@"selected_index"] intValue];
+        }
+        
+        [self popToRootViewControllerAnimated:NO];
+        [self pushViewController:productDetails animated:NO];
+    }
+    else
+    {
+        JAProductDetailsViewController *productDetails = (JAProductDetailsViewController*) topViewController;
+        NSDictionary *userInfo = notification.userInfo;
+        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"selected_index"], NSNumber))
+        {
+            productDetails.selectedIndex = [[userInfo objectForKey:@"selected_index"] intValue];
+        }
+    }
+}
+
 
 #pragma mark User Data Screen
 - (void)showUserData:(NSNotification*)notification
@@ -729,7 +774,7 @@
         
         JAForgotPasswordViewController *forgotVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"forgotPasswordViewController"];
         
-        forgotVC.navBarLayout.backButtonTitle = STRING_CHECKOUT;
+        [forgotVC.navBarLayout setShowBackButton:YES];
         
         [self pushViewController:forgotVC animated:YES];
     }
@@ -765,7 +810,7 @@
         }
         else
         {
-            addressesVC.navBarLayout.backButtonTitle = STRING_BACK;
+            [addressesVC.navBarLayout setShowBackButton:YES];
             addressesVC.navBarLayout.showLogo = NO;
         }
 
@@ -809,7 +854,7 @@
             addAddressVC.navBarLayout.showCartButton = NO;
             if([showBackButton boolValue])
             {
-                addAddressVC.navBarLayout.backButtonTitle = STRING_CHECKOUT;
+                [addAddressVC.navBarLayout setShowBackButton:YES];
                 addAddressVC.navBarLayout.showLogo = NO;
             }
             else
@@ -819,7 +864,7 @@
         }
         else
         {
-            addAddressVC.navBarLayout.backButtonTitle = STRING_BACK;
+            [addAddressVC.navBarLayout setShowBackButton:YES];
             addAddressVC.navBarLayout.showLogo = NO;
         }
         
@@ -849,7 +894,7 @@
         }
         else
         {
-            editAddressVC.navBarLayout.backButtonTitle = STRING_BACK;
+            [editAddressVC.navBarLayout setShowBackButton:YES];
             editAddressVC.navBarLayout.showLogo = NO;
         }
         
@@ -968,6 +1013,7 @@
     NSString* categoryName = [selectedItem objectForKey:@"category_name"];
     NSString* filterType = [notification.userInfo objectForKey:@"filter_type"];
     NSString* filterValue = [notification.userInfo objectForKey:@"filter_value"];
+    NSNumber* sorting = [notification.userInfo objectForKey:@"sorting"];
     
     if (VALID_NOTEMPTY(category, RICategory))
     {
@@ -996,6 +1042,7 @@
         catalog.categoryName = categoryName;
         catalog.filterType = filterType;
         catalog.filterValue = filterValue;
+        catalog.sortingMethodFromPush = sorting;
         
         [self pushViewController:catalog animated:YES];
     }
@@ -1012,9 +1059,9 @@
         if ([notification.userInfo objectForKey:@"filtersArray"]) {
             mainFiltersViewController.filtersArray = [notification.userInfo objectForKey:@"filtersArray"];
         }
-        if ([notification.userInfo objectForKey:@"categoriesArray"]) {
-            mainFiltersViewController.categoriesArray = [notification.userInfo objectForKey:@"categoriesArray"];
-        }
+//        if ([notification.userInfo objectForKey:@"categoriesArray"]) {
+//            mainFiltersViewController.categoriesArray = [notification.userInfo objectForKey:@"categoriesArray"];
+//        }
         if ([notification.userInfo objectForKey:@"selectedCategory"]) {
             mainFiltersViewController.selectedCategory = [notification.userInfo objectForKey:@"selectedCategory"];
         }
@@ -1258,9 +1305,9 @@
         catalog.navBarLayout.title = title;
         
         if ([notification.userInfo objectForKey:@"show_back_button_title"]) {
-            catalog.navBarLayout.backButtonTitle = [notification.userInfo objectForKey:@"show_back_button_title"];
+            [catalog.navBarLayout setShowBackButton:YES];
         } else {
-            catalog.navBarLayout.backButtonTitle = STRING_HOME;
+            [catalog.navBarLayout setShowBackButton:YES];;
         }
         
         [self pushViewController:catalog animated:YES];
@@ -1272,16 +1319,22 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
                                                         object:nil];
     
-    NSArray* campaignTeasers = [notification.userInfo objectForKey:@"campaignTeasers"];
     NSString* title = [notification.userInfo objectForKey:@"title"];
-    NSString* campaignId = [notification.userInfo objectForKey:@"campaign_id"];
-    NSString* campaignUrl = [notification.userInfo objectForKey:@"campaign_url"];
     
-    if (VALID_NOTEMPTY(campaignTeasers, NSArray))
+    //this is used when the teaserGrouping is campaigns and we have to show more than one campaign
+    RITeaserGrouping* teaserGrouping = [notification.userInfo objectForKey:@"teaserGrouping"];
+
+    //this is used when the teaserGrouping is not campaigns, so we're only going to be showing one
+    NSString* campaignUrl = [notification.userInfo objectForKey:@"url"];
+    
+    //this is used in deeplinking
+    NSString* campaignId = [notification.userInfo objectForKey:@"campaign_id"];
+    
+    if (VALID_NOTEMPTY(teaserGrouping, RITeaserGrouping))
     {
         JACampaignsViewController* campaignsVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"campaignsViewController"];
         
-        campaignsVC.campaignTeasers = campaignTeasers;
+        campaignsVC.teaserGrouping = teaserGrouping;
         campaignsVC.startingTitle = title;
         
         [self pushViewController:campaignsVC animated:YES];
@@ -1352,7 +1405,6 @@
         
         if([notification.userInfo objectForKey:@"show_back_button_title"])
         {
-            pdv.navBarLayout.backButtonTitle = [notification.userInfo objectForKey:@"show_back_button_title"];
             pdv.showBackButton = YES;
         }
         
@@ -1366,28 +1418,30 @@
                                                         object:nil];
     
     NSString* url = [notification.userInfo objectForKey:@"url"];
+    NSString* uid = [notification.userInfo objectForKey:@"shop_id"];
 
+    JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
+    if([notification.userInfo objectForKey:@"show_back_button"])
+    {
+        [viewController.navBarLayout setShowBackButton:YES];
+    }
+    if ([notification.userInfo objectForKey:@"show_back_button_title"]) {
+        [viewController.navBarLayout setShowBackButton:YES];
+    }
+    if([notification.userInfo objectForKey:@"title"])
+    {
+        viewController.navBarLayout.title = [notification.userInfo objectForKey:@"title"];
+    }
+    
     if (VALID_NOTEMPTY(url, NSString))
     {
-        
-        JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
-        
-        if([notification.userInfo objectForKey:@"show_back_button"])
-        {
-            viewController.navBarLayout.backButtonTitle = STRING_HOME;
-        }
-        
-        if ([notification.userInfo objectForKey:@"show_back_button_title"]) {
-            viewController.navBarLayout.backButtonTitle = [notification.userInfo objectForKey:@"show_back_button_title"];
-        }
-        
-        if([notification.userInfo objectForKey:@"title"])
-        {
-            viewController.navBarLayout.title = [notification.userInfo objectForKey:@"title"];
-        }
-        
+        viewController.url = url;
         [self pushViewController:viewController animated:YES];
 
+    } else if (VALID_NOTEMPTY(uid, NSString))
+    {
+        viewController.url = [NSString stringWithFormat:@"%@%@main/getstatic/?key=%@",[RIApi getCountryUrlInUse], RI_API_VERSION, uid];
+        [self pushViewController:viewController animated:YES];
     }
 
 }
@@ -1397,7 +1451,6 @@
     JACategoriesViewController* categoriesViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"categoriesViewController"];
     
     categoriesViewController.navBarLayout.title = STRING_ALL_CATEGORIES;
-    categoriesViewController.navBarLayout.backButtonTitle = STRING_HOME;
     
     NSDictionary* objectdic = notification.object;
     if (VALID_NOTEMPTY(objectdic, NSDictionary)) {
@@ -1489,8 +1542,15 @@
     
     self.navigationBarView = [JANavigationBarView getNewNavBarView];
     [self.navigationBarView initialSetup];
+
     
     [self.navigationBar.viewForBaselineLayout addSubview:self.navigationBarView];
+
+    //this removes the shadow line under the navbar
+    [self.navigationBar setBackgroundImage:[UIImage new]
+                            forBarPosition:UIBarPositionAny
+                                barMetrics:UIBarMetricsDefault];
+    [self.navigationBar setShadowImage:[UIImage new]];
     
     [self.navigationBarView.cartButton addTarget:self
                                           action:@selector(openCart)
@@ -1507,9 +1567,6 @@
     [self.navigationBarView.backButton addTarget:self
                                           action:@selector(back)
                                 forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationBarView.searchButton addTarget:self
-                                            action:@selector(search)
-                                  forControlEvents:UIControlEventTouchUpInside];
     
     self.navigationBarView.titleLabel.userInteractionEnabled = YES;
     UITapGestureRecognizer *touched = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goTop)];
@@ -1568,9 +1625,6 @@
         self.cart = nil;
         [self.navigationBarView updateCartProductCount:0];
     }
-    
-    // post side menu notification;
-    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateSideMenuCartNotification object:nil userInfo:userInfo];
 }
 
 #pragma mark - Navbar Button actions
@@ -1600,14 +1654,13 @@
                                                         object:nil];
 }
 
-- (void)search
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressSearchButtonNotification
-                                                        object:nil];
-}
-
 - (void)openCart
 {
+    if ([[self topViewController] isKindOfClass:[JALoadCountryViewController class]]) {
+        //inore the notification
+        return;
+    }
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
                                                         object:nil];
     
@@ -1624,6 +1677,11 @@
 
 - (void)openMenu
 {
+    if ([[self topViewController] isKindOfClass:[JALoadCountryViewController class]]) {
+        //inore the notification
+        return;
+    }
+    
     NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];;
     
     if(VALID_NOTEMPTY(self.cart, RICart))

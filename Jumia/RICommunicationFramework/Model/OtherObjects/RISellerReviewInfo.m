@@ -117,6 +117,19 @@
     if ([sellerReviewInfoJSON objectForKey:@"reviews"]) {
         NSDictionary* reviewsJSON = [sellerReviewInfoJSON objectForKey:@"reviews"];
         
+        NSDictionary *paginationJSON = [reviewsJSON objectForKey:@"pagination"];
+        
+        if (VALID_NOTEMPTY(paginationJSON, NSDictionary)) {
+            if ([paginationJSON objectForKey:@"current_page"]) {
+                newSellerReviewInfo.currentPage = [paginationJSON objectForKey:@"current_page"];
+            }
+            
+            if([paginationJSON objectForKey:@"total_pages"]){
+                newSellerReviewInfo.totalPages = [paginationJSON objectForKey:@"total_pages"];
+            }
+            
+        }
+        
         if (VALID_NOTEMPTY(reviewsJSON, NSDictionary)) {
             
             if ([reviewsJSON objectForKey:@"average"]) {
@@ -144,7 +157,6 @@
             }
         }
     }
-    
     return newSellerReviewInfo;
 }
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -22,12 +22,8 @@
                         <outlet property="delegate" destination="iN0-l3-epB" id="4Dg-P0-Adf"/>
                     </connections>
                 </scrollView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hhg-hR-pqI">
-                    <rect key="frame" x="241" y="30" width="78" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="30" id="EqY-mf-CQV"/>
-                        <constraint firstAttribute="width" constant="78" id="cq6-Y3-5kp"/>
-                    </constraints>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hhg-hR-pqI">
+                    <rect key="frame" x="242" y="30" width="78" height="30"/>
                     <state key="normal" title="Done">
                         <color key="titleColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -46,14 +42,13 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="Pck-Hn-bj8" secondAttribute="trailing" id="2Tc-Sh-ufR"/>
-                <constraint firstAttribute="trailing" secondItem="Hhg-hR-pqI" secondAttribute="trailing" constant="1" id="AZ7-qj-lf3"/>
                 <constraint firstItem="Pck-Hn-bj8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="RoA-Kp-PzA"/>
                 <constraint firstAttribute="bottom" secondItem="Pck-Hn-bj8" secondAttribute="bottom" id="ZWY-EI-ckJ"/>
-                <constraint firstItem="Hhg-hR-pqI" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="cHp-BC-Yxm"/>
                 <constraint firstItem="Pck-Hn-bj8" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="u11-ht-DrG"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <connections>
+                <outlet property="doneButton" destination="Hhg-hR-pqI" id="S9g-Xc-Sig"/>
                 <outlet property="scrollViewImages" destination="Pck-Hn-bj8" id="Abd-0m-PS7"/>
             </connections>
             <point key="canvasLocation" x="394" y="144"/>

@@ -10,6 +10,8 @@
 #import "JAClickableView.h"
 #import "JAShareActivityProvider.h"
 #import "JAActivityViewController.h"
+#import "AQSFacebookMessengerActivity.h"
+#import "JBWhatsAppActivity.h"
 
 @interface JAMyAccountViewController ()
 
@@ -75,6 +77,7 @@
     self.accountView.layer.cornerRadius = 5.0f;
     self.accountView.translatesAutoresizingMaskIntoConstraints = YES;
     
+    self.accountSettingsTitleLabel.font = [UIFont fontWithName:kFontRegularName size:self.accountSettingsTitleLabel.font.pointSize];
     self.accountSettingsTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
     self.accountSettingsTitleLabel.text = STRING_ACCOUNT_SETTINGS;
     
@@ -82,30 +85,36 @@
     self.accountAndEmailSeparator.backgroundColor = UIColorFromRGB(0xcccccc);
     self.emailAndAddressesSeparator.backgroundColor = UIColorFromRGB(0xcccccc);
     
+    self.userDataTitleLabel.font = [UIFont fontWithName:kFontLightName size:self.userDataTitleLabel.font.pointSize];
     self.userDataTitleLabel.textColor = UIColorFromRGB(0x666666);
     self.userDataTitleLabel.text = STRING_USER_DATA;
     self.userDataTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
     
+    self.userDataSubtitleLabel.font = [UIFont fontWithName:kFontLightName size:self.userDataSubtitleLabel.font.pointSize];
     self.userDataSubtitleLabel.textColor = UIColorFromRGB(0x666666);
     self.userDataSubtitleLabel.text = STRING_CHANGE_PASS_MANAGE_EMAIL;
     self.userDataSubtitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.userDataArrow.translatesAutoresizingMaskIntoConstraints = YES;
     
+    self.emailTitleLabel.font = [UIFont fontWithName:kFontLightName size:self.emailTitleLabel.font.pointSize];
     self.emailTitleLabel.textColor = UIColorFromRGB(0x666666);
     self.emailTitleLabel.text = STRING_EMAIL_NOTIFICATIONS;
     self.emailTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
     
+    self.emailSubtitleLabel.font = [UIFont fontWithName:kFontLightName size:self.emailSubtitleLabel.font.pointSize];
     self.emailSubtitleLabel.textColor = UIColorFromRGB(0x666666);
     self.emailSubtitleLabel.text = STRING_SUBSCRIVE_UNSUBSCRIVE;
     self.emailSubtitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.emailArrow.translatesAutoresizingMaskIntoConstraints = YES;
     
+    self.addressesTitleLabel.font = [UIFont fontWithName:kFontLightName size:self.addressesTitleLabel.font.pointSize];
     self.addressesTitleLabel.textColor = UIColorFromRGB(0x666666);
     self.addressesTitleLabel.text = STRING_MY_ADDRESSES;
     self.addressesTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
     
+    self.addressesSubtitleLabel.font = [UIFont fontWithName:kFontLightName size:self.addressesSubtitleLabel.font.pointSize];
     self.addressesSubtitleLabel.textColor = UIColorFromRGB(0x666666);
     self.addressesSubtitleLabel.text = STRING_CREATE_EDIT_ADDRESS;
     self.addressesSubtitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
@@ -114,17 +123,22 @@
     
     self.notificationView.layer.cornerRadius = 5.0f;
     self.notificationView.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.notificationSettingsTitleLabel.font = [UIFont fontWithName:kFontRegularName size:self.notificationSettingsTitleLabel.font.pointSize];
     self.notificationSettingsTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
     self.notificationSettingsTitleLabel.text = STRING_NOTIFICATIONS_SETTINGS;
     self.notificationViewTopSeparator.backgroundColor = UIColorFromRGB(0xfaa41a);
     self.notificationAndSoundSeparator.backgroundColor = UIColorFromRGB(0xcccccc);
     
+    self.notificationTitleLabel.font = [UIFont fontWithName:kFontLightName size:self.notificationTitleLabel.font.pointSize];
     self.notificationTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
     self.notificationTitleLabel.textColor = UIColorFromRGB(0x666666);
     self.notificationTitleLabel.text = STRING_NOTIFICATIONS;
     self.notificationTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
     
+    self.notificationTitleLabel.font = [UIFont fontWithName:kFontLightName size:self.notificationTitleLabel.font.pointSize];
     self.notificationTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    self.notificationSubtitleLabel.font = [UIFont fontWithName:kFontLightName size:self.notificationSubtitleLabel.font.pointSize];
     self.notificationSubtitleLabel.textColor = UIColorFromRGB(0x666666);
     self.notificationSubtitleLabel.text = STRING_RECEIVE_EXCLUSIVE_OFFERS;
     self.notificationSubtitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
@@ -132,10 +146,12 @@
     self.notificationSwitch.translatesAutoresizingMaskIntoConstraints = YES;
     [self.notificationSwitch setAccessibilityLabel:STRING_NOTIFICATIONS];
     
+    self.soundTitleLabel.font = [UIFont fontWithName:kFontLightName size:self.soundTitleLabel.font.pointSize];
     self.soundTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
     self.soundTitleLabel.textColor = UIColorFromRGB(0x666666);
     self.soundTitleLabel.text = STRING_SOUND;
     
+    self.soundSubtitleLabel.font = [UIFont fontWithName:kFontLightName size:self.soundSubtitleLabel.font.pointSize];
     self.soundSubtitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
     self.soundSubtitleLabel.textColor = UIColorFromRGB(0x666666);
     self.soundSubtitleLabel.text = STRING_PLAY_SOUND;
@@ -146,15 +162,18 @@
     self.appSharingView.layer.cornerRadius = 5.0f;
     self.appSharingView.translatesAutoresizingMaskIntoConstraints = YES;
     
+    self.appSharingTitleLabel.font = [UIFont fontWithName:kFontRegularName size:self.appSharingTitleLabel.font.pointSize];
     self.appSharingTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
     self.appSharingTitleLabel.text = STRING_APP_SHARING;
     
     self.appSharingSeparator.backgroundColor = UIColorFromRGB(0xfaa41a);
     
+    self.shareAppTitleLabel.font = [UIFont fontWithName:kFontLightName size:self.shareAppTitleLabel.font.pointSize];
     self.shareAppTitleLabel.textColor = UIColorFromRGB(0x666666);
     self.shareAppTitleLabel.text = STRING_SHARE_THE_APP;
     self.shareAppTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
     
+    self.shareAppSubtitleLabel.font = [UIFont fontWithName:kFontLightName size:self.shareAppSubtitleLabel.font.pointSize];
     self.shareAppSubtitleLabel.textColor = UIColorFromRGB(0x666666);
     self.shareAppSubtitleLabel.text = STRING_CAN_SHARE_APP_WITH_FRIENDS;
     self.shareAppSubtitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
@@ -500,17 +519,54 @@
 
 - (void)shareApp:(id)sender
 {
-    JAShareActivityProvider *provider = [[JAShareActivityProvider alloc] initForAppShare];
+
+    //JAShareActivityProvider *provider = [[JAShareActivityProvider alloc] initForAppShare];
     
-    NSArray *objectsToShare = @[provider];
+    NSArray *appActivities = @[];
     
-    JAActivityViewController *activityController = [[JAActivityViewController alloc] initWithActivityItems:objectsToShare
-                                                                                     applicationActivities:nil];
+    UIActivity *fbmActivity = [[AQSFacebookMessengerActivity alloc] init];
+    UIActivity *whatsAppActivity = [[JBWhatsAppActivity alloc] init];
+    WhatsAppMessage *whatsAppMsg;
+
+    JAActivityViewController  *activityController = [[JAActivityViewController alloc] init];
+    NSString *shareTheAppString = [[NSString alloc] initWithString:[NSString stringWithFormat:STRING_SHARE_APP, APP_NAME]];
+    if(!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")){
+
+        appActivities = @[fbmActivity, whatsAppActivity];
+    }
     
-    [activityController setValue:STRING_SHARE_JUMIA_APP
-                          forKey:@"subject"];
+           if ([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
+            {
+                whatsAppMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",shareTheAppString, kAppStoreUrl] forABID:nil];
+
+                activityController = [[JAActivityViewController alloc] initWithActivityItems:@[shareTheAppString, [NSURL URLWithString:kAppStoreUrl], whatsAppMsg ] applicationActivities:appActivities];
+                                                        
+            }else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
+                {
+                    whatsAppMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",shareTheAppString, kAppStoreUrlDaraz] forABID:nil];
+
+                    activityController = [[JAActivityViewController alloc] initWithActivityItems:@[shareTheAppString, [NSURL URLWithString:kAppStoreUrlDaraz], whatsAppMsg] applicationActivities:appActivities];
+                                                        
+            }else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+                {
+                    whatsAppMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",shareTheAppString, kAppStoreUrlShop] forABID:nil];
+
+                    activityController = [[JAActivityViewController alloc] initWithActivityItems:@[shareTheAppString, [NSURL URLWithString:kAppStoreUrlShop], whatsAppMsg] applicationActivities:appActivities];
+                                                        
+            }else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
+                {
+                    whatsAppMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",shareTheAppString, kAppStoreUrlBamilo]  forABID:nil];
+
+                    activityController = [[JAActivityViewController alloc] initWithActivityItems:@[shareTheAppString, [NSURL URLWithString:kAppStoreUrlBamilo], whatsAppMsg] applicationActivities:appActivities];
+            }
+                                                    
+                                                                                             
     
-    activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll];
+    [activityController setValue:[NSString stringWithFormat:STRING_SHARE_APP, APP_NAME] forKey:@"subject"];
+    
+    
+
+    activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
     
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {

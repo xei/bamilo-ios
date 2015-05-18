@@ -1,0 +1,560 @@
+/* 
+   RIStrings.strings
+   Jumia
+   
+   Created by Pedro Lopes on 13/09/14.
+   Copyright (c) 2014 Rocket Internet. All rights reserved. */
+"string_update_necessary_title" = "بروزرسانی لازم است.";
+
+"string_update_necessary_message_ios" = "ما موردی یافتیم که باید برطرف می‌شد تا تجربه خرید شما از %@ را باز هم بهبود دهد! برای ادامه باید برنامه را بروزرسانی کنید.";
+
+"string_update_available_title" = "بروزرسانی موجود است";
+
+"string_update_available_message_ios" = "یک به‌روزرسانی جدید برای بهبود بیشتر تجربه خرید از %@ وجود دارد. حتما برنامه خود را به‌روزرسانی کنید!";
+
+"string_update" = "بروزرسانی!";
+
+"string_ok_update" = "موافقم که بروزرسانی انجام می شود";
+
+"string_no_thanks" = "خیر، متشکر";
+
+"ok_label" = "تایید";
+
+"done_label" = "انجام شد";
+
+"back_label" = "بازگشت";
+
+"submit_label" = "ثبت";
+
+"string_error" = "خطا";
+
+"login_label" = "ورود";
+
+"action_label_logout" = "خروج";
+
+"home" = "خانه";
+
+"categories" = "مجموعه ها";
+
+"favourites" = "لیست علاقه مندی ها";
+
+"recent_searches" = "جستجوهای اخیر";
+
+"recently_viewed" = "کالاهای اخیرا مشاهده شده";
+
+"my_account" = "حساب کاربری من ‎";
+
+"nav_track_order" = "رهگیری سفارش من";
+
+"nav_country" = "انتخاب کشور";
+
+"string_filters" = "فیلترها";
+
+"categories_toplevel_title" = "تمام مجموعه ها";
+
+"string_apply" = "اعمال";
+
+"search_label" = "جستجو";
+
+"shopping_cart" = "سبد خرید";
+
+"navigation_cart_empty" = "سبد خرید شما خالی است";
+
+"string_vat_shipping_included" = "مالیات بر ارزش افزوده و هزینه ارسال در قیمت لحاظ شده است.";
+
+"catalog_no_results" = "نتیجه ای در این فیلتر یافت نشد.\nشما می توانید فیلتر دیگری را انتخاب نمایید";
+
+"catalog_edit_filters" = "ویرایش فیلترها";
+
+"teaser_campaign_button_first_line" = "داغ";
+
+"teaser_campaign_button_second_line" = "پیشنهادات";
+
+"string_top_brands" = "محبوبترین برندها";
+
+"string_top_categories" = "محبوبترین مجموعه ها";
+
+"string_top_sellers" = "پرفروش ترین ها";
+
+"string_new" = "جدید";
+
+"string_size" = "اندازه";
+
+"string_rating" = "1 امتیاز";
+
+"string_ratings" = "%d امتیاز";
+
+"string_review" = "1 نظر";
+
+"string_reviews" = "%d نظر";
+
+"string_quantity" = "تعداد: %@";
+
+"products_sort_bestrated" = "بهترین رتبه بندی";
+
+"products_sort_popularity" = "محبوبیت";
+
+"products_sort_newin" = "کالاهای جدید";
+
+"products_sort_priceup" = "ارزان تر به گران تر";
+
+"products_sort_pricedown" = "گران تر به ارزان تر";
+
+"products_sort_name" = "نام";
+
+"products_sort_brand" = "برند";
+
+"all_label" = "همه";
+
+"string_with_discount_only" = "تنها با تخفیف";
+
+"favourite_no_favourites" = "شما هیچ کالای مورد علاقه ای در لیست ندارد";
+
+"favourite_addalltocart" = "اضافه کردن تمام کالاها به سبد خرید";
+
+"added_to_shop_cart_dialog_text" = "کالا به سبد خرید شما اضافه شد.";
+
+"error_add_to_cart_failed" = "افزودن به سبد خرید ناموفق بوده است.";
+
+"string_size_with_value" = "اندازه: %@";
+
+"string_choose_size_for_all_products" = "لطفا سایز را برای تمام کالاها انتخاب کنید";
+
+"add_to_shopping_cart" = "افزودن به سبد خرید";
+
+"string_variations" = "تنوع کالا";
+
+"string_rate_now" = "امتیاز دهید";
+
+"related_items" = "کالاهای مرتبط";
+
+"product_features_title" = "امکانات کالا";
+
+"description" = "توضیحات";
+
+"key_features" = "ویژگی های کلیدی";
+
+"product_desc_summary_title" = "خلاصه";
+
+"product_description_title" = "توضیحات کالا";
+
+"share_subject_ios" = "اشترک گذاری %@";
+
+"share_checkout_this_product" = "این کالاهایی که یافته ام را نیز مشاهده کنید:";
+
+"rating_question" = "آیا از این کالا استفاده کرده اید؟ به آن امتیاز بدهید.";
+
+"writereview_send" = "ارسال نقد و بررسی";
+
+"submit_title" = "نقد و بررسی شما ارسال شد.";
+
+"write_comment" = "نوشتن نقد و بررسی";
+
+"string_posted_by" = "پست شده توسط %@، %@";
+
+"string_posted_by_anonymous" = "پست شده توسط کاربر ناشناس، %@";
+
+"string_price" = "قیمت";
+
+"string_appearance" = "تنظیمات ظاهری";
+
+"rating_quality" = "کیفیت";
+
+"cart_label" = "سبد خرید";
+
+"wishlist_notiems" = "شما هیچ کالایی در سبد خرید ندارید.";
+
+"continue_shopping" = "ادامه خرید";
+
+"my_order_coupon_label" = "کوپن";
+
+"voucher_use" = "استفاده";
+
+"voucher_remove" = "حذف";
+
+"voucher_message_hint" = "کد تخفیف خود را در این بخش وارد کنید.";
+
+"call_to_order" = "جهت سفارش تماس بگیرید.";
+
+"string_article" = "یک کالا";
+
+"string_articles" = "%d کالا";
+
+"string_item_cart" = "1 کالا";
+
+"string_items_cart" = "%d کالا";
+
+"error_add_to_shopping_cart_quantity" = "متاسفیم . شما نمی توانید بیش از تعداد مجاز سفارش دهید.";
+
+"shipping" = "ارسال کالا";
+
+"free_label" = "رایگان";
+
+"extra_costs_label" = "هزینه های اضافی";
+
+"my_order_voucher_label" = "کوپن";
+
+"my_order_total_label" = "مجموع";
+
+"checkout_button_text" = "ثبت سفارش";
+
+"sub_total_title" = "مجموع ناخالص:";
+
+"vat_string" = "مالیات بر ارزش افزوده";
+
+"signup_label" = "ثبت نام";
+
+"facebook_signup_button_text" = "ثبت نام با فیس بوک";
+
+"facebook_login_button_text" = "ورود با فیس بوک";
+
+"or_text" = "یا";
+
+"fgt_pass" = "آیا رمز عبور خود را فراموش کرده اید؟";
+
+"forgotten_password" = "لطفا پست الکترونیکی خود را وارد کنید";
+
+"forgotten_password_sub_text" = "به منظور تغییر رمز عبور لینکی برای شما ارسال خواهد شد.";
+
+"forgotten_password_successtext" = "پست الکترونیکی ارسال شد.";
+
+"checkout_label" = "ثبت نهایی سفارش";
+
+"checkout_header_step_1" = "۱- اطلاعات شما";
+
+"next_button" = "ادامه";
+
+"login_sectiontitle" = "اطلاعات";
+
+"register_title" = "ساخت حساب کاربری";
+
+"register_sectiontitle" = "اطلاعات حساب";
+
+"registration_text" = "ثبت";
+
+"checkout_header_step_2" = "۲- آدرس";
+
+"action_label_add_address" = "اضافه کردن آدرس جدید";
+
+"billing_same_label" = "ارسال صورت حساب به همان نشانی";
+
+"billing_shipping_label" = "نشانی دریافت کننده";
+
+"billing_billing_label" = "نشانی دریافت صورت حساب";
+
+"billing_def_shipping_label" = "نشانی پیش فرضی جهت ارسال کالا";
+
+"billing_others_label" = "نشانی های دیگر";
+
+"setting_address_error" = "خطا در تنظیمات نشانی صورت حساب / ارسال کالا";
+
+"cancel_label" = "لغو";
+
+"save_changes_label" = "ذخیره تغییرات";
+
+"edit_address" = "ویرایش نشانی";
+
+"validation_errortext" = "در اطلاعات وارد شده اشکالی وجود داشته است، لطفا بخش های وارد شده را دوباره چک کنید.";
+
+"checkout_header_step_3" = "۳- ارسال";
+
+"string_city" = "شهر:";
+
+"string_address" = "نشانی:";
+
+"string_opening_hours" = "ساعت های کاری:";
+
+"string_please_select" = "لطفا انتخاب کنید";
+
+"order_summary_shipping_fee_label" = "هزینه ارسال:";
+
+"checkout_header_step_4" = "۴- پرداخت";
+
+"payment" = "پرداخت";
+
+"creation_date" = "تاریخ ایجاد:";
+
+"payment_method" = "روش پرداخت:";
+
+"order_track_products" = "کالاها:";
+
+"string_error_no_results_for_tracking_id" = "هیچ نتیجه ای برای کد سفارش جستجو شده یافت نشد. \n لطفا کد سفارش را چک کرده و دوباره امتحان کنید.";
+
+"track_your_order" = "رهگیری سفارش شما";
+
+"track_order" = "رهگیری سفارش";
+
+"track_order_hint" = "کد سفارش";
+
+"string_order_status" = "وضعیت سفارش";
+
+"string_loosing_order_title" = "اخطار";
+
+"string_loosing_order_message" = "اگر از فرایند خرید خارج شوید سفارش شما باطل خواهد شد.";
+
+"recentsearch_no_searches" = "جستجویی وجود ندارد";
+
+"recentsearch_clear_searches" = "پاک کردن جستجوها";
+
+"recentlyview_no_searches" = "هیچ کالای مشاهده شده ای وجود ندارد.";
+
+"recentlyview_clear_viewed" = "پاک کردن کالاهای مشاهده شده";
+
+"string_user_data" = "اطلاعات کاربر";
+
+"string_user_email_notifications" = "اطلاعیه از طریق پست الکترونیکی";
+
+"section_title_account" = "تنظیمات حساب کاربری";
+
+"option2_description" = "تغییر رمز عبور، مدیریت پست الکترونیکی";
+
+"myaccount_email_notifications" = "اطلاع از طریق پست الکترونیکی";
+
+"option3_description" = "مشترک شدن یا لغو اشتراک";
+
+"section_title_notification" = "تنظیمات اطلاعیه ها";
+
+"notifications" = "اطلاعیه ها";
+
+"notifications_summary" = "دریافت پیشنهادات اختصاصی و بروزرسانی ها";
+
+"sound" = "صدا";
+
+"sound_summary" = "پخش صدای نمایش پیغام";
+
+"personal_data_label" = "اطلاعات شخصی شما";
+
+"new_password_label" = "رمز عبور جدید";
+
+"password_changed_success" = "رمز عبور با موفقیت تغییر یافت.";
+
+"preferences_updated" = "تنظیمات بروزرسانی شد.";
+
+"thank_you_order_title" = "با تشکر از شما!";
+
+"order_success" = "سفارش شما با موفقیت ثبت شد.\n شماره سفارش شما:";
+
+"order_track_success" = "شما می توانید سفارش خود را \n با مراجعه به بخش وضعیت سفارش رهگیری کنید.";
+
+"order_track_link" = "وضعیت سفارش";
+
+"my_order_label" = "سفارش من";
+
+"my_order_payment" = "روش های پرداخت";
+
+"enter_order_id" = "لطفا کد سفارش را وارد کنید.";
+
+"products_added_favourite" = "کالا به لیست علاقه مندی ها اضافه شد.";
+
+"error_adding_to_wishlist" = "خطا در اضافه کردن کالا به لیست علاقه مندی ها";
+
+"products_removed_favourite" = "کالا از لیست علاقه مندی ها حذف شد.";
+
+"error_removing_from_wishlist" = "خطا در حذف کالا از لیست علاقه مندی ها";
+
+"error_add_to_cart_failed_for_x_products" = "اضافه کردن به سبد خرید برای %d کالا دچار خطا شده است.";
+
+"error_add_to_cart_failed_for_1_product" = "اضافه کردن به سبد خرید برای یک کالا دچار خطا شده است.";
+
+"save_label" = "ذخیره";
+
+"string_campaign_ramaining_stock" = "موجودی باقیمانده: %d%%";
+
+"campaign_save" = "میزان تخفیف";
+
+"campaing_offer_ended" = "زمان پیشنهاد به پایان رسیده است";
+
+"campaing_timer_end" = "پایان";
+
+"string_format_off_label" = "تخفیف %d%% ";
+
+"campaigns_label" = "کمپین ها";
+
+"product_specifications" = "مشخصات کالا";
+
+"go_shop_text" = "خرید کنید";
+
+"promotion_tip_tap_text" = "کادر بالا را لمس نموده تا کد در حافظه ذخیره شده و در موقع لزوم از آن استفاده نمایید.";
+
+"string_try_again" = "دوباره امتحان کنید";
+
+"error_no_connection" = "ارتباط قطع است";
+
+"string_no_newtork" = "اتصال قطع شده است.";
+
+"internet_no_connection_details_label" = "مشکلی در ارتباط با اینترنت بوجود آمد. لطفا مجددا تلاش نمایید";
+
+"string_oops" = "خطا !";
+
+"string_something_broken" = "خطایی رخ داده است. دوباره امتحان کنید.";
+
+"form_data_not_transferred" = "خطایی در اطلاعات وارد شده وجود دارد، لطفاً بررسی نمائید.";
+
+"my_order_confirm_button" = "تایید سفارش";
+
+"string_error_setting_payment_method" = "خطا در تنظیم روش پرداخت";
+
+"string_error_setting_shipping_method" = "خطا در تنظیم روش ارسال";
+
+"fallback_maintenance" = "نگهداری";
+
+"fallback_maintenance_text" = "در حال بروزرسانی است";
+
+"fallback_maintenance_text_bottom" = "ما به این موضوع رسیدگی خواهیم کرد، شما می توانید بعدا دوباره اقدام نمایید.";
+
+"fallback_best" = "بهترین تجربه خرید آنلاین";
+
+"fallback_choice" = "گسترده ترین انتخاب";
+
+"fallback_doorstep" = "تحویل در خانه شما";
+
+"got_it" = "متوجه شدم.";
+
+"home_tip_text" = "انگشت خود را به چپ و راست بکشید تا مجموعه کالاها را تغییر دهید";
+
+"products_tip_swipe_text" = "انگشت خود را به راست و چپ بکشید تا کالاها بر اساس معیارهای دیگر مرتب سازی شوند.";
+
+"tip_favourite_text" = "برای اضافه کردن این کالا به لیست علاقه مندی ها کلیک کنید و لیست کامل را در صفحه مشخصات کاربری مشاهده کنید.";
+
+"tip_share_text" = "برای به اشتراک گذاری این کالا کلیک کنید.";
+
+"tip_swipe_text" = "انگشت خود را به سمت چپ یا راست بکشید تا \n تصاویر دیگر را مشاهده کنید.";
+
+"tip_tap_text" = "عکس مورد نظر را لمس کرده تا گالری تصاویر را مشاهده کنید.";
+
+"pinch_to_zoom_label" = "باز و بسته کردن دو انگشت برای تغییر بزرگنمایی";
+
+"fallback_audio_ios" = "صدا و تصویر";
+
+"fallback_books" = "کتاب ها";
+
+"fallback_bottom_text" = "از همه جا در هر زمان";
+
+"fallback_bottom_text2" = "گزینه ها و کالاهای بیشتر برای جستجو و خرید";
+
+"fallback_fashion" = "مد و لباس";
+
+"fallback_health_ios" = "سلامتی و زیبایی";
+
+"fallback_home_office_ios" = "خانه و دفتر کار";
+
+"fallback_mobile" = "تلفن های همراه";
+
+"fallback_welcome" = "خوش آمدید به";
+
+"reviews" = "نقدها و بررسی ها";
+
+"more" = "بیشتر";
+
+"reviews_empty" = "این کالا هنوز امتیازی دریافت ننموده است!";
+
+"reviews_empty_seller" = "برای این تامین کننده هنوز هیچ نظری ثبت نشده است!";
+
+"order_summary_label" = "خلاصه سفارش";
+
+"string_edit" = "ویرایش";
+
+"track_your_order_tip" = "جستجو برای کد سفارش و تمامی جزییات مربوط به آن در این بخش به نمایش در خواهد آمد.";
+
+"size_guide_label" = "راهنمای انتخاب سایز";
+
+"my_addresses" = "آدرس های من";
+
+"create_edit_address" = "ایجاد یا ویرایش آدرس شما";
+
+"app_sharing" = "به اشتراک گذاشتن برنامه";
+
+"share_the_app" = "برنامه را به اشتراک بگذار";
+
+"can_share_app_with_friends" = "هم اکنون می توانید برنامه را با دوستان خود به اشتراک بگذارید";
+
+"install_app_ios" = "برنامه iOS %@ را نصب کنید.";
+
+"share_app_ios" = "برنامه %@ را به اشتراک بگذارید.";
+
+"delivery_time" = "زمان تحویل";
+
+"product_outof_stock" = "کالا موجود نیست.";
+
+"products_outof_stock" = "کالاها در حال حاضر موجود نمی باشند";
+
+"login_remember_user_email" = "پست الکترونیکی من را به خاطر بسپار";
+
+"my_orders_label" = "سفارشات من";
+
+"my_order_history_label" = "سوابق سفارشات من";
+
+"my_order_tracking_label" = "رهگیری سفارش";
+
+"my_order_details_label" = "جزییات سفارش";
+
+"my_order_number_label" = "شماره";
+
+"my_order_date_label" = "تاریخ:";
+
+"my_order_payment_reference_label" = "شماره ارجاع :";
+
+"my_order_payment_status_label" = "وضعیت :";
+
+"my_order_quantity_label" = "تعداد";
+
+"my_order_no_orders_label" = "شما هیچ سفارشی ثبت نکرده اید.";
+
+"like_us_on_facebook" = "ما را در فیسبوک لایک کنید";
+
+"bundle_title" = "معمولا با هم خریداری شده";
+
+"bundle_total_price" = "قیمت کل:";
+
+"buy_now" = "خرید کنید";
+
+"other_sellers" = "سایر تامین کنندگان";
+
+"same_product_from_other_sellers" = "کالای مشابه از سایر تامین کنندگان";
+
+"from" = "از";
+
+"product_delivery_time" = "تحویل در:";
+
+"product_delivery_days" = "روز";
+
+"number_offers_from_ios" = "پیشنهادهای %d";
+
+"write_full_review" = "نظر کامل خود را بنویسید";
+
+"product_sold_by" = "فروخته شده توسط:";
+
+"sort_by" = "مرتب سازی بر اساس";
+
+"fee_include" = "شامل %@";
+
+"login_to_review" = "برای ثبت نظر لطفاً وارد حساب کاربری خود شوید";
+
+"login_to_rate" = "برای امتیازدهی لطفاً وارد حساب کاربری خود شوید";
+
+"my_order_item_label" = "کالا";
+
+"my_order_items_label" = "کالا";
+
+"string_more_choices" = "انتخاب های بیشتر";
+
+"string_addresses_saved_as_default" = "آدرس های ذخیره شده پیش فرض";
+
+"review_this_seller" = "نظر خود را در مورد این تامین کننده بنویسید";
+
+"string_wizard_back_top" = "بر روی نوار وضعیت بزنید تا به بالا بروید";
+
+"shops_of_the_week" = "برندهای برتر";
+
+"featured_stores" = "مجموعه های منتخب";
+
+"see_more_offers" = "پیشنهادات دیگر";
+
+"kickout_message_1" = "از پیشنهادات ویژه ما استقبال زیادی شده است";
+
+"kickout_message_2" = "به اندازه ای که ظرفیت فروشگاه تکمیل گردیده و امکان خدمت رسانی به مشتریان جدید در این زمان امکان پذیر نمی باشد";
+
+"kickout_message_3" = "ما می خواهیم تجربه ی خریدی دلپذیر را برای شما فراهم آوریم، و به همین دلیل از شما تقاضا می کنیم که دقایقی دیگر مراجعه نمائید";
+
+"search_placeholder" = "جستجوی محصولات، برندها...";
+

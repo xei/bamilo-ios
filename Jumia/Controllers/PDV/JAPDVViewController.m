@@ -81,6 +81,7 @@ JAActivityViewControllerDelegate
 
 - (void)viewDidLoad
 {
+    self.searchBarIsVisible = YES;
     [super viewDidLoad];
     self.apiResponse = RIApiResponseSuccess;
     if(VALID_NOTEMPTY(self.product.sku, NSString))
@@ -99,7 +100,7 @@ JAActivityViewControllerDelegate
     self.navBarLayout.showBackButton = self.showBackButton;
     if (self.showBackButton && self.previousCategory.length > 0)
     {
-        self.navBarLayout.backButtonTitle = self.previousCategory;
+        [self.navBarLayout setShowBackButton:YES];
     }
     
     self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
@@ -114,6 +115,8 @@ JAActivityViewControllerDelegate
                                              selector: @selector( applicationDidEnterBackgroundNotification:)
                                                  name: UIApplicationDidEnterBackgroundNotification
                                                object: nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductChangedNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -155,10 +158,26 @@ JAActivityViewControllerDelegate
     }
 }
 
+- (void)updatedProduct:(NSNotification*)notification
+{
+    RIProduct* newProduct = notification.object;
+    if (VALID_NOTEMPTY(newProduct, RIProduct)) {
+        self.product = newProduct;
+        [self removeSuperviews];
+        [self productLoaded];
+        [self fillTheViews];
+    }
+}
+
 - (void)viewDidDisappear:(BOOL)animated
 {
     // notify the InAppNotification SDK that this view controller in no more active
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updatedProduct:)
+                                                 name:kProductChangedNotification
+                                               object:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -312,7 +331,7 @@ JAActivityViewControllerDelegate
 
 - (void)loadCompleteProduct
 {
-    if(self.apiResponse == RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    if(self.apiResponse == RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
     {
         [self showLoading];
     }
@@ -338,6 +357,10 @@ JAActivityViewControllerDelegate
             if(RIApiResponseMaintenancePage == apiResponse)
             {
                 [self showMaintenancePage:@selector(loadCompleteProduct) objects:nil];
+            }
+            else if(RIApiResponseKickoutView == apiResponse)
+            {
+                [self showKickoutView:@selector(loadCompleteProduct) objects:nil];
             }
             else
             {
@@ -370,6 +393,10 @@ JAActivityViewControllerDelegate
             if(RIApiResponseMaintenancePage == apiResponse)
             {
                 [self showMaintenancePage:@selector(loadCompleteProduct) objects:nil];
+            }
+            else if(RIApiResponseKickoutView == apiResponse)
+            {
+                [self showKickoutView:@selector(loadCompleteProduct) objects:nil];
             }
             else
             {
@@ -556,7 +583,8 @@ JAActivityViewControllerDelegate
     }
     
     [RIProduct addToRecentlyViewed:product successBlock:^(RIProduct *product) {
-        self.product = product;
+        [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
+                                                            object:self.product];
         [self requestReviews];
         [self productLoaded];
     } andFailureBlock:nil];
@@ -575,27 +603,25 @@ JAActivityViewControllerDelegate
     
     self.hasLoaddedProduct = YES;
     
-    [self.mainScrollView setFrame:CGRectMake(0.0f,
-                                             0.0f,
-                                             self.view.frame.size.width,
-                                             self.view.frame.size.height)];
+    [self.mainScrollView setFrame:[self viewBounds]];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
         if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
         {
-            CGFloat scrollViewsWidth = (self.view.frame.size.width / 2);
-            [self.mainScrollView setFrame:CGRectMake(0.0f,
-                                                     0.0f,
+            CGRect bounds = [self viewBounds];
+            CGFloat scrollViewsWidth = bounds.size.width / 2;
+            [self.mainScrollView setFrame:CGRectMake(bounds.origin.x,
+                                                     bounds.origin.y,
                                                      scrollViewsWidth,
-                                                     self.view.frame.size.height)];
+                                                     bounds.size.height)];
             [self.mainScrollView setHidden:NO];
             
             [self.landscapeScrollView setFrame:CGRectMake(scrollViewsWidth,
-                                                          0.0f,
+                                                          bounds.origin.y,
                                                           scrollViewsWidth,
-                                                          self.view.frame.size.height)];
+                                                          bounds.size.height)];
             [self.landscapeScrollView setHidden:NO];
         }
         else
@@ -629,16 +655,16 @@ JAActivityViewControllerDelegate
     if(isiPadInLandscape)
     {
         [self.ctaView setFrame:CGRectMake(self.mainScrollView.frame.size.width,
-                                          0.0f,
+                                          self.mainScrollView.frame.origin.y,
                                           self.landscapeScrollView.frame.size.width,
                                           self.ctaView.frame.size.height)];
         [self.view addSubview:self.ctaView];
         
         // The JAButton
         [self.landscapeScrollView setFrame:CGRectMake(self.mainScrollView.frame.size.width,
-                                                      self.ctaView.frame.size.height,
+                                                      CGRectGetMaxY(self.ctaView.frame),
                                                       self.landscapeScrollView.frame.size.width,
-                                                      self.view.frame.size.height - self.ctaView.frame.size.height)];
+                                                      self.mainScrollView.frame.size.height - self.ctaView.frame.size.height)];
         
     }
     else
@@ -674,23 +700,25 @@ JAActivityViewControllerDelegate
 
 - (void)requestReviews
 {
-    [RIProductRatings getRatingsForProductWithUrl:[NSString stringWithFormat:@"%@?rating=1&page=1", self.product.url] //@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html?rating=1&page=1"
+    /*[RIProductRatings getRatingsForProductWithUrl:[NSString stringWithFormat:@"%@?rating=1&page=1", self.product.url] //@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html?rating=1&page=1"
                                      successBlock:^(RIProductRatings *ratings) {
                                          
                                          self.commentsCount = ratings.reviews.count;
                                          
                                          self.productRatings = ratings;
                                          
-                                         [self requestBundles];
-                                         
-                                         [self hideLoading];
+     
                                          
                                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                          
                                          [self requestBundles];
                                          
                                          [self hideLoading];
-                                     }];
+                                     }];*/
+    
+    [self requestBundles];
+    
+    [self hideLoading];
 }
 
 - (void)requestBundles
@@ -812,7 +840,7 @@ JAActivityViewControllerDelegate
                                                                                       imageHeight,
                                                                                       imageHeight)];
             [newImageView setImageWithURL:[NSURL URLWithString:variation.image.url]
-                         placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
+                         placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
             [newImageView changeImageHeight:imageHeight andWidth:0.0f];
             [variationClickableView addSubview:newImageView];
             
@@ -860,13 +888,10 @@ JAActivityViewControllerDelegate
     
     if (isiPadInLandscape)
     {
-        [self.productInfoSection.productFeaturesMore addTarget:self
+        [self.productInfoSection.specificationsClickableView addTarget:self
                                                         action:@selector(gotoDetails)
                                               forControlEvents:UIControlEventTouchUpInside];
         
-        [self.productInfoSection.productDescriptionMore addTarget:self
-                                                           action:@selector(gotoDetails)
-                                                 forControlEvents:UIControlEventTouchUpInside];
         
         self.productInfoSection.frame = CGRectMake(6,
                                                    landscapeScrollViewY,
@@ -923,7 +948,7 @@ JAActivityViewControllerDelegate
                 
                 [bundleSingleItem.sizeClickableView setTitle:STRING_SIZE forState:UIControlStateNormal];
                 [bundleSingleItem.sizeClickableView setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
-                [bundleSingleItem.sizeClickableView setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0f]];
+                [bundleSingleItem.sizeClickableView setFont:[UIFont fontWithName:kFontRegularName size:14.0f]];
                 bundleSingleItem.sizeClickableView.tag = i;
                 [bundleSingleItem.sizeClickableView addTarget:self
                                                        action:@selector(showSizePickerForBundleSingleItem:)
@@ -952,7 +977,7 @@ JAActivityViewControllerDelegate
                 RIImage *imageTemp = [bundleProduct.images firstObject];
                 
                 [bundleSingleItem.productImageView setImageWithURL:[NSURL URLWithString:imageTemp.url]
-                                                  placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
+                                                  placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
             }
             
             bundleSingleItem.productNameLabel.text = bundleProduct.brand;
@@ -1002,14 +1027,25 @@ JAActivityViewControllerDelegate
         
         if(isiPadInLandscape)
         {
-            [self.bundleLayout setFrame:CGRectMake(self.bundleLayout.frame.origin.x,
-                                                   self.bundleLayout.frame.origin.y,
-                                                   self.imageSection.frame.size.width,
+            [self.bundleLayout setFrame:CGRectMake(6.0f,
+                                                   landscapeScrollViewY,
+                                                   self.imageSection.frame.size.width- 6.0f,
                                                    self.bundleLayout.frame.size.height)];
+            
+            [self.landscapeScrollView addSubview:self.bundleLayout];
+            
+            landscapeScrollViewY += (6.0f + self.bundleLayout.frame.size.height);
+
+        }else
+        {
+            self.bundleLayout.frame = CGRectMake(6.0f,
+                                                 mainScrollViewY,
+                                                 self.bundleLayout.frame.size.width,
+                                                 self.bundleLayout.frame.size.height);
+            [self.mainScrollView addSubview:self.bundleLayout];
+            
+            mainScrollViewY += (6.0f + self.bundleLayout.frame.size.height);
         }
-        
-        mainScrollViewY += (6.0f + self.bundleLayout.frame.size.height);
-        
     }
     
     /*******
@@ -1047,7 +1083,7 @@ JAActivityViewControllerDelegate
                     RIImage *imageTemp = [product.images firstObject];
                     
                     [singleItem.imageViewItem setImageWithURL:[NSURL URLWithString:imageTemp.url]
-                                             placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
+                                             placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
                 }
                 
                 singleItem.labelBrand.text = product.brand;
@@ -1183,16 +1219,23 @@ JAActivityViewControllerDelegate
     // Share with Facebook Messenger and WhatsApp
     UIActivity *fbmActivity = [[AQSFacebookMessengerActivity alloc] init];
     UIActivity *whatsAppActivity = [[JBWhatsAppActivity alloc] init];
+    
+    NSArray *objectToShare = @[fbmActivity, whatsAppActivity];;
+    
     WhatsAppMessage *whatsappMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",STRING_SHARE_PRODUCT_MESSAGE, url] forABID:nil];
     
-    NSArray *aplicationActivities = @[fbmActivity, whatsAppActivity];
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_PRODUCT_MESSAGE, [NSURL URLWithString:url], whatsappMsg] applicationActivities:nil];
     
-    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_PRODUCT_MESSAGE, [NSURL URLWithString:url], whatsappMsg] applicationActivities:aplicationActivities];
+    if(!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")){
+       
+        activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_PRODUCT_MESSAGE, [NSURL URLWithString:url], whatsappMsg] applicationActivities:objectToShare];
+         
+    }
     
     
     activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
     
-    [activityController setValue:STRING_SHARE_OBJECT
+    [activityController setValue:[NSString stringWithFormat:STRING_SHARE_OBJECT, APP_NAME]
                           forKey:@"subject"];
     
     

@@ -66,12 +66,15 @@ JADynamicFormDelegate
     self.personalDataView.layer.cornerRadius = 5.0f;
     self.personalDataView.hidden = YES;
     
+    self.personalTitleLabel.font = [UIFont fontWithName:kFontRegularName size:self.personalTitleLabel.font.pointSize];
     self.personalTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
     self.personalTitleLabel.text = STRING_YOUR_PERSONAL_DATA;
     
+    self.nameLabel.font = [UIFont fontWithName:kFontLightName size:self.nameLabel.font.pointSize];
     self.nameLabel.translatesAutoresizingMaskIntoConstraints = YES;
     self.nameLabel.textColor = UIColorFromRGB(0x666666);
     
+    self.emailLabel.font = [UIFont fontWithName:kFontLightName size:self.emailLabel.font.pointSize];
     self.emailLabel.translatesAutoresizingMaskIntoConstraints = YES;
     self.emailLabel.textColor = UIColorFromRGB(0x666666);
     
@@ -82,10 +85,12 @@ JADynamicFormDelegate
     self.changePasswordView.hidden = YES;
     
     self.changePasswordImageView.backgroundColor = UIColorFromRGB(0xfaa41a);
+    self.changePasswordTitle.font = [UIFont fontWithName:kFontRegularName size:self.changePasswordTitle.font.pointSize];
     self.changePasswordTitle.textColor = UIColorFromRGB(0x4e4e4e);
     self.changePasswordTitle.text = STRING_NEW_PASSWORD;
     
     self.saveButton.translatesAutoresizingMaskIntoConstraints = YES;
+    self.saveButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.saveButton.titleLabel.font.pointSize];
     [self.saveButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.saveButton setTitle:STRING_SAVE_LABEL forState:UIControlStateNormal];
     [self.saveButton addTarget:self action:@selector(saveNewPassword) forControlEvents:UIControlEventTouchUpInside];
@@ -146,7 +151,7 @@ JADynamicFormDelegate
 {
     self.numberOfRequests = 2;
     
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
     {
         [self showLoading];
     }
@@ -157,10 +162,11 @@ JADynamicFormDelegate
        successBlock:^(RIForm *form)
      {
          self.changePasswordForm = [[JADynamicForm alloc] initWithForm:form
-                                                              delegate:self
                                                       startingPosition:self.currentY
                                                              widthSize:self.changePasswordView.frame.size.width
                                                     hasFieldNavigation:YES];
+         
+         self.changePasswordForm.delegate = self;
          
          self.numberOfRequests--;
          [self removeErrorView];
@@ -203,6 +209,10 @@ JADynamicFormDelegate
     else if(RIApiResponseMaintenancePage == self.apiResponse)
     {
         [self showMaintenancePage:@selector(makeRequests) objects:nil];
+    }
+    else if(RIApiResponseKickoutView == self.apiResponse)
+    {
+        [self showKickoutView:@selector(makeRequests) objects:nil];
     }
     else
     {

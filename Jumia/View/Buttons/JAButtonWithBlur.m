@@ -118,7 +118,7 @@
     UIImage *buttonImageNormal = [UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"normal"]];
     
     UIButton *newButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [newButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+    [newButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
     [newButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [newButton setTitle:name forState:UIControlStateNormal];
     [newButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];

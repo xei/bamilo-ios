@@ -196,27 +196,19 @@
 {
     NSURL *url = [request URL];
     
-    BOOL shouldNavigate = NO;
-    
     NSString *existingAuthValue = [request valueForHTTPHeaderField:@"Authorization"];
     if ([[url host] isEqualToString:[[self.originalRequest URL] host]] && existingAuthValue == nil)
     {
-        NSMutableURLRequest *newRequest = [NSMutableURLRequest requestWithURL:url];
+        NSMutableURLRequest *newRequest = [request mutableCopy];
         NSString *authStr = [NSString stringWithFormat:@"%@:%@", RI_USERNAME, RI_PASSWORD];
         NSData *authData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
         NSString *authValue = [NSString stringWithFormat:@"Basic %@", [authData base64EncodedStringWithOptions:0]];
         [newRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
         
-        //Append any other info from the old request
-        [webView loadRequest:newRequest];
+        request = newRequest;
     }
-    else
-    {
-        shouldNavigate = YES;
-    }
-    
-    
-    return shouldNavigate;
+
+    return YES;
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error

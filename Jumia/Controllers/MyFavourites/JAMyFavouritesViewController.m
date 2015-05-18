@@ -80,6 +80,7 @@
     
     self.emptyFavoritesView.layer.cornerRadius = 3.0f;
     
+    self.emptyFavoritesLabel.font = [UIFont fontWithName:kFontRegularName size:16.0f];
     self.emptyFavoritesLabel.textColor = UIColorFromRGB(0xcccccc);
     self.emptyFavoritesLabel.text = STRING_NO_FAVOURITES;
     
@@ -239,6 +240,10 @@
         if(RIApiResponseMaintenancePage == apiResponse)
         {
             [self showMaintenancePage:@selector(getFavorites) objects:nil];
+        }
+        else if(RIApiResponseKickoutView == apiResponse)
+        {
+            [self showKickoutView:@selector(getFavorites) objects:nil];
         }
         else
         {

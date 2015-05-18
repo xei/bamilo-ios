@@ -216,10 +216,10 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
-        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
+        cell.textLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
         cell.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
         
-        cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14.0f];
+        cell.detailTextLabel.font = [UIFont fontWithName:kFontLightName size:14.0f];
         cell.detailTextLabel.textColor = UIColorFromRGB(0x4e4e4e);
         cell.indentationLevel = 30.0f;
     }

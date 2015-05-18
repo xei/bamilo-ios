@@ -50,7 +50,7 @@
         [self.dismissButton setBackgroundImage:buttonImageHightlight forState:UIControlStateHighlighted];
         [self.dismissButton setBackgroundImage:buttonImageDisabled forState:UIControlStateDisabled];
         [self.dismissButton setTitle:STRING_GOT_IT forState:UIControlStateNormal];
-        self.dismissButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16.0f];
+        self.dismissButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:16.0f];
         [self.dismissButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
         [self.dismissButton addTarget:self action:@selector(dismissButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.dismissButton];

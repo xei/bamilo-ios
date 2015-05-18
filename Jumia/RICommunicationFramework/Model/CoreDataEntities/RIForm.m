@@ -80,7 +80,7 @@
                                                                        {
                                                                            if ([dic objectForKey:@"id"])
                                                                            {
-                                                                               if ([[dic objectForKey:@"id"] isEqualToString:@"Alice_Module_Mobapi_Form_Ext1m3_Customer_NewsletterManageForm"])
+                                                                               if ([@"managenewsletters" isEqualToString:formIndexID])
                                                                                {
                                                                                    NSArray *fields = [dic objectForKey:@"fields"];
                                                                                    
@@ -127,6 +127,12 @@
                                                                            formIndex.form = newForm;
                                                                            //form index was already on database, it just lacked the form variable. let's save the context without adding any other NSManagedObject
                                                                            [[RIDataBaseWrapper sharedInstance] saveContext];
+                                                                       } else {
+                                                                           //create a temporary form index just so that form can be identified. we only need to keep the id
+                                                                           NSMutableDictionary* formIndexJSON = [NSMutableDictionary new];
+                                                                           [formIndexJSON setObject:formIndexID forKey:@"id"];
+                                                                           RIFormIndex* tempFormIndex = [RIFormIndex parseFormIndex:formIndexJSON];
+                                                                           newForm.formIndex = tempFormIndex;
                                                                        }
                                                                        
                                                                        dispatch_async(dispatch_get_main_queue(), ^{
@@ -242,7 +248,7 @@
                                                               BOOL responseProcessed = NO;
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                               {
-                                                                  if([@"form-account-login" isEqualToString:form.uid])
+                                                                  if([@"login" isEqualToString:form.formIndex.uid])
                                                                   {
                                                                       responseProcessed = YES;
                                                                       RICustomer *customer = [RICustomer parseCustomerWithJson:[metadata objectForKey:@"user"] plainPassword:password loginMethod:@"normal"];
@@ -251,13 +257,13 @@
                                                                       [successDic setValue:customer forKey:@"customer"];
                                                                       successBlock([successDic copy]);
                                                                   }
-                                                                  else if([@"Alice_Module_Mobapi_Form_Ext1m4_Customer_RegistrationForm" isEqualToString:form.uid])
+                                                                  else if([@"register" isEqualToString:form.formIndex.uid])
                                                                   {
                                                                       responseProcessed = YES;
                                                                       RICustomer *customer = [RICustomer parseCustomerWithJson:metadata plainPassword:password loginMethod:@"normal"];
                                                                       successBlock(customer);
                                                                   }
-                                                                  else if([@"Alice_Module_Mobapi_Form_Ext1m1_Customer_RegisterSignupForm" isEqualToString:form.uid])
+                                                                  else if([@"registersignup" isEqualToString:form.formIndex.uid])
                                                                   {
                                                                       NSDictionary *data = [metadata objectForKey:@"data"];
                                                                       if(VALID_NOTEMPTY(data, NSDictionary))
@@ -267,13 +273,13 @@
                                                                           successBlock(customer);
                                                                       }
                                                                   }
-                                                                  else if([@"address-form" isEqualToString:form.uid])
+                                                                  else if([@"addressedit" isEqualToString:form.formIndex.uid] || [@"addresscreate" isEqualToString:form.formIndex.uid])
                                                                   {
                                                                       responseProcessed = YES;
                                                                       RICheckout *checkout = [RICheckout parseCheckout:metadata country:nil];
                                                                       successBlock(checkout);
                                                                   }
-                                                                  else if ([@"Alice_Module_Mobapi_Form_Ext1m3_Customer_NewsletterManageForm" isEqualToString:form.uid])
+                                                                  else if ([@"managenewsletters" isEqualToString:form.formIndex.uid])
                                                                   {
                                                                       [RICustomer updateCustomerNewsletterWithJson:metadata];
                                                                       responseProcessed = YES;
@@ -344,11 +350,35 @@
         NSArray* fields = [formDict objectForKey:@"fields"];
         
         if (VALID_NOTEMPTY(fields, NSArray)) {
+            
+            NSMutableArray* unsortedFields = [NSMutableArray new];
             for (NSDictionary* fieldJSON in fields) {
                 RIField* newField = [RIField parseField:fieldJSON];
                 newField.form = newForm;
-                [newForm addFieldsObject:newField];
+                [unsortedFields addObject:newField];
             }
+            NSMutableArray* sortedFields = [NSMutableArray new];
+            for (RIField* field in unsortedFields) {
+                if (VALID_NOTEMPTY(field.relatedField, NSString)) {
+                    
+                    BOOL inserted = NO;
+                    //search for it on the already sorted
+                    for (int i = 0; i<sortedFields.count; i++) {
+                        RIField* comparisonField = [sortedFields objectAtIndex:i];
+                        if ([comparisonField.key isEqualToString:field.relatedField]) {
+                            [sortedFields insertObject:field atIndex:i+1]; //after the field in question
+                            inserted = YES;
+                            break;
+                        }
+                    }
+                    if (NO == inserted) {
+                        [sortedFields addObject:field];
+                    }
+                } else {
+                    [sortedFields addObject:field];
+                }
+            }
+            newForm.fields = [NSOrderedSet orderedSetWithArray:sortedFields];
         }
     }
     

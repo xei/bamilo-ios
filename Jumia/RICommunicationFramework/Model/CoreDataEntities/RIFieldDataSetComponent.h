@@ -14,9 +14,13 @@
 @interface RIFieldDataSetComponent : NSManagedObject
 
 @property (nonatomic, retain) NSString * value;
+@property (nonatomic, retain) NSString * pattern;
+@property (nonatomic, retain) NSString * patternMessage;
+@property (nonatomic, retain) NSString * label;
 @property (nonatomic, retain) RIField *field;
 
-+ (RIFieldDataSetComponent *)parseDataSetComponent:(NSString *)text;
++ (RIFieldDataSetComponent *)parseDataSetComponentWithString:(NSString *)text;
++ (RIFieldDataSetComponent *)parseDataSetComponentWithDictionary:(NSDictionary *)dictionary;
 
 + (void)saveFieldDataSetComponent:(RIFieldDataSetComponent *)component;
 

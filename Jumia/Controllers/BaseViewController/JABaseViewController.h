@@ -8,14 +8,21 @@
 
 #import <UIKit/UIKit.h>
 #import "JANavigationBarLayout.h"
+#import "JASearchResultsView.h"
 
-@interface JABaseViewController : UIViewController
+@interface JABaseViewController : UIViewController <UISearchBarDelegate, JASearchResultsViewDelegate>
 
 @property (nonatomic, strong)JANavigationBarLayout* navBarLayout;
 
 @property (nonatomic, strong)NSString *screenName;
 @property (nonatomic, strong)NSDate *startLoadingTime;
 @property (nonatomic, assign)BOOL firstLoading;
+@property (nonatomic, assign)BOOL searchBarIsVisible;
+
+/**
+ * This method returns the correct bounds to be used, taking the searchBar positioning into account
+ */
+- (CGRect)viewBounds;
 
 /**
  * Method to force Nav bar to reload. This is called in viewWillAppear
@@ -61,6 +68,17 @@
  * Method to remove maintenance page
  */
 - (void)removeMaintenancePage;
+
+/**
+ * Method to show kickout view
+ */
+- (void)showKickoutView:(SEL)selector objects:(NSArray*)objects;
+
+/**
+ * Method to remove kickout view
+ */
+- (void)removeKickoutView;
+
 
 @end
 

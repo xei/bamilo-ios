@@ -84,7 +84,7 @@ UIPickerViewDelegate
                                          0.0f,
                                          doneButtonWidth,
                                          44.0f)];
-    [self.doneButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
+    [self.doneButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
     [self.doneButton setTitle:STRING_DONE forState:UIControlStateNormal];
     [self.doneButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.doneButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
@@ -98,7 +98,7 @@ UIPickerViewDelegate
                                          0.0f,
                                          leftButtonWidth,
                                          44.0f)];
-    [self.leftButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
+    [self.leftButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
     [self.leftButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.leftButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
     [self.leftButton addTarget:self action:@selector(leftButtonPressed) forControlEvents:UIControlEventTouchUpInside];
@@ -181,7 +181,7 @@ UIPickerViewDelegate
     NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:object
                                                                                   attributes:@{NSForegroundColorAttributeName:color}];
     
-    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Light"
+    UIFont *font = [UIFont fontWithName:kFontLightName
                                    size:22.0];
     
     [attString addAttribute:NSFontAttributeName

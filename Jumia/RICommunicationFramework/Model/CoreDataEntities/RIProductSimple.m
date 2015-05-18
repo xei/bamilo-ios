@@ -44,8 +44,8 @@
             newProductSimple.priceFormatted = [RICountryConfiguration formatPrice:newProductSimple.price country:country];
         }
         
-        if ([meta objectForKey:@"price_euroConverted"]) {
-            newProductSimple.priceEuroConverted = [NSNumber numberWithFloat:[[meta objectForKey:@"price_euroConverted"] floatValue]];
+        if ([meta objectForKey:@"price_converted"]) {
+            newProductSimple.priceEuroConverted = [NSNumber numberWithFloat:[[meta objectForKey:@"price_converted"] floatValue]];
         }
         
         if ([meta objectForKey:@"special_price"]) {
@@ -53,12 +53,18 @@
             newProductSimple.specialPriceFormatted = [RICountryConfiguration formatPrice:newProductSimple.specialPrice country:country];
         }
         
-        if ([meta objectForKey:@"special_price_euroConverted"]) {
-            newProductSimple.specialPriceEuroConverted = [NSNumber numberWithFloat:[[meta objectForKey:@"special_price_euroConverted"] floatValue]];
+        if ([meta objectForKey:@"special_price_converted"]) {
+            newProductSimple.specialPriceEuroConverted = [NSNumber numberWithFloat:[[meta objectForKey:@"special_price_converted"] floatValue]];
         }
         
         if ([meta objectForKey:@"quantity"]) {
-            newProductSimple.quantity = [meta objectForKey:@"quantity"];
+            id quantity = [meta objectForKey:@"quantity"];
+            if ([quantity isKindOfClass:[NSString class]]) {
+                newProductSimple.quantity = (NSString*)quantity;
+            } else if ([quantity isKindOfClass:[NSNumber class]]){
+                newProductSimple.quantity = [NSString stringWithFormat:@"%ld",(long)[(NSNumber*)quantity integerValue]];
+            }
+
         }
         if ([meta objectForKey:@"stock"]) {
             newProductSimple.stock = [meta objectForKey:@"stock"];
@@ -98,6 +104,17 @@
         }
         else if ([meta objectForKey:@"size"]) {
             newProductSimple.variation = [meta objectForKey:@"size"];
+        }
+        else if ([meta objectForKey:@"variation_value"]) {
+            id variationValue = [meta objectForKey:@"variation_value"];
+            if ([variationValue isKindOfClass:[NSString class]]) {
+                newProductSimple.variation = (NSString*)variationValue;
+            } else if ([variationValue isKindOfClass:[NSNumber class]]){
+                newProductSimple.variation = [NSString stringWithFormat:@"%ld",(long)[(NSNumber*)variationValue integerValue]];
+            }
+        }
+        else if ([meta objectForKey:@"variation"]) {
+            newProductSimple.variation = [meta objectForKey:@"variation"];
         }
     }
     

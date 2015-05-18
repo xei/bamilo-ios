@@ -50,6 +50,7 @@
     self.messageViewInitialY = 64.0f;
     self.errorImageViewHeight = self.errorImageView.frame.size.height;
     
+    self.titleLabel.font = [UIFont fontWithName:kFontLightName size:self.titleLabel.font.pointSize];
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = YES;
     self.titleLabel.textColor = UIColorFromRGB(0xffffff);
     self.titleLabel.numberOfLines = 0;

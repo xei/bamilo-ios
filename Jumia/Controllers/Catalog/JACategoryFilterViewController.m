@@ -23,7 +23,7 @@
     self.screenName = @"CategoryFilter";
     
     self.navBarLayout.title = STRING_CATEGORIES;
-    self.navBarLayout.backButtonTitle = STRING_FILTERS;
+    [self.navBarLayout setShowBackButton:YES];
     self.navBarLayout.showDoneButton = YES;
     
     self.categoryFiltersView = [[[NSBundle mainBundle] loadNibNamed:@"JACategoryFiltersView" owner:self options:nil] objectAtIndex:0];

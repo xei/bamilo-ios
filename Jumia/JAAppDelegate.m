@@ -29,12 +29,61 @@
 {
     self.startLoadingTime = [NSDate date];
     
+    //fonts
+    if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"]) {
+        [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontRegularNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontLightNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontBoldNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontMediumNameKey];
+    } else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
+        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontRegularNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontLightNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontBoldNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontMediumNameKey];
+    } else {
+        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontRegularNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue-Light" forKey:kFontLightNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue-Bold" forKey:kFontBoldNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue-Medium" forKey:kFontMediumNameKey];
+    }    
+    
 #if defined(DEBUG) && DEBUG
     
 #if defined(STAGING) && STAGING
-    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"9e886b9cb1a1dbb18eb575c7582ab3c9"];
+    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
+    {
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"9e886b9cb1a1dbb18eb575c7582ab3c9"];
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
+    {
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"7275370b79981af6b6437a87d813bafd"];
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+    {
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"9b9785a49d8763ce4f7d1041e15970cc"];
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
+    {
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"b69eae07b51d81f272e9ae78312967a8"];
+    }
+    
 #else
-    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"3c9ad1f5e09a65331e412821125cc2f2"];
+    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
+    {
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"3c9ad1f5e09a65331e412821125cc2f2"];
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
+    {
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@""];
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+    {
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@""];
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
+    {
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@""];
+    }
 #endif
     [[BITHockeyManager sharedHockeyManager].crashManager setCrashManagerStatus:BITCrashManagerStatusAutoSend];
     [[BITHockeyManager sharedHockeyManager] startManager];
@@ -44,16 +93,31 @@
     [[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
 #endif
     
-    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITrackingDebug" ofType:@"plist"];
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"RITrackingDebug_%@", [APP_NAME uppercaseString]] ofType:@"plist"];
     [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath
                                                                        launchOptions:launchOptions
                                                                         delegate:self];
 #else
-    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"dc297f584830db92a1047ba154dadb9e"];
+    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
+    {
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"dc297f584830db92a1047ba154dadb9e"];
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
+    {
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"373b0efcd95c82dbfb69a0c2d16c4b51"];
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+    {
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"d4fd2d8b265e80e20a34fc19ccc55d64"];
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
+    {
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"64935d72b0c34cd51a7a806f7bb70e4a"];
+    }
     [[BITHockeyManager sharedHockeyManager].crashManager setCrashManagerStatus:BITCrashManagerStatusAutoSend];
     [[BITHockeyManager sharedHockeyManager] startManager];
     
-    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITracking" ofType:@"plist"];
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"RITracking_%@", [APP_NAME uppercaseString]] ofType:@"plist"];
     [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath
                                                                        launchOptions:launchOptions
                                                                             delegate:self];
@@ -68,12 +132,12 @@
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]
      setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                              UIColorFromRGB(0xc8c8c8), NSForegroundColorAttributeName,
-                             [UIFont fontWithName:@"HelveticaNeue-Light" size:18.0f], NSFontAttributeName,nil] forState:UIControlStateNormal];
+                             [UIFont fontWithName:kFontLightName size:18.0f], NSFontAttributeName,nil] forState:UIControlStateNormal];
     
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]
      setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                              [UIColor orangeColor], NSForegroundColorAttributeName,
-                             [UIFont fontWithName:@"HelveticaNeue-Light" size:18.0f], NSFontAttributeName,nil] forState:UIControlStateSelected];
+                             [UIFont fontWithName:kFontLightName size:18.0f], NSFontAttributeName,nil] forState:UIControlStateSelected];
     
     NSDictionary *cookieProperties = [[NSUserDefaults standardUserDefaults] objectForKey:kPHPSESSIDCookie];
     if(VALID_NOTEMPTY(cookieProperties, NSDictionary))
@@ -245,6 +309,8 @@
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventOpenApp]
                                               data:[trackingDictionary copy]];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kAppWillEnterForeground object:nil];
 }
 
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
