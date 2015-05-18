@@ -57,6 +57,7 @@
     [self.otherOffersLabel setTextColor:UIColorFromRGB(0x666666)];
 
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    self.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.titleLabel.font.pointSize];
     [self.titleLabel setFrame:CGRectMake(self.titleLabel.frame.origin.x,
                                          self.titleLabel.frame.origin.y,
                                          width,
@@ -84,6 +85,7 @@
     /*
      Check if there are other offers
      */
+    self.otherOffersLabel.font = [UIFont fontWithName:kFontRegularName size:self.otherOffersLabel.font.pointSize];
     if (VALID_NOTEMPTY(product.offersTotal, NSNumber) && 0 < [product.offersTotal integerValue]) {
         
         self.otherOffersLabel.text = [NSString stringWithFormat:@"%@ (%ld)", STRING_OTHER_SELLERS, [product.offersTotal longValue]];
@@ -92,7 +94,7 @@
         
         self.fromLabel = [UILabel new];
         [self.fromLabel setTextColor:UIColorFromRGB(0x666666)];
-        [self.fromLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:9.0f]];
+        [self.fromLabel setFont:[UIFont fontWithName:kFontRegularName size:9.0f]];
         self.fromLabel.text = [NSString stringWithFormat:@"%@ ", STRING_FROM];
         [self.fromLabel sizeToFit];
         [self.fromLabel setFrame:CGRectMake(self.otherOffersLabel.frame.origin.x,
@@ -103,7 +105,7 @@
         
         self.offerMinPriceLabel = [UILabel new];
         [self.offerMinPriceLabel setTextColor:UIColorFromRGB(0xcc0000)];
-        [self.offerMinPriceLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:9.0f]];
+        [self.offerMinPriceLabel setFont:[UIFont fontWithName:kFontRegularName size:9.0f]];
         self.offerMinPriceLabel.text = product.offersMinPriceFormatted;
         [self.offerMinPriceLabel sizeToFit];
         [self.offerMinPriceLabel setFrame:CGRectMake(CGRectGetMaxX(self.fromLabel.frame),

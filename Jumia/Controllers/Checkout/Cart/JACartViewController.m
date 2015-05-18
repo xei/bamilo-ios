@@ -153,7 +153,7 @@
 {
     self.requestDone = NO;
     
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    if(self.apiResponse==RIApiResponseKickoutView || self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
     {
         [self showLoading];
     }
@@ -273,6 +273,10 @@
         {
             [self showMaintenancePage:@selector(continueLoading) objects:nil];
         }
+        else if(RIApiResponseKickoutView == apiResponse)
+        {
+            [self showKickoutView:@selector(continueLoading) objects:nil];
+        }
         else
         {
             BOOL noConnection = NO;
@@ -317,9 +321,11 @@
     self.screenName = @"CartEmpty";
     
     self.emptyCartView.layer.cornerRadius = 5.0f;
+    self.emptyCartLabel.font = [UIFont fontWithName:kFontRegularName size:self.emptyCartLabel.font.pointSize];
     [self.emptyCartLabel setText:STRING_NO_ITEMS_IN_CART];
     [self.emptyCartLabel setTextColor:JALabelGrey];
-    
+
+    self.continueShoppingButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.continueShoppingButton.titleLabel.font.pointSize];
     [self.continueShoppingButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
     [self.continueShoppingButton setTitle:STRING_CONTINUE_SHOPPING forState:UIControlStateNormal];
     
@@ -409,7 +415,7 @@
     self.couponView.layer.cornerRadius = 5.0f;
     
     self.couponTitle = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, 0.0f, self.cartScrollView.frame.size.width - (2 * horizontalMargin), 26.0f)];
-    [self.couponTitle setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
+    [self.couponTitle setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
     [self.couponTitle setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.couponTitle setText:STRING_COUPON];
     [self.couponTitle setBackgroundColor:[UIColor clearColor]];
@@ -425,7 +431,7 @@
     [self.useCouponButton setBackgroundImage:[UIImage imageNamed:@"useCoupon_highlighted"] forState:UIControlStateHighlighted];
     [self.useCouponButton setBackgroundImage:[UIImage imageNamed:@"useCoupon_highlighted"] forState:UIControlStateSelected];
     [self.useCouponButton setBackgroundImage:[UIImage imageNamed:@"useCoupon_disabled"] forState:UIControlStateDisabled];
-    [self.useCouponButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [self.useCouponButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
     [self.useCouponButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.useCouponButton addTarget:self action:@selector(useCouponButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.useCouponButton setFrame:CGRectMake(self.couponView.frame.size.width - useCouponImageNormal.size.width - 6.0f,
@@ -441,7 +447,7 @@
                                                                          CGRectGetMaxY(self.couponTitleSeparator.frame) + 17.0f,
                                                                          textFieldWidth,
                                                                          30.0f)];
-    [self.couponTextField setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [self.couponTextField setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
     [self.couponTextField setTextColor:UIColorFromRGB(0x666666)];
     [self.couponTextField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
     [self.couponTextField setPlaceholder:STRING_ENTER_COUPON];
@@ -491,7 +497,7 @@
     self.subtotalView.layer.cornerRadius = 5.0f;
     
     self.subtotalTitle = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, 0.0f, self.cartScrollView.frame.size.width - (2 * horizontalMargin), 26.0f)];
-    [self.subtotalTitle setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
+    [self.subtotalTitle setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
     [self.subtotalTitle setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.subtotalTitle setText:STRING_SUBTOTAL];
     [self.subtotalTitle setBackgroundColor:[UIColor clearColor]];
@@ -502,17 +508,17 @@
     [self.subtotalView addSubview:self.subtotalTitleSeparator];
     
     self.articlesCount = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.articlesCount setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [self.articlesCount setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
     [self.articlesCount setTextColor:UIColorFromRGB(0x666666)];
     [self.articlesCount setBackgroundColor:[UIColor clearColor]];
     NSInteger cartCount = [[[self cart] cartCount] integerValue];
     if(1 == cartCount)
     {
-        [self.articlesCount setText:STRING_ARTICLE];
+        [self.articlesCount setText:STRING_ITEM_CART];
     }
     else
     {
-        [self.articlesCount setText:[NSString stringWithFormat:STRING_ARTICLES, cartCount]];
+        [self.articlesCount setText:[NSString stringWithFormat:STRING_ITEMS_CART, cartCount]];
     }
     [self.articlesCount sizeToFit];
     [self.articlesCount setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.subtotalTitleSeparator.frame) + 10.0f, 50.f, self.articlesCount.frame.size.height)];
@@ -566,7 +572,7 @@
     }
     
     self.cartVatLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.cartVatLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [self.cartVatLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
     [self.cartVatLabel setTextColor:UIColorFromRGB(0x666666)];
     [self.cartVatLabel setText:[NSString stringWithFormat:STRING_TAX_INC, STRING_VAT]];
     [self.cartVatLabel sizeToFit];
@@ -583,7 +589,7 @@
     if(VALID_NOTEMPTY(priceRuleKeysString, NSString) && VALID_NOTEMPTY(priceRuleValuesString, NSString))
     {
         self.priceRulesLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [self.priceRulesLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+        [self.priceRulesLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
         [self.priceRulesLabel setTextColor:UIColorFromRGB(0x666666)];
         [self.priceRulesLabel setText:priceRuleKeysString];
         [self.priceRulesLabel setNumberOfLines:0];
@@ -598,7 +604,7 @@
         
         
         self.priceRulesValue = [[UILabel alloc] initWithFrame:CGRectZero];
-        [self.priceRulesValue setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+        [self.priceRulesValue setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
         [self.priceRulesValue setTextColor:UIColorFromRGB(0x666666)];
         [self.priceRulesValue setText:priceRuleValuesString];
         [self.priceRulesValue setNumberOfLines:0];
@@ -632,7 +638,7 @@
 
     
     self.extraCostsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.extraCostsLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [self.extraCostsLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
     [self.extraCostsLabel setTextColor:UIColorFromRGB(0x666666)];
     [self.extraCostsLabel setText:STRING_EXTRA_COSTS];
     [self.extraCostsLabel sizeToFit];
@@ -644,7 +650,7 @@
     [self.subtotalView addSubview:self.extraCostsLabel];
     
     self.extraCostsValue = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.extraCostsValue setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [self.extraCostsValue setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
     [self.extraCostsValue setTextColor:UIColorFromRGB(0x666666)];
     [self.extraCostsValue setText:[[self cart] extraCostsFormatted]];
     [self.extraCostsValue sizeToFit];
@@ -656,14 +662,14 @@
     [self.subtotalView addSubview:self.extraCostsValue];
     
     self.totalLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.totalLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [self.totalLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
     [self.totalLabel setTextColor:UIColorFromRGB(0x666666)];
     [self.totalLabel setText:STRING_TOTAL];
     [self.totalLabel sizeToFit];
     [self.totalLabel setBackgroundColor:[UIColor clearColor]];
     
     self.totalValue = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.totalValue setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [self.totalValue setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
     [self.totalValue setTextColor:UIColorFromRGB(0xcc0000)];
     [self.totalValue setText:[[self cart] cartValueFormatted]];
     [self.totalValue sizeToFit];
@@ -672,7 +678,7 @@
     if(VALID_NOTEMPTY([[self cart] couponMoneyValue], NSNumber) && 0.0f < [[[self cart] couponMoneyValue] floatValue])
     {
         self.couponLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [self.couponLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+        [self.couponLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
         [self.couponLabel setTextColor:UIColorFromRGB(0x3aaa35)];
         [self.couponLabel setText:STRING_VOUCHER];
         [self.couponLabel sizeToFit];
@@ -684,7 +690,7 @@
         [self.subtotalView addSubview:self.couponLabel];
         
         self.couponValue = [[UILabel alloc] initWithFrame:CGRectZero];
-        [self.couponValue setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+        [self.couponValue setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
         [self.couponValue setTextColor:UIColorFromRGB(0x3aaa35)];
         [self.couponValue setText:[NSString stringWithFormat:@"- %@", [[self cart] couponMoneyValueFormatted]]];
         [self.couponValue sizeToFit];
@@ -763,7 +769,7 @@
     [self.checkoutButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]] forState:UIControlStateHighlighted];
     [self.checkoutButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]] forState:UIControlStateSelected];
     [self.checkoutButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"disabled"]] forState:UIControlStateDisabled];
-    [self.checkoutButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+    [self.checkoutButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
     [self.checkoutButton setTitle:STRING_PROCEED_TO_CHECKOUT forState:UIControlStateNormal];
     [self.checkoutButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.checkoutButton addTarget:self action:@selector(checkoutButtonPressed) forControlEvents:UIControlEventTouchUpInside];
@@ -789,7 +795,7 @@
         [self.callToOrderButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"highlighted"]] forState:UIControlStateHighlighted];
         [self.callToOrderButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"highlighted"]] forState:UIControlStateSelected];
         [self.callToOrderButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"disabled"]] forState:UIControlStateDisabled];
-        [self.callToOrderButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+        [self.callToOrderButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
         [self.callToOrderButton setTitle:STRING_CALL_TO_ORDER forState:UIControlStateNormal];
         [self.callToOrderButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
         [self.callToOrderButton addTarget:self action:@selector(callToOrderButtonPressed) forControlEvents:UIControlEventTouchUpInside];
@@ -803,6 +809,11 @@
                                                        self.cartScrollView.frame.origin.y + CGRectGetMaxY(self.callToOrderButton.frame) + 6.0f)];
     }
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CartWithItem"];
+    
+    if([self.cart.extraCosts integerValue] == 0){
+        [self.extraCostsLabel setHidden:YES];
+        [self.extraCostsValue setHidden:YES];
+    }
 }
 
 -(void)goToHomeScreen
@@ -1121,7 +1132,7 @@
     if (kind == UICollectionElementKindSectionHeader) {
         JACartListHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cartListHeader" forIndexPath:indexPath];
         
-        [headerView loadHeaderWithText:@"Items" width:self.productCollectionView.frame.size.width];
+        [headerView loadHeaderWithText:STRING_ITEMS width:self.productCollectionView.frame.size.width];
         
         reusableview = headerView;
     }

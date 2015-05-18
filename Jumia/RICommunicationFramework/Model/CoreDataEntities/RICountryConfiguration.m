@@ -27,6 +27,7 @@
 @dynamic reviewRequiresLogin;
 @dynamic languages;
 @dynamic facebookAvailable;
+@dynamic gtmId;
 
 + (RICountryConfiguration *)parseCountryConfiguration:(NSDictionary *)json
 {
@@ -56,8 +57,8 @@
         newConfig.decimalsSep = [json objectForKey:@"decimals_sep"];
     }
     
-    if ([json objectForKey:@"ga_id"]) {
-        newConfig.gaId = [json objectForKey:@"ga_id"];
+    if ([json objectForKey:@"ga_ios_id"]) {
+        newConfig.gaId = [json objectForKey:@"ga_ios_id"];
     }
     
     if ([json objectForKey:@"phone_number"]) {
@@ -66,6 +67,10 @@
     
     if ([json objectForKey:@"cs_email"]) {
         newConfig.csEmail = [json objectForKey:@"cs_email"];
+    }
+    
+    if([json objectForKey:@"gtm_ios"]){
+        newConfig.gtmId = [json objectForKey:@"gtm_ios"];
     }
     
     if([json objectForKey:@"facebook_is_available"]){
@@ -135,7 +140,8 @@
 
 + (NSString*)formatPrice:(NSNumber*)price country:(RICountryConfiguration*)country
 {
-    NSString *formattedPrice = [price stringValue];
+    NSDecimalNumber* decimalNumber = [NSDecimalNumber decimalNumberWithDecimal:[price decimalValue]];
+    NSString* formattedPrice = [decimalNumber stringValue];
     
     NSString* noFraction = @"";
     NSString* fraction = @"";

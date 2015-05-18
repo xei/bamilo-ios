@@ -94,6 +94,9 @@ UIAlertViewDelegate
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     
+    self.brandLabel.font = [UIFont fontWithName:kFontMediumName size:self.brandLabel.font.pointSize];
+    self.nameLabel.font = [UIFont fontWithName:kFontRegularName size:self.nameLabel.font.pointSize];
+    
     self.topView.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.brandLabel.text = self.product.brand;
@@ -338,7 +341,7 @@ UIAlertViewDelegate
                                                                 verticalMargin,
                                                                 centerViewWidth - (2 * dynamicFormHorizontalMargin),
                                                                 16.0f)];
-    self.fixedLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+    self.fixedLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
     self.fixedLabel.text = STRING_RATE_PRODUCT;
     self.fixedLabel.textColor = UIColorFromRGB(0x666666);
     
@@ -351,10 +354,10 @@ UIAlertViewDelegate
         NSInteger count = 0;
         CGFloat initialContentY = 0;
         self.ratingsDynamicForm = [[JADynamicForm alloc] initWithForm:self.ratingsForm
-                                                             delegate:nil
                                                      startingPosition:initialContentY
                                                             widthSize:centerViewWidth
                                                    hasFieldNavigation:YES];
+        
         self.ratingsContentView = [UIView new];
         for (UIView *view in self.ratingsDynamicForm.formViews)
         {
@@ -385,7 +388,6 @@ UIAlertViewDelegate
     if (self.reviewsForm) {
         CGFloat initialContentY = 0;
         self.reviewsDynamicForm = [[JADynamicForm alloc] initWithForm:self.reviewsForm
-                                                             delegate:nil
                                                      startingPosition:initialContentY
                                                             widthSize:centerViewWidth
                                                    hasFieldNavigation:YES];
@@ -454,7 +456,7 @@ UIAlertViewDelegate
         CGFloat maxWriteReviewWidth = centerViewWidth - writeReviewLabelX;
         UILabel* writeReviewLabel = [UILabel new];
         writeReviewLabel.textColor = UIColorFromRGB(0x666666);
-        writeReviewLabel.font = [UIFont fontWithName:@"Helvetica-Neue" size:13.0f];
+        writeReviewLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
         writeReviewLabel.numberOfLines = 2;
         writeReviewLabel.text = STRING_WRITE_FULL_REVIEW;
         [writeReviewLabel sizeToFit];
@@ -494,7 +496,7 @@ UIAlertViewDelegate
                            forState:UIControlStateNormal];
     [self.sendReviewButton setTitleColor:UIColorFromRGB(0x4e4e4e)
                                 forState:UIControlStateNormal];
-    self.sendReviewButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16.0f];
+    self.sendReviewButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:16.0f];
     [self.sendReviewButton setBackgroundImage:buttonImageNormal forState:UIControlStateNormal];
     [self.sendReviewButton setBackgroundImage:buttonImageHighlighted forState:UIControlStateHighlighted];
     [self.sendReviewButton setBackgroundImage:buttonImageHighlighted forState:UIControlStateSelected];

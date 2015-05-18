@@ -38,7 +38,8 @@
 
 - (UIImage *)activityImage {
     
-    UIImage *facebookMessengerImage = [UIImage imageNamed:[NSString stringWithFormat:@"facebookMessenger"]];
+    UIImage *facebookMessengerImage = [UIImage imageNamed:[NSString stringWithFormat:@"facebookMessenger_noColor"]];
+    
     return facebookMessengerImage;
 }
 

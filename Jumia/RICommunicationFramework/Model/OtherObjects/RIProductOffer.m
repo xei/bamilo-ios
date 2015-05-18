@@ -115,8 +115,8 @@
             newProductOffer.price = [productJSON objectForKey:@"price"];
             newProductOffer.priceFormatted = [RICountryConfiguration formatPrice:newProductOffer.price country:country];
         }
-        if ([productJSON objectForKey:@"price_euroConverted"]) {
-            newProductOffer.priceEuroConverted = [productJSON objectForKey:@"price_euroConverted"];
+        if ([productJSON objectForKey:@"price_converted"]) {
+            newProductOffer.priceEuroConverted = [productJSON objectForKey:@"price_converted"];
         }
         if ([productJSON objectForKey:@"min_delivery_time"]) {
             newProductOffer.minDeliveryTime = [productJSON objectForKey:@"min_delivery_time"];

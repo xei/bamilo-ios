@@ -54,10 +54,7 @@ UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    CGFloat total = self.categories.count + 1;//add one for title
-    if (VALID_NOTEMPTY(self.currentCategory, RICategory)) {
-        total++;
-    }
+    CGFloat total = self.categories.count + 2;//add one for title and another one for backbutton
     return total;
 }
 
@@ -107,7 +104,7 @@ UITableViewDelegate
     if (0 == realIndex) {
         //this is the back cell
         cell.textLabel.text = backCellTitle;
-        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:17.0f];
+        cell.textLabel.font = [UIFont fontWithName:kFontRegularName size:17.0f];
         cell.textLabel.textColor = UIColorFromRGB(0xc8c8c8);
         cell.accessoryType = UITableViewCellAccessoryNone;
         [cell.imageView setImage:[UIImage imageNamed:@"btn_back"]];
@@ -122,7 +119,7 @@ UITableViewDelegate
         if (0 == realIndex) {
             //this is the current category cell
             cell.textLabel.text = self.currentCategory.name;
-            cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0f];
+            cell.textLabel.font = [UIFont fontWithName:kFontBoldName size:14.0f];
             cell.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
             cell.accessoryType = UITableViewCellAccessoryNone;
             return cell;
@@ -132,7 +129,7 @@ UITableViewDelegate
         if (0 == realIndex) {
             //this is the current category cell
             cell.textLabel.text = [STRING_CATEGORIES uppercaseString];
-            cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
+            cell.textLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
             cell.textLabel.textColor = UIColorFromRGB(0xc8c8c8);
             cell.accessoryType = UITableViewCellAccessoryNone;
             clickView.enabled = NO;
@@ -146,7 +143,7 @@ UITableViewDelegate
     RICategory* category = [self.categories objectAtIndex:realIndex];
     
     cell.textLabel.text = category.name;
-    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17.0f];
+    cell.textLabel.font = [UIFont fontWithName:kFontLightName size:17.0f];
     cell.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
     if (VALID_NOTEMPTY(category.children, NSOrderedSet)) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -165,7 +162,6 @@ UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger realIndex = indexPath.row;
-    NSString* backButtonTitle = [STRING_CATEGORIES uppercaseString];
     
     //ALWAYS has back cell
     if (0 == realIndex) {
@@ -184,8 +180,7 @@ UITableViewDelegate
                                                                 object:@{@"category":self.currentCategory}];
             return;
         }
-        backButtonTitle = self.currentCategory.name;
-    } else {
+           } else {
         if (0 == realIndex) {
             //do nothing
             return;

@@ -7,14 +7,12 @@
 //
 
 #import "JACampaignsViewController.h"
-#import "RITeaser.h"
-#import "RITeaserText.h"
-#import "RITeaserImage.h"
 #import "RICart.h"
 #import "RICampaign.h"
 #import "RICustomer.h"
 #import "JAUtils.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import "RITeaserComponent.h"
 
 @interface JACampaignsViewController ()
 
@@ -42,24 +40,29 @@
 
 @property (nonatomic, assign)BOOL isLoaded;
 
+@property (nonatomic, strong)NSMutableArray* activeCampaignComponents;
+
 @end
 
 @implementation JACampaignsViewController
 
 - (void)viewDidLoad
 {
+    self.searchBarIsVisible = YES;
     [super viewDidLoad];
     
     self.campaignIndex = -1;
     
     self.navBarLayout.title = STRING_CAMPAIGNS;
-    self.navBarLayout.backButtonTitle = STRING_HOME;
+    [self.navBarLayout setShowBackButton:YES];
+    
     
     self.pickerNamesAlreadySet = NO;
     
-    self.pickerScrollView = [[JAPickerScrollView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x,
-                                                                                 self.view.bounds.origin.y,
-                                                                                 self.view.bounds.size.width,
+    CGRect bounds = [self viewBounds];
+    self.pickerScrollView = [[JAPickerScrollView alloc] initWithFrame:CGRectMake(bounds.origin.x,
+                                                                                 bounds.origin.y,
+                                                                                 bounds.size.width,
                                                                                  44.0f)];
     self.pickerScrollView.delegate = self;
     [self.view addSubview:self.pickerScrollView];
@@ -88,7 +91,7 @@
     [super viewWillAppear:animated];
     
     if (self.isLoaded) {
-        [self setupCampaings:self.view.frame.size.width height:self.view.frame.size.height interfaceOrientation:self.interfaceOrientation];
+        [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
     } else {
         [self loadCampaigns];
     }
@@ -110,17 +113,12 @@
     [self.pickerScrollView setHidden:YES];
     [self.scrollView setHidden:YES];
     
-    if(!((UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) && (UIInterfaceOrientationIsLandscape(toInterfaceOrientation))) && !((UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) && (UIInterfaceOrientationIsPortrait(toInterfaceOrientation))) ){
-        
-    [self setupCampaings:self.view.frame.origin.y + self.view.frame.size.height height:self.view.frame.size.width - self.view.frame.origin.y interfaceOrientation:toInterfaceOrientation];
-    
-    }
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [self setupCampaings:self.view.frame.size.width height:self.view.frame.size.height interfaceOrientation:self.interfaceOrientation];
+    [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
     
     [self.pickerScrollView setHidden:NO];
     [self.scrollView setHidden:NO];
@@ -136,13 +134,13 @@
     {
         self.pickerScrollView.startingIndex = self.campaignIndex;
     }
-    
-    [self.pickerScrollView setFrame:CGRectMake(self.view.bounds.origin.x,
-                                               self.view.bounds.origin.y,
+    CGRect bounds = [self viewBounds];
+    [self.pickerScrollView setFrame:CGRectMake(bounds.origin.x,
+                                               bounds.origin.y,
                                                width,
                                                self.pickerScrollView.frame.size.height)];
     
-    [self.scrollView setFrame:CGRectMake(self.view.bounds.origin.x,
+    [self.scrollView setFrame:CGRectMake(bounds.origin.x,
                                          CGRectGetMaxY(self.pickerScrollView.frame),
                                          width,
                                          height - self.pickerScrollView.frame.size.height)];
@@ -177,34 +175,37 @@
     {
         [self createCampaignPageAtX:currentX];
     }
-    else if (VALID_NOTEMPTY(self.campaignTeasers, NSArray))
+    else if (VALID_NOTEMPTY(self.teaserGrouping, RITeaserGrouping) && VALID_NOTEMPTY(self.teaserGrouping.teaserComponents, NSOrderedSet))
     {
-        for (int i = 0; i < self.campaignTeasers.count; i++)
+        self.activeCampaignComponents = [NSMutableArray new];
+        for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++)
         {
-            JACampaignPageView* campaignPageView = [self createCampaignPageAtX:currentX];
-            currentX += campaignPageView.frame.size.width;
             
-            RITeaser* teaser = [self.campaignTeasers objectAtIndex:i];
-            if (VALID_NOTEMPTY(teaser.teaserTexts, NSOrderedSet)) {
-                RITeaserText* teaserText = [teaser.teaserTexts firstObject];
-                if (VALID_NOTEMPTY(teaserText, RITeaserText)) {
-                    [optionList addObject:teaserText.name];
-                    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"Campaign"];
-                    [[RITrackingWrapper sharedInstance]trackScreenWithName:teaserText.name];
-                    
-                    if ([teaserText.name isEqualToString:self.startingTitle]) {
-                        startingIndex = i;
+            RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
+            if (VALID_NOTEMPTY(component, RITeaserComponent)) {
+                
+                BOOL isActive = YES;
+                //its active unless there is an ending date AND that date has passed
+                if (VALID_NOTEMPTY(component.endingDate, NSDate)) {
+                    NSInteger remainingSeconds = (NSInteger)[component.endingDate timeIntervalSinceNow];
+                    if (0 >= remainingSeconds) {
+                        isActive = NO;
                     }
                 }
-            }
-            else if (VALID_NOTEMPTY(teaser.teaserImages, NSOrderedSet))
-            {
-                RITeaserImage* teaserImage = [teaser.teaserImages firstObject];
-                if (VALID_NOTEMPTY(teaserImage, RITeaserImage)) {
-                    [optionList addObject:teaserImage.teaserDescription];
+                
+                if (isActive) {
+                    JACampaignPageView* campaignPageView = [self createCampaignPageAtX:currentX];
+                    currentX += campaignPageView.frame.size.width;
                     
-                    if ([teaserImage.teaserDescription isEqualToString:self.startingTitle]) {
-                        startingIndex = i;
+                    if (VALID_NOTEMPTY(component.name, NSString)) {
+                        [optionList addObject:component.name];
+                        [self.activeCampaignComponents addObject:component];
+                        [[RITrackingWrapper sharedInstance]trackScreenWithName:@"Campaign"];
+                        [[RITrackingWrapper sharedInstance]trackScreenWithName:component.name];
+                        
+                        if ([component.name isEqualToString:self.startingTitle]) {
+                            startingIndex = i;
+                        }
                     }
                 }
             }
@@ -220,7 +221,7 @@
     
     self.isLoaded = YES;
     
-    [self setupCampaings:self.view.frame.size.width height:self.view.frame.size.height interfaceOrientation:self.interfaceOrientation];
+    [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
 }
 
 - (JACampaignPageView*)createCampaignPageAtX:(CGFloat)xPosition
@@ -245,19 +246,12 @@
             
             if (VALID_NOTEMPTY(self.campaignId, NSString)) {
                 [self loadPage:campaignPageView withCampaignId:self.campaignId];
-            } else if (VALID_NOTEMPTY(self.campaignTeasers, NSArray)) {
-                RITeaser* teaser = [self.campaignTeasers objectAtIndex:index];
-                if (VALID_NOTEMPTY(teaser.teaserTexts, NSOrderedSet)) {
-                    RITeaserText* teaserText = [teaser.teaserTexts firstObject];
-                    if (VALID_NOTEMPTY(teaserText, RITeaserText)) {
-                        [self loadPage:campaignPageView withCampaignUrl:teaserText.url];
-                    }
-                }
-                else if (VALID_NOTEMPTY(teaser.teaserImages, NSOrderedSet)) {
-                    RITeaserImage* teaserImage = [teaser.teaserImages firstObject];
-                    if (VALID_NOTEMPTY(teaserImage, RITeaserImage)) {
-                        [self loadPage:campaignPageView withCampaignUrl:teaserImage.url];
-                    }
+            } else if (VALID_NOTEMPTY(self.activeCampaignComponents, NSMutableArray)) {
+                
+                RITeaserComponent* component = [self.activeCampaignComponents objectAtIndex:index];
+                
+                if (VALID_NOTEMPTY(component, RITeaserComponent) && VALID_NOTEMPTY(component.url, NSString)) {
+                    [self loadPage:campaignPageView withCampaignUrl:component.url];
                 }
             } else if (VALID_NOTEMPTY(self.campaignUrl, NSString)) {
                 [self loadPage:campaignPageView withCampaignUrl:self.campaignUrl];
@@ -319,6 +313,10 @@
     {
         [self showMaintenancePage:@selector(loadCampaigns) objects:nil];
     }
+    else if(RIApiResponseKickoutView == apiResponse)
+    {
+        [self showKickoutView:@selector(loadCampaigns) objects:nil];
+    }
     else
     {
         if (RIApiResponseNoInternetConnection == apiResponse)
@@ -376,7 +374,6 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                             object:nil
                                                           userInfo:@{ @"sku" : sku ,
-                                                                      @"previousCategory" : STRING_CAMPAIGNS,
                                                                       @"show_back_button" : [NSNumber numberWithBool:YES]}];
     }
 }

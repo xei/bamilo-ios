@@ -24,7 +24,7 @@
     self.screenName = @"PriceFilter";
     
     self.navBarLayout.title = STRING_PRICE;
-    self.navBarLayout.backButtonTitle = STRING_FILTERS;
+    [self.navBarLayout setShowBackButton:YES];
     self.navBarLayout.showDoneButton = YES;
     
     self.priceFiltersView = [[[NSBundle mainBundle] loadNibNamed:@"JAPriceFiltersView" owner:self options:nil] objectAtIndex:0];

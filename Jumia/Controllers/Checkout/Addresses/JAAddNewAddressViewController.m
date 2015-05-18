@@ -145,7 +145,7 @@ JAPickerDelegate>
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"NewAddress"];
 }
 
-- (void) getForms
+- (void)getForms
 {
     if(RIApiResponseSuccess == self.apiResponse)
     {
@@ -156,11 +156,44 @@ JAPickerDelegate>
     self.numberOfGetFormRequests = 2;
     self.loadFailed = NO;
     
+    
+    typedef void (^GetBillingDynamicFormBlock)(void);
+    GetBillingDynamicFormBlock getBillingDynamicFormBlock = ^void{
+        [RIForm getForm:@"addresscreate"
+         extraArguments:nil
+           successBlock:^(RIForm *form)
+         {
+             self.billingDynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:self.billingAddressViewCurrentY widthSize:self.billingContentView.frame.size.width hasFieldNavigation:NO];
+             
+             [self.billingDynamicForm setDelegate:self];
+             
+             for(UIView *view in self.billingDynamicForm.formViews)
+             {
+                 [self.billingContentView addSubview:view];
+             }
+             self.numberOfGetFormRequests--;
+             
+         }failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
+         {
+             if(!self.loadFailed)
+             {
+                 self.apiResponse = apiResponse;
+             }
+             
+             self.loadFailed = YES;
+             self.numberOfGetFormRequests--;
+         }];
+    };
+    
     [RIForm getForm:@"addresscreate"
      extraArguments:self.extraParameters
        successBlock:^(RIForm *form)
-     {
-         self.shippingDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self startingPosition:self.shippingAddressViewCurrentY widthSize:self.shippingContentView.frame.size.width hasFieldNavigation:NO];
+    {
+         self.shippingDynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:self.shippingAddressViewCurrentY widthSize:self.shippingContentView.frame.size.width hasFieldNavigation:NO];
+        
+        [self.shippingDynamicForm setDelegate:self];
+        
+         getBillingDynamicFormBlock();
          
          for(UIView *view in self.shippingDynamicForm.formViews)
          {
@@ -171,29 +204,7 @@ JAPickerDelegate>
      }
        failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
      {
-         if(!self.loadFailed)
-         {
-             self.apiResponse = apiResponse;
-         }
-         
-         self.loadFailed = YES;
-         self.numberOfGetFormRequests--;
-     }];
-    
-    [RIForm getForm:@"addresscreate"
-     extraArguments:nil
-       successBlock:^(RIForm *form)
-     {
-         self.billingDynamicForm = [[JADynamicForm alloc] initWithForm:form delegate:self startingPosition:self.billingAddressViewCurrentY widthSize:self.billingContentView.frame.size.width hasFieldNavigation:NO];
-         
-         for(UIView *view in self.billingDynamicForm.formViews)
-         {
-             [self.billingContentView addSubview:view];
-         }
-         self.numberOfGetFormRequests--;
-     }
-       failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
-     {
+         getBillingDynamicFormBlock();
          if(!self.loadFailed)
          {
              self.apiResponse = apiResponse;
@@ -276,8 +287,6 @@ JAPickerDelegate>
     [self hideLoading];
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    
-    [self hideKeyboard];
 }
 
 -(void)initViews
@@ -288,6 +297,7 @@ JAPickerDelegate>
         self.stepView.translatesAutoresizingMaskIntoConstraints = YES;
         self.stepIcon.translatesAutoresizingMaskIntoConstraints = YES;
         self.stepLabel.translatesAutoresizingMaskIntoConstraints = YES;
+        self.stepLabel.font = [UIFont fontWithName:kFontBoldName size:self.stepLabel.font.pointSize];
         [self.stepLabel setText:STRING_CHECKOUT_ADDRESS];
         [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];        
     }
@@ -321,7 +331,7 @@ JAPickerDelegate>
     self.shippingContentView.layer.cornerRadius = 5.0f;
     
     self.shippingHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, self.shippingContentView.frame.size.width, 26.0f)];
-    [self.shippingHeaderLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
+    [self.shippingHeaderLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
     [self.shippingHeaderLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.shippingHeaderLabel setText:STRING_ADD_NEW_ADDRESS];
     [self.shippingHeaderLabel setBackgroundColor:[UIColor clearColor]];
@@ -343,7 +353,7 @@ JAPickerDelegate>
     [self.billingContentView setHidden:YES];
     
     self.billingHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, self.billingContentView.frame.size.width - 12.0f, 26.0f)];
-    [self.billingHeaderLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
+    [self.billingHeaderLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
     [self.billingHeaderLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.billingHeaderLabel setText:STRING_BILLING_ADDRESSES];
     [self.billingHeaderLabel setBackgroundColor:[UIColor clearColor]];
@@ -388,7 +398,7 @@ JAPickerDelegate>
     }
 }
 
-- (void) setupStepView:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+- (void)setupStepView:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
     CGFloat stepViewLeftMargin = 73.0f;
     NSString *stepBackgroundImageName = @"headerCheckoutStep2";

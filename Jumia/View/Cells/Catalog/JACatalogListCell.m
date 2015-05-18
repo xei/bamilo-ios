@@ -62,7 +62,7 @@
     }
     [self.recentLabel removeFromSuperview];
     self.recentLabel = [[UILabel alloc] initWithFrame:CGRectMake(recentLabelX, recentLabelY, 48.0f, 14.0f)];
-    self.recentLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:8.0f];
+    self.recentLabel.font = [UIFont fontWithName:kFontBoldName size:8.0f];
     self.recentLabel.text = STRING_NEW;
     self.recentLabel.textAlignment = NSTextAlignmentCenter;
     self.recentLabel.textColor = [UIColor whiteColor];
@@ -70,6 +70,7 @@
     [self addSubview:self.recentLabel];
     self.recentLabel.hidden = ![product.isNew boolValue];
     
+    self.addToCartButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.addToCartButton.titleLabel.font.pointSize];
     [self.addToCartButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.addToCartButton setTitle:STRING_ADD_TO_SHOPPING_CART forState:UIControlStateNormal];
 }
@@ -81,6 +82,7 @@
     [self.ratingsView removeFromSuperview];
     
     NSString *stringQuantity = [NSString stringWithFormat:STRING_QUANTITY, [[cartItem quantity] stringValue]];
+    self.quantityButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.quantityButton.titleLabel.font.pointSize];
     [self.quantityButton setBackgroundColor:[UIColor clearColor]];
     [self.quantityButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
     [self.quantityButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];

@@ -29,7 +29,11 @@
     
     for (NSObject *obj in xib) {
         if ([obj isKindOfClass:[JAPDVSingleRelatedItem class]]) {
-            return (JAPDVSingleRelatedItem *)obj;
+            JAPDVSingleRelatedItem* real = (JAPDVSingleRelatedItem* )obj;
+            real.labelBrand.font = [UIFont fontWithName:kFontRegularName size:real.labelBrand.font.pointSize];
+            real.labelName.font = [UIFont fontWithName:kFontLightName size:real.labelName.font.pointSize];
+            real.labelPrice.font = [UIFont fontWithName:kFontLightName size:real.labelPrice.font.pointSize];
+            return real;
         }
     }
     

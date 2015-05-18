@@ -37,6 +37,7 @@
     self.navBarLayout.title = STRING_RECENT_SEARCHES;
         
     self.noSearchesView.layer.cornerRadius = 5.0f;
+    self.noSearchesLabel.font = [UIFont fontWithName:kFontRegularName size:self.noSearchesLabel.font.pointSize];
     [self.noSearchesLabel setText:STRING_NO_RECENT_SEARCHES];
     
     self.recentSearches = [NSMutableArray new];
@@ -57,7 +58,7 @@
         
         self.button = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        UIFont *font = [UIFont fontWithName:@"HelveticaNeue"
+        UIFont *font = [UIFont fontWithName:kFontRegularName
                                        size:16.0];
         
         self.button.titleLabel.font = font;

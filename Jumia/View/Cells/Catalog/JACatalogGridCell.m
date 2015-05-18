@@ -26,7 +26,7 @@
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         priceY = JACatalogViewControllerGridCellPriceViewY_ipad;
     }
-    self.priceView.frame = CGRectMake(2.0f,
+    self.priceView.frame = CGRectMake(8.0f,
                                       priceY,
                                       self.frame.size.width - 4.0f,
                                       self.priceView.frame.size.height);
@@ -38,7 +38,7 @@
     
     [self.recentLabel removeFromSuperview];
     self.recentLabel = [[UILabel alloc] initWithFrame:CGRectMake(-2.0f, recentLabelY, 48.0f, 14.0f)];
-    self.recentLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:8.0f];
+    self.recentLabel.font = [UIFont fontWithName:kFontBoldName size:8.0f];
     self.recentLabel.text = STRING_NEW;
     self.recentLabel.textAlignment = NSTextAlignmentCenter;
     self.recentLabel.textColor = [UIColor whiteColor];

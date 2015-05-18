@@ -50,6 +50,8 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
+    NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse *)response;
+    self.lastStatusCode = [httpResponse statusCode];
     [self.mutableData setLength:0];
 }
 
@@ -84,10 +86,17 @@
         NSLog(@"Connection failed with error: %@", error);
         self.failureBlock(RIApiResponseTimeOut, nil, error);
         [self clearRequestData];
-    }    else if(error.code == 503)
+    }
+    else if(error.code == 503)
     {
         NSLog(@"Connection failed with error: %@", error);
         self.failureBlock(RIApiResponseMaintenancePage, nil, error);
+        [self clearRequestData];
+    }
+    else if(error.code == 429)
+    {
+        NSLog(@"Connection failed with error: %@", error);
+        self.failureBlock(RIApiResponseKickoutView, nil, error);
         [self clearRequestData];
     }
     else
@@ -116,7 +125,15 @@
         }
         else
         {
-            self.failureBlock(RIApiResponseMaintenancePage, responseJSON, nil);
+            if (429 == self.lastStatusCode) {
+                self.lastStatusCode = 0;
+                self.failureBlock(RIApiResponseKickoutView, responseJSON, nil);
+            } else if (503 == self.lastStatusCode){
+                self.lastStatusCode = 0;
+                self.failureBlock(RIApiResponseMaintenancePage, responseJSON, nil);
+            } else {
+                self.failureBlock(RIApiResponseAPIError, responseJSON, nil);
+            }
         }
     } else {
         self.successBlock(RIApiResponseSuccess, responseJSON);

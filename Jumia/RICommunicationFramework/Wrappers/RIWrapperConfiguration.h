@@ -9,6 +9,10 @@
 #ifndef Comunication_Project_RIWrapperConfiguration_h
 #define Comunication_Project_RIWrapperConfiguration_h
 
+#ifndef APP_NAME
+#define APP_NAME [[[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleNameKey] capitalizedString]
+#endif
+
 #ifndef ISEMPTY
 #define ISEMPTY(__OBJECT) ( (nil == __OBJECT) ? YES : ( (nil != __OBJECT && [__OBJECT respondsToSelector:@selector(count)]) ? ([__OBJECT performSelector:@selector(count)] <= 0) : ( (nil != __OBJECT && [__OBJECT respondsToSelector:@selector(length)]) ? ([__OBJECT performSelector:@selector(length)] <= 0) : NO ) ) )
 #endif
@@ -45,7 +49,8 @@ typedef NS_ENUM(NSInteger, RIApiResponse) {
     RIApiResponseUnknownError           = 4,
     RIApiResponseAPIError               = 5,
     RIApiResponseNoInternetConnection   = 6,
-    RIApiResponseMaintenancePage        = 7
+    RIApiResponseMaintenancePage        = 7,
+    RIApiResponseKickoutView            = 8
 };
 
 #ifndef UIColorFromRGB

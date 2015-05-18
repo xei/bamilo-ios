@@ -789,6 +789,18 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                                                                     object:nil
                                                                   userInfo:@{@"campaign_id":arguments}];
             }
+            else if ([key isEqualToString:@"ss"])
+            {
+                if(VALID_NOTEMPTY(urlComponents, NSArray) && 3 == urlComponents.count)
+                {
+                    NSString* shopID = [urlComponents objectAtIndex:2];
+                    if (VALID_NOTEMPTY(shopID, NSString)) {
+                        NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+                        [userInfo setObject:shopID forKey:@"shop_id"];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithShopUrlNofication object:nil userInfo:userInfo];
+                    }
+                }
+            }
         }
     }
 }

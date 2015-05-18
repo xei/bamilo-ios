@@ -96,6 +96,7 @@ UITextFieldDelegate>
     self.stepView.translatesAutoresizingMaskIntoConstraints = YES;
     self.stepIcon.translatesAutoresizingMaskIntoConstraints = YES;
     self.stepLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    self.stepLabel.font = [UIFont fontWithName:kFontBoldName size:self.stepLabel.font.pointSize];
     [self.stepLabel setText:STRING_CHECKOUT_PAYMENT];
     
     [self initViews];
@@ -147,7 +148,7 @@ UITextFieldDelegate>
 
 -(void)continueLoading
 {
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
     {
         [self showLoading];
     }
@@ -172,6 +173,10 @@ UITextFieldDelegate>
          if(RIApiResponseMaintenancePage == apiResponse)
          {
              [self showMaintenancePage:@selector(continueLoading) objects:nil];
+         }
+         else if(RIApiResponseKickoutView == apiResponse)
+         {
+             [self showKickoutView:@selector(continueLoading) objects:nil];
          }
          else
          {
@@ -232,7 +237,7 @@ UITextFieldDelegate>
                                                                  0.0f,
                                                                  self.couponView.frame.size.width - 12.0f,
                                                                  26.0f)];
-    [self.couponTitle setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
+    [self.couponTitle setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
     [self.couponTitle setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.couponTitle setText:STRING_COUPON];
     [self.couponTitle setBackgroundColor:[UIColor clearColor]];
@@ -251,7 +256,7 @@ UITextFieldDelegate>
                                                                          CGRectGetMaxY(self.couponTitleSeparator.frame) + 17.0f,
                                                                          self.couponView.frame.size.width - 12.0f - 5.0f - useCouponImageNormal.size.width,
                                                                          30.0f)];
-    [self.couponTextField setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [self.couponTextField setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
     [self.couponTextField setTextColor:UIColorFromRGB(0x666666)];
     [self.couponTextField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
     [self.couponTextField setPlaceholder:STRING_ENTER_COUPON];
@@ -264,7 +269,7 @@ UITextFieldDelegate>
     [self.useCouponButton setBackgroundImage:[UIImage imageNamed:@"useCoupon_highlighted"] forState:UIControlStateHighlighted];
     [self.useCouponButton setBackgroundImage:[UIImage imageNamed:@"useCoupon_highlighted"] forState:UIControlStateSelected];
     [self.useCouponButton setBackgroundImage:[UIImage imageNamed:@"useCoupon_disabled"] forState:UIControlStateDisabled];
-    [self.useCouponButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:11.0f]];
+    [self.useCouponButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
     [self.useCouponButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.useCouponButton addTarget:self action:@selector(useCouponButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.useCouponButton setFrame:CGRectMake(CGRectGetMaxX(self.couponTextField.frame) + 5.0f,

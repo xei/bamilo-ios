@@ -44,7 +44,6 @@
     self.doneButton.translatesAutoresizingMaskIntoConstraints = YES;
     self.cartButton.translatesAutoresizingMaskIntoConstraints = YES;
     self.cartCountLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    self.searchButton.translatesAutoresizingMaskIntoConstraints = YES;
     self.logoImageView.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.titleLabel.minimumScaleFactor = 10./self.titleLabel.font.pointSize;
@@ -75,6 +74,19 @@
                                              selector:@selector(orientationChanged:)
                                                  name:UIDeviceOrientationDidChangeNotification
                                                object:nil];
+    
+    [self.logoImageView setImage:[UIImage imageNamed:@"img_navbar_logo"]];
+    
+    CGFloat fontSize = 17.0f;
+    if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"]) {
+        fontSize = 14.0f;
+    }
+    [self.editButton.titleLabel setFont:[UIFont fontWithName:kFontLightName size:fontSize]];
+    [self.backButton.titleLabel setFont:[UIFont fontWithName:kFontLightName size:fontSize]];
+    [self.doneButton.titleLabel setFont:[UIFont fontWithName:kFontLightName size:fontSize]];
+    [self.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:fontSize]];
+    [self.topTitleLabel setFont:[UIFont fontWithName:kFontRegularName size:14.0f]];
+    [self.bottomTitleLabel setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
 }
 
 - (void)orientationChanged:(NSNotification *)notification
@@ -112,9 +124,6 @@
         [self showDoneButtonWithTitle:layout.doneButtonTitle];
     } else if (layout.showCartButton) {
         [self showCartButton];
-        if (layout.showSearchButton) {
-            [self showSearchButton];
-        }
     } else { //default
         [self hideRightItems];
     }
@@ -135,6 +144,7 @@
 }
 - (void)showEditButton;
 {
+    [self.editButton setTitle:STRING_EDIT forState:UIControlStateNormal];
     self.backButton.hidden = YES;
     self.leftButton.hidden = YES;
     self.editButton.hidden = NO;
@@ -246,7 +256,7 @@
     if(!self.doneButton.hidden)
     {
         NSString *doneButtonText = self.doneButton.titleLabel.text;
-        NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:17]};
+        NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:kFontRegularName size:17]};
         CGSize doneButtonTextSize = [doneButtonText sizeWithAttributes:attributes];
         CGFloat doneButtonWidth = 6.0f + doneButtonTextSize.width;
 
@@ -270,25 +280,13 @@
                                                  self.cartCountLabel.frame.size.height)];
         
         rightItemFrame = self.cartButton.frame;
-        if (!self.searchButton.hidden) {
-            
-            [self.searchButton setFrame:CGRectMake(self.cartButton.frame.origin.x - self.searchButton.frame.size.width,
-                                                   self.searchButton.frame.origin.y,
-                                                   self.searchButton.frame.size.width,
-                                                   self.searchButton.frame.size.height)];
-            
-            rightItemFrame = CGRectMake(self.searchButton.frame.origin.x,
-                                        self.searchButton.frame.origin.y,
-                                        self.searchButton.frame.size.width + self.cartButton.frame.size.width,
-                                        self.searchButton.frame.size.height);
-        }
     }
     
     CGRect leftItemFrame = CGRectZero;
     if(!self.backButton.hidden)
     {
         NSString *backButtonText = self.backButton.titleLabel.text;
-        NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:17]};
+        NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:kFontRegularName size:17]};
         CGSize backButtonTextSize = [backButtonText sizeWithAttributes:attributes];
         
         CGFloat backButtonMaxWidth = backButtonTextSize.width;
@@ -350,7 +348,7 @@
     titleLabelWidth = width - (2 * titleLabelSideMargin);
     
     NSString *titleLabelText = self.titleLabel.text;
-    NSDictionary *titleLabelAttributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:17]};
+    NSDictionary *titleLabelAttributes = @{NSFontAttributeName: [UIFont fontWithName:kFontRegularName size:17]};
     CGSize titleLabelTextSize = [titleLabelText sizeWithAttributes:titleLabelAttributes];
     if (titleLabelTextSize.width > titleLabelWidth)
     {
@@ -388,7 +386,6 @@
     self.doneButton.hidden = NO;
     self.cartButton.hidden = YES;
     self.cartCountLabel.hidden = YES;
-    self.searchButton.hidden = YES;
 }
 
 - (void)showCartButton;
@@ -398,17 +395,11 @@
     self.cartCountLabel.hidden = NO;
 }
 
-- (void)showSearchButton
-{
-    self.searchButton.hidden = NO;
-}
-
 - (void)hideRightItems
 {
     self.doneButton.hidden = YES;
     self.cartButton.hidden = YES;
     self.cartCountLabel.hidden = YES;
-    self.searchButton.hidden = YES;
 }
 
 #pragma mark - Details

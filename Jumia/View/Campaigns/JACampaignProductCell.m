@@ -67,6 +67,7 @@
     self.backgroundContentView.layer.cornerRadius = 5.0f;
     
     //TOP STUFF
+    self.discountLabel.font = [UIFont fontWithName:kFontBoldName size:13.0f];
     self.discountLabel.textColor = [UIColor whiteColor];
     if (VALID_NOTEMPTY(campaignProduct.maxSavingPercentage, NSNumber) && 0 < [campaignProduct.maxSavingPercentage integerValue]){
         self.discountBadge.hidden = NO;
@@ -85,6 +86,7 @@
                                                 self.titleLabel.frame.size.height)];
     }
     
+    self.titleLabel.font = [UIFont fontWithName:kFontLightName size:17.0f];
     self.titleLabel.textColor = UIColorFromRGB(0x666666);
     self.titleLabel.text = campaignProduct.name;
     
@@ -94,14 +96,14 @@
                       forControlEvents:UIControlEventTouchUpInside];
     
     [self.imageView setImageWithURL:[NSURL URLWithString:[campaignProduct.imagesUrls firstObject]]
-                   placeholderImage:[UIImage imageNamed:@"placeholder_scrollableitems"]];
+                   placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
     
     //OFFER ENDED
     if (ISEMPTY(self.offerEndedLabel)) {
         self.offerEndedLabel = [UILabel new];
         self.offerEndedLabel.textAlignment = NSTextAlignmentCenter;
         self.offerEndedLabel.numberOfLines = -1;
-        self.offerEndedLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16.0f];
+        self.offerEndedLabel.font = [UIFont fontWithName:kFontBoldName size:16.0f];
         self.offerEndedLabel.textColor = UIColorFromRGB(0x4e4e4e);
         self.offerEndedLabel.text = STRING_CAMPAIGN_OFFER_ENDED;
         [self.offerEndedLabel sizeToFit];
@@ -148,7 +150,7 @@
     if (ISEMPTY(self.endLabel)) {
         self.endLabel = [[UILabel alloc] init];
         self.endLabel.text = STRING_CAMPAIGN_TIMER_END;
-        self.endLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+        self.endLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         self.endLabel.textColor = UIColorFromRGB(0x666666);
         [self.endLabel sizeToFit];
         [self.backgroundContentView addSubview:self.endLabel];
@@ -170,7 +172,7 @@
     
     if (ISEMPTY(self.timeLabel)) {
         self.timeLabel = [[UILabel alloc] init];
-        self.timeLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+        self.timeLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         self.timeLabel.textColor = UIColorFromRGB(0xcc0000);
         [self.timeLabel sizeToFit];
         [self.backgroundContentView addSubview:self.timeLabel];
@@ -210,6 +212,7 @@
                              fontSize:11.0f specialPriceOnTheLeft:NO];
     }
 
+    self.savingLabel.font = [UIFont fontWithName:kFontRegularName size:11.0f];
     self.savingLabel.textColor = UIColorFromRGB(0x666666);
     self.savingLabel.text = STRING_CAMPAIGN_SAVE;
     [self.savingLabel sizeToFit];
@@ -245,10 +248,11 @@
                                               3.0f);
     [self.percentageBarView loadWithPercentage:[campaignProduct.stockPercentage integerValue]];
 
-    
+    self.remainingStockLabel.font = [UIFont fontWithName:kFontRegularName size:11.0f];
     self.remainingStockLabel.textColor = UIColorFromRGB(0x666666);
     self.remainingStockLabel.text = [NSString stringWithFormat:STRING_CAMPAIGN_REMAINING_STOCK, [campaignProduct.stockPercentage integerValue]];
     
+    [self.buyButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
     [self.buyButton setTitle:STRING_ADD_TO_SHOPPING_CART forState:UIControlStateNormal];
     [self.buyButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.buyButton addTarget:self action:@selector(buyButtonPressed) forControlEvents:UIControlEventTouchUpInside];
@@ -285,7 +289,7 @@
                                                            1.0f);
         self.sizeLabel = [[UILabel alloc] init];
         self.sizeLabel.textColor = UIColorFromRGB(0x55a1ff);
-        self.sizeLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
+        self.sizeLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
         [self.sizeClickableView addSubview:self.sizeLabel];
         [self.sizeLabel setFrame:CGRectMake(self.sizeClickableView.bounds.origin.x + 10.0f,
                                             self.sizeClickableView.bounds.origin.y,

@@ -52,6 +52,7 @@
     
     [self.textField setPlaceholder:label];
     
+    self.textField.font = [UIFont fontWithName:kFontRegularName size:self.textField.font.pointSize];
     [self.textField setTextColor:UIColorFromRGB(0x666666)];
     [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
 
@@ -121,6 +122,7 @@
 
 -(void)setError:(NSString*)error
 {
+    self.textField.font = [UIFont fontWithName:kFontRegularName size:self.textField.font.pointSize];
     [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
     [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];
     
@@ -133,6 +135,7 @@
 
 -(void)cleanError
 {
+    self.textField.font = [UIFont fontWithName:kFontRegularName size:self.textField.font.pointSize];
     [self.textField setTextColor:UIColorFromRGB(0x666666)];
     [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
     
@@ -145,6 +148,7 @@
 
 -(BOOL)isValid
 {
+    self.textField.font = [UIFont fontWithName:kFontRegularName size:self.textField.font.pointSize];
     if (([self.dayField.required boolValue]) && (self.textField.text.length == 0))
     {
         [self.textField setTextColor:UIColorFromRGB(0xcc0000)];

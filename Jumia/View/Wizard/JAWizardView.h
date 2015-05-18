@@ -31,7 +31,7 @@
 #define kJAWizardPDV4TextHorizontalMargin 25.0f
 #define kJAWizardPDV4ViewTextVerticalMargin 72.0f
 
-#define kJAWizardFont [UIFont fontWithName:@"HelveticaNeue" size:18.0f]
+#define kJAWizardFont [UIFont fontWithName:kFontRegularName size:18.0f]
 #define kJAWizardFontColor UIColorFromRGB(0xc3c3c3)
 
 #define kJAWizardButtonBottomMargin 10.0f

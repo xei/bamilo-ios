@@ -1,0 +1,559 @@
+/* 
+   RIStrings.strings
+   Jumia
+   
+   Created by Pedro Lopes on 13/09/14.
+   Copyright (c) 2014 Rocket Internet. All rights reserved. */
+"string_update_necessary_title" = "Update လိုအပ္ပါသည္";
+
+"string_update_necessary_message_ios" = "%@ ကို ပိုမို အဆင္ေျပစြာ အသံုးျပဳႏုိင္ရန္ ျပင္ဆင္မွဳ ျပဳလုပ္ရန္ လိုအပ္ပါသည္! ဤ app ကို ဆက္လက္ အသံုးမျပဳခင္ update ျပဳလုပ္ေပးပါ။";
+
+"string_update_available_title" = "Update ရရွိႏုိင္ပါသည္";
+
+"string_update_available_message_ios" = "%@ ကို အေကာင္းဆံုး အသံုးျပဳႏုိင္ရန္ ေန႕စဥ္ update အသစ္ ရယူႏုိင္ပါသည္။";
+
+"string_update" = "Update!";
+
+"string_ok_update" = "Update လုပ္မည္";
+
+"string_no_thanks" = "Update မလုပ္ေသးပါ";
+
+"ok_label" = "အိုေက";
+
+"done_label" = "ျပီးဆံုးျပီ";
+
+"back_label" = "ေနာက္သို႕";
+
+"submit_label" = "တင္ရန္";
+
+"string_error" = "မွားယြင္းမွဳ";
+
+"login_label" = "Login၀င္ရန္";
+
+"action_label_logout" = "ထြက္ရန္";
+
+"home" = "ပင္မစာမ်က္ႏွာ";
+
+"categories" = "အမ်ိဳးအစားမ်ား";
+
+"favourites" = "ႏွစ္သက္ေသာပစၥည္းမ်ား";
+
+"recent_searches" = "လတ္တေလာ ရွာေဖြမွဳမ်ား";
+
+"recently_viewed" = "လတ္တေလာ ၾကည္႕ရွဳခဲ့သည္မ်ား";
+
+"my_account" = "ကြ်ႏု္ပ္၏ အေကာင့္";
+
+"nav_track_order" = "ကြ်ႏု္ပ္၏ ေအာ္ဒါ ရွာေဖြရန္";
+
+"nav_country" = "ႏုိင္ငံ ေရြးခ်ယ္ရန္";
+
+"string_filters" = "ေရြးခ်ယ္ရန္";
+
+"categories_toplevel_title" = "အမ်ိဳးအစား အားလံုး";
+
+"string_apply" = "ရွာေဖြမည္";
+
+"search_label" = "ရွာေဖြရန္";
+
+"shopping_cart" = "ေစ်း၀ယ္တြန္းလွည္း";
+
+"navigation_cart_empty" = "ထည္႕သြင္းထားေသာ ပစၥည္းမရွိပါ";
+
+"string_vat_shipping_included" = "အခြန္ႏွင့္ ပို႕ေဆာင္ခ ပါ၀င္ျပီး";
+
+"catalog_no_results" = "သင္ရွာေဖြေသာ ပစၥည္း ရွာမေတြ႕ပါ. အျခားအခ်က္အလက္ျဖင့္ ေျပာင္းလဲ ရွာေဖြၾကည္႕ပါ";
+
+"catalog_edit_filters" = "ရွာေဖြမွဳ ျပင္ဆင္ရန္";
+
+"teaser_campaign_button_first_line" = "HOT";
+
+"teaser_campaign_button_second_line" = "အထူးအစီအစဥ္မ်ား";
+
+"string_top_brands" = "အေကာင္းဆံုး အမွတ္တံဆိပ္မ်ား";
+
+"string_top_categories" = "လူၾကိဳက္အမ်ားဆံုး ပစၥည္းမ်ား";
+
+"string_top_sellers" = "အေရာင္းအသြက္ဆံုး ေရာင္းခ်သူမ်ား";
+
+"string_new" = "ေနာက္ဆံုးေပၚ";
+
+"string_size" = "အရြယ္အစား";
+
+"string_rating" = "ပစၥည္းသံုးသပ္ခ်က္ 1ခု";
+
+"string_ratings" = "%d သံုးသပ္ခ်က္မ်ား";
+
+"string_review" = "ထင္ျမင္ခ်က္ 1ခု";
+
+"string_reviews" = "%d ထင္ျမင္ခ်က္မ်ား";
+
+"string_quantity" = "အေရအတြက္: %@";
+
+"products_sort_bestrated" = "အေကာင္းဆံုး သံုးသပ္မွဳ";
+
+"products_sort_popularity" = "ေရပန္းစားမွဳ";
+
+"products_sort_newin" = "အသစ္";
+
+"products_sort_priceup" = "အမ်ားဆံုးေစ်းႏွဳန္း";
+
+"products_sort_pricedown" = "အနည္းဆံုးေစ်း";
+
+"products_sort_name" = "အမည္";
+
+"products_sort_brand" = "တံဆိပ္";
+
+"all_label" = "အားလံုး";
+
+"string_with_discount_only" = "ေလွ်ာ့ေစ်းျဖင့္";
+
+"favourite_no_favourites" = "သင္ႏွစ္သက္ေသာ ပစၥည္းမ်ားထည္႕ထားျခင္း မရွိပါ";
+
+"favourite_addalltocart" = "ပစၥည္းအားလံုး တြန္းလွည္းထဲ ထည္႕မည္";
+
+"added_to_shop_cart_dialog_text" = "ပစၥည္းအား ေစ်း၀ယ္လွညး္ထဲ ထည္႕ျပီးပါျပီ";
+
+"error_add_to_cart_failed" = "ပစၥည္းအား ေစ်း၀ယ္လွည္းထဲ ထည္႕၍ မရပါ";
+
+"string_size_with_value" = "အရြယ္အစား:  %@";
+
+"string_choose_size_for_all_products" = "ပစၥည္းအားလံုးကို အရြယ္အစားေရြးခ်ယ္ေပးပါ";
+
+"add_to_shopping_cart" = "ေစ်း၀ယ္လွည္းအတြင္း ထည္႕မည္";
+
+"string_variations" = "အျခား အမ်ိဳးအစားမ်ား";
+
+"string_rate_now" = "ယခု အမွတ္ေပးရန္";
+
+"related_items" = "ဆက္စပ္ ပစၥည္းမ်ား";
+
+"product_features_title" = "ကုန္ပစၥည္း၏ ထူးျခားခ်က္မ်ား";
+
+"description" = "ေဖာ္ျပခ်က္";
+
+"key_features" = "ေယဘုယ် အခ်က္အလက္မ်ား";
+
+"product_desc_summary_title" = "အႏွစ္ခ်ဳပ္";
+
+"product_description_title" = "ကုန္ပစၥည္း၏ အခ်က္အလက္မ်ား";
+
+"share_subject_ios" = "%@ မွ်ေ၀ျခင္း";
+
+"share_checkout_this_product" = "ဒီပစၥည္း တကယ္ေကာင္းတယ္ သံုးၾကည္႕လိုက္ပါ:";
+
+"rating_question" = "ဒီပစၥည္းကို အသံုးျပဳျပီးပါျပီလား? သံုးသပ္ခ်က္ ေပးႏုိင္ပါသည္!";
+
+"writereview_send" = "ထင္ျမင္ခ်က္ ေပးပို႕ရန္";
+
+"submit_title" = "ထင္ျမင္ခ်က္ ပို႕ျပီးပါျပီ";
+
+"write_comment" = "ထင္ျမင္ခ်က္ ေရးသားရန္";
+
+"string_posted_by" = "%@, %@ မွ ေရးသားသည္";
+
+"string_posted_by_anonymous" = "%@ အမည္မသိ သံုးသူမွ ေရးသားသည္";
+
+"string_price" = "ေစ်းႏွဳန္း";
+
+"string_appearance" = "အသြင္အျပင္";
+
+"rating_quality" = "အရည္အေသြး";
+
+"cart_label" = "ေစ်း၀ယ္လွည္း";
+
+"wishlist_notiems" = "သင့္ေစ်း၀ယ္လွည္းအတြင္း ပစၥည္းမရွိပါ";
+
+"continue_shopping" = "ေစ်းဆက္၀ယ္မည္";
+
+"my_order_coupon_label" = "ကူပြန္";
+
+"voucher_use" = "သံုးရန္";
+
+"voucher_remove" = "ဖယ္ရွားရန္";
+
+"voucher_message_hint" = "ကူပြန္ကုဒ္ကို ဤေနရာတြင္ ျဖည္႕ပါ";
+
+"call_to_order" = "စံုစမ္းရန္";
+
+"string_article" = "ပစၥည္း 1 ခု";
+
+"string_articles" = "ပစၥည္း %d ခု";
+
+"string_item_cart" = "ပစၥည္း 1 ခု";
+
+"string_items_cart" = "ပစၥည္း %d ခု";
+
+"error_add_to_shopping_cart_quantity" = "၀မ္းနည္းပါသည္။ သတ္မွတ္ထားေသာ အေရအတြက္ထက္ ပို၍ မွာယူလုိ႕ မရပါ။";
+
+"shipping" = "ပို႕ေဆာင္မွဳ";
+
+"free_label" = "အခမဲ့";
+
+"extra_costs_label" = "အျခား စရိတ္မ်ား";
+
+"my_order_voucher_label" = "ေဘာက္ခ်ာ";
+
+"my_order_total_label" = "စုစုေပါင္း";
+
+"checkout_button_text" = "ေငြေခ်ရန္ ျပဳလုပ္မည္";
+
+"sub_total_title" = "စုစုေပါငး";
+
+"vat_string" = "အခြန္";
+
+"signup_label" = "စာရင္းသြင္းရန္";
+
+"facebook_signup_button_text" = "Facebook အေကာင့္ျဖင့္ ထည္႕သြင္းမည္";
+
+"facebook_login_button_text" = "Facebook ျဖင့္ ၀င္မည္";
+
+"or_text" = "သို႕မဟုတ္";
+
+"fgt_pass" = "Password ေမ့သြားပါသလား?";
+
+"forgotten_password" = "သင့္ အီးေမးလ္ ျဖည္႕သြင္းပါ";
+
+"forgotten_password_sub_text" = "Password ျပင္ဆင္ရန္ link ပို႕ေပးပါမည္";
+
+"forgotten_password_successtext" = "အီးေမးလ္ ပို႕ျပီးပါျပီ";
+
+"checkout_label" = "ေအာ္ဒါလုပ္ငန္းစဥ္";
+
+"checkout_header_step_1" = "ကိုယ္ေရးအခ်က္အလက္";
+
+"next_button" = "ေရွ႕သို႕";
+
+"login_sectiontitle" = "အေထာက္အထားမ်ား";
+
+"register_title" = "အေကာင့္ ျပဳလုပ္မည္";
+
+"register_sectiontitle" = "အေကာင့္ အခ်က္အလက္";
+
+"registration_text" = "ေဖာင္ျဖည္႕ရန္";
+
+"checkout_header_step_2" = "2. လိပ္စာ";
+
+"action_label_add_address" = "လိပ္စာအသစ္ ျဖည္႕မည္";
+
+"billing_same_label" = "တူညီေသာ လိပ္စာျဖင့္ ေငြေခ်မည္";
+
+"billing_shipping_label" = "ပို႕ေဆာင္ရန္ လိပ္စာ";
+
+"billing_billing_label" = "ေငြေခ်ရန္ လိပ္စာ";
+
+"billing_def_shipping_label" = "ပံုေသ ပို႕ေဆာင္ရမည္႕လိပ္စာ";
+
+"billing_others_label" = "အျခား လိပ္စာမ်ား";
+
+"setting_address_error" = "ေငြေခ်ရန္/ပစၥည္းပို႕ရန္ လိပ္စာ မွားယြင္းမွဳ";
+
+"cancel_label" = "ပယ္ဖ်က္ရန္";
+
+"save_changes_label" = "သိမ္းဆည္းရန္";
+
+"edit_address" = "လိပ္စာ ျပင္ဆင္ရန္";
+
+"validation_errortext" = "အခ်က္အလက္ ျဖည္႕သြင္းရာတြင္ အမွားအယြင္းမ်ား ရွိေနသည္။ သင္ျဖည္႕သြင္းထားသည္မ်ားကို ျပန္လည္ စစ္ေဆးေပးပါ။";
+
+"checkout_header_step_3" = "3. ပို႕ေဆာင္မွဳ";
+
+"string_city" = "ၿမိဳ႕: ";
+
+"string_address" = "လိပ္စာ: ";
+
+"string_opening_hours" = "ဖြင့္ခ်ိန္: ";
+
+"string_please_select" = "ေက်းဇူးျပဳ၍ ေရြးခ်ယ္ပါ";
+
+"order_summary_shipping_fee_label" = "သယ္ယူပို႕ေဆာင္ခ";
+
+"checkout_header_step_4" = "4. ေငြေပးေခ်မွဳ";
+
+"payment" = "ေငြေပးေခ်မွဳ";
+
+"creation_date" = "ျပဳလုပ္သည္႕ ရက္စြဲ";
+
+"payment_method" = "ေငြေပးေခ်ရန္ နည္းလမ္း:";
+
+"order_track_products" = "ကုန္ပစၥည္းမ်ား:";
+
+"string_error_no_results_for_tracking_id" = "ေအာ္ဒါကုဒ္ ရွာမေတြ႕ပါ။ ေက်းဇူးျပဳ၍ ေအာ္ဒါကုဒ္ကို စစ္ေဆးျပီး ျပန္လည္ရွာေဖြပါ။";
+
+"track_your_order" = "သင္၏ ေအာ္ဒါကို ေျခရာခံရန္";
+
+"track_order" = "ေအာ္ဒါေျခရာခံရန္";
+
+"track_order_hint" = "ေအာ္ဒါကုဒ္";
+
+"string_order_status" = "ေအာ္ဒါ အေျခအေန";
+
+"string_loosing_order_title" = "သတိေပးခ်က္";
+
+"string_loosing_order_message" = "ေငြေခ်ရန္ လုပ္ငန္းစဥ္မွ ထြက္လုိက္ပါက သင္၏ ေအာ္ဒါပ်က္ျပယ္သြားမည္ ျဖစ္ပါသည္။";
+
+"recentsearch_no_searches" = "လတ္တေလာ ရွာေဖြထားသည္မ်ား မရွိပါ";
+
+"recentsearch_clear_searches" = "လတ္တေလာ ရွာေဖြမွဳမ်ားကို ရွင္းလင္းရန္";
+
+"recentlyview_no_searches" = "လတ္တေလာ ၾကည္႕ရွဳထားသည္႕ ပစၥည္းမရွိပါ";
+
+"recentlyview_clear_viewed" = "လတ္တေလာ ၾကည္႕ထားသည္႕ စာရင္းကိုရွင္းလင္းမည္";
+
+"string_user_data" = "သံုးသူ၏ အခ်က္အလက္";
+
+"string_user_email_notifications" = "အီးေမးလ္ျဖင့္ အေၾကာင္းၾကားျခင္း";
+
+"section_title_account" = "အေကာင့္ ဆက္တင္မ်ား";
+
+"option2_description" = "Password ေျပာင္းရန္, အီးေမးလ္အား စီမံရန္";
+
+"myaccount_email_notifications" = "အီးေမးလ္ျဖင့္ အေၾကာင္းၾကားျခင္း";
+
+"option3_description" = "စာရင္းသြင္းရန္ (သို႕) မသြင္းရန္";
+
+"section_title_notification" = "အေၾကာင္းၾကားျခင္း ဆက္တင္မ်ား";
+
+"notifications" = "အေၾကာင္းၾကားမွဳမ်ား";
+
+"notifications_summary" = "အထူး အစီအစဥ္မ်ားႏွင့္ ေနာက္ဆံုးေပၚသတင္းမ်ား သိရွိရန္";
+
+"sound" = "အသံ";
+
+"sound_summary" = "အေၾကာင္းၾကားခ်က္ ၀င္လာလွ်င္ အသံျပဳရန္";
+
+"personal_data_label" = "သင္၏ ကိုယ္ေရး အခ်က္အလက္";
+
+"new_password_label" = "Password အသစ္";
+
+"password_changed_success" = "Password ေအာင္ျမင္စြာ ေျပာင္းလဲျပီးပါျပီ";
+
+"preferences_updated" = "ေရြးခ်ယ္မွဳမ်ား အသစ္ျပဳလုပ္ျပီးပါျပီ";
+
+"thank_you_order_title" = "ေက်းဇူးတင္ပါသည္!";
+
+"order_success" = "သင္၏ ေအာ္ဒါကို ေအာင္ျမင္စြာ စာရင္း သြင္းျပီးပါျပီ";
+
+"order_track_success" = "သင္၏ ေအာ္ဒါအား ေအာ္ဒါအေျခအေန က႑တြင္ စစ္ေဆးႏုိင္ပါသည္";
+
+"order_track_link" = "ေအာ္ဒါအေျခအေန";
+
+"my_order_label" = "ကြ်ႏ္ုပ္၏ ေအာ္ဒါ";
+
+"my_order_payment" = "ေငြေပးေခ်ရန္ နည္းလမ္းမ်ား";
+
+"enter_order_id" = "ေက်းဇူးျပဳ၍ ေအာ္ဒါနံပါတ္ကို ျဖည္႕ပါ";
+
+"products_added_favourite" = "ႏွစ္သက္ေသာ ပစၥည္းစာရင္းအတြင္း ထည္႕သြင္းျပီးပါျပီ";
+
+"error_adding_to_wishlist" = "ပစၥည္းစာရင္း ထည္႕သြင္း၍ မရပါ";
+
+"products_removed_favourite" = "ႏွစ္သက္ေသာ ပစၥည္းစာရင္းမွ ဖယ္ရွားျပီးပါျပီ";
+
+"error_removing_from_wishlist" = "ႏွစ္သက္ေသာ ပစၥည္းစာရင္း ဖယ္ရွား၍ မရပါ";
+
+"error_add_to_cart_failed_for_x_products" = "ကုန္ပစၥည္း %d ခုမွာ ေစ်း၀ယ္လွည္းအတြင္း ထည္႕သြင္း၍ မရပါ";
+
+"error_add_to_cart_failed_for_1_product" = "ကုန္ပစၥည္း 1 ခုမွာ ေစ်း၀ယ္လွည္းအတြင္း ထည္႕သြင္း၍ မရပါ";
+
+"save_label" = "သိမ္းဆည္းရန္";
+
+"string_campaign_ramaining_stock" = "ကုန္ပစၥည္းလက္က်န္: %d%%";
+
+"campaign_save" = "သက္သာျပီး";
+
+"campaing_offer_ended" = "အစီအစဥ္ ျပီးဆံုးပါျပီ!";
+
+"campaing_timer_end" = ": တြင္ ကုန္ဆံုးမည္";
+
+"string_format_off_label" = "%d%% ေလွ်ာ႕ေစ်း";
+
+"campaigns_label" = "အထူး အစီအစဥ္မ်ား";
+
+"product_specifications" = "အေသးစိတ္ အခ်က္အလက္မ်ား";
+
+"go_shop_text" = "ယခု ေစ်း၀ယ္ရန္";
+
+"promotion_tip_tap_text" = "အေပၚ ခလုတ္ကိုႏွိပ္ျပီး ကုဒ္နံပါတ္ေကာ္ပီကူးႏုိင္ပါသည္";
+
+"string_try_again" = "ျပန္လည္ၾကိဳးစားၾကည္႕ပါ";
+
+"error_no_connection" = "ကြန္နက္ရွင္ မရွိပါ";
+
+"string_no_newtork" = "နက္ေ၀ါ့ မရွိပါ";
+
+"internet_no_connection_details_label" = "အင္တာနက္ ကြန္နက္ရွင္မရွိပါ။ ျပန္လည္ၾကိဳးစားၾကည္႕ပါ။";
+
+"string_oops" = "၀မ္းနည္းပါသည္!";
+
+"string_something_broken" = "ေက်းဇူးျပဳ၍ ျပန္လည္ၾကိဳးစားၾကည္႕ပါ။";
+
+"form_data_not_transferred" = "အခ်က္အလက္ျဖည္႕သြင္းမွဳ မွားယြင္းေနပါသည္။ ျပန္လည္စစ္ေဆးၾကည္႕ပါ။";
+
+"my_order_confirm_button" = "ေအာ္ဒါအတည္ျပဳရန္";
+
+"string_error_setting_payment_method" = "ေငြေပးေခ်မွဳ နည္းလမ္း ေရြးခ်ယ္မွဳ မွားယြင္းေနပါသည္";
+
+"string_error_setting_shipping_method" = "ပို႕ေဆာင္မွဳ နည္းလမ္း ေရြးခ်ယ္မွဳ မွားယြင္းေနပါသည္";
+
+"fallback_maintenance" = "ျပင္ဆင္ေျပာင္းလဲမွဳ";
+
+"fallback_maintenance_text" = "ျပင္ဆင္ေျပာင္းလဲမွဳမ်ား ျပဳလုပ္ေနပါသည္";
+
+"fallback_maintenance_text_bottom" = "လုပ္ေဆာင္ႏိုင္ရန္ ၾကိဳးစားေပးပါမည္, ေနာက္မွ ထပ္မံၾကိဳးစားၾကည္႕ပါ";
+
+"fallback_best" = "အေကာင္းဆံုး အြန္လိုင္းေစ်း၀ယ္မွဳ အေတြ႕အၾကံဳ";
+
+"fallback_choice" = "အမ်ားျပားဆံုး ေရြးခ်ယ္စရာမ်ား";
+
+"fallback_doorstep" = "သင္၏ အိမ္သို႕အေရာက္";
+
+"got_it" = "ရပါျပီ";
+
+"home_tip_text" = "က႑ေျပာင္းလဲရန္ ဘယ္ (သို႕) ညာသို႕ ဆြဲပါ";
+
+"products_tip_swipe_text" = "စီရီမွဳ ေျပာင္းလဲရန္ ဘယ္ (သို႕) ညာသို႕ ဆြဲပါ";
+
+"tip_favourite_text" = "ဤပစၥည္းကို အၾကိဳက္ဆံုးစာရင္းထဲ ထည္႕ျပီးပါက ပရိုဖိုင္တြင္ ျပန္လည္ ၾကည္႕ရွဳႏုိင္ပါသည္။";
+
+"tip_share_text" = "ဤပစၥည္းအေၾကာင္းကို အမ်ားအား မွ်ေ၀ရန္ ကလစ္ႏွိပ္ပါ";
+
+"tip_swipe_text" = "အျခား ပံုမ်ား ၾကည္႕ရွဳရန္ ဘယ္ (သို႕) ညာသို႕ ဆြဲပါ";
+
+"tip_tap_text" = "ပစၥည္း ပံုကိုဖြင့္ၾကည္႕ရန္ ႏွိပ္ပါ";
+
+"pinch_to_zoom_label" = "ပံုကို ခ်ဲ႕ၾကည္႕ရန္ လက္ႏွစ္ေခ်ာင္းျဖင့္ ခ်ဲ့ပါ";
+
+"fallback_audio_ios" = "ေအာ္ဒီယိုႏွင့္ ဗီဒီယို";
+
+"fallback_books" = "စာအုပ္မ်ား";
+
+"fallback_bottom_text" = "အခ်ိန္တိုင္း ေနရာတိုင္းမွ";
+
+"fallback_bottom_text2" = "အျခား ေနာက္ထပ္ ၀ယ္ခ်င္စရာ အစံုအလင္";
+
+"fallback_fashion" = "ဖက္ရွင္";
+
+"fallback_health_ios" = "အလွအပႏွင့္ က်န္းမာေရး";
+
+"fallback_home_office_ios" = "အိမ္ႏွင့္ ရုံးသံုး";
+
+"fallback_mobile" = "မိုဘုိင္းလ္ဖုန္းမ်ား";
+
+"fallback_welcome" = "ၾကိဳဆိုပါသည္";
+
+"reviews" = "ထင္ျမင္ခ်က္မ်ား";
+
+"more" = "အျခား";
+
+"reviews_empty" = "ဤကုန္ပစၥည္းတြင္ ထင္ျမင္ခ်က္မ်ား မရွိေသးပါ";
+
+"reviews_empty_seller" = "ဤေရာင္းသူကို အမွတ္ေပးထားျခင္း မရွိေသးပါ!";
+
+"order_summary_label" = "ေအာ္ဒါ အက်ဥ္းခ်ဳပ္";
+
+"string_edit" = "ျပင္ဆင္ရန္";
+
+"track_your_order_tip" = "သင္၏ ေအာ္ဒါနံပါတ္ႏွင့္ အေသးစိတ္အခ်က္မ်ားကို ဤေနရာတြင္ရွာေဖြပါ";
+
+"size_guide_label" = "အရြယ္အစား လမ္းညႊန္";
+
+"my_addresses" = "ကြ်ႏု္ပ္၏ လိပ္စာမ်ား";
+
+"create_edit_address" = "သင္၏ လိပ္စာမ်ား ျဖည္႕သြင္းရန္ (သို႕) ျပင္ဆင္ရန္";
+
+"app_sharing" = "App မွ်ေ၀ျခင္း";
+
+"share_the_app" = "App ကို မွ်ေ၀ရန္";
+
+"can_share_app_with_friends" = "သင္၏ သူငယ္ခ်င္းမ်ားကို ဤapp မွ်ေ၀ႏုိင္ပါသည္";
+
+"install_app_ios" = "%@ iOS App ကို သြင္းရန္";
+
+"share_app_ios" = "%@ App ကို မွ်ေ၀ရန္";
+
+"delivery_time" = "ပို႕ေဆာင္ရန္ ၾကာခ်ိန္";
+
+"product_outof_stock" = "ပစၥည္းကုန္ေနပါသည္";
+
+"products_outof_stock" = "ပစၥည္းမ်ား ကုန္ေနပါသည္";
+
+"login_remember_user_email" = "ကြ်ႏု္ပ္၏ အီးေမးလ္ကို မွတ္ထားေပးပါ";
+
+"my_orders_label" = "ကြ်ႏု္ပ္၏ ေအာ္ဒါမ်ား";
+
+"my_order_history_label" = "ကြ်ႏု္ပ္၏ ေအာ္ဒါစာရင္း";
+
+"my_order_tracking_label" = "ေအာ္ဒါ ေျခရာခံျခင္း";
+
+"my_order_details_label" = "ေအာ္ဒါ အခ်က္အလက္မ်ား";
+
+"my_order_number_label" = "နံပါတ္.";
+
+"my_order_date_label" = "ေန႕စြဲ:";
+
+"my_order_payment_reference_label" = "အကိုးအကား#:";
+
+"my_order_payment_status_label" = "အေျခအေန:";
+
+"my_order_quantity_label" = "အေရအတြက္.";
+
+"my_order_no_orders_label" = "သင္ေအာ္ဒါမမွာရေသးပါ";
+
+"like_us_on_facebook" = "Facebook တြင္ Like ေပးရန္";
+
+"bundle_title" = "တြဲဖက္၀ယ္ထားေသာ ပစၥည္းမ်ား";
+
+"bundle_total_price" = "စုစုေပါင္း ေစ်းႏွဳန္း:";
+
+"buy_now" = "၀ယ္ယူမည္";
+
+"other_sellers" = "အျခား ေရာင္းခ်သူမ်ား";
+
+"same_product_from_other_sellers" = "အျခားေရာင္းခ်သူမ်ား ထံမွ တူညီေသာ ကုန္ပစၥည္း";
+
+"from" = "မွ";
+
+"product_delivery_time" = "ပို႕ေဆာင္မည္႕ရက္:";
+
+"product_delivery_days" = "ရက္";
+
+"number_offers_from_ios" = "မွ အထူး အစီအစဥ္မ်ား %d";
+
+"write_full_review" = "ထင္ျမင္ခ်က္ ေရးရန္";
+
+"product_sold_by" = ":ျဖင့္ စီသည္";
+
+"sort_by" = "ျဖင့္ စီသည္";
+
+"fee_include" = "(%@ ပါျပီး)";
+
+"login_to_review" = "ထင္ျမင္ခ်က္ေရးရန္ Login ၀င္ေပးပါ";
+
+"login_to_rate" = "သံုးသပ္ခ်က္ ေပးရန္ Login ၀င္ေပးပါ";
+
+"my_order_item_label" = "ပစၥည္း";
+
+"my_order_items_label" = "ပစၥည္းမ်ား";
+
+"string_more_choices" = "အျခား ေရြးစရာမ်ား";
+
+"string_addresses_saved_as_default" = "ပံုေသ လိပ္စာအျဖစ္ သိမ္းဆည္းျပီးပါျပီ";
+
+"review_this_seller" = "ဤ ေရာင္းခ်သူကို ထင္ျမင္ခ်က္ေပးရန္!";
+
+"string_wizard_back_top" = "အေပၚသို႕ ျပန္သြားရန္ status bar ကို ႏွိပ္ပါ";
+
+"shops_of_the_week" = "ဤအပတ္၏ အေရာင္းရဆံုးမ်ား";
+
+"featured_stores" = "အေရာင္းဆိုင္မ်ား";
+
+"see_more_offers" = "အျခား အစီအစဥ္မ်ားကို ၾကည္႕ရွဳရန္";
+
+"kickout_message_1" = "ကြ်ႏုပ္တုိ႕၏ အထူးအစီအစဥ္ ေအာင္ျမင္စြာ ျပီးဆံုးပါျပီ";
+
+"kickout_message_2" = "၀ဘ္ဆိုဒ္တြင္ လတ္တေလာ လူျပည္႕ေနပါသျဖင့္ လူသစ္မ်ားထပ္မံလက္ခံ၍ မရေတာ့ပါ";
+
+"kickout_message_3" = "၀ဘ္ဆိုဒ္ကို ပိုမိုေကာင္းမြန္ေအာင္ ျပင္ဆင္ေနသျဖင့္ ေနာက္တစ္ၾကိမ္ ထပ္ၾကိဳးစားၾကည္႕ပါ";
+
+"search_placeholder" = "အမွတ္တံဆိပ္ျဖင့္ ကုန္ပစၥည္းမ်ားရွာေဖြရန္";

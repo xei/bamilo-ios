@@ -25,6 +25,7 @@
 {
     self.paymentMethod = paymentMethod;
     
+    self.label.font = [UIFont fontWithName:kFontLightName size:self.label.font.pointSize];
     [self.label setText:paymentMethod.label];
     
     if(VALID_NOTEMPTY(self.separator, UIView))

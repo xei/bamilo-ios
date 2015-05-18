@@ -78,7 +78,7 @@
                                          0.0f,
                                          doneButtonWidth,
                                          44.0f)];
-    [self.doneButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
+    [self.doneButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
     [self.doneButton setTitle:STRING_DONE forState:UIControlStateNormal];
     [self.doneButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.doneButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
@@ -132,7 +132,7 @@
     NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:object
                                                                                   attributes:@{NSForegroundColorAttributeName:color}];
     
-    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Light"
+    UIFont *font = [UIFont fontWithName:kFontLightName
                                    size:22.0];
     
     [attString addAttribute:NSFontAttributeName

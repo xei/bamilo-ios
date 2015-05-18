@@ -55,17 +55,18 @@
     [self.priceLabel setText:order.totalFormatted];
     
     NSDictionary* baseAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         [UIFont fontWithName:@"HelveticaNeue-Light" size:13], NSFontAttributeName,
+                                         [UIFont fontWithName:kFontLightName size:13], NSFontAttributeName,
                                          UIColorFromRGB(0x666666), NSForegroundColorAttributeName, nil];    NSString* orderNumberString = [NSString stringWithFormat:@"%@ %@", STRING_ORDER_NUMBER, order.orderId];
     NSRange orderNumberLabelRange = [orderNumberString rangeOfString:STRING_ORDER_NUMBER];
     NSDictionary* highlightAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         [UIFont fontWithName:@"HelveticaNeue" size:13], NSFontAttributeName,
+                                         [UIFont fontWithName:kFontRegularName size:13], NSFontAttributeName,
                                          UIColorFromRGB(0x666666), NSForegroundColorAttributeName, nil];
     
     NSMutableAttributedString* finalString = [[NSMutableAttributedString alloc] initWithString:orderNumberString attributes:baseAttributes];
     [finalString setAttributes:highlightAttributes range:orderNumberLabelRange];
     
     [self.orderNumberLabel setAttributedText:finalString];
+    [self.orderNumberLabel sizeToFit];
 }
 
 + (CGFloat)getCellHeight

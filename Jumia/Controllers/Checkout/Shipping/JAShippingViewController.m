@@ -91,6 +91,7 @@ UICollectionViewDelegateFlowLayout
     self.stepView.translatesAutoresizingMaskIntoConstraints = YES;
     self.stepIcon.translatesAutoresizingMaskIntoConstraints = YES;
     self.stepLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    self.stepLabel.font = [UIFont fontWithName:kFontBoldName size:self.stepLabel.font.pointSize];
     [self.stepLabel setText:STRING_CHECKOUT_SHIPPING];
     
     [self initViews];
@@ -149,7 +150,7 @@ UICollectionViewDelegateFlowLayout
 
 - (void)continueLoading
 {
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
     {
         [self showLoading];
     }
@@ -172,6 +173,10 @@ UICollectionViewDelegateFlowLayout
          if(RIApiResponseMaintenancePage == apiResponse)
          {
              [self showMaintenancePage:@selector(continueLoading) objects:nil];
+         }
+         else if(RIApiResponseKickoutView == apiResponse)
+         {
+             [self showKickoutView:@selector(continueLoading) objects:nil];
          }
          else
          {

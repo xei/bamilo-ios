@@ -12,4 +12,6 @@
 
 @interface JAPageControl : UIPageControl
 
+@property (nonatomic, assign)BOOL hasSmallDots;
+
 @end

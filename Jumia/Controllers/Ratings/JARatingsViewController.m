@@ -64,6 +64,8 @@ UITableViewDataSource
 @property (assign, nonatomic) NSInteger numberOfRequests;
 @property (assign, nonatomic) RIApiResponse apiResponse;
 @property (assign, nonatomic) BOOL requestsDone;
+@property (assign, nonatomic) BOOL loadedEverything;
+@property (strong, nonatomic) NSMutableArray *reviewsArray;
 
 @end
 
@@ -83,6 +85,10 @@ UITableViewDataSource
 {
     [super viewDidLoad];
     
+    self.reviewsArray = [NSMutableArray new];
+    
+    self.loadedEverything = NO;
+    
     if(VALID_NOTEMPTY(self.product.sku, NSString))
     {
         self.screenName = [NSString stringWithFormat:@"RatingScreen / %@", self.product.sku];
@@ -99,6 +105,12 @@ UITableViewDataSource
     
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
+    
+    self.brandLabel.font = [UIFont fontWithName:kFontMediumName size:self.brandLabel.font.pointSize];
+    self.nameLabel.font = [UIFont fontWithName:kFontRegularName size:self.nameLabel.font.pointSize];
+    self.labelUsedProduct.font = [UIFont fontWithName:kFontLightName size:self.labelUsedProduct.font.pointSize];
+    self.writeReviewButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.writeReviewButton.titleLabel.font.pointSize];
+    self.emptyReviewsLabel.font = [UIFont fontWithName:kFontRegularName size:self.emptyReviewsLabel.font.pointSize];
     
     self.topView.translatesAutoresizingMaskIntoConstraints = YES;
     self.brandLabel.text = self.product.brand;
@@ -126,6 +138,16 @@ UITableViewDataSource
         self.emptyReviewsView.translatesAutoresizingMaskIntoConstraints = YES;
     }
     
+    if(self.requestsDone)
+    {
+        [self setupViews];
+    }else
+    {
+        [self showLoading];
+        
+        [self requestReviews];
+    }
+    
     [self hideViews];
 }
 
@@ -139,12 +161,7 @@ UITableViewDataSource
                                                  name:kOpenMenuNotification
                                                object:nil];
     
-    if(self.requestsDone)
-    {
-        [self setupViews];
-    }
-    else
-    {
+   
         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
         {
             [self ratingsRequests];
@@ -153,7 +170,6 @@ UITableViewDataSource
         {
             self.numberOfRequests = 0;
         }
-    }
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -488,7 +504,7 @@ UITableViewDataSource
     if (ISEMPTY(self.productRatings.ratingInfo.averageRatingsArray)) {
         UILabel* titleLabel = [UILabel new];
         [titleLabel setTextColor:UIColorFromRGB(0x666666)];
-        [titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
+        [titleLabel setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
         [titleLabel setText:@" "];
         [titleLabel sizeToFit];
         [titleLabel setFrame:CGRectMake(currentX,
@@ -515,7 +531,7 @@ UITableViewDataSource
             
             UILabel* titleLabel = [UILabel new];
             [titleLabel setTextColor:UIColorFromRGB(0x666666)];
-            [titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
+            [titleLabel setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
             [titleLabel setText:title];
             [titleLabel sizeToFit];
             [titleLabel setFrame:CGRectMake(currentX,
@@ -563,6 +579,88 @@ UITableViewDataSource
                                       self.view.frame.size.width,
                                       topViewMinHeight)];
     [self.topView setHidden:NO];
+}
+
+-(void)addReviewsToTable:(NSArray *)reviews
+{
+    self.apiResponse = RIApiResponseSuccess;
+    [self removeErrorView];
+    
+    BOOL isEmpty = NO;
+    if(ISEMPTY(self.reviewsArray))
+    {
+        isEmpty = YES;
+        self.reviewsArray = [NSMutableArray new];
+    }
+    
+    if(VALID_NOTEMPTY(reviews, NSArray))
+    {
+        [self.reviewsArray addObjectsFromArray:reviews];
+    }
+    
+    [self.tableViewComments reloadData];
+    if(isEmpty)
+    {
+        [self.tableViewComments setContentOffset:CGPointZero animated:NO];
+    }
+}
+
+
+-(void)requestReviews
+{
+    NSInteger currentPage = 0;
+    if(VALID_NOTEMPTY(self.productRatings, RIProductRatings))
+    {
+        if([self.productRatings.currentPage integerValue] == [self.productRatings.totalPages integerValue])
+        {
+            self.loadedEverything = YES;
+            return;
+        }
+        
+        currentPage = [self.productRatings.currentPage integerValue] + 1;
+    }
+    
+    [self showLoading];
+    [RIProductRatings getRatingsForProductWithUrl:self.product.url
+                                      allowRating:1
+                                       pageNumber:currentPage
+                                     successBlock:^(RIProductRatings *ratings) {
+                                         
+                                         self.productRatings = ratings;
+                                         
+                                         [self removeErrorView];
+                                         
+                                         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+                                         {
+                                             [self ratingsRequests];
+                                         }
+                                         else
+                                         {
+                                             self.numberOfRequests = 0;
+                                         }
+                                         
+                                         
+                                         [self addReviewsToTable:self.productRatings.reviews];
+                                         
+                                         [self hideLoading];
+                                         
+                                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                                         
+                                         if(RIApiResponseSuccess != self.apiResponse)
+                                         {
+                                             if (RIApiResponseNoInternetConnection == self.apiResponse)
+                                             {
+                                                 [self showErrorView:YES startingY:0.0f selector:@selector(requestReviews) objects:nil];
+                                             }
+                                             else
+                                             {
+                                                 [self showErrorView:NO startingY:0.0f selector:@selector(requestReviews) objects:nil];
+                                             }
+                                         }
+                                         self.numberOfRequests = 0;
+                                         [self hideLoading];
+                                     }];
+
 }
 
 - (void)setupResumeView:(CGFloat)width
@@ -636,7 +734,7 @@ UITableViewDataSource
                                                                 verticalMargin,
                                                                 width - (2 * dynamicFormHorizontalMargin),
                                                                 16.0f)];
-    self.fixedLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f];
+    self.fixedLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
     self.fixedLabel.text = STRING_RATE_PRODUCT;
     self.fixedLabel.textColor = UIColorFromRGB(0x666666);
     
@@ -649,7 +747,6 @@ UITableViewDataSource
         NSInteger count = 0;
         CGFloat initialContentY = 0;
         self.ratingsDynamicForm = [[JADynamicForm alloc] initWithForm:self.ratingsForm
-                                                             delegate:nil
                                                      startingPosition:initialContentY
                                                             widthSize:width
                                                    hasFieldNavigation:YES];
@@ -683,7 +780,6 @@ UITableViewDataSource
     if (self.reviewsForm) {
         CGFloat initialContentY = 0;
         self.reviewsDynamicForm = [[JADynamicForm alloc] initWithForm:self.reviewsForm
-                                                             delegate:nil
                                                      startingPosition:initialContentY
                                                             widthSize:width
                                                    hasFieldNavigation:YES];
@@ -749,7 +845,7 @@ UITableViewDataSource
         CGFloat maxWriteReviewWidth = width - writeReviewLabelX;
         UILabel* writeReviewLabel = [UILabel new];
         writeReviewLabel.textColor = UIColorFromRGB(0x666666);
-        writeReviewLabel.font = [UIFont fontWithName:@"Helvetica-Neue" size:13.0f];
+        writeReviewLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
         writeReviewLabel.numberOfLines = 2;
         writeReviewLabel.text = STRING_WRITE_FULL_REVIEW;
         [writeReviewLabel sizeToFit];
@@ -785,7 +881,7 @@ UITableViewDataSource
                            forState:UIControlStateNormal];
     [self.sendReviewButton setTitleColor:UIColorFromRGB(0x4e4e4e)
                                 forState:UIControlStateNormal];
-    self.sendReviewButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16.0f];
+    self.sendReviewButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:16.0f];
     [self.sendReviewButton setBackgroundImage:buttonImageNormal forState:UIControlStateNormal];
     [self.sendReviewButton setBackgroundImage:buttonImageHighlighted forState:UIControlStateHighlighted];
     [self.sendReviewButton setBackgroundImage:buttonImageHighlighted forState:UIControlStateSelected];
@@ -900,23 +996,29 @@ UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.productRatings.reviews.count;
+    return self.reviewsArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    RIReview* review = [self.productRatings.reviews objectAtIndex:indexPath.row];
+    RIReview* review = [self.reviewsArray objectAtIndex:indexPath.row];
     return [JAReviewCell cellHeightWithReview:review width:self.tableViewComments.frame.size.width];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     JAReviewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reviewCell"];
+    
+    if((indexPath.row == ([self.reviewsArray count] - 1)) && (!self.loadedEverything))
+    {
+        [self requestReviews];
+    }
 
-    RIReview* review = [self.productRatings.reviews objectAtIndex:indexPath.row];
+
+    RIReview* review = [self.reviewsArray objectAtIndex:indexPath.row];
 
     BOOL showSeparator = YES;
-    if(indexPath.row == ([self.productRatings.reviews count] - 1))
+    if(indexPath.row == ([self.reviewsArray count] - 1))
     {
         showSeparator = NO;
     }

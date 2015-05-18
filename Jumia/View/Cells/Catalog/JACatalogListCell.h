@@ -14,7 +14,7 @@
 #define JACatalogViewControllerListCellNewLabelX 4.0f
 #define JACatalogViewControllerListCellNewLabelY 15.0f
 #define JACatalogViewControllerListCellNewLabelX_ipad -2.0f
-#define JACatalogViewControllerListCellNewLabelY_ipad 14.0f
+#define JACatalogViewControllerListCellNewLabelY_ipad 20.0f
 
 @interface JACatalogListCell : JACatalogCell
 

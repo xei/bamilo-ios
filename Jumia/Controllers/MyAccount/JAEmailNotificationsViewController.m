@@ -70,7 +70,7 @@ JADynamicFormDelegate
 
 - (void)getForm
 {
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse==RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
     {
         [self showLoading];
     }
@@ -103,6 +103,10 @@ JADynamicFormDelegate
            if(RIApiResponseMaintenancePage == apiResponse)
            {
                [self showMaintenancePage:@selector(getForm) objects:nil];
+           }
+           else if(RIApiResponseKickoutView == apiResponse)
+           {
+               [self showKickoutView:@selector(getForm) objects:nil];
            }
            else
            {
@@ -216,10 +220,11 @@ JADynamicFormDelegate
                                                                      self.view.frame.size.width - 12.0f,
                                                                      self.view.frame.size.height)];
     self.dynamicForm = [[JADynamicForm alloc] initWithForm:self.form
-                                                  delegate:self
                                           startingPosition:0.0f
                                                  widthSize:self.scrollView.frame.size.width
                                         hasFieldNavigation:YES];
+    
+    [self.dynamicForm setDelegate:self];
     
     self.notificationsView = [[UIView alloc] initWithFrame:CGRectZero];
     self.notificationsView.layer.cornerRadius = 5.0f;
@@ -261,7 +266,7 @@ JADynamicFormDelegate
     [self.saveButton setTitle:STRING_SAVE_LABEL forState:UIControlStateNormal];
     [self.saveButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.saveButton addTarget:self action:@selector(continueUpdatePreferences) forControlEvents:UIControlEventTouchUpInside];
-    [self.saveButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+    [self.saveButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
     [self.scrollView addSubview:self.saveButton];
     
     [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, CGRectGetMaxY(self.saveButton.frame) + 6.0f)];

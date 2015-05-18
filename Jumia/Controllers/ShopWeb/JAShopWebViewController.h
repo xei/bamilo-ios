@@ -10,4 +10,6 @@
 
 @interface JAShopWebViewController : JABaseViewController <UIWebViewDelegate>
 
+@property (nonatomic, strong)NSString* url;
+
 @end

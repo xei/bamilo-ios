@@ -59,14 +59,7 @@
         xib = [[NSBundle mainBundle] loadNibNamed:@"JAPDVProductInfo~iPad_Portrait"
                                             owner:nil
                                           options:nil];
-        
-        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
-        {
-            xib = [[NSBundle mainBundle] loadNibNamed:@"JAPDVProductInfo~iPad_Landscape"
-                                                owner:nil
-                                              options:nil];
-        }
+    
     }
     
     for (NSObject *obj in xib) {
@@ -82,6 +75,17 @@
 - (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize
 {
     self.product = product;
+    
+    self.oldPriceLabel.font = [UIFont fontWithName:kFontRegularName size:self.oldPriceLabel.font.pointSize];
+    self.sizeLabel.font = [UIFont fontWithName:kFontRegularName size:self.sizeLabel.font.pointSize];
+    self.numberOfReviewsLabel.font = [UIFont fontWithName:kFontRegularName size:self.numberOfReviewsLabel.font.pointSize];
+    self.specificationsLabel.font = [UIFont fontWithName:kFontRegularName size:self.specificationsLabel.font.pointSize];
+    self.reviewsLabel.font = [UIFont fontWithName:kFontRegularName size:self.reviewsLabel.font.pointSize];
+    self.productFeaturesLabel.font = [UIFont fontWithName:kFontRegularName size:self.productFeaturesLabel.font.pointSize];
+    self.productFeaturesText.font = [UIFont fontWithName:kFontRegularName size:self.productFeaturesText.font.pointSize];
+    self.productDescriptionLabel.font = [UIFont fontWithName:kFontRegularName size:self.productDescriptionLabel.font.pointSize];
+    self.productDescriptionText.font = [UIFont fontWithName:kFontRegularName size:self.productDescriptionText.font.pointSize];
+    self.otherOffersLabel.font = [UIFont fontWithName:kFontRegularName size:self.otherOffersLabel.font.pointSize];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
@@ -298,7 +302,7 @@
         
         self.fromLabel = [UILabel new];
         [self.fromLabel setTextColor:UIColorFromRGB(0x666666)];
-        [self.fromLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:9.0f]];
+        [self.fromLabel setFont:[UIFont fontWithName:kFontRegularName size:9.0f]];
         self.fromLabel.text = [NSString stringWithFormat:@"%@ ", STRING_FROM];
         [self.fromLabel sizeToFit];
         [self.fromLabel setFrame:CGRectMake(self.otherOffersLabel.frame.origin.x,
@@ -309,7 +313,7 @@
         
         self.offerMinPriceLabel = [UILabel new];
         [self.offerMinPriceLabel setTextColor:UIColorFromRGB(0xcc0000)];
-        [self.offerMinPriceLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:9.0f]];
+        [self.offerMinPriceLabel setFont:[UIFont fontWithName:kFontRegularName size:9.0f]];
         self.offerMinPriceLabel.text = product.offersMinPriceFormatted;
         [self.offerMinPriceLabel sizeToFit];
         [self.offerMinPriceLabel setFrame:CGRectMake(CGRectGetMaxX(self.fromLabel.frame),
@@ -328,26 +332,24 @@
 
 - (void)setupForLandscape:(CGRect)frame product:(RIProduct*)product
 {
+    self.layer.cornerRadius = 5.0f;
+    CGFloat startingY = 0.0f;
+    
+    [self.sizeLabel setTextColor:UIColorFromRGB(0x55a1ff)];
+    [self.numberOfReviewsLabel setTextColor:UIColorFromRGB(0xcccccc)];
+    [self.specificationsLabel setTextColor:UIColorFromRGB(0x666666)];
+    [self.otherOffersLabel setTextColor:UIColorFromRGB(0x666666)];
+    
     CGFloat width = frame.size.width - 12.0f;
     
-    self.reviewsView.layer.cornerRadius = 5.0f;
-    [self.reviewsLabel setText:STRING_REVIEWS_LABEL];
-    [self.reviewsLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
-    [self.reviewsSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
-    [self setNumberOfStars:[product.ratingAverage integerValue]];
-
-    self.numberOfReviewsLabel.text = [self ratingAndReviewString:product];
+    [self setFrame:CGRectMake(self.frame.origin.x,
+                              self.frame.origin.y,
+                              width,
+                              90.0f)];
     
-    NSString *productFeaturesText = product.descriptionString;
-    NSString *productDescriptionText = nil;
-    if (VALID_NOTEMPTY(product.attributeShortDescription, NSString))
-    {
-        productFeaturesText = product.attributeShortDescription;
-        productDescriptionText = product.descriptionString;
-    }
     
     [self.reviewsClickableView setFrame:CGRectMake(self.reviewsClickableView.frame.origin.x,
-                                                   self.reviewsClickableView.frame.origin.y,
+                                                   startingY,
                                                    width,
                                                    self.reviewsClickableView.frame.size.height)];
     
@@ -356,108 +358,22 @@
                                                    self.goToReviewsImageView.frame.size.width,
                                                    self.goToReviewsImageView.frame.size.height)];
     
-    self.productFeaturesView.translatesAutoresizingMaskIntoConstraints = YES;
-    self.productFeaturesView.layer.cornerRadius = 5.0f;
-    [self.productFeaturesLabel setText:STRING_PRODUCT_FEATURES];
-    [self.productFeaturesLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
-    [self.productFeaturesSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+    [self.ratingsSeparator setFrame:CGRectMake(self.ratingsSeparator.frame.origin.x,
+                                               45.0f,
+                                               width,
+                                               self.ratingsSeparator.frame.size.height)];
     
-    self.productFeaturesText.translatesAutoresizingMaskIntoConstraints = YES;
-    [self.productFeaturesText setText:productFeaturesText];
+    [self.specificationsClickableView setFrame:CGRectMake(self.specificationsClickableView.frame.origin.x,
+                                                          46.0f,
+                                                          width,
+                                                          self.specificationsClickableView.frame.size.height)];
+    
+    [self.goToSpecificationsImageView setFrame:CGRectMake(self.reviewsClickableView.frame.size.width - self.reviewsClickableView.frame.origin.x - self.goToReviewsImageView.frame.size.width - 9.0f,
+                                                          self.goToSpecificationsImageView.frame.origin.y,
+                                                          self.goToSpecificationsImageView.frame.size.width,
+                                                          self.goToSpecificationsImageView.frame.size.height)];
+    
 
-    [self.productFeaturesText setTextColor:UIColorFromRGB(0x666666)];
-    [self.productFeaturesText setFrame:CGRectMake(self.productFeaturesText.frame.origin.x,
-                                                  self.productFeaturesText.frame.origin.y,
-                                                  width - (self.productFeaturesText.frame.origin.x * 2),
-                                                  self.productFeaturesText.frame.size.height)];
-    
-    CGRect productFeaturesTextRect = [self.productFeaturesText.text boundingRectWithSize:CGSizeMake(self.productFeaturesText.frame.size.width, 1000.0f)
-                                                                                 options:NSStringDrawingUsesLineFragmentOrigin
-                                                                              attributes:@{NSFontAttributeName:self.productFeaturesText.font} context:nil];
-    if(productFeaturesTextRect.size.height > self.productFeaturesText.frame.size.height)
-    {
-        [self.productFeaturesMore setTitle:STRING_MORE forState:UIControlStateNormal];
-        [self.productFeaturesMore setBackgroundColor:[UIColor clearColor]];
-        [self.productFeaturesMore setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
-        [self.productFeaturesMore setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
-    }
-    else
-    {
-        [self.productFeaturesMore removeFromSuperview];
-        
-        [self.productFeaturesText setFrame:CGRectMake(self.productFeaturesText.frame.origin.x,
-                                                      self.productFeaturesText.frame.origin.y,
-                                                      self.productFeaturesText.frame.size.width,
-                                                      ceilf(productFeaturesTextRect.size.height))];
-        
-        [self.productFeaturesView setFrame:CGRectMake(self.productFeaturesView.frame.origin.x,
-                                                      self.productFeaturesView.frame.origin.y,
-                                                      self.productFeaturesView.frame.size.width,
-                                                      self.productFeaturesText.frame.origin.y +  ceilf(productFeaturesTextRect.size.height) + 6.0f)];
-    }
-    
-    CGFloat frameHeight = CGRectGetMaxY(self.productFeaturesView.frame);
-    if(VALID_NOTEMPTY(productDescriptionText, NSString))
-    {
-        [self.productDescriptionView setHidden:NO];
-        self.productDescriptionView.translatesAutoresizingMaskIntoConstraints = YES;
-        self.productDescriptionView.layer.cornerRadius = 5.0f;
-        
-        [self.productDescriptionView setFrame:CGRectMake(self.productDescriptionView.frame.origin.x,
-                                                         CGRectGetMaxY(self.productFeaturesView.frame) + 6.0f,
-                                                         self.productDescriptionView.frame.size.width,
-                                                         self.productDescriptionView.frame.size.height)];
-        
-        [self.productDescriptionLabel setText:STRING_PRODUCT_DESCRIPTION];
-        [self.productDescriptionLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
-        [self.productDescriptionSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
-        
-        self.productDescriptionText.translatesAutoresizingMaskIntoConstraints = YES;
-        [self.productDescriptionText setText:product.descriptionString];
-        [self.productDescriptionText setTextColor:UIColorFromRGB(0x666666)];
-        
-        [self.productDescriptionText setFrame:CGRectMake(self.productDescriptionText.frame.origin.x,
-                                                         self.productDescriptionText.frame.origin.y,
-                                                         width - (self.productDescriptionText.frame.origin.x * 2),
-                                                         self.productDescriptionText.frame.size.height)];
-        
-        CGRect productDescriptionTextRect = [self.productDescriptionText.text boundingRectWithSize:CGSizeMake(self.productDescriptionText.frame.size.width, 1000.0f)
-                                                                                           options:NSStringDrawingUsesLineFragmentOrigin
-                                                                                        attributes:@{NSFontAttributeName:self.productDescriptionText.font} context:nil];
-        if(productDescriptionTextRect.size.height > self.productDescriptionText.frame.size.height)
-        {
-            [self.productDescriptionMore setTitle:STRING_MORE forState:UIControlStateNormal];
-            [self.productDescriptionMore setBackgroundColor:[UIColor clearColor]];
-            [self.productDescriptionMore setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
-            [self.productDescriptionMore setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
-        }
-        else
-        {
-            [self.productDescriptionMore removeFromSuperview];
-            
-            [self.productDescriptionText setFrame:CGRectMake(self.productDescriptionText.frame.origin.x,
-                                                             self.productDescriptionText.frame.origin.y,
-                                                             self.productDescriptionText.frame.size.width,
-                                                             ceilf(productDescriptionTextRect.size.height))];
-            
-            [self.productDescriptionView setFrame:CGRectMake(self.productDescriptionView.frame.origin.x,
-                                                             self.productDescriptionView.frame.origin.y,
-                                                             self.productDescriptionView.frame.size.width,
-                                                             self.productDescriptionText.frame.origin.y +  ceilf(productDescriptionTextRect.size.height) + 6.0f)];
-        }
-        
-        frameHeight = CGRectGetMaxY(self.productDescriptionView.frame);
-    }
-    else
-    {
-        [self.productDescriptionView setHidden:YES];
-    }
-    
-    [self setFrame:CGRectMake(self.frame.origin.x,
-                              self.frame.origin.y,
-                              width,
-                              frameHeight)];
-    
     
     for(UIView *subView in self.subviews)
     {
@@ -466,6 +382,25 @@
                                      width,
                                      subView.frame.size.height)];
     }
+    
+    [self setPriceWithNewValue:product.specialPriceFormatted
+                   andOldValue:product.priceFormatted];
+    
+    [self setNumberOfStars:[product.ratingAverage integerValue]];
+    
+    self.numberOfReviewsLabel.text = [self ratingAndReviewString:product];
+    
+    self.specificationsLabel.text = STRING_SPECIFICATIONS;
+    
+    [self.sizeClickableView removeFromSuperview];
+    [self.sizeImageViewSeparator removeFromSuperview];
+    
+    [self.otherOffersClickableView removeFromSuperview];
+    [self.otherOffersTopSeparator removeFromSuperview];
+    
+    [self.priceView removeFromSuperview];
+    [self.priceSeparator removeFromSuperview];
+    
 }
 
 - (void)setPriceWithNewValue:(NSString *)newValue

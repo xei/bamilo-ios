@@ -28,7 +28,7 @@
     }
     
     self.navBarLayout.title = self.filter.name;
-    self.navBarLayout.backButtonTitle = STRING_FILTERS;
+    [self.navBarLayout setShowBackButton:YES];
     self.navBarLayout.showDoneButton = YES;
 
     self.genericFiltersView = [[[NSBundle mainBundle] loadNibNamed:@"JAGenericFiltersView" owner:self options:nil] objectAtIndex:0];

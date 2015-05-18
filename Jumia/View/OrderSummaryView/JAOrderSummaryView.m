@@ -18,6 +18,7 @@
 @property (nonatomic, strong)UIView* shippingAddressView;
 @property (nonatomic, strong)UIView* billingAddressView;
 @property (nonatomic, strong)UIView* shippingMethodView;
+@property (nonatomic, strong)NSString *extraCosts;
 
 @end
 
@@ -56,7 +57,7 @@
                                                                                 self.cartView.bounds.size.width - 2*JAOrderSummaryViewTextMargin,
                                                                                 26.0f)];
         productsTitleLabel.text = STRING_PRODUCTS;
-        productsTitleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+        productsTitleLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         productsTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
         [self.cartView addSubview:productsTitleLabel];
         
@@ -94,6 +95,8 @@
                                             subtotal:cart.cartValueFormatted
                                                extra:cart.extraCostsFormatted
                                          shippingFee:shippingFeeValue];
+        
+        self.extraCosts = cart.extraCostsFormatted;
         
         [self.cartView setFrame:CGRectMake(self.cartView.frame.origin.x,
                                            self.cartView.frame.origin.y,
@@ -229,7 +232,7 @@
     CGFloat rightMargin = JAOrderSummaryViewTextMargin;
     if (selector)
     {
-        UIFont *editFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:10.0f];
+        UIFont *editFont = [UIFont fontWithName:kFontLightName size:10.0f];
         UIButton* editButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [editButton setTitle:STRING_EDIT forState:UIControlStateNormal];
         [editButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
@@ -255,7 +258,7 @@
                                                                     view.bounds.size.width -JAOrderSummaryViewTextMargin - rightMargin,
                                                                     26.0f)];
     titleLabel.text = title;
-    titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
+    titleLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
     titleLabel.textColor = UIColorFromRGB(0x4e4e4e);
     [view addSubview:titleLabel];
     
@@ -282,7 +285,7 @@
                                                                    currentY,
                                                                    self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
                                                                    1.0f)];
-    nameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    nameLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     nameLabel.textColor = UIColorFromRGB(0x4e4e4e);
     nameLabel.text = name;
     nameLabel.numberOfLines = -1;
@@ -295,7 +298,7 @@
                                                                        currentY,
                                                                        self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
                                                                        1.0f)];
-    quantityLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    quantityLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     quantityLabel.textColor = UIColorFromRGB(0x4e4e4e);
     quantityLabel.numberOfLines = -1;
     quantityLabel.text = [NSString stringWithFormat:@"%ld x %@", (long)quantity, price];
@@ -318,7 +321,7 @@
                                                                        currentY,
                                                                        self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
                                                                        1.0f)];
-    subtotalLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    subtotalLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     subtotalLabel.textColor = UIColorFromRGB(0x4e4e4e);
     subtotalLabel.text = STRING_SUBTOTAL;
     [subtotalLabel sizeToFit];
@@ -328,7 +331,7 @@
                                                                             currentY,
                                                                             self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
                                                                             subtotalLabel.frame.size.height)];
-    subtotalValueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    subtotalValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     subtotalValueLabel.textColor = UIColorFromRGB(0x4e4e4e);
     subtotalValueLabel.text = subtotal;
     subtotalValueLabel.textAlignment = NSTextAlignmentRight;
@@ -342,7 +345,7 @@
                                                                               currentY,
                                                                               self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
                                                                               1.0f)];
-        shippingFeeLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+        shippingFeeLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         shippingFeeLabel.textColor = UIColorFromRGB(0x4e4e4e);
         shippingFeeLabel.text = STRING_SHIPPING_FEE;
         [shippingFeeLabel sizeToFit];
@@ -352,11 +355,17 @@
                                                                                    currentY,
                                                                                    self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
                                                                                    shippingFeeLabel.frame.size.height)];
-        shippingFeeValueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+        shippingFeeValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         shippingFeeValueLabel.textColor = UIColorFromRGB(0x4e4e4e);
         shippingFeeValueLabel.text = shippingFee;
         shippingFeeValueLabel.textAlignment = NSTextAlignmentRight;
         [self.cartView addSubview:shippingFeeValueLabel];
+        
+        if([shippingFee isEqualToString:STRING_FREE]){
+            [shippingFeeValueLabel setHidden:YES];
+            [shippingFeeLabel setHidden:YES];
+            
+        }
         
         currentY += shippingFeeValueLabel.frame.size.height + 7.0f;
     }
@@ -365,7 +374,7 @@
                                                                     currentY,
                                                                     self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
                                                                     1.0f)];
-    extraLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    extraLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     extraLabel.textColor = UIColorFromRGB(0x4e4e4e);
     extraLabel.text = STRING_EXTRA_COSTS;
     [extraLabel sizeToFit];
@@ -375,10 +384,16 @@
                                                                          currentY,
                                                                          self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
                                                                          extraLabel.frame.size.height)];
-    extraValueLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    extraValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     extraValueLabel.textColor = UIColorFromRGB(0x4e4e4e);
     extraValueLabel.text = extra;
     extraValueLabel.textAlignment = NSTextAlignmentRight;
+    
+    if([self.extraCosts integerValue ] == 0){
+        [extraLabel setHidden:YES];
+        [extraValueLabel setHidden:YES];
+    }
+    
     [self.cartView addSubview:extraValueLabel];
     
     currentY += extraLabel.frame.size.height + 10.0f;
@@ -478,7 +493,7 @@
                                                                       startY,
                                                                       view.frame.size.width - 2*JAOrderSummaryViewTextMargin,
                                                                       0.0f)];
-    addressLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    addressLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     addressLabel.numberOfLines = 0;
     addressLabel.textColor = UIColorFromRGB(0x4e4e4e);
     addressLabel.text = text;

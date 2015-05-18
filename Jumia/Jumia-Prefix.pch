@@ -48,6 +48,7 @@
     #import "RIApi.h"
     #import "RILocalizationWrapper.h"
     #import "JAStrings.h"
+    #import "JAFont.h"
 
     #import "JAMessageView.h"
     #import "Reachability.h"

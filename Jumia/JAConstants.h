@@ -17,9 +17,9 @@
 #define kUserLoggedOutNotification @"NOTIFICATION_USER_LOGGED_OUT"
 #define kCancelLoadingNotificationName @"CANCEL_LOADING_NOTIFICATION"
 #define kCancelButtonPressedInMenuSearchBar @"PRESSED_BACK_BUTTON_NOTIFICATION"
-#define kUpdateSideMenuCartNotification @"NOTIFICATION_SIDE_MENU_UPDATE_CART"
 #define kExternalPaymentValue @"NOTIFICATION_EXTERNAL_PAYMENT_VALUE"
 #define kDeactivateExternalPaymentNotification @"NOTIFICATION_DEACTIVATE_EXTERNAL_PAYMENT_VALUE"
+#define kAppWillEnterForeground @"NOTIFICATION_APP_WILL_ENTER_FOREGROUND"
 //************
 
 //************ root view controller notifications
@@ -81,6 +81,7 @@
 #define kShowNewRatingScreenNotification @"NOTIFICATION_SHOW_NEW_RATING_SCREEN"
 #define kShowSizeGuideNotification @"NOTIFICATION_SHOW_SIZE_GUIDE"
 #define kProductChangedNotification @"NOTIFICATION_PRODUCT_CHANGED"
+#define kOpenSpecificationsScreen @"NOTIFICATION_SHOW_SPECIFICATIONS_SCREEN"
 
 //teasers
 #define kDidSelectTeaserWithCatalogUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_CATALOG_URL"
@@ -97,7 +98,6 @@
 #define kDidPressBackNotification @"DID_PRESS_BACK_NOTIFICATION"
 #define kDidPressDoneNotification @"DID_PRESS_DONE_NOTIFICATION"
 #define kDidPressEditNotification @"DID_PRESS_EDIT_NOTIFICATION"
-#define kDidPressSearchButtonNotification @"DID_PRESS_SEARCH_BUTTON_NOTIFICATION"
 #define kDidPressNavBar @"DID_PRESS_NAV_BAR"
 
 
@@ -122,6 +122,9 @@
 
 // App url (this is needed to redirect to itunes connect to update the app)
 #define kAppStoreUrl @"https://itunes.apple.com/us/app/jumia-online-shopping/id925015459?mt=8"
+#define kAppStoreUrlDaraz @"https://itunes.apple.com/app/daraz-online-shopping/id978058048"
+#define kAppStoreUrlShop @"https://itunes.apple.com/app/shop.com.mm-online-shopping/id979214282"
+#define kAppStoreUrlBamilo @"https://itunes.apple.com/app/bamylw/id979950698"
 
 // Preferences
 #define kDidFirstBuyKey @"did_first_buy"
@@ -135,6 +138,7 @@
 // Colors - Backgrounds
 #define JANavBarBackgroundGrey UIColorFromRGB(0xeaeaea)
 #define JABackgroundGrey UIColorFromRGB(0xc8c8c8)
+#define JAHomePageBackgroundGrey UIColorFromRGB(0xf9f9f9)
 
 // Colors - Buttons
 #define JAButtonOrange UIColorFromRGB(0xfaa41a)

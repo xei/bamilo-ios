@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "RIBanner.h"
 
 
-@class RIImage, RIProductSimple, RIVariation, RIBundle, RISeller;
+@class RIImage, RIProductSimple, RIVariation, RIBundle, RISeller, RISpecification;
 
 /*
  * IMPORTANT NOTICE
@@ -74,6 +75,11 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSString * offersMinPriceFormatted;
 @property (nonatomic, retain) NSSet *relatedProducts;
 @property (nonatomic, retain) RIProduct *referredFromProduct;
+@property (nonatomic, retain) NSNumber *bucketActive;
+@property (nonatomic, retain) NSString *shortSummary;
+@property (nonatomic, retain) NSString *summary;
+@property (nonatomic, retain) NSOrderedSet *specifications;
+
 
 //Not a coredata relationship
 @property (nonatomic, retain) NSOrderedSet *categoryIds;
@@ -127,7 +133,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
                                 filters:(NSArray*)filters
                              filterType:(NSString*)filterType
                             filterValue:(NSString*)filterValue
-                           successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories))successBlock
+                           successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories, RIBanner* banner))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
@@ -140,13 +146,26 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *  @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)getProductsWithFullUrl:(NSString*)url
-                        successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories))successBlock
+                        successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories, RIBanner* banner))successBlock
                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+
+/**
+ *  Method to reload a set of products given their skus
+ *
+ *  @param an array of skus to be reloaded
+ *  @param the success block containing the obtained products
+ *  @param the failure block containing the error message
+ *
+ *  @return a string with the operationID that can be used to cancel the operation
+ */
++ (NSString *)getUpdatedProductsWithSkus:(NSArray*)productSkus
+                            successBlock:(void (^)(NSArray *products))successBlock
+                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
  *  Method to load a the recently viewed products from coredata
  *
- *  @param the success block containing the recently viewed products
+ *  @param the success block containing the recently viewed product
  *  @param the failure block containing the error message
  *
  */
@@ -268,6 +287,9 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 - (void)removeRelatedProductsObject:(RIProduct *)value;
 - (void)addRelatedProducts:(NSSet *)values;
 - (void)removeRelatedProducts:(NSSet *)values;
+- (void)addSpecificationsObject:(RISpecification *)value;
+- (void)removeSpecificationsObject:(RISpecification *)value;
+
 
 @end
 

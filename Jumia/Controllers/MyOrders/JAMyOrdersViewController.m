@@ -111,7 +111,7 @@ JAPickerScrollViewDelegate
     [self.trackOrderView setBackgroundColor:UIColorFromRGB(0xffffff)];
     
     self.trackOrderLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.trackOrderLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
+    [self.trackOrderLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
     [self.trackOrderLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.trackOrderLabel setText:STRING_TRACK_YOUR_ORDER];
     [self.trackOrderLabel setBackgroundColor:[UIColor clearColor]];
@@ -129,7 +129,7 @@ JAPickerScrollViewDelegate
     [self.trackOrderButton setTitle:STRING_TRACK_YOUR_ORDER forState:UIControlStateNormal];
     [self.trackOrderButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.trackOrderButton addTarget:self action:@selector(trackOrder:) forControlEvents:UIControlEventTouchUpInside];
-    [self.trackOrderButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:16.0f]];
+    [self.trackOrderButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
     [self.trackOrderView addSubview:self.trackOrderButton];
     
     [self.firstScrollView addSubview:self.trackOrderView];
@@ -139,7 +139,7 @@ JAPickerScrollViewDelegate
     [self.myOrderView setBackgroundColor:UIColorFromRGB(0xffffff)];
     
     self.myOrderViewLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.myOrderViewLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
+    [self.myOrderViewLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
     [self.myOrderViewLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.myOrderViewLabel setText:STRING_TRACK_YOUR_ORDER];
     [self.myOrderViewLabel setBackgroundColor:[UIColor clearColor]];
@@ -150,7 +150,7 @@ JAPickerScrollViewDelegate
     [self.myOrderView addSubview:self.myOrderViewSeparator];
     
     self.myOrderHintLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.myOrderHintLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
+    [self.myOrderHintLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
     [self.myOrderHintLabel setTextColor:UIColorFromRGB(0xcccccc)];
     [self.myOrderHintLabel setText:STRING_TRACK_YOUR_ORDER_TIP];
     [self.myOrderHintLabel setBackgroundColor:[UIColor clearColor]];
@@ -213,7 +213,7 @@ JAPickerScrollViewDelegate
 
 - (void) loadOrders
 {
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
     {
         [self showLoading];
     }
@@ -280,6 +280,10 @@ JAPickerScrollViewDelegate
                if(RIApiResponseMaintenancePage == apiResponse)
                {
                    [self showMaintenancePage:@selector(loadOrders) objects:nil];
+               }
+               else if(RIApiResponseKickoutView == apiResponse)
+               {
+                   [self showKickoutView:@selector(loadOrders) objects:nil];
                }
                else
                {
@@ -447,7 +451,7 @@ JAPickerScrollViewDelegate
 
 - (void)loadOrderDetails
 {
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseSuccess)
+    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
     {
         [self showLoading];
     }
@@ -486,9 +490,20 @@ JAPickerScrollViewDelegate
                           {
                               [self showMaintenancePage:@selector(loadOrderDetails) objects:nil];
                           }
+                          else if(RIApiResponseKickoutView == apiResponse)
+                          {
+                              [self showKickoutView:@selector(loadOrderDetails) objects:nil];
+                          }
                           else if (RIApiResponseNoInternetConnection == apiResponse)
                           {
-                              [self showErrorView:YES startingY:0.0f selector:@selector(loadOrderDetails) objects:nil];
+                              if (VALID_NOTEMPTY(self.trackOrderTextField.textField.text, NSString))
+                              {
+                                  [self showMessage:STRING_NO_CONNECTION success:NO];
+                                  
+                              }else{
+                                  
+                                  [self showErrorView:YES startingY:0.0f selector:@selector(loadOrderDetails) objects:nil];
+                              }
                           }
                           else
                           {
@@ -534,7 +549,7 @@ JAPickerScrollViewDelegate
                                                                            startingY,
                                                                            150.0f,
                                                                            20.0f)];
-    creationDateLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
+    creationDateLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
     creationDateLabel.textColor = UIColorFromRGB(0x4e4e4e);
     creationDateLabel.text = STRING_CREATION_DATE;
     creationDateLabel.tag = kMyOrderViewTag;
@@ -545,7 +560,7 @@ JAPickerScrollViewDelegate
                                                                                  startingY,
                                                                                  200.0f,
                                                                                  20.0f)];
-    creationDateLabelDetail.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    creationDateLabelDetail.font = [UIFont fontWithName:kFontLightName size:13.0f];
     creationDateLabelDetail.textColor = UIColorFromRGB(0x666666);
     creationDateLabelDetail.text = order.creationDate;
     [creationDateLabelDetail sizeToFit];
@@ -556,7 +571,7 @@ JAPickerScrollViewDelegate
     
     // Payment method
     UILabel *paymentMethodLabel = [[UILabel alloc] initWithFrame:CGRectMake(6, startingY, 150, 20)];
-    paymentMethodLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
+    paymentMethodLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
     paymentMethodLabel.textColor = UIColorFromRGB(0x4e4e4e);
     paymentMethodLabel.text = STRING_PAYMENT_METHOD;
     paymentMethodLabel.tag = kMyOrderViewTag;
@@ -564,7 +579,7 @@ JAPickerScrollViewDelegate
     [self.myOrderView addSubview:paymentMethodLabel];
     
     UILabel *paymentMethodLabelDetail = [[UILabel alloc] initWithFrame:CGRectMake(paymentMethodLabel.frame.size.width + 12, startingY, 200, 20)];
-    paymentMethodLabelDetail.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    paymentMethodLabelDetail.font = [UIFont fontWithName:kFontLightName size:13.0f];
     paymentMethodLabelDetail.textColor = UIColorFromRGB(0x666666);
     paymentMethodLabelDetail.text = order.paymentMethod;
     [paymentMethodLabelDetail sizeToFit];
@@ -575,7 +590,7 @@ JAPickerScrollViewDelegate
     
     // Products label
     UILabel *productsLabel = [[UILabel alloc] initWithFrame:CGRectMake(6, startingY, 296, 20)];
-    productsLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
+    productsLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
     productsLabel.textColor = UIColorFromRGB(0x4e4e4e);
     productsLabel.text = STRING_PRODUCTS;
     [productsLabel sizeToFit];
@@ -588,7 +603,7 @@ JAPickerScrollViewDelegate
     {
         UILabel *labelProductName = [[UILabel alloc] initWithFrame:CGRectMake(6, startingY, 296, 40)];
         labelProductName.numberOfLines = 0;
-        labelProductName.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+        labelProductName.font = [UIFont fontWithName:kFontLightName size:13.0f];
         labelProductName.textColor = UIColorFromRGB(0x4e4e4e);
         labelProductName.text = item.name;
         [labelProductName sizeToFit];
@@ -598,7 +613,7 @@ JAPickerScrollViewDelegate
         startingY += labelProductName.frame.size.height + 6;
         
         UILabel *labelQuantity = [[UILabel alloc] initWithFrame:CGRectMake(6, startingY, 296, 40)];
-        labelQuantity.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
+        labelQuantity.font = [UIFont fontWithName:kFontRegularName size:13.0f];
         labelQuantity.textColor = UIColorFromRGB(0x666666);
         labelQuantity.text = [NSString stringWithFormat:STRING_QUANTITY, [item.quantity stringValue]];
         [labelQuantity sizeToFit];
@@ -610,7 +625,7 @@ JAPickerScrollViewDelegate
         RIStatus *status = [item.status firstObject];
         
         UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(6, startingY, 296, 20)];
-        statusLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0f];
+        statusLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
         statusLabel.textColor = UIColorFromRGB(0x666666);
         statusLabel.text = status.itemStatus;
         [statusLabel sizeToFit];
@@ -654,7 +669,7 @@ JAPickerScrollViewDelegate
     UILabel *noResultsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     noResultsLabel.textAlignment = NSTextAlignmentCenter;
     noResultsLabel.numberOfLines = 0;
-    noResultsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
+    noResultsLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     noResultsLabel.textColor = UIColorFromRGB(0x666666);
     noResultsLabel.text = STRING_ERROR_NO_RESULTS_FOR_TRACKING_ID;
     noResultsLabel.tag = kMyOrderViewTag;
@@ -932,7 +947,7 @@ JAPickerScrollViewDelegate
             self.orderDetailsContainer.layer.cornerRadius = 5.0f;
             
             self.orderDetailsLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, width, 26.0f)];
-            [self.orderDetailsLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
+            [self.orderDetailsLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
             [self.orderDetailsLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
             [self.orderDetailsLabel setText:STRING_ORDER_DETAILS];
             [self.orderDetailsLabel setBackgroundColor:[UIColor clearColor]];
@@ -1016,7 +1031,7 @@ JAPickerScrollViewDelegate
     }
     self.emptyOrderHistoryLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     [self.emptyOrderHistoryLabel setNumberOfLines:0];
-    [self.emptyOrderHistoryLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:15.0f]];
+    [self.emptyOrderHistoryLabel setFont:[UIFont fontWithName:kFontRegularName size:15.0f]];
     [self.emptyOrderHistoryLabel setTextColor:UIColorFromRGB(0xcccccc)];
     [self.emptyOrderHistoryLabel setText:STRING_NO_ORDERS];
     [self.emptyOrderHistoryLabel setTextAlignment:NSTextAlignmentCenter];

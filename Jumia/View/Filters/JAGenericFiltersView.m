@@ -110,7 +110,7 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selectionCheckmark"]];
             
-            cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
+            cell.textLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
             cell.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
             cell.indentationWidth = 20.0f;
         }

@@ -35,15 +35,29 @@ NSString *const RI_HTTP_USER_AGENT_HEADER_NAME = @"User-Agent";
 NSString *const RI_HTTP_USER_AGENT_HEADER_IPHONE_VALUE = @"iPhone: Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_0 like Mac OS X; en-us) AppleWebKit/532.9 (KHTML, like Gecko) Version/4.0.5 Mobile/8A293 Safari/6531.22.7";
 NSString *const RI_HTTP_USER_AGENT_HEADER_IPAD_VALUE = @"iPad: Mozilla/5.0(iPad; U; CPU iPhone OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B314 Safari/531.21.10";
 
-NSString *const RI_COUNTRIES_URL = @"http://www.jumia.com/mobapi/availablecountries";
-NSString *const RI_COUNTRIES_URL_ALL = @"https://cld.pt/dl/download/40e5154f-fbe5-4b4d-abad-bef636d089e5/jtmobapi_040215";
+NSString *const RI_COUNTRIES_URL_JUMIA = @"http://www.jumia.com/mobapi/availablecountries";
+NSString *const RI_COUNTRIES_URL_JUMIA_STAGING = @"https://cld.pt/dl/download/40e5154f-fbe5-4b4d-abad-bef636d089e5/jtmobapi_040215";
+NSString *const RI_COUNTRIES_URL_DARAZ = @"http://www.daraz.com/mobapi/availablecountries";
+NSString *const RI_COUNTRIES_URL_DARAZ_STAGING = @"https://cld.pt/dl/download/06052f3c-c6ac-4a91-ae88-b739c1e08d91/dtmobapi?download=true";//@"http://www.daraz.com/mobapi/availablecountries/staging";
+
+NSString *const RI_UNIQUE_COUNTRY_URL_SHOP = @"http://www.shop.com.mm/mobapi/";
+NSString *const RI_UNIQUE_COUNTRY_URL_SHOP_STAGING = @"http://alice-staging.shop.com.mm/mobapi/";
+NSString *const RI_UNIQUE_COUNTRY_NAME_SHOP = @"Myanmar";
+NSString *const RI_UNIQUE_COUNTRY_ISO_SHOP = @"MM";
+
+NSString *const RI_UNIQUE_COUNTRY_URL_BAMILO = @"http://www.bamilo.com/mobapi/";
+NSString *const RI_UNIQUE_COUNTRY_URL_BAMILO_STAGING = @"https://alice-staging.bamilo.com/mobapi/";
+NSString *const RI_UNIQUE_COUNTRY_URL_BAMILO_INTEGRATION = @"http://integration-www.bamilo.com/mobapi/";
+NSString *const RI_UNIQUE_COUNTRY_NAME_BAMILO = @"Iran";
+NSString *const RI_UNIQUE_COUNTRY_ISO_BAMILO = @"IR";
+
 NSString *const RI_MOBAPI_PREFIX = @"mobapi/";
-NSString *const RI_API_VERSION = @"v1.6/";
+NSString *const RI_API_VERSION = @"v1.7/";
 NSString *const RI_CATALOG_CATEGORIES = @"catalog/categories/";
 NSString *const RI_FORMS_INDEX = @"forms/index/";
 NSString *const RI_API_INFO = @"main/md5/";
 NSString *const RI_API_IMAGE_RESOLUTIONS = @"main/imageresolutions/";
-NSString *const RI_API_GET_TEASERS = @"main/getteasers/";
+NSString *const RI_API_GET_TEASERS = @"main/home/";
 NSString *const RI_API_GET_STATICBLOCKS = @"main/getstaticblocks/";
 NSString *const RI_API_GET_CUSTOMER = @"customer/getdetails?setDevice=mobileApi";
 NSString *const RI_API_REGISTER_CUSTOMER = @"customer/create/";
@@ -53,7 +67,7 @@ NSString *const RI_API_LOGOUT_CUSTOMER = @"customer/logout/";
 NSString *const RI_API_GET_ORDERS = @"order/list";
 NSString *const RI_API_TRACK_ORDER = @"order/trackingorder/?ordernr=%@";
 NSString *const RI_API_SEARCH_SUGGESTIONS = @"search/suggest/";
-NSString *const RI_API_COUNTRY_CONFIGURATION = @"main/getcountryconfs/";
+NSString *const RI_API_COUNTRY_CONFIGURATION = @"main/getconfigurations/";
 NSString *const RI_API_ADD_ORDER = @"order/add?setDevice=mobileApi";
 NSString *const RI_API_ADD_MULTIPLE_ORDER = @"order/addmultiple?setDevice=mobileApi";
 NSString *const RI_API_GET_CART_DATA = @"order/cartdata?setDevice=mobileApi";
@@ -76,3 +90,5 @@ NSString *const RI_API_BUNDLE = @"catalog/bundle/sku/";
 NSString *const RI_API_ADD_BUNDLE = @"order/addbundle/";
 NSString *const RI_API_PRODUCT_OFFERS = @"?all_offers=1";
 NSString *const RI_API_SELLER_RATING = @"?seller_rating=1&per_page=%d&page=%d";
+NSString *const RI_API_PROD_RATING = @"?rating=%d&page=%d";
+NSString *const RI_API_PROD_VALIDATE = @"catalog/validate/";

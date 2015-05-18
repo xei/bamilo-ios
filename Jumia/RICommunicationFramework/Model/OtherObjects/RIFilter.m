@@ -99,10 +99,15 @@
                     if (ISEMPTY(urlString)) {
                         
                         NSString* filterUidString = filter.uid;
-                        if ([filter.uid isEqualToString:@"brand"]) {
-                            filterUidString = @"q";
-                        }
                         urlString = [NSString stringWithFormat:@"%@=%@", filterUidString, filterOption.val];
+                        urlString = [urlString stringByReplacingOccurrencesOfString:@"_" withString:@"%20"];
+                        urlString = [urlString stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
+                        if ([filter.uid isEqualToString:@"brand"]) {
+                            NSString* extraQuery = [NSString stringWithFormat:@"q=%@", filterOption.val];
+                            extraQuery = [extraQuery stringByReplacingOccurrencesOfString:@"_" withString:@"%20"];
+                            extraQuery = [extraQuery stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
+                            urlString = [NSString stringWithFormat:@"%@&%@", urlString, extraQuery];
+                        }
                     } else {
                         urlString = [NSString stringWithFormat:@"%@--%@", urlString, filterOption.val];
                     }
