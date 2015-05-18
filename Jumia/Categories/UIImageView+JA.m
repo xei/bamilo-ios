@@ -78,4 +78,13 @@
     return ceilf(image.size.height*width/image.size.width);
 }
 
+- (UIImage *)flipImageWithOrientation:(UIImageOrientation)orientation
+{
+    UIImage *flippedImage = [UIImage imageWithCGImage:self.CGImage
+                                                scale:self.scale
+                                          orientation:orientation];
+    
+    return flippedImage;
+}
+
 @end

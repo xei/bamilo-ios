@@ -21,4 +21,7 @@
 
 - (void) changeImageHeight:(CGFloat)height
                   andWidth:(CGFloat)width;
+
+- (UIImage *)flipImageWithOrientation:(UIImageOrientation)orientation;
+
 @end
