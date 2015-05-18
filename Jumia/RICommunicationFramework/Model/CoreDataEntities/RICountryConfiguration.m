@@ -128,7 +128,7 @@
         }
     }
     
-    [[NSUserDefaults standardUserDefaults] setObject:languageCode forKey:kLanguageCodeKey];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSArray arrayWithObjects:languageCode, nil] forKey:kLanguageCodeKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICountryConfiguration class])];
