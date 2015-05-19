@@ -11,7 +11,7 @@
 
 int main(int argc, char * argv[]) {
     @autoreleasepool {
-#if TARGET == Bamilo
+#if defined(FORCE_RTL) && FORCE_RTL
         NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
         [defaults setObject:[NSArray arrayWithObject:@"fa-IR"] forKey:@"AppleLanguages"];
         [defaults synchronize];

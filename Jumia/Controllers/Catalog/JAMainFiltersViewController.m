@@ -63,8 +63,8 @@
     
     NSNotificationCenter* notificationCenter = [NSNotificationCenter defaultCenter];
     
-    [notificationCenter postNotificationName:kTurnOffLeftSwipePanelNotification
-                                                        object:nil];
+    [notificationCenter postNotificationName:kTurnOffMenuSwipePanelNotification
+                                      object:nil];
     
     [notificationCenter addObserver:self
                            selector:@selector(editButtonPressed)

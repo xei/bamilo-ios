@@ -185,7 +185,7 @@ JAPickerScrollViewDelegate
 {
     [super viewWillAppear:animated];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffMenuSwipePanelNotification
                                                         object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
