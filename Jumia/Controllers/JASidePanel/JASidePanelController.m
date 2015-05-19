@@ -136,6 +136,7 @@ static char ja_kvoContext;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
         self.leftFixedWidth = 256.0f;
+        self.rightFixedWidth = 256.0f;
     }
     else
     {
