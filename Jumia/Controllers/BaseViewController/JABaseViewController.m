@@ -186,7 +186,7 @@
     
     [self reloadNavBar];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnLeftSwipePanelNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnMenuSwipePanelNotification
                                                         object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
