@@ -166,12 +166,12 @@ UIAlertViewDelegate
     UILabel* customTextLabel = [UILabel new];
     customTextLabel.font = [UIFont fontWithName:kFontLightName size:fontSize];
     customTextLabel.text = [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"];
+    customTextLabel.textAlignment = NSTextAlignmentNatural;
     [cell addSubview:customTextLabel];
     
     if (UIUserInterfaceLayoutDirectionRightToLeft == [UIApplication sharedApplication].userInterfaceLayoutDirection) {
         cellImageX = textLabelWidth + margin;
         textLabelX = 0.0f;
-        customTextLabel.textAlignment = NSTextAlignmentRight;
     }
 
     [cellImageView setFrame:CGRectMake(cellImageX,
