@@ -90,6 +90,7 @@ UIAlertViewDelegate
     
     
     self.tableViewMenu.translatesAutoresizingMaskIntoConstraints = YES;
+    self.tableViewMenu.separatorColor = [UIColor whiteColor];
     
     // Added because of the footer space
     self.tableViewMenu.contentInset = UIEdgeInsetsMake(0, 0, -20, 0);
@@ -182,6 +183,13 @@ UIAlertViewDelegate
                                          0.0,
                                          textLabelWidth,
                                          cellHeight)];
+    
+    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(customTextLabel.frame.origin.x,
+                                                                 cellHeight - 1,
+                                                                 customTextLabel.frame.size.width,
+                                                                 1)];
+    separator.backgroundColor = JALabelGrey;
+    [clickView addSubview:separator];
     
     if (1 == indexPath.row)
     {
