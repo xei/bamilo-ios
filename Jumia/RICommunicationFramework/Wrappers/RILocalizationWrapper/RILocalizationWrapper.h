@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define kLanguageCodeKey @"AppleLanguages"
+#define kLanguageCodeKey @"language_code"
 
 @interface RILocalizationWrapper : NSObject
 
