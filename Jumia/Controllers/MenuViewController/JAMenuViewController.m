@@ -90,6 +90,7 @@ UIAlertViewDelegate
     
     
     self.tableViewMenu.translatesAutoresizingMaskIntoConstraints = YES;
+    self.tableViewMenu.separatorColor = [UIColor whiteColor];
     
     // Added because of the footer space
     self.tableViewMenu.contentInset = UIEdgeInsetsMake(0, 0, -20, 0);
@@ -166,12 +167,12 @@ UIAlertViewDelegate
     UILabel* customTextLabel = [UILabel new];
     customTextLabel.font = [UIFont fontWithName:kFontLightName size:fontSize];
     customTextLabel.text = [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"];
+    customTextLabel.textAlignment = NSTextAlignmentNatural;
     [cell addSubview:customTextLabel];
     
     if (UIUserInterfaceLayoutDirectionRightToLeft == [UIApplication sharedApplication].userInterfaceLayoutDirection) {
         cellImageX = textLabelWidth + margin;
         textLabelX = 0.0f;
-        customTextLabel.textAlignment = NSTextAlignmentRight;
     }
 
     [cellImageView setFrame:CGRectMake(cellImageX,
@@ -182,6 +183,13 @@ UIAlertViewDelegate
                                          0.0,
                                          textLabelWidth,
                                          cellHeight)];
+    
+    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(customTextLabel.frame.origin.x,
+                                                                 cellHeight - 1,
+                                                                 customTextLabel.frame.size.width,
+                                                                 1)];
+    separator.backgroundColor = JALabelGrey;
+    [clickView addSubview:separator];
     
     if (1 == indexPath.row)
     {
