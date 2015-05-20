@@ -105,9 +105,13 @@ UITableViewDelegate
 
     CGFloat margin = 13.0f;
     
+    UILabel* customTextLabel = [UILabel new];
+    [clickView addSubview:customTextLabel];
+    
     UIImage* backImage = [UIImage imageNamed:@"btn_back"];
     UIImage* accessoryImage = [UIImage imageNamed:@"arrow_gotoarea"];
-    if (UIUserInterfaceLayoutDirectionRightToLeft == [UIApplication sharedApplication].userInterfaceLayoutDirection) {
+    if (RI_IS_RTL) {
+        customTextLabel.textAlignment = NSTextAlignmentRight;
         backImage = [backImage flipImageWithOrientation:UIImageOrientationUpMirrored];
         accessoryImage = [accessoryImage flipImageWithOrientation:UIImageOrientationUpMirrored];
     }
@@ -115,10 +119,6 @@ UITableViewDelegate
     [customImageView setImage:backImage];
     UIImageView* customAcessoryView = [UIImageView new];
     [customAcessoryView setImage:accessoryImage];
-    
-    UILabel* customTextLabel = [UILabel new];
-    customTextLabel.textAlignment = NSTextAlignmentNatural;
-    [clickView addSubview:customTextLabel];
 
     
     NSString* backCellTitle = STRING_BACK;
@@ -136,7 +136,7 @@ UITableViewDelegate
         CGFloat customImageX = margin;
         CGFloat customTextX = customImageX + accessoryImage.size.width + margin;
         CGFloat customTextWidth = self.view.frame.size.width - customTextX;
-        if (UIUserInterfaceLayoutDirectionRightToLeft == [UIApplication sharedApplication].userInterfaceLayoutDirection) {
+        if (RI_IS_RTL) {
             customTextX = 0.0f;
             customImageX = customTextWidth + margin;
         }
@@ -201,7 +201,7 @@ UITableViewDelegate
     CGFloat customTextX = margin;
     CGFloat customImageX = self.view.frame.size.width - margin - accessoryImage.size.width;
     CGFloat customTextWidth = customImageX - margin*2;
-    if (UIUserInterfaceLayoutDirectionRightToLeft == [UIApplication sharedApplication].userInterfaceLayoutDirection) {
+    if (RI_IS_RTL) {
         customImageX = margin;
         customTextX = customImageX + accessoryImage.size.width + margin;
     }

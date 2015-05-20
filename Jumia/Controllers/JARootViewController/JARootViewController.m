@@ -160,7 +160,7 @@
 
 - (void)turnOnMenuSwipe
 {
-    if (UIUserInterfaceLayoutDirectionRightToLeft == [UIApplication sharedApplication].userInterfaceLayoutDirection) {
+    if (RI_IS_RTL) {
         self.allowLeftSwipe = NO;
         self.allowRightSwipe = YES;
     } else {
@@ -180,7 +180,7 @@
         }
     }
     
-    if (UIUserInterfaceLayoutDirectionRightToLeft == [UIApplication sharedApplication].userInterfaceLayoutDirection) {
+    if (RI_IS_RTL) {
         [self showRightPanelAnimated:YES userInfo:notification.userInfo];
     } else {
         [self showLeftPanelAnimated:YES userInfo:notification.userInfo];
