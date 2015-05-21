@@ -284,7 +284,7 @@ FBLoginViewDelegate
     self.loginViewCurrentY += 10.0f;
     [self.checkBoxComponent setFrame:CGRectMake((self.loginView.frame.size.width - facebookNormalImage.size.width) / 2,
                                                 self.loginViewCurrentY,
-                                                facebookNormalImage.size.width - 12.0f,
+                                                facebookNormalImage.size.width,
                                                 self.checkBoxComponent.frame.size.height)];
     [self.checkBoxComponent setHidden:NO];
     self.loginViewCurrentY += self.checkBoxComponent.frame.size.height;

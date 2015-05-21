@@ -19,16 +19,18 @@
 
 + (JANewsletterComponent *)getNewJANewsletterComponent
 {
-    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JANewsletterComponent"
+    NSString* xibName = @"JANewsletterComponent";
+    if((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
+    {
+        xibName = @"JANewsletterComponent~iPad";
+    }
+    if (RI_IS_RTL) {
+        xibName = [xibName stringByAppendingString:@"_RTL"];
+    }
+    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:xibName
                                                  owner:nil
                                                options:nil];
     
-    if((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
-    {
-            xib = [[NSBundle mainBundle] loadNibNamed:@"JANewsletterComponent~iPad"
-                                                     owner:nil
-                                              options:nil];
-    }
     for (NSObject *obj in xib) {
         if ([obj isKindOfClass:[JANewsletterComponent class]]) {
             return (JANewsletterComponent *)obj;
