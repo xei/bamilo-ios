@@ -19,7 +19,11 @@
 
 + (JACheckBoxComponent *)getNewJACheckBoxComponent
 {
-    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JACheckBoxComponent"
+    NSString* xibName = @"JACheckBoxComponent";
+    if (RI_IS_RTL) {
+        xibName = [xibName stringByAppendingString:@"_RTL"];
+    }
+    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:xibName
                                                  owner:nil
                                                options:nil];
     
