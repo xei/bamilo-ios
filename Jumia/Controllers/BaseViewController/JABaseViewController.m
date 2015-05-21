@@ -255,14 +255,26 @@
     self.searchBar.layer.borderColor = [JANavBarBackgroundGrey CGColor];
     
     [self.searchBarBackground addSubview:self.searchBar];
+     UIImage *searchIcon = [UIImage imageNamed:@"searchIcon"];
     
-    UIImage *searchIcon = [UIImage imageNamed:@"searchIcon"];
+    CGFloat searchIconXpos = CGRectGetMaxX(self.searchBar.frame) - horizontalMargin - searchIcon.size.width;
+
+    
+    
+    if(RI_IS_RTL){
+    
+        [textFieldSearch setTextAlignment:NSTextAlignmentRight];
+        searchIconXpos = 6.0f;
+        
+    }
+    
     self.searchIconImageView = [[UIImageView alloc] initWithImage:searchIcon];
-    self.searchIconImageView.frame = CGRectMake(CGRectGetMaxX(self.searchBar.frame) - horizontalMargin - searchIcon.size.width,
+    self.searchIconImageView.frame = CGRectMake(searchIconXpos,
                                                 (self.searchBarBackground.frame.size.height - searchIcon.size.height) / 2,
                                                 searchIcon.size.width,
                                                 searchIcon.size.height);
     [self.searchBarBackground addSubview:self.searchIconImageView];
+    
 }
 
 - (void)reloadSearchBar {
@@ -276,7 +288,15 @@
                                       self.searchBarBackground.bounds.origin.y + verticalMargin,
                                       self.searchBarBackground.bounds.size.width - horizontalMargin * 2,
                                       self.searchBarBackground.bounds.size.height - verticalMargin * 2);
-    self.searchIconImageView.frame = CGRectMake(CGRectGetMaxX(self.searchBar.frame) - horizontalMargin - self.searchIconImageView.frame.size.width,
+    
+    CGFloat searchIconXpos = CGRectGetMaxX(self.searchBar.frame) - horizontalMargin - self.searchIconImageView.frame.size.width;
+    
+    if(RI_IS_RTL){
+        
+        searchIconXpos = horizontalMargin + self.searchIconImageView.frame.size.width;
+    }
+    
+    self.searchIconImageView.frame = CGRectMake(searchIconXpos,
                                                 (self.searchBarBackground.frame.size.height - self.searchIconImageView.frame.size.height) / 2,
                                                 self.searchIconImageView.frame.size.width,
                                                 self.searchIconImageView.frame.size.height);
