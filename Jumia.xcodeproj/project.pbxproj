@@ -2393,6 +2393,10 @@
 		CEDBF8951B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEDBF88D1B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib */; };
 		CEDBF8961B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEDBF88D1B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib */; };
 		CEDBF8971B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEDBF88D1B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib */; };
+		CEDBF8A51B0F6F850073971A /* UIView+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C9680781B0F699A0073EBF2 /* UIView+Mirror.m */; };
+		CEDBF8A61B0F6F850073971A /* UIView+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C9680781B0F699A0073EBF2 /* UIView+Mirror.m */; };
+		CEDBF8A71B0F6F860073971A /* UIView+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C9680781B0F699A0073EBF2 /* UIView+Mirror.m */; };
+		CEDBF8A81B0F6F860073971A /* UIView+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C9680781B0F699A0073EBF2 /* UIView+Mirror.m */; };
 		CEDEB983199A51E30022BAB5 /* RIFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDEB982199A51E30022BAB5 /* RIFilter.m */; };
 		CEDEB986199A6F430022BAB5 /* JAMainFiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDEB985199A6F430022BAB5 /* JAMainFiltersViewController.m */; };
 		CEDEB98E199BA4140022BAB5 /* JAPriceFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDEB98D199BA4140022BAB5 /* JAPriceFilterViewController.m */; };
@@ -7149,6 +7153,7 @@
 				5ddb2cd2f090566c17bfc751 /* RICity.m in Sources */,
 				876d96c3d745466130991f03 /* MKAnnotationView+WebCache.m in Sources */,
 				2608f636ef2e99dcbbfb171e /* JAPDVRelatedItem.m in Sources */,
+				CEDBF8A51B0F6F850073971A /* UIView+Mirror.m in Sources */,
 				94e152e4d8dd3055aab7a4d0 /* JAPaymentViewController.m in Sources */,
 				e39ee093e35c257cd5514d65 /* RIRegion.m in Sources */,
 				B5B79B411A3F4A2A00639F9E /* RIShippingMethod.m in Sources */,
@@ -7638,6 +7643,7 @@
 				CE9ADB961AB34C4600D56481 /* JAShopWebViewController.m in Sources */,
 				CE9ADB971AB34C4600D56481 /* JAMenuViewController.m in Sources */,
 				CE9ADB981AB34C4600D56481 /* RIProductOffer.m in Sources */,
+				CEDBF8A61B0F6F850073971A /* UIView+Mirror.m in Sources */,
 				CE9ADB991AB34C4600D56481 /* RICity.m in Sources */,
 				CE9ADB9A1AB34C4600D56481 /* JACatalogTopView.m in Sources */,
 				CE9ADB9B1AB34C4600D56481 /* JAPDVBundles.m in Sources */,
@@ -7886,6 +7892,7 @@
 				CE9ADD901AB6D6E900D56481 /* JAShopWebViewController.m in Sources */,
 				CE9ADD911AB6D6E900D56481 /* JAMenuViewController.m in Sources */,
 				CE9ADD921AB6D6E900D56481 /* RIProductOffer.m in Sources */,
+				CEDBF8A71B0F6F860073971A /* UIView+Mirror.m in Sources */,
 				CE9ADD931AB6D6E900D56481 /* RICity.m in Sources */,
 				CE9ADD941AB6D6E900D56481 /* JACatalogTopView.m in Sources */,
 				CE9ADD951AB6D6E900D56481 /* JAPDVBundles.m in Sources */,
@@ -8134,6 +8141,7 @@
 				CE9ADF8A1AB6D78200D56481 /* JAShopWebViewController.m in Sources */,
 				CE9ADF8B1AB6D78200D56481 /* JAMenuViewController.m in Sources */,
 				CE9ADF8C1AB6D78200D56481 /* RIProductOffer.m in Sources */,
+				CEDBF8A81B0F6F860073971A /* UIView+Mirror.m in Sources */,
 				CE9ADF8D1AB6D78200D56481 /* RICity.m in Sources */,
 				CE9ADF8E1AB6D78200D56481 /* JACatalogTopView.m in Sources */,
 				CE9ADF8F1AB6D78200D56481 /* JAPDVBundles.m in Sources */,
