@@ -456,11 +456,11 @@
 
 - (void)setNumberOfStars:(NSInteger)stars
 {
-    self.star1.image = stars < 1 ? [self getEmptyStar] : [self getFilledStar];
-    self.star2.image = stars < 2 ? [self getEmptyStar] : [self getFilledStar];
-    self.star3.image = stars < 3 ? [self getEmptyStar] : [self getFilledStar];
-    self.star4.image = stars < 4 ? [self getEmptyStar] : [self getFilledStar];
-    self.star5.image = stars < 5 ? [self getEmptyStar] : [self getFilledStar];
+    self.star1.image = stars < (RTL?5:1) ? [self getEmptyStar] : [self getFilledStar];
+    self.star2.image = stars < (RTL?4:2) ? [self getEmptyStar] : [self getFilledStar];
+    self.star3.image = stars < (RTL?3:3) ? [self getEmptyStar] : [self getFilledStar];
+    self.star4.image = stars < (RTL?2:4) ? [self getEmptyStar] : [self getFilledStar];
+    self.star5.image = stars < (RTL?1:5) ? [self getEmptyStar] : [self getFilledStar];
 }
 
 - (UIImage *)getEmptyStar

@@ -8,6 +8,13 @@
 
 #import "JAPriceView.h"
 
+@interface JAPriceView () {
+    UILabel *_label;
+    UIView *_strike;
+}
+
+@end
+
 @implementation JAPriceView
 
 - (void)loadWithPrice:(NSString*)price
@@ -15,7 +22,7 @@
              fontSize:(CGFloat)fontSize
 specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
 {
-    UILabel* label = [UILabel new];
+    _label = [UILabel new];
     
     NSMutableAttributedString* finalPriceString;
     NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -62,13 +69,15 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
         finalPriceString  = [[NSMutableAttributedString alloc] initWithString:@"" attributes:attributes];
     }
     
-    [label setAttributedText:finalPriceString];
-    [label sizeToFit];
+    [_label setAttributedText:finalPriceString];
+    [_label sizeToFit];
     self.frame = CGRectMake(self.frame.origin.x,
                             self.frame.origin.y,
-                            label.frame.size.width,
-                            label.frame.size.height);
-    [self addSubview:label];
+                            _label.frame.size.width,
+                            _label.frame.size.height);
+    [self addSubview:_label];
+    
+    [_label setTextAlignment:NSTextAlignmentNatural];
     
     
     if (VALID_NOTEMPTY(specialPrice, NSString)) {
@@ -76,19 +85,35 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
         oldPriceLabel.text = price;
         oldPriceLabel.font = [UIFont fontWithName:kFontLightName size:fontSize];
         [oldPriceLabel sizeToFit];
-        UIView* strike = [[UIView alloc] init];
-        
+        _strike = [[UIView alloc] init];
         CGFloat strikePosition = self.frame.size.width - oldPriceLabel.frame.size.width;
         if (specialPriceOnTheLeft) {
             strikePosition = 0.0f;
         }
         
-        strike.frame = CGRectMake(strikePosition,
+        _strike.frame = CGRectMake(strikePosition,
                                   (self.frame.size.height - 1.0f) /2 ,
                                   oldPriceLabel.frame.size.width,
                                   1.0f);
-        strike.backgroundColor = UIColorFromRGB(0xcccccc);
-        [self addSubview:strike];
+        
+        _strike.backgroundColor = UIColorFromRGB(0xcccccc);
+        [self addSubview:_strike];
+    }
+}
+
+- (void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    [_label setFrame:self.bounds];
+    [_label setTextAlignment:NSTextAlignmentLeft];
+    
+    
+    if (RTL)
+    {
+        [_label setTextAlignment:NSTextAlignmentRight];
+        CGRect strikeFrame = _strike.frame;
+        strikeFrame.origin.x = CGRectGetMaxX(self.bounds) - strikeFrame.size.width;
+        _strike.frame = strikeFrame;
     }
 }
 

@@ -54,13 +54,24 @@
 {
     _rating = rating;
     
+    if (RTL)
+        rating = 5-rating;
+    
     for (UIButton* subview in self.subviews) {
         if (VALID_NOTEMPTY(subview, UIButton)) {
-            
-            if (rating < subview.tag) {
-                subview.selected = NO;
-            } else {
-                subview.selected = YES;
+            if (RTL) {
+                if (rating >= subview.tag) {
+                    subview.selected = NO;
+                } else {
+                    subview.selected = YES;
+                }
+            }else
+            {
+                if (rating < subview.tag) {
+                    subview.selected = NO;
+                } else {
+                    subview.selected = YES;
+                }
             }
         }
     }

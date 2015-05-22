@@ -1153,7 +1153,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JARatingsViewController class]])
     {
-        JARatingsViewController* ratingsViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"ratingsViewController"];
+        JARatingsViewController *ratingsViewController = [[JARatingsViewController alloc] initWithNibName:@"JARatingsViewController" bundle:nil];
         
         if ([notification.userInfo objectForKey:@"product"]) {
             ratingsViewController.product = [notification.userInfo objectForKey:@"product"];
