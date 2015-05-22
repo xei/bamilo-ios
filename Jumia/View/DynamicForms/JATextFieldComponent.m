@@ -19,7 +19,11 @@
 
 + (JATextFieldComponent *)getNewJATextFieldComponent
 {
-    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JATextFieldComponent"
+    NSString* xibName = @"JATextFieldComponent";
+    if (RI_IS_RTL) {
+        xibName = [xibName stringByAppendingString:@"_RTL"];
+    }
+    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:xibName
                                                  owner:nil
                                                options:nil];
     

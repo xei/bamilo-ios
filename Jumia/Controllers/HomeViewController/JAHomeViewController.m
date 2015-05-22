@@ -94,7 +94,7 @@
 //    [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0.0];
 //    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffMenuSwipePanelNotification
                                                         object:nil];
     
     [self hideLoading];

@@ -8,6 +8,12 @@
 
 #import "RIConfiguration.h"
 
+#if defined(FORCE_RTL) && FORCE_RTL
+BOOL const RI_IS_RTL = YES;
+#else
+BOOL const RI_IS_RTL = NO;
+#endif
+
 NSString *const RI_USERNAME = @"rocket";
 NSString *const RI_PASSWORD = @"z7euN7qfRD769BP";
 //NSString *const RI_PASSWORD = @"rock4me";
