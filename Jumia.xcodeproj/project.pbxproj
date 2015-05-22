@@ -190,6 +190,7 @@
 		6C60C86E1AB75F41008AD4AD /* RITrackingDebug_SHOP.COM.MM.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C60C86B1AB75D41008AD4AD /* RITrackingDebug_SHOP.COM.MM.plist */; };
 		6C6EBE281ABC6634006A3D46 /* RITracking_بامیلو.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C6EBE261ABC6600006A3D46 /* RITracking_بامیلو.plist */; };
 		6C6EBE2B1ABC66DB006A3D46 /* RITrackingDebug_بامیلو.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C6EBE291ABC66BE006A3D46 /* RITrackingDebug_بامیلو.plist */; };
+		6C9680791B0F699A0073EBF2 /* UIView+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C9680781B0F699A0073EBF2 /* UIView+Mirror.m */; };
 		6CA85FD21AE683D0001D1C94 /* RISpecification.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85FD11AE683D0001D1C94 /* RISpecification.m */; };
 		6CA85FD31AE683D0001D1C94 /* RISpecification.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85FD11AE683D0001D1C94 /* RISpecification.m */; };
 		6CA85FD41AE683D0001D1C94 /* RISpecification.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85FD11AE683D0001D1C94 /* RISpecification.m */; };
@@ -2638,6 +2639,8 @@
 		6C60C86B1AB75D41008AD4AD /* RITrackingDebug_SHOP.COM.MM.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITrackingDebug_SHOP.COM.MM.plist; sourceTree = "<group>"; };
 		6C6EBE261ABC6600006A3D46 /* RITracking_بامیلو.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RITracking_بامیلو.plist"; sourceTree = "<group>"; };
 		6C6EBE291ABC66BE006A3D46 /* RITrackingDebug_بامیلو.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RITrackingDebug_بامیلو.plist"; sourceTree = "<group>"; };
+		6C9680771B0F699A0073EBF2 /* UIView+Mirror.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Mirror.h"; path = "Categories/UIView+Mirror.h"; sourceTree = "<group>"; };
+		6C9680781B0F699A0073EBF2 /* UIView+Mirror.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Mirror.m"; path = "Categories/UIView+Mirror.m"; sourceTree = "<group>"; };
 		6CA85FD01AE683D0001D1C94 /* RISpecification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RISpecification.h; sourceTree = "<group>"; };
 		6CA85FD11AE683D0001D1C94 /* RISpecification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RISpecification.m; sourceTree = "<group>"; };
 		6CA85FD61AE69195001D1C94 /* RISpecificationAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RISpecificationAttribute.h; sourceTree = "<group>"; };
@@ -4737,6 +4740,8 @@
 		B5C1E33419BA1E3D009C422C /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				6C9680771B0F699A0073EBF2 /* UIView+Mirror.h */,
+				6C9680781B0F699A0073EBF2 /* UIView+Mirror.m */,
 				CEDBF85F1B0A01B60073971A /* UIImage+Mirror.h */,
 				CEDBF8601B0A01B60073971A /* UIImage+Mirror.m */,
 				B5C1E33519BA1E73009C422C /* UIImageView+JA.h */,
@@ -7376,6 +7381,7 @@
 				CEBE2A801A9E31E800F457FA /* JAShopWebViewController.m in Sources */,
 				4AE242E81986570F00E37C90 /* JAMenuViewController.m in Sources */,
 				CE283E6D1A726B3B00F3E92D /* RIProductOffer.m in Sources */,
+				6C9680791B0F699A0073EBF2 /* UIView+Mirror.m in Sources */,
 				B59DCA6219B710B100DE7960 /* RICity.m in Sources */,
 				CE06FCB71A88C3A5002FCD25 /* JACatalogTopView.m in Sources */,
 				CEED472C1A7B973B006D9CE7 /* JAPDVBundles.m in Sources */,

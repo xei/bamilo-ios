@@ -7,6 +7,7 @@
 //
 
 #import "JAPDVWizardView.h"
+#import "UIImage+Mirror.h"
 
 @interface JAPDVWizardView ()
 
@@ -117,8 +118,17 @@
         [self.scrollView addSubview:self.wizardPage3];
         
         UIImage* image3 = [UIImage imageNamed:@"wizard_fav"];
+        
+        CGFloat handImageWizard2Xposition = self.wizardPage3.bounds.size.width - image3.size.width - 15.0f;
+        
         self.wizardPage3ImageView = [[UIImageView alloc] initWithImage:image3];
-        [self.wizardPage3ImageView setFrame:CGRectMake(self.wizardPage3.bounds.size.width - image3.size.width - 15.0f,
+        
+        if(RI_IS_RTL){
+            
+            handImageWizard2Xposition = 15.0f;
+        }
+        
+        [self.wizardPage3ImageView setFrame:CGRectMake(handImageWizard2Xposition,
                                                        kJAWizardViewImageGenericSmallTopMargin,
                                                        image3.size.width,
                                                        image3.size.height)];
@@ -152,7 +162,17 @@
         
         UIImage* image4 = [UIImage imageNamed:@"wizard_tap"];
         self.wizardPage4ImageView = [[UIImageView alloc] initWithImage:image4];
-        [self.wizardPage4ImageView setFrame:CGRectMake(kJAWizardPDV4TextHorizontalMargin,
+        CGFloat handImageView4XPosition = kJAWizardPDV4TextHorizontalMargin;
+        if(RI_IS_RTL){
+            
+            [self.wizardPage2ImageView setImage:[image2 flipImageWithOrientation:UIImageOrientationUpMirrored]];
+            [self.wizardPage3ImageView setImage:[image3 flipImageWithOrientation:UIImageOrientationUpMirrored]];
+            [self.wizardPage4ImageView setImage:[image4 flipImageWithOrientation:UIImageOrientationUpMirrored]];
+            
+            handImageView4XPosition = self.wizardPage4.bounds.size.width - image4.size.width - 15.0f;
+            
+        }
+        [self.wizardPage4ImageView setFrame:CGRectMake(handImageView4XPosition,
                                                        kJAWizardViewImageGenericSmallTopMargin,
                                                        image4.size.width,
                                                        image4.size.height)];
@@ -268,6 +288,10 @@
                                           self.scrollView.bounds.origin.y,
                                           self.scrollView.bounds.size.width,
                                           self.scrollView.bounds.size.height)];
+    if(RI_IS_RTL){
+    
+        leftMargin3 = 15.0f;
+    }
     [self.wizardPage3ImageView setFrame:CGRectMake(leftMargin3,
                                                    topMargin3,
                                                    self.wizardPage3ImageView.frame.size.width,
@@ -294,8 +318,12 @@
                                           self.scrollView.bounds.origin.y,
                                           self.scrollView.bounds.size.width,
                                           self.scrollView.bounds.size.height)];
+    CGFloat handImage4XPos =kJAWizardPDV4TextHorizontalMargin;
+    if(RI_IS_RTL){
+        handImage4XPos = self.wizardPage4.bounds.size.width - self.wizardPage4ImageView.frame.size.width - 15.0f;
+    }
     
-    [self.wizardPage4ImageView setFrame:CGRectMake(kJAWizardPDV4TextHorizontalMargin,
+    [self.wizardPage4ImageView setFrame:CGRectMake(handImage4XPos,
                                                    topMargin4,
                                                    self.wizardPage4ImageView.frame.size.width,
                                                    self.wizardPage4ImageView.frame.size.height)];
