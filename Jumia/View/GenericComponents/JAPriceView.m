@@ -108,7 +108,7 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
     [_label setTextAlignment:NSTextAlignmentLeft];
     
     
-    if (RTL)
+    if (RI_IS_RTL)
     {
         [_label setTextAlignment:NSTextAlignmentRight];
         CGRect strikeFrame = _strike.frame;

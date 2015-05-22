@@ -36,7 +36,7 @@
     self.ratingLabels = [NSMutableArray new];
     self.ratingStarViews = [NSMutableArray new];
     
-    CGFloat currentX = RTL? width - kJAReviewCellHorizontalMargins: kJAReviewCellHorizontalMargins;
+    CGFloat currentX = RI_IS_RTL? width - kJAReviewCellHorizontalMargins: kJAReviewCellHorizontalMargins;
     CGFloat currentY = 6.0f;
     
     int numberOfItemsSideBySide = 3;
@@ -58,7 +58,7 @@
         [titleLabel setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
         [titleLabel setText:title];
         [titleLabel sizeToFit];
-        [titleLabel setFrame:CGRectMake(currentX + (RTL?-titleLabel.bounds.size.width:0),
+        [titleLabel setFrame:CGRectMake(currentX + (RI_IS_RTL?-titleLabel.bounds.size.width:0),
                                         currentY,
                                         ratingViewWidth,
                                         titleLabel.frame.size.height)];
@@ -69,27 +69,27 @@
         
         JARatingsView* ratingsView = [JARatingsView getNewJARatingsView];
         [ratingsView setRating:[average integerValue]];
-        [ratingsView setFrame:CGRectMake(currentX + (RTL?-ratingsView.bounds.size.width:0),
+        [ratingsView setFrame:CGRectMake(currentX + (RI_IS_RTL?-ratingsView.bounds.size.width:0),
                                          currentY + titleLabel.frame.size.height,
                                          ratingsView.frame.size.width,
                                          ratingsView.frame.size.height)];
         [self addSubview:ratingsView];
         [self.ratingStarViews addObject:ratingsView];
         
-        currentX += RTL?-ratingViewWidth:ratingViewWidth;
+        currentX += RI_IS_RTL?-ratingViewWidth:ratingViewWidth;
         
         NSInteger nextIndex = i+1;
         if (nextIndex < review.ratingStars.count) {
             if (0 == nextIndex%numberOfItemsSideBySide) {
                 //                currentX = kJAReviewCellHorizontalMargins;
-                currentX = RTL? width - kJAReviewCellHorizontalMargins: kJAReviewCellHorizontalMargins;
+                currentX = RI_IS_RTL? width - kJAReviewCellHorizontalMargins: kJAReviewCellHorizontalMargins;
                 if (0 != nextIndex) {
                     currentY += titleLabel.frame.size.height + ratingsView.frame.size.height;
                 }
             }
         } else {
             currentY += 35.0f;
-            currentX = RTL? width - kJAReviewCellHorizontalMargins: kJAReviewCellHorizontalMargins;
+            currentX = RI_IS_RTL? width - kJAReviewCellHorizontalMargins: kJAReviewCellHorizontalMargins;
         }
     }
  
@@ -146,7 +146,7 @@
                                          currentY,
                                          width - (kJAReviewCellHorizontalMargins*2),
                                          self.titleLabel.frame.size.height)];
-    [self.titleLabel setTextAlignment:RTL?NSTextAlignmentRight:NSTextAlignmentLeft];
+    [self.titleLabel setTextAlignment:RI_IS_RTL?NSTextAlignmentRight:NSTextAlignmentLeft];
     
     [self addSubview:self.titleLabel];
     
@@ -161,7 +161,7 @@
                                                CGRectGetMaxY(self.titleLabel.frame) + 10.0f,
                                                width - (kJAReviewCellHorizontalMargins*2),
                                                self.descriptionLabel.frame.size.height)];
-    [self.descriptionLabel setTextAlignment:RTL?NSTextAlignmentRight:NSTextAlignmentLeft];
+    [self.descriptionLabel setTextAlignment:RI_IS_RTL?NSTextAlignmentRight:NSTextAlignmentLeft];
     
     [self addSubview:self.descriptionLabel];
     
@@ -186,7 +186,7 @@
                                               self.authorDateLabel.frame.origin.y,
                                               width - (kJAReviewCellHorizontalMargins*2),
                                               self.authorDateLabel.frame.size.height)];
-    [self.authorDateLabel setTextAlignment:RTL?NSTextAlignmentRight:NSTextAlignmentLeft];
+    [self.authorDateLabel setTextAlignment:RI_IS_RTL?NSTextAlignmentRight:NSTextAlignmentLeft];
     
     [self addSubview:self.authorDateLabel];
     

@@ -53,5 +53,3 @@
     #import "JAMessageView.h"
     #import "Reachability.h"
 #endif
-
-#define RTL YES

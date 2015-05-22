@@ -29,7 +29,7 @@
     {
         if (VALID_NOTEMPTY(subview, UIButton))
         {
-            if (_rating < (RTL?6-subview.tag:subview.tag))
+            if (_rating < (RI_IS_RTL?6-subview.tag:subview.tag))
             {
                 subview.selected = NO;
             } else
@@ -79,7 +79,7 @@
     
     [self.starButton5 setImage:[UIImage imageNamed:@"img_rating_star_big_full.png"] forState:UIControlStateSelected | UIControlStateHighlighted];
     
-    [self starPressed:RTL?self.starButton5:self.starButton1];
+    [self starPressed:RI_IS_RTL?self.starButton5:self.starButton1];
     
 }
 
@@ -87,7 +87,7 @@
 {
     UIButton *button = (UIButton *)sender;
     
-    self.rating = RTL?6-button.tag:button.tag;
+    self.rating = RI_IS_RTL?6-button.tag:button.tag;
 }
 
 @end

@@ -54,12 +54,12 @@
 {
     _rating = rating;
     
-    if (RTL)
+    if (RI_IS_RTL)
         rating = 5-rating;
     
     for (UIButton* subview in self.subviews) {
         if (VALID_NOTEMPTY(subview, UIButton)) {
-            if (RTL) {
+            if (RI_IS_RTL) {
                 if (rating >= subview.tag) {
                     subview.selected = NO;
                 } else {

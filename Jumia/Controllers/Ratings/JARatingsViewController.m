@@ -443,7 +443,7 @@ UITableViewDataSource
     CGFloat ratingViewWidth = (self.topView.frame.size.width - 2*kHorizontalMargin) / numberOfItemsSideBySide;
     
     CGFloat currentX = 2*kHorizontalMargin;
-    if (RTL) {
+    if (RI_IS_RTL) {
         currentX = self.view.bounds.size.width - 2*kHorizontalMargin;
     }
     
@@ -463,7 +463,7 @@ UITableViewDataSource
         JARatingsViewMedium* ratingsView = [JARatingsViewMedium getNewJARatingsViewMedium];
         [ratingsView setRating:0];
         CGFloat offset = ratingViewWidth - ratingsView.frame.size.width;
-        [ratingsView setFrame:CGRectMake(RTL?self.topView.bounds.size.width - 2*kHorizontalMargin - ratingViewWidth + offset:2*kHorizontalMargin,
+        [ratingsView setFrame:CGRectMake(RI_IS_RTL?self.topView.bounds.size.width - 2*kHorizontalMargin - ratingViewWidth + offset:2*kHorizontalMargin,
                                      topViewMinHeight + titleLabel.frame.size.height,
                                      ratingsView.frame.size.width,
                                      ratingsView.frame.size.height)];
@@ -482,7 +482,7 @@ UITableViewDataSource
             [titleLabel setText:title];
             [titleLabel sizeToFit];
             
-            [titleLabel setFrame:CGRectMake(RTL?
+            [titleLabel setFrame:CGRectMake(RI_IS_RTL?
                                             currentX - titleLabel.bounds.size.width
                                             :
                                             currentX,
@@ -500,7 +500,7 @@ UITableViewDataSource
             JARatingsViewMedium* ratingsView = [JARatingsViewMedium getNewJARatingsViewMedium];
             [ratingsView setRating:[average integerValue]];
             
-            [ratingsView setFrame:CGRectMake(RTL?
+            [ratingsView setFrame:CGRectMake(RI_IS_RTL?
                                              currentX - ratingsView.bounds.size.width
                                              :
                                              currentX,
@@ -511,13 +511,13 @@ UITableViewDataSource
             [self.topView addSubview:ratingsView];
             [self.ratingStars addObject:ratingsView];
             
-            currentX += RTL?-ratingViewWidth:ratingViewWidth;
+            currentX += RI_IS_RTL?-ratingViewWidth:ratingViewWidth;
             
             NSInteger nextIndex = i+1;
             if (nextIndex < self.productRatings.ratingInfo.averageRatingsArray.count) {
                 if (0 == nextIndex%numberOfItemsSideBySide) {
                     
-                    if (RTL) {
+                    if (RI_IS_RTL) {
                         currentX = self.view.bounds.size.width - 2*kHorizontalMargin;
                     }else
                         currentX = 2*kHorizontalMargin;
@@ -536,7 +536,7 @@ UITableViewDataSource
     topViewFrame.size.height += _ratingTypeLinesHeight;
     self.topView.frame = topViewFrame;
     
-    if (RTL)
+    if (RI_IS_RTL)
     {
         [self.nameLabel setTextAlignment:NSTextAlignmentRight];
         [self.brandLabel setTextAlignment:NSTextAlignmentRight];
@@ -647,7 +647,7 @@ UITableViewDataSource
         self.labelUsedProduct.text = STRING_RATE_PRODUCT;
         [self.labelUsedProduct setTextColor:UIColorFromRGB(0x666666)];
         
-        if (RTL) {
+        if (RI_IS_RTL) {
             [self.labelUsedProduct setTextAlignment:NSTextAlignmentRight];
         }
         
