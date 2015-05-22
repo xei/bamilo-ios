@@ -244,7 +244,7 @@
         uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_SHOP;
         uniqueCountry.isLive = YES;
 #if defined(STAGING) && STAGING
-//        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_SHOP_STAGING;
+        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_SHOP_STAGING;
         uniqueCountry.isLive = NO;
 #endif
         return uniqueCountry;
