@@ -12,6 +12,7 @@
 #import "JAMaintenancePage.h"
 #import "JAKickoutView.h"
 #import "JAFallbackView.h"
+#import "UIView+Mirror.h"
 
 #define kSearchViewBarHeight 32.0f
 
@@ -257,22 +258,19 @@
     [self.searchBarBackground addSubview:self.searchBar];
      UIImage *searchIcon = [UIImage imageNamed:@"searchIcon"];
     
-    CGFloat searchIconXpos = CGRectGetMaxX(self.searchBar.frame) - horizontalMargin - searchIcon.size.width;
-
-    
-    
-    if(RI_IS_RTL){
-    
-        [textFieldSearch setTextAlignment:NSTextAlignmentRight];
-        searchIconXpos = 6.0f;
-        
-    }
     
     self.searchIconImageView = [[UIImageView alloc] initWithImage:searchIcon];
-    self.searchIconImageView.frame = CGRectMake(searchIconXpos,
+    self.searchIconImageView.frame = CGRectMake(CGRectGetMaxX(self.searchBar.frame) - horizontalMargin - searchIcon.size.width,
                                                 (self.searchBarBackground.frame.size.height - searchIcon.size.height) / 2,
                                                 searchIcon.size.width,
                                                 searchIcon.size.height);
+    
+    if(RI_IS_RTL){
+        
+        [textFieldSearch setTextAlignment:NSTextAlignmentRight];
+        [self.searchIconImageView flipViewPositionInsideSuperview];
+    }
+    
     [self.searchBarBackground addSubview:self.searchIconImageView];
     
 }
@@ -289,17 +287,15 @@
                                       self.searchBarBackground.bounds.size.width - horizontalMargin * 2,
                                       self.searchBarBackground.bounds.size.height - verticalMargin * 2);
     
-    CGFloat searchIconXpos = CGRectGetMaxX(self.searchBar.frame) - horizontalMargin - self.searchIconImageView.frame.size.width;
-    
-    if(RI_IS_RTL){
-        
-        searchIconXpos = horizontalMargin + self.searchIconImageView.frame.size.width;
-    }
-    
-    self.searchIconImageView.frame = CGRectMake(searchIconXpos,
+    self.searchIconImageView.frame = CGRectMake(CGRectGetMaxX(self.searchBar.frame) - horizontalMargin - self.searchIconImageView.frame.size.width,
                                                 (self.searchBarBackground.frame.size.height - self.searchIconImageView.frame.size.height) / 2,
                                                 self.searchIconImageView.frame.size.width,
                                                 self.searchIconImageView.frame.size.height);
+    
+    if(RI_IS_RTL){
+        
+        [self.searchIconImageView flipViewPositionInsideSuperview];
+    }
     
     [self.searchResultsView reloadFrame:[self viewBounds]];
 }
