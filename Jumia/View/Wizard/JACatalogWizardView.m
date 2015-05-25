@@ -7,6 +7,7 @@
 //
 
 #import "JACatalogWizardView.h"
+#import "UIImage+Mirror.h"
 
 @interface JACatalogWizardView ()
 
@@ -40,6 +41,12 @@
                                                        kJAWizardViewImageGenericSmallTopMargin,
                                                        image2.size.width,
                                                        image2.size.height)];
+        
+        if(RI_IS_RTL){
+            
+            [self.wizardPage1ImageView setImage:[image2 flipImageWithOrientation:UIImageOrientationUpMirrored]];
+        
+        }
         [self.wizardPage1 addSubview:self.wizardPage1ImageView];
         
         self.wizardPage1Label = [[UILabel alloc] init];
@@ -136,7 +143,13 @@
                                           self.scrollView.bounds.size.width,
                                           self.scrollView.bounds.size.height)];
     
-    [self.wizardPage1ImageView setFrame:CGRectMake(self.wizardPage1.bounds.size.width - self.wizardPage1ImageView.frame.size.width - 15.0f,
+    CGFloat handImageXPosition =self.wizardPage1.bounds.size.width - self.wizardPage1ImageView.frame.size.width - 15.0f;
+    if(RI_IS_RTL){
+    
+        handImageXPosition = 15.0f;
+    
+    }
+    [self.wizardPage1ImageView setFrame:CGRectMake(handImageXPosition,
                                                    kJAWizardViewImageGenericSmallTopMargin,
                                                    self.wizardPage1ImageView.frame.size.width,
                                                    self.wizardPage1ImageView.frame.size.height)];

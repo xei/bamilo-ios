@@ -7,6 +7,7 @@
 //
 
 #import "JANoConnectionView.h"
+#import "UIView+Mirror.h"
 
 @interface JANoConnectionView ()
 
@@ -124,6 +125,10 @@ void(^retryBock)(BOOL dismiss);
     
     self.animationView.alpha = 1.0f;
     [self.retryButton addSubview:self.animationView];
+    
+    if(RI_IS_RTL){
+        [self.retryButton flipSubviewPositions];
+    }
 
     if (internetConnection)
     {

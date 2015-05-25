@@ -214,7 +214,7 @@
         
         NSArray *arrayToUse = featuredBox.products;
         
-        if (UIUserInterfaceLayoutDirectionRightToLeft == [UIApplication sharedApplication].userInterfaceLayoutDirection) {
+        if (RI_IS_RTL) {
             
             arrayToUse = convertedProd;
         }
@@ -306,7 +306,7 @@
         
         NSArray *arrayToUse = featuredBrandBox.brands;
         
-        if (UIUserInterfaceLayoutDirectionRightToLeft == [UIApplication sharedApplication].userInterfaceLayoutDirection) {
+        if (RI_IS_RTL) {
         
             arrayToUse = convertedBrands;
         }
@@ -384,7 +384,7 @@
     
     scrollViewY += self.noticeView.frame.size.height + 6.0f;
     
-    if (UIUserInterfaceLayoutDirectionRightToLeft == [UIApplication sharedApplication].userInterfaceLayoutDirection) {
+    if (RI_IS_RTL) {
         
         [noticeLabel setFrame:CGRectMake(self.noticeView.bounds.size.width - self.leftMargin - noticeLabel.frame.size.width ,
                                         15.0f,
