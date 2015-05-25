@@ -8,6 +8,7 @@
 
 #import "UIView+Mirror.h"
 #import "UIImage+Mirror.h"
+#import "JAClickableView.h"
 
 @implementation UIView (Mirror)
 
@@ -44,6 +45,55 @@
             button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         } else if (UIControlContentHorizontalAlignmentRight == currentAlignment) {
             button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        } else if (UIControlContentHorizontalAlignmentCenter == currentAlignment) {
+            
+            CGFloat imageWidth = button.imageView.frame.size.width;
+            CGFloat textWidth = button.titleLabel.frame.size.width;
+            
+            CGFloat newTextX = -imageWidth;
+            CGFloat newImageX = textWidth;
+            
+            UIEdgeInsets currentImageInsets = button.imageEdgeInsets;
+            UIEdgeInsets currentTextInsets = button.titleEdgeInsets;
+            
+            button.imageEdgeInsets = UIEdgeInsetsMake(currentImageInsets.top,
+                                                      newImageX,
+                                                      currentImageInsets.bottom,
+                                                      -newImageX);
+            button.titleEdgeInsets = UIEdgeInsetsMake(currentTextInsets.top,
+                                                      newTextX,
+                                                      currentTextInsets.bottom,
+                                                      -newTextX);
+            
+        }
+    } else if ([self isKindOfClass:[JAClickableView class]]) {
+    
+        JAClickableView* clickableView = (JAClickableView*)self;
+        UIControlContentHorizontalAlignment currentAlignment = clickableView.contentHorizontalAlignment;
+        
+        if (UIControlContentHorizontalAlignmentLeft == currentAlignment) {
+            clickableView.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+        } else if (UIControlContentHorizontalAlignmentRight == currentAlignment) {
+            clickableView.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        } else if (UIControlContentHorizontalAlignmentCenter == currentAlignment) {
+            
+            CGFloat imageWidth = clickableView.imageView.frame.size.width;
+            CGFloat textWidth = clickableView.titleLabel.frame.size.width;
+            
+            CGFloat newTextX = -imageWidth;
+            CGFloat newImageX = textWidth;
+            
+            UIEdgeInsets currentImageInsets = clickableView.imageEdgeInsets;
+            UIEdgeInsets currentTextInsets = clickableView.titleEdgeInsets;
+            
+            clickableView.imageEdgeInsets = UIEdgeInsetsMake(currentImageInsets.top,
+                                                             newImageX,
+                                                             currentImageInsets.bottom,
+                                                             -newImageX);
+            clickableView.titleEdgeInsets = UIEdgeInsetsMake(currentTextInsets.top,
+                                                             newTextX,
+                                                             currentTextInsets.bottom,
+                                                             -newTextX);
         }
     }
 }
@@ -76,6 +126,25 @@
         
         UIImage* newImage = [currentImage flipImageWithOrientation:UIImageOrientationUpMirrored];
         imageView.image = newImage;
+
+    } else if ([self isKindOfClass:[JAClickableView class]]) {
+    
+        JAClickableView* clickableView = (JAClickableView*)self;
+        
+        UIImage* currentImageNormal = [clickableView imageForState:UIControlStateNormal];
+        UIImage* currentImageHighlighted = [clickableView imageForState:UIControlStateHighlighted];
+        UIImage* currentImageSelected = [clickableView imageForState:UIControlStateSelected];
+        UIImage* currentImageDisabled = [clickableView imageForState:UIControlStateDisabled];
+        
+        UIImage* newImageNormal = [currentImageNormal flipImageWithOrientation:UIImageOrientationUpMirrored];
+        UIImage* newImageHighlighted = [currentImageHighlighted flipImageWithOrientation:UIImageOrientationUpMirrored];
+        UIImage* newImageSelected = [currentImageSelected flipImageWithOrientation:UIImageOrientationUpMirrored];
+        UIImage* newImageDisabled = [currentImageDisabled flipImageWithOrientation:UIImageOrientationUpMirrored];
+        
+        [clickableView setImage:newImageNormal forState:UIControlStateNormal];
+        [clickableView setImage:newImageHighlighted forState:UIControlStateHighlighted];
+        [clickableView setImage:newImageSelected forState:UIControlStateSelected];
+        [clickableView setImage:newImageDisabled forState:UIControlStateDisabled];
     }
 }
 

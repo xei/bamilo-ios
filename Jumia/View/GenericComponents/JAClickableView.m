@@ -21,6 +21,33 @@
 
 @implementation JAClickableView
 
+- (void)setImageEdgeInsets:(UIEdgeInsets)imageEdgeInsets
+{
+    self.overlayButton.imageEdgeInsets = imageEdgeInsets;
+}
+- (UIEdgeInsets)imageEdgeInsets
+{
+    return self.overlayButton.imageEdgeInsets;
+}
+
+- (void)setTitleEdgeInsets:(UIEdgeInsets)titleEdgeInsets
+{
+    self.overlayButton.titleEdgeInsets = titleEdgeInsets;
+}
+- (UIEdgeInsets)titleEdgeInsets
+{
+    return self.overlayButton.titleEdgeInsets;
+}
+
+- (void)setContentHorizontalAlignment:(UIControlContentHorizontalAlignment)contentHorizontalAlignment
+{
+    self.overlayButton.contentHorizontalAlignment = contentHorizontalAlignment;
+}
+- (UIControlContentHorizontalAlignment)contentHorizontalAlignment
+{
+    return self.overlayButton.contentHorizontalAlignment;
+}
+
 - (void)setSelected:(BOOL)selected
 {
     self.overlayButton.selected = selected;
@@ -46,6 +73,16 @@
 - (NSInteger)tag
 {
     return self.overlayButton.tag;
+}
+
+- (UIImageView*)imageView
+{
+    return self.overlayButton.imageView;
+}
+
+- (UILabel*)titleLabel
+{
+    return self.overlayButton.titleLabel;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)coder
@@ -130,6 +167,11 @@
 forControlEvents:(UIControlEvents)controlEvents
 {
     [self.overlayButton addTarget:target action:action forControlEvents:controlEvents];
+}
+
+- (UIImage*)imageForState:(UIControlState)controlState;
+{
+    return [self.overlayButton imageForState:controlState];
 }
 
 @end

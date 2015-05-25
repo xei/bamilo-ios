@@ -7,6 +7,7 @@
 //
 
 #import "JACatalogTopView.h"
+#import "UIView+Mirror.h"
 
 @interface JACatalogTopView()
 
@@ -78,6 +79,7 @@
 {
     self.backgroundColor = [UIColor clearColor];
     
+    self.sortingButton.translatesAutoresizingMaskIntoConstraints = YES;
     [self.sortingButton setImage:[UIImage imageNamed:@"sortingIcon_normal"] forState:UIControlStateNormal];
     [self.sortingButton setImage:[UIImage imageNamed:@"sortingIcon_highlighted"] forState:UIControlStateSelected];
     [self.sortingButton setImage:[UIImage imageNamed:@"sortingIcon_highlighted"] forState:UIControlStateHighlighted];
@@ -86,7 +88,8 @@
     [self.sortingButton setTitleColor:UIColorFromRGB(0xffa200) forState:UIControlStateHighlighted];
     [self.sortingButton setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
     [self.sortingButton addTarget:self action:@selector(sortingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-
+    
+    self.filterButton.translatesAutoresizingMaskIntoConstraints = YES;
     [self.filterButton setImage:[UIImage imageNamed:@"filterIcon_normal"] forState:UIControlStateNormal];
     [self.filterButton setImage:[UIImage imageNamed:@"filterIcon_highlighted"] forState:UIControlStateSelected];
     [self.filterButton setImage:[UIImage imageNamed:@"filterIcon_highlighted"] forState:UIControlStateHighlighted];
@@ -97,16 +100,26 @@
     [self.filterButton setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
     [self.filterButton addTarget:self action:@selector(filterButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
+    self.viewModeButton.translatesAutoresizingMaskIntoConstraints = YES;
     [self.viewModeButton addTarget:self action:@selector(viewModeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     self.gridSelected = NO;
     
+    self.separatorView.translatesAutoresizingMaskIntoConstraints = YES;
     self.separatorView.backgroundColor = UIColorFromRGB(0xcccccc);
+    
+    if (RI_IS_RTL) {
+        [self flipSubviewPositions];
+        [self flipSubviewAlignments];
+    }
 }
 
 - (void)setSorting:(RICatalogSorting)sorting;
 {
     NSString* title = [NSString stringWithFormat:@" %@", [kJASORTINGVIEW_OPTIONS_ARRAY objectAtIndex:sorting]];
     [self.sortingButton setTitle:title forState:UIControlStateNormal];
+    if (RI_IS_RTL) {
+        [self.sortingButton flipViewAlignment];
+    }
 }
 
 - (void)sortingButtonPressed:(id)sender
