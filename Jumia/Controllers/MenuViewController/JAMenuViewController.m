@@ -17,6 +17,7 @@
 #import "RISearchSuggestion.h"
 #import "RICart.h"
 #import "JAClickableView.h"
+#import "UIView+Mirror.h"
 
 typedef NS_ENUM(NSUInteger, JAMenuViewControllerAction) {
     JAMenuViewControllerOpenCart = 0,
@@ -173,6 +174,7 @@ UIAlertViewDelegate
         cellImageX = textLabelWidth + margin;
         textLabelX = 0.0f;
         customTextLabel.textAlignment = NSTextAlignmentRight;
+        [cellImageView flipViewImage];
     }
 
     [cellImageView setFrame:CGRectMake(cellImageX,
