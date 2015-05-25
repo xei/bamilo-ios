@@ -24,13 +24,14 @@
                               self.frame.origin.y,
                               self.frame.size.width,
                               totalHeight)];
-    
     CGFloat margin = 6.0f; //value by design
     CGFloat numberOfComponents = 3; //value by design;
     CGFloat componentWidth = (self.frame.size.width - margin*2)/numberOfComponents;
     
     CGFloat currentX = margin;
-    for (int i = 0; i < numberOfComponents; i++) {
+    
+    
+    for (int i = RI_IS_RTL?numberOfComponents-1:0; RI_IS_RTL?i >= 0:i < numberOfComponents; RI_IS_RTL?i--:i++) {
         
         JAClickableView* clickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
                                                                                            self.bounds.origin.y,

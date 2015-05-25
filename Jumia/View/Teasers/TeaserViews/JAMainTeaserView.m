@@ -70,11 +70,14 @@
     CGFloat currentX = 0;
     
     NSMutableArray* componentsArray = [[self.teaserGrouping.teaserComponents array] mutableCopy];
+    
     if (self.isInfinite && 1 < self.teaserGrouping.teaserComponents.count) {
         [componentsArray insertObject:[self.teaserGrouping.teaserComponents lastObject] atIndex:0];
         [componentsArray addObject:[self.teaserGrouping.teaserComponents firstObject]];
     }
-    for (int i = 0; i < componentsArray.count; i++) {
+    for (int i = RI_IS_RTL?(int)componentsArray.count-1:0;
+         RI_IS_RTL?i >=0 :i < componentsArray.count;
+         RI_IS_RTL? i-- : i++) {
         RITeaserComponent* component = [componentsArray objectAtIndex:i];
         
         NSString* imageUrl;
@@ -132,7 +135,6 @@
     self.pageControl.hasSmallDots = YES;
     self.pageControl.numberOfPages = self.teaserGrouping.teaserComponents.count;
     [self addSubview:self.pageControl];
-    self.pageControl.currentPage = 0;
 }
 
 
@@ -199,6 +201,9 @@
                 page -= 1;
             }
         }
+        if (RI_IS_RTL) {
+            page = self.teaserGrouping.teaserComponents.count-1 - page;
+        }
         [self teaserPressedForIndex:page];
     }
 }
@@ -217,6 +222,8 @@
                                        self.scrollView.frame.size.width,
                                        self.scrollView.frame.size.height);
     [self.scrollView scrollRectToVisible:scrollViewRect animated:NO];
+    self.pageControl.currentPage = index;
+    
 }
 
 @end
