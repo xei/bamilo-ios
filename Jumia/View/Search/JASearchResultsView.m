@@ -9,6 +9,7 @@
 #import "JASearchResultsView.h"
 #import "JAClickableView.h"
 #import "RISearchSuggestion.h"
+#import "UIView+Mirror.h"
 
 @interface JASearchResultsView()
 
@@ -232,7 +233,7 @@
     
     customTextLabel.attributedText = stringText;
     
-    UIImage *recentSearchImage;//[UIImage imageNamed:@"ico_searchsuggestion"];;
+    UIImage *recentSearchImage;
     UIImageView *recentSearchImageView = [UIImageView new];
     
     
@@ -253,16 +254,6 @@
     CGFloat customTextLabelWidth = tableView.frame.size.width - CGRectGetMaxX(recentSearchImageView.frame) - 24.0f;
     CGFloat separatorX = 45.0f;
     CGFloat separatorWidth = cell.frame.size.width-20;
-    
-    if(RI_IS_RTL){
-        
-        customImageX = tableView.frame.size.width - (recentSearchImage.size.width * 2);
-        customTextX = 0.0f;
-        customTextLabelWidth = tableView.frame.size.width - recentSearchImage.size.width - 24.0f;
-        [customTextLabel setTextAlignment:NSTextAlignmentRight];
-        separatorX = 0.0f;
-        separatorWidth = customTextLabelWidth;
-    }
     
     [recentSearchImageView setFrame:CGRectMake(customImageX,
                                               (heightLabel - recentSearchImage.size.height)/2,
@@ -294,6 +285,13 @@
     line2.tag = 98;
     [cell.viewForBaselineLayout addSubview:line2];
     
+    if(RI_IS_RTL){
+        
+        [cell flipSubviewPositions];
+        [recentSearchImageView flipViewPositionInsideSuperview];
+        [customTextLabel flipViewPositionInsideSuperview];
+        [customTextLabel setTextAlignment:NSTextAlignmentRight];
+    }
     [clickView addTarget:self action:@selector(resultCellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;

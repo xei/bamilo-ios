@@ -11,6 +11,7 @@
 #import "UIImageView+WebCache.h"
 #import "RIConfiguration.h"
 #import "RICountry.h"
+#import "UIView+Mirror.h"
 
 @implementation JABrandView
 
@@ -386,10 +387,7 @@
     
     if (RI_IS_RTL) {
         
-        [noticeLabel setFrame:CGRectMake(self.noticeView.bounds.size.width - self.leftMargin - noticeLabel.frame.size.width ,
-                                        15.0f,
-                                        self.noticeView.bounds.size.width-self.leftMargin*2,
-                                         10.0f)];
+        [noticeLabel flipViewPositionInsideSuperview];
     }
     
     [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,

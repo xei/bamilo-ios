@@ -142,16 +142,16 @@
                                           self.scrollView.bounds.size.width,
                                           self.scrollView.bounds.size.height)];
     
-    CGFloat handImageXPosition =self.wizardPage1.bounds.size.width - self.wizardPage1ImageView.frame.size.width - 15.0f;
-    if(RI_IS_RTL){
     
-        handImageXPosition = 15.0f;
     
-    }
-    [self.wizardPage1ImageView setFrame:CGRectMake(handImageXPosition,
+    [self.wizardPage1ImageView setFrame:CGRectMake(self.wizardPage1.bounds.size.width - self.wizardPage1ImageView.frame.size.width - 15.0f,
                                                    kJAWizardViewImageGenericSmallTopMargin,
                                                    self.wizardPage1ImageView.frame.size.width,
                                                    self.wizardPage1ImageView.frame.size.height)];
+    
+    if(RI_IS_RTL){
+        [self.wizardPage1ImageView flipViewPositionInsideSuperview];
+    }
     
     CGRect wizardLabe2ect = [STRING_WIZARD_CATALOG_FAVORITE boundingRectWithSize:CGSizeMake(self.wizardPage1.bounds.size.width - kJAWizardCatalog2TextHorizontalMargin*2, 1000.0f)
                                                                          options:NSStringDrawingUsesLineFragmentOrigin
