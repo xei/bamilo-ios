@@ -369,7 +369,8 @@
             [self popToRootViewControllerAnimated:NO];
         }
         
-        JAHomeViewController *home = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"homeViewController"];
+//        JAHomeViewController *home = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"homeViewController"];
+        JAHomeViewController *home = [JAHomeViewController new];
         [self pushViewController:home animated:NO];
     }
 }
@@ -1365,7 +1366,8 @@
     
     if (VALID_NOTEMPTY(url, NSString) || VALID_NOTEMPTY(productSku, NSString))
     {
-        JAPDVViewController *pdv = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
+//        JAPDVViewController *pdv = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
+        JAPDVViewController *pdv = [JAPDVViewController new];
         pdv.productUrl = url;
         pdv.productSku = productSku;
         

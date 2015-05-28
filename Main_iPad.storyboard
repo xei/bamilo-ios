@@ -286,37 +286,6 @@
             </objects>
             <point key="canvasLocation" x="-30.719999999999999" y="-3292.1600000000003"/>
         </scene>
-        <!--Home View Controller-->
-        <scene sceneID="pMD-oq-kIM">
-            <objects>
-                <viewController storyboardIdentifier="homeViewController" automaticallyAdjustsScrollViewInsets="NO" id="ay2-aP-Z0B" customClass="JAHomeViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="4ON-aj-4z6"/>
-                        <viewControllerLayoutGuide type="bottom" id="Sfn-gt-aUT"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="4od-Do-AQO">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="960"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="wjA-pi-dNW"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XUl-x7-wBe" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="right" id="OMC-ef-sWf">
-                    <connections>
-                        <action selector="swipeRight:" destination="ay2-aP-Z0B" id="Lgj-Yb-cgX"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="left" id="9Be-Xx-5lJ">
-                    <connections>
-                        <action selector="swipeLeft:" destination="ay2-aP-Z0B" id="z8L-bH-90f"/>
-                    </connections>
-                </swipeGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="1662.72" y="-2121.3866666666668"/>
-        </scene>
         <!--Main Filters View Controller-->
         <scene sceneID="z14-J7-XZy">
             <objects>
@@ -440,26 +409,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="37k-Xc-XjB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1684" y="-3293"/>
-        </scene>
-        <!--PDV View Controller-->
-        <scene sceneID="6U3-VW-ZbS">
-            <objects>
-                <viewController storyboardIdentifier="pdvViewController" automaticallyAdjustsScrollViewInsets="NO" id="teE-F1-KdV" userLabel="PDV View Controller" customClass="JAPDVViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="gfy-gS-hFd"/>
-                        <viewControllerLayoutGuide type="bottom" id="lRX-Vr-Iym"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="5hU-mo-9cA">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="zxv-wt-hy3"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="74j-q2-f1n" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1475.8399999999999" y="1389.2266666666667"/>
         </scene>
         <!--Product Details View Controller-->
         <scene sceneID="ciK-XI-ufq">

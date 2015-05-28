@@ -9,7 +9,6 @@
 #import "JABrandTeaserView.h"
 #import "UIImageView+WebCache.h"
 #import "JAClickableView.h"
-#import "UIView+Mirror.h"
 
 @interface JABrandTeaserView()
 

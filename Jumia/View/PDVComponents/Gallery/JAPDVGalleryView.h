@@ -18,10 +18,7 @@
 
 @property (weak, nonatomic) id<JAPDVGalleryViewDelegate> delegate;
 
-+ (JAPDVGalleryView *)getNewJAPDVGalleryView;
-
 - (void)loadGalleryWithArray:(NSArray *)source
-                       frame:(CGRect)frame
                      atIndex:(NSInteger)index;
 
 - (void)reloadFrame:(CGRect)frame;

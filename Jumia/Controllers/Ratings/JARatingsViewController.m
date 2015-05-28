@@ -20,7 +20,6 @@
 #import "JAUtils.h"
 #import "RICategory.h"
 #import <FacebookSDK/FacebookSDK.h>
-#import "UIView+Mirror.h"
 
 #define kDistanceBetweenStarsAndText 70.0f
 
@@ -893,7 +892,6 @@ UITableViewDataSource
     }
     emptyScrollViewFrame.size.height = self.view.bounds.size.height - emptyScrollViewFrame.origin.y - kVerticalMargin;
     [self.emptyScrollView setFrame:emptyScrollViewFrame];
-    NSLog(@"emptyReviewsViewFrame.size.height: %f emptyScrollViewFrame.size.height: %f", emptyReviewsViewFrame.size.height, emptyScrollViewFrame.size.height);
     [self.emptyScrollView setContentSize:CGSizeMake(self.emptyReviewsView.bounds.size.width, self.emptyReviewsView.bounds.size.height)];
     [self.emptyScrollView setScrollEnabled:YES];
     

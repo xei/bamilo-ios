@@ -7,7 +7,6 @@
 //
 
 #import "JAPDVWizardView.h"
-#import "UIImage+Mirror.h"
 
 @interface JAPDVWizardView ()
 

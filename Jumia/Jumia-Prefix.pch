@@ -52,4 +52,8 @@
 
     #import "JAMessageView.h"
     #import "Reachability.h"
+
+    #import "UIView+Mirror.h"
+    #import "UIImage+Mirror.h"
+    #import "UIView+Frame.h"
 #endif

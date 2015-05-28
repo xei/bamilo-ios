@@ -790,7 +790,7 @@ JAActivityViewControllerDelegate
     }
     [self.mainScrollView addSubview:self.imageSection];
     
-    
+     
     if (VALID_NOTEMPTY(self.product.variations, NSOrderedSet))
     {
         self.variationsSection = [JAPDVVariations getNewPDVVariationsSection];
@@ -798,6 +798,7 @@ JAActivityViewControllerDelegate
     }
     
     mainScrollViewY += (6.0f + self.imageSection.frame.size.height);
+    
     
     /*******
      Colors / Variation
@@ -810,6 +811,11 @@ JAActivityViewControllerDelegate
                                                   self.variationsSection.frame.size.width,
                                                   self.variationsSection.frame.size.height);
         
+        [self.variationsSection.variationsScrollView setFrame:CGRectMake(6.0f,
+                                                                         _variationsSection.variationsScrollView.frame.origin.y,
+                                                                         _variationsSection.bounds.size.width - 12.0f,
+                                                                         _variationsSection.variationsScrollView.bounds.size.height)];
+        
         self.variationsSection.titleLabel.text = STRING_MORE_CHOICES;
         
         CGFloat currentX = 0.0;
@@ -821,7 +827,7 @@ JAActivityViewControllerDelegate
             imageHeight = 71.0f;
         }
         
-        for (int i = 0; i < [self.product.variations count]; i++)
+        for (int i = RI_IS_RTL?(int)self.product.variations.count-1:0; RI_IS_RTL?i>=0:i < [self.product.variations count]; RI_IS_RTL?i--:i++)
         {
             RIVariation *variation = [self.product.variations objectAtIndex:i];
             
@@ -842,6 +848,7 @@ JAActivityViewControllerDelegate
             [newImageView setImageWithURL:[NSURL URLWithString:variation.image.url]
                          placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
             [newImageView changeImageHeight:imageHeight andWidth:0.0f];
+//            [newImageView sizeToFit];
             [variationClickableView addSubview:newImageView];
             
             currentX += variationClickableView.frame.size.width;
@@ -850,6 +857,15 @@ JAActivityViewControllerDelegate
         [self.variationsSection.variationsScrollView setContentSize:CGSizeMake(currentX,
                                                                                viewHeight
                                                                                )];
+        
+        
+        if (RI_IS_RTL)
+        {
+            
+            [self.variationsSection.titleLabel flipViewAlignment];
+            [self.variationsSection.titleLabel flipViewPositionInsideSuperview];
+            [self.variationsSection.variationsScrollView setContentOffset:CGPointMake(self.variationsSection.variationsScrollView.contentSize.width - self.variationsSection.variationsScrollView.width, 0)];
+        }
         
         [self.mainScrollView addSubview:self.variationsSection];
         
@@ -934,7 +950,9 @@ JAActivityViewControllerDelegate
 
         BOOL atLeastOneProductHasSize = NO;
         
-        for(int i=0; i<self.productBundle.bundleProducts.count; i++)
+        for(int i= RI_IS_RTL?(int)self.productBundle.bundleProducts.count-1:0;
+            RI_IS_RTL?i>=0:i<self.productBundle.bundleProducts.count;
+            RI_IS_RTL?i--:i++)
         {
             
             RIProduct *bundleProduct = [self.productBundle.bundleProducts objectAtIndex:i];
@@ -1046,6 +1064,16 @@ JAActivityViewControllerDelegate
             
             mainScrollViewY += (6.0f + self.bundleLayout.frame.size.height);
         }
+        
+        if (RI_IS_RTL) {
+            [self.bundleLayout.bundleTitle flipViewPositionInsideSuperview];
+            [self.bundleLayout.bundleTitle flipViewAlignment];
+            [self.bundleLayout.buynowButton flipViewAlignment];
+            [self.bundleLayout.buynowButton flipViewPositionInsideSuperview];
+            [self.bundleLayout.totalLabel flipViewAlignment];
+            [self.bundleLayout.totalLabel flipViewPositionInsideSuperview];
+            [self.bundleLayout.bundleScrollView setContentOffset:CGPointMake(self.bundleLayout.bundleScrollView.contentSize.width - self.bundleLayout.bundleScrollView.bounds.size.width, 0)];
+        }
     }
     
     /*******
@@ -1060,11 +1088,14 @@ JAActivityViewControllerDelegate
         [self.relatedItems setupWithFrame:self.mainScrollView.frame];
         self.relatedItems.topLabel.text = STRING_RELATED_ITEMS;
         
-        
+        if (RI_IS_RTL) {
+            [self.relatedItems.topLabel flipViewPositionInsideSuperview];
+            [self.relatedItems.topLabel flipViewAlignment];
+        }
         
         NSArray* relatedProducts = [self.product.relatedProducts allObjects];
         
-        for (int i = 0; i < self.product.relatedProducts.count; i++) {
+        for (int i = RI_IS_RTL ? (int)relatedProducts.count-1 : 0; RI_IS_RTL ? i>= 0 : i < relatedProducts.count; RI_IS_RTL ? i-- : i++) {
             RIProduct* product = [relatedProducts objectAtIndex:i];
             if (![product.sku isEqualToString:self.product.sku])
             {
@@ -1102,6 +1133,10 @@ JAActivityViewControllerDelegate
         }
         
         [self.relatedItems.relatedItemsScrollView setContentSize:CGSizeMake(relatedItemStart, self.relatedItems.relatedItemsScrollView.frame.size.height)];
+        
+        if (RI_IS_RTL) {
+            [self.relatedItems.relatedItemsScrollView setContentOffset:CGPointMake(self.relatedItems.relatedItemsScrollView.contentSize.width - self.relatedItems.bounds.size.width, 0)];
+        }
         
         if(isiPadInLandscape)
         {
@@ -1202,8 +1237,6 @@ JAActivityViewControllerDelegate
 
 - (void)shareProduct
 {
-    
-    
     NSString *url = self.product.url;
     
     if(NSNotFound != [url rangeOfString:RI_MOBAPI_PREFIX].location)
@@ -1934,7 +1967,8 @@ JAActivityViewControllerDelegate
         [self.gallery removeFromSuperview];
     }
     
-    self.gallery = [JAPDVGalleryView getNewJAPDVGalleryView];
+//    self.gallery = [JAPDVGalleryView getNewJAPDVGalleryView];
+    self.gallery = [JAPDVGalleryView new];
     self.gallery.delegate = self;
     
     UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
@@ -1959,15 +1993,17 @@ JAActivityViewControllerDelegate
         }
     }
     
-    [self.gallery loadGalleryWithArray:[self.product.images array]
-                                 frame:CGRectMake(0.0f, 0.0f, width, height)
-                               atIndex:index];
-    
     CGRect oldFrame = self.gallery.frame;
+    oldFrame.size.width = width;
+    oldFrame.size.height = height;
     CGRect newFrame = oldFrame;
     newFrame.origin.y = self.gallery.frame.size.height;
     self.gallery.frame = newFrame;
     [gallerySuperView addSubview:self.gallery];
+    
+    [self.gallery loadGalleryWithArray:[self.product.images array]
+                               atIndex:index];
+    
     
     [UIView animateWithDuration:0.4f
                      animations:^{
