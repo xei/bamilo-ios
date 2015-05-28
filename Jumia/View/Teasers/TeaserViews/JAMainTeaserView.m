@@ -221,13 +221,7 @@
     {
         NSInteger page = self.scrollView.contentOffset.x / self.scrollView.frame.size.width;
         if (self.isInfinite && 2 < _teasersArray.count) {
-//            if (0 == page) {
-//                page = _teasersArray.count-1;
-//            } else if (_teasersArray.count-1 == page){
-//                page = 0;
-//            } else {
-                page--;
-//            }
+            page--;
         }
         if (RI_IS_RTL) {
             page = _teasersArray.count-1 - ((self.isInfinite && 2 < _teasersArray.count)?2:0) - page;
