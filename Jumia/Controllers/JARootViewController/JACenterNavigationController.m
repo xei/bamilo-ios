@@ -733,7 +733,7 @@
                 animated = [[notification.object objectForKey:@"animated"] boolValue];
             }
             
-            JAEmailNotificationsViewController *email = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"emailNotificationsViewController"];
+            JAEmailNotificationsViewController *email = [[JAEmailNotificationsViewController alloc]init];
             
             [self pushViewController:email animated:animated];
         }

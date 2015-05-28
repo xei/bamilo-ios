@@ -851,26 +851,6 @@
             </objects>
             <point key="canvasLocation" x="2708.48" y="2998.6133333333337"/>
         </scene>
-        <!--Email Notifications View Controller-->
-        <scene sceneID="BWk-lZ-Oaq">
-            <objects>
-                <viewController storyboardIdentifier="emailNotificationsViewController" id="cbT-Ku-PwG" customClass="JAEmailNotificationsViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="0Ag-gh-Y5E"/>
-                        <viewControllerLayoutGuide type="bottom" id="SfS-bd-QFA"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="1FV-wl-dNe">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="IDI-4r-QUV"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ckK-ZD-Gyl" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4526.0799999999999" y="3816.106666666667"/>
-        </scene>
         <!--User Data View Controller-->
         <scene sceneID="24F-0t-QaU">
             <objects>

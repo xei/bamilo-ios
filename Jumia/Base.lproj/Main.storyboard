@@ -714,26 +714,6 @@
             </objects>
             <point key="canvasLocation" x="2971" y="1619"/>
         </scene>
-        <!--Email Notifications View Controller-->
-        <scene sceneID="on9-z5-LVd">
-            <objects>
-                <viewController storyboardIdentifier="emailNotificationsViewController" id="9Ha-gc-bt5" customClass="JAEmailNotificationsViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="iXN-N6-sQJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="sMr-nc-W9c"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Tfc-Ff-EQd">
-                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="BeD-Xo-O09"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ADR-5d-yrz" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2970" y="2240"/>
-        </scene>
         <!--PDV View Controller-->
         <scene sceneID="PB4-GR-7g5">
             <objects>
