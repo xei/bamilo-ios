@@ -429,7 +429,23 @@
                 [self getConfigurations];
             }
             
-            NSURL  *url = [NSURL URLWithString:kAppStoreUrl];
+            NSURL  *url;
+            if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
+            {
+                url = [NSURL URLWithString:kAppStoreUrl];
+            }
+            else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
+            {
+                url = [NSURL URLWithString:kAppStoreUrlDaraz];
+            }
+            else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+            {
+                url = [NSURL URLWithString:kAppStoreUrlShop];
+            }
+            else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
+            {
+                url = [NSURL URLWithString:kAppStoreUrlBamilo];
+            }
             if([[UIApplication sharedApplication] canOpenURL:url]) {
                 [[UIApplication sharedApplication] openURL:url];
             }
@@ -439,7 +455,23 @@
     {
         if(0 == buttonIndex)
         {
-            NSURL  *url = [NSURL URLWithString:kAppStoreUrl];
+            NSURL  *url;
+            if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
+            {
+                url = [NSURL URLWithString:kAppStoreUrl];
+            }
+            else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
+            {
+                url = [NSURL URLWithString:kAppStoreUrlDaraz];
+            }
+            else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+            {
+                url = [NSURL URLWithString:kAppStoreUrlShop];
+            }
+            else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
+            {
+                url = [NSURL URLWithString:kAppStoreUrlBamilo];
+            }
             if([[UIApplication sharedApplication] canOpenURL:url]) {
                 [[UIApplication sharedApplication] openURL:url];
             }

@@ -310,6 +310,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
         [RICategory loadCategoriesIntoDatabaseForCountry:url withSuccessBlock:^(id categories) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSideMenuShouldReload object:nil];
             successBlock();
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray* errorMessages) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
@@ -331,6 +332,7 @@
         [RITeaserGrouping loadTeasersIntoDatabaseForCountryUrl:url
                                               withSuccessBlock:^(NSArray *teaserGroupings) {
                                                   [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
+                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kHomeShouldReload object:nil];
                                                   successBlock();
                                               } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
                                                   [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];

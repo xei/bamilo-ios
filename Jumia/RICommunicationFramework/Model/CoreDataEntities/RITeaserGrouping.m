@@ -19,6 +19,9 @@
                                  withSuccessBlock:(void (^)(NSArray* teaserGroupings))successBlock
                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
+    //remove existing ones from database
+    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RITeaserGrouping class])];
+    
     NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", countryUrl, RI_API_VERSION, RI_API_GET_TEASERS]];
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
                                                             parameters:nil
