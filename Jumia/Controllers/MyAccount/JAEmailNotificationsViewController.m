@@ -10,7 +10,6 @@
 #import "RIForm.h"
 #import "JAButtonWithBlur.h"
 #import "RICustomer.h"
-#import "UIView+Mirror.h"
 
 #define kDynamicFormFieldsTag 1
 

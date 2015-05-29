@@ -12,7 +12,6 @@
 #import "JAMaintenancePage.h"
 #import "JAKickoutView.h"
 #import "JAFallbackView.h"
-#import "UIView+Mirror.h"
 
 #define kSearchViewBarHeight 32.0f
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -286,37 +286,6 @@
             </objects>
             <point key="canvasLocation" x="-30.719999999999999" y="-3292.1600000000003"/>
         </scene>
-        <!--Home View Controller-->
-        <scene sceneID="pMD-oq-kIM">
-            <objects>
-                <viewController storyboardIdentifier="homeViewController" automaticallyAdjustsScrollViewInsets="NO" id="ay2-aP-Z0B" customClass="JAHomeViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="4ON-aj-4z6"/>
-                        <viewControllerLayoutGuide type="bottom" id="Sfn-gt-aUT"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="4od-Do-AQO">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="960"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="wjA-pi-dNW"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XUl-x7-wBe" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="right" id="OMC-ef-sWf">
-                    <connections>
-                        <action selector="swipeRight:" destination="ay2-aP-Z0B" id="Lgj-Yb-cgX"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="left" id="9Be-Xx-5lJ">
-                    <connections>
-                        <action selector="swipeLeft:" destination="ay2-aP-Z0B" id="z8L-bH-90f"/>
-                    </connections>
-                </swipeGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="1662.72" y="-2121.3866666666668"/>
-        </scene>
         <!--Main Filters View Controller-->
         <scene sceneID="z14-J7-XZy">
             <objects>
@@ -440,86 +409,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="37k-Xc-XjB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1684" y="-3293"/>
-        </scene>
-        <!--PDV View Controller-->
-        <scene sceneID="6U3-VW-ZbS">
-            <objects>
-                <viewController storyboardIdentifier="pdvViewController" automaticallyAdjustsScrollViewInsets="NO" id="teE-F1-KdV" userLabel="PDV View Controller" customClass="JAPDVViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="gfy-gS-hFd"/>
-                        <viewControllerLayoutGuide type="bottom" id="lRX-Vr-Iym"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="5hU-mo-9cA">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="zxv-wt-hy3"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="74j-q2-f1n" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1475.8399999999999" y="1389.2266666666667"/>
-        </scene>
-        <!--Product Details View Controller-->
-        <scene sceneID="ciK-XI-ufq">
-            <objects>
-                <viewController storyboardIdentifier="productDetailViewController" automaticallyAdjustsScrollViewInsets="NO" id="QVy-CK-tzA" customClass="JAProductDetailsViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="q65-92-u9q"/>
-                        <viewControllerLayoutGuide type="bottom" id="btM-NH-ZIS"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="3Xw-Lm-tS5">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eyu-sF-hkK" customClass="JAPickerScrollView">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="vX9-T6-HpW"/>
-                                </constraints>
-                            </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Vo-eM-0eZ">
-                                <rect key="frame" x="0.0" y="44" width="768" height="556"/>
-                            </scrollView>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="2Vo-eM-0eZ" firstAttribute="top" secondItem="Eyu-sF-hkK" secondAttribute="bottom" id="68r-cg-fgY"/>
-                            <constraint firstItem="2Vo-eM-0eZ" firstAttribute="leading" secondItem="3Xw-Lm-tS5" secondAttribute="leading" id="RNg-VG-xLu"/>
-                            <constraint firstAttribute="bottom" secondItem="2Vo-eM-0eZ" secondAttribute="bottom" id="YPb-ex-6oc"/>
-                            <constraint firstItem="Eyu-sF-hkK" firstAttribute="leading" secondItem="3Xw-Lm-tS5" secondAttribute="leading" id="Yby-rH-fRm"/>
-                            <constraint firstItem="Eyu-sF-hkK" firstAttribute="top" secondItem="3Xw-Lm-tS5" secondAttribute="top" id="cRw-76-fuK"/>
-                            <constraint firstAttribute="trailing" secondItem="2Vo-eM-0eZ" secondAttribute="trailing" id="fqz-pO-U5d"/>
-                            <constraint firstAttribute="trailing" secondItem="Eyu-sF-hkK" secondAttribute="trailing" id="zNI-GJ-GHb"/>
-                        </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="L83-xW-Mje" appends="YES" id="beA-xu-X3c"/>
-                            <outletCollection property="gestureRecognizers" destination="kVZ-pg-eX3" appends="YES" id="uuy-ut-Hmn"/>
-                        </connections>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="3US-kp-dnc"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="768" height="600"/>
-                    <connections>
-                        <outlet property="mainScrollView" destination="2Vo-eM-0eZ" id="1PK-oR-iIj"/>
-                        <outlet property="pickerScrollView" destination="Eyu-sF-hkK" id="CCe-7n-L4D"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dB9-SK-UYi" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="left" id="L83-xW-Mje" userLabel="Left Swipe Gesture Recognizer">
-                    <connections>
-                        <action selector="swipeLeft:" destination="QVy-CK-tzA" id="jiN-vy-scy"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="right" id="kVZ-pg-eX3" userLabel="Right Swipe Gesture Recognizer">
-                    <connections>
-                        <action selector="swipeRight:" destination="QVy-CK-tzA" id="9qn-qq-rXh"/>
-                    </connections>
-                </swipeGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="1443.8399999999999" y="2606.0800000000004"/>
         </scene>
         <!--New Rating View Controller-->
         <scene sceneID="Ljr-fw-e64">

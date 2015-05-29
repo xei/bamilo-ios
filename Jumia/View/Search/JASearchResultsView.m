@@ -9,7 +9,6 @@
 #import "JASearchResultsView.h"
 #import "JAClickableView.h"
 #import "RISearchSuggestion.h"
-#import "UIView+Mirror.h"
 
 @interface JASearchResultsView()
 

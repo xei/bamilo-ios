@@ -30,185 +30,170 @@ UIScrollViewDelegate
 
 @implementation JAPDVGalleryView
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)init
 {
-    self = [super initWithFrame:frame];
-    
+    self = (JAPDVGalleryView *)[[[NSBundle mainBundle] loadNibNamed:@"JAPDVGalleryView" owner:self options:nil] firstObject];
     if (self) {
-        
     }
-    
     return self;
 }
 
-+ (JAPDVGalleryView *)getNewJAPDVGalleryView
+- (instancetype)initWithFrame:(CGRect)frame
 {
-    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JAPDVGalleryView"
-                                                 owner:nil
-                                               options:nil];
-    
-    for (NSObject *obj in xib) {
-        if ([obj isKindOfClass:[JAPDVGalleryView class]]) {
-            JAPDVGalleryView *temp = (JAPDVGalleryView *)obj;
-            temp.frame = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame;
-            return temp;
-        }
+    self = (JAPDVGalleryView *)[[[NSBundle mainBundle] loadNibNamed:@"JAPDVGalleryView" owner:self options:nil] firstObject];
+    if (self) {
+        [super setFrame:frame];
     }
-    
-    return nil;
+    return self;
 }
 
 - (void)loadGalleryWithArray:(NSArray *)source
-                       frame:(CGRect)frame
                      atIndex:(NSInteger)index
 {
-    self.source = source;
+    _source = [NSArray arrayWithArray:source];
     
-    self.translatesAutoresizingMaskIntoConstraints = YES;
-    [self setFrame:CGRectMake(frame.origin.x,
-                              frame.origin.y,
-                              frame.size.width,
-                              frame.size.height)];
-    self.scrollViewImages.translatesAutoresizingMaskIntoConstraints = YES;
-    [self.scrollViewImages setFrame:CGRectMake(0.0f,
-                                               self.scrollViewImages.frame.origin.y,
+    [_scrollViewImages setFrame:CGRectMake(0.0f,
+                                               _scrollViewImages.frame.origin.y,
                                                self.frame.size.width,
-                                               self.frame.size.height - self.scrollViewImages.frame.origin.y)];
+                                               self.frame.size.height - _scrollViewImages.frame.origin.y)];
     
-    self.imageViewsArray = [NSMutableArray new];
+    _imageViewsArray = [NSMutableArray new];
     
-    if (source.count == 1)
+    if (_source.count == 1)
     {
-        RIImage *image = source[0];
+        RIImage *image = _source[0];
         
         UIScrollView *scrollForImage = [[UIScrollView alloc] initWithFrame:CGRectMake(0,
                                                                                       0,
-                                                                                      self.scrollViewImages.frame.size.width,
-                                                                                      self.scrollViewImages.frame.size.height)];
+                                                                                      _scrollViewImages.frame.size.width,
+                                                                                      _scrollViewImages.frame.size.height)];
         scrollForImage.delegate = self;
         scrollForImage.tag = 0;
         
         scrollForImage.minimumZoomScale = 1.0;
         scrollForImage.maximumZoomScale = 2.0;
-        scrollForImage.contentSize = CGSizeMake(self.scrollViewImages.frame.size.width,
-                                                self.scrollViewImages.frame.size.height);
+        scrollForImage.contentSize = CGSizeMake(_scrollViewImages.frame.size.width,
+                                                _scrollViewImages.frame.size.height);
         scrollForImage.showsHorizontalScrollIndicator = NO;
         scrollForImage.showsVerticalScrollIndicator = NO;
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,
                                                                                0,
-                                                                               self.scrollViewImages.frame.size.width,
-                                                                               self.scrollViewImages.frame.size.height)];
+                                                                               _scrollViewImages.frame.size.width,
+                                                                               _scrollViewImages.frame.size.height)];
         imageView.contentMode = UIViewContentModeCenter;
         CGPoint point = scrollForImage.center;
-        point.x = self.scrollViewImages.frame.size.width/2;
-        point.y = self.scrollViewImages.frame.size.height/2;
+        point.x = _scrollViewImages.frame.size.width/2;
+        point.y = _scrollViewImages.frame.size.height/2;
         imageView.center = point;
         
         [imageView setImageWithURL:[NSURL URLWithString:image.url]
                   placeholderImage:[UIImage imageNamed:@"placeholder_gallery"]];
         
-        [self.imageViewsArray insertObject:imageView
+        [_imageViewsArray insertObject:imageView
                                    atIndex:0];
         
         [scrollForImage addSubview:imageView];
-        [self.scrollViewImages addSubview:scrollForImage];
+        [_scrollViewImages addSubview:scrollForImage];
     }
     else
     {
-        self.modifiedArray = [source mutableCopy];
-        [self.modifiedArray insertObject:[source lastObject]
+        _modifiedArray = [_source mutableCopy];
+        [_modifiedArray insertObject:[_source lastObject]
                                  atIndex:0];
-        [self.modifiedArray addObject:[source firstObject]];
+        [_modifiedArray addObject:[_source firstObject]];
         
-        [self.scrollViewImages setContentSize:CGSizeMake(self.scrollViewImages.frame.size.width * self.modifiedArray.count,
-                                                         self.scrollViewImages.frame.size.height)];
+        [_scrollViewImages setContentSize:CGSizeMake(_scrollViewImages.frame.size.width * _modifiedArray.count,
+                                                         _scrollViewImages.frame.size.height)];
         
-        for (int i = 0; i < self.modifiedArray.count; i++)
+        int position = 0;
+        for (int i = RI_IS_RTL?(int)_modifiedArray.count-1:0; RI_IS_RTL?i >= 0:i < _modifiedArray.count; RI_IS_RTL?i--:i++)
+//        for (int i = 0; i < _modifiedArray.count; i++)
         {
-            RIImage *image = [self.modifiedArray objectAtIndex:i];
+            RIImage *image = [_modifiedArray objectAtIndex:i];
             
-            UIScrollView *scrollForImage = [[UIScrollView alloc] initWithFrame:CGRectMake(i * self.scrollViewImages.frame.size.width,
+            UIScrollView *scrollForImage = [[UIScrollView alloc] initWithFrame:CGRectMake(position * _scrollViewImages.frame.size.width,
                                                                                           0,
-                                                                                          self.scrollViewImages.frame.size.width,
-                                                                                          self.scrollViewImages.frame.size.height)];
+                                                                                          _scrollViewImages.frame.size.width,
+                                                                                          _scrollViewImages.frame.size.height)];
             scrollForImage.delegate = self;
             scrollForImage.tag = i;
             
             scrollForImage.minimumZoomScale = 1.0;
             scrollForImage.maximumZoomScale = 2.0;
-            scrollForImage.contentSize = CGSizeMake(self.scrollViewImages.frame.size.width,
-                                                    self.scrollViewImages.frame.size.height);
+            scrollForImage.contentSize = CGSizeMake(_scrollViewImages.frame.size.width,
+                                                    _scrollViewImages.frame.size.height);
             scrollForImage.showsHorizontalScrollIndicator = NO;
             scrollForImage.showsVerticalScrollIndicator = NO;
             
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,
                                                                                    0,
-                                                                                   self.scrollViewImages.frame.size.width,
-                                                                                   self.scrollViewImages.frame.size.height)];
+                                                                                   _scrollViewImages.frame.size.width,
+                                                                                   _scrollViewImages.frame.size.height)];
             imageView.contentMode = UIViewContentModeCenter;
             CGPoint point = scrollForImage.center;
-            point.x = self.scrollViewImages.frame.size.width/2;
-            point.y = self.scrollViewImages.frame.size.height/2;
+            point.x = _scrollViewImages.frame.size.width/2;
+            point.y = _scrollViewImages.frame.size.height/2;
             imageView.center = point;
             
             [imageView setImageWithURL:[NSURL URLWithString:image.url]
                       placeholderImage:[UIImage imageNamed:@"placeholder_gallery"]];
             
-            [self.imageViewsArray insertObject:imageView
-                                       atIndex:i];
+//            [_imageViewsArray insertObject:imageView
+//                                       atIndex:i];
+            [_imageViewsArray addObject:imageView];
             
             [scrollForImage addSubview:imageView];
-            [self.scrollViewImages addSubview:scrollForImage];
+            [_scrollViewImages addSubview:scrollForImage];
+            position++;
         }
         
-        if (index >= source.count)
+        if (index >= _source.count)
         {
             index = 0;
         }
-        
-        [self.scrollViewImages scrollRectToVisible:CGRectMake(self.scrollViewImages.frame.size.width + (self.scrollViewImages.frame.size.width * index),
+        [_scrollViewImages scrollRectToVisible:CGRectMake(_scrollViewImages.frame.size.width + (_scrollViewImages.frame.size.width * (RI_IS_RTL?(_source.count-1-index):index)),
                                                               0,
-                                                              self.scrollViewImages.frame.size.width,
-                                                              self.scrollViewImages.frame.size.height)
+                                                              _scrollViewImages.frame.size.width,
+                                                              _scrollViewImages.frame.size.height)
                                           animated:NO];
     }
 
-    self.index = index;
+    _index = index;
     
-    [self.pageControl removeFromSuperview];
-    self.pageControl = [[JAPageControl alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
+    if (_pageControl) {
+        [_pageControl removeFromSuperview];
+    }
+    
+    _pageControl = [[JAPageControl alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
                                                                        self.bounds.size.height - 20.0f,
                                                                        self.bounds.size.width,
                                                                        10.0f)];
-    self.pageControl.numberOfPages = source.count;
-    [self addSubview:self.pageControl];
-    self.pageControl.currentPage = self.index;
+    _pageControl.numberOfPages = _source.count;
+    [self addSubview:_pageControl];
     
-    self.doneButton.translatesAutoresizingMaskIntoConstraints = YES;
-    self.doneButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.doneButton.titleLabel.font.pointSize];
-    [self.doneButton setTitle:STRING_DONE forState:UIControlStateNormal];
-    [self.doneButton setFrame:CGRectMake(self.frame.size.width - self.doneButton.frame.size.width,
-                                         self.doneButton.frame.origin.y,
-                                         self.doneButton.frame.size.width,
-                                         self.doneButton.frame.size.height)];
+    _pageControl.currentPage = RI_IS_RTL?_source.count-1 - _index: _index;
+    
+    _doneButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:_doneButton.titleLabel.font.pointSize];
+    [_doneButton setTitle:STRING_DONE forState:UIControlStateNormal];
+    [_doneButton setFrame:CGRectMake(self.frame.size.width - _doneButton.frame.size.width,
+                                         _doneButton.frame.origin.y,
+                                         _doneButton.frame.size.width,
+                                         _doneButton.frame.size.height)];
 }
 
 - (void)reloadFrame:(CGRect)frame
 {
-    [self setFrame:CGRectMake(frame.origin.x,
-                              frame.origin.y,
-                              frame.size.width,
-                              frame.size.height)];
+    [self setFrame:frame];
     
-    [self.scrollViewImages setFrame:CGRectMake(0.0f,
-                                               self.scrollViewImages.frame.origin.y,
+    [_scrollViewImages setFrame:CGRectMake(0.0f,
+                                               _scrollViewImages.frame.origin.y,
                                                self.frame.size.width,
-                                               self.frame.size.height - self.scrollViewImages.frame.origin.y)];
+                                               self.frame.size.height - _scrollViewImages.frame.origin.y)];
     
-    self.imageViewsArray = [NSMutableArray new];
+    _imageViewsArray = [NSMutableArray new];
     
-    for(UIView *view in self.scrollViewImages.subviews)
+    for(UIView *view in _scrollViewImages.subviews)
     {
         if([view isKindOfClass:[UIScrollView class]])
         {
@@ -216,59 +201,59 @@ UIScrollViewDelegate
         }
     }
     
-    [self loadGalleryWithArray:self.source
-                         frame:frame
-                       atIndex:self.index];
+    if (_source && _index) {
+        [self loadGalleryWithArray:_source atIndex:_index];
+    }
     
-    [self.doneButton setFrame:CGRectMake(self.frame.size.width - self.doneButton.frame.size.width,
-                                         self.doneButton.frame.origin.y,
-                                         self.doneButton.frame.size.width,
-                                         self.doneButton.frame.size.height)];
+    [_doneButton setFrame:CGRectMake(self.frame.size.width - _doneButton.frame.size.width,
+                                         _doneButton.frame.origin.y,
+                                         _doneButton.frame.size.width,
+                                         _doneButton.frame.size.height)];
 }
 
 - (IBAction)dismiss:(id)sender
 {
-    [self.delegate dismissGallery];
+    [_delegate dismissGallery];
 }
 
 #pragma mark - Scrollview delegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    if (scrollView == self.scrollViewImages)
+    if (scrollView == _scrollViewImages)
     {
         NSInteger newIndex = scrollView.contentOffset.x / scrollView.frame.size.width;
         if(0 == newIndex)
         {
-            self.index = [self.source count] - 1;
+            _index = [_source count] - 1;
         }
-        else if(([self.modifiedArray count] - 1) == newIndex)
+        else if(([_modifiedArray count] - 1) == newIndex)
         {
-            self.index =  0;
+            _index =  0;
         }
         else
         {
-            self.index = newIndex - 1;
+            _index = newIndex - 1;
         }
         
-        CGFloat contentOffsetWhenFullyScrolledRight = self.scrollViewImages.frame.size.width * (self.modifiedArray.count - 1);
+        CGFloat contentOffsetWhenFullyScrolledRight = _scrollViewImages.frame.size.width * (_modifiedArray.count - 1);
         
         if (scrollView.contentOffset.x == contentOffsetWhenFullyScrolledRight) {
             
-            [self.scrollViewImages scrollRectToVisible:CGRectMake(self.scrollViewImages.frame.size.width,
+            [_scrollViewImages scrollRectToVisible:CGRectMake(_scrollViewImages.frame.size.width,
                                                                   0,
-                                                                  self.scrollViewImages.frame.size.width,
-                                                                  self.scrollViewImages.frame.size.height)
+                                                                  _scrollViewImages.frame.size.width,
+                                                                  _scrollViewImages.frame.size.height)
                                               animated:NO];
             
         }
         else if (scrollView.contentOffset.x == 0)
         {
-            if (self.modifiedArray.count > 1)
+            if (_modifiedArray.count > 1)
             {
-                [self.scrollViewImages scrollRectToVisible:CGRectMake(self.scrollViewImages.contentSize.width - (self.scrollViewImages.frame.size.width * 2),
-                                                                      0, self.scrollViewImages.frame.size.width,
-                                                                      self.scrollViewImages.frame.size.height)
+                [_scrollViewImages scrollRectToVisible:CGRectMake(_scrollViewImages.contentSize.width - (_scrollViewImages.frame.size.width * 2),
+                                                                      0, _scrollViewImages.frame.size.width,
+                                                                      _scrollViewImages.frame.size.height)
                                                   animated:NO];
             }
         }
@@ -278,7 +263,7 @@ UIScrollViewDelegate
 #pragma mark UIScrollViewDelegate
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
-    UIImageView *imageView = [self.imageViewsArray objectAtIndex:scrollView.tag];
+    UIImageView *imageView = [_imageViewsArray objectAtIndex:scrollView.tag];
     
     return imageView;
 }
@@ -287,7 +272,10 @@ UIScrollViewDelegate
 {
     //add 0.5 to make sure we scroll the indicators with the middle of the page
     //and then subtract 1 to make up for the fake image offset (fake images that are used for infinite scrolling)
-    self.pageControl.currentPage = (scrollView.contentOffset.x / self.scrollViewImages.frame.size.width) + 0.5f - 1.0f;
+//    _pageControl.currentPage = (scrollView.contentOffset.x / _scrollViewImages.frame.size.width) + 0.5f - 1.0f;
+    
+    int page = (scrollView.contentOffset.x / _scrollViewImages.frame.size.width) + 0.5f - 1.0f;
+    _pageControl.currentPage = page;
 
 }
 

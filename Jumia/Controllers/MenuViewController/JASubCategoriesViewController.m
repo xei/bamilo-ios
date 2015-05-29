@@ -10,7 +10,6 @@
 #import "RICategory.h"
 #import "RICustomer.h"
 #import "JAClickableView.h"
-#import "UIImage+Mirror.h"
 
 @interface JASubCategoriesViewController ()
 <

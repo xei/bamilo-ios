@@ -13,6 +13,7 @@
 @interface JATeaserView : UIView
 
 @property (nonatomic, strong)RITeaserGrouping* teaserGrouping;
+@property (nonatomic, strong)NSArray* validTeaserComponents;
 
 - (void)load;
 

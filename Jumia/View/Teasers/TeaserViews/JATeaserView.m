@@ -29,6 +29,9 @@
 - (void)teaserPressedForIndex:(NSInteger)index
 {
     RITeaserComponent* teaserComponent = [self.teaserGrouping.teaserComponents objectAtIndex:index];
+    if (self.validTeaserComponents) {
+        teaserComponent = [self.validTeaserComponents objectAtIndex:index];
+    }
     
     NSMutableDictionary* userInfo = [NSMutableDictionary new];
     [userInfo setObject:STRING_HOME forKey:@"show_back_button_title"];

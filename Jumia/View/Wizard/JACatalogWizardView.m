@@ -7,8 +7,6 @@
 //
 
 #import "JACatalogWizardView.h"
-#import "UIImage+Mirror.h"
-#import "UIView+Mirror.h"
 
 @interface JACatalogWizardView ()
 

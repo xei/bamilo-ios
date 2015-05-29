@@ -8,7 +8,6 @@
 
 #import "JANavigationBarView.h"
 #import "JAAppDelegate.h"
-#import "UIView+Mirror.h"
 
 @interface JANavigationBarView ()
 

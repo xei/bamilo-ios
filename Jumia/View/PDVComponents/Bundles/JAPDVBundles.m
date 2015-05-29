@@ -10,7 +10,8 @@
 
 @interface JAPDVBundles()
 
-@property (weak, nonatomic) IBOutlet UIImageView *separatorView;
+@property (weak, nonatomic) IBOutlet UIImageView *titleSeparatorView;
+@property (weak, nonatomic) IBOutlet UIImageView *scrollSeparatorView;
 
 
 @end
@@ -67,7 +68,9 @@
     
     self.layer.cornerRadius = 5.0f;
     
-    [self.separatorView setBackgroundColor: UIColorFromRGB(0xfaa41a)];
+    //    [self.separatorView setBackgroundColor: UIColorFromRGB(0xfaa41a)];
+    [self.titleSeparatorView setWidth:width];
+    [self.scrollSeparatorView setWidth:width];
     self.bundleTitle.font = [UIFont fontWithName:kFontRegularName size:self.bundleTitle.font.pointSize];
     [self.bundleTitle setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self setFrame:CGRectMake(self.frame.origin.x,
@@ -92,6 +95,7 @@
     self.totalLabel.font = [UIFont fontWithName:kFontRegularName size:self.totalLabel.font.pointSize];
     self.totalLabel.text = STRING_BUNDLE_TOTAL_PRICE;
     [self.totalLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
+    [self.totalLabel setX:6.0f];
     
     self.layer.cornerRadius = 5.0f;
 }

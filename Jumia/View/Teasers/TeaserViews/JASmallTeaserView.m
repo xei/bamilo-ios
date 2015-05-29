@@ -47,7 +47,10 @@
         currentX = marginX*2; //the first margin is doubled
     }
     
-    for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
+    for (int i = RI_IS_RTL?(int)self.teaserGrouping.teaserComponents.count-1:0;
+         RI_IS_RTL? i >= 0 : i < self.teaserGrouping.teaserComponents.count;
+         RI_IS_RTL? i--:i++) {
+        
         RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
         
         
@@ -108,6 +111,7 @@
     [self.scrollView setContentSize:CGSizeMake(currentX,
                                                self.scrollView.frame.size.height)];
     
+    
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         if (self.scrollView.contentSize.width < self.frame.size.width) {
             [self.scrollView setFrame: CGRectMake((self.frame.size.width - self.scrollView.contentSize.width) / 2,
@@ -115,6 +119,10 @@
                                                   self.scrollView.contentSize.width,
                                                   self.scrollView.frame.size.height)];
         }
+    }
+    
+    if (RI_IS_RTL) {
+        [self.scrollView setContentOffset:CGPointMake(self.scrollView.contentSize.width - self.bounds.size.width, self.scrollView.contentOffset.y)];
     }
 }
 

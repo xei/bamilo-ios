@@ -11,6 +11,9 @@
 #import "JAPageControl.h"
 
 @interface JAMainTeaserView()
+{
+    NSMutableArray *_teasersArray;
+}
 
 @property (nonatomic, strong)UIScrollView* scrollView;
 @property (nonatomic, strong)JAPageControl* pageControl;
@@ -69,13 +72,34 @@
     
     CGFloat currentX = 0;
     
-    NSMutableArray* componentsArray = [[self.teaserGrouping.teaserComponents array] mutableCopy];
-    if (self.isInfinite && 1 < self.teaserGrouping.teaserComponents.count) {
-        [componentsArray insertObject:[self.teaserGrouping.teaserComponents lastObject] atIndex:0];
-        [componentsArray addObject:[self.teaserGrouping.teaserComponents firstObject]];
+    _teasersArray = [NSMutableArray new];
+    
+    for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
+        RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
+        
+        NSString* imageUrl;
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            imageUrl = component.imageLandscapeUrl;
+        } else {
+            imageUrl = component.imagePortraitUrl;
+        }
+        
+        if (VALID_NOTEMPTY(imageUrl, NSString)) {
+            [_teasersArray addObject:component];
+        }
     }
-    for (int i = 0; i < componentsArray.count; i++) {
-        RITeaserComponent* component = [componentsArray objectAtIndex:i];
+    
+    self.validTeaserComponents = [_teasersArray copy];
+    
+    if (self.isInfinite && 2 < _teasersArray.count) {
+        [_teasersArray addObject:[_teasersArray firstObject]];
+        [_teasersArray insertObject:[_teasersArray objectAtIndex:_teasersArray.count-2] atIndex:0];
+    }
+    
+    for (int i = RI_IS_RTL?(int)_teasersArray.count-1:0;
+         RI_IS_RTL?i >=0 :i < _teasersArray.count;
+         RI_IS_RTL? i-- : i++) {
+        RITeaserComponent* component = [_teasersArray objectAtIndex:i];
         
         NSString* imageUrl;
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
@@ -96,7 +120,7 @@
                     //notice we are using self.teaserGrouping.teaserComponents.count-1 and not componentsArray.count-1
                     //looking at the REAL array count, not the fake one's.
                     realIndex = self.teaserGrouping.teaserComponents.count-1;
-                } else if (componentsArray.count-1 == i){
+                } else if (_teasersArray.count-1 == i){
                     realIndex = 0;
                 } else {
                     realIndex = i-1;
@@ -113,14 +137,6 @@
     
     [self.scrollView setContentSize:CGSizeMake(currentX,
                                                self.scrollView.frame.size.height)];
-    
-    if (self.isInfinite && 1 < self.teaserGrouping.teaserComponents.count) {
-        [self.scrollView scrollRectToVisible:CGRectMake(self.scrollView.bounds.size.width,
-                                                        self.scrollView.bounds.origin.y,
-                                                        self.scrollView.bounds.size.width,
-                                                        self.scrollView.bounds.size.height)
-                                          animated:NO];
-    }
 
     CGFloat pageControlBottomMargin = 3.0f; //value by design
     CGFloat pageControlHeight = 10.0f;
@@ -130,9 +146,10 @@
                                                                        self.bounds.size.width,
                                                                        pageControlHeight)];
     self.pageControl.hasSmallDots = YES;
-    self.pageControl.numberOfPages = self.teaserGrouping.teaserComponents.count;
+    self.pageControl.numberOfPages = (self.isInfinite && 2 < _teasersArray.count)?_teasersArray.count-2:_teasersArray.count;
     [self addSubview:self.pageControl];
-    self.pageControl.currentPage = 0;
+    
+    [self scrollToIndex:RI_IS_RTL?((self.isInfinite && 2 < _teasersArray.count)?_teasersArray.count-2:_teasersArray.count):0];
 }
 
 
@@ -140,11 +157,9 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    if (self.isInfinite && 1 < self.teaserGrouping.teaserComponents.count) {
+    if (self.isInfinite && 2 < _teasersArray.count) {
         
-        CGFloat contentOffsetWhenFullyScrolledRight = self.scrollView.frame.size.width * (self.teaserGrouping.teaserComponents.count+1);
-        
-        if (scrollView.contentOffset.x == contentOffsetWhenFullyScrolledRight) {
+        if (scrollView.contentOffset.x == self.scrollView.contentSize.width - self.scrollView.frame.size.width) {
             
             [self.scrollView scrollRectToVisible:CGRectMake(self.scrollView.bounds.size.width,
                                                             self.scrollView.bounds.origin.y,
@@ -155,25 +170,40 @@
         }
         else if (scrollView.contentOffset.x == 0)
         {
-            [self.scrollView scrollRectToVisible:CGRectMake(self.scrollView.contentSize.width - (self.scrollView.frame.size.width * 2),
+            [self.scrollView scrollRectToVisible:CGRectMake(self.scrollView.contentSize.width - (2*self.scrollView.frame.size.width),
                                                             self.scrollView.bounds.origin.y,
                                                             self.scrollView.bounds.size.width,
                                                             self.scrollView.bounds.size.height)
                                         animated:NO];
         }
     }
+    self.pageControl.currentPage = [self getCurrentPage:scrollView];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    self.pageControl.currentPage = [self getCurrentPage:scrollView];
+}
+
+- (NSInteger)getCurrentPage:(UIScrollView *)scrollView
+{
     CGFloat infinityOffset = 0.0f;
-    if (self.isInfinite && 1 < self.teaserGrouping.teaserComponents.count) {
+    if (self.isInfinite && 2 < _teasersArray.count) {
         //subtract 1 to make up for the fake image offset (fake images that are used for infinite scrolling)
         infinityOffset = 1.0f;
     }
     
     //add 0.5 to make sure we scroll the indicators with the middle of the page
-    self.pageControl.currentPage = (scrollView.contentOffset.x / scrollView.frame.size.width) + 0.5f - infinityOffset;
+    NSInteger page = (scrollView.contentOffset.x / scrollView.frame.size.width) + 0.5f - infinityOffset;
+    return page;
+}
+
+- (CGRect)getVisibleRectToPage:(NSInteger)page
+{
+    return CGRectMake(self.scrollView.contentSize.width - (self.scrollView.frame.size.width * 2),
+               self.scrollView.bounds.origin.y,
+               self.scrollView.bounds.size.width,
+               self.scrollView.bounds.size.height);
 }
 
 - (UIView *) hitTest:(CGPoint)point withEvent:(UIEvent *)event {
@@ -190,14 +220,11 @@
     if (point.x > self.scrollView.frame.origin.x && point.x < (self.scrollView.frame.origin.x + self.scrollView.frame.size.width))
     {
         NSInteger page = self.scrollView.contentOffset.x / self.scrollView.frame.size.width;
-        if (self.isInfinite && 1 < self.teaserGrouping.teaserComponents.count) {
-            if (0 == page) {
-                page = self.teaserGrouping.teaserComponents.count-1;
-            } else if (self.teaserGrouping.teaserComponents.count+1 == page){
-                page = 0;
-            } else {
-                page -= 1;
-            }
+        if (self.isInfinite && 2 < _teasersArray.count) {
+            page--;
+        }
+        if (RI_IS_RTL) {
+            page = _teasersArray.count-1 - ((self.isInfinite && 2 < _teasersArray.count)?2:0) - page;
         }
         [self teaserPressedForIndex:page];
     }
@@ -205,10 +232,11 @@
 
 - (void)scrollToIndex:(NSInteger)index
 {
+    self.pageControl.currentPage = index;
     //adjust index to the infinite scroll
-    if (self.isInfinite) {
+    if (self.isInfinite && 2 < _teasersArray.count) {
         index++;
-        if (index > self.teaserGrouping.teaserComponents.count) {
+        if (index > _teasersArray.count-1) {
             index = 0;
         }
     }
@@ -217,6 +245,7 @@
                                        self.scrollView.frame.size.width,
                                        self.scrollView.frame.size.height);
     [self.scrollView scrollRectToVisible:scrollViewRect animated:NO];
+    
 }
 
 @end
