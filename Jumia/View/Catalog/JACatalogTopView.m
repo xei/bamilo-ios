@@ -7,7 +7,6 @@
 //
 
 #import "JACatalogTopView.h"
-#import "UIView+Mirror.h"
 
 @interface JACatalogTopView()
 
@@ -79,6 +78,7 @@
 {
     self.backgroundColor = [UIColor clearColor];
     
+    self.sortingBackView.translatesAutoresizingMaskIntoConstraints = YES;
     self.sortingButton.translatesAutoresizingMaskIntoConstraints = YES;
     [self.sortingButton setImage:[UIImage imageNamed:@"sortingIcon_normal"] forState:UIControlStateNormal];
     [self.sortingButton setImage:[UIImage imageNamed:@"sortingIcon_highlighted"] forState:UIControlStateSelected];
@@ -89,6 +89,7 @@
     [self.sortingButton setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
     [self.sortingButton addTarget:self action:@selector(sortingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
+    self.filterBackView.translatesAutoresizingMaskIntoConstraints = YES;
     self.filterButton.translatesAutoresizingMaskIntoConstraints = YES;
     [self.filterButton setImage:[UIImage imageNamed:@"filterIcon_normal"] forState:UIControlStateNormal];
     [self.filterButton setImage:[UIImage imageNamed:@"filterIcon_highlighted"] forState:UIControlStateSelected];
@@ -106,10 +107,56 @@
     
     self.separatorView.translatesAutoresizingMaskIntoConstraints = YES;
     self.separatorView.backgroundColor = UIColorFromRGB(0xcccccc);
+}
+
+- (void)repositionForWidth:(CGFloat)width
+{
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        
+        self.frame = CGRectMake(self.frame.origin.x,
+                                self.frame.origin.y,
+                                width,
+                                self.frame.size.height);
+        
+        CGFloat margin = 6.0f;
+        
+        self.viewModeButton.frame = CGRectMake(width - self.viewModeButton.frame.size.width - margin,
+                                               margin,
+                                               self.viewModeButton.frame.size.width,
+                                               self.viewModeButton.frame.size.height);
+        
+        CGFloat remainingWidth = width - self.viewModeButton.frame.size.width - margin*3;
+        CGFloat halfWidth = (remainingWidth-1)/2;
+
+        self.sortingBackView.frame = CGRectMake(margin,
+                                                margin,
+                                                halfWidth,
+                                                self.sortingButton.frame.size.height);
+        self.sortingButton.frame = CGRectMake(self.sortingBackView.frame.size.width - self.sortingButton.frame.size.width,
+                                              0.0f,
+                                              self.sortingButton.frame.size.width,
+                                              self.sortingButton.frame.size.height);
+        
+        self.filterBackView.frame = CGRectMake(CGRectGetMaxX(self.sortingBackView.frame) + 1.0,
+                                               margin,
+                                               halfWidth,
+                                               self.filterBackView.frame.size.height);
+        self.filterButton.frame = CGRectMake(0.0f,
+                                             0.0f,
+                                             self.filterButton.frame.size.width,
+                                             self.filterButton.frame.size.height);
+        
+    }
     
     if (RI_IS_RTL) {
-        [self flipSubviewPositions];
-        [self flipSubviewAlignments];
+        [self.viewModeButton flipViewPositionInsideSuperview];
+        [self.sortingBackView flipViewPositionInsideSuperview];
+        [self.sortingButton flipViewPositionInsideSuperview];
+        [self.filterBackView flipViewPositionInsideSuperview];
+        [self.filterButton flipViewPositionInsideSuperview];
+
+        //the sorting button will be aligned when the text is set, but we need to align the filters here
+        [self.filterButton flipViewAlignment];
     }
 }
 

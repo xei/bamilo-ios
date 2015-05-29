@@ -69,6 +69,8 @@
     self.isLoaded = NO;
     
     self.teaserPageView = [[JATeaserPageView alloc] init];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reload) name:kHomeShouldReload object:nil];
 }
 
 -(void)campaignTimerEnded
@@ -144,6 +146,12 @@
     }
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+}
+
+- (void)reload
+{
+    self.isLoaded = NO;
+    [self requestTeasers];
 }
 
 - (void)requestTeasers

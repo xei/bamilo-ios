@@ -275,8 +275,7 @@
     CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     
     [self setupViews:newWidth toInterfaceOrientation:toInterfaceOrientation];
-    
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -332,6 +331,51 @@
         leftMargin = 128.0f;
         rightMargin = 128.0f;
     }
+    
+    [self.accountViewTopSeparator setFrame:CGRectMake(self.accountViewTopSeparator.frame.origin.x,
+                                                      self.accountViewTopSeparator.frame.origin.y,
+                                                      self.accountView.frame.size.width,
+                                                      self.accountViewTopSeparator.frame.size.height)];
+    
+    [self.accountAndEmailSeparator setFrame:CGRectMake(self.accountAndEmailSeparator.frame.origin.x,
+                                                       self.accountAndEmailSeparator.frame.origin.y,
+                                                       self.accountView.frame.size.width,
+                                                       self.accountAndEmailSeparator.frame.size.height)];
+    
+    [self.emailAndAddressesSeparator setFrame:CGRectMake(self.emailAndAddressesSeparator.frame.origin.x,
+                                                         self.emailAndAddressesSeparator.frame.origin.y,
+                                                         self.accountView.frame.size.width,
+                                                         self.emailAndAddressesSeparator.frame.size.height)];
+    
+    [self.notificationViewTopSeparator setFrame:CGRectMake(self.notificationViewTopSeparator.frame.origin.x,
+                                                           self.notificationViewTopSeparator.frame.origin.y,
+                                                           self.accountView.frame.size.width,
+                                                           self.notificationViewTopSeparator.frame.size.height)];
+    
+    [self.notificationAndSoundSeparator setFrame:CGRectMake(self.notificationAndSoundSeparator.frame.origin.x,
+                                                            self.notificationAndSoundSeparator.frame.origin.y,
+                                                            self.accountView.frame.size.width,
+                                                            self.notificationAndSoundSeparator.frame.size.height)];
+    
+    [self.appSharingSeparator setFrame:CGRectMake(self.appSharingSeparator.frame.origin.x,
+                                                  self.appSharingSeparator.frame.origin.y,
+                                                  self.accountView.frame.size.width,
+                                                  self.appSharingSeparator.frame.size.height)];
+    
+    [self.accountSettingsTitleLabel setFrame: CGRectMake(6.0f,
+                                                         self.accountSettingsTitleLabel.frame.origin.y,
+                                                         self.accountSettingsTitleLabel.frame.size.width,
+                                                         self.accountSettingsTitleLabel.frame.size.height)];
+    
+    [self.notificationSettingsTitleLabel setFrame: CGRectMake(6.0f,
+                                                         self.notificationSettingsTitleLabel.frame.origin.y,
+                                                         self.notificationSettingsTitleLabel.frame.size.width,
+                                                         self.notificationSettingsTitleLabel.frame.size.height)];
+    
+    [self.appSharingTitleLabel setFrame: CGRectMake(6.0f,
+                                                         self.appSharingTitleLabel.frame.origin.y,
+                                                         self.appSharingTitleLabel.frame.size.width,
+                                                         self.appSharingTitleLabel.frame.size.height)];
     
     [self.userDataArrow setFrame:CGRectMake(self.accountView.frame.size.width - self.userDataArrow.frame.size.width - rightMargin,
                                             self.userDataArrow.frame.origin.y,
@@ -427,6 +471,18 @@
                                             self.shareAppArrow.frame.origin.y,
                                             self.shareAppArrow.frame.size.width,
                                             self.shareAppArrow.frame.size.height)];
+    
+    if(RI_IS_RTL){
+    
+        [self.accountView  flipSubviewPositions];
+        [self.accountView flipSubviewAlignments];
+        [self.accountView flipSubviewImages];
+        [self.notificationView flipSubviewPositions];
+        [self.notificationView flipSubviewAlignments];
+        [self.appSharingView flipSubviewPositions];
+        [self.appSharingView flipSubviewAlignments];
+        [self.appSharingView flipSubviewImages];
+    }
 }
 
 #pragma mark - Actions

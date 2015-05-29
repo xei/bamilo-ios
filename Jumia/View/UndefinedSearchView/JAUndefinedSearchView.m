@@ -11,7 +11,6 @@
 #import "UIImageView+WebCache.h"
 #import "RIConfiguration.h"
 #import "RICountry.h"
-#import "UIView+Mirror.h"
 
 @implementation JABrandView
 

@@ -243,6 +243,9 @@ JADynamicFormDelegate
                                   view.frame.size.height)];
         [self.notificationsView addSubview:view];
         formHeight += CGRectGetMaxY(view.frame);
+        if(RI_IS_RTL){
+            [view flipSubviewAlignments];
+        }
     }
     
     [self.notificationsView setFrame:CGRectMake(0.0f,

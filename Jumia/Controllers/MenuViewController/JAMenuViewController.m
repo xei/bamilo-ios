@@ -95,6 +95,13 @@ UIAlertViewDelegate
     // Added because of the footer space
     self.tableViewMenu.contentInset = UIEdgeInsetsMake(0, 0, -20, 0);
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCategories) name:kSideMenuShouldReload object:nil];
+    
+    [self reloadCategories];
+}
+
+- (void)reloadCategories
+{
     [RICategory getCategoriesWithSuccessBlock:^(id categories) {
         
         self.categories = [NSArray arrayWithArray:(NSArray *)categories];
@@ -107,6 +114,11 @@ UIAlertViewDelegate
         
         [self showMessage:STRING_ERROR success:NO];
     }];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated

@@ -12,7 +12,6 @@
 #import "JAMaintenancePage.h"
 #import "JAKickoutView.h"
 #import "JAFallbackView.h"
-#import "UIView+Mirror.h"
 
 #define kSearchViewBarHeight 32.0f
 
@@ -43,6 +42,15 @@
                       self.view.bounds.origin.y + offset,
                       self.view.bounds.size.width,
                       self.view.bounds.size.height - offset);
+}
+
+-(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        JANavigationBarLayout *defaultLayout = [[JANavigationBarLayout alloc] init];
+        self.navBarLayout = defaultLayout;
+    }
+    return self;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
