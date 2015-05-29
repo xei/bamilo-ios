@@ -1187,66 +1187,6 @@
             </objects>
             <point key="canvasLocation" x="713" y="1527"/>
         </scene>
-        <!--Product Details View Controller-->
-        <scene sceneID="7Ab-US-7HF">
-            <objects>
-                <viewController storyboardIdentifier="productDetailViewController" automaticallyAdjustsScrollViewInsets="NO" id="4DA-Wb-YGP" customClass="JAProductDetailsViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="BA6-ET-S6M"/>
-                        <viewControllerLayoutGuide type="bottom" id="TEU-E5-HPl"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Ngo-JV-gZI">
-                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JDq-0q-JN1">
-                                <rect key="frame" x="0.0" y="44" width="320" height="460"/>
-                            </scrollView>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GOb-c9-X4a" customClass="JAPickerScrollView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="25L-1A-WDZ"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <constraints>
-                            <constraint firstAttribute="bottom" secondItem="JDq-0q-JN1" secondAttribute="bottom" id="G4q-iQ-ySz"/>
-                            <constraint firstItem="GOb-c9-X4a" firstAttribute="top" secondItem="BA6-ET-S6M" secondAttribute="bottom" id="clT-DK-GFV"/>
-                            <constraint firstItem="JDq-0q-JN1" firstAttribute="top" secondItem="GOb-c9-X4a" secondAttribute="bottom" id="gWI-e6-VjC"/>
-                            <constraint firstItem="JDq-0q-JN1" firstAttribute="leading" secondItem="Ngo-JV-gZI" secondAttribute="leading" id="hfG-Wo-HdO"/>
-                            <constraint firstAttribute="trailing" secondItem="JDq-0q-JN1" secondAttribute="trailing" id="lhU-ip-CCn"/>
-                            <constraint firstItem="GOb-c9-X4a" firstAttribute="leading" secondItem="Ngo-JV-gZI" secondAttribute="leading" id="pgA-fs-Qhz"/>
-                            <constraint firstAttribute="trailing" secondItem="GOb-c9-X4a" secondAttribute="trailing" id="qyI-YY-oow"/>
-                        </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="uZs-Bp-S8W" appends="YES" id="cmf-0d-FXg"/>
-                            <outletCollection property="gestureRecognizers" destination="neK-xE-reB" appends="YES" id="7Sn-ij-Vr4"/>
-                        </connections>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="Lff-Xd-XGy"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="320" height="568"/>
-                    <connections>
-                        <outlet property="mainScrollView" destination="JDq-0q-JN1" id="lTL-TZ-VSp"/>
-                        <outlet property="pickerScrollView" destination="GOb-c9-X4a" id="0tf-q5-wCh"/>
-                    </connections>
-                </viewController>
-                <swipeGestureRecognizer direction="left" id="uZs-Bp-S8W" userLabel="Left Swipe Gesture Recognizer">
-                    <connections>
-                        <action selector="swipeLeft:" destination="4DA-Wb-YGP" id="W02-mN-Gcp"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="right" id="neK-xE-reB" userLabel="Right Swipe Gesture Recognizer">
-                    <connections>
-                        <action selector="swipeRight:" destination="4DA-Wb-YGP" id="uRf-hN-T3d"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="y3U-xA-b18" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1128" y="1527"/>
-        </scene>
         <!--Sign In View Controller-->
         <scene sceneID="uW8-50-FvF">
             <objects>

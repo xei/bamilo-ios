@@ -1139,7 +1139,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAProductDetailsViewController class]])
     {
-        JAProductDetailsViewController* productDetailsViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"productDetailViewController"];
+        JAProductDetailsViewController *productDetailsViewController = [[JAProductDetailsViewController alloc] initWithNibName:@"JAProductDetailsViewController" bundle:nil];
         
         if ([notification.userInfo objectForKey:@"product"]) {
             productDetailsViewController.product = [notification.userInfo objectForKey:@"product"];
