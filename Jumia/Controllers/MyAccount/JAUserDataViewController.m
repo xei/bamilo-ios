@@ -9,6 +9,7 @@
 #import "JAUserDataViewController.h"
 #import "RICustomer.h"
 #import "RIForm.h"
+#import "UIView+Mirror.h"
 
 @interface JAUserDataViewController ()
 <
@@ -24,7 +25,6 @@ JADynamicFormDelegate
 @property (weak, nonatomic) IBOutlet UIView *changePasswordView;
 @property (weak, nonatomic) IBOutlet UILabel *changePasswordTitle;
 @property (weak, nonatomic) IBOutlet UIImageView *changePasswordImageView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *changePasswordHeight;
 @property (strong, nonatomic) JADynamicForm *changePasswordForm;
 @property (assign, nonatomic) CGFloat currentY;
 @property (assign, nonatomic) NSInteger numberOfFields;
@@ -236,6 +236,7 @@ JADynamicFormDelegate
 
 - (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
+    
     [self.personalDataView setFrame:CGRectMake(self.personalDataView.frame.origin.x,
                                                self.personalDataView.frame.origin.y,
                                                width - (2 * self.personalDataView.frame.origin.x),
@@ -246,12 +247,28 @@ JADynamicFormDelegate
                                                  width - (2 * self.changePasswordView.frame.origin.x),
                                                  self.currentY + 15.0f)];
     
+    [self.personalLine setFrame:CGRectMake(self.personalLine.frame.origin.x,
+                                           self.personalLine.frame.origin.y,
+                                           self.personalDataView.frame.size.width,
+                                           self.personalLine.frame.size.height)];
+    
+    [self.changePasswordImageView setFrame:CGRectMake(self.changePasswordImageView.frame.origin.x,
+                                                      self.changePasswordImageView.frame.origin.y,
+                                                      self.changePasswordView.frame.size.width,
+                                                      self.changePasswordImageView.frame.size.height)];
+    
     CGFloat leftMargin = 17.0f;
     CGFloat dynamicFormleftMargin = 0.0f;
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
     {
         leftMargin = 145.0f;
         dynamicFormleftMargin = 128.0f;
+        
+        [self.contentScrollView setFrame:CGRectMake(0.0f,
+                                                    self.contentScrollView.frame.origin.y,
+                                                    1024.0f,
+                                                    768.0f)];
+        
     }
     
     [self.nameLabel setFrame:CGRectMake(leftMargin,
@@ -271,12 +288,22 @@ JADynamicFormDelegate
                                   view.frame.origin.y,
                                   self.changePasswordView.frame.size.width - (2 * dynamicFormleftMargin),
                                   view.frame.size.height)];
+        if(RI_IS_RTL){
+            [view flipSubviewAlignments];
+        }
     }
     
     [self.saveButton setFrame:CGRectMake((width - self.saveButton.frame.size.width) / 2, CGRectGetMaxY(self.changePasswordView.frame) + 6.0f, self.saveButton.frame.size.width, self.saveButton.frame.size.height)];
     
     [self.personalDataView setHidden:NO];
     [self.changePasswordView setHidden:NO];
+    
+    if(RI_IS_RTL){
+        [self.personalDataView flipSubviewPositions];
+        [self.changePasswordView flipSubviewPositions];
+        [self.personalDataView flipSubviewAlignments];
+        [self.changePasswordView flipSubviewAlignments];
+    }
 }
 
 - (void)didReceiveMemoryWarning
