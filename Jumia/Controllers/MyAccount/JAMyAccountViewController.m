@@ -50,6 +50,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *shareAppSubtitleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *shareAppArrow;
 @property (strong, nonatomic) UIPopoverController *currentPopoverController;
+@property (assign, nonatomic) BOOL stillRTL;
 
 @end
 
@@ -60,6 +61,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    self.stillRTL = YES;
     
     self.screenName = @"CustomerAccount";
     
@@ -475,13 +479,21 @@
     if(RI_IS_RTL){
     
         [self.accountView  flipSubviewPositions];
-        [self.accountView flipSubviewAlignments];
         [self.accountView flipSubviewImages];
         [self.notificationView flipSubviewPositions];
-        [self.notificationView flipSubviewAlignments];
         [self.appSharingView flipSubviewPositions];
-        [self.appSharingView flipSubviewAlignments];
         [self.appSharingView flipSubviewImages];
+        
+        
+        if(self.stillRTL){
+        
+            [self.accountView flipSubviewAlignments];
+            [self.notificationView flipSubviewAlignments];
+            [self.appSharingView flipSubviewAlignments];
+            self.stillRTL= NO;
+        }
+        
+        
     }
 }
 
