@@ -45,6 +45,15 @@
                       self.view.bounds.size.height - offset);
 }
 
+-(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        JANavigationBarLayout *defaultLayout = [[JANavigationBarLayout alloc] init];
+        self.navBarLayout = defaultLayout;
+    }
+    return self;
+}
+
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {

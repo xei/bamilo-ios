@@ -10,6 +10,7 @@
 #import "RIForm.h"
 #import "JAButtonWithBlur.h"
 #import "RICustomer.h"
+#import "UIView+Mirror.h"
 
 #define kDynamicFormFieldsTag 1
 
@@ -243,6 +244,9 @@ JADynamicFormDelegate
                                   view.frame.size.height)];
         [self.notificationsView addSubview:view];
         formHeight += CGRectGetMaxY(view.frame);
+        if(RI_IS_RTL){
+            [view flipSubviewAlignments];
+        }
     }
     
     [self.notificationsView setFrame:CGRectMake(0.0f,
