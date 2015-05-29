@@ -311,6 +311,7 @@
         self.sortingMethod = [self.sortingMethodFromPush integerValue];
     }
     [self.catalogTopView setSorting:self.sortingMethod];
+    [self.catalogTopView repositionForWidth:self.view.frame.size.width];
     
     NSNumber* gridSelected = [[NSUserDefaults standardUserDefaults] objectForKey:JACatalogGridSelected];
     self.catalogTopView.gridSelected = [gridSelected boolValue];
@@ -1568,11 +1569,8 @@
                                                                            [self viewBounds].size.height - self.catalogTopView.frame.origin.y)];
         [self.undefinedView didRotate];
     }
-    
-    [self.catalogTopView setFrame:CGRectMake(self.catalogTopView.frame.origin.x,
-                                             self.catalogTopView.frame.origin.y,
-                                             [self viewBounds].size.width,
-                                             self.catalogTopView.frame.size.height)];
+
+    [self.catalogTopView repositionForWidth:self.view.frame.size.width];
     
     [self hideLoading];
     

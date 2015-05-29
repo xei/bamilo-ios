@@ -293,6 +293,26 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
+    [RIApi startApiWithCountry:nil
+                  successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory){
+                      if(hasUpdate)
+                      {
+                          if(isUpdateMandatory)
+                          {
+                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_NECESSARY_TITLE message:[NSString stringWithFormat:STRING_UPDATE_NECESSARY_MESSAGE, APP_NAME] delegate:self cancelButtonTitle:STRING_OK_UPDATE otherButtonTitles:nil];
+                              [alert setTag:kForceUpdateAlertViewTag];
+                              [alert show];
+                          }
+                          else
+                          {
+                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_AVAILABLE_TITLE message:[NSString stringWithFormat:STRING_UPDATE_AVAILABLE_MESSAGE, APP_NAME] delegate:self cancelButtonTitle:STRING_NO_THANKS otherButtonTitles:STRING_UPDATE, nil];
+                              [alert setTag:kUpdateAvailableAlertViewTag];
+                              [alert show];
+                          }
+                      }
+                  }
+               andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage){}];
+    
     self.startLoadingTime = [NSDate date];
     
     [self checkSession];
@@ -516,4 +536,69 @@
 {
     [FBAppEvents activateApp];
 }
+
+
+#pragma mark UIAlertView
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if(kUpdateAvailableAlertViewTag == [alertView tag])
+    {
+        if(0 == buttonIndex)
+        {
+            //cancel
+        }
+        else if(1 == buttonIndex)
+        {
+            NSURL  *url;
+            if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
+            {
+                url = [NSURL URLWithString:kAppStoreUrl];
+            }
+            else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
+            {
+                url = [NSURL URLWithString:kAppStoreUrlDaraz];
+            }
+            else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+            {
+                url = [NSURL URLWithString:kAppStoreUrlShop];
+            }
+            else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
+            {
+                url = [NSURL URLWithString:kAppStoreUrlBamilo];
+            }
+
+            if([[UIApplication sharedApplication] canOpenURL:url]) {
+                [[UIApplication sharedApplication] openURL:url];
+            }
+        }
+    }
+    else if(kForceUpdateAlertViewTag == [alertView tag])
+    {
+        if(0 == buttonIndex)
+        {
+            NSURL  *url;
+            if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
+            {
+                url = [NSURL URLWithString:kAppStoreUrl];
+            }
+            else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
+            {
+                url = [NSURL URLWithString:kAppStoreUrlDaraz];
+            }
+            else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+            {
+                url = [NSURL URLWithString:kAppStoreUrlShop];
+            }
+            else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
+            {
+                url = [NSURL URLWithString:kAppStoreUrlBamilo];
+            }
+            if([[UIApplication sharedApplication] canOpenURL:url]) {
+                [[UIApplication sharedApplication] openURL:url];
+            }
+        }
+    }
+}
+
 @end
