@@ -12,7 +12,6 @@
 #import "JAActivityViewController.h"
 #import "AQSFacebookMessengerActivity.h"
 #import "JBWhatsAppActivity.h"
-#import "UIView+Mirror.h"
 
 @interface JAMyAccountViewController ()
 

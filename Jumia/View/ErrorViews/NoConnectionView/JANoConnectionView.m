@@ -7,7 +7,6 @@
 //
 
 #import "JANoConnectionView.h"
-#import "UIView+Mirror.h"
 
 @interface JANoConnectionView ()
 

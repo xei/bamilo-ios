@@ -369,7 +369,8 @@
             [self popToRootViewControllerAnimated:NO];
         }
         
-        JAHomeViewController *home = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"homeViewController"];
+//        JAHomeViewController *home = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"homeViewController"];
+        JAHomeViewController *home = [JAHomeViewController new];
         [self pushViewController:home animated:NO];
     }
 }
@@ -1147,7 +1148,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAProductDetailsViewController class]])
     {
-        JAProductDetailsViewController* productDetailsViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"productDetailViewController"];
+        JAProductDetailsViewController *productDetailsViewController = [[JAProductDetailsViewController alloc] initWithNibName:@"JAProductDetailsViewController" bundle:nil];
         
         if ([notification.userInfo objectForKey:@"product"]) {
             productDetailsViewController.product = [notification.userInfo objectForKey:@"product"];
@@ -1374,7 +1375,8 @@
     
     if (VALID_NOTEMPTY(url, NSString) || VALID_NOTEMPTY(productSku, NSString))
     {
-        JAPDVViewController *pdv = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
+//        JAPDVViewController *pdv = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
+        JAPDVViewController *pdv = [JAPDVViewController new];
         pdv.productUrl = url;
         pdv.productSku = productSku;
         

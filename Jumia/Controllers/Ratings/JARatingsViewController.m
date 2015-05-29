@@ -34,7 +34,7 @@ UITableViewDataSource
     CGFloat _viewsWidth;
     BOOL _hasComments;
     BOOL _reviewsEnabled;
-    int _ratingTypeLinesHeight;
+    float _ratingTypeLinesHeight;
     int _topViewHeight;
 }
 
@@ -50,6 +50,7 @@ UITableViewDataSource
 @property (nonatomic, strong) JAPriceView *priceView;
 
 @property (weak, nonatomic) IBOutlet UIView *emptyReviewsView;
+@property (weak, nonatomic) IBOutlet UIScrollView *emptyScrollView;
 @property (weak, nonatomic) IBOutlet UIImageView *emptyReviewsImageView;
 @property (weak, nonatomic) IBOutlet UILabel *emptyReviewsLabel;
 // iPad landscape components only
@@ -166,10 +167,6 @@ UITableViewDataSource
         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
         {
             [self ratingsRequests];
-        }
-        else
-        {
-            self.numberOfRequests = 0;
         }
 }
 
@@ -375,10 +372,9 @@ UITableViewDataSource
 
 - (void)setupTopView
 {
-    if (_ratingTypeLinesHeight == 0) {
-        _topViewHeight = self.topView.frame.size.height;
-    }
-    _ratingTypeLinesHeight = 0;
+    _topViewHeight = self.topView.frame.size.height;
+    _ratingTypeLinesHeight = -self.nameLabel.bounds.size.height;
+    
     CGRect topViewFrame = self.topView.frame;
     topViewFrame.size.width = [self.view bounds].size.width;
     topViewFrame.size.height = _topViewHeight;
@@ -388,11 +384,17 @@ UITableViewDataSource
     brandLabelFrame.origin.x = 2*kHorizontalMargin;
     brandLabelFrame.size.width = topViewFrame.size.width - 4*kHorizontalMargin;
     self.brandLabel.frame = brandLabelFrame;
+    [self.brandLabel sizeToFit];
     
     CGRect nameLabelFrame = self.nameLabel.frame;
     nameLabelFrame.origin.x = 2*kHorizontalMargin;
     nameLabelFrame.size.width = topViewFrame.size.width - 4*kHorizontalMargin;
     self.nameLabel.frame = nameLabelFrame;
+    [self.nameLabel sizeToFit];
+    _ratingTypeLinesHeight += self.nameLabel.bounds.size.height;
+    
+    if (RI_IS_RTL)
+        [self.nameLabel setTextAlignment:NSTextAlignmentRight];
     
     if(VALID(self.priceView, JAPriceView))
     {
@@ -432,10 +434,7 @@ UITableViewDataSource
     NSInteger numberOfItemsSideBySide = 3;
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {
-//        if (UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation || UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)
-//        {
-            numberOfItemsSideBySide = 7;
-//        }
+        numberOfItemsSideBySide = 7;
     }
     
     topViewMinHeight += 6.0f;
@@ -443,9 +442,6 @@ UITableViewDataSource
     CGFloat ratingViewWidth = (self.topView.frame.size.width - 2*kHorizontalMargin) / numberOfItemsSideBySide;
     
     CGFloat currentX = 2*kHorizontalMargin;
-    if (RI_IS_RTL) {
-        currentX = self.view.bounds.size.width - 2*kHorizontalMargin;
-    }
     
     if (ISEMPTY(self.productRatings.ratingInfo.averageRatingsArray)) {
         UILabel* titleLabel = [UILabel new];
@@ -458,16 +454,20 @@ UITableViewDataSource
                                         ratingViewWidth,
                                         titleLabel.frame.size.height)];
         [self.topView addSubview:titleLabel];
+        
         [self.ratingStarLabels addObject:titleLabel];
         
         JARatingsViewMedium* ratingsView = [JARatingsViewMedium getNewJARatingsViewMedium];
         [ratingsView setRating:0];
-        CGFloat offset = ratingViewWidth - ratingsView.frame.size.width;
-        [ratingsView setFrame:CGRectMake(RI_IS_RTL?self.topView.bounds.size.width - 2*kHorizontalMargin - ratingViewWidth + offset:2*kHorizontalMargin,
+        [ratingsView setFrame:CGRectMake(2*kHorizontalMargin,
                                      topViewMinHeight + titleLabel.frame.size.height,
                                      ratingsView.frame.size.width,
                                      ratingsView.frame.size.height)];
         [self.topView addSubview:ratingsView];
+        if (RI_IS_RTL) {
+            [titleLabel flipViewAlignment];
+            [ratingsView flipViewAlignment];
+        }
         [self.ratingStars addObject:ratingsView];
         
         topViewMinHeight += titleLabel.frame.size.height + ratingsView.frame.size.height;
@@ -482,10 +482,7 @@ UITableViewDataSource
             [titleLabel setText:title];
             [titleLabel sizeToFit];
             
-            [titleLabel setFrame:CGRectMake(RI_IS_RTL?
-                                            currentX - titleLabel.bounds.size.width
-                                            :
-                                            currentX,
+            [titleLabel setFrame:CGRectMake(currentX,
                                             topViewMinHeight,
                                             ratingViewWidth - 12,
                                             titleLabel.frame.size.height)];
@@ -500,26 +497,25 @@ UITableViewDataSource
             JARatingsViewMedium* ratingsView = [JARatingsViewMedium getNewJARatingsViewMedium];
             [ratingsView setRating:[average integerValue]];
             
-            [ratingsView setFrame:CGRectMake(RI_IS_RTL?
-                                             currentX - ratingsView.bounds.size.width
-                                             :
-                                             currentX,
+            [ratingsView setFrame:CGRectMake(currentX,
                                              topViewMinHeight + titleLabel.frame.size.height,
                                              ratingsView.frame.size.width,
                                              ratingsView.frame.size.height)];
             
             [self.topView addSubview:ratingsView];
+            
             [self.ratingStars addObject:ratingsView];
             
-            currentX += RI_IS_RTL?-ratingViewWidth:ratingViewWidth;
+            if (RI_IS_RTL) {
+                [titleLabel flipViewAlignment];
+                [ratingsView flipViewAlignment];
+            }
+            
+            currentX += ratingViewWidth;
             
             NSInteger nextIndex = i+1;
             if (nextIndex < self.productRatings.ratingInfo.averageRatingsArray.count) {
                 if (0 == nextIndex%numberOfItemsSideBySide) {
-                    
-                    if (RI_IS_RTL) {
-                        currentX = self.view.bounds.size.width - 2*kHorizontalMargin;
-                    }else
                         currentX = 2*kHorizontalMargin;
                     if (0 != nextIndex) {
                         topViewMinHeight += titleLabel.frame.size.height + ratingsView.frame.size.height;
@@ -536,10 +532,11 @@ UITableViewDataSource
     topViewFrame.size.height += _ratingTypeLinesHeight;
     self.topView.frame = topViewFrame;
     
+    [self.topView sizeToFit];
+    
     if (RI_IS_RTL)
     {
-        [self.nameLabel setTextAlignment:NSTextAlignmentRight];
-        [self.brandLabel setTextAlignment:NSTextAlignmentRight];
+        [self.topView flipSubviewPositions];
     }
     
     if(topViewMinHeight < 38.0f)
@@ -664,6 +661,7 @@ UITableViewDataSource
     resumeViewFrame.size.width = self.view.bounds.size.width - 2*kHorizontalMargin;
     resumeViewFrame.origin.y = CGRectGetMaxY(self.topView.frame) + kVerticalMargin;
     self.resumeView.frame = resumeViewFrame;
+    
     
     CGRect labelUsedProductFrame = self.labelUsedProduct.frame;
     labelUsedProductFrame.size.width = self.resumeView.bounds.size.width - 2*kHorizontalMargin;
@@ -883,12 +881,20 @@ UITableViewDataSource
     
     CGRect emptyReviewsViewFrame = self.emptyReviewsView.frame;
     emptyReviewsViewFrame.size.width = width;
-    if (!_reviewsEnabled) {
-        emptyReviewsViewFrame.origin.y = self.resumeView.frame.origin.y;
-    }else{
-        emptyReviewsViewFrame.origin.y = CGRectGetMaxY(self.resumeView.frame) + kVerticalMargin;
-    }
     [self.emptyReviewsView setFrame:emptyReviewsViewFrame];
+    
+    CGRect emptyScrollViewFrame = self.emptyScrollView.frame;
+    emptyScrollViewFrame.size.width = self.view.bounds.size.width - 2*kHorizontalMargin;
+    if (!_reviewsEnabled) {
+        emptyScrollViewFrame.origin.y = self.resumeView.frame.origin.y;
+    }else{
+        emptyScrollViewFrame.origin.y = CGRectGetMaxY(self.resumeView.frame) + kVerticalMargin;
+    }
+    emptyScrollViewFrame.size.height = self.view.bounds.size.height - emptyScrollViewFrame.origin.y - kVerticalMargin;
+    [self.emptyScrollView setFrame:emptyScrollViewFrame];
+    [self.emptyScrollView setContentSize:CGSizeMake(self.emptyReviewsView.bounds.size.width, self.emptyReviewsView.bounds.size.height)];
+    [self.emptyScrollView setScrollEnabled:YES];
+    
     
     [self.emptyReviewsLabel setText:STRING_REVIEWS_EMPTY];
     [self.emptyReviewsLabel sizeToFit];

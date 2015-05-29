@@ -7,7 +7,6 @@
 //
 
 #import "JACatalogTopView.h"
-#import "UIView+Mirror.h"
 
 @interface JACatalogTopView()
 

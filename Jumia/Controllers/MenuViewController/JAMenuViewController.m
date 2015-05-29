@@ -17,7 +17,6 @@
 #import "RISearchSuggestion.h"
 #import "RICart.h"
 #import "JAClickableView.h"
-#import "UIView+Mirror.h"
 
 typedef NS_ENUM(NSUInteger, JAMenuViewControllerAction) {
     JAMenuViewControllerOpenCart = 0,
