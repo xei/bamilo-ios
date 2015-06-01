@@ -186,7 +186,6 @@
 		6C60C86E1AB75F41008AD4AD /* RITrackingDebug_SHOP.COM.MM.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C60C86B1AB75D41008AD4AD /* RITrackingDebug_SHOP.COM.MM.plist */; };
 		6C6EBE281ABC6634006A3D46 /* RITracking_بامیلو.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C6EBE261ABC6600006A3D46 /* RITracking_بامیلو.plist */; };
 		6C6EBE2B1ABC66DB006A3D46 /* RITrackingDebug_بامیلو.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C6EBE291ABC66BE006A3D46 /* RITrackingDebug_بامیلو.plist */; };
-		6C9680791B0F699A0073EBF2 /* UIView+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C9680781B0F699A0073EBF2 /* UIView+Mirror.m */; };
 		6C9680971B14DEB90073EBF2 /* JAMyAccountViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C9680961B14DEB90073EBF2 /* JAMyAccountViewController~iPad.xib */; };
 		6C9680981B14DEB90073EBF2 /* JAMyAccountViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C9680961B14DEB90073EBF2 /* JAMyAccountViewController~iPad.xib */; };
 		6C9680991B14DEB90073EBF2 /* JAMyAccountViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C9680961B14DEB90073EBF2 /* JAMyAccountViewController~iPad.xib */; };
@@ -2678,8 +2677,6 @@
 		6C60C86B1AB75D41008AD4AD /* RITrackingDebug_SHOP.COM.MM.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RITrackingDebug_SHOP.COM.MM.plist; sourceTree = "<group>"; };
 		6C6EBE261ABC6600006A3D46 /* RITracking_بامیلو.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RITracking_بامیلو.plist"; sourceTree = "<group>"; };
 		6C6EBE291ABC66BE006A3D46 /* RITrackingDebug_بامیلو.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RITrackingDebug_بامیلو.plist"; sourceTree = "<group>"; };
-		6C9680771B0F699A0073EBF2 /* UIView+Mirror.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Mirror.h"; path = "Categories/UIView+Mirror.h"; sourceTree = "<group>"; };
-		6C9680781B0F699A0073EBF2 /* UIView+Mirror.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Mirror.m"; path = "Categories/UIView+Mirror.m"; sourceTree = "<group>"; };
 		6C9680961B14DEB90073EBF2 /* JAMyAccountViewController~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JAMyAccountViewController~iPad.xib"; sourceTree = "<group>"; };
 		6C9680A21B1771E00073EBF2 /* JAMyAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAMyAccountViewController.xib; sourceTree = "<group>"; };
 		6C9680A81B1772000073EBF2 /* JAUserDataViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAUserDataViewController.xib; sourceTree = "<group>"; };
@@ -9213,7 +9210,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "9b3b07c3-90b7-4f89-8108-e876783770cb";
+				PROVISIONING_PROFILE = "83f53783-a654-427a-8316-c594edece2ea";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9252,7 +9249,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "9b3b07c3-90b7-4f89-8108-e876783770cb";
+				PROVISIONING_PROFILE = "83f53783-a654-427a-8316-c594edece2ea";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9291,7 +9288,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "9b3b07c3-90b7-4f89-8108-e876783770cb";
+				PROVISIONING_PROFILE = "83f53783-a654-427a-8316-c594edece2ea";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9327,7 +9324,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "9b3b07c3-90b7-4f89-8108-e876783770cb";
+				PROVISIONING_PROFILE = "83f53783-a654-427a-8316-c594edece2ea";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
