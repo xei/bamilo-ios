@@ -254,7 +254,7 @@
         uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO;
         uniqueCountry.isLive = YES;
 #if defined(STAGING) && STAGING
-        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO_STAGING;
+        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO_INTEGRATION;
         uniqueCountry.isLive = NO;
 #endif
         return uniqueCountry;

@@ -11,6 +11,7 @@
 @interface JAPriceView () {
     UILabel *_label;
     UIView *_strike;
+    BOOL _specialPriceOnTheLeft;
 }
 
 @end
@@ -22,6 +23,9 @@
              fontSize:(CGFloat)fontSize
 specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
 {
+    _specialPriceOnTheLeft = specialPriceOnTheLeft;
+    NSLog(@"price: %@ specialPrice: %@", price, specialPrice);
+    
     _label = [UILabel new];
     
     NSMutableAttributedString* finalPriceString;
@@ -107,12 +111,15 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
     [_label setFrame:self.bounds];
     [_label setTextAlignment:NSTextAlignmentLeft];
     
-    
     if (RI_IS_RTL)
     {
         [_label setTextAlignment:NSTextAlignmentRight];
         CGRect strikeFrame = _strike.frame;
-        strikeFrame.origin.x = CGRectGetMaxX(self.bounds) - strikeFrame.size.width;
+        if (_specialPriceOnTheLeft) {
+            strikeFrame.origin.x = 0;
+        }else{
+            strikeFrame.origin.x = CGRectGetMaxX(self.bounds) - strikeFrame.size.width;
+        }
         _strike.frame = strikeFrame;
     }
 }

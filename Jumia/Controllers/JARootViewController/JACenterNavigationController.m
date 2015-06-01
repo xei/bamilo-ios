@@ -1671,7 +1671,7 @@
     
     if (![[self topViewController] isKindOfClass:[JACartViewController class]])
     {
-        JACartViewController *cartViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"cartViewController"];
+        JACartViewController *cartViewController = [[JACartViewController alloc] initWithNibName:@"JACartViewController" bundle:nil];
         [cartViewController setCart:self.cart];
         
         [self popToRootViewControllerAnimated:NO];

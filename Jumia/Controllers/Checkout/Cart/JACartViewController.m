@@ -100,6 +100,11 @@
 {
     [super viewWillAppear:animated];
     
+    [self.emptyCartView setWidth:self.view.width-12.f];
+    [self.continueShoppingButton setWidth:self.view.width-12.f];
+    [self.emptyCartLabel setX:self.view.width/2-self.emptyCartLabel.width/2];
+    [self.emptyCartImageView setX:self.view.width/2-self.emptyCartImageView.width/2];
+    
      [[NSNotificationCenter defaultCenter] addObserver:self
                                               selector:@selector(removeKeyboard)
                                             name:kOpenMenuNotification
@@ -111,7 +116,6 @@
 - (void)setEmptyCartViewHidden:(BOOL)hidden
 {
     [self.emptyCartView setHidden:hidden];
-    [self.emptyCartLabel setHidden:hidden];
     [self.continueShoppingButton setHidden:hidden];
 }
 
@@ -324,6 +328,8 @@
     self.emptyCartLabel.font = [UIFont fontWithName:kFontRegularName size:self.emptyCartLabel.font.pointSize];
     [self.emptyCartLabel setText:STRING_NO_ITEMS_IN_CART];
     [self.emptyCartLabel setTextColor:JALabelGrey];
+    [self.emptyCartLabel setNumberOfLines:1];
+    [self.emptyCartLabel sizeToFit];
 
     self.continueShoppingButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.continueShoppingButton.titleLabel.font.pointSize];
     [self.continueShoppingButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
@@ -332,6 +338,12 @@
     self.continueShoppingButton.layer.cornerRadius = 5.0f;
     
     [self.continueShoppingButton addTarget:self action:@selector(goToHomeScreen) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.emptyCartView setWidth:self.view.width-12.f];
+    [self.continueShoppingButton setWidth:self.view.width-12.f];
+    [self.emptyCartLabel setX:self.view.width/2-self.emptyCartLabel.width/2];
+    [self.emptyCartImageView setX:self.view.width/2-self.emptyCartImageView.width/2];
+    
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CartEmpty"];
 }
 
@@ -411,6 +423,7 @@
                                                                originY,
                                                                self.cartScrollView.frame.size.width,
                                                                86.0f)];
+    
     [self.couponView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.couponView.layer.cornerRadius = 5.0f;
     
@@ -452,6 +465,7 @@
     [self.couponTextField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
     [self.couponTextField setPlaceholder:STRING_ENTER_COUPON];
     [self.couponTextField setDelegate:self];
+    [self.couponTextField setTextAlignment:NSTextAlignmentLeft];
     [self.couponView addSubview:self.couponTextField];
     
     
@@ -534,14 +548,14 @@
         [self.totalPriceView loadWithPrice:[[self cart] cartUnreducedValueFormatted]
                               specialPrice:[[self cart] subTotalFormatted]
                                   fontSize:11.0f
-                     specialPriceOnTheLeft:YES];
+                     specialPriceOnTheLeft:RI_IS_RTL?NO:YES];
     }
     else
     {
         [self.totalPriceView loadWithPrice:[[self cart] subTotalFormatted]
                               specialPrice:nil
                                   fontSize:11.0f
-                     specialPriceOnTheLeft:YES];
+                     specialPriceOnTheLeft:RI_IS_RTL?NO:YES];
     }
     
     self.totalPriceView.frame = CGRectMake(self.subtotalView.frame.size.width - self.totalPriceView.frame.size.width - 4.0f,
@@ -814,6 +828,16 @@
         [self.extraCostsLabel setHidden:YES];
         [self.extraCostsValue setHidden:YES];
     }
+    
+    if (RI_IS_RTL) {
+        [self.productsScrollView flipViewPositionInsideSuperview];
+        [self.cartScrollView flipViewPositionInsideSuperview];
+        
+        [self.couponView flipSubviewAlignments];
+        [self.couponView flipSubviewPositions];
+        [self.subtotalView flipSubviewAlignments];
+        [self.subtotalView flipSubviewPositions];
+    }
 }
 
 -(void)goToHomeScreen
@@ -1085,6 +1109,8 @@
         
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
         
+        [cell setWidth:self.productCollectionView.width];
+        
         [cell loadWithCartItem:product];
         
         cell.quantityButton.tag = indexPath.row;
@@ -1134,7 +1160,11 @@
         
         [headerView loadHeaderWithText:STRING_ITEMS width:self.productCollectionView.frame.size.width];
         
+        [headerView flipSubviewAlignments];
+        [headerView flipSubviewPositions];
+        
         reusableview = headerView;
+        
     }
     
     return reusableview;

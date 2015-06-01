@@ -605,81 +605,6 @@
             </objects>
             <point key="canvasLocation" x="427" y="402"/>
         </scene>
-        <!--Cart View Controller-->
-        <scene sceneID="Ba2-aS-8zt">
-            <objects>
-                <viewController storyboardIdentifier="cartViewController" automaticallyAdjustsScrollViewInsets="NO" id="7p0-LJ-X1P" userLabel="Cart View Controller" customClass="JACartViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="yW7-be-nz1"/>
-                        <viewControllerLayoutGuide type="bottom" id="hgi-ui-uPD"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="SLl-6J-i6e">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LTD-h3-fKF" userLabel="Empty Cart View">
-                                <rect key="frame" x="6" y="6" width="756" height="300"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_emptyCart" translatesAutoresizingMaskIntoConstraints="NO" id="BCk-t4-Ug3" userLabel="Empty Cart Image">
-                                        <rect key="frame" x="329" y="67" width="98" height="98"/>
-                                    </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HtH-Vl-vse" userLabel="Empty Cart Label">
-                                        <rect key="frame" x="360" y="200" width="37" height="18"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="18" id="lgt-Dp-b09"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="OGF-de-iLB"/>
-                                    <constraint firstAttribute="centerX" secondItem="BCk-t4-Ug3" secondAttribute="centerX" id="bF1-83-Z9N"/>
-                                    <constraint firstItem="HtH-Vl-vse" firstAttribute="top" secondItem="BCk-t4-Ug3" secondAttribute="bottom" constant="35" id="nnV-wp-Lx1"/>
-                                    <constraint firstAttribute="centerX" secondItem="HtH-Vl-vse" secondAttribute="centerX" id="oS6-tT-9dL"/>
-                                    <constraint firstItem="BCk-t4-Ug3" firstAttribute="top" secondItem="LTD-h3-fKF" secondAttribute="top" constant="67" id="tsa-XN-e2a"/>
-                                </constraints>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nke-7d-h5t" userLabel="Continue Shopping Button">
-                                <rect key="frame" x="6" y="312" width="756" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="Egc-SG-M7k"/>
-                                    <constraint firstAttribute="width" constant="756" id="fEW-D4-uWA"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
-                                <state key="normal" title="Button" backgroundImage="orangeFullPortrait_normal">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="disabled" title="Button" backgroundImage="orangeBig_disabled"/>
-                                <state key="selected" backgroundImage="orangeFullPortrait_highlighted"/>
-                                <state key="highlighted" backgroundImage="orangeFullPortrait_highlighted"/>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="nke-7d-h5t" firstAttribute="top" secondItem="LTD-h3-fKF" secondAttribute="bottom" constant="6" id="Bdr-li-Kjd"/>
-                            <constraint firstItem="LTD-h3-fKF" firstAttribute="top" secondItem="SLl-6J-i6e" secondAttribute="top" constant="6" id="ZK3-XR-fkY"/>
-                            <constraint firstItem="LTD-h3-fKF" firstAttribute="leading" secondItem="SLl-6J-i6e" secondAttribute="leading" constant="6" id="eUO-XF-Mf4"/>
-                            <constraint firstAttribute="centerX" secondItem="nke-7d-h5t" secondAttribute="centerX" id="p26-Td-ksF"/>
-                            <constraint firstAttribute="trailing" secondItem="LTD-h3-fKF" secondAttribute="trailing" constant="6" id="z4o-aK-n84"/>
-                        </constraints>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="aYz-e4-6ra"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="768" height="600"/>
-                    <connections>
-                        <outlet property="continueShoppingButton" destination="nke-7d-h5t" id="Cnc-d1-LWY"/>
-                        <outlet property="emptyCartLabel" destination="HtH-Vl-vse" id="OeN-nT-pgb"/>
-                        <outlet property="emptyCartView" destination="LTD-h3-fKF" id="Uil-WI-EoK"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="alm-Wa-TMq" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-40.960000000000001" y="1336.3200000000002"/>
-        </scene>
         <!--Forgot Password View Controller-->
         <scene sceneID="2x1-2D-K9x">
             <objects>
@@ -1803,10 +1728,8 @@
         <image name="headerCheckoutStep3Portrait" width="768" height="21"/>
         <image name="headerCheckoutStep4" width="320" height="21"/>
         <image name="headerCheckoutStep4Icon" width="14" height="10"/>
-        <image name="img_emptyCart" width="98" height="98"/>
         <image name="img_emptyrecentsearches" width="98" height="98"/>
         <image name="img_noreviews" width="140" height="140"/>
-        <image name="orangeBig_disabled" width="308" height="44"/>
         <image name="orangeFullPortrait_disabled" width="756" height="44"/>
         <image name="orangeFullPortrait_highlighted" width="756" height="44"/>
         <image name="orangeFullPortrait_normal" width="756" height="44"/>
