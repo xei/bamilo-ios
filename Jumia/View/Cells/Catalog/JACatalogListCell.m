@@ -73,6 +73,8 @@
     self.addToCartButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.addToCartButton.titleLabel.font.pointSize];
     [self.addToCartButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.addToCartButton setTitle:STRING_ADD_TO_SHOPPING_CART forState:UIControlStateNormal];
+    
+    [self setRTL];
 }
 
 - (void)loadWithCartItem:(RICartItem *)cartItem
@@ -87,5 +89,22 @@
     [self.quantityButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
     [self.quantityButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
     [self.quantityButton setTitle:stringQuantity forState:UIControlStateNormal];
+    [self.quantityButton sizeToFit];
+    [self.quantityButton setX:self.width-self.quantityButton.width-6.f];
+    
+    [self.deleteButton setX:self.width-self.deleteButton.width];
+    [self.separator setWidth:self.width];
+    
+    [self setRTL];
 }
+
+- (void)setRTL {
+    if (RI_IS_RTL) {
+        [self flipSubviewPositions];
+        [self flipSubviewAlignments];
+        [self.backgroundContentView flipSubviewPositions];
+        [self.backgroundContentView flipSubviewAlignments];
+    }
+}
+
 @end

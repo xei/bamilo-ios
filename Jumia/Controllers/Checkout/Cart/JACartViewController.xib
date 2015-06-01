@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JACartViewController">
+            <connections>
+                <outlet property="continueShoppingButton" destination="lWg-vl-639" id="QqY-fW-LEQ"/>
+                <outlet property="emptyCartImageView" destination="z4K-F6-eob" id="cdd-3K-YU9"/>
+                <outlet property="emptyCartLabel" destination="PtX-eN-79N" id="9yq-yW-kXn"/>
+                <outlet property="emptyCartView" destination="ZB2-Bb-dgh" id="rcv-rZ-qI6"/>
+                <outlet property="view" destination="6D6-7X-fk0" id="ujc-EM-G2v"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="6D6-7X-fk0">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" id="ZB2-Bb-dgh" userLabel="Empty Cart View">
+                    <rect key="frame" x="6" y="6" width="308" height="200"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_emptyCart" id="z4K-F6-eob" userLabel="Empty Cart Image">
+                            <rect key="frame" x="105" y="31" width="98" height="98"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PtX-eN-79N" userLabel="Empty Cart Label">
+                            <rect key="frame" x="136" y="146" width="37" height="17"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lWg-vl-639" userLabel="Continue Shopping Button">
+                    <rect key="frame" x="6" y="212" width="308" height="44"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                    <state key="normal" title="Button" backgroundImage="orangeBig_normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="disabled" title="Button" backgroundImage="orangeBig_disabled"/>
+                    <state key="selected" backgroundImage="orangeBig_highlighted"/>
+                    <state key="highlighted" backgroundImage="orangeBig_highlighted"/>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <point key="canvasLocation" x="484" y="334"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="img_emptyCart" width="98" height="98"/>
+        <image name="orangeBig_disabled" width="308" height="44"/>
+        <image name="orangeBig_highlighted" width="308" height="44"/>
+        <image name="orangeBig_normal" width="308" height="44"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

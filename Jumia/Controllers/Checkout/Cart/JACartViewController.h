@@ -30,6 +30,7 @@ JAPickerDelegate
 @property (weak, nonatomic) IBOutlet UIView *emptyCartView;
 @property (weak, nonatomic) IBOutlet UILabel *emptyCartLabel;
 @property (weak, nonatomic) IBOutlet UIButton *continueShoppingButton;
+@property (weak, nonatomic) IBOutlet UIImageView *emptyCartImageView;
 
 // Cart views
 @property (strong, nonatomic) UIScrollView *cartScrollView;

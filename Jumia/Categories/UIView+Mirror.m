@@ -36,6 +36,16 @@
         } else if (NSTextAlignmentRight == currentAlignment) {
             label.textAlignment = NSTextAlignmentLeft;
         }
+    } else if ([self isKindOfClass:[UITextField class]]) {
+        
+        UITextField* textField = (UITextField*)self;
+        NSTextAlignment currentAlignment = textField.textAlignment;
+        
+        if (NSTextAlignmentLeft == currentAlignment) {
+            textField.textAlignment = NSTextAlignmentRight;
+        } else if (NSTextAlignmentRight == currentAlignment) {
+            textField.textAlignment = NSTextAlignmentLeft;
+        }
     } else if ([self isKindOfClass:[UIButton class]]) {
         
         UIButton* button = (UIButton*)self;
