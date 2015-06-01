@@ -154,7 +154,6 @@
         
         UIImage* image4 = [UIImage imageNamed:@"wizard_tap"];
         self.wizardPage4ImageView = [[UIImageView alloc] initWithImage:image4];
-        CGFloat handImageView4XPosition = kJAWizardPDV4TextHorizontalMargin;
         [self.wizardPage4ImageView setFrame:CGRectMake(self.wizardPage4.bounds.size.width - image4.size.width - 15.0f,
                                                        kJAWizardViewImageGenericSmallTopMargin,
                                                        image4.size.width,
@@ -190,6 +189,8 @@
             [self.wizardPage3ImageView setImage:[image3 flipImageWithOrientation:UIImageOrientationUpMirrored]];
             [self.wizardPage4ImageView setImage:[image4 flipImageWithOrientation:UIImageOrientationUpMirrored]];
             
+            [self.wizardPage1ImageView flipViewPositionInsideSuperview];
+            [self.wizardPage2ImageView flipViewPositionInsideSuperview];
             [self.wizardPage3ImageView flipViewPositionInsideSuperview];
             [self.wizardPage4ImageView flipViewPositionInsideSuperview];
         }
@@ -323,6 +324,9 @@
     currentX += self.wizardPage4.frame.size.width;
     
     if(RI_IS_RTL){
+        
+        [self.wizardPage1ImageView flipViewPositionInsideSuperview];
+        [self.wizardPage2ImageView flipViewPositionInsideSuperview];
         [self.wizardPage3ImageView flipViewPositionInsideSuperview];
         [self.wizardPage4ImageView flipViewPositionInsideSuperview];
     }
