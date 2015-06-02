@@ -516,7 +516,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JARecentSearchesViewController class]])
     {
-        JARecentSearchesViewController *recentSearches = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"recentSearchesViewController"];
+        JARecentSearchesViewController *recentSearches = [[JARecentSearchesViewController alloc] initWithNibName:@"JARecentSearchesViewController" bundle:nil];
         
         [self popToRootViewControllerAnimated:NO];
         [self pushViewController:recentSearches animated:NO];
