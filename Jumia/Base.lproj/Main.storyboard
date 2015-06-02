@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
         <!--Load Country View Controller-->
@@ -568,9 +568,9 @@
                     <navigationItem key="navigationItem" id="nFe-QH-wMv"/>
                     <connections>
                         <segue destination="kkN-0R-T6h" kind="push" identifier="segueNewReview" id="BOh-Tr-8Lm"/>
-                        <segue destination="we7-Gk-jkb" kind="push" id="rUp-Rh-Qx3"/>
                         <segue destination="LjQ-x6-EIP" kind="push" id="Zjg-Oa-JfE"/>
                         <segue destination="0fU-Gn-Dfc" kind="push" id="wXL-pA-TpM"/>
+                        <segue destination="Gh5-6E-R0E" kind="push" id="CEY-CM-Qfl"/>
                         <segue destination="fQL-zh-vpR" kind="push" id="sx1-VO-Ujm"/>
                         <segue destination="npC-Ek-8yq" kind="push" id="c6r-y0-Qa4"/>
                         <segue destination="Zjk-p2-4wX" kind="push" id="Kbm-d1-uhP"/>
@@ -798,83 +798,51 @@
             </objects>
             <point key="canvasLocation" x="1717" y="91"/>
         </scene>
-        <!--Cart View Controller-->
-        <scene sceneID="y5d-LC-9xW">
+        <!--Add New Address Controller-->
+        <scene sceneID="Stl-uA-BX8">
             <objects>
-                <viewController storyboardIdentifier="cartViewController" automaticallyAdjustsScrollViewInsets="NO" id="we7-Gk-jkb" userLabel="Cart View Controller" customClass="JACartViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="addNewAddressViewController" automaticallyAdjustsScrollViewInsets="NO" id="Gh5-6E-R0E" userLabel="Add New Address Controller" customClass="JAAddNewAddressViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="lsG-eh-GHh"/>
-                        <viewControllerLayoutGuide type="bottom" id="o8e-gD-yPB"/>
+                        <viewControllerLayoutGuide type="top" id="kfW-55-XdT"/>
+                        <viewControllerLayoutGuide type="bottom" id="aNC-vL-EQI"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="TAg-wu-qnb">
+                    <view key="view" contentMode="scaleToFill" id="32A-UA-UUh">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Qt-Jk-Rkc" userLabel="Empty Cart View">
-                                <rect key="frame" x="6" y="6" width="308" height="200"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2" translatesAutoresizingMaskIntoConstraints="NO" id="mxV-EE-O8u">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IAW-kV-hxG">
+                                <rect key="frame" x="73" y="0.0" width="122" height="21"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_emptyCart" translatesAutoresizingMaskIntoConstraints="NO" id="Xdd-K7-78b" userLabel="Empty Cart Image">
-                                        <rect key="frame" x="105" y="31" width="98" height="98"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="98" id="bPR-M8-Gdg"/>
-                                            <constraint firstAttribute="height" constant="98" id="eZJ-Ay-LQ6"/>
-                                        </constraints>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2Icon" translatesAutoresizingMaskIntoConstraints="NO" id="lN0-4f-CH6">
+                                        <rect key="frame" x="14" y="4" width="9" height="12"/>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w2f-EV-aL4" userLabel="Empty Cart Label">
-                                        <rect key="frame" x="136" y="146" width="37" height="17"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="17" id="Yek-77-ksh"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AFv-qn-kgz">
+                                        <rect key="frame" x="29" y="4" width="42" height="12"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="Xdd-K7-78b" firstAttribute="top" secondItem="6Qt-Jk-Rkc" secondAttribute="top" constant="31" id="1Tg-vG-Buh"/>
-                                    <constraint firstAttribute="height" constant="200" id="2kx-MF-qkx"/>
-                                    <constraint firstAttribute="centerX" secondItem="Xdd-K7-78b" secondAttribute="centerX" id="CMO-2H-ZjY"/>
-                                    <constraint firstAttribute="width" constant="308" id="Idx-bH-axH"/>
-                                    <constraint firstItem="w2f-EV-aL4" firstAttribute="top" secondItem="Xdd-K7-78b" secondAttribute="bottom" constant="17" id="J7B-rk-2bH"/>
-                                    <constraint firstAttribute="centerX" secondItem="w2f-EV-aL4" secondAttribute="centerX" id="gOf-IZ-VIk"/>
-                                </constraints>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="360-TD-5SK" userLabel="Continue Shopping Button">
-                                <rect key="frame" x="6" y="212" width="308" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="mQX-PM-oEG"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
-                                <state key="normal" title="Button" backgroundImage="orangeBig_normal">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="disabled" title="Button" backgroundImage="orangeBig_disabled"/>
-                                <state key="selected" backgroundImage="orangeBig_highlighted"/>
-                                <state key="highlighted" backgroundImage="orangeBig_highlighted"/>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="360-TD-5SK" secondAttribute="trailing" constant="6" id="6A5-gx-kQg"/>
-                            <constraint firstItem="6Qt-Jk-Rkc" firstAttribute="leading" secondItem="TAg-wu-qnb" secondAttribute="leading" constant="6" id="U8R-N5-b97"/>
-                            <constraint firstItem="360-TD-5SK" firstAttribute="top" secondItem="6Qt-Jk-Rkc" secondAttribute="bottom" constant="6" id="X0c-fk-Cvw"/>
-                            <constraint firstItem="6Qt-Jk-Rkc" firstAttribute="top" secondItem="lsG-eh-GHh" secondAttribute="bottom" constant="6" id="cAm-pk-8Te"/>
-                            <constraint firstItem="360-TD-5SK" firstAttribute="leading" secondItem="TAg-wu-qnb" secondAttribute="leading" constant="6" id="eLT-JB-oS0"/>
-                            <constraint firstAttribute="trailing" secondItem="6Qt-Jk-Rkc" secondAttribute="trailing" constant="6" id="oc5-ba-bdb"/>
-                        </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="DFn-Nn-YPR"/>
+                    <navigationItem key="navigationItem" id="h9V-mw-vY4"/>
                     <connections>
-                        <outlet property="continueShoppingButton" destination="360-TD-5SK" id="Pif-vm-yXE"/>
-                        <outlet property="emptyCartLabel" destination="w2f-EV-aL4" id="lvr-fd-k4O"/>
-                        <outlet property="emptyCartView" destination="6Qt-Jk-Rkc" id="b99-DQ-QS5"/>
+                        <outlet property="stepBackground" destination="mxV-EE-O8u" id="bdy-DY-h3A"/>
+                        <outlet property="stepIcon" destination="lN0-4f-CH6" id="wdQ-uB-wnm"/>
+                        <outlet property="stepLabel" destination="AFv-qn-kgz" id="n1Y-rD-kse"/>
+                        <outlet property="stepView" destination="IAW-kV-hxG" id="akF-nO-Lz9"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="CQy-QZ-SNO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rx2-cK-7O1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-267" y="799"/>
+            <point key="canvasLocation" x="-586" y="1619"/>
         </scene>
         <!--Addresses Controller-->
         <scene sceneID="ClD-cO-5Sq">
@@ -1637,7 +1605,6 @@
         <image name="headerCheckoutStep3Icon" width="17" height="11"/>
         <image name="headerCheckoutStep4" width="320" height="21"/>
         <image name="headerCheckoutStep4Icon" width="14" height="10"/>
-        <image name="img_emptyCart" width="98" height="98"/>
         <image name="img_emptyrecentsearches" width="98" height="98"/>
         <image name="img_noreviews" width="140" height="140"/>
         <image name="orangeBig_disabled" width="308" height="44"/>

@@ -131,6 +131,7 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="goToOtherOffersImageView" destination="d18-CH-shy" id="W5m-Vt-mjK"/>
                 <outlet property="goToReviewsImageView" destination="btd-Hm-AA2" id="KcO-9b-DZc"/>
                 <outlet property="goToSpecificationsImageView" destination="AxB-nz-fog" id="a5H-xA-mH3"/>
                 <outlet property="numberOfReviewsLabel" destination="orw-SE-ilC" id="wgS-HP-rRa"/>
