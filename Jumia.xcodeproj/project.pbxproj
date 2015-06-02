@@ -214,6 +214,16 @@
 		6CA85FD91AE69195001D1C94 /* RISpecificationAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85FD71AE69195001D1C94 /* RISpecificationAttribute.m */; };
 		6CA85FDA1AE69195001D1C94 /* RISpecificationAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85FD71AE69195001D1C94 /* RISpecificationAttribute.m */; };
 		6CA85FDB1AE69195001D1C94 /* RISpecificationAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA85FD71AE69195001D1C94 /* RISpecificationAttribute.m */; };
+		6CCE088B1B1CBA77004311E2 /* JAAddNewAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CCE088A1B1CBA77004311E2 /* JAAddNewAddressViewController.xib */; };
+		6CCE088C1B1CBA77004311E2 /* JAAddNewAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CCE088A1B1CBA77004311E2 /* JAAddNewAddressViewController.xib */; };
+		6CCE088D1B1CBA77004311E2 /* JAAddNewAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CCE088A1B1CBA77004311E2 /* JAAddNewAddressViewController.xib */; };
+		6CCE088E1B1CBA77004311E2 /* JAAddNewAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CCE088A1B1CBA77004311E2 /* JAAddNewAddressViewController.xib */; };
+		6CCE088F1B1CBA77004311E2 /* JAAddNewAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CCE088A1B1CBA77004311E2 /* JAAddNewAddressViewController.xib */; };
+		6CCE08911B1DBC20004311E2 /* JAAddNewAddressViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CCE08901B1DBC20004311E2 /* JAAddNewAddressViewController~iPad.xib */; };
+		6CCE08921B1DBC20004311E2 /* JAAddNewAddressViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CCE08901B1DBC20004311E2 /* JAAddNewAddressViewController~iPad.xib */; };
+		6CCE08931B1DBC20004311E2 /* JAAddNewAddressViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CCE08901B1DBC20004311E2 /* JAAddNewAddressViewController~iPad.xib */; };
+		6CCE08941B1DBC20004311E2 /* JAAddNewAddressViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CCE08901B1DBC20004311E2 /* JAAddNewAddressViewController~iPad.xib */; };
+		6CCE08951B1DBC20004311E2 /* JAAddNewAddressViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CCE08901B1DBC20004311E2 /* JAAddNewAddressViewController~iPad.xib */; };
 		6CF4AE7F1ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */; };
 		6CF4AE801ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */; };
 		6CF4AE811ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */; };
@@ -2686,6 +2696,8 @@
 		6CA85FD61AE69195001D1C94 /* RISpecificationAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RISpecificationAttribute.h; sourceTree = "<group>"; };
 		6CA85FD71AE69195001D1C94 /* RISpecificationAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RISpecificationAttribute.m; sourceTree = "<group>"; };
 		6CC5C4B81A9634FE00E362F3 /* Model_1.5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.5.xcdatamodel; sourceTree = "<group>"; };
+		6CCE088A1B1CBA77004311E2 /* JAAddNewAddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAAddNewAddressViewController.xib; sourceTree = "<group>"; };
+		6CCE08901B1DBC20004311E2 /* JAAddNewAddressViewController~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JAAddNewAddressViewController~iPad.xib"; sourceTree = "<group>"; };
 		6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogBannerCell.xib; sourceTree = "<group>"; };
 		6CF4AE831ADEABBB0024EC34 /* JACatalogBannerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogBannerCell.h; sourceTree = "<group>"; };
 		6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogBannerCell.m; sourceTree = "<group>"; };
@@ -4064,6 +4076,8 @@
 				B59DCA5A19B7109300DE7960 /* JAAddNewAddressViewController.m */,
 				B57DC97C19B90AB10080C818 /* JAEditAddressViewController.h */,
 				B57DC97D19B90AB10080C818 /* JAEditAddressViewController.m */,
+				6CCE088A1B1CBA77004311E2 /* JAAddNewAddressViewController.xib */,
+				6CCE08901B1DBC20004311E2 /* JAAddNewAddressViewController~iPad.xib */,
 			);
 			path = Addresses;
 			sourceTree = "<group>";
@@ -5920,6 +5934,7 @@
 				B5CBFF691A10B33D0050C553 /* JARatingsViewMedium.xib in Resources */,
 				287b907897ac71738f12ec84 /* JASwitchCell.xib in Resources */,
 				CEAB63D21A81053C00B6F26E /* BMA4SiPhoneTextNotifView-nobuttons-iPad.xib in Resources */,
+				6CCE088C1B1CBA77004311E2 /* JAAddNewAddressViewController.xib in Resources */,
 				8ef5430a40f35557c9e3eb94 /* JAUndefinedSearchView.xib in Resources */,
 				CEAB63C41A81053C00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-ret4.xib in Resources */,
 				507ba71a40fd000b7faa7bcc /* JACartListHeaderView.xib in Resources */,
@@ -5947,6 +5962,7 @@
 				CEE5586F1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib in Resources */,
 				CEAB63521A81053C00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-retHD.xib in Resources */,
 				CEAB63EA1A81053C00B6F26E /* BMA4SiPhoneWebViewNotifView-nobuttons-retHD.xib in Resources */,
+				6CCE08921B1DBC20004311E2 /* JAAddNewAddressViewController~iPad.xib in Resources */,
 				CEA86E0B1A49D247000032AD /* JACampaignProductCell_ipad_landscape.xib in Resources */,
 				BBBA4CD519E44CDC004271B2 /* 19_filters.feature in Resources */,
 				B5C008601A038F63000BBC52 /* JAPDVImageSection~iPad_Portrait.xib in Resources */,
@@ -6130,6 +6146,7 @@
 				CEAB63591A81053C00B6F26E /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib in Resources */,
 				CE88F7B61A1F88FB00A3A586 /* JAGrayButtonCell_ipad_landscape.xib in Resources */,
 				CEAB63871A81053C00B6F26E /* BMA4SiPhoneTextNotifView-retHD.xib in Resources */,
+				6CCE088B1B1CBA77004311E2 /* JAAddNewAddressViewController.xib in Resources */,
 				CEAB63BB1A81053C00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape-iPad.xib in Resources */,
 				9AE488621B0CE2640033F169 /* JARatingsViewController~ipad.xib in Resources */,
 				BBA145B419DC56BF003F0CA7 /* multi_step.rb in Resources */,
@@ -6222,6 +6239,7 @@
 				CEAB63851A81053C00B6F26E /* BMA4SiPhoneTextNotifView-landscape.xib in Resources */,
 				CEAB63411A81053C00B6F26E /* A4S.bundle in Resources */,
 				CEED47321A7B973B006D9CE7 /* JAPDVBundleSingleItem.xib in Resources */,
+				6CCE08911B1DBC20004311E2 /* JAAddNewAddressViewController~iPad.xib in Resources */,
 				4AE730C9198F8C8B000CA1DD /* JAPDVImageSection.xib in Resources */,
 				CEAB63E51A81053C00B6F26E /* BMA4SiPhoneWebViewNotifView-nobuttons-landscape-retHD.xib in Resources */,
 				CEAB63A71A81053C00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons.xib in Resources */,
@@ -6442,6 +6460,7 @@
 				CE9ADCBC1AB34C4600D56481 /* JACatalogGridCell_ipad_landscape.xib in Resources */,
 				CE9ADCBE1AB34C4600D56481 /* slider-default-track@2x.png in Resources */,
 				CE9ADCBF1AB34C4600D56481 /* slider-metal-track.png in Resources */,
+				6CCE088D1B1CBA77004311E2 /* JAAddNewAddressViewController.xib in Resources */,
 				CE9ADCC01AB34C4600D56481 /* BMA4SRichPushWebViewWithToolBar-nobuttons.xib in Resources */,
 				CEDBF8891B0DF4AD0073971A /* JARadioRelatedComponent_RTL.xib in Resources */,
 				CE9ADCC11AB34C4600D56481 /* JACheckBoxComponent.xib in Resources */,
@@ -6521,6 +6540,7 @@
 				CE9ADD051AB34C4600D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape-iPad.xib in Resources */,
 				CE9ADD061AB34C4600D56481 /* BMA4SiPhoneTextNotifView.xib in Resources */,
 				CE9ADD081AB34C4600D56481 /* Main_iPad.storyboard in Resources */,
+				6CCE08931B1DBC20004311E2 /* JAAddNewAddressViewController~iPad.xib in Resources */,
 				CE9ADD091AB34C4600D56481 /* BMA4SiPhoneIntersticialTextNotifView-retHD.xib in Resources */,
 				CE9ADD0A1AB34C4600D56481 /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib in Resources */,
 				9AE488661B0E20240033F169 /* JARatingsViewController~ipad.xib in Resources */,
@@ -6646,6 +6666,7 @@
 				CE9ADE871AB6D6E900D56481 /* JAGrayButtonCell_ipad_landscape.xib in Resources */,
 				CE9ADE881AB6D6E900D56481 /* BMA4SiPhoneTextNotifView-retHD.xib in Resources */,
 				CE9ADE891AB6D6E900D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape-iPad.xib in Resources */,
+				6CCE088E1B1CBA77004311E2 /* JAAddNewAddressViewController.xib in Resources */,
 				CE9ADE8A1AB6D6E900D56481 /* multi_step.rb in Resources */,
 				CE9ADE8B1AB6D6E900D56481 /* BMA4SiPhoneWebViewNotifView-landscape.xib in Resources */,
 				CE9ADE8C1AB6D6E900D56481 /* JAFilteredNoResultsView~iPad.xib in Resources */,
@@ -6738,6 +6759,7 @@
 				CE9ADED91AB6D6E900D56481 /* BMA4SiPhoneTextNotifView-landscape.xib in Resources */,
 				CE9ADEDA1AB6D6E900D56481 /* A4S.bundle in Resources */,
 				CE9ADEDB1AB6D6E900D56481 /* JAPDVBundleSingleItem.xib in Resources */,
+				6CCE08941B1DBC20004311E2 /* JAAddNewAddressViewController~iPad.xib in Resources */,
 				CE9ADEDC1AB6D6E900D56481 /* JAPDVImageSection.xib in Resources */,
 				CE9ADEDD1AB6D6E900D56481 /* BMA4SiPhoneWebViewNotifView-nobuttons-landscape-retHD.xib in Resources */,
 				CE9ADEDE1AB6D6E900D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons.xib in Resources */,
@@ -6951,6 +6973,7 @@
 				CE9AE0B01AB6D78200D56481 /* JACatalogGridCell_ipad_landscape.xib in Resources */,
 				CE9AE0B21AB6D78200D56481 /* slider-default-track@2x.png in Resources */,
 				CE9AE0B31AB6D78200D56481 /* slider-metal-track.png in Resources */,
+				6CCE088F1B1CBA77004311E2 /* JAAddNewAddressViewController.xib in Resources */,
 				6C18BD741AB87E0A00905FD2 /* Images.xcassets in Resources */,
 				CEDBF88B1B0DF4AD0073971A /* JARadioRelatedComponent_RTL.xib in Resources */,
 				CE9AE0B41AB6D78200D56481 /* BMA4SRichPushWebViewWithToolBar-nobuttons.xib in Resources */,
@@ -7030,6 +7053,7 @@
 				CE9AE0F91AB6D78200D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape-iPad.xib in Resources */,
 				CE9AE0FA1AB6D78200D56481 /* BMA4SiPhoneTextNotifView.xib in Resources */,
 				CE9AE0FC1AB6D78200D56481 /* Main_iPad.storyboard in Resources */,
+				6CCE08951B1DBC20004311E2 /* JAAddNewAddressViewController~iPad.xib in Resources */,
 				CE9AE0FD1AB6D78200D56481 /* BMA4SiPhoneIntersticialTextNotifView-retHD.xib in Resources */,
 				6C6EBE281ABC6634006A3D46 /* RITracking_بامیلو.plist in Resources */,
 				9AE488681B0E20260033F169 /* JARatingsViewController~ipad.xib in Resources */,

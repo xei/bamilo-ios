@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <scenes>
         <!--Load Country View Controller-->
@@ -571,7 +571,6 @@
                         <segue destination="we7-Gk-jkb" kind="push" id="rUp-Rh-Qx3"/>
                         <segue destination="LjQ-x6-EIP" kind="push" id="Zjg-Oa-JfE"/>
                         <segue destination="0fU-Gn-Dfc" kind="push" id="wXL-pA-TpM"/>
-                        <segue destination="Gh5-6E-R0E" kind="push" id="CEY-CM-Qfl"/>
                         <segue destination="fQL-zh-vpR" kind="push" id="sx1-VO-Ujm"/>
                         <segue destination="npC-Ek-8yq" kind="push" id="c6r-y0-Qa4"/>
                         <segue destination="Zjk-p2-4wX" kind="push" id="Kbm-d1-uhP"/>
@@ -876,52 +875,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CQy-QZ-SNO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-267" y="799"/>
-        </scene>
-        <!--Add New Address Controller-->
-        <scene sceneID="Stl-uA-BX8">
-            <objects>
-                <viewController storyboardIdentifier="addNewAddressViewController" automaticallyAdjustsScrollViewInsets="NO" id="Gh5-6E-R0E" userLabel="Add New Address Controller" customClass="JAAddNewAddressViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="kfW-55-XdT"/>
-                        <viewControllerLayoutGuide type="bottom" id="aNC-vL-EQI"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="32A-UA-UUh">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2" translatesAutoresizingMaskIntoConstraints="NO" id="mxV-EE-O8u">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
-                            </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IAW-kV-hxG">
-                                <rect key="frame" x="73" y="0.0" width="122" height="21"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2Icon" translatesAutoresizingMaskIntoConstraints="NO" id="lN0-4f-CH6">
-                                        <rect key="frame" x="14" y="4" width="9" height="12"/>
-                                    </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AFv-qn-kgz">
-                                        <rect key="frame" x="29" y="4" width="42" height="12"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="h9V-mw-vY4"/>
-                    <connections>
-                        <outlet property="stepBackground" destination="mxV-EE-O8u" id="bdy-DY-h3A"/>
-                        <outlet property="stepIcon" destination="lN0-4f-CH6" id="wdQ-uB-wnm"/>
-                        <outlet property="stepLabel" destination="AFv-qn-kgz" id="n1Y-rD-kse"/>
-                        <outlet property="stepView" destination="IAW-kV-hxG" id="akF-nO-Lz9"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="rx2-cK-7O1" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-586" y="1619"/>
         </scene>
         <!--Addresses Controller-->
         <scene sceneID="ClD-cO-5Sq">

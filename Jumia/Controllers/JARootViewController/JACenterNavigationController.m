@@ -847,7 +847,12 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAAddNewAddressViewController class]] && [RICustomer checkIfUserIsLogged])
     {
-        JAAddNewAddressViewController *addAddressVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"addNewAddressViewController"];
+        JAAddNewAddressViewController *addAddressVC = [[JAAddNewAddressViewController alloc]initWithNibName:@"JAAddNewAddressViewController" bundle:nil];
+        
+        if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad){
+            
+            addAddressVC = [[JAAddNewAddressViewController alloc]initWithNibName:@"JAAddNewAddressViewController~iPad" bundle:nil];
+        }
         
         NSNumber* isBillingAddress = [notification.userInfo objectForKey:@"is_billing_address"];
         NSNumber* isShippingAddress = [notification.userInfo objectForKey:@"is_shipping_address"];
