@@ -17,6 +17,8 @@
 #import "RICheckout.h"
 #import "RIShippingMethodPickupStationOption.h"
 #import "RICustomer.h"
+#import "UIView+Mirror.h"
+#import "UIImage+Mirror.h"
 
 #define kPickupStationKey @"pickupstation"
 
@@ -299,6 +301,14 @@ UICollectionViewDelegateFlowLayout
                                             4.0f,
                                             (self.stepView.frame.size.width - self.stepIcon.frame.size.width - marginBetweenIconAndLabel - (2 * horizontalMargin)),
                                             12.0f)];
+    }
+    
+    if(RI_IS_RTL){
+        
+        [self.stepBackground setImage:[stepBackgroundImage flipImageWithOrientation:UIImageOrientationUpMirrored]];
+        [self.stepView flipViewPositionInsideSuperview];
+        [self.stepView flipSubviewPositions];
+        [self.stepView flipSubviewAlignments];
     }
 }
 

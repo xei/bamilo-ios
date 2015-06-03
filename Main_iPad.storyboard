@@ -654,54 +654,6 @@
             </objects>
             <point key="canvasLocation" x="2447.3600000000001" y="-989.86666666666667"/>
         </scene>
-        <!--Shipping View Controller-->
-        <scene sceneID="7xf-T0-Dx8">
-            <objects>
-                <viewController storyboardIdentifier="shippingViewController" automaticallyAdjustsScrollViewInsets="NO" id="QR9-xj-fPf" customClass="JAShippingViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="iv9-87-zRG"/>
-                        <viewControllerLayoutGuide type="bottom" id="zXc-gY-7GX"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="20t-uQ-DN4">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep3Portrait" translatesAutoresizingMaskIntoConstraints="NO" id="PfI-a8-NZe">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="21"/>
-                            </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vhR-PF-qi4">
-                                <rect key="frame" x="349" y="0.0" width="160" height="21"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep3Icon" translatesAutoresizingMaskIntoConstraints="NO" id="sDV-IC-J1V">
-                                        <rect key="frame" x="14" y="5" width="17" height="11"/>
-                                    </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oQ3-Yl-yQm">
-                                        <rect key="frame" x="37" y="4" width="42" height="12"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="kIk-Go-ERU"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="768" height="600"/>
-                    <connections>
-                        <outlet property="stepBackground" destination="PfI-a8-NZe" id="vtw-oJ-ks8"/>
-                        <outlet property="stepIcon" destination="sDV-IC-J1V" id="uJG-sE-uLH"/>
-                        <outlet property="stepLabel" destination="oQ3-Yl-yQm" id="JqG-wP-NC8"/>
-                        <outlet property="stepView" destination="vhR-PF-qi4" id="7wH-31-YSt"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="L4h-tk-Vdb" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2" y="4341"/>
-        </scene>
         <!--Payment View Controller-->
         <scene sceneID="9gx-SX-tW7">
             <objects>
@@ -1266,8 +1218,6 @@
         <image name="greyHalf_disabled" width="152" height="44"/>
         <image name="greyHalf_highlighted" width="152" height="44"/>
         <image name="greyHalf_normal" width="152" height="44"/>
-        <image name="headerCheckoutStep3Icon" width="17" height="11"/>
-        <image name="headerCheckoutStep3Portrait" width="768" height="21"/>
         <image name="headerCheckoutStep4" width="320" height="21"/>
         <image name="headerCheckoutStep4Icon" width="14" height="10"/>
         <image name="img_noreviews" width="140" height="140"/>

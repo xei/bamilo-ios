@@ -938,7 +938,12 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAShippingViewController class]] && [RICustomer checkIfUserIsLogged])
     {
-        JAShippingViewController *shippingVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"shippingViewController"];
+        JAShippingViewController *shippingVC = [[JAShippingViewController alloc] initWithNibName:@"JAShippingViewController" bundle:nil];
+        
+        if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
+        {
+            shippingVC = [[JAShippingViewController alloc] initWithNibName:@"JAShippingViewController~iPad" bundle:nil];
+        }
         
         [self pushViewController:shippingVC animated:YES];
     }
