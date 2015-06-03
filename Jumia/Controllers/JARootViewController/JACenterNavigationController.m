@@ -955,7 +955,13 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAPaymentViewController class]] && [RICustomer checkIfUserIsLogged])
     {
-        JAPaymentViewController *paymentVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"paymentViewController"];
+        JAPaymentViewController *paymentVC = [[JAPaymentViewController alloc] initWithNibName:@"JAPaymentViewController" bundle:nil];
+        
+        if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
+        {
+            paymentVC = [[JAPaymentViewController alloc] initWithNibName:@"JAPaymentViewController~iPad" bundle:nil];
+        
+        }
         
         [self pushViewController:paymentVC animated:YES];
     }
