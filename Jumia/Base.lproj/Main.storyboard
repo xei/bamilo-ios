@@ -570,7 +570,6 @@
                         <segue destination="LjQ-x6-EIP" kind="push" id="Zjg-Oa-JfE"/>
                         <segue destination="0fU-Gn-Dfc" kind="push" id="wXL-pA-TpM"/>
                         <segue destination="Gh5-6E-R0E" kind="push" id="CEY-CM-Qfl"/>
-                        <segue destination="npC-Ek-8yq" kind="push" id="c6r-y0-Qa4"/>
                         <segue destination="Zjk-p2-4wX" kind="push" id="Kbm-d1-uhP"/>
                         <segue destination="0l9-ec-cdv" kind="push" id="FUy-lf-wqh"/>
                         <segue destination="nXK-xm-YTt" kind="push" id="GX3-Fb-mOc"/>
@@ -743,54 +742,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rx2-cK-7O1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-586" y="1619"/>
-        </scene>
-        <!--Edit Address View Controller-->
-        <scene sceneID="AQl-gz-qlq">
-            <objects>
-                <viewController storyboardIdentifier="editAddressViewController" automaticallyAdjustsScrollViewInsets="NO" id="npC-Ek-8yq" customClass="JAEditAddressViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="MPZ-lh-f4X"/>
-                        <viewControllerLayoutGuide type="bottom" id="MZy-Q8-g84"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="XKQ-wn-JwR">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2" translatesAutoresizingMaskIntoConstraints="NO" id="LxP-DF-eGQ">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
-                            </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ms2-bD-mVV">
-                                <rect key="frame" x="73" y="0.0" width="122" height="21"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2Icon" translatesAutoresizingMaskIntoConstraints="NO" id="hbx-ay-Dyp">
-                                        <rect key="frame" x="14" y="4" width="9" height="12"/>
-                                    </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ktl-mZ-gHd">
-                                        <rect key="frame" x="29" y="4" width="42" height="12"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="QWR-kk-poU"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="320" height="568"/>
-                    <connections>
-                        <outlet property="stepBackground" destination="LxP-DF-eGQ" id="vol-EJ-Io9"/>
-                        <outlet property="stepIcon" destination="hbx-ay-Dyp" id="yh8-0o-3Ri"/>
-                        <outlet property="stepLabel" destination="Ktl-mZ-gHd" id="AXC-7w-68b"/>
-                        <outlet property="stepView" destination="ms2-bD-mVV" id="QMO-n4-uDw"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ofY-Eg-f3a" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-586" y="2365"/>
         </scene>
         <!--Shipping View Controller-->
         <scene sceneID="q56-6o-47V">

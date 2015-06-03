@@ -706,54 +706,6 @@
             </objects>
             <point key="canvasLocation" x="-149" y="2537"/>
         </scene>
-        <!--Edit Address View Controller-->
-        <scene sceneID="pd5-rI-S8b">
-            <objects>
-                <viewController storyboardIdentifier="editAddressViewController" automaticallyAdjustsScrollViewInsets="NO" id="E1c-xN-EIh" customClass="JAEditAddressViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="kIO-0W-vHY"/>
-                        <viewControllerLayoutGuide type="bottom" id="7Im-H5-Zf2"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="4Pw-Z4-m3e">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2Portrait" translatesAutoresizingMaskIntoConstraints="NO" id="p6T-Io-7vs">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="21"/>
-                            </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GoD-2H-ZrQ">
-                                <rect key="frame" x="256" y="0.0" width="160" height="21"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2Icon" translatesAutoresizingMaskIntoConstraints="NO" id="79C-WZ-eIj">
-                                        <rect key="frame" x="14" y="4" width="9" height="12"/>
-                                    </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JOS-1D-nNz">
-                                        <rect key="frame" x="29" y="4" width="42" height="12"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="czD-T2-99g"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="768" height="600"/>
-                    <connections>
-                        <outlet property="stepBackground" destination="p6T-Io-7vs" id="fFZ-Vp-pPK"/>
-                        <outlet property="stepIcon" destination="79C-WZ-eIj" id="7jO-Tg-XsT"/>
-                        <outlet property="stepLabel" destination="JOS-1D-nNz" id="FMr-El-EOc"/>
-                        <outlet property="stepView" destination="GoD-2H-ZrQ" id="diw-8f-6jy"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YKT-0k-Ydb" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="711" y="5015"/>
-        </scene>
         <!--Shipping View Controller-->
         <scene sceneID="7xf-T0-Dx8">
             <objects>
@@ -1368,8 +1320,6 @@
         <image name="greyHalf_normal" width="152" height="44"/>
         <image name="headerCheckoutStep1Icon" width="9" height="12"/>
         <image name="headerCheckoutStep1Portrait" width="768" height="21"/>
-        <image name="headerCheckoutStep2Icon" width="8" height="13"/>
-        <image name="headerCheckoutStep2Portrait" width="768" height="21"/>
         <image name="headerCheckoutStep3Icon" width="17" height="11"/>
         <image name="headerCheckoutStep3Portrait" width="768" height="21"/>
         <image name="headerCheckoutStep4" width="320" height="21"/>
