@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0V7-j2-mJV">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <scenes>
         <!--Load Country View Controller-->
@@ -570,7 +570,6 @@
                         <segue destination="LjQ-x6-EIP" kind="push" id="Zjg-Oa-JfE"/>
                         <segue destination="0fU-Gn-Dfc" kind="push" id="wXL-pA-TpM"/>
                         <segue destination="Gh5-6E-R0E" kind="push" id="CEY-CM-Qfl"/>
-                        <segue destination="fQL-zh-vpR" kind="push" id="sx1-VO-Ujm"/>
                         <segue destination="npC-Ek-8yq" kind="push" id="c6r-y0-Qa4"/>
                         <segue destination="Zjk-p2-4wX" kind="push" id="Kbm-d1-uhP"/>
                         <segue destination="0l9-ec-cdv" kind="push" id="FUy-lf-wqh"/>
@@ -744,52 +743,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rx2-cK-7O1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-586" y="1619"/>
-        </scene>
-        <!--Addresses Controller-->
-        <scene sceneID="ClD-cO-5Sq">
-            <objects>
-                <viewController storyboardIdentifier="addressesViewController" automaticallyAdjustsScrollViewInsets="NO" id="fQL-zh-vpR" userLabel="Addresses Controller" customClass="JAAddressesViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ERF-In-Sq0"/>
-                        <viewControllerLayoutGuide type="bottom" id="Xiw-9P-8o0"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="vvC-E1-CpH">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2" translatesAutoresizingMaskIntoConstraints="NO" id="lYq-XR-Aoj">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
-                            </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="far-Sa-Edc">
-                                <rect key="frame" x="73" y="0.0" width="122" height="21"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep2Icon" translatesAutoresizingMaskIntoConstraints="NO" id="wmS-Dw-SzE">
-                                        <rect key="frame" x="14" y="4" width="9" height="12"/>
-                                    </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ISk-Oo-DKH">
-                                        <rect key="frame" x="29" y="4" width="42" height="12"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="x14-RD-kHn"/>
-                    <connections>
-                        <outlet property="stepBackground" destination="lYq-XR-Aoj" id="f8A-JT-8Fi"/>
-                        <outlet property="stepIcon" destination="wmS-Dw-SzE" id="4eT-8v-pPL"/>
-                        <outlet property="stepLabel" destination="ISk-Oo-DKH" id="NaN-Ju-avi"/>
-                        <outlet property="stepView" destination="far-Sa-Edc" id="iMr-xv-IRu"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gjX-yg-cRS" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="361.33333333333331" y="1527.6833333333334"/>
         </scene>
         <!--Edit Address View Controller-->
         <scene sceneID="AQl-gz-qlq">
