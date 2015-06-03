@@ -902,7 +902,7 @@
         
         if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         {
-            editAddressVC = [[JAEditAddressViewController alloc] initWithNibName:@"JAEditAddressViewController~iPad" bundle:nil];
+            editAddressVC = [[JAEditAddressViewController alloc] initWithNibName:@"JAEditAddressesViewController~iPad" bundle:nil];
         }
         
         NSNumber* fromCheckout = [notification.userInfo objectForKey:@"from_checkout"];
