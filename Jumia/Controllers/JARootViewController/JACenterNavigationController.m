@@ -808,7 +808,12 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAAddressesViewController class]] && [RICustomer checkIfUserIsLogged])
     {
-        JAAddressesViewController *addressesVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"addressesViewController"];
+        JAAddressesViewController *addressesVC = [[JAAddressesViewController alloc] initWithNibName:@"JAAddressesViewController" bundle:nil];
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            addressesVC = [[JAAddressesViewController alloc] initWithNibName:@"JAAddressesViewController~iPad" bundle:nil];
+        
+        }
         
         addressesVC.cart = self.cart;
         addressesVC.fromCheckout = fromCheckout;
@@ -893,7 +898,12 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAEditAddressViewController class]] && [RICustomer checkIfUserIsLogged])
     {
-        JAEditAddressViewController *editAddressVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"editAddressViewController"];
+        JAEditAddressViewController *editAddressVC = [[JAEditAddressViewController alloc] initWithNibName:@"JAEditAddressViewController" bundle:nil];
+        
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            editAddressVC = [[JAEditAddressViewController alloc] initWithNibName:@"JAEditAddressViewController~iPad" bundle:nil];
+        }
         
         NSNumber* fromCheckout = [notification.userInfo objectForKey:@"from_checkout"];
         
