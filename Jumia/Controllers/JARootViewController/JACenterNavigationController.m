@@ -766,7 +766,12 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JALoginViewController class]] && ![RICustomer checkIfUserIsLogged])
     {
-        JALoginViewController *loginVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"loginViewController"];
+        JALoginViewController *loginVC = [[JALoginViewController alloc] initWithNibName:@"JALoginViewController" bundle:nil];
+        
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            loginVC = [[JALoginViewController alloc] initWithNibName:@"JALoginViewController~iPad" bundle:nil];
+        }
         
         loginVC.cart = self.cart;
         

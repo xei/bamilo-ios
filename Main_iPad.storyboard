@@ -654,58 +654,6 @@
             </objects>
             <point key="canvasLocation" x="2447.3600000000001" y="-989.86666666666667"/>
         </scene>
-        <!--Login View Controller-->
-        <scene sceneID="Q4A-kG-u0F">
-            <objects>
-                <viewController storyboardIdentifier="loginViewController" id="1f0-p1-gLC" userLabel="Login View Controller" customClass="JALoginViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="w11-f0-plb"/>
-                        <viewControllerLayoutGuide type="bottom" id="mqw-ss-Yb0"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="LM1-9n-yPE">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep1Portrait" translatesAutoresizingMaskIntoConstraints="NO" id="2Xw-HN-CHq">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="21"/>
-                            </imageView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9k9-Sg-kgM">
-                                <rect key="frame" x="0.0" y="10" width="768" height="580"/>
-                            </scrollView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VlL-nx-TaP">
-                                <rect key="frame" x="175" y="0.0" width="160" height="21"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="headerCheckoutStep1Icon" translatesAutoresizingMaskIntoConstraints="NO" id="V88-ZD-wdN">
-                                        <rect key="frame" x="14" y="3" width="9" height="13"/>
-                                    </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0bi-Ke-6ul">
-                                        <rect key="frame" x="29" y="4" width="42" height="12"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="9"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="meN-eT-YAK"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="768" height="600"/>
-                    <connections>
-                        <outlet property="scrollView" destination="9k9-Sg-kgM" id="bIh-89-7dT"/>
-                        <outlet property="stepBackground" destination="2Xw-HN-CHq" id="8Hb-WC-Uls"/>
-                        <outlet property="stepIcon" destination="V88-ZD-wdN" id="WqI-EB-kge"/>
-                        <outlet property="stepLabel" destination="0bi-Ke-6ul" id="bYq-3l-5Zu"/>
-                        <outlet property="stepView" destination="VlL-nx-TaP" id="31a-Cj-iDS"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="v5Z-TC-ZGd" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-149" y="2537"/>
-        </scene>
         <!--Shipping View Controller-->
         <scene sceneID="7xf-T0-Dx8">
             <objects>
@@ -1318,8 +1266,6 @@
         <image name="greyHalf_disabled" width="152" height="44"/>
         <image name="greyHalf_highlighted" width="152" height="44"/>
         <image name="greyHalf_normal" width="152" height="44"/>
-        <image name="headerCheckoutStep1Icon" width="9" height="12"/>
-        <image name="headerCheckoutStep1Portrait" width="768" height="21"/>
         <image name="headerCheckoutStep3Icon" width="17" height="11"/>
         <image name="headerCheckoutStep3Portrait" width="768" height="21"/>
         <image name="headerCheckoutStep4" width="320" height="21"/>
