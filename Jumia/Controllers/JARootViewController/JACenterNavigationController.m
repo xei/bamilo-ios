@@ -51,7 +51,6 @@
 #import "JARatingsViewController.h"
 #import "JANewRatingViewController.h"
 #import "JASubCategoriesViewController.h"
-#import "JACategoryFilterViewController.h"
 #import "RICart.h"
 #import "JASizeGuideViewController.h"
 #import "JAOtherOffersViewController.h"
@@ -288,11 +287,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showFiltersScreen:)
                                                  name:kShowFiltersScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showCategoryFiltersScreen:)
-                                                 name:kShowCategoryFiltersScreenNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -1074,41 +1068,11 @@
         if ([notification.userInfo objectForKey:@"filtersArray"]) {
             mainFiltersViewController.filtersArray = [notification.userInfo objectForKey:@"filtersArray"];
         }
-//        if ([notification.userInfo objectForKey:@"categoriesArray"]) {
-//            mainFiltersViewController.categoriesArray = [notification.userInfo objectForKey:@"categoriesArray"];
-//        }
-        if ([notification.userInfo objectForKey:@"selectedCategory"]) {
-            mainFiltersViewController.selectedCategory = [notification.userInfo objectForKey:@"selectedCategory"];
-        }
         if ([notification.userInfo objectForKey:@"delegate"]) {
             mainFiltersViewController.delegate = [notification.userInfo objectForKey:@"delegate"];
         }
         
         [self pushViewController:mainFiltersViewController animated:YES];
-    }
-}
-
-- (void)showCategoryFiltersScreen:(NSNotification*)notification
-{
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JACategoryFilterViewController class]])
-    {
-        JACategoryFilterViewController* categoryFilterViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"categoryFilterViewController"];
-        
-        if ([notification.userInfo objectForKey:@"categoriesArray"]) {
-            categoryFilterViewController.categoriesArray = [notification.userInfo objectForKey:@"categoriesArray"];
-        }
-        if ([notification.userInfo objectForKey:@"selectedCategory"]) {
-            categoryFilterViewController.selectedCategory = [notification.userInfo objectForKey:@"selectedCategory"];
-        }
-        if ([notification.userInfo objectForKey:@"delegate"]) {
-            categoryFilterViewController.delegate = [notification.userInfo objectForKey:@"delegate"];
-        }
-        if ([notification.userInfo objectForKey:@"categoryFiltersViewDelegate"]) {
-            categoryFilterViewController.categoryFiltersViewDelegate = [notification.userInfo objectForKey:@"categoryFiltersViewDelegate"];
-        }
-        
-        [self pushViewController:categoryFilterViewController animated:YES];
     }
 }
 

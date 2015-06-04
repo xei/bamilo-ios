@@ -49,6 +49,11 @@
     self.discountSwitch.on = self.priceFilterOption.discountOnly;
     [self.discountSwitch setAccessibilityLabel:STRING_WITH_DISCOUNT_ONLY];
     [self.discountSwitch addTarget:self action:@selector(switchMoved:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.discountSwitch.translatesAutoresizingMaskIntoConstraints = YES;
+    if (RI_IS_RTL) {
+        [self flipSubviewPositions];
+    }
 }
 
 - (void)saveOptions

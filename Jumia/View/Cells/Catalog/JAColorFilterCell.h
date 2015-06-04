@@ -13,8 +13,10 @@
 
 @property (strong, nonatomic) JAColorView *colorView;
 @property (strong, nonatomic) UILabel *colorTitleLabel;
+@property (nonatomic, strong) UIImageView* customAccessoryView;
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier
-                            isLandscape:(BOOL)isLandscape;
+                            isLandscape:(BOOL)isLandscape
+                                  frame:(CGRect)frame;
 
 @end
