@@ -265,6 +265,17 @@
     }
 }
 
+- (void)viewDidLayoutSubviews
+{
+    [self.collectionView setX:6.0f];
+    [self.collectionView setWidth:self.view.width - 12.f];
+    
+    [self.catalogTopView repositionForWidth:self.view.frame.size.width];
+    
+//    _cellWidth = (self.view.width-12.f) / 378;
+    NSLog(@"width: %f", self.view.width);
+}
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -290,7 +301,7 @@
     
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
-
+    
     [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogBannerCell" bundle:nil] forCellWithReuseIdentifier:@"bannerCell"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogGridCell" bundle:nil] forCellWithReuseIdentifier:@"gridCell"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogGridCell_ipad_portrait" bundle:nil] forCellWithReuseIdentifier:@"gridCell_ipad_portrait"];
@@ -300,7 +311,7 @@
     [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogListCell_ipad_landscape" bundle:nil] forCellWithReuseIdentifier:@"listCell_ipad_landscape"];
     
     self.flowLayout = [[JAProductListFlowLayout alloc] init];
-    self.flowLayout.manualCellSpacing = 0.0f;
+    self.flowLayout.manualCellSpacing = 6.0f;
     self.flowLayout.minimumLineSpacing = 0;
     self.flowLayout.minimumInteritemSpacing = 0;
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
@@ -986,11 +997,27 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (VALID_NOTEMPTY(self.banner, RIBanner) && 0 == indexPath.row) {
-        return self.bannerImage.frame.size;
-    } else {
-        return [self getLayoutItemSizeForInterfaceOrientation:self.interfaceOrientation];
-    }
+    if ([self.cellIdentifier isEqualToString:@"listCell"])
+        return CGSizeMake(308, 103);
+    else if ([self.cellIdentifier isEqualToString:@"listCell_ipad_portrait"])
+        return CGSizeMake(375, 103);
+    else if ([self.cellIdentifier isEqualToString:@"listCell_ipad_landscape"])
+        return CGSizeMake(333.33, 103);
+    
+    else if ([self.cellIdentifier isEqualToString:@"gridCell"])
+        return CGSizeMake(151, 206);
+    else if ([self.cellIdentifier isEqualToString:@"gridCell_ipad_portrait"])
+        return CGSizeMake(248, 206);
+    else if ([self.cellIdentifier isEqualToString:@"gridCell_ipad_landscape"])
+        return CGSizeMake(197.6, 206);
+    else
+        return CGSizeZero;
+    
+//    if (VALID_NOTEMPTY(self.banner, RIBanner) && 0 == indexPath.row) {
+//        return self.bannerImage.frame.size;
+//    } else {
+//        return [self getLayoutItemSizeForInterfaceOrientation:self.interfaceOrientation];
+//    }
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section

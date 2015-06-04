@@ -78,8 +78,6 @@
 {
     self.backgroundColor = [UIColor clearColor];
     
-    self.sortingBackView.translatesAutoresizingMaskIntoConstraints = YES;
-    self.sortingButton.translatesAutoresizingMaskIntoConstraints = YES;
     [self.sortingButton setImage:[UIImage imageNamed:@"sortingIcon_normal"] forState:UIControlStateNormal];
     [self.sortingButton setImage:[UIImage imageNamed:@"sortingIcon_highlighted"] forState:UIControlStateSelected];
     [self.sortingButton setImage:[UIImage imageNamed:@"sortingIcon_highlighted"] forState:UIControlStateHighlighted];
@@ -89,8 +87,6 @@
     [self.sortingButton setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
     [self.sortingButton addTarget:self action:@selector(sortingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
-    self.filterBackView.translatesAutoresizingMaskIntoConstraints = YES;
-    self.filterButton.translatesAutoresizingMaskIntoConstraints = YES;
     [self.filterButton setImage:[UIImage imageNamed:@"filterIcon_normal"] forState:UIControlStateNormal];
     [self.filterButton setImage:[UIImage imageNamed:@"filterIcon_highlighted"] forState:UIControlStateSelected];
     [self.filterButton setImage:[UIImage imageNamed:@"filterIcon_highlighted"] forState:UIControlStateHighlighted];
@@ -101,32 +97,33 @@
     [self.filterButton setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
     [self.filterButton addTarget:self action:@selector(filterButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
-    self.viewModeButton.translatesAutoresizingMaskIntoConstraints = YES;
     [self.viewModeButton addTarget:self action:@selector(viewModeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     self.gridSelected = NO;
     
-    self.separatorView.translatesAutoresizingMaskIntoConstraints = YES;
     self.separatorView.backgroundColor = UIColorFromRGB(0xcccccc);
 }
 
 - (void)repositionForWidth:(CGFloat)width
 {
+    CGFloat margin = 6.0f;
+    
+    self.frame = CGRectMake(self.frame.origin.x,
+                            self.frame.origin.y,
+                            width,
+                            self.frame.size.height);
+    
+    
+    self.viewModeButton.frame = CGRectMake(width - self.viewModeButton.frame.size.width - margin,
+                                           margin,
+                                           self.viewModeButton.frame.size.width,
+                                           self.viewModeButton.frame.size.height);
+    
+    CGFloat remainingWidth = width - self.viewModeButton.frame.size.width - margin*2;
+    CGFloat halfWidth = (remainingWidth-2)/2;
+    
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         
-        self.frame = CGRectMake(self.frame.origin.x,
-                                self.frame.origin.y,
-                                width,
-                                self.frame.size.height);
         
-        CGFloat margin = 6.0f;
-        
-        self.viewModeButton.frame = CGRectMake(width - self.viewModeButton.frame.size.width - margin,
-                                               margin,
-                                               self.viewModeButton.frame.size.width,
-                                               self.viewModeButton.frame.size.height);
-        
-        CGFloat remainingWidth = width - self.viewModeButton.frame.size.width - margin*3;
-        CGFloat halfWidth = (remainingWidth-1)/2;
 
         self.sortingBackView.frame = CGRectMake(margin,
                                                 margin,
@@ -146,6 +143,17 @@
                                              self.filterButton.frame.size.width,
                                              self.filterButton.frame.size.height);
         
+    }else{
+        
+        self.sortingButton.frame = CGRectMake(self.viewModeButton.frame.origin.x - 1.0f - halfWidth,
+                                              margin,
+                                              halfWidth,
+                                              self.sortingButton.frame.size.height);
+        
+        self.filterButton.frame = CGRectMake(self.sortingButton.frame.origin.x - 1.0f - halfWidth,
+                                             margin,
+                                             halfWidth,
+                                             self.filterButton.frame.size.height);
     }
     
     if (RI_IS_RTL) {

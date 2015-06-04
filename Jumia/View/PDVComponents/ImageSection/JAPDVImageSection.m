@@ -81,7 +81,6 @@
     self.product = product;
     
     self.layer.cornerRadius = 5.0f;
-//    self.translatesAutoresizingMaskIntoConstraints = YES;
     
     CGFloat width = frame.size.width - 12.0f;
     
@@ -96,17 +95,9 @@
     
     self.productNameLabel.font = [UIFont fontWithName:kFontMediumName size:self.productNameLabel.font.pointSize];
     self.productNameLabel.text = product.brand;
-//    self.productNameLabel.translatesAutoresizingMaskIntoConstraints = YES;
 
     self.productDescriptionLabel.font = [UIFont fontWithName:kFontRegularName size:self.productDescriptionLabel.font.pointSize];
     self.productDescriptionLabel.text = product.name;
-//    self.productDescriptionLabel.translatesAutoresizingMaskIntoConstraints = YES;
-//    
-//    self.sizeClickableView.translatesAutoresizingMaskIntoConstraints = YES;
-//    
-//    self.separatorImageView.translatesAutoresizingMaskIntoConstraints = YES;
-//    
-    //    self.imageScrollView.translatesAutoresizingMaskIntoConstraints = YES;
     
     [self setWidth:width];
     
@@ -300,7 +291,7 @@
     
     [self setY:currentY];
     
-    [self setHeight:self.bounds.size.height + _sellerButton.bounds.size.height + _sellerDeliveryLabel.bounds.size.height + 16.0f];
+    [self setHeight:CGRectGetMaxY(_sellerDeliveryLabel.frame) + 6.f];
     
 }
 

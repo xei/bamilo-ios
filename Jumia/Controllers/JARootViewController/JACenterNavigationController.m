@@ -369,7 +369,6 @@
             [self popToRootViewControllerAnimated:NO];
         }
         
-//        JAHomeViewController *home = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"homeViewController"];
         JAHomeViewController *home = [JAHomeViewController new];
         [self pushViewController:home animated:NO];
     }
@@ -995,7 +994,7 @@
 #pragma mark Catalog Screen
 - (void)pushCatalogToShowSearchResults:(NSString *)query
 {
-    JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+    JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
     catalog.searchString = query;
     
     catalog.navBarLayout.title = query;
@@ -1006,7 +1005,7 @@
 - (void)pushCatalogForUndefinedSearchWithBrandUrl:(NSString *)brandUrl
                                      andBrandName:(NSString *)brandName
 {
-    JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+    JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
     catalog.catalogUrl = brandUrl;
     catalog.forceShowBackButton = YES;
     
@@ -1030,7 +1029,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
                                                             object:nil];
         
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         
         catalog.navBarLayout.title = category.name;
         catalog.category = category;
@@ -1039,7 +1038,7 @@
     }
     else if (VALID_NOTEMPTY(categoryId, NSString))
     {
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         
         catalog.categoryId = categoryId;
         
@@ -1047,7 +1046,7 @@
     }
     else if (VALID_NOTEMPTY(categoryName, NSString))
     {
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         
         catalog.categoryName = categoryName;
         catalog.filterType = filterType;
@@ -1289,7 +1288,7 @@
     
     if(VALID_NOTEMPTY(url, NSString))
     {
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         catalog.catalogUrl = url;
         catalog.navBarLayout.title = title;
         catalog.navBarLayout.showBackButton = YES;
@@ -1309,7 +1308,7 @@
     
     if (VALID_NOTEMPTY(url, NSString)) {
         
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         
         catalog.catalogUrl = url;
         catalog.navBarLayout.title = title;
@@ -1375,7 +1374,6 @@
     
     if (VALID_NOTEMPTY(url, NSString) || VALID_NOTEMPTY(productSku, NSString))
     {
-//        JAPDVViewController *pdv = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
         JAPDVViewController *pdv = [JAPDVViewController new];
         pdv.productUrl = url;
         pdv.productSku = productSku;
@@ -1492,7 +1490,7 @@
     RICategory* category = [selectedItem objectForKey:@"category"];
     if (VALID_NOTEMPTY(category, RICategory)) {
         
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         
         catalog.category = category;
         
@@ -1535,7 +1533,7 @@
     RISearchSuggestion *recentSearch = notification.object;
     
     if (VALID_NOTEMPTY(recentSearch, RISearchSuggestion)) {
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         catalog.searchString = recentSearch.item;
         
         catalog.navBarLayout.title = recentSearch.item;

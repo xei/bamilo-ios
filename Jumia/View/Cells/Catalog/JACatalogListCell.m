@@ -25,8 +25,6 @@
 {
     self = [super initWithCoder:coder];
     if (self) {
-        self.ratingsView = [JARatingsView getNewJARatingsView];
-        [self addSubview:self.ratingsView];
     }
     return self;
 }
@@ -35,9 +33,30 @@
 {
     [super loadWithProduct:product];
     
+    [self.productImageView setX:6.f];
+    
+    [self.brandLabel setX:80.f];
+    [self.brandLabel setWidth:self.backgroundContentView.width - self.productImageView.width - self.favoriteButton.width - 3*6.f];
+    
+    [self.nameLabel setX:80.f];
+    [self.nameLabel setWidth:self.backgroundContentView.width - self.productImageView.width - self.favoriteButton.width - 3*6.f];
+    
+    self.priceView.frame = CGRectMake(self.nameLabel.frame.origin.x,// + priceXOffset,
+                                      CGRectGetMaxY(self.nameLabel.frame) + JACatalogCellPriceLabelOffsetY,
+                                      self.priceView.frame.size.width,
+                                      self.priceView.frame.size.height);
+    [self.priceView sizeToFit];
+    [self.priceView setY:CGRectGetMaxY(self.nameLabel.frame) + 2*JACatalogCellPriceLabelOffsetY];
+    
+    [self.favoriteButton setX:self.backgroundContentView.width - self.favoriteButton.width - 6.f];
+    
+    [self.ratingsView removeFromSuperview];
+    self.ratingsView = [JARatingsView getNewJARatingsView];
+    [self.backgroundContentView addSubview:self.ratingsView];
+    
     if (self.numberOfReviewsLabel) {
-        [self.ratingsView setFrame:CGRectMake(self.priceView.frame.origin.x + JACatalogCellRatingsViewOffsetY,
-                                              CGRectGetMaxY(self.priceView.frame) + JACatalogCellRatingsViewOffsetX,
+        [self.ratingsView setFrame:CGRectMake(self.priceView.frame.origin.x + JACatalogCellRatingsViewOffsetX,
+                                              CGRectGetMaxY(self.priceView.frame) + 6.f,
                                               self.ratingsView.frame.size.width,
                                               self.ratingsView.frame.size.height)];
         self.ratingsView.rating = [product.avr integerValue];
@@ -50,6 +69,9 @@
         } else {
             self.numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_RATINGS, [product.sum integerValue]];
         }
+        [self.numberOfReviewsLabel sizeToFit];
+        [self.numberOfReviewsLabel setX:CGRectGetMaxX(self.ratingsView.frame) + JACatalogCellPriceLabelOffsetX];
+        [self.numberOfReviewsLabel setY:self.ratingsView.y];
     } else {
         [self.ratingsView removeFromSuperview];
     }
@@ -100,10 +122,7 @@
 
 - (void)setRTL {
     if (RI_IS_RTL) {
-        [self flipSubviewPositions];
-        [self flipSubviewAlignments];
-        [self.backgroundContentView flipSubviewPositions];
-        [self.backgroundContentView flipSubviewAlignments];
+        [self.backgroundContentView flipAllSubviews];
     }
 }
 

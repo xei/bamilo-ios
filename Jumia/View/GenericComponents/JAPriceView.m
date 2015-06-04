@@ -24,7 +24,6 @@
 specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
 {
     _specialPriceOnTheLeft = specialPriceOnTheLeft;
-    NSLog(@"price: %@ specialPrice: %@", price, specialPrice);
     
     _label = [UILabel new];
     

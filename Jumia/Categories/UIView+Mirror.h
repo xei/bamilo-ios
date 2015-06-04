@@ -19,5 +19,6 @@
 - (void)flipSubviewPositions;
 - (void)flipSubviewAlignments;
 - (void)flipSubviewImages;
+- (void)flipAllSubviews;
 
 @end
