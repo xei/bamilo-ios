@@ -515,7 +515,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JARecentSearchesViewController class]])
     {
-        JARecentSearchesViewController *recentSearches = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"recentSearchesViewController"];
+        JARecentSearchesViewController *recentSearches = [[JARecentSearchesViewController alloc] initWithNibName:@"JARecentSearchesViewController" bundle:nil];
         
         [self popToRootViewControllerAnimated:NO];
         [self pushViewController:recentSearches animated:NO];
@@ -807,7 +807,12 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAAddressesViewController class]] && [RICustomer checkIfUserIsLogged])
     {
-        JAAddressesViewController *addressesVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"addressesViewController"];
+        JAAddressesViewController *addressesVC = [[JAAddressesViewController alloc] initWithNibName:@"JAAddressesViewController" bundle:nil];
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            addressesVC = [[JAAddressesViewController alloc] initWithNibName:@"JAAddressesViewController~iPad" bundle:nil];
+        
+        }
         
         addressesVC.cart = self.cart;
         addressesVC.fromCheckout = fromCheckout;
@@ -846,7 +851,12 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAAddNewAddressViewController class]] && [RICustomer checkIfUserIsLogged])
     {
-        JAAddNewAddressViewController *addAddressVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"addNewAddressViewController"];
+        JAAddNewAddressViewController *addAddressVC = [[JAAddNewAddressViewController alloc]initWithNibName:@"JAAddNewAddressViewController" bundle:nil];
+        
+        if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad){
+            
+            addAddressVC = [[JAAddNewAddressViewController alloc]initWithNibName:@"JAAddNewAddressViewController~iPad" bundle:nil];
+        }
         
         NSNumber* isBillingAddress = [notification.userInfo objectForKey:@"is_billing_address"];
         NSNumber* isShippingAddress = [notification.userInfo objectForKey:@"is_shipping_address"];
@@ -887,7 +897,12 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAEditAddressViewController class]] && [RICustomer checkIfUserIsLogged])
     {
-        JAEditAddressViewController *editAddressVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"editAddressViewController"];
+        JAEditAddressViewController *editAddressVC = [[JAEditAddressViewController alloc] initWithNibName:@"JAEditAddressViewController" bundle:nil];
+        
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            editAddressVC = [[JAEditAddressViewController alloc] initWithNibName:@"JAEditAddressViewController~iPad" bundle:nil];
+        }
         
         NSNumber* fromCheckout = [notification.userInfo objectForKey:@"from_checkout"];
         
