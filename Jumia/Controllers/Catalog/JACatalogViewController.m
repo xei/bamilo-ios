@@ -1128,7 +1128,7 @@
 
 #pragma mark - JAMainFiltersViewControllerDelegate
 
-- (void)updatedFiltersAndCategory:(RICategory *)category;
+- (void)updatedFilters;
 {
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:self.catalogUrl forKey:kRIEventLabelKey];
@@ -1191,20 +1191,10 @@
         }
     }
     
-    if(VALID_NOTEMPTY(category, RICategory))
-    {
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventIndividualFilter]
-                                                  data:[NSDictionary dictionaryWithObject:@"category" forKey:kRIEventFilterTypeKey]];
-        [trackingDictionary setObject:@"category" forKey:kRIEventCategoryFilterKey];
-        
-        filtersSelected = YES;
-    }
-    
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFilter]
                                               data:[trackingDictionary copy]];
     
     [self.catalogTopView setFilterSelected:filtersSelected];
-    self.filterCategory = category;
     [self resetCatalog];
     [self loadMoreProducts];
 }

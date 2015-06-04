@@ -520,6 +520,8 @@ UICollectionViewDelegateFlowLayout
                                  
                                  [self hideLoading];
                                  
+                                 self.checkout=checkout;
+                                 
                                  [JAUtils goToCheckout:self.checkout];
                                  
                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
