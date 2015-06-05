@@ -11,6 +11,7 @@
                 <outlet property="emptyReviewsImageView" destination="qR4-P8-n1l" id="u9u-eE-cfX"/>
                 <outlet property="emptyReviewsLabel" destination="9LG-6X-SO6" id="ZBS-nW-GPc"/>
                 <outlet property="emptyReviewsView" destination="bO0-8Z-C6e" id="lyz-tq-L8x"/>
+                <outlet property="emptyScrollView" destination="Puz-uF-vLI" id="xAq-mH-YUc"/>
                 <outlet property="labelUsedProduct" destination="z31-KQ-YlS" id="DGl-mW-Rdo"/>
                 <outlet property="nameLabel" destination="Yhv-hQ-ImG" id="OT1-Q2-swX"/>
                 <outlet property="resumeView" destination="hbP-65-feQ" id="8j1-9a-6gL"/>
@@ -53,24 +54,30 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <view contentMode="scaleToFill" id="bO0-8Z-C6e" userLabel="Empty Reviews View">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Puz-uF-vLI">
                     <rect key="frame" x="6" y="232" width="590" height="272"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9LG-6X-SO6">
-                            <rect key="frame" x="276" y="200" width="295" height="21"/>
+                        <view contentMode="scaleToFill" id="bO0-8Z-C6e" userLabel="Empty Reviews View">
+                            <rect key="frame" x="0.0" y="0.0" width="590" height="272"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_noreviews" id="qR4-P8-n1l">
-                            <rect key="frame" x="349" y="20" width="140" height="140"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </imageView>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9LG-6X-SO6">
+                                    <rect key="frame" x="276" y="200" width="295" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_noreviews" id="qR4-P8-n1l">
+                                    <rect key="frame" x="349" y="20" width="140" height="140"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
+                </scrollView>
                 <view contentMode="scaleToFill" id="hbP-65-feQ">
                     <rect key="frame" x="6" y="121" width="588" height="105"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

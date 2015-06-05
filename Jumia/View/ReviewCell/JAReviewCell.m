@@ -156,12 +156,13 @@
     [self.descriptionLabel setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
     [self.descriptionLabel setText:comment];
     [self.descriptionLabel setNumberOfLines:0];
-    [self.descriptionLabel sizeToFit];
+//    [self.descriptionLabel sizeToFit];
     [self.descriptionLabel setFrame:CGRectMake(kJAReviewCellHorizontalMargins,
                                                CGRectGetMaxY(self.titleLabel.frame) + 10.0f,
                                                width - (kJAReviewCellHorizontalMargins*2),
                                                self.descriptionLabel.frame.size.height)];
     [self.descriptionLabel setTextAlignment:RI_IS_RTL?NSTextAlignmentRight:NSTextAlignmentLeft];
+    [self.descriptionLabel sizeToFit];
     
     [self addSubview:self.descriptionLabel];
     
@@ -204,23 +205,15 @@
 + (CGFloat)cellHeightWithReview:(RIReview*)review
                           width:(CGFloat)width;
 {
-    CGFloat totalHeight = 0.0f;
     
-    NSInteger numberOfRatingLines = ceilf(review.ratingStars.count / 3);
-    
-    UILabel* ratingLabel = [UILabel new];
-    [ratingLabel setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
-    [ratingLabel setText:@"A"];
-    [ratingLabel sizeToFit];
-    JARatingsView* ratingsView = [JARatingsView getNewJARatingsView];
-    [ratingsView setRating:1];
-    
-    totalHeight += numberOfRatingLines*(ratingLabel.frame.size.height+ratingsView.frame.size.height) + 35.0f;
-    
-    return [JAReviewCell cellHeightForBottomOfCellWithPreviousHeight:totalHeight
-                                                        width:width
-                                                        title:review.title
-                                                      comment:review.comment];
+    UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(kJAReviewCellHorizontalMargins, 0, width - 2*kJAReviewCellHorizontalMargins, 500)];
+    [descriptionLabel setTextColor:UIColorFromRGB(0x666666)];
+    [descriptionLabel setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
+    [descriptionLabel setText:review.comment];
+    [descriptionLabel setNumberOfLines:0];
+    [descriptionLabel sizeToFit];
+
+    return descriptionLabel.frame.size.height + 100.f;
 }
 
 + (CGFloat)cellHeightWithSellerReview:(RISellerReview*)sellerReview

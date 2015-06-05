@@ -54,7 +54,7 @@ UITableViewDataSource
 @property (weak, nonatomic) IBOutlet UIImageView *emptyReviewsImageView;
 @property (weak, nonatomic) IBOutlet UILabel *emptyReviewsLabel;
 // iPad landscape components only
-@property (weak, nonatomic) IBOutlet UIScrollView *writeReviewScrollView;
+@property (strong, nonatomic) UIScrollView *writeReviewScrollView;
 @property (assign, nonatomic) CGRect writeReviewScrollViewInitialRect;
 
 @property (strong, nonatomic) UIView *centerView;
@@ -130,16 +130,6 @@ UITableViewDataSource
     
     self.apiResponse = RIApiResponseSuccess;
     
-    if(VALID_NOTEMPTY(self.writeReviewScrollView, UIScrollView))
-    {
-        self.writeReviewScrollView.translatesAutoresizingMaskIntoConstraints = YES;
-    }
-    
-    if(VALID_NOTEMPTY(self.emptyReviewsView, UIView))
-    {
-        self.emptyReviewsView.translatesAutoresizingMaskIntoConstraints = YES;
-    }
-    
     if(self.requestsDone)
     {
         [self setupViews];
@@ -192,7 +182,17 @@ UITableViewDataSource
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self hideLoading];
-    [self setupViews];
+    CGFloat alpha = self.view.alpha;
+    [UIView animateWithDuration:.1 animations:^{
+        [UIView animateWithDuration:.1 animations:^{
+            [self.view setAlpha:.7f];
+        } completion:^(BOOL finished) {
+            [self setupViews];
+            [UIView animateWithDuration:.1 animations:^{
+                [self.view setAlpha:alpha];
+            }];
+        }];
+    }];
 }
 
 - (void)ratingsRequests
@@ -322,7 +322,18 @@ UITableViewDataSource
     
     _viewsWidth = self.view.frame.size.width - (2 * kHorizontalMargin);
     
-    [self setupResumeView];
+    BOOL ipadLandscape = NO;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    {
+        [self.resumeView setHidden:YES];
+        [self setupSendReviewView:self.view.width/2 originY:CGRectGetMaxY(self.topView.frame) + kVerticalMargin];
+        [self.writeReviewScrollView setHidden:NO];
+        ipadLandscape = YES;
+    }else{
+        [self.resumeView setHidden:NO];
+        [self.writeReviewScrollView setHidden:YES];
+        [self setupResumeView];
+    }
     
     self.tableViewComments.layer.cornerRadius = 5.0f;
     self.tableViewComments.allowsSelection = NO;
@@ -337,21 +348,23 @@ UITableViewDataSource
         _reviewsEnabled = NO;
     } else {
         _reviewsEnabled = YES;
-        [self.resumeView setHidden:NO];
     }
-    
-    [self.writeReviewScrollView setHidden:YES];
     
     if(_hasComments)
     {
         CGRect tableViewCommentsFrame = self.tableViewComments.frame;
-        tableViewCommentsFrame.size.width = self.view.bounds.size.width - 2*kHorizontalMargin;
-        tableViewCommentsFrame.size.height = self.view.bounds.size.height - tableViewCommentsFrame.origin.y - kVerticalMargin;
-        if (!_reviewsEnabled) {
+        tableViewCommentsFrame.size.width = self.view.bounds.size.width/2 - kHorizontalMargin - 3.f;
+        if (!self.writeReviewScrollView || (self.writeReviewScrollView && self.writeReviewScrollView.hidden)) {
+            tableViewCommentsFrame.size.width = self.view.bounds.size.width - 2*kHorizontalMargin;
+        }
+        
+        if (!_reviewsEnabled || ipadLandscape) {
             tableViewCommentsFrame.origin.y = self.resumeView.frame.origin.y;
         }else{
             tableViewCommentsFrame.origin.y = CGRectGetMaxY(self.resumeView.frame) + kVerticalMargin;
         }
+        tableViewCommentsFrame.size.height = self.view.bounds.size.height - tableViewCommentsFrame.origin.y - kVerticalMargin;
+        
         [self.tableViewComments setFrame:tableViewCommentsFrame];
         
         [self.tableViewComments setHidden:NO];
@@ -637,7 +650,7 @@ UITableViewDataSource
         NO == [[RICountryConfiguration getCurrentConfiguration].reviewIsEnabled boolValue]) {
 
         [self.labelUsedProduct setHidden:YES];
-        [self.self.writeReviewButton setHidden:YES];
+        [self.writeReviewButton setHidden:YES];
         _reviewsEnabled = NO;
     } else {
         _reviewsEnabled = YES;
@@ -662,14 +675,9 @@ UITableViewDataSource
     resumeViewFrame.origin.y = CGRectGetMaxY(self.topView.frame) + kVerticalMargin;
     self.resumeView.frame = resumeViewFrame;
     
+    [self.labelUsedProduct setWidth:self.resumeView.bounds.size.width - 2*kHorizontalMargin];
     
-    CGRect labelUsedProductFrame = self.labelUsedProduct.frame;
-    labelUsedProductFrame.size.width = self.resumeView.bounds.size.width - 2*kHorizontalMargin;
-    [self.labelUsedProduct setFrame:labelUsedProductFrame];
-    
-    CGRect writeReviewButtonFrame = self.writeReviewButton.frame;
-    writeReviewButtonFrame.origin.x = self.view.bounds.size.width/2 - writeReviewButtonFrame.size.width/2;
-    [self.writeReviewButton setFrame:writeReviewButtonFrame];
+    [self.writeReviewButton setX:self.view.bounds.size.width/2 - self.writeReviewButton.bounds.size.width/2];
 }
 
 - (void)setupSendReviewView:(CGFloat)width originY:(CGFloat)originY
@@ -683,15 +691,13 @@ UITableViewDataSource
     CGFloat verticalMargin = 6.0f;
     
     // This value is calculated by adding the left and middle margin of the two main views
-    CGFloat horizontalMargin = 12.0f;
-    [self.writeReviewScrollView setFrame:CGRectMake(width + horizontalMargin,
-                                                    originY,
-                                                    width,
-                                                    self.view.frame.size.height - originY)];
+    CGFloat horizontalMargin = 3.0f;
     self.writeReviewScrollViewInitialRect = CGRectMake(width + horizontalMargin,
                                                        originY,
-                                                       width,
+                                                       width - 3*horizontalMargin,
                                                        self.view.frame.size.height - originY);
+    self.writeReviewScrollView = [[UIScrollView alloc] initWithFrame:_writeReviewScrollViewInitialRect];
+    
     if(VALID(self.centerView, UIView))
     {
         [self.centerView removeFromSuperview];
@@ -867,31 +873,45 @@ UITableViewDataSource
     
     [self.centerView setFrame:CGRectMake(0.0f,
                                          0.0f,
-                                         width,
+                                         self.writeReviewScrollView.width,
                                          CGRectGetMaxY(self.sendReviewButton.frame) + verticalMargin)];
     [self.writeReviewScrollView addSubview:self.centerView];
     [self.writeReviewScrollView setContentSize:CGSizeMake(self.writeReviewScrollView.frame.size.width, currentY)];
+    [self.view addSubview:self.writeReviewScrollView];
+    
+    if (RI_IS_RTL) {
+        [self.writeReviewScrollView flipAllSubviews];
+    }
 }
 
 - (void) setupEmptyReviewsView
 {
-    CGFloat width = self.view.bounds.size.width - 2*kHorizontalMargin;
+    BOOL ipadLandscape = NO;
+    CGFloat width = self.view.bounds.size.width/2 - kHorizontalMargin - 3.f;
+    if (!self.writeReviewScrollView || (self.writeReviewScrollView && self.writeReviewScrollView.hidden)) {
+        width = self.view.bounds.size.width - kHorizontalMargin - 6.f;
+        ipadLandscape = YES;
+    }
     
     self.emptyReviewsView.layer.cornerRadius = 5.0f;
     
     CGRect emptyReviewsViewFrame = self.emptyReviewsView.frame;
     emptyReviewsViewFrame.size.width = width;
+    emptyReviewsViewFrame.origin.y = 0;
     [self.emptyReviewsView setFrame:emptyReviewsViewFrame];
     
     CGRect emptyScrollViewFrame = self.emptyScrollView.frame;
-    emptyScrollViewFrame.size.width = self.view.bounds.size.width - 2*kHorizontalMargin;
-    if (!_reviewsEnabled) {
-        emptyScrollViewFrame.origin.y = self.resumeView.frame.origin.y;
-    }else{
+    emptyScrollViewFrame.size.width = width;
+    if (ipadLandscape || !_reviewsEnabled) {
         emptyScrollViewFrame.origin.y = CGRectGetMaxY(self.resumeView.frame) + kVerticalMargin;
+    }else{
+        emptyScrollViewFrame.origin.y = self.resumeView.frame.origin.y;
     }
+    
     emptyScrollViewFrame.size.height = self.view.bounds.size.height - emptyScrollViewFrame.origin.y - kVerticalMargin;
     [self.emptyScrollView setFrame:emptyScrollViewFrame];
+    
+    
     [self.emptyScrollView setContentSize:CGSizeMake(self.emptyReviewsView.bounds.size.width, self.emptyReviewsView.bounds.size.height)];
     [self.emptyScrollView setScrollEnabled:YES];
     
@@ -901,11 +921,11 @@ UITableViewDataSource
     [self.emptyReviewsLabel setTextColor:UIColorFromRGB(0xcccccc)];
     
     CGRect emptyReviewsLabelFrame = self.emptyReviewsLabel.frame;
-    emptyReviewsLabelFrame.origin.x = self.view.bounds.size.width/2 - emptyReviewsLabelFrame.size.width/2;
+    emptyReviewsLabelFrame.origin.x = width/2 - emptyReviewsLabelFrame.size.width/2;
     [self.emptyReviewsLabel setFrame:emptyReviewsLabelFrame];
     
     CGRect emptyReviewsImageViewFrame = self.emptyReviewsImageView.frame;
-    emptyReviewsImageViewFrame.origin.x = self.view.bounds.size.width/2 - emptyReviewsImageViewFrame.size.width/2;
+    emptyReviewsImageViewFrame.origin.x = width/2 - emptyReviewsImageViewFrame.size.width/2;
     [self.emptyReviewsImageView setFrame:emptyReviewsImageViewFrame];
 }
 

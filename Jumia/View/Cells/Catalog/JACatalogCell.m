@@ -19,13 +19,16 @@
 {
     self.backgroundColor = [UIColor clearColor];
     
-    [self.backgroundContentView setWidth:self.width];
+    self.backgroundContentView.backgroundColor = [UIColor whiteColor];
+    [self.backgroundContentView setFrame:CGRectMake(0.f, 3.f, self.width, self.height-6.f)];
     self.backgroundContentView.layer.cornerRadius = JACatalogCellContentCornerRadius;
     self.backgroundContentView.clipsToBounds = YES;
     
+    [self.feedbackView setFrame:CGRectMake(0.f, 0.f, self.backgroundContentView.width, self.backgroundContentView.height)];
+    self.feedbackView.layer.cornerRadius = JACatalogCellContentCornerRadius;
+    
     RIImage* firstImage = [product.images firstObject];
     
-    [self.productImageView setX:6.f];
     [self.productImageView setImageWithURL:[NSURL URLWithString:firstImage.url]
                           placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
     
@@ -33,15 +36,15 @@
     
     self.recentProductImageView.hidden = ![product.isNew boolValue];
     
-    [self.brandLabel setX:96.f];
     self.brandLabel.font = [UIFont fontWithName:kFontRegularName size:self.brandLabel.font.pointSize];
     self.brandLabel.text = product.brand;
+    [self.brandLabel setTextAlignment:NSTextAlignmentLeft];
     self.brandLabel.textColor = UIColorFromRGB(0x666666);
     
-    [self.brandLabel setX:96.f];
     self.nameLabel.font = [UIFont fontWithName:kFontLightName size:self.nameLabel.font.pointSize];
     self.nameLabel.text = product.name;
     self.nameLabel.textColor = UIColorFromRGB(0x666666);
+    [self.nameLabel setTextAlignment:NSTextAlignmentLeft];
     
     [self.priceView removeFromSuperview];
     self.priceView = [[JAPriceView alloc] init];
@@ -49,22 +52,18 @@
                      specialPrice:product.specialPriceFormatted
                          fontSize:10.0f
             specialPriceOnTheLeft:NO];
-    
-    [self.priceView setBackgroundColor:[UIColor greenColor]];
+    [self.priceView sizeToFit];
     
     CGFloat priceXOffset = JACatalogCellPriceLabelOffsetX;
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         priceXOffset = JACatalogCellPriceLabelOffsetX_ipad;
     }
-    self.priceView.frame = CGRectMake(self.nameLabel.frame.origin.x + priceXOffset,
-                                      CGRectGetMaxY(self.nameLabel.frame) + JACatalogCellPriceLabelOffsetY,
-                                      self.priceView.frame.size.width,
-                                      self.priceView.frame.size.height);
-    [self.contentView addSubview:self.priceView];
     
+    [self.backgroundContentView addSubview:self.priceView];
     
     self.discountLabel.text = [NSString stringWithFormat:@"-%@%%",product.maxSavingPercentage];
     self.discountLabel.hidden = !product.maxSavingPercentage;
+    [self.discountLabel setTextAlignment:NSTextAlignmentLeft];
     self.discountImageView.hidden = !product.maxSavingPercentage;
     
     self.favoriteButton.selected = VALID_NOTEMPTY(product.favoriteAddDate, NSDate);
@@ -121,8 +120,6 @@
     self.discountImageView.hidden = !cartItem.savingPercentage;
     [self.discountImageView setX:54.f];
     [self.discountLabel setX:54.f];
-    
-    NSLog(@"self.sizeLabel.x: %f", self.sizeLabel.x);
 }
 
 @end

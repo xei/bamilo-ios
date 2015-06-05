@@ -17,6 +17,20 @@
 {
     [super loadWithProduct:product];
     
+    [self.brandLabel setX:6.f];
+    [self.brandLabel setWidth:self.backgroundContentView.width - 2*6.f];
+    [self.nameLabel setX:6.f];
+    [self.nameLabel setWidth:self.backgroundContentView.width - 2*6.f];
+    
+    self.priceView.frame = CGRectMake(self.nameLabel.frame.origin.x,// + priceXOffset,
+                                      CGRectGetMaxY(self.nameLabel.frame) + JACatalogCellPriceLabelOffsetY,
+                                      self.priceView.frame.size.width,
+                                      self.priceView.frame.size.height);
+    [self.priceView sizeToFit];
+    [self.priceView setY:CGRectGetMaxY(self.nameLabel.frame) + 2*JACatalogCellPriceLabelOffsetY];
+    
+    [self.favoriteButton setX:self.backgroundContentView.width - self.favoriteButton.width - 6.f];
+    
     RIImage* firstImage = [product.images firstObject];
  
     [self.productImageView setImageWithURL:[NSURL URLWithString:firstImage.url]
@@ -26,10 +40,10 @@
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         priceY = JACatalogViewControllerGridCellPriceViewY_ipad;
     }
-    self.priceView.frame = CGRectMake(8.0f,
-                                      priceY,
-                                      self.frame.size.width - 4.0f,
-                                      self.priceView.frame.size.height);
+    
+    self.priceView.x = 6.f;
+    self.priceView.y = priceY;
+    [self.priceView sizeToFit];
     
     CGFloat recentLabelY = JACatalogViewControllerGridCellNewLabelY;
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
@@ -45,6 +59,10 @@
     self.recentLabel.transform = CGAffineTransformMakeRotation (-M_PI/4);
     [self addSubview:self.recentLabel];
     self.recentLabel.hidden = ![product.isNew boolValue];
+    
+    if (RI_IS_RTL) {
+        [self.backgroundContentView flipAllSubviews];
+    }
 }
 
 @end

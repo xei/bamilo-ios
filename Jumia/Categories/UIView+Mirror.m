@@ -172,6 +172,18 @@
     }
 }
 
+- (void)flipAllSubviews
+{
+    for (UIView *view in self.subviews) {
+        [view flipViewPositionInsideSuperview];
+        [view flipViewAlignment];
+        if ([self isKindOfClass:[UIImageView class]]) {
+            [self flipViewImage];
+        }
+        [view flipAllSubviews];
+    }
+}
+
 - (void)flipSubviewImages
 {
     for (UIView* view in self.subviews) {
