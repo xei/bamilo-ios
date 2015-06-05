@@ -413,10 +413,7 @@
                                                                            [self viewBounds].size.height - self.catalogTopView.frame.origin.y)];
     }
     
-    [self.catalogTopView setFrame:CGRectMake(self.catalogTopView.frame.origin.x,
-                                             self.catalogTopView.frame.origin.y,
-                                             [self viewBounds].size.width,
-                                             self.catalogTopView.frame.size.height)];
+    [self.catalogTopView repositionForWidth:self.view.frame.size.width];
 }
 
 - (void)resetCatalog
