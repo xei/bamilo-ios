@@ -283,6 +283,7 @@
 		98f2c1c10bfdddd3c20a7666 /* RIGTMTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A0058F19D5A1EE0069C0A9 /* RIGTMTracker.m */; };
 		99064e0e1729a0012aaba9d6 /* JAHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242E41986570500E37C90 /* JAHomeViewController.m */; };
 		99d8372eb3bbfbda5f45a1f7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F919811F1E00F71726 /* CoreGraphics.framework */; };
+		9A2036AE1B21DE0F00F36F55 /* JANewRatingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A2036AD1B21DE0F00F36F55 /* JANewRatingViewController.xib */; };
 		9ABCAEEE1B0F6A2C00A69271 /* UIView+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ABCAEED1B0F6A2C00A69271 /* UIView+Mirror.m */; };
 		9ABCAEF81B0F8FEE00A69271 /* UIView+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ABCAEED1B0F6A2C00A69271 /* UIView+Mirror.m */; };
 		9ABCAEF91B0F8FEE00A69271 /* UIView+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ABCAEED1B0F6A2C00A69271 /* UIView+Mirror.m */; };
@@ -2727,6 +2728,7 @@
 		8C38E18519CF16F50007F6F9 /* JAMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMessageView.h; sourceTree = "<group>"; };
 		8C38E18619CF16F50007F6F9 /* JAMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMessageView.m; sourceTree = "<group>"; };
 		8C38E18819CF170F0007F6F9 /* JAMessageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAMessageView.xib; sourceTree = "<group>"; };
+		9A2036AD1B21DE0F00F36F55 /* JANewRatingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JANewRatingViewController.xib; sourceTree = "<group>"; };
 		9ABCAEEC1B0F6A2C00A69271 /* UIView+Mirror.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Mirror.h"; path = "Categories/UIView+Mirror.h"; sourceTree = "<group>"; };
 		9ABCAEED1B0F6A2C00A69271 /* UIView+Mirror.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Mirror.m"; path = "Categories/UIView+Mirror.m"; sourceTree = "<group>"; };
 		9AE488611B0CE2640033F169 /* JARatingsViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JARatingsViewController~ipad.xib"; sourceTree = "<group>"; };
@@ -3764,6 +3766,7 @@
 				9AE488611B0CE2640033F169 /* JARatingsViewController~ipad.xib */,
 				CE283E4B1A6515F600F3E92D /* JANewRatingViewController.h */,
 				CE283E4C1A6515F600F3E92D /* JANewRatingViewController.m */,
+				9A2036AD1B21DE0F00F36F55 /* JANewRatingViewController.xib */,
 			);
 			path = Ratings;
 			sourceTree = "<group>";
@@ -6210,6 +6213,7 @@
 				9AF49A301B18B3DC0028105D /* JACartViewController~ipad.xib in Resources */,
 				BBB7F57619E532FA00E898E3 /* 21_native_checkout.feature in Resources */,
 				CEDEB9B0199BA8FA0022BAB5 /* slider-default-handle-highlighted@2x.png in Resources */,
+				9A2036AE1B21DE0F00F36F55 /* JANewRatingViewController.xib in Resources */,
 				CEAB63BD1A81053C00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape-ret4.xib in Resources */,
 				CEDEB9C2199BA8FA0022BAB5 /* slider-metal-handle-highlighted@2x.png in Resources */,
 				BB4F1BD419E2D4D600E89C3F /* navigation.rb in Resources */,
@@ -6678,7 +6682,6 @@
 				CE9ADE591AB6D6E900D56481 /* BMA4SiPhoneTextNotifView-landscape-ret4.xib in Resources */,
 				CE9ADE5A1AB6D6E900D56481 /* JAShippingInfoCell.xib in Resources */,
 				CE9ADE5B1AB6D6E900D56481 /* BMA4SiPhoneTextNotifView-nobuttons-retHD.xib in Resources */,
-				6C96809A1B14DEB90073EBF2 /* JAMyAccountViewController~iPad.xib in Resources */,
 				6CCE08A61B1F0241004311E2 /* JAEditAddressViewController.xib in Resources */,
 				CE9ADE5C1AB6D6E900D56481 /* 14_side_menu.feature in Resources */,
 				CE9ADE5D1AB6D6E900D56481 /* JAPickupRegionsCell.xib in Resources */,

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,22 +11,16 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="37"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eEQ-7b-iUp">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eEQ-7b-iUp">
                     <rect key="frame" x="17" y="13" width="120" height="14"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="120" id="jtb-mX-Kp4"/>
-                        <constraint firstAttribute="height" constant="14" id="z5O-2Q-2x0"/>
-                    </constraints>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" tag="1" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oZT-Oc-Lwf" userLabel="Star1">
+                <button opaque="NO" tag="1" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="oZT-Oc-Lwf" userLabel="Star1">
                     <rect key="frame" x="140" y="5" width="27" height="27"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="27" id="F0R-kc-T7T"/>
-                        <constraint firstAttribute="width" constant="27" id="JXK-le-Qp9"/>
-                    </constraints>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="Button" image="img_rating_star_big_empty">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -36,11 +30,9 @@
                         <action selector="starPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="PzJ-Ot-5qH"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="3" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5wa-ng-IDn" userLabel="Star3">
+                <button opaque="NO" tag="3" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="5wa-ng-IDn" userLabel="Star3">
                     <rect key="frame" x="202" y="5" width="27" height="27"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="27" id="t8d-2d-zmB"/>
-                    </constraints>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="Button" image="img_rating_star_big_empty">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -50,12 +42,9 @@
                         <action selector="starPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="HaB-PN-tRj"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="4" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3gr-XY-A4q" userLabel="Star4">
+                <button opaque="NO" tag="4" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="3gr-XY-A4q" userLabel="Star4">
                     <rect key="frame" x="233" y="5" width="27" height="27"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="27" id="7xP-mt-3Nc"/>
-                        <constraint firstAttribute="height" constant="27" id="Rg8-Lr-jpm"/>
-                    </constraints>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="Button" image="img_rating_star_big_empty">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -65,12 +54,9 @@
                         <action selector="starPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="fX8-XH-r9r"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="5" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E3F-ir-ae8" userLabel="Star5">
+                <button opaque="NO" tag="5" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="E3F-ir-ae8" userLabel="Star5">
                     <rect key="frame" x="264" y="5" width="27" height="27"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="27" id="4YQ-3s-5UC"/>
-                        <constraint firstAttribute="height" constant="27" id="Qqw-PZ-DTK"/>
-                    </constraints>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="Button" image="img_rating_star_big_empty">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -80,12 +66,9 @@
                         <action selector="starPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="xI6-cu-m7A"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="2" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3U0-tr-Aed" userLabel="Star2">
+                <button opaque="NO" tag="2" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="3U0-tr-Aed" userLabel="Star2">
                     <rect key="frame" x="171" y="5" width="27" height="27"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="27" id="W0C-cR-Egt"/>
-                        <constraint firstAttribute="width" constant="27" id="ydz-eb-n4L"/>
-                    </constraints>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="Button" image="img_rating_star_big_empty">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -97,20 +80,6 @@
                 </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstItem="5wa-ng-IDn" firstAttribute="leading" secondItem="3U0-tr-Aed" secondAttribute="trailing" constant="4" id="0fN-X1-Pmk"/>
-                <constraint firstItem="3gr-XY-A4q" firstAttribute="leading" secondItem="5wa-ng-IDn" secondAttribute="trailing" constant="4" id="4FU-ug-dTo"/>
-                <constraint firstItem="oZT-Oc-Lwf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="8d6-ji-4vm"/>
-                <constraint firstItem="3U0-tr-Aed" firstAttribute="leading" secondItem="oZT-Oc-Lwf" secondAttribute="trailing" constant="4" id="UJT-d9-dIO"/>
-                <constraint firstItem="eEQ-7b-iUp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="17" id="XL2-w0-wdk"/>
-                <constraint firstItem="3gr-XY-A4q" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="XwW-vv-oYy"/>
-                <constraint firstItem="eEQ-7b-iUp" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="13" id="eeG-Em-iev"/>
-                <constraint firstItem="3U0-tr-Aed" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="gEq-WJ-rHq"/>
-                <constraint firstItem="E3F-ir-ae8" firstAttribute="leading" secondItem="3gr-XY-A4q" secondAttribute="trailing" constant="4" id="j62-ea-aeU"/>
-                <constraint firstItem="oZT-Oc-Lwf" firstAttribute="leading" secondItem="eEQ-7b-iUp" secondAttribute="trailing" constant="3" id="jmE-mU-fPR"/>
-                <constraint firstItem="5wa-ng-IDn" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="vl6-tj-9MV"/>
-                <constraint firstItem="E3F-ir-ae8" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="xXx-Ue-OCF"/>
-            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
@@ -130,4 +99,9 @@
         <image name="img_rating_star_big_empty" width="27" height="27"/>
         <image name="img_rating_star_big_full" width="27" height="27"/>
     </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>

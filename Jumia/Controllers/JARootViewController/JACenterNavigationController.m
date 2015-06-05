@@ -1202,7 +1202,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JANewRatingViewController class]])
     {
-        JANewRatingViewController* newRatingViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"newRatingViewController"];
+        JANewRatingViewController* newRatingViewController = [[JANewRatingViewController alloc] initWithNibName:@"JANewRatingViewController" bundle:nil];
         
         if ([notification.userInfo objectForKey:@"product"]) {
             newRatingViewController.product = [notification.userInfo objectForKey:@"product"];

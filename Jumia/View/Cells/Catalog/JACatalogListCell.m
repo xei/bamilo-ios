@@ -55,7 +55,7 @@
     [self.backgroundContentView addSubview:self.ratingsView];
     
     if (self.numberOfReviewsLabel) {
-        [self.ratingsView setFrame:CGRectMake(self.priceView.frame.origin.x + JACatalogCellRatingsViewOffsetX,
+        [self.ratingsView setFrame:CGRectMake(80.f,
                                               CGRectGetMaxY(self.priceView.frame) + 6.f,
                                               self.ratingsView.frame.size.width,
                                               self.ratingsView.frame.size.height)];

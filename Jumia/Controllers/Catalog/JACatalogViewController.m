@@ -271,9 +271,6 @@
     [self.collectionView setWidth:self.view.width - 12.f];
     
     [self.catalogTopView repositionForWidth:self.view.frame.size.width];
-    
-//    _cellWidth = (self.view.width-12.f) / 378;
-    NSLog(@"width: %f", self.view.width);
 }
 
 -(void)viewDidAppear:(BOOL)animated
