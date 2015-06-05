@@ -96,6 +96,10 @@
     [self.addToCartButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.addToCartButton setTitle:STRING_ADD_TO_SHOPPING_CART forState:UIControlStateNormal];
     
+    if (self.addToCartButton) {
+        [self.addToCartButton setX:self.width -6.f - self.addToCartButton.width];
+    }
+    
     [self setRTL];
 }
 
