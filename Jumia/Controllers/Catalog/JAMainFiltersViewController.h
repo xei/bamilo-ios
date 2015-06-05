@@ -7,22 +7,20 @@
 //
 
 #import "JABaseViewController.h"
-#import "JACategoryFiltersView.h"
 #import "JASubFiltersViewController.h"
+#import "JAFiltersView.h"
 
 @protocol JAMainFiltersViewControllerDelegate <NSObject>
 
-//only the category is passed as argument, because the filters array used inside this class is passed by reference,
+//the filters array used inside this class is passed by reference,
 //so that every change we make, we're saving inside it
-- (void)updatedFiltersAndCategory:(RICategory*)category;
+- (void)updatedFilters;
 
 @end
 
-@interface JAMainFiltersViewController : JABaseViewController <UITableViewDataSource, UITableViewDelegate, JACategoryFiltersViewDelegate, JASubFiltersViewControllerDelegate, JAFiltersViewDelegate>
+@interface JAMainFiltersViewController : JABaseViewController <UITableViewDataSource, UITableViewDelegate, JASubFiltersViewControllerDelegate, JAFiltersViewDelegate>
 
 @property (nonatomic, strong)NSArray* filtersArray;
-@property (nonatomic, strong)NSArray* categoriesArray;
-@property (nonatomic, strong)RICategory* selectedCategory;
 @property (nonatomic, assign)id<JAMainFiltersViewControllerDelegate> delegate;
 
 @end

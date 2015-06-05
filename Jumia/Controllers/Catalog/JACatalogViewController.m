@@ -421,10 +421,7 @@
                                                                            [self viewBounds].size.height - self.catalogTopView.frame.origin.y)];
     }
     
-    [self.catalogTopView setFrame:CGRectMake(self.catalogTopView.frame.origin.x,
-                                             self.catalogTopView.frame.origin.y,
-                                             [self viewBounds].size.width,
-                                             self.catalogTopView.frame.size.height)];
+    [self.catalogTopView repositionForWidth:self.view.frame.size.width];
 }
 
 - (void)resetCatalog
@@ -1152,7 +1149,7 @@
 
 #pragma mark - JAMainFiltersViewControllerDelegate
 
-- (void)updatedFiltersAndCategory:(RICategory *)category;
+- (void)updatedFilters;
 {
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:self.catalogUrl forKey:kRIEventLabelKey];
@@ -1215,20 +1212,10 @@
         }
     }
     
-    if(VALID_NOTEMPTY(category, RICategory))
-    {
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventIndividualFilter]
-                                                  data:[NSDictionary dictionaryWithObject:@"category" forKey:kRIEventFilterTypeKey]];
-        [trackingDictionary setObject:@"category" forKey:kRIEventCategoryFilterKey];
-        
-        filtersSelected = YES;
-    }
-    
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFilter]
                                               data:[trackingDictionary copy]];
     
     [self.catalogTopView setFilterSelected:filtersSelected];
-    self.filterCategory = category;
     [self resetCatalog];
     [self loadMoreProducts];
 }

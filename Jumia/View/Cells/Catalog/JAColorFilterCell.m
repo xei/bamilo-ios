@@ -11,12 +11,13 @@
 @implementation JAColorFilterCell
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier
-                            isLandscape:(BOOL)isLandscape;
+                            isLandscape:(BOOL)isLandscape
+                                  frame:(CGRect)frame;
 {
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.frame = frame;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        self.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selectionCheckmark"]];
         
         CGFloat horizontalMargin = 0.0f;
         if (isLandscape) {
@@ -39,6 +40,16 @@
                                                 self.frame.size.width - 50.0f - horizontalMargin,
                                                 self.colorTitleLabel.frame.size.height);
         [self addSubview:self.colorTitleLabel];
+        
+        
+        UIImage* customAccessoryIcon = [UIImage imageNamed:@"selectionCheckmark"];
+        self.customAccessoryView = [[UIImageView alloc] initWithImage:customAccessoryIcon];
+        self.customAccessoryView.frame = CGRectMake(self.frame.size.width - 12.0f - customAccessoryIcon.size.width,
+                                                    (self.frame.size.height - customAccessoryIcon.size.height) / 2,
+                                                    customAccessoryIcon.size.width,
+                                                    customAccessoryIcon.size.height);
+        self.customAccessoryView.hidden = YES;
+        [self addSubview:self.customAccessoryView];
     }
     return self;
 }

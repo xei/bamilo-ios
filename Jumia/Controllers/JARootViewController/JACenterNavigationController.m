@@ -51,7 +51,6 @@
 #import "JARatingsViewController.h"
 #import "JANewRatingViewController.h"
 #import "JASubCategoriesViewController.h"
-#import "JACategoryFilterViewController.h"
 #import "RICart.h"
 #import "JASizeGuideViewController.h"
 #import "JAOtherOffersViewController.h"
@@ -288,11 +287,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showFiltersScreen:)
                                                  name:kShowFiltersScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showCategoryFiltersScreen:)
-                                                 name:kShowCategoryFiltersScreenNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -765,7 +759,12 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JALoginViewController class]] && ![RICustomer checkIfUserIsLogged])
     {
-        JALoginViewController *loginVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"loginViewController"];
+        JALoginViewController *loginVC = [[JALoginViewController alloc] initWithNibName:@"JALoginViewController" bundle:nil];
+        
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            loginVC = [[JALoginViewController alloc] initWithNibName:@"JALoginViewController~iPad" bundle:nil];
+        }
         
         loginVC.cart = self.cart;
         
@@ -901,7 +900,7 @@
         
         if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         {
-            editAddressVC = [[JAEditAddressViewController alloc] initWithNibName:@"JAEditAddressViewController~iPad" bundle:nil];
+            editAddressVC = [[JAEditAddressViewController alloc] initWithNibName:@"JAEditAddressesViewController~iPad" bundle:nil];
         }
         
         NSNumber* fromCheckout = [notification.userInfo objectForKey:@"from_checkout"];
@@ -932,7 +931,12 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAShippingViewController class]] && [RICustomer checkIfUserIsLogged])
     {
-        JAShippingViewController *shippingVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"shippingViewController"];
+        JAShippingViewController *shippingVC = [[JAShippingViewController alloc] initWithNibName:@"JAShippingViewController" bundle:nil];
+        
+        if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
+        {
+            shippingVC = [[JAShippingViewController alloc] initWithNibName:@"JAShippingViewController~iPad" bundle:nil];
+        }
         
         [self pushViewController:shippingVC animated:YES];
     }
@@ -944,7 +948,13 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAPaymentViewController class]] && [RICustomer checkIfUserIsLogged])
     {
-        JAPaymentViewController *paymentVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"paymentViewController"];
+        JAPaymentViewController *paymentVC = [[JAPaymentViewController alloc] initWithNibName:@"JAPaymentViewController" bundle:nil];
+        
+        if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
+        {
+            paymentVC = [[JAPaymentViewController alloc] initWithNibName:@"JAPaymentViewController~iPad" bundle:nil];
+        
+        }
         
         [self pushViewController:paymentVC animated:YES];
     }
@@ -1083,41 +1093,11 @@
         if ([notification.userInfo objectForKey:@"filtersArray"]) {
             mainFiltersViewController.filtersArray = [notification.userInfo objectForKey:@"filtersArray"];
         }
-//        if ([notification.userInfo objectForKey:@"categoriesArray"]) {
-//            mainFiltersViewController.categoriesArray = [notification.userInfo objectForKey:@"categoriesArray"];
-//        }
-        if ([notification.userInfo objectForKey:@"selectedCategory"]) {
-            mainFiltersViewController.selectedCategory = [notification.userInfo objectForKey:@"selectedCategory"];
-        }
         if ([notification.userInfo objectForKey:@"delegate"]) {
             mainFiltersViewController.delegate = [notification.userInfo objectForKey:@"delegate"];
         }
         
         [self pushViewController:mainFiltersViewController animated:YES];
-    }
-}
-
-- (void)showCategoryFiltersScreen:(NSNotification*)notification
-{
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JACategoryFilterViewController class]])
-    {
-        JACategoryFilterViewController* categoryFilterViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"categoryFilterViewController"];
-        
-        if ([notification.userInfo objectForKey:@"categoriesArray"]) {
-            categoryFilterViewController.categoriesArray = [notification.userInfo objectForKey:@"categoriesArray"];
-        }
-        if ([notification.userInfo objectForKey:@"selectedCategory"]) {
-            categoryFilterViewController.selectedCategory = [notification.userInfo objectForKey:@"selectedCategory"];
-        }
-        if ([notification.userInfo objectForKey:@"delegate"]) {
-            categoryFilterViewController.delegate = [notification.userInfo objectForKey:@"delegate"];
-        }
-        if ([notification.userInfo objectForKey:@"categoryFiltersViewDelegate"]) {
-            categoryFilterViewController.categoryFiltersViewDelegate = [notification.userInfo objectForKey:@"categoryFiltersViewDelegate"];
-        }
-        
-        [self pushViewController:categoryFilterViewController animated:YES];
     }
 }
 
