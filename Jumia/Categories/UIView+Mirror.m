@@ -175,12 +175,18 @@
 - (void)flipAllSubviews
 {
     for (UIView *view in self.subviews) {
-        [view flipViewPositionInsideSuperview];
-        [view flipViewAlignment];
-        if ([self isKindOfClass:[UIImageView class]]) {
-            [self flipViewImage];
+        if ([view isKindOfClass:[UITableView class]]) {
+            continue;
+        } else {
+            [view flipViewPositionInsideSuperview];
+            [view flipViewAlignment];
+            [view flipViewImage];
+            if ([view isKindOfClass:[UISwitch class]]) {
+                continue;
+            } else {
+                [view flipAllSubviews];
+            }
         }
-        [view flipAllSubviews];
     }
 }
 
