@@ -29,7 +29,7 @@
     {
         if (VALID_NOTEMPTY(subview, UIButton))
         {
-            if (_rating < (RI_IS_RTL?6-subview.tag:subview.tag))
+            if (_rating < subview.tag)
             {
                 subview.selected = NO;
             } else
@@ -60,6 +60,12 @@
     self.fieldRatingStars = fieldRatingStars;
     
     self.translatesAutoresizingMaskIntoConstraints = YES;
+    self.label.translatesAutoresizingMaskIntoConstraints = YES;
+    self.starButton1.translatesAutoresizingMaskIntoConstraints = YES;
+    self.starButton2.translatesAutoresizingMaskIntoConstraints = YES;
+    self.starButton3.translatesAutoresizingMaskIntoConstraints = YES;
+    self.starButton4.translatesAutoresizingMaskIntoConstraints = YES;
+    self.starButton5.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.label.font = [UIFont fontWithName:kFontRegularName size:self.label.font.pointSize];
     [self.label setTextColor:UIColorFromRGB(0x666666)];
@@ -79,15 +85,14 @@
     
     [self.starButton5 setImage:[UIImage imageNamed:@"img_rating_star_big_full.png"] forState:UIControlStateSelected | UIControlStateHighlighted];
     
-    [self starPressed:RI_IS_RTL?self.starButton5:self.starButton1];
-    
+    [self starPressed:self.starButton1];
 }
 
 - (IBAction)starPressed:(id)sender
 {
     UIButton *button = (UIButton *)sender;
     
-    self.rating = RI_IS_RTL?6-button.tag:button.tag;
+    self.rating = button.tag;
 }
 
 @end

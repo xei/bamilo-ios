@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "RIField.h"
+#import "JADynamicField.h"
 
-@interface JATextFieldComponent : UIView
+@interface JATextFieldComponent : JADynamicField
 
 @property (assign, nonatomic) BOOL hasError;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
