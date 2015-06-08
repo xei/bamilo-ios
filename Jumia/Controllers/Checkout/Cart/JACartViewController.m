@@ -787,6 +787,8 @@
     [self.checkoutButton setTitle:STRING_PROCEED_TO_CHECKOUT forState:UIControlStateNormal];
     [self.checkoutButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.checkoutButton addTarget:self action:@selector(checkoutButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+//    [self.checkoutButton setX:self.view.width/2 - self.checkoutButton.width/2];
+//    [self.checkoutButton setY:CGRectGetMaxY(self.subtotalView.frame) + 6.0f];
     [self.checkoutButton setFrame:CGRectMake(0.0f,
                                              CGRectGetMaxY(self.subtotalView.frame) + 6.0f,
                                              checkoutButtonImageNormal.size.width,
@@ -1160,8 +1162,10 @@
         
         [headerView loadHeaderWithText:STRING_ITEMS width:self.productCollectionView.frame.size.width];
         
-        [headerView flipSubviewAlignments];
-        [headerView flipSubviewPositions];
+        if (RI_IS_RTL) {
+            [headerView flipSubviewAlignments];
+            [headerView flipSubviewPositions];
+        }
         
         reusableview = headerView;
         

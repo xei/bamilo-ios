@@ -64,9 +64,13 @@
     
     self.backgroundColor = [UIColor clearColor];
     
+    [self.backgroundContentView setX:6.f];
+    [self.backgroundContentView setWidth:self.width - 6.f];
     self.backgroundContentView.layer.cornerRadius = 5.0f;
     
     //TOP STUFF
+    [_discountBadge setX:15.f];
+    [_discountLabel setX:15.f];
     self.discountLabel.font = [UIFont fontWithName:kFontBoldName size:13.0f];
     self.discountLabel.textColor = [UIColor whiteColor];
     if (VALID_NOTEMPTY(campaignProduct.maxSavingPercentage, NSNumber) && 0 < [campaignProduct.maxSavingPercentage integerValue]){
@@ -91,6 +95,8 @@
     self.titleLabel.text = campaignProduct.name;
     
     //IMAGE AREA
+    [self.imageClickableView setX:0];
+    [self.imageClickableView setWidth:self.backgroundContentView.width];
     [self.imageClickableView addTarget:self
                                 action:@selector(backViewPressed)
                       forControlEvents:UIControlEventTouchUpInside];
@@ -183,6 +189,8 @@
                                         self.timeLabel.frame.size.height)];
     
     //BOTTOM CONTENT
+    [self.bottomContentView setWidth:self.backgroundContentView.width];
+    [self.bottomContentView setX:0.f];
     if (ISEMPTY(self.coverupView)) {
         self.coverupView = [[UIView alloc] init];
         self.coverupView.backgroundColor = self.backgroundContentView.backgroundColor;
@@ -198,7 +206,7 @@
     [self.priceView removeFromSuperview]; //force reload;
     self.priceView = [[JAPriceView alloc] init];
     [self.bottomContentView addSubview:self.priceView];
-    self.priceView.frame = CGRectMake(self.remainingStockLabel.frame.origin.x,
+    self.priceView.frame = CGRectMake(8.f,
                                       self.bottomContentView.bounds.origin.y + self.coverupView.frame.size.height + 3.0f,
                                       self.remainingStockLabel.frame.size.width,
                                       self.remainingStockLabel.frame.size.height);
@@ -211,7 +219,7 @@
                          specialPrice:nil
                              fontSize:11.0f specialPriceOnTheLeft:NO];
     }
-
+    [_savingLabel setX:_priceView.x];
     self.savingLabel.font = [UIFont fontWithName:kFontRegularName size:11.0f];
     self.savingLabel.textColor = UIColorFromRGB(0x666666);
     self.savingLabel.text = STRING_CAMPAIGN_SAVE;
@@ -242,19 +250,24 @@
         self.percentageBarView = [[JAPercentageBarView alloc] init];
         [self.bottomContentView addSubview:self.percentageBarView];
     }
-    self.percentageBarView.frame = CGRectMake(self.remainingStockLabel.frame.origin.x,
-                                              self.remainingStockLabel.frame.origin.y,
-                                              150.0f,
-                                              3.0f);
-    [self.percentageBarView loadWithPercentage:[campaignProduct.stockPercentage integerValue]];
-
+    
+    [self.remainingStockLabel setX:8.f];
+    [self.remainingStockLabel setYBottomAligned:6.f];
     self.remainingStockLabel.font = [UIFont fontWithName:kFontRegularName size:11.0f];
     self.remainingStockLabel.textColor = UIColorFromRGB(0x666666);
     self.remainingStockLabel.text = [NSString stringWithFormat:STRING_CAMPAIGN_REMAINING_STOCK, [campaignProduct.stockPercentage integerValue]];
+    [self.remainingStockLabel sizeToFit];
+    
+    self.percentageBarView.frame = CGRectMake(self.remainingStockLabel.frame.origin.x,
+                                              self.remainingStockLabel.frame.origin.y-6.f,
+                                              150.0f,
+                                              3.0f);
+    [self.percentageBarView loadWithPercentage:[campaignProduct.stockPercentage integerValue]];
     
     [self.buyButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
     [self.buyButton setTitle:STRING_ADD_TO_SHOPPING_CART forState:UIControlStateNormal];
     [self.buyButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [self.buyButton setXRightAligned:8.f];
     [self.buyButton addTarget:self action:@selector(buyButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     if (campaignProduct.productSimples.count > 1) {
@@ -313,6 +326,10 @@
                                                     selector:@selector(updateTimeLabelText)
                                                     userInfo:nil
                                                      repeats:YES];
+    }
+    
+    if (RI_IS_RTL) {
+        [self flipAllSubviews];
     }
 }
 

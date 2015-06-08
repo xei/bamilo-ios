@@ -107,17 +107,9 @@
     
     
     if (RI_IS_RTL) {
-        [self.priceView flipViewPositionInsideSuperview];
-        [self.sizeLabel flipViewAlignment];
-        [self.sizeLabel flipViewPositionInsideSuperview];
-        [self.reviewsClickableView flipSubviewAlignments];
-        [self.reviewsClickableView flipSubviewPositions];
+        [self flipAllSubviews];
         [self.goToReviewsImageView flipViewImage];
-        [self.specificationsClickableView flipSubviewAlignments];
-        [self.specificationsClickableView flipSubviewPositions];
         [self.goToSpecificationsImageView flipViewImage];
-        [self.otherOffersClickableView flipSubviewAlignments];
-        [self.otherOffersClickableView flipSubviewPositions];
         [self.goToOtherOffersImageView flipViewImage];
     }
 }
@@ -444,11 +436,6 @@
                                       self.priceView.frame.size.width,
                                       self.priceView.frame.size.height);
     [self addSubview:self.priceView];
-    
-//    if (RI_IS_RTL) {
-//        [self.priceView flipViewAlignment];
-//        [self.priceView flipViewPositionInsideSuperview];
-//    }
     
     [self layoutSubviews];
 }

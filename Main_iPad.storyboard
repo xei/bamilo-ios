@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -759,40 +759,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dtt-gj-AQl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-771" y="5923"/>
-        </scene>
-        <!--Campaigns View Controller-->
-        <scene sceneID="3qy-Ig-B22">
-            <objects>
-                <viewController storyboardIdentifier="campaignsViewController" id="Rlq-KF-ZE8" customClass="JACampaignsViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="IHS-75-rTx"/>
-                        <viewControllerLayoutGuide type="bottom" id="qnB-MR-o1b"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="39j-sv-qG2">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <gestureRecognizers/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="cX8-Sr-zn9" appends="YES" id="VAV-il-SMs"/>
-                            <outletCollection property="gestureRecognizers" destination="JDR-KB-BkY" appends="YES" id="G31-Oz-I0z"/>
-                        </connections>
-                    </view>
-                    <navigationItem key="navigationItem" id="BOQ-DH-231"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eLs-SN-oVd" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="left" id="cX8-Sr-zn9">
-                    <connections>
-                        <action selector="swipeLeft:" destination="Rlq-KF-ZE8" id="b1E-7X-Z9V"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="right" id="JDR-KB-BkY">
-                    <connections>
-                        <action selector="swipeRight:" destination="Rlq-KF-ZE8" id="Uym-kz-YP7"/>
-                    </connections>
-                </swipeGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="1543" y="-589"/>
         </scene>
         <!--Size Guide View Controller-->
         <scene sceneID="f6Q-KZ-Foe">

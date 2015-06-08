@@ -67,7 +67,7 @@
 
 - (void)setYBottomAligned:(CGFloat)yBottomAligned
 {
-    self.x = self.superview.height - self.height - yBottomAligned;
+    self.y = self.superview.height - self.height - yBottomAligned;
 }
 
 
