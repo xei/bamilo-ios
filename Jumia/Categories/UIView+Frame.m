@@ -28,6 +28,14 @@
     return self.frame.size.height;
 }
 
+- (CGFloat)xRightAligned {
+    return self.superview.width - CGRectGetMaxX(self.frame);
+}
+
+- (CGFloat)yBottomAligned {
+    return self.superview.height - CGRectGetMaxY(self.frame);
+}
+
 - (void)setX:(CGFloat)x {
     CGRect frame = [self frame];
     frame.origin.x = x;
@@ -40,7 +48,6 @@
     [self setFrame:frame];
 }
 
-
 - (void)setWidth:(CGFloat)width {
     CGRect frame = [self frame];
     frame.size.width = width;
@@ -51,6 +58,37 @@
     CGRect frame = [self frame];
     frame.size.height = height;
     [self setFrame:frame];
+}
+
+- (void)setXRightAligned:(CGFloat)xRightAligned
+{
+    self.x = self.superview.width - self.width - xRightAligned;
+}
+
+- (void)setYBottomAligned:(CGFloat)yBottomAligned
+{
+    self.x = self.superview.height - self.height - yBottomAligned;
+}
+
+
+- (void)setXLeftOf:(UIView *)view at:(CGFloat)distance
+{
+    self.x = view.x - self.width - distance;
+}
+
+- (void)setXRightOf:(UIView *)view at:(CGFloat)distance
+{
+    self.x = CGRectGetMaxX(view.frame) + distance;
+}
+
+- (void)setYTopOf:(UIView *)view at:(CGFloat)distance
+{
+    self.y = view.y - self.height - distance;
+}
+
+- (void)setYBottomOf:(UIView *)view at:(CGFloat)distance
+{
+    self.y = CGRectGetMaxY(view.frame) + distance;
 }
 
 
