@@ -311,40 +311,6 @@
             </objects>
             <point key="canvasLocation" x="1976" y="-589"/>
         </scene>
-        <!--Campaigns View Controller-->
-        <scene sceneID="JnK-HZ-uUo">
-            <objects>
-                <viewController storyboardIdentifier="campaignsViewController" id="HxC-4Z-hee" customClass="JACampaignsViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="eXn-DM-Zlx"/>
-                        <viewControllerLayoutGuide type="bottom" id="eDc-CR-OUq"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="wqz-wx-n6c">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <gestureRecognizers/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="vpD-du-0cK" appends="YES" id="jtp-Z7-q66"/>
-                            <outletCollection property="gestureRecognizers" destination="rLg-cQ-Rog" appends="YES" id="dIj-pE-10z"/>
-                        </connections>
-                    </view>
-                    <navigationItem key="navigationItem" id="hMV-Lk-pLb"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="h2h-bh-I2J" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="left" id="vpD-du-0cK">
-                    <connections>
-                        <action selector="swipeLeft:" destination="HxC-4Z-hee" id="ccK-CR-qXy"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="right" id="rLg-cQ-Rog">
-                    <connections>
-                        <action selector="swipeRight:" destination="HxC-4Z-hee" id="OeL-Jh-Lnn"/>
-                    </connections>
-                </swipeGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="1543" y="-589"/>
-        </scene>
         <!--Categories View Controller-->
         <scene sceneID="1D2-QG-8TZ">
             <objects>

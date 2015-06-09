@@ -1336,7 +1336,7 @@
     
     if (VALID_NOTEMPTY(teaserGrouping, RITeaserGrouping))
     {
-        JACampaignsViewController* campaignsVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"campaignsViewController"];
+        JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
         
         campaignsVC.teaserGrouping = teaserGrouping;
         campaignsVC.startingTitle = title;
@@ -1345,13 +1345,13 @@
     }
     else if (VALID_NOTEMPTY(campaignId, NSString))
     {
-        JACampaignsViewController* campaignsVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"campaignsViewController"];
+        JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
         
         campaignsVC.campaignId = campaignId;
         
         [self pushViewController:campaignsVC animated:YES];
     } else if (VALID_NOTEMPTY(campaignUrl, NSString)) {
-        JACampaignsViewController* campaignsVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"campaignsViewController"];
+        JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
         
         campaignsVC.campaignUrl = campaignUrl;
         

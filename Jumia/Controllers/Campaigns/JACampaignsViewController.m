@@ -84,6 +84,14 @@
     self.isLoaded = NO;
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCampaign] data:trackingDictionary];
+    
+    
+    UISwipeGestureRecognizer *leftSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
+    leftSwipeGesture.direction = (UISwipeGestureRecognizerDirectionLeft);
+    UISwipeGestureRecognizer *rightSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRight:)];
+    rightSwipeGesture.direction = (UISwipeGestureRecognizerDirectionRight);
+    [self.view addGestureRecognizer:leftSwipeGesture];
+    [self.view addGestureRecognizer:rightSwipeGesture];
 }
 
 - (void)viewWillAppear:(BOOL)animated

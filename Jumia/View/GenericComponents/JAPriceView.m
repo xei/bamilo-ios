@@ -38,20 +38,18 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
                                             [UIFont fontWithName:kFontLightName size:fontSize], NSFontAttributeName,
                                             UIColorFromRGB(0xcccccc), NSForegroundColorAttributeName, nil];
         
-        NSRange oldPriceRange = NSMakeRange(specialPrice.length + 1, price.length);
-        finalPriceString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", specialPrice, price]
-                                                                  attributes:attributes];
-
-        BOOL specialPriceOnTheLeftRelatingToRTL = specialPriceOnTheLeft;
-        if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
-            specialPriceOnTheLeftRelatingToRTL = !specialPriceOnTheLeft;
-        }
-        if (specialPriceOnTheLeftRelatingToRTL)
-        {
-            oldPriceRange = NSMakeRange(0, price.length);
+        NSRange oldPriceRange = NSMakeRange(RI_IS_RTL?0:(specialPrice.length + 1), RI_IS_RTL?specialPrice.length:price.length);
+        
+        if ((RI_IS_RTL && _specialPriceOnTheLeft) || (!RI_IS_RTL && !_specialPriceOnTheLeft) ) {
             finalPriceString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", price, specialPrice]
                                                                       attributes:attributes];
+            oldPriceRange = NSMakeRange(0, price.length);
+        }else{
+            finalPriceString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", specialPrice, price]
+                                                                      attributes:attributes];
+            oldPriceRange = NSMakeRange(specialPrice.length + 1, price.length);
         }
+        
         
         [finalPriceString setAttributes:oldPriceAttributes
                                   range:oldPriceRange];
@@ -90,7 +88,7 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
         [oldPriceLabel sizeToFit];
         _strike = [[UIView alloc] init];
         CGFloat strikePosition = self.frame.size.width - oldPriceLabel.frame.size.width;
-        if (specialPriceOnTheLeft) {
+        if (_specialPriceOnTheLeft) {
             strikePosition = 0.0f;
         }
         
@@ -107,19 +105,8 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
-    [_label setFrame:self.bounds];
-    [_label setTextAlignment:NSTextAlignmentLeft];
-    
-    if (RI_IS_RTL)
-    {
-        [_label setTextAlignment:NSTextAlignmentRight];
-        CGRect strikeFrame = _strike.frame;
-        if (_specialPriceOnTheLeft) {
-            strikeFrame.origin.x = 0;
-        }else{
-            strikeFrame.origin.x = CGRectGetMaxX(self.bounds) - strikeFrame.size.width;
-        }
-        _strike.frame = strikeFrame;
+    if (self.width < _label.width) {
+        _label.width = self.width;
     }
 }
 
