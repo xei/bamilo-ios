@@ -77,6 +77,11 @@
     [self.sizeButton setTitle:STRING_SIZE forState:UIControlStateNormal];
     [self.sizeButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
     [self.sizeButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+    [self.sizeButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    [self.sizeButton setFrame:CGRectMake(80.0f,
+                                         self.sizeButton.frame.origin.y,
+                                         self.sizeButton.frame.size.width,
+                                         self.sizeButton.frame.size.height)];
 }
 
 - (void)loadWithCartItem:(RICartItem*)cartItem
