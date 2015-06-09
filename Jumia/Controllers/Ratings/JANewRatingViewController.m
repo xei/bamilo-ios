@@ -361,12 +361,15 @@ UIAlertViewDelegate
             if(isiPad)
             {
                 frame.origin.x = dynamicFormHorizontalMargin;
-                frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
+                if (![view isKindOfClass:[JAAddRatingView class]]) {
+                    frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
+                }
             }
             else
             {
                 frame.size.width = centerViewWidth;
             }
+
             view.frame = frame;
             
             [self.ratingsContentView addSubview:view];

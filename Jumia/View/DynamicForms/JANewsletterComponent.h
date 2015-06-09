@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "RIField.h"
+#import "JADynamicField.h"
 
-@interface JANewsletterComponent : UIView
+@interface JANewsletterComponent : JADynamicField
 
 @property (weak, nonatomic) IBOutlet UILabel *labelText;
 @property (weak, nonatomic) IBOutlet UISwitch *switchComponent;

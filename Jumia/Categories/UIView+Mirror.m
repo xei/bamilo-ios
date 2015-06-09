@@ -9,6 +9,8 @@
 #import "UIView+Mirror.h"
 #import "UIImage+Mirror.h"
 #import "JAClickableView.h"
+#import "JADynamicForm.h"
+#import "JAAddRatingView.h"
 
 @implementation UIView (Mirror)
 
@@ -184,7 +186,7 @@
 - (void)flipAllSubviews
 {
     for (UIView *view in self.subviews) {
-        if ([view isKindOfClass:[UITableView class]]) {
+        if ([view isKindOfClass:[UITableView class]] || [view isKindOfClass:[JADynamicField class]]) {
             continue;
         } else {
             [view flipViewPositionInsideSuperview];

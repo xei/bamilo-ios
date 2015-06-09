@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JADynamicField.h"
 
-@interface JACheckBoxWithOptionsComponent : UIView
+@interface JACheckBoxWithOptionsComponent : JADynamicField
 
 @property (strong, nonatomic) UILabel *title;
 @property (strong, nonatomic) UIView *separator;
