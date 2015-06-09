@@ -50,16 +50,6 @@
         recentLabelY = JACatalogViewControllerGridCellNewLabelY_ipad;
     }
     
-    [self.recentLabel removeFromSuperview];
-    self.recentLabel = [[UILabel alloc] initWithFrame:CGRectMake(-2.0f, recentLabelY, 48.0f, 14.0f)];
-    self.recentLabel.font = [UIFont fontWithName:kFontBoldName size:8.0f];
-    self.recentLabel.text = STRING_NEW;
-    self.recentLabel.textAlignment = NSTextAlignmentCenter;
-    self.recentLabel.textColor = [UIColor whiteColor];
-    self.recentLabel.transform = CGAffineTransformMakeRotation (-M_PI/4);
-    [self addSubview:self.recentLabel];
-    self.recentLabel.hidden = ![product.isNew boolValue];
-    
     if (RI_IS_RTL) {
         [self.backgroundContentView flipAllSubviews];
     }

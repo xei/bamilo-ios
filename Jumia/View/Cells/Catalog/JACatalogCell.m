@@ -12,6 +12,7 @@
 #import "RIImage.h"
 #import "UIImageView+WebCache.h"
 #import "JARatingsView.h"
+#import "RILanguage.h"
 
 @implementation JACatalogCell
 
@@ -34,6 +35,25 @@
     
     [self.backgroundContentView sendSubviewToBack:self.productImageView];
     
+    RICountryConfiguration* config = [RICountryConfiguration getCurrentConfiguration];
+    RILanguage* language = [config.languages firstObject];
+    NSString* imageName = @"ProductBadgeNew_";
+    if (NSNotFound != [language.langCode rangeOfString:@"fr"].location) {
+        imageName = [imageName stringByAppendingString:@"fr"];
+    } else if (NSNotFound != [language.langCode rangeOfString:@"fa"].location) {
+        imageName = [imageName stringByAppendingString:@"fa"];
+    } else if (NSNotFound != [language.langCode rangeOfString:@"pt"].location) {
+        imageName = [imageName stringByAppendingString:@"pt"];
+    } else {
+        imageName = [imageName stringByAppendingString:@"en"];
+    }
+    
+    UIImage* recentProductImage = [UIImage imageNamed:imageName];
+    [self.recentProductImageView setImage:recentProductImage];
+    self.recentProductImageView.frame = CGRectMake(0.0f,
+                                                   0.0f,
+                                                   recentProductImage.size.width,
+                                                   recentProductImage.size.height);
     self.recentProductImageView.hidden = ![product.isNew boolValue];
     
     self.brandLabel.font = [UIFont fontWithName:kFontRegularName size:self.brandLabel.font.pointSize];
