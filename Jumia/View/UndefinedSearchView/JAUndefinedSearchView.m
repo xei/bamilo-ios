@@ -384,13 +384,12 @@
     
     scrollViewY += self.noticeView.frame.size.height + 6.0f;
     
-    if (RI_IS_RTL) {
-        
-        [self flipAllSubviews];
-    }
-    
     [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
                                                scrollViewY)];
+    
+    if (RI_IS_RTL) {
+        [self flipAllSubviews];
+    }
 }
 -(void)didRotate
 {
