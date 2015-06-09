@@ -861,9 +861,6 @@ JAActivityViewControllerDelegate
         
         if (RI_IS_RTL)
         {
-            
-            [self.variationsSection.titleLabel flipViewAlignment];
-            [self.variationsSection.titleLabel flipViewPositionInsideSuperview];
             [self.variationsSection.variationsScrollView setContentOffset:CGPointMake(self.variationsSection.variationsScrollView.contentSize.width - self.variationsSection.variationsScrollView.width, 0)];
         }
         
@@ -1066,12 +1063,6 @@ JAActivityViewControllerDelegate
         }
         
         if (RI_IS_RTL) {
-            [self.bundleLayout.bundleTitle flipViewPositionInsideSuperview];
-            [self.bundleLayout.bundleTitle flipViewAlignment];
-            [self.bundleLayout.buynowButton flipViewAlignment];
-            [self.bundleLayout.buynowButton flipViewPositionInsideSuperview];
-            [self.bundleLayout.totalLabel flipViewAlignment];
-            [self.bundleLayout.totalLabel flipViewPositionInsideSuperview];
             [self.bundleLayout.bundleScrollView setContentOffset:CGPointMake(self.bundleLayout.bundleScrollView.contentSize.width - self.bundleLayout.bundleScrollView.bounds.size.width, 0)];
         }
     }
@@ -1089,8 +1080,6 @@ JAActivityViewControllerDelegate
         self.relatedItems.topLabel.text = STRING_RELATED_ITEMS;
         
         if (RI_IS_RTL) {
-            [self.relatedItems.topLabel flipViewPositionInsideSuperview];
-            [self.relatedItems.topLabel flipViewAlignment];
         }
         
         NSArray* relatedProducts = [self.product.relatedProducts allObjects];
@@ -1177,6 +1166,10 @@ JAActivityViewControllerDelegate
     
     //make sure wizard is in front
     [self.view bringSubviewToFront:self.wizardView];
+    
+    if (RI_IS_RTL) {
+        [self.view flipAllSubviews];
+    }
 }
 
 

@@ -155,23 +155,20 @@
     [_wishListButton setX:[_wishListButton superview].bounds.size.width - _wishListButton.bounds.size.width];
     [_wishListButton setY:_imageScrollView.frame.origin.y];
     
-    
-    
-    if (RI_IS_RTL) {
-        [self flipSubviewPositions];
-        [self flipSubviewAlignments];
-        [self.sizeClickableView flipSubviewPositions];
-        [self.sizeClickableView flipSubviewAlignments];
-    }
-    
-    [self.pageControl removeFromSuperview];
+//    [self.pageControl removeFromSuperview];
     self.pageControl = [[JAPageControl alloc] initWithFrame:CGRectMake(self.imageScrollView.frame.origin.x,
                                                                        self.imageScrollView.frame.origin.y + self.imageScrollView.frame.size.height - 20.0f,
                                                                        self.imageScrollView.frame.size.width,
                                                                        10.0f)];
     self.pageControl.numberOfPages = [product.images array].count;
     [self addSubview:self.pageControl];
-    self.pageControl.currentPage = RI_IS_RTL?self.pageControl.numberOfPages-1:0;
+    
+//    if (RI_IS_RTL) {
+//        [self.imageScrollView flipAllSubviews];
+//        [self.pageControl flipAllSubviews];
+//    }
+    self.pageControl.currentPage = 0;
+//    self.pageControl.currentPage = RI_IS_RTL?self.pageControl.numberOfPages-1:0;
 }
 
 - (void)setupForPortrait:(CGRect)frame product:(RIProduct*)product
@@ -525,8 +522,8 @@
         CGFloat currentX = 0.0f;
         CGFloat imageWidth = 146.0f;
         CGFloat imageHeight = 183.0f;
-//        for (int i = 0; i < modifiedArray.count; i++) {
-        for (int i = RI_IS_RTL?(int)modifiedArray.count-1:0; RI_IS_RTL?i >= 0:i < modifiedArray.count; RI_IS_RTL?i--:i++) {
+        for (int i = 0; i < modifiedArray.count; i++) {
+//        for (int i = RI_IS_RTL?(int)modifiedArray.count-1:0; RI_IS_RTL?i >= 0:i < modifiedArray.count; RI_IS_RTL?i--:i++) {
             RIImage* image = [modifiedArray objectAtIndex:i];
             if (VALID_NOTEMPTY(image, RIImage)) {
                 JAClickableView* clickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
@@ -562,11 +559,13 @@
         
         //starting index should be 1 because 0 is the last image, replicated in order to simulate infinite scroll
         [self.imageScrollView scrollRectToVisible:CGRectMake(self.imageScrollView.frame.size.width*(RI_IS_RTL?(int)modifiedArray.count-2:1),
+//        [self.imageScrollView scrollRectToVisible:CGRectMake(self.imageScrollView.frame.size.width*1,
                                                              0,
                                                              self.imageScrollView.frame.size.width,
                                                              self.imageScrollView.frame.size.height)
                                          animated:NO];
-        self.pageControl.currentPage = RI_IS_RTL?(int)modifiedArray.count-1:0;
+//        self.pageControl.currentPage = RI_IS_RTL?(int)modifiedArray.count-1:0;
+//        self.pageControl.currentPage = 0;
     }
     else
     {

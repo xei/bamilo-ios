@@ -66,6 +66,7 @@
     
     [self.backgroundContentView setX:6.f];
     [self.backgroundContentView setWidth:self.width - 6.f];
+    
     self.backgroundContentView.layer.cornerRadius = 5.0f;
     
     //TOP STUFF
@@ -238,21 +239,12 @@
                                              self.savingMoneyLabel.frame.size.height);
     [self.bottomContentView addSubview:self.savingMoneyLabel];
     
-    if (VALID_NOTEMPTY(campaignProduct.savePrice, NSNumber) && 0.0f < [campaignProduct.savePrice floatValue]) {
-        [self.savingLabel setHidden:NO];
-        [self.savingMoneyLabel setHidden:NO];
-    } else {
-        [self.savingLabel setHidden:YES];
-        [self.savingMoneyLabel setHidden:YES];
-    }
-    
     if (ISEMPTY(self.percentageBarView)) {
         self.percentageBarView = [[JAPercentageBarView alloc] init];
         [self.bottomContentView addSubview:self.percentageBarView];
     }
     
     [self.remainingStockLabel setX:8.f];
-    [self.remainingStockLabel setYBottomAligned:6.f];
     self.remainingStockLabel.font = [UIFont fontWithName:kFontRegularName size:11.0f];
     self.remainingStockLabel.textColor = UIColorFromRGB(0x666666);
     self.remainingStockLabel.text = [NSString stringWithFormat:STRING_CAMPAIGN_REMAINING_STOCK, [campaignProduct.stockPercentage integerValue]];
@@ -263,6 +255,18 @@
                                               150.0f,
                                               3.0f);
     [self.percentageBarView loadWithPercentage:[campaignProduct.stockPercentage integerValue]];
+    
+    
+    if (VALID_NOTEMPTY(campaignProduct.savePrice, NSNumber) && 0.0f < [campaignProduct.savePrice floatValue]) {
+        [self.savingLabel setHidden:NO];
+        [self.savingMoneyLabel setHidden:NO];
+        [self.percentageBarView setYBottomOf:_savingLabel at:7.f];
+    } else {
+        [self.savingLabel setHidden:YES];
+        [self.savingMoneyLabel setHidden:YES];
+        [self.percentageBarView setYBottomOf:_priceView at:7.f];
+    }
+    [self.remainingStockLabel setYBottomOf:_percentageBarView at:3.f];
     
     [self.buyButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
     [self.buyButton setTitle:STRING_ADD_TO_SHOPPING_CART forState:UIControlStateNormal];

@@ -91,6 +91,8 @@
         self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
         
         self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:self.flowLayout];
+        [_collectionView setX:0.f];
+        [_collectionView setWidth:self.bounds.size.width];
         self.collectionView.backgroundColor = [UIColor clearColor];
         self.collectionView.delegate = self;
         self.collectionView.dataSource = self;
@@ -120,6 +122,8 @@
     }
     
     [self.collectionView setFrame:self.bounds];
+    [_collectionView setX:0.f];
+    [_collectionView setWidth:self.bounds.size.width];
     [self.collectionView reloadData];
 }
 
@@ -138,8 +142,10 @@
 {
     if (VALID_NOTEMPTY(self.campaign.bannerImageURL, NSString) && 0 == indexPath.row) {
         return self.bannerImage.frame.size;
+//        return CGSizeMake(self.bannerImage.width - 6.f, self.bannerImage.height);
     } else {
         return [self getCellLayoutForInterfaceOrientation:self.interfaceOrientation];
+//        return CGSizeMake([self getCellLayoutForInterfaceOrientation:self.interfaceOrientation].width - 6.f, [self getCellLayoutForInterfaceOrientation:self.interfaceOrientation].height);
     }
 }
 
@@ -156,7 +162,7 @@
             width = 339.0f;
         }
     } else {
-        width = 320;
+        width = 313;
     }
     
     return CGSizeMake(width, height);

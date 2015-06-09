@@ -180,6 +180,8 @@ UIScrollViewDelegate
                                          _doneButton.frame.origin.y,
                                          _doneButton.frame.size.width,
                                          _doneButton.frame.size.height)];
+    if (RI_IS_RTL)
+        [self.doneButton flipViewPositionInsideSuperview];
 }
 
 - (void)reloadFrame:(CGRect)frame

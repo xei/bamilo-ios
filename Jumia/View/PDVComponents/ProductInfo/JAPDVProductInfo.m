@@ -107,7 +107,6 @@
     
     
     if (RI_IS_RTL) {
-        [self flipAllSubviews];
         [self.goToReviewsImageView flipViewImage];
         [self.goToSpecificationsImageView flipViewImage];
         [self.goToOtherOffersImageView flipViewImage];
