@@ -386,7 +386,7 @@
     
     if (RI_IS_RTL) {
         
-        [noticeLabel flipViewPositionInsideSuperview];
+        [self flipAllSubviews];
     }
     
     [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
