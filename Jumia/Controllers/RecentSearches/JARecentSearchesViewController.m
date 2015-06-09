@@ -223,9 +223,15 @@
     if (ISEMPTY(cell)) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"searchCell"];
     }
-    for (UIView* subview in cell.subviews) {
-        if ([subview isKindOfClass:[JAClickableView class]]) {
-            [subview removeFromSuperview];
+    for (UIView* view in cell.subviews) {
+        if ([view isKindOfClass:[JAClickableView class]]) { //remove the clickable view
+            [view removeFromSuperview];
+        } else {
+            for (UIView* subview in view.subviews) {
+                if ([subview isKindOfClass:[JAClickableView class]]) { //remove the clickable view
+                    [subview removeFromSuperview];
+                }
+            }
         }
     }
     
