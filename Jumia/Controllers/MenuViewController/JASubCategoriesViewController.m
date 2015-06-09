@@ -92,6 +92,12 @@ UITableViewDelegate
     for (UIView* view in cell.subviews) {
         if ([view isKindOfClass:[JAClickableView class]] || -1 == view.tag) { //remove the clickable view or separator
             [view removeFromSuperview];
+        } else {
+            for (UIView* subview in view.subviews) {
+                if ([subview isKindOfClass:[JAClickableView class]] || -1 == subview.tag) { //remove the clickable view or separator
+                    [subview removeFromSuperview];
+                }
+            }
         }
     }
     //add the new clickable view

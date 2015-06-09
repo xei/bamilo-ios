@@ -213,8 +213,14 @@
     
     //remove the clickable view
     for (UIView* view in cell.subviews) {
-        if ([view isKindOfClass:[JAClickableView class]]) {
+        if ([view isKindOfClass:[JAClickableView class]]) { //remove the clickable view
             [view removeFromSuperview];
+        } else {
+            for (UIView* subview in view.subviews) {
+                if ([subview isKindOfClass:[JAClickableView class]]) { //remove the clickable view
+                    [subview removeFromSuperview];
+                }
+            }
         }
     }
     //add the new clickable view
