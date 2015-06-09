@@ -18,15 +18,10 @@
 {
     CGFloat superviewWidth = self.superview.frame.size.width;
     
-    if ([self isKindOfClass:[UIScrollView class]]) {
-        UIScrollView *scrollView = (UIScrollView *)self;
-        [((UIScrollView *)self) setContentOffset:CGPointMake(scrollView.contentSize.width - scrollView.width, scrollView.contentOffset.y)];
-    }
-    
     if ([self.superview isKindOfClass:[UIScrollView class]]) {
         superviewWidth = ((UIScrollView *)self.superview).contentSize.width;
     }
-    
+
     CGFloat newX = superviewWidth - self.frame.origin.x - self.frame.size.width;
     
     [self setFrame:CGRectMake(newX,
@@ -116,6 +111,9 @@
                                                              currentTextInsets.bottom,
                                                              -newTextX);
         }
+    } else if ([self isKindOfClass:[UIScrollView class]]) {
+        UIScrollView *scrollView = (UIScrollView *)self;
+        [((UIScrollView *)self) setContentOffset:CGPointMake(scrollView.contentSize.width - scrollView.width, scrollView.contentOffset.y)];
     }
 }
 
