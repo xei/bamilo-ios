@@ -680,6 +680,11 @@
 		CE02C9B31B29D72E00176E14 /* JAMyAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A3F1B1DE1920028105D /* JAMyAccountViewController.xib */; };
 		CE02C9B41B29D72F00176E14 /* JAMyAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A3F1B1DE1920028105D /* JAMyAccountViewController.xib */; };
 		CE02C9B51B29D72F00176E14 /* JAMyAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A3F1B1DE1920028105D /* JAMyAccountViewController.xib */; };
+		CE02C9B71B29D9CE00176E14 /* JAMyFavouritesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE02C9B61B29D9CE00176E14 /* JAMyFavouritesViewController.xib */; };
+		CE02C9B81B29D9CE00176E14 /* JAMyFavouritesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE02C9B61B29D9CE00176E14 /* JAMyFavouritesViewController.xib */; };
+		CE02C9B91B29D9CE00176E14 /* JAMyFavouritesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE02C9B61B29D9CE00176E14 /* JAMyFavouritesViewController.xib */; };
+		CE02C9BA1B29D9CE00176E14 /* JAMyFavouritesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE02C9B61B29D9CE00176E14 /* JAMyFavouritesViewController.xib */; };
+		CE02C9BB1B29D9CE00176E14 /* JAMyFavouritesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE02C9B61B29D9CE00176E14 /* JAMyFavouritesViewController.xib */; };
 		CE06FCB71A88C3A5002FCD25 /* JACatalogTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE06FCB61A88C3A5002FCD25 /* JACatalogTopView.m */; };
 		CE06FCBB1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE06FCBA1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib */; };
 		CE06FCBC1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE06FCBA1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib */; };
@@ -3153,6 +3158,7 @@
 		BBBA4CD019E43993004271B2 /* 18_track_order.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 18_track_order.feature; sourceTree = "<group>"; };
 		BBBA4CD319E44CDC004271B2 /* 19_filters.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 19_filters.feature; sourceTree = "<group>"; };
 		BBBA4CD719E45799004271B2 /* 20_cart.feature */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 20_cart.feature; sourceTree = "<group>"; };
+		CE02C9B61B29D9CE00176E14 /* JAMyFavouritesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAMyFavouritesViewController.xib; sourceTree = "<group>"; };
 		CE06FCB51A88C3A5002FCD25 /* JACatalogTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACatalogTopView.h; path = Catalog/JACatalogTopView.h; sourceTree = "<group>"; };
 		CE06FCB61A88C3A5002FCD25 /* JACatalogTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACatalogTopView.m; path = Catalog/JACatalogTopView.m; sourceTree = "<group>"; };
 		CE06FCBA1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JACatalogTopView_iphone.xib; path = Catalog/JACatalogTopView_iphone.xib; sourceTree = "<group>"; };
@@ -3760,6 +3766,7 @@
 			children = (
 				4A39213819891FC400B70A9C /* JAMyFavouritesViewController.h */,
 				4A39213919891FC400B70A9C /* JAMyFavouritesViewController.m */,
+				CE02C9B61B29D9CE00176E14 /* JAMyFavouritesViewController.xib */,
 			);
 			path = MyFavourites;
 			sourceTree = "<group>";
@@ -5984,6 +5991,7 @@
 				3c0ad639becc3ca29c25bcd2 /* JARadioComponent.xib in Resources */,
 				CEAB63DA1A81053C00B6F26E /* BMA4SiPhoneTextNotifView-nobuttons-landscape.xib in Resources */,
 				CEDBF8761B0CEC570073971A /* JACheckBoxComponent_RTL.xib in Resources */,
+				CE02C9B81B29D9CE00176E14 /* JAMyFavouritesViewController.xib in Resources */,
 				2a68cbeb778041d497796638 /* slider-default-handle@2x.png in Resources */,
 				CEAB639A1A81053C00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-iPad.xib in Resources */,
 				9A2036E71B25D45500F36F55 /* JANewRatingViewController.xib in Resources */,
@@ -6265,6 +6273,7 @@
 				CEAB63A91A81053C00B6F26E /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-iPad.xib in Resources */,
 				CEAB63591A81053C00B6F26E /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-ret4.xib in Resources */,
 				CE88F7B61A1F88FB00A3A586 /* JAGrayButtonCell_ipad_landscape.xib in Resources */,
+				CE02C9B71B29D9CE00176E14 /* JAMyFavouritesViewController.xib in Resources */,
 				CEAB63871A81053C00B6F26E /* BMA4SiPhoneTextNotifView-retHD.xib in Resources */,
 				6CCE088B1B1CBA77004311E2 /* JAAddNewAddressViewController.xib in Resources */,
 				CEAB63BB1A81053C00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape-iPad.xib in Resources */,
@@ -6497,6 +6506,7 @@
 				CE9ADC631AB34C4600D56481 /* JAPickupRegionsCell.xib in Resources */,
 				CE9ADC641AB34C4600D56481 /* JAPDVVariations.xib in Resources */,
 				CE9ADC651AB34C4600D56481 /* JAPDVImageSection~iPad_Landscape.xib in Resources */,
+				CE02C9B91B29D9CE00176E14 /* JAMyFavouritesViewController.xib in Resources */,
 				CE9ADC661AB34C4600D56481 /* JANavigationBarView.xib in Resources */,
 				CE9ADC671AB34C4600D56481 /* RIStrings.strings in Resources */,
 				CE9ADC681AB34C4600D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-iPad.xib in Resources */,
@@ -6973,6 +6983,7 @@
 				CE9ADF0F1AB6D6E900D56481 /* slider-default_trackBackground@2x.png in Resources */,
 				CE9ADF101AB6D6E900D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape.xib in Resources */,
 				CE9ADF111AB6D6E900D56481 /* BMA4SiPhoneIntersticialWebViewNotifView.xib in Resources */,
+				CE02C9BA1B29D9CE00176E14 /* JAMyFavouritesViewController.xib in Resources */,
 				CE9ADF121AB6D6E900D56481 /* BMA4SiPhoneWebViewNotifView-nobuttons-retHD.xib in Resources */,
 				CE9ADF131AB6D6E900D56481 /* BMA4SiPhoneWebViewNotifView-landscape-iPad.xib in Resources */,
 				CE9ADF141AB6D6E900D56481 /* JAFavoriteListCell_ipad_portrait.xib in Resources */,
@@ -7036,6 +7047,7 @@
 				CE9AE0581AB6D78200D56481 /* JAPDVVariations.xib in Resources */,
 				CE9AE0591AB6D78200D56481 /* JAPDVImageSection~iPad_Landscape.xib in Resources */,
 				CE9AE05A1AB6D78200D56481 /* JANavigationBarView.xib in Resources */,
+				CE02C9BB1B29D9CE00176E14 /* JAMyFavouritesViewController.xib in Resources */,
 				CE9AE05B1AB6D78200D56481 /* RIStrings.strings in Resources */,
 				CE9AE05C1AB6D78200D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-iPad.xib in Resources */,
 				CE9AE05D1AB6D78200D56481 /* JACatalogGridCell_ipad_portrait.xib in Resources */,

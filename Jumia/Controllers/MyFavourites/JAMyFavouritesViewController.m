@@ -22,6 +22,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *emptyFavoritesView;
 @property (weak, nonatomic) IBOutlet UILabel *emptyFavoritesLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *emptyFavoritesImageView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) NSString* cellIdentifier;
 @property (nonatomic, strong) NSString* buttonCellIdentifier;
@@ -108,7 +109,7 @@
     
     [self getFavorites];
     
-    [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0.0f];
+    [self didRotateFromInterfaceOrientation:0];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -118,13 +119,34 @@
     [[RITrackingWrapper sharedInstance]trackScreenWithName:@"Favourites"];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [self changeViewToInterfaceOrientation:toInterfaceOrientation];
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     
     [self.picker removeFromSuperview];
     
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    self.collectionView.frame = CGRectMake(self.collectionView.frame.origin.x,
+                                           self.collectionView.frame.origin.y,
+                                           self.view.frame.size.width - self.collectionView.frame.origin.x*2,
+                                           self.view.frame.size.height);
+    [self.collectionView reloadData];
+    
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+        self.emptyFavoritesView.frame = CGRectMake(self.emptyFavoritesView.frame.origin.x,
+                                                   self.emptyFavoritesView.frame.origin.y,
+                                                   self.view.frame.size.width - self.emptyFavoritesView.frame.origin.x * 2,
+                                                   300.0f);
+        self.emptyFavoritesImageView.frame = CGRectMake((self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2,
+                                                        56.0f,
+                                                        self.emptyFavoritesImageView.frame.size.width,
+                                                        self.emptyFavoritesImageView.frame.size.height);
+        self.emptyFavoritesLabel.frame = CGRectMake(12.0f,
+                                                    183.0f,
+                                                    self.emptyFavoritesView.frame.size.width - 12*2,
+                                                    self.emptyFavoritesLabel.frame.size.height);
+    }
+    
+    [self changeViewToInterfaceOrientation:self.interfaceOrientation];
 }
 
 - (void)changeViewToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

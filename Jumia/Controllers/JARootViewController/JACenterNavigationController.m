@@ -496,10 +496,9 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAMyFavouritesViewController class]])
     {
-        JAMyFavouritesViewController *favourites = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"myFavouritesViewController"];
-        
-        [self popToRootViewControllerAnimated:NO];
-        [self pushViewController:favourites animated:NO];
+        JAMyFavouritesViewController *myFavouritesViewController = [[JAMyFavouritesViewController alloc]initWithNibName:@"JAMyFavouritesViewController" bundle:nil];
+
+        [self pushViewController:myFavouritesViewController animated:NO];
     }
 }
 
