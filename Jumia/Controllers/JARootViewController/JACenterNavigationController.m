@@ -496,10 +496,9 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAMyFavouritesViewController class]])
     {
-        JAMyFavouritesViewController *favourites = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"myFavouritesViewController"];
-        
-        [self popToRootViewControllerAnimated:NO];
-        [self pushViewController:favourites animated:NO];
+        JAMyFavouritesViewController *myFavouritesViewController = [[JAMyFavouritesViewController alloc]initWithNibName:@"JAMyFavouritesViewController" bundle:nil];
+
+        [self pushViewController:myFavouritesViewController animated:NO];
     }
 }
 
@@ -522,7 +521,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JASignInViewController class]] && ![RICustomer checkIfUserIsLogged])
     {
-        JASignInViewController *signInVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"signInViewController"];
+        JASignInViewController *signInVC = [[JASignInViewController alloc] init];
         
         if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSNotification))
         {
@@ -547,7 +546,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JASignupViewController class]] && ![RICustomer checkIfUserIsLogged])
     {
-        JASignupViewController *signUpVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"signUpViewController"];
+        JASignupViewController *signUpVC = [[JASignupViewController alloc] init];
         
         if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSNotification))
         {
@@ -572,7 +571,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JASignupViewController class]] && ![RICustomer checkIfUserIsLogged])
     {
-        JAForgotPasswordViewController *forgotVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"forgotPasswordViewController"];
+        JAForgotPasswordViewController *forgotVC = [[JAForgotPasswordViewController alloc] init];
         
         [forgotVC.navBarLayout setShowBackButton:YES];
         
@@ -586,10 +585,9 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JARecentlyViewedViewController class]])
     {
-        JARecentlyViewedViewController *recentlyViewed = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"recentlyViewedViewController"];
+        JARecentlyViewedViewController *recentlyViewedViewController = [[JARecentlyViewedViewController alloc]initWithNibName:@"JARecentlyViewedViewController" bundle:nil];
         
-        [self popToRootViewControllerAnimated:NO];
-        [self pushViewController:recentlyViewed animated:NO];
+        [self pushViewController:recentlyViewedViewController animated:NO];
     }
 }
 
@@ -708,7 +706,7 @@
     {
         if (![topViewController isKindOfClass:[JASignInViewController class]])
         {
-            JASignInViewController *signInViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"signInViewController"];
+            JASignInViewController *signInViewController = [[JASignInViewController alloc] init];
             
             signInViewController.navBarLayout.showBackButton = YES;
             signInViewController.fromSideMenu = NO;
@@ -742,7 +740,7 @@
     {
         if (![topViewController isKindOfClass:[JASignInViewController class]])
         {
-            JASignInViewController *signInViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"signInViewController"];
+            JASignInViewController *signInViewController = [[JASignInViewController alloc] init];
             
             signInViewController.navBarLayout.showBackButton = YES;
             signInViewController.fromSideMenu = NO;
@@ -833,7 +831,7 @@
     {
         if (!fromCheckout && ![topViewController isKindOfClass:[JASignInViewController class]])
         {
-            JASignInViewController *signInViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"signInViewController"];
+            JASignInViewController *signInViewController = [[JASignInViewController alloc] init];
             
             signInViewController.navBarLayout.showBackButton = YES;
             signInViewController.fromSideMenu = NO;
