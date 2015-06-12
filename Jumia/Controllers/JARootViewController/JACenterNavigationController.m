@@ -778,7 +778,7 @@
     if (![topViewController isKindOfClass:[JAForgotPasswordViewController class]] && ![RICustomer checkIfUserIsLogged])
     {
         
-        JAForgotPasswordViewController *forgotVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"forgotPasswordViewController"];
+        JAForgotPasswordViewController *forgotVC = [[JAForgotPasswordViewController alloc] init];
         
         [forgotVC.navBarLayout setShowBackButton:YES];
         
