@@ -585,10 +585,9 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JARecentlyViewedViewController class]])
     {
-        JARecentlyViewedViewController *recentlyViewed = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"recentlyViewedViewController"];
+        JARecentlyViewedViewController *recentlyViewedViewController = [[JARecentlyViewedViewController alloc]initWithNibName:@"JARecentlyViewedViewController" bundle:nil];
         
-        [self popToRootViewControllerAnimated:NO];
-        [self pushViewController:recentlyViewed animated:NO];
+        [self pushViewController:recentlyViewedViewController animated:NO];
     }
 }
 

@@ -125,9 +125,9 @@
     
     [self.picker removeFromSuperview];
     
-    self.collectionView.frame = CGRectMake(self.collectionView.frame.origin.x,
+    self.collectionView.frame = CGRectMake(6.0f,
                                            self.collectionView.frame.origin.y,
-                                           self.view.frame.size.width - self.collectionView.frame.origin.x*2,
+                                           self.view.frame.size.width - 6.0f*2,
                                            self.view.frame.size.height);
     [self.collectionView reloadData];
     

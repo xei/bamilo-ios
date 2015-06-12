@@ -737,6 +737,11 @@
 		CE3AF91A19DD8BC400D8C51B /* RIPromotion.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF91919DD8BC400D8C51B /* RIPromotion.m */; };
 		CE3FC5A71990E209003B4A27 /* JAPickerScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3FC5A61990E209003B4A27 /* JAPickerScrollView.m */; };
 		CE3FC5AE1990E25C003B4A27 /* JACatalogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3FC5AD1990E25C003B4A27 /* JACatalogViewController.m */; };
+		CE4054B71B29EFB300E9CD1A /* JARecentlyViewedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE4054B61B29EFB300E9CD1A /* JARecentlyViewedViewController.xib */; };
+		CE4054B81B29EFB300E9CD1A /* JARecentlyViewedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE4054B61B29EFB300E9CD1A /* JARecentlyViewedViewController.xib */; };
+		CE4054B91B29EFB300E9CD1A /* JARecentlyViewedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE4054B61B29EFB300E9CD1A /* JARecentlyViewedViewController.xib */; };
+		CE4054BA1B29EFB300E9CD1A /* JARecentlyViewedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE4054B61B29EFB300E9CD1A /* JARecentlyViewedViewController.xib */; };
+		CE4054BB1B29EFB300E9CD1A /* JARecentlyViewedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE4054B61B29EFB300E9CD1A /* JARecentlyViewedViewController.xib */; };
 		CE44586B198BD20A00CE7E8D /* JAMainTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE445866198BD20A00CE7E8D /* JAMainTeaserView.m */; };
 		CE445870198BD21A00CE7E8D /* JATeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44586F198BD21A00CE7E8D /* JATeaserView.m */; };
 		CE445875198BD5D800CE7E8D /* JASmallTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE445874198BD5D800CE7E8D /* JASmallTeaserView.m */; };
@@ -3224,6 +3229,7 @@
 		CE3FC5A61990E209003B4A27 /* JAPickerScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPickerScrollView.m; sourceTree = "<group>"; };
 		CE3FC5AC1990E25C003B4A27 /* JACatalogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogViewController.h; sourceTree = "<group>"; };
 		CE3FC5AD1990E25C003B4A27 /* JACatalogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogViewController.m; sourceTree = "<group>"; };
+		CE4054B61B29EFB300E9CD1A /* JARecentlyViewedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JARecentlyViewedViewController.xib; sourceTree = "<group>"; };
 		CE445865198BD20A00CE7E8D /* JAMainTeaserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMainTeaserView.h; sourceTree = "<group>"; };
 		CE445866198BD20A00CE7E8D /* JAMainTeaserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMainTeaserView.m; sourceTree = "<group>"; };
 		CE44586E198BD21A00CE7E8D /* JATeaserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATeaserView.h; sourceTree = "<group>"; };
@@ -3747,6 +3753,7 @@
 			children = (
 				4A39212E19891F7800B70A9C /* JARecentlyViewedViewController.h */,
 				4A39212F19891F7800B70A9C /* JARecentlyViewedViewController.m */,
+				CE4054B61B29EFB300E9CD1A /* JARecentlyViewedViewController.xib */,
 			);
 			path = RecentlyViewed;
 			sourceTree = "<group>";
@@ -6084,6 +6091,7 @@
 				6CCE08B01B1F0E6E004311E2 /* JALoginViewController.xib in Resources */,
 				BBBA4CD519E44CDC004271B2 /* 19_filters.feature in Resources */,
 				B5C008601A038F63000BBC52 /* JAPDVImageSection~iPad_Portrait.xib in Resources */,
+				CE4054B81B29EFB300E9CD1A /* JARecentlyViewedViewController.xib in Resources */,
 				CEDBF86A1B0CE0CE0073971A /* JABirthDateComponent_RTL.xib in Resources */,
 				CEAB63C21A81053C00B6F26E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape.xib in Resources */,
 				BB9546A919F5512300AC7D05 /* wait.rb in Resources */,
@@ -6373,6 +6381,7 @@
 				CEAB63851A81053C00B6F26E /* BMA4SiPhoneTextNotifView-landscape.xib in Resources */,
 				CEAB63411A81053C00B6F26E /* A4S.bundle in Resources */,
 				CEED47321A7B973B006D9CE7 /* JAPDVBundleSingleItem.xib in Resources */,
+				CE4054B71B29EFB300E9CD1A /* JARecentlyViewedViewController.xib in Resources */,
 				6CCE08911B1DBC20004311E2 /* JAAddNewAddressViewController~iPad.xib in Resources */,
 				4AE730C9198F8C8B000CA1DD /* JAPDVImageSection.xib in Resources */,
 				CEAB63E51A81053C00B6F26E /* BMA4SiPhoneWebViewNotifView-nobuttons-landscape-retHD.xib in Resources */,
@@ -6602,6 +6611,7 @@
 				CEDBF87D1B0DE8EB0073971A /* JARadioComponent_RTL.xib in Resources */,
 				CE9ADCBB1AB34C4600D56481 /* slider-default7-trackBackground.png in Resources */,
 				CE9ADCBC1AB34C4600D56481 /* JACatalogGridCell_ipad_landscape.xib in Resources */,
+				CE4054B91B29EFB300E9CD1A /* JARecentlyViewedViewController.xib in Resources */,
 				CE9ADCBE1AB34C4600D56481 /* slider-default-track@2x.png in Resources */,
 				CE9ADCBF1AB34C4600D56481 /* slider-metal-track.png in Resources */,
 				6CCE088D1B1CBA77004311E2 /* JAAddNewAddressViewController.xib in Resources */,
@@ -6748,6 +6758,7 @@
 				6CCE08B21B1F0E6E004311E2 /* JALoginViewController.xib in Resources */,
 				CE9ADE441AB6D6E900D56481 /* init.rb in Resources */,
 				CE9ADE451AB6D6E900D56481 /* 17_recently_viewed.feature in Resources */,
+				CE4054BA1B29EFB300E9CD1A /* JARecentlyViewedViewController.xib in Resources */,
 				CE9ADE461AB6D6E900D56481 /* BMA4SiPhoneTextNotifView-landscape-retHD.xib in Resources */,
 				CE9ADE471AB6D6E900D56481 /* JAFavoriteListCell.xib in Resources */,
 				CE9ADE481AB6D6E900D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-iPad.xib in Resources */,
@@ -7143,6 +7154,7 @@
 				CEDBF87F1B0DE8EB0073971A /* JARadioComponent_RTL.xib in Resources */,
 				CE9AE0AF1AB6D78200D56481 /* slider-default7-trackBackground.png in Resources */,
 				CE9AE0B01AB6D78200D56481 /* JACatalogGridCell_ipad_landscape.xib in Resources */,
+				CE4054BB1B29EFB300E9CD1A /* JARecentlyViewedViewController.xib in Resources */,
 				CE9AE0B21AB6D78200D56481 /* slider-default-track@2x.png in Resources */,
 				CE9AE0B31AB6D78200D56481 /* slider-metal-track.png in Resources */,
 				6CCE088F1B1CBA77004311E2 /* JAAddNewAddressViewController.xib in Resources */,
