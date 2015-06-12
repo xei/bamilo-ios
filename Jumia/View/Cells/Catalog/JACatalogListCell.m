@@ -84,6 +84,8 @@
         [self.addToCartButton setX:self.width -6.f - self.addToCartButton.width];
     }
     
+    [self.deleteButton setX:self.width-self.deleteButton.width];
+    
     [self setRTL];
 }
 
