@@ -294,7 +294,6 @@
                     <nil name="viewControllers"/>
                     <connections>
                         <segue destination="fgT-Jv-tdb" kind="push" identifier="showPdv" id="uaI-yU-cmP"/>
-                        <segue destination="ghr-t8-OwX" kind="push" identifier="segueToMyAccount" id="Fv7-Im-hF1"/>
                         <segue destination="OuJ-bo-0Lu" kind="push" identifier="pushTrackOrder" id="k6z-HH-SJs"/>
                         <segue destination="2Bm-pv-QSw" kind="push" id="8V7-qT-p81"/>
                     </connections>
@@ -386,70 +385,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zwP-v4-smR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1153" y="814"/>
-        </scene>
-        <!--Sign In View Controller-->
-        <scene sceneID="uW8-50-FvF">
-            <objects>
-                <viewController storyboardIdentifier="signInViewController" id="ghr-t8-OwX" customClass="JASignInViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="YaJ-P8-TCQ"/>
-                        <viewControllerLayoutGuide type="bottom" id="gU7-jo-m0u"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="cNj-bh-3PS">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="HlZ-cw-qE8"/>
-                    <connections>
-                        <segue destination="FGH-sW-a5w" kind="push" identifier="segueSignUp" id="Tky-4b-C7s"/>
-                        <segue destination="0eq-Us-89i" kind="push" identifier="segueToForgot" id="V1x-Qc-gGm"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xMg-uB-dWZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1590" y="1599"/>
-        </scene>
-        <!--Signup View Controller-->
-        <scene sceneID="Kxt-Aa-vEv">
-            <objects>
-                <viewController storyboardIdentifier="signUpViewController" id="FGH-sW-a5w" customClass="JASignupViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="iRE-ps-u1B"/>
-                        <viewControllerLayoutGuide type="bottom" id="Xha-UT-cf0"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="7yC-MH-9GN">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="nZs-G9-2BW"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Shi-tF-b6p" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2058" y="1529"/>
-        </scene>
-        <!--Forgot Password View Controller-->
-        <scene sceneID="90a-1K-268">
-            <objects>
-                <viewController storyboardIdentifier="forgotPasswordViewController" id="0eq-Us-89i" customClass="JAForgotPasswordViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="p9x-kt-8H3"/>
-                        <viewControllerLayoutGuide type="bottom" id="0Ql-uN-k2Z"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="yMS-j5-fEt">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="4LO-qh-qBC"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pd5-tI-K1Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2058" y="2158"/>
         </scene>
         <!--Thanks View Controller-->
         <scene sceneID="5sS-nM-jdi">
