@@ -187,6 +187,12 @@
 - (void)flipAllSubviews
 {
     for (UIView *view in self.subviews) {
+        if ([view isKindOfClass:[UIScrollView class]]) {
+            UIScrollView *scrollview = (UIScrollView *)view;
+            if (scrollview.contentSize.width < view.width) {
+                [scrollview setContentSize:CGSizeMake(view.width, scrollview.contentSize.height)];
+            }
+        }
         if ([view isKindOfClass:[UITableView class]]) {
             [view flipViewPositionInsideSuperview];
             continue;

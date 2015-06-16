@@ -63,9 +63,7 @@
     }
     CGFloat currentX = 6.0f;
     
-    for (int i = RI_IS_RTL?(int)self.teaserGrouping.teaserComponents.count-1:0;
-         RI_IS_RTL? i >= 0 : i < self.teaserGrouping.teaserComponents.count;
-         RI_IS_RTL? i--:i++) {
+    for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
         RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
         
         
@@ -95,7 +93,7 @@
                                                self.scrollView.frame.size.height)];
     
     if (RI_IS_RTL) {
-        [self.scrollView setContentOffset:CGPointMake(self.scrollView.contentSize.width - self.bounds.size.width, self.scrollView.contentOffset.y)];
+        [self flipAllSubviews];
     }
 }
 

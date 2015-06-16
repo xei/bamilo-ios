@@ -51,9 +51,7 @@
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             componentWidth = 142.0f; //value by design
         }
-//        for (int i = RI_IS_RTL?(int)self.teaserGrouping.teaserComponents.count-1:0;
-//             RI_IS_RTL? i >= 0 : i < self.teaserGrouping.teaserComponents.count;
-//             RI_IS_RTL? i--:i++) {
+        
         for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
             
             RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
@@ -126,9 +124,10 @@
             }
         }
         
-        
-        [self.scrollView setContentSize:CGSizeMake(currentX,
-                                                   self.scrollView.frame.size.height)];
+        if (currentX < self.scrollView.width) {
+            currentX = self.scrollView.width;
+        }
+        [self.scrollView setContentSize:CGSizeMake(currentX, self.scrollView.frame.size.height)];
         
         CGFloat totalHeight = groupingTitleLabel.frame.size.height + self.scrollView.frame.size.height;
         [self setFrame:CGRectMake(self.frame.origin.x,

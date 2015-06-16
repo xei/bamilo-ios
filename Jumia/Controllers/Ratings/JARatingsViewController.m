@@ -540,12 +540,6 @@ UITableViewDataSource
         }
     }
     
-//    if (RI_IS_RTL) {
-//        [titleLabel flipViewAlignment];
-//        [ratingsView flipViewAlignment];
-//        [self.priceView flipViewPositionInsideSuperview];
-//    }
-    
     topViewFrame = self.topView.frame;
     topViewFrame.size.height += _ratingTypeLinesHeight;
     self.topView.frame = topViewFrame;
@@ -678,7 +672,6 @@ UITableViewDataSource
     
     [self.labelUsedProduct setX:kHorizontalMargin];
     [self.labelUsedProduct sizeToFit];
-//    [self.labelUsedProduct setWidth:self.resumeView.bounds.size.width - 2*kHorizontalMargin];
     
     [self.writeReviewButton setX:self.view.bounds.size.width/2 - self.writeReviewButton.bounds.size.width/2];
 }
@@ -882,9 +875,6 @@ UITableViewDataSource
     [self.writeReviewScrollView setContentSize:CGSizeMake(self.writeReviewScrollView.frame.size.width, currentY)];
     [self.view addSubview:self.writeReviewScrollView];
     
-//    if (RI_IS_RTL) {
-//        [self.writeReviewScrollView flipAllSubviews];
-//    }
 }
 
 - (void) setupEmptyReviewsView
