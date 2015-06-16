@@ -11,6 +11,7 @@
 #import "JAClickableView.h"
 #import "JADynamicForm.h"
 #import "JAAddRatingView.h"
+#import "JAPagedView.h"
 
 @implementation UIView (Mirror)
 
@@ -19,7 +20,9 @@
     CGFloat superviewWidth = self.superview.frame.size.width;
     
     if ([self.superview isKindOfClass:[UIScrollView class]]) {
-        superviewWidth = ((UIScrollView *)self.superview).contentSize.width;
+        if (((UIScrollView *)self.superview).contentSize.width > ((UIScrollView *)self.superview).width) {
+            superviewWidth = ((UIScrollView *)self.superview).contentSize.width;
+        }
     }
 
     CGFloat newX = superviewWidth - self.frame.origin.x - self.frame.size.width;
@@ -185,6 +188,8 @@
 {
     for (UIView *view in self.subviews) {
         if ([view isKindOfClass:[UITableView class]] || [view isKindOfClass:[JADynamicField class]]) {
+            continue;
+        } else if ([view isKindOfClass:[JAPagedView class]]) {
             continue;
         } else {
             [view flipViewPositionInsideSuperview];
