@@ -301,6 +301,10 @@ JADatePickerDelegate
     [self hideLoading];
     
     [self finishedFormLoading];
+    
+    if (RI_IS_RTL) {
+        [self.view flipAllSubviews];
+    }
 }
 
 - (void)finishedFormLoading

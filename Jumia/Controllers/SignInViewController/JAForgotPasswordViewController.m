@@ -72,6 +72,10 @@
     [self.secondLabel setNumberOfLines:2];
     [self.contentView addSubview:self.secondLabel];
     
+    if (RI_IS_RTL) {
+        [self.view flipAllSubviews];
+    }
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification

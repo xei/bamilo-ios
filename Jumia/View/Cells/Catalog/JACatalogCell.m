@@ -12,6 +12,7 @@
 #import "RIImage.h"
 #import "UIImageView+WebCache.h"
 #import "JARatingsView.h"
+#import "RILanguage.h"
 
 @implementation JACatalogCell
 
@@ -34,6 +35,25 @@
     
     [self.backgroundContentView sendSubviewToBack:self.productImageView];
     
+    RICountryConfiguration* config = [RICountryConfiguration getCurrentConfiguration];
+    RILanguage* language = [config.languages firstObject];
+    NSString* imageName = @"ProductBadgeNew_";
+    if (NSNotFound != [language.langCode rangeOfString:@"fr"].location) {
+        imageName = [imageName stringByAppendingString:@"fr"];
+    } else if (NSNotFound != [language.langCode rangeOfString:@"fa"].location) {
+        imageName = [imageName stringByAppendingString:@"fa"];
+    } else if (NSNotFound != [language.langCode rangeOfString:@"pt"].location) {
+        imageName = [imageName stringByAppendingString:@"pt"];
+    } else {
+        imageName = [imageName stringByAppendingString:@"en"];
+    }
+    
+    UIImage* recentProductImage = [UIImage imageNamed:imageName];
+    [self.recentProductImageView setImage:recentProductImage];
+    self.recentProductImageView.frame = CGRectMake(0.0f,
+                                                   0.0f,
+                                                   recentProductImage.size.width,
+                                                   recentProductImage.size.height);
     self.recentProductImageView.hidden = ![product.isNew boolValue];
     
     self.brandLabel.font = [UIFont fontWithName:kFontRegularName size:self.brandLabel.font.pointSize];
@@ -77,6 +97,11 @@
     [self.sizeButton setTitle:STRING_SIZE forState:UIControlStateNormal];
     [self.sizeButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
     [self.sizeButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+    [self.sizeButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    [self.sizeButton setFrame:CGRectMake(80.0f,
+                                         self.sizeButton.frame.origin.y,
+                                         self.sizeButton.frame.size.width,
+                                         self.sizeButton.frame.size.height)];
 }
 
 - (void)loadWithCartItem:(RICartItem*)cartItem

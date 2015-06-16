@@ -38,6 +38,7 @@ FBLoginViewDelegate
 @property (strong, nonatomic) UIImageView *loginArrow;
 @property (strong, nonatomic) UIView *loginFormView;
 
+@property (assign, nonatomic) CGFloat initialLoginFormHeight;
 @property (assign, nonatomic) CGFloat loginFormHeight;
 @property (strong, nonatomic) UIButton *loginButton;
 @property (strong, nonatomic) UIButton *forgotButton;
@@ -56,6 +57,7 @@ FBLoginViewDelegate
 @property (strong, nonatomic) NSLayoutConstraint *signUpViewConstrains;
 @property (strong, nonatomic) UIView *signUpFormView;
 @property (strong, nonatomic)  NSLayoutConstraint *signUpViewFormConstrains;
+@property (assign, nonatomic) CGFloat initialSignupFormHeight;
 @property (assign, nonatomic) CGFloat signupFormHeight;
 @property (strong, nonatomic) UIButton *signUpButton;
 @property (strong, nonatomic) UIView *facebookSignupSeparator;
@@ -68,11 +70,11 @@ FBLoginViewDelegate
 @property (assign, nonatomic) RIApiResponse apiResponse;
 
 @property (nonatomic, strong)JAOrderSummaryView* orderSummaryView;
-@property (assign, nonatomic) CGRect orderSummaryOriginalFrame;
+@property (assign, nonatomic) CGFloat orderSummaryOriginalHeight;
 
 @property (strong, nonatomic) UIView *viewToScroll;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (assign, nonatomic) CGRect scrollViewOriginalFrame;
+@property (assign, nonatomic) CGFloat scrollViewOriginalHeight;
 @property (strong, nonatomic) JACheckBoxComponent* checkBoxComponent;
 @end
 
@@ -122,43 +124,37 @@ FBLoginViewDelegate
     
     self.scrollView.translatesAutoresizingMaskIntoConstraints = YES;
     
-    self.viewToScroll = [[UIView alloc] initWithFrame:self.scrollView.bounds];
+    self.viewToScroll = [[UIView alloc] init];
     
     UITapGestureRecognizer *showLoginViewTap =
     [[UITapGestureRecognizer alloc] initWithTarget:self
                                             action:@selector(showLogin)];
     
-    self.loginView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, 6.0f, self.viewToScroll.frame.size.width-12.0f, 26.0f)];
+    self.loginView = [[UIView alloc] init];
     [self.loginView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.loginView.layer.cornerRadius = 5.0f;
     [self.loginView addGestureRecognizer:showLoginViewTap];
     
-    self.loginLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f,
-                                                                0,
-                                                                self.loginView.frame.size.width - self.loginArrow.frame.size.width - 12.0f,
-                                                                self.loginView.frame.size.height)];
+    self.loginLabel = [[UILabel alloc] init];
     [self.loginLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.loginLabel setBackgroundColor:[UIColor clearColor]];
     [self.loginLabel setText:STRING_LOGIN];
     [self.loginLabel setFont:[UIFont fontWithName:kFontLightName size:13.0f]];
+    [self.loginLabel sizeToFit];
     [self.loginView addSubview:self.loginLabel];
     
     self.loginArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrowOrangeClosed"]];
-    [self.loginArrow setFrame:CGRectMake(self.loginView.frame.size.width - self.loginArrow.frame.size.width - 6.0f,
-                                         (self.loginView.frame.size.height - self.loginArrow.frame.size.height)/2,
-                                         self.loginArrow.frame.size.width,
-                                         self.loginArrow.frame.size.height)];
+    if (RI_IS_RTL) {
+        [self.loginArrow flipViewImage];
+    }
     [self.loginView addSubview:self.loginArrow];
     
-    self.loginSeparator = [[UIImageView alloc] initWithFrame:CGRectMake(0,
-                                                                        26.0f,
-                                                                        self.loginView.frame.size.width,
-                                                                        1.0f)];
+    self.loginSeparator = [[UIImageView alloc] init];
     [self.loginSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     [self.loginSeparator setHidden:YES];
     [self.loginView addSubview:self.loginSeparator];
     
-    self.loginFormView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.loginSeparator.frame), 0, 0)];
+    self.loginFormView = [[UIView alloc] init];
     [self.loginFormView setHidden: YES];
     [self.loginView addSubview:self.loginFormView];
     [self.viewToScroll addSubview:self.loginView];
@@ -167,7 +163,7 @@ FBLoginViewDelegate
     [[UITapGestureRecognizer alloc] initWithTarget:self
                                             action:@selector(showSignup)];
     
-    self.signUpView = [[UIView alloc]initWithFrame:CGRectMake(6.0f, CGRectGetMaxY(self.loginView.frame) + 6.0f,self.viewToScroll.frame.size.width-12.0f, 26.0f)];
+    self.signUpView = [[UIView alloc]init];
     [self.signUpView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.signUpView.layer.cornerRadius = 5.0f;
     [self.signUpView addGestureRecognizer:showSignupViewTap];
@@ -175,58 +171,40 @@ FBLoginViewDelegate
     [self.signUpSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     
     
-    self.signUpLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f,
-                                                                 0,
-                                                                 self.signUpView.frame.size.width - self.signUpArrow.frame.size.width - 12.0f,
-                                                                 self.signUpView.frame.size.height)];
+    self.signUpLabel = [[UILabel alloc] init];
     [self.signUpLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.signUpLabel setBackgroundColor:[UIColor clearColor]];
     [self.signUpLabel setText:STRING_SIGNUP];
     self.signUpLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
+    [self.signUpLabel sizeToFit];
     [self.signUpView addSubview:self.signUpLabel];
     
     self.signUpArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrowOrangeClosed"]];
-    [self.signUpArrow setFrame:CGRectMake(self.signUpView.frame.size.width - self.signUpArrow.frame.size.width - 6.0f,
-                                          (self.signUpView.frame.size.height - self.signUpArrow.frame.size.height)/2,
-                                          self.signUpArrow.frame.size.width,
-                                          self.signUpArrow.frame.size.height)];
+    if (RI_IS_RTL) {
+        [self.signUpArrow flipViewImage];
+    }
     [self.signUpView addSubview:self.signUpArrow];
     
-    self.signUpSeparator = [[UIImageView alloc] initWithFrame:CGRectZero];
+    self.signUpSeparator = [[UIImageView alloc] init];
     [self.signUpSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     [self.signUpView addSubview:self.signUpSeparator];
     
-    self.signUpFormView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.signUpSeparator.frame), 0, 0)];
+    self.signUpFormView = [[UIView alloc] init];
     [self.signUpFormView setHidden:YES];
     [self.signUpView addSubview:self.signUpFormView];
     [self.viewToScroll addSubview:self.signUpView];
     
     [self.scrollView addSubview:self.viewToScroll];
+    
+    self.orderSummaryView = [[JAOrderSummaryView alloc] init];
+    [self.view addSubview:self.orderSummaryView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    
-    CGFloat orderSummaryY = self.stepBackground.frame.size.height;
-    CGFloat orderSummaryWidth = 250.0f;
-    CGFloat orderSummaryX = 768.0f;
-    self.orderSummaryView = [[JAOrderSummaryView alloc] initWithFrame:CGRectMake(orderSummaryX,
-                                                                                 orderSummaryY,
-                                                                                 orderSummaryWidth,
-                                                                                 self.view.frame.size.height - orderSummaryY)];
-    self.orderSummaryOriginalFrame = self.orderSummaryView.frame;
-    if (VALID_NOTEMPTY(self.cart, RICart)) {
-        [self.orderSummaryView loadWithCart:self.cart shippingFee:NO];
-    } else {
-        [self getCart];
-    }
-    [self.view addSubview:self.orderSummaryView];
-    
-    [self setupViews:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
-    
-    [self showLoading];
+    [self didRotateFromInterfaceOrientation:0];
     
     [self getForms];
 }
@@ -240,6 +218,8 @@ FBLoginViewDelegate
 
 - (void)getForms
 {
+    [self showLoading];
+    
     self.loadFailed = NO; //resetting to NO, it is turned to YES if it fails
     
     self.numberOfFormsToLoad = 2;
@@ -248,14 +228,14 @@ FBLoginViewDelegate
            
            self.loginDynamicForm = [[JADynamicForm alloc] initWithForm:form values:[self getEmail] startingPosition:7.0f hasFieldNavigation:YES];
            
-           self.loginFormHeight = 0.0f;
+           self.initialLoginFormHeight = 0.0f;
            
            for(UIView *view in self.loginDynamicForm.formViews)
            {
                [self.loginFormView addSubview:view];
-               if(CGRectGetMaxY(view.frame) > self.loginFormHeight)
+               if(CGRectGetMaxY(view.frame) > self.initialLoginFormHeight)
                {
-                   self.loginFormHeight = CGRectGetMaxY(view.frame);
+                   self.initialLoginFormHeight = CGRectGetMaxY(view.frame);
                }
            }
            
@@ -275,14 +255,14 @@ FBLoginViewDelegate
        successBlock:^(RIForm *form) {
            
            self.signupDynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:7.0f];
-           self.signupFormHeight = 0.0f;
+           self.initialSignupFormHeight = 0.0f;
            
            for(UIView *view in self.signupDynamicForm.formViews)
            {
                [self.signUpFormView addSubview:view];
-               if(CGRectGetMaxY(view.frame) > self.signupFormHeight)
+               if(CGRectGetMaxY(view.frame) > self.initialSignupFormHeight)
                {
-                   self.signupFormHeight = CGRectGetMaxY(view.frame);
+                   self.initialSignupFormHeight = CGRectGetMaxY(view.frame);
                }
            }
            
@@ -312,18 +292,30 @@ FBLoginViewDelegate
     }];
 }
 
-- (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+- (void)setup
 {
     self.isAnimationRunning = NO;
     
-    [self setupStepView:width toInterfaceOrientation:toInterfaceOrientation];
+    [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
     
-    [self.scrollView setFrame:CGRectMake(0,
+    [self setupViews:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
+    
+    if (RI_IS_RTL) {
+        [self.view flipAllSubviews];
+        [self.checkBoxComponent flipViewPositionInsideSuperview];
+    }
+}
+
+- (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    CGFloat margin = 6.0f;
+    
+    [self.scrollView setFrame:CGRectMake(0.0f,
                                          CGRectGetMaxY(self.stepView.frame),
                                          self.view.frame.size.width,
                                          self.view.frame.size.height - CGRectGetMaxY(self.stepView.frame))];
     
-    self.scrollViewOriginalFrame = self.scrollView.frame;
+    self.scrollViewOriginalHeight = self.scrollView.frame.size.height;
     
     if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
         self.orderSummaryView.hidden = NO;
@@ -331,76 +323,163 @@ FBLoginViewDelegate
         self.orderSummaryView.hidden = YES;
     }
     
-    CGFloat margin = 6.0f;
+    self.loginView.frame = CGRectMake(margin,
+                                      margin,
+                                      self.viewToScroll.frame.size.width-margin*2,
+                                      self.loginView.frame.size.height);
+    
+    self.loginLabel.frame = CGRectMake(margin,
+                                       4.0f,
+                                       self.loginView.frame.size.width - self.loginArrow.frame.size.width - margin*2,
+                                       self.loginLabel.frame.size.height);
+    self.loginLabel.textAlignment = NSTextAlignmentLeft;
+    
+    self.loginArrow.frame = CGRectMake(self.loginView.frame.size.width - self.loginArrow.frame.size.width - 6.0f,
+                                       margin,
+                                       self.loginArrow.frame.size.width,
+                                       self.loginArrow.frame.size.height);
+    
+    self.loginSeparator.frame = CGRectMake(0.0f,
+                                           26.0f,
+                                           self.loginView.frame.size.width,
+                                           1.0f);
+    
+    self.signUpView.frame = CGRectMake(margin,
+                                       CGRectGetMaxY(self.loginView.frame) + margin,
+                                       self.viewToScroll.frame.size.width-margin*2,
+                                       self.signUpView.frame.size.height);
+    
+    self.signUpLabel.frame = CGRectMake(margin,
+                                        4.0f,
+                                        self.signUpView.frame.size.width - self.signUpArrow.frame.size.width - margin*2,
+                                        self.signUpLabel.frame.size.height);
+    self.signUpLabel.textAlignment = NSTextAlignmentLeft;
+    
+    [self.signUpArrow setFrame:CGRectMake(self.signUpView.frame.size.width - self.signUpArrow.frame.size.width - margin,
+                                          margin,
+                                          self.signUpArrow.frame.size.width,
+                                          self.signUpArrow.frame.size.height)];
+    
+    self.signUpSeparator.frame = CGRectMake(0.0f,
+                                            26.0f,
+                                            self.signUpView.frame.size.width,
+                                            1.0f);
+    
     CGFloat componentWidth;
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
-        componentWidth = 744.0f;
+        componentWidth = 756.0f;
     } else {
-        componentWidth = 296.0f;
+        componentWidth = 308.0f;
     }
     [self.loginFormView setFrame:CGRectMake(self.loginFormView.frame.origin.x,
-                                            self.loginFormView.frame.origin.y,
+                                            CGRectGetMaxY(self.loginSeparator.frame),
                                             self.loginView.frame.size.width,
                                             self.loginView.frame.size.height)];
     
     [self.signUpFormView setFrame:CGRectMake(self.loginFormView.frame.origin.x,
-                                             self.loginFormView.frame.origin.y,
+                                             CGRectGetMaxY(self.signUpSeparator.frame),
                                              self.loginView.frame.size.width,
                                              self.loginView.frame.size.height)];
     
     for(UIView *view in self.loginDynamicForm.formViews) {
         [view setFrame:CGRectMake(view.frame.origin.x,
                                   view.frame.origin.y,
-                                  componentWidth + margin*2, //form already has its own margins
+                                  componentWidth,
                                   view.frame.size.height)];
     }
     
     for(UIView *view in self.signupDynamicForm.formViews) {
         [view setFrame:CGRectMake(view.frame.origin.x,
                                   view.frame.origin.y,
-                                  componentWidth + margin*2, //form already has its own margins
+                                  componentWidth,
                                   view.frame.size.height)];
+    }
+    
+    
+    CGFloat buttonWidth = componentWidth - margin*2;
+    self.loginFormHeight = self.initialLoginFormHeight;
+    self.loginFormHeight += 10.0f;
+    [self.checkBoxComponent setFrame:CGRectMake(6.0f,
+                                                self.loginFormHeight,
+                                                self.checkBoxComponent.frame.size.width,
+                                                self.checkBoxComponent.frame.size.height)];
+    self.loginFormHeight += self.checkBoxComponent.frame.size.height + 10.0f;
+    [self.loginButton setFrame:CGRectMake(6.0f, self.loginFormHeight, buttonWidth, 44.0f)];
+    self.loginFormHeight += self.loginButton.frame.size.height;
+    self.loginFormHeight += 5.0f;
+    [self.forgotButton setFrame:CGRectMake(6.0f, self.loginFormHeight, buttonWidth, 30.0f)];
+    self.loginFormHeight += self.forgotButton.frame.size.height;
+    
+    CGFloat centerWidth = 54.0f;
+    CGFloat halfSeparatorWidth = (buttonWidth - centerWidth) / 2;
+    if ([[RICountryConfiguration getCurrentConfiguration].facebookAvailable boolValue]){
+        [self.facebookLoginSeparatorLeftView setFrame:CGRectMake(0.0f, (self.facebookLoginSeparatorLabel.frame.size.height - 1.0f) / 2.0f, halfSeparatorWidth, 1.0f)];
+        [self.facebookLoginSeparatorLabel setFrame:CGRectMake(CGRectGetMaxX(self.facebookLoginSeparatorLeftView.frame) + 15.0f, 0.0f, self.facebookLoginSeparatorLabel.frame.size.width, self.facebookLoginSeparatorLabel.frame.size.height)];
+        [self.facebookLoginSeparatorRightView setFrame:CGRectMake(halfSeparatorWidth + centerWidth, (self.facebookLoginSeparatorLabel.frame.size.height - 1.0f) / 2.0f, halfSeparatorWidth, 1.0f)];
+        [self.facebookLoginSeparator setFrame:CGRectMake(6.0f, self.loginFormHeight, buttonWidth, self.facebookLoginSeparatorLabel.frame.size.height)];
+        self.loginFormHeight += self.facebookLoginSeparator.frame.size.height;
+        
+        self.loginFormHeight += 11.0f;
+        
+        [self.facebookLoginButton setFrame:CGRectMake(6.0f, self.loginFormHeight, buttonWidth, 44.0f)];
+        self.loginFormHeight += self.facebookLoginButton.frame.size.height;
+    }
+    
+    self.signupFormHeight = self.initialSignupFormHeight;
+    self.signupFormHeight += 15.0f;
+    [self.signUpButton setFrame:CGRectMake(6.0f, self.signupFormHeight, buttonWidth, 44.0f)];
+    self.signupFormHeight += self.signUpButton.frame.size.height;
+    self.signupFormHeight += 12.0f;
+    
+    if ([[RICountryConfiguration getCurrentConfiguration].facebookAvailable boolValue]){
+        [self.facebookSignupSeparatorLeftView setFrame:CGRectMake(0.0f, (self.facebookSignupSeparatorLabel.frame.size.height - 1.0f) / 2.0f, halfSeparatorWidth, 1.0f)];
+        [self.facebookSignupSeparatorLabel setFrame:CGRectMake(CGRectGetMaxX(self.facebookSignupSeparatorLeftView.frame) + 15.0f, 0.0f, self.facebookSignupSeparatorLabel.frame.size.width, self.facebookSignupSeparatorLabel.frame.size.height)];
+        [self.facebookSignupSeparatorRightView setFrame:CGRectMake(halfSeparatorWidth + centerWidth, (self.facebookSignupSeparatorLabel.frame.size.height - 1.0f) / 2.0f, halfSeparatorWidth, 1.0f)];
+        [self.facebookSignupSeparator setFrame:CGRectMake(6.0f, self.signupFormHeight, buttonWidth, self.facebookSignupSeparatorLabel.frame.size.height)];
+        self.signupFormHeight += self.facebookSignupSeparator.frame.size.height;
+        self.signupFormHeight += 11.0f;
+        [self.facebookSingupButton setFrame:CGRectMake(6.0f, self.signupFormHeight, buttonWidth, 44.0f)];
+        self.signupFormHeight += self.facebookSingupButton.frame.size.height;
     }
     
     [self.viewToScroll setFrame:CGRectMake(0.0f,
                                            0.0f,
-                                           self.scrollView.frame.size.width,
+                                           componentWidth + margin*2,
                                            CGRectGetMaxY(self.signUpView.frame) + 6.0f)];
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width,
+                                             self.viewToScroll.frame.size.height);
+    
+    CGFloat orderSummaryY = self.stepBackground.frame.size.height;
+    CGFloat orderSummaryWidth = 250.0f;
+    CGFloat orderSummaryX = 768.0f;
+    self.orderSummaryView.frame = CGRectMake(orderSummaryX,
+                                             orderSummaryY,
+                                             orderSummaryWidth,
+                                             self.view.frame.size.height - orderSummaryY);
+    self.orderSummaryOriginalHeight = self.orderSummaryView.frame.size.height;
+    if (VALID_NOTEMPTY(self.cart, RICart)) {
+        [self.orderSummaryView loadWithCart:self.cart shippingFee:NO];
+    } else {
+        [self getCart];
+    }
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [self showLoading];
     
-    CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
-    {
-        newWidth = self.view.frame.size.width;
-    }
-    
-    [self setupViews:newWidth toInterfaceOrientation:toInterfaceOrientation];
-    
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    CGFloat newWidth = self.view.frame.size.width;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
-    {
-        newWidth = self.view.frame.size.height + self.view.frame.origin.y;
-    }
-    
-    [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
+    [self setup];
     
     [self hideLoading];
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     
     [self hideKeyboard];
-    
-    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
-                                               CGRectGetMaxY(self.signUpView.frame) + 6.0f)];
 }
 
 - (void) hideKeyboard
@@ -473,15 +552,14 @@ FBLoginViewDelegate
     if(RI_IS_RTL){
         
         [self.stepBackground setImage:[stepBackgroundImage flipImageWithOrientation:UIImageOrientationUpMirrored]];
-        [self.stepView flipViewPositionInsideSuperview];
-        [self.stepView flipSubviewPositions];
-        [self.stepView flipSubviewAlignments];
     }
 }
 
 
 - (void) finishedFormsLoading
 {
+    [self hideLoading];
+    
     if(self.firstLoading)
     {
         NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
@@ -494,6 +572,7 @@ FBLoginViewDelegate
     if(!self.loadFailed)
     {
         [self finishingSetupViews];
+        [self setup];
         [self.checkBoxComponent setHidden:YES];
         [self showLogin];
     }
@@ -517,8 +596,6 @@ FBLoginViewDelegate
             [self showErrorView:hasNoConnection startingY:0.0f selector:@selector(getForms) objects:nil];
         }
     }
-    
-    [self hideLoading];
 }
 
 - (void) finishingSetupViews
@@ -530,16 +607,10 @@ FBLoginViewDelegate
         componentWidth = 296.0f;
     }
     self.checkBoxComponent = [JACheckBoxComponent getNewJACheckBoxComponent];
-    self.loginFormHeight += 10.0f;
-    [self.checkBoxComponent setFrame:CGRectMake(self.facebookLoginButton.frame.origin.x,
-                                                self.loginFormHeight,
-                                                self.checkBoxComponent.frame.size.width - 12.0f,
-                                                self.checkBoxComponent.frame.size.height)];
     self.checkBoxComponent.labelText.font = [UIFont fontWithName:kFontRegularName size:self.checkBoxComponent.labelText.font.pointSize];
     [self.checkBoxComponent.labelText setText:STRING_REMEMBER_EMAIL];
     [self.checkBoxComponent.switchComponent setOn:YES];
     [self.loginFormView addSubview:self.checkBoxComponent];
-    self.loginFormHeight += self.checkBoxComponent.frame.size.height + 10.0f;
     
     // Login
     self.loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -554,19 +625,15 @@ FBLoginViewDelegate
         [self.loginButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_highlighted"] forState:UIControlStateSelected];
         [self.loginButton setBackgroundImage:[UIImage imageNamed:@"orangeBig_disabled"] forState:UIControlStateDisabled];
     }
-    [self.loginButton setFrame:CGRectMake(6.0f, self.loginFormHeight, componentWidth, 44.0f)];
     
     [self.loginButton setTitle:STRING_LOGIN forState:UIControlStateNormal];
     [self.loginButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.loginButton addTarget:self action:@selector(loginButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.loginButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
     [self.loginFormView addSubview:self.loginButton];
-    self.loginFormHeight += self.loginButton.frame.size.height;
     
-    self.loginFormHeight += 5.0f;
     // Forgot Password
     self.forgotButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.forgotButton setFrame:CGRectMake(6.0f, self.loginFormHeight, componentWidth, 30.0f)];
     [self.forgotButton setBackgroundColor:[UIColor clearColor]];
     [self.forgotButton setTitle:STRING_FORGOT_PASSWORD forState:UIControlStateNormal];
     [self.forgotButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
@@ -574,10 +641,6 @@ FBLoginViewDelegate
     [self.forgotButton addTarget:self action:@selector(forgotButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.forgotButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
     [self.loginFormView addSubview:self.forgotButton];
-    self.loginFormHeight += self.forgotButton.frame.size.height;
-    
-    CGFloat centerWidth = 54.0f;
-    CGFloat halfSeparatorWidth = (componentWidth - centerWidth) / 2;
     
     if ([[RICountryConfiguration getCurrentConfiguration].facebookAvailable boolValue]){
         
@@ -594,28 +657,17 @@ FBLoginViewDelegate
         self.facebookLoginSeparatorLeftView = [[UIView alloc] initWithFrame:CGRectZero];
         [self.facebookLoginSeparatorLeftView setBackgroundColor:UIColorFromRGB(0xcccccc)];
         
-        
-        [self.facebookLoginSeparatorLeftView setFrame:CGRectMake(0.0f, (self.facebookLoginSeparatorLabel.frame.size.height - 1.0f) / 2.0f, halfSeparatorWidth, 1.0f)];
-        
-        [self.facebookLoginSeparatorLabel setFrame:CGRectMake(CGRectGetMaxX(self.facebookLoginSeparatorLeftView.frame) + 15.0f, 0.0f, self.facebookLoginSeparatorLabel.frame.size.width, self.facebookLoginSeparatorLabel.frame.size.height)];
-        
         self.facebookLoginSeparatorRightView = [[UIView alloc] initWithFrame:CGRectZero];
         [self.facebookLoginSeparatorRightView setBackgroundColor:UIColorFromRGB(0xcccccc)];
-        [self.facebookLoginSeparatorRightView setFrame:CGRectMake(halfSeparatorWidth + centerWidth, (self.facebookLoginSeparatorLabel.frame.size.height - 1.0f) / 2.0f, halfSeparatorWidth, 1.0f)];
         
         [self.facebookLoginSeparator addSubview:self.facebookLoginSeparatorLeftView];
         [self.facebookLoginSeparator addSubview:self.facebookLoginSeparatorLabel];
         [self.facebookLoginSeparator addSubview:self.facebookLoginSeparatorRightView];
         
-        [self.facebookLoginSeparator setFrame:CGRectMake(6.0f, self.loginFormHeight, componentWidth, self.facebookLoginSeparatorLabel.frame.size.height)];
         [self.loginFormView addSubview:self.facebookLoginSeparator];
-        self.loginFormHeight += self.facebookLoginSeparator.frame.size.height;
-        
-        self.loginFormHeight += 11.0f;
         
         // Facebook Login
         self.facebookLoginButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.facebookLoginButton setFrame:CGRectMake(6.0f, self.loginFormHeight, componentWidth, 44.0f)];
         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
             [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"facebookFullPortrait_normal"] forState:UIControlStateNormal];
             [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"facebookFullPortrait_highlighted"] forState:UIControlStateHighlighted];
@@ -631,12 +683,9 @@ FBLoginViewDelegate
         [self.facebookLoginButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
         
         [self.loginFormView addSubview:self.facebookLoginButton];
-        self.loginFormHeight += self.facebookLoginButton.frame.size.height;
     }
-    self.signupFormHeight += 15.0f;
     // Signup
     self.signUpButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.signUpButton setFrame:CGRectMake(6.0f, self.signupFormHeight, componentWidth, 44.0f)];
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
         [self.signUpButton setBackgroundImage:[UIImage imageNamed:@"orangeFullPortrait_normal"] forState:UIControlStateNormal];
         [self.signUpButton setBackgroundImage:[UIImage imageNamed:@"orangeFullPortrait_highlighted"] forState:UIControlStateHighlighted];
@@ -653,9 +702,6 @@ FBLoginViewDelegate
     [self.signUpButton addTarget:self action:@selector(signUpButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.signUpButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
     [self.signUpFormView addSubview:self.signUpButton];
-    self.signupFormHeight += self.signUpButton.frame.size.height;
-    
-    self.signupFormHeight += 12.0f;
     
     if ([[RICountryConfiguration getCurrentConfiguration].facebookAvailable boolValue]){
         // Separator
@@ -669,26 +715,18 @@ FBLoginViewDelegate
         
         self.facebookSignupSeparatorLeftView = [[UIView alloc] initWithFrame:CGRectZero];
         [self.facebookSignupSeparatorLeftView setBackgroundColor:UIColorFromRGB(0xcccccc)];
-        [self.facebookSignupSeparatorLeftView setFrame:CGRectMake(0.0f, (self.facebookSignupSeparatorLabel.frame.size.height - 1.0f) / 2.0f, halfSeparatorWidth, 1.0f)];
-        
-        [self.facebookSignupSeparatorLabel setFrame:CGRectMake(CGRectGetMaxX(self.facebookSignupSeparatorLeftView.frame) + 15.0f, 0.0f, self.facebookSignupSeparatorLabel.frame.size.width, self.facebookSignupSeparatorLabel.frame.size.height)];
         
         self.facebookSignupSeparatorRightView = [[UIView alloc] initWithFrame:CGRectZero];
         [self.facebookSignupSeparatorRightView setBackgroundColor:UIColorFromRGB(0xcccccc)];
-        [self.facebookSignupSeparatorRightView setFrame:CGRectMake(halfSeparatorWidth + centerWidth, (self.facebookSignupSeparatorLabel.frame.size.height - 1.0f) / 2.0f, halfSeparatorWidth, 1.0f)];
         
         [self.facebookSignupSeparator addSubview:self.facebookSignupSeparatorLeftView];
         [self.facebookSignupSeparator addSubview:self.facebookSignupSeparatorLabel];
         [self.facebookSignupSeparator addSubview:self.facebookSignupSeparatorRightView];
         
-        [self.facebookSignupSeparator setFrame:CGRectMake(6.0f, self.signupFormHeight, componentWidth, self.facebookSignupSeparatorLabel.frame.size.height)];
         [self.signUpFormView addSubview:self.facebookSignupSeparator];
-        self.signupFormHeight += self.facebookSignupSeparator.frame.size.height;
         
-        self.signupFormHeight += 11.0f;
         // Facebook Signup
         self.facebookSingupButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.facebookSingupButton setFrame:CGRectMake(6.0f, self.signupFormHeight, componentWidth, 44.0f)];
         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
             [self.facebookSingupButton setBackgroundImage:[UIImage imageNamed:@"facebookFullPortrait_normal"] forState:UIControlStateNormal];
             [self.facebookSingupButton setBackgroundImage:[UIImage imageNamed:@"facebookFullPortrait_highlighted"] forState:UIControlStateHighlighted];
@@ -704,10 +742,7 @@ FBLoginViewDelegate
         [self.facebookSingupButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
         
         [self.signUpFormView addSubview:self.facebookSingupButton];
-        self.signupFormHeight += self.facebookSingupButton.frame.size.height;
     }
-    
-    [self setupViews:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
 }
 
 - (void) showLogin
@@ -737,9 +772,9 @@ FBLoginViewDelegate
             self.isAnimationRunning = NO;
             [self.signUpSeparator setHidden:YES];
             
-            [self.viewToScroll setFrame:CGRectMake(0.0f,
-                                                   0.0f,
-                                                   self.scrollView.frame.size.width,
+            [self.viewToScroll setFrame:CGRectMake(self.viewToScroll.frame.origin.x,
+                                                   self.viewToScroll.frame.origin.y,
+                                                   self.viewToScroll.frame.size.width,
                                                    CGRectGetMaxY(self.signUpView.frame)+6.0f)];
             
             [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, CGRectGetMaxY(self.signUpView.frame)+6.0f)];
@@ -763,6 +798,9 @@ FBLoginViewDelegate
     [self.checkBoxComponent setHidden:YES];
     [self.loginSeparator setHidden:YES];
     [self.loginArrow setImage:[UIImage imageNamed:@"arrowOrangeClosed"]];
+    if (RI_IS_RTL) {
+        [self.loginArrow flipViewImage];
+    }
 }
 
 - (void) showSignup
@@ -795,9 +833,9 @@ FBLoginViewDelegate
             self.isAnimationRunning = NO;
             [self.signUpSeparator setHidden:NO];
             
-            [self.viewToScroll setFrame:CGRectMake(0.0f,
-                                                   0.0f,
-                                                   self.scrollView.frame.size.width,
+            [self.viewToScroll setFrame:CGRectMake(self.viewToScroll.frame.origin.x,
+                                                   self.viewToScroll.frame.origin.y,
+                                                   self.viewToScroll.frame.size.width,
                                                    CGRectGetMaxY(self.signUpView.frame)+6.0f)];
             
             [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, CGRectGetMaxY(self.signUpView.frame)+6.0f)];
@@ -821,6 +859,9 @@ FBLoginViewDelegate
                                          26.0f)];
     [self.signUpSeparator setHidden:YES];
     [self.signUpArrow setImage:[UIImage imageNamed:@"arrowOrangeClosed"]];
+    if (RI_IS_RTL) {
+        [self.signUpArrow flipViewImage];
+    }
 }
 
 - (void)facebookLoginButtonPressed:(id)sender
@@ -1152,23 +1193,29 @@ FBLoginViewDelegate
     }
     
     [UIView animateWithDuration:0.3 animations:^{
-        [self.orderSummaryView setFrame:CGRectMake(self.orderSummaryOriginalFrame.origin.x,
-                                                   self.orderSummaryOriginalFrame.origin.y,
-                                                   self.orderSummaryOriginalFrame.size.width,
-                                                   self.orderSummaryOriginalFrame.size.height - height)];
+        [self.orderSummaryView setFrame:CGRectMake(self.orderSummaryView.frame.origin.x,
+                                                   self.orderSummaryView.frame.origin.y,
+                                                   self.orderSummaryView.frame.size.width,
+                                                   self.orderSummaryOriginalHeight - height)];
         
-        [self.scrollView setFrame:CGRectMake(self.scrollViewOriginalFrame.origin.x,
-                                             self.scrollViewOriginalFrame.origin.y,
-                                             self.scrollViewOriginalFrame.size.width,
-                                             self.scrollViewOriginalFrame.size.height - height)];
+        [self.scrollView setFrame:CGRectMake(self.scrollView.frame.origin.x,
+                                             self.scrollView.frame.origin.y,
+                                             self.scrollView.frame.size.width,
+                                             self.scrollViewOriginalHeight - height)];
     }];
 }
 
 - (void) keyboardWillHide:(NSNotification *)notification
 {
     [UIView animateWithDuration:0.3 animations:^{
-        [self.orderSummaryView setFrame:self.orderSummaryOriginalFrame];
-        [self.scrollView setFrame:self.scrollViewOriginalFrame];
+        [self.orderSummaryView setFrame:CGRectMake(self.orderSummaryView.frame.origin.x,
+                                                   self.orderSummaryView.frame.origin.y,
+                                                   self.orderSummaryView.frame.size.width,
+                                                   self.orderSummaryOriginalHeight)];
+        [self.scrollView setFrame:CGRectMake(self.scrollView.frame.origin.x,
+                                             self.scrollView.frame.origin.y,
+                                             self.scrollView.frame.size.width,
+                                             self.scrollViewOriginalHeight)];
     }];
 }
 
