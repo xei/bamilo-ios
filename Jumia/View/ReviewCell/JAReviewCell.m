@@ -151,18 +151,21 @@
     [self addSubview:self.titleLabel];
     
     [self.descriptionLabel removeFromSuperview];
-    self.descriptionLabel = [UILabel new];
+    self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(kJAReviewCellHorizontalMargins,
+                                                   CGRectGetMaxY(self.titleLabel.frame) + 10.0f,
+                                                   width - (kJAReviewCellHorizontalMargins*2),
+                                                   self.descriptionLabel.frame.size.height + 20.f)];
     [self.descriptionLabel setTextColor:UIColorFromRGB(0x666666)];
     [self.descriptionLabel setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
     [self.descriptionLabel setText:comment];
     [self.descriptionLabel setNumberOfLines:0];
-//    [self.descriptionLabel sizeToFit];
-    [self.descriptionLabel setFrame:CGRectMake(kJAReviewCellHorizontalMargins,
-                                               CGRectGetMaxY(self.titleLabel.frame) + 10.0f,
-                                               width - (kJAReviewCellHorizontalMargins*2),
-                                               self.descriptionLabel.frame.size.height)];
-    [self.descriptionLabel setTextAlignment:RI_IS_RTL?NSTextAlignmentRight:NSTextAlignmentLeft];
     [self.descriptionLabel sizeToFit];
+    if (RI_IS_RTL) {
+        [self.descriptionLabel setX:width-kJAReviewCellHorizontalMargins-self.descriptionLabel.width];
+        [self.descriptionLabel setTextAlignment:NSTextAlignmentRight];
+    }else{
+        [self.descriptionLabel setTextAlignment:NSTextAlignmentRight];
+    }
     
     [self addSubview:self.descriptionLabel];
     
