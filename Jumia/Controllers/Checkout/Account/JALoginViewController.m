@@ -144,6 +144,9 @@ FBLoginViewDelegate
     [self.loginView addSubview:self.loginLabel];
     
     self.loginArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrowOrangeClosed"]];
+    if (RI_IS_RTL) {
+        [self.loginArrow flipViewImage];
+    }
     [self.loginView addSubview:self.loginArrow];
     
     self.loginSeparator = [[UIImageView alloc] init];
@@ -177,6 +180,9 @@ FBLoginViewDelegate
     [self.signUpView addSubview:self.signUpLabel];
     
     self.signUpArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrowOrangeClosed"]];
+    if (RI_IS_RTL) {
+        [self.signUpArrow flipViewImage];
+    }
     [self.signUpView addSubview:self.signUpArrow];
     
     self.signUpSeparator = [[UIImageView alloc] init];
@@ -296,6 +302,7 @@ FBLoginViewDelegate
     
     if (RI_IS_RTL) {
         [self.view flipAllSubviews];
+        [self.checkBoxComponent flipViewPositionInsideSuperview];
     }
 }
 
@@ -392,9 +399,9 @@ FBLoginViewDelegate
     CGFloat buttonWidth = componentWidth - margin*2;
     self.loginFormHeight = self.initialLoginFormHeight;
     self.loginFormHeight += 10.0f;
-    [self.checkBoxComponent setFrame:CGRectMake(self.facebookLoginButton.frame.origin.x,
+    [self.checkBoxComponent setFrame:CGRectMake(6.0f,
                                                 self.loginFormHeight,
-                                                self.checkBoxComponent.frame.size.width - 12.0f,
+                                                self.checkBoxComponent.frame.size.width,
                                                 self.checkBoxComponent.frame.size.height)];
     self.loginFormHeight += self.checkBoxComponent.frame.size.height + 10.0f;
     [self.loginButton setFrame:CGRectMake(6.0f, self.loginFormHeight, buttonWidth, 44.0f)];
@@ -545,9 +552,6 @@ FBLoginViewDelegate
     if(RI_IS_RTL){
         
         [self.stepBackground setImage:[stepBackgroundImage flipImageWithOrientation:UIImageOrientationUpMirrored]];
-//        [self.stepView flipViewPositionInsideSuperview];
-//        [self.stepView flipSubviewPositions];
-//        [self.stepView flipSubviewAlignments];
     }
 }
 
@@ -794,6 +798,9 @@ FBLoginViewDelegate
     [self.checkBoxComponent setHidden:YES];
     [self.loginSeparator setHidden:YES];
     [self.loginArrow setImage:[UIImage imageNamed:@"arrowOrangeClosed"]];
+    if (RI_IS_RTL) {
+        [self.loginArrow flipViewImage];
+    }
 }
 
 - (void) showSignup
@@ -852,6 +859,9 @@ FBLoginViewDelegate
                                          26.0f)];
     [self.signUpSeparator setHidden:YES];
     [self.signUpArrow setImage:[UIImage imageNamed:@"arrowOrangeClosed"]];
+    if (RI_IS_RTL) {
+        [self.signUpArrow flipViewImage];
+    }
 }
 
 - (void)facebookLoginButtonPressed:(id)sender
