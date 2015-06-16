@@ -114,7 +114,6 @@
         if (RI_IS_RTL) {
             [self flipAllSubviews];
         }
-//        [self setBackgroundColor:[UIColor redColor]];
     }
 }
 

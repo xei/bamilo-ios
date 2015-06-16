@@ -30,8 +30,7 @@
     
     CGFloat currentX = margin;
     
-    
-    for (int i = RI_IS_RTL?numberOfComponents-1:0; RI_IS_RTL?i >= 0:i < numberOfComponents; RI_IS_RTL?i--:i++) {
+    for (int i = 0; i < numberOfComponents; i++) {
         
         JAClickableView* clickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
                                                                                            self.bounds.origin.y,
@@ -101,6 +100,10 @@
                                            clickableView.frame.size.height)];
             [self addSubview:separator];
         }
+    }
+    
+    if (RI_IS_RTL) {
+        [self flipAllSubviews];
     }
 }
 
