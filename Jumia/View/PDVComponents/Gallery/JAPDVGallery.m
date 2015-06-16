@@ -26,7 +26,6 @@
 - (void)loadGalleryWithArray:(NSArray *)source
                      atIndex:(NSInteger)index
 {
-    NSLog(@"self.height: %f", self.height);
     _source = source;
     _lastIndex = index;
     
@@ -75,8 +74,6 @@
 - (void)reloadFrame:(CGRect)frame
 {
     [self setFrame:frame];
-//    [_pageControl setFrame:CGRectMake(0, 0, self.width, self.height)];
-//    [_exitButton setX:self.width - 6.f];
     [self loadGalleryWithArray:_source atIndex:_lastIndex];
 }
 
