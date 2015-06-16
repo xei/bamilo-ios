@@ -18,7 +18,7 @@
 #import "RICart.h"
 #import "RIProductSimple.h"
 #import "JAPicker.h"
-#import "JAPDVGalleryView.h"
+#import "JAPDVGallery.h"
 #import "RIProductRatings.h"
 #import "JARatingsViewController.h"
 #import "JAProductDetailsViewController.h"
@@ -41,7 +41,7 @@
 
 @interface JAPDVViewController ()
 <
-JAPDVGalleryViewDelegate,
+JAPDVGalleryDelegate,
 JAPickerDelegate,
 JAActivityViewControllerDelegate
 >
@@ -56,7 +56,7 @@ JAActivityViewControllerDelegate
 @property (strong, nonatomic) JAPDVBundles *bundleLayout;
 @property (strong, nonatomic) JAPicker *picker;
 @property (strong, nonatomic) NSMutableArray *pickerDataSource;
-@property (strong, nonatomic) JAPDVGalleryView *gallery;
+@property (strong, nonatomic) JAPDVGallery *galleryPaged;
 @property (strong, nonatomic) JAButtonWithBlur *ctaView;
 @property (assign, nonatomic) NSInteger commentsCount;
 @property (assign, nonatomic) BOOL openPickerFromCart;
@@ -229,7 +229,7 @@ JAActivityViewControllerDelegate
         [self.wizardView reloadForFrame:newFrame];
     }
     
-    if(VALID_NOTEMPTY(self.gallery, JAPDVGalleryView))
+    if(VALID_NOTEMPTY(self.galleryPaged, JAPDVGallery))
     {
         UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
         
@@ -253,7 +253,7 @@ JAActivityViewControllerDelegate
             }
         }
         
-        [self.gallery reloadFrame:CGRectMake(0.0f, 0.0f, width, height)];
+        [self.galleryPaged reloadFrame:CGRectMake(0.0f, 0.0f, width, height)];
     }
     
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
@@ -270,7 +270,7 @@ JAActivityViewControllerDelegate
         [self.wizardView reloadForFrame:self.view.bounds];
     }
     
-    if(VALID_NOTEMPTY(self.gallery, JAPDVGalleryView))
+    if(VALID_NOTEMPTY(self.galleryPaged, JAPDVGallery))
     {
         UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
         
@@ -294,7 +294,8 @@ JAActivityViewControllerDelegate
             }
         }
         
-        [self.gallery reloadFrame:CGRectMake(0.0f, 0.0f, width, height)];
+        [self.galleryPaged reloadFrame:CGRectMake(0.0f, 0.0f, width, height)];
+        [self.view bringSubviewToFront:self.galleryPaged];
     }
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
@@ -827,7 +828,7 @@ JAActivityViewControllerDelegate
             imageHeight = 71.0f;
         }
         
-        for (int i = RI_IS_RTL?(int)self.product.variations.count-1:0; RI_IS_RTL?i>=0:i < [self.product.variations count]; RI_IS_RTL?i--:i++)
+        for (int i = 0; i < [self.product.variations count]; i++)
         {
             RIVariation *variation = [self.product.variations objectAtIndex:i];
             
@@ -848,7 +849,6 @@ JAActivityViewControllerDelegate
             [newImageView setImageWithURL:[NSURL URLWithString:variation.image.url]
                          placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
             [newImageView changeImageHeight:imageHeight andWidth:0.0f];
-//            [newImageView sizeToFit];
             [variationClickableView addSubview:newImageView];
             
             currentX += variationClickableView.frame.size.width;
@@ -857,12 +857,6 @@ JAActivityViewControllerDelegate
         [self.variationsSection.variationsScrollView setContentSize:CGSizeMake(currentX,
                                                                                viewHeight
                                                                                )];
-        
-        
-        if (RI_IS_RTL)
-        {
-            [self.variationsSection.variationsScrollView setContentOffset:CGPointMake(self.variationsSection.variationsScrollView.contentSize.width - self.variationsSection.variationsScrollView.width, 0)];
-        }
         
         [self.mainScrollView addSubview:self.variationsSection];
         
@@ -947,9 +941,9 @@ JAActivityViewControllerDelegate
 
         BOOL atLeastOneProductHasSize = NO;
         
-        for(int i= RI_IS_RTL?(int)self.productBundle.bundleProducts.count-1:0;
-            RI_IS_RTL?i>=0:i<self.productBundle.bundleProducts.count;
-            RI_IS_RTL?i--:i++)
+        for(int i= 0;
+            i<self.productBundle.bundleProducts.count;
+            i++)
         {
             
             RIProduct *bundleProduct = [self.productBundle.bundleProducts objectAtIndex:i];
@@ -1061,10 +1055,6 @@ JAActivityViewControllerDelegate
             
             mainScrollViewY += (6.0f + self.bundleLayout.frame.size.height);
         }
-        
-        if (RI_IS_RTL) {
-            [self.bundleLayout.bundleScrollView setContentOffset:CGPointMake(self.bundleLayout.bundleScrollView.contentSize.width - self.bundleLayout.bundleScrollView.bounds.size.width, 0)];
-        }
     }
     
     /*******
@@ -1079,12 +1069,9 @@ JAActivityViewControllerDelegate
         [self.relatedItems setupWithFrame:self.mainScrollView.frame];
         self.relatedItems.topLabel.text = STRING_RELATED_ITEMS;
         
-        if (RI_IS_RTL) {
-        }
-        
         NSArray* relatedProducts = [self.product.relatedProducts allObjects];
         
-        for (int i = RI_IS_RTL ? (int)relatedProducts.count-1 : 0; RI_IS_RTL ? i>= 0 : i < relatedProducts.count; RI_IS_RTL ? i-- : i++) {
+        for (int i = 0; i < relatedProducts.count; i++) {
             RIProduct* product = [relatedProducts objectAtIndex:i];
             if (![product.sku isEqualToString:self.product.sku])
             {
@@ -1122,10 +1109,6 @@ JAActivityViewControllerDelegate
         }
         
         [self.relatedItems.relatedItemsScrollView setContentSize:CGSizeMake(relatedItemStart, self.relatedItems.relatedItemsScrollView.frame.size.height)];
-        
-        if (RI_IS_RTL) {
-            [self.relatedItems.relatedItemsScrollView setContentOffset:CGPointMake(self.relatedItems.relatedItemsScrollView.contentSize.width - self.relatedItems.bounds.size.width, 0)];
-        }
         
         if(isiPadInLandscape)
         {
@@ -1955,67 +1938,33 @@ JAActivityViewControllerDelegate
 
 - (void)presentGalleryAtIndex:(NSInteger)index;
 {
-    if(VALID(self.gallery, JAPDVGalleryView))
-    {
-        [self.gallery removeFromSuperview];
-    }
+    if(VALID(_galleryPaged, JAPDVGallery))
+        [_galleryPaged removeFromSuperview];
     
-//    self.gallery = [JAPDVGalleryView getNewJAPDVGalleryView];
-    self.gallery = [JAPDVGalleryView new];
-    self.gallery.delegate = self;
-    
-    UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
-    
-    CGFloat width = gallerySuperView.frame.size.width;
-    CGFloat height = gallerySuperView.frame.size.height;
-    
-    if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
-    {
-        if(width < gallerySuperView.frame.size.height)
-        {
-            width = gallerySuperView.frame.size.height;
-            height = gallerySuperView.frame.size.width;
-        }
-    }
-    else
-    {
-        if(width > gallerySuperView.frame.size.height)
-        {
-            width = gallerySuperView.frame.size.height;
-            height = gallerySuperView.frame.size.width;
-        }
-    }
-    
-    CGRect oldFrame = self.gallery.frame;
-    oldFrame.size.width = width;
-    oldFrame.size.height = height;
-    CGRect newFrame = oldFrame;
-    newFrame.origin.y = self.gallery.frame.size.height;
-    self.gallery.frame = newFrame;
-    [gallerySuperView addSubview:self.gallery];
-    
-    [self.gallery loadGalleryWithArray:[self.product.images array]
-                               atIndex:index];
-    
-    
-    [UIView animateWithDuration:0.4f
+    _galleryPaged = [[JAPDVGallery alloc] initWithFrame:CGRectMake(0, self.view.height-30, self.view.width, self.view.height-30)];
+    CGRect openFrame = CGRectMake(0, 0, self.view.width, self.view.height);
+    [_galleryPaged loadGalleryWithArray:[self.product.images array] atIndex:index];
+    [self.view addSubview:_galleryPaged];
+    [_galleryPaged setBackgroundColor:[UIColor whiteColor]];
+    [UIView animateWithDuration:.3f delay:0.f options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
-                         self.gallery.frame = oldFrame;
-                     }];
+                         _galleryPaged.frame = openFrame;
+                     } completion:nil];
+    _galleryPaged.delegate = self;
+    
 }
 
 - (void)dismissGallery
 {
-    CGRect newFrame = self.gallery.frame;
-    newFrame.origin.y = self.gallery.frame.size.height;
+    CGRect newFrame = self.galleryPaged.frame;
+    newFrame.origin.y = self.galleryPaged.frame.size.height;
     
-    [UIView animateWithDuration:0.4f
-                     animations:^{
-                         self.gallery.frame = newFrame;
-                     } completion:^(BOOL finished) {
-                         [self.gallery removeFromSuperview];
-                         self.gallery = nil;
-                     }];
+    [UIView animateWithDuration:.3f delay:0.f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.galleryPaged.frame = newFrame;
+    } completion:^(BOOL finished) {
+        [self.galleryPaged removeFromSuperview];
+        self.galleryPaged = nil;
+    }];
 }
 
 

@@ -43,10 +43,7 @@
         NSInteger numberOfMargins = numberOfComponentsForLine + 1;
         CGFloat componentWidth = (self.bounds.size.width- marginX * numberOfMargins)/numberOfComponentsForLine;
         CGFloat currentX = marginX;
-        for (int i = RI_IS_RTL?(int)self.teaserGrouping.teaserComponents.count-1:0;
-             RI_IS_RTL? i >= 0 : i < self.teaserGrouping.teaserComponents.count;
-             RI_IS_RTL? i--:i++) {
-//        for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
+        for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
             
             JAClickableView* clickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
                                                                                                currentY,
@@ -114,6 +111,10 @@
                                   self.frame.origin.y,
                                   self.frame.size.width,
                                   currentY)];
+        if (RI_IS_RTL) {
+            [self flipAllSubviews];
+        }
+//        [self setBackgroundColor:[UIColor redColor]];
     }
 }
 
