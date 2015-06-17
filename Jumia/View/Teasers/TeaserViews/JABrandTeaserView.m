@@ -44,10 +44,6 @@
                                             self.frame.size.width - groupingTitleLabelMargin*2,
                                             topAreaHeight)];
     
-    if (RI_IS_RTL) {
-        [groupingTitleLabel flipViewAlignment];
-    }
-    
     [self addSubview:groupingTitleLabel];
     
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
