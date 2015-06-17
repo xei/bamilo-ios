@@ -193,7 +193,7 @@
                 [scrollview setContentSize:CGSizeMake(view.width, scrollview.contentSize.height)];
             }
         }
-        if ([view isKindOfClass:[UITableView class]]) {
+        if ([view isKindOfClass:[UITableView class]] || [view isKindOfClass:[UICollectionView class]] ) {
             [view flipViewPositionInsideSuperview];
             continue;
         } else if ([view isKindOfClass:[JADynamicField class]]) {
