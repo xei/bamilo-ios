@@ -25,12 +25,7 @@
     self.backgroundColor = UIColorFromRGB(0xffffff);
     
     self.clickableView.translatesAutoresizingMaskIntoConstraints = YES;
-    [self.clickableView setFrame:CGRectMake(0.0f,
-                                            0.0f,
-                                            self.frame.size.width,
-                                            self.frame.size.height)];
-    
-    [self.checkMark setHidden:YES];
+    self.clickableView.frame = self.bounds;
     
     NSString *addressText = @"";
     
@@ -107,7 +102,36 @@
         }
     }
     
+    self.separator.translatesAutoresizingMaskIntoConstraints = YES;
+    self.separator.frame = CGRectMake(0.0f, 99.0f, self.frame.size.width, 1.0f);
+    
+    self.editAddressButton.translatesAutoresizingMaskIntoConstraints = YES;
+    self.editAddressButton.frame = CGRectMake(self.frame.size.width - self.editAddressButton.frame.size.width,
+                                              100.0f - self.editAddressButton.frame.size.height,
+                                              self.editAddressButton.frame.size.width,
+                                              self.editAddressButton.frame.size.height);
+    
+    self.checkMark.translatesAutoresizingMaskIntoConstraints = YES;
+    self.checkMark.frame = CGRectMake(self.frame.size.width - self.checkMark.frame.size.width - 14.0f,
+                                      (100.0f - self.checkMark.frame.size.height) / 2,
+                                      self.checkMark.frame.size.width,
+                                      self.checkMark.frame.size.height);
+    [self.checkMark setHidden:YES];
+    
+    self.addressLabel.textAlignment = NSTextAlignmentLeft;
+    self.addressLabel.frame = CGRectMake(17.0f,
+                                         6.0f,
+                                         self.frame.size.width - self.editAddressButton.frame.size.width - 30.0f,
+                                         100.0f - 12.0f);
     [self.addressLabel setText:addressText];
+    
+    if (RI_IS_RTL) {
+        [self.clickableView flipAllSubviews];
+        self.editAddressButton.frame = CGRectMake(0.0f,
+                                                  self.editAddressButton.frame.origin.y,
+                                                  self.editAddressButton.frame.size.width,
+                                                  self.editAddressButton.frame.size.height);
+    }
 }
 
 -(void)selectAddress

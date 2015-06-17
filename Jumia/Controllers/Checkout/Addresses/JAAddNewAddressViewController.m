@@ -137,6 +137,8 @@ JAPickerDelegate>
     
     [self initViews];
     
+    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+    
     [self getForms];
 }
 
@@ -262,14 +264,6 @@ JAPickerDelegate>
     
     [self showLoading];
     
-    CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation) && self.fromCheckout)
-    {
-        newWidth = self.view.frame.size.width;
-    }
-    
-    [self setupViews:newWidth toInterfaceOrientation:toInterfaceOrientation];
-    
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
@@ -327,19 +321,22 @@ JAPickerDelegate>
 
 -(void)initShippingAddressView
 {
-    self.shippingContentView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.contentScrollView.frame.size.height)];
+    self.shippingContentView = [[UIView alloc] init];
+    self.shippingContentView.frame = CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.contentScrollView.frame.size.height);
     [self.shippingContentView setBackgroundColor:UIColorFromRGB(0xffffff)];
     [self.shippingContentView setHidden:YES];
     self.shippingContentView.layer.cornerRadius = 5.0f;
     
-    self.shippingHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, self.shippingContentView.frame.size.width, 26.0f)];
+    self.shippingHeaderLabel = [[UILabel alloc] init];
+    self.shippingHeaderLabel.frame = CGRectMake(6.0f, 0.0f, self.shippingContentView.frame.size.width, 26.0f);
     [self.shippingHeaderLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
     [self.shippingHeaderLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.shippingHeaderLabel setText:STRING_ADD_NEW_ADDRESS];
     [self.shippingHeaderLabel setBackgroundColor:[UIColor clearColor]];
     [self.shippingContentView addSubview:self.shippingHeaderLabel];
     
-    self.shippingHeaderSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.shippingHeaderLabel.frame), self.shippingContentView.frame.size.width - 12.0f, 1.0f)];
+    self.shippingHeaderSeparator = [[UIView alloc] init];
+    self.shippingHeaderSeparator.frame = CGRectMake(0.0f, CGRectGetMaxY(self.shippingHeaderLabel.frame), self.shippingContentView.frame.size.width - 12.0f, 1.0f);
     [self.shippingHeaderSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     [self.shippingContentView addSubview:self.shippingHeaderSeparator];
     
@@ -349,19 +346,22 @@ JAPickerDelegate>
 
 -(void)initBillingAddressView
 {
-    self.billingContentView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width, self.contentScrollView.frame.size.height)];
+    self.billingContentView = [[UIView alloc] init];
+    self.billingContentView.frame = CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width, self.contentScrollView.frame.size.height);
     [self.billingContentView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.billingContentView.layer.cornerRadius = 5.0f;
     [self.billingContentView setHidden:YES];
     
-    self.billingHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, self.billingContentView.frame.size.width - 12.0f, 26.0f)];
+    self.billingHeaderLabel = [[UILabel alloc] init];
+    self.billingHeaderLabel.frame = CGRectMake(6.0f, 0.0f, self.billingContentView.frame.size.width - 12.0f, 26.0f);
     [self.billingHeaderLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
     [self.billingHeaderLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
     [self.billingHeaderLabel setText:STRING_BILLING_ADDRESSES];
     [self.billingHeaderLabel setBackgroundColor:[UIColor clearColor]];
     [self.billingContentView addSubview:self.billingHeaderLabel];
     
-    self.billingHeaderSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.billingHeaderLabel.frame), self.billingContentView.frame.size.width - 12.0f, 1.0f)];
+    self.billingHeaderSeparator = [[UIView alloc] init];
+    self.billingHeaderSeparator.frame = CGRectMake(0.0f, CGRectGetMaxY(self.billingHeaderLabel.frame), self.billingContentView.frame.size.width - 12.0f, 1.0f);
     [self.billingHeaderSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     [self.billingContentView addSubview:self.billingHeaderSeparator];
     
@@ -462,11 +462,7 @@ JAPickerDelegate>
     }
     
     if(RI_IS_RTL){
-        
         [self.stepBackground setImage:[stepBackgroundImage flipImageWithOrientation:UIImageOrientationUpMirrored]];
-        [self.stepView flipViewPositionInsideSuperview];
-        [self.stepView flipSubviewPositions];
-        [self.stepView flipSubviewAlignments];
     }
 }
 
@@ -545,6 +541,7 @@ JAPickerDelegate>
                                                   self.shippingAddressViewCurrentY)];
     [self.shippingContentView setHidden:NO];
     
+    self.shippingHeaderLabel.textAlignment = NSTextAlignmentLeft;
     [self.shippingHeaderLabel setFrame:CGRectMake(6.0f,
                                                   0.0f,
                                                   self.shippingContentView.frame.size.width,
@@ -572,6 +569,7 @@ JAPickerDelegate>
                                                  self.contentScrollView.frame.size.width - 12.0f,
                                                  self.billingAddressViewCurrentY + 12.0f)];
     
+    self.billingHeaderLabel.textAlignment = NSTextAlignmentLeft;
     [self.billingHeaderLabel setFrame:CGRectMake(6.0f,
                                                  0.0f,
                                                  self.billingContentView.frame.size.width,
@@ -605,6 +603,10 @@ JAPickerDelegate>
     {
         [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width,
                                                           self.shippingContentView.frame.origin.y + self.shippingContentView.frame.size.height + 6.0f + self.billingContentView.frame.size.height + self.bottomView.frame.size.height)];
+    }
+    
+    if (RI_IS_RTL) {
+        [self.view flipAllSubviews];
     }
 }
 

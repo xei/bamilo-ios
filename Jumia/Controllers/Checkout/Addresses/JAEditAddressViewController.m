@@ -93,6 +93,8 @@ JAPickerDelegate>
     
     [self initViews];
 
+    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+    
     [self getForm];
 }
 
@@ -156,14 +158,6 @@ JAPickerDelegate>
     }
     
     [self showLoading];
-    
-    CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation) && self.fromCheckout)
-    {
-        newWidth = self.view.frame.size.width;
-    }
-    
-    [self setupViews:newWidth toInterfaceOrientation:toInterfaceOrientation];
     
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
@@ -285,11 +279,7 @@ JAPickerDelegate>
     }
     
     if(RI_IS_RTL){
-        
         [self.stepBackground setImage:[stepBackgroundImage flipImageWithOrientation:UIImageOrientationUpMirrored]];
-        [self.stepView flipViewPositionInsideSuperview];
-        [self.stepView flipSubviewPositions];
-        [self.stepView flipSubviewAlignments];
     }
 }
 
@@ -349,6 +339,7 @@ JAPickerDelegate>
                                           self.addressViewCurrentY)];
     [self.contentView setHidden:NO];
     
+    self.headerLabel.textAlignment = NSTextAlignmentLeft;
     [self.headerLabel setFrame:CGRectMake(6.0f, 0.0f, self.contentView.frame.size.width - 12.0f, 26.0f)];
     [self.headerSeparator setFrame:CGRectMake(0.0f, CGRectGetMaxY(self.headerLabel.frame), self.contentView.frame.size.width, 1.0f)];
     
@@ -364,6 +355,10 @@ JAPickerDelegate>
         [self.bottomView addButton:STRING_CANCEL target:self action:@selector(cancelButtonPressed)];
     }
     [self.bottomView addButton:STRING_SAVE_CHANGES target:self action:@selector(saveChangesButtonPressed)];
+    
+    if (RI_IS_RTL) {
+        [self.view flipAllSubviews];
+    }
 }
 
 -(NSDictionary*)getAddressValues
