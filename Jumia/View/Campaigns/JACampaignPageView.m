@@ -140,13 +140,13 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    CGSize size = [self getCellLayoutForInterfaceOrientation:self.interfaceOrientation];
     if (VALID_NOTEMPTY(self.campaign.bannerImageURL, NSString) && 0 == indexPath.row) {
-        return self.bannerImage.frame.size;
-//        return CGSizeMake(self.bannerImage.width - 6.f, self.bannerImage.height);
-    } else {
-        return [self getCellLayoutForInterfaceOrientation:self.interfaceOrientation];
-//        return CGSizeMake([self getCellLayoutForInterfaceOrientation:self.interfaceOrientation].width - 6.f, [self getCellLayoutForInterfaceOrientation:self.interfaceOrientation].height);
+        size = self.bannerImage.frame.size;
+        NSLog(@"BANNER");
     }
+    NSLog(@"size.width: %f", size.width);
+    return size;
 }
 
 - (CGSize)getCellLayoutForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -190,7 +190,7 @@
     [cell loadWithCampaignProduct:product
              elapsedTimeInSeconds:self.elapsedTimeInSeconds
                        chosenSize:chosenSimpleName];
-    
+    [cell.backgroundView setX:0.f];
     return cell;
 
 }

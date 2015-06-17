@@ -75,7 +75,7 @@
     NSMutableArray* tempArray = [NSMutableArray new];
     
     CGFloat currentWidth = 0;
-    for (int i = RI_IS_RTL?(int)self.optionStrings.count-1:0; RI_IS_RTL?i>=0:i<self.optionStrings.count; RI_IS_RTL?i--:i++) {
+    for (int i = 0; i<self.optionStrings.count; i++) {
         NSString* category = [self.optionStrings objectAtIndex:i];
         
         UILabel* newLabel = [[UILabel alloc] initWithFrame:CGRectMake(currentWidth,
@@ -214,8 +214,7 @@
 - (void)scrollLeftAnimated:(BOOL)animated
 {
     CGFloat newIndex = self.selectedIndex + 1;
-    
-    if (newIndex < self.optionLabels.count) {
+    if (newIndex < self.optionLabels.count && newIndex >= 0) {
         [self.scrollView scrollRectToVisible:CGRectMake(newIndex * self.scrollView.bounds.size.width,
                                                         self.scrollView.bounds.origin.y,
                                                         self.scrollView.bounds.size.width,
@@ -228,7 +227,7 @@
 {
     CGFloat newIndex = self.selectedIndex - 1;
     
-    if (newIndex >= 0) {
+    if (newIndex < self.optionLabels.count && newIndex >= 0) {
         [self.scrollView scrollRectToVisible:CGRectMake(newIndex * self.scrollView.bounds.size.width,
                                                         self.scrollView.bounds.origin.y,
                                                         self.scrollView.bounds.size.width,
