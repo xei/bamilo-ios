@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -13,49 +13,32 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="308" height="100"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="955-Tk-gcN" customClass="JAClickableView">
+                    <view contentMode="scaleToFill" id="955-Tk-gcN" customClass="JAClickableView">
                         <rect key="frame" x="0.0" y="0.0" width="308" height="100"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vCe-DM-Ifa">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vCe-DM-Ifa">
                                 <rect key="frame" x="17" y="6" width="230" height="88"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tick_selected" translatesAutoresizingMaskIntoConstraints="NO" id="p0q-iW-PJD">
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tick_selected" id="p0q-iW-PJD">
                                 <rect key="frame" x="280" y="35" width="14" height="14"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="14" id="iV1-La-Xv7"/>
-                                    <constraint firstAttribute="height" constant="14" id="k2X-OY-CvB"/>
-                                </constraints>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ugd-Hg-g5g">
+                            <view contentMode="scaleToFill" id="Ugd-Hg-g5g">
                                 <rect key="frame" x="0.0" y="99" width="308" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="Mq1-SH-nbJ"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="vCe-DM-Ifa" firstAttribute="top" secondItem="955-Tk-gcN" secondAttribute="top" constant="6" id="357-3a-xZ1"/>
-                            <constraint firstAttribute="bottom" secondItem="Ugd-Hg-g5g" secondAttribute="bottom" id="3wX-u7-fWD"/>
-                            <constraint firstItem="Ugd-Hg-g5g" firstAttribute="top" secondItem="vCe-DM-Ifa" secondAttribute="bottom" constant="5" id="9vp-dq-MkW"/>
-                            <constraint firstItem="vCe-DM-Ifa" firstAttribute="leading" secondItem="955-Tk-gcN" secondAttribute="leading" constant="17" id="DsG-hv-l8i"/>
-                            <constraint firstItem="p0q-iW-PJD" firstAttribute="top" secondItem="955-Tk-gcN" secondAttribute="top" constant="35" id="U7q-Zj-1Q3"/>
-                            <constraint firstItem="p0q-iW-PJD" firstAttribute="leading" secondItem="vCe-DM-Ifa" secondAttribute="trailing" constant="33" id="bL5-6A-hJu"/>
-                            <constraint firstItem="Ugd-Hg-g5g" firstAttribute="leading" secondItem="955-Tk-gcN" secondAttribute="leading" id="cAQ-I5-PNG"/>
-                            <constraint firstAttribute="trailing" secondItem="Ugd-Hg-g5g" secondAttribute="trailing" id="ijX-2L-0ES"/>
-                            <constraint firstAttribute="trailing" secondItem="p0q-iW-PJD" secondAttribute="trailing" constant="14" id="lhl-JT-P3v"/>
-                        </constraints>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ImB-e1-r4D">
-                        <rect key="frame" x="262" y="58" width="45" height="45"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="45" id="aM4-9B-hXi"/>
-                            <constraint firstAttribute="height" constant="45" id="kyc-zg-A7P"/>
-                        </constraints>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ImB-e1-r4D">
+                        <rect key="frame" x="263" y="55" width="45" height="45"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <state key="normal" image="editAddress_normal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
@@ -66,14 +49,6 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstItem="955-Tk-gcN" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Bht-uJ-xEb"/>
-                <constraint firstItem="955-Tk-gcN" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="JHQ-en-RMb"/>
-                <constraint firstAttribute="bottom" secondItem="955-Tk-gcN" secondAttribute="bottom" id="MxQ-D7-7wX"/>
-                <constraint firstItem="ImB-e1-r4D" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="58" id="ZCO-fS-PbX"/>
-                <constraint firstAttribute="trailing" secondItem="ImB-e1-r4D" secondAttribute="trailing" constant="1" id="fbt-Ps-cRR"/>
-                <constraint firstAttribute="trailing" secondItem="955-Tk-gcN" secondAttribute="trailing" id="pb8-YI-W4F"/>
-            </constraints>
             <connections>
                 <outlet property="addressLabel" destination="vCe-DM-Ifa" id="Yri-vh-7ui"/>
                 <outlet property="checkMark" destination="p0q-iW-PJD" id="vpx-tp-2vv"/>

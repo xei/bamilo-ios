@@ -24,10 +24,13 @@
     [self setBackgroundColor:UIColorFromRGB(0xffffff)];
     
     self.title.font = [UIFont fontWithName:kFontRegularName size:self.title.font.pointSize];
+    self.title.textAlignment = NSTextAlignmentLeft;
     [self.title setText:text];
     [self.title setTextColor:UIColorFromRGB(0x4e4e4e)];
     
     [self.separator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+    
+    [self flipAllSubviews];
 }
 
 @end

@@ -187,7 +187,7 @@
 - (void)flipAllSubviews
 {
     for (UIView *view in self.subviews) {
-        if ([view isKindOfClass:[UITableView class]] || [view isKindOfClass:[JADynamicField class]]) {
+        if ([view isKindOfClass:[UITableView class]] || [view isKindOfClass:[UICollectionView class]] || [view isKindOfClass:[JADynamicField class]]) {
             continue;
         } else if ([view isKindOfClass:[JAPagedView class]]) {
             continue;

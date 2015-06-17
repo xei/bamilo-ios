@@ -179,10 +179,7 @@ UICollectionViewDelegateFlowLayout>
     [self.contentScrollView setHidden:YES];
     [self.bottomView setHidden:YES];
     
-    if(self.fromCheckout)
-    {
-        [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
-    }
+    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
     
     [self getAddressList];
 }
@@ -275,14 +272,6 @@ UICollectionViewDelegateFlowLayout>
 {
     [self showLoading];
     
-    CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation) && self.fromCheckout)
-    {
-        newWidth = self.view.frame.size.width;
-    }
-    
-    [self setupViews:newWidth toInterfaceOrientation:toInterfaceOrientation];
-    
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
@@ -366,11 +355,7 @@ UICollectionViewDelegateFlowLayout>
     }
     
     if(RI_IS_RTL){
-        
         [self.stepBackground setImage:[stepBackgroundImage flipImageWithOrientation:UIImageOrientationUpMirrored]];
-        [self.stepView flipViewPositionInsideSuperview];
-        [self.stepView flipSubviewPositions];
-        [self.stepView flipSubviewAlignments];
     }
 }
 
@@ -446,6 +431,8 @@ UICollectionViewDelegateFlowLayout>
                                                                 self.secondAddressesCollectionView.frame.size.width,
                                                                 70.0f)];
     }
+    [self.firstAddressesCollectionView reloadData];
+    [self.secondAddressesCollectionView reloadData];
     
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, CGRectGetMaxY(self.secondAddressesCollectionView.frame) + self.bottomView.frame.size.height)];
     
@@ -465,6 +452,10 @@ UICollectionViewDelegateFlowLayout>
     }
     
     [self.bottomView setHidden:NO];
+    
+    if (RI_IS_RTL) {
+        [self.view flipAllSubviews];
+    }
 }
 
 -(void)finishedLoadingAddresses
@@ -834,22 +825,22 @@ UICollectionViewDelegateFlowLayout>
         {
             if(self.useSameAddressAsBillingAndShipping)
             {
-                [headerView loadHeaderWithText:STRING_DEFAULT_SHIPPING_ADDRESSES width:self.contentScrollView.frame.size.width];
+                [headerView loadHeaderWithText:STRING_DEFAULT_SHIPPING_ADDRESSES width:self.contentScrollView.frame.size.width - 12.0f];
             }
             else
             {
-                [headerView loadHeaderWithText:STRING_SHIPPING_ADDRESSES width:self.contentScrollView.frame.size.width];
+                [headerView loadHeaderWithText:STRING_SHIPPING_ADDRESSES width:self.contentScrollView.frame.size.width - 12.0f];
             }
         }
         else if(collectionView == self.secondAddressesCollectionView)
         {
             if(self.useSameAddressAsBillingAndShipping)
             {
-                [headerView loadHeaderWithText:STRING_OTHER_ADDRESSES width:self.contentScrollView.frame.size.width];
+                [headerView loadHeaderWithText:STRING_OTHER_ADDRESSES width:self.contentScrollView.frame.size.width - 12.0f];
             }
             else
             {
-                [headerView loadHeaderWithText:STRING_BILLING_ADDRESSES width:self.contentScrollView.frame.size.width];
+                [headerView loadHeaderWithText:STRING_BILLING_ADDRESSES width:self.contentScrollView.frame.size.width - 12.0f];
             }
         }
         
