@@ -315,7 +315,7 @@
     else {
         [self.featuresTextLabel setText:self.product.summary];
         [self.featuresTextLabel sizeToFit];
-        [self.featuresView setFrame:CGRectMake(RI_IS_RTL?self.contentScrollView.frame.size.width:6.0f,
+        [self.featuresView setFrame:CGRectMake(6.0f,
                                                6.0f,
                                                self.contentScrollView.frame.size.width - 12.0f,
                                                CGRectGetMaxY(self.featuresTextLabel.frame) + 6.0f)];

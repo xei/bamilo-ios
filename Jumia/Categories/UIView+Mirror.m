@@ -187,7 +187,16 @@
 - (void)flipAllSubviews
 {
     for (UIView *view in self.subviews) {
-        if ([view isKindOfClass:[UITableView class]] || [view isKindOfClass:[UICollectionView class]] || [view isKindOfClass:[JADynamicField class]]) {
+        if ([view isKindOfClass:[UIScrollView class]]) {
+            UIScrollView *scrollview = (UIScrollView *)view;
+            if (scrollview.contentSize.width < view.width) {
+                [scrollview setContentSize:CGSizeMake(view.width, scrollview.contentSize.height)];
+            }
+        }
+        if ([view isKindOfClass:[UITableView class]] || [view isKindOfClass:[UICollectionView class]] ) {
+            [view flipViewPositionInsideSuperview];
+            continue;
+        } else if ([view isKindOfClass:[JADynamicField class]]) {
             continue;
         } else if ([view isKindOfClass:[JAPagedView class]]) {
             continue;

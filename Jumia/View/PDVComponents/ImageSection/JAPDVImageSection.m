@@ -293,11 +293,11 @@
             currentY += self.sellerDeliveryLabel.frame.size.height;
         }
         currentY += 16.0f;
+        [self setHeight:CGRectGetMaxY(_sellerDeliveryLabel.frame) + 6.f];
     }
     
     [self setY:currentY];
     
-    [self setHeight:CGRectGetMaxY(_sellerDeliveryLabel.frame) + 6.f];
     
 }
 
@@ -569,7 +569,6 @@
         [imageView setImage:[UIImage imageNamed:@"placeholder_pdv"]];
     }
     [_imagesPagedView setViews:items];
-    
 }
 
 - (void)imageViewPressed:(UIControl*)sender

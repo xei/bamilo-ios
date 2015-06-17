@@ -153,7 +153,6 @@
     CGFloat dotImageWidth = [dotImageTemp size].width;
     
     _pageComponentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, (_infinite?numberOfViews-1:numberOfViews)*(dotImageWidth), dotImageWidth)];
-    NSLog(@"_pageComponentView.width: %f", _pageComponentView.width);
     [_pageComponentView setX:self.width/2-_pageComponentView.width/2];
     [self addSubview:_pageComponentView];
     [_pageComponentView setYBottomAligned:self.height*.2];

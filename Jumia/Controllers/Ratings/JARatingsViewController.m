@@ -294,7 +294,7 @@ UITableViewDataSource
     
     if(self.emptyReviewsView)
     {
-        [self.emptyReviewsView setHidden:YES];
+        [self.emptyScrollView setHidden:YES];
     }
     
     if(self.writeReviewScrollView)
@@ -353,6 +353,7 @@ UITableViewDataSource
     if(_hasComments)
     {
         CGRect tableViewCommentsFrame = self.tableViewComments.frame;
+        tableViewCommentsFrame.origin.x = kHorizontalMargin;
         tableViewCommentsFrame.size.width = self.view.bounds.size.width/2 - kHorizontalMargin - 3.f;
         if (!self.writeReviewScrollView || (self.writeReviewScrollView && self.writeReviewScrollView.hidden)) {
             tableViewCommentsFrame.size.width = self.view.bounds.size.width - 2*kHorizontalMargin;
@@ -368,12 +369,12 @@ UITableViewDataSource
         [self.tableViewComments setFrame:tableViewCommentsFrame];
         
         [self.tableViewComments setHidden:NO];
-        [self.emptyReviewsView setHidden:YES];
+        [self.emptyScrollView setHidden:YES];
     }
     else
     {
         [self.tableViewComments setHidden:YES];
-        [self.emptyReviewsView setHidden:NO];
+        [self.emptyScrollView setHidden:NO];
         [self setupEmptyReviewsView];
     }
     
@@ -381,6 +382,13 @@ UITableViewDataSource
     self.tableViewComments.dataSource = self;
     
     [self.tableViewComments reloadData];
+    
+    if (RI_IS_RTL)
+    {
+        [self.view flipAllSubviews];
+    }
+    
+    [self.view bringSubviewToFront:self.tableViewComments];
 }
 
 - (void)setupTopView
@@ -477,10 +485,6 @@ UITableViewDataSource
                                      ratingsView.frame.size.width,
                                      ratingsView.frame.size.height)];
         [self.topView addSubview:ratingsView];
-        if (RI_IS_RTL) {
-            [titleLabel flipViewAlignment];
-            [ratingsView flipViewAlignment];
-        }
         [self.ratingStars addObject:ratingsView];
         
         topViewMinHeight += titleLabel.frame.size.height + ratingsView.frame.size.height;
@@ -519,11 +523,6 @@ UITableViewDataSource
             
             [self.ratingStars addObject:ratingsView];
             
-            if (RI_IS_RTL) {
-                [titleLabel flipViewAlignment];
-                [ratingsView flipViewAlignment];
-            }
-            
             currentX += ratingViewWidth;
             
             NSInteger nextIndex = i+1;
@@ -546,11 +545,6 @@ UITableViewDataSource
     self.topView.frame = topViewFrame;
     
     [self.topView sizeToFit];
-    
-    if (RI_IS_RTL)
-    {
-        [self.topView flipSubviewPositions];
-    }
     
     if(topViewMinHeight < 38.0f)
     {
@@ -671,11 +665,13 @@ UITableViewDataSource
     self.resumeView.layer.cornerRadius = 5.0f;
     
     CGRect resumeViewFrame = self.resumeView.frame;
+    resumeViewFrame.origin.x = kHorizontalMargin;
     resumeViewFrame.size.width = self.view.bounds.size.width - 2*kHorizontalMargin;
     resumeViewFrame.origin.y = CGRectGetMaxY(self.topView.frame) + kVerticalMargin;
     self.resumeView.frame = resumeViewFrame;
     
-    [self.labelUsedProduct setWidth:self.resumeView.bounds.size.width - 2*kHorizontalMargin];
+    [self.labelUsedProduct setX:kHorizontalMargin];
+    [self.labelUsedProduct sizeToFit];
     
     [self.writeReviewButton setX:self.view.bounds.size.width/2 - self.writeReviewButton.bounds.size.width/2];
 }
@@ -879,9 +875,6 @@ UITableViewDataSource
     [self.writeReviewScrollView setContentSize:CGSizeMake(self.writeReviewScrollView.frame.size.width, currentY)];
     [self.view addSubview:self.writeReviewScrollView];
     
-    if (RI_IS_RTL) {
-        [self.writeReviewScrollView flipAllSubviews];
-    }
 }
 
 - (void) setupEmptyReviewsView
