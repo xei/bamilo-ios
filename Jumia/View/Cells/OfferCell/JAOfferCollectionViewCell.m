@@ -86,7 +86,7 @@
     [self.addToCartButton setTitle:STRING_ADD_TO_SHOPPING_CART forState:UIControlStateNormal];
     
     if (RI_IS_RTL) {
-        [self flipAllSubviews];
+        [self.backgroundContentView flipAllSubviews];
     }
 }
 

@@ -275,7 +275,7 @@
             height = 104.0f;
         }
     } else {
-        width = self.view.frame.size.width;
+        width = self.view.frame.size.width - 12.f;
         height = 104.0f;
     }
     
