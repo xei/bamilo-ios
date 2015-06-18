@@ -103,7 +103,7 @@
         self.selectedIndex = self.startingIndex-1;
         [self scrollLeftAnimated:NO];
     } else {
-        [self scrollTo:RI_IS_RTL?self.optionStrings.count-1:0 animated:NO];
+        [self scrollTo:RI_IS_RTL?(self.optionStrings?(self.optionStrings.count-1):0):0 animated:NO];
     }
     
     UIImage* indicatorImage = [UIImage imageNamed:JAPickerScrollViewIndicatorImageName];
