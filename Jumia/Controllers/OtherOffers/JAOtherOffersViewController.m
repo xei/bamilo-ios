@@ -141,7 +141,6 @@
                                               self.topView.frame.size.width - 2*horizontalMargin,
                                               1)];
     [self.offersFromLabel sizeToFit];
-    [self.offersFromLabel setBackgroundColor:[UIColor greenColor]];
     
     if (ISEMPTY(self.priceLabel)) {
         self.priceLabel = [UILabel new];
