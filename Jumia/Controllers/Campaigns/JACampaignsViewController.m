@@ -186,7 +186,8 @@
     else if (VALID_NOTEMPTY(self.teaserGrouping, RITeaserGrouping) && VALID_NOTEMPTY(self.teaserGrouping.teaserComponents, NSOrderedSet))
     {
         self.activeCampaignComponents = [NSMutableArray new];
-        for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++)
+        for (int i = RI_IS_RTL?(int)self.teaserGrouping.teaserComponents.count-1:0;
+             RI_IS_RTL?i>=0:i < self.teaserGrouping.teaserComponents.count; RI_IS_RTL?i--:i++)
         {
             
             RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
