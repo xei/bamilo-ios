@@ -105,6 +105,8 @@ UICollectionViewDelegateFlowLayout
 
     self.apiResponse = RIApiResponseSuccess;
 
+    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+    
     [self continueLoading];
 }
 
@@ -123,14 +125,6 @@ UICollectionViewDelegateFlowLayout
     }
     
     [self showLoading];
-    
-    CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
-    {
-        newWidth = self.view.frame.size.width;
-    }
-    
-    [self setupViews:newWidth toInterfaceOrientation:toInterfaceOrientation];
     
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
@@ -304,11 +298,7 @@ UICollectionViewDelegateFlowLayout
     }
     
     if(RI_IS_RTL){
-        
         [self.stepBackground setImage:[stepBackgroundImage flipImageWithOrientation:UIImageOrientationUpMirrored]];
-        [self.stepView flipViewPositionInsideSuperview];
-        [self.stepView flipSubviewPositions];
-        [self.stepView flipSubviewAlignments];
     }
 }
 
@@ -400,6 +390,10 @@ UICollectionViewDelegateFlowLayout
     [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
     
     [self reloadCollectionView];
+    
+    if (RI_IS_RTL) {
+        [self.view flipAllSubviews];
+    }
 }
 
 - (void)reloadCollectionView

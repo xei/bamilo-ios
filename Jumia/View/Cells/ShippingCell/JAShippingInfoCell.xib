@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -13,51 +13,48 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="308" height="53"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cgS-z4-icp">
-                        <rect key="frame" x="0.0" y="52" width="308" height="1"/>
-                        <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="1" id="NOu-OS-PZN"/>
-                        </constraints>
+                    <view contentMode="scaleToFill" id="egk-hi-4wY">
+                        <rect key="frame" x="0.0" y="0.0" width="308" height="53"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pma-15-RxK">
+                                <rect key="frame" x="27" y="0.0" width="264" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vYH-mM-Vxv">
+                                <rect key="frame" x="26" y="26" width="264" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" id="cgS-z4-icp">
+                                <rect key="frame" x="0.0" y="56" width="308" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pma-15-RxK">
-                        <rect key="frame" x="27" y="0.0" width="264" height="26"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="26" id="5TG-QY-il8"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vYH-mM-Vxv">
-                        <rect key="frame" x="27" y="26" width="264" height="27"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="27" id="6Cg-59-FIR"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
-                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstItem="vYH-mM-Vxv" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="27" id="DHD-7L-Tic"/>
-                <constraint firstAttribute="trailing" secondItem="vYH-mM-Vxv" secondAttribute="trailing" constant="17" id="GV1-jJ-k20"/>
-                <constraint firstItem="pma-15-RxK" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="27" id="GlL-KZ-aP7"/>
-                <constraint firstItem="cgS-z4-icp" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Iq0-dy-xtJ"/>
-                <constraint firstAttribute="trailing" secondItem="pma-15-RxK" secondAttribute="trailing" constant="17" id="SHs-yw-6RG"/>
-                <constraint firstAttribute="bottom" secondItem="vYH-mM-Vxv" secondAttribute="bottom" id="Sdb-Qo-6Rq"/>
-                <constraint firstAttribute="trailing" secondItem="cgS-z4-icp" secondAttribute="trailing" id="cy3-xL-zdy"/>
-                <constraint firstAttribute="bottom" secondItem="cgS-z4-icp" secondAttribute="bottom" id="qMj-Cy-OZ8"/>
-                <constraint firstItem="pma-15-RxK" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="qck-p1-Q6Z"/>
-            </constraints>
             <connections>
+                <outlet property="contentView" destination="egk-hi-4wY" id="hcG-yN-FMf"/>
                 <outlet property="deliveryTimeLabel" destination="pma-15-RxK" id="nbg-qa-qxC"/>
                 <outlet property="label" destination="vYH-mM-Vxv" id="wWR-WC-FRJ"/>
                 <outlet property="separator" destination="cgS-z4-icp" id="ZrA-bF-k4w"/>
             </connections>
+            <point key="canvasLocation" x="276" y="278.5"/>
         </collectionViewCell>
     </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>

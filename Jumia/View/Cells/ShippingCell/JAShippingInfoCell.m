@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *deliveryTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *label;
 @property (weak, nonatomic) IBOutlet UIView *labelSeparator;
+@property (weak, nonatomic) IBOutlet UIView *contentView;
 
 @end
 
@@ -29,6 +30,9 @@
 -(void)loadWithShippingFee:(NSString *)shippingFee
               deliveryTime:(NSString *)deliveryTime
 {
+    self.contentView.translatesAutoresizingMaskIntoConstraints = YES;
+    self.contentView.frame = self.bounds;
+    
     NSDictionary* shippingFeeLabelAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:kFontRegularName size:13.0f], NSFontAttributeName, nil];
     NSDictionary* shippingFeeAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:kFontLightName size:13.0f], NSFontAttributeName, nil];
     
@@ -42,6 +46,13 @@
     
     
     [self.label setAttributedText:finalshippingFeeString];
+    self.label.translatesAutoresizingMaskIntoConstraints = YES;
+    self.label.textAlignment = NSTextAlignmentLeft;
+    self.label.frame = CGRectMake(27.0f,
+                                  0.0f,
+                                  self.contentView.frame.size.width - 27.0f - 17.0f,
+                                  self.label.frame.size.height);
+    
     
     NSDictionary* deliveryTimeLabelAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:kFontRegularName size:13.0f], NSFontAttributeName, nil];
     NSDictionary* deliveryTimeAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:kFontLightName size:13.0f], NSFontAttributeName, nil];
@@ -56,6 +67,22 @@
     
     
     [self.deliveryTimeLabel setAttributedText:finalDeliveryTimeString];
+    self.deliveryTimeLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    self.deliveryTimeLabel.textAlignment = NSTextAlignmentLeft;
+    self.deliveryTimeLabel.frame = CGRectMake(27.0f,
+                                              CGRectGetMaxY(self.label.frame),
+                                              self.contentView.frame.size.width - 27.0f - 17.0f,
+                                              self.label.frame.size.height);
+    
+    self.separator.translatesAutoresizingMaskIntoConstraints = YES;
+    self.separator.frame = CGRectMake(0.0f,
+                                      self.contentView.frame.size.height - 1.0f,
+                                      self.contentView.frame.size.width,
+                                      1.0f);
+    
+    if (RI_IS_RTL) {
+        [self.contentView flipAllSubviews];
+    }
 }
 
 -(void)loadWithPickupStation
