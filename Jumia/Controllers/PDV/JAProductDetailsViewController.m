@@ -337,8 +337,7 @@
     
     if (RI_IS_RTL)
     {
-        [self.topView flipSubviewAlignments];
-        [self.topView flipSubviewPositions];
+        [self.topView flipAllSubviews];
         [self.featuresView flipSubviewPositions];
         [self.featuresView flipSubviewAlignments];
         [self.descriptionView flipSubviewAlignments];

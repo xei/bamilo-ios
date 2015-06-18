@@ -169,13 +169,27 @@
                                              CGRectGetMaxY(self.topView.frame),
                                              self.view.frame.size.width - 12.0f,
                                              self.view.frame.size.height - CGRectGetMaxY(self.topView.frame))];
+    
+    if (RI_IS_RTL) {
+        [self.topView flipAllSubviews];
+    }
 }
 
 - (void)readjustOffersFromLabel
 {
+    CGFloat lastWidth = self.offersFromLabel.width;
     self.offersFromLabel.text = [NSString stringWithFormat:STRING_NUMBER_OFFERS_FROM, self.productOffers.count];
     [self.offersFromLabel sizeToFit];
-    [self.priceLabel setFrame:CGRectMake(CGRectGetMaxX(self.offersFromLabel.frame) + 4.0f,
+    CGFloat adjustment = self.offersFromLabel.width - lastWidth;
+    
+    if (RI_IS_RTL) {
+        self.offersFromLabel.x -= adjustment;
+        [self.priceLabel setFrame:CGRectMake(self.offersFromLabel.x - self.priceLabel.frame.size.width - 4.f,
+                                             self.priceLabel.frame.origin.y,
+                                             self.priceLabel.frame.size.width,
+                                             self.priceLabel.frame.size.height)];
+    }else
+        [self.priceLabel setFrame:CGRectMake(CGRectGetMaxX(self.offersFromLabel.frame) + 4.0f,
                                          self.priceLabel.frame.origin.y,
                                          self.priceLabel.frame.size.width,
                                          self.priceLabel.frame.size.height)];
@@ -261,7 +275,7 @@
             height = 104.0f;
         }
     } else {
-        width = self.view.frame.size.width;
+        width = self.view.frame.size.width - 12.f;
         height = 104.0f;
     }
     

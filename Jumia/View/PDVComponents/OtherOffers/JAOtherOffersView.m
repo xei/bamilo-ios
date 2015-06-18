@@ -80,6 +80,7 @@
                                                        self.goToOtherOffersImageView.frame.size.width,
                                                        self.goToOtherOffersImageView.frame.size.height)];
     
+    [self.goToOtherOffersImageView setX:RI_IS_RTL?9.f:self.width - self.goToOtherOffersImageView.frame.size.width - 9.0f];
     /*
      Check if there are other offers
      */
@@ -88,6 +89,9 @@
         
         [self.otherOffersLabel setX:6.f];
         self.otherOffersLabel.text = [NSString stringWithFormat:@"%@ (%ld)", STRING_OTHER_SELLERS, [product.offersTotal longValue]];
+        if (RI_IS_RTL) {
+            self.otherOffersLabel.text = [NSString stringWithFormat:@"(%ld) %@", [product.offersTotal longValue], STRING_OTHER_SELLERS];
+        }
         
         [self.otherOffersClickableView addTarget:self action:@selector(pressedOtherOffers) forControlEvents:UIControlEventTouchUpInside];
         
@@ -115,11 +119,10 @@
         
     }
     
-//    if (RI_IS_RTL) {
-//        [self flipAllSubviews];
-//    }
-    
-    [self setBackgroundColor:[UIColor greenColor]];
+    if (RI_IS_RTL) {
+        [self.goToOtherOffersImageView flipViewImage];
+        [self.goToOtherOffersImageView flipViewPositionInsideSuperview];
+    }
 }
 
 - (void)pressedOtherOffers
