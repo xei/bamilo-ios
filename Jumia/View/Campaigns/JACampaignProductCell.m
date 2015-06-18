@@ -56,7 +56,8 @@
 
 - (void)loadWithCampaignProduct:(RICampaignProduct*)campaignProduct
            elapsedTimeInSeconds:(NSInteger)elapsedTimeInSeconds
-                     chosenSize:(NSString*)chosenSize;
+                     chosenSize:(NSString*)chosenSize
+               capaignHasBanner:(BOOL)hasBanner
 {
     self.discountLabel.translatesAutoresizingMaskIntoConstraints = YES;
     self.campaignProduct = campaignProduct;
@@ -65,6 +66,10 @@
     self.backgroundColor = [UIColor clearColor];
     
     [self.backgroundContentView setX:6.f];
+    if (RI_IS_RTL && !hasBanner && [UIDevice currentDevice].userInterfaceIdiom != UIUserInterfaceIdiomPad) {
+        
+        [self.backgroundContentView setX:12.f];
+    }
     [self.backgroundContentView setWidth:self.width - 6.f];
     
     self.backgroundContentView.layer.cornerRadius = 5.0f;

@@ -85,7 +85,7 @@
                                         repeats:YES];
         
         self.flowLayout = [[JAProductListFlowLayout alloc] init];
-//        self.flowLayout.manualCellSpacing = 6.0f;
+        self.flowLayout.manualCellSpacing = 0.0f;
         self.flowLayout.minimumLineSpacing = 0;
         self.flowLayout.minimumInteritemSpacing = 0;
         self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
@@ -143,9 +143,7 @@
     CGSize size = [self getCellLayoutForInterfaceOrientation:self.interfaceOrientation];
     if (VALID_NOTEMPTY(self.campaign.bannerImageURL, NSString) && 0 == indexPath.row) {
         size = self.bannerImage.frame.size;
-        NSLog(@"BANNER");
     }
-    NSLog(@"size.width: %f", size.width);
     return size;
 }
 
@@ -162,7 +160,7 @@
             width = 339.0f;
         }
     } else {
-        width = 313;
+        width = 314;
     }
     
     return CGSizeMake(width, height);
@@ -171,7 +169,9 @@
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger realIndex = indexPath.row;
+    BOOL campaignHasBanner = NO;
     if (VALID_NOTEMPTY(self.campaign.bannerImageURL, NSString)) {
+        campaignHasBanner = YES;
         if (0 == indexPath.row) {
             JACampaignBannerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"campaignBannerCell" forIndexPath:indexPath];
             [cell loadWithImageView:self.bannerImage];
@@ -189,8 +189,9 @@
     
     [cell loadWithCampaignProduct:product
              elapsedTimeInSeconds:self.elapsedTimeInSeconds
-                       chosenSize:chosenSimpleName];
-    [cell.backgroundView setX:0.f];
+                       chosenSize:chosenSimpleName
+                 capaignHasBanner:campaignHasBanner];
+    
     return cell;
 
 }
