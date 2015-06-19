@@ -16,10 +16,6 @@
 @property (weak, nonatomic) IBOutlet JAClickableView *clickableView;
 @property (strong, nonatomic) UIView *separator;
 
--(void)loadWithPaymentMethod:(RIPaymentMethodFormOption *)paymentMethod paymentMethodView:(UIView*)paymentMethodView;
-
--(void)selectPaymentMethod;
-
--(void)deselectPaymentMethod;
+-(void)loadWithPaymentMethod:(RIPaymentMethodFormOption *)paymentMethod paymentMethodView:(UIView*)paymentMethodView isSelected:(BOOL)isSelected;
 
 @end
