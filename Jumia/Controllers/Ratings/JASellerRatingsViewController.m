@@ -29,6 +29,10 @@
 UITableViewDelegate,
 UITableViewDataSource
 >
+{
+    JARatingsViewMedium *_ratingsView;
+    CGFloat _ratingsViewWidth, _ratingsViewHeight;
+}
 
 @property (nonatomic, strong)RISellerReviewInfo* sellerReviewInfo;
 
@@ -107,30 +111,13 @@ UITableViewDataSource
     self.writeReviewButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.writeReviewButton.titleLabel.font.pointSize];
     self.emptyReviewsLabel.font = [UIFont fontWithName:kFontRegularName size:self.emptyReviewsLabel.font.pointSize];
     
-    self.topView.translatesAutoresizingMaskIntoConstraints = YES;
     self.sellerNameLabel.text = self.product.seller.name;
-    self.sellerNameLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.resumeView.translatesAutoresizingMaskIntoConstraints = YES;
-    self.tableViewComments.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.tableViewComments.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.requestsDone = NO;
     
     self.loadedEverything = NO;
     
     self.apiResponse = RIApiResponseSuccess;
-    
-    if(VALID_NOTEMPTY(self.writeReviewScrollView, UIScrollView))
-    {
-        self.writeReviewScrollView.translatesAutoresizingMaskIntoConstraints = YES;
-    }
-    
-    if(VALID_NOTEMPTY(self.emptyReviewsView, UIView))
-    {
-        self.emptyReviewsView.translatesAutoresizingMaskIntoConstraints = YES;
-    }
     
     self.reviewsArray = [NSMutableArray new];
         
@@ -357,6 +344,8 @@ UITableViewDataSource
     }
     
     CGFloat originY = CGRectGetMaxY(self.resumeView.frame) + verticalMargin;
+    self.tableViewComments.delegate = self;
+    self.tableViewComments.dataSource = self;
     self.tableViewComments.layer.cornerRadius = 5.0f;
     self.tableViewComments.allowsSelection = NO;
     
@@ -428,14 +417,22 @@ UITableViewDataSource
             [self.tableViewComments setHidden:YES];
             [self.emptyReviewsView setHidden:NO];
             [self setupEmptyReviewsView:viewsWidth originY:startingYForContent];
+            [self.view bringSubviewToFront:self.tableViewComments];
         }
     }
     
     [self.tableViewComments reloadData];
+    
+    if (RI_IS_RTL) {
+        [self.view flipAllSubviews];
+    }
+    
+    self.writeReviewScrollViewInitialRect = self.writeReviewScrollView.frame;
 }
 
 - (void)setupTopView
 {
+    [self.topView setWidth:self.view.width];
     [self.sellerNameLabel setFrame:CGRectMake(12.0f,
                                               6.0f,
                                               self.view.frame.size.width - 24.0f,
@@ -444,20 +441,25 @@ UITableViewDataSource
             
     CGFloat topViewMinHeight = CGRectGetMaxY(self.sellerNameLabel.frame) + 6.0f;
     
-    JARatingsViewMedium* ratingsView = [JARatingsViewMedium getNewJARatingsViewMedium];
-    [ratingsView setRating:[self.sellerReviewInfo.averageReviews integerValue]];
-    [ratingsView setFrame:CGRectMake(12.0f,
-                                     topViewMinHeight,
-                                     ratingsView.frame.size.width,
-                                     ratingsView.frame.size.height)];
-    [self.topView addSubview:ratingsView];
+    if (!_ratingsView) {
+        _ratingsView = [JARatingsViewMedium getNewJARatingsViewMedium];
+        _ratingsViewWidth = _ratingsView.width;
+        _ratingsViewHeight = _ratingsView.height;
+        [self.topView addSubview:_ratingsView];
+    }
     
-    topViewMinHeight += ratingsView.frame.size.height + 11.0f;
+    [_ratingsView setRating:[self.sellerReviewInfo.averageReviews integerValue]];
+    [_ratingsView setX:12.0f];
+    [_ratingsView setWidth:_ratingsViewWidth];
+    [_ratingsView setY:topViewMinHeight];
+    
+    topViewMinHeight = CGRectGetMaxY(_ratingsView.frame) + 11.0f;
     
     [self.topView setFrame:CGRectMake(0.0f,
                                       0.0f,
                                       self.view.frame.size.width,
-                                      topViewMinHeight)];
+                                      70)];
+    
     [self.topView setHidden:NO];
 }
 
@@ -473,7 +475,6 @@ UITableViewDataSource
         self.labelUsedProduct.text = STRING_REVIEW_THIS_SELLER;
         self.labelUsedProduct.textAlignment = NSTextAlignmentCenter;
         [self.labelUsedProduct setTextColor:UIColorFromRGB(0x666666)];
-        self.labelUsedProduct.translatesAutoresizingMaskIntoConstraints = YES;
         [self.labelUsedProduct setFrame:CGRectMake(self.labelUsedProduct.frame.origin.x,
                                                    currentY,
                                                    self.view.frame.size.width - 12.0f - (2* self.labelUsedProduct.frame.origin.x),
@@ -484,7 +485,9 @@ UITableViewDataSource
         [self.writeReviewButton setTitleColor:UIColorFromRGB(0x4e4e4e)
                                      forState:UIControlStateNormal];
         
-        currentY += self.labelUsedProduct.frame.size.height + self.writeReviewButton.frame.size.height;
+        currentY = CGRectGetMaxY(self.writeReviewButton.frame);
+        
+        [self.writeReviewButton setX:[self.writeReviewButton superview].width/2 - self.writeReviewButton.width/2];
     }
     
     self.resumeView.layer.cornerRadius = 5.0f;
@@ -510,10 +513,7 @@ UITableViewDataSource
                                                     originY,
                                                     width,
                                                     self.view.frame.size.height - originY)];
-    self.writeReviewScrollViewInitialRect = CGRectMake(width + horizontalMargin,
-                                                       originY,
-                                                       width,
-                                                       self.view.frame.size.height - originY);
+    
     if(VALID(self.centerView, UIView))
     {
         [self.centerView removeFromSuperview];
@@ -614,9 +614,6 @@ UITableViewDataSource
 
 - (void) setupEmptyReviewsView:(CGFloat)width originY:(CGFloat)originY
 {
-    self.emptyReviewsView.translatesAutoresizingMaskIntoConstraints = YES;
-    self.emptyReviewsImageView.translatesAutoresizingMaskIntoConstraints = YES;
-    self.emptyReviewsLabel.translatesAutoresizingMaskIntoConstraints = YES;
     
     CGFloat horizontalMargin = 6.0f;
     CGFloat totalHeight = 6.0f;
@@ -704,8 +701,11 @@ UITableViewDataSource
         [self sellerReviewsRequest];
         
     }
-    
     JAReviewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reviewCell"];
+    
+    if (!cell) {
+        cell = [[JAReviewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"reviewCell"];
+    }
     
     RISellerReview* review = [self.reviewsArray objectAtIndex:indexPath.row];
     
