@@ -21,72 +21,79 @@
 
 @implementation JAPaymentCell
 
--(void)loadWithPaymentMethod:(RIPaymentMethodFormOption *)paymentMethod paymentMethodView:(UIView*)paymentMethodView
+-(void)loadWithPaymentMethod:(RIPaymentMethodFormOption *)paymentMethod paymentMethodView:(UIView*)paymentMethodView isSelected:(BOOL)isSelected
 {
     self.paymentMethod = paymentMethod;
-    
-    self.label.font = [UIFont fontWithName:kFontLightName size:self.label.font.pointSize];
-    [self.label setText:paymentMethod.label];
     
     if(VALID_NOTEMPTY(self.separator, UIView))
     {
         [self.separator removeFromSuperview];
     }
+    self.separator = [[UIView alloc] init];
+    [self.separator setBackgroundColor:UIColorFromRGB(0xcccccc)];
+    [self addSubview:self.separator];
     
     self.paymentMethodDetailsView = paymentMethodView;
     [self.paymentMethodDetailsView setHidden:YES];
     [self addSubview:self.paymentMethodDetailsView];
     
-    self.separator = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                              self.frame.size.height - 1.0f,
-                                                              self.frame.size.width,
-                                                              1.0f)];
-    [self.separator setBackgroundColor:UIColorFromRGB(0xcccccc)];
-    [self addSubview:self.separator];
-}
+    self.clickableView.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    if (isSelected) {
+        [self.checkMark setHidden:NO];
+        [self.paymentMethodDetailsView setHidden:NO];
+        
+        [self.paymentMethodDetailsView setFrame:CGRectMake(0.0f,
+                                                           44.0f,
+                                                           self.paymentMethodDetailsView.frame.size.width,
+                                                           self.paymentMethodDetailsView.frame.size.height)];
+        
+        [self setFrame:CGRectMake(self.frame.origin.x,
+                                  self.frame.origin.y,
+                                  self.frame.size.width,
+                                  44.0f + self.paymentMethodDetailsView.frame.size.height)];
+        
+        [self.clickableView setFrame:self.bounds];
+        self.clickableView.enabled = NO;
 
--(void)selectPaymentMethod
-{
-    [self.checkMark setHidden:NO];
+    } else {
     
-    [self.paymentMethodDetailsView setFrame:CGRectMake(0.0f,
-                                                       self.frame.size.height,
-                                                       self.paymentMethodDetailsView.frame.size.width,
-                                                       self.paymentMethodDetailsView.frame.size.height)];    
-    [self.paymentMethodDetailsView setHidden:NO];
+        [self.checkMark setHidden:YES];
+        [self.paymentMethodDetailsView setHidden:YES];
+        
+        [self setFrame:CGRectMake(self.frame.origin.x,
+                                  self.frame.origin.y,
+                                  self.frame.size.width,
+                                  44.0f)];
+        
+        [self.clickableView setFrame:self.bounds];
+        self.clickableView.enabled = YES;
     
-    [self setFrame:CGRectMake(self.frame.origin.x,
-                              self.frame.origin.y,
-                              self.frame.size.width,
-                              44.0f + self.paymentMethodDetailsView.frame.size.height)];
+    }
     
     [self.separator setFrame:CGRectMake(0.0f,
                                         self.frame.size.height - 1.0f,
                                         self.frame.size.width,
                                         1.0f)];
     
-    [self.clickableView setFrame:self.bounds];
-    self.clickableView.enabled = NO;
+    self.label.translatesAutoresizingMaskIntoConstraints = YES;
+    self.label.font = [UIFont fontWithName:kFontLightName size:self.label.font.pointSize];
+    self.label.textAlignment = NSTextAlignmentLeft;
+    [self.label setText:paymentMethod.label];
+    self.label.frame = CGRectMake(17.0f,
+                                  11.0f,
+                                  self.clickableView.frame.size.width - self.checkMark.frame.size.width - 14.0f*2,
+                                  self.label.frame.size.height);
+    
+    self.checkMark.translatesAutoresizingMaskIntoConstraints = YES;
+    self.checkMark.frame = CGRectMake(self.clickableView.frame.size.width - self.checkMark.frame.size.width - 14.0f,
+                                      15.0f,
+                                      self.checkMark.frame.size.width,
+                                      self.checkMark.frame.size.height);
+    
+    if (RI_IS_RTL) {
+        [self.clickableView flipAllSubviews];
+    }
 }
-
--(void)deselectPaymentMethod
-{
-    [self.checkMark setHidden:YES];
-    [self.paymentMethodDetailsView setHidden:YES];
-    
-    [self setFrame:CGRectMake(self.frame.origin.x,
-                              self.frame.origin.y,
-                              self.frame.size.width,
-                              44.0f)];
-    
-    [self.separator setFrame:CGRectMake(0.0f,
-                                        self.frame.size.height - 1.0f,
-                                        self.frame.size.width,
-                                        1.0f)];
-    
-    [self.clickableView setFrame:self.bounds];
-    self.clickableView.enabled = YES;
-}
-
 
 @end

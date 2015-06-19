@@ -32,8 +32,8 @@ JAPickerDelegate>
 
 // Add Address
 @property (strong, nonatomic) UIScrollView *contentScrollView;
-@property (assign, nonatomic) CGRect originalFrame;
-@property (assign, nonatomic) CGRect orderSummaryOriginalFrame;
+@property (assign, nonatomic) CGFloat contentScrollOriginalHeight;
+@property (assign, nonatomic) CGFloat orderSummaryOriginalHeight;
 
 // Shipping Address
 @property (strong, nonatomic) UIView *shippingContentView;
@@ -491,7 +491,7 @@ JAPickerDelegate>
                                                                                  self.view.frame.size.height - scrollViewStartY)];
         [self.orderSummary loadWithCart:self.cart shippingFee:NO];
         [self.view addSubview:self.orderSummary];
-        self.orderSummaryOriginalFrame = self.orderSummary.frame;
+        self.orderSummaryOriginalHeight = self.orderSummary.frame.size.height;
     }
     
     
@@ -552,7 +552,7 @@ JAPickerDelegate>
                                                       self.shippingContentView.frame.size.width,
                                                       1.0f)];
     
-    self.originalFrame = self.contentScrollView.frame;
+    self.contentScrollOriginalHeight = self.contentScrollView.frame.size.height;
     
     self.billingAddressViewCurrentY = CGRectGetMaxY(self.billingHeaderSeparator.frame) + 6.0f;
     for(UIView *view in self.billingDynamicForm.formViews)
@@ -1116,17 +1116,17 @@ JAPickerDelegate>
     }
     
     [UIView animateWithDuration:0.3 animations:^{
-        [self.contentScrollView setFrame:CGRectMake(self.originalFrame.origin.x,
-                                                    self.originalFrame.origin.y,
-                                                    self.originalFrame.size.width,
-                                                    self.originalFrame.size.height - height)];
+        [self.contentScrollView setFrame:CGRectMake(self.contentScrollView.frame.origin.x,
+                                                    self.contentScrollView.frame.origin.y,
+                                                    self.contentScrollView.frame.size.width,
+                                                    self.contentScrollOriginalHeight - height)];
         
         if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
         {
-            [self.orderSummary setFrame:CGRectMake(self.orderSummaryOriginalFrame.origin.x,
-                                                   self.orderSummaryOriginalFrame.origin.y,
-                                                   self.orderSummaryOriginalFrame.size.width,
-                                                   self.orderSummaryOriginalFrame.size.height - height)];
+            [self.orderSummary setFrame:CGRectMake(self.orderSummary.frame.origin.x,
+                                                   self.orderSummary.frame.origin.y,
+                                                   self.orderSummary.frame.size.width,
+                                                   self.orderSummaryOriginalHeight - height)];
         }
     }];
 }
@@ -1134,11 +1134,17 @@ JAPickerDelegate>
 - (void) keyboardWillHide:(NSNotification *)notification
 {
     [UIView animateWithDuration:0.3 animations:^{
-        [self.contentScrollView setFrame:self.originalFrame];
+        [self.contentScrollView setFrame:CGRectMake(self.contentScrollView.frame.origin.x,
+                                                    self.contentScrollView.frame.origin.y,
+                                                    self.contentScrollView.frame.size.width,
+                                                    self.contentScrollOriginalHeight)];
         
         if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
         {
-            [self.orderSummary setFrame:self.orderSummaryOriginalFrame];
+            [self.orderSummary setFrame:CGRectMake(self.orderSummary.frame.origin.x,
+                                                   self.orderSummary.frame.origin.y,
+                                                   self.orderSummary.frame.size.width,
+                                                   self.orderSummaryOriginalHeight)];
         }
     }];
 }
