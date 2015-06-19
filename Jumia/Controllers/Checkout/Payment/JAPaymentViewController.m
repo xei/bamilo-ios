@@ -55,8 +55,8 @@ UITextFieldDelegate>
 @property (strong, nonatomic) NSIndexPath *collectionViewIndexSelected;
 @property (strong, nonatomic) RIPaymentMethodFormOption* selectedPaymentMethod;
 
-@property (assign, nonatomic) CGRect originalFrame;
-@property (assign, nonatomic) CGRect orderSummaryOriginalFrame;
+@property (assign, nonatomic) CGFloat contentScrollOriginalHeight;
+@property (assign, nonatomic) CGFloat orderSummaryOriginalHeight;
 
 @property (assign, nonatomic) RIApiResponse apiResponse;
 
@@ -356,7 +356,7 @@ UITextFieldDelegate>
                                          self.stepBackground.frame.size.height,
                                          width,
                                          self.view.frame.size.height - self.stepBackground.frame.size.height)];
-    self.originalFrame = self.scrollView.frame;
+    self.contentScrollOriginalHeight = self.scrollView.frame.size.height;
     
     if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
     {
@@ -373,7 +373,7 @@ UITextFieldDelegate>
                                                                                  self.view.frame.size.height - self.stepBackground.frame.size.height)];
         [self.orderSummary loadWithCheckout:self.checkout shippingMethod:YES shippingFee:YES];
         [self.view addSubview:self.orderSummary];
-        self.orderSummaryOriginalFrame = self.orderSummary.frame;
+        self.orderSummaryOriginalHeight = self.orderSummary.frame.size.height;
     }
     
     [self.collectionView setFrame:CGRectMake(self.collectionView.frame.origin.x,
@@ -776,23 +776,30 @@ UITextFieldDelegate>
     }
     
     [UIView animateWithDuration:0.3 animations:^{
-        [self.scrollView setFrame:CGRectMake(self.originalFrame.origin.x,
-                                             self.originalFrame.origin.y,
-                                             self.originalFrame.size.width,
-                                             self.originalFrame.size.height - height)];
+        [self.scrollView setFrame:CGRectMake(self.scrollView.frame.origin.x,
+                                             self.scrollView.frame.origin.y,
+                                             self.scrollView.frame.size.width,
+                                             self.contentScrollOriginalHeight - height)];
         
-        [self.orderSummary setFrame:CGRectMake(self.orderSummaryOriginalFrame.origin.x,
-                                               self.orderSummaryOriginalFrame.origin.y,
-                                               self.orderSummaryOriginalFrame.size.width,
-                                               self.orderSummaryOriginalFrame.size.height - height)];
+        [self.orderSummary setFrame:CGRectMake(self.orderSummary.frame.origin.x,
+                                               self.orderSummary.frame.origin.y,
+                                               self.orderSummary.frame.size.width,
+                                               self.orderSummaryOriginalHeight - height)];
     }];
 }
 
 - (void) keyboardWillHide:(NSNotification *)notification
 {
     [UIView animateWithDuration:0.3 animations:^{
-        [self.scrollView setFrame:self.originalFrame];
-        [self.orderSummary setFrame:self.orderSummaryOriginalFrame];
+        [self.scrollView setFrame:CGRectMake(self.scrollView.frame.origin.x,
+                                             self.scrollView.frame.origin.y,
+                                             self.scrollView.frame.size.width,
+                                             self.contentScrollOriginalHeight)];
+        
+        [self.orderSummary setFrame:CGRectMake(self.orderSummary.frame.origin.x,
+                                               self.orderSummary.frame.origin.y,
+                                               self.orderSummary.frame.size.width,
+                                               self.orderSummaryOriginalHeight)];
     }];
 }
 
