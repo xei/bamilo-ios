@@ -195,6 +195,10 @@
     [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
                                                self.scrollViewCurrentY + self.bottomView.frame.size.height)];
     [self hideLoading];
+    
+    if (RI_IS_RTL) {
+        [self.view flipAllSubviews];
+    }
 }
 
 - (CGFloat)setupOrderView:(UIScrollView*)scrollView atYPostion:(CGFloat)yPosition
