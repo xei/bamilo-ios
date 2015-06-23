@@ -276,6 +276,7 @@ JAActivityViewControllerDelegate
         
         CGFloat width = gallerySuperView.frame.size.width;
         CGFloat height = gallerySuperView.frame.size.height;
+        CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
         
         if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
         {
@@ -294,7 +295,7 @@ JAActivityViewControllerDelegate
             }
         }
         
-        [self.galleryPaged reloadFrame:CGRectMake(0.0f, 0.0f, width, height)];
+        [self.galleryPaged reloadFrame:CGRectMake(0.0f, statusBarHeight, width, height)];
         [self.view bringSubviewToFront:self.galleryPaged];
     }
     
@@ -683,7 +684,7 @@ JAActivityViewControllerDelegate
     }
     
     UIDevice *device = [UIDevice currentDevice];
-    if ([[device model] isEqualToString:@"iPhone"])
+    if ([[device model] isEqualToString:@"iPhone"] || [[device model] isEqualToString:@"iPhone Simulator"])
     {
         [self.ctaView addButton:STRING_CALL_TO_ORDER
                          target:self
@@ -707,9 +708,7 @@ JAActivityViewControllerDelegate
                                          self.commentsCount = ratings.reviews.count;
                                          
                                          self.productRatings = ratings;
-                                         
      
-                                         
                                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                          
                                          [self requestBundles];
@@ -1941,17 +1940,39 @@ JAActivityViewControllerDelegate
     if(VALID(_galleryPaged, JAPDVGallery))
         [_galleryPaged removeFromSuperview];
     
-    _galleryPaged = [[JAPDVGallery alloc] initWithFrame:CGRectMake(0, self.view.height-30, self.view.width, self.view.height-30)];
-    CGRect openFrame = CGRectMake(0, 0, self.view.width, self.view.height);
+    UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
+    
+    CGFloat width = gallerySuperView.frame.size.width;
+    CGFloat height = gallerySuperView.frame.size.height;
+    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    
+    if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    {
+        if(width < gallerySuperView.frame.size.height)
+        {
+            width = gallerySuperView.frame.size.height;
+            height = gallerySuperView.frame.size.width;
+        }
+    }
+    else
+    {
+        if(width > gallerySuperView.frame.size.height)
+        {
+            width = gallerySuperView.frame.size.height;
+            height = gallerySuperView.frame.size.width;
+        }
+    }
+    
+    _galleryPaged = [[JAPDVGallery alloc] initWithFrame:CGRectMake(0, height, width, height-statusBarHeight)];
+    CGRect openFrame = CGRectMake(0, statusBarHeight, width, height-statusBarHeight);
     [_galleryPaged loadGalleryWithArray:[self.product.images array] atIndex:index];
-    [self.view addSubview:_galleryPaged];
+    [gallerySuperView addSubview:_galleryPaged];
     [_galleryPaged setBackgroundColor:[UIColor whiteColor]];
     [UIView animateWithDuration:.3f delay:0.f options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
                          _galleryPaged.frame = openFrame;
                      } completion:nil];
     _galleryPaged.delegate = self;
-    
 }
 
 - (void)dismissGallery
@@ -1960,10 +1981,10 @@ JAActivityViewControllerDelegate
     newFrame.origin.y = self.galleryPaged.frame.size.height;
     
     [UIView animateWithDuration:.3f delay:0.f options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.galleryPaged.frame = newFrame;
+        _galleryPaged.frame = newFrame;
     } completion:^(BOOL finished) {
-        [self.galleryPaged removeFromSuperview];
-        self.galleryPaged = nil;
+        [_galleryPaged removeFromSuperview];
+        _galleryPaged = nil;
     }];
 }
 

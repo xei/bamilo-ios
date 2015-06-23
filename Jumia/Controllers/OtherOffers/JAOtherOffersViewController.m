@@ -12,6 +12,7 @@
 #import "RICart.h"
 #import "RICustomer.h"
 #import "JAUtils.h"
+#import "JAProductListFlowLayout.h"
 #import <FacebookSDK/FacebookSDK.h>
 
 @interface JAOtherOffersViewController ()
@@ -24,7 +25,7 @@
 @property (nonatomic, strong) UILabel* priceLabel;
 
 @property (nonatomic, strong) UICollectionView *collectionView;
-@property (nonatomic, strong) UICollectionViewFlowLayout* flowLayout;
+@property (nonatomic, strong) JAProductListFlowLayout* flowLayout;
 @property (nonatomic, strong) NSString* cellIdentifier;
 @property (nonatomic, strong) NSArray* productOffers;
 
@@ -37,7 +38,8 @@
     
     self.navBarLayout.showBackButton = YES;
     
-    self.flowLayout = [UICollectionViewFlowLayout new];
+    self.flowLayout = [JAProductListFlowLayout new];
+    self.flowLayout.manualCellSpacing = 6.0f;
     self.flowLayout.minimumLineSpacing = 0;
     self.flowLayout.minimumInteritemSpacing = 0;
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
