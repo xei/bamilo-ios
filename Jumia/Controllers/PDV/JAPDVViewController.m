@@ -684,7 +684,7 @@ JAActivityViewControllerDelegate
     }
     
     UIDevice *device = [UIDevice currentDevice];
-    if ([[device model] isEqualToString:@"iPhone"] || [[device model] isEqualToString:@"iPhone-Simulator"])
+    if ([[device model] isEqualToString:@"iPhone"] || [[device model] isEqualToString:@"iPhone Simulator"])
     {
         [self.ctaView addButton:STRING_CALL_TO_ORDER
                          target:self
