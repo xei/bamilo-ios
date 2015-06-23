@@ -12,6 +12,7 @@
 #import "JADynamicForm.h"
 #import "JAAddRatingView.h"
 #import "JAPagedView.h"
+#import "JAPicker.h"
 
 @implementation UIView (Mirror)
 
@@ -199,6 +200,8 @@
         } else if ([view isKindOfClass:[JADynamicField class]]) {
             continue;
         } else if ([view isKindOfClass:[JAPagedView class]]) {
+            continue;
+        } else if ([view isKindOfClass:[JAPicker class]]) {
             continue;
         } else {
             [view flipViewPositionInsideSuperview];

@@ -1610,10 +1610,6 @@ JAActivityViewControllerDelegate
                                      pickerViewHeight)];
     [self.view addSubview:self.picker];
     
-    if (RI_IS_RTL) {
-        [self.picker flipAllSubviews];
-    }
-    
     [UIView animateWithDuration:0.4f
                      animations:^{
                          [self.picker setFrame:CGRectMake(0.0f,

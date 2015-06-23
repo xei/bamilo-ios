@@ -104,6 +104,11 @@ UIPickerViewDelegate
     [self.leftButton addTarget:self action:@selector(leftButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.buttonBackgroundView addSubview:self.leftButton];
     self.leftButton.hidden = YES;
+    
+    if (RI_IS_RTL) {
+        [self.doneButton flipViewPositionInsideSuperview];
+        [self.leftButton flipViewPositionInsideSuperview];
+    }
 }
 
 - (void)removePickerView
