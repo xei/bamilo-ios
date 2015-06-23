@@ -63,7 +63,7 @@
     [_exitButton setTitle:STRING_DONE forState:UIControlStateNormal];
     [_exitButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [_exitButton sizeToFit];
-    [_exitButton setFrame:CGRectMake(self.frame.size.width - _exitButton.frame.size.width - 6.f,
+    [_exitButton setFrame:CGRectMake(RI_IS_RTL?6:self.frame.size.width - _exitButton.frame.size.width - 6.f,
                                      _exitButton.frame.origin.y,
                                      _exitButton.frame.size.width,
                                      _exitButton.frame.size.height)];

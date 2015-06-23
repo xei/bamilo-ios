@@ -28,6 +28,10 @@
 UITextFieldDelegate,
 UIAlertViewDelegate
 >
+{
+    JARatingsViewMedium* _ratingsView;
+    CGFloat _ratingsViewWidth, _ratingsViewHeight;
+}
 
 @property (weak, nonatomic) IBOutlet UIView *topView;
 @property (weak, nonatomic) IBOutlet UILabel *sellerNameLabel;
@@ -200,15 +204,19 @@ UIAlertViewDelegate
     
     CGFloat topViewMinHeight = CGRectGetMaxY(self.sellerNameLabel.frame) + 6.0f;
     
-    JARatingsViewMedium* ratingsView = [JARatingsViewMedium getNewJARatingsViewMedium];
-    [ratingsView setRating:[self.sellerAverageReviews integerValue]];
-    [ratingsView setFrame:CGRectMake(12.0f,
+    if (!_ratingsView) {
+        _ratingsView = [JARatingsViewMedium getNewJARatingsViewMedium];
+        [self.topView addSubview:_ratingsView];
+        _ratingsViewWidth = _ratingsView.width;
+        _ratingsViewHeight = _ratingsView.height;
+    }
+    [_ratingsView setRating:[self.sellerAverageReviews integerValue]];
+    [_ratingsView setFrame:CGRectMake(12.0f,
                                      topViewMinHeight,
-                                     ratingsView.frame.size.width,
-                                     ratingsView.frame.size.height)];
-    [self.topView addSubview:ratingsView];
+                                     _ratingsViewWidth,
+                                     _ratingsViewHeight)];
     
-    topViewMinHeight += ratingsView.frame.size.height + 11.0f;
+    topViewMinHeight += _ratingsView.frame.size.height + 11.0f;
     
     [self.topView setFrame:CGRectMake(0.0f,
                                       0.0f,
@@ -375,6 +383,10 @@ UIAlertViewDelegate
                                              self.centerView.frame.size.height + self.centerView.frame.origin.y);
     
     [self.scrollView setHidden:NO];
+    
+    if (RI_IS_RTL) {
+        [self.view flipAllSubviews];
+    }
 }
 
 - (void)dealloc

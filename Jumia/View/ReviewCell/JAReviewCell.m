@@ -10,6 +10,13 @@
 
 #define kJAReviewCellHorizontalMargins 6.0f
 
+@interface JAReviewCell () {
+    JARatingsView *_sellerRatingsView;
+    CGFloat _sellerRatingsViewWidth, _sellerRatingsViewHeight;
+}
+
+@end
+
 @implementation JAReviewCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -108,16 +115,20 @@
 {
     CGFloat currentY = 8.0f;
     
-    JARatingsView* ratingsView = [JARatingsView getNewJARatingsView];
-    [ratingsView setRating:[sellerReview.average integerValue]];
-    [ratingsView setFrame:CGRectMake(kJAReviewCellHorizontalMargins,
-                                     currentY,
-                                     ratingsView.frame.size.width,
-                                     ratingsView.frame.size.height)];
-    [self addSubview:ratingsView];
-    [self.ratingStarViews addObject:ratingsView];
+    if (!_sellerRatingsView) {
+        _sellerRatingsView = [JARatingsView getNewJARatingsView];
+        [_sellerRatingsView setY:8.f];
+        _sellerRatingsViewWidth = _sellerRatingsView.width;
+        _sellerRatingsViewHeight = _sellerRatingsView.height;
+        [self addSubview:_sellerRatingsView];
+    }
+    [_sellerRatingsView setRating:[sellerReview.average integerValue]];
     
-    currentY += ratingsView.frame.size.height + 6.0f;
+    [_sellerRatingsView setWidth:_sellerRatingsViewWidth];
+    [_sellerRatingsView setHeight:_sellerRatingsViewHeight];
+    [_sellerRatingsView setX:RI_IS_RTL?width-_sellerRatingsView.width-kJAReviewCellHorizontalMargins:kJAReviewCellHorizontalMargins];
+    
+    currentY = _sellerRatingsView.height + 12.0f;
     
     [self loadBottomOfCellWithY:currentY
                           width:width
@@ -272,7 +283,7 @@
                                          authorDateLabel.frame.size.height)];
     [authorDateLabel sizeToFit];
     
-    totalHeight += authorDateLabel.frame.size.height + 20; //separator height, plus margin
+    totalHeight += authorDateLabel.frame.size.height + 10; //separator height, plus margin
     
     return totalHeight;
 }

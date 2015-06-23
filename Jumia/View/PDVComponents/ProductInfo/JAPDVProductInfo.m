@@ -316,9 +316,6 @@
         [self removeOtherOffers];
     } else {
         self.otherOffersLabel.text = [NSString stringWithFormat:@"%@ (%ld)", STRING_OTHER_SELLERS, [product.offersTotal longValue]];
-        if (RI_IS_RTL) {
-            self.otherOffersLabel.text = [NSString stringWithFormat:@"(%ld) %@", [product.offersTotal longValue], STRING_OTHER_SELLERS];
-        }
 
         [self.otherOffersClickableView addTarget:self action:@selector(pressedOtherOffers) forControlEvents:UIControlEventTouchUpInside];
         

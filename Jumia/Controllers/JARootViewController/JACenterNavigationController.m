@@ -1238,7 +1238,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JASellerRatingsViewController class]])
     {
-        JASellerRatingsViewController* viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"sellerRatingsViewController"];
+        JASellerRatingsViewController* viewController = [[JASellerRatingsViewController alloc] initWithNibName:@"JASellerRatingsViewController" bundle:nil];
         
         if (notification.object && [notification.object isKindOfClass:[RIProduct class]]) {
             viewController.product = notification.object;
@@ -1253,7 +1253,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JANewRatingViewController class]])
     {
-        JANewSellerRatingViewController* newSellerRatingViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"newSellerRatingViewController"];
+        JANewSellerRatingViewController* newSellerRatingViewController = [[JANewSellerRatingViewController alloc] initWithNibName:@"JANewSellerRatingViewController" bundle:nil];
         
         if ([notification.userInfo objectForKey:@"product"]) {
             newSellerRatingViewController.product = [notification.userInfo objectForKey:@"product"];
