@@ -30,7 +30,9 @@
     
     [self.separator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     
-    [self flipAllSubviews];
+    if (RI_IS_RTL) {
+        [self flipAllSubviews];
+    }
 }
 
 @end

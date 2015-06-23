@@ -11,7 +11,6 @@
 
 @interface JAMyOrderCell : UICollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UIView *separator;
 @property (weak, nonatomic) IBOutlet UIImageView *portraitArrowImageView;
 @property (weak, nonatomic) IBOutlet JAClickableView *clickableView;
 

@@ -525,14 +525,18 @@
         
         if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSNotification))
         {
-            NSNumber *fromSideMenu = [notification.userInfo objectForKey:@"from_side_menu"];
-            signInVC.navBarLayout.showBackButton = ![fromSideMenu boolValue];
-            signInVC.fromSideMenu = [fromSideMenu boolValue];
             signInVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
         }
-        else
+        
+        NSNumber *fromSideMenu = [notification.userInfo objectForKey:@"from_side_menu"];
+        if (!VALID_NOTEMPTY(fromSideMenu, NSNumber)) {
+            //if nil, assume the default (YES)
+            fromSideMenu = [NSNumber numberWithBool:YES];
+        }
+        signInVC.fromSideMenu = [fromSideMenu boolValue];
+        signInVC.navBarLayout.showBackButton = ![fromSideMenu boolValue];
+        if ([fromSideMenu boolValue])
         {
-            signInVC.fromSideMenu = YES;
             [self popToRootViewControllerAnimated:NO];
         }
         

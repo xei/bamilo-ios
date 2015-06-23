@@ -13,7 +13,7 @@
 
 @implementation JAMyOrderDetailView
 
-- (void)setupWithOrder:(RITrackOrder*)order maxWidth:(CGFloat)maxWidth
+- (void)setupWithOrder:(RITrackOrder*)order maxWidth:(CGFloat)maxWidth allowsFlip:(BOOL)allowsFlip
 {
     for(UIView *view in self.subviews)
     {
@@ -224,6 +224,15 @@
         
         // Space betweeen list of products and cell separator
         currentY += 10.0f;
+    }
+    
+    self.frame = CGRectMake(self.frame.origin.x,
+                            self.frame.origin.y,
+                            maxWidth,
+                            currentY);
+    
+    if (RI_IS_RTL && allowsFlip) {
+        [self flipAllSubviews];
     }
 }
 
