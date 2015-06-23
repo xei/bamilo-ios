@@ -646,50 +646,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HiF-Ss-fqX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
-        <!--New Seller Rating View Controller-->
-        <scene sceneID="Nz3-Mc-oDz">
-            <objects>
-                <viewController storyboardIdentifier="newSellerRatingViewController" automaticallyAdjustsScrollViewInsets="NO" id="UWG-8z-CQo" customClass="JANewSellerRatingViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="GNx-q2-Z4G"/>
-                        <viewControllerLayoutGuide type="bottom" id="i8Y-8Z-uHd"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="959-C1-5p3">
-                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cfx-Cn-DnA">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="92"/>
-                                <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jcR-gn-vd1">
-                                        <rect key="frame" x="12" y="8" width="296" height="17"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
-                                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rI0-bI-Q5f">
-                                <rect key="frame" x="0.0" y="92" width="320" height="412"/>
-                            </scrollView>
-                        </subviews>
-                        <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="mbE-lx-XlI"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="320" height="568"/>
-                    <connections>
-                        <outlet property="scrollView" destination="rI0-bI-Q5f" id="2Si-wM-2MC"/>
-                        <outlet property="sellerNameLabel" destination="jcR-gn-vd1" id="Pfm-Qy-f55"/>
-                        <outlet property="topView" destination="Cfx-Cn-DnA" id="Oav-EI-Iv2"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Hwp-5U-Y7f" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2334" y="401"/>
-        </scene>
     </scenes>
     <resources>
         <image name="orangeBig_disabled" width="308" height="44"/>

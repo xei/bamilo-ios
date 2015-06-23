@@ -8,10 +8,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JARatingsViewController">
             <connections>
                 <outlet property="brandLabel" destination="KU9-eH-G7K" id="Jyx-hn-UdK"/>
+                <outlet property="contentScrollView" destination="NjB-49-Nc3" id="eg1-cm-gfE"/>
                 <outlet property="emptyReviewsImageView" destination="Gpc-oX-Ooy" id="vS0-4v-zcI"/>
                 <outlet property="emptyReviewsLabel" destination="GJP-yS-4BI" id="hMR-pm-0as"/>
                 <outlet property="emptyReviewsView" destination="KGs-Oo-0Ep" id="d69-LS-t4H"/>
-                <outlet property="emptyScrollView" destination="NjB-49-Nc3" id="fNK-7V-rE2"/>
                 <outlet property="labelUsedProduct" destination="YUo-jY-OJT" id="oEa-Fj-gl1"/>
                 <outlet property="nameLabel" destination="AmH-pJ-ZAk" id="6Vx-9d-3jF"/>
                 <outlet property="resumeView" destination="HfI-XL-bIU" id="o4m-yh-E4R"/>
@@ -25,35 +25,6 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" id="HfI-XL-bIU">
-                    <rect key="frame" x="6" y="121" width="308" height="91"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YUo-jY-OJT">
-                            <rect key="frame" x="6" y="6" width="296" height="16"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                            <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="poj-wF-m68">
-                            <rect key="frame" x="78" y="31" width="152" height="44"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
-                            <state key="normal" title="Button" backgroundImage="greyHalf_normal">
-                                <color key="titleColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <state key="disabled" backgroundImage="greyHalf_disabled"/>
-                            <state key="selected" backgroundImage="greyHalf_highlighted"/>
-                            <state key="highlighted" backgroundImage="greyHalf_highlighted"/>
-                            <connections>
-                                <action selector="goToNewReviews:" destination="-1" eventType="touchUpInside" id="rm6-Lw-0O0"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
                 <view contentMode="scaleToFill" id="A7G-4F-Dpu">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="115"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -75,17 +46,46 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="144" sectionHeaderHeight="22" sectionFooterHeight="22" id="l6M-7W-Bqt">
-                    <rect key="frame" x="6" y="218" width="308" height="287"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <color key="separatorColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
-                    <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                </tableView>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="NjB-49-Nc3">
                     <rect key="frame" x="6" y="218" width="308" height="247"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
+                        <view contentMode="scaleToFill" id="HfI-XL-bIU">
+                            <rect key="frame" x="0.0" y="78" width="308" height="91"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YUo-jY-OJT">
+                                    <rect key="frame" x="6" y="6" width="296" height="16"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="poj-wF-m68">
+                                    <rect key="frame" x="78" y="31" width="152" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                    <state key="normal" title="Button" backgroundImage="greyHalf_normal">
+                                        <color key="titleColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="disabled" backgroundImage="greyHalf_disabled"/>
+                                    <state key="selected" backgroundImage="greyHalf_highlighted"/>
+                                    <state key="highlighted" backgroundImage="greyHalf_highlighted"/>
+                                    <connections>
+                                        <action selector="goToNewReviews:" destination="-1" eventType="touchUpInside" id="rm6-Lw-0O0"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="144" sectionHeaderHeight="22" sectionFooterHeight="22" id="l6M-7W-Bqt">
+                            <rect key="frame" x="0.0" y="-20" width="308" height="287"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="separatorColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </tableView>
                         <view contentMode="scaleToFill" id="KGs-Oo-0Ep" userLabel="Empty Reviews View">
                             <rect key="frame" x="0.0" y="0.0" width="308" height="210"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

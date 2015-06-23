@@ -38,6 +38,7 @@ UITableViewDataSource
 
 @property (weak, nonatomic) IBOutlet UIView *topView;
 @property (weak, nonatomic) IBOutlet UILabel *sellerNameLabel;
+@property (weak, nonatomic) IBOutlet UIScrollView *contentScrollView;
 @property (weak, nonatomic) IBOutlet UIView *resumeView;
 @property (weak, nonatomic) IBOutlet UILabel *labelUsedProduct;
 @property (weak, nonatomic) IBOutlet UIButton *writeReviewButton;
@@ -338,12 +339,20 @@ UITableViewDataSource
     
     CGFloat viewsWidth = self.view.frame.size.width - (2 * horizontalMargin);
     
+    if (self.contentScrollView) {
+        [self.contentScrollView setFrame:CGRectMake(0, CGRectGetMaxY(self.topView.frame), self.view.frame.size.width, self.view.height-CGRectGetMaxY(self.topView.frame))];
+    }
+    
     if(!isiPad || !isInLandscape)
     {
         [self setupResumeView:viewsWidth];
     }
     
     CGFloat originY = CGRectGetMaxY(self.resumeView.frame) + verticalMargin;
+    if (NO == [[RICountryConfiguration getCurrentConfiguration].reviewIsEnabled boolValue]) {
+        
+        originY = verticalMargin;
+    }
     self.tableViewComments.delegate = self;
     self.tableViewComments.dataSource = self;
     self.tableViewComments.layer.cornerRadius = 5.0f;
@@ -355,6 +364,11 @@ UITableViewDataSource
         [self.writeReviewScrollView setHidden:NO];
         
         originY = CGRectGetMaxY(self.topView.frame) + verticalMargin;
+        CGFloat tableHeight = self.view.frame.size.height - originY - verticalMargin;
+        if (self.contentScrollView) {
+            originY = verticalMargin;
+            tableHeight = self.view.height - self.contentScrollView.y - verticalMargin;
+        }
         
         
         CGFloat rightSideViewsWidth = 0.0f;
@@ -370,10 +384,12 @@ UITableViewDataSource
             rightSideViewsWidth = viewsWidth;
         }
         
+        
         [self.tableViewComments setFrame:CGRectMake(horizontalMargin,
                                                     originY,
                                                     viewsWidth,
-                                                    self.view.frame.size.height - originY - verticalMargin)];
+                                                    tableHeight)];
+        
         if(hasComments)
         {
             [self.emptyReviewsView setHidden:YES];
@@ -396,19 +412,23 @@ UITableViewDataSource
         if (NO == [[RICountryConfiguration getCurrentConfiguration].reviewIsEnabled boolValue]) {
             
             [self.resumeView setHidden:YES];
-            startingYForContent = self.resumeView.frame.origin.y;
         } else {
             [self.resumeView setHidden:NO];
+        }
+        
+        CGFloat tableHeight = self.view.frame.size.height - startingYForContent - verticalMargin;
+        if (self.contentScrollView) {
+            tableHeight = self.view.height - self.contentScrollView.y - verticalMargin - startingYForContent;
         }
         
         [self.writeReviewScrollView setHidden:YES];
         
         if(hasComments)
         {
-            [self.tableViewComments setFrame:CGRectMake(verticalMargin,
+            [self.tableViewComments setFrame:CGRectMake(horizontalMargin,
                                                         startingYForContent,
                                                         viewsWidth,
-                                                        self.view.frame.size.height - startingYForContent - verticalMargin)];
+                                                        tableHeight)];
             [self.tableViewComments setHidden:NO];
             [self.emptyReviewsView setHidden:YES];
         }
@@ -465,7 +485,18 @@ UITableViewDataSource
 
 - (void)setupResumeView:(CGFloat)width
 {
+    CGFloat verticalMargin = 6.f;
+    CGFloat horizontalMargin = 6.0f;
     CGFloat currentY = 6.0f;
+    
+    self.resumeView.layer.cornerRadius = 5.0f;
+    if (!self.contentScrollView) {
+        verticalMargin = CGRectGetMaxY(self.topView.frame) + verticalMargin;
+    }
+    [self.resumeView setFrame:CGRectMake(horizontalMargin,
+                                         verticalMargin,
+                                         width,
+                                         currentY + 20.0f)];
     
     if (NO == [[RICountryConfiguration getCurrentConfiguration].reviewIsEnabled boolValue]) {
         
@@ -490,11 +521,7 @@ UITableViewDataSource
         [self.writeReviewButton setX:[self.writeReviewButton superview].width/2 - self.writeReviewButton.width/2];
     }
     
-    self.resumeView.layer.cornerRadius = 5.0f;
-    [self.resumeView setFrame:CGRectMake(6.0f,
-                                         CGRectGetMaxY(self.topView.frame) + 6.0f,
-                                         width,
-                                         currentY + 20.0f)];
+    [self.resumeView setHeight:currentY + 20.0f];
 }
 
 - (void)setupSendReviewView:(CGFloat)width originY:(CGFloat)originY
@@ -655,6 +682,9 @@ UITableViewDataSource
                                                 CGRectGetMaxY(self.emptyReviewsImageView.frame) + marginBetweenImageAndLabel,
                                                 emptyReviewsLabelRect.size.width,
                                                 emptyReviewsLabelRect.size.height)];
+    if (self.contentScrollView) {
+        [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.width, CGRectGetMaxY(self.emptyReviewsView.frame) + verticalMargin)];
+    }
 }
 
 - (void)didReceiveMemoryWarning

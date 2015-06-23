@@ -7,22 +7,22 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JANewSellerRatingViewController">
             <connections>
-                <outlet property="scrollView" destination="kE6-j3-AIt" id="gPF-lC-uXB"/>
-                <outlet property="sellerNameLabel" destination="Gcj-Ev-ual" id="xPx-6p-mWR"/>
-                <outlet property="topView" destination="UHN-8V-AoO" id="JjB-x3-Q1P"/>
-                <outlet property="view" destination="doS-Yn-7Ai" id="W5U-rx-wsY"/>
+                <outlet property="scrollView" destination="Rz7-sR-si9" id="O7a-FN-TVq"/>
+                <outlet property="sellerNameLabel" destination="2et-0H-hXX" id="2VV-fk-eWg"/>
+                <outlet property="topView" destination="aVB-wb-BpT" id="Wpe-2S-IOS"/>
+                <outlet property="view" destination="Azv-m8-WQ1" id="16r-U2-uFw"/>
             </connections>
         </placeholder>
-        <view contentMode="scaleToFill" id="doS-Yn-7Ai">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+        <view contentMode="scaleToFill" id="Azv-m8-WQ1">
+            <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" id="UHN-8V-AoO">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="92"/>
+                <view contentMode="scaleToFill" id="aVB-wb-BpT">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="92"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Gcj-Ev-ual">
-                            <rect key="frame" x="12" y="8" width="296" height="17"/>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2et-0H-hXX">
+                            <rect key="frame" x="12" y="8" width="576" height="17"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
                             <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -31,12 +31,14 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="kE6-j3-AIt">
-                    <rect key="frame" x="0.0" y="92" width="320" height="412"/>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Rz7-sR-si9">
+                    <rect key="frame" x="140" y="92" width="320" height="508"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </scrollView>
             </subviews>
             <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="289" y="317"/>
         </view>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
     </objects>

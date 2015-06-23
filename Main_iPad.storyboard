@@ -741,50 +741,6 @@
             </objects>
             <point key="canvasLocation" x="-885" y="-3293"/>
         </scene>
-        <!--New Seller Rating View Controller-->
-        <scene sceneID="wWC-KO-wMw">
-            <objects>
-                <viewController storyboardIdentifier="newSellerRatingViewController" id="eLi-TK-pCW" customClass="JANewSellerRatingViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ne7-3o-Z38"/>
-                        <viewControllerLayoutGuide type="bottom" id="9Ci-oN-lc7"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="w2C-zs-zgl">
-                        <rect key="frame" x="0.0" y="64" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bc4-vm-fB2">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="92"/>
-                                <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KtG-b8-BOo">
-                                        <rect key="frame" x="12" y="8" width="576" height="17"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
-                                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ii0-Fl-lZc">
-                                <rect key="frame" x="140" y="92" width="320" height="508"/>
-                            </scrollView>
-                        </subviews>
-                        <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="k4Y-fD-BUD"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="600" height="600"/>
-                    <connections>
-                        <outlet property="scrollView" destination="Ii0-Fl-lZc" id="0S4-7R-eiB"/>
-                        <outlet property="sellerNameLabel" destination="KtG-b8-BOo" id="SKc-rA-lPr"/>
-                        <outlet property="topView" destination="bc4-vm-fB2" id="EDD-pY-gdG"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ndr-ma-YMK" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2801" y="756"/>
-        </scene>
     </scenes>
     <resources>
         <image name="emptyFavoritesIcon" width="98" height="98"/>

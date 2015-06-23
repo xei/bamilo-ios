@@ -1001,9 +1001,9 @@
     else if ([self.cellIdentifier isEqualToString:@"gridCell"])
         return CGSizeMake(151, 206);
     else if ([self.cellIdentifier isEqualToString:@"gridCell_ipad_portrait"])
-        return CGSizeMake(248, 206);
+        return CGSizeMake(248, 212);
     else if ([self.cellIdentifier isEqualToString:@"gridCell_ipad_landscape"])
-        return CGSizeMake(197.6, 206);
+        return CGSizeMake(197.6, 212);
     else
         return CGSizeZero;
     
