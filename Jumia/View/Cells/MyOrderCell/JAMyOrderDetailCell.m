@@ -8,6 +8,12 @@
 
 #import "JAMyOrderDetailCell.h"
 
+@interface JAMyOrderDetailCell()
+
+@property (weak, nonatomic) IBOutlet UIView *separator;
+
+@end
+
 @implementation JAMyOrderDetailCell
 
 - (void)awakeFromNib
@@ -17,7 +23,13 @@
 
 - (void)setupWithOrder:(RITrackOrder*)order
 {
-    [self.orderDetailView setupWithOrder:order maxWidth:self.frame.size.width];
+    [self.orderDetailView setupWithOrder:order maxWidth:self.frame.size.width allowsFlip:YES];
+    
+    CGFloat height = [JAMyOrderDetailView getOrderDetailViewHeight:order maxWidth:self.frame.size.width];
+    self.separator.frame = CGRectMake(0.0f,
+                                      height - 1.0f,
+                                      self.frame.size.width,
+                                      1.0f);
 }
 
 @end

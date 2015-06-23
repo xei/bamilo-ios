@@ -13,8 +13,6 @@
 
 @property (weak, nonatomic) IBOutlet JAMyOrderDetailView *orderDetailView;
 
-@property (weak, nonatomic) IBOutlet UIView *separator;
-
 - (void)setupWithOrder:(RITrackOrder*)order;
 
 @end
