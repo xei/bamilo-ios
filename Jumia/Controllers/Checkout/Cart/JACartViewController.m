@@ -548,14 +548,14 @@
         [self.totalPriceView loadWithPrice:[[self cart] cartUnreducedValueFormatted]
                               specialPrice:[[self cart] subTotalFormatted]
                                   fontSize:11.0f
-                     specialPriceOnTheLeft:RI_IS_RTL?NO:YES];
+                     specialPriceOnTheLeft:NO];
     }
     else
     {
         [self.totalPriceView loadWithPrice:[[self cart] subTotalFormatted]
                               specialPrice:nil
                                   fontSize:11.0f
-                     specialPriceOnTheLeft:RI_IS_RTL?NO:YES];
+                     specialPriceOnTheLeft:NO];
     }
     
     self.totalPriceView.frame = CGRectMake(self.subtotalView.frame.size.width - self.totalPriceView.frame.size.width - 4.0f,
@@ -1162,11 +1162,6 @@
         
         [headerView loadHeaderWithText:STRING_ITEMS width:self.productCollectionView.frame.size.width];
         
-        if (RI_IS_RTL) {
-            [headerView flipSubviewAlignments];
-            [headerView flipSubviewPositions];
-        }
-        
         reusableview = headerView;
         
     }
@@ -1369,17 +1364,14 @@
     }
     
     [UIView animateWithDuration:0.3 animations:^{
-        [self.cartScrollView setFrame:CGRectMake(self.cartScrollViewInitialFrame.origin.x,
-                                                 self.cartScrollViewInitialFrame.origin.y,
-                                                 self.cartScrollViewInitialFrame.size.width,
-                                                 self.cartScrollViewInitialFrame.size.height - height)];
+        [self.cartScrollView setHeight:self.cartScrollViewInitialFrame.size.height - height];
     }];
 }
 
 - (void)keyboardWillHide:(NSNotification*)notification
 {
     [UIView animateWithDuration:0.3 animations:^{
-        [self.cartScrollView setFrame:self.cartScrollViewInitialFrame];
+        [self.cartScrollView setHeight:self.cartScrollViewInitialFrame.size.height];
     }];
 }
 

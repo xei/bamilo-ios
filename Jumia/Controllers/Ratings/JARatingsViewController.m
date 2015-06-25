@@ -189,6 +189,12 @@ UITableViewDataSource
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self hideKeyboards];
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self hideLoading];
@@ -203,6 +209,7 @@ UITableViewDataSource
             }];
         }];
     }];
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 - (void)ratingsRequests
@@ -441,12 +448,11 @@ UITableViewDataSource
                          fontSize:14.0f
             specialPriceOnTheLeft:NO];
     
-    self.priceView.frame = CGRectMake(12.0f,
-                                      CGRectGetMaxY(self.nameLabel.frame) + 4.0f,
-                                      self.topView.bounds.size.width - 24.0f,
-                                      self.priceView.frame.size.height);
+    [self.priceView setX:12.f];
+    [self.priceView setY:CGRectGetMaxY(self.nameLabel.frame) + 4.0f];
     
     [self.topView addSubview:self.priceView];
+    [self.priceView sizeToFit];
     
     CGFloat topViewMinHeight = CGRectGetMaxY(self.priceView.frame);
     
