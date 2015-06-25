@@ -118,11 +118,6 @@ UITableViewDataSource
         self.screenName = @"RatingScreen";
     }
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
-    
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     
@@ -179,6 +174,10 @@ UITableViewDataSource
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
                                                object:nil];
 }
 
@@ -1171,6 +1170,7 @@ UITableViewDataSource
 
 - (void) keyboardWillHide:(NSNotification *)notification
 {
+    [self.writeReviewScrollView.layer removeAllAnimations];
     [UIView animateWithDuration:0.3 animations:^{
         [self.writeReviewScrollView setFrame:self.writeReviewScrollViewInitialRect];
     }];

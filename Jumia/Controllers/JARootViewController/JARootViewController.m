@@ -134,15 +134,21 @@
         self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
     }
     
-    [self setLeftPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
-    [self setRightPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
+    if (RI_IS_RTL) {
+        [self setRightPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
+    }else{
+        [self setLeftPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
+    }
     [self setCenterPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"rootNavigationController"]];
 }
 
 - (void)updateCountry:(NSNotification*)notification
 {
-    [self setLeftPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
-    [self setRightPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
+    if (RI_IS_RTL) {
+        [self setRightPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
+    }else{
+        [self setLeftPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
+    }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"first_screen"]];
 
