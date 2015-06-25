@@ -94,16 +94,6 @@ UITableViewDataSource
         self.screenName = @"SellerReviewsScreen";
     }
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
-    
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
     
@@ -129,10 +119,14 @@ UITableViewDataSource
 {
     [super viewWillAppear:animated];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(hideKeyboards)
-                                                 name:kOpenMenuNotification
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
                                                object:nil];
     
     if(self.requestsDone)

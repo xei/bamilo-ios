@@ -697,12 +697,6 @@
             
             JAUserDataViewController *userData = [[JAUserDataViewController alloc] initWithNibName:@"JAUserDataViewController" bundle:nil];
             
-            if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad){
-            
-                userData = [[JAUserDataViewController alloc] initWithNibName:@"JAUserDataViewController~iPad" bundle:nil];
-                
-            }
-            
             [self pushViewController:userData animated:animated];
         }
     }

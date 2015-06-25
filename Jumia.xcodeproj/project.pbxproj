@@ -317,6 +317,14 @@
 		9A2036F31B25F39D00F36F55 /* JANoConnectionView~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A481B1DE1FF0028105D /* JANoConnectionView~iPad.xib */; };
 		9A2036F41B25F39E00F36F55 /* JANoConnectionView~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A481B1DE1FF0028105D /* JANoConnectionView~iPad.xib */; };
 		9A2036F51B25F39E00F36F55 /* JANoConnectionView~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A481B1DE1FF0028105D /* JANoConnectionView~iPad.xib */; };
+		9A4F910A1B3C308F00E34C0B /* JAUserDataViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A441B1DE1B80028105D /* JAUserDataViewController~iPad.xib */; };
+		9A4F910B1B3C308F00E34C0B /* JAUserDataViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A441B1DE1B80028105D /* JAUserDataViewController~iPad.xib */; };
+		9A4F910C1B3C309000E34C0B /* JAUserDataViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A441B1DE1B80028105D /* JAUserDataViewController~iPad.xib */; };
+		9A4F910D1B3C309000E34C0B /* JAUserDataViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A441B1DE1B80028105D /* JAUserDataViewController~iPad.xib */; };
+		9A4F910E1B3C311B00E34C0B /* JAUserDataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A431B1DE1B80028105D /* JAUserDataViewController.xib */; };
+		9A4F910F1B3C311B00E34C0B /* JAUserDataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A431B1DE1B80028105D /* JAUserDataViewController.xib */; };
+		9A4F91101B3C311C00E34C0B /* JAUserDataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A431B1DE1B80028105D /* JAUserDataViewController.xib */; };
+		9A4F91111B3C311C00E34C0B /* JAUserDataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A431B1DE1B80028105D /* JAUserDataViewController.xib */; };
 		9A564CAB1B332EBE00F23057 /* JASellerRatingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A564CAA1B332EBE00F23057 /* JASellerRatingsViewController.xib */; };
 		9A564CAC1B332FB100F23057 /* JASellerRatingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A564CAA1B332EBE00F23057 /* JASellerRatingsViewController.xib */; };
 		9A564CAD1B332FB200F23057 /* JASellerRatingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A564CAA1B332EBE00F23057 /* JASellerRatingsViewController.xib */; };
@@ -6048,6 +6056,7 @@
 				CEDBF88F1B0DF5D00073971A /* JANewsletterComponent_RTL.xib in Resources */,
 				CE88F7A61A1DFFCD00A3A586 /* JAOrangeButtonCell_ipad_landscape.xib in Resources */,
 				CEAB63781A81053C00B6F26E /* BMA4SRichPushWebView.xib in Resources */,
+				9A4F910E1B3C311B00E34C0B /* JAUserDataViewController.xib in Resources */,
 				CEAB63821A81053C00B6F26E /* BMA4SiPhoneTextNotifView-landscape-ret4.xib in Resources */,
 				CEAB63461A81053C00B6F26E /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib in Resources */,
 				9AEE88101B0B3369005BFBEB /* JARatingsViewController.xib in Resources */,
@@ -6125,6 +6134,7 @@
 				CEA86E0B1A49D247000032AD /* JACampaignProductCell_ipad_landscape.xib in Resources */,
 				6CCE08B01B1F0E6E004311E2 /* JALoginViewController.xib in Resources */,
 				BBBA4CD519E44CDC004271B2 /* 19_filters.feature in Resources */,
+				9A4F910A1B3C308F00E34C0B /* JAUserDataViewController~iPad.xib in Resources */,
 				B5C008601A038F63000BBC52 /* JAPDVImageSection~iPad_Portrait.xib in Resources */,
 				CE4054B81B29EFB300E9CD1A /* JARecentlyViewedViewController.xib in Resources */,
 				CEDBF86A1B0CE0CE0073971A /* JABirthDateComponent_RTL.xib in Resources */,
@@ -6586,6 +6596,7 @@
 				CE9ADC801AB34C4600D56481 /* 20_cart.feature in Resources */,
 				CE9ADC811AB34C4600D56481 /* JAFallbackView.xib in Resources */,
 				CE9ADC821AB34C4600D56481 /* JAPDVSingleRelatedItem.xib in Resources */,
+				9A4F910B1B3C308F00E34C0B /* JAUserDataViewController~iPad.xib in Resources */,
 				CE9ADC831AB34C4600D56481 /* BMA4SiPhoneTextNotifView-nobuttons.xib in Resources */,
 				CE9ADC841AB34C4600D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-ret4.xib in Resources */,
 				CE9ADC851AB34C4600D56481 /* 05_user_data.feature in Resources */,
@@ -6763,6 +6774,7 @@
 				CE9ADD151AB34C4600D56481 /* slider-default_trackBackground@2x.png in Resources */,
 				CE9ADD161AB34C4600D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape.xib in Resources */,
 				CE9ADD171AB34C4600D56481 /* BMA4SiPhoneIntersticialWebViewNotifView.xib in Resources */,
+				9A4F910F1B3C311B00E34C0B /* JAUserDataViewController.xib in Resources */,
 				CE9ADD181AB34C4600D56481 /* BMA4SiPhoneWebViewNotifView-nobuttons-retHD.xib in Resources */,
 				CE9ADD191AB34C4600D56481 /* BMA4SiPhoneWebViewNotifView-landscape-iPad.xib in Resources */,
 				CE9ADD1A1AB34C4600D56481 /* JAFavoriteListCell_ipad_portrait.xib in Resources */,
@@ -7019,6 +7031,7 @@
 				9AF49A371B18B5BC0028105D /* JACartViewController.xib in Resources */,
 				CE9AE1381AB8997900D56481 /* Shop.com.mm.xcassets in Resources */,
 				CE9ADEFE1AB6D6E900D56481 /* 10_search.feature in Resources */,
+				9A4F91101B3C311C00E34C0B /* JAUserDataViewController.xib in Resources */,
 				CE9ADEFF1AB6D6E900D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape-iPad.xib in Resources */,
 				CE9ADF001AB6D6E900D56481 /* BMA4SiPhoneTextNotifView.xib in Resources */,
 				CE9ADF021AB6D6E900D56481 /* Main_iPad.storyboard in Resources */,
@@ -7031,6 +7044,7 @@
 				CE9ADF091AB6D6E900D56481 /* JACatalogListCell_ipad_landscape.xib in Resources */,
 				CE9ADF0A1AB6D6E900D56481 /* env.rb in Resources */,
 				CE9ADF0B1AB6D6E900D56481 /* JARecentlyViewedListCell_ipad_portrait.xib in Resources */,
+				9A4F910C1B3C309000E34C0B /* JAUserDataViewController~iPad.xib in Resources */,
 				CE9ADF0C1AB6D6E900D56481 /* slider-default-track.png in Resources */,
 				CE9ADF0D1AB6D6E900D56481 /* JAGrayButtonCell_ipad_portrait.xib in Resources */,
 				CE9ADF0E1AB6D6E900D56481 /* Main.storyboard in Resources */,
@@ -7135,6 +7149,7 @@
 				CE9AE0751AB6D78200D56481 /* JAFallbackView.xib in Resources */,
 				CE9AE0761AB6D78200D56481 /* JAPDVSingleRelatedItem.xib in Resources */,
 				CE9AE0771AB6D78200D56481 /* BMA4SiPhoneTextNotifView-nobuttons.xib in Resources */,
+				9A4F910D1B3C309000E34C0B /* JAUserDataViewController~iPad.xib in Resources */,
 				CE9AE0781AB6D78200D56481 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-ret4.xib in Resources */,
 				CE9AE0791AB6D78200D56481 /* 05_user_data.feature in Resources */,
 				CE9AE07A1AB6D78200D56481 /* JAAddNewAddressCell.xib in Resources */,
@@ -7312,6 +7327,7 @@
 				CE9AE1091AB6D78200D56481 /* slider-default_trackBackground@2x.png in Resources */,
 				CE9AE10A1AB6D78200D56481 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape.xib in Resources */,
 				CE9AE10B1AB6D78200D56481 /* BMA4SiPhoneIntersticialWebViewNotifView.xib in Resources */,
+				9A4F91111B3C311C00E34C0B /* JAUserDataViewController.xib in Resources */,
 				CE9AE10C1AB6D78200D56481 /* BMA4SiPhoneWebViewNotifView-nobuttons-retHD.xib in Resources */,
 				CE9AE10D1AB6D78200D56481 /* BMA4SiPhoneWebViewNotifView-landscape-iPad.xib in Resources */,
 				CE9AE10E1AB6D78200D56481 /* JAFavoriteListCell_ipad_portrait.xib in Resources */,
