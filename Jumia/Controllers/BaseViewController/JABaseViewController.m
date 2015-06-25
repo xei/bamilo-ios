@@ -273,16 +273,9 @@
                                                 searchIcon.size.width,
                                                 searchIcon.size.height);
     
-    if(RI_IS_RTL){
-        
-        [textFieldSearch setTextAlignment:NSTextAlignmentRight];
-        [self.searchIconImageView flipViewPositionInsideSuperview];
-        [self.searchBar setPositionAdjustment:UIOffsetMake(-self.searchBar.frame.size.width + 43.0f, 0) forSearchBarIcon:UISearchBarIconClear];
-        [self.searchBar setSearchTextPositionAdjustment:UIOffsetMake(23.0f, 0)];
-    }
-    
     [self.searchBarBackground addSubview:self.searchIconImageView];
     
+    [self reloadSearchBar];
 }
 
 - (void)reloadSearchBar {
@@ -302,8 +295,12 @@
                                                 self.searchIconImageView.frame.size.width,
                                                 self.searchIconImageView.frame.size.height);
     
+    UITextField *textFieldSearch = [self.searchBar valueForKey:@"_searchField"];
+    textFieldSearch.textAlignment = NSTextAlignmentLeft;
+    
     if(RI_IS_RTL){
         
+        [textFieldSearch flipViewAlignment];
         [self.searchIconImageView flipViewPositionInsideSuperview];
         [self.searchBar setPositionAdjustment:UIOffsetMake(-self.searchBar.frame.size.width + 48.0f, 0) forSearchBarIcon:UISearchBarIconClear];
         [self.searchBar setSearchTextPositionAdjustment:UIOffsetMake(24.0f, 0)];

@@ -204,6 +204,8 @@
             continue;
         } else if ([view isKindOfClass:[JAPicker class]]) {
             continue;
+        } else if ([view isKindOfClass:[UISearchBar class]]) {
+            continue;
         } else {
             [view flipViewPositionInsideSuperview];
             [view flipViewAlignment];
