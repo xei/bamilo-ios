@@ -61,7 +61,6 @@ JADynamicFormDelegate
     self.navBarLayout.showLogo = NO;
     self.navBarLayout.title = STRING_USER_DATA;
     
-    self.personalDataView.translatesAutoresizingMaskIntoConstraints = YES;
     self.personalDataView.layer.cornerRadius = 5.0f;
     self.personalDataView.hidden = YES;
     
@@ -70,16 +69,13 @@ JADynamicFormDelegate
     self.personalTitleLabel.text = STRING_YOUR_PERSONAL_DATA;
     
     self.nameLabel.font = [UIFont fontWithName:kFontLightName size:self.nameLabel.font.pointSize];
-    self.nameLabel.translatesAutoresizingMaskIntoConstraints = YES;
     self.nameLabel.textColor = UIColorFromRGB(0x666666);
     
     self.emailLabel.font = [UIFont fontWithName:kFontLightName size:self.emailLabel.font.pointSize];
-    self.emailLabel.translatesAutoresizingMaskIntoConstraints = YES;
     self.emailLabel.textColor = UIColorFromRGB(0x666666);
     
     self.personalLine.backgroundColor = UIColorFromRGB(0xfaa41a);
     
-    self.changePasswordView.translatesAutoresizingMaskIntoConstraints = YES;
     self.changePasswordView.layer.cornerRadius = 5.0f;
     self.changePasswordView.hidden = YES;
     
@@ -88,7 +84,6 @@ JADynamicFormDelegate
     self.changePasswordTitle.textColor = UIColorFromRGB(0x4e4e4e);
     self.changePasswordTitle.text = STRING_NEW_PASSWORD;
     
-    self.saveButton.translatesAutoresizingMaskIntoConstraints = YES;
     self.saveButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.saveButton.titleLabel.font.pointSize];
     [self.saveButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.saveButton setTitle:STRING_SAVE_LABEL forState:UIControlStateNormal];
@@ -235,7 +230,8 @@ JADynamicFormDelegate
 
 - (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
-    
+    [self.personalTitleLabel setX:6.f];
+    [self.changePasswordTitle setX:6.f];
     [self.personalDataView setFrame:CGRectMake(self.personalDataView.frame.origin.x,
                                                self.personalDataView.frame.origin.y,
                                                width - (2 * self.personalDataView.frame.origin.x),
@@ -262,13 +258,12 @@ JADynamicFormDelegate
     {
         leftMargin = 145.0f;
         dynamicFormleftMargin = 128.0f;
-        
-        [self.contentScrollView setFrame:CGRectMake(0.0f,
-                                                    self.contentScrollView.frame.origin.y,
-                                                    1024.0f,
-                                                    768.0f)];
-        
     }
+    
+    [self.contentScrollView setFrame:CGRectMake(0.0f,
+                                                self.contentScrollView.frame.origin.y,
+                                                self.view.width,
+                                                self.view.height - self.contentScrollView.frame.origin.y)];
     
     [self.nameLabel setFrame:CGRectMake(leftMargin,
                                         self.nameLabel.frame.origin.y,

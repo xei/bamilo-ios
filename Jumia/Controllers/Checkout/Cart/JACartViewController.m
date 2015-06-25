@@ -21,7 +21,9 @@
 #import "RIAddress.h"
 #import <FacebookSDK/FacebookSDK.h>
 
-@interface JACartViewController ()
+@interface JACartViewController () {
+    BOOL _emptyImageFlipOnce;
+}
 
 @property (nonatomic, strong) NSString *voucherCode;
 @property (nonatomic, assign) CGRect keyboardFrame;
@@ -104,6 +106,10 @@
     [self.continueShoppingButton setWidth:self.view.width-12.f];
     [self.emptyCartLabel setX:self.view.width/2-self.emptyCartLabel.width/2];
     [self.emptyCartImageView setX:self.view.width/2-self.emptyCartImageView.width/2];
+    
+    if (!_emptyImageFlipOnce)
+        [self.emptyCartImageView flipViewImage];
+    _emptyImageFlipOnce = YES;
     
      [[NSNotificationCenter defaultCenter] addObserver:self
                                               selector:@selector(removeKeyboard)
