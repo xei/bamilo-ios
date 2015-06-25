@@ -81,10 +81,10 @@
     [self.addToCartButton setTitle:STRING_ADD_TO_SHOPPING_CART forState:UIControlStateNormal];
     
     if (self.addToCartButton) {
-        [self.addToCartButton setX:self.width -6.f - self.addToCartButton.width];
+        [self.addToCartButton setX:self.backgroundContentView.frame.size.width -6.f - self.addToCartButton.width];
     }
     
-    [self.deleteButton setX:self.width-self.deleteButton.width];
+    [self.deleteButton setX:self.backgroundContentView.frame.size.width-self.deleteButton.width];
     
     [self setRTL];
 }

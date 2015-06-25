@@ -227,6 +227,7 @@ FBLoginViewDelegate
                                         self.scrollView.frame.size.width - (2 * horizontalMargin),
                                         340.0f)];
     
+    self.loginLabel.textAlignment = NSTextAlignmentLeft;
     [self.loginLabel setFrame:CGRectMake(horizontalMargin,
                                          2.0f,
                                          self.loginView.frame.size.width - (2 * horizontalMargin),
