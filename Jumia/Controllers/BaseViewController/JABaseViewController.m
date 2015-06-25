@@ -268,12 +268,12 @@
     
     
     self.searchIconImageView = [[UIImageView alloc] initWithImage:searchIcon];
-    self.searchIconImageView.frame = CGRectMake(CGRectGetMaxX(self.searchBar.frame) - horizontalMargin - searchIcon.size.width,
-                                                (self.searchBarBackground.frame.size.height - searchIcon.size.height) / 2,
+    self.searchIconImageView.frame = CGRectMake(self.searchBar.frame.size.width - horizontalMargin - searchIcon.size.width,
+                                                (self.searchBar.frame.size.height - searchIcon.size.height) / 2,
                                                 searchIcon.size.width,
                                                 searchIcon.size.height);
     
-    [self.searchBarBackground addSubview:self.searchIconImageView];
+    [self.searchBar addSubview:self.searchIconImageView];
     
     [self reloadSearchBar];
 }
@@ -290,8 +290,8 @@
                                       self.searchBarBackground.bounds.size.width - horizontalMargin * 2,
                                       self.searchBarBackground.bounds.size.height - verticalMargin * 2);
     
-    self.searchIconImageView.frame = CGRectMake(CGRectGetMaxX(self.searchBar.frame) - horizontalMargin - self.searchIconImageView.frame.size.width,
-                                                (self.searchBarBackground.frame.size.height - self.searchIconImageView.frame.size.height) / 2,
+    self.searchIconImageView.frame = CGRectMake(self.searchBar.frame.size.width - horizontalMargin - self.searchIconImageView.frame.size.width,
+                                                (self.searchBar.frame.size.height - self.searchIconImageView.frame.size.height) / 2,
                                                 self.searchIconImageView.frame.size.width,
                                                 self.searchIconImageView.frame.size.height);
     
