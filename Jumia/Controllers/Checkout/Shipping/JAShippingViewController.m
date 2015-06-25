@@ -271,6 +271,8 @@ UICollectionViewDelegateFlowLayout
     CGFloat marginBetweenIconAndLabel = 5.0f;
     CGFloat realWidth = self.stepIcon.frame.size.width + marginBetweenIconAndLabel + self.stepLabel.frame.size.width - (2 * horizontalMargin);
     
+    self.stepIcon.image = [UIImage imageNamed:@"headerCheckoutStep3Icon"];
+    
     if(self.stepView.frame.size.width >= realWidth)
     {
         CGFloat xStepIconValue = ((self.stepView.frame.size.width - realWidth) / 2) - horizontalMargin;
@@ -299,6 +301,7 @@ UICollectionViewDelegateFlowLayout
     
     if(RI_IS_RTL){
         [self.stepBackground setImage:[stepBackgroundImage flipImageWithOrientation:UIImageOrientationUpMirrored]];
+        [self.stepIcon flipViewImage];
     }
 }
 

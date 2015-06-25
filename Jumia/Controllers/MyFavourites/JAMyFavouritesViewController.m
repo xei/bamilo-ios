@@ -332,7 +332,7 @@
             height = JACatalogViewControllerListCellHeight_ipad;
         }
     } else {
-        width = self.view.frame.size.width;
+        width = self.collectionView.frame.size.width;
         height = JACatalogViewControllerListCellHeight;
     }
     
@@ -352,7 +352,7 @@
             width = 1012.0f;
         }
     } else {
-        width = self.view.frame.size.width;
+        width = self.collectionView.frame.size.width;
     }
     
     return CGSizeMake(width, height);
