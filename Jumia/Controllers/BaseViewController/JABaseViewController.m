@@ -268,21 +268,14 @@
     
     
     self.searchIconImageView = [[UIImageView alloc] initWithImage:searchIcon];
-    self.searchIconImageView.frame = CGRectMake(CGRectGetMaxX(self.searchBar.frame) - horizontalMargin - searchIcon.size.width,
-                                                (self.searchBarBackground.frame.size.height - searchIcon.size.height) / 2,
+    self.searchIconImageView.frame = CGRectMake(self.searchBar.frame.size.width - horizontalMargin - searchIcon.size.width,
+                                                (self.searchBar.frame.size.height - searchIcon.size.height) / 2,
                                                 searchIcon.size.width,
                                                 searchIcon.size.height);
     
-    if(RI_IS_RTL){
-        
-        [textFieldSearch setTextAlignment:NSTextAlignmentRight];
-        [self.searchIconImageView flipViewPositionInsideSuperview];
-        [self.searchBar setPositionAdjustment:UIOffsetMake(-self.searchBar.frame.size.width + 43.0f, 0) forSearchBarIcon:UISearchBarIconClear];
-        [self.searchBar setSearchTextPositionAdjustment:UIOffsetMake(23.0f, 0)];
-    }
+    [self.searchBar addSubview:self.searchIconImageView];
     
-    [self.searchBarBackground addSubview:self.searchIconImageView];
-    
+    [self reloadSearchBar];
 }
 
 - (void)reloadSearchBar {
@@ -297,13 +290,17 @@
                                       self.searchBarBackground.bounds.size.width - horizontalMargin * 2,
                                       self.searchBarBackground.bounds.size.height - verticalMargin * 2);
     
-    self.searchIconImageView.frame = CGRectMake(CGRectGetMaxX(self.searchBar.frame) - horizontalMargin - self.searchIconImageView.frame.size.width,
-                                                (self.searchBarBackground.frame.size.height - self.searchIconImageView.frame.size.height) / 2,
+    self.searchIconImageView.frame = CGRectMake(self.searchBar.frame.size.width - horizontalMargin - self.searchIconImageView.frame.size.width,
+                                                (self.searchBar.frame.size.height - self.searchIconImageView.frame.size.height) / 2,
                                                 self.searchIconImageView.frame.size.width,
                                                 self.searchIconImageView.frame.size.height);
     
+    UITextField *textFieldSearch = [self.searchBar valueForKey:@"_searchField"];
+    textFieldSearch.textAlignment = NSTextAlignmentLeft;
+    
     if(RI_IS_RTL){
         
+        [textFieldSearch flipViewAlignment];
         [self.searchIconImageView flipViewPositionInsideSuperview];
         [self.searchBar setPositionAdjustment:UIOffsetMake(-self.searchBar.frame.size.width + 48.0f, 0) forSearchBarIcon:UISearchBarIconClear];
         [self.searchBar setSearchTextPositionAdjustment:UIOffsetMake(24.0f, 0)];
