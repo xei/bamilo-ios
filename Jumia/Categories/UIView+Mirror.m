@@ -13,6 +13,7 @@
 #import "JAAddRatingView.h"
 #import "JAPagedView.h"
 #import "JAPicker.h"
+#import "JAPriceView.h"
 
 @implementation UIView (Mirror)
 
@@ -208,6 +209,8 @@
             [view flipViewAlignment];
 //            [view flipViewImage];
             if ([view isKindOfClass:[UISwitch class]]) {
+                continue;
+            } else if ([view isKindOfClass:[JAPriceView class]]) {
                 continue;
             } else {
                 [view flipAllSubviews];
