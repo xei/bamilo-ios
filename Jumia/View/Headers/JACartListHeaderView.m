@@ -23,6 +23,7 @@
     
     [self setBackgroundColor:UIColorFromRGB(0xffffff)];
     
+    [self.title setX:6.f];
     self.title.font = [UIFont fontWithName:kFontRegularName size:self.title.font.pointSize];
     self.title.textAlignment = NSTextAlignmentLeft;
     [self.title setText:text];
@@ -30,7 +31,9 @@
     
     [self.separator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     
-    [self flipAllSubviews];
+    if (RI_IS_RTL) {
+        [self flipAllSubviews];
+    }
 }
 
 @end
