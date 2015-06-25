@@ -401,7 +401,7 @@ FBLoginViewDelegate
     self.loginFormHeight += 10.0f;
     [self.checkBoxComponent setFrame:CGRectMake(6.0f,
                                                 self.loginFormHeight,
-                                                self.checkBoxComponent.frame.size.width,
+                                                self.checkBoxComponent.frame.size.width - 6.0f,
                                                 self.checkBoxComponent.frame.size.height)];
     self.loginFormHeight += self.checkBoxComponent.frame.size.height + 10.0f;
     [self.loginButton setFrame:CGRectMake(6.0f, self.loginFormHeight, buttonWidth, 44.0f)];
