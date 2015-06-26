@@ -59,14 +59,6 @@
 {
     self.fieldRatingStars = fieldRatingStars;
     
-    self.translatesAutoresizingMaskIntoConstraints = YES;
-    self.label.translatesAutoresizingMaskIntoConstraints = YES;
-    self.starButton1.translatesAutoresizingMaskIntoConstraints = YES;
-    self.starButton2.translatesAutoresizingMaskIntoConstraints = YES;
-    self.starButton3.translatesAutoresizingMaskIntoConstraints = YES;
-    self.starButton4.translatesAutoresizingMaskIntoConstraints = YES;
-    self.starButton5.translatesAutoresizingMaskIntoConstraints = YES;
-    
     self.label.font = [UIFont fontWithName:kFontRegularName size:self.label.font.pointSize];
     [self.label setTextColor:UIColorFromRGB(0x666666)];
     

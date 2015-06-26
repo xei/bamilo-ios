@@ -286,7 +286,7 @@ UIAlertViewDelegate
     CGFloat dynamicFormHorizontalMargin = 6.0f;
     if(isiPad)
     {
-        dynamicFormHorizontalMargin = 250.0f;
+        dynamicFormHorizontalMargin = 230.0f;
     }
     
     if(VALID_NOTEMPTY(self.fixedLabel, UILabel))
