@@ -65,13 +65,14 @@
     
     self.backgroundColor = [UIColor clearColor];
     
+    self.backgroundContentView.translatesAutoresizingMaskIntoConstraints = YES;
     [self.backgroundContentView setX:6.f];
-    if (RI_IS_RTL && !hasBanner && [UIDevice currentDevice].userInterfaceIdiom != UIUserInterfaceIdiomPad) {
-        
-        [self.backgroundContentView setX:12.f];
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        [self.backgroundContentView setWidth:self.width - 6.0f];
+    } else {
+        [self.backgroundContentView setWidth:self.width - 12.f];
     }
-    [self.backgroundContentView setWidth:self.width - 6.f];
-    
+
     self.backgroundContentView.layer.cornerRadius = 5.0f;
     
     //TOP STUFF
