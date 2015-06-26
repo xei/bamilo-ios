@@ -91,8 +91,6 @@
         self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
         
         self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:self.flowLayout];
-        [_collectionView setX:0.f];
-        [_collectionView setWidth:self.bounds.size.width];
         self.collectionView.backgroundColor = [UIColor clearColor];
         self.collectionView.delegate = self;
         self.collectionView.dataSource = self;
@@ -122,8 +120,6 @@
     }
     
     [self.collectionView setFrame:self.bounds];
-    [_collectionView setX:0.f];
-    [_collectionView setWidth:self.bounds.size.width];
     [self.collectionView reloadData];
 }
 
@@ -160,7 +156,7 @@
             width = 339.0f;
         }
     } else {
-        width = 314;
+        width = 320;
     }
     
     return CGSizeMake(width, height);
