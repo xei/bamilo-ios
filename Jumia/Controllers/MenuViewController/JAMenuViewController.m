@@ -180,12 +180,12 @@ UIAlertViewDelegate
     CGFloat textLabelWidth = self.view.frame.size.width - margin*2 - cellImage.size.width;
     
     UIImageView* cellImageView = [[UIImageView alloc] initWithImage:cellImage];
-    [cell addSubview:cellImageView];
+    [clickView addSubview:cellImageView];
     
     UILabel* customTextLabel = [UILabel new];
     customTextLabel.font = [UIFont fontWithName:kFontLightName size:fontSize];
     customTextLabel.text = [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"];
-    [cell addSubview:customTextLabel];
+    [clickView addSubview:customTextLabel];
     
     if (RI_IS_RTL) {
         cellImageX = textLabelWidth + margin;
