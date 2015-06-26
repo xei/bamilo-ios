@@ -287,9 +287,6 @@ JADynamicFormDelegate
                                   view.frame.origin.y,
                                   self.changePasswordView.frame.size.width - (2 * dynamicFormleftMargin),
                                   view.frame.size.height)];
-        if(RI_IS_RTL){
-            [view flipSubviewAlignments];
-        }
     }
     
     [self.saveButton setFrame:CGRectMake((width - self.saveButton.frame.size.width) / 2, CGRectGetMaxY(self.changePasswordView.frame) + 6.0f, self.saveButton.frame.size.width, self.saveButton.frame.size.height)];
