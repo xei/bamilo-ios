@@ -422,6 +422,7 @@ JAActivityViewControllerDelegate
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
     
     self.product = product;
+    [self.wizardView setHasNoSeller:product.seller?NO:YES];
     NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue]) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
     
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];

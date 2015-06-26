@@ -21,6 +21,10 @@
     self = [super initWithFrame:frame];
     if (self) {
         
+        
+        _pagedView = [[JAPagedView alloc] initWithFrame:self.bounds];
+        [self addSubview:_pagedView];
+        
         self.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.85f];
         
         CGFloat bottomMargin;
@@ -55,28 +59,17 @@
         [self.dismissButton addTarget:self action:@selector(dismissButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.dismissButton];
         
-        self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
-                                                                           self.dismissButton.frame.origin.y - 10.0f - 10.0f,
-                                                                           self.bounds.size.width,
-                                                                           10.0f)];
-        [self addSubview:self.pageControl];
-        
-        self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
-                                                                         self.bounds.origin.y,
-                                                                         self.bounds.size.width,
-                                                                         self.pageControl.frame.origin.y)];
-        self.scrollView.delegate = self;
-        self.scrollView.pagingEnabled = YES;
-        self.scrollView.showsHorizontalScrollIndicator = NO;
-        [self addSubview:self.scrollView];
-        
     }
     return self;
 }
 
 - (void)dismissButtonPressed
 {
-    [self removeFromSuperview];
+    [UIView animateWithDuration:.3 animations:^{
+        [self setX:self.width];
+    }completion:^(BOOL finished) {
+        [self removeFromSuperview];
+    }];
 }
 
 - (void)reloadForFrame:(CGRect)frame
@@ -101,24 +94,9 @@
                                             buttonImageNormal.size.width,
                                             buttonImageNormal.size.height)];
     
-    [self.pageControl setFrame:CGRectMake(self.bounds.origin.x,
-                                         self.dismissButton.frame.origin.y - 10.0f - 10.0f,
-                                         self.bounds.size.width,
-                                          10.0f)];
+    [self.pagedView setFrame:frame];
     
-    [self.scrollView setFrame:CGRectMake(self.bounds.origin.x,
-                                         self.bounds.origin.y,
-                                         self.bounds.size.width,
-                                         self.pageControl.frame.origin.y)];
-
-}
-
-#pragma mark UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    //add 0.5 to make sure we scroll the indicators with the middle of the page
-    self.pageControl.currentPage = (scrollView.contentOffset.x / self.scrollView.frame.size.width) + 0.5;
+    [self bringSubviewToFront:self.dismissButton];
 }
 
 @end

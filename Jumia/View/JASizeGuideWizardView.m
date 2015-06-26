@@ -27,8 +27,7 @@
     
     if(self)
     {
-        self.wizardView = [[UIView alloc] initWithFrame:self.scrollView.bounds];
-        [self.scrollView addSubview:self.wizardView];
+        self.wizardView = [[UIView alloc] initWithFrame:self.bounds];
         
         CGFloat topMargin = kJAWizardViewImageGenericTopMargin;
         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
@@ -65,6 +64,8 @@
         
         [self.wizardView addSubview:self.label];
         
+        [self.pagedView setViews:[NSArray arrayWithObject:self.wizardView]];
+        
         [self reloadForFrame:frame];
     }
     
@@ -76,7 +77,7 @@
 {
     [super reloadForFrame:frame];
     
-    [self.wizardView setFrame:self.scrollView.bounds];
+    [self.wizardView setFrame:self.bounds];
     
     CGFloat topMargin = kJAWizardViewImageGenericTopMargin;
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
@@ -98,6 +99,10 @@
                                           CGRectGetMaxY(self.imageView.frame) + kJAWizardHomeViewTextVerticalMargin,
                                           self.wizardView.bounds.size.width - kJAWizardHomeTextHorizontalMargin * 2,
                                           wizardLabelRect.size.height)];
+    
+    if (RI_IS_RTL) {
+        [self.wizardView flipAllSubviews];
+    }
 }
 
 

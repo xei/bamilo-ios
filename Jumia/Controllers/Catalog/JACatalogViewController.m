@@ -269,6 +269,7 @@
 {
     [self.collectionView setX:6.0f];
     [self.collectionView setWidth:self.view.width - 12.f];
+    [self.collectionView setHeight:self.view.height - self.collectionView.y];
     
     [self.catalogTopView repositionForWidth:self.view.frame.size.width];
 }

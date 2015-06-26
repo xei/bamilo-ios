@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JAPagedView.h"
 
-#define kJAWizardViewImageGenericTopMargin 60.0f
-#define kJAWizardViewImageGenericTopMargin_ipad 140.0f
-#define kJAWizardViewImageGenericSmallTopMargin 60.0f
+#define kJAWizardViewImageGenericTopMargin 80.0f
+#define kJAWizardViewImageGenericTopMargin_ipad 160.0f
+#define kJAWizardViewImageGenericTopMargin_landscape 250.0f
+#define kJAWizardViewImageGenericSmallTopMargin 50.0f
+
 #define kJAWizardHomeTextHorizontalMargin 35.0f
 #define kJAWizardHomeViewTextVerticalMargin 32.0f
 #define kJAWizardCatalog1TextHorizontalMargin 35.0f
@@ -38,10 +41,13 @@
 #define kJAWizardButtonBottomMargin_ipad_portrait 100.0f
 #define kJAWizardButtonBottomMargin_ipad_landscape 50.0f
 
-@interface JAWizardView : UIView <UIScrollViewDelegate>
+@interface JAWizardView : UIView
+//<UIScrollViewDelegate>
 
-@property (nonatomic, strong)UIScrollView* scrollView;
-@property (nonatomic, retain)UIPageControl* pageControl;
+//@property (nonatomic, strong)UIScrollView* scrollView;
+//@property (nonatomic, retain)UIPageControl* pageControl;
+//@property (nonatomic, strong)UIButton* dismissButton;
+@property (nonatomic, strong) JAPagedView *pagedView;
 
 - (void)reloadForFrame:(CGRect)frame;
 
