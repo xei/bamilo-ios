@@ -551,6 +551,20 @@ static char ja_kvoContext;
         CGRect frame = _centerPanelRestingFrame;
         frame.origin.x += roundf([self _correctMovement:translate.x]);
         
+        if (RI_IS_RTL) {
+            if (frame.origin.x > 0) {
+                frame.origin.x = 0;
+            }else if (frame.origin.x < -_leftFixedWidth) {
+                frame.origin.x = -_leftFixedWidth;
+            }
+        }else{
+            if (frame.origin.x < 0) {
+                frame.origin.x = 0;
+            }else if (frame.origin.x > _leftFixedWidth) {
+                frame.origin.x = _leftFixedWidth;
+            }
+        }
+        
         if (self.style == JASidePanelMultipleActive) {
             frame.size.width = self.view.bounds.size.width - frame.origin.x;
         }
