@@ -135,9 +135,6 @@ JAActivityViewControllerDelegate
     if(self.hasLoaddedProduct)
     {
         [self removeSuperviews];
-        
-        [self productLoaded];
-        
         [self fillTheViews];
     }
     else
@@ -164,7 +161,6 @@ JAActivityViewControllerDelegate
     if (VALID_NOTEMPTY(newProduct, RIProduct)) {
         self.product = newProduct;
         [self removeSuperviews];
-        [self productLoaded];
         [self fillTheViews];
     }
 }
@@ -261,7 +257,6 @@ JAActivityViewControllerDelegate
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [self productLoaded];
     [self fillTheViews];
     [self hideLoading];
     
@@ -589,7 +584,6 @@ JAActivityViewControllerDelegate
         [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
                                                             object:self.product];
         [self requestReviews];
-        [self productLoaded];
     } andFailureBlock:nil];
 }
 
@@ -750,6 +744,8 @@ JAActivityViewControllerDelegate
 
 - (void)fillTheViews
 {
+    [self productLoaded];
+    
     CGFloat mainScrollViewY = 6.0f;
     CGFloat landscapeScrollViewY = 0.0f;
     
