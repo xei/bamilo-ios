@@ -252,7 +252,6 @@
                          }
                                    andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage)
                          {
-                             [self removeErrorView];
                              self.apiResponse = apiResponse;
                              self.isRequestDone=YES;
                              if(RIApiResponseMaintenancePage == apiResponse)

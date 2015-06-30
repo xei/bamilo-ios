@@ -348,7 +348,6 @@ JAActivityViewControllerDelegate
             [self removeErrorView];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             self.apiResponse = apiResponse;
-            [self removeErrorView];
             if(self.firstLoading)
             {
                 NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];

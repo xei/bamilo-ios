@@ -91,5 +91,9 @@
     self.y = CGRectGetMaxY(view.frame) + distance;
 }
 
+- (void)setXCenterAligned
+{
+    self.x = [self superview].width/2 - self.width/2;
+}
 
 @end

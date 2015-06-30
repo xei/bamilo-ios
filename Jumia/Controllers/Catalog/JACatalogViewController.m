@@ -806,7 +806,6 @@
                                                                           [self reloadNavBar];
                                                                           
                                                                           self.apiResponse = apiResponse;
-                                                                          [self removeErrorView];
                                                                           self.getProductsOperationID = nil;
                                                                           
                                                                           if(VALID_NOTEMPTY(self.productsArray, NSArray))
