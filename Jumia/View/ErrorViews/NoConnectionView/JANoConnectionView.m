@@ -8,7 +8,10 @@
 
 #import "JANoConnectionView.h"
 
-@interface JANoConnectionView ()
+@interface JANoConnectionView () {
+    NSLock *_lockAnim;
+    BOOL _internetConnection;
+}
 
 @property (weak, nonatomic) IBOutlet UIView *noNetworkView;
 @property (weak, nonatomic) IBOutlet UIButton *retryButton;
@@ -25,16 +28,18 @@
 
 @property (strong, nonatomic) UIImageView *animationView;
 
+@property (nonatomic) BOOL noConnection;
+
 @end
 
 @implementation JANoConnectionView
 
 void(^retryBock)(BOOL dismiss);
 
-+ (JANoConnectionView *)getNewJANoConnectionView
++ (JANoConnectionView *)getNewJANoConnectionViewWithFrame:(CGRect)frame
 {
     NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JANoConnectionView"
-                                                 owner:nil
+                                                 owner:self
                                                options:nil];
     
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -46,6 +51,7 @@ void(^retryBock)(BOOL dismiss);
     {
         if ([obj isKindOfClass:[JANoConnectionView class]])
         {
+            [((JANoConnectionView *)obj) setFrame:frame];
             return (JANoConnectionView *)obj;
         }
     }
@@ -54,23 +60,85 @@ void(^retryBock)(BOOL dismiss);
 
 - (void)setupNoConnectionViewForNoInternetConnection:(BOOL)internetConnection
 {
-    self.translatesAutoresizingMaskIntoConstraints = YES;
+    _internetConnection = internetConnection;
+    if (_noConnection) {
+        if (!_lockAnim) {
+            _lockAnim = [NSLock new];
+        }
+        [_lockAnim tryLock];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.animationView.layer removeAllAnimations];
+            [_lockAnim unlock];
+        });
+    }
+    _noConnection = YES;
+    
+    
+    if (internetConnection)
+    {
+        self.textLabel.text = STRING_NO_CONNECTION;
+        self.noConnectionDetailsLabel.text = STRING_NO_NETWORK_DETAILS;
+        self.noInternetImageView.hidden = NO;
+        self.textLabel.hidden = NO;
+        self.noConnectionDetailsLabel.hidden = NO;
+        self.genericImageView.hidden = YES;
+        self.genericErrorLabel.hidden = YES;
+        self.genericDetailLabel.hidden = YES;
+        self.errorFirstView.hidden = YES;
+        self.noInternetFirstView.hidden = NO;
+        [self.textLabel sizeToFit];
+        [self.noConnectionDetailsLabel sizeToFit];
+        [self.textLabel setXCenterAligned];
+        [self.noConnectionDetailsLabel setXCenterAligned];
+    }
+    else
+    {
+        self.noInternetImageView.hidden = YES;
+        self.textLabel.hidden = YES;
+        self.noConnectionDetailsLabel.hidden = YES;
+        self.genericImageView.hidden = NO;
+        self.genericErrorLabel.hidden = NO;
+        self.genericDetailLabel.hidden = NO;
+        self.errorFirstView.hidden = NO;
+        self.noInternetFirstView.hidden = YES;
+        
+        self.genericErrorLabel.text = STRING_OOPS;
+        self.genericDetailLabel.text = STRING_SOMETHING_BROKEN;
+        [self.genericErrorLabel sizeToFit];
+        [self.genericDetailLabel sizeToFit];
+        [self.genericErrorLabel setXCenterAligned];
+        [self.genericDetailLabel setXCenterAligned];
+    }
     
     self.backgroundColor = UIColorFromRGB(0xc8c8c8);
     self.noNetworkView.layer.cornerRadius = 5.0f;
+    [self.noNetworkView setX:6.f];
+    [self.noNetworkView setWidth:self.width - 2*6.f];
+    [self.noInternetFirstView setX:0.f];
+    [self.noInternetFirstView setWidth:self.noNetworkView.width];
+    [self.errorFirstView setX:0.f];
+    [self.errorFirstView setWidth:self.noNetworkView.width];
 
     self.retryButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.retryButton.titleLabel.font.pointSize];
     [self.retryButton setTitle:STRING_TRY_AGAIN forState:UIControlStateNormal];
     [self.retryButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [self.retryButton setXCenterAligned];
+    
+    [self.genericImageView setXCenterAligned];
+    [self.noInternetImageView setXCenterAligned];
     
     self.textLabel.font = [UIFont fontWithName:kFontRegularName size:self.textLabel.font.pointSize];
     self.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    
     self.noConnectionDetailsLabel.font = [UIFont fontWithName:kFontRegularName size:self.noConnectionDetailsLabel.font.pointSize];
     self.noConnectionDetailsLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    [self.noConnectionDetailsLabel setXCenterAligned];
     self.genericErrorLabel.font = [UIFont fontWithName:kFontRegularName size:self.genericErrorLabel.font.pointSize];
     self.genericErrorLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    [self.genericErrorLabel setXCenterAligned];
     self.genericDetailLabel.font = [UIFont fontWithName:kFontRegularName size:self.genericDetailLabel.font.pointSize];
     self.genericDetailLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    [self.genericDetailLabel setXCenterAligned];
     
     CGRect buttonTextLabelRect = [self.textLabel.text boundingRectWithSize: CGSizeMake(self.retryButton.frame.size.width, self.retryButton.frame.size.height)
                                   options:NSStringDrawingUsesLineFragmentOrigin
@@ -86,6 +154,7 @@ void(^retryBock)(BOOL dismiss);
                                          self.textLabel.frame.origin.y,
                                          buttonTextLabelRect.size.width,
                                          buttonTextLabelRect.size.height))];
+    [self.textLabel setXCenterAligned];
     
     UIImage *tryAgainImage = [UIImage imageNamed:@"tryAgainAnimationF1"];
     CGFloat offset = 40.0f;
@@ -93,7 +162,26 @@ void(^retryBock)(BOOL dismiss);
     {
         offset = 50.0f;
     }
-    self.animationView = [[UIImageView alloc] init];
+    
+    if (!VALID(self.animationView, UIImageView)) {
+        self.animationView = [[UIImageView alloc] init];
+        [self.retryButton addSubview:self.animationView];
+        
+        [self.animationView setImage:tryAgainImage];
+        
+        NSMutableArray* animationFrames = [NSMutableArray new];
+        for (int i = 1; i <= 25; i++) {
+            NSString* frameName = [NSString stringWithFormat:@"tryAgainAnimationF%d", i];
+            UIImage* frame = [UIImage imageNamed:frameName];
+            [animationFrames addObject:frame];
+        }
+        
+        self.animationView.animationImages = [animationFrames copy];
+        
+        self.animationView.animationDuration = 2.0f;
+        
+        self.animationView.alpha = 1.0f;
+    }
                            
     CGFloat spaceBetweenLabelandImage = 12.0f;
     CGFloat labelAndImageTotalWidth = tryAgainImage.size.width + spaceBetweenLabelandImage + buttonLabel.size.width;
@@ -108,54 +196,15 @@ void(^retryBock)(BOOL dismiss);
                                                       buttonLabel.size.width,
                                                       buttonLabel.size.height))];
     
-
-    [self.animationView setImage:tryAgainImage];
-    
-    NSMutableArray* animationFrames = [NSMutableArray new];
-    for (int i = 1; i <= 25; i++) {
-        NSString* frameName = [NSString stringWithFormat:@"tryAgainAnimationF%d", i];
-        UIImage* frame = [UIImage imageNamed:frameName];
-        [animationFrames addObject:frame];
-    }
-    
-    self.animationView.animationImages = [animationFrames copy];
-
-    self.animationView.animationDuration = 2.0f;
-    
-    self.animationView.alpha = 1.0f;
-    [self.retryButton addSubview:self.animationView];
     
     if(RI_IS_RTL){
         [self.retryButton flipSubviewPositions];
     }
+}
 
-    if (internetConnection)
-    {
-        self.textLabel.text = STRING_NO_CONNECTION;
-        self.noConnectionDetailsLabel.text = STRING_NO_NETWORK_DETAILS;
-        self.noInternetImageView.hidden = NO;
-        self.textLabel.hidden = NO;
-        self.noConnectionDetailsLabel.hidden = NO;
-        self.genericImageView.hidden = YES;
-        self.genericErrorLabel.hidden = YES;
-        self.genericDetailLabel.hidden = YES;
-        self.errorFirstView.hidden = YES;
-        self.noInternetFirstView.hidden = NO;
-    }
-    else
-    {
-        self.noInternetImageView.hidden = YES;
-        self.textLabel.hidden = YES;
-        self.noConnectionDetailsLabel.hidden = YES; 
-        self.genericImageView.hidden = NO;
-        self.genericErrorLabel.hidden = NO;
-        self.genericDetailLabel.hidden = NO;
-        self.errorFirstView.hidden = NO;
-        self.noInternetFirstView.hidden = YES;
-        
-        self.genericErrorLabel.text = STRING_OOPS;
-        self.genericDetailLabel.text = STRING_SOMETHING_BROKEN;
-    }
+- (void)reDraw
+{
+    [self setupNoConnectionViewForNoInternetConnection:_internetConnection];
 }
 
 - (IBAction)retryConnectionButtonTapped:(id)sender

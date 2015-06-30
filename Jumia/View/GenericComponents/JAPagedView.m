@@ -155,7 +155,7 @@
     _pageComponentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, (_infinite?numberOfViews-1:numberOfViews)*(dotImageWidth), dotImageWidth)];
     [_pageComponentView setX:self.width/2-_pageComponentView.width/2];
     [self addSubview:_pageComponentView];
-    [_pageComponentView setYBottomAligned:self.height*.2];
+    [_pageComponentView setYBottomAligned:self.height*.05];
     
     int j= _infinite?1:0;
     for (; RI_IS_RTL?i>=_infinite?1:0:i<=numberOfViews-1; RI_IS_RTL?i--:i++) {

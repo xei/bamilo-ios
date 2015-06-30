@@ -176,6 +176,7 @@
                                                  self.noConnectionView.frame.origin.y,
                                                  screenWidth,
                                                  screenHeight);
+        [self.noConnectionView reDraw];
         [self.view bringSubviewToFront:self.noConnectionView];
     }
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
@@ -428,10 +429,33 @@
 
 - (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray *)objects {
     if (VALID_NOTEMPTY(self.noConnectionView, JANoConnectionView)) {
-        [self.noConnectionView removeFromSuperview];
+//        [self.noConnectionView removeFromSuperview];
+        
+    }else{
+        self.noConnectionView = [JANoConnectionView getNewJANoConnectionViewWithFrame:self.viewBounds];
+        
+        // This is to avoid a retain cycle
+        __block JABaseViewController *viewController = self;
+        [self.noConnectionView setRetryBlock: ^(BOOL dismiss)
+         {
+             if ([viewController respondsToSelector:selector]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+                 if (ISEMPTY(objects)) {
+                     [viewController performSelector:selector];
+                 }
+                 else if (1 == [objects count]) {
+                     [viewController performSelector:selector withObject:[objects objectAtIndex:0]];
+                 }
+                 else if (2 == [objects count]) {
+                     [viewController performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
+                 }
+#pragma clang diagnostic pop
+             }
+         }];
+        [self.view addSubview:self.noConnectionView];
     }
     
-    self.noConnectionView = [JANoConnectionView getNewJANoConnectionView];
     [self.noConnectionView setupNoConnectionViewForNoInternetConnection:isNoInternetConnection];
     
     CGRect noConnectionViewFrame = CGRectMake(0.0f,
@@ -458,27 +482,6 @@
     
     [self.noConnectionView setFrame:noConnectionViewFrame];
     
-    // This is to avoid a retain cycle
-    __block JABaseViewController *viewController = self;
-    [self.noConnectionView setRetryBlock: ^(BOOL dismiss)
-     {
-         if ([viewController respondsToSelector:selector]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-             if (ISEMPTY(objects)) {
-                 [viewController performSelector:selector];
-             }
-             else if (1 == [objects count]) {
-                 [viewController performSelector:selector withObject:[objects objectAtIndex:0]];
-             }
-             else if (2 == [objects count]) {
-                 [viewController performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
-             }
-#pragma clang diagnostic pop
-         }
-     }];
-    
-    [self.view addSubview:self.noConnectionView];
 }
 
 - (void)removeErrorView {

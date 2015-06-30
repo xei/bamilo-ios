@@ -10,12 +10,14 @@
 
 @interface JANoConnectionView : UIView
 
-+ (JANoConnectionView *)getNewJANoConnectionView;
++ (JANoConnectionView *)getNewJANoConnectionViewWithFrame:(CGRect)frame;
 
 - (void)setupNoConnectionViewForNoInternetConnection:(BOOL)internetConnection;
 
 - (IBAction)retryConnectionButtonTapped:(id)sender;
 
 - (void)setRetryBlock:(void(^)(BOOL dismiss))completion;
+
+- (void)reDraw;
 
 @end
