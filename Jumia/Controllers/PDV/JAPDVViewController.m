@@ -280,6 +280,8 @@ JAActivityViewControllerDelegate
                 width = gallerySuperView.frame.size.height;
                 height = gallerySuperView.frame.size.width;
             }
+            if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0"))
+                statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.width;
         }
         else
         {
@@ -1949,6 +1951,8 @@ JAActivityViewControllerDelegate
             width = gallerySuperView.frame.size.height;
             height = gallerySuperView.frame.size.width;
         }
+        if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0"))
+            statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.width;
     }
     else
     {

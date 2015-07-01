@@ -133,6 +133,8 @@ static char ja_kvoContext;
 
 - (void)_baseInit {
     self.style = JASidePanelSingleActive;
+    self.rightGapPercentage = 0.8f;
+    self.leftGapPercentage = 0.8f;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
         self.leftFixedWidth = 256.0f;
@@ -140,9 +142,9 @@ static char ja_kvoContext;
     }
     else
     {
-        self.leftGapPercentage = 0.8f;
+        self.leftFixedWidth = [UIScreen mainScreen].bounds.size.width*self.leftGapPercentage;
+        self.rightFixedWidth = [UIScreen mainScreen].bounds.size.width*self.rightGapPercentage;
     }
-    self.rightGapPercentage = 0.8f;
     self.minimumMovePercentage = 0.15f;
     self.maximumAnimationDuration = 0.2f;
     self.bounceDuration = 0.1f;
@@ -550,12 +552,11 @@ static char ja_kvoContext;
         CGPoint translate = [pan translationInView:self.centerPanelContainer];
         CGRect frame = _centerPanelRestingFrame;
         frame.origin.x += roundf([self _correctMovement:translate.x]);
-        
         if (RI_IS_RTL) {
             if (frame.origin.x > 0) {
                 frame.origin.x = 0;
-            }else if (frame.origin.x < -_leftFixedWidth) {
-                frame.origin.x = -_leftFixedWidth;
+            }else if (frame.origin.x < -_rightFixedWidth) {
+                frame.origin.x = -_rightFixedWidth;
             }
         }else{
             if (frame.origin.x < 0) {
