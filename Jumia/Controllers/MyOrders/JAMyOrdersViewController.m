@@ -1083,7 +1083,7 @@ JAPickerScrollViewDelegate
         
         if(collectionView == self.ordersCollectionView)
         {
-            [headerView loadHeaderWithText:STRING_MY_ORDERS width:self.contentScrollView.frame.size.width - 12.0f];
+            [headerView loadHeaderWithText:STRING_MY_ORDERS width:self.ordersCollectionView.frame.size.width];
         }
         
         reusableview = headerView;
