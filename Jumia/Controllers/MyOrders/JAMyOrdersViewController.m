@@ -182,6 +182,8 @@ JAPickerScrollViewDelegate
     [self.ordersCollectionView setHidden:YES];
     
     [self.contentScrollView addSubview:self.ordersCollectionView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotateFromInterfaceOrientation:) name:kAppWillEnterForeground object:nil];
 }
 
 - (void) viewWillAppear:(BOOL)animated
