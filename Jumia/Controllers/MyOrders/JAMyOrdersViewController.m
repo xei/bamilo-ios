@@ -182,6 +182,8 @@ JAPickerScrollViewDelegate
     [self.ordersCollectionView setHidden:YES];
     
     [self.contentScrollView addSubview:self.ordersCollectionView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotateFromInterfaceOrientation:) name:kAppWillEnterForeground object:nil];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -1083,7 +1085,7 @@ JAPickerScrollViewDelegate
         
         if(collectionView == self.ordersCollectionView)
         {
-            [headerView loadHeaderWithText:STRING_MY_ORDERS width:self.contentScrollView.frame.size.width - 12.0f];
+            [headerView loadHeaderWithText:STRING_MY_ORDERS width:self.ordersCollectionView.frame.size.width];
         }
         
         reusableview = headerView;
