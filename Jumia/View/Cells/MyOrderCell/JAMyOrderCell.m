@@ -76,7 +76,7 @@
     
     self.priceLabel.textAlignment = NSTextAlignmentRight;
     [self.priceLabel setText:order.totalFormatted];
-    self.priceLabel.frame = CGRectMake(self.clickableView.frame.origin.x - self.priceLabel.frame.size.width - 51.0f,
+    self.priceLabel.frame = CGRectMake(self.clickableView.frame.size.width - self.priceLabel.frame.size.width - 51.0f,
                                        14.0f,
                                        self.priceLabel.frame.size.width,
                                        self.priceLabel.frame.size.height);
