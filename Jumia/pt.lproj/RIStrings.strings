@@ -6,7 +6,7 @@
    Copyright (c) 2014 Rocket Internet. All rights reserved. */
 "string_update_necessary_title" = "Atualização necessária";
 
-"string_update_necessary_message_ios" = "Encontramos algo que é preciso corrigir para melhorar a sua experiência de compra em %@! Terá de atualizar a aplicação para a continuar a utilizar.";
+"string_update_necessary_message_ios" = "Encontrámos algo que foi necessário corrigir para que a experiência de comprar na %@ seja ainda melhor! Para continuar a usar a aplicação, deverá atualizá-la.";
 
 "string_update_available_title" = "Atualização disponível";
 
@@ -36,7 +36,7 @@
 
 "categories" = "Categorias";
 
-"favourites" = "Os Meus Favoritos";
+"favourites" = "Meus Favoritos";
 
 "recent_searches" = "Pesquisas Recentes";
 
@@ -80,7 +80,7 @@
 
 "string_size" = "Tamanho";
 
-"string_rating" = "1 Avaliação";
+"string_rating" = "1 Nota";
 
 "string_ratings" = "%d Notas";
 
@@ -108,11 +108,11 @@
 
 "string_with_discount_only" = "Apenas com desconto";
 
-"favourite_no_favourites" = "Não tem artigos favoritos de momento.";
+"favourite_no_favourites" = "Não existem artigos favoritos no momento.";
 
 "favourite_addalltocart" = "Adicionar Todos os Artigos ao Carrinho";
 
-"added_to_shop_cart_dialog_text" = "O artigo foi adicionado ao carrinho de compras";
+"added_to_shop_cart_dialog_text" = "O artigo foi adicionado ao carrinho";
 
 "error_add_to_cart_failed" = "Ocorreu um erro ao adicionar o artigo ao carrinho";
 
@@ -120,7 +120,7 @@
 
 "string_choose_size_for_all_products" = "Por favor selecione um tamanho para todos os produtos";
 
-"add_to_shopping_cart" = "Adicionar ao Carrinho";
+"add_to_shopping_cart" = "Adicionar";
 
 "string_variations" = "Tamanhos";
 
@@ -138,7 +138,7 @@
 
 "product_description_title" = "Descrição do Produto";
 
-"share_subject_ios" = "%@ Partilhar";
+"share_subject_ios" = "%@ Compartilhar";
 
 "share_checkout_this_product" = "Veja este produto que encontrámos!";
 
@@ -148,7 +148,7 @@
 
 "submit_title" = "Comentário enviado";
 
-"write_comment" = "Escreva um Comentário";
+"write_comment" = "Avaliar";
 
 "string_posted_by" = "Publicado por %@, %@";
 
@@ -166,15 +166,15 @@
 
 "continue_shopping" = "Continuar a Comprar";
 
-"my_order_coupon_label" = "Cupão";
+"my_order_coupon_label" = "Cupom";
 
 "voucher_use" = "Utilizar";
 
 "voucher_remove" = "Remover";
 
-"voucher_message_hint" = "Insira aqui o código do seu cupão";
+"voucher_message_hint" = "Insira aqui o código do seu cupom";
 
-"call_to_order" = "Ligar para encomendar";
+"call_to_order" = "Ligar";
 
 "string_article" = "1 artigo";
 
@@ -204,17 +204,17 @@
 
 "signup_label" = "Registar";
 
-"facebook_signup_button_text" = "Registar com o Facebook";
+"facebook_signup_button_text" = "Registar com Facebook";
 
-"facebook_login_button_text" = "Entrar com o Facebook";
+"facebook_login_button_text" = "Entrar com Facebook";
 
 "or_text" = "OU";
 
-"fgt_pass" = "Esqueceu a Password?";
+"fgt_pass" = "Esqueceu a Senha?";
 
 "forgotten_password" = "Por favor insira o seu endereço de email.";
 
-"forgotten_password_sub_text" = "Vamos enviar-lhe um link para alterar a password.";
+"forgotten_password_sub_text" = "Vamos enviar-lhe um link para alterar a senha.";
 
 "forgotten_password_successtext" = "Mensagem enviada";
 
@@ -274,7 +274,7 @@
 
 "creation_date" = "Data de Criação:";
 
-"payment_method" = "Método de Pagamento:";
+"payment_method" = "Método de Pagamento";
 
 "order_track_products" = "Produtos:";
 
@@ -306,7 +306,7 @@
 
 "section_title_account" = "Configurações da Conta";
 
-"option2_description" = "Alterar Password, gerir email";
+"option2_description" = "Alterar Password, E-mail etc...";
 
 "myaccount_email_notifications" = "Notificações por Email";
 
@@ -316,7 +316,7 @@
 
 "notifications" = "Notificações";
 
-"notifications_summary" = "Receba ofertas exclusivas e atualizações pessoais";
+"notifications_summary" = "Receba ofertas exclusivas";
 
 "sound" = "Som";
 
@@ -324,7 +324,7 @@
 
 "personal_data_label" = "Os Seus Dados Pessoais";
 
-"new_password_label" = "Nova Password";
+"new_password_label" = "Nova Senha";
 
 "password_changed_success" = "Password alterada com sucesso.";
 
@@ -358,7 +358,7 @@
 
 "save_label" = "Guardar";
 
-"string_campaign_ramaining_stock" = "Stock Disponível: %d%%";
+"string_campaign_ramaining_stock" = "Estoque Disponível: %d%%";
 
 "campaign_save" = "Está a Poupar";
 
@@ -416,13 +416,13 @@
 
 "tip_favourite_text" = "Clique para adicionar este produto aos favoritos e ver a lista completa no seu perfil";
 
-"tip_share_text" = "Clique para partilhar este produto";
+"tip_share_text" = "Clique para compartilhar este produto";
 
 "tip_swipe_text" = "Deslize para a esquerda ou para a direita para\nver imagens diferentes";
 
 "tip_tap_text" = "Toque para abrir a galeria de imagens do produto";
 
-"pinch_to_zoom_label" = "Belisque para ampliar";
+"pinch_to_zoom_label" = "Clique para ampliar";
 
 "fallback_audio_ios" = "Áudio & Vídeo";
 
@@ -462,15 +462,15 @@
 
 "create_edit_address" = "Criar ou editar as suas moradas";
 
-"app_sharing" = "Partilhar Aplicação";
+"app_sharing" = "Compartilhar Aplicação";
 
 "share_the_app" = "Partilhe a Aplicação";
 
-"can_share_app_with_friends" = "Já pode partilhar a aplicação com os seus amigos";
+"can_share_app_with_friends" = "Agora podes compartilhar com os teus amigos";
 
-"install_app_ios" = "Instala a Aplicação para iOS num instante";
+"install_app_ios" = "Instala %@ para iOS num instante";
 
-"share_app_ios" = "Partilha a Aplicação";
+"share_app_ios" = "Partilha a Aplicação de %@";
 
 "delivery_time" = "Prazo de entrega:";
 
@@ -518,7 +518,7 @@
 
 "product_delivery_days" = "dias";
 
-"number_offers_from_ios" = "%@ Ofertas de";
+"number_offers_from_ios" = "%d Ofertas de";
 
 "write_full_review" = "Escrever um comentário";
 
@@ -534,7 +534,7 @@
 
 "my_order_item_label" = "artigo";
 
-"my_order_items_label" = "artigos";
+"my_order_items_label" = "Artigos";
 
 "string_more_choices" = "Mais Escolhas";
 
