@@ -8,8 +8,6 @@
 
 #import "JACatalogViewController.h"
 #import "RIProduct.h"
-#import "JACatalogListCell.h"
-#import "JACatalogGridCell.h"
 #import "JAUtils.h"
 #import "RISearchSuggestion.h"
 #import "RICustomer.h"
@@ -26,6 +24,7 @@
 #import "JACampaignBannerCell.h"
 #import "JACatalogBannerCell.h"
 #import "JAProductListFlowLayout.h"
+#import "JACatalogCollectionViewCell.h"
 #import "JACatalogListCollectionViewCell.h"
 #import "JACatalogGridCollectionViewCell.h"
 

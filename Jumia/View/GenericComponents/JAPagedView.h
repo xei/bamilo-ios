@@ -16,6 +16,7 @@ typedef void (^SelectPageBlock)(NSInteger pageIndex);
 @property (nonatomic, strong) NSArray *views;
 @property (nonatomic) NSInteger selectedIndexPage;
 @property (nonatomic) BOOL infinite;
+@property (nonatomic) CGFloat navigationCursorBottomPercentage;
 
 - (void)getPageChanged:(SelectPageBlock)page;
 
