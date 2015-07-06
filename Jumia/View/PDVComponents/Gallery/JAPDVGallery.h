@@ -14,7 +14,7 @@
 
 @end
 
-@interface JAPDVGallery : UIView
+@interface JAPDVGallery : UIView <UIScrollViewDelegate>
 
 @property (weak, nonatomic) id<JAPDVGalleryDelegate> delegate;
 
