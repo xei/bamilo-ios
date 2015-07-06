@@ -93,6 +93,8 @@
 {
     [super loadWithCartItem:cartItem];
     
+    [self.nameLabel setTextAlignment:NSTextAlignmentLeft];
+    
     [self.ratingsView removeFromSuperview];
     
     NSString *stringQuantity = [NSString stringWithFormat:STRING_QUANTITY, [[cartItem quantity] stringValue]];
@@ -103,6 +105,7 @@
     [self.quantityButton setTitle:stringQuantity forState:UIControlStateNormal];
     [self.quantityButton sizeToFit];
     [self.quantityButton setX:self.width-self.quantityButton.width-6.f];
+    [self.quantityButton.titleLabel setTextAlignment:NSTextAlignmentLeft];
     
     [self.deleteButton setX:self.width-self.deleteButton.width];
     [self.separator setWidth:self.width];
@@ -113,6 +116,8 @@
 - (void)setRTL {
     if (RI_IS_RTL) {
         [self.backgroundContentView flipAllSubviews];
+        [self.quantityButton.titleLabel setTextAlignment:NSTextAlignmentRight];
+        [self.nameLabel setTextAlignment:NSTextAlignmentRight];
     }
 }
 
