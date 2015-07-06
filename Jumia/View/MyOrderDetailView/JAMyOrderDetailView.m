@@ -23,7 +23,7 @@
     // add top margin
     CGFloat currentY = 10.0f;
     CGFloat horizontalMargin = 6.0f;
-    maxWidth -= (horizontalMargin * 2);
+    CGFloat width = maxWidth - (horizontalMargin * 2);
     
     NSDictionary* baseAttributes = [NSDictionary dictionaryWithObjectsAndKeys:kNormalFont, NSFontAttributeName, nil];
     NSDictionary* highlightAttributes = [NSDictionary dictionaryWithObjectsAndKeys:kHighlightedFont,NSFontAttributeName, nil];
@@ -40,12 +40,12 @@
     [finalString setAttributes:highlightAttributes range:orderDateLabelRange];
     [dateLabel setAttributedText:finalString];
     
-    CGRect dateLabelRect = [orderDateString boundingRectWithSize:CGSizeMake(maxWidth, 1000.0f)
+    CGRect dateLabelRect = [orderDateString boundingRectWithSize:CGSizeMake(width, 1000.0f)
                                                          options:NSStringDrawingUsesLineFragmentOrigin
                                                       attributes:@{NSFontAttributeName:kHighlightedFont} context:nil];
     [dateLabel setFrame:CGRectMake(horizontalMargin,
                                    currentY,
-                                   maxWidth,
+                                   width,
                                    ceilf(dateLabelRect.size.height))];
     [self addSubview:dateLabel];
     currentY += ceilf(dateLabelRect.size.height);
@@ -62,12 +62,12 @@
     [paymentMethodFinalString setAttributes:highlightAttributes range:paymentMethodLabelRange];
     [paymentMethodLabel setAttributedText:paymentMethodFinalString];
     
-    CGRect paymentLabelRect = [paymentMethodString boundingRectWithSize:CGSizeMake(maxWidth, 1000.0f)
+    CGRect paymentLabelRect = [paymentMethodString boundingRectWithSize:CGSizeMake(width, 1000.0f)
                                                                 options:NSStringDrawingUsesLineFragmentOrigin
                                                              attributes:@{NSFontAttributeName:kHighlightedFont} context:nil];
     [paymentMethodLabel setFrame:CGRectMake(horizontalMargin,
                                             currentY,
-                                            maxWidth,
+                                            width,
                                             ceilf(paymentLabelRect.size.height))];
     [self addSubview:paymentMethodLabel];
     currentY += ceilf(paymentLabelRect.size.height);
@@ -86,12 +86,12 @@
         [paymentReferenceFinalString setAttributes:highlightAttributes range:paymentReferenceLabelRange];
         [paymentReferenceLabel setAttributedText:paymentReferenceFinalString];
         
-        CGRect paymentReferenceLabelRect = [paymentReferenceString boundingRectWithSize:CGSizeMake(maxWidth, 1000.0f)
+        CGRect paymentReferenceLabelRect = [paymentReferenceString boundingRectWithSize:CGSizeMake(width, 1000.0f)
                                                                                 options:NSStringDrawingUsesLineFragmentOrigin
                                                                              attributes:@{NSFontAttributeName:kHighlightedFont} context:nil];
         [paymentReferenceLabel setFrame:CGRectMake(horizontalMargin,
                                                    currentY,
-                                                   maxWidth,
+                                                   width,
                                                    ceilf(paymentReferenceLabelRect.size.height))];
         [self addSubview:paymentReferenceLabel];
         currentY += ceilf(paymentReferenceLabelRect.size.height);
@@ -111,12 +111,12 @@
         [paymentStatusFinalString setAttributes:highlightAttributes range:paymentStatusLabelRange];
         [paymentStatusLabel setAttributedText:paymentStatusFinalString];
         
-        CGRect paymentStatusLabelRect = [paymentStatusString boundingRectWithSize:CGSizeMake(maxWidth, 1000.0f)
+        CGRect paymentStatusLabelRect = [paymentStatusString boundingRectWithSize:CGSizeMake(width, 1000.0f)
                                                                           options:NSStringDrawingUsesLineFragmentOrigin
                                                                        attributes:@{NSFontAttributeName:kHighlightedFont} context:nil];
         [paymentStatusLabel setFrame:CGRectMake(horizontalMargin,
                                                 currentY,
-                                                maxWidth,
+                                                width,
                                                 ceilf(paymentStatusLabelRect.size.height))];
         [self addSubview:paymentStatusLabel];
         currentY += ceilf(paymentStatusLabelRect.size.height);
@@ -133,12 +133,12 @@
         [productsLabel setTextColor:UIColorFromRGB(0x666666)];
         [productsLabel setText:STRING_PRODUCTS];
         
-        CGRect productsLabelRect = [STRING_PRODUCTS boundingRectWithSize:CGSizeMake(maxWidth, 1000.0f)
+        CGRect productsLabelRect = [STRING_PRODUCTS boundingRectWithSize:CGSizeMake(width, 1000.0f)
                                                                  options:NSStringDrawingUsesLineFragmentOrigin
                                                               attributes:@{NSFontAttributeName:kHighlightedFont} context:nil];
         [productsLabel setFrame:CGRectMake(horizontalMargin,
                                            currentY,
-                                           maxWidth,
+                                           width,
                                            ceilf(productsLabelRect.size.height))];
         [self addSubview:productsLabel];
         currentY += ceilf(productsLabelRect.size.height);
@@ -156,12 +156,12 @@
             [productNameLabel setTextColor:UIColorFromRGB(0x666666)];
             [productNameLabel setText:product.name];
             
-            CGRect productNameLabelRect = [product.name boundingRectWithSize:CGSizeMake(maxWidth, 1000.0f)
+            CGRect productNameLabelRect = [product.name boundingRectWithSize:CGSizeMake(width, 1000.0f)
                                                                      options:NSStringDrawingUsesLineFragmentOrigin
                                                                   attributes:@{NSFontAttributeName:kNormalFont} context:nil];
             [productNameLabel setFrame:CGRectMake(horizontalMargin,
                                                   currentY,
-                                                  maxWidth,
+                                                  width,
                                                   ceilf(productNameLabelRect.size.height))];
             [self addSubview:productNameLabel];
             currentY += ceilf(productNameLabelRect.size.height);
@@ -175,12 +175,12 @@
             NSString *quantityString = [NSString stringWithFormat:@"%@ %@", STRING_ORDER_QUANTITY, [product.quantity stringValue]];
             [productQuantityLabel setText:quantityString];
             
-            CGRect productQuantityLabelRect = [quantityString boundingRectWithSize:CGSizeMake(maxWidth, 1000.0f)
+            CGRect productQuantityLabelRect = [quantityString boundingRectWithSize:CGSizeMake(width, 1000.0f)
                                                                            options:NSStringDrawingUsesLineFragmentOrigin
                                                                         attributes:@{NSFontAttributeName:kHighlightedFont} context:nil];
             [productQuantityLabel setFrame:CGRectMake(horizontalMargin,
                                                       currentY,
-                                                      maxWidth,
+                                                      width,
                                                       ceilf(productQuantityLabelRect.size.height))];
             [self addSubview:productQuantityLabel];
             currentY += ceilf(productQuantityLabelRect.size.height);
@@ -192,12 +192,12 @@
             [productPriceLabel setTextColor:UIColorFromRGB(0x666666)];
             [productPriceLabel setText:product.totalFormatted];
             
-            CGRect productPriceLabelRect = [product.totalFormatted boundingRectWithSize:CGSizeMake(maxWidth, 1000.0f)
+            CGRect productPriceLabelRect = [product.totalFormatted boundingRectWithSize:CGSizeMake(width, 1000.0f)
                                                                                 options:NSStringDrawingUsesLineFragmentOrigin
                                                                              attributes:@{NSFontAttributeName:kNormalFont} context:nil];
             [productPriceLabel setFrame:CGRectMake(horizontalMargin,
                                                    currentY,
-                                                   maxWidth,
+                                                   width,
                                                    ceilf(productPriceLabelRect.size.height))];
             [self addSubview:productPriceLabel];
             currentY += ceilf(productPriceLabelRect.size.height);
@@ -211,7 +211,7 @@
                 // Separator
                 UIView *productSeparator = [[UIView alloc] initWithFrame:CGRectMake(horizontalMargin,
                                                                                     currentY,
-                                                                                    maxWidth,
+                                                                                    width,
                                                                                     1.0f)];
                 [productSeparator setBackgroundColor:UIColorFromRGB(0xcccccc)];
                 [self addSubview:productSeparator];
