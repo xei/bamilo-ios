@@ -182,6 +182,8 @@ JAPickerScrollViewDelegate
     [self.ordersCollectionView setHidden:YES];
     
     [self.contentScrollView addSubview:self.ordersCollectionView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotateFromInterfaceOrientation:) name:kAppWillEnterForeground object:nil];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -813,11 +815,6 @@ JAPickerScrollViewDelegate
         [self.ordersCollectionView setHidden:NO];
         [self.ordersCollectionView reloadData];
         
-        // Height is calculated from the the nav bar to the bottom of the screen, so we have to remove
-        // the picker scroll view size and the margins to have the maximum space that the collection view
-        // can have
-        CGFloat maxCollectionHeight = height - self.myOrdersPickerScrollView.frame.size.height  - (2 * orderHistoryViewVerticalMargin);
-        
         // 27.0f is the height of the header
         collectionHeight = 27.0f + [JAMyOrderCell getCellHeight] * [self.orders count];
         if(!(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)))
@@ -830,9 +827,9 @@ JAPickerScrollViewDelegate
             }
         }
         
-        if(collectionHeight > maxCollectionHeight)
+        if(collectionHeight > self.contentScrollView.contentSize.height - 12.0f)
         {
-            collectionHeight = maxCollectionHeight;
+            collectionHeight = self.contentScrollView.contentSize.height - 12.0f;
         }
         
         [self.ordersCollectionView setFrame:CGRectMake(startingX + orderHistoryViewHorizontalMargin,
@@ -1083,7 +1080,7 @@ JAPickerScrollViewDelegate
         
         if(collectionView == self.ordersCollectionView)
         {
-            [headerView loadHeaderWithText:STRING_MY_ORDERS width:self.contentScrollView.frame.size.width - 12.0f];
+            [headerView loadHeaderWithText:STRING_MY_ORDERS width:self.ordersCollectionView.frame.size.width];
         }
         
         reusableview = headerView;

@@ -4,13 +4,19 @@
    
    Created by Pedro Lopes on 13/09/14.
    Copyright (c) 2014 Rocket Internet. All rights reserved. */
-"string_update_necessary_title" = "Update necessary";
-"string_update_necessary_message_ios" = "We found something that we needed to fix to make shopping experience in %@ even better! You will need to update before continue using the app.";
-"string_update_available_title" = "Update available";
-"string_update_available_message_ios" = "There is a new update available that we prepared to make shopping experience in %@ even better! Make sure you upgrade today!";
+"string_update_necessary_title" = "Update လိုအပ္ပါသည္";
+
+"string_update_necessary_message_ios" = "%@ ကို ပိုမို အဆင္ေျပစြာ အသံုးျပဳႏုိင္ရန္ ျပင္ဆင္မွဳ ျပဳလုပ္ရန္ လိုအပ္ပါသည္! ဤ app ကို ဆက္လက္ အသံုးမျပဳခင္ update ျပဳလုပ္ေပးပါ။";
+
+"string_update_available_title" = "Update ရရွိႏုိင္ပါသည္";
+
+"string_update_available_message_ios" = "%@ ကို အေကာင္းဆံုး အသံုးျပဳႏုိင္ရန္ ေန႕စဥ္ update အသစ္ ရယူႏုိင္ပါသည္။";
+
 "string_update" = "Update!";
-"string_ok_update" = "Ok, Update!";
-"string_no_thanks" = "No, thanks.";
+
+"string_ok_update" = "Update လုပ္မည္";
+
+"string_no_thanks" = "Update မလုပ္ေသးပါ";
 
 "ok_label" = "အိုေက";
 
@@ -551,3 +557,4 @@
 "kickout_message_3" = "၀ဘ္ဆိုဒ္ကို ပိုမိုေကာင္းမြန္ေအာင္ ျပင္ဆင္ေနသျဖင့္ ေနာက္တစ္ၾကိမ္ ထပ္ၾကိဳးစားၾကည္႕ပါ";
 
 "search_placeholder" = "အမွတ္တံဆိပ္ျဖင့္ ကုန္ပစၥည္းမ်ားရွာေဖြရန္";
+
