@@ -15,6 +15,7 @@
 {
     JAPagedView *_pageControl;
     NSArray *_source;
+    NSArray *_imageViewsToScroll;
     NSInteger _lastIndex;
     UIButton *_exitButton;
 }
@@ -34,15 +35,29 @@
     [_pageControl setInfinite:YES];
     [self addSubview:_pageControl];
     
+    NSMutableArray* imageViewsToScroll = [NSMutableArray new];
     NSMutableArray *items = [NSMutableArray new];
     for (int i = 0; i < source.count; i++)
     {
+
+        UIScrollView *scrollForImage = [[UIScrollView alloc] initWithFrame:CGRectMake(0,
+                                                                                      0,
+                                                                                      self.width,
+                                                                                      self.height)];
+        scrollForImage.delegate = self;
+        scrollForImage.tag = i;
+        
+        scrollForImage.minimumZoomScale = 1.0;
+        scrollForImage.maximumZoomScale = 2.0;
+        scrollForImage.contentSize = CGSizeMake(self.width,
+                                                self.height);
+        scrollForImage.showsHorizontalScrollIndicator = NO;
+        scrollForImage.showsVerticalScrollIndicator = NO;
+        
+        
         RIImage *image = [source objectAtIndex:i];
         
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,
-                                                                               0,
-                                                                               self.width,
-                                                                               self.height)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:scrollForImage.bounds];
         imageView.contentMode = UIViewContentModeCenter;
         CGPoint point = self.center;
         point.x = self.width/2;
@@ -51,8 +66,14 @@
         
         [imageView setImageWithURL:[NSURL URLWithString:image.url]
                   placeholderImage:[UIImage imageNamed:@"placeholder_gallery"]];
-        [items addObject:imageView];
+
+        [imageViewsToScroll addObject:imageView];
+        
+        [scrollForImage addSubview:imageView];
+        [items addObject:scrollForImage];
+        
     }
+    _imageViewsToScroll = [imageViewsToScroll copy];
     [_pageControl setViews:items];
     [_pageControl setSelectedIndexPage:index];
     
@@ -82,6 +103,14 @@
     if (_delegate) {
         [_delegate dismissGallery];
     }
+}
+
+#pragma mark UIScrollViewDelegate
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
+{
+    UIImageView *imageView = [_imageViewsToScroll objectAtIndex:scrollView.tag];
+    
+    return imageView;
 }
 
 @end
