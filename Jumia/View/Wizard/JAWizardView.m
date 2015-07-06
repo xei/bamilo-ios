@@ -32,6 +32,7 @@
         UIImage* buttonImageHightlight;
         UIImage* buttonImageDisabled;
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            [_pagedView setNavigationCursorBottomPercentage:.20];
             if (frame.size.height > frame.size.width) {
                 bottomMargin = kJAWizardButtonBottomMargin_ipad_portrait;
             } else {
@@ -41,6 +42,7 @@
             buttonImageHightlight = [UIImage imageNamed:@"orangeQuarterLandscape_highlighted"];
             buttonImageDisabled = [UIImage imageNamed:@"orangeQuarterLandscape_disabled"];
         } else {
+            [_pagedView setNavigationCursorBottomPercentage:.15];
             bottomMargin = kJAWizardButtonBottomMargin;
             buttonImageNormal = [UIImage imageNamed:@"orangeHalf_normal"];
             buttonImageHightlight = [UIImage imageNamed:@"orangeHalf_highlighted"];

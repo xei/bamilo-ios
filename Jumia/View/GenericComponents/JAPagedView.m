@@ -25,7 +25,7 @@
 
 @implementation JAPagedView
 
-@synthesize views = _views, selectedIndexPage = _selectedIndexPage;
+@synthesize views = _views, selectedIndexPage = _selectedIndexPage, navigationCursorBottomPercentage = _navigationCursorBottomPercentage;
 
 - (instancetype)init
 {
@@ -69,6 +69,7 @@
     
     _infinite = NO;
     _first = NO;
+    _navigationCursorBottomPercentage = .05;
     
 }
 
@@ -155,7 +156,7 @@
     _pageComponentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, (_infinite?numberOfViews-1:numberOfViews)*(dotImageWidth), dotImageWidth)];
     [_pageComponentView setX:self.width/2-_pageComponentView.width/2];
     [self addSubview:_pageComponentView];
-    [_pageComponentView setYBottomAligned:self.height*.05];
+    [_pageComponentView setYBottomAligned:self.height*_navigationCursorBottomPercentage];
     
     int j= _infinite?1:0;
     for (; RI_IS_RTL?i>=_infinite?1:0:i<=numberOfViews-1; RI_IS_RTL?i--:i++) {
