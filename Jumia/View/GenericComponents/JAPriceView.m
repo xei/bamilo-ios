@@ -25,7 +25,10 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
 {
     _specialPriceOnTheLeft = specialPriceOnTheLeft;
     
-    _label = [UILabel new];
+    if (!_label) {
+        _label = [UILabel new];
+        [self addSubview:_label];
+    }
     
     NSMutableAttributedString* finalPriceString;
     NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -76,7 +79,6 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
                             self.frame.origin.y,
                             _label.frame.size.width,
                             _label.frame.size.height);
-    [self addSubview:_label];
     
     [_label setTextAlignment:NSTextAlignmentNatural];
     if (RI_IS_RTL) {
@@ -89,7 +91,10 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
         oldPriceLabel.text = price;
         oldPriceLabel.font = [UIFont fontWithName:kFontLightName size:fontSize];
         [oldPriceLabel sizeToFit];
-        _strike = [[UIView alloc] init];
+        if (!_strike) {
+            _strike = [[UIView alloc] init];
+            [self addSubview:_strike];
+        }
         CGFloat strikePosition = self.frame.size.width - oldPriceLabel.frame.size.width;
         if ((RI_IS_RTL && !_specialPriceOnTheLeft) || (!RI_IS_RTL && _specialPriceOnTheLeft)) {
             strikePosition = 0.0f;
@@ -101,7 +106,10 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
                                   1.0f);
         
         _strike.backgroundColor = UIColorFromRGB(0xcccccc);
-        [self addSubview:_strike];
+    }else{
+        if (_strike) {
+            [_strike removeFromSuperview];
+        }
     }
 }
 

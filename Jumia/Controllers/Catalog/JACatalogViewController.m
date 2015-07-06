@@ -26,6 +26,8 @@
 #import "JACampaignBannerCell.h"
 #import "JACatalogBannerCell.h"
 #import "JAProductListFlowLayout.h"
+#import "JACatalogListCollectionViewCell.h"
+#import "JACatalogGridCollectionViewCell.h"
 
 #define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
@@ -270,7 +272,6 @@
     [self.collectionView setX:6.0f];
     [self.collectionView setWidth:self.view.width - 12.f];
     [self.collectionView setHeight:self.view.height - self.collectionView.y];
-    
     [self.catalogTopView repositionForWidth:self.view.frame.size.width];
 }
 
@@ -300,18 +301,15 @@
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     
-    [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogBannerCell" bundle:nil] forCellWithReuseIdentifier:@"bannerCell"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogGridCell" bundle:nil] forCellWithReuseIdentifier:@"gridCell"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogGridCell_ipad_portrait" bundle:nil] forCellWithReuseIdentifier:@"gridCell_ipad_portrait"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogGridCell_ipad_landscape" bundle:nil] forCellWithReuseIdentifier:@"gridCell_ipad_landscape"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogListCell" bundle:nil] forCellWithReuseIdentifier:@"listCell"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogListCell_ipad_portrait" bundle:nil] forCellWithReuseIdentifier:@"listCell_ipad_portrait"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogListCell_ipad_landscape" bundle:nil] forCellWithReuseIdentifier:@"listCell_ipad_landscape"];
+    [self.collectionView registerClass:[JACatalogListCollectionViewCell class] forCellWithReuseIdentifier:@"JACatalogListCollectionViewCell"];
+    [self.collectionView registerClass:[JACatalogGridCollectionViewCell class] forCellWithReuseIdentifier:@"JACatalogGridCollectionViewCell"];
     
     self.flowLayout = [[JAProductListFlowLayout alloc] init];
     self.flowLayout.manualCellSpacing = 6.0f;
-    self.flowLayout.minimumLineSpacing = 0;
-    self.flowLayout.minimumInteritemSpacing = 0;
+    self.flowLayout.minimumLineSpacing = 6.0f;
+    self.flowLayout.minimumInteritemSpacing = 0.f;
+    //                                              top, left, bottom, right
+    [self.flowLayout setSectionInset:UIEdgeInsetsMake(0.f, 0.0, 0.0, 0.0)];
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     [self.collectionView setCollectionViewLayout:self.flowLayout];
     
@@ -992,11 +990,11 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([self.cellIdentifier isEqualToString:@"listCell"])
-        return CGSizeMake(308, 103);
+        return CGSizeMake(308, 97);
     else if ([self.cellIdentifier isEqualToString:@"listCell_ipad_portrait"])
-        return CGSizeMake(375, 103);
+        return CGSizeMake(375, 97);
     else if ([self.cellIdentifier isEqualToString:@"listCell_ipad_landscape"])
-        return CGSizeMake(333.33, 103);
+        return CGSizeMake(333.33, 97);
     
     else if ([self.cellIdentifier isEqualToString:@"gridCell"])
         return CGSizeMake(151, 206);
@@ -1040,11 +1038,19 @@
     
     RIProduct *product = [self.productsArray objectAtIndex:realIndex];
     
-    JACatalogCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:self.cellIdentifier forIndexPath:indexPath];
+    JACatalogCollectionViewCell *cell;
+    
+    if ([self.cellIdentifier hasPrefix:@"grid"]) {
+        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JACatalogGridCollectionViewCell" forIndexPath:indexPath];
+    }else{
+        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JACatalogListCollectionViewCell" forIndexPath:indexPath];
+    }
+    
     cell.favoriteButton.tag = realIndex;
     [cell.favoriteButton addTarget:self
                             action:@selector(addToFavoritesPressed:)
                   forControlEvents:UIControlEventTouchUpInside];
+    
     cell.feedbackView.tag = indexPath.row;
     [cell.feedbackView addTarget:self
                           action:@selector(clickableViewPressedInCell:)
