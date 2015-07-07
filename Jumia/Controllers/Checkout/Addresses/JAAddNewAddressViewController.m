@@ -237,7 +237,6 @@ JAPickerDelegate>
         
         [self hideLoading];
         
-        [self removeErrorView];
         [self showErrorView:noInternetConnection startingY:0.0f selector:@selector(getForms) objects:nil];
     }
     else

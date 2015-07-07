@@ -268,7 +268,6 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-        [self removeErrorView];
         self.apiResponse = apiResponse;
         self.requestDone = YES;
         

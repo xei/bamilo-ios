@@ -184,7 +184,6 @@ FBLoginViewDelegate
          [self removeErrorView];
      } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
      {
-         [self removeErrorView];
          self.apiResponse = apiResponse;
          self.requestDone = YES;
          if(RIApiResponseMaintenancePage == apiResponse)

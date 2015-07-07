@@ -15,7 +15,9 @@
 
 #define kSearchViewBarHeight 32.0f
 
-@interface JABaseViewController ()
+@interface JABaseViewController () {
+    CGRect _noConnectionViewFrame;
+}
 
 @property (assign, nonatomic) int requestNumber;
 @property (strong, nonatomic) UIView *loadingView;
@@ -172,8 +174,11 @@
     CGFloat screenHeight = viewFrame.size.height;
     
     if (VALID_NOTEMPTY(self.noConnectionView, JANoConnectionView)) {
-        self.noConnectionView.frame = CGRectMake(self.noConnectionView.frame.origin.x,
-                                                 self.noConnectionView.frame.origin.y,
+        
+        NSLog(@"self.noConnectionView.x: %f", self.noConnectionView.x);
+        
+        self.noConnectionView.frame = CGRectMake(_noConnectionViewFrame.origin.x,
+                                                 _noConnectionViewFrame.origin.y,
                                                  screenWidth,
                                                  screenHeight);
         [self.noConnectionView reDraw];
@@ -458,34 +463,36 @@
     
     [self.noConnectionView setupNoConnectionViewForNoInternetConnection:isNoInternetConnection];
     
-    CGRect noConnectionViewFrame = CGRectMake(0.0f,
+    _noConnectionViewFrame = CGRectMake(0.0f,
                                               0.0f,
                                               [[UIScreen mainScreen] bounds].size.width,
                                               [[UIScreen mainScreen] bounds].size.height);
     
     if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
-        if (noConnectionViewFrame.size.width > noConnectionViewFrame.size.height) {
-            noConnectionViewFrame  = CGRectMake(0.0f, startingY, noConnectionViewFrame.size.height, noConnectionViewFrame.size.width - startingY);
+        if (_noConnectionViewFrame.size.width > _noConnectionViewFrame.size.height) {
+            _noConnectionViewFrame  = CGRectMake(0.0f, startingY, _noConnectionViewFrame.size.height, _noConnectionViewFrame.size.width - startingY);
         }
         else {
-            noConnectionViewFrame  = CGRectMake(0.0f, startingY, noConnectionViewFrame.size.width, noConnectionViewFrame.size.height - startingY);
+            _noConnectionViewFrame  = CGRectMake(0.0f, startingY, _noConnectionViewFrame.size.width, _noConnectionViewFrame.size.height - startingY);
         }
     }
     else {
-        if (noConnectionViewFrame.size.width > noConnectionViewFrame.size.height) {
-            noConnectionViewFrame  = CGRectMake(0.0f, startingY, noConnectionViewFrame.size.width, noConnectionViewFrame.size.height - startingY);
+        if (_noConnectionViewFrame.size.width > _noConnectionViewFrame.size.height) {
+            _noConnectionViewFrame  = CGRectMake(0.0f, startingY, _noConnectionViewFrame.size.width, _noConnectionViewFrame.size.height - startingY);
         }
         else {
-            noConnectionViewFrame  = CGRectMake(0.0f, startingY, noConnectionViewFrame.size.height, noConnectionViewFrame.size.width - startingY);
+            _noConnectionViewFrame  = CGRectMake(0.0f, startingY, _noConnectionViewFrame.size.height, _noConnectionViewFrame.size.width - startingY);
         }
     }
     
-    [self.noConnectionView setFrame:noConnectionViewFrame];
+    [self.noConnectionView setFrame:_noConnectionViewFrame];
     
+    [self.view bringSubviewToFront:self.noConnectionView];
 }
 
 - (void)removeErrorView {
     [self.noConnectionView removeFromSuperview];
+    self.noConnectionView = nil;
 }
 
 - (void)showMaintenancePage:(SEL)selector objects:(NSArray *)objects {

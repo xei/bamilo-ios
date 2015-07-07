@@ -372,7 +372,6 @@
          
      } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
          self.apiResponse = apiResponse;
-         [self removeErrorView];
          
          if(RIApiResponseMaintenancePage == apiResponse)
          {
@@ -576,7 +575,6 @@
                                                                               [self reloadNavBar];
                                                                               
                                                                               self.apiResponse = apiResponse;
-                                                                              [self removeErrorView];
                                                                               self.searchSuggestionOperationID = nil;
                                                                               
                                                                               if(VALID_NOTEMPTY(self.productsArray, NSArray))

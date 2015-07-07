@@ -235,7 +235,6 @@ JAPickerScrollViewDelegate
               [self setupViews];
           }
            andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-               [self removeErrorView];
                self.apiResponse = apiResponse;
                self.isLoadingOrders = NO;
                [self hideLoading];
@@ -416,7 +415,6 @@ JAPickerScrollViewDelegate
                           [self hideLoading];
                           
                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-                          [self removeErrorView];
                           self.apiResponse = apiResponse;
                           self.trackingOrder = nil;
                           
