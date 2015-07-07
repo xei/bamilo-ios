@@ -203,12 +203,12 @@ UITableViewDataSource
             [self.view setAlpha:.7f];
         } completion:^(BOOL finished) {
             [self setupViews];
+            [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
             [UIView animateWithDuration:.1 animations:^{
                 [self.view setAlpha:alpha];
             }];
         }];
     }];
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 - (void)ratingsRequests
@@ -612,12 +612,12 @@ UITableViewDataSource
         currentPage = [self.productRatings.currentPage integerValue] + 1;
     }
     
-    [self showLoading];
     [RIProductRatings getRatingsForProductWithUrl:self.product.url
                                       allowRating:1
                                        pageNumber:currentPage
                                      successBlock:^(RIProductRatings *ratings) {
                                          
+                                         [self showLoading];
                                          self.productRatings = ratings;
                                          
                                          [self removeErrorView];
@@ -638,9 +638,9 @@ UITableViewDataSource
                                          
                                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                          
-                                         if(RIApiResponseSuccess != self.apiResponse)
+                                         if(RIApiResponseSuccess != apiResponse)
                                          {
-                                             if (RIApiResponseNoInternetConnection == self.apiResponse)
+                                             if (RIApiResponseNoInternetConnection == apiResponse)
                                              {
                                                  [self showErrorView:YES startingY:0.0f selector:@selector(requestReviews) objects:nil];
                                              }
@@ -649,7 +649,7 @@ UITableViewDataSource
                                                  [self showErrorView:NO startingY:0.0f selector:@selector(requestReviews) objects:nil];
                                              }
                                          }
-                                         self.numberOfRequests = 0;
+//                                         self.numberOfRequests = 0;
                                          [self hideLoading];
                                      }];
 
