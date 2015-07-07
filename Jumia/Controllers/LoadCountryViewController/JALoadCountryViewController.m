@@ -216,6 +216,7 @@
         [RICommunicationWrapper deleteSessionCookie];
     }
     self.apiRequestId = [RIApi startApiWithCountry:self.selectedCountry
+                                         reloadAPI:YES
                                       successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory)
                          {
                              if(hasUpdate)

@@ -28,6 +28,7 @@
 @dynamic sections;
 
 + (NSString *)startApiWithCountry:(RICountry *)country
+                        reloadAPI:(BOOL)reloadAPI
                      successBlock:(void (^)(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory))successBlock
                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
 {
@@ -35,23 +36,25 @@
     NSString *countryIso;
     NSString *name;
     
-    if (ISEMPTY(country))
-    {
-        NSArray* apiArrayFromCoreData = [[RIDataBaseWrapper sharedInstance]allEntriesOfType:NSStringFromClass([RIApi class])];
-        if(VALID_NOTEMPTY(apiArrayFromCoreData, NSArray))
+    if (reloadAPI) {
+        if (ISEMPTY(country))
         {
-            RIApi* api = [apiArrayFromCoreData firstObject];
-            url = api.countryUrl;
-            countryIso = api.countryIso;
-            name = api.countryName;
+            NSArray* apiArrayFromCoreData = [[RIDataBaseWrapper sharedInstance]allEntriesOfType:NSStringFromClass([RIApi class])];
+            if(VALID_NOTEMPTY(apiArrayFromCoreData, NSArray))
+            {
+                RIApi* api = [apiArrayFromCoreData firstObject];
+                url = api.countryUrl;
+                countryIso = api.countryIso;
+                name = api.countryName;
+            }
         }
-    }
-    else
-    {
-        [[RIDataBaseWrapper sharedInstance] resetApplicationModel];
-        url = country.url;
-        countryIso = country.countryIso;
-        name = country.name;
+        else
+        {
+            [[RIDataBaseWrapper sharedInstance] resetApplicationModel];
+            url = country.url;
+            countryIso = country.countryIso;
+            name = country.name;
+        }
     }
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", url, RI_API_VERSION, RI_API_INFO]]
