@@ -101,7 +101,7 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
         }
         
         _strike.frame = CGRectMake(strikePosition,
-                                  (self.frame.size.height - 1.0f) /2 ,
+                                  _label.y + _label.height/2,
                                   oldPriceLabel.frame.size.width,
                                   1.0f);
         
@@ -109,6 +109,7 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
     }else{
         if (_strike) {
             [_strike removeFromSuperview];
+            _strike = nil;
         }
     }
 }
