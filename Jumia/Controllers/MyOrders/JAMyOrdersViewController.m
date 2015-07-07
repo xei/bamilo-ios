@@ -280,6 +280,8 @@ JAPickerScrollViewDelegate
     
     [self setupViews];
     
+    [self selectedIndex:_pickerScrollIndex];
+    
     [self hideLoading];
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
@@ -294,8 +296,6 @@ JAPickerScrollViewDelegate
     self.contentScrollView.contentSize = CGSizeMake(self.view.frame.size.width * [self.sortList count], self.view.frame.size.height - self.myOrdersPickerScrollView.frame.size.height);
     
     [self setupMyOrdersViews:self.view.frame.size.width height:self.view.frame.size.height - self.myOrdersPickerScrollView.frame.size.height interfaceOrientation:self.interfaceOrientation];
-    
-    [self selectedIndex:_pickerScrollIndex];
 }
 
 - (void)didReceiveMemoryWarning
