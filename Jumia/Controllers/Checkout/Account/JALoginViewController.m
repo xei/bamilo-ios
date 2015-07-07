@@ -218,7 +218,10 @@ FBLoginViewDelegate
 
 - (void)getForms
 {
-    [self showLoading];
+    if(!self.apiResponse)
+    {
+        [self showLoading];
+    }
     
     self.loadFailed = NO; //resetting to NO, it is turned to YES if it fails
     
@@ -567,10 +570,9 @@ FBLoginViewDelegate
         self.firstLoading = NO;
     }
     
-    [self removeErrorView];
-    
     if(!self.loadFailed)
     {
+        [self removeErrorView];
         [self finishingSetupViews];
         [self setup];
         [self.checkBoxComponent setHidden:YES];
