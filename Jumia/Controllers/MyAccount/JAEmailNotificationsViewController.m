@@ -91,7 +91,6 @@ JADynamicFormDelegate
            [self hideLoading];
            
        } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-           [self removeErrorView];
            self.apiResponse = apiResponse;
            if(self.firstLoading)
            {

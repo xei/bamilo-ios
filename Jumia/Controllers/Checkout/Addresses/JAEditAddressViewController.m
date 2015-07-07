@@ -132,7 +132,6 @@ JAPickerDelegate>
        failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
      {
          self.apiResponse = apiResponse;
-         [self removeErrorView];
          
          BOOL noInternetConnection = NO;
          if (RIApiResponseNoInternetConnection == self.apiResponse)

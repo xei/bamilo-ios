@@ -164,7 +164,6 @@ UITextFieldDelegate>
          [self finishedLoadingPaymentMethods];
      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
      {
-         [self removeErrorView];
          self.apiResponse = apiResponse;
          if(RIApiResponseMaintenancePage == apiResponse)
          {

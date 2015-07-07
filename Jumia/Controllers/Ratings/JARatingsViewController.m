@@ -251,8 +251,6 @@ UITableViewDataSource
     
     [self hideLoading];
     
-    [self removeErrorView];
-    
     if(RIApiResponseSuccess != self.apiResponse)
     {
         if (RIApiResponseNoInternetConnection == self.apiResponse)
@@ -263,6 +261,8 @@ UITableViewDataSource
         {
             [self showErrorView:NO startingY:0.0f selector:@selector(ratingsRequests) objects:nil];
         }
+    }else{
+        [self removeErrorView];
     }
     
     self.requestsDone = YES;

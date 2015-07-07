@@ -194,7 +194,6 @@ JADatePickerDelegate
            [self.contentView setHidden:NO];
            [self removeErrorView];
        } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
-           [self removeErrorView];
            self.apiResponse = apiResponse;
            if(RIApiResponseMaintenancePage == apiResponse)
            {

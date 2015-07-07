@@ -163,7 +163,6 @@ UICollectionViewDelegateFlowLayout
          [self removeErrorView];
      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
      {
-         [self removeErrorView];
          [self hideLoading];
          self.apiResponse = apiResponse;
          if(RIApiResponseMaintenancePage == apiResponse)

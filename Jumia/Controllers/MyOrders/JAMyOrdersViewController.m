@@ -32,6 +32,9 @@ UICollectionViewDelegate,
 UICollectionViewDelegateFlowLayout,
 JAPickerScrollViewDelegate
 >
+{
+    NSInteger _pickerScrollIndex;
+}
 
 @property (weak, nonatomic) IBOutlet JAPickerScrollView *myOrdersPickerScrollView;
 @property (weak, nonatomic) IBOutlet UIScrollView *contentScrollView;
@@ -235,7 +238,6 @@ JAPickerScrollViewDelegate
               [self setupViews];
           }
            andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-               [self removeErrorView];
                self.apiResponse = apiResponse;
                self.isLoadingOrders = NO;
                [self hideLoading];
@@ -292,6 +294,8 @@ JAPickerScrollViewDelegate
     self.contentScrollView.contentSize = CGSizeMake(self.view.frame.size.width * [self.sortList count], self.view.frame.size.height - self.myOrdersPickerScrollView.frame.size.height);
     
     [self setupMyOrdersViews:self.view.frame.size.width height:self.view.frame.size.height - self.myOrdersPickerScrollView.frame.size.height interfaceOrientation:self.interfaceOrientation];
+    
+    [self selectedIndex:_pickerScrollIndex];
 }
 
 - (void)didReceiveMemoryWarning
@@ -320,17 +324,17 @@ JAPickerScrollViewDelegate
 #pragma mark JAPickerScrollView
 - (void)selectedIndex:(NSInteger)index
 {
-    NSInteger pickerScrollIndex = index;
+    _pickerScrollIndex = index;
     if (RI_IS_RTL) {
-        if (0==pickerScrollIndex) {
-            pickerScrollIndex = 1;
-        } else if (1==pickerScrollIndex) {
-            pickerScrollIndex = 0;
+        if (0==_pickerScrollIndex) {
+            _pickerScrollIndex = 1;
+        } else if (1==_pickerScrollIndex) {
+            _pickerScrollIndex = 0;
         }
     }
     
     // Track Order
-    if(0 == pickerScrollIndex)
+    if(0 == _pickerScrollIndex)
     {
         self.screenName = @"OrdingTracker";
         [[RITrackingWrapper sharedInstance] trackScreenWithName:self.screenName];
@@ -342,7 +346,7 @@ JAPickerScrollViewDelegate
                                                                self.contentScrollView.frame.size.height) animated:self.animatedScroll];
     }
     // Order history
-    else if(1 == pickerScrollIndex)
+    else if(1 == _pickerScrollIndex)
     {
         self.screenName = @"MyOrders";
         if([RICustomer checkIfUserIsLogged])
@@ -416,7 +420,6 @@ JAPickerScrollViewDelegate
                           [self hideLoading];
                           
                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-                          [self removeErrorView];
                           self.apiResponse = apiResponse;
                           self.trackingOrder = nil;
                           
