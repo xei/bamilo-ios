@@ -294,6 +294,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     [RIApi startApiWithCountry:nil
+                     reloadAPI:NO
                   successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory){
                       if(hasUpdate)
                       {

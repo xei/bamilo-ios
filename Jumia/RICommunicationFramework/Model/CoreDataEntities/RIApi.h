@@ -38,6 +38,7 @@
  *  @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)startApiWithCountry:(RICountry *)country
+                        reloadAPI:(BOOL)reloadAPI
                      successBlock:(void (^)(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory))successBlock
                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 
