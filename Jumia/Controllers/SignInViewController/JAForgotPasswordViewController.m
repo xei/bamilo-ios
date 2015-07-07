@@ -133,7 +133,6 @@
        failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
      {
          self.apiResponse = apiResponse;
-         [self removeErrorView];
          [self hideLoading];
          
          if (RIApiResponseNoInternetConnection == apiResponse)

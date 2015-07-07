@@ -859,7 +859,6 @@
         [self removeErrorView];
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-        [self removeErrorView];
         self.apiResponse = apiResponse;
         
         if(RIApiResponseMaintenancePage == apiResponse)

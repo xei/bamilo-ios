@@ -252,7 +252,6 @@ UICollectionViewDelegateFlowLayout>
         }
         [self removeErrorView];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-        [self removeErrorView];
         self.apiResponse = apiResponse;
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];

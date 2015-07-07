@@ -165,7 +165,7 @@ JADynamicFormDelegate
          self.numberOfRequests--;
          [self removeErrorView];
      } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
-     {   [self removeErrorView];
+     {
          self.apiResponse = apiResponse;
          self.numberOfRequests--;
      }];

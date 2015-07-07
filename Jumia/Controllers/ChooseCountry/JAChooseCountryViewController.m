@@ -139,7 +139,6 @@ UITableViewDataSource
                                                     finalHeight)];
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-        [self removeErrorView];
         self.apiResponse = apiResponse;
         if (VALID_NOTEMPTY(countryUrl, NSString))
         {
