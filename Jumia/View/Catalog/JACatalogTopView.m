@@ -145,15 +145,15 @@
         
     }else{
         
-        self.sortingButton.frame = CGRectMake(self.viewModeButton.frame.origin.x - 1.0f - halfWidth,
-                                              margin,
-                                              halfWidth,
-                                              self.sortingButton.frame.size.height);
-        
-        self.filterButton.frame = CGRectMake(self.sortingButton.frame.origin.x - 1.0f - halfWidth,
+        self.filterButton.frame = CGRectMake(self.viewModeButton.frame.origin.x - 1.0f - halfWidth,
                                              margin,
                                              halfWidth,
                                              self.filterButton.frame.size.height);
+        
+        self.sortingButton.frame = CGRectMake(self.filterButton.frame.origin.x - 1.0f - halfWidth,
+                                              margin,
+                                              halfWidth,
+                                              self.sortingButton.frame.size.height);
     }
     
     if (RI_IS_RTL) {
