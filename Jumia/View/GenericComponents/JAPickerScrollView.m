@@ -206,7 +206,9 @@
     
     if (NOTEMPTY(self.delegate) && [self.delegate respondsToSelector:@selector(selectedIndex:)]) {
         if (!self.disableDelagation) {
-            [self.delegate selectedIndex:index];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate selectedIndex:index];
+            });
         }
     }
 }
