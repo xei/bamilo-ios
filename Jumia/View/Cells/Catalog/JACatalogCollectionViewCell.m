@@ -128,8 +128,6 @@
     [_discountLabel setFrame:_discountLabelRect];
     [_discountLabel setXRightAligned:6.f];
     _discountLabelRect = _discountLabel.frame;
-    
-    [_priceView setFrame:CGRectMake(80, 0, _textWidth, 50)];
 }
 
 - (void)initGridViews
@@ -153,12 +151,16 @@
     [_discountLabel setFrame:_discountLabelRect];
     [_discountLabel setXRightAligned:6.f];
     _discountLabelRect = _discountLabel.frame;
-    
-    [_priceView setFrame:CGRectMake(6, 0, _textWidth, 50)];
 }
 
 - (void)reloadViews
 {
+    if (_grid) {
+        [self initGridViews];
+    }else{
+        [self initListViews];
+    }
+    
     [_brandLabel setFrame:CGRectMake(_brandLabelRect.origin.x,
                                      _brandLabelRect.origin.y,
                                      _textWidth,
@@ -175,7 +177,13 @@
     [_recentProductImageView setFrame:_recentProductImageViewRect];
     [_favoriteButton setXRightAligned:6];
     [_discountImageView setFrame:_discountImageViewRect];
+    [_discountImageView setXRightAligned:6];
     [_discountLabel setFrame:_discountLabelRect];
+    [_discountLabel setXRightAligned:6];
+    
+    if (_grid) {
+        [self reloadGridViews];
+    }
     
     if (RI_IS_RTL) {
         [_productImageView flipViewPositionInsideSuperview];
@@ -193,6 +201,11 @@
     }
     
     _lastWidth = self.width;
+}
+
+- (void)reloadGridViews
+{
+    [_productImageView setX:self.width/2 - _productImageView.width/2];
 }
 
 - (void)prepareForReuse
