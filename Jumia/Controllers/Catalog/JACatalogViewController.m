@@ -476,6 +476,8 @@
                                                                                filters:self.filtersArray
                                                                           successBlock:^(NSArray *results, NSArray *filters, NSNumber *productCount, RIBanner *banner) {
                                                                               
+                                                                              [self removeErrorView];
+                                                                              
                                                                               self.searchSuggestionOperationID = nil;
                                                                               
                                                                               if (ISEMPTY(self.filtersArray) && NOTEMPTY(filters)) {
