@@ -95,7 +95,7 @@
             separator.backgroundColor = UIColorFromRGB(0xcccccc);
             [cell addSubview:separator];
             if (RI_IS_RTL) {
-                [cell flipSubviewPositions];
+                [cell flipAllSubviews];
                 [cell flipSubviewAlignments];
             }
         }
