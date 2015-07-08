@@ -140,8 +140,6 @@ UITableViewDataSource
         [self setupViews];
     }else
     {
-        [self showLoading];
-        
         [self requestReviews];
     }
     
@@ -638,6 +636,7 @@ UITableViewDataSource
                                          
                                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                          
+                                         self.apiResponse = apiResponse;
                                          if(RIApiResponseSuccess != apiResponse)
                                          {
                                              if (RIApiResponseNoInternetConnection == apiResponse)
@@ -649,7 +648,8 @@ UITableViewDataSource
                                                  [self showErrorView:NO startingY:0.0f selector:@selector(requestReviews) objects:nil];
                                              }
                                          }
-//                                         self.numberOfRequests = 0;
+                                         self.numberOfRequests = 0;
+                                         
                                          [self hideLoading];
                                      }];
 
