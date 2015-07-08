@@ -612,12 +612,12 @@ UITableViewDataSource
         currentPage = [self.productRatings.currentPage integerValue] + 1;
     }
     
+    [self showLoading];
     [RIProductRatings getRatingsForProductWithUrl:self.product.url
                                       allowRating:1
                                        pageNumber:currentPage
                                      successBlock:^(RIProductRatings *ratings) {
                                          
-                                         [self showLoading];
                                          self.productRatings = ratings;
                                          
                                          [self removeErrorView];
