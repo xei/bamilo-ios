@@ -96,7 +96,6 @@
             [cell addSubview:separator];
             if (RI_IS_RTL) {
                 [cell flipAllSubviews];
-                [cell flipSubviewAlignments];
             }
         }
         
