@@ -128,8 +128,6 @@
     [_discountLabel setFrame:_discountLabelRect];
     [_discountLabel setXRightAligned:6.f];
     _discountLabelRect = _discountLabel.frame;
-    
-    [_priceView setFrame:CGRectMake(80, 0, _textWidth, 50)];
 }
 
 - (void)initGridViews
@@ -153,13 +151,16 @@
     [_discountLabel setFrame:_discountLabelRect];
     [_discountLabel setXRightAligned:6.f];
     _discountLabelRect = _discountLabel.frame;
-    
-    [_priceView setFrame:CGRectMake(6, 0, _textWidth, 50)];
 }
 
 - (void)reloadViews
 {
-    _textWidth = self.width - 6 - 6;
+    if (_grid) {
+        [self initGridViews];
+    }else{
+        [self initListViews];
+    }
+    
     [_brandLabel setFrame:CGRectMake(_brandLabelRect.origin.x,
                                      _brandLabelRect.origin.y,
                                      _textWidth,
