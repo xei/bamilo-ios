@@ -608,6 +608,7 @@
                                                                                       }
                                                                                       else if(RIApiResponseAPIError == apiResponse)
                                                                                       {
+                                                                                          [self removeErrorView];
                                                                                           [self showNoResultsView:CGRectGetMaxY(self.catalogTopView.frame) undefinedSearchTerm:undefSearchTerm];
                                                                                       }
                                                                                   }
