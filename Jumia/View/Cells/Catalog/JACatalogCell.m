@@ -83,7 +83,6 @@
     
     self.discountLabel.text = [NSString stringWithFormat:@"-%@%%",product.maxSavingPercentage];
     self.discountLabel.hidden = !product.maxSavingPercentage;
-    [self.discountLabel setTextAlignment:NSTextAlignmentLeft];
     [self.discountLabel setX:48];
     self.discountImageView.hidden = !product.maxSavingPercentage;
     [self.discountImageView setX:48];
