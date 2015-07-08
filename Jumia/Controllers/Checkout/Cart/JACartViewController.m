@@ -553,7 +553,7 @@
         [self.totalPriceView loadWithPrice:[[self cart] cartUnreducedValueFormatted]
                               specialPrice:[[self cart] subTotalFormatted]
                                   fontSize:11.0f
-                     specialPriceOnTheLeft:NO];
+                     specialPriceOnTheLeft:YES];
     }
     else
     {
