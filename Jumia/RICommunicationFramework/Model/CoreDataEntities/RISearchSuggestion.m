@@ -228,6 +228,7 @@
                    [RIProduct urlComponentForSortingMethod:sortingMethod]];
     }
 
+    tempUrl = [tempUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *url = [NSURL URLWithString:tempUrl];
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url

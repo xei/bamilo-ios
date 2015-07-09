@@ -226,7 +226,9 @@
                         successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories, RIBanner* banner))successBlock
                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
+    url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL *finalURL = [NSURL URLWithString:url];
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:finalURL
                                                             parameters:nil
                                                         httpMethodPost:NO
                                                              cacheType:RIURLCacheDBCache
