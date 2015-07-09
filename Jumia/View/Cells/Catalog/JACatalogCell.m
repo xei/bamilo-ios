@@ -71,7 +71,7 @@
     [self.priceView loadWithPrice:product.priceFormatted
                      specialPrice:product.specialPriceFormatted
                          fontSize:10.0f
-            specialPriceOnTheLeft:NO];
+            specialPriceOnTheLeft:YES];
     [self.priceView sizeToFit];
     
     CGFloat priceXOffset = JACatalogCellPriceLabelOffsetX;
@@ -127,7 +127,7 @@
     [self.priceView loadWithPrice:cartItem.priceFormatted
                      specialPrice:cartItem.specialPriceFormatted
                          fontSize:10.0f
-            specialPriceOnTheLeft:NO];
+            specialPriceOnTheLeft:YES];
     self.priceView.frame = CGRectMake(96.0f,
                                       34.0f,
                                       self.priceView.frame.size.width,

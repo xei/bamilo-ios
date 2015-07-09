@@ -182,7 +182,7 @@
     [self.priceView loadWithPrice:self.product.priceFormatted
                      specialPrice:self.product.specialPriceFormatted
                          fontSize:14.0f
-            specialPriceOnTheLeft:NO];
+            specialPriceOnTheLeft:YES];
     
     self.priceView.frame = CGRectMake(12.0f,
                                       CGRectGetMaxY(self.labelName.frame) + 4.0f,

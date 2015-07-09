@@ -220,7 +220,7 @@
     if (VALID_NOTEMPTY(self.campaignProduct.specialPrice, NSNumber) && 0 != [self.campaignProduct.specialPrice integerValue]) {
         [self.priceView loadWithPrice:campaignProduct.priceFormatted
                          specialPrice:campaignProduct.specialPriceFormatted
-                             fontSize:11.0f specialPriceOnTheLeft:NO];
+                             fontSize:11.0f specialPriceOnTheLeft:YES];
     } else {
         [self.priceView loadWithPrice:campaignProduct.priceFormatted
                          specialPrice:nil

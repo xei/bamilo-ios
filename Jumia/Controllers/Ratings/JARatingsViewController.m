@@ -443,7 +443,7 @@ UITableViewDataSource
     [self.priceView loadWithPrice:self.product.priceFormatted
                      specialPrice:self.product.specialPriceFormatted
                          fontSize:14.0f
-            specialPriceOnTheLeft:NO];
+            specialPriceOnTheLeft:YES];
     
     [self.priceView setX:12.f];
     [self.priceView setY:CGRectGetMaxY(self.nameLabel.frame) + 4.0f];
