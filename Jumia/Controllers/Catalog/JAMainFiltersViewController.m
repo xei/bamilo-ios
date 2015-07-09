@@ -136,15 +136,10 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    
-    [self updatedValues];
-}
-
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
+    [self updatedValues];
+    
     [self.tableView reloadData];
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     
