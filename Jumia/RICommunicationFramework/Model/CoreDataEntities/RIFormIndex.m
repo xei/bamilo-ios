@@ -17,6 +17,7 @@
 @dynamic form;
 
 + (NSString*)loadFormIndexesIntoDatabaseForCountry:(NSString*)countryUrl
+                                  deleteOldIndexes:(BOOL)deleteOldIndexes
                                   withSuccessBlock:(void (^)(id formIndexes))successBlock
                                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
 {
@@ -28,6 +29,9 @@
                                                               
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary)) {
+                                                                  if (deleteOldIndexes) {
+                                                                      [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RIFormIndex class])];
+                                                                  }
                                                                   successBlock([RIFormIndex parseFormIndexes:metadata]);
                                                               } else {
                                                                   failureBlock(apiResponse, nil);
@@ -54,10 +58,17 @@
     NSArray* formIndexes = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIFormIndex class]) withPropertyName:@"uid" andPropertyValue:formIndexID];
     if(VALID_NOTEMPTY(formIndexes, NSArray))
     {
-        successBlock([formIndexes objectAtIndex:0]);
+        RIFormIndex* lastForm = [formIndexes lastObject];
+        //delete all but last
+        for (RIFormIndex* formIndex in formIndexes) {
+            if (formIndex != lastForm) {
+                [[RIDataBaseWrapper sharedInstance] deleteObject:formIndex];
+            }
+        }
+        successBlock(lastForm);
         return nil;
     } else {
-        return [RIFormIndex loadFormIndexesIntoDatabaseForCountry:[RIApi getCountryUrlInUse] withSuccessBlock:^(id formIndexes) {
+        return [RIFormIndex loadFormIndexesIntoDatabaseForCountry:[RIApi getCountryUrlInUse] deleteOldIndexes:YES withSuccessBlock:^(id formIndexes) {
             formIndexes = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIFormIndex class]) withPropertyName:@"uid" andPropertyValue:formIndexID];
             if(VALID_NOTEMPTY(formIndexes, NSArray))
             {
@@ -72,8 +83,6 @@
 
 + (NSArray*)parseFormIndexes:(NSDictionary*)formIndexesJSON;
 {
-    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RIFormIndex class])];
-    
     NSMutableArray* newFormIndexes = [NSMutableArray new];
     
     NSArray* data = [formIndexesJSON objectForKey:@"data"];
