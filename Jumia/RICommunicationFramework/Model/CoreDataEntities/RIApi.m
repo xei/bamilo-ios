@@ -55,6 +55,11 @@
             countryIso = country.countryIso;
             name = country.name;
         }
+    } else {
+        //since the api was not reloaded, we can still use the saved parameters
+        name = [RIApi getCountryNameInUse];
+        countryIso = [RIApi getCountryIsoInUse];
+        url = [RIApi getCountryUrlInUse];
     }
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", url, RI_API_VERSION, RI_API_INFO]]
