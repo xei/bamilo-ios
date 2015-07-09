@@ -267,13 +267,6 @@ UICollectionViewDelegateFlowLayout>
     }];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    [self showLoading];
-    
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-}
-
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     CGFloat newWidth = self.view.frame.size.width;
@@ -286,8 +279,6 @@ UICollectionViewDelegateFlowLayout>
     
     [self.firstAddressesCollectionView reloadData];
     [self.secondAddressesCollectionView reloadData];
-    
-    [self hideLoading];
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
