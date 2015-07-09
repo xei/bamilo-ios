@@ -226,7 +226,7 @@
     [_priceView loadWithPrice:product.priceFormatted
                  specialPrice:product.specialPriceFormatted
                      fontSize:10.0f
-        specialPriceOnTheLeft:NO];
+        specialPriceOnTheLeft:YES];
     
     if (_grid) {
         [_priceView setX:6];

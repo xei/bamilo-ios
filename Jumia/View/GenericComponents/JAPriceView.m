@@ -43,7 +43,7 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
         
         NSRange oldPriceRange = NSMakeRange(RI_IS_RTL?0:(specialPrice.length + 1), RI_IS_RTL?specialPrice.length:price.length);
         
-        if ((RI_IS_RTL && _specialPriceOnTheLeft) || (!RI_IS_RTL && !_specialPriceOnTheLeft) ) {
+        if (/*(RI_IS_RTL && _specialPriceOnTheLeft) || (!RI_IS_RTL && */!_specialPriceOnTheLeft/*)*/ ) {
             finalPriceString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", price, specialPrice]
                                                                       attributes:attributes];
             oldPriceRange = NSMakeRange(0, price.length);
@@ -96,7 +96,7 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
             [self addSubview:_strike];
         }
         CGFloat strikePosition = self.frame.size.width - oldPriceLabel.frame.size.width;
-        if ((RI_IS_RTL && !_specialPriceOnTheLeft) || (!RI_IS_RTL && _specialPriceOnTheLeft)) {
+        if ((RI_IS_RTL && _specialPriceOnTheLeft) || (!RI_IS_RTL && !_specialPriceOnTheLeft)) {
             strikePosition = 0.0f;
         }
         

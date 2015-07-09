@@ -429,7 +429,7 @@
     [self.priceView loadWithPrice:oldValue
                      specialPrice:newValue
                          fontSize:14.0f
-            specialPriceOnTheLeft:NO];
+            specialPriceOnTheLeft:YES];
     self.priceView.frame = CGRectMake(6.0f,
                                       14.0f,
                                       self.priceView.frame.size.width,
