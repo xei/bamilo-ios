@@ -85,7 +85,7 @@
                                         repeats:YES];
         
         self.flowLayout = [[JAProductListFlowLayout alloc] init];
-//        self.flowLayout.manualCellSpacing = 6.0f;
+        self.flowLayout.manualCellSpacing = 0.0f;
         self.flowLayout.minimumLineSpacing = 0;
         self.flowLayout.minimumInteritemSpacing = 0;
         self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
@@ -136,11 +136,11 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    CGSize size = [self getCellLayoutForInterfaceOrientation:self.interfaceOrientation];
     if (VALID_NOTEMPTY(self.campaign.bannerImageURL, NSString) && 0 == indexPath.row) {
-        return self.bannerImage.frame.size;
-    } else {
-        return [self getCellLayoutForInterfaceOrientation:self.interfaceOrientation];
+        size = self.bannerImage.frame.size;
     }
+    return size;
 }
 
 - (CGSize)getCellLayoutForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -165,7 +165,9 @@
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger realIndex = indexPath.row;
+    BOOL campaignHasBanner = NO;
     if (VALID_NOTEMPTY(self.campaign.bannerImageURL, NSString)) {
+        campaignHasBanner = YES;
         if (0 == indexPath.row) {
             JACampaignBannerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"campaignBannerCell" forIndexPath:indexPath];
             [cell loadWithImageView:self.bannerImage];
@@ -183,7 +185,8 @@
     
     [cell loadWithCampaignProduct:product
              elapsedTimeInSeconds:self.elapsedTimeInSeconds
-                       chosenSize:chosenSimpleName];
+                       chosenSize:chosenSimpleName
+                 capaignHasBanner:campaignHasBanner];
     
     return cell;
 

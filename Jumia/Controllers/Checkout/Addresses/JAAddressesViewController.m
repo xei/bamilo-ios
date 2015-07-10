@@ -20,6 +20,8 @@
 #import "RICustomer.h"
 #import "JAClickableView.h"
 #import "JAOrderSummaryView.h"
+#import "UIImage+Mirror.h"
+#import "UIView+Mirror.h"
 
 @interface JAAddressesViewController ()
 <UICollectionViewDataSource,
@@ -177,10 +179,7 @@ UICollectionViewDelegateFlowLayout>
     [self.contentScrollView setHidden:YES];
     [self.bottomView setHidden:YES];
     
-    if(self.fromCheckout)
-    {
-        [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
-    }
+    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
     
     [self getAddressList];
 }
@@ -253,7 +252,6 @@ UICollectionViewDelegateFlowLayout>
         }
         [self removeErrorView];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-        [self removeErrorView];
         self.apiResponse = apiResponse;
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
@@ -269,21 +267,6 @@ UICollectionViewDelegateFlowLayout>
     }];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    [self showLoading];
-    
-    CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation) && self.fromCheckout)
-    {
-        newWidth = self.view.frame.size.width;
-    }
-    
-    [self setupViews:newWidth toInterfaceOrientation:toInterfaceOrientation];
-    
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-}
-
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     CGFloat newWidth = self.view.frame.size.width;
@@ -296,8 +279,6 @@ UICollectionViewDelegateFlowLayout>
     
     [self.firstAddressesCollectionView reloadData];
     [self.secondAddressesCollectionView reloadData];
-    
-    [self hideLoading];
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
@@ -361,6 +342,10 @@ UICollectionViewDelegateFlowLayout>
                                             4.0f,
                                             (self.stepView.frame.size.width - self.stepIcon.frame.size.width - marginBetweenIconAndLabel - (2 * horizontalMargin)),
                                             12.0f)];
+    }
+    
+    if(RI_IS_RTL){
+        [self.stepBackground setImage:[stepBackgroundImage flipImageWithOrientation:UIImageOrientationUpMirrored]];
     }
 }
 
@@ -436,6 +421,8 @@ UICollectionViewDelegateFlowLayout>
                                                                 self.secondAddressesCollectionView.frame.size.width,
                                                                 70.0f)];
     }
+    [self.firstAddressesCollectionView reloadData];
+    [self.secondAddressesCollectionView reloadData];
     
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, CGRectGetMaxY(self.secondAddressesCollectionView.frame) + self.bottomView.frame.size.height)];
     
@@ -455,6 +442,10 @@ UICollectionViewDelegateFlowLayout>
     }
     
     [self.bottomView setHidden:NO];
+    
+    if (RI_IS_RTL) {
+        [self.view flipAllSubviews];
+    }
 }
 
 -(void)finishedLoadingAddresses
@@ -824,22 +815,22 @@ UICollectionViewDelegateFlowLayout>
         {
             if(self.useSameAddressAsBillingAndShipping)
             {
-                [headerView loadHeaderWithText:STRING_DEFAULT_SHIPPING_ADDRESSES width:self.contentScrollView.frame.size.width];
+                [headerView loadHeaderWithText:STRING_DEFAULT_SHIPPING_ADDRESSES width:self.contentScrollView.frame.size.width - 12.0f];
             }
             else
             {
-                [headerView loadHeaderWithText:STRING_SHIPPING_ADDRESSES width:self.contentScrollView.frame.size.width];
+                [headerView loadHeaderWithText:STRING_SHIPPING_ADDRESSES width:self.contentScrollView.frame.size.width - 12.0f];
             }
         }
         else if(collectionView == self.secondAddressesCollectionView)
         {
             if(self.useSameAddressAsBillingAndShipping)
             {
-                [headerView loadHeaderWithText:STRING_OTHER_ADDRESSES width:self.contentScrollView.frame.size.width];
+                [headerView loadHeaderWithText:STRING_OTHER_ADDRESSES width:self.contentScrollView.frame.size.width - 12.0f];
             }
             else
             {
-                [headerView loadHeaderWithText:STRING_BILLING_ADDRESSES width:self.contentScrollView.frame.size.width];
+                [headerView loadHeaderWithText:STRING_BILLING_ADDRESSES width:self.contentScrollView.frame.size.width - 12.0f];
             }
         }
         

@@ -228,6 +228,7 @@
                    [RIProduct urlComponentForSortingMethod:sortingMethod]];
     }
 
+    tempUrl = [tempUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *url = [NSURL URLWithString:tempUrl];
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
@@ -420,7 +421,12 @@
     RISearchSuggestion *newSearchSuggestion = (RISearchSuggestion*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RISearchSuggestion class])];
     
     if ([jsonObject objectForKey:@"item"]) {
-        newSearchSuggestion.item = [jsonObject objectForKey:@"item"];
+        id item = [jsonObject objectForKey:@"item"];
+        if ([item isKindOfClass:[NSString class]]) {
+            newSearchSuggestion.item = (NSString*)item;
+        } else if ([item isKindOfClass:[NSNumber class]]){
+            newSearchSuggestion.item = [NSString stringWithFormat:@"%ld",(long)[(NSNumber*)item integerValue]];
+        }
     }
     
     if ([jsonObject objectForKey:@"relevance"]) {

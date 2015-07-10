@@ -15,7 +15,9 @@
 
 #define kSearchViewBarHeight 32.0f
 
-@interface JABaseViewController ()
+@interface JABaseViewController () {
+    CGRect _noConnectionViewFrame;
+}
 
 @property (assign, nonatomic) int requestNumber;
 @property (strong, nonatomic) UIView *loadingView;
@@ -42,6 +44,15 @@
                       self.view.bounds.origin.y + offset,
                       self.view.bounds.size.width,
                       self.view.bounds.size.height - offset);
+}
+
+-(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        JANavigationBarLayout *defaultLayout = [[JANavigationBarLayout alloc] init];
+        self.navBarLayout = defaultLayout;
+    }
+    return self;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -163,10 +174,14 @@
     CGFloat screenHeight = viewFrame.size.height;
     
     if (VALID_NOTEMPTY(self.noConnectionView, JANoConnectionView)) {
-        self.noConnectionView.frame = CGRectMake(self.noConnectionView.frame.origin.x,
-                                                 self.noConnectionView.frame.origin.y,
+        
+        NSLog(@"self.noConnectionView.x: %f", self.noConnectionView.x);
+        
+        self.noConnectionView.frame = CGRectMake(_noConnectionViewFrame.origin.x,
+                                                 _noConnectionViewFrame.origin.y,
                                                  screenWidth,
                                                  screenHeight);
+        [self.noConnectionView reDraw];
         [self.view bringSubviewToFront:self.noConnectionView];
     }
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
@@ -186,7 +201,7 @@
     
     [self reloadNavBar];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnLeftSwipePanelNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnMenuSwipePanelNotification
                                                         object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -255,14 +270,18 @@
     self.searchBar.layer.borderColor = [JANavBarBackgroundGrey CGColor];
     
     [self.searchBarBackground addSubview:self.searchBar];
+     UIImage *searchIcon = [UIImage imageNamed:@"searchIcon"];
     
-    UIImage *searchIcon = [UIImage imageNamed:@"searchIcon"];
+    
     self.searchIconImageView = [[UIImageView alloc] initWithImage:searchIcon];
-    self.searchIconImageView.frame = CGRectMake(CGRectGetMaxX(self.searchBar.frame) - horizontalMargin - searchIcon.size.width,
-                                                (self.searchBarBackground.frame.size.height - searchIcon.size.height) / 2,
+    self.searchIconImageView.frame = CGRectMake(self.searchBar.frame.size.width - horizontalMargin - searchIcon.size.width,
+                                                (self.searchBar.frame.size.height - searchIcon.size.height) / 2,
                                                 searchIcon.size.width,
                                                 searchIcon.size.height);
-    [self.searchBarBackground addSubview:self.searchIconImageView];
+    
+    [self.searchBar addSubview:self.searchIconImageView];
+    
+    [self reloadSearchBar];
 }
 
 - (void)reloadSearchBar {
@@ -276,10 +295,22 @@
                                       self.searchBarBackground.bounds.origin.y + verticalMargin,
                                       self.searchBarBackground.bounds.size.width - horizontalMargin * 2,
                                       self.searchBarBackground.bounds.size.height - verticalMargin * 2);
-    self.searchIconImageView.frame = CGRectMake(CGRectGetMaxX(self.searchBar.frame) - horizontalMargin - self.searchIconImageView.frame.size.width,
-                                                (self.searchBarBackground.frame.size.height - self.searchIconImageView.frame.size.height) / 2,
+    
+    self.searchIconImageView.frame = CGRectMake(self.searchBar.frame.size.width - horizontalMargin - self.searchIconImageView.frame.size.width,
+                                                (self.searchBar.frame.size.height - self.searchIconImageView.frame.size.height) / 2,
                                                 self.searchIconImageView.frame.size.width,
                                                 self.searchIconImageView.frame.size.height);
+    
+    UITextField *textFieldSearch = [self.searchBar valueForKey:@"_searchField"];
+    textFieldSearch.textAlignment = NSTextAlignmentLeft;
+    
+    if(RI_IS_RTL){
+        
+        [textFieldSearch flipViewAlignment];
+        [self.searchIconImageView flipViewPositionInsideSuperview];
+        [self.searchBar setPositionAdjustment:UIOffsetMake(-self.searchBar.frame.size.width + 48.0f, 0) forSearchBarIcon:UISearchBarIconClear];
+        [self.searchBar setSearchTextPositionAdjustment:UIOffsetMake(24.0f, 0)];
+    }
     
     [self.searchResultsView reloadFrame:[self viewBounds]];
 }
@@ -403,61 +434,65 @@
 
 - (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray *)objects {
     if (VALID_NOTEMPTY(self.noConnectionView, JANoConnectionView)) {
-        [self.noConnectionView removeFromSuperview];
+//        [self.noConnectionView removeFromSuperview];
+        
+    }else{
+        self.noConnectionView = [JANoConnectionView getNewJANoConnectionViewWithFrame:self.viewBounds];
+        
+        // This is to avoid a retain cycle
+        __block JABaseViewController *viewController = self;
+        [self.noConnectionView setRetryBlock: ^(BOOL dismiss)
+         {
+             if ([viewController respondsToSelector:selector]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+                 if (ISEMPTY(objects)) {
+                     [viewController performSelector:selector];
+                 }
+                 else if (1 == [objects count]) {
+                     [viewController performSelector:selector withObject:[objects objectAtIndex:0]];
+                 }
+                 else if (2 == [objects count]) {
+                     [viewController performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
+                 }
+#pragma clang diagnostic pop
+             }
+         }];
+        [self.view addSubview:self.noConnectionView];
     }
     
-    self.noConnectionView = [JANoConnectionView getNewJANoConnectionView];
     [self.noConnectionView setupNoConnectionViewForNoInternetConnection:isNoInternetConnection];
     
-    CGRect noConnectionViewFrame = CGRectMake(0.0f,
+    _noConnectionViewFrame = CGRectMake(0.0f,
                                               0.0f,
                                               [[UIScreen mainScreen] bounds].size.width,
                                               [[UIScreen mainScreen] bounds].size.height);
     
     if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
-        if (noConnectionViewFrame.size.width > noConnectionViewFrame.size.height) {
-            noConnectionViewFrame  = CGRectMake(0.0f, startingY, noConnectionViewFrame.size.height, noConnectionViewFrame.size.width - startingY);
+        if (_noConnectionViewFrame.size.width > _noConnectionViewFrame.size.height) {
+            _noConnectionViewFrame  = CGRectMake(0.0f, startingY, _noConnectionViewFrame.size.height, _noConnectionViewFrame.size.width - startingY);
         }
         else {
-            noConnectionViewFrame  = CGRectMake(0.0f, startingY, noConnectionViewFrame.size.width, noConnectionViewFrame.size.height - startingY);
+            _noConnectionViewFrame  = CGRectMake(0.0f, startingY, _noConnectionViewFrame.size.width, _noConnectionViewFrame.size.height - startingY);
         }
     }
     else {
-        if (noConnectionViewFrame.size.width > noConnectionViewFrame.size.height) {
-            noConnectionViewFrame  = CGRectMake(0.0f, startingY, noConnectionViewFrame.size.width, noConnectionViewFrame.size.height - startingY);
+        if (_noConnectionViewFrame.size.width > _noConnectionViewFrame.size.height) {
+            _noConnectionViewFrame  = CGRectMake(0.0f, startingY, _noConnectionViewFrame.size.width, _noConnectionViewFrame.size.height - startingY);
         }
         else {
-            noConnectionViewFrame  = CGRectMake(0.0f, startingY, noConnectionViewFrame.size.height, noConnectionViewFrame.size.width - startingY);
+            _noConnectionViewFrame  = CGRectMake(0.0f, startingY, _noConnectionViewFrame.size.height, _noConnectionViewFrame.size.width - startingY);
         }
     }
     
-    [self.noConnectionView setFrame:noConnectionViewFrame];
+    [self.noConnectionView setFrame:_noConnectionViewFrame];
     
-    // This is to avoid a retain cycle
-    __block JABaseViewController *viewController = self;
-    [self.noConnectionView setRetryBlock: ^(BOOL dismiss)
-     {
-         if ([viewController respondsToSelector:selector]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-             if (ISEMPTY(objects)) {
-                 [viewController performSelector:selector];
-             }
-             else if (1 == [objects count]) {
-                 [viewController performSelector:selector withObject:[objects objectAtIndex:0]];
-             }
-             else if (2 == [objects count]) {
-                 [viewController performSelector:selector withObject:[objects objectAtIndex:0] withObject:[objects objectAtIndex:1]];
-             }
-#pragma clang diagnostic pop
-         }
-     }];
-    
-    [self.view addSubview:self.noConnectionView];
+    [self.view bringSubviewToFront:self.noConnectionView];
 }
 
 - (void)removeErrorView {
     [self.noConnectionView removeFromSuperview];
+    self.noConnectionView = nil;
 }
 
 - (void)showMaintenancePage:(SEL)selector objects:(NSArray *)objects {

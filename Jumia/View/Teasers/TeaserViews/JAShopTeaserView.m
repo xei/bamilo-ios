@@ -24,12 +24,12 @@
                               self.frame.origin.y,
                               self.frame.size.width,
                               totalHeight)];
-    
     CGFloat margin = 6.0f; //value by design
     CGFloat numberOfComponents = 3; //value by design;
     CGFloat componentWidth = (self.frame.size.width - margin*2)/numberOfComponents;
     
     CGFloat currentX = margin;
+    
     for (int i = 0; i < numberOfComponents; i++) {
         
         JAClickableView* clickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
@@ -100,6 +100,10 @@
                                            clickableView.frame.size.height)];
             [self addSubview:separator];
         }
+    }
+    
+    if (RI_IS_RTL) {
+        [self flipAllSubviews];
     }
 }
 

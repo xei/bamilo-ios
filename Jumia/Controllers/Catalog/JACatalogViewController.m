@@ -8,8 +8,6 @@
 
 #import "JACatalogViewController.h"
 #import "RIProduct.h"
-#import "JACatalogListCell.h"
-#import "JACatalogGridCell.h"
 #import "JAUtils.h"
 #import "RISearchSuggestion.h"
 #import "RICustomer.h"
@@ -26,6 +24,9 @@
 #import "JACampaignBannerCell.h"
 #import "JACatalogBannerCell.h"
 #import "JAProductListFlowLayout.h"
+#import "JACatalogCollectionViewCell.h"
+#import "JACatalogListCollectionViewCell.h"
+#import "JACatalogGridCollectionViewCell.h"
 
 #define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
@@ -265,6 +266,14 @@
     }
 }
 
+- (void)viewDidLayoutSubviews
+{
+    [self.collectionView setX:6.0f];
+    [self.collectionView setWidth:self.view.width - 12.f];
+    [self.collectionView setHeight:self.view.height - self.collectionView.y];
+    [self.catalogTopView repositionForWidth:self.view.frame.size.width];
+}
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -290,19 +299,16 @@
     
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
-
-    [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogBannerCell" bundle:nil] forCellWithReuseIdentifier:@"bannerCell"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogGridCell" bundle:nil] forCellWithReuseIdentifier:@"gridCell"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogGridCell_ipad_portrait" bundle:nil] forCellWithReuseIdentifier:@"gridCell_ipad_portrait"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogGridCell_ipad_landscape" bundle:nil] forCellWithReuseIdentifier:@"gridCell_ipad_landscape"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogListCell" bundle:nil] forCellWithReuseIdentifier:@"listCell"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogListCell_ipad_portrait" bundle:nil] forCellWithReuseIdentifier:@"listCell_ipad_portrait"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogListCell_ipad_landscape" bundle:nil] forCellWithReuseIdentifier:@"listCell_ipad_landscape"];
+    
+    [self.collectionView registerClass:[JACatalogListCollectionViewCell class] forCellWithReuseIdentifier:@"JACatalogListCollectionViewCell"];
+    [self.collectionView registerClass:[JACatalogGridCollectionViewCell class] forCellWithReuseIdentifier:@"JACatalogGridCollectionViewCell"];
     
     self.flowLayout = [[JAProductListFlowLayout alloc] init];
-    self.flowLayout.manualCellSpacing = 0.0f;
-    self.flowLayout.minimumLineSpacing = 0;
-    self.flowLayout.minimumInteritemSpacing = 0;
+    self.flowLayout.manualCellSpacing = 6.0f;
+    self.flowLayout.minimumLineSpacing = 6.0f;
+    self.flowLayout.minimumInteritemSpacing = 0.f;
+    //                                              top, left, bottom, right
+    [self.flowLayout setSectionInset:UIEdgeInsetsMake(0.f, 0.0, 0.0, 0.0)];
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     [self.collectionView setCollectionViewLayout:self.flowLayout];
     
@@ -311,6 +317,7 @@
         self.sortingMethod = [self.sortingMethodFromPush integerValue];
     }
     [self.catalogTopView setSorting:self.sortingMethod];
+    [self.catalogTopView repositionForWidth:self.view.frame.size.width];
     
     NSNumber* gridSelected = [[NSUserDefaults standardUserDefaults] objectForKey:JACatalogGridSelected];
     self.catalogTopView.gridSelected = [gridSelected boolValue];
@@ -365,7 +372,6 @@
          
      } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
          self.apiResponse = apiResponse;
-         [self removeErrorView];
          
          if(RIApiResponseMaintenancePage == apiResponse)
          {
@@ -412,10 +418,7 @@
                                                                            [self viewBounds].size.height - self.catalogTopView.frame.origin.y)];
     }
     
-    [self.catalogTopView setFrame:CGRectMake(self.catalogTopView.frame.origin.x,
-                                             self.catalogTopView.frame.origin.y,
-                                             [self viewBounds].size.width,
-                                             self.catalogTopView.frame.size.height)];
+    [self.catalogTopView repositionForWidth:self.view.frame.size.width];
 }
 
 - (void)resetCatalog
@@ -472,6 +475,8 @@
                                                                          sortingMethod:self.sortingMethod
                                                                                filters:self.filtersArray
                                                                           successBlock:^(NSArray *results, NSArray *filters, NSNumber *productCount, RIBanner *banner) {
+                                                                              
+                                                                              [self removeErrorView];
                                                                               
                                                                               self.searchSuggestionOperationID = nil;
                                                                               
@@ -572,7 +577,6 @@
                                                                               [self reloadNavBar];
                                                                               
                                                                               self.apiResponse = apiResponse;
-                                                                              [self removeErrorView];
                                                                               self.searchSuggestionOperationID = nil;
                                                                               
                                                                               if(VALID_NOTEMPTY(self.productsArray, NSArray))
@@ -604,6 +608,7 @@
                                                                                       }
                                                                                       else if(RIApiResponseAPIError == apiResponse)
                                                                                       {
+                                                                                          [self removeErrorView];
                                                                                           [self showNoResultsView:CGRectGetMaxY(self.catalogTopView.frame) undefinedSearchTerm:undefSearchTerm];
                                                                                       }
                                                                                   }
@@ -799,7 +804,6 @@
                                                                           [self reloadNavBar];
                                                                           
                                                                           self.apiResponse = apiResponse;
-                                                                          [self removeErrorView];
                                                                           self.getProductsOperationID = nil;
                                                                           
                                                                           if(VALID_NOTEMPTY(self.productsArray, NSArray))
@@ -985,11 +989,27 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (VALID_NOTEMPTY(self.banner, RIBanner) && 0 == indexPath.row) {
-        return self.bannerImage.frame.size;
-    } else {
-        return [self getLayoutItemSizeForInterfaceOrientation:self.interfaceOrientation];
-    }
+    if ([self.cellIdentifier isEqualToString:@"listCell"])
+        return CGSizeMake(308, 97);
+    else if ([self.cellIdentifier isEqualToString:@"listCell_ipad_portrait"])
+        return CGSizeMake(375, 97);
+    else if ([self.cellIdentifier isEqualToString:@"listCell_ipad_landscape"])
+        return CGSizeMake(333.33, 97);
+    
+    else if ([self.cellIdentifier isEqualToString:@"gridCell"])
+        return CGSizeMake(151, 206);
+    else if ([self.cellIdentifier isEqualToString:@"gridCell_ipad_portrait"])
+        return CGSizeMake(248, 212);
+    else if ([self.cellIdentifier isEqualToString:@"gridCell_ipad_landscape"])
+        return CGSizeMake(197.6, 212);
+    else
+        return CGSizeZero;
+    
+//    if (VALID_NOTEMPTY(self.banner, RIBanner) && 0 == indexPath.row) {
+//        return self.bannerImage.frame.size;
+//    } else {
+//        return [self getLayoutItemSizeForInterfaceOrientation:self.interfaceOrientation];
+//    }
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
@@ -1018,11 +1038,19 @@
     
     RIProduct *product = [self.productsArray objectAtIndex:realIndex];
     
-    JACatalogCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:self.cellIdentifier forIndexPath:indexPath];
+    JACatalogCollectionViewCell *cell;
+    
+    if ([self.cellIdentifier hasPrefix:@"grid"]) {
+        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JACatalogGridCollectionViewCell" forIndexPath:indexPath];
+    }else{
+        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JACatalogListCollectionViewCell" forIndexPath:indexPath];
+    }
+    
     cell.favoriteButton.tag = realIndex;
     [cell.favoriteButton addTarget:self
                             action:@selector(addToFavoritesPressed:)
                   forControlEvents:UIControlEventTouchUpInside];
+    
     cell.feedbackView.tag = indexPath.row;
     [cell.feedbackView addTarget:self
                           action:@selector(clickableViewPressedInCell:)
@@ -1127,7 +1155,7 @@
 
 #pragma mark - JAMainFiltersViewControllerDelegate
 
-- (void)updatedFiltersAndCategory:(RICategory *)category;
+- (void)updatedFilters;
 {
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:self.catalogUrl forKey:kRIEventLabelKey];
@@ -1190,20 +1218,10 @@
         }
     }
     
-    if(VALID_NOTEMPTY(category, RICategory))
-    {
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventIndividualFilter]
-                                                  data:[NSDictionary dictionaryWithObject:@"category" forKey:kRIEventFilterTypeKey]];
-        [trackingDictionary setObject:@"category" forKey:kRIEventCategoryFilterKey];
-        
-        filtersSelected = YES;
-    }
-    
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFilter]
                                               data:[trackingDictionary copy]];
     
     [self.catalogTopView setFilterSelected:filtersSelected];
-    self.filterCategory = category;
     [self resetCatalog];
     [self loadMoreProducts];
 }
@@ -1568,11 +1586,8 @@
                                                                            [self viewBounds].size.height - self.catalogTopView.frame.origin.y)];
         [self.undefinedView didRotate];
     }
-    
-    [self.catalogTopView setFrame:CGRectMake(self.catalogTopView.frame.origin.x,
-                                             self.catalogTopView.frame.origin.y,
-                                             [self viewBounds].size.width,
-                                             self.catalogTopView.frame.size.height)];
+
+    [self.catalogTopView repositionForWidth:self.view.frame.size.width];
     
     [self hideLoading];
     

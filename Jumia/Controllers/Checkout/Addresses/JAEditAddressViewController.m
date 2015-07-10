@@ -14,6 +14,8 @@
 #import "RICheckout.h"
 #import "RIRegion.h"
 #import "RICity.h"
+#import "UIView+Mirror.h"
+#import "UIImage+Mirror.h"
 
 @interface JAEditAddressViewController ()
 <JADynamicFormDelegate,
@@ -27,8 +29,8 @@ JAPickerDelegate>
 
 // Add Address
 @property (strong, nonatomic) UIScrollView *contentScrollView;
-@property (assign, nonatomic) CGRect originalFrame;
-@property (assign, nonatomic) CGRect orderSummaryOriginalFrame;
+@property (assign, nonatomic) CGFloat contentScrollOriginalHeight;
+@property (assign, nonatomic) CGFloat orderSummaryOriginalHeight;
 
 @property (strong, nonatomic) UIView *contentView;
 @property (strong, nonatomic) UILabel *headerLabel;
@@ -91,6 +93,8 @@ JAPickerDelegate>
     
     [self initViews];
 
+    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+    
     [self getForm];
 }
 
@@ -128,7 +132,6 @@ JAPickerDelegate>
        failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
      {
          self.apiResponse = apiResponse;
-         [self removeErrorView];
          
          BOOL noInternetConnection = NO;
          if (RIApiResponseNoInternetConnection == self.apiResponse)
@@ -154,14 +157,6 @@ JAPickerDelegate>
     }
     
     [self showLoading];
-    
-    CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation) && self.fromCheckout)
-    {
-        newWidth = self.view.frame.size.width;
-    }
-    
-    [self setupViews:newWidth toInterfaceOrientation:toInterfaceOrientation];
     
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
@@ -281,6 +276,10 @@ JAPickerDelegate>
                                             (self.stepView.frame.size.width - self.stepIcon.frame.size.width - marginBetweenIconAndLabel - (2 * horizontalMargin)),
                                             12.0f)];
     }
+    
+    if(RI_IS_RTL){
+        [self.stepBackground setImage:[stepBackgroundImage flipImageWithOrientation:UIImageOrientationUpMirrored]];
+    }
 }
 
 - (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
@@ -296,7 +295,7 @@ JAPickerDelegate>
                                                 scrollViewStartY,
                                                 width,
                                                 self.view.frame.size.height - scrollViewStartY)];
-    self.originalFrame = self.contentScrollView.frame;
+    self.contentScrollOriginalHeight = self.contentScrollView.frame.size.height;
     
     self.addressViewCurrentY = CGRectGetMaxY(self.headerSeparator.frame) + 6.0f;
     
@@ -314,7 +313,7 @@ JAPickerDelegate>
                                                                                  self.view.frame.size.height - scrollViewStartY)];
         [self.orderSummary loadWithCart:self.cart shippingFee:NO];
         [self.view addSubview:self.orderSummary];
-        self.orderSummaryOriginalFrame = self.orderSummary.frame;        
+        self.orderSummaryOriginalHeight = self.orderSummary.frame.size.height;
     }
     
     [self.contentView setFrame:CGRectMake(6.0f,
@@ -339,6 +338,7 @@ JAPickerDelegate>
                                           self.addressViewCurrentY)];
     [self.contentView setHidden:NO];
     
+    self.headerLabel.textAlignment = NSTextAlignmentLeft;
     [self.headerLabel setFrame:CGRectMake(6.0f, 0.0f, self.contentView.frame.size.width - 12.0f, 26.0f)];
     [self.headerSeparator setFrame:CGRectMake(0.0f, CGRectGetMaxY(self.headerLabel.frame), self.contentView.frame.size.width, 1.0f)];
     
@@ -354,6 +354,10 @@ JAPickerDelegate>
         [self.bottomView addButton:STRING_CANCEL target:self action:@selector(cancelButtonPressed)];
     }
     [self.bottomView addButton:STRING_SAVE_CHANGES target:self action:@selector(saveChangesButtonPressed)];
+    
+    if (RI_IS_RTL) {
+        [self.view flipAllSubviews];
+    }
 }
 
 -(NSDictionary*)getAddressValues
@@ -765,17 +769,17 @@ JAPickerDelegate>
     }
     
     [UIView animateWithDuration:0.3 animations:^{
-        [self.contentScrollView setFrame:CGRectMake(self.originalFrame.origin.x,
-                                                    self.originalFrame.origin.y,
-                                                    self.originalFrame.size.width,
-                                                    self.originalFrame.size.height - height)];
+        [self.contentScrollView setFrame:CGRectMake(self.contentScrollView.frame.origin.x,
+                                                    self.contentScrollView.frame.origin.y,
+                                                    self.contentScrollView.frame.size.width,
+                                                    self.contentScrollOriginalHeight - height)];
         
         if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
         {
-            [self.orderSummary setFrame:CGRectMake(self.orderSummaryOriginalFrame.origin.x,
-                                                   self.orderSummaryOriginalFrame.origin.y,
-                                                   self.orderSummaryOriginalFrame.size.width,
-                                                   self.orderSummaryOriginalFrame.size.height - height)];
+            [self.orderSummary setFrame:CGRectMake(self.orderSummary.frame.origin.x,
+                                                   self.orderSummary.frame.origin.y,
+                                                   self.orderSummary.frame.size.width,
+                                                   self.orderSummaryOriginalHeight - height)];
         }
     }];
 }
@@ -783,11 +787,17 @@ JAPickerDelegate>
 - (void) keyboardWillHide:(NSNotification *)notification
 {
     [UIView animateWithDuration:0.3 animations:^{
-        [self.contentScrollView setFrame:self.originalFrame];
+        [self.contentScrollView setFrame:CGRectMake(self.contentScrollView.frame.origin.x,
+                                                    self.contentScrollView.frame.origin.y,
+                                                    self.contentScrollView.frame.size.width,
+                                                    self.contentScrollOriginalHeight)];
         
         if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
         {
-            [self.orderSummary setFrame:self.orderSummaryOriginalFrame];
+            [self.orderSummary setFrame:CGRectMake(self.orderSummary.frame.origin.x,
+                                                   self.orderSummary.frame.origin.y,
+                                                   self.orderSummary.frame.size.width,
+                                                   self.orderSummaryOriginalHeight)];
         }
     }];
 }

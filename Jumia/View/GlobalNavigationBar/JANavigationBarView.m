@@ -87,6 +87,14 @@
     [self.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:fontSize]];
     [self.topTitleLabel setFont:[UIFont fontWithName:kFontRegularName size:14.0f]];
     [self.bottomTitleLabel setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
+    
+    if (RI_IS_RTL) {
+        [self.editButton flipViewAlignment];
+        [self.doneButton flipViewAlignment];
+        [self.backButton flipViewAlignment];
+        [self.backButton flipViewImage];
+        [self.cartButton flipViewImage];
+    }
 }
 
 - (void)orientationChanged:(NSNotification *)notification
@@ -369,6 +377,10 @@
                                                self.frame.size.height - self.bottomTitleLabel.frame.size.height - 2.0f,
                                                titleLabelWidth,
                                                self.bottomTitleLabel.frame.size.height)];
+    
+    if (RI_IS_RTL) {
+        [self flipSubviewPositions];
+    }
 }
 
 - (void)hideCenterItems

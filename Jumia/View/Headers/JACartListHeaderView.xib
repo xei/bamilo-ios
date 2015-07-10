@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,33 +11,29 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="27"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lRw-lP-JFq">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lRw-lP-JFq">
                     <rect key="frame" x="6" y="2" width="308" height="22"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SlH-SY-ZNJ">
+                <view contentMode="scaleToFill" id="SlH-SY-ZNJ">
                     <rect key="frame" x="0.0" y="26" width="320" height="1"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="1" id="GRI-J9-EPJ"/>
-                    </constraints>
                 </view>
             </subviews>
-            <constraints>
-                <constraint firstItem="lRw-lP-JFq" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="2" id="7v9-vb-CKF"/>
-                <constraint firstItem="SlH-SY-ZNJ" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" id="CzM-T0-12X"/>
-                <constraint firstAttribute="trailing" secondItem="SlH-SY-ZNJ" secondAttribute="trailing" id="Mmp-UY-mZU"/>
-                <constraint firstItem="lRw-lP-JFq" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="6" id="XlT-PQ-074"/>
-                <constraint firstAttribute="bottom" secondItem="SlH-SY-ZNJ" secondAttribute="bottom" id="mkQ-Hb-VHn"/>
-                <constraint firstItem="SlH-SY-ZNJ" firstAttribute="top" secondItem="lRw-lP-JFq" secondAttribute="bottom" constant="2" id="vzS-ft-zPA"/>
-                <constraint firstAttribute="trailing" secondItem="lRw-lP-JFq" secondAttribute="trailing" constant="6" id="ya8-Mq-MMt"/>
-            </constraints>
             <connections>
                 <outlet property="separator" destination="SlH-SY-ZNJ" id="Bbo-gh-Q20"/>
                 <outlet property="title" destination="lRw-lP-JFq" id="X6N-0K-KVu"/>
             </connections>
+            <point key="canvasLocation" x="402" y="295.5"/>
         </collectionReusableView>
     </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>

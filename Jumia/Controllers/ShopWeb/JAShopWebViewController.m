@@ -31,8 +31,6 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    self.searchBarIsVisible = YES;
-    
     [super viewWillAppear:animated];
     
     [self.webView setFrame:[self viewBounds]];
@@ -40,6 +38,7 @@
     if (NO == self.isLoaded) {
         NSURL* url = [NSURL URLWithString:self.url];
         [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url parameters:nil httpMethodPost:YES cacheType:RIURLCacheNoCache cacheTime:RIURLCacheDefaultTime successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+            self.searchBarIsVisible = YES;
             NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
             NSDictionary *data = [metadata objectForKey:@"data"];
             NSString* htmlRaw = [data objectForKey:@"html"];
@@ -48,6 +47,7 @@
             
             self.isLoaded = YES;
             [self.webView loadHTMLString:htmlFinal baseURL:url];
+            [self removeErrorView];
         } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObjectt) {
             if (RIApiResponseNoInternetConnection == apiResponse) {
                 [self showErrorView:YES startingY:0.0f selector:@selector(viewWillAppear:) objects:nil];

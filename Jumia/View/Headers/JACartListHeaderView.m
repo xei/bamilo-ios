@@ -23,11 +23,24 @@
     
     [self setBackgroundColor:UIColorFromRGB(0xffffff)];
     
+    self.title.frame = CGRectMake(6.0f,
+                                  self.title.frame.origin.y,
+                                  width - 2*6.0f,
+                                  self.title.frame.size.height);
     self.title.font = [UIFont fontWithName:kFontRegularName size:self.title.font.pointSize];
+    self.title.textAlignment = NSTextAlignmentLeft;
     [self.title setText:text];
     [self.title setTextColor:UIColorFromRGB(0x4e4e4e)];
     
+    self.separator.frame = CGRectMake(0.0f,
+                                      self.separator.frame.origin.y,
+                                      width,
+                                      1.0f);
     [self.separator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+    
+    if (RI_IS_RTL) {
+        [self flipAllSubviews];
+    }
 }
 
 @end

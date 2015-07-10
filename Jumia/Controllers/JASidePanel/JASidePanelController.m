@@ -133,15 +133,18 @@ static char ja_kvoContext;
 
 - (void)_baseInit {
     self.style = JASidePanelSingleActive;
+    self.rightGapPercentage = 0.8f;
+    self.leftGapPercentage = 0.8f;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
         self.leftFixedWidth = 256.0f;
+        self.rightFixedWidth = 256.0f;
     }
     else
     {
-        self.leftGapPercentage = 0.8f;
+        self.leftFixedWidth = [UIScreen mainScreen].bounds.size.width*self.leftGapPercentage;
+        self.rightFixedWidth = [UIScreen mainScreen].bounds.size.width*self.rightGapPercentage;
     }
-    self.rightGapPercentage = 0.8f;
     self.minimumMovePercentage = 0.15f;
     self.maximumAnimationDuration = 0.2f;
     self.bounceDuration = 0.1f;
@@ -443,6 +446,28 @@ static char ja_kvoContext;
     }
 }
 
+- (void)updateRightPanelInformation:(NSDictionary*)userInfo
+{
+    if (VALID_NOTEMPTY(_rightPanel, UINavigationController))
+    {
+        UINavigationController *navigationController = (UINavigationController *)_rightPanel;
+        if(VALID_NOTEMPTY([navigationController topViewController], JAMenuViewController))
+        {
+            JAMenuViewController* menuVC = (JAMenuViewController*) [navigationController topViewController];
+            [menuVC setCart:nil];
+            if([userInfo objectForKey:kUpdateCartNotificationValue])
+            {
+                [menuVC setCart:[userInfo objectForKey:kUpdateCartNotificationValue]];
+            }
+            
+            if([userInfo objectForKey:kExternalPaymentValue])
+            {
+                [menuVC setNeedsExternalPaymentMethod:[[userInfo objectForKey:kExternalPaymentValue] boolValue]];
+            }
+        }
+    }
+}
+
 - (void)setRightPanel:(UIViewController *)rightPanel {
     if (rightPanel != _rightPanel) {
         [_rightPanel willMoveToParentViewController:nil];
@@ -527,6 +552,19 @@ static char ja_kvoContext;
         CGPoint translate = [pan translationInView:self.centerPanelContainer];
         CGRect frame = _centerPanelRestingFrame;
         frame.origin.x += roundf([self _correctMovement:translate.x]);
+        if (RI_IS_RTL) {
+            if (frame.origin.x > 0) {
+                frame.origin.x = 0;
+            }else if (frame.origin.x < -_rightFixedWidth) {
+                frame.origin.x = -_rightFixedWidth;
+            }
+        }else{
+            if (frame.origin.x < 0) {
+                frame.origin.x = 0;
+            }else if (frame.origin.x > _leftFixedWidth) {
+                frame.origin.x = _leftFixedWidth;
+            }
+        }
         
         if (self.style == JASidePanelMultipleActive) {
             frame.size.width = self.view.bounds.size.width - frame.origin.x;
@@ -935,6 +973,48 @@ static char ja_kvoContext;
     }
 }
 
+- (void)_showRightPanel:(BOOL)animated bounce:(BOOL)shouldBounce userInfo:(NSDictionary*)userInfo {
+    
+    self.state = JASidePanelRightVisible;
+    [self _loadRightPanel];
+    
+    [self _adjustCenterFrame];
+    
+    if (animated) {
+        [self _animateCenterPanel:shouldBounce completion:^(BOOL finished) {
+            [self updateRightPanelInformation:userInfo];
+        }];
+    } else {
+        self.centerPanelContainer.frame = _centerPanelRestingFrame;
+        [self styleContainer:self.centerPanelContainer animate:NO duration:0.0f];
+        if (self.style == JASidePanelMultipleActive || self.pushesSidePanels) {
+            [self _layoutSideContainers:NO duration:0.0f];
+        }
+    }
+    
+    if (self.style == JASidePanelSingleActive) {
+        self.tapView = [[UIView alloc] init];
+    }
+    [self _toggleScrollsToTopForCenter:NO left:NO right:YES];
+    
+    //add shadow if no shadow is already there
+    BOOL placeShadow = YES;
+    for (UIView* view in [self.centerPanel.view subviews]) {
+        if (1000 == view.tag) {
+            placeShadow = NO;
+            break;
+        }
+    }
+    if (placeShadow) {
+        UIView* shadowView = [[UIView alloc] initWithFrame:self.centerPanel.view.frame];
+        shadowView.tag = 1000;
+        shadowView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
+        [self.centerPanel.view addSubview:shadowView];
+    }
+    
+    [self updateRightPanelInformation:userInfo];
+}
+
 - (void)_showRightPanel:(BOOL)animated bounce:(BOOL)shouldBounce {
     self.state = JASidePanelRightVisible;
     [self _loadRightPanel];
@@ -1097,6 +1177,10 @@ static char ja_kvoContext;
 
 - (void)showRightPanelAnimated:(BOOL)animated {
     [self _showRightPanel:animated bounce:NO];
+}
+
+- (void)showRightPanelAnimated:(BOOL)animated userInfo:(NSDictionary*)userInfo {
+    [self _showRightPanel:animated bounce:NO userInfo:userInfo];
 }
 
 - (void)showCenterPanelAnimated:(BOOL)animated {

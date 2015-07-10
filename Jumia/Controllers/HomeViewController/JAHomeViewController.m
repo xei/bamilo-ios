@@ -69,6 +69,8 @@
     self.isLoaded = NO;
     
     self.teaserPageView = [[JATeaserPageView alloc] init];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reload) name:kHomeShouldReload object:nil];
 }
 
 -(void)campaignTimerEnded
@@ -94,7 +96,7 @@
 //    [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0.0];
 //    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffMenuSwipePanelNotification
                                                         object:nil];
     
     [self hideLoading];
@@ -146,6 +148,12 @@
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
+- (void)reload
+{
+    self.isLoaded = NO;
+    [self requestTeasers];
+}
+
 - (void)requestTeasers
 {
     if (self.isLoaded) {
@@ -180,7 +188,6 @@
         }];
 
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
-        [self removeErrorView];
         if(self.firstLoading)
         {
             NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];

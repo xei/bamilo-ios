@@ -48,6 +48,7 @@
     }
     
     for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
+        
         RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
         
         
@@ -105,8 +106,8 @@
         currentX += clickableView.frame.size.width + marginX;
     }
     
-    [self.scrollView setContentSize:CGSizeMake(currentX,
-                                               self.scrollView.frame.size.height)];
+    [self.scrollView setContentSize:CGSizeMake(currentX, self.scrollView.frame.size.height)];
+    
     
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         if (self.scrollView.contentSize.width < self.frame.size.width) {
@@ -115,6 +116,10 @@
                                                   self.scrollView.contentSize.width,
                                                   self.scrollView.frame.size.height)];
         }
+    }
+    
+    if (RI_IS_RTL) {
+        [self flipAllSubviews];
     }
 }
 

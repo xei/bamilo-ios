@@ -20,14 +20,16 @@
 #define kExternalPaymentValue @"NOTIFICATION_EXTERNAL_PAYMENT_VALUE"
 #define kDeactivateExternalPaymentNotification @"NOTIFICATION_DEACTIVATE_EXTERNAL_PAYMENT_VALUE"
 #define kAppWillEnterForeground @"NOTIFICATION_APP_WILL_ENTER_FOREGROUND"
+#define kHomeShouldReload @"NOTIFICATION_HOME_SHOULD_RELOAD"
+#define kSideMenuShouldReload @"NOTIFICATION_SIDE_MENU_SHOULD_RELOAD"
 //************
 
 //************ root view controller notifications
 #define kOpenMenuNotification @"NOTIFICATION_OPEN_MENU"
 #define kCloseMenuNotification @"NOTIFICATION_OPEN_COLSE"
 #define kOpenCenterPanelNotification @"NOTIFICATION_OPEN_CENTER_PANEL"
-#define kTurnOffLeftSwipePanelNotification @"NOTIFICATION_TURN_OFF_LEFT_SWIPE_PANEL"
-#define kTurnOnLeftSwipePanelNotification @"NOTIFICATION_TURN_ON_LEFT_SWIPE_PANEL"
+#define kTurnOffMenuSwipePanelNotification @"NOTIFICATION_TURN_OFF_MENU_SWIPE_PANEL"
+#define kTurnOnMenuSwipePanelNotification @"NOTIFICATION_TURN_ON_MENU_SWIPE_PANEL"
 //************
 
 //************ center navigation controller notifications
@@ -71,8 +73,7 @@
 
 // Filters
 #define kShowFiltersScreenNotification @"NOTIFICATION_SHOW_FILTERS_SCREEN"
-#define kShowCategoryFiltersScreenNotification @"NOTIFICATION_SHOW_PRICE_FILTERS_SCREEN"
-#define kShowPriceFiltersScreenNotification @"NOTIFICATION_SHOW_CATEGORY_FILTERS_SCREEN"
+#define kShowPriceFiltersScreenNotification @"NOTIFICATION_SHOW_PRICE_FILTERS_SCREEN"
 #define kShowGenericFiltersScreenNotification @"NOTIFICATION_SHOW_GENERIC_FILTERS_SCREEN"
 
 // Product

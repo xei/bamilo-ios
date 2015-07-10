@@ -22,7 +22,11 @@
 
 +(JARadioComponent *)getNewJARadioComponent
 {
-    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JARadioComponent"
+    NSString* xibName = @"JARadioComponent";
+    if (RI_IS_RTL) {
+        xibName = [xibName stringByAppendingString:@"_RTL"];
+    }
+    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:xibName
                                                  owner:nil
                                                options:nil];
     

@@ -43,6 +43,7 @@
                                             0.0f,
                                             self.frame.size.width - groupingTitleLabelMargin*2,
                                             topAreaHeight)];
+    
     [self addSubview:groupingTitleLabel];
     
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
@@ -86,6 +87,10 @@
     
     [self.scrollView setContentSize:CGSizeMake(currentX,
                                                self.scrollView.frame.size.height)];
+    
+    if (RI_IS_RTL) {
+        [self flipAllSubviews];
+    }
 }
 
 

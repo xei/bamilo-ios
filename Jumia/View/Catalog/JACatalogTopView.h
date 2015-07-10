@@ -25,6 +25,8 @@
 
 @property (nonatomic, assign)id<JACatalogTopViewDelegate>delegate;
 
+@property (weak, nonatomic) IBOutlet UIView *sortingBackView;
+@property (weak, nonatomic) IBOutlet UIView *filterBackView;
 @property (weak, nonatomic) IBOutlet JAClickableView *sortingButton;
 @property (weak, nonatomic) IBOutlet JAClickableView *filterButton;
 @property (weak, nonatomic) IBOutlet JAClickableView *viewModeButton;
@@ -32,5 +34,6 @@
 @property (nonatomic, assign) BOOL filterSelected;
 
 - (void)setSorting:(RICatalogSorting)sorting;
+- (void)repositionForWidth:(CGFloat)width;
 
 @end

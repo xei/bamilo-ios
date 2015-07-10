@@ -8,6 +8,14 @@
 
 #import "JAPriceView.h"
 
+@interface JAPriceView () {
+    UILabel *_label;
+    UIView *_strike;
+    BOOL _specialPriceOnTheLeft;
+}
+
+@end
+
 @implementation JAPriceView
 
 - (void)loadWithPrice:(NSString*)price
@@ -15,7 +23,12 @@
              fontSize:(CGFloat)fontSize
 specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
 {
-    UILabel* label = [UILabel new];
+    _specialPriceOnTheLeft = specialPriceOnTheLeft;
+    
+    if (!_label) {
+        _label = [UILabel new];
+        [self addSubview:_label];
+    }
     
     NSMutableAttributedString* finalPriceString;
     NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -28,20 +41,18 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
                                             [UIFont fontWithName:kFontLightName size:fontSize], NSFontAttributeName,
                                             UIColorFromRGB(0xcccccc), NSForegroundColorAttributeName, nil];
         
-        NSRange oldPriceRange = NSMakeRange(specialPrice.length + 1, price.length);
-        finalPriceString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", specialPrice, price]
-                                                                  attributes:attributes];
-
-        BOOL specialPriceOnTheLeftRelatingToRTL = specialPriceOnTheLeft;
-        if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
-            specialPriceOnTheLeftRelatingToRTL = !specialPriceOnTheLeft;
-        }
-        if (specialPriceOnTheLeftRelatingToRTL)
-        {
-            oldPriceRange = NSMakeRange(0, price.length);
+        NSRange oldPriceRange = NSMakeRange(RI_IS_RTL?0:(specialPrice.length + 1), RI_IS_RTL?specialPrice.length:price.length);
+        
+        if (/*(RI_IS_RTL && _specialPriceOnTheLeft) || (!RI_IS_RTL && */!_specialPriceOnTheLeft/*)*/ ) {
             finalPriceString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", price, specialPrice]
                                                                       attributes:attributes];
+            oldPriceRange = NSMakeRange(0, price.length);
+        }else{
+            finalPriceString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", specialPrice, price]
+                                                                      attributes:attributes];
+            oldPriceRange = NSMakeRange(specialPrice.length + 1, price.length);
         }
+        
         
         [finalPriceString setAttributes:oldPriceAttributes
                                   range:oldPriceRange];
@@ -62,13 +73,17 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
         finalPriceString  = [[NSMutableAttributedString alloc] initWithString:@"" attributes:attributes];
     }
     
-    [label setAttributedText:finalPriceString];
-    [label sizeToFit];
+    [_label setAttributedText:finalPriceString];
+    [_label sizeToFit];
     self.frame = CGRectMake(self.frame.origin.x,
                             self.frame.origin.y,
-                            label.frame.size.width,
-                            label.frame.size.height);
-    [self addSubview:label];
+                            _label.frame.size.width,
+                            _label.frame.size.height);
+    
+    [_label setTextAlignment:NSTextAlignmentNatural];
+    if (RI_IS_RTL) {
+        [_label setTextAlignment:NSTextAlignmentRight];
+    }
     
     
     if (VALID_NOTEMPTY(specialPrice, NSString)) {
@@ -76,19 +91,34 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
         oldPriceLabel.text = price;
         oldPriceLabel.font = [UIFont fontWithName:kFontLightName size:fontSize];
         [oldPriceLabel sizeToFit];
-        UIView* strike = [[UIView alloc] init];
-        
+        if (!_strike) {
+            _strike = [[UIView alloc] init];
+            [self addSubview:_strike];
+        }
         CGFloat strikePosition = self.frame.size.width - oldPriceLabel.frame.size.width;
-        if (specialPriceOnTheLeft) {
+        if ((RI_IS_RTL && _specialPriceOnTheLeft) || (!RI_IS_RTL && !_specialPriceOnTheLeft)) {
             strikePosition = 0.0f;
         }
         
-        strike.frame = CGRectMake(strikePosition,
-                                  (self.frame.size.height - 1.0f) /2 ,
+        _strike.frame = CGRectMake(strikePosition,
+                                  _label.y + _label.height/2,
                                   oldPriceLabel.frame.size.width,
                                   1.0f);
-        strike.backgroundColor = UIColorFromRGB(0xcccccc);
-        [self addSubview:strike];
+        
+        _strike.backgroundColor = UIColorFromRGB(0xcccccc);
+    }else{
+        if (_strike) {
+            [_strike removeFromSuperview];
+            _strike = nil;
+        }
+    }
+}
+
+- (void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    if (self.width < _label.width) {
+        _label.width = self.width;
     }
 }
 

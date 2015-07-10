@@ -103,6 +103,14 @@
     {
         [self setupForPortrait:frame product:product preSelectedSize:preSelectedSize];
     }
+    
+    
+    
+    if (RI_IS_RTL) {
+        [self.goToReviewsImageView flipViewImage];
+        [self.goToSpecificationsImageView flipViewImage];
+        [self.goToOtherOffersImageView flipViewImage];
+    }
 }
 
 - (NSString*)ratingAndReviewString:(RIProduct*)product
@@ -198,10 +206,12 @@
                                                    width,
                                                    self.reviewsClickableView.frame.size.height)];
     
+    
     [self.goToReviewsImageView setFrame:CGRectMake(self.reviewsClickableView.frame.size.width - self.reviewsClickableView.frame.origin.x - self.goToReviewsImageView.frame.size.width - 9.0f,
                                                    self.goToReviewsImageView.frame.origin.y,
                                                    self.goToReviewsImageView.frame.size.width,
                                                    self.goToReviewsImageView.frame.size.height)];
+    
     
     [self.ratingsSeparator setFrame:CGRectMake(self.ratingsSeparator.frame.origin.x,
                                                self.ratingsSeparator.frame.origin.y,
@@ -213,20 +223,24 @@
                                                           width,
                                                           self.specificationsClickableView.frame.size.height)];
     
+    
     [self.goToSpecificationsImageView setFrame:CGRectMake(self.sizeClickableView.frame.size.width - self.specificationsClickableView.frame.origin.x - self.goToSpecificationsImageView.frame.size.width - 9.0f,
                                                           self.goToSpecificationsImageView.frame.origin.y,
                                                           self.goToSpecificationsImageView.frame.size.width,
                                                           self.goToSpecificationsImageView.frame.size.height)];
+    
     
     [self.otherOffersClickableView setFrame:CGRectMake(self.otherOffersClickableView.frame.origin.x,
                                                        self.otherOffersClickableView.frame.origin.y,
                                                        width,
                                                        self.otherOffersClickableView.frame.size.height)];
     
+    
     [self.goToOtherOffersImageView setFrame:CGRectMake(self.otherOffersClickableView.frame.size.width - self.otherOffersClickableView.frame.origin.x - self.goToOtherOffersImageView.frame.size.width - 9.0f,
                                                           self.goToOtherOffersImageView.frame.origin.y,
                                                           self.goToOtherOffersImageView.frame.size.width,
-                                                          self.goToOtherOffersImageView.frame.size.height)];
+                                                       self.goToOtherOffersImageView.frame.size.height)];
+    
     
     for(UIView *subView in self.subviews)
     {
@@ -234,7 +248,12 @@
                                      subView.frame.origin.y,
                                      width,
                                      subView.frame.size.height)];
+//        if (RI_IS_RTL) {
+//            [subView flipViewAlignment];
+//            [subView flipViewPositionInsideSuperview];
+//        }
     }
+    
     
     [self setPriceWithNewValue:product.specialPriceFormatted
                    andOldValue:product.priceFormatted];
@@ -347,7 +366,6 @@
                               width,
                               90.0f)];
     
-    
     [self.reviewsClickableView setFrame:CGRectMake(self.reviewsClickableView.frame.origin.x,
                                                    startingY,
                                                    width,
@@ -411,7 +429,7 @@
     [self.priceView loadWithPrice:oldValue
                      specialPrice:newValue
                          fontSize:14.0f
-            specialPriceOnTheLeft:NO];
+            specialPriceOnTheLeft:YES];
     self.priceView.frame = CGRectMake(6.0f,
                                       14.0f,
                                       self.priceView.frame.size.width,
@@ -456,11 +474,26 @@
 
 - (void)setNumberOfStars:(NSInteger)stars
 {
-    self.star1.image = stars < 1 ? [self getEmptyStar] : [self getFilledStar];
-    self.star2.image = stars < 2 ? [self getEmptyStar] : [self getFilledStar];
-    self.star3.image = stars < 3 ? [self getEmptyStar] : [self getFilledStar];
-    self.star4.image = stars < 4 ? [self getEmptyStar] : [self getFilledStar];
-    self.star5.image = stars < 5 ? [self getEmptyStar] : [self getFilledStar];
+    
+    self.star1.image = stars < 1 ?
+    [self getEmptyStar] :
+    [self getFilledStar];
+    
+    self.star2.image = stars < 2 ?
+    [self getEmptyStar] :
+    [self getFilledStar];
+    
+    self.star3.image = stars < 3 ?
+    [self getEmptyStar] :
+    [self getFilledStar];
+    
+    self.star4.image = stars < 4 ?
+    [self getEmptyStar] :
+    [self getFilledStar];
+    
+    self.star5.image = stars < 5 ?
+    [self getEmptyStar] :
+    [self getFilledStar];
 }
 
 - (UIImage *)getEmptyStar

@@ -22,6 +22,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *emptyListView;
 @property (weak, nonatomic) IBOutlet UILabel *emptyListLabel;
+@property (weak, nonatomic) IBOutlet UIImageView* emptyListImageView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong)JAProductListFlowLayout* flowLayout;
 @property (nonatomic, strong)NSString* cellIdentifier;
@@ -75,6 +76,11 @@
     
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
+    
+    self.collectionView.translatesAutoresizingMaskIntoConstraints = YES;
+    self.emptyListView.translatesAutoresizingMaskIntoConstraints = YES;
+    self.emptyListLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    self.emptyListImageView.translatesAutoresizingMaskIntoConstraints = YES;
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"JARecentlyViewedListCell" bundle:nil] forCellWithReuseIdentifier:@"recentlyViewedListCell"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"JARecentlyViewedListCell_ipad_portrait" bundle:nil] forCellWithReuseIdentifier:@"recentlyViewedListCell_ipad_portrait"];
@@ -158,7 +164,7 @@
 {
     [super viewWillAppear:animated];
     
-    [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0.0f];
+    [self didRotateFromInterfaceOrientation:0];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -168,13 +174,34 @@
     [[RITrackingWrapper sharedInstance]trackScreenWithName:@"RecentlyViewed"];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     
     [self.picker removeFromSuperview];
     
-    [self changeViewToInterfaceOrientation:toInterfaceOrientation];
+    self.collectionView.frame = CGRectMake(6.0f,
+                                           self.collectionView.frame.origin.y,
+                                           self.view.frame.size.width - 6.0f*2,
+                                           self.view.frame.size.height);
+    [self.collectionView reloadData];
+    
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+        self.emptyListView.frame = CGRectMake(self.emptyListView.frame.origin.x,
+                                              self.emptyListView.frame.origin.y,
+                                              self.view.frame.size.width - self.emptyListView.frame.origin.x * 2,
+                                              300.0f);
+        self.emptyListImageView.frame = CGRectMake((self.emptyListView.frame.size.width - self.emptyListImageView.frame.size.width)/2,
+                                                   56.0f,
+                                                   self.emptyListImageView.frame.size.width,
+                                                   self.emptyListImageView.frame.size.height);
+        self.emptyListLabel.frame = CGRectMake(12.0f,
+                                               183.0f,
+                                               self.emptyListView.frame.size.width - 12*2,
+                                               self.emptyListLabel.frame.size.height);
+    }
+    
+    [self changeViewToInterfaceOrientation:self.interfaceOrientation];
 }
 
 - (void)changeViewToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -231,7 +258,7 @@
             height = JACatalogViewControllerListCellHeight_ipad;
         }
     } else {
-        width = self.view.frame.size.width;
+        width = self.collectionView.frame.size.width;
         height = JACatalogViewControllerListCellHeight;
     }
     
@@ -251,7 +278,7 @@
             width = 1012.0f;
         }
     } else {
-        width = self.view.frame.size.width;
+        width = self.collectionView.frame.size.width;
     }
     
     return CGSizeMake(width, height);

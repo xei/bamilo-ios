@@ -37,6 +37,17 @@ UITableViewDelegate
     
     // notify the InAppNotification SDK that this the active view controller
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popToRoot) name:kSideMenuShouldReload object:nil];
+}
+
+- (void)popToRoot
+{
+    [self.navigationController popToRootViewControllerAnimated:NO];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -51,6 +62,11 @@ UITableViewDelegate
 }
 
 #pragma mark - Tableview delegates and datasource
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 44.0f;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -76,10 +92,17 @@ UITableViewDelegate
     for (UIView* view in cell.subviews) {
         if ([view isKindOfClass:[JAClickableView class]] || -1 == view.tag) { //remove the clickable view or separator
             [view removeFromSuperview];
+        } else {
+            for (UIView* subview in view.subviews) {
+                if ([subview isKindOfClass:[JAClickableView class]] || -1 == subview.tag) { //remove the clickable view or separator
+                    [subview removeFromSuperview];
+                }
+            }
         }
     }
     //add the new clickable view
-    JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
+    CGFloat cellHeight = 44.0f;
+    JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, cellHeight)];
     clickView.tag = indexPath.row;
     [clickView addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
     [cell addSubview:clickView];
@@ -87,7 +110,7 @@ UITableViewDelegate
     
     //add the new separator
     UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                 43.0f,
+                                                                 cellHeight - 1,
                                                                  self.view.frame.size.width,
                                                                  1)];
     separator.tag = -1;
@@ -95,6 +118,24 @@ UITableViewDelegate
     [cell addSubview:separator];
     
     NSInteger realIndex = indexPath.row;
+
+    CGFloat margin = 13.0f;
+    
+    UILabel* customTextLabel = [UILabel new];
+    [clickView addSubview:customTextLabel];
+    
+    UIImage* backImage = [UIImage imageNamed:@"btn_back"];
+    UIImage* accessoryImage = [UIImage imageNamed:@"arrow_gotoarea"];
+    if (RI_IS_RTL) {
+        customTextLabel.textAlignment = NSTextAlignmentRight;
+        backImage = [backImage flipImageWithOrientation:UIImageOrientationUpMirrored];
+        accessoryImage = [accessoryImage flipImageWithOrientation:UIImageOrientationUpMirrored];
+    }
+    UIImageView* customImageView = [UIImageView new];
+    [customImageView setImage:backImage];
+    UIImageView* customAcessoryView = [UIImageView new];
+    [customAcessoryView setImage:accessoryImage];
+
     
     NSString* backCellTitle = STRING_BACK;
     if (VALID_NOTEMPTY(self.backTitle, NSString)) {
@@ -103,37 +144,60 @@ UITableViewDelegate
     //ALWAYS has back cell
     if (0 == realIndex) {
         //this is the back cell
-        cell.textLabel.text = backCellTitle;
-        cell.textLabel.font = [UIFont fontWithName:kFontRegularName size:17.0f];
-        cell.textLabel.textColor = UIColorFromRGB(0xc8c8c8);
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        [cell.imageView setImage:[UIImage imageNamed:@"btn_back"]];
+        customTextLabel.text = backCellTitle;
+        customTextLabel.font = [UIFont fontWithName:kFontRegularName size:17.0f];
+        customTextLabel.textColor = UIColorFromRGB(0xc8c8c8);
+        [clickView addSubview:customImageView];
+        
+        CGFloat customImageX = margin;
+        CGFloat customTextX = customImageX + accessoryImage.size.width + margin;
+        CGFloat customTextWidth = self.view.frame.size.width - customTextX;
+        if (RI_IS_RTL) {
+            customTextX = 0.0f;
+            customImageX = customTextWidth + margin;
+        }
+        
+        [customImageView setFrame:CGRectMake(customImageX,
+                                             (cellHeight - accessoryImage.size.height) / 2,
+                                             accessoryImage.size.width,
+                                             accessoryImage.size.height)];
+        [customTextLabel setFrame:CGRectMake(customTextX,
+                                             0.0f,
+                                             customTextWidth,
+                                             cellHeight)];
         return cell;
     }
     realIndex--;
-    
-    [cell.imageView setImage:nil];
     
     if (VALID_NOTEMPTY(self.currentCategory, RICategory)) {
         //has current category
         if (0 == realIndex) {
             //this is the current category cell
-            cell.textLabel.text = self.currentCategory.name;
-            cell.textLabel.font = [UIFont fontWithName:kFontBoldName size:14.0f];
-            cell.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
-            cell.accessoryType = UITableViewCellAccessoryNone;
+            customTextLabel.text = self.currentCategory.name;
+            customTextLabel.font = [UIFont fontWithName:kFontBoldName size:14.0f];
+            customTextLabel.textColor = UIColorFromRGB(0x4e4e4e);
+            
+            [customTextLabel setFrame:CGRectMake(margin,
+                                                 0.0f,
+                                                 self.view.frame.size.width - margin*2,
+                                                 cellHeight)];
+            
             return cell;
         }
     } else {
         //does not have current category
         if (0 == realIndex) {
             //this is the current category cell
-            cell.textLabel.text = [STRING_CATEGORIES uppercaseString];
-            cell.textLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
-            cell.textLabel.textColor = UIColorFromRGB(0xc8c8c8);
-            cell.accessoryType = UITableViewCellAccessoryNone;
+            customTextLabel.text = [STRING_CATEGORIES uppercaseString];
+            customTextLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
+            customTextLabel.textColor = UIColorFromRGB(0xc8c8c8);
+            
+            [customTextLabel setFrame:CGRectMake(margin,
+                                                 0.0f,
+                                                 self.view.frame.size.width - margin*2,
+                                                 cellHeight)];
+            
             clickView.enabled = NO;
-            [clickView removeFromSuperview];
             return cell;
         }
     }
@@ -142,14 +206,30 @@ UITableViewDelegate
     
     RICategory* category = [self.categories objectAtIndex:realIndex];
     
-    cell.textLabel.text = category.name;
-    cell.textLabel.font = [UIFont fontWithName:kFontLightName size:17.0f];
-    cell.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    customTextLabel.text = category.name;
+    customTextLabel.font = [UIFont fontWithName:kFontLightName size:17.0f];
+    customTextLabel.textColor = UIColorFromRGB(0x4e4e4e);
+
     if (VALID_NOTEMPTY(category.children, NSOrderedSet)) {
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    } else {
-        cell.accessoryType = UITableViewCellAccessoryNone;
+        [cell addSubview:customAcessoryView];
     }
+    
+    CGFloat customTextX = margin;
+    CGFloat customImageX = self.view.frame.size.width - margin - accessoryImage.size.width;
+    CGFloat customTextWidth = customImageX - margin*2;
+    if (RI_IS_RTL) {
+        customImageX = margin;
+        customTextX = customImageX + accessoryImage.size.width + margin;
+    }
+    
+    [customAcessoryView setFrame:CGRectMake(customImageX,
+                                            (cellHeight - accessoryImage.size.height) / 2,
+                                            accessoryImage.size.width,
+                                            accessoryImage.size.height)];
+    [customTextLabel setFrame:CGRectMake(customTextX,
+                                         0.0f,
+                                         customTextWidth,
+                                         cellHeight)];
     
     return cell;
 }

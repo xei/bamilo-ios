@@ -181,6 +181,9 @@
         UIImage* arrowImage = [UIImage imageNamed:@"campaignTeaserMoreArrow"];
         UIImageView* arrowImageView = [[UIImageView alloc] initWithImage:arrowImage];
         [moreView addSubview:arrowImageView];
+        if (RI_IS_RTL) {
+            [arrowImageView flipViewImage];
+        }
         
         CGFloat moreLabelMaxWidth = moreView.frame.size.width - arrowImage.size.width - marginBetweenLabelAndImage;
         
@@ -204,6 +207,10 @@
                                             arrowImage.size.width,
                                             arrowImage.size.height)];
         
+    }
+    
+    if (RI_IS_RTL) {
+        [self flipAllSubviews];
     }
 }
 
@@ -348,6 +355,9 @@
         UIImage* arrowImage = [UIImage imageNamed:@"campaignTeaserMoreArrow"];
         UIImageView* arrowImageView = [[UIImageView alloc] initWithImage:arrowImage];
         [moreView addSubview:arrowImageView];
+        if (RI_IS_RTL) {
+            [arrowImageView flipViewImage];
+        }
         
         CGFloat moreLabelMaxWidth = moreView.frame.size.width - arrowImage.size.width - marginBetweenLabelAndImage;
         
@@ -371,6 +381,10 @@
                                             arrowImage.size.width,
                                             arrowImage.size.height)];
         
+    }
+    
+    if (RI_IS_RTL) {
+        [self flipAllSubviews];
     }
 
 }

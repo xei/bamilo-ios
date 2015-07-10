@@ -29,10 +29,9 @@
         CGFloat currentX = 0.0f;
         
         self.wizardPage1 = [[UIView alloc] initWithFrame:CGRectMake(currentX,
-                                                                    self.scrollView.bounds.origin.y,
-                                                                    self.scrollView.bounds.size.width,
-                                                                    self.scrollView.bounds.size.height)];
-        [self.scrollView addSubview:self.wizardPage1];
+                                                                    self.y,
+                                                                    self.width,
+                                                                    self.height)];
         
         UIImage* image2 = [UIImage imageNamed:@"wizard_fav"];
         self.wizardPage1ImageView = [[UIImageView alloc] initWithImage:image2];
@@ -40,6 +39,12 @@
                                                        kJAWizardViewImageGenericSmallTopMargin,
                                                        image2.size.width,
                                                        image2.size.height)];
+        
+        if(RI_IS_RTL){
+            
+            [self.wizardPage1ImageView setImage:[image2 flipImageWithOrientation:UIImageOrientationUpMirrored]];
+        
+        }
         [self.wizardPage1 addSubview:self.wizardPage1ImageView];
         
         self.wizardPage1Label = [[UILabel alloc] init];
@@ -63,21 +68,15 @@
                                                    wizardLabe2ect.size.height)];
         [self.wizardPage1 addSubview:self.wizardPage1Label];
         
-        currentX += self.wizardPage1.frame.size.width;
-        
-        [self.scrollView setContentSize:CGSizeMake(currentX,
-                                                   self.scrollView.frame.size.height)];
-        
 /*  Wizard Page 2 - Scroll Back to Top */
         
         CGFloat topMargin = 60.0f;
         CGFloat marginBetweenImageAndLabel = 40.0f;
         
         self.wizardPage2 = [[UIView alloc] initWithFrame:CGRectMake(currentX,
-                                                                   self.scrollView.bounds.origin.y,
-                                                                   self.scrollView.bounds.size.width,
-                                                                    self.scrollView.bounds.size.height)];
-        [self.scrollView addSubview:self.wizardPage2];
+                                                                   self.y,
+                                                                   self.width,
+                                                                    self.height)];
         
         
         UIImage* imageForWizardPage2 = [UIImage imageNamed:@"backtop_wizard"];
@@ -106,12 +105,7 @@
                                                    wizardLabe2Rect.size.height)];
         [self.wizardPage2 addSubview:self.wizardPage2Label];
         
-        currentX += self.wizardPage2.frame.size.width;
-        
-        [self.scrollView setContentSize:CGSizeMake(currentX,
-                                                   self.scrollView.frame.size.height)];
-        
-        self.pageControl.numberOfPages = 2;
+        [self.pagedView setViews:[NSArray arrayWithObjects:_wizardPage1, _wizardPage2, nil]];
         
         [self reloadForFrame:frame];
     }
@@ -132,11 +126,11 @@
     }
     
     [self.wizardPage1 setFrame:CGRectMake(currentX,
-                                          self.scrollView.bounds.origin.y,
-                                          self.scrollView.bounds.size.width,
-                                          self.scrollView.bounds.size.height)];
+                                          self.y,
+                                          self.width,
+                                          self.height)];
     
-    [self.wizardPage1ImageView setFrame:CGRectMake(self.wizardPage1.bounds.size.width - self.wizardPage1ImageView.frame.size.width - 15.0f,
+    [self.wizardPage1ImageView setFrame:CGRectMake(self.wizardPage1.bounds.size.width - self.wizardPage1ImageView.frame.size.width - 25.0f,
                                                    kJAWizardViewImageGenericSmallTopMargin,
                                                    self.wizardPage1ImageView.frame.size.width,
                                                    self.wizardPage1ImageView.frame.size.height)];
@@ -154,17 +148,15 @@
                                                self.wizardPage1.bounds.size.width - kJAWizardCatalog2TextHorizontalMargin*2,
                                                wizardLabe2ect.size.height)];
     
-    currentX += self.wizardPage1.frame.size.width;
-    
     CGFloat leftMargin2 = (self.bounds.size.width - self.wizardPage2ImageView.frame.size.width) / 2;
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && isLandscape) {
         leftMargin2 = 397.0f;
     }
     
     [self.wizardPage2 setFrame:CGRectMake(currentX,
-                                          self.scrollView.bounds.origin.y,
-                                          self.scrollView.bounds.size.width,
-                                          self.scrollView.bounds.size.height)];
+                                          self.y,
+                                          self.width,
+                                          self.height)];
     
     [self.wizardPage2ImageView setFrame:CGRectMake(leftMargin2,
                                                    topMargin,
@@ -181,15 +173,11 @@
                                                CGRectGetMaxY(self.wizardPage2ImageView.frame) + kJAWizardPDV2ViewTextVerticalMargin,
                                                self.wizardPage2.bounds.size.width - kJAWizardPDV2TextHorizontalMargin*2,
                                                wizardLabe2Rect.size.height)];
-    currentX += self.wizardPage2.frame.size.width;
-
     
-    [self.scrollView setContentSize:CGSizeMake(currentX,
-                                               self.scrollView.frame.size.height)];
-    
-    self.pageControl.numberOfPages = 2;
-    
-    [self.scrollView scrollRectToVisible:CGRectMake(0.0f, 0.0f, self.scrollView.frame.size.width, self.scrollView.frame.size.height) animated:NO];
+    if (RI_IS_RTL) {
+        [_wizardPage1 flipAllSubviews];
+        [_wizardPage2 flipAllSubviews];
+    }
 }
 
 @end
