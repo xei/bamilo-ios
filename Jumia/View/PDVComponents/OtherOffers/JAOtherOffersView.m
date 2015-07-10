@@ -56,39 +56,42 @@
     
     [self.otherOffersLabel setTextColor:UIColorFromRGB(0x666666)];
 
-    self.titleLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    [self.titleLabel setX:6.f];
     self.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.titleLabel.font.pointSize];
     [self.titleLabel setFrame:CGRectMake(self.titleLabel.frame.origin.x,
                                          self.titleLabel.frame.origin.y,
                                          width,
                                          self.titleLabel.frame.size.height)];
     self.titleLabel.text = STRING_SAME_PRODUCT_FROM_OTHER_SELLERS;
+    [self.titleLabel sizeToFit];
 
-    self.titleSeparator.translatesAutoresizingMaskIntoConstraints = YES;
     [self.titleSeparator setFrame:CGRectMake(self.titleSeparator.frame.origin.x,
                                              self.titleSeparator.frame.origin.y,
                                              width,
                                              self.titleSeparator.frame.size.height)];
     
-    self.otherOffersClickableView.translatesAutoresizingMaskIntoConstraints = YES;
     [self.otherOffersClickableView setFrame:CGRectMake(self.otherOffersClickableView.frame.origin.x,
                                                        self.otherOffersClickableView.frame.origin.y,
                                                        width,
                                                        self.otherOffersClickableView.frame.size.height)];
     
-    self.goToOtherOffersImageView.translatesAutoresizingMaskIntoConstraints = YES;
     [self.goToOtherOffersImageView setFrame:CGRectMake(width - self.goToOtherOffersImageView.frame.size.width - 9.0f,
                                                        self.goToOtherOffersImageView.frame.origin.y,
                                                        self.goToOtherOffersImageView.frame.size.width,
                                                        self.goToOtherOffersImageView.frame.size.height)];
     
+    [self.goToOtherOffersImageView setX:RI_IS_RTL?9.f:self.width - self.goToOtherOffersImageView.frame.size.width - 9.0f];
     /*
      Check if there are other offers
      */
     self.otherOffersLabel.font = [UIFont fontWithName:kFontRegularName size:self.otherOffersLabel.font.pointSize];
     if (VALID_NOTEMPTY(product.offersTotal, NSNumber) && 0 < [product.offersTotal integerValue]) {
         
+        [self.otherOffersLabel setX:6.f];
         self.otherOffersLabel.text = [NSString stringWithFormat:@"%@ (%ld)", STRING_OTHER_SELLERS, [product.offersTotal longValue]];
+        if (RI_IS_RTL) {
+            self.otherOffersLabel.text = [NSString stringWithFormat:@"(%ld) %@", [product.offersTotal longValue], STRING_OTHER_SELLERS];
+        }
         
         [self.otherOffersClickableView addTarget:self action:@selector(pressedOtherOffers) forControlEvents:UIControlEventTouchUpInside];
         
@@ -114,6 +117,11 @@
                                                      self.offerMinPriceLabel.frame.size.height)];
         [self.otherOffersClickableView addSubview:self.offerMinPriceLabel];
         
+    }
+    
+    if (RI_IS_RTL) {
+        [self.goToOtherOffersImageView flipViewImage];
+        [self.goToOtherOffersImageView flipViewPositionInsideSuperview];
     }
 }
 

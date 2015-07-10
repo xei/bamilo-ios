@@ -34,6 +34,7 @@
                                                 self.bounds.origin.y,
                                                 self.frame.size.width - groupingTitleLabelMargin*2,
                                                 groupingTitleLabelHeight)];
+        
         [self addSubview:groupingTitleLabel];
         
         CGFloat margin = 6.0f; //value by design
@@ -50,7 +51,9 @@
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             componentWidth = 142.0f; //value by design
         }
+        
         for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
+            
             RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
             
             NSString *priceToPresent = component.specialPriceFormatted;
@@ -121,15 +124,20 @@
             }
         }
         
-        
-        [self.scrollView setContentSize:CGSizeMake(currentX,
-                                                   self.scrollView.frame.size.height)];
+        if (currentX < self.scrollView.width) {
+            currentX = self.scrollView.width;
+        }
+        [self.scrollView setContentSize:CGSizeMake(currentX, self.scrollView.frame.size.height)];
         
         CGFloat totalHeight = groupingTitleLabel.frame.size.height + self.scrollView.frame.size.height;
         [self setFrame:CGRectMake(self.frame.origin.x,
                                   self.frame.origin.y,
                                   self.frame.size.width,
                                   totalHeight)];
+        
+        if (RI_IS_RTL) {
+            [self flipAllSubviews];
+        }
     }
 }
 

@@ -97,15 +97,10 @@ UIAlertViewDelegate
     self.brandLabel.font = [UIFont fontWithName:kFontMediumName size:self.brandLabel.font.pointSize];
     self.nameLabel.font = [UIFont fontWithName:kFontRegularName size:self.nameLabel.font.pointSize];
     
-    self.topView.translatesAutoresizingMaskIntoConstraints = YES;
-    
     self.brandLabel.text = self.product.brand;
-    self.brandLabel.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.nameLabel.text = self.product.name;
-    self.nameLabel.translatesAutoresizingMaskIntoConstraints = YES;
     
-    self.scrollView.translatesAutoresizingMaskIntoConstraints = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -246,7 +241,7 @@ UIAlertViewDelegate
     [self.priceView loadWithPrice:self.product.priceFormatted
                      specialPrice:self.product.specialPriceFormatted
                          fontSize:14.0f
-            specialPriceOnTheLeft:NO];
+            specialPriceOnTheLeft:YES];
     
     self.priceView.frame = CGRectMake(12.0f,
                                       CGRectGetMaxY(self.nameLabel.frame) + 4.0f,
@@ -292,6 +287,7 @@ UIAlertViewDelegate
     {
         [self.topView setHidden:NO];
         [self.scrollView setHidden:NO];
+        [self setupViews];
     }
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
@@ -344,7 +340,6 @@ UIAlertViewDelegate
     self.fixedLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
     self.fixedLabel.text = STRING_RATE_PRODUCT;
     self.fixedLabel.textColor = UIColorFromRGB(0x666666);
-    
     [self.centerView addSubview:self.fixedLabel];
 
     CGFloat currentY = CGRectGetMaxY(self.fixedLabel.frame) + 12.0f;
@@ -366,23 +361,28 @@ UIAlertViewDelegate
             if(isiPad)
             {
                 frame.origin.x = dynamicFormHorizontalMargin;
-                frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
+                if (![view isKindOfClass:[JAAddRatingView class]]) {
+                    frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
+                }
             }
             else
             {
                 frame.size.width = centerViewWidth;
             }
+
             view.frame = frame;
             
             [self.ratingsContentView addSubview:view];
             initialContentY += view.frame.size.height + spaceBetweenFormFields;
             count++;
         }
+        
         [self.ratingsContentView setFrame:CGRectMake(0.0,
                                                      currentY,
                                                      centerViewWidth,
                                                      initialContentY)];
         [self.centerView addSubview:self.ratingsContentView];
+        
     }
     
     if (self.reviewsForm) {
@@ -490,7 +490,7 @@ UIAlertViewDelegate
     UIImage* buttonImageDisabled = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, @"disabled"]];
     self.sendReviewButton = [[UIButton alloc] initWithFrame:CGRectMake(6.0f,
                                                                        currentY,
-                                                                       buttonImageNormal.size.width,
+                                                                       centerViewWidth - 12.f,
                                                                        buttonImageNormal.size.height)];
     [self.sendReviewButton setTitle:STRING_SEND_REVIEW
                            forState:UIControlStateNormal];
@@ -514,6 +514,10 @@ UIAlertViewDelegate
                                              self.centerView.frame.size.height + self.centerView.frame.origin.y);
     
     [self.scrollView setHidden:NO];
+    
+    if (RI_IS_RTL) {
+        [self.view flipAllSubviews];
+    }
 }
 
 - (void)dealloc

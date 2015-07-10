@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JADynamicField.h"
 
-@interface JARadioRelatedComponent : UIView
+@interface JARadioRelatedComponent : JADynamicField
 
 @property (weak, nonatomic) IBOutlet UILabel *labelText;
 @property (weak, nonatomic) IBOutlet UISwitch *switchComponent;

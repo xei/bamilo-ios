@@ -76,6 +76,11 @@
         if ([teaserGrouping.type isEqualToString:@"main_teasers"]) {
             //found it
             
+            if (!self.mainTeaserView)
+            {
+                self.mainTeaserLastIndex = RI_IS_RTL?teaserGrouping.teaserComponents.count-1:0;
+            }
+            
             self.mainTeaserView = [[JAMainTeaserView alloc] initWithFrame:CGRectMake(scrollView.bounds.origin.x,
                                                                                                   yPosition,
                                                                                                   scrollView.bounds.size.width,

@@ -21,7 +21,9 @@
 #import "RIAddress.h"
 #import <FacebookSDK/FacebookSDK.h>
 
-@interface JACartViewController ()
+@interface JACartViewController () {
+    BOOL _emptyImageFlipOnce;
+}
 
 @property (nonatomic, strong) NSString *voucherCode;
 @property (nonatomic, assign) CGRect keyboardFrame;
@@ -100,6 +102,15 @@
 {
     [super viewWillAppear:animated];
     
+    [self.emptyCartView setWidth:self.view.width-12.f];
+    [self.continueShoppingButton setWidth:self.view.width-12.f];
+    [self.emptyCartLabel setX:self.view.width/2-self.emptyCartLabel.width/2];
+    [self.emptyCartImageView setX:self.view.width/2-self.emptyCartImageView.width/2];
+    
+    if (!_emptyImageFlipOnce)
+        [self.emptyCartImageView flipViewImage];
+    _emptyImageFlipOnce = YES;
+    
      [[NSNotificationCenter defaultCenter] addObserver:self
                                               selector:@selector(removeKeyboard)
                                             name:kOpenMenuNotification
@@ -111,7 +122,6 @@
 - (void)setEmptyCartViewHidden:(BOOL)hidden
 {
     [self.emptyCartView setHidden:hidden];
-    [self.emptyCartLabel setHidden:hidden];
     [self.continueShoppingButton setHidden:hidden];
 }
 
@@ -258,7 +268,6 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-        [self removeErrorView];
         self.apiResponse = apiResponse;
         self.requestDone = YES;
         
@@ -324,6 +333,8 @@
     self.emptyCartLabel.font = [UIFont fontWithName:kFontRegularName size:self.emptyCartLabel.font.pointSize];
     [self.emptyCartLabel setText:STRING_NO_ITEMS_IN_CART];
     [self.emptyCartLabel setTextColor:JALabelGrey];
+    [self.emptyCartLabel setNumberOfLines:1];
+    [self.emptyCartLabel sizeToFit];
 
     self.continueShoppingButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.continueShoppingButton.titleLabel.font.pointSize];
     [self.continueShoppingButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
@@ -332,6 +343,12 @@
     self.continueShoppingButton.layer.cornerRadius = 5.0f;
     
     [self.continueShoppingButton addTarget:self action:@selector(goToHomeScreen) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.emptyCartView setWidth:self.view.width-12.f];
+    [self.continueShoppingButton setWidth:self.view.width-12.f];
+    [self.emptyCartLabel setX:self.view.width/2-self.emptyCartLabel.width/2];
+    [self.emptyCartImageView setX:self.view.width/2-self.emptyCartImageView.width/2];
+    
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CartEmpty"];
 }
 
@@ -411,6 +428,7 @@
                                                                originY,
                                                                self.cartScrollView.frame.size.width,
                                                                86.0f)];
+    
     [self.couponView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.couponView.layer.cornerRadius = 5.0f;
     
@@ -452,6 +470,7 @@
     [self.couponTextField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
     [self.couponTextField setPlaceholder:STRING_ENTER_COUPON];
     [self.couponTextField setDelegate:self];
+    [self.couponTextField setTextAlignment:NSTextAlignmentLeft];
     [self.couponView addSubview:self.couponTextField];
     
     
@@ -534,14 +553,14 @@
         [self.totalPriceView loadWithPrice:[[self cart] cartUnreducedValueFormatted]
                               specialPrice:[[self cart] subTotalFormatted]
                                   fontSize:11.0f
-                     specialPriceOnTheLeft:YES];
+                     specialPriceOnTheLeft:NO];
     }
     else
     {
         [self.totalPriceView loadWithPrice:[[self cart] subTotalFormatted]
                               specialPrice:nil
                                   fontSize:11.0f
-                     specialPriceOnTheLeft:YES];
+                     specialPriceOnTheLeft:NO];
     }
     
     self.totalPriceView.frame = CGRectMake(self.subtotalView.frame.size.width - self.totalPriceView.frame.size.width - 4.0f,
@@ -773,6 +792,8 @@
     [self.checkoutButton setTitle:STRING_PROCEED_TO_CHECKOUT forState:UIControlStateNormal];
     [self.checkoutButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.checkoutButton addTarget:self action:@selector(checkoutButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+//    [self.checkoutButton setX:self.view.width/2 - self.checkoutButton.width/2];
+//    [self.checkoutButton setY:CGRectGetMaxY(self.subtotalView.frame) + 6.0f];
     [self.checkoutButton setFrame:CGRectMake(0.0f,
                                              CGRectGetMaxY(self.subtotalView.frame) + 6.0f,
                                              checkoutButtonImageNormal.size.width,
@@ -813,6 +834,16 @@
     if([self.cart.extraCosts integerValue] == 0){
         [self.extraCostsLabel setHidden:YES];
         [self.extraCostsValue setHidden:YES];
+    }
+    
+    if (RI_IS_RTL) {
+        [self.productsScrollView flipViewPositionInsideSuperview];
+        [self.cartScrollView flipViewPositionInsideSuperview];
+        
+        [self.couponView flipSubviewAlignments];
+        [self.couponView flipSubviewPositions];
+        [self.subtotalView flipSubviewAlignments];
+        [self.subtotalView flipSubviewPositions];
     }
 }
 
@@ -1085,6 +1116,8 @@
         
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
         
+        [cell setWidth:self.productCollectionView.width];
+        
         [cell loadWithCartItem:product];
         
         cell.quantityButton.tag = indexPath.row;
@@ -1135,6 +1168,7 @@
         [headerView loadHeaderWithText:STRING_ITEMS width:self.productCollectionView.frame.size.width];
         
         reusableview = headerView;
+        
     }
     
     return reusableview;
@@ -1335,17 +1369,14 @@
     }
     
     [UIView animateWithDuration:0.3 animations:^{
-        [self.cartScrollView setFrame:CGRectMake(self.cartScrollViewInitialFrame.origin.x,
-                                                 self.cartScrollViewInitialFrame.origin.y,
-                                                 self.cartScrollViewInitialFrame.size.width,
-                                                 self.cartScrollViewInitialFrame.size.height - height)];
+        [self.cartScrollView setHeight:self.cartScrollViewInitialFrame.size.height - height];
     }];
 }
 
 - (void)keyboardWillHide:(NSNotification*)notification
 {
     [UIView animateWithDuration:0.3 animations:^{
-        [self.cartScrollView setFrame:self.cartScrollViewInitialFrame];
+        [self.cartScrollView setHeight:self.cartScrollViewInitialFrame.size.height];
     }];
 }
 

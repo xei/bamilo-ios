@@ -85,6 +85,10 @@
     [self.doneButton addTarget:self action:@selector(doneButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.buttonBackgroundView addSubview:self.doneButton];
     [self addSubview:self.buttonBackgroundView];
+    
+    if (RI_IS_RTL) {
+        [self.doneButton flipViewPositionInsideSuperview];
+    }
 }
 
 -(void)setDate:(NSDate*)date

@@ -28,6 +28,7 @@
 @dynamic sections;
 
 + (NSString *)startApiWithCountry:(RICountry *)country
+                        reloadAPI:(BOOL)reloadAPI
                      successBlock:(void (^)(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory))successBlock
                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
 {
@@ -128,7 +129,7 @@
                                                                           
                                                                           if (sectionNeedsDownload) {
                                                                               
-                                                                              [RIApi requestSectionContent:newSection forCountry:url successBlock:^() {
+                                                                              [RIApi requestSectionContent:newSection forCountry:url deleteOldContent:reloadAPI successBlock:^() {
                                                                                   
                                                                               } andFailureBlock:^(RIApiResponse apiResponse,  id error) {
                                                                                   
@@ -302,6 +303,7 @@
 
 + (void)requestSectionContent:(RISection*)section
                    forCountry:(NSString*)url
+             deleteOldContent:(BOOL)deleteOldContent
                  successBlock:(void (^)(void))successBlock
               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray* errorMessages))failureBlock
 {
@@ -310,6 +312,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
         [RICategory loadCategoriesIntoDatabaseForCountry:url withSuccessBlock:^(id categories) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSideMenuShouldReload object:nil];
             successBlock();
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray* errorMessages) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
@@ -317,7 +320,7 @@
         }];
     } else if ([section.name isEqualToString:@"forms"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
-        [RIFormIndex loadFormIndexesIntoDatabaseForCountry:url withSuccessBlock:^(id formIndexes) {
+        [RIFormIndex loadFormIndexesIntoDatabaseForCountry:url deleteOldIndexes:deleteOldContent withSuccessBlock:^(id formIndexes) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             successBlock();
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
@@ -331,6 +334,7 @@
         [RITeaserGrouping loadTeasersIntoDatabaseForCountryUrl:url
                                               withSuccessBlock:^(NSArray *teaserGroupings) {
                                                   [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
+                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kHomeShouldReload object:nil];
                                                   successBlock();
                                               } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
                                                   [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="nbo-eQ-moL" customClass="JATextFieldComponent">
+            <rect key="frame" x="0.0" y="0.0" width="308" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" textAlignment="right" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="JRn-g3-R40" customClass="JATextField">
+                    <rect key="frame" x="11" y="0.0" width="280" height="43"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jdc-dr-gcD">
+                    <rect key="frame" x="6" y="43" width="296" height="1"/>
+                    <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="VMi-LM-yxb"/>
+                    </constraints>
+                </view>
+                <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Gl-RP-kDd">
+                    <rect key="frame" x="8" y="28" width="10" height="10"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="10" id="Xg9-bO-T5t"/>
+                        <constraint firstAttribute="width" constant="10" id="nnB-ke-QKc"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Jdc-dr-gcD" firstAttribute="leading" secondItem="nbo-eQ-moL" secondAttribute="leading" constant="6" id="5Cf-49-oJp"/>
+                <constraint firstItem="JRn-g3-R40" firstAttribute="top" secondItem="nbo-eQ-moL" secondAttribute="top" id="Jfs-7H-eWc"/>
+                <constraint firstItem="5Gl-RP-kDd" firstAttribute="leading" secondItem="nbo-eQ-moL" secondAttribute="leading" constant="8" id="PVy-dm-JLY"/>
+                <constraint firstItem="JRn-g3-R40" firstAttribute="leading" secondItem="nbo-eQ-moL" secondAttribute="leading" constant="11" id="Qht-kJ-A12"/>
+                <constraint firstItem="Jdc-dr-gcD" firstAttribute="top" secondItem="5Gl-RP-kDd" secondAttribute="bottom" constant="5" id="Vur-4s-7NY"/>
+                <constraint firstAttribute="trailing" secondItem="JRn-g3-R40" secondAttribute="trailing" constant="17" id="WEO-J9-vkt"/>
+                <constraint firstAttribute="bottom" secondItem="Jdc-dr-gcD" secondAttribute="bottom" id="YA9-Lz-kgA"/>
+                <constraint firstItem="Jdc-dr-gcD" firstAttribute="top" secondItem="JRn-g3-R40" secondAttribute="bottom" id="pcJ-87-Ut7"/>
+                <constraint firstAttribute="trailing" secondItem="Jdc-dr-gcD" secondAttribute="trailing" constant="6" id="wqe-AU-uXn"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="requiredSymbol" destination="5Gl-RP-kDd" id="hcn-Yf-dl3"/>
+                <outlet property="textField" destination="JRn-g3-R40" id="OaM-1s-kH1"/>
+            </connections>
+            <point key="canvasLocation" x="309" y="254"/>
+        </view>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

@@ -29,6 +29,7 @@
 
 - (void)loadWithCampaignProduct:(RICampaignProduct*)campaignProduct
            elapsedTimeInSeconds:(NSInteger)elapsedTimeInSeconds
-                     chosenSize:(NSString*)chosenSize;
+                     chosenSize:(NSString*)chosenSize
+               capaignHasBanner:(BOOL)hasBanner;
 
 @end

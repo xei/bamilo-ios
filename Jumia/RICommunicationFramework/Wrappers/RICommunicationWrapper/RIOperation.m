@@ -75,7 +75,7 @@
         self.connection = [[NSURLConnection alloc] initWithRequest:self.request
                                                           delegate:self];
     }
-    else if(error.code == NSURLErrorNotConnectedToInternet)
+    else if(error.code == NSURLErrorNotConnectedToInternet || error.code == NSURLErrorCannotFindHost)
     {
         NSLog(@"Connection failed with error: %@", error);
         self.failureBlock(RIApiResponseNoInternetConnection, nil, error);

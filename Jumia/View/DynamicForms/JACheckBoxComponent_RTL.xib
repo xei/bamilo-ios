@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="xSd-NR-Bjy" customClass="JACheckBoxComponent">
+            <rect key="frame" x="0.0" y="0.0" width="308" height="51"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="or4-7n-9RV">
+                    <rect key="frame" x="239" y="10" width="51" height="31"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="31" id="FUW-r3-Tvi"/>
+                        <constraint firstAttribute="width" constant="49" id="OBd-Pz-F6o"/>
+                    </constraints>
+                </switch>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="06D-re-hHb">
+                    <rect key="frame" x="15" y="15" width="210" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="210" id="uwD-ab-tBW"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="06D-re-hHb" firstAttribute="top" secondItem="xSd-NR-Bjy" secondAttribute="top" constant="15" id="IT2-Nt-nId"/>
+                <constraint firstItem="06D-re-hHb" firstAttribute="leading" secondItem="xSd-NR-Bjy" secondAttribute="leading" constant="15" id="LjU-Q4-VcT"/>
+                <constraint firstItem="or4-7n-9RV" firstAttribute="leading" secondItem="06D-re-hHb" secondAttribute="trailing" constant="14" id="jiI-qu-lrL"/>
+                <constraint firstAttribute="bottom" secondItem="or4-7n-9RV" secondAttribute="bottom" constant="10" id="m7r-ZI-6Wu"/>
+                <constraint firstAttribute="bottom" secondItem="06D-re-hHb" secondAttribute="bottom" constant="15" id="rVx-Yf-YfG"/>
+                <constraint firstAttribute="trailing" secondItem="or4-7n-9RV" secondAttribute="trailing" constant="20" id="vef-zf-OmD"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="labelText" destination="06D-re-hHb" id="zdL-q7-QeH"/>
+                <outlet property="switchComponent" destination="or4-7n-9RV" id="VlK-sq-GWU"/>
+            </connections>
+            <point key="canvasLocation" x="458" y="275"/>
+        </view>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

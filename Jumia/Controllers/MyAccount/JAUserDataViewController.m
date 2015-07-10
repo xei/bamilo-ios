@@ -24,7 +24,6 @@ JADynamicFormDelegate
 @property (weak, nonatomic) IBOutlet UIView *changePasswordView;
 @property (weak, nonatomic) IBOutlet UILabel *changePasswordTitle;
 @property (weak, nonatomic) IBOutlet UIImageView *changePasswordImageView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *changePasswordHeight;
 @property (strong, nonatomic) JADynamicForm *changePasswordForm;
 @property (assign, nonatomic) CGFloat currentY;
 @property (assign, nonatomic) NSInteger numberOfFields;
@@ -62,7 +61,6 @@ JADynamicFormDelegate
     self.navBarLayout.showLogo = NO;
     self.navBarLayout.title = STRING_USER_DATA;
     
-    self.personalDataView.translatesAutoresizingMaskIntoConstraints = YES;
     self.personalDataView.layer.cornerRadius = 5.0f;
     self.personalDataView.hidden = YES;
     
@@ -71,16 +69,13 @@ JADynamicFormDelegate
     self.personalTitleLabel.text = STRING_YOUR_PERSONAL_DATA;
     
     self.nameLabel.font = [UIFont fontWithName:kFontLightName size:self.nameLabel.font.pointSize];
-    self.nameLabel.translatesAutoresizingMaskIntoConstraints = YES;
     self.nameLabel.textColor = UIColorFromRGB(0x666666);
     
     self.emailLabel.font = [UIFont fontWithName:kFontLightName size:self.emailLabel.font.pointSize];
-    self.emailLabel.translatesAutoresizingMaskIntoConstraints = YES;
     self.emailLabel.textColor = UIColorFromRGB(0x666666);
     
     self.personalLine.backgroundColor = UIColorFromRGB(0xfaa41a);
     
-    self.changePasswordView.translatesAutoresizingMaskIntoConstraints = YES;
     self.changePasswordView.layer.cornerRadius = 5.0f;
     self.changePasswordView.hidden = YES;
     
@@ -89,7 +84,6 @@ JADynamicFormDelegate
     self.changePasswordTitle.textColor = UIColorFromRGB(0x4e4e4e);
     self.changePasswordTitle.text = STRING_NEW_PASSWORD;
     
-    self.saveButton.translatesAutoresizingMaskIntoConstraints = YES;
     self.saveButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.saveButton.titleLabel.font.pointSize];
     [self.saveButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
     [self.saveButton setTitle:STRING_SAVE_LABEL forState:UIControlStateNormal];
@@ -171,7 +165,7 @@ JADynamicFormDelegate
          self.numberOfRequests--;
          [self removeErrorView];
      } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
-     {   [self removeErrorView];
+     {
          self.apiResponse = apiResponse;
          self.numberOfRequests--;
      }];
@@ -236,6 +230,8 @@ JADynamicFormDelegate
 
 - (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
+    [self.personalTitleLabel setX:6.f];
+    [self.changePasswordTitle setX:6.f];
     [self.personalDataView setFrame:CGRectMake(self.personalDataView.frame.origin.x,
                                                self.personalDataView.frame.origin.y,
                                                width - (2 * self.personalDataView.frame.origin.x),
@@ -246,6 +242,16 @@ JADynamicFormDelegate
                                                  width - (2 * self.changePasswordView.frame.origin.x),
                                                  self.currentY + 15.0f)];
     
+    [self.personalLine setFrame:CGRectMake(self.personalLine.frame.origin.x,
+                                           self.personalLine.frame.origin.y,
+                                           self.personalDataView.frame.size.width,
+                                           self.personalLine.frame.size.height)];
+    
+    [self.changePasswordImageView setFrame:CGRectMake(self.changePasswordImageView.frame.origin.x,
+                                                      self.changePasswordImageView.frame.origin.y,
+                                                      self.changePasswordView.frame.size.width,
+                                                      self.changePasswordImageView.frame.size.height)];
+    
     CGFloat leftMargin = 17.0f;
     CGFloat dynamicFormleftMargin = 0.0f;
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
@@ -253,6 +259,11 @@ JADynamicFormDelegate
         leftMargin = 145.0f;
         dynamicFormleftMargin = 128.0f;
     }
+    
+    [self.contentScrollView setFrame:CGRectMake(0.0f,
+                                                self.contentScrollView.frame.origin.y,
+                                                self.view.width,
+                                                self.view.height - self.contentScrollView.frame.origin.y)];
     
     [self.nameLabel setFrame:CGRectMake(leftMargin,
                                         self.nameLabel.frame.origin.y,
@@ -277,6 +288,13 @@ JADynamicFormDelegate
     
     [self.personalDataView setHidden:NO];
     [self.changePasswordView setHidden:NO];
+    
+    if(RI_IS_RTL){
+        [self.personalDataView flipSubviewPositions];
+        [self.changePasswordView flipSubviewPositions];
+        [self.personalDataView flipSubviewAlignments];
+        [self.changePasswordView flipSubviewAlignments];
+    }
 }
 
 - (void)didReceiveMemoryWarning

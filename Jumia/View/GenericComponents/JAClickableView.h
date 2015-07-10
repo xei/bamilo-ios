@@ -10,10 +10,16 @@
 
 @interface JAClickableView : UIView
 
+@property (nonatomic, assign)UIEdgeInsets imageEdgeInsets;
+@property (nonatomic, assign)UIEdgeInsets titleEdgeInsets;
+@property (nonatomic, assign)UIControlContentHorizontalAlignment contentHorizontalAlignment;
 @property (nonatomic, assign)BOOL selected;
 @property (nonatomic, assign)BOOL enabled;
 @property (nonatomic, readonly)NSString* title;
+@property (nonatomic, readonly)UIImageView* imageView;
+@property (nonatomic, readonly)UILabel* titleLabel;
 
+- (UIImage*)imageForState:(UIControlState)controlState;
 - (void)setImage:(UIImage*)image forState:(UIControlState)state;
 - (void)setImageWithURL:(NSURL*)url placeholderImage:(UIImage*)image;
 - (void)setTitle:(NSString*)title forState:(UIControlState)state;

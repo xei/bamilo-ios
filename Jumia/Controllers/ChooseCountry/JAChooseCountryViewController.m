@@ -64,7 +64,7 @@ UITableViewDataSource
 
     if(!VALID_NOTEMPTY([RIApi getCountryUrlInUse], NSString))
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
+        [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffMenuSwipePanelNotification
                                                             object:nil];
     }
 
@@ -139,7 +139,6 @@ UITableViewDataSource
                                                     finalHeight)];
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-        [self removeErrorView];
         self.apiResponse = apiResponse;
         if (VALID_NOTEMPTY(countryUrl, NSString))
         {

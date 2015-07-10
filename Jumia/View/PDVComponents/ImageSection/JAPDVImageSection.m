@@ -15,8 +15,11 @@
 #import "UIImageView+WebCache.h"
 #import "JAPageControl.h"
 #import "JARatingsView.h"
+#import "JAPagedView.h"
 
-@interface JAPDVImageSection ()
+@interface JAPDVImageSection () {
+    JAPagedView *_imagesPagedView;
+}
 
 @property (nonatomic, strong)JAPriceView* priceView;
 @property (nonatomic, assign)NSInteger numberOfImages;
@@ -81,7 +84,6 @@
     self.product = product;
     
     self.layer.cornerRadius = 5.0f;
-    self.translatesAutoresizingMaskIntoConstraints = YES;
     
     CGFloat width = frame.size.width - 12.0f;
     
@@ -96,32 +98,21 @@
     
     self.productNameLabel.font = [UIFont fontWithName:kFontMediumName size:self.productNameLabel.font.pointSize];
     self.productNameLabel.text = product.brand;
-    self.productNameLabel.translatesAutoresizingMaskIntoConstraints = YES;
 
     self.productDescriptionLabel.font = [UIFont fontWithName:kFontRegularName size:self.productDescriptionLabel.font.pointSize];
     self.productDescriptionLabel.text = product.name;
-    self.productDescriptionLabel.translatesAutoresizingMaskIntoConstraints = YES;
     
-    self.sizeClickableView.translatesAutoresizingMaskIntoConstraints = YES;
+    [self setWidth:width];
     
-    self.separatorImageView.translatesAutoresizingMaskIntoConstraints = YES;
+    [self.imageScrollView setWidth:width];
+    [self.imageScrollView setHidden:YES];
+    _imagesPagedView = [[JAPagedView alloc] initWithFrame:_imageScrollView.frame];
+    [_imagesPagedView setInfinite:YES];
+    [self addSubview:_imagesPagedView];
+    [self bringSubviewToFront:self.shareButton];
+    [self bringSubviewToFront:self.wishListButton];
     
-    self.imageScrollView.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    [self setFrame:CGRectMake(self.frame.origin.x,
-                              self.frame.origin.y,
-                              width,
-                              self.frame.size.height)];
-    
-    [self.imageScrollView setFrame:CGRectMake(self.imageScrollView.frame.origin.x,
-                                              self.imageScrollView.frame.origin.y,
-                                              width,
-                                              self.imageScrollView.frame.size.height)];
-    
-    [self.separatorImageView setFrame:CGRectMake(self.separatorImageView.frame.origin.x,
-                                                 self.separatorImageView.frame.origin.y,
-                                                 width,
-                                                 self.separatorImageView.frame.size.height)];
+    [self.separatorImageView setWidth:width];
     
     [self loadWithImages:[product.images array]];
     
@@ -133,6 +124,8 @@
     {
         self.discountLabel.hidden = YES;
     }
+    
+    
     
     UIImage *img = [UIImage imageNamed:@"img_badge_discount"];
     CGSize imgSize = self.discountLabel.frame.size;
@@ -161,14 +154,30 @@
         [self setupForPortrait:frame product:product];
     }
     
-    [self.pageControl removeFromSuperview];
-    self.pageControl = [[JAPageControl alloc] initWithFrame:CGRectMake(self.imageScrollView.frame.origin.x,
-                                                                       self.imageScrollView.frame.origin.y + self.imageScrollView.frame.size.height - 20.0f,
-                                                                       self.imageScrollView.frame.size.width,
-                                                                       10.0f)];
-    self.pageControl.numberOfPages = [product.images array].count;
-    [self addSubview:self.pageControl];
-    self.pageControl.currentPage = 0;
+    [_discountLabel setX: CGRectGetMaxX([_discountLabel superview].frame) - _discountLabel.bounds.size.width - 12.0f];
+    [_discountLabel setY: CGRectGetMaxY(_imageScrollView.frame) - _discountLabel.bounds.size.height - 20.0f];
+    [_discountLabel.layer setZPosition:100];
+    
+    [_shareButton setX:[_shareButton superview].frame.origin.x];
+    [_shareButton setY:_imageScrollView.frame.origin.y];
+    
+    [_wishListButton setX:[_wishListButton superview].bounds.size.width - _wishListButton.bounds.size.width];
+    [_wishListButton setY:_imageScrollView.frame.origin.y];
+    
+//    [self.pageControl removeFromSuperview];
+//    self.pageControl = [[JAPageControl alloc] initWithFrame:CGRectMake(self.imageScrollView.frame.origin.x,
+//                                                                       self.imageScrollView.frame.origin.y + self.imageScrollView.frame.size.height - 20.0f,
+//                                                                       self.imageScrollView.frame.size.width,
+//                                                                       10.0f)];
+//    self.pageControl.numberOfPages = [product.images array].count;
+//    [self addSubview:self.pageControl];
+    
+//    if (RI_IS_RTL) {
+//        [self.imageScrollView flipAllSubviews];
+//        [self.pageControl flipAllSubviews];
+//    }
+//    self.pageControl.currentPage = 0;
+//    self.pageControl.currentPage = RI_IS_RTL?self.pageControl.numberOfPages-1:0;
 }
 
 - (void)setupForPortrait:(CGRect)frame product:(RIProduct*)product
@@ -284,12 +293,12 @@
             currentY += self.sellerDeliveryLabel.frame.size.height;
         }
         currentY += 16.0f;
+        [self setHeight:CGRectGetMaxY(_sellerDeliveryLabel.frame) + 6.f];
     }
     
-    [self setFrame:CGRectMake(self.frame.origin.x,
-                              self.frame.origin.y,
-                              self.frame.size.width,
-                              currentY)];
+    [self setY:currentY];
+    
+    
 }
 
 -(void)selectedButton
@@ -421,15 +430,14 @@
     }
     
     
-    [self.separatorImageView setFrame:CGRectMake(self.separatorImageView.frame.origin.x,
-                                                 currentY + 6.0f,
-                                                 self.separatorImageView.frame.size.width,
-                                                 self.separatorImageView.frame.size.height)];
+    [self.separatorImageView setY:currentY + 6.0f];
     
     [self.imageScrollView setFrame:CGRectMake(self.imageScrollView.frame.origin.x,
                                               CGRectGetMaxY(self.separatorImageView.frame),
                                               width,
                                               self.imageScrollView.frame.size.height)];
+    [_imagesPagedView setY:CGRectGetMaxY(self.separatorImageView.frame)];
+    [_imagesPagedView setWidth:width];
     
     [self.sizeImageViewSeparator setBackgroundColor:UIColorFromRGB(0xcccccc)];
     self.sizeLabel.font = [UIFont fontWithName:kFontLightName size:self.sizeLabel.font.pointSize];
@@ -449,10 +457,7 @@
         [self.sizeClickableView removeFromSuperview];
         [self.sizeImageViewSeparator removeFromSuperview];
         
-        [self setFrame:CGRectMake(self.frame.origin.x,
-                                  self.frame.origin.y,
-                                  self.frame.size.width,
-                                  CGRectGetMaxY(self.imageScrollView.frame))];
+        [self setHeight:CGRectGetMaxY(self.imageScrollView.frame)];
     }
     else if (1 == product.productSimples.count)
     {
@@ -462,21 +467,15 @@
         if (VALID_NOTEMPTY(currentSimple.variation, NSString))
         {
             [self.sizeLabel setText:currentSimple.variation];
-            
-            [self setFrame:CGRectMake(self.frame.origin.x,
-                                      self.frame.origin.y,
-                                      self.frame.size.width,
-                                      CGRectGetMaxY(self.sizeClickableView.frame))];
+        
+            [self setHeight:CGRectGetMaxY(self.sizeClickableView.frame)];
         }
         else
         {
             [self.sizeClickableView removeFromSuperview];
             [self.sizeImageViewSeparator removeFromSuperview];
             
-            [self setFrame:CGRectMake(self.frame.origin.x,
-                                      self.frame.origin.y,
-                                      self.frame.size.width,
-                                      CGRectGetMaxY(self.imageScrollView.frame))];
+            [self setHeight:CGRectGetMaxY(self.imageScrollView.frame)];
         }
     }
     else if (1 < product.productSimples.count)
@@ -484,10 +483,7 @@
         [self.sizeClickableView setEnabled:YES];
         [self.sizeLabel setText:STRING_SIZE];
         
-        [self setFrame:CGRectMake(self.frame.origin.x,
-                                  self.frame.origin.y,
-                                  self.frame.size.width,
-                                  CGRectGetMaxY(self.sizeClickableView.frame))];
+        [self setHeight:CGRectGetMaxY(self.sizeClickableView.frame)];
         
         if (VALID_NOTEMPTY(preSelectedSize, NSString))
         {
@@ -511,7 +507,7 @@
     [self.priceView loadWithPrice:oldValue
                      specialPrice:newValue
                          fontSize:14.0f
-            specialPriceOnTheLeft:NO];
+            specialPriceOnTheLeft:YES];
     self.priceView.frame = CGRectMake(6.0f,
                                       CGRectGetMaxY(self.productDescriptionLabel.frame) + 3.0f,
                                       self.priceView.frame.size.width,
@@ -521,30 +517,21 @@
 
 - (void)loadWithImages:(NSArray*)imagesArray
 {
+    NSMutableArray *items = [NSMutableArray new];
     if(VALID_NOTEMPTY(imagesArray, NSArray))
     {
-        //add the last item to the begining and the first item to the end in order to simulate infinite scroll
         NSInteger lastIndex = [imagesArray count] - 1;
-        NSMutableArray* modifiedArray = [imagesArray mutableCopy];
-        [modifiedArray insertObject:[imagesArray lastObject]
-                            atIndex:0];
-        [modifiedArray addObject:[imagesArray firstObject]];
-        self.numberOfImages = [modifiedArray count];
-        
-        self.imageScrollView.pagingEnabled = YES;
-        self.imageScrollView.showsHorizontalScrollIndicator = NO;
-        self.imageScrollView.delegate = self;
-        CGFloat currentX = 0.0f;
+//        CGFloat currentX = 0.0f;
         CGFloat imageWidth = 146.0f;
         CGFloat imageHeight = 183.0f;
-        for (int i = 0; i < modifiedArray.count; i++) {
-            RIImage* image = [modifiedArray objectAtIndex:i];
+        for (int i = 0; i < imagesArray.count; i++) {
+            RIImage* image = [imagesArray objectAtIndex:i];
             if (VALID_NOTEMPTY(image, RIImage)) {
-                JAClickableView* clickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
+                JAClickableView* clickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f,
                                                                                                    0.0f,
                                                                                                    self.imageScrollView.frame.size.width,
                                                                                                    self.imageScrollView.frame.size.height)];
-                
+
                 if(0 == i || i > lastIndex)
                 {
                     clickableView.tag = lastIndex;
@@ -554,8 +541,9 @@
                     clickableView.tag = i - 1;
                 }
                 [clickableView addTarget:self action:@selector(imageViewPressed:) forControlEvents:UIControlEventTouchUpInside];
-                [self.imageScrollView addSubview:clickableView];
-                
+//                [self.imageScrollView addSubview:clickableView];
+                [items addObject:clickableView];
+
                 UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake((clickableView.bounds.size.width - imageWidth) / 2,
                                                                                        (clickableView.bounds.size.height - imageHeight) / 2,
                                                                                        imageWidth,
@@ -564,79 +552,30 @@
                 [imageView setImageWithURL:[NSURL URLWithString:image.url]
                           placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
                 
-                currentX += clickableView.frame.size.width;
+//                currentX += clickableView.frame.size.width;
             }
         }
-        
-        [self.imageScrollView setContentSize:CGSizeMake(currentX,
-                                                        self.imageScrollView.frame.size.height)];
-        
-        //starting index should be 1 because 0 is the last image, replicated in order to simulate infinite scroll
-        [self.imageScrollView scrollRectToVisible:CGRectMake(self.imageScrollView.frame.size.width,
-                                                             0,
-                                                             self.imageScrollView.frame.size.width,
-                                                             self.imageScrollView.frame.size.height)
-                                         animated:NO];
-    }
-    else
-    {
+    }else{
         self.numberOfImages = 0;
-        self.imageScrollView.pagingEnabled = NO;
-        self.imageScrollView.showsHorizontalScrollIndicator = NO;
-        
+
         CGFloat imageWidth = 146.0f;
         CGFloat imageHeight = 183.0f;
-        
+
         UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake((self.imageScrollView.frame.size.width - imageWidth) / 2,
                                                                                (self.imageScrollView.frame.size.height - imageHeight) / 2,
                                                                                imageWidth,
                                                                                imageHeight)];
-        [self.imageScrollView addSubview:imageView];
+        [items addObject:imageView];
         [imageView setImage:[UIImage imageNamed:@"placeholder_pdv"]];
-        
     }
+    [_imagesPagedView setViews:items];
 }
 
 - (void)imageViewPressed:(UIControl*)sender
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(imageClickedAtIndex:)]) {
-        [self.delegate imageClickedAtIndex:sender.tag];
+        [self.delegate imageClickedAtIndex:_imagesPagedView.selectedIndexPage];
     }
-}
-
-#pragma mark - UIScrollView
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    if (scrollView == self.imageScrollView && self.numberOfImages > 1)
-    {
-        float contentOffsetWhenFullyScrolledRight = self.imageScrollView.frame.size.width * (self.numberOfImages - 1);
-        
-        if (scrollView.contentOffset.x == contentOffsetWhenFullyScrolledRight) {
-            
-            [self.imageScrollView scrollRectToVisible:CGRectMake(self.imageScrollView.frame.size.width,
-                                                                 0,
-                                                                 self.imageScrollView.frame.size.width,
-                                                                 self.imageScrollView.frame.size.height)
-                                             animated:NO];
-            
-        } else if (scrollView.contentOffset.x == 0)  {
-            
-            [self.imageScrollView scrollRectToVisible:CGRectMake(self.imageScrollView.contentSize.width - self.imageScrollView.frame.size.width*2,
-                                                                 0,
-                                                                 self.imageScrollView.frame.size.width,
-                                                                 self.imageScrollView.frame.size.height)
-                                             animated:NO];
-        }
-    }
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    //add 0.5 to make sure we scroll the indicators with the middle of the page
-    //and then subtract 1 to make up for the fake image offset (fake images that are used for infinite scrolling)
-    self.pageControl.currentPage = (scrollView.contentOffset.x / scrollView.frame.size.width) + 0.5f - 1.0f;
-    
 }
 
 #pragma mark - ButtonActions

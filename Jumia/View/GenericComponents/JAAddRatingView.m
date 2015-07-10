@@ -29,7 +29,7 @@
     {
         if (VALID_NOTEMPTY(subview, UIButton))
         {
-            if (rating < subview.tag)
+            if (_rating < subview.tag)
             {
                 subview.selected = NO;
             } else
@@ -59,8 +59,6 @@
 {
     self.fieldRatingStars = fieldRatingStars;
     
-    self.translatesAutoresizingMaskIntoConstraints = YES;
-    
     self.label.font = [UIFont fontWithName:kFontRegularName size:self.label.font.pointSize];
     [self.label setTextColor:UIColorFromRGB(0x666666)];
     
@@ -68,8 +66,6 @@
     {
         [self.label setText:fieldRatingStars.title];
     }
-    
-    self.rating = 1;
     
     [self.starButton1 setImage:[UIImage imageNamed:@"img_rating_star_big_full.png"] forState:UIControlStateSelected | UIControlStateHighlighted];
     
@@ -82,29 +78,13 @@
     [self.starButton5 setImage:[UIImage imageNamed:@"img_rating_star_big_full.png"] forState:UIControlStateSelected | UIControlStateHighlighted];
     
     [self starPressed:self.starButton1];
-    
 }
 
 - (IBAction)starPressed:(id)sender
 {
     UIButton *button = (UIButton *)sender;
-    NSInteger starPressedTag = button.tag;
     
-    self.rating = starPressedTag;
-    
-    for (UIButton* subview in self.subviews)
-    {
-        if (VALID_NOTEMPTY(subview, UIButton))
-        {
-            if (starPressedTag < subview.tag)
-            {
-                subview.selected = NO;
-            } else
-            {
-                subview.selected = YES;
-            }
-        }
-    }
+    self.rating = button.tag;
 }
 
 @end

@@ -194,7 +194,6 @@ JADatePickerDelegate
            [self.contentView setHidden:NO];
            [self removeErrorView];
        } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
-           [self removeErrorView];
            self.apiResponse = apiResponse;
            if(RIApiResponseMaintenancePage == apiResponse)
            {
@@ -274,7 +273,7 @@ JADatePickerDelegate
     
     [self.checkBoxComponent setFrame:CGRectMake((self.contentView.frame.size.width - signupNormalImage.size.width) / 2,
                                                 self.registerViewCurrentY,
-                                                signupNormalImage.size.width - 12.0f,
+                                                signupNormalImage.size.width,
                                                 self.checkBoxComponent.frame.size.height)];
     
     self.registerViewCurrentY = CGRectGetMaxY(self.checkBoxComponent.frame) + 10.0f;
@@ -301,6 +300,10 @@ JADatePickerDelegate
     [self hideLoading];
     
     [self finishedFormLoading];
+    
+    if (RI_IS_RTL) {
+        [self.view flipAllSubviews];
+    }
 }
 
 - (void)finishedFormLoading

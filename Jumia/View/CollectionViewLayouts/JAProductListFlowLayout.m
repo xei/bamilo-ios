@@ -30,6 +30,10 @@
     if (indexPath.item == 0) { // first item of section
         CGRect frame = currentItemAttributes.frame;
         frame.origin.x = sectionInset.left; // first item of the section should always be left aligned
+        if (RI_IS_RTL) {
+            frame.origin.x = self.collectionView.frame.size.width - frame.size.width;
+        }
+        
         currentItemAttributes.frame = frame;
         
         return currentItemAttributes;
@@ -38,6 +42,7 @@
     NSIndexPath* previousIndexPath = [NSIndexPath indexPathForItem:indexPath.item-1 inSection:indexPath.section];
     CGRect previousFrame = [self layoutAttributesForItemAtIndexPath:previousIndexPath].frame;
     CGFloat previousFrameRightPoint = previousFrame.origin.x + previousFrame.size.width + self.manualCellSpacing;
+    CGFloat previousFrameLeftPoint = previousFrame.origin.x - self.manualCellSpacing;
     
     CGRect currentFrame = currentItemAttributes.frame;
     CGRect strecthedCurrentFrame = CGRectMake(0,
@@ -51,12 +56,18 @@
         // is on the same line, otherwise it is on it's own new line
         CGRect frame = currentItemAttributes.frame;
         frame.origin.x = sectionInset.left; // first item on the line should always be left aligned
+        if (RI_IS_RTL) {
+            frame.origin.x = self.collectionView.frame.size.width - frame.size.width;
+        }
         currentItemAttributes.frame = frame;
         return currentItemAttributes;
     }
     
     CGRect frame = currentItemAttributes.frame;
     frame.origin.x = previousFrameRightPoint;
+    if (RI_IS_RTL) {
+        frame.origin.x = previousFrameLeftPoint - frame.size.width;
+    }
     currentItemAttributes.frame = frame;
     return currentItemAttributes;
 }

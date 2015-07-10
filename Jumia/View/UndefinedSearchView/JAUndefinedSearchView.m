@@ -36,23 +36,6 @@
 @property (assign, nonatomic) CGFloat scrollViewY;
 @property (assign, nonatomic) CGFloat leftMargin;
 
-
-//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topViewHeightConstraint;
-//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *spaceLabelConstraint;
-
-//@property (weak, nonatomic) IBOutlet UIView *topSellersView;
-//@property (weak, nonatomic) IBOutlet UILabel *topSellersLabel;
-//@property (weak, nonatomic) IBOutlet UIImageView *lineSellersImageView;
-//@property (weak, nonatomic) IBOutlet UIScrollView *topSellersScrollView;
-//@property (weak, nonatomic) IBOutlet UIView *topBrandsView;
-//@property (weak, nonatomic) IBOutlet UILabel *topBrandsLabel;
-//@property (weak, nonatomic) IBOutlet UIImageView *lineBrandsImageView;
-//@property (weak, nonatomic) IBOutlet UIScrollView *topBrandsScrollView;
-//@property (weak, nonatomic) IBOutlet UIView *noticeView;
-//@property (weak, nonatomic) IBOutlet UILabel *noticeLabel;
-//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *noticeConstraintHeight;
-//@property (assign, nonatomic) CGSize contentSize;
-
 @end
 
 @implementation JAUndefinedSearchView
@@ -183,7 +166,6 @@
                                       self.topView.frame.size.width,
                                       CGRectGetMaxY(self.searchTipsTextLabel.frame) + 15.0f)];
     
-    
     scrollViewY += self.topView.frame.size.height + 6.0f;
     
     /////// TOP SELLERS ///////
@@ -223,8 +205,23 @@
         
         CGFloat currentX = productScrollView.bounds.origin.x;
         
+        NSMutableArray *convertedProd = [NSMutableArray arrayWithCapacity:featuredBox.products.count];
+        
+        NSEnumerator *enumeratorProd = [ featuredBox.products reverseObjectEnumerator];
+        for (id element in enumeratorProd) {
+            [convertedProd addObject:element];
+        }
+        
+        NSArray *arrayToUse = featuredBox.products;
+        
+        if (RI_IS_RTL) {
+            
+            arrayToUse = convertedProd;
+        }
+
+        
         for (int i = 0; i < featuredBox.products.count; i++) {
-            RISearchTypeProduct* product = [featuredBox.products objectAtIndex:i];
+            RISearchTypeProduct* product = [arrayToUse objectAtIndex:i];
             if (product.imagesArray.count > 0)
             {
                 JAPDVSingleRelatedItem *singleItem = [JAPDVSingleRelatedItem getNewPDVSingleRelatedItem];
@@ -300,8 +297,22 @@
         
         CGFloat brandsCurrentX = brandsScrollView.bounds.origin.x;
         
+        NSMutableArray *convertedBrands = [NSMutableArray arrayWithCapacity:featuredBrandBox.brands.count];
+        
+        NSEnumerator *enumerator = [featuredBrandBox.brands reverseObjectEnumerator];
+        for (id element in enumerator) {
+            [convertedBrands addObject:element];
+        }
+        
+        NSArray *arrayToUse = featuredBrandBox.brands;
+        
+        if (RI_IS_RTL) {
+        
+            arrayToUse = convertedBrands;
+        }
+        
         for (int i = 0; i < featuredBrandBox.brands.count; i++) {
-            RIBrand* brand = [featuredBrandBox.brands objectAtIndex:i];
+            RIBrand* brand = [arrayToUse objectAtIndex:i];
             if (brand.image.length > 0)
             {
                 JABrandView *brandView = [[JABrandView alloc] initWithFrame:CGRectMake(brandsCurrentX, 0, 110, 110)];
@@ -373,10 +384,12 @@
     
     scrollViewY += self.noticeView.frame.size.height + 6.0f;
     
-    
     [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
                                                scrollViewY)];
     
+    if (RI_IS_RTL) {
+        [self flipAllSubviews];
+    }
 }
 -(void)didRotate
 {

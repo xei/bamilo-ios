@@ -21,4 +21,5 @@
 
 - (void) changeImageHeight:(CGFloat)height
                   andWidth:(CGFloat)width;
+
 @end

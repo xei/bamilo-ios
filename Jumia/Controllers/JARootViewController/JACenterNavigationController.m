@@ -51,7 +51,6 @@
 #import "JARatingsViewController.h"
 #import "JANewRatingViewController.h"
 #import "JASubCategoriesViewController.h"
-#import "JACategoryFilterViewController.h"
 #import "RICart.h"
 #import "JASizeGuideViewController.h"
 #import "JAOtherOffersViewController.h"
@@ -291,11 +290,6 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showCategoryFiltersScreen:)
-                                                 name:kShowCategoryFiltersScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showPriceFiltersScreen:)
                                                  name:kShowPriceFiltersScreenNotification
                                                object:nil];
@@ -369,7 +363,7 @@
             [self popToRootViewControllerAnimated:NO];
         }
         
-        JAHomeViewController *home = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"homeViewController"];
+        JAHomeViewController *home = [JAHomeViewController new];
         [self pushViewController:home animated:NO];
     }
 }
@@ -502,10 +496,9 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAMyFavouritesViewController class]])
     {
-        JAMyFavouritesViewController *favourites = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"myFavouritesViewController"];
-        
-        [self popToRootViewControllerAnimated:NO];
-        [self pushViewController:favourites animated:NO];
+        JAMyFavouritesViewController *myFavouritesViewController = [[JAMyFavouritesViewController alloc]initWithNibName:@"JAMyFavouritesViewController" bundle:nil];
+
+        [self pushViewController:myFavouritesViewController animated:NO];
     }
 }
 
@@ -515,7 +508,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JARecentSearchesViewController class]])
     {
-        JARecentSearchesViewController *recentSearches = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"recentSearchesViewController"];
+        JARecentSearchesViewController *recentSearches = [[JARecentSearchesViewController alloc] initWithNibName:@"JARecentSearchesViewController" bundle:nil];
         
         [self popToRootViewControllerAnimated:NO];
         [self pushViewController:recentSearches animated:NO];
@@ -528,18 +521,22 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JASignInViewController class]] && ![RICustomer checkIfUserIsLogged])
     {
-        JASignInViewController *signInVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"signInViewController"];
+        JASignInViewController *signInVC = [[JASignInViewController alloc] init];
         
         if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSNotification))
         {
-            NSNumber *fromSideMenu = [notification.userInfo objectForKey:@"from_side_menu"];
-            signInVC.navBarLayout.showBackButton = ![fromSideMenu boolValue];
-            signInVC.fromSideMenu = [fromSideMenu boolValue];
             signInVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
         }
-        else
+        
+        NSNumber *fromSideMenu = [notification.userInfo objectForKey:@"from_side_menu"];
+        if (!VALID_NOTEMPTY(fromSideMenu, NSNumber)) {
+            //if nil, assume the default (YES)
+            fromSideMenu = [NSNumber numberWithBool:YES];
+        }
+        signInVC.fromSideMenu = [fromSideMenu boolValue];
+        signInVC.navBarLayout.showBackButton = ![fromSideMenu boolValue];
+        if ([fromSideMenu boolValue])
         {
-            signInVC.fromSideMenu = YES;
             [self popToRootViewControllerAnimated:NO];
         }
         
@@ -553,7 +550,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JASignupViewController class]] && ![RICustomer checkIfUserIsLogged])
     {
-        JASignupViewController *signUpVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"signUpViewController"];
+        JASignupViewController *signUpVC = [[JASignupViewController alloc] init];
         
         if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSNotification))
         {
@@ -578,7 +575,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JASignupViewController class]] && ![RICustomer checkIfUserIsLogged])
     {
-        JAForgotPasswordViewController *forgotVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"forgotPasswordViewController"];
+        JAForgotPasswordViewController *forgotVC = [[JAForgotPasswordViewController alloc] init];
         
         [forgotVC.navBarLayout setShowBackButton:YES];
         
@@ -592,10 +589,9 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JARecentlyViewedViewController class]])
     {
-        JARecentlyViewedViewController *recentlyViewed = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"recentlyViewedViewController"];
+        JARecentlyViewedViewController *recentlyViewedViewController = [[JARecentlyViewedViewController alloc]initWithNibName:@"JARecentlyViewedViewController" bundle:nil];
         
-        [self popToRootViewControllerAnimated:NO];
-        [self pushViewController:recentlyViewed animated:NO];
+        [self pushViewController:recentlyViewedViewController animated:NO];
     }
 }
 
@@ -605,9 +601,12 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAMyAccountViewController class]])
     {
-        JAMyAccountViewController *myAccountViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"myAccountViewController"];
+        JAMyAccountViewController *myAccountViewController = [[JAMyAccountViewController alloc]initWithNibName:@"JAMyAccountViewController" bundle:nil];
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()){
+            
+            myAccountViewController = [[JAMyAccountViewController alloc] initWithNibName:@"JAMyAccountViewController~iPad" bundle:nil];
         
-        [self popToRootViewControllerAnimated:NO];
+        }
         [self pushViewController:myAccountViewController animated:NO];
     }
 }
@@ -696,7 +695,7 @@
                 animated = [[notification.object objectForKey:@"animated"] boolValue];
             }
             
-            JAUserDataViewController *userData = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"userDataViewController"];
+            JAUserDataViewController *userData = [[JAUserDataViewController alloc] initWithNibName:@"JAUserDataViewController" bundle:nil];
             
             [self pushViewController:userData animated:animated];
         }
@@ -705,7 +704,7 @@
     {
         if (![topViewController isKindOfClass:[JASignInViewController class]])
         {
-            JASignInViewController *signInViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"signInViewController"];
+            JASignInViewController *signInViewController = [[JASignInViewController alloc] init];
             
             signInViewController.navBarLayout.showBackButton = YES;
             signInViewController.fromSideMenu = NO;
@@ -730,7 +729,7 @@
                 animated = [[notification.object objectForKey:@"animated"] boolValue];
             }
             
-            JAEmailNotificationsViewController *email = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"emailNotificationsViewController"];
+            JAEmailNotificationsViewController *email = [[JAEmailNotificationsViewController alloc]init];
             
             [self pushViewController:email animated:animated];
         }
@@ -739,7 +738,7 @@
     {
         if (![topViewController isKindOfClass:[JASignInViewController class]])
         {
-            JASignInViewController *signInViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"signInViewController"];
+            JASignInViewController *signInViewController = [[JASignInViewController alloc] init];
             
             signInViewController.navBarLayout.showBackButton = YES;
             signInViewController.fromSideMenu = NO;
@@ -756,7 +755,12 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JALoginViewController class]] && ![RICustomer checkIfUserIsLogged])
     {
-        JALoginViewController *loginVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"loginViewController"];
+        JALoginViewController *loginVC = [[JALoginViewController alloc] initWithNibName:@"JALoginViewController" bundle:nil];
+        
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            loginVC = [[JALoginViewController alloc] initWithNibName:@"JALoginViewController~iPad" bundle:nil];
+        }
         
         loginVC.cart = self.cart;
         
@@ -772,7 +776,7 @@
     if (![topViewController isKindOfClass:[JAForgotPasswordViewController class]] && ![RICustomer checkIfUserIsLogged])
     {
         
-        JAForgotPasswordViewController *forgotVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"forgotPasswordViewController"];
+        JAForgotPasswordViewController *forgotVC = [[JAForgotPasswordViewController alloc] init];
         
         [forgotVC.navBarLayout setShowBackButton:YES];
         
@@ -798,7 +802,12 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAAddressesViewController class]] && [RICustomer checkIfUserIsLogged])
     {
-        JAAddressesViewController *addressesVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"addressesViewController"];
+        JAAddressesViewController *addressesVC = [[JAAddressesViewController alloc] initWithNibName:@"JAAddressesViewController" bundle:nil];
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            addressesVC = [[JAAddressesViewController alloc] initWithNibName:@"JAAddressesViewController~iPad" bundle:nil];
+        
+        }
         
         addressesVC.cart = self.cart;
         addressesVC.fromCheckout = fromCheckout;
@@ -820,7 +829,7 @@
     {
         if (!fromCheckout && ![topViewController isKindOfClass:[JASignInViewController class]])
         {
-            JASignInViewController *signInViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"signInViewController"];
+            JASignInViewController *signInViewController = [[JASignInViewController alloc] init];
             
             signInViewController.navBarLayout.showBackButton = YES;
             signInViewController.fromSideMenu = NO;
@@ -837,7 +846,12 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAAddNewAddressViewController class]] && [RICustomer checkIfUserIsLogged])
     {
-        JAAddNewAddressViewController *addAddressVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"addNewAddressViewController"];
+        JAAddNewAddressViewController *addAddressVC = [[JAAddNewAddressViewController alloc]initWithNibName:@"JAAddNewAddressViewController" bundle:nil];
+        
+        if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad){
+            
+            addAddressVC = [[JAAddNewAddressViewController alloc]initWithNibName:@"JAAddNewAddressViewController~iPad" bundle:nil];
+        }
         
         NSNumber* isBillingAddress = [notification.userInfo objectForKey:@"is_billing_address"];
         NSNumber* isShippingAddress = [notification.userInfo objectForKey:@"is_shipping_address"];
@@ -878,7 +892,12 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAEditAddressViewController class]] && [RICustomer checkIfUserIsLogged])
     {
-        JAEditAddressViewController *editAddressVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"editAddressViewController"];
+        JAEditAddressViewController *editAddressVC = [[JAEditAddressViewController alloc] initWithNibName:@"JAEditAddressViewController" bundle:nil];
+        
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            editAddressVC = [[JAEditAddressViewController alloc] initWithNibName:@"JAEditAddressesViewController~iPad" bundle:nil];
+        }
         
         NSNumber* fromCheckout = [notification.userInfo objectForKey:@"from_checkout"];
         
@@ -908,7 +927,12 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAShippingViewController class]] && [RICustomer checkIfUserIsLogged])
     {
-        JAShippingViewController *shippingVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"shippingViewController"];
+        JAShippingViewController *shippingVC = [[JAShippingViewController alloc] initWithNibName:@"JAShippingViewController" bundle:nil];
+        
+        if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
+        {
+            shippingVC = [[JAShippingViewController alloc] initWithNibName:@"JAShippingViewController~iPad" bundle:nil];
+        }
         
         [self pushViewController:shippingVC animated:YES];
     }
@@ -920,7 +944,13 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAPaymentViewController class]] && [RICustomer checkIfUserIsLogged])
     {
-        JAPaymentViewController *paymentVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"paymentViewController"];
+        JAPaymentViewController *paymentVC = [[JAPaymentViewController alloc] initWithNibName:@"JAPaymentViewController" bundle:nil];
+        
+        if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
+        {
+            paymentVC = [[JAPaymentViewController alloc] initWithNibName:@"JAPaymentViewController~iPad" bundle:nil];
+        
+        }
         
         [self pushViewController:paymentVC animated:YES];
     }
@@ -985,7 +1015,7 @@
 #pragma mark Catalog Screen
 - (void)pushCatalogToShowSearchResults:(NSString *)query
 {
-    JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+    JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
     catalog.searchString = query;
     
     catalog.navBarLayout.title = query;
@@ -996,7 +1026,7 @@
 - (void)pushCatalogForUndefinedSearchWithBrandUrl:(NSString *)brandUrl
                                      andBrandName:(NSString *)brandName
 {
-    JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+    JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
     catalog.catalogUrl = brandUrl;
     catalog.forceShowBackButton = YES;
     
@@ -1020,7 +1050,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
                                                             object:nil];
         
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         
         catalog.navBarLayout.title = category.name;
         catalog.category = category;
@@ -1029,7 +1059,7 @@
     }
     else if (VALID_NOTEMPTY(categoryId, NSString))
     {
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         
         catalog.categoryId = categoryId;
         
@@ -1037,7 +1067,7 @@
     }
     else if (VALID_NOTEMPTY(categoryName, NSString))
     {
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         
         catalog.categoryName = categoryName;
         catalog.filterType = filterType;
@@ -1059,41 +1089,11 @@
         if ([notification.userInfo objectForKey:@"filtersArray"]) {
             mainFiltersViewController.filtersArray = [notification.userInfo objectForKey:@"filtersArray"];
         }
-//        if ([notification.userInfo objectForKey:@"categoriesArray"]) {
-//            mainFiltersViewController.categoriesArray = [notification.userInfo objectForKey:@"categoriesArray"];
-//        }
-        if ([notification.userInfo objectForKey:@"selectedCategory"]) {
-            mainFiltersViewController.selectedCategory = [notification.userInfo objectForKey:@"selectedCategory"];
-        }
         if ([notification.userInfo objectForKey:@"delegate"]) {
             mainFiltersViewController.delegate = [notification.userInfo objectForKey:@"delegate"];
         }
         
         [self pushViewController:mainFiltersViewController animated:YES];
-    }
-}
-
-- (void)showCategoryFiltersScreen:(NSNotification*)notification
-{
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JACategoryFilterViewController class]])
-    {
-        JACategoryFilterViewController* categoryFilterViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"categoryFilterViewController"];
-        
-        if ([notification.userInfo objectForKey:@"categoriesArray"]) {
-            categoryFilterViewController.categoriesArray = [notification.userInfo objectForKey:@"categoriesArray"];
-        }
-        if ([notification.userInfo objectForKey:@"selectedCategory"]) {
-            categoryFilterViewController.selectedCategory = [notification.userInfo objectForKey:@"selectedCategory"];
-        }
-        if ([notification.userInfo objectForKey:@"delegate"]) {
-            categoryFilterViewController.delegate = [notification.userInfo objectForKey:@"delegate"];
-        }
-        if ([notification.userInfo objectForKey:@"categoryFiltersViewDelegate"]) {
-            categoryFilterViewController.categoryFiltersViewDelegate = [notification.userInfo objectForKey:@"categoryFiltersViewDelegate"];
-        }
-        
-        [self pushViewController:categoryFilterViewController animated:YES];
     }
 }
 
@@ -1138,7 +1138,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAProductDetailsViewController class]])
     {
-        JAProductDetailsViewController* productDetailsViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"productDetailViewController"];
+        JAProductDetailsViewController *productDetailsViewController = [[JAProductDetailsViewController alloc] initWithNibName:@"JAProductDetailsViewController" bundle:nil];
         
         if ([notification.userInfo objectForKey:@"product"]) {
             productDetailsViewController.product = [notification.userInfo objectForKey:@"product"];
@@ -1153,7 +1153,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JARatingsViewController class]])
     {
-        JARatingsViewController* ratingsViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"ratingsViewController"];
+        JARatingsViewController *ratingsViewController = [[JARatingsViewController alloc] initWithNibName:@"JARatingsViewController" bundle:nil];
         
         if ([notification.userInfo objectForKey:@"product"]) {
             ratingsViewController.product = [notification.userInfo objectForKey:@"product"];
@@ -1178,7 +1178,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JANewRatingViewController class]])
     {
-        JANewRatingViewController* newRatingViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"newRatingViewController"];
+        JANewRatingViewController* newRatingViewController = [[JANewRatingViewController alloc] initWithNibName:@"JANewRatingViewController" bundle:nil];
         
         if ([notification.userInfo objectForKey:@"product"]) {
             newRatingViewController.product = [notification.userInfo objectForKey:@"product"];
@@ -1236,7 +1236,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JASellerRatingsViewController class]])
     {
-        JASellerRatingsViewController* viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"sellerRatingsViewController"];
+        JASellerRatingsViewController* viewController = [[JASellerRatingsViewController alloc] initWithNibName:@"JASellerRatingsViewController" bundle:nil];
         
         if (notification.object && [notification.object isKindOfClass:[RIProduct class]]) {
             viewController.product = notification.object;
@@ -1251,7 +1251,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JANewRatingViewController class]])
     {
-        JANewSellerRatingViewController* newSellerRatingViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"newSellerRatingViewController"];
+        JANewSellerRatingViewController* newSellerRatingViewController = [[JANewSellerRatingViewController alloc] initWithNibName:@"JANewSellerRatingViewController" bundle:nil];
         
         if ([notification.userInfo objectForKey:@"product"]) {
             newSellerRatingViewController.product = [notification.userInfo objectForKey:@"product"];
@@ -1279,7 +1279,7 @@
     
     if(VALID_NOTEMPTY(url, NSString))
     {
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         catalog.catalogUrl = url;
         catalog.navBarLayout.title = title;
         catalog.navBarLayout.showBackButton = YES;
@@ -1299,7 +1299,7 @@
     
     if (VALID_NOTEMPTY(url, NSString)) {
         
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         
         catalog.catalogUrl = url;
         catalog.navBarLayout.title = title;
@@ -1332,7 +1332,7 @@
     
     if (VALID_NOTEMPTY(teaserGrouping, RITeaserGrouping))
     {
-        JACampaignsViewController* campaignsVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"campaignsViewController"];
+        JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
         
         campaignsVC.teaserGrouping = teaserGrouping;
         campaignsVC.startingTitle = title;
@@ -1341,13 +1341,13 @@
     }
     else if (VALID_NOTEMPTY(campaignId, NSString))
     {
-        JACampaignsViewController* campaignsVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"campaignsViewController"];
+        JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
         
         campaignsVC.campaignId = campaignId;
         
         [self pushViewController:campaignsVC animated:YES];
     } else if (VALID_NOTEMPTY(campaignUrl, NSString)) {
-        JACampaignsViewController* campaignsVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"campaignsViewController"];
+        JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
         
         campaignsVC.campaignUrl = campaignUrl;
         
@@ -1365,7 +1365,7 @@
     
     if (VALID_NOTEMPTY(url, NSString) || VALID_NOTEMPTY(productSku, NSString))
     {
-        JAPDVViewController *pdv = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"pdvViewController"];
+        JAPDVViewController *pdv = [JAPDVViewController new];
         pdv.productUrl = url;
         pdv.productSku = productSku;
         
@@ -1481,7 +1481,7 @@
     RICategory* category = [selectedItem objectForKey:@"category"];
     if (VALID_NOTEMPTY(category, RICategory)) {
         
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         
         catalog.category = category;
         
@@ -1524,7 +1524,7 @@
     RISearchSuggestion *recentSearch = notification.object;
     
     if (VALID_NOTEMPTY(recentSearch, RISearchSuggestion)) {
-        JACatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
+        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         catalog.searchString = recentSearch.item;
         
         catalog.navBarLayout.title = recentSearch.item;
@@ -1666,7 +1666,7 @@
     
     if (![[self topViewController] isKindOfClass:[JACartViewController class]])
     {
-        JACartViewController *cartViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"cartViewController"];
+        JACartViewController *cartViewController = [[JACartViewController alloc] initWithNibName:@"JACartViewController" bundle:nil];
         [cartViewController setCart:self.cart];
         
         [self popToRootViewControllerAnimated:NO];

@@ -16,6 +16,8 @@
 #import "RICheckout.h"
 #import "RICustomer.h"
 #import "RICart.h"
+#import "UIView+Mirror.h"
+#import "UIImage+Mirror.h"
 
 @interface JAPaymentViewController ()
 <UICollectionViewDataSource,
@@ -53,8 +55,8 @@ UITextFieldDelegate>
 @property (strong, nonatomic) NSIndexPath *collectionViewIndexSelected;
 @property (strong, nonatomic) RIPaymentMethodFormOption* selectedPaymentMethod;
 
-@property (assign, nonatomic) CGRect originalFrame;
-@property (assign, nonatomic) CGRect orderSummaryOriginalFrame;
+@property (assign, nonatomic) CGFloat contentScrollOriginalHeight;
+@property (assign, nonatomic) CGFloat orderSummaryOriginalHeight;
 
 @property (assign, nonatomic) RIApiResponse apiResponse;
 
@@ -106,6 +108,8 @@ UITextFieldDelegate>
 {
     [super viewWillAppear:animated];
     
+    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+    
     [self continueLoading];
 }
 
@@ -119,14 +123,6 @@ UITextFieldDelegate>
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [self showLoading];
-    
-    CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
-    {
-        newWidth = self.view.frame.size.width;
-    }
-    
-    [self setupViews:newWidth toInterfaceOrientation:toInterfaceOrientation];
     
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
@@ -168,7 +164,6 @@ UITextFieldDelegate>
          [self finishedLoadingPaymentMethods];
      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
      {
-         [self removeErrorView];
          self.apiResponse = apiResponse;
          if(RIApiResponseMaintenancePage == apiResponse)
          {
@@ -252,10 +247,7 @@ UITextFieldDelegate>
     
     UIImage *useCouponImageNormal = [UIImage imageNamed:@"useCoupon_normal"];
     
-    self.couponTextField = [[UITextField alloc] initWithFrame:CGRectMake(6.0f,
-                                                                         CGRectGetMaxY(self.couponTitleSeparator.frame) + 17.0f,
-                                                                         self.couponView.frame.size.width - 12.0f - 5.0f - useCouponImageNormal.size.width,
-                                                                         30.0f)];
+    self.couponTextField = [[UITextField alloc] init];
     [self.couponTextField setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
     [self.couponTextField setTextColor:UIColorFromRGB(0x666666)];
     [self.couponTextField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
@@ -349,6 +341,10 @@ UITextFieldDelegate>
                                             (self.stepView.frame.size.width - self.stepIcon.frame.size.width - marginBetweenIconAndLabel - (2 * horizontalMargin)),
                                             12.0f)];
     }
+    
+    if(RI_IS_RTL){
+        [self.stepBackground setImage:[stepBackgroundImage flipImageWithOrientation:UIImageOrientationUpMirrored]];
+    }
 }
 
 - (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
@@ -359,7 +355,7 @@ UITextFieldDelegate>
                                          self.stepBackground.frame.size.height,
                                          width,
                                          self.view.frame.size.height - self.stepBackground.frame.size.height)];
-    self.originalFrame = self.scrollView.frame;
+    self.contentScrollOriginalHeight = self.scrollView.frame.size.height;
     
     if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
     {
@@ -376,7 +372,7 @@ UITextFieldDelegate>
                                                                                  self.view.frame.size.height - self.stepBackground.frame.size.height)];
         [self.orderSummary loadWithCheckout:self.checkout shippingMethod:YES shippingFee:YES];
         [self.view addSubview:self.orderSummary];
-        self.orderSummaryOriginalFrame = self.orderSummary.frame;
+        self.orderSummaryOriginalHeight = self.orderSummary.frame.size.height;
     }
     
     [self.collectionView setFrame:CGRectMake(self.collectionView.frame.origin.x,
@@ -404,6 +400,7 @@ UITextFieldDelegate>
                                          self.scrollView.frame.size.width - 12.0f,
                                          self.couponView.frame.size.height)];
     
+    self.couponTitle.textAlignment = NSTextAlignmentLeft;
     [self.couponTitle  setFrame:CGRectMake(self.couponTitle.frame.origin.x,
                                            self.couponTitle.frame.origin.y,
                                            self.couponView.frame.size.width - 12.0f,
@@ -414,10 +411,25 @@ UITextFieldDelegate>
                                                    self.couponView.frame.size.width,
                                                    self.couponTitleSeparator.frame.size.height)];
     
-    [self.couponTextField setFrame:CGRectMake(self.couponTextField.frame.origin.x,
-                                              CGRectGetMaxY(self.couponTitleSeparator.frame) + 17.0f,
-                                              self.couponView.frame.size.width - 12.0f - 5.0f - self.useCouponButton.frame.size.width,
-                                              self.couponTextField.frame.size.height)];
+    BOOL saveCouponTextFieldEnabled = self.couponTextField.enabled;
+    UIColor* saveCouponTextFieldColor = self.couponTextField.textColor;
+    NSString* saveCouponTextFieldText = self.couponTextField.text;
+    [self.couponTextField removeFromSuperview];
+    self.couponTextField = [[UITextField alloc] init];
+    [self.couponTextField setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
+    [self.couponTextField setTextColor:UIColorFromRGB(0x666666)];
+    [self.couponTextField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
+    [self.couponTextField setPlaceholder:STRING_ENTER_COUPON];
+    [self.couponTextField setDelegate:self];
+    [self.couponView addSubview:self.couponTextField];
+    self.couponTextField.textAlignment = NSTextAlignmentLeft;
+    self.couponTextField.frame = CGRectMake(6.0f,
+                                            CGRectGetMaxY(self.couponTitleSeparator.frame) + 17.0f,
+                                            self.couponView.frame.size.width - 12.0f - 5.0f - self.useCouponButton.frame.size.width,
+                                            30.0f);
+    self.couponTextField.enabled = saveCouponTextFieldEnabled;
+    self.couponTextField.textColor = saveCouponTextFieldColor;
+    self.couponTextField.text = saveCouponTextFieldText;
     
     [self.useCouponButton setFrame:CGRectMake(CGRectGetMaxX(self.couponTextField.frame) + 5.0f,
                                               CGRectGetMaxY(self.couponTitleSeparator.frame) + 17.0f,
@@ -431,6 +443,10 @@ UITextFieldDelegate>
     [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
     
     [self reloadCollectionView];
+    
+    if (RI_IS_RTL) {
+        [self.view flipAllSubviews];
+    }
 }
 
 -(void)finishedLoadingPaymentMethods
@@ -656,16 +672,19 @@ UITextFieldDelegate>
             NSString *cellIdentifier = @"paymentListCell";
             
             JAPaymentCell *paymentListCell = (JAPaymentCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-            [paymentListCell loadWithPaymentMethod:paymentMethod paymentMethodView:[self.checkoutFormForPaymentMethod getPaymentMethodView:paymentMethod]];
+
+            BOOL isSelected = NO;
+            if(VALID_NOTEMPTY(self.collectionViewIndexSelected, NSIndexPath) && indexPath.row == self.collectionViewIndexSelected.row)
+            {
+                isSelected = YES;
+            }
+            
+            [paymentListCell loadWithPaymentMethod:paymentMethod
+                                 paymentMethodView:[self.checkoutFormForPaymentMethod getPaymentMethodView:paymentMethod]
+                                        isSelected:isSelected];
             
             paymentListCell.clickableView.tag = indexPath.row;
             [paymentListCell.clickableView addTarget:self action:@selector(clickViewSelected:) forControlEvents:UIControlEventTouchUpInside];
-            
-            [paymentListCell deselectPaymentMethod];
-            if(VALID_NOTEMPTY(self.collectionViewIndexSelected, NSIndexPath) && indexPath.row == self.collectionViewIndexSelected.row)
-            {
-                [paymentListCell selectPaymentMethod];
-            }
             
             if(indexPath.row == ([self.paymentMethods count] - 1))
             {
@@ -756,23 +775,30 @@ UITextFieldDelegate>
     }
     
     [UIView animateWithDuration:0.3 animations:^{
-        [self.scrollView setFrame:CGRectMake(self.originalFrame.origin.x,
-                                             self.originalFrame.origin.y,
-                                             self.originalFrame.size.width,
-                                             self.originalFrame.size.height - height)];
+        [self.scrollView setFrame:CGRectMake(self.scrollView.frame.origin.x,
+                                             self.scrollView.frame.origin.y,
+                                             self.scrollView.frame.size.width,
+                                             self.contentScrollOriginalHeight - height)];
         
-        [self.orderSummary setFrame:CGRectMake(self.orderSummaryOriginalFrame.origin.x,
-                                               self.orderSummaryOriginalFrame.origin.y,
-                                               self.orderSummaryOriginalFrame.size.width,
-                                               self.orderSummaryOriginalFrame.size.height - height)];
+        [self.orderSummary setFrame:CGRectMake(self.orderSummary.frame.origin.x,
+                                               self.orderSummary.frame.origin.y,
+                                               self.orderSummary.frame.size.width,
+                                               self.orderSummaryOriginalHeight - height)];
     }];
 }
 
 - (void) keyboardWillHide:(NSNotification *)notification
 {
     [UIView animateWithDuration:0.3 animations:^{
-        [self.scrollView setFrame:self.originalFrame];
-        [self.orderSummary setFrame:self.orderSummaryOriginalFrame];
+        [self.scrollView setFrame:CGRectMake(self.scrollView.frame.origin.x,
+                                             self.scrollView.frame.origin.y,
+                                             self.scrollView.frame.size.width,
+                                             self.contentScrollOriginalHeight)];
+        
+        [self.orderSummary setFrame:CGRectMake(self.orderSummary.frame.origin.x,
+                                               self.orderSummary.frame.origin.y,
+                                               self.orderSummary.frame.size.width,
+                                               self.orderSummaryOriginalHeight)];
     }];
 }
 

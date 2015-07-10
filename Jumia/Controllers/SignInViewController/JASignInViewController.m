@@ -184,7 +184,6 @@ FBLoginViewDelegate
          [self removeErrorView];
      } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
      {
-         [self removeErrorView];
          self.apiResponse = apiResponse;
          self.requestDone = YES;
          if(RIApiResponseMaintenancePage == apiResponse)
@@ -227,6 +226,7 @@ FBLoginViewDelegate
                                         self.scrollView.frame.size.width - (2 * horizontalMargin),
                                         340.0f)];
     
+    self.loginLabel.textAlignment = NSTextAlignmentLeft;
     [self.loginLabel setFrame:CGRectMake(horizontalMargin,
                                          2.0f,
                                          self.loginView.frame.size.width - (2 * horizontalMargin),
@@ -284,7 +284,7 @@ FBLoginViewDelegate
     self.loginViewCurrentY += 10.0f;
     [self.checkBoxComponent setFrame:CGRectMake((self.loginView.frame.size.width - facebookNormalImage.size.width) / 2,
                                                 self.loginViewCurrentY,
-                                                facebookNormalImage.size.width - 12.0f,
+                                                facebookNormalImage.size.width,
                                                 self.checkBoxComponent.frame.size.height)];
     [self.checkBoxComponent setHidden:NO];
     self.loginViewCurrentY += self.checkBoxComponent.frame.size.height;
@@ -335,6 +335,10 @@ FBLoginViewDelegate
     
     // notify the InAppNotification SDK that this the active view controller
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
+    
+    if (RI_IS_RTL) {
+        [self.view flipAllSubviews];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated

@@ -111,6 +111,9 @@
                                   self.frame.origin.y,
                                   self.frame.size.width,
                                   currentY)];
+        if (RI_IS_RTL) {
+            [self flipAllSubviews];
+        }
     }
 }
 

@@ -10,7 +10,7 @@
 
 @interface JAMyOrderDetailView : UIView
 
-- (void)setupWithOrder:(RITrackOrder*)order maxWidth:(CGFloat)maxWidth;
+- (void)setupWithOrder:(RITrackOrder*)order maxWidth:(CGFloat)maxWidth allowsFlip:(BOOL)allowsFlip;
 
 + (CGFloat)getOrderDetailViewHeight:(RITrackOrder*)order maxWidth:(CGFloat)maxWidth;
 

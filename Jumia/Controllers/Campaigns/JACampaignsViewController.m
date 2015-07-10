@@ -33,6 +33,7 @@
 @property (nonatomic, assign)BOOL pickerNamesAlreadySet;
 
 @property (nonatomic, assign)NSInteger campaignIndex;
+@property (nonatomic, assign)NSNumber *clickedCampaignIndex;
 
 @property (nonatomic, assign)JACampaignPageView* campaignPageWithSizePickerOpen;
 
@@ -84,6 +85,14 @@
     self.isLoaded = NO;
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCampaign] data:trackingDictionary];
+    
+    
+    UISwipeGestureRecognizer *leftSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
+    leftSwipeGesture.direction = (UISwipeGestureRecognizerDirectionLeft);
+    UISwipeGestureRecognizer *rightSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRight:)];
+    rightSwipeGesture.direction = (UISwipeGestureRecognizerDirectionRight);
+    [self.view addGestureRecognizer:leftSwipeGesture];
+    [self.view addGestureRecognizer:rightSwipeGesture];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -96,7 +105,7 @@
         [self loadCampaigns];
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffLeftSwipePanelNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffMenuSwipePanelNotification
                                                         object:nil];
 }
 
@@ -178,7 +187,8 @@
     else if (VALID_NOTEMPTY(self.teaserGrouping, RITeaserGrouping) && VALID_NOTEMPTY(self.teaserGrouping.teaserComponents, NSOrderedSet))
     {
         self.activeCampaignComponents = [NSMutableArray new];
-        for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++)
+        for (int i = RI_IS_RTL?(int)self.teaserGrouping.teaserComponents.count-1:0;
+             RI_IS_RTL?i>=0:i < self.teaserGrouping.teaserComponents.count; RI_IS_RTL?i--:i++)
         {
             
             RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
@@ -238,17 +248,18 @@
     return campaignPage;
 }
 
-- (void)loadCampaignPageAtIndex:(NSInteger)index
+- (void)loadCampaignPageAtIndex:(NSNumber *)index
 {
-    if (self.campaignPages.count > index) {
-        JACampaignPageView* campaignPageView = [self.campaignPages objectAtIndex:index];
+    if (self.campaignPages.count > index.intValue) {
+        _clickedCampaignIndex = index;
+        JACampaignPageView* campaignPageView = [self.campaignPages objectAtIndex:index.intValue];
         if (VALID_NOTEMPTY(campaignPageView, JACampaignPageView) && NO == campaignPageView.isLoaded) {
             
             if (VALID_NOTEMPTY(self.campaignId, NSString)) {
                 [self loadPage:campaignPageView withCampaignId:self.campaignId];
             } else if (VALID_NOTEMPTY(self.activeCampaignComponents, NSMutableArray)) {
                 
-                RITeaserComponent* component = [self.activeCampaignComponents objectAtIndex:index];
+                RITeaserComponent* component = [self.activeCampaignComponents objectAtIndex:index.intValue];
                 
                 if (VALID_NOTEMPTY(component, RITeaserComponent) && VALID_NOTEMPTY(component.url, NSString)) {
                     [self loadPage:campaignPageView withCampaignUrl:component.url];
@@ -289,6 +300,7 @@
         [campaignPage loadWithCampaign:campaign];
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
+        
         [self loadCampaignFailedWithResponse:apiResponse];
     }];
 }
@@ -307,15 +319,14 @@
 - (void)loadCampaignFailedWithResponse:(RIApiResponse)apiResponse
 {
     self.apiResponse = apiResponse;
-    [self removeErrorView];
     BOOL noConnection = NO;
     if(RIApiResponseMaintenancePage == apiResponse)
     {
-        [self showMaintenancePage:@selector(loadCampaigns) objects:nil];
+        [self showMaintenancePage:@selector(loadCampaignPageAtIndex:) objects:[NSArray arrayWithObject:_clickedCampaignIndex]];
     }
     else if(RIApiResponseKickoutView == apiResponse)
     {
-        [self showKickoutView:@selector(loadCampaigns) objects:nil];
+        [self showKickoutView:@selector(loadCampaignPageAtIndex:) objects:[NSArray arrayWithObject:_clickedCampaignIndex]];
     }
     else
     {
@@ -323,7 +334,7 @@
         {
             noConnection = YES;
         }
-        [self showErrorView:noConnection startingY:0.0f selector:@selector(loadCampaigns) objects:nil];
+        [self showErrorView:noConnection startingY:0.0f selector:@selector(loadCampaignPageAtIndex:) objects:[NSArray arrayWithObject:_clickedCampaignIndex]];
     }
     [self hideLoading];
 }
@@ -337,7 +348,7 @@
     JACampaignPageView* campaignPageView = [self.campaignPages objectAtIndex:index];
     [self.scrollView scrollRectToVisible:campaignPageView.frame animated:YES];
     if (NO == campaignPageView.isLoaded) {
-        [self loadCampaignPageAtIndex:index];
+        [self loadCampaignPageAtIndex:[NSNumber numberWithInt:index]];
     }
 }
 

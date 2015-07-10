@@ -75,26 +75,29 @@
 {
     NSString *cellIdentifier = @"filterCell";
     
+    NSNumber* selected = [self.selectedIndexes objectAtIndex:indexPath.row];
+    
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if ([@"color_family" isEqualToString:self.filter.uid]) {
         
         if (ISEMPTY(cell)) {
-            cell = [[JAColorFilterCell alloc] initWithReuseIdentifier:cellIdentifier isLandscape:self.isLandscape];
-        }
-        
-        for (UIView* subview in cell.subviews) {
-            if (subview.tag == -1) {
-                [subview removeFromSuperview];
+            cell = [[JAColorFilterCell alloc] initWithReuseIdentifier:cellIdentifier
+                                                          isLandscape:self.isLandscape
+                                                                frame:CGRectMake(0.0f,
+                                                                                 0.0f,
+                                                                                 tableView.frame.size.width,
+                                                                                 44.0f)];
+            CGFloat separatorX = 50.0f;
+            if (self.isLandscape) {
+                separatorX += 20.0f;
+            }
+            UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(separatorX, 43.0f, self.tableView.frame.size.width - 50.0f, 1.0f)];
+            separator.backgroundColor = UIColorFromRGB(0xcccccc);
+            [cell addSubview:separator];
+            if (RI_IS_RTL) {
+                [cell flipAllSubviews];
             }
         }
-        CGFloat separatorX = 50.0f;
-        if (self.isLandscape) {
-            separatorX += 20.0f;
-        }
-        UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(separatorX, 43.0f, self.tableView.frame.size.width - 50.0f, 1.0f)];
-        separator.tag = -1;
-        separator.backgroundColor = UIColorFromRGB(0xcccccc);
-        [cell addSubview:separator];
         
         RIFilterOption* filterOption = [self.filter.options objectAtIndex:indexPath.row];
         [(JAColorFilterCell*)cell colorTitleLabel].text = filterOption.name;
@@ -103,53 +106,91 @@
             [[(JAColorFilterCell*)cell colorView] setColorWithHexString:filterOption.colorHexValue];
         }
         
+        [(JAColorFilterCell*)cell customAccessoryView].hidden = ![selected boolValue];
+        
+        //remove the clickable view
+        for (UIView* view in cell.subviews) {
+            if ([view isKindOfClass:[JAClickableView class]]) { //remove the clickable view
+                [view removeFromSuperview];
+            } else {
+                for (UIView* subview in view.subviews) {
+                    if ([subview isKindOfClass:[JAClickableView class]]) { //remove the clickable view
+                        [subview removeFromSuperview];
+                    }
+                }
+            }
+        }
+        //add the new clickable view
+        JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.frame.size.width, 44.0f)];
+        clickView.tag = indexPath.row;
+        [clickView addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [cell addSubview:clickView];
+        
     } else {
         
         if (ISEMPTY(cell)) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selectionCheckmark"]];
-            
-            cell.textLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
-            cell.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
-            cell.indentationWidth = 20.0f;
         }
         
-        if (self.isLandscape) {
-            cell.indentationLevel = 1;
-        } else {
-            cell.indentationLevel = 0;
-        }
-        
-        for (UIView* subview in cell.subviews) {
-            if (subview.tag == -1) {
-                [subview removeFromSuperview];
+        //remove the clickable view
+        for (UIView* view in cell.subviews) {
+            if ([view isKindOfClass:[JAClickableView class]]) { //remove the clickable view
+                [view removeFromSuperview];
+            } else {
+                for (UIView* subview in view.subviews) {
+                    if ([subview isKindOfClass:[JAClickableView class]]) { //remove the clickable view
+                        [subview removeFromSuperview];
+                    }
+                }
             }
         }
-        UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 43.0f, self.tableView.frame.size.width, 1.0f)];
-        separator.tag = -1;
+        //add the new clickable view
+        JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, tableView.frame.size.width, 44.0f)];
+        clickView.tag = indexPath.row;
+        [clickView addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [cell addSubview:clickView];
+        
+        CGFloat startingX = 0.0;
+        if (self.isLandscape) {
+            startingX = 20.0f;
+        }
+        CGFloat margin = 12.0f;
+        
+        UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                     clickView.frame.size.height - 1,
+                                                                     tableView.frame.size.width,
+                                                                     1.0f)];
         separator.backgroundColor = UIColorFromRGB(0xcccccc);
-        [cell addSubview:separator];
+        [clickView addSubview:separator];
+        
+        UIImage* customAccessoryIcon = [UIImage imageNamed:@"selectionCheckmark"];
+        UIImageView* customAccessoryView = [[UIImageView alloc] initWithImage:customAccessoryIcon];
+        customAccessoryView.frame = CGRectMake(clickView.frame.size.width - margin - customAccessoryIcon.size.width,
+                                               (clickView.frame.size.height - customAccessoryIcon.size.height) / 2,
+                                               customAccessoryIcon.size.width,
+                                               customAccessoryIcon.size.height);
+        customAccessoryView.hidden = ![selected boolValue];
+        [clickView addSubview:customAccessoryView];
+        
+        CGFloat remainingWidth = tableView.frame.size.width - customAccessoryView.frame.size.width - margin*2;
+        UILabel* customTextLabel = [UILabel new];
+        customTextLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
+        customTextLabel.textColor = UIColorFromRGB(0x4e4e4e);
+        customTextLabel.frame = CGRectMake(startingX,
+                                           0.0f,
+                                           remainingWidth,
+                                           clickView.frame.size.height);
+        [clickView addSubview:customTextLabel];
         
         RIFilterOption* filterOption = [self.filter.options objectAtIndex:indexPath.row];
-        cell.textLabel.text = filterOption.name;
+        customTextLabel.text = filterOption.name;
         
-    }
-    
-    NSNumber* selected = [self.selectedIndexes objectAtIndex:indexPath.row];
-    cell.accessoryView.hidden = ![selected boolValue];
-    
-    //remove the clickable view
-    for (UIView* view in cell.subviews) {
-        if ([view isKindOfClass:[JAClickableView class]]) {
-            [view removeFromSuperview];
+        if (RI_IS_RTL) {
+            [clickView flipSubviewAlignments];
+            [clickView flipSubviewPositions];
         }
     }
-    //add the new clickable view
-    JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.frame.size.width, 44.0f)];
-    clickView.tag = indexPath.row;
-    [clickView addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [cell addSubview:clickView];
     
     return cell;
     

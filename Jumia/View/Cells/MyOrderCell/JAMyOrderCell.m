@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *orderNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *landscapeArrowImageView;
+@property (weak, nonatomic) IBOutlet UIView *separator;
 
 @end
 
@@ -24,7 +25,13 @@
 - (void)awakeFromNib
 {
     // Initialization code
+    self.portraitArrowImageView.translatesAutoresizingMaskIntoConstraints=YES;
     self.clickableView.translatesAutoresizingMaskIntoConstraints = YES;
+    self.dateLabel.translatesAutoresizingMaskIntoConstraints=YES;
+    self.orderNumberLabel.translatesAutoresizingMaskIntoConstraints=YES;
+    self.priceLabel.translatesAutoresizingMaskIntoConstraints=YES;
+    self.landscapeArrowImageView.translatesAutoresizingMaskIntoConstraints=YES;
+    self.separator.translatesAutoresizingMaskIntoConstraints=YES;
     
     [self.dateLabel setTextColor:UIColorFromRGB(0x666666)];
     [self.orderNumberLabel setTextColor:UIColorFromRGB(0x666666)];
@@ -35,6 +42,27 @@
 
 - (void)setupWithOrder:(RITrackOrder*)order isInLandscape:(BOOL)isInLandscape
 {
+    [self.clickableView setFrame:CGRectMake(0.0f,
+                                            0.0f,
+                                            self.frame.size.width,
+                                            kJAMyOrderCellHeight)];
+    
+    self.separator.frame = CGRectMake(0.0f,
+                                      self.clickableView.frame.size.height - 1.0f,
+                                      self.clickableView.frame.size.width,
+                                      1.0f);
+    
+    self.portraitArrowImageView.frame = CGRectMake(self.clickableView.frame.size.width - self.portraitArrowImageView.frame.size.width - 17.0f,
+                                                   18.0f,
+                                                   self.portraitArrowImageView.frame.size.width,
+                                                   self.portraitArrowImageView.frame.size.height);
+    
+    [self.landscapeArrowImageView setImage:[UIImage imageNamed:@"arrow_gotoarea"]];
+    self.landscapeArrowImageView.frame = CGRectMake(self.clickableView.frame.size.width - self.landscapeArrowImageView.frame.size.width - 17.0f,
+                                                    15.0f,
+                                                    self.landscapeArrowImageView.frame.size.width,
+                                                    self.landscapeArrowImageView.frame.size.height);
+    
     if(isInLandscape)
     {
         [self.portraitArrowImageView setHidden:YES];
@@ -46,13 +74,12 @@
         [self.portraitArrowImageView setHidden:NO];
     }
     
-    [self.clickableView setFrame:CGRectMake(0.0f,
-                                            0.0f,
-                                            self.frame.size.width,
-                                            kJAMyOrderCellHeight)];
-    
-    [self.dateLabel setText:order.creationDate];
+    self.priceLabel.textAlignment = NSTextAlignmentRight;
     [self.priceLabel setText:order.totalFormatted];
+    self.priceLabel.frame = CGRectMake(self.clickableView.frame.size.width - self.priceLabel.frame.size.width - 51.0f,
+                                       14.0f,
+                                       self.priceLabel.frame.size.width,
+                                       self.priceLabel.frame.size.height);
     
     NSDictionary* baseAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                          [UIFont fontWithName:kFontLightName size:13], NSFontAttributeName,
@@ -65,8 +92,25 @@
     NSMutableAttributedString* finalString = [[NSMutableAttributedString alloc] initWithString:orderNumberString attributes:baseAttributes];
     [finalString setAttributes:highlightAttributes range:orderNumberLabelRange];
     
+    self.orderNumberLabel.textAlignment = NSTextAlignmentLeft;
     [self.orderNumberLabel setAttributedText:finalString];
     [self.orderNumberLabel sizeToFit];
+    self.orderNumberLabel.frame = CGRectMake(25.0f,
+                                             21.0f,
+                                             self.orderNumberLabel.frame.size.width,
+                                             self.orderNumberLabel.frame.size.height);
+    
+    self.dateLabel.textAlignment = NSTextAlignmentLeft;
+    [self.dateLabel setText:order.creationDate];
+    self.dateLabel.frame = CGRectMake(25.0f,
+                                      8.0f,
+                                      self.dateLabel.frame.size.width,
+                                      self.dateLabel.frame.size.height);
+    
+    if (RI_IS_RTL) {
+        [self.clickableView flipAllSubviews];
+        [self.landscapeArrowImageView flipViewImage];
+    }
 }
 
 + (CGFloat)getCellHeight

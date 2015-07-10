@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+FOUNDATION_EXPORT BOOL const RI_IS_RTL;
+
 FOUNDATION_EXPORT NSString *const RI_USERNAME;
 FOUNDATION_EXPORT NSString *const RI_PASSWORD;
 

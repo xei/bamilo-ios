@@ -62,6 +62,10 @@
             [clickableView addSubview:imageView];
         }
     }
+    
+    if (RI_IS_RTL) {
+        [self flipAllSubviews];
+    }
 }
 
 @end

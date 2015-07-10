@@ -90,10 +90,18 @@ UIAlertViewDelegate
     
     
     self.tableViewMenu.translatesAutoresizingMaskIntoConstraints = YES;
+    self.tableViewMenu.separatorColor = [UIColor whiteColor];
     
     // Added because of the footer space
     self.tableViewMenu.contentInset = UIEdgeInsetsMake(0, 0, -20, 0);
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCategories) name:kSideMenuShouldReload object:nil];
+    
+    [self reloadCategories];
+}
+
+- (void)reloadCategories
+{
     [RICategory getCategoriesWithSuccessBlock:^(id categories) {
         
         self.categories = [NSArray arrayWithArray:(NSArray *)categories];
@@ -106,6 +114,11 @@ UIAlertViewDelegate
         
         [self showMessage:STRING_ERROR success:NO];
     }];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -136,8 +149,14 @@ UIAlertViewDelegate
     
     //remove the clickable view
     for (UIView* view in cell.subviews) {
-        if ([view isKindOfClass:[JAClickableView class]]) {
+        if ([view isKindOfClass:[JAClickableView class]]) { //remove the clickable view
             [view removeFromSuperview];
+        } else {
+            for (UIView* subview in view.subviews) {
+                if ([subview isKindOfClass:[JAClickableView class]]) { //remove the clickable view
+                    [subview removeFromSuperview];
+                }
+            }
         }
     }
     //add the new clickable view
@@ -151,11 +170,45 @@ UIAlertViewDelegate
     if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"]) {
         fontSize = 14.0f;
     }
-    cell.textLabel.font = [UIFont fontWithName:kFontLightName size:fontSize];
-    cell.textLabel.text = [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"];
     
-    cell.imageView.image = [UIImage imageNamed:[[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"image"]];
-    cell.imageView.highlightedImage = [UIImage imageNamed:[[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"selected"]];
+    CGFloat margin = 13.0f;
+    
+    UIImage* cellImage = [UIImage imageNamed:[[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"image"]];
+    CGFloat cellImageX = margin;
+    
+    CGFloat textLabelX = cellImageX*2 + cellImage.size.width;
+    CGFloat textLabelWidth = self.view.frame.size.width - margin*2 - cellImage.size.width;
+    
+    UIImageView* cellImageView = [[UIImageView alloc] initWithImage:cellImage];
+    [clickView addSubview:cellImageView];
+    
+    UILabel* customTextLabel = [UILabel new];
+    customTextLabel.font = [UIFont fontWithName:kFontLightName size:fontSize];
+    customTextLabel.text = [[self.sourceArray objectAtIndex:indexPath.row] objectForKey:@"name"];
+    [clickView addSubview:customTextLabel];
+    
+    if (RI_IS_RTL) {
+        cellImageX = textLabelWidth + margin;
+        textLabelX = 0.0f;
+        customTextLabel.textAlignment = NSTextAlignmentRight;
+        [cellImageView flipViewImage];
+    }
+
+    [cellImageView setFrame:CGRectMake(cellImageX,
+                                       (cellHeight - cellImage.size.height) / 2,
+                                       cellImage.size.width,
+                                       cellImage.size.height)];
+    [customTextLabel setFrame:CGRectMake(textLabelX,
+                                         0.0,
+                                         textLabelWidth,
+                                         cellHeight)];
+    
+    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(customTextLabel.frame.origin.x,
+                                                                 cellHeight - 1,
+                                                                 customTextLabel.frame.size.width,
+                                                                 1)];
+    separator.backgroundColor = JALabelGrey;
+    [clickView addSubview:separator];
     
     if (1 == indexPath.row)
     {

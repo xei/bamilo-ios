@@ -74,6 +74,7 @@
                     [descriptionLabel setLineBreakMode:NSLineBreakByWordWrapping];
                     [descriptionLabel setTextColor:UIColorFromRGB(0x666666)];
                     [descriptionLabel setText:paymentMethod.text];
+                    [descriptionLabel setTextAlignment:NSTextAlignmentLeft];
                     [descriptionLabel sizeToFit];
                     [paymentMethodView addSubview:descriptionLabel];
                     totalHeight += descriptionLabel.frame.size.height + 13.0f;
@@ -83,6 +84,8 @@
                                                        0.0f,
                                                        width,
                                                        totalHeight)];
+                
+                [paymentMethodView flipAllSubviews];
                 [self.paymentMethodFormViews setValue:paymentMethodView forKey:paymentMethod.uid];
             }
         }

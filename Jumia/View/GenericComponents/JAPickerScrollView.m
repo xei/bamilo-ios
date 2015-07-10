@@ -75,7 +75,7 @@
     NSMutableArray* tempArray = [NSMutableArray new];
     
     CGFloat currentWidth = 0;
-    for (int i = 0; i < self.optionStrings.count; i++) {
+    for (int i = 0; i<self.optionStrings.count; i++) {
         NSString* category = [self.optionStrings objectAtIndex:i];
         
         UILabel* newLabel = [[UILabel alloc] initWithFrame:CGRectMake(currentWidth,
@@ -103,7 +103,7 @@
         self.selectedIndex = self.startingIndex-1;
         [self scrollLeftAnimated:NO];
     } else {
-        [self selectLabelAtIndex:0];
+        [self scrollTo:RI_IS_RTL?(self.optionStrings?(self.optionStrings.count-1):0):0 animated:NO];
     }
     
     UIImage* indicatorImage = [UIImage imageNamed:JAPickerScrollViewIndicatorImageName];
@@ -139,6 +139,9 @@
         self.userInteractionEnabled = YES;
         [self addGestureRecognizer:tap];
     }
+    
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchedInScrollView:)];
+    [self addGestureRecognizer:tapGestureRecognizer];
 }
 
 - (UIView *) hitTest:(CGPoint)point withEvent:(UIEvent *)event {
@@ -203,7 +206,9 @@
     
     if (NOTEMPTY(self.delegate) && [self.delegate respondsToSelector:@selector(selectedIndex:)]) {
         if (!self.disableDelagation) {
-            [self.delegate selectedIndex:index];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate selectedIndex:index];
+            });
         }
     }
 }
@@ -211,8 +216,7 @@
 - (void)scrollLeftAnimated:(BOOL)animated
 {
     CGFloat newIndex = self.selectedIndex + 1;
-    
-    if (newIndex < self.optionLabels.count) {
+    if (newIndex < self.optionLabels.count && newIndex >= 0) {
         [self.scrollView scrollRectToVisible:CGRectMake(newIndex * self.scrollView.bounds.size.width,
                                                         self.scrollView.bounds.origin.y,
                                                         self.scrollView.bounds.size.width,
@@ -224,6 +228,19 @@
 - (void)scrollRightAnimated:(BOOL)animated;
 {
     CGFloat newIndex = self.selectedIndex - 1;
+    
+    if (newIndex < self.optionLabels.count && newIndex >= 0) {
+        [self.scrollView scrollRectToVisible:CGRectMake(newIndex * self.scrollView.bounds.size.width,
+                                                        self.scrollView.bounds.origin.y,
+                                                        self.scrollView.bounds.size.width,
+                                                        self.scrollView.bounds.size.height) animated:animated];
+        [self selectLabelAtIndex:newIndex];
+    }
+}
+
+- (void)scrollTo:(NSInteger)index animated:(BOOL)animated;
+{
+    CGFloat newIndex = index;
     
     if (newIndex >= 0) {
         [self.scrollView scrollRectToVisible:CGRectMake(newIndex * self.scrollView.bounds.size.width,

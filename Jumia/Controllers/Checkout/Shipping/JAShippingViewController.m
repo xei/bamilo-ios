@@ -17,6 +17,8 @@
 #import "RICheckout.h"
 #import "RIShippingMethodPickupStationOption.h"
 #import "RICustomer.h"
+#import "UIView+Mirror.h"
+#import "UIImage+Mirror.h"
 
 #define kPickupStationKey @"pickupstation"
 
@@ -103,6 +105,8 @@ UICollectionViewDelegateFlowLayout
 
     self.apiResponse = RIApiResponseSuccess;
 
+    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+    
     [self continueLoading];
 }
 
@@ -121,14 +125,6 @@ UICollectionViewDelegateFlowLayout
     }
     
     [self showLoading];
-    
-    CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
-    {
-        newWidth = self.view.frame.size.width;
-    }
-    
-    [self setupViews:newWidth toInterfaceOrientation:toInterfaceOrientation];
     
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
@@ -167,7 +163,6 @@ UICollectionViewDelegateFlowLayout
          [self removeErrorView];
      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
      {
-         [self removeErrorView];
          [self hideLoading];
          self.apiResponse = apiResponse;
          if(RIApiResponseMaintenancePage == apiResponse)
@@ -275,6 +270,8 @@ UICollectionViewDelegateFlowLayout
     CGFloat marginBetweenIconAndLabel = 5.0f;
     CGFloat realWidth = self.stepIcon.frame.size.width + marginBetweenIconAndLabel + self.stepLabel.frame.size.width - (2 * horizontalMargin);
     
+    self.stepIcon.image = [UIImage imageNamed:@"headerCheckoutStep3Icon"];
+    
     if(self.stepView.frame.size.width >= realWidth)
     {
         CGFloat xStepIconValue = ((self.stepView.frame.size.width - realWidth) / 2) - horizontalMargin;
@@ -299,6 +296,11 @@ UICollectionViewDelegateFlowLayout
                                             4.0f,
                                             (self.stepView.frame.size.width - self.stepIcon.frame.size.width - marginBetweenIconAndLabel - (2 * horizontalMargin)),
                                             12.0f)];
+    }
+    
+    if(RI_IS_RTL){
+        [self.stepBackground setImage:[stepBackgroundImage flipImageWithOrientation:UIImageOrientationUpMirrored]];
+        [self.stepIcon flipViewImage];
     }
 }
 
@@ -390,6 +392,10 @@ UICollectionViewDelegateFlowLayout
     [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
     
     [self reloadCollectionView];
+    
+    if (RI_IS_RTL) {
+        [self.view flipAllSubviews];
+    }
 }
 
 - (void)reloadCollectionView
@@ -519,6 +525,8 @@ UICollectionViewDelegateFlowLayout
                              successBlock:^(RICheckout *checkout) {
                                  
                                  [self hideLoading];
+                                 
+                                 self.checkout=checkout;
                                  
                                  [JAUtils goToCheckout:self.checkout];
                                  

@@ -50,20 +50,21 @@
     }
     
     self.shouldResizeLeftPanel = YES;
-
+    self.shouldResizeRightPanel = YES;
+    
     //we need to allow panning for all view controllers
     //(we will de-activate it in each JABaseViewController
     self.panningLimitedToTopViewController = NO;
     
     //notifications to turn swipe on and off
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(turnOffLeftSwipe)
-                                                 name:kTurnOffLeftSwipePanelNotification
+                                             selector:@selector(turnOffMenuSwipe)
+                                                 name:kTurnOffMenuSwipePanelNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(turnOnLeftSwipe)
-                                                 name:kTurnOnLeftSwipePanelNotification
+                                             selector:@selector(turnOnMenuSwipe)
+                                                 name:kTurnOnMenuSwipePanelNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -133,13 +134,21 @@
         self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
     }
     
-    [self setLeftPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
+    if (RI_IS_RTL) {
+        [self setRightPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
+    }else{
+        [self setLeftPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
+    }
     [self setCenterPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"rootNavigationController"]];
 }
 
 - (void)updateCountry:(NSNotification*)notification
 {
-    [self setLeftPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
+    if (RI_IS_RTL) {
+        [self setRightPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
+    }else{
+        [self setLeftPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
+    }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"first_screen"]];
 
@@ -149,14 +158,21 @@
     }
 }
 
-- (void)turnOffLeftSwipe
+- (void)turnOffMenuSwipe
 {
     self.allowLeftSwipe = NO;
+    self.allowRightSwipe = NO;
 }
 
-- (void)turnOnLeftSwipe
+- (void)turnOnMenuSwipe
 {
-    self.allowLeftSwipe = YES;
+    if (RI_IS_RTL) {
+        self.allowLeftSwipe = NO;
+        self.allowRightSwipe = YES;
+    } else {
+        self.allowLeftSwipe = YES;
+        self.allowRightSwipe = NO;
+    }
 }
 
 - (void)openMainMenu:(NSNotification *)notification
@@ -170,7 +186,11 @@
         }
     }
     
-    [self showLeftPanelAnimated:YES userInfo:notification.userInfo];
+    if (RI_IS_RTL) {
+        [self showRightPanelAnimated:YES userInfo:notification.userInfo];
+    } else {
+        [self showLeftPanelAnimated:YES userInfo:notification.userInfo];
+    }
 }
 
 - (void)showCenterViewController

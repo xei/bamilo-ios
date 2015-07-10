@@ -174,7 +174,7 @@
 
 "voucher_message_hint" = "کد تخفیف خود را در این بخش وارد کنید.";
 
-"call_to_order" = "جهت سفارش تماس بگیرید.";
+"call_to_order" = "سفارش تلفنی";
 
 "string_article" = "یک کالا";
 
@@ -200,7 +200,7 @@
 
 "sub_total_title" = "مجموع ناخالص:";
 
-"vat_string" = "مالیات بر ارزش افزوده";
+"vat_string" = "مالیات ارزش افزوده";
 
 "signup_label" = "ثبت نام";
 

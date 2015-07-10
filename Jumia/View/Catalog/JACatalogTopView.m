@@ -86,7 +86,7 @@
     [self.sortingButton setTitleColor:UIColorFromRGB(0xffa200) forState:UIControlStateHighlighted];
     [self.sortingButton setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
     [self.sortingButton addTarget:self action:@selector(sortingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-
+    
     [self.filterButton setImage:[UIImage imageNamed:@"filterIcon_normal"] forState:UIControlStateNormal];
     [self.filterButton setImage:[UIImage imageNamed:@"filterIcon_highlighted"] forState:UIControlStateSelected];
     [self.filterButton setImage:[UIImage imageNamed:@"filterIcon_highlighted"] forState:UIControlStateHighlighted];
@@ -103,10 +103,78 @@
     self.separatorView.backgroundColor = UIColorFromRGB(0xcccccc);
 }
 
+- (void)repositionForWidth:(CGFloat)width
+{
+    CGFloat margin = 6.0f;
+    
+    self.frame = CGRectMake(self.frame.origin.x,
+                            self.frame.origin.y,
+                            width,
+                            self.frame.size.height);
+    
+    
+    self.viewModeButton.frame = CGRectMake(width - self.viewModeButton.frame.size.width - margin,
+                                           margin,
+                                           self.viewModeButton.frame.size.width,
+                                           self.viewModeButton.frame.size.height);
+    
+    CGFloat remainingWidth = width - self.viewModeButton.frame.size.width - margin*2;
+    CGFloat halfWidth = (remainingWidth-2)/2;
+    
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        
+        
+
+        self.sortingBackView.frame = CGRectMake(margin,
+                                                margin,
+                                                halfWidth,
+                                                self.sortingButton.frame.size.height);
+        self.sortingButton.frame = CGRectMake(self.sortingBackView.frame.size.width - self.sortingButton.frame.size.width,
+                                              0.0f,
+                                              self.sortingButton.frame.size.width,
+                                              self.sortingButton.frame.size.height);
+        
+        self.filterBackView.frame = CGRectMake(CGRectGetMaxX(self.sortingBackView.frame) + 1.0,
+                                               margin,
+                                               halfWidth,
+                                               self.filterBackView.frame.size.height);
+        self.filterButton.frame = CGRectMake(0.0f,
+                                             0.0f,
+                                             self.filterButton.frame.size.width,
+                                             self.filterButton.frame.size.height);
+        
+    }else{
+        
+        self.filterButton.frame = CGRectMake(self.viewModeButton.frame.origin.x - 1.0f - halfWidth,
+                                             margin,
+                                             halfWidth,
+                                             self.filterButton.frame.size.height);
+        
+        self.sortingButton.frame = CGRectMake(self.filterButton.frame.origin.x - 1.0f - halfWidth,
+                                              margin,
+                                              halfWidth,
+                                              self.sortingButton.frame.size.height);
+    }
+    
+    if (RI_IS_RTL) {
+        [self.viewModeButton flipViewPositionInsideSuperview];
+        [self.sortingBackView flipViewPositionInsideSuperview];
+        [self.sortingButton flipViewPositionInsideSuperview];
+        [self.filterBackView flipViewPositionInsideSuperview];
+        [self.filterButton flipViewPositionInsideSuperview];
+
+        //the sorting button will be aligned when the text is set, but we need to align the filters here
+        [self.filterButton flipViewAlignment];
+    }
+}
+
 - (void)setSorting:(RICatalogSorting)sorting;
 {
     NSString* title = [NSString stringWithFormat:@" %@", [kJASORTINGVIEW_OPTIONS_ARRAY objectAtIndex:sorting]];
     [self.sortingButton setTitle:title forState:UIControlStateNormal];
+    if (RI_IS_RTL) {
+        [self.sortingButton flipViewAlignment];
+    }
 }
 
 - (void)sortingButtonPressed:(id)sender
