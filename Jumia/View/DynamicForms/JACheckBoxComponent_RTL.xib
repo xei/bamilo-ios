@@ -27,14 +27,24 @@
                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4qn-33-6fa">
+                    <rect key="frame" x="0.0" y="0.0" width="225" height="51"/>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="06D-re-hHb" firstAttribute="top" secondItem="xSd-NR-Bjy" secondAttribute="top" constant="15" id="IT2-Nt-nId"/>
                 <constraint firstItem="06D-re-hHb" firstAttribute="leading" secondItem="xSd-NR-Bjy" secondAttribute="leading" constant="15" id="LjU-Q4-VcT"/>
+                <constraint firstAttribute="bottom" secondItem="4qn-33-6fa" secondAttribute="bottom" id="c0W-VH-ZxA"/>
+                <constraint firstItem="4qn-33-6fa" firstAttribute="leading" secondItem="xSd-NR-Bjy" secondAttribute="leading" id="dNz-rE-zcq"/>
                 <constraint firstItem="or4-7n-9RV" firstAttribute="leading" secondItem="06D-re-hHb" secondAttribute="trailing" constant="14" id="jiI-qu-lrL"/>
                 <constraint firstAttribute="bottom" secondItem="or4-7n-9RV" secondAttribute="bottom" constant="10" id="m7r-ZI-6Wu"/>
+                <constraint firstItem="or4-7n-9RV" firstAttribute="leading" secondItem="4qn-33-6fa" secondAttribute="trailing" constant="14" id="nCE-nW-eJj"/>
                 <constraint firstAttribute="bottom" secondItem="06D-re-hHb" secondAttribute="bottom" constant="15" id="rVx-Yf-YfG"/>
+                <constraint firstItem="4qn-33-6fa" firstAttribute="top" secondItem="xSd-NR-Bjy" secondAttribute="top" id="sIM-0N-Y4H"/>
                 <constraint firstAttribute="trailing" secondItem="or4-7n-9RV" secondAttribute="trailing" constant="20" id="vef-zf-OmD"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
@@ -42,8 +52,9 @@
             <connections>
                 <outlet property="labelText" destination="06D-re-hHb" id="zdL-q7-QeH"/>
                 <outlet property="switchComponent" destination="or4-7n-9RV" id="VlK-sq-GWU"/>
+                <outlet property="urlButton" destination="4qn-33-6fa" id="2Xa-s9-Mxy"/>
             </connections>
-            <point key="canvasLocation" x="458" y="275"/>
+            <point key="canvasLocation" x="458" y="274.5"/>
         </view>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
