@@ -53,24 +53,58 @@
     
     self.field = field;
     
-    NSString* text;
-    if(VALID_NOTEMPTY(field.label, NSString))
-    {
-        text = field.label;
-        
-        if (VALID_NOTEMPTY(field.linkText, NSString)) {
-            text = [NSString stringWithFormat:@"%@%@", field.label, field.linkText];
-        }
+    if (VALID_NOTEMPTY(field.linkUrl, NSString)) {
+        [self.urlButton addTarget:self action:@selector(urlWasClicked) forControlEvents:UIControlEventTouchUpInside];
     }
     
+    
+    NSMutableAttributedString* attributedText;
+    NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                UIColorFromRGB(0x666666), NSForegroundColorAttributeName, nil];
+
+    NSRange linkRange;
+    if(VALID_NOTEMPTY(field.label, NSString))
+    {
+        if (VALID_NOTEMPTY(field.linkText, NSString)) {
+            attributedText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", field.label, field.linkText]
+                                                                    attributes:attributes];
+            NSDictionary* linkAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                            UIColorFromRGB(0x55a1ff), NSForegroundColorAttributeName, nil];
+            linkRange = NSMakeRange(field.label.length, field.linkText.length);
+            [attributedText setAttributes:linkAttributes
+                                      range:linkRange];
+        } else {
+            attributedText = [[NSMutableAttributedString alloc] initWithString:field.label
+                                                                    attributes:attributes];
+        }
+    }
+    self.labelText.attributedText = attributedText;
+
     [self.switchComponent addTarget:self action:@selector(changedState:) forControlEvents:UIControlEventValueChanged];
-    [self.switchComponent setAccessibilityLabel:text];
-    self.labelText.text = text;
+    [self.switchComponent setAccessibilityLabel:attributedText.string];
     
     if(VALID_NOTEMPTY([self.field value], NSString))
     {
         self.storedValue = @"1";
         [self.switchComponent setOn:YES animated:NO];
+    }
+}
+
+- (void)urlWasClicked
+{
+    NSMutableDictionary* userInfo = [NSMutableDictionary new];
+    [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"show_back_button"];
+    if (VALID_NOTEMPTY(self.field.linkText, NSString)) {
+        [userInfo setObject:self.field.linkText forKey:@"title"];
+    }
+    
+    NSString* notificationName = kDidSelectTeaserWithShopUrlNofication;
+    
+    if (VALID_NOTEMPTY(self.field.linkUrl, NSString)) {
+        [userInfo setObject:self.field.linkUrl forKey:@"url"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
+                                                            object:nil
+                                                          userInfo:userInfo];
     }
 }
 
