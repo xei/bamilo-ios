@@ -88,6 +88,7 @@
     [self.discountImageView setX:48];
     
     self.favoriteButton.selected = VALID_NOTEMPTY(product.favoriteAddDate, NSDate);
+    [self.favoriteButton setHitTestEdgeInsets:UIEdgeInsetsMake(-10, -10, -10, -10)];
     
     if (1 >= product.productSimples.count) {
         self.sizeButton.hidden = YES;
