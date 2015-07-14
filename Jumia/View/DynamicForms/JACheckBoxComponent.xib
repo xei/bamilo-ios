@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -24,23 +24,34 @@
                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2xE-dz-hd1">
+                    <rect key="frame" x="83" y="0.0" width="225" height="51"/>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="06D-re-hHb" firstAttribute="leading" secondItem="or4-7n-9RV" secondAttribute="trailing" constant="16" id="6nP-gH-VZB"/>
+                <constraint firstItem="2xE-dz-hd1" firstAttribute="leading" secondItem="or4-7n-9RV" secondAttribute="trailing" constant="16" id="BEH-gV-MqO"/>
                 <constraint firstItem="or4-7n-9RV" firstAttribute="leading" secondItem="xSd-NR-Bjy" secondAttribute="leading" constant="18" id="CWC-qk-ssJ"/>
                 <constraint firstItem="06D-re-hHb" firstAttribute="top" secondItem="xSd-NR-Bjy" secondAttribute="top" constant="15" id="IT2-Nt-nId"/>
                 <constraint firstAttribute="trailing" secondItem="06D-re-hHb" secondAttribute="trailing" constant="15" id="Xot-Rj-7X5"/>
+                <constraint firstAttribute="trailing" secondItem="2xE-dz-hd1" secondAttribute="trailing" id="hgS-Wl-fuv"/>
                 <constraint firstAttribute="bottom" secondItem="or4-7n-9RV" secondAttribute="bottom" constant="10" id="m7r-ZI-6Wu"/>
                 <constraint firstAttribute="bottom" secondItem="06D-re-hHb" secondAttribute="bottom" constant="15" id="rVx-Yf-YfG"/>
+                <constraint firstAttribute="bottom" secondItem="2xE-dz-hd1" secondAttribute="bottom" id="umH-bd-eRZ"/>
+                <constraint firstItem="2xE-dz-hd1" firstAttribute="top" secondItem="xSd-NR-Bjy" secondAttribute="top" id="uoQ-7o-qWs"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="labelText" destination="06D-re-hHb" id="zdL-q7-QeH"/>
                 <outlet property="switchComponent" destination="or4-7n-9RV" id="VlK-sq-GWU"/>
+                <outlet property="urlButton" destination="2xE-dz-hd1" id="Cra-So-Nja"/>
             </connections>
-            <point key="canvasLocation" x="458" y="275"/>
+            <point key="canvasLocation" x="458" y="274.5"/>
         </view>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

@@ -36,30 +36,23 @@
     NSString *countryIso;
     NSString *name;
     
-    if (reloadAPI) {
-        if (ISEMPTY(country))
+    if (ISEMPTY(country))
+    {
+        NSArray* apiArrayFromCoreData = [[RIDataBaseWrapper sharedInstance]allEntriesOfType:NSStringFromClass([RIApi class])];
+        if(VALID_NOTEMPTY(apiArrayFromCoreData, NSArray))
         {
-            NSArray* apiArrayFromCoreData = [[RIDataBaseWrapper sharedInstance]allEntriesOfType:NSStringFromClass([RIApi class])];
-            if(VALID_NOTEMPTY(apiArrayFromCoreData, NSArray))
-            {
-                RIApi* api = [apiArrayFromCoreData firstObject];
-                url = api.countryUrl;
-                countryIso = api.countryIso;
-                name = api.countryName;
-            }
+            RIApi* api = [apiArrayFromCoreData firstObject];
+            url = api.countryUrl;
+            countryIso = api.countryIso;
+            name = api.countryName;
         }
-        else
-        {
-            [[RIDataBaseWrapper sharedInstance] resetApplicationModel];
-            url = country.url;
-            countryIso = country.countryIso;
-            name = country.name;
-        }
-    } else {
-        //since the api was not reloaded, we can still use the saved parameters
-        name = [RIApi getCountryNameInUse];
-        countryIso = [RIApi getCountryIsoInUse];
-        url = [RIApi getCountryUrlInUse];
+    }
+    else
+    {
+        [[RIDataBaseWrapper sharedInstance] resetApplicationModel];
+        url = country.url;
+        countryIso = country.countryIso;
+        name = country.name;
     }
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", url, RI_API_VERSION, RI_API_INFO]]
@@ -136,7 +129,7 @@
                                                                           
                                                                           if (sectionNeedsDownload) {
                                                                               
-                                                                              [RIApi requestSectionContent:newSection forCountry:url successBlock:^() {
+                                                                              [RIApi requestSectionContent:newSection forCountry:url deleteOldContent:reloadAPI successBlock:^() {
                                                                                   
                                                                               } andFailureBlock:^(RIApiResponse apiResponse,  id error) {
                                                                                   
@@ -310,6 +303,7 @@
 
 + (void)requestSectionContent:(RISection*)section
                    forCountry:(NSString*)url
+             deleteOldContent:(BOOL)deleteOldContent
                  successBlock:(void (^)(void))successBlock
               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray* errorMessages))failureBlock
 {
@@ -326,7 +320,7 @@
         }];
     } else if ([section.name isEqualToString:@"forms"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
-        [RIFormIndex loadFormIndexesIntoDatabaseForCountry:url withSuccessBlock:^(id formIndexes) {
+        [RIFormIndex loadFormIndexesIntoDatabaseForCountry:url deleteOldIndexes:deleteOldContent withSuccessBlock:^(id formIndexes) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             successBlock();
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {

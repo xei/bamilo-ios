@@ -134,6 +134,13 @@ JADatePickerDelegate
     [self getRegisterForm];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+}
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
