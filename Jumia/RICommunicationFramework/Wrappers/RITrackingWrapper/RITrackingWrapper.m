@@ -75,7 +75,7 @@ static dispatch_once_t sharedInstanceToken;
     RINewRelicTracker *newRelicTracker = [[RINewRelicTracker alloc] init];
     RIAdjustTracker *adjustTracker = [[RIAdjustTracker alloc] init];
     [adjustTracker setDelegate:delegate];
-    RIGTMTracker *gtmTracker = [[RIGTMTracker alloc] init];
+    RIGTMTracker *gtmTracker = [RIGTMTracker sharedInstance];
     
     self.trackers = @[googleAnalyticsTracker, bugsenseTracker, ad4PushTracker, newRelicTracker, adjustTracker, gtmTracker];
     

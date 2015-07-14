@@ -13,6 +13,7 @@
 #import "TAGDataLayer.h"
 #import  "GAI.h"
 
+#define kGTMEventGaPropertyIdKey                @"gaPropertyId"
 #define kGTMEventKey                            @"transaction"
 #define kGTMEventSourceKey                      @"source"
 #define kGTMEventCampaignKey                    @"campaign"
@@ -90,6 +91,7 @@ NSString *kGTMToken = @"kGTMToken";
 @property (nonatomic, strong) TAGContainer *container;
 @property (nonatomic, strong) NSMutableArray *pendingEvents;
 @property (nonatomic, assign) BOOL containerIsAvailable;
+@property (nonatomic) NSString *gaId;
 
 // Used for sending traffic in the background.
 @property(nonatomic, assign) BOOL okToWait;
@@ -101,6 +103,15 @@ NSString *kGTMToken = @"kGTMToken";
 
 @synthesize queue;
 @synthesize registeredEvents;
+
++ (instancetype)sharedInstance {
+    static RIGTMTracker *sharedMyManager = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedMyManager = [[self alloc] init];
+    });
+    return sharedMyManager;
+}
 
 - (id)init
 {
@@ -161,7 +172,7 @@ NSString *kGTMToken = @"kGTMToken";
     return self;
 }
 
-+ (void)initWithGTMTrackerId:(NSString *)trackingId{
+- (void)setGTMTrackerId:(NSString *)trackingId andGaId:(NSString *)gaId {
     
     RIDebugLog(@"GTM tracker tracks application launch");
     
@@ -172,6 +183,8 @@ NSString *kGTMToken = @"kGTMToken";
             return;
         }
     }
+    
+    self.gaId = gaId;
     
     TAGManager *tagManager = [TAGManager instance];
     
@@ -190,8 +203,7 @@ NSString *kGTMToken = @"kGTMToken";
                                  tagManager:tagManager
                                    openType:kTAGOpenTypePreferFresh
                                     timeout:nil
-                                   notifier:nil];
-
+                                   notifier:self];
 }
 
 #pragma mark - RITracker protocol
@@ -217,8 +229,11 @@ NSString *kGTMToken = @"kGTMToken";
     self.pendingEvents = [[NSMutableArray alloc] init];
 }
 
-- (void)pushEvent:(NSDictionary*)event
+- (void)pushEvent:(NSMutableDictionary *)event
 {
+    if (self.gaId) {
+        [event setObject:self.gaId forKey:kGTMEventGaPropertyIdKey];
+    }
     if(self.containerIsAvailable)
     {
         // The container should have already been opened, otherwise events pushed to
