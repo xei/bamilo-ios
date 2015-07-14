@@ -10,6 +10,7 @@
 #import "RIProduct.h"
 #import "JAPriceView.h"
 #import "JAClickableView.h"
+#import "UIButton+Extensions.h"
 
 #define JACatalogCellContentCornerRadius 3.0f
 #define JACatalogCellNormalFont [UIFont fontWithName:kFontRegularName size:10.0f]

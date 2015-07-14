@@ -466,6 +466,11 @@
 		9A7EE9C01B554706004E2505 /* UIDevice+ADJAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A7EE9B31B554706004E2505 /* UIDevice+ADJAdditions.m */; };
 		9A7EE9C11B554706004E2505 /* UIDevice+ADJAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A7EE9B31B554706004E2505 /* UIDevice+ADJAdditions.m */; };
 		9A7EE9C21B554706004E2505 /* UIDevice+ADJAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A7EE9B31B554706004E2505 /* UIDevice+ADJAdditions.m */; };
+		9A7EE9C51B5557C9004E2505 /* UIButton+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A7EE9C41B5557C9004E2505 /* UIButton+Extensions.m */; };
+		9A7EE9C61B5557C9004E2505 /* UIButton+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A7EE9C41B5557C9004E2505 /* UIButton+Extensions.m */; };
+		9A7EE9C71B5557C9004E2505 /* UIButton+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A7EE9C41B5557C9004E2505 /* UIButton+Extensions.m */; };
+		9A7EE9C81B5557C9004E2505 /* UIButton+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A7EE9C41B5557C9004E2505 /* UIButton+Extensions.m */; };
+		9A7EE9C91B5557C9004E2505 /* UIButton+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A7EE9C41B5557C9004E2505 /* UIButton+Extensions.m */; };
 		9ABCAEEE1B0F6A2C00A69271 /* UIView+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ABCAEED1B0F6A2C00A69271 /* UIView+Mirror.m */; };
 		9ABCAEF81B0F8FEE00A69271 /* UIView+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ABCAEED1B0F6A2C00A69271 /* UIView+Mirror.m */; };
 		9ABCAEF91B0F8FEE00A69271 /* UIView+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ABCAEED1B0F6A2C00A69271 /* UIView+Mirror.m */; };
@@ -2901,6 +2906,8 @@
 		9A7EE9B11B554706004E2505 /* NSString+ADJAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ADJAdditions.m"; sourceTree = "<group>"; };
 		9A7EE9B21B554706004E2505 /* UIDevice+ADJAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+ADJAdditions.h"; sourceTree = "<group>"; };
 		9A7EE9B31B554706004E2505 /* UIDevice+ADJAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+ADJAdditions.m"; sourceTree = "<group>"; };
+		9A7EE9C31B5557C9004E2505 /* UIButton+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+Extensions.h"; path = "Categories/UIButton+Extensions.h"; sourceTree = "<group>"; };
+		9A7EE9C41B5557C9004E2505 /* UIButton+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+Extensions.m"; path = "Categories/UIButton+Extensions.m"; sourceTree = "<group>"; };
 		9ABCAEEC1B0F6A2C00A69271 /* UIView+Mirror.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Mirror.h"; path = "Categories/UIView+Mirror.h"; sourceTree = "<group>"; };
 		9ABCAEED1B0F6A2C00A69271 /* UIView+Mirror.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Mirror.m"; path = "Categories/UIView+Mirror.m"; sourceTree = "<group>"; };
 		9AC4D6931B45A1EF00036F1C /* JACatalogListCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogListCollectionViewCell.h; sourceTree = "<group>"; };
@@ -5013,6 +5020,8 @@
 				B5C1E33619BA1E73009C422C /* UIImageView+JA.m */,
 				9AEA3B241B15D4AC00771EEA /* UIView+Frame.h */,
 				9AEA3B251B15D4AC00771EEA /* UIView+Frame.m */,
+				9A7EE9C31B5557C9004E2505 /* UIButton+Extensions.h */,
+				9A7EE9C41B5557C9004E2505 /* UIButton+Extensions.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -7565,6 +7574,7 @@
 				ac030ec40f4f5b911adb9da0 /* JARecentlyViewedViewController.m in Sources */,
 				B5C2B0691A0911AB00B4872D /* JAPicker.m in Sources */,
 				227641879a675f5bdc88d47a /* SDWebImageDownloader.m in Sources */,
+				9A7EE9C61B5557C9004E2505 /* UIButton+Extensions.m in Sources */,
 				B5CFE99E1A0CF45F004CE545 /* JAAddRatingView.m in Sources */,
 				f216f801001f61223ca8024c /* JAColorFilterCell.m in Sources */,
 				ed304145f21e8a21401fd967 /* JAAddressesViewController.m in Sources */,
@@ -7766,6 +7776,7 @@
 				CEBE2A7B1A9E312F00F457FA /* GTMNSString+HTML.m in Sources */,
 				B5A3025E19811E8A00F71726 /* UIImageView+WebCache.m in Sources */,
 				B55BFB9519E6A83E0098467E /* JALoadCountryViewController.m in Sources */,
+				9A7EE9C51B5557C9004E2505 /* UIButton+Extensions.m in Sources */,
 				CEC376D319EBCA5800558B98 /* JAClickableView.m in Sources */,
 				CE445879198BF15B00CE7E8D /* JACampaignsTeaserView.m in Sources */,
 				B59DCA7619B88DAD00DE7960 /* JASwitchCell.m in Sources */,
@@ -8029,6 +8040,7 @@
 				CE9ADB5C1AB34C4600D56481 /* RIProductRatings.m in Sources */,
 				CE9ADB5D1AB34C4600D56481 /* GTMNSString+HTML.m in Sources */,
 				CE9ADB5E1AB34C4600D56481 /* UIImageView+WebCache.m in Sources */,
+				9A7EE9C71B5557C9004E2505 /* UIButton+Extensions.m in Sources */,
 				CE9ADB5F1AB34C4600D56481 /* JALoadCountryViewController.m in Sources */,
 				CE9ADB601AB34C4600D56481 /* JAClickableView.m in Sources */,
 				CE9ADB611AB34C4600D56481 /* JACampaignsTeaserView.m in Sources */,
@@ -8284,6 +8296,7 @@
 				CE9ADD561AB6D6E900D56481 /* RIProductRatings.m in Sources */,
 				CE9ADD571AB6D6E900D56481 /* GTMNSString+HTML.m in Sources */,
 				CE9ADD581AB6D6E900D56481 /* UIImageView+WebCache.m in Sources */,
+				9A7EE9C81B5557C9004E2505 /* UIButton+Extensions.m in Sources */,
 				CE9ADD591AB6D6E900D56481 /* JALoadCountryViewController.m in Sources */,
 				CE9ADD5A1AB6D6E900D56481 /* JAClickableView.m in Sources */,
 				CE9ADD5B1AB6D6E900D56481 /* JACampaignsTeaserView.m in Sources */,
@@ -8539,6 +8552,7 @@
 				CE9ADF501AB6D78200D56481 /* RIProductRatings.m in Sources */,
 				CE9ADF511AB6D78200D56481 /* GTMNSString+HTML.m in Sources */,
 				CE9ADF521AB6D78200D56481 /* UIImageView+WebCache.m in Sources */,
+				9A7EE9C91B5557C9004E2505 /* UIButton+Extensions.m in Sources */,
 				CE9ADF531AB6D78200D56481 /* JALoadCountryViewController.m in Sources */,
 				CE9ADF541AB6D78200D56481 /* JAClickableView.m in Sources */,
 				CE9ADF551AB6D78200D56481 /* JACampaignsTeaserView.m in Sources */,
