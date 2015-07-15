@@ -181,10 +181,27 @@
         NSMutableDictionary *trackingDictionary = nil;
         NSMutableArray *viewCartTrackingProducts = [[NSMutableArray alloc] init];
         [self removeErrorView];
+
+        //reset teaserTrackingInfo for items that have been removed somehow (i.e. logout)
+        NSDictionary* teaserTrackingInfoDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey];
+        NSMutableDictionary* newteaserTrackingInfoDictionary = [NSMutableDictionary new];
+        [teaserTrackingInfoDictionary enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+            BOOL exists = NO;
+            for (RICartItem *cartItem in self.cart.cartItems) {
+                if ([key isEqualToString:cartItem.sku]) {
+                    exists = YES;
+                    break;
+                }
+            }
+            if (exists) {
+                [newteaserTrackingInfoDictionary setObject:obj forKey:key];
+            }
+        }];
+        [[NSUserDefaults standardUserDefaults] setObject:newteaserTrackingInfoDictionary forKey:kSkusFromTeaserInCartKey];
         
         for (int i = 0; i < self.cart.cartItems.count; i++) {
             RICartItem *cartItem = [[self.cart cartItems] objectAtIndex:i];
-
+            
             trackingDictionary = [[NSMutableDictionary alloc] init];
             NSMutableDictionary *viewCartTrackingProduct = [[NSMutableDictionary alloc] init];
 
@@ -870,6 +887,11 @@
         [RICart removeProductWithQuantity:[product.quantity stringValue]
                                       sku:product.simpleSku
                          withSuccessBlock:^(RICart *cart) {
+                             
+                             NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
+                             [skusFromTeaserInCart removeObjectForKey:product.sku];
+                             [[NSUserDefaults standardUserDefaults] setObject:[skusFromTeaserInCart copy] forKey:kSkusFromTeaserInCartKey];
+                             
                              self.cart = cart;
                              
                              NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];

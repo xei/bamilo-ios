@@ -74,28 +74,34 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     if (VALID_NOTEMPTY(parts, NSArray) && 2 == parts.count) {
         NSString* identifier = [parts objectAtIndex:0];
         NSString* url = [parts objectAtIndex:1];
+        
         if (VALID_NOTEMPTY(identifier, NSString) && VALID_NOTEMPTY(url, NSString)) {
 
+            NSMutableDictionary* userInfo = [NSMutableDictionary new];
+            [userInfo setObject:url forKey:@"url"];
+            [userInfo setObject:STRING_BACK forKey:@"show_back_button_title"];
+            
+            if (self.teaserTrackingInfo) {
+                [userInfo setObject:self.teaserTrackingInfo forKey:@"teaserTrackingInfo"];
+            }
+            
             if ([identifier isEqualToString:@"pdv"]) {
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                                     object:nil
-                                                                  userInfo:@{ @"url" : url,
-                                                                              @"show_back_button_title" : STRING_BACK}];
+                                                                  userInfo:userInfo];
                 
             } else if ([identifier isEqualToString:@"catalog"]) {
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithCatalogUrlNofication
                                                                     object:nil
-                                                                  userInfo:@{ @"url" : url,
-                                                                              @"show_back_button_title" : STRING_BACK}];
+                                                                  userInfo:userInfo];
                 
             } else if ([identifier isEqualToString:@"campaign"]) {
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectCampaignNofication
                                                                     object:nil
-                                                                  userInfo:@{ @"url" : url,
-                                                                              @"show_back_button_title" : STRING_BACK}];
+                                                                  userInfo:userInfo];
                 
             }
             

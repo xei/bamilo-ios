@@ -41,6 +41,8 @@
         [userInfo setObject:teaserComponent.title forKey:@"title"];
     }
     
+    [userInfo setObject:[self teaserTrackingInfoForIndex:index] forKeyedSubscript:@"teaserTrackingInfo"];
+    
     NSString* notificationName;
     
     if ([teaserComponent.targetType isEqualToString:@"catalog"]) {
@@ -71,7 +73,22 @@
                                                             object:nil
                                                           userInfo:userInfo];
     }
+    
+    //tracking click
+    NSMutableDictionary* teaserTrackingDictionary = [NSMutableDictionary new];
+    [teaserTrackingDictionary setValue:[self teaserTrackingInfoForIndex:index] forKey:kRIEventCategoryKey];
+    [teaserTrackingDictionary setValue:@"BannerClick" forKey:kRIEventActionKey];
+    [teaserTrackingDictionary setValue:teaserComponent.url forKey:kRIEventLabelKey];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventTeaserClick]
+                                              data:[teaserTrackingDictionary copy]];
 
+}
+
+- (NSString*)teaserTrackingInfoForIndex:(NSInteger)index;
+{
+    //should be implemented in subclasses
+    return nil;
 }
 
 @end

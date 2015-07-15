@@ -141,4 +141,10 @@
     }
 }
 
+- (NSString*)teaserTrackingInfoForIndex:(NSInteger)index;
+{
+    NSString* teaserTrackingInfo = [NSString stringWithFormat:@"Top_Sellers_%ld",(long)index];
+    return teaserTrackingInfo;
+}
+
 @end

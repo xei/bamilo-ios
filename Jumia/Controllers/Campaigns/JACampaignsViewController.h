@@ -19,4 +19,6 @@
 @property (nonatomic, strong)NSString* campaignId;
 @property (nonatomic, strong)NSString* campaignUrl;
 
+@property (nonatomic, strong) NSString* teaserTrackingInfo;
+
 @end
