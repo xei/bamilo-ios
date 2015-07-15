@@ -396,6 +396,8 @@
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation
 {
+    [Adjust appWillOpenUrl:url];
+    
     BOOL urlWasHandled = [FBAppCall handleOpenURL:url
                                 sourceApplication:sourceApplication
                                   fallbackHandler:^(FBAppCall *call) {

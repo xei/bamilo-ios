@@ -348,7 +348,7 @@
     JACampaignPageView* campaignPageView = [self.campaignPages objectAtIndex:index];
     [self.scrollView scrollRectToVisible:campaignPageView.frame animated:YES];
     if (NO == campaignPageView.isLoaded) {
-        [self loadCampaignPageAtIndex:[NSNumber numberWithInt:index]];
+        [self loadCampaignPageAtIndex:[NSNumber numberWithLong:index]];
     }
 }
 

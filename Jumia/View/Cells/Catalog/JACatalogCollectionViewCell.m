@@ -65,6 +65,7 @@
     
     _favoriteButtonRect = CGRectMake(0, 10, 24, 24);
     _favoriteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_favoriteButton setHitTestEdgeInsets:UIEdgeInsetsMake(-10, -10, -10, -10)];
     [_favoriteButton setFrame:_favoriteButtonRect];
     [_favoriteButton setImage:[UIImage imageNamed:@"FavButton"] forState:UIControlStateNormal];
     [_favoriteButton setImage:[UIImage imageNamed:@"FavButtonPressed"] forState:UIControlStateSelected];

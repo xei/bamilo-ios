@@ -323,7 +323,7 @@
                                        {
                                            [RIGoogleAnalyticsTracker initGATrackerWithId:configuration.gaId];
                                            
-                                           [RIGTMTracker initWithGTMTrackerId:configuration.gtmId];
+                                           [[RIGTMTracker sharedInstance] setGTMTrackerId:configuration.gtmId andGaId:configuration.gaId];
                                             
                                            self.configurationRequestCount--;
                                        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)

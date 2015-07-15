@@ -49,6 +49,7 @@
     [self.priceView setY:CGRectGetMaxY(self.nameLabel.frame) + 2*JACatalogCellPriceLabelOffsetY];
     
     [self.favoriteButton setX:self.backgroundContentView.width - self.favoriteButton.width - 6.f];
+    [self.favoriteButton setHitTestEdgeInsets:UIEdgeInsetsMake(-10, -10, -10, -10)];
     
     [self.ratingsView removeFromSuperview];
     self.ratingsView = [JARatingsView getNewJARatingsView];
@@ -85,6 +86,7 @@
     }
     
     [self.deleteButton setX:self.backgroundContentView.frame.size.width-self.deleteButton.width];
+    [self.deleteButton setHitTestEdgeInsets:UIEdgeInsetsMake(-10, -10, -10, -10)];
     
     [self setRTL];
 }
@@ -108,6 +110,7 @@
     [self.quantityButton.titleLabel setTextAlignment:NSTextAlignmentLeft];
     
     [self.deleteButton setX:self.width-self.deleteButton.width];
+    [self.deleteButton setHitTestEdgeInsets:UIEdgeInsetsMake(-10, -10, -10, -10)];
     [self.separator setWidth:self.width];
     
     [self setRTL];

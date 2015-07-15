@@ -23,11 +23,11 @@
 
 @interface JACartViewController () {
     BOOL _emptyImageFlipOnce;
+    BOOL _firstLoading;
 }
 
 @property (nonatomic, strong) NSString *voucherCode;
 @property (nonatomic, assign) CGRect keyboardFrame;
-@property (nonatomic, assign) BOOL firstLoading;
 @property (nonatomic, strong) JAPicker *picker;
 @property (nonatomic, assign) BOOL requestDone;
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
@@ -53,7 +53,7 @@
     
     self.apiResponse = RIApiResponseSuccess;
     
-    self.firstLoading = YES;
+    _firstLoading = YES;
     
     self.A4SViewControllerAlias = @"CART";
     
@@ -274,11 +274,11 @@
         [self loadCartInfo];
         [self hideLoading];
         
-        if(self.firstLoading)
+        if(_firstLoading)
         {
             NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
             [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-            self.firstLoading = NO;
+            _firstLoading = NO;
         }
         
         // notify the InAppNotification SDK that this the active view controller
@@ -288,11 +288,11 @@
         self.apiResponse = apiResponse;
         self.requestDone = YES;
         
-        if(self.firstLoading)
+        if(_firstLoading)
         {
             NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
             [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-            self.firstLoading = NO;
+            _firstLoading = NO;
         }
         
         if(RIApiResponseMaintenancePage == apiResponse)
