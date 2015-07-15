@@ -110,6 +110,8 @@
 #define kRememberedEmail @"REMEMBER_EMAIL"
 
 
+//tracking keys
+#define kSkusFromTeaserInCartKey @"SKUS_FROM_TEASER_IN_CART"
 
 
 //************

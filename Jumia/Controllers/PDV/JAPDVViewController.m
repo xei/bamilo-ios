@@ -1376,6 +1376,17 @@ JAActivityViewControllerDelegate
                                 simple:self.currentSimple.sku
                       withSuccessBlock:^(RICart *cart) {
                           
+                          if (VALID_NOTEMPTY(self.teaserTrackingInfo, NSString)) {
+                              NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
+                              
+                              NSString* obj = [skusFromTeaserInCart objectForKey:self.product.sku];
+                              
+                              if (ISEMPTY(obj)) {
+                                  [skusFromTeaserInCart setValue:self.teaserTrackingInfo forKey:self.product.sku];
+                                  [[NSUserDefaults standardUserDefaults] setObject:[skusFromTeaserInCart copy] forKey:kSkusFromTeaserInCartKey];
+                              }
+                          }
+                          
                           NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f)? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
                           
                           NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];

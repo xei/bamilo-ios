@@ -380,12 +380,18 @@
 
 - (void)openCampaignWithSku:(NSString*)sku;
 {
+    
+    NSMutableDictionary* userInfo = [NSMutableDictionary new];
+    [userInfo setObject:sku forKey:@"sku"];
+    [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"show_back_button"];
+    if (self.teaserTrackingInfo) {
+        [userInfo setObject:self.teaserTrackingInfo forKey:@"teaserTrackingInfo"];
+    }
     //the flag shouldPerformButtonActions is used to fix the scrolling, if the campaignPages.count is 1, then it is not needed
     if (self.shouldPerformButtonActions || 1 == self.campaignPages.count) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                             object:nil
-                                                          userInfo:@{ @"sku" : sku ,
-                                                                      @"show_back_button" : [NSNumber numberWithBool:YES]}];
+                                                          userInfo:userInfo];
     }
 }
 
@@ -432,6 +438,17 @@
                                sku:self.backupCampaignProduct.sku
                             simple:self.backupSimpleSku
                   withSuccessBlock:^(RICart *cart) {
+                      
+                      if (VALID_NOTEMPTY(self.teaserTrackingInfo, NSString)) {
+                          NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
+                          
+                          NSString* obj = [skusFromTeaserInCart objectForKey:self.backupCampaignProduct.sku];
+                          
+                          if (ISEMPTY(obj)) {
+                              [skusFromTeaserInCart setValue:self.teaserTrackingInfo forKey:self.backupCampaignProduct.sku];
+                              [[NSUserDefaults standardUserDefaults] setObject:[skusFromTeaserInCart copy] forKey:kSkusFromTeaserInCartKey];
+                          }
+                      }
                       
                       NSNumber *price = self.backupCampaignProduct.priceEuroConverted;
                       if(VALID_NOTEMPTY(self.backupCampaignProduct.specialPriceEuroConverted, NSNumber) && [self.backupCampaignProduct.specialPriceEuroConverted floatValue] > 0.0f)
