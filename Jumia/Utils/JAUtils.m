@@ -16,6 +16,11 @@
 {       
     if([@"createAddress" isEqualToString:checkout.nextStep])
     {
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button", @"from_checkout"]];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
+                                                            object:checkout
+                                                          userInfo:userInfo];
     }
     else if([@"billing" isEqualToString:checkout.nextStep])
     {
@@ -26,19 +31,55 @@
     else if([@"shippingMethod" isEqualToString:checkout.nextStep])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutShippingScreenNotification
-                                                            object:nil
+                                                            object:checkout
                                                           userInfo:nil];
     }
     else if([@"paymentMethod" isEqualToString:checkout.nextStep])
     {        
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutPaymentScreenNotification
-                                                            object:nil
+                                                            object:checkout
                                                           userInfo:nil];
     }
     else if([@"finish" isEqualToString:checkout.nextStep])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutFinishScreenNotification
                                                             object:checkout
+                                                          userInfo:nil];
+    }
+}
+
++ (void) goToNextStep:(NSString*)nextStep
+{
+    if([@"createAddress" isEqualToString:nextStep])
+    {
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button", @"from_checkout"]];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
+                                                            object:nil
+                                                          userInfo:userInfo];
+    }
+    else if([@"billing" isEqualToString:nextStep])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+                                                            object:@{@"animated":[NSNumber numberWithBool:YES]}
+                                                          userInfo:@{@"from_checkout":[NSNumber numberWithBool:YES]}];
+    }
+    else if([@"shippingMethod" isEqualToString:nextStep])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutShippingScreenNotification
+                                                            object:nil
+                                                          userInfo:nil];
+    }
+    else if([@"paymentMethod" isEqualToString:nextStep])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutPaymentScreenNotification
+                                                            object:nil
+                                                          userInfo:nil];
+    }
+    else if([@"finish" isEqualToString:nextStep])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutFinishScreenNotification
+                                                            object:nil
                                                           userInfo:nil];
     }
 }
