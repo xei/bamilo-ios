@@ -41,7 +41,7 @@
         [userInfo setObject:teaserComponent.title forKey:@"title"];
     }
     
-    [userInfo setObject:[self teaserTrackingInfoForIndex:index] forKeyedSubscript:@"teaserTrackingInfo"];
+    [userInfo setObject:[self teaserTrackingInfoForIndex:index] forKey:@"teaserTrackingInfo"];
     
     NSString* notificationName;
     
@@ -72,16 +72,16 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
                                                             object:nil
                                                           userInfo:userInfo];
+        
+        //tracking click
+        NSMutableDictionary* teaserTrackingDictionary = [NSMutableDictionary new];
+        [teaserTrackingDictionary setValue:[self teaserTrackingInfoForIndex:index] forKey:kRIEventCategoryKey];
+        [teaserTrackingDictionary setValue:@"BannerClick" forKey:kRIEventActionKey];
+        [teaserTrackingDictionary setValue:teaserComponent.url forKey:kRIEventLabelKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventTeaserClick]
+                                                  data:[teaserTrackingDictionary copy]];
     }
-    
-    //tracking click
-    NSMutableDictionary* teaserTrackingDictionary = [NSMutableDictionary new];
-    [teaserTrackingDictionary setValue:[self teaserTrackingInfoForIndex:index] forKey:kRIEventCategoryKey];
-    [teaserTrackingDictionary setValue:@"BannerClick" forKey:kRIEventActionKey];
-    [teaserTrackingDictionary setValue:teaserComponent.url forKey:kRIEventLabelKey];
-    
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventTeaserClick]
-                                              data:[teaserTrackingDictionary copy]];
 
 }
 

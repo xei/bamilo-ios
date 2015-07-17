@@ -22,13 +22,23 @@
 {
     [super load];
     
-    if (VALID_NOTEMPTY(self.teaserGrouping.teaserComponents, NSOrderedSet)) {
+    NSOrderedSet* teaserComponents;
+    NSString* title;
+    if (VALID_NOTEMPTY(self.teaserGrouping, RITeaserGrouping)) {
+        teaserComponents = self.teaserGrouping.teaserComponents;
+        title = self.teaserGrouping.title;
+    } else if (VALID_NOTEMPTY(self.featuredBoxTeaserGrouping, RIFeaturedBoxTeaserGrouping)) {
+        teaserComponents = self.featuredBoxTeaserGrouping.teaserComponents;
+        title = self.featuredBoxTeaserGrouping.title;
+    }
+    
+    if (VALID_NOTEMPTY(teaserComponents, NSOrderedSet)) {
         CGFloat groupingTitleLabelMargin = 16.0f;
         CGFloat groupingTitleLabelHeight = 50.0f; //value by design
         UILabel* groupingTitleLabel = [UILabel new];
         groupingTitleLabel.font = [UIFont fontWithName:kFontMediumName size:14.0f];
         groupingTitleLabel.textColor = [UIColor blackColor];
-        groupingTitleLabel.text = self.teaserGrouping.title;
+        groupingTitleLabel.text = title;
         [groupingTitleLabel sizeToFit];
         [groupingTitleLabel setFrame:CGRectMake(groupingTitleLabelMargin,
                                                 self.bounds.origin.y,
@@ -52,9 +62,9 @@
             componentWidth = 142.0f; //value by design
         }
         
-        for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
+        for (int i = 0; i < teaserComponents.count; i++) {
             
-            RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
+            RITeaserComponent* component = [teaserComponents objectAtIndex:i];
             
             NSString *priceToPresent = component.specialPriceFormatted;
             
@@ -112,7 +122,7 @@
             
             currentX += clickableView.frame.size.width;
             
-            if (i+1 != self.teaserGrouping.teaserComponents.count) {
+            if (i+1 != teaserComponents.count) {
                 //not the last one, so add a separator
                 UIView* separator = [UIView new];
                 separator.backgroundColor = UIColorFromRGB(0xd8d8d8);
@@ -145,6 +155,31 @@
 {
     NSString* teaserTrackingInfo = [NSString stringWithFormat:@"Top_Sellers_%ld",(long)index];
     return teaserTrackingInfo;
+}
+
+- (void)teaserPressedForIndex:(NSInteger)index
+{
+    if (VALID_NOTEMPTY(self.teaserGrouping, RITeaserGrouping)) {
+        [super teaserPressedForIndex:index];
+    } else if (VALID_NOTEMPTY(self.featuredBoxTeaserGrouping, RIFeaturedBoxTeaserGrouping)) {
+        
+        RITeaserComponent* teaserComponent = [self.featuredBoxTeaserGrouping.teaserComponents objectAtIndex:index];
+        
+        NSMutableDictionary* userInfo = [NSMutableDictionary new];
+        [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"show_back_button"];
+        if (VALID_NOTEMPTY(teaserComponent.title, NSString)) {
+            [userInfo setObject:teaserComponent.title forKey:@"title"];
+        }
+        
+        NSString* notificationName = kDidSelectTeaserWithPDVUrlNofication;
+        
+        if (VALID_NOTEMPTY(teaserComponent.url, NSString)) {
+            [userInfo setObject:teaserComponent.url forKey:@"url"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
+                                                                object:nil
+                                                              userInfo:userInfo];
+        }
+    }
 }
 
 @end
