@@ -10,7 +10,7 @@
 #import "JARootViewController.h"
 #import "JAUtils.h"
 #import "RIAdjustTracker.h"
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <HockeySDK/HockeySDK.h>
 
 #define kSessionDuration 1800.0f
@@ -123,7 +123,7 @@
                                                                             delegate:self];
 #endif
     
-    [FBLoginView class];
+    [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
     
     [self checkSession];
     
@@ -398,11 +398,7 @@
 {
     [Adjust appWillOpenUrl:url];
     
-    BOOL urlWasHandled = [FBAppCall handleOpenURL:url
-                                sourceApplication:sourceApplication
-                                  fallbackHandler:^(FBAppCall *call) {
-                                      NSLog(@"Unhandled deep link: %@", url);
-                                  }];
+    BOOL urlWasHandled = [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
     
     if (!urlWasHandled && VALID_NOTEMPTY(url, NSURL))
     {
@@ -537,7 +533,7 @@
 
 -(void)applicationDidBecomeActive:(UIApplication *)application
 {
-    [FBAppEvents activateApp];
+    [FBSDKAppEvents activateApp];
 }
 
 

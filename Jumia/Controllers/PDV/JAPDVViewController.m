@@ -31,7 +31,7 @@
 #import "JAUtils.h"
 #import "RICustomer.h"
 #import "JAPDVWizardView.h"
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKAppEvents.h>
 #import "AQSFacebookMessengerActivity.h"
 #import "JAPDVBundles.h"
 #import "JAPDVBundleSingleItem.h"
@@ -564,11 +564,11 @@ JAActivityViewControllerDelegate
                                               data:[trackingDictionary copy]];
     
     float value = [price floatValue];
-    [FBAppEvents logEvent:FBAppEventNameViewedContent
+    [FBSDKAppEvents logEvent:FBSDKAppEventNameViewedContent
                valueToSum: value
-               parameters:@{FBAppEventParameterNameContentID: self.product.sku,
-                            FBAppEventParameterNameContentType: self.product.name,
-                            FBAppEventParameterNameCurrency:@"EUR"}];
+               parameters:@{FBSDKAppEventParameterNameContentID: self.product.sku,
+                            FBSDKAppEventParameterNameContentType: self.product.name,
+                            FBSDKAppEventParameterNameCurrency:@"EUR"}];
     
     
     
@@ -1468,11 +1468,11 @@ JAActivityViewControllerDelegate
                                                                     data:[trackingDictionary copy]];
                           
                           float value = [price floatValue];
-                          [FBAppEvents logEvent:FBAppEventNameAddedToCart
+                          [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToCart
                                      valueToSum:value
-                                     parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
-                                                   FBAppEventParameterNameContentType : self.product.name,
-                                                   FBAppEventParameterNameContentID   : self.product.sku}];
+                                     parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
+                                                   FBSDKAppEventParameterNameContentType : self.product.name,
+                                                   FBSDKAppEventParameterNameContentID   : self.product.sku}];
                           
                           NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                           [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
@@ -1809,11 +1809,11 @@ JAActivityViewControllerDelegate
                                                                        data:[trackingDictionary copy]];
                              
                              float value = [price floatValue];
-                             [FBAppEvents logEvent:FBAppEventNameAddedToCart
+                             [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToCart
                                         valueToSum:value
-                                        parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
-                                                      FBAppEventParameterNameContentType : self.product.name,
-                                                      FBAppEventParameterNameContentID   : self.product.sku}];
+                                        parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
+                                                      FBSDKAppEventParameterNameContentType : self.product.name,
+                                                      FBSDKAppEventParameterNameContentID   : self.product.sku}];
                              
                              NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                              [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
@@ -2081,11 +2081,11 @@ JAActivityViewControllerDelegate
                                                       data:[trackingDictionary copy]];
             
             float value = [price floatValue];
-            [FBAppEvents logEvent:FBAppEventNameAddedToWishlist
+            [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToWishlist
                        valueToSum:value
-                       parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
-                                     FBAppEventParameterNameContentType : self.product.name,
-                                     FBAppEventParameterNameContentID   : self.product.sku}];
+                       parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
+                                     FBSDKAppEventParameterNameContentType : self.product.name,
+                                     FBSDKAppEventParameterNameContentID   : self.product.sku}];
             
             if (button.selected) {
                 self.product.favoriteAddDate = [NSDate date];

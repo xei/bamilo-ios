@@ -19,7 +19,7 @@
 #import "RICartItem.h"
 #import "RICustomer.h"
 #import "RIAddress.h"
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKAppEvents.h>
 
 @interface JACartViewController () {
     BOOL _emptyImageFlipOnce;
@@ -228,12 +228,12 @@
                                                       data:[trackingDictionary copy]];
             
             float value = [cartItem.price floatValue];
-            [FBAppEvents logEvent:FBAppEventNameInitiatedCheckout
+            [FBSDKAppEvents logEvent:FBSDKAppEventNameInitiatedCheckout
                         valueToSum:value
                        parameters:@{
-                                    FBAppEventParameterNameContentID:cartItem.sku,
-                                    FBAppEventParameterNameNumItems:cartItem.quantity,
-                                    FBAppEventParameterNameCurrency: @"EUR"}];
+                                    FBSDKAppEventParameterNameContentID:cartItem.sku,
+                                    FBSDKAppEventParameterNameNumItems:cartItem.quantity,
+                                    FBSDKAppEventParameterNameCurrency: @"EUR"}];
         }
         
         trackingDictionary = [[NSMutableDictionary alloc] init];

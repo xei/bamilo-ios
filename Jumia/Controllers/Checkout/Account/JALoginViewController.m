@@ -12,7 +12,7 @@
 #import "RICustomer.h"
 #import "JAUtils.h"
 #import "JAOrderSummaryView.h"
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "UIView+Mirror.h"
 #import "UIImage+Mirror.h"
 

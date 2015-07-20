@@ -10,7 +10,7 @@
 #import "JAClickableView.h"
 #import "JAShareActivityProvider.h"
 #import "JAActivityViewController.h"
-#import "AQSFacebookMessengerActivity.h"
+#import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 #import "JBWhatsAppActivity.h"
 
 @interface JAMyAccountViewController ()
