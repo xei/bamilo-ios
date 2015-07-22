@@ -32,6 +32,7 @@
 #import "RICustomer.h"
 #import "JAPDVWizardView.h"
 #import <FBSDKCoreKit/FBSDKAppEvents.h>
+#import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 #import "AQSFacebookMessengerActivity.h"
 #import "JAPDVBundles.h"
 #import "JAPDVBundleSingleItem.h"
@@ -1222,6 +1223,7 @@ JAActivityViewControllerDelegate
     }
         
     // Share with Facebook Messenger and WhatsApp
+    
     UIActivity *fbmActivity = [[AQSFacebookMessengerActivity alloc] init];
     UIActivity *whatsAppActivity = [[JBWhatsAppActivity alloc] init];
     
