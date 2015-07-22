@@ -1131,26 +1131,28 @@
     
     NSString *temp = self.category.name;
     
+    NSMutableDictionary* userInfo = [NSMutableDictionary new];
+    [userInfo setObject:product.url forKey:@"url"];
+    [userInfo setObject:@"YES" forKey:@"fromCatalog"];
+    [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"show_back_button"];
+    
+    if (self.teaserTrackingInfo) {
+        [userInfo setObject:self.teaserTrackingInfo forKey:@"teaserTrackingInfo"];
+    }
     
     if (temp.length > 0) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                            object:nil
-                                                          userInfo:@{ @"url" : product.url,
-                                                                      @"fromCatalog" : @"YES",
-                                                                      @"category" : self.category,
-                                                                      @"show_back_button" : [NSNumber numberWithBool:YES]}];
+        [userInfo setObject:self.category forKey:@"category"];
         [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"cat_/%@/%@",self.category.urlKey
                                                                  ,product.name]];
     }
     else
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                            object:nil
-                                                          userInfo:@{ @"url" : product.url,
-                                                                      @"fromCatalog" : @"YES",
-                                                                      @"show_back_button" : [NSNumber numberWithBool:YES]}];
         [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"Search_%@",product.name]];
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                        object:nil
+                                                      userInfo:userInfo];
 }
 
 #pragma mark - JAMainFiltersViewControllerDelegate

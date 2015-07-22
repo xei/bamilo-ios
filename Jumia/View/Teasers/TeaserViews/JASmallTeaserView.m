@@ -123,4 +123,10 @@
     }
 }
 
+- (NSString*)teaserTrackingInfoForIndex:(NSInteger)index;
+{
+    NSString* teaserTrackingInfo = [NSString stringWithFormat:@"Small_Teaser_%ld",(long)index];
+    return teaserTrackingInfo;
+}
+
 @end

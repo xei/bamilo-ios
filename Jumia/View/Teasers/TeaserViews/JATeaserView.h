@@ -20,4 +20,7 @@
 - (void)teaserPressed:(UIControl*)control;
 - (void)teaserPressedForIndex:(NSInteger)index;
 
+//virtual
+- (NSString*)teaserTrackingInfoForIndex:(NSInteger)index;
+
 @end

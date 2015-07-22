@@ -1309,6 +1309,9 @@
         } else {
             [catalog.navBarLayout setShowBackButton:YES];;
         }
+        if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
+            catalog.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
+        }
         
         [self pushViewController:catalog animated:YES];
     }
@@ -1330,12 +1333,18 @@
     //this is used in deeplinking
     NSString* campaignId = [notification.userInfo objectForKey:@"campaign_id"];
     
+    NSString* cameFromTeasers;
+    if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
+        cameFromTeasers = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
+    }
+    
     if (VALID_NOTEMPTY(teaserGrouping, RITeaserGrouping))
     {
         JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
         
         campaignsVC.teaserGrouping = teaserGrouping;
         campaignsVC.startingTitle = title;
+        campaignsVC.teaserTrackingInfo = cameFromTeasers;
         
         [self pushViewController:campaignsVC animated:YES];
     }
@@ -1344,12 +1353,14 @@
         JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
         
         campaignsVC.campaignId = campaignId;
+        campaignsVC.teaserTrackingInfo = cameFromTeasers;
         
         [self pushViewController:campaignsVC animated:YES];
     } else if (VALID_NOTEMPTY(campaignUrl, NSString)) {
         JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
         
         campaignsVC.campaignUrl = campaignUrl;
+        campaignsVC.teaserTrackingInfo = cameFromTeasers;
         
         [self pushViewController:campaignsVC animated:YES];
     }
@@ -1408,6 +1419,10 @@
             pdv.showBackButton = YES;
         }
         
+        if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
+            pdv.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
+        }
+        
         [self pushViewController:pdv animated:YES];
     }
 }
@@ -1431,6 +1446,9 @@
     if([notification.userInfo objectForKey:@"title"])
     {
         viewController.navBarLayout.title = [notification.userInfo objectForKey:@"title"];
+    }
+    if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
+        viewController.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
     }
     
     if (VALID_NOTEMPTY(url, NSString))
@@ -1487,6 +1505,10 @@
         
         catalog.navBarLayout.title = category.name;
         catalog.navBarLayout.backButtonTitle = STRING_ALL_CATEGORIES;
+        
+        if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
+            catalog.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
+        }
         
         [self pushViewController:catalog animated:YES];
     }

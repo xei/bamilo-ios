@@ -131,6 +131,8 @@
     NSMutableDictionary *productDic = [NSMutableDictionary new];
     NSMutableArray *productsArray = [NSMutableArray new];
     
+    NSDictionary* teaserTrackingInfoDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey];
+    
     for (int i = 0; i < self.checkout.cart.cartItems.count; i++) {
         trackingDictionary = [[NSMutableDictionary alloc] init];
         
@@ -158,6 +160,19 @@
                 discount = @"true";
                 priceNumber = cartItem.specialPrice;
             }
+        }
+        
+        //check if came from teasers and track that info
+        NSString* teaserTrackingInfo = [teaserTrackingInfoDictionary objectForKey:cartItem.sku];
+        if (VALID_NOTEMPTY(teaserTrackingInfo, NSString)) {
+            NSMutableDictionary* teaserTrackingDictionary = [NSMutableDictionary new];
+            [teaserTrackingDictionary setValue:teaserTrackingInfo forKey:kRIEventCategoryKey];
+            [teaserTrackingDictionary setValue:@"Purchase" forKey:kRIEventActionKey];
+            [teaserTrackingDictionary setValue:cartItem.sku forKey:kRIEventLabelKey];
+            [teaserTrackingDictionary setValue:priceNumber forKey:kRIEventPriceKey];
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventTeaserPurchase]
+                                                      data:[teaserTrackingDictionary copy]];
         }
         
         // Since we're sending the converted price, we have to send the currency as EUR.
@@ -230,6 +245,9 @@
         [viewCartTrackingProduct setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
         [viewCartTrackingProducts addObject:viewCartTrackingProduct];
     }
+    
+    //clean teaserTrackingInfoDictionary from user defaults
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kSkusFromTeaserInCartKey];
 
     trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];

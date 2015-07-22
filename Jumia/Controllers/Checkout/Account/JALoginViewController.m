@@ -1219,20 +1219,7 @@ FBSDKLoginButtonDelegate
             [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                                 object:nil];
             
-            if(VALID_NOTEMPTY(nextStep, NSString) && [nextStep isEqualToString:@"billing"])
-            {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
-                                                                    object:@{@"animated":[NSNumber numberWithBool:YES]}
-                                                                  userInfo:@{@"from_checkout":[NSNumber numberWithBool:YES]}];
-            }
-            else
-            {
-                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button", @"from_checkout"]];
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
-                                                                    object:nil
-                                                                  userInfo:userInfo];
-            }
+            [JAUtils goToNextStep:nextStep];
         }
         
         [self hideLoading];
