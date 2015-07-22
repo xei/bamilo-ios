@@ -259,10 +259,6 @@ FBSDKLoginButtonDelegate
                                                       42.0f,
                                                       facebookNormalImage.size.width,
                                                       facebookNormalImage.size.height)];
-        [self.facebookLoginButton setBackgroundImage:facebookNormalImage forState:UIControlStateNormal];
-        [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:facebookImageNameFormatter, @"highlighted"]] forState:UIControlStateHighlighted];
-        [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:facebookImageNameFormatter, @"highlighted"]] forState:UIControlStateSelected];
-        
         self.loginViewCurrentY = CGRectGetMaxY(self.facebookLoginButton.frame) + 6.0f;
     }else {
         self.loginViewCurrentY= facebookNormalImage.size.height;
