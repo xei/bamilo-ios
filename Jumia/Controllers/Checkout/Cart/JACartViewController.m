@@ -19,7 +19,7 @@
 #import "RICartItem.h"
 #import "RICustomer.h"
 #import "RIAddress.h"
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKAppEvents.h>
 
 @interface JACartViewController () {
     BOOL _emptyImageFlipOnce;
@@ -245,12 +245,12 @@
                                                       data:[trackingDictionary copy]];
             
             float value = [cartItem.price floatValue];
-            [FBAppEvents logEvent:FBAppEventNameInitiatedCheckout
+            [FBSDKAppEvents logEvent:FBSDKAppEventNameInitiatedCheckout
                         valueToSum:value
                        parameters:@{
-                                    FBAppEventParameterNameContentID:cartItem.sku,
-                                    FBAppEventParameterNameNumItems:cartItem.quantity,
-                                    FBAppEventParameterNameCurrency: @"EUR"}];
+                                    FBSDKAppEventParameterNameContentID:cartItem.sku,
+                                    FBSDKAppEventParameterNameNumItems:cartItem.quantity,
+                                    FBSDKAppEventParameterNameCurrency: @"EUR"}];
         }
         
         trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -610,16 +610,30 @@
     self.cartVatLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     [self.cartVatLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
     [self.cartVatLabel setTextColor:UIColorFromRGB(0x666666)];
-    [self.cartVatLabel setText:[NSString stringWithFormat:STRING_TAX_INC, STRING_VAT]];
+    [self.cartVatLabel setText:[self.cart vatLabel]];
     [self.cartVatLabel sizeToFit];
     [self.cartVatLabel setBackgroundColor:[UIColor clearColor]];
     
-    [self.cartVatLabel setFrame:CGRectMake(articleNumberWidth.size.width + 10.0f,
-                                           self.articlesCount.frame.origin.y,
+    [self.cartVatLabel setFrame:CGRectMake(self.articlesCount.x,
+                                           self.articlesCount.y + 15.f,
                                            self.cartVatLabel.frame.size.width,
                                            self.cartVatLabel.frame.size.height)];
     
-    CGFloat extraCostYPos = CGRectGetMaxY(self.articlesCount.frame);
+    self.cartVatValue = [[UILabel alloc] initWithFrame:CGRectZero];
+    [self.cartVatValue setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
+    [self.cartVatValue setTextColor:UIColorFromRGB(0x666666)];
+    if ([self.cart vatLabelEnabled]) {
+        [self.cartVatValue setText:[self.cart vatValueFormatted]];
+    }
+    [self.cartVatValue sizeToFit];
+    [self.cartVatValue setBackgroundColor:[UIColor clearColor]];
+    [self.cartVatValue setFrame:CGRectMake(self.subtotalView.frame.size.width - self.cartVatValue.frame.size.width - 4.0f,
+                                          self.articlesCount.y + 15.f,
+                                          self.cartVatValue.frame.size.width,
+                                           self.cartVatValue.frame.size.height)];
+    
+    
+    CGFloat extraCostYPos = CGRectGetMaxY(self.cartVatLabel.frame);
     
     
     if(VALID_NOTEMPTY(priceRuleKeysString, NSString) && VALID_NOTEMPTY(priceRuleValuesString, NSString))
@@ -632,7 +646,7 @@
         [self.priceRulesLabel setBackgroundColor:[UIColor clearColor]];
         [self.priceRulesLabel sizeToFit];
         [self.priceRulesLabel setFrame:CGRectMake(6.0f,
-                                                  CGRectGetMaxY(self.articlesCount.frame) + 4.0f,
+                                                  CGRectGetMaxY(self.cartVatLabel.frame) + 4.0f,
                                                   self.priceRulesLabel.frame.size.width,
                                                   self.priceRulesLabel.frame.size.height)];
         
@@ -653,7 +667,7 @@
         
         [self.subtotalView addSubview:self.priceRulesValue];
         
-        extraCostYPos = CGRectGetMaxY(self.articlesCount.frame) + self.priceRulesLabel.frame.size.height + 4.0f;
+        extraCostYPos = CGRectGetMaxY(self.cartVatLabel.frame) + self.priceRulesLabel.frame.size.height + 4.0f;
        
     }
     else
@@ -667,10 +681,11 @@
             [self.priceRulesValue removeFromSuperview];
         }
         
-        extraCostYPos = CGRectGetMaxY(self.articlesCount.frame);
+        extraCostYPos = CGRectGetMaxY(self.cartVatLabel.frame);
 
     }
     [self.subtotalView addSubview:self.cartVatLabel];
+    [self.subtotalView addSubview:self.cartVatValue];
 
     
     self.extraCostsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -683,6 +698,7 @@
                                               extraCostYPos,
                                               self.extraCostsLabel.frame.size.width,
                                               self.extraCostsLabel.frame.size.height)];
+    
     [self.subtotalView addSubview:self.extraCostsLabel];
     
     self.extraCostsValue = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -695,6 +711,7 @@
                                               extraCostYPos,
                                               self.extraCostsValue.frame.size.width,
                                               self.extraCostsValue.frame.size.height)];
+    
     [self.subtotalView addSubview:self.extraCostsValue];
     
     self.totalLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -738,12 +755,12 @@
         [self.subtotalView addSubview:self.couponValue];
         
         [self.totalLabel setFrame:CGRectMake(6.0f,
-                                             CGRectGetMaxY(self.couponLabel.frame) + 4.0f,
+                                             CGRectGetMaxY(self.couponLabel.frame),
                                              self.totalLabel.frame.size.width,
                                              self.totalLabel.frame.size.height)];
         
         [self.totalValue setFrame:CGRectMake(self.subtotalView.frame.size.width - self.totalValue.frame.size.width - 4.0f,
-                                             CGRectGetMaxY(self.couponLabel.frame) + 4.0f,
+                                             CGRectGetMaxY(self.couponLabel.frame),
                                              self.totalValue.frame.size.width,
                                              self.totalValue.frame.size.height)];
     }

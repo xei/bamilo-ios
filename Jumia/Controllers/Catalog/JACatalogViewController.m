@@ -17,7 +17,7 @@
 #import "JAUndefinedSearchView.h"
 #import "JAFilteredNoResultsView.h"
 #import "JAAppDelegate.h"
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKAppEvents.h>
 #import "JANavigationBarView.h"
 #import "UIImageView+JA.h"
 #import "UIImageView+WebCache.h"
@@ -517,9 +517,9 @@
                                                                                   
                                                                                   [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSearch]
                                                                                                                             data:[trackingDictionary copy]];
-                                                                                  [FBAppEvents logEvent:FBAppEventNameSearched
-                                                                                             parameters:@{FBAppEventParameterNameSearchString: self.searchString,
-                                                                                                          FBAppEventParameterNameSuccess: @1 }];
+                                                                                  [FBSDKAppEvents logEvent:FBSDKAppEventNameSearched
+                                                                                             parameters:@{FBSDKAppEventParameterNameSearchString: self.searchString,
+                                                                                                          FBSDKAppEventParameterNameSuccess: @1 }];
                                                                                   
                                                                                   trackingDictionary = [[NSMutableDictionary alloc] init];
                                                                                   NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
@@ -614,9 +614,9 @@
                                                                                   }
                                                                               }
                                                                               
-                                                                              [FBAppEvents logEvent:FBAppEventNameSearched
-                                                                                         parameters:@{FBAppEventParameterNameSearchString:self.searchString  ,
-                                                                                                      FBAppEventParameterNameSuccess: @0 }];
+                                                                              [FBSDKAppEvents logEvent:FBSDKAppEventNameSearched
+                                                                                         parameters:@{FBSDKAppEventParameterNameSearchString:self.searchString  ,
+                                                                                                      FBSDKAppEventParameterNameSuccess: @0 }];
                                                                               
                                                                               self.isLoadingMoreProducts = NO;
                                                                               [self hideLoading];                                                                              
@@ -1404,11 +1404,11 @@
                                         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]
                                                                                   data:[trackingDictionary copy]];
                                         float value = [price floatValue];
-                                        [FBAppEvents logEvent:FBAppEventNameAddedToWishlist
+                                        [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToWishlist
                                                    valueToSum:value
-                                                   parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
-                                                                 FBAppEventParameterNameContentType : product.name,
-                                                                 FBAppEventParameterNameContentID   : product.sku}];
+                                                   parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
+                                                                 FBSDKAppEventParameterNameContentType : product.name,
+                                                                 FBSDKAppEventParameterNameContentID   : product.sku}];
                                         
                                         
                                         [self hideLoading];

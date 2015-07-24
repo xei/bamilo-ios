@@ -16,7 +16,7 @@
 #import "RICustomer.h"
 #import "JAProductListFlowLayout.h"
 #import "RICategory.h"
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKAppEvents.h>
 
 @interface JARecentlyViewedViewController ()
 
@@ -449,11 +449,11 @@
                                                                 data:[trackingDictionary copy]];
                       
                       float value = [price floatValue];
-                      [FBAppEvents logEvent:FBAppEventNameAddedToCart
+                      [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToCart
                                  valueToSum:value
-                                 parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
-                                               FBAppEventParameterNameContentType : product.name,
-                                               FBAppEventParameterNameContentID   : product.sku}];
+                                 parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
+                                               FBSDKAppEventParameterNameContentType : product.name,
+                                               FBSDKAppEventParameterNameContentID   : product.sku}];
                       
                       [RIProduct removeFromRecentlyViewed:product];
                       

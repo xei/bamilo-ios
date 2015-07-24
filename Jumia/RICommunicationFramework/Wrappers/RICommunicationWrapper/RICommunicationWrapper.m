@@ -220,6 +220,11 @@
 {
     operation.request = [NSMutableURLRequest requestWithURL:url];
     
+    if (RI_REQUEST_LOGGER) {
+        NSLog(@"///////////// START REQUEST \n url: %@ \n parameters: %@", url, parameters);
+        NSLog(@"///////////// END REQUEST");
+    }
+    
     if (post) {
         [operation.request setHTTPMethod:RI_HTTP_METHOD_POST];
     } else {

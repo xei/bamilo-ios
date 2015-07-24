@@ -13,7 +13,7 @@
 #import "RICustomer.h"
 #import "JAUtils.h"
 #import "JAProductListFlowLayout.h"
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKAppEvents.h>
 
 @interface JAOtherOffersViewController ()
 
@@ -342,11 +342,11 @@
                                                                 data:[trackingDictionary copy]];
                       
                       float value = [price floatValue];
-                      [FBAppEvents logEvent:FBAppEventNameAddedToCart
+                      [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToCart
                                  valueToSum:value
-                                 parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
-                                               FBAppEventParameterNameContentType : self.product.name,
-                                               FBAppEventParameterNameContentID   : self.product.sku}];
+                                 parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
+                                               FBSDKAppEventParameterNameContentType : self.product.name,
+                                               FBSDKAppEventParameterNameContentID   : self.product.sku}];
                       
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];

@@ -19,7 +19,7 @@
 #import "RIProduct.h"
 #import "RISeller.h"
 #import "JARatingsViewMedium.h"
-#import <FacebookSDK/FacebookSDK.h>
+//#import <FacebookSDK/FacebookSDK.h>
 
 #define kDistanceBetweenStarsAndText 70.0f
 

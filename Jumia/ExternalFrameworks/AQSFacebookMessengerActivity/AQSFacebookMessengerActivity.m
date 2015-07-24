@@ -8,7 +8,8 @@
 
 #import "AQSFacebookMessengerActivity.h"
 
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
 
 @interface AQSFacebookMessengerActivity ()
 
@@ -37,101 +38,30 @@
 }
 
 - (UIImage *)activityImage {
-    
-    UIImage *facebookMessengerImage = [UIImage imageNamed:[NSString stringWithFormat:@"facebookMessenger_noColor"]];
-    
-    return facebookMessengerImage;
-}
-
-
-- (BOOL)canPerformWithActivityItems:(NSArray *)activityItems {
-    if ([self isFacebookMessengerDialogAvailable] == NO) {  
-        return NO;
+    if ([[[[UIDevice currentDevice] systemVersion] componentsSeparatedByString:@"."][0] intValue] >= 8) {
+        return [UIImage imageNamed:[NSString stringWithFormat:@"color_%@", NSStringFromClass([self class])]];
+    } else {
+        return [UIImage imageNamed:NSStringFromClass([self class])];
     }
-    
-    UIImage *image = [self nilOrFirstImageFromArray:activityItems];
-    NSURL *URL = [self nilOrFirstURLFromArray:activityItems];
-    FBPhotoParams *photoParams = [self nilOrFirstPhotoParamsFromArray:activityItems];
-    FBLinkShareParams *linkParams = [self nilOrFirstLinkShareParamsFromArray:activityItems];
-    
-    if (linkParams && [self isFacebookMessengerDialogAvailableWithLinkShareParams:linkParams]) {
-        return YES;
-    } else if (photoParams && [self isFacebookMessengerDialogAvailableWithPhoto]) {
-        return YES;
-    } else if (image && [self isFacebookMessengerDialogAvailableWithPhoto]) {
-        return YES;
-    } else if (URL != nil) {
-        return YES;
-    }
-    
-    return NO;
 }
 
 - (void)performActivity {
     UIImage *image = [self nilOrFirstImageFromArray:_activityItems];
     NSURL *URL = [self nilOrFirstURLFromArray:_activityItems];
-    FBPhotoParams *photoParams = [self nilOrFirstPhotoParamsFromArray:_activityItems];
-    FBLinkShareParams *linkParams = [self nilOrFirstLinkShareParamsFromArray:_activityItems];
+    FBSDKSharePhotoContent *photoParams = [self nilOrFirstPhotoParamsFromArray:_activityItems];
+    FBSDKShareLinkContent *linkParams = [self nilOrFirstLinkShareParamsFromArray:_activityItems];
     
-    if (linkParams && [self isFacebookMessengerDialogAvailableWithLinkShareParams:linkParams]) {
-        [self performActivityWithLinkShareParams:linkParams];
-    } else if (photoParams && [self isFacebookMessengerDialogAvailableWithPhoto]) {
-        [self performActivityWithPhotoParams:photoParams];
-    } else if (image && [self isFacebookMessengerDialogAvailableWithPhoto]) {
-        [self performActivityWithImageArray:_activityItems];
+    if (linkParams) {
+        [FBSDKMessageDialog showWithContent:linkParams delegate:nil];
+    } else if (photoParams) {
+        [FBSDKMessageDialog showWithContent:photoParams delegate:nil];
+    } else if (image) {
+        NSLog(@"NOT SUPPORTED YET!");
+//        [self performActivityWithImageArray:_activityItems];
     } else if (URL) {
-        [self performActivityWithURL:URL];
-    }
-}
-
-# pragma mark - Helpers (Facebook Messenger)
-
-- (BOOL)isFacebookMessengerDialogAvailable {
-    return [FBDialogs canPresentMessageDialog];
-}
-
-- (BOOL)isFacebookMessengerDialogAvailableWithPhoto {
-    return [FBDialogs canPresentMessageDialogWithPhotos];
-}
-
-- (BOOL)isFacebookMessengerDialogAvailableWithLinkShareParams:(FBLinkShareParams *)params {
-    return [FBDialogs canPresentMessageDialogWithParams:params];
-}
-
-
-- (void)performActivityWithLinkShareParams:(FBLinkShareParams *)params {
-    __weak typeof(self) weakSelf = self;
-    [FBDialogs presentMessageDialogWithParams:params clientState:nil handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
-        [weakSelf handleCallback:call results:results error:error];
-    }];
-}
-
-- (void)performActivityWithPhotoParams:(FBPhotoParams *)params {
-    __weak typeof(self) weakSelf = self;
-    [FBDialogs presentMessageDialogWithPhotoParams:params clientState:nil handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
-        [weakSelf handleCallback:call results:results error:error];
-    }];
-}
-
-- (void)performActivityWithImageArray:(NSArray /* UIImage */ *)images {
-    __weak typeof(self) weakSelf = self;
-    [FBDialogs presentMessageDialogWithPhotos:images handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
-        [weakSelf handleCallback:call results:results error:error];
-    }];
-}
-
-- (void)performActivityWithURL:(NSURL *)URL {
-    __weak typeof(self) weakSelf = self;
-    [FBDialogs presentMessageDialogWithLink:URL handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
-        [weakSelf handleCallback:call results:results error:error];
-    }];
-}
-
-- (void)handleCallback:(FBAppCall *)call results:(NSDictionary *)results error:(NSError *)error {
-    if (error != nil) {
-        [self activityDidFinish:NO];
-    } else {
-        [self activityDidFinish:YES];
+        FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+        content.contentURL = URL;
+        [FBSDKMessageDialog showWithContent:content delegate:nil];
     }
 }
 
@@ -146,18 +76,18 @@
     return nil;
 }
 
-- (FBLinkShareParams *)nilOrFirstLinkShareParamsFromArray:(NSArray *)array {
+- (FBSDKShareLinkContent *)nilOrFirstLinkShareParamsFromArray:(NSArray *)array {
     for (id item in array) {
-        if ([item isKindOfClass:[FBLinkShareParams class]]) {
+        if ([item isKindOfClass:[FBSDKShareLinkContent class]]) {
             return item;
         }
     }
     return nil;
 }
 
-- (FBPhotoParams *)nilOrFirstPhotoParamsFromArray:(NSArray *)array {
+- (FBSDKSharePhotoContent *)nilOrFirstPhotoParamsFromArray:(NSArray *)array {
     for (id item in array) {
-        if ([item isKindOfClass:[FBPhotoParams class]]) {
+        if ([item isKindOfClass:[FBSDKSharePhotoContent class]]) {
             return item;
         }
     }

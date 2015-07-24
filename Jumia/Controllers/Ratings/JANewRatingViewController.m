@@ -17,7 +17,7 @@
 #import "JAPriceView.h"
 #import "JAUtils.h"
 #import "RIProduct.h"
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKAppEvents.h>
 
 #define kDistanceBetweenStarsAndText 70.0f
 
@@ -620,11 +620,11 @@ UIAlertViewDelegate
                                                               data:[trackingDictionary copy]];
                     
                     float value = [@(ratingView.rating) floatValue];
-                    [FBAppEvents logEvent:FBAppEventNameRated
+                    [FBSDKAppEvents logEvent:FBSDKAppEventNameRated
                                valueToSum:value
-                               parameters:@{FBAppEventParameterNameContentType: self.product.name,
-                                            FBAppEventParameterNameContentID: self.product.sku,
-                                            FBAppEventParameterNameMaxRatingValue: @5 }];
+                               parameters:@{FBSDKAppEventParameterNameContentType: self.product.name,
+                                            FBSDKAppEventParameterNameContentID: self.product.sku,
+                                            FBSDKAppEventParameterNameMaxRatingValue: @5 }];
                 }
             }
             

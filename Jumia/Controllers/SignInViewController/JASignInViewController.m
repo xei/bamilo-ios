@@ -11,12 +11,13 @@
 #import "RIField.h"
 #import "RICustomer.h"
 #import "JAUtils.h"
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 @interface JASignInViewController ()
 <
 JADynamicFormDelegate,
-FBLoginViewDelegate
+FBSDKLoginButtonDelegate
 >
 
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -27,7 +28,7 @@ FBLoginViewDelegate
 @property (strong, nonatomic) UIButton *loginButton;
 @property (strong, nonatomic) UIButton *signUpButton;
 @property (strong, nonatomic) UIButton *forgotPasswordButton;
-@property (strong, nonatomic) UIButton *facebookLoginButton;
+@property (strong, nonatomic) FBSDKLoginButton *facebookLoginButton;
 @property (strong, nonatomic) UILabel *facebookLoginLabel;
 @property (assign, nonatomic) CGFloat loginViewCurrentY;
 @property (assign, nonatomic) BOOL requestDone;
@@ -75,7 +76,7 @@ FBLoginViewDelegate
     self.loginView.layer.cornerRadius = 5.0f;
     self.loginView.backgroundColor = [UIColor whiteColor];
     [self.scrollView addSubview:self.loginView];
-
+    
     self.loginLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     self.loginLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
     [self.loginLabel setText:STRING_CREDENTIALS];
@@ -87,18 +88,15 @@ FBLoginViewDelegate
     [self.loginView addSubview:self.loginSeparator];
     
     self.checkBoxComponent = [JACheckBoxComponent getNewJACheckBoxComponent];
-        self.checkBoxComponent.labelText.font = [UIFont fontWithName:kFontRegularName size:self.checkBoxComponent.labelText.font.pointSize];
+    self.checkBoxComponent.labelText.font = [UIFont fontWithName:kFontRegularName size:self.checkBoxComponent.labelText.font.pointSize];
     [self.checkBoxComponent.labelText setText:STRING_REMEMBER_EMAIL];
     [self.checkBoxComponent.switchComponent setOn:YES];
     [self.loginView addSubview:self.checkBoxComponent];
     [self.checkBoxComponent setHidden:YES];
     
-    self.facebookLoginButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.facebookLoginButton setFrame:CGRectZero];
-    [self.facebookLoginButton setTitle:STRING_LOGIN_WITH_FACEBOOK forState:UIControlStateNormal];
-    [self.facebookLoginButton setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
-    [self.facebookLoginButton addTarget:self action:@selector(facebookLoginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.facebookLoginButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
+    self.facebookLoginButton = [[FBSDKLoginButton alloc] init];
+    self.facebookLoginButton.readPermissions = @[@"public_profile", @"email", @"user_birthday"];
+    [self.facebookLoginButton setDelegate:self];
     [self.loginView addSubview:self.facebookLoginButton];
     
     self.loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -108,7 +106,7 @@ FBLoginViewDelegate
     [self.loginButton addTarget:self action:@selector(loginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.loginButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
     [self.loginView addSubview:self.loginButton];
-
+    
     self.forgotPasswordButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.forgotPasswordButton setFrame:CGRectZero];
     [self.forgotPasswordButton setBackgroundColor:[UIColor clearColor]];
@@ -261,10 +259,6 @@ FBLoginViewDelegate
                                                       42.0f,
                                                       facebookNormalImage.size.width,
                                                       facebookNormalImage.size.height)];
-        [self.facebookLoginButton setBackgroundImage:facebookNormalImage forState:UIControlStateNormal];
-        [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:facebookImageNameFormatter, @"highlighted"]] forState:UIControlStateHighlighted];
-        [self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:facebookImageNameFormatter, @"highlighted"]] forState:UIControlStateSelected];
-        
         self.loginViewCurrentY = CGRectGetMaxY(self.facebookLoginButton.frame) + 6.0f;
     }else {
         self.loginViewCurrentY= facebookNormalImage.size.height;
@@ -378,37 +372,44 @@ FBLoginViewDelegate
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
-- (void)facebookLoginButtonPressed:(id)sender
-{
-    [self hideKeyboard];
-    
-    FBSession *session = [[FBSession alloc] initWithPermissions:@[@"public_profile", @"email", @"user_birthday"]];
-    [FBSession setActiveSession:session];
-    
-    [[FBSession activeSession] openWithBehavior:FBSessionLoginBehaviorWithFallbackToWebView completionHandler:^(FBSession *session, FBSessionState status, NSError *error)
-     {
-         if(FBSessionStateOpen == status)
-         {
-             [self getFacebookUserInfo];
-         }
-     }];
-}
+#pragma mark FBSDKLoginButtonDelegate
 
-- (void) getFacebookUserInfo
+/*!
+ @abstract Sent to the delegate when the button was used to login.
+ @param loginButton the sender
+ @param result The results of the login
+ @param error The error (if any) from the login
+ */
+- (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error
 {
-    [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id<FBGraphUser> user, NSError *error)
-     {
-         if (!error)
-         {
+    if (error) {
+        NSLog(@"ERROR: %@", error);
+        return;
+    }
+    NSLog(@"token: %@", result.token);
+    
+    NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
+    [parameters setValue:@"id,name, first_name, last_name, email, gender, birthday" forKey:@"fields"];
+    FBSDKGraphRequest *requestMe = [[FBSDKGraphRequest alloc]
+                                    initWithGraphPath:@"me" parameters:parameters];
+    FBSDKGraphRequestConnection *connection = [[FBSDKGraphRequestConnection alloc] init];
+    [connection addRequest:requestMe
+         completionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+             //TODO: process me information@
+             
+             if (error) {
+                 NSLog(@"%@", error);
+                 return;
+             }
              if (![RICustomer checkIfUserIsLogged])
              {
                  [self showLoading];
                  
-                 NSString *email = [user objectForKey:@"email"];
-                 NSString *firstName = [user objectForKey:@"first_name"];
-                 NSString *lastName = [user objectForKey:@"last_name"];
-                 NSString *birthday = [user objectForKey:@"birthday"];
-                 NSString *gender = [user objectForKey:@"gender"];
+                 NSString *email = [result objectForKey:@"email"];
+                 NSString *firstName = [result objectForKey:@"first_name"];
+                 NSString *lastName = [result objectForKey:@"last_name"];
+                 NSString *birthday = [result objectForKey:@"birthday"];
+                 NSString *gender = [result objectForKey:@"gender"];
                  
                  NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
                  if((VALID_NOTEMPTY(email, NSString)) && (VALID_NOTEMPTY(firstName, NSString)) && (VALID_NOTEMPTY(lastName, NSString)) && (VALID_NOTEMPTY(gender, NSString)) && (VALID_NOTEMPTY(birthday, NSString)))
@@ -524,8 +525,17 @@ FBLoginViewDelegate
              {
                  [self showMessage:[error description] success:NO];
              }
-         }
-     }];
+         }];
+    [connection start];
+}
+
+/*!
+ @abstract Sent to the delegate when the button was used to logout.
+ @param loginButton The button that was clicked.
+ */
+- (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton
+{
+    NSLog(@"LogOut!!!!");
 }
 
 - (void)signUpButtonPressed:(id)sender
@@ -686,46 +696,50 @@ FBLoginViewDelegate
      }];
 }
 
-// Handle possible errors that can occur during login
-- (void)loginView:(FBLoginView *)loginView handleError:(NSError *)error
-{
-    NSString *alertMessage, *alertTitle;
-    
-    // If the user should perform an action outside of you app to recover,
-    // the SDK will provide a message for the user, you just need to surface it.
-    // This conveniently handles cases like Facebook password change or unverified Facebook accounts.
-    if ([FBErrorUtility shouldNotifyUserForError:error]) {
-        alertTitle = @"Facebook error";
-        alertMessage = [FBErrorUtility userMessageForError:error];
-        
-        // This code will handle session closures that happen outside of the app
-        // You can take a look at our error handling guide to know more about it
-        // https://developers.facebook.com/docs/ios/errors
-    } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryAuthenticationReopenSession) {
-        alertTitle = @"Session Error";
-        alertMessage = @"Your current session is no longer valid. Please log in again.";
-        
-        // If the user has cancelled a login, we will do nothing.
-        // You can also choose to show the user a message if cancelling login will result in
-        // the user not being able to complete a task they had initiated in your app
-        // (like accessing FB-stored information or posting to Facebook)
-    } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
-        NSLog(@"user cancelled login");
-        
-        // For simplicity, this sample handles other errors with a generic message
-        // You can checkout our error handling guide for more detailed information
-        // https://developers.facebook.com/docs/ios/errors
-    } else {
-        alertTitle  = @"Something went wrong";
-        alertMessage = @"Please try again later.";
-        NSLog(@"Unexpected error:%@", error);
-    }
-    
-    if (alertMessage)
-    {
-        [self showMessage:alertMessage success:NO];
-    }
-}
+/*
+ *  FACEBOOK TO CHANGE
+ */
+
+//// Handle possible errors that can occur during login
+//- (void)loginView:(FBLoginView *)loginView handleError:(NSError *)error
+//{
+//    NSString *alertMessage, *alertTitle;
+//
+//    // If the user should perform an action outside of you app to recover,
+//    // the SDK will provide a message for the user, you just need to surface it.
+//    // This conveniently handles cases like Facebook password change or unverified Facebook accounts.
+//    if ([FBErrorUtility shouldNotifyUserForError:error]) {
+//        alertTitle = @"Facebook error";
+//        alertMessage = [FBErrorUtility userMessageForError:error];
+//
+//        // This code will handle session closures that happen outside of the app
+//        // You can take a look at our error handling guide to know more about it
+//        // https://developers.facebook.com/docs/ios/errors
+//    } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryAuthenticationReopenSession) {
+//        alertTitle = @"Session Error";
+//        alertMessage = @"Your current session is no longer valid. Please log in again.";
+//
+//        // If the user has cancelled a login, we will do nothing.
+//        // You can also choose to show the user a message if cancelling login will result in
+//        // the user not being able to complete a task they had initiated in your app
+//        // (like accessing FB-stored information or posting to Facebook)
+//    } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
+//        NSLog(@"user cancelled login");
+//
+//        // For simplicity, this sample handles other errors with a generic message
+//        // You can checkout our error handling guide for more detailed information
+//        // https://developers.facebook.com/docs/ios/errors
+//    } else {
+//        alertTitle  = @"Something went wrong";
+//        alertMessage = @"Please try again later.";
+//        NSLog(@"Unexpected error:%@", error);
+//    }
+//
+//    if (alertMessage)
+//    {
+//        [self showMessage:alertMessage success:NO];
+//    }
+//}
 
 #pragma mark JADynamicFormDelegate
 

@@ -8,6 +8,9 @@
 
 #import "RIConfiguration.h"
 
+BOOL const RI_REQUEST_LOGGER = NO;
+BOOL const RI_RESPONSE_LOGGER = NO;
+
 #if defined(FORCE_RTL) && FORCE_RTL
 BOOL const RI_IS_RTL = YES;
 #else
