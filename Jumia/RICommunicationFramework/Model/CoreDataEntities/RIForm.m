@@ -270,7 +270,10 @@
                                                                       {
                                                                           responseProcessed = YES;
                                                                           RICustomer *customer = [RICustomer parseCustomerWithJson:[data objectForKey:@"user"] plainPassword:password loginMethod:@"signup"];
-                                                                          successBlock(customer);
+                                                                          NSDictionary* nativeCheckoutDic = [data objectForKey:@"native_checkout"];
+                                                                          NSMutableDictionary* successDic = [NSMutableDictionary dictionaryWithDictionary:nativeCheckoutDic];
+                                                                          [successDic setValue:customer forKey:@"customer"];
+                                                                          successBlock([successDic copy]);
                                                                       }
                                                                   }
                                                                   else if([@"addressedit" isEqualToString:form.formIndex.uid] || [@"addresscreate" isEqualToString:form.formIndex.uid])

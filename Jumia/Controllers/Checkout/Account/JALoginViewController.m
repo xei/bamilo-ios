@@ -865,7 +865,6 @@ FBSDKLoginButtonDelegate
              completionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
                  //TODO: process me information@
                  
-                 NSLog(@"createAddress ####################");
                  if (!error)
                  {
                      if (![RICustomer checkIfUserIsLogged])
@@ -952,20 +951,8 @@ FBSDKLoginButtonDelegate
                                                                   [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                                                                                       object:nil];
                                                                   
-                                                                  if([nextStep isEqualToString:@"createAddress"])
-                                                                  {
-                                                                      NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button", @"from_checkout"]];
-                                                                      
-                                                                      [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
-                                                                                                                          object:nil
-                                                                                                                        userInfo:userInfo];
-                                                                  }
-                                                                  else
-                                                                  {
-                                                                      [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
-                                                                                                                          object:@{@"animated":[NSNumber numberWithBool:YES]}
-                                                                                                                        userInfo:@{@"from_checkout":[NSNumber numberWithBool:YES]}];
-                                                                  }
+                                                                  [JAUtils goToNextStep:nextStep];
+                                                                  
                                                               } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
                                                                   [self hideLoading];
                                                                   
@@ -1133,11 +1120,11 @@ FBSDKLoginButtonDelegate
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                             object:nil];
         
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button", @"from_checkout"]];
+        NSDictionary *responseDictionary = (NSDictionary *)object;
+        NSString* nextStep = [responseDictionary objectForKey:@"next_step"];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
-                                                            object:nil
-                                                          userInfo:userInfo];
+        [JAUtils goToNextStep:nextStep];
+        
     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:@"Checkout" forKey:kRIEventLocationKey];

@@ -110,10 +110,6 @@ JAPickerDelegate>
     self.hasErrors = NO;
     
     self.extraParameters = nil;
-    if([RICustomer wasSignup])
-    {
-        self.extraParameters = [NSDictionary dictionaryWithObject:@"true" forKey:@"showGender"];
-    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)

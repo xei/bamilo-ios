@@ -100,7 +100,8 @@
                         
                         NSString* filterUidString = filter.uid;
                         urlString = [NSString stringWithFormat:@"%@=%@", filterUidString, filterOption.val];
-                        urlString = [urlString stringByReplacingOccurrencesOfString:@"_" withString:@"%20"];
+                        /* TODO BUG FIX Filters */
+//                        urlString = [urlString stringByReplacingOccurrencesOfString:@"_" withString:@"%20"];
                         urlString = [urlString stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
                         if ([filter.uid isEqualToString:@"brand"]) {
                             NSString* extraQuery = [NSString stringWithFormat:@"q=%@", filterOption.val];
