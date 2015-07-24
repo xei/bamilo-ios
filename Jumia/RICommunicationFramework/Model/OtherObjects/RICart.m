@@ -717,6 +717,18 @@
         }
     }
     
+    if ([json objectForKey:@"vat_label_enable"]) {
+        if (![[json objectForKey:@"vat_label_enable"] isKindOfClass:[NSNull class]]) {
+            cart.vatLabelEnabled = [json objectForKey:@"vat_label_enable"];
+        }
+    }
+    
+    if ([json objectForKey:@"vat_label"]) {
+        if (![[json objectForKey:@"vat_label"] isKindOfClass:[NSNull class]]) {
+            cart.vatLabel = [json objectForKey:@"vat_label"];
+        }
+    }
+    
     return cart;
 }
 
