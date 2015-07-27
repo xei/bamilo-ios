@@ -107,6 +107,8 @@
                 if([@"email" isEqualToString:field.type])
                 {
                     [textField.textField setKeyboardType:UIKeyboardTypeEmailAddress];
+                }else{
+                    textField.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
                 }
                 
                 if([@"address-form" isEqualToString:[self.form uid]] && [textField isComponentWithKey:@"fk_customer_address_city"] && VALID_NOTEMPTY([values objectForKey:@"city"], NSString))
