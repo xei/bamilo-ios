@@ -99,10 +99,11 @@
                     if (ISEMPTY(urlString)) {
                         
                         NSString* filterUidString = filter.uid;
-                        urlString = [NSString stringWithFormat:@"%@=%@", filterUidString, filterOption.val];
+                        
                         /* TODO BUG FIX Filters */
-//                        urlString = [urlString stringByReplacingOccurrencesOfString:@"_" withString:@"%20"];
-                        urlString = [urlString stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
+                        filterOption.val = [filterOption.val stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
+                        filterOption.val = [filterOption.val stringByReplacingOccurrencesOfString:@"_" withString:@"%20"];
+                        urlString = [NSString stringWithFormat:@"%@=%@", filterUidString, filterOption.val];
                         if ([filter.uid isEqualToString:@"brand"]) {
                             NSString* extraQuery = [NSString stringWithFormat:@"q=%@", filterOption.val];
                             extraQuery = [extraQuery stringByReplacingOccurrencesOfString:@"_" withString:@"%20"];
