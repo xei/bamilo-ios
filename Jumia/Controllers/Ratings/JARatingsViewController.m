@@ -159,7 +159,9 @@ UITableViewDataSource
    
         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
         {
-            [self ratingsRequests];
+            if (!self.ratingsForm) {
+                [self ratingsRequests];
+            }
         }
 }
 
@@ -1025,7 +1027,9 @@ UITableViewDataSource
         currentDynamicForm = self.ratingsDynamicForm;
         if ([[RICountryConfiguration getCurrentConfiguration].ratingRequiresLogin boolValue] && NO == [RICustomer checkIfUserIsLogged]) {
             [self hideLoading];
-            [self showMessage:STRING_LOGIN_TO_RATE success:NO];
+            NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
+            [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfoLogin];
             return;
         }
     } else {
@@ -1033,7 +1037,9 @@ UITableViewDataSource
         currentDynamicForm = self.reviewsDynamicForm;
         if ([[RICountryConfiguration getCurrentConfiguration].reviewRequiresLogin boolValue] && NO == [RICustomer checkIfUserIsLogged]) {
             [self hideLoading];
-            [self showMessage:STRING_LOGIN_TO_REVIEW success:NO];
+            NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
+            [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfoLogin];
             return;
         }
     }
