@@ -18,6 +18,9 @@
     
     JARatingsView *_ratingsView;
     UILabel *_numberOfReviewsLabel;
+    
+    CGFloat _numberOfReviewsLabelAlpha;
+    CGFloat _ratingsViewAlpha;
 }
 
 @end
@@ -61,11 +64,15 @@
     _numberOfReviewsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _numberOfReviewsLabel.font = JACatalogCellLightFont;
     _numberOfReviewsLabel.textColor = JACatalogCellGrayFontColor;
+    _numberOfReviewsLabelAlpha = _numberOfReviewsLabel.alpha;
     [self addSubview:_numberOfReviewsLabel];
     _ratingsView = [JARatingsView getNewJARatingsView];
     _ratingsView.rating = 0;
     _ratingsViewRect = _ratingsView.frame;
+    _ratingsViewAlpha = _ratingsView.alpha;
     [self addSubview:_ratingsView];
+    [_ratingsView setAlpha:0.f];
+    [_numberOfReviewsLabel setAlpha:0.f];
 }
 
 - (void)reloadViews
@@ -80,8 +87,7 @@
     
     [_numberOfReviewsLabel setX:CGRectGetMaxX(_ratingsView.frame) + JACatalogCellPriceLabelOffsetX + 10];
     
-    CGPoint center = _numberOfReviewsLabel.center;
-    [_ratingsView setCenter:CGPointMake(_ratingsView.center.x, center.y)];
+    [_ratingsView setY:_numberOfReviewsLabel.y];
 
     if (RI_IS_RTL) {
         [_numberOfReviewsLabel flipViewPositionInsideSuperview];
@@ -99,14 +105,24 @@
 {
     [super loadWithProduct:product];
     
+    if (0 == [product.sum integerValue] && _ratingsView.rating != 0) {
+        [_ratingsView setAlpha:0.f];
+        [_numberOfReviewsLabel setAlpha:0.f];
+    }else if (0 != [product.sum integerValue] && _ratingsView.rating == 0) {
+        [_ratingsView setAlpha:_ratingsViewAlpha];
+        [_numberOfReviewsLabel setAlpha:_numberOfReviewsLabelAlpha];
+    }
+    
     _ratingsView.rating = [product.avr integerValue];
     
-    if (1 == [product.sum integerValue]) {
-        _numberOfReviewsLabel.text = STRING_RATING;
-    } else {
-        _numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_RATINGS, [product.sum integerValue]];
+    if (0 != [product.sum integerValue]) {
+        if (1 == [product.sum integerValue]) {
+            _numberOfReviewsLabel.text = STRING_RATING;
+        } else {
+            _numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_RATINGS, [product.sum integerValue]];
+        }
+        [_numberOfReviewsLabel sizeToFit];
     }
-    [_numberOfReviewsLabel sizeToFit];
     
     if (_lastWidth != self.width) {
         [self reloadViews];
