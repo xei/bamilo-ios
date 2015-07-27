@@ -111,8 +111,8 @@ UIAlertViewDelegate
                                              selector:@selector(hideKeyboards)
                                                  name:kOpenMenuNotification
                                                object:nil];
-    
-    [self ratingsRequests];
+    if (!self.ratingsForm)
+        [self ratingsRequests];
 }
 
 -(void) viewWillDisappear:(BOOL)animated
@@ -546,7 +546,9 @@ UIAlertViewDelegate
         currentDynamicForm = self.ratingsDynamicForm;
         if ([[RICountryConfiguration getCurrentConfiguration].ratingRequiresLogin boolValue] && NO == [RICustomer checkIfUserIsLogged]) {
             [self hideLoading];
-            [self showMessage:STRING_LOGIN_TO_RATE success:NO];
+            NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
+            [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfoLogin];
             return;
         }
     } else {
@@ -554,7 +556,9 @@ UIAlertViewDelegate
         currentDynamicForm = self.reviewsDynamicForm;
         if ([[RICountryConfiguration getCurrentConfiguration].reviewRequiresLogin boolValue] && NO == [RICustomer checkIfUserIsLogged]) {
             [self hideLoading];
-            [self showMessage:STRING_LOGIN_TO_REVIEW success:NO];
+            NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
+            [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfoLogin];
             return;
         }
     }

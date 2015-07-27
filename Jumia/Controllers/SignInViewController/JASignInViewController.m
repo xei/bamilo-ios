@@ -485,7 +485,9 @@ FBSDKLoginButtonDelegate
                                                           
                                                           [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                                                                               object:nil];
-                                                          
+                                                          if (self.fromSideMenu) {
+                                                              [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+                                                          }else
                                                           if(VALID_NOTEMPTY(self.nextNotification, NSNotification))
                                                           {
                                                               [self.navigationController popViewControllerAnimated:NO];
@@ -493,10 +495,8 @@ FBSDKLoginButtonDelegate
                                                               [[NSNotificationCenter defaultCenter] postNotificationName:self.nextNotification.name
                                                                                                                   object:self.nextNotification.object
                                                                                                                 userInfo:self.nextNotification.userInfo];
-                                                          }
-                                                          else
-                                                          {
-                                                              [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+                                                          }else{
+                                                              [self.navigationController popViewControllerAnimated:NO];
                                                           }
                                                           
                                                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
