@@ -384,6 +384,8 @@
 		9A0F9BC11B5EAD9700569DF2 /* AQSFacebookMessengerActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A0F9BBE1B5EAD9700569DF2 /* AQSFacebookMessengerActivity.m */; };
 		9A0F9BC21B5EAD9700569DF2 /* AQSFacebookMessengerActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A0F9BBE1B5EAD9700569DF2 /* AQSFacebookMessengerActivity.m */; };
 		9A0F9BC31B5EAD9700569DF2 /* AQSFacebookMessengerActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A0F9BBE1B5EAD9700569DF2 /* AQSFacebookMessengerActivity.m */; };
+		9A17372B1B669B0E004905B4 /* JACheckoutBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */; };
+		9A17372F1B679740004905B4 /* UIImage+WithColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372E1B679740004905B4 /* UIImage+WithColor.m */; };
 		9A2036AE1B21DE0F00F36F55 /* JANewRatingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A2036AD1B21DE0F00F36F55 /* JANewRatingViewController.xib */; };
 		9A2036AF1B21DFC200F36F55 /* JANewRatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E4C1A6515F600F3E92D /* JANewRatingViewController.m */; };
 		9A2036B01B21ED7100F36F55 /* JACartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A2D1B18B3C50028105D /* JACartViewController.xib */; };
@@ -2939,6 +2941,10 @@
 		9A0F9BAA1B5E7DE600569DF2 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		9A0F9BBD1B5EAD9700569DF2 /* AQSFacebookMessengerActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AQSFacebookMessengerActivity.h; path = Jumia/ExternalFrameworks/AQSFacebookMessengerActivity/AQSFacebookMessengerActivity.h; sourceTree = "<group>"; };
 		9A0F9BBE1B5EAD9700569DF2 /* AQSFacebookMessengerActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AQSFacebookMessengerActivity.m; path = Jumia/ExternalFrameworks/AQSFacebookMessengerActivity/AQSFacebookMessengerActivity.m; sourceTree = "<group>"; };
+		9A1737291B669B0E004905B4 /* JACheckoutBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACheckoutBottomView.h; path = ../Controllers/Checkout/JACheckoutBottomView.h; sourceTree = "<group>"; };
+		9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACheckoutBottomView.m; path = ../Controllers/Checkout/JACheckoutBottomView.m; sourceTree = "<group>"; };
+		9A17372D1B679740004905B4 /* UIImage+WithColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+WithColor.h"; path = "Categories/UIImage+WithColor.h"; sourceTree = "<group>"; };
+		9A17372E1B679740004905B4 /* UIImage+WithColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+WithColor.m"; path = "Categories/UIImage+WithColor.m"; sourceTree = "<group>"; };
 		9A2036AD1B21DE0F00F36F55 /* JANewRatingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JANewRatingViewController.xib; sourceTree = "<group>"; };
 		9A4F91121B3D5C3E00E34C0B /* JAPDVWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAPDVWizardView.h; path = Wizard/JAPDVWizardView.h; sourceTree = "<group>"; };
 		9A4F91131B3D5C3E00E34C0B /* JAPDVWizardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAPDVWizardView.m; path = Wizard/JAPDVWizardView.m; sourceTree = "<group>"; };
@@ -4066,7 +4072,7 @@
 				520A37CF1A4890CD0046C8B1 /* Search */,
 				B59DCA6719B851F700DE7960 /* Buttons */,
 				4A4ABF08198B902600342D92 /* Cells */,
-				B530D56E19C199690052FEDA /* CheckoutForms */,
+				9A17372C1B677A13004905B4 /* Checkout */,
 				CE88F7A91A1E339F00A3A586 /* CollectionViewLayouts */,
 				B510B00119AE466B00A9754A /* DynamicForms */,
 				8C38E17F19CF164A0007F6F9 /* ErrorViews */,
@@ -4288,6 +4294,16 @@
 			);
 			name = AQSFacebookMessengerActivity;
 			path = ../..;
+			sourceTree = "<group>";
+		};
+		9A17372C1B677A13004905B4 /* Checkout */ = {
+			isa = PBXGroup;
+			children = (
+				B530D56E19C199690052FEDA /* CheckoutForms */,
+				9A1737291B669B0E004905B4 /* JACheckoutBottomView.h */,
+				9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */,
+			);
+			name = Checkout;
 			sourceTree = "<group>";
 		};
 		9A20DEAA1B5545E700601910 /* Adjust */ = {
@@ -5183,6 +5199,8 @@
 				9AEA3B251B15D4AC00771EEA /* UIView+Frame.m */,
 				9A7EE9C31B5557C9004E2505 /* UIButton+Extensions.h */,
 				9A7EE9C41B5557C9004E2505 /* UIButton+Extensions.m */,
+				9A17372D1B679740004905B4 /* UIImage+WithColor.h */,
+				9A17372E1B679740004905B4 /* UIImage+WithColor.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -8078,6 +8096,7 @@
 				B5A302E519811E9200F71726 /* RIGoogleAnalyticsTracker.m in Sources */,
 				CE88F7BD1A23886100A3A586 /* JAOrderSummaryView.m in Sources */,
 				CE33CA0119AB36FA00333B1A /* JAPriceView.m in Sources */,
+				9A17372F1B679740004905B4 /* UIImage+WithColor.m in Sources */,
 				B5A302DE19811E9200F71726 /* RITrackingWrapper.m in Sources */,
 				B5A302D319811E9200F71726 /* RIVariation.m in Sources */,
 				CEDEB986199A6F430022BAB5 /* JAMainFiltersViewController.m in Sources */,
@@ -8100,6 +8119,7 @@
 				B5A302E119811E9200F71726 /* RITrackingConfiguration.m in Sources */,
 				CECD059C1ADFF2DB00EC51E3 /* RITeaserComponent.m in Sources */,
 				B5A302C419811E9200F71726 /* RIFormIndex.m in Sources */,
+				9A17372B1B669B0E004905B4 /* JACheckoutBottomView.m in Sources */,
 				B510B01419AE466B00A9754A /* JADynamicForm.m in Sources */,
 				B5A301AE19811D0700F71726 /* main.m in Sources */,
 				B5A3025D19811E8A00F71726 /* UIButton+WebCache.m in Sources */,

@@ -18,11 +18,16 @@
 #import "RICart.h"
 #import "UIView+Mirror.h"
 #import "UIImage+Mirror.h"
+#import "JACheckoutBottomView.h"
 
 @interface JAPaymentViewController ()
 <UICollectionViewDataSource,
 UICollectionViewDelegate,
 UITextFieldDelegate>
+{
+    // Bottom view
+    JACheckoutBottomView *_bottomView;
+}
 
 // Steps
 @property (weak, nonatomic) IBOutlet UIImageView *stepBackground;
@@ -41,8 +46,6 @@ UITextFieldDelegate>
 @property (strong, nonatomic) UITextField *couponTextField;
 @property (strong, nonatomic) UIButton *useCouponButton;
 
-// Bottom view
-@property (strong, nonatomic) JAButtonWithBlur *bottomView;
 
 // Order Summary
 @property (strong, nonatomic) JAOrderSummaryView *orderSummary;
@@ -123,6 +126,12 @@ UITextFieldDelegate>
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [self showLoading];
+    
+    if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
+        [_bottomView setNoTotal:YES];
+    }else{
+        [_bottomView setNoTotal:NO];
+    }
     
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
@@ -272,13 +281,12 @@ UITextFieldDelegate>
     [self.couponView addSubview:self.useCouponButton];
     [self.scrollView addSubview:self.couponView];
     
-    self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero orientation:UIInterfaceOrientationPortrait];
+    _bottomView = [[JACheckoutBottomView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                         self.view.frame.size.height - 64.0f - _bottomView.frame.size.height,
+                                                                         self.view.frame.size.width,
+                                                                         _bottomView.frame.size.height) orientation:self.interfaceOrientation];
     
-    [self.bottomView setFrame:CGRectMake(0.0f,
-                                         self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height,
-                                         self.view.frame.size.width,
-                                         self.bottomView.frame.size.height)];
-    [self.view addSubview:self.bottomView];
+    [self.view addSubview:_bottomView];
 }
 
 - (void) setupStepView:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
@@ -436,11 +444,12 @@ UITextFieldDelegate>
                                               self.useCouponButton.frame.size.width,
                                               self.useCouponButton.frame.size.height)];
     
-    [self.bottomView reloadFrame:CGRectMake(0.0f,
-                                            self.view.frame.size.height - self.bottomView.frame.size.height,
+    [_bottomView setFrame:CGRectMake(0.0f,
+                                            self.view.frame.size.height - 56,
                                             width,
-                                            self.bottomView.frame.size.height)];
-    [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
+                                     56)];
+    [_bottomView setTotalValue:self.checkout.cart.cartValueFormatted];
+    [_bottomView setButtonText:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
     
     [self reloadCollectionView];
     
@@ -514,7 +523,7 @@ UITextFieldDelegate>
                          }];
         
         [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
-                                                   self.collectionView.frame.origin.y + collectionViewHeight + 92.0f + self.bottomView.frame.size.height + 6.0f)];
+                                                   self.collectionView.frame.origin.y + collectionViewHeight + 92.0f + _bottomView.frame.size.height + 6.0f)];
         
     }
     

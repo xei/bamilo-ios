@@ -19,6 +19,7 @@
 #import "RICustomer.h"
 #import "UIView+Mirror.h"
 #import "UIImage+Mirror.h"
+#import "JACheckoutBottomView.h"
 
 #define kPickupStationKey @"pickupstation"
 
@@ -28,6 +29,10 @@ UICollectionViewDataSource,
 UICollectionViewDelegate,
 UICollectionViewDelegateFlowLayout
 >
+{
+    // Bottom view
+    JACheckoutBottomView *_bottomView;
+}
 
 // Steps
 @property (weak, nonatomic) IBOutlet UIImageView *stepBackground;
@@ -38,9 +43,6 @@ UICollectionViewDelegateFlowLayout
 // Shipping methods
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UICollectionView *collectionView;
-
-// Bottom view
-@property (strong, nonatomic) JAButtonWithBlur *bottomView;
 
 // Picker view
 @property (strong, nonatomic) JAPicker *picker;
@@ -122,6 +124,12 @@ UICollectionViewDelegateFlowLayout
     if(VALID(self.picker, JAPicker))
     {
         [self.picker removeFromSuperview];
+    }
+    
+    if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
+        [_bottomView setNoTotal:YES];
+    }else{
+        [_bottomView setNoTotal:NO];
     }
     
     [self showLoading];
@@ -226,13 +234,9 @@ UICollectionViewDelegateFlowLayout
     [self.scrollView addSubview:self.collectionView];
     [self.view addSubview:self.scrollView];
     
-    self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero orientation:UIInterfaceOrientationPortrait];
-    
-    [self.bottomView setFrame:CGRectMake(0.0f,
-                                         self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height,
-                                         self.view.frame.size.width,
-                                         self.bottomView.frame.size.height)];
-    [self.view addSubview:self.bottomView];
+    _bottomView = [[JACheckoutBottomView alloc] initWithFrame:CGRectMake(0.f, self.view.frame.size.height - 56, self.view.frame.size.width, 56) orientation:self.interfaceOrientation];
+    [_bottomView setTotalValue:self.checkout.cart.cartValueFormatted];
+    [self.view addSubview:_bottomView];
 }
 
 - (void) setupStepView:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
@@ -385,11 +389,12 @@ UICollectionViewDelegateFlowLayout
                                              self.scrollView.frame.size.width - 12.0f,
                                              self.collectionView.frame.size.height)];
     
-    [self.bottomView reloadFrame:CGRectMake(0.0f,
-                                            self.view.frame.size.height - self.bottomView.frame.size.height,
-                                            width,
-                                            self.bottomView.frame.size.height)];
-    [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
+    [_bottomView setFrame:CGRectMake(0.0f,
+                                             self.view.frame.size.height - 56,
+                                             width,
+                                             56)];
+    [_bottomView setButtonText:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
+    [_bottomView setTotalValue:self.checkout.cart.cartValueFormatted];
     
     [self reloadCollectionView];
     
@@ -433,7 +438,7 @@ UICollectionViewDelegateFlowLayout
                          }];
         
         [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
-                                                   self.collectionView.frame.origin.y + collectionViewHeight + self.bottomView.frame.size.height + 6.0f)];
+                                                   self.collectionView.frame.origin.y + collectionViewHeight + _bottomView.frame.size.height + 6.0f)];
         
     }
     

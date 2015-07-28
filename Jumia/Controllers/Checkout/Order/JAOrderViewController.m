@@ -363,18 +363,32 @@
     UILabel* vatLabel = [UILabel new];
     vatLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     vatLabel.textColor = UIColorFromRGB(0x666666);
-    vatLabel.text = [NSString stringWithFormat:STRING_TAX_INC, STRING_VAT];
+    [vatLabel setText:self.checkout.cart.vatLabel];
     [vatLabel sizeToFit];
-    vatLabel.frame = CGRectMake(articleNumberWidth.size.width+ 10.0f,
-                                articlesLabel.frame.origin.y,
+    vatLabel.frame = CGRectMake(articlesLabel.x,
+                                CGRectGetMaxY(articlesLabel.frame),
                                 articlesLabel.frame.size.width,
                                 vatLabel.frame.size.height);
     
+    UILabel *cartVatValue = [[UILabel alloc] initWithFrame:CGRectZero];
+    [cartVatValue setFont:[UIFont fontWithName:kFontLightName size:13.0f]];
+    [cartVatValue setTextColor:UIColorFromRGB(0x666666)];
+    if ([self.checkout.cart vatLabelEnabled]) {
+        [cartVatValue setText:[self.checkout.cart vatValueFormatted]];
+    }
+    [cartVatValue sizeToFit];
+    [cartVatValue setBackgroundColor:[UIColor clearColor]];
+    [cartVatValue setFrame:CGRectMake(CGRectGetMaxX(totalLabel.frame) - cartVatValue.frame.size.width,
+                                           vatLabel.y,
+                                           cartVatValue.frame.size.width,
+                                           cartVatValue.frame.size.height)];
+    
     CGFloat shippingYPos = CGRectGetMaxY(vatLabel.frame);
     
+    [subtotalContentView addSubview:cartVatValue];
     [subtotalContentView addSubview:vatLabel];
     
-    CGFloat vatPositionY = CGRectGetMaxY(articlesLabel.frame);
+    CGFloat vatPositionY = CGRectGetMaxY(vatLabel.frame);
     if(VALID_NOTEMPTY(priceRuleKeysString, NSString) && VALID_NOTEMPTY(priceRuleValuesString, NSString))
     {
         UILabel *priceRulesLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -385,7 +399,7 @@
         [priceRulesLabel setBackgroundColor:[UIColor clearColor]];
         [priceRulesLabel sizeToFit];
         [priceRulesLabel setFrame:CGRectMake(articlesLabel.frame.origin.x,
-                                             CGRectGetMaxY(articlesLabel.frame),
+                                             CGRectGetMaxY(vatLabel.frame),
                                              articlesLabel.frame.size.width,
                                              priceRulesLabel.frame.size.height)];
         
@@ -401,7 +415,7 @@
         [priceRulesValue setBackgroundColor:[UIColor clearColor]];
         [priceRulesValue sizeToFit];
         [priceRulesValue setFrame:CGRectMake(CGRectGetMaxX(priceRulesLabel.frame),
-                                             CGRectGetMaxY(articlesLabel.frame),
+                                             CGRectGetMaxY(vatLabel.frame),
                                              totalLabel.frame.size.width,
                                              priceRulesValue.frame.size.height)];
         

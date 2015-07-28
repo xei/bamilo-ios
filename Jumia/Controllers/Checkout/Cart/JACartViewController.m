@@ -661,7 +661,7 @@
         [self.priceRulesValue setBackgroundColor:[UIColor clearColor]];
         [self.priceRulesValue sizeToFit];
         [self.priceRulesValue setFrame:CGRectMake(self.subtotalView.frame.size.width - self.priceRulesValue.frame.size.width - 4.0f,
-                                                  CGRectGetMaxY(self.articlesCount.frame) + 4.0f,
+                                                  CGRectGetMaxY(self.cartVatLabel.frame) + 4.0f,
                                                   self.priceRulesValue.frame.size.width,
                                                   self.priceRulesValue.frame.size.height)];
         
