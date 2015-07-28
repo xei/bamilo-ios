@@ -10,4 +10,6 @@
 
 @interface UIImage (WithColor)
 
++ (UIImage *)imageWithColor:(UIColor *)color;
+
 @end
