@@ -111,8 +111,6 @@ UITextFieldDelegate>
 {
     [super viewWillAppear:animated];
     
-    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
-    
     [self continueLoading];
 }
 
@@ -574,6 +572,9 @@ UITextFieldDelegate>
 
 -(void)nextStepButtonPressed
 {
+    if (!self.selectedPaymentMethod) {
+        return;
+    }
     [self showLoading];
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithDictionary:[RIPaymentMethodForm getParametersForForm:self.paymentMethodForm]];

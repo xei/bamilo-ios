@@ -106,8 +106,6 @@ UICollectionViewDelegateFlowLayout
     [super viewWillAppear:animated];
 
     self.apiResponse = RIApiResponseSuccess;
-
-    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
     
     [self continueLoading];
 }
