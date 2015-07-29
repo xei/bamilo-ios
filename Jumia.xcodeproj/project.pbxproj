@@ -386,6 +386,10 @@
 		9A0F9BC31B5EAD9700569DF2 /* AQSFacebookMessengerActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A0F9BBE1B5EAD9700569DF2 /* AQSFacebookMessengerActivity.m */; };
 		9A17372B1B669B0E004905B4 /* JACheckoutBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */; };
 		9A17372F1B679740004905B4 /* UIImage+WithColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372E1B679740004905B4 /* UIImage+WithColor.m */; };
+		9A1737301B68EBAF004905B4 /* JACheckoutBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */; };
+		9A1737311B68EBAF004905B4 /* JACheckoutBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */; };
+		9A1737321B68EBAF004905B4 /* JACheckoutBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */; };
+		9A1737331B68EBB0004905B4 /* JACheckoutBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */; };
 		9A2036AE1B21DE0F00F36F55 /* JANewRatingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A2036AD1B21DE0F00F36F55 /* JANewRatingViewController.xib */; };
 		9A2036AF1B21DFC200F36F55 /* JANewRatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E4C1A6515F600F3E92D /* JANewRatingViewController.m */; };
 		9A2036B01B21ED7100F36F55 /* JACartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A2D1B18B3C50028105D /* JACartViewController.xib */; };
@@ -7907,6 +7911,7 @@
 				9A7EE96D1B5546A0004E2505 /* ADJAttribution.m in Sources */,
 				CE59BEF71AE7EF090057F4E2 /* JAShopTeaserView.m in Sources */,
 				CE59BF211AE906180057F4E2 /* JATopSellersTeaserView.m in Sources */,
+				9A1737301B68EBAF004905B4 /* JACheckoutBottomView.m in Sources */,
 				5612820b1a73e2366b652295 /* RIDataBaseWrapper.m in Sources */,
 				4bc43fda46c675d38bdb8ad7 /* JARootViewController.m in Sources */,
 				c9f69801c66118e53de177a7 /* RIShippingMethodPickupStationOption.m in Sources */,
@@ -8389,6 +8394,7 @@
 				CE9ADBF51AB34C4600D56481 /* JADynamicForm.m in Sources */,
 				CE9ADBF61AB34C4600D56481 /* main.m in Sources */,
 				CE9ADBF71AB34C4600D56481 /* UIButton+WebCache.m in Sources */,
+				9A1737311B68EBAF004905B4 /* JACheckoutBottomView.m in Sources */,
 				CE9ADBF81AB34C4600D56481 /* JARatingsViewMedium.m in Sources */,
 				CE9ADBFA1AB34C4600D56481 /* SDWebImagePrefetcher.m in Sources */,
 				9A7EE9B61B554706004E2505 /* NSData+ADJAdditions.m in Sources */,
@@ -8647,6 +8653,7 @@
 				CE9ADDEF1AB6D6E900D56481 /* JADynamicForm.m in Sources */,
 				CE9ADDF01AB6D6E900D56481 /* main.m in Sources */,
 				CE9ADDF11AB6D6E900D56481 /* UIButton+WebCache.m in Sources */,
+				9A1737321B68EBAF004905B4 /* JACheckoutBottomView.m in Sources */,
 				CE9ADDF21AB6D6E900D56481 /* JARatingsViewMedium.m in Sources */,
 				CE9ADDF41AB6D6E900D56481 /* SDWebImagePrefetcher.m in Sources */,
 				9A7EE9B71B554706004E2505 /* NSData+ADJAdditions.m in Sources */,
@@ -8723,6 +8730,7 @@
 				CE9ADF381AB6D78200D56481 /* RIShippingMethodForm.m in Sources */,
 				9ABCAEFA1B0F8FEF00A69271 /* UIView+Mirror.m in Sources */,
 				CE9ADF391AB6D78200D56481 /* SDWebImageManager.m in Sources */,
+				9A1737331B68EBB0004905B4 /* JACheckoutBottomView.m in Sources */,
 				CE9ADF3A1AB6D78200D56481 /* JAButtonCell.m in Sources */,
 				CE9ADF3B1AB6D78200D56481 /* RIForm.m in Sources */,
 				CE9ADF3C1AB6D78200D56481 /* JAPageControl.m in Sources */,
