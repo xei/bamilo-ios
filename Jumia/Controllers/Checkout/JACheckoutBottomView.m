@@ -18,6 +18,7 @@
     UIView *_totalView;
     
     UIColor *_totalBackgoundColor;
+    UIView *_delimiter;
 }
 
 @end
@@ -36,21 +37,23 @@
 
 - (void)initViews
 {
-    _totalBackgoundColor = [UIColor colorWithRed:.898 green:.898 blue:.898 alpha:1];
+    _delimiter = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width, 1)];
+    [_delimiter setBackgroundColor:[UIColor colorWithRed:0.3059 green:0.3059 blue:0.3059 alpha:.5]];
+    [self addSubview:_delimiter];
+    _totalBackgoundColor = JABackgroundGrey;
     [self setBackgroundColor:_totalBackgoundColor];
     
     _totalView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width/2, self.height)];
     [self addSubview:_totalView];
     
     _totalLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [_totalLabel setFont:[UIFont systemFontOfSize:14]];
+    [_totalLabel setFont:[UIFont systemFontOfSize:16]];
     [_totalLabel setTextColor:[UIColor colorWithRed:0.3059 green:0.3059 blue:0.3059 alpha:1]];
-    [_totalLabel setFrame:CGRectMake(10, _totalView.height/2 - _totalLabel.height/2, _totalLabel.width, _totalLabel.height)];
+    [_totalLabel setFrame:CGRectMake(23, _totalView.height/2 - _totalLabel.height/2, _totalLabel.width, _totalLabel.height)];
     [_totalView addSubview:_totalLabel];
     
     _totalLabelValue = [[UILabel alloc] initWithFrame:CGRectZero];
-    [_totalLabelValue setFont:[UIFont boldSystemFontOfSize:14]];
-    [_totalLabelValue setFont:[UIFont systemFontOfSize:14]];
+    [_totalLabelValue setFont:[UIFont boldSystemFontOfSize:16]];
     [_totalLabelValue setTextColor:[UIColor colorWithRed:.8f green:0 blue:0 alpha:1]];
     [self setTotalValue:@""];
     [_totalView addSubview:_totalLabelValue];
@@ -78,10 +81,12 @@
 {
     if (_noTotal) {
         [self setBackgroundColor:[UIColor clearColor]];
+        [_delimiter setHidden:YES];
         [_totalView setHidden:YES];
         [_submitButton setFrame:CGRectMake(5, 5, self.width - 10, self.height - 10)];
     }else{
         [self setBackgroundColor:_totalBackgoundColor];
+        [_delimiter setHidden:NO];
         [_totalView setHidden:NO];
         [_submitButton setFrame:CGRectMake(self.width/2 + 5, 5, self.width/2 - 10, self.height - 10)];
         [_submitButton setX:self.width/2 + 5];
@@ -97,9 +102,9 @@
     _totalValue = totalValue;
     [_totalLabel setText:[NSString stringWithFormat:@"%@: ", STRING_TOTAL]];
     [_totalLabel sizeToFit];
-    [_totalLabelValue setText:totalValue];
+    [_totalLabelValue setText:_totalValue];
     [_totalLabelValue sizeToFit];
-    [_totalLabel setX:10];
+    [_totalLabel setX:23];
     if (_totalLabelValue.width + _totalLabel.width > self.width/2 - 22) {
         [_totalLabel setY:10];
         [_totalLabelValue setY:30];
