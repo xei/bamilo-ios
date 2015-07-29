@@ -40,7 +40,7 @@
     _delimiter = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width, 1)];
     [_delimiter setBackgroundColor:[UIColor colorWithRed:0.3059 green:0.3059 blue:0.3059 alpha:.5]];
     [self addSubview:_delimiter];
-    _totalBackgoundColor = [UIColor clearColor];
+    _totalBackgoundColor = JABackgroundGrey;
     [self setBackgroundColor:_totalBackgoundColor];
     
     _totalView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width/2, self.height)];
