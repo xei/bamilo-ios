@@ -180,12 +180,6 @@
         
         // notify the InAppNotification SDK that this the active view controller
         [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
-        
-        [RIPromotion getPromotionWithSuccessBlock:^(RIPromotion *promotion) {
-            [self loadPromotion:promotion];
-        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
-
-        }];
 
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
         if(self.firstLoading)
