@@ -299,6 +299,22 @@ static dispatch_once_t sharedInstanceToken;
                                  arguments:@[campaignName]];
 }
 
+#pragma mark - RIStaticPageTracker
+
+- (void)trackStaticPage:(NSString *)staticPageKey
+{
+    RIDebugLog(@"Tracking static page with staticPageKey '%@'", staticPageKey);
+    
+    if (!self.trackers) {
+        RIRaiseError(@"Invalid call with non-existent trackers. Initialisation may have failed.");
+        return;
+    }
+    
+    [self RI_callTrackersConformToProtocol:@protocol(RIStaticPageTracker)
+                                  selector:@selector(trackStaticPage:)
+                                 arguments:@[staticPageKey]];
+}
+
 #pragma mark - Private methods
 
 - (void)RI_callTrackersConformToProtocol:(Protocol *)protocol
