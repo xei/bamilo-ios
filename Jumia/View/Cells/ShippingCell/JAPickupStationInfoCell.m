@@ -49,15 +49,16 @@
     }
     
     if (!_cityLabel) {
-        _cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(_infoView.frame.origin.x,
-                                                               _infoView.frame.origin.y,
-                                                               infoViewWidth,
-                                                               _infoView.frame.size.height)];
+        _cityLabel = [[UILabel alloc] init];
         [_infoView addSubview:_cityLabel];
     }
     
+    [_cityLabel setFrame:CGRectMake(0,
+                                   0,
+                                   infoViewWidth,
+                                    _infoView.frame.size.height)];
     [_cityLabel setNumberOfLines:0];
-    [_cityLabel setLineBreakMode:NSLineBreakByWordWrapping];
+    [_cityLabel setLineBreakMode:NSLineBreakByCharWrapping];
     [_cityLabel setTextColor:UIColorFromRGB(0x666666)];
     
     NSString *cityLabelString = STRING_CITY;
@@ -72,13 +73,14 @@
     totalHeight += _cityLabel.frame.size.height;
     
     if (!_addressLabel) {
-        _addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(_infoView.frame.origin.x,
-                                                                  CGRectGetMaxY(_cityLabel.frame),
-                                                                  infoViewWidth,
-                                                                  _infoView.frame.size.height)];
+        _addressLabel = [[UILabel alloc] init];
         [_infoView addSubview:_addressLabel];
     }
     
+    [_addressLabel setFrame:CGRectMake(0,
+                                      CGRectGetMaxY(_cityLabel.frame),
+                                      infoViewWidth,
+                                       _infoView.frame.size.height)];
     [_addressLabel setNumberOfLines:0];
     [_addressLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [_addressLabel setTextColor:UIColorFromRGB(0x666666)];
@@ -95,13 +97,14 @@
     totalHeight += _addressLabel.frame.size.height;
     
     if (!_openingHours) {
-        _openingHours = [[UILabel alloc] initWithFrame:CGRectMake(_infoView.frame.origin.x,
-                                                                  CGRectGetMaxY(_addressLabel.frame),
-                                                                  infoViewWidth,
-                                                                  _infoView.frame.size.height)];
+        _openingHours = [[UILabel alloc] init];
         [_infoView addSubview:_openingHours];
     }
     
+    [_openingHours setFrame:CGRectMake(0,
+                                      CGRectGetMaxY(_addressLabel.frame),
+                                      infoViewWidth,
+                                       _infoView.frame.size.height)];
     [_openingHours setNumberOfLines:0];
     [_openingHours setLineBreakMode:NSLineBreakByWordWrapping];
     [_openingHours setTextColor:UIColorFromRGB(0x666666)];
@@ -118,10 +121,11 @@
     totalHeight += _openingHours.frame.size.height;
     
     if (!_shippingFeeLabel) {
-        _shippingFeeLabel = [[UILabel alloc] initWithFrame:CGRectMake(_infoView.frame.origin.x, CGRectGetMaxY(_openingHours.frame), infoViewWidth, 20)];
+        _shippingFeeLabel = [[UILabel alloc] init];
         [_infoView addSubview:_shippingFeeLabel];
     }
     
+    [_shippingFeeLabel setFrame:CGRectMake(0, CGRectGetMaxY(_openingHours.frame), infoViewWidth, 20)];
     [_shippingFeeLabel setNumberOfLines:0];
     [_shippingFeeLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [_shippingFeeLabel setTextColor:UIColorFromRGB(0x666666)];
@@ -138,11 +142,12 @@
     [_shippingFeeLabel sizeToFit];
     
     if (!_shippingFeeAlertLabel) {
-        _shippingFeeAlertLabel = [[UILabel alloc] initWithFrame:CGRectMake(_infoView.x, CGRectGetMaxY(_shippingFeeLabel.frame) + 4, _infoView.width, 20)];
+        _shippingFeeAlertLabel = [[UILabel alloc] init];
         [_infoView addSubview:_shippingFeeAlertLabel];
         [_shippingFeeAlertLabel setFont:[UIFont fontWithName:kFontLightName size:11.0f]];
     }
     
+    [_shippingFeeAlertLabel setFrame:CGRectMake(0, CGRectGetMaxY(_shippingFeeLabel.frame) + 4, _infoView.width, 20)];
     [_shippingFeeAlertLabel setText:STRING_SHIPPING_FEE_INFO];
     [_shippingFeeAlertLabel setTextColor:UIColorFromRGB(0x666666)];
     [_shippingFeeAlertLabel sizeToFit];
@@ -167,7 +172,7 @@
     [_separator setBackgroundColor:UIColorFromRGB(0xcccccc)];
     
     [_infoView setFrame:self.bounds];
-    _infoView.y += 10;
+    _infoView.y += 16;
     _infoView.x += 85;
     _infoView.width -= 85;
     
@@ -195,7 +200,7 @@
     NSDictionary* labelAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:kFontRegularName size:13.0f], NSFontAttributeName, nil];
     NSDictionary* valueAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:kFontLightName size:13.0f], NSFontAttributeName, nil];
     
-    CGFloat totalHeight = 6.0f;
+    CGFloat totalHeight = 16.0f;
     
     CGFloat infoViewWidth = 180.0f;
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
@@ -244,6 +249,41 @@
     [label sizeToFit];
     
     totalHeight += label.frame.size.height;
+    
+    UILabel *shippingFeeLabel = [[UILabel alloc] init];
+    
+    [shippingFeeLabel setFrame:CGRectMake(0, 0, infoViewWidth, 20)];
+    [shippingFeeLabel setNumberOfLines:0];
+    [shippingFeeLabel setLineBreakMode:NSLineBreakByWordWrapping];
+    [shippingFeeLabel setTextColor:UIColorFromRGB(0x666666)];
+    NSString *shippingFeeString = STRING_SHIPPING_FEE;
+    NSString *shippingFeeValue = [RICountryConfiguration formatPrice:pickupStation.shippingFee country:[RICountryConfiguration getCurrentConfiguration]];
+    if ([pickupStation.shippingFee isEqualToNumber:[NSNumber numberWithInteger:0]]) {
+        shippingFeeValue = STRING_FREE;
+    }
+    NSRange shippingFeeRange = NSMakeRange(shippingFeeString.length, shippingFeeValue.length);
+    NSMutableAttributedString *finalShippingFeeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", shippingFeeString, shippingFeeValue] attributes:labelAttributes];
+    [finalShippingFeeString setAttributes:valueAttributes
+                                    range:shippingFeeRange];
+    [shippingFeeLabel setAttributedText:finalShippingFeeString];
+    [shippingFeeLabel sizeToFit];
+    
+    totalHeight += shippingFeeLabel.height;
+    
+    if (![pickupStation.shippingFee isEqualToNumber:[NSNumber numberWithInteger:0]]) {
+        UILabel *shippingFeeAlertLabel = [[UILabel alloc] init];
+        [shippingFeeAlertLabel setFont:[UIFont fontWithName:kFontLightName size:11.0f]];
+        
+        [shippingFeeAlertLabel setFrame:CGRectMake(0, 0, infoViewWidth, 20)];
+        [shippingFeeAlertLabel setText:STRING_SHIPPING_FEE_INFO];
+        [shippingFeeAlertLabel setTextColor:UIColorFromRGB(0x666666)];
+        [shippingFeeAlertLabel sizeToFit];
+        
+        totalHeight += shippingFeeAlertLabel.height + 4;
+    }
+    
+    totalHeight += 16;
+    
     NSLog(@"totalHeight: %f", totalHeight);
     
     return totalHeight;

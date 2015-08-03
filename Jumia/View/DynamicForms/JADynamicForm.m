@@ -182,6 +182,11 @@
                 [textField setupWithField:field];
                 [textField.textField setDelegate:self];
                 [textField.textField setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
+                
+                if ([@"phone" isEqualToString:field.key]) {
+                    textField.textField.keyboardType = UIKeyboardTypePhonePad;
+                }
+                
                 [textField.textField setReturnKeyType:returnKeyType];
                 
                 CGRect frame = textField.frame;

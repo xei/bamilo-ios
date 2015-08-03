@@ -569,11 +569,6 @@ UICollectionViewDelegateFlowLayout
             {
                 CGFloat size = [JAPickupStationInfoCell getHeightForPickupStation:pickupStation];
                 
-                if(size < 120.0f)
-                {
-                    size = 120.0f;
-                }
-                
                 [self.pickupStationHeightsForRegion addObject:[NSNumber numberWithFloat:size]];
             }
             
@@ -632,8 +627,9 @@ UICollectionViewDelegateFlowLayout
             if([kPickupStationKey isEqualToString:[self.selectedShippingMethod lowercaseString]])
             {
                 NSInteger index = indexPath.row - self.collectionViewIndexSelected.row - 2;
-                NSLog(@"sizeForItemAtIndexPath %ld = %@", (long)indexPath.row, [[self.pickupStationHeightsForRegion objectAtIndex:index] stringValue]);
-                sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, [[self.pickupStationHeightsForRegion objectAtIndex:index] floatValue]);
+                CGFloat pickupStationInfoCellHeight = [JAPickupStationInfoCell getHeightForPickupStation:[self.pickupStationsForRegion objectAtIndex:index]];
+                
+                return CGSizeMake(self.collectionView.frame.size.width, pickupStationInfoCellHeight);
             }
         }
     }
