@@ -208,15 +208,20 @@
     if ([url rangeOfString:@"?"].location != NSNotFound) {
         particle = @"&";
     }
+    NSString *sortingString = [RIProduct urlComponentForSortingMethod:sortingMethod];
+    if (VALID_NOTEMPTY(sortingString, NSString)) {
+        sortingString = [NSString stringWithFormat:@"&%@", sortingString];
+    }
+    
     if(VALID_NOTEMPTY(filtersString, NSString))
     {
-
-        fullUrl = [NSString stringWithFormat:@"%@%@page=%ld&maxitems=%ld&%@&%@", url, particle, (long)page, (long)maxItems, [RIProduct urlComponentForSortingMethod:sortingMethod], filtersString];
+        fullUrl = [NSString stringWithFormat:@"%@%@page=%ld&maxitems=%ld%@%@", url, particle, (long)page, (long)maxItems, sortingString, [NSString stringWithFormat:@"&%@" ,filtersString]];
     }
     else
     {
-        fullUrl = [NSString stringWithFormat:@"%@%@page=%ld&maxitems=%ld&%@", url, particle, (long)page, (long)maxItems, [RIProduct urlComponentForSortingMethod:sortingMethod]];
+        fullUrl = [NSString stringWithFormat:@"%@%@page=%ld&maxitems=%ld%@", url, particle, (long)page, (long)maxItems, sortingString];
     }
+    fullUrl = [fullUrl stringByReplacingOccurrencesOfString:@"http://integration-www.jumia.ug/mobapi/v1.7/integration-www.jumia.ug/" withString:@"http://integration-www.jumia.ug/mobapi/v1.7/"];
     return [RIProduct getProductsWithFullUrl:fullUrl
                                 successBlock:successBlock
                              andFailureBlock:failureBlock];
@@ -226,7 +231,6 @@
                         successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories, RIBanner* banner))successBlock
                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
-    url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *finalURL = [NSURL URLWithString:url];
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:finalURL
                                                             parameters:nil

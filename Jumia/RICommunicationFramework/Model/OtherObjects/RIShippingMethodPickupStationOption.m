@@ -60,6 +60,11 @@
         pickupStation.regions = [regions copy];
     }
     
+    NSArray *shippingFee = [jsonObject objectForKey:@"shipping_fee"];
+    if (VALID_NOTEMPTY(shippingFee, NSNumber)) {
+        pickupStation.shippingFee = [shippingFee copy];
+    }
+    
     return pickupStation;
 }
 
