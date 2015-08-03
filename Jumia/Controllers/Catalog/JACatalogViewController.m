@@ -469,7 +469,7 @@
             
             self.isLoadingMoreProducts =YES;
             
-            self.searchSuggestionOperationID = [RISearchSuggestion getResultsForSearch:self.searchString
+            self.searchSuggestionOperationID = [RISearchSuggestion getResultsForSearch:[self.searchString stringByReplacingOccurrencesOfString:@" " withString:@"+"]
                                                                                   page:[pageNumber stringValue]
                                                                               maxItems:[NSString stringWithFormat:@"%ld",(long)self.maxProducts]
                                                                          sortingMethod:self.sortingMethod

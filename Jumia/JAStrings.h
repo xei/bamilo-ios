@@ -153,6 +153,7 @@
 #define STRING_OPENING_HOURS RILocalizedString(@"string_opening_hours", nil)
 #define STRING_PLEASE_SELECT RILocalizedString(@"string_please_select", nil)
 #define STRING_SHIPPING_FEE RILocalizedString(@"order_summary_shipping_fee_label", nil)
+#define STRING_SHIPPING_FEE_INFO RILocalizedString(@"shipping_fee_info", nil)
 
 #define STRING_CHECKOUT_PAYMENT RILocalizedString(@"checkout_header_step_4", nil)
 #define STRING_PAYMENT RILocalizedString(@"payment", nil)

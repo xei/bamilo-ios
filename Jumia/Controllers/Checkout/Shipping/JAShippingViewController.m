@@ -623,7 +623,7 @@ UICollectionViewDelegateFlowLayout
             else
             {
                 // JAShippingInfoCell Height
-                sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, 53.0f);
+                sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, 60.0f);
             }
         }
         else
@@ -767,7 +767,11 @@ UICollectionViewDelegateFlowLayout
                     RIShippingMethod *shippingMethod = [shippingMethodDictionary objectForKey:shippingMethodKey];
                     if(VALID_NOTEMPTY(shippingMethod, RIShippingMethod))
                     {
-                        [shippingInfoCell loadWithShippingFee:shippingFee deliveryTime:shippingMethod.deliveryTime];
+                        NSString *shippingFeeString = [RICountryConfiguration formatPrice:shippingMethod.shippingFee country:[RICountryConfiguration getCurrentConfiguration]];
+                        if ([shippingMethod.shippingFee isEqualToNumber:[NSNumber numberWithInteger:0]]) {
+                            shippingFeeString = STRING_FREE;
+                        }
+                        [shippingInfoCell loadWithShippingFee:shippingFeeString deliveryTime:shippingMethod.deliveryTime];
                     }
                 }
                 

@@ -183,8 +183,6 @@
                      successBlock:(void (^)(NSArray *results, NSArray *filters, NSNumber *productCount, RIBanner *banner))successBlock
                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
 {
-    query = [query stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
     BOOL discountMode = NO;
     for (RIFilter* filter in filters)
     {
@@ -208,24 +206,30 @@
         tempUrl = [NSString stringWithFormat:@"%@search/", tempUrl];
     }
     
+    NSString *sortingString = [RIProduct urlComponentForSortingMethod:sortingMethod];
+    
+    if (VALID_NOTEMPTY(sortingString, NSString)) {
+        sortingString = [NSString stringWithFormat:@"&%@", sortingString];
+    }
+    
     NSString *filtersString = [RIFilter urlWithFiltersArray:filters];
     if(VALID_NOTEMPTY(filtersString, NSString))
     {
         if(NSNotFound == [@"q" rangeOfString:filtersString].location)
         {
-            tempUrl = [NSString stringWithFormat:@"%@?setDevice=mobileApi&q=%@&page=%@&maxitems=%@&%@&%@", tempUrl, query, page, maxItems,
-                       [RIProduct urlComponentForSortingMethod:sortingMethod], filtersString];
+            tempUrl = [NSString stringWithFormat:@"%@?setDevice=mobileApi&q=%@&page=%@&maxitems=%@%@&%@", tempUrl, query, page, maxItems,
+                       sortingString, filtersString];
         }
         else
         {
-            tempUrl = [NSString stringWithFormat:@"%@?setDevice=mobileApi&page=%@&maxitems=%@&%@&%@", tempUrl, page, maxItems,
-                          [RIProduct urlComponentForSortingMethod:sortingMethod], filtersString];
+            tempUrl = [NSString stringWithFormat:@"%@?setDevice=mobileApi&page=%@&maxitems=%@%@&%@", tempUrl, page, maxItems,
+                          sortingString, filtersString];
         }
     }
     else
     {
-        tempUrl = [NSString stringWithFormat:@"%@?setDevice=mobileApi&q=%@&page=%@&maxitems=%@&%@", tempUrl, query, page, maxItems,
-                   [RIProduct urlComponentForSortingMethod:sortingMethod]];
+        tempUrl = [NSString stringWithFormat:@"%@?setDevice=mobileApi&q=%@&page=%@&maxitems=%@%@", tempUrl, query, page, maxItems,
+                   sortingString];
     }
 
     tempUrl = [tempUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
