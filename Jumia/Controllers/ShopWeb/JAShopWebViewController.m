@@ -14,7 +14,6 @@
 @interface JAShopWebViewController ()
 
 @property (nonatomic, strong)RIHtmlShop* htmlShop;
-
 @property (nonatomic, strong)UIScrollView* scrollView;
 @property (nonatomic, strong)UIWebView* webView;
 @property (nonatomic, strong)NSMutableArray* topSellerTeaserViewsArray;
@@ -43,6 +42,10 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    NSString *staticKey = [[[[self.url componentsSeparatedByString:@"main/getstatic/?key="] lastObject] componentsSeparatedByString:@"&"] firstObject];
+    
+    [[RITrackingWrapper sharedInstance] trackStaticPage:staticKey];
     
     [self.scrollView setFrame:[self viewBounds]];
     [self.webView setFrame:self.scrollView.bounds];
