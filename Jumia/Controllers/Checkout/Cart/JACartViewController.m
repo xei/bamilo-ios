@@ -607,7 +607,10 @@
         }
     }
     
-    self.cartVatLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    if (!self.cartVatLabel) {
+        self.cartVatLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        [self.subtotalView addSubview:self.cartVatLabel];
+    }
     [self.cartVatLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
     [self.cartVatLabel setTextColor:UIColorFromRGB(0x666666)];
     [self.cartVatLabel setText:[self.cart vatLabel]];
@@ -619,11 +622,18 @@
                                            self.cartVatLabel.frame.size.width,
                                            self.cartVatLabel.frame.size.height)];
     
-    self.cartVatValue = [[UILabel alloc] initWithFrame:CGRectZero];
+    if (!self.cartVatValue) {
+        self.cartVatValue = [[UILabel alloc] initWithFrame:CGRectZero];
+        [self.subtotalView addSubview:self.cartVatValue];
+    }
+    
     [self.cartVatValue setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
     [self.cartVatValue setTextColor:UIColorFromRGB(0x666666)];
-    if ([self.cart vatLabelEnabled]) {
+    if ([[self.cart vatLabelEnabled] boolValue]) {
         [self.cartVatValue setText:[self.cart vatValueFormatted]];
+        [self.cartVatValue setHidden:NO];
+    }else{
+        [self.cartVatValue setHidden:YES];
     }
     [self.cartVatValue sizeToFit];
     [self.cartVatValue setBackgroundColor:[UIColor clearColor]];
@@ -684,8 +694,6 @@
         extraCostYPos = CGRectGetMaxY(self.cartVatLabel.frame);
 
     }
-    [self.subtotalView addSubview:self.cartVatLabel];
-    [self.subtotalView addSubview:self.cartVatValue];
 
     
     self.extraCostsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
