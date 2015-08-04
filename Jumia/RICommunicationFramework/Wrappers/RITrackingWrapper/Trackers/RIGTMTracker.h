@@ -14,7 +14,8 @@ RITracker,
 RILaunchEventTracker,
 RIEventTracking,
 RIEcommerceEventTracking,
-RITrackingTiming
+RITrackingTiming,
+RIStaticPageTracker
 >
 
 + (instancetype)sharedInstance;

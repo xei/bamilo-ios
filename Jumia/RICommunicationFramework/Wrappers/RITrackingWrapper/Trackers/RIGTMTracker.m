@@ -81,6 +81,7 @@
 #define kGTMEventInstallAdgroupKey              @"installAdgroup"
 #define kGTMEventInstallCampaignKey             @"installCampaign"
 #define kGTMEventInstallCreativeKey             @"installCreative"
+#define kGTMEventStaticPageKey                  @"staticPageKey"
 
 NSString *kGTMToken = @"kGTMToken";
 
@@ -1064,6 +1065,18 @@ NSString *kGTMToken = @"kGTMToken";
     NSMutableDictionary *pushedData = [[NSMutableDictionary alloc] init];
     [pushedData setObject:reference forKey:kGTMEventScreenNameKey];
     [pushedData setObject:millis forKey:kGTMEventLoadTimeKey];
+    
+    [self pushEvent:pushedData];
+}
+
+#pragma mark - RIStaticPageTracker
+
+- (void)trackStaticPage:(NSString *)staticPageKey
+{
+    RIDebugLog(@"GTM - Tracking static page with statickPageKey: %@", staticPageKey);
+    
+    NSMutableDictionary *pushedData = [[NSMutableDictionary alloc] init];
+    [pushedData setObject:staticPageKey forKey:kGTMEventStaticPageKey];
     
     [self pushEvent:pushedData];
 }

@@ -101,6 +101,20 @@ typedef NS_ENUM(NSInteger, RICartState) {
 @end
 
 /**
+ *  This protocol implements tracking to static pages
+ */
+@protocol RIStaticPageTracker <NSObject>
+
+/**
+ *  Track how many times the static pages are opened and seen in the app, given its staticPageKey
+ *
+ *  @param name The staticPageKey
+ */
+- (void)trackStaticPage:(NSString *)staticPageKey;
+
+@end
+
+/**
  *  API protocol for exception tracking
  */
 @protocol RIExceptionTracking <NSObject>
@@ -425,7 +439,8 @@ typedef NS_ENUM(NSInteger, RIEventType) {
     RIEcommerceEventTracking,
     RITrackingTiming,
     RILaunchEventTracker,
-    RICampaignTracker
+    RICampaignTracker,
+    RIStaticPageTracker
 >
 
 /**
