@@ -10,6 +10,7 @@
 #import "RIAddress.h"
 #import "RIForm.h"
 #import "RINewsletterCategory.h"
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 @interface RICustomer ()
 
@@ -306,6 +307,7 @@
     }
     else
     {
+        [[[FBSDKLoginManager alloc] init] logOut];
         return NO;
     }
 }

@@ -855,8 +855,6 @@ FBSDKLoginButtonDelegate
 {
     if (!error) {
         
-        NSLog(@"token: %@", result.token);
-        
         NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
         [parameters setValue:@"id,name, first_name, last_name, email, gender, birthday" forKey:@"fields"];
         FBSDKGraphRequest *requestMe = [[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:parameters];

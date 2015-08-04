@@ -552,11 +552,13 @@
     {
         JASignupViewController *signUpVC = [[JASignupViewController alloc] init];
         
-        if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSNotification))
-        {
+        if(VALID_NOTEMPTY(notification, NSNotification)) {
             signUpVC.navBarLayout.showBackButton = ![[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
             signUpVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
-            signUpVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
+            if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSNotification))
+            {
+                signUpVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
+            }
             [self popViewControllerAnimated:NO];
         }
         else

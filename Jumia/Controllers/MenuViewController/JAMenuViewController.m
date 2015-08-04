@@ -12,8 +12,6 @@
 #import "JAUtils.h"
 #import "RISearchSuggestion.h"
 #import "RICustomer.h"
-//#import <FacebookSDK/FacebookSDK.h>
-//#import <FacebookSDK/FBSession.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBAudienceNetwork/FBAudienceNetwork.h>
