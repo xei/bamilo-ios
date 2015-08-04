@@ -34,6 +34,7 @@
     
     self.webView = [UIWebView new];
     self.webView.delegate = self;
+    self.webView.scrollView.scrollEnabled = NO;
     [self.scrollView addSubview:self.webView];
     
     self.isLoaded = NO;
@@ -56,10 +57,8 @@
             self.htmlShop = htmlShop;
             self.isLoaded = YES;
             
-            [self.webView loadHTMLString:htmlShop.html baseURL:[NSURL URLWithString:self.url]];
             [self removeErrorView];
-            
-            [self loadViews];
+            [self.webView loadHTMLString:self.htmlShop.html baseURL:[NSURL URLWithString:self.url]];
             
         } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
             if (RIApiResponseNoInternetConnection == apiResponse) {
@@ -75,8 +74,6 @@
 
 - (void)loadViews
 {
-    //adjust scroll
-    [self.scrollView setFrame:[self viewBounds]];
     self.webView.frame = CGRectMake(0.0f,
                                     0.0f,
                                     self.scrollView.frame.size.width,
@@ -113,7 +110,7 @@
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    [self loadViews];
+    [self.webView loadHTMLString:self.htmlShop.html baseURL:[NSURL URLWithString:self.url]];
 }
 
 - (BOOL)webView:(UIWebView *)webView
@@ -162,6 +159,13 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     
     
     return YES;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [self.scrollView setFrame:[self viewBounds]];
+    [self.webView setFrame:self.scrollView.bounds];
+    [self loadViews];
 }
 
 @end
