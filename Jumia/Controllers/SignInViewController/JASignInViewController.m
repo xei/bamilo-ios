@@ -544,11 +544,11 @@ FBSDKLoginButtonDelegate
     
     NSMutableDictionary *userInfo = nil;
     
+    userInfo = [[NSMutableDictionary alloc] init];
+    [userInfo setObject:[NSNumber numberWithBool:self.fromSideMenu] forKey:@"from_side_menu"];
     if(VALID_NOTEMPTY(self.nextNotification, NSNotification))
     {
-        userInfo = [[NSMutableDictionary alloc] init];
         [userInfo setObject:self.nextNotification forKey:@"notification"];
-        [userInfo setObject:[NSNumber numberWithBool:self.fromSideMenu] forKey:@"from_side_menu"];
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignUpScreenNotification
@@ -636,17 +636,17 @@ FBSDKLoginButtonDelegate
              [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                                  object:nil];
              
-             if(VALID_NOTEMPTY(self.nextNotification, NSNotification))
+             if (self.fromSideMenu) {
+                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+             }else if(VALID_NOTEMPTY(self.nextNotification, NSNotification))
              {
                  [self.navigationController popViewControllerAnimated:NO];
                  
                  [[NSNotificationCenter defaultCenter] postNotificationName:self.nextNotification.name
                                                                      object:self.nextNotification.object
                                                                    userInfo:self.nextNotification.userInfo];
-             }
-             else
-             {
-                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+             }else{
+                 [self.navigationController popViewControllerAnimated:NO];
              }
          }
          
