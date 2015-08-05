@@ -2,7 +2,7 @@
 //  A4SWebView.h
 //  Accengage SDK 
 //
-//  Copyright (c) 2010-2014 Accengage. All rights reserved.
+//  Copyright (c) 2010-2015 Accengage. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
