@@ -609,8 +609,10 @@
     
     if (!self.cartVatLabel) {
         self.cartVatLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [self.subtotalView addSubview:self.cartVatLabel];
     }
+    [self.cartVatLabel removeFromSuperview];
+    [self.subtotalView addSubview:self.cartVatLabel];
+    
     [self.cartVatLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
     [self.cartVatLabel setTextColor:UIColorFromRGB(0x666666)];
     [self.cartVatLabel setText:[self.cart vatLabel]];
@@ -624,8 +626,9 @@
     
     if (!self.cartVatValue) {
         self.cartVatValue = [[UILabel alloc] initWithFrame:CGRectZero];
-        [self.subtotalView addSubview:self.cartVatValue];
     }
+    [self.cartVatValue removeFromSuperview];
+    [self.subtotalView addSubview:self.cartVatValue];
     
     [self.cartVatValue setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
     [self.cartVatValue setTextColor:UIColorFromRGB(0x666666)];
