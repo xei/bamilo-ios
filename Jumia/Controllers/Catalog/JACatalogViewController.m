@@ -1585,7 +1585,7 @@
         [self addUndefinedSearchView:self.undefinedBackup frame:CGRectMake(6.0f,
                                                                            self.catalogTopView.frame.origin.y,
                                                                            [self viewBounds].size.width - 12.0f,
-                                                                           [self viewBounds].size.height - self.catalogTopView.frame.origin.y)];
+                                                                           [self viewBounds].size.height)];
         [self.undefinedView didRotate];
     }
 
