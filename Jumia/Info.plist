@@ -36,6 +36,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>Jumia</string>
+				<string>gsd-Jumia</string>
 			</array>
 		</dict>
 		<dict>

@@ -12,6 +12,7 @@
 #import "RIAdjustTracker.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <HockeySDK/HockeySDK.h>
+#import <GoogleAppIndexing/GoogleAppIndexing.h>
 
 #define kSessionDuration 1800.0f
 #define IS_IOS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
@@ -396,6 +397,7 @@
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation
 {
+    url = [GSDDeepLink handleDeepLink:url];
     [Adjust appWillOpenUrl:url];
     
     BOOL urlWasHandled = [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
