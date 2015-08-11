@@ -903,7 +903,11 @@
                           [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
                                                                     data:[trackingDictionary copy]];
                           
-                          [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventAddFromWishlistToCart] data:[NSDictionary dictionaryWithObject:product.sku forKey:kRIEventProductFavToCartKey]];
+                          [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventAddFromWishlistToCart]
+                                                                    data:[NSDictionary dictionaryWithObject:product.sku forKey:kRIEventProductFavToCartKey]];
+                          
+                          [[NSUserDefaults standardUserDefaults] setObject:product.sku forKey:kRIEventProductFavToCartKey];
+                          [[NSUserDefaults standardUserDefaults] synchronize];
                           
                           NSMutableDictionary *tracking = [NSMutableDictionary new];
                           [tracking setValue:[NSDate new] forKey:kRIEventDateLastAddedToCartKey];

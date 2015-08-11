@@ -26,7 +26,8 @@
 #define kAd4PushProfileOrderStatusKey                       @"orderStatus"
 #define kAd4PushProfileUserGenderKey                        @"userGender"
 #define kAd4PushProfileLastOrderDateKey                     @"lastOrderDate"
-#define kAd4PushProfileAggregatedNumberOfPurchaseKey        @"aggregatedNumberOfPurchase"
+#define kAd4PushProfileAggregatedNumberOfPurchasesKey       @"aggregatedNumberOfPurchases"
+#define kAd4PushProfileAggregatedValueOfPurchasesKey        @"aggregatedValueOfPurchases"
 #define kAd4PushProfileCartStatusKey                        @"cartStatus"
 #define kAd4PushProfileCartValueKey                         @"cartValue"
 #define kAd4PushProfilePurchaseGrandTotalKey                @"purchaseGrandTotal"
@@ -592,7 +593,17 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
     {
         numberOfPurchases = [data objectForKey:kRIEventAmountTransactions];
     }
-    [deviceInfo setObject:numberOfPurchases forKey:kAd4PushProfileAggregatedNumberOfPurchaseKey];
+    NSNumber *totalValueOfPurchases = [NSNumber numberWithFloat:0.f];
+    if (VALID_NOTEMPTY([data objectForKey:kRIEventAmountValueTransactions], NSNumber)) {
+        totalValueOfPurchases = [data objectForKey:kRIEventAmountValueTransactions];
+    }
+    [deviceInfo setObject:totalValueOfPurchases forKey:kAd4PushProfileAggregatedValueOfPurchasesKey];
+    
+    if (VALID_NOTEMPTY([data objectForKey:kRIEventProductFavToCartKey], NSString)) {
+        [deviceInfo setObject:[data objectForKey:kRIEventProductFavToCartKey] forKey:kAd4PushProfileLastMovedFromFavtoCartKey];
+    }
+    
+    [deviceInfo setObject:numberOfPurchases forKey:kAd4PushProfileAggregatedNumberOfPurchasesKey];
     
     NSNumber *total = [data objectForKey:kRIEcommerceTotalValueKey];
     [deviceInfo setObject:total forKey:kAd4PushProfileCartValueKey];
