@@ -3749,6 +3749,7 @@
 		CED30C29199CC8F200C67F4B /* JAColorFilterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAColorFilterCell.m; sourceTree = "<group>"; };
 		CED7C51C1B78E0560070C855 /* GoogleAppIndexing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppIndexing.framework; sourceTree = "<group>"; };
 		CED7C51E1B78E0560070C855 /* GoogleAppIndexingResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleAppIndexingResources.bundle; sourceTree = "<group>"; };
+		CED7C52B1B7A3A990070C855 /* Model_1.8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.8.xcdatamodel; sourceTree = "<group>"; };
 		CED9B5BE1B5810ED0097EB30 /* RIHtmlShop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIHtmlShop.h; sourceTree = "<group>"; };
 		CED9B5BF1B5810ED0097EB30 /* RIHtmlShop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIHtmlShop.m; sourceTree = "<group>"; };
 		CED9B5CA1B590F2C0097EB30 /* RIFeaturedBoxTeaserGrouping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIFeaturedBoxTeaserGrouping.h; sourceTree = "<group>"; };
@@ -10397,6 +10398,7 @@
 		B5A3028F19811E9200F71726 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				CED7C52B1B7A3A990070C855 /* Model_1.8.xcdatamodel */,
 				CECD058B1ADFBA4E00EC51E3 /* Model_1.7.xcdatamodel */,
 				CE3F81431ACAED1100EB3916 /* Model_1.6.xcdatamodel */,
 				6CC5C4B81A9634FE00E362F3 /* Model_1.5.xcdatamodel */,
@@ -10406,7 +10408,7 @@
 				CE73D4FF19E5866D0074F7F3 /* Model_1.1.xcdatamodel */,
 				B5A3029019811E9200F71726 /* Model.xcdatamodel */,
 			);
-			currentVersion = CECD058B1ADFBA4E00EC51E3 /* Model_1.7.xcdatamodel */;
+			currentVersion = CED7C52B1B7A3A990070C855 /* Model_1.8.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
