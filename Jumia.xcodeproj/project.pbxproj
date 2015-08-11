@@ -2712,6 +2712,17 @@
 		CED30C24199CAA5C00C67F4B /* JAGenericFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C23199CAA5C00C67F4B /* JAGenericFilterViewController.m */; };
 		CED30C27199CBF0E00C67F4B /* JAColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C26199CBF0E00C67F4B /* JAColorView.m */; };
 		CED30C2A199CC8F200C67F4B /* JAColorFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C29199CC8F200C67F4B /* JAColorFilterCell.m */; };
+		CED7C51F1B78E0560070C855 /* GoogleAppIndexing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED7C51C1B78E0560070C855 /* GoogleAppIndexing.framework */; };
+		CED7C5201B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED7C51C1B78E0560070C855 /* GoogleAppIndexing.framework */; };
+		CED7C5211B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED7C51C1B78E0560070C855 /* GoogleAppIndexing.framework */; };
+		CED7C5221B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED7C51C1B78E0560070C855 /* GoogleAppIndexing.framework */; };
+		CED7C5231B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED7C51C1B78E0560070C855 /* GoogleAppIndexing.framework */; };
+		CED7C5241B78E0570070C855 /* GoogleAppIndexingResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CED7C51E1B78E0560070C855 /* GoogleAppIndexingResources.bundle */; };
+		CED7C5251B78E0570070C855 /* GoogleAppIndexingResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CED7C51E1B78E0560070C855 /* GoogleAppIndexingResources.bundle */; };
+		CED7C5261B78E0570070C855 /* GoogleAppIndexingResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CED7C51E1B78E0560070C855 /* GoogleAppIndexingResources.bundle */; };
+		CED7C5271B78E0570070C855 /* GoogleAppIndexingResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CED7C51E1B78E0560070C855 /* GoogleAppIndexingResources.bundle */; };
+		CED7C5281B78E0570070C855 /* GoogleAppIndexingResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CED7C51E1B78E0560070C855 /* GoogleAppIndexingResources.bundle */; };
+		CED7C5291B78FE340070C855 /* RIHtmlShop.m in Sources */ = {isa = PBXBuildFile; fileRef = CED9B5BF1B5810ED0097EB30 /* RIHtmlShop.m */; };
 		CED9B5C01B5810ED0097EB30 /* RIHtmlShop.m in Sources */ = {isa = PBXBuildFile; fileRef = CED9B5BF1B5810ED0097EB30 /* RIHtmlShop.m */; };
 		CED9B5C11B5810ED0097EB30 /* RIHtmlShop.m in Sources */ = {isa = PBXBuildFile; fileRef = CED9B5BF1B5810ED0097EB30 /* RIHtmlShop.m */; };
 		CED9B5C21B5810ED0097EB30 /* RIHtmlShop.m in Sources */ = {isa = PBXBuildFile; fileRef = CED9B5BF1B5810ED0097EB30 /* RIHtmlShop.m */; };
@@ -3741,6 +3752,9 @@
 		CED30C26199CBF0E00C67F4B /* JAColorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAColorView.m; sourceTree = "<group>"; };
 		CED30C28199CC8F200C67F4B /* JAColorFilterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAColorFilterCell.h; sourceTree = "<group>"; };
 		CED30C29199CC8F200C67F4B /* JAColorFilterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAColorFilterCell.m; sourceTree = "<group>"; };
+		CED7C51C1B78E0560070C855 /* GoogleAppIndexing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppIndexing.framework; sourceTree = "<group>"; };
+		CED7C51E1B78E0560070C855 /* GoogleAppIndexingResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleAppIndexingResources.bundle; sourceTree = "<group>"; };
+		CED7C52B1B7A3A990070C855 /* Model_1.8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.8.xcdatamodel; sourceTree = "<group>"; };
 		CED9B5BE1B5810ED0097EB30 /* RIHtmlShop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIHtmlShop.h; sourceTree = "<group>"; };
 		CED9B5BF1B5810ED0097EB30 /* RIHtmlShop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIHtmlShop.m; sourceTree = "<group>"; };
 		CED9B5CA1B590F2C0097EB30 /* RIFeaturedBoxTeaserGrouping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIFeaturedBoxTeaserGrouping.h; sourceTree = "<group>"; };
@@ -3821,6 +3835,7 @@
 				9A0F9B8A1B5E58E900569DF2 /* FBSDKMessengerShareKit.framework in Frameworks */,
 				B5376A311A3B51BD009C03AD /* libGoogleAnalyticsServices.a in Frameworks */,
 				53f9e54fb2236b4a9a33201e /* CoreText.framework in Frameworks */,
+				CED7C5201B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */,
 				12a1d1e4c6768298e7b485d4 /* CoreTelephony.framework in Frameworks */,
 				6343e651aae2fa544731ccd2 /* Social.framework in Frameworks */,
 				f86a3b267a8e343aedfa85f7 /* QuartzCore.framework in Frameworks */,
@@ -3859,6 +3874,7 @@
 				B5A302EA19811ECB00F71726 /* AdSupport.framework in Frameworks */,
 				B5007AC819A4E92F0024035A /* Security.framework in Frameworks */,
 				B5007AC619A4E9170024035A /* CoreText.framework in Frameworks */,
+				CED7C51F1B78E0560070C855 /* GoogleAppIndexing.framework in Frameworks */,
 				B5FE9FB119A1F362006F7D63 /* CoreTelephony.framework in Frameworks */,
 				4A2FD84A19913FCA00C65C1D /* Social.framework in Frameworks */,
 				4A4ABF0E198B9DE600342D92 /* QuartzCore.framework in Frameworks */,
@@ -3906,6 +3922,7 @@
 				CE9ADC261AB34C4600D56481 /* AdSupport.framework in Frameworks */,
 				CE9ADC271AB34C4600D56481 /* Security.framework in Frameworks */,
 				CE9ADC281AB34C4600D56481 /* CoreText.framework in Frameworks */,
+				CED7C5211B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */,
 				CE9ADC291AB34C4600D56481 /* CoreTelephony.framework in Frameworks */,
 				CE9ADC2A1AB34C4600D56481 /* Social.framework in Frameworks */,
 				CE9ADC2B1AB34C4600D56481 /* QuartzCore.framework in Frameworks */,
@@ -3946,6 +3963,7 @@
 				CE9ADE201AB6D6E900D56481 /* AdSupport.framework in Frameworks */,
 				CE9ADE211AB6D6E900D56481 /* Security.framework in Frameworks */,
 				CE9ADE221AB6D6E900D56481 /* CoreText.framework in Frameworks */,
+				CED7C5221B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */,
 				CE9ADE231AB6D6E900D56481 /* CoreTelephony.framework in Frameworks */,
 				CE9ADE241AB6D6E900D56481 /* Social.framework in Frameworks */,
 				CE9ADE251AB6D6E900D56481 /* QuartzCore.framework in Frameworks */,
@@ -3986,6 +4004,7 @@
 				CE9AE01A1AB6D78200D56481 /* AdSupport.framework in Frameworks */,
 				CE9AE01B1AB6D78200D56481 /* Security.framework in Frameworks */,
 				CE9AE01C1AB6D78200D56481 /* CoreText.framework in Frameworks */,
+				CED7C5231B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */,
 				CE9AE01D1AB6D78200D56481 /* CoreTelephony.framework in Frameworks */,
 				CE9AE01E1AB6D78200D56481 /* Social.framework in Frameworks */,
 				CE9AE01F1AB6D78200D56481 /* QuartzCore.framework in Frameworks */,
@@ -5221,6 +5240,7 @@
 		B5A301D219811E8900F71726 /* ExternalFrameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CED7C51A1B78E0560070C855 /* GoogleAppIndexing */,
 				9A0F9BBC1B5EAD5F00569DF2 /* AQSFacebookMessengerActivity */,
 				9A7EE9CA1B556FD6004E2505 /* FacebookSDK */,
 				9A20DEAA1B5545E700601910 /* Adjust */,
@@ -6123,6 +6143,31 @@
 			path = ButtonCell;
 			sourceTree = "<group>";
 		};
+		CED7C51A1B78E0560070C855 /* GoogleAppIndexing */ = {
+			isa = PBXGroup;
+			children = (
+				CED7C51B1B78E0560070C855 /* Frameworks */,
+				CED7C51D1B78E0560070C855 /* Resources */,
+			);
+			path = GoogleAppIndexing;
+			sourceTree = "<group>";
+		};
+		CED7C51B1B78E0560070C855 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CED7C51C1B78E0560070C855 /* GoogleAppIndexing.framework */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		CED7C51D1B78E0560070C855 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CED7C51E1B78E0560070C855 /* GoogleAppIndexingResources.bundle */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		CEDEB98F199BA8FA0022BAB5 /* NMRangeSlider */ = {
 			isa = PBXGroup;
 			children = (
@@ -6460,6 +6505,7 @@
 				9A9CD4EF1B72514A0061ACE0 /* BMA4SiPhoneTextNotifView-nobuttons.xib in Resources */,
 				8d80dd9d7ee5aa27da772182 /* JAPaymentCell.xib in Resources */,
 				BB9546AD19F5513900AC7D05 /* assert.rb in Resources */,
+				CED7C5251B78E0570070C855 /* GoogleAppIndexingResources.bundle in Resources */,
 				9A9CD3C31B72514A0061ACE0 /* BMA4SiPhoneTextNotifView-iPad.xib in Resources */,
 				BB9546A719F5511C00AC7D05 /* 01_launch.rb in Resources */,
 				9A9CD3191B72514A0061ACE0 /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib in Resources */,
@@ -6872,6 +6918,7 @@
 				9A9CD4B21B72514A0061ACE0 /* BMA4SRichPushWebView-nobuttons-iPad.xib in Resources */,
 				BBB12A9C19DDA01E00656529 /* 09_home.feature in Resources */,
 				9A9CD3951B72514A0061ACE0 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape.xib in Resources */,
+				CED7C5241B78E0570070C855 /* GoogleAppIndexingResources.bundle in Resources */,
 				9AF49A411B1DE1920028105D /* JAMyAccountViewController.xib in Resources */,
 				CE2F577019913B6D000A9E09 /* JACatalogListCell.xib in Resources */,
 				B5C0085E1A038F55000BBC52 /* JAPDVImageSection~iPad_Portrait.xib in Resources */,
@@ -7023,6 +7070,7 @@
 				CE9ADC731AB34C4600D56481 /* slider-default-handle-highlighted.png in Resources */,
 				CE9ADC751AB34C4600D56481 /* JAOrangeButtonCell_ipad_landscape.xib in Resources */,
 				9A9CD4001B72514A0061ACE0 /* BMA4SiPhoneWebViewNotifView-landscape-ret6.xib in Resources */,
+				CED7C5261B78E0570070C855 /* GoogleAppIndexingResources.bundle in Resources */,
 				9A9CD4231B72514A0061ACE0 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape-iPad.xib in Resources */,
 				9A9CD31A1B72514A0061ACE0 /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib in Resources */,
 				CE9ADC761AB34C4600D56481 /* 18_track_order.feature in Resources */,
@@ -7271,6 +7319,7 @@
 				CE9ADE441AB6D6E900D56481 /* init.rb in Resources */,
 				CE9ADE451AB6D6E900D56481 /* 17_recently_viewed.feature in Resources */,
 				CE4054BA1B29EFB300E9CD1A /* JARecentlyViewedViewController.xib in Resources */,
+				CED7C5271B78E0570070C855 /* GoogleAppIndexingResources.bundle in Resources */,
 				CE9ADE471AB6D6E900D56481 /* JAFavoriteListCell.xib in Resources */,
 				9A9CD3E81B72514A0061ACE0 /* BMA4SiPhoneTextNotifView-retHD.xib in Resources */,
 				CE9ADE491AB6D6E900D56481 /* JAMaintenancePage.xib in Resources */,
@@ -7628,6 +7677,7 @@
 				CE9AE0691AB6D78200D56481 /* JAOrangeButtonCell_ipad_landscape.xib in Resources */,
 				CE9AE06A1AB6D78200D56481 /* 18_track_order.feature in Resources */,
 				9A9CD4021B72514A0061ACE0 /* BMA4SiPhoneWebViewNotifView-landscape-ret6.xib in Resources */,
+				CED7C5281B78E0570070C855 /* GoogleAppIndexingResources.bundle in Resources */,
 				9A9CD4251B72514A0061ACE0 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape-iPad.xib in Resources */,
 				9A9CD31C1B72514A0061ACE0 /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib in Resources */,
 				CE9AE06B1AB6D78200D56481 /* 06_email_notifications.feature in Resources */,
@@ -9033,7 +9083,7 @@
 				CE9ADF661AB6D78200D56481 /* JACategoriesViewController.m in Sources */,
 				CE9ADF681AB6D78200D56481 /* JAShippingCell.m in Sources */,
 				9A7EE9931B5546A0004E2505 /* ADJPackageHandler.m in Sources */,
-				9AB488851B7279E300886A44 /* RIHtmlShop.m in Sources */,
+				CED7C5291B78FE340070C855 /* RIHtmlShop.m in Sources */,
 				9A7EE9A71B5546A0004E2505 /* Adjust.m in Sources */,
 				CE9ADF691AB6D78200D56481 /* JAMyOrdersViewController.m in Sources */,
 				CE9ADF6B1AB6D78200D56481 /* JAFiltersView.m in Sources */,
@@ -9260,6 +9310,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 					"$(SRCROOT)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -9340,13 +9391,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -9444,13 +9496,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -9510,6 +9563,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 					"$(SRCROOT)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -9630,13 +9684,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -9664,13 +9719,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -9748,6 +9804,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -9783,6 +9840,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -9818,6 +9876,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -9853,6 +9912,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -9887,6 +9947,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -9922,6 +9983,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -9957,6 +10019,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -9992,6 +10055,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -10026,6 +10090,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -10064,6 +10129,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -10102,6 +10168,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -10140,6 +10207,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -10175,6 +10243,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 					"$(SRCROOT)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -10218,6 +10287,7 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
 					"$(SRCROOT)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
@@ -10333,6 +10403,7 @@
 		B5A3028F19811E9200F71726 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				CED7C52B1B7A3A990070C855 /* Model_1.8.xcdatamodel */,
 				CECD058B1ADFBA4E00EC51E3 /* Model_1.7.xcdatamodel */,
 				CE3F81431ACAED1100EB3916 /* Model_1.6.xcdatamodel */,
 				6CC5C4B81A9634FE00E362F3 /* Model_1.5.xcdatamodel */,
@@ -10342,7 +10413,7 @@
 				CE73D4FF19E5866D0074F7F3 /* Model_1.1.xcdatamodel */,
 				B5A3029019811E9200F71726 /* Model.xcdatamodel */,
 			);
-			currentVersion = CECD058B1ADFBA4E00EC51E3 /* Model_1.7.xcdatamodel */;
+			currentVersion = CED7C52B1B7A3A990070C855 /* Model_1.8.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
