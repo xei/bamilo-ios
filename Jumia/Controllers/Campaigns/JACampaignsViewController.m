@@ -84,7 +84,7 @@
     
     self.isLoaded = NO;
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCampaign] data:trackingDictionary];
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCampaigns] data:trackingDictionary];
     
     
     UISwipeGestureRecognizer *leftSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
@@ -488,6 +488,19 @@
                       [trackingDictionary setValue:@"1" forKey:kRIEventQuantityKey];
                       
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
+                                                                data:[trackingDictionary copy]];
+                      
+                      NSMutableDictionary *tracking = [NSMutableDictionary new];
+                      [tracking setValue:[NSDate date] forKey:kRIEventDateLastAddedToCartKey];
+                      [tracking setValue:self.backupCampaignProduct.name forKey:kRIEventProductNameKey];
+                      [tracking setValue:self.backupCampaignProduct.sku forKey:kRIEventSkuKey];
+                      [tracking setValue:nil forKey:kRIEventLastCategoryAddedToCartKey];
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
+                      
+                      trackingDictionary = [NSMutableDictionary new];
+                      [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+                      [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
                                                                 data:[trackingDictionary copy]];
                       
                       float value = [price floatValue];

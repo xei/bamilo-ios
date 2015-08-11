@@ -367,7 +367,10 @@ JADatePickerDelegate
         [trackingDictionary setValue:@"CreateSuccess" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
         [trackingDictionary setValue:((RICustomer *)object).idCustomer forKey:kRIEventUserIdKey];
+        [trackingDictionary setValue:((RICustomer *)object).firstName forKey:kRIEventUserFirstNameKey];
+        [trackingDictionary setValue:((RICustomer *)object).lastName forKey:kRIEventUserLastNameKey];
         [trackingDictionary setValue:((RICustomer *)object).gender forKey:kRIEventGenderKey];
+        [trackingDictionary setValue:((RICustomer *)object).birthday forKey:kRIEventBirthDayKey];
         [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
         [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];

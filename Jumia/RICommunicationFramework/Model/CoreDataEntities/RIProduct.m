@@ -105,6 +105,7 @@
 @dynamic shortSummary;
 @dynamic summary;
 @dynamic specifications;
+@dynamic numberOfTimesSeen;
 
 @synthesize categoryIds;
 
@@ -1100,6 +1101,46 @@
                                                                   failureBlock(apiResponse, nil);
                                                               }
                                                           }];
+}
+
++ (NSString*)getTopBrand:(RIProduct *)seenProduct
+{
+    [RIProduct seenProduct:seenProduct];
+    
+    NSMutableDictionary *brandsDictionary = [NSMutableDictionary new];
+    NSString *topBrand = nil;
+    NSArray* databaseBrands = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIProduct class]) withPropertyName:@"brand"];
+    for(RIProduct *product in databaseBrands)
+    {
+        if(ISEMPTY(topBrand))
+        {
+            topBrand = product.brand;
+            [brandsDictionary setObject:product.numberOfTimesSeen forKey:product.brand];
+        }
+        else
+        {
+            if (VALID_NOTEMPTY([brandsDictionary objectForKey:product.brand], NSNumber)) {
+                NSNumber *sum = [NSNumber numberWithLong:[[brandsDictionary objectForKey:product.brand] longValue] + [product.numberOfTimesSeen longValue]];
+                [brandsDictionary setObject:sum forKey:product.brand];
+            }else{
+                [brandsDictionary setObject:product.numberOfTimesSeen forKey:product.brand];
+            }
+            if([brandsDictionary[topBrand] longValue] < [brandsDictionary[product.brand] longValue])
+            {
+                topBrand = product.brand;
+            }
+        }
+    }
+    
+    return topBrand;
+}
+
++ (void)seenProduct:(RIProduct *)seenProduct
+{
+    if(VALID_NOTEMPTY(seenProduct, RIProduct))
+    {
+        seenProduct.numberOfTimesSeen = [NSNumber numberWithInt:([seenProduct.numberOfTimesSeen intValue] + 1)];
+    }
 }
 
 #pragma mark - Save method

@@ -79,6 +79,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSString *shortSummary;
 @property (nonatomic, retain) NSString *summary;
 @property (nonatomic, retain) NSOrderedSet *specifications;
+@property (nonatomic, retain) NSNumber *numberOfTimesSeen;
 
 
 //Not a coredata relationship
@@ -249,6 +250,9 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 + (NSString *)getBundleWithSku:(NSString *)sku
                   successBlock:(void (^)(RIBundle* bundle))successBlock
                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+
++ (NSString*)getTopBrand:(RIProduct *)seenProduct;
+
 @end
 
 @interface RIProduct (CoreDataGeneratedAccessors)

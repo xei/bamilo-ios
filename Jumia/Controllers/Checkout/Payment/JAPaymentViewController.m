@@ -544,6 +544,12 @@ UITextFieldDelegate>
         [RICart removeVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;
             
+            NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
+            [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+            [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+                                                      data:[trackingDictionary copy]];
+            
             [self.useCouponButton setTitle:STRING_USE forState:UIControlStateNormal];
             [self.couponTextField setEnabled: YES];
             [self.couponTextField setText:@""];
@@ -558,6 +564,13 @@ UITextFieldDelegate>
     {
         [RICart addVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;
+            
+            NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
+            [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+            [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+                                                      data:[trackingDictionary copy]];
+            
             [self.useCouponButton setTitle:STRING_REMOVE forState:UIControlStateNormal];
             [self.couponTextField setEnabled:NO];
             [self hideLoading];
