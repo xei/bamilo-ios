@@ -49,7 +49,10 @@
     [[RITrackingWrapper sharedInstance] trackStaticPage:staticKey];
     
     [self.scrollView setFrame:[self viewBounds]];
-    [self.webView setFrame:self.scrollView.bounds];
+    [self.webView setFrame:CGRectMake(self.scrollView.bounds.origin.x,
+                                      self.scrollView.bounds.origin.y,
+                                      self.scrollView.bounds.size.width,
+                                      1.0f)];
     
     if (NO == self.isLoaded) {
         
@@ -76,7 +79,7 @@
 {
     self.webView.frame = CGRectMake(0.0f,
                                     0.0f,
-                                    self.scrollView.frame.size.width,
+                                    self.webView.scrollView.contentSize.width,
                                     self.webView.scrollView.contentSize.height);
     
     for (JATopSellersTeaserView* topSellersTeaserView in self.topSellerTeaserViewsArray) {
@@ -164,7 +167,10 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     [self.scrollView setFrame:[self viewBounds]];
-    [self.webView setFrame:self.scrollView.bounds];
+    [self.webView setFrame:CGRectMake(self.scrollView.bounds.origin.x,
+                                      self.scrollView.bounds.origin.y,
+                                      self.scrollView.bounds.size.width,
+                                      1.0f)];
     [self loadViews];
 }
 
