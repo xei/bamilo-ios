@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C109" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E46" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="RIAddress" representedClassName="RIAddress" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
@@ -175,6 +175,7 @@
         <attribute name="maxSpecialPriceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="maxSpecialPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="numberOfTimesSeen" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="offersMinPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="offersMinPriceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="offersMinPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
@@ -308,7 +309,7 @@
         <element name="RIImageResolution" positionX="-270" positionY="560" width="128" height="103"/>
         <element name="RILanguage" positionX="-270" positionY="-207" width="128" height="103"/>
         <element name="RINewsletterCategory" positionX="-684" positionY="287" width="128" height="73"/>
-        <element name="RIProduct" positionX="-99" positionY="0" width="128" height="778"/>
+        <element name="RIProduct" positionX="-99" positionY="0" width="128" height="795"/>
         <element name="RIProductSimple" positionX="162" positionY="14" width="128" height="255"/>
         <element name="RISearchSuggestion" positionX="-828" positionY="183" width="128" height="105"/>
         <element name="RISection" positionX="-261" positionY="428" width="128" height="103"/>
