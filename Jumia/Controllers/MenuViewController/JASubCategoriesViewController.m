@@ -258,9 +258,13 @@ UITableViewDelegate
             //this is the current category cell
             [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification
                                                                 object:@{@"category":self.currentCategory}];
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventTopCategory]
+                                                      data:[NSDictionary dictionaryWithObject:[RICategory getTopCategory:self.currentCategory] forKey:kRIEventCategoryNameKey]];
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastViewedCategory] data:[NSDictionary dictionaryWithObject:self.currentCategory.uid forKey:kRIEventLastViewedCategoryKey]];
             return;
         }
-           } else {
+    } else {
         if (0 == realIndex) {
             //do nothing
             return;
@@ -272,14 +276,6 @@ UITableViewDelegate
     RICategory* category = [self.categories objectAtIndex:realIndex];
     
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-    if(ISEMPTY(category.parent))
-    {
-        [trackingDictionary setObject:[RICategory getTopCategory:category] forKey:kRIEventTopCategoryKey];
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventTopCategory]
-                                                  data:[trackingDictionary copy]];
-    }
-    
-    trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:category.name forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"Categories" forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
@@ -306,6 +302,10 @@ UITableViewDelegate
     } else {
         [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification
                                                             object:@{@"category":category}];
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventTopCategory]
+                                                  data:[NSDictionary dictionaryWithObject:[RICategory getTopCategory:category] forKey:kRIEventCategoryNameKey]];
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastViewedCategory] data:[NSDictionary dictionaryWithObject:category.uid
+                                                                                                                                           forKey:kRIEventLastViewedCategoryKey]];
     }
 }
 

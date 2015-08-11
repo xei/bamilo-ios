@@ -607,6 +607,8 @@ FBSDKLoginButtonDelegate
              [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
              [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventUserIdKey];
              [trackingDictionary setValue:customerObject.firstName forKey:kRIEventUserFirstNameKey];
+             [trackingDictionary setValue:customerObject.lastName forKey:kRIEventUserLastNameKey];
+             [trackingDictionary setValue:customerObject.birthday forKey:kRIEventBirthDayKey];
              [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
              [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
              NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];

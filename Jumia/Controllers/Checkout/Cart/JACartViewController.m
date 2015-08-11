@@ -942,6 +942,12 @@
                              [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromCart]
                                                                        data:[trackingDictionary copy]];
                              
+                             NSMutableDictionary *tracking = [NSMutableDictionary new];
+                             [tracking setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+                             [tracking setValue:cart.cartCount forKey:kRIEventQuantityKey];
+                             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+                                                                       data:[tracking copy]];
+                             
                              NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                              [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                              
@@ -1027,6 +1033,12 @@
     {
         [RICart removeVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;
+            
+            NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
+            [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+            [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+                                                      data:[trackingDictionary copy]];
             self.voucherCode = voucherCode;
             
             [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kUserDefaultsVoucherCode];
@@ -1046,6 +1058,12 @@
         [RICart addVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;
             self.voucherCode = voucherCode;
+            
+            NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
+            [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+            [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+                                                      data:[trackingDictionary copy]];
 
             [[NSUserDefaults standardUserDefaults] setObject:voucherCode forKey:kUserDefaultsVoucherCode];
             
@@ -1072,7 +1090,7 @@
             [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
             
             [trackingDictionary setValue:[NSNumber numberWithInteger:[[self.cart cartItems] count]] forKey:kRIEventQuantityKey];
-            [trackingDictionary setValue:[self.cart cartValue] forKey:kRIEventTotalCartKey];
+            [trackingDictionary setValue:[self.cart cartValueEuroConverted] forKey:kRIEventTotalCartKey];
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutStart]
                                                       data:[trackingDictionary copy]];
@@ -1335,6 +1353,12 @@
         [RICart changeQuantityInProducts:quantitiesToChange
                         withSuccessBlock:^(RICart *cart) {
                             self.cart = cart;
+                            
+                            NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
+                            [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+                            [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+                            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+                                                                      data:[trackingDictionary copy]];
                             
                             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                             [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];

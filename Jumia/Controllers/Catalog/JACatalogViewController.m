@@ -300,6 +300,7 @@
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     
+    [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogBannerCell" bundle:nil] forCellWithReuseIdentifier:@"bannerCell"];
     [self.collectionView registerClass:[JACatalogListCollectionViewCell class] forCellWithReuseIdentifier:@"JACatalogListCollectionViewCell"];
     [self.collectionView registerClass:[JACatalogGridCollectionViewCell class] forCellWithReuseIdentifier:@"JACatalogGridCollectionViewCell"];
     
@@ -989,6 +990,10 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (VALID_NOTEMPTY(self.banner, RIBanner) && 0 == indexPath.row) {
+        return self.bannerImage.frame.size;
+    }
+    
     if ([self.cellIdentifier isEqualToString:@"listCell"])
         return CGSizeMake(308, 97);
     else if ([self.cellIdentifier isEqualToString:@"listCell_ipad_portrait"])
@@ -1005,11 +1010,6 @@
     else
         return CGSizeZero;
     
-//    if (VALID_NOTEMPTY(self.banner, RIBanner) && 0 == indexPath.row) {
-//        return self.bannerImage.frame.size;
-//    } else {
-//        return [self getLayoutItemSizeForInterfaceOrientation:self.interfaceOrientation];
-//    }
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
@@ -1181,12 +1181,13 @@
                             
                             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventIndividualFilter]
                                                                       data:[NSDictionary dictionaryWithObject:filter.name forKey:kRIEventFilterTypeKey]];
-                            
-                            [trackingDictionary setObject:filter.name forKey:kRIEventPriceFilterKey];
+
+                                [trackingDictionary setObject:[NSString stringWithFormat:@"%ld-%ld", (long)filterOption.lowerValue, (long)filterOption.upperValue] forKey:kRIEventPriceFilterKey];
                             
                             filtersSelected = YES;
                         }
                         if (filterOption.discountOnly) {
+                            [trackingDictionary setObject:@1 forKey:kRIEventSpecialPriceFilterKey];
                             filtersSelected = YES;
                         }
                     }
@@ -1201,11 +1202,33 @@
                                                                       data:[NSDictionary dictionaryWithObject:filter.name forKey:kRIEventFilterTypeKey]];
                             if([@"brand" isEqualToString:filter.uid])
                             {
-                                [trackingDictionary setObject:filter.name forKey:kRIEventBrandFilterKey];
+                                if ([trackingDictionary objectForKey:kRIEventBrandFilterKey]) {
+                                    [trackingDictionary setObject:[NSString stringWithFormat:@"%@,%@", [trackingDictionary objectForKey:kRIEventBrandFilterKey], filterOption.name] forKey:kRIEventBrandFilterKey];
+                                }else{
+                                    [trackingDictionary setObject:filterOption.name forKey:kRIEventBrandFilterKey];
+                                }
                             }
                             else if([@"color_family" isEqualToString:filter.uid])
                             {
-                                [trackingDictionary setObject:filter.name forKey:kRIEventColorFilterKey];
+                                if ([trackingDictionary objectForKey:kRIEventColorFilterKey]) {
+                                    [trackingDictionary setObject:[NSString stringWithFormat:@"%@,%@", [trackingDictionary objectForKey:kRIEventColorFilterKey], filterOption.name] forKey:kRIEventColorFilterKey];
+                                }else{
+                                    [trackingDictionary setObject:filterOption.name forKey:kRIEventColorFilterKey];
+                                }
+                            }else if([@"size" isEqualToString:filter.uid])
+                            {
+                                if ([trackingDictionary objectForKey:kRIEventSizeFilterKey]) {
+                                    [trackingDictionary setObject:[NSString stringWithFormat:@"%@,%@", [trackingDictionary objectForKey:kRIEventSizeFilterKey], filterOption.name] forKey:kRIEventSizeFilterKey];
+                                }else{
+                                    [trackingDictionary setObject:filterOption.name forKey:kRIEventSizeFilterKey];
+                                }
+                            }else if([@"category" isEqualToString:filter.uid])
+                            {
+                                if ([trackingDictionary objectForKey:kRIEventCategoryFilterKey]) {
+                                    [trackingDictionary setObject:[NSString stringWithFormat:@"%@,%@", [trackingDictionary objectForKey:kRIEventCategoryFilterKey], filterOption.name] forKey:kRIEventCategoryFilterKey];
+                                }else{
+                                    [trackingDictionary setObject:filterOption.name forKey:kRIEventCategoryFilterKey];
+                                }
                             }
                             
                             filtersSelected = YES;

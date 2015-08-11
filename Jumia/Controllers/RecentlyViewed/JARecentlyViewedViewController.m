@@ -448,6 +448,22 @@
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                 data:[trackingDictionary copy]];
                       
+                      
+                      NSMutableDictionary *tracking = [NSMutableDictionary new];
+                      [tracking setValue:[NSDate new] forKey:kRIEventDateLastAddedToCartKey];
+                      [tracking setValue:product.name forKey:kRIEventProductNameKey];
+                      [tracking setValue:product.sku forKey:kRIEventSkuKey];
+                      if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet)) {
+                          [tracking setValue:[product.categoryIds lastObject] forKey:kRIEventLastCategoryAddedToCartKey];
+                      }
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
+                      
+                      tracking = [NSMutableDictionary new];
+                      [tracking setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+                      [tracking setValue:cart.cartCount forKey:kRIEventQuantityKey];
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+                                                                data:[tracking copy]];
+                      
                       float value = [price floatValue];
                       [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToCart
                                  valueToSum:value
