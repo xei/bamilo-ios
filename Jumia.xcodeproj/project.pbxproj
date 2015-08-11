@@ -2717,6 +2717,7 @@
 		CED7C5261B78E0570070C855 /* GoogleAppIndexingResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CED7C51E1B78E0560070C855 /* GoogleAppIndexingResources.bundle */; };
 		CED7C5271B78E0570070C855 /* GoogleAppIndexingResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CED7C51E1B78E0560070C855 /* GoogleAppIndexingResources.bundle */; };
 		CED7C5281B78E0570070C855 /* GoogleAppIndexingResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CED7C51E1B78E0560070C855 /* GoogleAppIndexingResources.bundle */; };
+		CED7C5291B78FE340070C855 /* RIHtmlShop.m in Sources */ = {isa = PBXBuildFile; fileRef = CED9B5BF1B5810ED0097EB30 /* RIHtmlShop.m */; };
 		CED9B5C01B5810ED0097EB30 /* RIHtmlShop.m in Sources */ = {isa = PBXBuildFile; fileRef = CED9B5BF1B5810ED0097EB30 /* RIHtmlShop.m */; };
 		CED9B5C11B5810ED0097EB30 /* RIHtmlShop.m in Sources */ = {isa = PBXBuildFile; fileRef = CED9B5BF1B5810ED0097EB30 /* RIHtmlShop.m */; };
 		CED9B5C21B5810ED0097EB30 /* RIHtmlShop.m in Sources */ = {isa = PBXBuildFile; fileRef = CED9B5BF1B5810ED0097EB30 /* RIHtmlShop.m */; };
@@ -9073,6 +9074,7 @@
 				CE9ADF661AB6D78200D56481 /* JACategoriesViewController.m in Sources */,
 				CE9ADF681AB6D78200D56481 /* JAShippingCell.m in Sources */,
 				9A7EE9931B5546A0004E2505 /* ADJPackageHandler.m in Sources */,
+				CED7C5291B78FE340070C855 /* RIHtmlShop.m in Sources */,
 				9A7EE9A71B5546A0004E2505 /* Adjust.m in Sources */,
 				CE9ADF691AB6D78200D56481 /* JAMyOrdersViewController.m in Sources */,
 				CE9ADF6B1AB6D78200D56481 /* JAFiltersView.m in Sources */,
