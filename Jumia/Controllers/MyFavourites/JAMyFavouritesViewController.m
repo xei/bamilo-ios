@@ -621,6 +621,9 @@
                                    }
                                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
                                    
+                                   [[NSUserDefaults standardUserDefaults] setObject:product.sku forKey:kRIEventProductFavToCartKey];
+                                   [[NSUserDefaults standardUserDefaults] synchronize];
+                                   
                                    tracking = [NSMutableDictionary new];
                                    [tracking setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
                                    [tracking setValue:cart.cartCount forKey:kRIEventQuantityKey];
