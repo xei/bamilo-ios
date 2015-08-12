@@ -268,10 +268,14 @@ UICollectionViewDelegateFlowLayout>
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
-        [_bottomView setNoTotal:YES];
+    if (self.fromCheckout) {
+        if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
+            [_bottomView setNoTotal:YES];
+        }else{
+            [_bottomView setNoTotal:NO];
+        }
     }else{
-        [_bottomView setNoTotal:NO];
+        [_bottomView setNoTotal:YES];
     }
     
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
@@ -448,6 +452,7 @@ UICollectionViewDelegateFlowLayout>
     }
     else
     {
+        [_bottomView setNoTotal:YES];
         [_bottomView setButtonText:STRING_SAVE_LABEL target:self action:@selector(nextStepButtonPressed)];
     }
     
