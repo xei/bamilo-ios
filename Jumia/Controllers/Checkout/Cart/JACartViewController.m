@@ -709,6 +709,40 @@
         }
 
     }
+    
+    if (VALID_NOTEMPTY(self.cart.shippingValue, NSNumber) && self.cart.shippingValue.floatValue != 0.f) {
+        if (!_shippingFeeLabel) {
+            _shippingFeeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+            [_shippingFeeLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
+            [_shippingFeeLabel setTextColor:UIColorFromRGB(0x666666)];
+            [_shippingFeeLabel setText:STRING_SHIPPING_FEE];
+            [_shippingFeeLabel sizeToFit];
+            [self.subtotalView addSubview:_shippingFeeLabel];
+        }
+        [_shippingFeeLabel setX:6];
+        [_shippingFeeLabel setY:nextElementPosY];
+        [_shippingFeeLabel setHidden:NO];
+        
+        if (!_shippingFeeValueLabel) {
+            _shippingFeeValueLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+            [_shippingFeeValueLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
+            [_shippingFeeValueLabel setTextColor:UIColorFromRGB(0x666666)];
+            [self.subtotalView addSubview:_shippingFeeValueLabel];
+        }
+        [_shippingFeeValueLabel setText:self.cart.shippingValueFormatted];
+        [_shippingFeeValueLabel sizeToFit];
+        [_shippingFeeValueLabel setX:CGRectGetMaxX(self.subtotalView.frame) - _shippingFeeValueLabel.width - 4.f];
+        [_shippingFeeValueLabel setY:nextElementPosY];
+        nextElementPosY = CGRectGetMaxY(_shippingFeeLabel.frame) + 4.f;
+        [_shippingFeeValueLabel setHidden:NO];
+    }else{
+        if (!_shippingFeeLabel) {
+            [_shippingFeeLabel setHidden:YES];
+        }
+        if (!_shippingFeeValueLabel) {
+            [_shippingFeeValueLabel setHidden:YES];
+        }
+    }
 
     if (!self.extraCostsLabel) {
         self.extraCostsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -744,40 +778,6 @@
         [self.extraCostsLabel setHidden:NO];
         [self.extraCostsValue setHidden:NO];
         nextElementPosY = CGRectGetMaxY(self.extraCostsLabel.frame) + 4.f;
-    }
-    
-    if (VALID_NOTEMPTY(self.cart.shippingValue, NSNumber) && self.cart.shippingValue.floatValue != 0.f) {
-        if (!_shippingFeeLabel) {
-            _shippingFeeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-            [_shippingFeeLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
-            [_shippingFeeLabel setTextColor:UIColorFromRGB(0x666666)];
-            [_shippingFeeLabel setText:STRING_SHIPPING_FEE];
-            [_shippingFeeLabel sizeToFit];
-            [self.subtotalView addSubview:_shippingFeeLabel];
-        }
-        [_shippingFeeLabel setX:6];
-        [_shippingFeeLabel setY:nextElementPosY];
-        [_shippingFeeLabel setHidden:NO];
-        
-        if (!_shippingFeeValueLabel) {
-            _shippingFeeValueLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-            [_shippingFeeValueLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
-            [_shippingFeeValueLabel setTextColor:UIColorFromRGB(0x666666)];
-            [self.subtotalView addSubview:_shippingFeeValueLabel];
-        }
-        [_shippingFeeValueLabel setText:self.cart.shippingValueFormatted];
-        [_shippingFeeValueLabel sizeToFit];
-        [_shippingFeeValueLabel setX:CGRectGetMaxX(self.subtotalView.frame) - _shippingFeeValueLabel.width - 4.f];
-        [_shippingFeeValueLabel setY:nextElementPosY];
-        nextElementPosY = CGRectGetMaxY(_shippingFeeLabel.frame) + 4.f;
-        [_shippingFeeValueLabel setHidden:NO];
-    }else{
-        if (!_shippingFeeLabel) {
-            [_shippingFeeLabel setHidden:YES];
-        }
-        if (!_shippingFeeValueLabel) {
-            [_shippingFeeValueLabel setHidden:YES];
-        }
     }
     
     if(VALID_NOTEMPTY([[self cart] couponMoneyValue], NSNumber) && 0.0f < [[[self cart] couponMoneyValue] floatValue])
