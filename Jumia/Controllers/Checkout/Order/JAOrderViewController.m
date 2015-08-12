@@ -421,7 +421,7 @@
         
         [subtotalContentView addSubview:priceRulesValue];
         
-        shippingYPos = CGRectGetMaxY(articlesLabel.frame) + articlesLabel.frame.size.height;
+        shippingYPos = CGRectGetMaxY(priceRulesLabel.frame);
         vatPositionY = CGRectGetMaxY(priceRulesLabel.frame);
     }
     
