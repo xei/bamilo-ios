@@ -425,7 +425,7 @@
         vatPositionY = CGRectGetMaxY(priceRulesLabel.frame);
     }
     
-    if (self.checkout.cart.shippingValue != 0) {
+    if (self.checkout.cart.shippingValue.floatValue != 0) {
         UILabel* shippingLabel = [UILabel new];
         shippingLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         shippingLabel.textColor = UIColorFromRGB(0x666666);
@@ -454,7 +454,7 @@
         nextYPos = CGRectGetMaxY(shippingLabel.frame);
     }
     
-    if (self.checkout.cart.extraCosts != 0) {
+    if (self.checkout.cart.extraCosts.floatValue != 0) {
         UILabel* extraCostsLabel = [UILabel new];
         extraCostsLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         extraCostsLabel.textColor = UIColorFromRGB(0x666666);
@@ -480,7 +480,7 @@
         nextYPos = CGRectGetMaxY(extraCostsLabel.frame);
     }
     
-    if (self.checkout.cart.couponMoneyValue != 0) {
+    if (self.checkout.cart.couponMoneyValue.floatValue != 0) {
         UILabel *couponLabel = [UILabel new];
         [couponLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
         [couponLabel setTextColor:UIColorFromRGB(0x3aaa35)];
