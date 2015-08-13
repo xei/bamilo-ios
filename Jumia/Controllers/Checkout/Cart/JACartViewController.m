@@ -109,7 +109,7 @@
     [self.emptyCartLabel setX:self.view.width/2-self.emptyCartLabel.width/2];
     [self.emptyCartImageView setX:self.view.width/2-self.emptyCartImageView.width/2];
     
-    if (!_emptyImageFlipOnce)
+    if (!_emptyImageFlipOnce && RI_IS_RTL)
         [self.emptyCartImageView flipViewImage];
     _emptyImageFlipOnce = YES;
     
