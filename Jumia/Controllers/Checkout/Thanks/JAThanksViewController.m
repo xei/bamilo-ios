@@ -376,6 +376,22 @@
     
     [ecommerceDictionary setValue:[ecommerceProductsArray copy] forKey:kRIEcommerceProducts];
     
+    CGFloat totalOfPurchasesValue = grandTotal.floatValue;
+    NSNumber *totalOfPurchases = [[NSUserDefaults standardUserDefaults] objectForKey:kRIEventAmountValueTransactions];
+    if(VALID_NOTEMPTY(totalOfPurchases, NSNumber))
+    {
+        totalOfPurchasesValue += [totalOfPurchases floatValue];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithFloat:totalOfPurchasesValue] forKey:kRIEventAmountValueTransactions];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [ecommerceDictionary setValue:[NSNumber numberWithFloat:totalOfPurchasesValue] forKey:kRIEventAmountValueTransactions];
+    
+    NSString *lastProductFavToCartSKU = [[NSUserDefaults standardUserDefaults] objectForKey:kRIEventProductFavToCartKey];
+    if (VALID_NOTEMPTY(lastProductFavToCartSKU, NSString)) {
+        [ecommerceDictionary setObject:lastProductFavToCartSKU forKey:kRIEventProductFavToCartKey];
+    }
+    
     [[RITrackingWrapper sharedInstance] trackCheckout:ecommerceDictionary];
     
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kDidFirstBuyKey];

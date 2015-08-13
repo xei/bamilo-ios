@@ -578,6 +578,9 @@
                                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                          data:[trackingDictionary copy]];
                                
+                               [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventAddFromWishlistToCart]
+                                                                         data:[NSDictionary dictionaryWithObject:product.sku forKey:kRIEventProductFavToCartKey]];
+                               
                                float value = [price floatValue];
                                [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToCart
                                           valueToSum:value
@@ -608,6 +611,25 @@
                                    
                                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
                                                                              data:[trackingDictionary copy]];
+                                   
+                                   NSMutableDictionary *tracking = [NSMutableDictionary new];
+                                   [tracking setValue:[NSDate new] forKey:kRIEventDateLastAddedToCartKey];
+                                   [tracking setValue:product.name forKey:kRIEventProductNameKey];
+                                   [tracking setValue:product.sku forKey:kRIEventSkuKey];
+                                   if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet)) {
+                                       [tracking setValue:[product.categoryIds lastObject] forKey:kRIEventLastCategoryAddedToCartKey];
+                                   }
+                                   [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
+                                   
+                                   [[NSUserDefaults standardUserDefaults] setObject:product.sku forKey:kRIEventProductFavToCartKey];
+                                   [[NSUserDefaults standardUserDefaults] synchronize];
+                                   
+                                   tracking = [NSMutableDictionary new];
+                                   [tracking setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+                                   [tracking setValue:cart.cartCount forKey:kRIEventQuantityKey];
+                                   [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+                                                                             data:[tracking copy]];
+                                   
                                } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                                }];
                            }
@@ -679,14 +701,10 @@
             self.totalProdutsInWishlist -= [favoriteProducts count];
         }
         
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventAddFromWishlistToCart] data:[NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:self.totalProdutsInWishlist] forKey:kRIEventNumberOfProductsKey]];
-        
         [self updateListsWith:favoriteProducts];
         
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventAddFromWishlistToCart] data:[NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:self.totalProdutsInWishlist] forKey:kRIEventNumberOfProductsKey]];
-        
         [self hideLoading];
     }];
 }
@@ -848,6 +866,22 @@
                       
                       [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
                       
+                      NSMutableDictionary *tracking = [NSMutableDictionary new];
+                      [tracking setValue:[NSDate new] forKey:kRIEventDateLastAddedToCartKey];
+                      [tracking setValue:product.name forKey:kRIEventProductNameKey];
+                      [tracking setValue:product.sku forKey:kRIEventSkuKey];
+                      if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet)) {
+                          [tracking setValue:[product.categoryIds lastObject] forKey:kRIEventLastCategoryAddedToCartKey];
+                      }
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
+                      
+                      
+                      tracking = [NSMutableDictionary new];
+                      [tracking setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+                      [tracking setValue:cart.cartCount forKey:kRIEventQuantityKey];
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+                                                                data:[tracking copy]];
+                      
                       [RIProduct removeFromFavorites:product successBlock:^(void) {
                           
                           NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -871,6 +905,20 @@
                           
                           [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
                                                                     data:[trackingDictionary copy]];
+                          
+                          [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventAddFromWishlistToCart]
+                                                                    data:[NSDictionary dictionaryWithObject:product.sku forKey:kRIEventProductFavToCartKey]];
+                          
+                          [[NSUserDefaults standardUserDefaults] setObject:product.sku forKey:kRIEventProductFavToCartKey];
+                          [[NSUserDefaults standardUserDefaults] synchronize];
+                          
+                          NSMutableDictionary *tracking = [NSMutableDictionary new];
+                          [tracking setValue:[NSDate new] forKey:kRIEventDateLastAddedToCartKey];
+                          [tracking setValue:product.name forKey:kRIEventProductNameKey];
+                          [tracking setValue:product.sku forKey:kRIEventSkuKey];
+                          [tracking setValue:[product.categoryIds lastObject] forKey:kRIEventLastCategoryAddedToCartKey];
+                          [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
+                          
                           
                           [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
                               [self updateListsWith:favoriteProducts];

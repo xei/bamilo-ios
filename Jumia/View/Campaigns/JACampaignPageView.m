@@ -72,6 +72,13 @@
         
         self.campaign = campaign;
         
+        
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:self.campaign.name forKey:kRIEventCampaignKey];
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCampaign] data:trackingDictionary];
+        
+        
+        
         self.chosenSimpleNames = [NSMutableArray new];
         for (int i = 0; i < self.campaign.campaignProducts.count; i++) {
             [self.chosenSimpleNames addObject:@""];

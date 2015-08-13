@@ -120,6 +120,7 @@
 
 - (void)setButtonText:(NSString *)text target:(id)target action:(SEL)selector
 {
+    [_submitButton setTitle:text forState:UIControlStateNormal];
     [_submitButton addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
 }
 

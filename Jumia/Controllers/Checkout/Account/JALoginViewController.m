@@ -1022,6 +1022,7 @@ FBSDKLoginButtonDelegate
             [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
             [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventUserIdKey];
             [trackingDictionary setValue:customerObject.firstName forKey:kRIEventUserFirstNameKey];
+            [trackingDictionary setValue:customerObject.lastName forKey:kRIEventUserLastNameKey];
             [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
             [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
             NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
@@ -1029,6 +1030,7 @@ FBSDKLoginButtonDelegate
             [trackingDictionary setValue:@"Checkout" forKey:kRIEventLocationKey];
             [trackingDictionary setValue:customerObject.gender forKey:kRIEventGenderKey];
             [trackingDictionary setValue:customerObject.createdAt forKey:kRIEventAccountDateKey];
+            [trackingDictionary setValue:customerObject.birthday forKey:kRIEventBirthDayKey];
             
             NSDate* now = [NSDate date];
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];

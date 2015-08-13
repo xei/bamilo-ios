@@ -373,8 +373,9 @@
     UILabel *cartVatValue = [[UILabel alloc] initWithFrame:CGRectZero];
     [cartVatValue setFont:[UIFont fontWithName:kFontLightName size:13.0f]];
     [cartVatValue setTextColor:UIColorFromRGB(0x666666)];
-    if ([self.checkout.cart vatLabelEnabled]) {
+    if ([[self.checkout.cart vatLabelEnabled] boolValue]) {
         [cartVatValue setText:[self.checkout.cart vatValueFormatted]];
+        [subtotalContentView addSubview:cartVatValue];
     }
     [cartVatValue sizeToFit];
     [cartVatValue setBackgroundColor:[UIColor clearColor]];
@@ -383,9 +384,8 @@
                                            cartVatValue.frame.size.width,
                                            cartVatValue.frame.size.height)];
     
-    CGFloat shippingYPos = CGRectGetMaxY(vatLabel.frame);
+    CGFloat nextYPos = CGRectGetMaxY(vatLabel.frame);
     
-    [subtotalContentView addSubview:cartVatValue];
     [subtotalContentView addSubview:vatLabel];
     
     CGFloat vatPositionY = CGRectGetMaxY(vatLabel.frame);
@@ -421,73 +421,100 @@
         
         [subtotalContentView addSubview:priceRulesValue];
         
-        shippingYPos = CGRectGetMaxY(articlesLabel.frame) + articlesLabel.frame.size.height;
+        nextYPos = CGRectGetMaxY(priceRulesLabel.frame);
         vatPositionY = CGRectGetMaxY(priceRulesLabel.frame);
     }
     
-    
-    UILabel* shippingLabel = [UILabel new];
-    shippingLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-    shippingLabel.textColor = UIColorFromRGB(0x666666);
-    shippingLabel.text = STRING_SHIPPING;
-    [shippingLabel sizeToFit];
-    shippingLabel.frame = CGRectMake(articlesLabel.frame.origin.x,
-                                     shippingYPos,
-                                     articlesLabel.frame.size.width,
-                                     vatLabel.frame.size.height);
-    [subtotalContentView addSubview:shippingLabel];
-    
-    UILabel* shippingValueLabel = [UILabel new];
-    shippingValueLabel.textAlignment = NSTextAlignmentRight;
-    shippingValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-    shippingValueLabel.textColor = UIColorFromRGB(0x666666);
-    shippingValueLabel.text = self.checkout.cart.shippingValueFormatted;
-    if (0 == [self.checkout.cart.shippingValue integerValue]) {
-        shippingValueLabel.text = STRING_FREE;
+    if (self.checkout.cart.shippingValue.floatValue != 0) {
+        UILabel* shippingLabel = [UILabel new];
+        shippingLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
+        shippingLabel.textColor = UIColorFromRGB(0x666666);
+        shippingLabel.text = STRING_SHIPPING;
+        [shippingLabel sizeToFit];
+        shippingLabel.frame = CGRectMake(articlesLabel.frame.origin.x,
+                                         nextYPos,
+                                         articlesLabel.frame.size.width,
+                                         vatLabel.frame.size.height);
+        [subtotalContentView addSubview:shippingLabel];
+        
+        UILabel* shippingValueLabel = [UILabel new];
+        shippingValueLabel.textAlignment = NSTextAlignmentRight;
+        shippingValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
+        shippingValueLabel.textColor = UIColorFromRGB(0x666666);
+        shippingValueLabel.text = self.checkout.cart.shippingValueFormatted;
+        if (0 == [self.checkout.cart.shippingValue integerValue]) {
+            shippingValueLabel.text = STRING_FREE;
+        }
+        [shippingValueLabel sizeToFit];
+        shippingValueLabel.frame = CGRectMake(CGRectGetMaxX(shippingLabel.frame),
+                                              shippingLabel.frame.origin.y,
+                                              totalLabel.frame.size.width,
+                                              shippingValueLabel.frame.size.height);
+        [subtotalContentView addSubview:shippingValueLabel];
+        nextYPos = CGRectGetMaxY(shippingLabel.frame);
     }
-    [shippingValueLabel sizeToFit];
-    shippingValueLabel.frame = CGRectMake(CGRectGetMaxX(shippingLabel.frame),
-                                          shippingLabel.frame.origin.y,
-                                          totalLabel.frame.size.width,
-                                          shippingValueLabel.frame.size.height);
-    [subtotalContentView addSubview:shippingValueLabel];
     
-    UILabel* extraCostsLabel = [UILabel new];
-    extraCostsLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-    extraCostsLabel.textColor = UIColorFromRGB(0x666666);
-    extraCostsLabel.text = STRING_EXTRA_COSTS;
-    [extraCostsLabel sizeToFit];
-    extraCostsLabel.frame = CGRectMake(articlesLabel.frame.origin.x,
-                                       CGRectGetMaxY(shippingLabel.frame),
-                                       articlesLabel.frame.size.width,
-                                       extraCostsLabel.frame.size.height);
-    [subtotalContentView addSubview:extraCostsLabel];
+    if (self.checkout.cart.extraCosts.floatValue != 0) {
+        UILabel* extraCostsLabel = [UILabel new];
+        extraCostsLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
+        extraCostsLabel.textColor = UIColorFromRGB(0x666666);
+        extraCostsLabel.text = STRING_EXTRA_COSTS;
+        [extraCostsLabel sizeToFit];
+        extraCostsLabel.frame = CGRectMake(articlesLabel.frame.origin.x,
+                                           nextYPos,
+                                           articlesLabel.frame.size.width,
+                                           extraCostsLabel.frame.size.height);
+        [subtotalContentView addSubview:extraCostsLabel];
+        
+        UILabel* extraCostsValueLabel = [UILabel new];
+        extraCostsValueLabel.textAlignment = NSTextAlignmentRight;
+        extraCostsValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
+        extraCostsValueLabel.textColor = UIColorFromRGB(0x666666);
+        extraCostsValueLabel.text = self.checkout.cart.extraCostsFormatted;
+        [extraCostsValueLabel sizeToFit];
+        extraCostsValueLabel.frame = CGRectMake(CGRectGetMaxX(extraCostsLabel.frame),
+                                                extraCostsLabel.frame.origin.y,
+                                                totalLabel.frame.size.width,
+                                                extraCostsValueLabel.frame.size.height);
+        [subtotalContentView addSubview:extraCostsValueLabel];
+        nextYPos = CGRectGetMaxY(extraCostsLabel.frame);
+    }
     
-    UILabel* extraCostsValueLabel = [UILabel new];
-    extraCostsValueLabel.textAlignment = NSTextAlignmentRight;
-    extraCostsValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-    extraCostsValueLabel.textColor = UIColorFromRGB(0x666666);
-    extraCostsValueLabel.text = self.checkout.cart.extraCostsFormatted;
-    [extraCostsValueLabel sizeToFit];
-    extraCostsValueLabel.frame = CGRectMake(CGRectGetMaxX(extraCostsLabel.frame),
-                                            extraCostsLabel.frame.origin.y,
-                                            totalLabel.frame.size.width,
-                                            extraCostsValueLabel.frame.size.height);
-    [subtotalContentView addSubview:extraCostsValueLabel];
+    if (self.checkout.cart.couponMoneyValue.floatValue != 0) {
+        UILabel *couponLabel = [UILabel new];
+        [couponLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
+        [couponLabel setTextColor:UIColorFromRGB(0x3aaa35)];
+        [couponLabel setText:STRING_VOUCHER];
+        [couponLabel sizeToFit];
+        [couponLabel setX:articlesLabel.x];
+        [couponLabel setY:nextYPos];
+        [subtotalContentView addSubview:couponLabel];
+        
+        UILabel *couponValueLabel = [UILabel new];
+        [couponValueLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
+        [couponValueLabel setTextColor:UIColorFromRGB(0x3aaa35)];
+        [couponValueLabel setText:[NSString stringWithFormat:@"- %@", self.checkout.cart.couponMoneyValueFormatted]];
+        [couponValueLabel sizeToFit];
+        [couponValueLabel setX:CGRectGetMaxX(subtotalContentView.frame) - couponValueLabel.width - 4.f];
+        [couponValueLabel setY:nextYPos];
+        [subtotalContentView addSubview:couponValueLabel];
+        
+        nextYPos = CGRectGetMaxY(couponLabel.frame);
+    }
     
     subtotalContentView.frame = CGRectMake(subtotalContentView.frame.origin.x,
                                            subtotalContentView.frame.origin.y,
                                            subtotalContentView.frame.size.width,
-                                           CGRectGetMaxY(extraCostsLabel.frame) + 10.0f);
+                                           nextYPos + 10.0f);
     
     UILabel* finalTotalLabel = [UILabel new];
     finalTotalLabel.font = [UIFont fontWithName:kFontBoldName size:13.0f];
     finalTotalLabel.textColor = UIColorFromRGB(0x666666);
     finalTotalLabel.text = STRING_TOTAL;
     [finalTotalLabel sizeToFit];
-    finalTotalLabel.frame = CGRectMake(extraCostsLabel.frame.origin.x,
-                                       CGRectGetMaxY(extraCostsLabel.frame) + 5.0f,
-                                       extraCostsLabel.frame.size.width,
+    finalTotalLabel.frame = CGRectMake(articlesLabel.x,
+                                       nextYPos + 5.0f,
+                                       articlesLabel.width,
                                        finalTotalLabel.frame.size.height);
     [subtotalContentView addSubview:finalTotalLabel];
     
@@ -507,17 +534,6 @@
                                            subtotalContentView.frame.origin.y,
                                            subtotalContentView.frame.size.width,
                                            CGRectGetMaxY(finalTotalLabel.frame) + 10.0f);
-    
-    if([self.checkout.cart.extraCosts integerValue] == 0){
-        [extraCostsLabel setHidden:YES];
-        [extraCostsValueLabel setHidden:YES];
-    }
-    
-    if([self.checkout.cart.shippingValue integerValue] == 0){
-        [shippingLabel setHidden:YES];
-        [shippingValueLabel setHidden:YES];
-    
-    }
 
     return subtotalContentView.frame.size.height + 5.0f;
 }
