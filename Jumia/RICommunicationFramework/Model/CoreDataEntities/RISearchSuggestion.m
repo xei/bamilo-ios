@@ -111,6 +111,7 @@
                                                         httpMethodPost:NO
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               NSMutableArray *suggestions = [[NSMutableArray alloc] init];
                                                               
@@ -240,6 +241,7 @@
                                                         httpMethodPost:NO
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
                                                                   NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
