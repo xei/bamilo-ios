@@ -121,6 +121,7 @@
              httpMethodPost:YES
              cacheType:RIURLCacheNoCache
              cacheTime:RIURLCacheDefaultTime
+             userAgentInjection:[RIApi getCountryUserAgentInjection]
              successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                  
                  dispatch_async(dispatch_get_main_queue(), ^{
@@ -179,6 +180,7 @@
                        httpMethodPost:YES
                        cacheType:RIURLCacheNoCache
                        cacheTime:RIURLCacheDefaultTime
+                       userAgentInjection:[RIApi getCountryUserAgentInjection]
                        successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                            
                            dispatch_async(dispatch_get_main_queue(), ^{

@@ -18,6 +18,7 @@
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
@@ -76,6 +77,7 @@
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
                                                                   if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
@@ -131,6 +133,7 @@
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
                                                                   if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
@@ -170,6 +173,7 @@
                                                         httpMethodPost:isPostRequest
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
                                                                   if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
@@ -206,6 +210,7 @@
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
                                                                   if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
@@ -245,6 +250,7 @@
                                                         httpMethodPost:isPostRequest
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
                                                                   if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
@@ -280,6 +286,7 @@
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
                                                                   if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))

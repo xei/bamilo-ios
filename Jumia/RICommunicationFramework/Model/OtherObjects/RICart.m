@@ -21,6 +21,7 @@
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
@@ -64,6 +65,7 @@
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
@@ -121,6 +123,7 @@
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
@@ -169,6 +172,7 @@
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
@@ -241,6 +245,7 @@
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
@@ -345,6 +350,7 @@
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
@@ -438,6 +444,7 @@
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
@@ -481,6 +488,7 @@
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {

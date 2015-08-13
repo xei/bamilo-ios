@@ -25,6 +25,7 @@
                                                             parameters:nil httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
