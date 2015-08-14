@@ -601,27 +601,6 @@
                                            self.totalPriceView.frame.size.width,
                                            self.totalPriceView.frame.size.height);
     
-    NSString *priceRuleKeysString = @"";
-    NSString *priceRuleValuesString = @"";
-    if(VALID_NOTEMPTY([[self cart] priceRules], NSDictionary))
-    {
-        NSArray *priceRuleKeys = [[[self cart] priceRules] allKeys];
-        
-        for (NSString *priceRuleKey in priceRuleKeys)
-        {
-            if(ISEMPTY(priceRuleKeysString))
-            {
-                priceRuleKeysString = priceRuleKey;
-                priceRuleValuesString = [[[self cart] priceRules] objectForKey:priceRuleKey];
-            }
-            else
-            {
-                priceRuleKeysString = [NSString stringWithFormat:@"%@\n%@", priceRuleKeysString, priceRuleKey];
-                priceRuleValuesString = [NSString stringWithFormat:@"%@\n%@", priceRuleValuesString, [[[self cart] priceRules] objectForKey:priceRuleKey]];
-            }
-        }
-    }
-    
     if (!self.cartVatLabel) {
         self.cartVatLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         [self.subtotalView addSubview:self.cartVatLabel];
@@ -661,6 +640,28 @@
     
     CGFloat nextElementPosY = CGRectGetMaxY(self.cartVatLabel.frame);
     
+    
+    
+    NSString *priceRuleKeysString = @"";
+    NSString *priceRuleValuesString = @"";
+    if(VALID_NOTEMPTY([[self cart] priceRules], NSDictionary))
+    {
+        NSArray *priceRuleKeys = [[[self cart] priceRules] allKeys];
+        
+        for (NSString *priceRuleKey in priceRuleKeys)
+        {
+            if(ISEMPTY(priceRuleKeysString))
+            {
+                priceRuleKeysString = priceRuleKey;
+                priceRuleValuesString = [[[self cart] priceRules] objectForKey:priceRuleKey];
+            }
+            else
+            {
+                priceRuleKeysString = [NSString stringWithFormat:@"%@\n%@", priceRuleKeysString, priceRuleKey];
+                priceRuleValuesString = [NSString stringWithFormat:@"%@\n%@", priceRuleValuesString, [[[self cart] priceRules] objectForKey:priceRuleKey]];
+            }
+        }
+    }
     
     if(VALID_NOTEMPTY(priceRuleKeysString, NSString) && VALID_NOTEMPTY(priceRuleValuesString, NSString))
     {
@@ -1081,6 +1082,9 @@
         [RICart removeVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;
             
+            NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+            
             NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
             [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
             [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
@@ -1105,6 +1109,9 @@
         [RICart addVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;
             self.voucherCode = voucherCode;
+            
+            NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
             
             NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
             [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
