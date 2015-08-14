@@ -376,7 +376,7 @@ UITextFieldDelegate>
                                                                                  self.stepBackground.frame.size.height,
                                                                                  self.view.frame.size.width - width - orderSummaryRightMargin,
                                                                                  self.view.frame.size.height - self.stepBackground.frame.size.height)];
-        [self.orderSummary loadWithCheckout:self.checkout shippingMethod:YES shippingFee:YES];
+        [self.orderSummary loadWithCheckout:self.checkout shippingMethod:YES];
         [self.view addSubview:self.orderSummary];
         self.orderSummaryOriginalHeight = self.orderSummary.frame.size.height;
     }

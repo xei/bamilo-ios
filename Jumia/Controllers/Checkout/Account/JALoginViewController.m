@@ -290,7 +290,7 @@ FBSDKLoginButtonDelegate
     [self showLoading];
     [RICart getCartWithSuccessBlock:^(RICart *cartData) {
         if (VALID_NOTEMPTY(self.orderSummaryView, JAOrderSummaryView) && VALID_NOTEMPTY(cartData.cartItems, NSArray)) {
-            [self.orderSummaryView loadWithCart:cartData shippingFee:NO];
+            [self.orderSummaryView loadWithCart:cartData];
         }
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
@@ -464,7 +464,7 @@ FBSDKLoginButtonDelegate
                                              self.view.frame.size.height - orderSummaryY);
     self.orderSummaryOriginalHeight = self.orderSummaryView.frame.size.height;
     if (VALID_NOTEMPTY(self.cart, RICart)) {
-        [self.orderSummaryView loadWithCart:self.cart shippingFee:NO];
+        [self.orderSummaryView loadWithCart:self.cart];
     } else {
         [self getCart];
     }
