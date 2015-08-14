@@ -184,28 +184,7 @@
                      successBlock:(void (^)(NSArray *results, NSArray *filters, NSNumber *productCount, RIBanner *banner))successBlock
                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
 {
-    BOOL discountMode = NO;
-    for (RIFilter* filter in filters)
-    {
-        for (RIFilterOption* filterOption in filter.options)
-        {
-            if (filterOption.discountOnly)
-            {
-                discountMode = YES;
-                break;
-            }
-        }
-    }
-    
-    NSString *tempUrl = [NSString stringWithFormat:@"%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION];
-    if (discountMode)
-    {
-        tempUrl = [NSString stringWithFormat:@"%@search/special-price/", tempUrl];
-    }
-    else
-    {
-        tempUrl = [NSString stringWithFormat:@"%@search/", tempUrl];
-    }
+    NSString *tempUrl = [NSString stringWithFormat:@"%@%@search/", [RIApi getCountryUrlInUse], RI_API_VERSION];
     
     NSString *sortingString = [RIProduct urlComponentForSortingMethod:sortingMethod];
     
@@ -231,6 +210,23 @@
     {
         tempUrl = [NSString stringWithFormat:@"%@?setDevice=mobileApi&q=%@&page=%@&maxitems=%@%@", tempUrl, query, page, maxItems,
                    sortingString];
+    }
+    
+    BOOL discountMode = NO;
+    for (RIFilter* filter in filters)
+    {
+        for (RIFilterOption* filterOption in filter.options)
+        {
+            if (filterOption.discountOnly)
+            {
+                discountMode = YES;
+                break;
+            }
+        }
+    }
+    if (discountMode)
+    {
+        tempUrl = [NSString stringWithFormat:@"%@&special_price=1", tempUrl];
     }
 
     tempUrl = [tempUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
