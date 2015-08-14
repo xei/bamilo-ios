@@ -170,6 +170,7 @@
                        httpMethodPost:YES
                        cacheType:RIURLCacheDBCache
                        cacheTime:RIURLCacheDefaultTime
+                       userAgentInjection:[RIApi getCountryUserAgentInjection]
                        successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                            
                            if ([jsonObject objectForKey:@"metadata"]) {
@@ -224,6 +225,7 @@
                        httpMethodPost:YES
                        cacheType:RIURLCacheDBCache
                        cacheTime:RIURLCacheDefaultTime
+                       userAgentInjection:[RIApi getCountryUserAgentInjection]
                        successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                            
                            dispatch_async(dispatch_get_main_queue(), ^{

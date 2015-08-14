@@ -51,12 +51,15 @@ NSString *const RI_COUNTRIES_URL_DARAZ_STAGING = @"http://shareptcmobile.eu.pn/d
 
 NSString *const RI_UNIQUE_COUNTRY_URL_SHOP = @"http://www.shop.com.mm/mobapi/";
 NSString *const RI_UNIQUE_COUNTRY_URL_SHOP_STAGING = @"http://alice-staging.shop.com.mm/mobapi/";
+NSString *const RI_UNIQUE_COUNTRY_USER_AGENT_INJECTION_SHOP = @"MMAMZ";
 NSString *const RI_UNIQUE_COUNTRY_NAME_SHOP = @"Myanmar";
 NSString *const RI_UNIQUE_COUNTRY_ISO_SHOP = @"MM";
 
 NSString *const RI_UNIQUE_COUNTRY_URL_BAMILO = @"http://www.bamilo.com/mobapi/";
 NSString *const RI_UNIQUE_COUNTRY_URL_BAMILO_STAGING = @"https://alice-staging.bamilo.com/mobapi/";
-NSString *const RI_UNIQUE_COUNTRY_URL_BAMILO_INTEGRATION = @"http://integration-mobile-www.bamilo.com/mobapi/";
+NSString *const RI_UNIQUE_COUNTRY_URL_BAMILO_INTEGRATION_MOBILE = @"http://integration-mobile-www.bamilo.com/mobapi/";
+NSString *const RI_UNIQUE_COUNTRY_USER_AGENT_INJECTION_BAMILO = @"IRAMZ";
+NSString *const RI_UNIQUE_COUNTRY_USER_AGENT_INJECTION_BAMILO_INTEGRATION_MOBILE = @"M_IRAMZ";
 NSString *const RI_UNIQUE_COUNTRY_NAME_BAMILO = @"Iran";
 NSString *const RI_UNIQUE_COUNTRY_ISO_BAMILO = @"IR";
 

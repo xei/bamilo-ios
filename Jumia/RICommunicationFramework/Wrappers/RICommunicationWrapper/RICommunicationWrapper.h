@@ -44,6 +44,7 @@
                  httpMethodPost:(BOOL)post
                       cacheType:(RIURLCacheType)cacheType
                       cacheTime:(RIURLCacheTime)cacheTime
+             userAgentInjection:(NSString*)userAgentInjection
                    successBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* jsonObject))successBlock
                    failureBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObjectt))failureBlock;
 
@@ -71,6 +72,7 @@
                         timeOut:(NSInteger)timeOut
                       cacheType:(RIURLCacheType)cacheType
                       cacheTime:(RIURLCacheTime)cacheTime
+             userAgentInjection:(NSString*)userAgentInjection
                    successBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* jsonObject))successBlock
                    failureBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject))failureBlock;
 
@@ -100,6 +102,7 @@
                 numberOfRetries:(NSInteger)numberOfRetries
                       cacheType:(RIURLCacheType)cacheType
                       cacheTime:(RIURLCacheTime)cacheTime
+             userAgentInjection:(NSString*)userAgentInjection
                    successBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* jsonObject))successBlock
                    failureBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject))failureBlock;
 
@@ -128,6 +131,7 @@
                 numberOfRetries:(NSInteger)numberOfRetries
                       cacheType:(RIURLCacheType)cacheType
                       cacheTime:(RIURLCacheTime)cacheTime
+             userAgentInjection:(NSString*)userAgentInjection
                    successBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* jsonObject))successBlock
                    failureBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject))failureBlock;
 

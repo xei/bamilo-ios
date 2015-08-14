@@ -29,6 +29,7 @@
         <attribute name="countryIso" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="countryName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="countryUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="countryUserAgentInjection" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="curVersion" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
         <attribute name="minVersion" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
         <relationship name="sections" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RISection" inverseName="api" inverseEntity="RISection" syncable="YES"/>
@@ -295,7 +296,7 @@
     </entity>
     <elements>
         <element name="RIAddress" positionX="90" positionY="666" width="128" height="373"/>
-        <element name="RIApi" positionX="-308" positionY="227" width="128" height="150"/>
+        <element name="RIApi" positionX="-308" positionY="227" width="128" height="163"/>
         <element name="RICategory" positionX="-261" positionY="27" width="128" height="150"/>
         <element name="RICountryConfiguration" positionX="-459" positionY="-423" width="128" height="285"/>
         <element name="RICustomer" positionX="279" positionY="650" width="128" height="208"/>

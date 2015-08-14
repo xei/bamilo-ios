@@ -40,6 +40,7 @@
                                                          httpMethodPost:NO
                                                               cacheType:RIURLCacheNoCache
                                                               cacheTime:RIURLCacheNoTime
+                                                     userAgentInjection:nil
                                                            successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                                
                                                                if (VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
@@ -71,6 +72,7 @@
 }
 
 + (NSString *)loadCountryConfigurationForCountry:(NSString*)countryUrl
+                              userAgentInjection:(NSString*)userAgentInjection
                                 withSuccessBlock:(void (^)(RICountryConfiguration *configuration))successBlock
                                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
@@ -79,6 +81,7 @@
                                                          httpMethodPost:YES
                                                               cacheType:RIURLCacheNoCache
                                                               cacheTime:RIURLCacheNoTime
+                                                     userAgentInjection:userAgentInjection
                                                            successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                                
                                                                if ([jsonObject objectForKey:@"metadata"]) {
@@ -113,7 +116,7 @@
     if (VALID_NOTEMPTY(configuration, NSArray)) {
         successBlock([configuration firstObject]);
     } else {
-        operationID = [RICountry loadCountryConfigurationForCountry:[RIApi getCountryUrlInUse] withSuccessBlock:^(RICountryConfiguration *configuration) {
+        operationID = [RICountry loadCountryConfigurationForCountry:[RIApi getCountryUrlInUse] userAgentInjection:[RIApi getCountryUserAgentInjection] withSuccessBlock:^(RICountryConfiguration *configuration) {
             successBlock(configuration);
         } andFailureBlock:failureBlock];
     }
@@ -231,6 +234,11 @@
             country.url = [jsonObject objectForKey:@"url"];
         }
     }
+    
+    if ([jsonObject objectForKey:@"user_agent"]) {
+        country.userAgentInjection = [jsonObject objectForKey:@"user_agent"];
+    }
+    
     return country;
 }
 
@@ -246,6 +254,7 @@
 #if defined(STAGING) && STAGING
         uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_SHOP_STAGING;
         uniqueCountry.isLive = NO;
+        uniqueCountry.userAgentInjection = RI_UNIQUE_COUNTRY_USER_AGENT_INJECTION_SHOP;
 #endif
         return uniqueCountry;
     } else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
@@ -254,8 +263,9 @@
         uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO;
         uniqueCountry.isLive = YES;
 #if defined(STAGING) && STAGING
-        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO_INTEGRATION;
+        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO_INTEGRATION_MOBILE;
         uniqueCountry.isLive = NO;
+        uniqueCountry.userAgentInjection = RI_UNIQUE_COUNTRY_USER_AGENT_INJECTION_BAMILO_INTEGRATION_MOBILE;
 #endif
         return uniqueCountry;
     } else {
