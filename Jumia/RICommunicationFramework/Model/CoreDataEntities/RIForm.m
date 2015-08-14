@@ -27,13 +27,13 @@
          failureBlock:(void (^)(RIApiResponse, NSArray *))failureBlock
 {
     return [self getForm:formIndexID
-          extraArguments:nil
+            forceRequest:NO
             successBlock:successBlock
             failureBlock:failureBlock];
 }
 
 + (NSString*)getForm:(NSString*)formIndexID
-      extraArguments:(NSDictionary*)extraArguments
+        forceRequest:(BOOL)forceRequest
         successBlock:(void (^)(id form))successBlock
         failureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 {
@@ -41,131 +41,120 @@
     
     return [RIFormIndex getFormWithIndexId:formIndexID successBlock:^(RIFormIndex* formIndex) {
         
-        if (!VALID_NOTEMPTY(extraArguments, NSDictionary) && VALID_NOTEMPTY(formIndex, RIFormIndex) && VALID_NOTEMPTY(formIndex.form, RIForm)) {
+        if (VALID_NOTEMPTY(formIndex, RIFormIndex) && VALID_NOTEMPTY(formIndex.form, RIForm)) {
             //index has form
-            dispatch_async(dispatch_get_main_queue(), ^{
-                successBlock(formIndex.form);
-            });
-        } else {
             
-            if (VALID_NOTEMPTY(formIndex.url, NSString))
-            {
-                NSURL *url = [NSURL URLWithString:formIndex.url];
-                if(VALID_NOTEMPTY(extraArguments, NSDictionary))
-                {
-                    NSArray *keys = [extraArguments allKeys];
-                    NSMutableArray *extraArgumentsArray = [[NSMutableArray alloc] init];
-                    for(NSString *key in keys)
-                    {
-                        [extraArgumentsArray addObject:[NSString stringWithFormat:@"%@=%@", key, [extraArguments objectForKey:key]]];
-                    }
-                    
-                    url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?%@", formIndex.url, [extraArgumentsArray componentsJoinedByString:@"&"]]];
-                }
-                
-                [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
-                                                                 parameters:nil
-                                                             httpMethodPost:YES
-                                                                  cacheType:RIURLCacheNoCache
-                                                                  cacheTime:RIURLCacheDefaultTime
-                                                         userAgentInjection:[RIApi getCountryUserAgentInjection]
-                                                               successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+            if (!forceRequest) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    successBlock(formIndex.form);
+                });
+                return;
+            }
+            
+            [RIForm removeForm:formIndex.form];
+        }
+        
+        if (VALID_NOTEMPTY(formIndex.url, NSString))
+        {
+            NSURL *url = [NSURL URLWithString:formIndex.url];
+            
+            [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
+                                                             parameters:nil
+                                                         httpMethodPost:YES
+                                                              cacheType:RIURLCacheNoCache
+                                                              cacheTime:RIURLCacheDefaultTime
+                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                               
+                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                               
+                                                               if (VALID_NOTEMPTY(metadata, NSDictionary) && VALID_NOTEMPTY([metadata objectForKey:@"data"], NSArray)) {
+                                                                   NSArray* data = [metadata objectForKey:@"data"];
                                                                    
-                                                                   NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
-                                                                   
-                                                                   if (VALID_NOTEMPTY(metadata, NSDictionary) && VALID_NOTEMPTY([metadata objectForKey:@"data"], NSArray)) {
-                                                                       NSArray* data = [metadata objectForKey:@"data"];
-                                                                       
-                                                                       // Update user newsletter preferences
-                                                                       for (NSDictionary *dic in data)
+                                                                   // Update user newsletter preferences
+                                                                   for (NSDictionary *dic in data)
+                                                                   {
+                                                                       if ([dic objectForKey:@"id"])
                                                                        {
-                                                                           if ([dic objectForKey:@"id"])
+                                                                           if ([@"managenewsletters" isEqualToString:formIndexID])
                                                                            {
-                                                                               if ([@"managenewsletters" isEqualToString:formIndexID])
+                                                                               NSArray *fields = [dic objectForKey:@"fields"];
+                                                                               
+                                                                               for (NSDictionary *field in fields)
                                                                                {
-                                                                                   NSArray *fields = [dic objectForKey:@"fields"];
+                                                                                   NSArray *options = [field objectForKey:@"options"];
                                                                                    
-                                                                                   for (NSDictionary *field in fields)
+                                                                                   [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RINewsletterCategory class])];
+                                                                                   [[RIDataBaseWrapper sharedInstance] saveContext];
+                                                                                   
+                                                                                   for (NSDictionary *optionField in options)
                                                                                    {
-                                                                                       NSArray *options = [field objectForKey:@"options"];
+                                                                                       NSInteger subs = [[optionField objectForKey:@"user_subscribed"] integerValue];
                                                                                        
-                                                                                       [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RINewsletterCategory class])];
-                                                                                       [[RIDataBaseWrapper sharedInstance] saveContext];
-                                                                                       
-                                                                                       for (NSDictionary *optionField in options)
+                                                                                       if (1 == subs)
                                                                                        {
-                                                                                           NSInteger subs = [[optionField objectForKey:@"user_subscribed"] integerValue];
+                                                                                           NSMutableDictionary *temp = [NSMutableDictionary new];
                                                                                            
-                                                                                           if (1 == subs)
-                                                                                           {
-                                                                                               NSMutableDictionary *temp = [NSMutableDictionary new];
-                                                                                               
-                                                                                               if ([optionField objectForKey:@"value"]) {
-                                                                                                   [temp addEntriesFromDictionary:@{@"id_newsletter_category" : [optionField objectForKey:@"value"]} ];
-                                                                                               }
-                                                                                               
-                                                                                               if ([optionField objectForKey:@"label"]) {
-                                                                                                   [temp addEntriesFromDictionary:@{@"name" : [optionField objectForKey:@"label"]} ];
-                                                                                               }
-                                                                                               
-                                                                                               RINewsletterCategory *tempNews = [RINewsletterCategory parseNewsletterCategory:[temp copy]];
-                                                                                               [RINewsletterCategory saveNewsLetterCategory:tempNews];
+                                                                                           if ([optionField objectForKey:@"value"]) {
+                                                                                               [temp addEntriesFromDictionary:@{@"id_newsletter_category" : [optionField objectForKey:@"value"]} ];
                                                                                            }
+                                                                                           
+                                                                                           if ([optionField objectForKey:@"label"]) {
+                                                                                               [temp addEntriesFromDictionary:@{@"name" : [optionField objectForKey:@"label"]} ];
+                                                                                           }
+                                                                                           
+                                                                                           RINewsletterCategory *tempNews = [RINewsletterCategory parseNewsletterCategory:[temp copy]];
+                                                                                           [RINewsletterCategory saveNewsLetterCategory:tempNews];
                                                                                        }
                                                                                    }
                                                                                }
                                                                            }
                                                                        }
-                                                                       
-                                                                       RIForm* newForm = [RIForm parseForm:[data firstObject]];
-                                                                       
-                                                                       // We just want to save the form if there are no extra arguments on the request.
-                                                                       // Otherwise we'll save the address form with the gender field
-                                                                       if(!VALID_NOTEMPTY(extraArguments, NSDictionary))
-                                                                       {
-                                                                           [RIForm saveForm:newForm];
-                                                                           newForm.formIndex = formIndex;
-                                                                           formIndex.form = newForm;
-                                                                           //form index was already on database, it just lacked the form variable. let's save the context without adding any other NSManagedObject
-                                                                           [[RIDataBaseWrapper sharedInstance] saveContext];
-                                                                       } else {
-                                                                           //create a temporary form index just so that form can be identified. we only need to keep the id
-                                                                           NSMutableDictionary* formIndexJSON = [NSMutableDictionary new];
-                                                                           [formIndexJSON setObject:formIndexID forKey:@"id"];
-                                                                           RIFormIndex* tempFormIndex = [RIFormIndex parseFormIndex:formIndexJSON];
-                                                                           newForm.formIndex = tempFormIndex;
-                                                                       }
-                                                                       
-                                                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                                                           successBlock(newForm);
-                                                                       });
-                                                                   } else {
-                                                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                                                           failureBlock(apiResponse, nil);
-                                                                       });
                                                                    }
                                                                    
-                                                               } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
-                                                                   if(NOTEMPTY(errorJsonObject))
+                                                                   RIForm* newForm = [RIForm parseForm:[data firstObject]];
+                                                                   
+                                                                   // We just want to save the form if there are no extra arguments on the request.
+                                                                   // Otherwise we'll save the address form with the gender field
+                                                                   if(!forceRequest)
                                                                    {
-                                                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                                                           failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
-                                                                       });
-                                                                   } else if(NOTEMPTY(errorObject))
-                                                                   {
-                                                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                                                           NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                           failureBlock(apiResponse, errorArray);
-                                                                       });
-                                                                   } else
-                                                                   {
-                                                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                                                           failureBlock(apiResponse, nil);
-                                                                       });
+                                                                       [RIForm saveForm:newForm];
+                                                                       newForm.formIndex = formIndex;
+                                                                       formIndex.form = newForm;
+                                                                       //form index was already on database, it just lacked the form variable. let's save the context without adding any other NSManagedObject
+                                                                       [[RIDataBaseWrapper sharedInstance] saveContext];
                                                                    }
-                                                               }];
-            }
+                                                                   
+                                                                   dispatch_async(dispatch_get_main_queue(), ^{
+                                                                       successBlock(newForm);
+                                                                   });
+                                                               } else {
+                                                                   dispatch_async(dispatch_get_main_queue(), ^{
+                                                                       failureBlock(apiResponse, nil);
+                                                                   });
+                                                               }
+                                                               
+                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                               if(NOTEMPTY(errorJsonObject))
+                                                               {
+                                                                   dispatch_async(dispatch_get_main_queue(), ^{
+                                                                       failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+                                                                   });
+                                                               } else if(NOTEMPTY(errorObject))
+                                                               {
+                                                                   dispatch_async(dispatch_get_main_queue(), ^{
+                                                                       NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                       failureBlock(apiResponse, errorArray);
+                                                                   });
+                                                               } else
+                                                               {
+                                                                   dispatch_async(dispatch_get_main_queue(), ^{
+                                                                       failureBlock(apiResponse, nil);
+                                                                   });
+                                                               }
+                                                           }];
         }
+        
         
         return;
         
@@ -267,7 +256,10 @@
                                                                   }
                                                                   else if([@"registersignup" isEqualToString:form.formIndex.uid])
                                                                   {
-                                                                      NSDictionary *data = [metadata objectForKey:@"data"];
+                                                                      NSDictionary *data = [metadata copy];
+                                                                      if (VALID_NOTEMPTY([metadata objectForKey:@"data"], NSDictionary)) {
+                                                                          data = [metadata objectForKey:@"data"];
+                                                                      }
                                                                       if(VALID_NOTEMPTY(data, NSDictionary))
                                                                       {
                                                                           responseProcessed = YES;
@@ -407,6 +399,12 @@
     }
     
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:form];
+    [[RIDataBaseWrapper sharedInstance] saveContext];
+}
+
++ (void)removeForm:(RIForm *)form
+{
+    [[RIDataBaseWrapper sharedInstance] deleteObject:form];
     [[RIDataBaseWrapper sharedInstance] saveContext];
 }
 
