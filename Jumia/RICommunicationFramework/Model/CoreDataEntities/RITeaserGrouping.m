@@ -16,6 +16,7 @@
 @dynamic teaserComponents;
 
 + (NSString*)loadTeasersIntoDatabaseForCountryUrl:(NSString*)countryUrl
+                        countryUserAgentInjection:(NSString *)countryUserAgentInjection
                                  withSuccessBlock:(void (^)(NSArray* teaserGroupings))successBlock
                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
@@ -28,7 +29,7 @@
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
-                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                    userAgentInjection:countryUserAgentInjection
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
@@ -84,6 +85,7 @@
         successBlock(allTeaserGroupings);
     } else {
         operationID = [RITeaserGrouping loadTeasersIntoDatabaseForCountryUrl:[RIApi getCountryUrlInUse]
+                                                   countryUserAgentInjection:[RIApi getCountryUserAgentInjection]
                                                             withSuccessBlock:^(NSArray *teaserGroupings) {
                                                                 if (VALID_NOTEMPTY(teaserGroupings, NSArray)) {
                                                                     successBlock(teaserGroupings);

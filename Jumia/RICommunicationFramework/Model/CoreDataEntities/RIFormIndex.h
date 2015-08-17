@@ -18,6 +18,7 @@
 @property (nonatomic, retain) RIForm *form;
 
 + (NSString*)loadFormIndexesIntoDatabaseForCountry:(NSString*)countryUrl
+                         countryUserAgentInjection:(NSString *)countryUserAgentInjection
                                   deleteOldIndexes:(BOOL)deleteOldIndexes
                                   withSuccessBlock:(void (^)(id formIndexes))successBlock
                                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;

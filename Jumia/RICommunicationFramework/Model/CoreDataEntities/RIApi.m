@@ -115,7 +115,7 @@
                                                                               hasDownloadedFacebookConfigs = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsHasDownloadedFacebookConfigs];
                                                                           }
                                                                           
-                                                                          if ([newSection.name isEqualToString:@"countryconfs"] && NO == hasDownloadedFacebookConfigs) {
+                                                                          if ([newSection.name isEqualToString:@"configurations"] && NO == hasDownloadedFacebookConfigs) {
                                                                               
                                                                               sectionNeedsDownload = YES;
                                                                           } else {
@@ -335,7 +335,7 @@ countryUserAgentInjection:(NSString*)countryUserAgentInjection
     if ([section.name isEqualToString:@"categories"])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
-        [RICategory loadCategoriesIntoDatabaseForCountry:url withSuccessBlock:^(id categories) {
+        [RICategory loadCategoriesIntoDatabaseForCountry:url countryUserAgentInjection:countryUserAgentInjection withSuccessBlock:^(id categories) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:kSideMenuShouldReload object:nil];
             successBlock();
@@ -345,7 +345,7 @@ countryUserAgentInjection:(NSString*)countryUserAgentInjection
         }];
     } else if ([section.name isEqualToString:@"forms"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
-        [RIFormIndex loadFormIndexesIntoDatabaseForCountry:url deleteOldIndexes:deleteOldContent withSuccessBlock:^(id formIndexes) {
+        [RIFormIndex loadFormIndexesIntoDatabaseForCountry:url countryUserAgentInjection:countryUserAgentInjection deleteOldIndexes:deleteOldContent withSuccessBlock:^(id formIndexes) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             successBlock();
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
@@ -357,6 +357,7 @@ countryUserAgentInjection:(NSString*)countryUserAgentInjection
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
         [RITeaserGrouping loadTeasersIntoDatabaseForCountryUrl:url
+                                     countryUserAgentInjection:countryUserAgentInjection
                                               withSuccessBlock:^(NSArray *teaserGroupings) {
                                                   [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
                                                   [[NSNotificationCenter defaultCenter] postNotificationName:kHomeShouldReload object:nil];
@@ -369,13 +370,13 @@ countryUserAgentInjection:(NSString*)countryUserAgentInjection
     else if ([section.name isEqualToString:@"imageresolutions"])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
-        [RIImageResolution loadImageResolutionsIntoDatabaseForCountry:url withSuccessBlock:^{
+        [RIImageResolution loadImageResolutionsIntoDatabaseForCountry:url countryUserAgentInjection:countryUserAgentInjection withSuccessBlock:^{
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         }];
     }
-    else if ([section.name isEqualToString:@"countryconfs"])
+    else if ([section.name isEqualToString:@"configurations"])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
         [RICountry loadCountryConfigurationForCountry:url userAgentInjection:countryUserAgentInjection withSuccessBlock:^(RICountryConfiguration *configuration) {
@@ -387,7 +388,7 @@ countryUserAgentInjection:(NSString*)countryUserAgentInjection
     else if ([section.name isEqualToString:@"static_blocks"])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
-        [RIStaticBlockIndex loadStaticBlockIndexesIntoDatabaseForCountry:url withSuccessBlock:^(id staticBlockIndexes) {
+        [RIStaticBlockIndex loadStaticBlockIndexesIntoDatabaseForCountry:url countryUserAgentInjection:countryUserAgentInjection withSuccessBlock:^(id staticBlockIndexes) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];

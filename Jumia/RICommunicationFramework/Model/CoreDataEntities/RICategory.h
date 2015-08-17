@@ -30,6 +30,7 @@
  *  @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)loadCategoriesIntoDatabaseForCountry:(NSString *)country
+                         countryUserAgentInjection:(NSString *)countryUserAgentInjection
                                   withSuccessBlock:(void (^)(id categories))successBlock
                                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 

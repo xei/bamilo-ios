@@ -17,6 +17,7 @@
 @dynamic form;
 
 + (NSString*)loadFormIndexesIntoDatabaseForCountry:(NSString*)countryUrl
+                         countryUserAgentInjection:(NSString *)countryUserAgentInjection
                                   deleteOldIndexes:(BOOL)deleteOldIndexes
                                   withSuccessBlock:(void (^)(id formIndexes))successBlock
                                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
@@ -25,7 +26,7 @@
                                                             parameters:nil httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
-                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                    userAgentInjection:countryUserAgentInjection
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
@@ -69,7 +70,7 @@
         successBlock(lastForm);
         return nil;
     } else {
-        return [RIFormIndex loadFormIndexesIntoDatabaseForCountry:[RIApi getCountryUrlInUse] deleteOldIndexes:YES withSuccessBlock:^(id formIndexes) {
+        return [RIFormIndex loadFormIndexesIntoDatabaseForCountry:[RIApi getCountryUrlInUse] countryUserAgentInjection:[RIApi getCountryUserAgentInjection] deleteOldIndexes:YES withSuccessBlock:^(id formIndexes) {
             formIndexes = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIFormIndex class]) withPropertyName:@"uid" andPropertyValue:formIndexID];
             if(VALID_NOTEMPTY(formIndexes, NSArray))
             {

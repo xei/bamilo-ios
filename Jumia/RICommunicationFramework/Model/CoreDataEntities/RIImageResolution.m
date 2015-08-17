@@ -24,6 +24,7 @@
 @dynamic extension;
 
 + (NSString*)loadImageResolutionsIntoDatabaseForCountry:(NSString*)countryUrl
+                              countryUserAgentInjection:(NSString *)countryUserAgentInjection
                                        withSuccessBlock:(void (^)())successBlock
                                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
 {
@@ -31,7 +32,7 @@
                                                             parameters:nil httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
-                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                    userAgentInjection:countryUserAgentInjection
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary)) {
