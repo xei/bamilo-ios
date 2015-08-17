@@ -23,14 +23,12 @@
                                   withSuccessBlock:(void (^)(id categories))successBlock
                                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
 {
-    NSLog(@"$$$$$$ START: %@", [NSDate date]);
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", country, RI_API_VERSION, RI_CATALOG_CATEGORIES]]
                                                             parameters:nil httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:countryUserAgentInjection
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                                  NSLog(@"$$$$$$ END: %@", [NSDate date]);
                                                               
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary)) {
@@ -119,7 +117,6 @@
 + (NSArray*)parseCategories:(NSArray*)categories
                 persistData:(BOOL)persistData;
 {
-        NSLog(@"$$$$$$ PARSE START: %@", [NSDate date]);
     if (persistData) {
         [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICategory class])];
     }
@@ -142,8 +139,6 @@
             [newCategories addObject:category];
         }
     }
-    
-        NSLog(@"$$$$$$ PARSE END: %@", [NSDate date]);
     
     return newCategories;
 }
