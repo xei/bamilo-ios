@@ -75,6 +75,7 @@
 }
 
 + (NSString*)loadStaticBlockIndexesIntoDatabaseForCountry:(NSString*)countryUrl
+                                countryUserAgentInjection:(NSString *)countryUserAgentInjection
                                          withSuccessBlock:(void (^)(id staticBlockIndexes))successBlock
                                           andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 {
@@ -82,7 +83,7 @@
                                                             parameters:nil httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
-                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                    userAgentInjection:countryUserAgentInjection
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
