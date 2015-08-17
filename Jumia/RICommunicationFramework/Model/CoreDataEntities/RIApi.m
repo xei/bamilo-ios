@@ -115,7 +115,7 @@
                                                                               hasDownloadedFacebookConfigs = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsHasDownloadedFacebookConfigs];
                                                                           }
                                                                           
-                                                                          if ([newSection.name isEqualToString:@"countryconfs"] && NO == hasDownloadedFacebookConfigs) {
+                                                                          if ([newSection.name isEqualToString:@"configurations"] && NO == hasDownloadedFacebookConfigs) {
                                                                               
                                                                               sectionNeedsDownload = YES;
                                                                           } else {
@@ -376,7 +376,7 @@ countryUserAgentInjection:(NSString*)countryUserAgentInjection
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         }];
     }
-    else if ([section.name isEqualToString:@"countryconfs"])
+    else if ([section.name isEqualToString:@"configurations"])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
         [RICountry loadCountryConfigurationForCountry:url userAgentInjection:countryUserAgentInjection withSuccessBlock:^(RICountryConfiguration *configuration) {
