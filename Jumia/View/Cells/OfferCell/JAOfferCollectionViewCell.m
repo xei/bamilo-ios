@@ -38,7 +38,11 @@
     [self.priceLabel setX:6.f];
     self.priceLabel.font = [UIFont fontWithName:kFontBoldName size:self.priceLabel.font.pointSize];
     self.priceLabel.textColor = UIColorFromRGB(0xcc0000);
-    self.priceLabel.text = productOffer.priceFormatted;
+    if (VALID_NOTEMPTY(productOffer.specialPriceFormatted, NSString)) {
+        self.priceLabel.text = productOffer.specialPriceFormatted;
+    } else {
+        self.priceLabel.text = productOffer.priceFormatted;
+    }
     [self.priceLabel sizeToFit];
     
     [self.sellerLabel setX:6.f];
