@@ -121,7 +121,7 @@
             if (VALID_NOTEMPTY(staticBlockIndexJSON, NSDictionary)) {
                 
                 RIStaticBlockIndex* staticBlockIndex = [RIStaticBlockIndex parseStaticBlockIndex:staticBlockIndexJSON];
-                [RIStaticBlockIndex saveStaticBlockIndex:staticBlockIndex];
+                [RIStaticBlockIndex saveStaticBlockIndex:staticBlockIndex andContext:YES];
                 [newStaticBlocks addObject:staticBlockIndex];
             }
         }
@@ -144,10 +144,13 @@
     return newStaticBlockIndex;
 }
 
-+ (void)saveStaticBlockIndex:(RIStaticBlockIndex*)staticBlockIndex;
++ (void)saveStaticBlockIndex:(RIStaticBlockIndex*)staticBlockIndex andContext:(BOOL)save;
 {
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:staticBlockIndex];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 @end

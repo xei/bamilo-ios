@@ -27,7 +27,7 @@
                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 + (NSArray*)parseFormIndexes:(NSDictionary*)formIndexesJSON;
 + (RIFormIndex*)parseFormIndex:(NSDictionary*)formIndexJSON;
-+ (void)saveFormIndex:(RIFormIndex*)formIndex;
++ (void)saveFormIndex:(RIFormIndex*)formIndex andContext:(BOOL)save;
 + (void)cancelRequest:(NSString *)operationID;
 
 @end

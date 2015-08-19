@@ -27,6 +27,6 @@
 @interface RISeller (CoreDataGeneratedAccessors)
 
 + (RISeller*)parseSeller:(NSDictionary*)sellerJSON;
-+ (void)saveSeller:(RISeller*)seller;
++ (void)saveSeller:(RISeller*)seller andContext:(BOOL)save;
 
 @end

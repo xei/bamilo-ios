@@ -351,7 +351,7 @@
 - (void)searchFor:(NSString*)stringToSearch
 {
     [RISearchSuggestion saveSearchSuggestionOnDB:stringToSearch
-                                  isRecentSearch:YES];
+                                  isRecentSearch:YES andContext:YES];
     
     // I changed the index to 99 to know that it's to display a search result
     [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification

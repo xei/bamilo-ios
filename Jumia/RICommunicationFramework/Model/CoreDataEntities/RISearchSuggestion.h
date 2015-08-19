@@ -81,7 +81,7 @@
  * @param boolean if it's recent search
  */
 + (void)saveSearchSuggestionOnDB:(NSString *)query
-                  isRecentSearch:(BOOL)isRecentSearch;
+                  isRecentSearch:(BOOL)isRecentSearch andContext:(BOOL)save;
 
 /**
  * Method to request a set of search suggestions

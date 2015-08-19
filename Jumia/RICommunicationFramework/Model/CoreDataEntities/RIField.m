@@ -172,13 +172,16 @@
     return newField;
 }
 
-+ (void)saveField:(RIField *)field;
++ (void)saveField:(RIField *)field andContext:(BOOL)save
 {
     for (RIFieldRatingStars* fieldRatingStars in field.ratingStars) {
-        [RIFieldRatingStars saveFieldRatingStars:fieldRatingStars];
+        [RIFieldRatingStars saveFieldRatingStars:fieldRatingStars andContext:NO];
     }
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:field];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 @end

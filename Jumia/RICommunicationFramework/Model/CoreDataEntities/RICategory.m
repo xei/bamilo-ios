@@ -134,7 +134,7 @@
         if (VALID_NOTEMPTY(categoryJSON, NSDictionary)) {
             RICategory* category = [RICategory parseCategory:categoryJSON];
             if (persistData) {
-                [RICategory saveCategory:category];
+                [RICategory saveCategory:category andContext:YES];
             }
             [newCategories addObject:category];
         }
@@ -258,14 +258,17 @@
     return newCategory;
 }
 
-+ (void)saveCategory:(RICategory *)category
++ (void)saveCategory:(RICategory *)category andContext:(BOOL)save
 {
     for (RICategory* childCategory in category.children) {
-        [RICategory saveCategory:childCategory];
+        [RICategory saveCategory:childCategory andContext:NO];
     }
     
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:category];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 

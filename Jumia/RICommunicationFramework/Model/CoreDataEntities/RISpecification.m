@@ -42,11 +42,22 @@
     return newSpecification;
 }
 
-+ (void)saveSpecification:(RISpecification*)specification
++ (void)saveSpecification:(RISpecification*)specification andContext:(BOOL)save
 {
+    if (specification.specificationAttributes) {
+        for (RISpecificationAttribute *attribute in specification.specificationAttributes) {
+            if (!attribute.specification) {
+                attribute.specification = specification;
+            }
+            [RISpecificationAttribute saveSpacificationAttribute:attribute andContext:NO];
+        }
+    }
     
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:specification];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 

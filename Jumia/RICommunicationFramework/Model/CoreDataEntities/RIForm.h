@@ -92,7 +92,7 @@
 
 + (void)cancelRequest:(NSString *)operationID;
 
-+ (void)saveForm:(RIForm *)form;
++ (void)saveForm:(RIForm *)form andContext:(BOOL)save;
 
 + (RIForm *)parseForm:(NSDictionary *)formJSON;
 

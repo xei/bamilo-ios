@@ -400,7 +400,7 @@
         }
     }
     
-    [RICustomer saveCustomer:customer];
+    [RICustomer saveCustomer:customer andContext:YES];
     
     return customer;
 }
@@ -471,19 +471,22 @@
     
     [self updateCustomerNewsletterWithJson:json];
     
-    [RICustomer saveCustomer:customer];
+    [RICustomer saveCustomer:customer andContext:YES];
     
     return customer;
 }
 
-+ (void)saveCustomer:(RICustomer *)customer
++ (void)saveCustomer:(RICustomer *)customer andContext:(BOOL)save
 {
     for (RIAddress *address in customer.addresses) {
-        [RIAddress saveAddress:address];
+        [RIAddress saveAddress:address andContext:NO];
     }
     
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:customer];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 #pragma mark - Save newsletter preferences
@@ -500,7 +503,7 @@
         for (NSDictionary *dic in newsletterArray)
         {
             RINewsletterCategory *newsletter = [RINewsletterCategory parseNewsletterCategory:dic];
-            [RINewsletterCategory saveNewsLetterCategory:newsletter];
+            [RINewsletterCategory saveNewsLetterCategory:newsletter andContext:YES];
         }
     }
     else if ([json objectForKey:@"newsletter_subscription"])
@@ -513,7 +516,7 @@
         for (NSDictionary *dic in newsletterArray)
         {
             RINewsletterCategory *newsletter = [RINewsletterCategory parseNewsletterCategory:dic];
-            [RINewsletterCategory saveNewsLetterCategory:newsletter];
+            [RINewsletterCategory saveNewsLetterCategory:newsletter andContext:YES];
         }
     }
 }

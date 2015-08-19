@@ -49,10 +49,17 @@
     return newImage;
 }
 
-+ (void)saveImage:(RIImage*)image
++ (void)saveImage:(RIImage*)image andContext:(BOOL)save
 {
+    if (VALID_NOTEMPTY(image.variation, RIVariation)) {
+        [RIVariation saveVariation:image.variation andContext:NO];
+    }
+    
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:image];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 @end

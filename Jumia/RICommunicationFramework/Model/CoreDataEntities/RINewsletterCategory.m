@@ -30,10 +30,13 @@
     return category;
 }
 
-+ (void)saveNewsLetterCategory:(RINewsletterCategory *)newsletterCategory
++ (void)saveNewsLetterCategory:(RINewsletterCategory *)newsletterCategory andContext:(BOOL)save
 {    
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:newsletterCategory];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 + (NSArray *)getNewsletter

@@ -353,7 +353,7 @@
     CGFloat margin = 6.0f;
     CGFloat startingY = 6.0f;
     
-    NSOrderedSet *listSpecifications = self.product.specifications;
+    NSSet *listSpecifications = self.product.specifications;
     
     
     [self.specificationScrollView setFrame:CGRectMake(RI_IS_RTL?0:self.contentScrollView.frame.size.width,

@@ -43,10 +43,13 @@
     return newFieldRatingStars;
 }
 
-+ (void)saveFieldRatingStars:(RIFieldRatingStars *)fieldRatingStars;
++ (void)saveFieldRatingStars:(RIFieldRatingStars *)fieldRatingStars andContext:(BOOL)save;
 {
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:fieldRatingStars];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 @end

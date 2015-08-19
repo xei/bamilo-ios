@@ -133,7 +133,7 @@
         if (VALID_NOTEMPTY(imageResolutionObject, NSDictionary))
         {
             RIImageResolution* imageResolution = [RIImageResolution parseImageResolution:imageResolutionObject];
-            [RIImageResolution saveImageResolution:imageResolution];
+            [RIImageResolution saveImageResolution:imageResolution andContext:YES];
             [imageResolutions addObject:imageResolution];
         }
     }
@@ -168,10 +168,13 @@
     return imageResolution;
 }
 
-+ (void)saveImageResolution:(RIImageResolution *)imageResolution
++ (void)saveImageResolution:(RIImageResolution *)imageResolution andContext:(BOOL)save
 {
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:imageResolution];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 /**

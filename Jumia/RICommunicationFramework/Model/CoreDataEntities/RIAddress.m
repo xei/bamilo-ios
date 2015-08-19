@@ -208,10 +208,13 @@
     return newAddress;
 }
 
-+ (void)saveAddress:(RIAddress *)address
++ (void)saveAddress:(RIAddress *)address andContext:(BOOL)save
 {
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:address];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 @end

@@ -153,19 +153,22 @@
         }
     }
     
-    [RITeaserGrouping saveTeaserGrouping:newTeaserGrouping];
+    [RITeaserGrouping saveTeaserGrouping:newTeaserGrouping andContext:YES];
     
     return newTeaserGrouping;
 }
 
-+ (void)saveTeaserGrouping:(RITeaserGrouping *)teaserGrouping
++ (void)saveTeaserGrouping:(RITeaserGrouping *)teaserGrouping andContext:(BOOL)save
 {
     for (RITeaserComponent *teaserComponent in teaserGrouping.teaserComponents) {
-        [RITeaserComponent saveTeaserComponent:teaserComponent];
+        [RITeaserComponent saveTeaserComponent:teaserComponent andContext:NO];
     }
     
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:teaserGrouping];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
 }
 
 @end

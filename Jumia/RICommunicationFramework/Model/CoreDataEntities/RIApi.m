@@ -145,7 +145,7 @@
                                                                       
                                                                       //save new api in coredata
                                                                       [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RIApi class])];
-                                                                      [RIApi saveApi:newApi];
+                                                                      [RIApi saveApi:newApi andContext:YES];
                                                                   }
                                                                   
                                                                   successBlock(newApi, hasUpdate, isUpdateMandatory);
@@ -315,14 +315,17 @@ countryUserAgentInjection:(NSString*)countryUserAgentInjection
     return newApi;
 }
 
-+ (void)saveApi:(RIApi*)api
++ (void)saveApi:(RIApi*)api andContext:(BOOL)save
 {
     for (RISection* section in api.sections) {
-        [RISection saveSection:section];
+        [RISection saveSection:section andContext:NO];
     }
     
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:api];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
 }
 
 + (void)requestSectionContent:(RISection*)section
