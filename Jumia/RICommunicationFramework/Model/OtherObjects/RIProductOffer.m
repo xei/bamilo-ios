@@ -119,6 +119,13 @@
         if ([productJSON objectForKey:@"price_converted"]) {
             newProductOffer.priceEuroConverted = [productJSON objectForKey:@"price_converted"];
         }
+        if ([productJSON objectForKey:@"special_price"]) {
+            newProductOffer.specialPrice = [productJSON objectForKey:@"special_price"];
+            newProductOffer.specialPriceFormatted = [RICountryConfiguration formatPrice:newProductOffer.specialPrice country:country];
+        }
+        if ([productJSON objectForKey:@"special_price_converted"]) {
+            newProductOffer.specialPriceEuroConverted = [productJSON objectForKey:@"special_price_converted"];
+        }
         if ([productJSON objectForKey:@"min_delivery_time"]) {
             newProductOffer.minDeliveryTime = [productJSON objectForKey:@"min_delivery_time"];
         }
