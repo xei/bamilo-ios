@@ -95,6 +95,10 @@ FBSDKLoginButtonDelegate
     [self.checkBoxComponent setHidden:YES];
     
     self.facebookLoginButton = [[FBSDKLoginButton alloc] init];
+    self.facebookLoginButton.frame = CGRectMake(self.view.frame.size.width,
+                                                self.view.frame.size.height,
+                                                self.facebookLoginButton.frame.size.width,
+                                                self.facebookLoginButton.frame.size.height);
     self.facebookLoginButton.readPermissions = @[@"public_profile", @"email", @"user_birthday"];
     [self.facebookLoginButton setDelegate:self];
     [self.loginView addSubview:self.facebookLoginButton];
@@ -259,6 +263,7 @@ FBSDKLoginButtonDelegate
                                                       42.0f,
                                                       facebookNormalImage.size.width,
                                                       facebookNormalImage.size.height)];
+        self.facebookLoginButton.titleLabel.text = STRING_LOGIN_WITH_FACEBOOK;
         self.loginViewCurrentY = CGRectGetMaxY(self.facebookLoginButton.frame) + 6.0f;
     }else {
         self.loginViewCurrentY= facebookNormalImage.size.height;
