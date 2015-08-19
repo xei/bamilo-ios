@@ -42,6 +42,6 @@
  *
  *  @param the RIProductSimple to be saved
  */
-+ (void)saveProductSimple:(RIProductSimple*)productSimple;
++ (void)saveProductSimple:(RIProductSimple*)productSimple andContext:(BOOL)save;
 
 @end

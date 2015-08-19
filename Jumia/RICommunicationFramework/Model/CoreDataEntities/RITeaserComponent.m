@@ -113,10 +113,13 @@
     return newTeaserComponent;
 }
 
-+ (void)saveTeaserComponent:(RITeaserComponent *)teaserComponent
++ (void)saveTeaserComponent:(RITeaserComponent *)teaserComponent andContext:(BOOL)save
 {
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:teaserComponent];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 @end

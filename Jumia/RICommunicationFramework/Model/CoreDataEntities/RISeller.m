@@ -59,10 +59,13 @@
 
 #pragma mark - Save method
 
-+ (void)saveSeller:(RISeller*)seller
++ (void)saveSeller:(RISeller*)seller andContext:(BOOL)save
 {
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:seller];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 @end

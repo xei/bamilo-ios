@@ -57,10 +57,13 @@
     return component;
 }
 
-+ (void)saveFieldDataSetComponent:(RIFieldDataSetComponent *)component
++ (void)saveFieldDataSetComponent:(RIFieldDataSetComponent *)component andContext:(BOOL)save
 {
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:component];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 @end

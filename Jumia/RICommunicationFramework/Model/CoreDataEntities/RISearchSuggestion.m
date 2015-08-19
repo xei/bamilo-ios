@@ -55,7 +55,7 @@
 }
 
 + (void)saveSearchSuggestionOnDB:(NSString *)query
-                  isRecentSearch:(BOOL)isRecentSearch
+                  isRecentSearch:(BOOL)isRecentSearch andContext:(BOOL)save
 {
     if(VALID_NOTEMPTY(query, NSString))
     {
@@ -93,11 +93,16 @@
                  }];
                 
                 [[RIDataBaseWrapper sharedInstance] deleteObject:[searches lastObject]];
-                [[RIDataBaseWrapper sharedInstance] saveContext];
+                if (save) {
+                    [[RIDataBaseWrapper sharedInstance] saveContext];
+                }
+                
             }
 
             [[RIDataBaseWrapper sharedInstance] insertManagedObject:newSearchSuggestion];
-            [[RIDataBaseWrapper sharedInstance] saveContext];
+            if (save) {
+                [[RIDataBaseWrapper sharedInstance] saveContext];
+            }
         }
     }
 }

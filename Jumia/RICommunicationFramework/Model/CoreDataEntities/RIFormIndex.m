@@ -96,7 +96,7 @@
             if (VALID_NOTEMPTY(formIndexJSON, NSDictionary)) {
                 
                 RIFormIndex* formIndex = [RIFormIndex parseFormIndex:formIndexJSON];
-                [RIFormIndex saveFormIndex:formIndex];
+                [RIFormIndex saveFormIndex:formIndex andContext:YES];
                 [newFormIndexes addObject:formIndex];
             }
         }
@@ -118,14 +118,17 @@
     return newFormIndex;
 }
 
-+ (void)saveFormIndex:(RIFormIndex*)formIndex;
++ (void)saveFormIndex:(RIFormIndex*)formIndex andContext:(BOOL)save;
 {
     if (VALID_NOTEMPTY(formIndex.form, RIForm)) {
-        [RIForm saveForm:formIndex.form];
+        [RIForm saveForm:formIndex.form andContext:NO];
     }
     
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:formIndex];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 #pragma mark - Cancel requests

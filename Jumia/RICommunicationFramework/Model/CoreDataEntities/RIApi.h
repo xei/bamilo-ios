@@ -65,7 +65,7 @@ countryUserAgentInjection:(NSString*)countryUserAgentInjection;
  *
  *  @param the RIApi to save
  */
-+ (void)saveApi:(RIApi *)api;
++ (void)saveApi:(RIApi *)api andContext:(BOOL)save;
 
 /**
  *  Check if the app was allready started

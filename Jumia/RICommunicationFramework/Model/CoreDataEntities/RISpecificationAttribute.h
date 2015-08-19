@@ -21,6 +21,6 @@
 
 +(RISpecificationAttribute*)parseSpecificationAttribute:(NSDictionary *)specificationAttributteJSON;
 
-+ (void)saveSpacificationAttribute:(RISpecificationAttribute *)specificationAttribute;
++ (void)saveSpacificationAttribute:(RISpecificationAttribute *)specificationAttribute andContext:(BOOL)save;
 
 @end

@@ -30,6 +30,6 @@
  *
  *  @param the RISection to save
  */
-+ (void)saveSection:(RISection *)section;
++ (void)saveSection:(RISection *)section andContext:(BOOL)save;
 
 @end

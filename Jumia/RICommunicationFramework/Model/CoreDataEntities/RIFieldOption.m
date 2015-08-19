@@ -45,10 +45,13 @@
     return fieldOption;
 }
 
-+ (void)saveFieldOption:(RIFieldOption *)option
++ (void)saveFieldOption:(RIFieldOption *)option andContext:(BOOL)save
 {
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:option];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 @end

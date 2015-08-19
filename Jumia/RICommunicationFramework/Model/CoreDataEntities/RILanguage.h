@@ -30,6 +30,6 @@
  *
  *  @param the RILanguage to save
  */
-+ (void)saveLanguage:(RILanguage *)language;
++ (void)saveLanguage:(RILanguage *)language andContext:(BOOL)save;
 
 @end

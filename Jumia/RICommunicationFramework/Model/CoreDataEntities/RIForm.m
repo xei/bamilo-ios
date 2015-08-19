@@ -50,8 +50,6 @@
                 });
                 return;
             }
-            
-            [RIForm removeForm:formIndex.form];
         }
         
         if (VALID_NOTEMPTY(formIndex.url, NSString))
@@ -104,7 +102,7 @@
                                                                                            }
                                                                                            
                                                                                            RINewsletterCategory *tempNews = [RINewsletterCategory parseNewsletterCategory:[temp copy]];
-                                                                                           [RINewsletterCategory saveNewsLetterCategory:tempNews];
+                                                                                           [RINewsletterCategory saveNewsLetterCategory:tempNews andContext:YES];
                                                                                        }
                                                                                    }
                                                                                }
@@ -114,17 +112,12 @@
                                                                    
                                                                    RIForm* newForm = [RIForm parseForm:[data firstObject]];
                                                                    
-                                                                   // We just want to save the form if there are no extra arguments on the request.
-                                                                   // Otherwise we'll save the address form with the gender field
-                                                                   if(!forceRequest)
-                                                                   {
-                                                                       [RIForm saveForm:newForm];
-                                                                       newForm.formIndex = formIndex;
-                                                                       formIndex.form = newForm;
-                                                                       //form index was already on database, it just lacked the form variable. let's save the context without adding any other NSManagedObject
-                                                                       [[RIDataBaseWrapper sharedInstance] saveContext];
-                                                                   }
-                                                                   
+                                                                   [RIForm saveForm:newForm andContext:NO];
+                                                                   newForm.formIndex = formIndex;
+                                                                   formIndex.form = newForm;
+                                                                   //form index was already on database, it just lacked the form variable. let's save the context without adding any other NSManagedObject
+                                                                   [[RIDataBaseWrapper sharedInstance] saveContext];
+//
                                                                    dispatch_async(dispatch_get_main_queue(), ^{
                                                                        successBlock(newForm);
                                                                    });
@@ -382,24 +375,27 @@
     return newForm;
 }
 
-+ (void)saveForm:(RIForm *)form;
++ (void)saveForm:(RIForm *)form andContext:(BOOL)save;
 {
     for (RIField* field in form.fields) {
         
         for (RIFieldDataSetComponent *component in field.dataSet) {
-            [RIFieldDataSetComponent saveFieldDataSetComponent:component];
+            [RIFieldDataSetComponent saveFieldDataSetComponent:component andContext:NO];
         }
         
         for(RIFieldOption *option in field.options)
         {
-            [RIFieldOption saveFieldOption:option];
+            [RIFieldOption saveFieldOption:option andContext:NO];
         }
         
-        [RIField saveField:field];
+        [RIField saveField:field andContext:NO];
     }
     
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:form];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 + (void)removeForm:(RIForm *)form

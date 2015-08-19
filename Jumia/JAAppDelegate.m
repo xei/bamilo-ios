@@ -13,6 +13,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <HockeySDK/HockeySDK.h>
 #import <GoogleAppIndexing/GoogleAppIndexing.h>
+#import "RIProduct.h"
 
 #define kSessionDuration 1800.0f
 #define IS_IOS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
@@ -28,6 +29,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+//    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RIProduct class])];
     self.startLoadingTime = [NSDate date];
     
     //fonts

@@ -797,7 +797,7 @@
             product.recentlyViewedDate = [NSDate date];
             product.favoriteAddDate = currentProduct.favoriteAddDate;
             [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
-            [RIProduct saveProduct:product];
+            [RIProduct saveProduct:product andContext:YES];
             productExists = YES;
             break;
         }
@@ -805,7 +805,7 @@
     if (NO == productExists) {
         //did not find it, so save the product
         product.recentlyViewedDate = [NSDate date];
-        [RIProduct saveProduct:product];
+        [RIProduct saveProduct:product andContext:YES];
     }
     
     //now we need to check if there are more than 15 products
@@ -869,10 +869,11 @@
                     product.recentlyViewedDate = [NSDate date];
                     product.favoriteAddDate = currentProduct.favoriteAddDate;
                     [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
+                    [[RIDataBaseWrapper sharedInstance] saveContext];
                     //already deleted
                     shouldDelete = NO;
                     
-                    [RIProduct saveProduct:product];
+                    [RIProduct saveProduct:product andContext:YES];
                     
                     break;
                 }
@@ -1009,7 +1010,7 @@
                 [[RIDataBaseWrapper sharedInstance] saveContext];
             } else {
                 [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
-                [RIProduct saveProduct:product];
+                [RIProduct saveProduct:product andContext:YES];
             }
             productExists = YES;
             break;
@@ -1017,7 +1018,7 @@
     }
     if (NO == productExists) {
         product.favoriteAddDate = [NSDate date];
-        [RIProduct saveProduct:product];
+        [RIProduct saveProduct:product andContext:YES];
     }
     
     if (successBlock) {
@@ -1149,30 +1150,50 @@
 
 #pragma mark - Save method
 
-+ (void)saveProduct:(RIProduct *)product
++ (void)saveProduct:(RIProduct *)product andContext:(BOOL)save
 {
     for (RIImage* image in product.images) {
-        [RIImage saveImage:image];
+//        if (!image.product) {
+//            image.product = product;
+//        }
+        [RIImage saveImage:image andContext:NO];
     }
     for (RIProductSimple* productSimple in product.productSimples) {
-        [RIProductSimple saveProductSimple:productSimple];
+//        if (!productSimple.product) {
+//            productSimple.product = product;
+//        }
+        [RIProductSimple saveProductSimple:productSimple andContext:NO];
     }
     for (RIVariation* variation in product.variations) {
-        [RIVariation saveVariation:variation];
+//        if (!variation.product) {
+//            variation.product = product;
+//        }
+        [RIVariation saveVariation:variation andContext:NO];
     }
     for(RISpecification *specification in product.specifications){
-        [RISpecification saveSpecification:specification];
+        [RISpecification saveSpecification:specification andContext:NO];
     }
 //    for (RIProduct* relatedProduct in product.relatedProducts) {
-//        [RIProduct saveProduct:relatedProduct];
+////        if (!relatedProduct.referredFromProduct) {
+////            relatedProduct.referredFromProduct = product;
+////        }
+//        NSArray *array = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIProduct class]) withPropertyName:@"url" andPropertyValue:product.url];
+//        if (!array || array.count == 0)
+//            [RIProduct saveProduct:relatedProduct andContext:NO];
+//        else{
+//            NSLog(@"");
+//        }
 //    }
+    product.relatedProducts = nil;
     
     if (VALID_NOTEMPTY(product.seller, RISeller)) {
-        [RISeller saveSeller:product.seller];
+        [RISeller saveSeller:product.seller andContext:NO];
     }
     
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:product];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
 }
 
 @end

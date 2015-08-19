@@ -20,7 +20,7 @@
 
 +(RISpecification*)parseSpecification:(NSDictionary *)specificationsJSON;
 
-+ (void)saveSpecification:(RISpecification*)specification;
++ (void)saveSpecification:(RISpecification*)specification andContext:(BOOL)save;
 
 
 @end

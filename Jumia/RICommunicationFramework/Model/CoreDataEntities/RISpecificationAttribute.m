@@ -37,10 +37,13 @@
     
 }
 
-+ (void)saveSpacificationAttribute:(RISpecificationAttribute *)specificationAttribute
++ (void)saveSpacificationAttribute:(RISpecificationAttribute *)specificationAttribute andContext:(BOOL)save
 {
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:specificationAttribute];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 @end

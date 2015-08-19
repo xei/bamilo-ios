@@ -78,7 +78,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSNumber *bucketActive;
 @property (nonatomic, retain) NSString *shortSummary;
 @property (nonatomic, retain) NSString *summary;
-@property (nonatomic, retain) NSOrderedSet *specifications;
+@property (nonatomic, retain) NSSet *specifications;
 @property (nonatomic, retain) NSNumber *numberOfTimesSeen;
 
 

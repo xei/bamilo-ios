@@ -35,7 +35,7 @@
 @property (nonatomic, retain) NSString * relatedField;
 
 + (RIField *)parseField:(NSDictionary *)fieldJSON;
-+ (void)saveField:(RIField *)field;
++ (void)saveField:(RIField *)field andContext:(BOOL)save;
 
 @end
 
