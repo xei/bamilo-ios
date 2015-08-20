@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E46" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C109" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="RIAddress" representedClassName="RIAddress" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
@@ -199,10 +199,6 @@
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="images" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIImage" inverseName="product" inverseEntity="RIImage" syncable="YES"/>
         <relationship name="productSimples" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIProductSimple" inverseName="product" inverseEntity="RIProductSimple" syncable="YES"/>
-        <relationship name="referredFromProduct" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIProduct" inverseName="relatedProducts" inverseEntity="RIProduct" syncable="YES"/>
-        <relationship name="relatedProducts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RIProduct" inverseName="referredFromProduct" inverseEntity="RIProduct" syncable="YES"/>
-        <relationship name="seller" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RISeller" inverseName="product" inverseEntity="RISeller" syncable="YES"/>
-        <relationship name="specifications" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="RISpecification" inverseName="product" inverseEntity="RISpecification" syncable="YES"/>
         <relationship name="variations" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIVariation" inverseName="product" inverseEntity="RIVariation" syncable="YES"/>
     </entity>
     <entity name="RIProductSimple" representedClassName="RIProductSimple" syncable="YES">
@@ -232,26 +228,6 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="api" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIApi" inverseName="sections" inverseEntity="RIApi" syncable="YES"/>
-    </entity>
-    <entity name="RISeller" representedClassName="RISeller" syncable="YES">
-        <attribute name="maxDeliveryTime" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="minDeliveryTime" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="reviewAverage" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="reviewTotal" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIProduct" inverseName="seller" inverseEntity="RIProduct" syncable="YES"/>
-    </entity>
-    <entity name="RISpecification" syncable="YES">
-        <attribute name="headLabel" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIProduct" inverseName="specifications" inverseEntity="RIProduct" syncable="YES"/>
-        <relationship name="specificationAttributes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="RISpecificationAttribute" inverseName="specification" inverseEntity="RISpecificationAttribute" syncable="YES"/>
-    </entity>
-    <entity name="RISpecificationAttribute" syncable="YES">
-        <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="specification" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RISpecification" inverseName="specificationAttributes" inverseEntity="RISpecification" syncable="YES"/>
     </entity>
     <entity name="RIStaticBlockIndex" representedClassName="RIStaticBlockIndex" syncable="YES">
         <attribute name="data" optional="YES" attributeType="String" syncable="YES"/>
@@ -310,13 +286,10 @@
         <element name="RIImageResolution" positionX="-270" positionY="560" width="128" height="103"/>
         <element name="RILanguage" positionX="-270" positionY="-207" width="128" height="103"/>
         <element name="RINewsletterCategory" positionX="-684" positionY="287" width="128" height="73"/>
-        <element name="RIProduct" positionX="-99" positionY="0" width="128" height="795"/>
+        <element name="RIProduct" positionX="-99" positionY="0" width="128" height="733"/>
         <element name="RIProductSimple" positionX="162" positionY="14" width="128" height="255"/>
         <element name="RISearchSuggestion" positionX="-828" positionY="183" width="128" height="105"/>
         <element name="RISection" positionX="-261" positionY="428" width="128" height="103"/>
-        <element name="RISeller" positionX="-261" positionY="771" width="128" height="165"/>
-        <element name="RISpecification" positionX="-513" positionY="666" width="128" height="88"/>
-        <element name="RISpecificationAttribute" positionX="-711" positionY="684" width="128" height="88"/>
         <element name="RIStaticBlockIndex" positionX="-90" positionY="-126" width="128" height="90"/>
         <element name="RITeaserComponent" positionX="-731" positionY="-414" width="128" height="315"/>
         <element name="RITeaserGrouping" positionX="-873" positionY="-90" width="128" height="90"/>

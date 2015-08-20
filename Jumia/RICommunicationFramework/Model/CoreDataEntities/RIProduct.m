@@ -94,20 +94,19 @@
 @dynamic ratingAverage;
 @dynamic ratingsTotal;
 @dynamic reviewsTotal;
-@dynamic seller;
 @dynamic offersMinPrice;
 @dynamic offersMinPriceEuroConverted;
 @dynamic offersMinPriceFormatted;
 @dynamic offersTotal;
-@dynamic relatedProducts;
-@dynamic referredFromProduct;
 @dynamic bucketActive;
 @dynamic shortSummary;
 @dynamic summary;
-@dynamic specifications;
 @dynamic numberOfTimesSeen;
 
 @synthesize categoryIds;
+@synthesize relatedProducts;
+@synthesize specifications;
+@synthesize seller;
 
 + (NSString *)getCompleteProductWithSku:(NSString*)sku
                            successBlock:(void (^)(id product))successBlock
@@ -584,14 +583,16 @@
         
         if([dataDic objectForKey:@"specifications"]){
             NSArray* specificationsJSON = [dataDic objectForKey:@"specifications"];
+
+            NSMutableSet* newSpecifications = [NSMutableSet new];
             for (NSDictionary *specifJSON in specificationsJSON){
                 if(VALID_NOTEMPTY(specifJSON, NSDictionary)){
                     
                     RISpecification *newSpecification = [RISpecification parseSpecification:specifJSON];
-                    [newProduct addSpecificationsObject:newSpecification];
-                
+                    [newSpecifications addObject:newSpecification];
                 }
             }
+            newProduct.specifications = [newSpecifications copy];
         }
         
         if ([dataDic objectForKey:@"variations"]) {
@@ -655,7 +656,6 @@
             if (VALID_NOTEMPTY(sellerJSON, NSDictionary)) {
                 
                 RISeller* seller = [RISeller parseSeller:sellerJSON];
-                seller.product = newProduct;
                 newProduct.seller = seller;
             }
         }
@@ -680,18 +680,18 @@
             NSArray* relatedProductsArray = [dataDic objectForKey:@"related_products"];
             if (VALID_NOTEMPTY(relatedProductsArray, NSArray)) {
                 
+                NSMutableSet *newRelatedProducts = [NSMutableSet new];
                 for (NSDictionary* relatedProductJSON in relatedProductsArray) {
-                    
                     if (VALID_NOTEMPTY(relatedProductJSON, NSDictionary)) {
                         
                         NSMutableDictionary* fakeData = [NSMutableDictionary new];
                         [fakeData setObject:relatedProductJSON forKey:@"data"];
                         
                         RIProduct* relatedProduct = [RIProduct parseProduct:fakeData country:country];
-                        relatedProduct.referredFromProduct = newProduct;
-                        [newProduct addRelatedProductsObject:relatedProduct];
+                        [newRelatedProducts addObject:relatedProduct];
                     }
                 }
+                newProduct.relatedProducts = [newRelatedProducts copy];
             }
         }
     }
@@ -1169,25 +1169,6 @@
 //            variation.product = product;
 //        }
         [RIVariation saveVariation:variation andContext:NO];
-    }
-    for(RISpecification *specification in product.specifications){
-        [RISpecification saveSpecification:specification andContext:NO];
-    }
-//    for (RIProduct* relatedProduct in product.relatedProducts) {
-////        if (!relatedProduct.referredFromProduct) {
-////            relatedProduct.referredFromProduct = product;
-////        }
-//        NSArray *array = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIProduct class]) withPropertyName:@"url" andPropertyValue:product.url];
-//        if (!array || array.count == 0)
-//            [RIProduct saveProduct:relatedProduct andContext:NO];
-//        else{
-//            NSLog(@"");
-//        }
-//    }
-    product.relatedProducts = nil;
-    
-    if (VALID_NOTEMPTY(product.seller, RISeller)) {
-        [RISeller saveSeller:product.seller andContext:NO];
     }
     
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:product];
