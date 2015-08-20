@@ -11,7 +11,7 @@
 #import "RIBanner.h"
 
 
-@class RIImage, RIProductSimple, RIVariation, RIBundle, RISeller, RISpecification;
+@class RIImage, RIProductSimple, RIVariation, RIBundle, RISeller;
 
 /*
  * IMPORTANT NOTICE
@@ -68,22 +68,21 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSNumber * ratingAverage;
 @property (nonatomic, retain) NSNumber * ratingsTotal;
 @property (nonatomic, retain) NSNumber * reviewsTotal;
-@property (nonatomic, retain) RISeller *seller;
 @property (nonatomic, retain) NSNumber * offersMinPrice;
 @property (nonatomic, retain) NSNumber * offersMinPriceEuroConverted;
 @property (nonatomic, retain) NSNumber * offersTotal;
 @property (nonatomic, retain) NSString * offersMinPriceFormatted;
-@property (nonatomic, retain) NSSet *relatedProducts;
-@property (nonatomic, retain) RIProduct *referredFromProduct;
 @property (nonatomic, retain) NSNumber *bucketActive;
 @property (nonatomic, retain) NSString *shortSummary;
 @property (nonatomic, retain) NSString *summary;
-@property (nonatomic, retain) NSSet *specifications;
 @property (nonatomic, retain) NSNumber *numberOfTimesSeen;
 
 
 //Not a coredata relationship
 @property (nonatomic, retain) NSOrderedSet *categoryIds;
+@property (nonatomic, retain) NSSet *relatedProducts;
+@property (nonatomic, retain) NSSet *specifications;
+@property (nonatomic, retain) RISeller *seller;
 
 /**
  *  Method to load a product and all its details given his sku. This method uses getCompleteProductWithUrl:successBlock:andFailureBlock:
@@ -287,12 +286,6 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 - (void)removeVariationsObject:(RIVariation *)value;
 - (void)addVariations:(NSOrderedSet *)values;
 - (void)removeVariations:(NSOrderedSet *)values;
-- (void)addRelatedProductsObject:(RIProduct *)value;
-- (void)removeRelatedProductsObject:(RIProduct *)value;
-- (void)addRelatedProducts:(NSSet *)values;
-- (void)removeRelatedProducts:(NSSet *)values;
-- (void)addSpecificationsObject:(RISpecification *)value;
-- (void)removeSpecificationsObject:(RISpecification *)value;
 
 
 @end
