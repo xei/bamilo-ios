@@ -429,7 +429,11 @@
         facebookSchema = [NSString stringWithFormat:@"fb%@", faceAppId];
     }
     
-    if ((urlScheme != nil && [urlScheme isEqualToString:@"jumia"]) || (urlScheme != nil && [facebookSchema isEqualToString:urlScheme]))
+    NSString* appName = [APP_NAME lowercaseString];
+    if ([appName isEqualToString:@"بامیلو"]) {
+        appName = @"bamilo";
+    }
+    if ((urlScheme != nil && [urlScheme isEqualToString:appName]) || (urlScheme != nil && [facebookSchema isEqualToString:urlScheme]))
     {
         NSMutableDictionary *pushNotification = [NSMutableDictionary dictionaryWithObject:@"" forKey:@"u"];
         
