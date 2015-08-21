@@ -18,9 +18,6 @@
 #import "UIImage+Mirror.h"
 
 @interface JALoginViewController ()
-<
-FBSDKLoginButtonDelegate
->
 
 @property (assign, nonatomic) BOOL isAnimationRunning;
 @property (assign, nonatomic) NSInteger numberOfFormsToLoad;
@@ -47,8 +44,7 @@ FBSDKLoginButtonDelegate
 @property (strong, nonatomic) UIView *facebookLoginSeparatorLeftView;
 @property (strong, nonatomic) UILabel *facebookLoginSeparatorLabel;
 @property (strong, nonatomic) UIView *facebookLoginSeparatorRightView;
-//@property (strong, nonatomic) UIButton *facebookLoginButton;
-@property (strong, nonatomic) FBSDKLoginButton *facebookLoginButton;
+@property (strong, nonatomic) UIButton *facebookLoginButton;
 
 // Signup
 @property (strong, nonatomic) JADynamicForm *signupDynamicForm;
@@ -66,8 +62,7 @@ FBSDKLoginButtonDelegate
 @property (strong, nonatomic) UIView *facebookSignupSeparatorLeftView;
 @property (strong, nonatomic) UILabel *facebookSignupSeparatorLabel;
 @property (strong, nonatomic) UIView *facebookSignupSeparatorRightView;
-//@property (strong, nonatomic) UIButton *facebookSingupButton;
-@property (strong, nonatomic) FBSDKLoginButton *facebookSingupButton;
+@property (strong, nonatomic) UIButton *facebookSingupButton;
 
 @property (assign, nonatomic) BOOL loadFailed;
 @property (assign, nonatomic) RIApiResponse apiResponse;
@@ -416,6 +411,21 @@ FBSDKLoginButtonDelegate
     [self.forgotButton setFrame:CGRectMake(6.0f, self.loginFormHeight, buttonWidth, 30.0f)];
     self.loginFormHeight += self.forgotButton.frame.size.height;
     
+    NSString *facebookImageNameFormatter = @"facebookMedium_%@";
+
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        facebookImageNameFormatter = @"facebookMediumPortrait_%@";
+        
+        if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+        {
+            facebookImageNameFormatter = @"facebookFullPortrait_%@";
+        }
+    }
+    
+    UIImage *facebookNormalImage = [UIImage imageNamed:[NSString stringWithFormat:facebookImageNameFormatter, @"normal"]];
+    UIImage *facebookHighlightImage = [UIImage imageNamed:[NSString stringWithFormat:facebookImageNameFormatter, @"highlighted"]];
+    
     CGFloat centerWidth = 54.0f;
     CGFloat halfSeparatorWidth = (buttonWidth - centerWidth) / 2;
     if ([[RICountryConfiguration getCurrentConfiguration].facebookAvailable boolValue]){
@@ -428,6 +438,9 @@ FBSDKLoginButtonDelegate
         self.loginFormHeight += 11.0f;
         
         [self.facebookLoginButton setFrame:CGRectMake(6.0f, self.loginFormHeight, buttonWidth, 44.0f)];
+        [self.facebookLoginButton setBackgroundImage:facebookNormalImage forState:UIControlStateNormal];
+        [self.facebookLoginButton setBackgroundImage:facebookHighlightImage forState:UIControlStateHighlighted];
+        [self.facebookLoginButton setBackgroundImage:facebookHighlightImage forState:UIControlStateSelected];
         self.loginFormHeight += self.facebookLoginButton.frame.size.height;
     }
     
@@ -445,6 +458,9 @@ FBSDKLoginButtonDelegate
         self.signupFormHeight += self.facebookSignupSeparator.frame.size.height;
         self.signupFormHeight += 11.0f;
         [self.facebookSingupButton setFrame:CGRectMake(6.0f, self.signupFormHeight, buttonWidth, 44.0f)];
+        [self.facebookSingupButton setBackgroundImage:facebookNormalImage forState:UIControlStateNormal];
+        [self.facebookSingupButton setBackgroundImage:facebookHighlightImage forState:UIControlStateHighlighted];
+        [self.facebookSingupButton setBackgroundImage:facebookHighlightImage forState:UIControlStateSelected];
         self.signupFormHeight += self.facebookSingupButton.frame.size.height;
     }
     
@@ -671,8 +687,9 @@ FBSDKLoginButtonDelegate
         
         [self.loginFormView addSubview:self.facebookLoginSeparator];
         
-        self.facebookLoginButton = [[FBSDKLoginButton alloc] init];
-        [self.facebookLoginButton setDelegate:self];
+        self.facebookLoginButton = [UIButton new];
+        [self.facebookLoginButton setTitle:STRING_LOGIN_WITH_FACEBOOK forState:UIControlStateNormal];
+        [self.facebookLoginButton addTarget:self action:@selector(facebookLoginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.loginFormView addSubview:self.facebookLoginButton];
     }
     // Signup
@@ -717,8 +734,9 @@ FBSDKLoginButtonDelegate
         [self.signUpFormView addSubview:self.facebookSignupSeparator];
         
         // Facebook Signup
-        self.facebookSingupButton = [[FBSDKLoginButton alloc] init];
-        [self.facebookSingupButton setDelegate:self];
+        self.facebookSingupButton = [UIButton new];
+        [self.facebookSingupButton setTitle:STRING_SIGNUP_WITH_FACEBOOK forState:UIControlStateNormal];
+        [self.facebookSingupButton addTarget:self action:@selector(facebookLoginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.signUpFormView addSubview:self.facebookSingupButton];
     }
 }
@@ -845,150 +863,138 @@ FBSDKLoginButtonDelegate
 #pragma mark FBSDKLoginButtonDelegate
 
 
-/*!
- @abstract Sent to the delegate when the button was used to login.
- @param loginButton the sender
- @param result The results of the login
- @param error The error (if any) from the login
- */
-- (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error
+#pragma mark Facebook Login
+- (void)facebookLoginButtonPressed:(id)sender
 {
-    if (!error) {
-        
-        NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
-        [parameters setValue:@"id,name, first_name, last_name, email, gender, birthday" forKey:@"fields"];
-        FBSDKGraphRequest *requestMe = [[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:parameters];
-        FBSDKGraphRequestConnection *connection = [[FBSDKGraphRequestConnection alloc] init];
-        [connection addRequest:requestMe
-             completionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-                 //TODO: process me information@
-                 
-                 if (!error)
-                 {
-                     if (![RICustomer checkIfUserIsLogged])
+    FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
+    [login logInWithReadPermissions:@[@"public_profile", @"email", @"user_birthday"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+        if (!error) {
+            
+            NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
+            [parameters setValue:@"id,name, first_name, last_name, email, gender, birthday" forKey:@"fields"];
+            FBSDKGraphRequest *requestMe = [[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:parameters];
+            FBSDKGraphRequestConnection *connection = [[FBSDKGraphRequestConnection alloc] init];
+            [connection addRequest:requestMe
+                 completionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+                     //TODO: process me information@
+                     
+                     if (!error)
                      {
-                         [self showLoading];
-                         
-                         NSString *email = [result objectForKey:@"email"];
-                         NSString *firstName = [result objectForKey:@"first_name"];
-                         NSString *lastName = [result objectForKey:@"last_name"];
-                         NSString *birthday = [result objectForKey:@"birthday"];
-                         NSString *gender = [result objectForKey:@"gender"];
-                         
-                         NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-                         if((VALID_NOTEMPTY(email, NSString)) && (VALID_NOTEMPTY(firstName, NSString)) && (VALID_NOTEMPTY(lastName, NSString)) && (VALID_NOTEMPTY(gender, NSString)) && (VALID_NOTEMPTY(birthday, NSString)))
+                         if (![RICustomer checkIfUserIsLogged])
                          {
-                             [parameters setValue:email forKey:@"email"];
-                             [parameters setValue:firstName forKey:@"first_name"];
-                             [parameters setValue:lastName forKey:@"last_name"];
-                             [parameters setValue:gender forKey:@"gender"];
-                             [parameters setValue:birthday forKey:@"birthday"];
+                             [self showLoading];
                              
-                         }else if((VALID_NOTEMPTY(email, NSString)) && (VALID_NOTEMPTY(firstName, NSString)) && (VALID_NOTEMPTY(lastName, NSString)) && (VALID_NOTEMPTY(gender, NSString)))
-                         {
-                             [parameters setValue:email forKey:@"email"];
-                             [parameters setValue:firstName forKey:@"first_name"];
-                             [parameters setValue:lastName forKey:@"last_name"];
-                             [parameters setValue:gender forKey:@"gender"];
+                             NSString *email = [result objectForKey:@"email"];
+                             NSString *firstName = [result objectForKey:@"first_name"];
+                             NSString *lastName = [result objectForKey:@"last_name"];
+                             NSString *birthday = [result objectForKey:@"birthday"];
+                             NSString *gender = [result objectForKey:@"gender"];
                              
-                         }else if((VALID_NOTEMPTY(email, NSString)) && (VALID_NOTEMPTY(firstName, NSString)) && (VALID_NOTEMPTY(lastName, NSString))){
-                             [parameters setValue:email forKey:@"email"];
-                             [parameters setValue:firstName forKey:@"first_name"];
-                             [parameters setValue:lastName forKey:@"last_name"];
+                             NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+                             if((VALID_NOTEMPTY(email, NSString)) && (VALID_NOTEMPTY(firstName, NSString)) && (VALID_NOTEMPTY(lastName, NSString)) && (VALID_NOTEMPTY(gender, NSString)) && (VALID_NOTEMPTY(birthday, NSString)))
+                             {
+                                 [parameters setValue:email forKey:@"email"];
+                                 [parameters setValue:firstName forKey:@"first_name"];
+                                 [parameters setValue:lastName forKey:@"last_name"];
+                                 [parameters setValue:gender forKey:@"gender"];
+                                 [parameters setValue:birthday forKey:@"birthday"];
+                                 
+                             }else if((VALID_NOTEMPTY(email, NSString)) && (VALID_NOTEMPTY(firstName, NSString)) && (VALID_NOTEMPTY(lastName, NSString)) && (VALID_NOTEMPTY(gender, NSString)))
+                             {
+                                 [parameters setValue:email forKey:@"email"];
+                                 [parameters setValue:firstName forKey:@"first_name"];
+                                 [parameters setValue:lastName forKey:@"last_name"];
+                                 [parameters setValue:gender forKey:@"gender"];
+                                 
+                             }else if((VALID_NOTEMPTY(email, NSString)) && (VALID_NOTEMPTY(firstName, NSString)) && (VALID_NOTEMPTY(lastName, NSString))){
+                                 [parameters setValue:email forKey:@"email"];
+                                 [parameters setValue:firstName forKey:@"first_name"];
+                                 [parameters setValue:lastName forKey:@"last_name"];
+                                 
+                             }else if((VALID_NOTEMPTY(email, NSString)) && (VALID_NOTEMPTY(firstName, NSString)))
+                             {
+                                 [parameters setValue:email forKey:@"email"];
+                                 [parameters setValue:firstName forKey:@"first_name"];
+                                 
+                             }else
+                             {
+                                 [parameters setValue:email forKey:@"email"];
+                             }
                              
-                         }else if((VALID_NOTEMPTY(email, NSString)) && (VALID_NOTEMPTY(firstName, NSString)))
-                         {
-                             [parameters setValue:email forKey:@"email"];
-                             [parameters setValue:firstName forKey:@"first_name"];
                              
-                         }else
-                         {
-                             [parameters setValue:email forKey:@"email"];
+                             [RICustomer loginCustomerByFacebookWithParameters:parameters
+                                                                  successBlock:^(RICustomer* customer, NSString* nextStep) {
+                                                                      
+                                                                      RICustomer *customerObject = ((RICustomer *)customer);
+                                                                      
+                                                                      NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                                                                      [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventLabelKey];
+                                                                      [trackingDictionary setValue:@"FacebookLoginSuccess" forKey:kRIEventActionKey];
+                                                                      [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+                                                                      [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventUserIdKey];
+                                                                      [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                                                                      [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                                                                      [trackingDictionary setValue:customerObject.gender forKey:kRIEventGenderKey];
+                                                                      [trackingDictionary setValue:customerObject.createdAt forKey:kRIEventAccountDateKey];
+                                                                      
+                                                                      NSDate* now = [NSDate date];
+                                                                      NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                                                                      [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+                                                                      NSDate *dateOfBirth = [dateFormatter dateFromString:customerObject.birthday];
+                                                                      NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
+                                                                      [trackingDictionary setValue:[NSNumber numberWithInteger:[ageComponents year]] forKey:kRIEventAgeKey];
+                                                                      [trackingDictionary setValue:@"Checkou" forKey:kRIEventLocationKey];
+                                                                      NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                                                                      [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+                                                                      
+                                                                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookLoginSuccess]
+                                                                                                                data:[trackingDictionary copy]];
+                                                                      
+                                                                      trackingDictionary = [[NSMutableDictionary alloc] init];
+                                                                      [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+                                                                      [trackingDictionary setValue:@"CheckoutAboutYou" forKey:kRIEventActionKey];
+                                                                      [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
+                                                                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAboutYou]
+                                                                                                                data:[trackingDictionary copy]];
+                                                                      
+                                                                      [self.loginDynamicForm resetValues];
+                                                                      
+                                                                      [self hideLoading];
+                                                                      
+                                                                      [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
+                                                                                                                          object:nil];
+                                                                      
+                                                                      [JAUtils goToNextStep:nextStep];
+                                                                      
+                                                                  } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
+                                                                      [self hideLoading];
+                                                                      
+                                                                      NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                                                                      [trackingDictionary setValue:@"LoginFailed" forKey:kRIEventActionKey];
+                                                                      [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+                                                                      [trackingDictionary setValue:@"Checkout" forKey:kRIEventLocationKey];
+                                                                      
+                                                                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookLoginFail]
+                                                                                                                data:[trackingDictionary copy]];
+                                                                      
+                                                                      [self showMessage:STRING_ERROR success:NO];
+                                                                  }];
+                             
                          }
-                         
-                         
-                         [RICustomer loginCustomerByFacebookWithParameters:parameters
-                                                              successBlock:^(RICustomer* customer, NSString* nextStep) {
-                                                                  
-                                                                  RICustomer *customerObject = ((RICustomer *)customer);
-                                                                  
-                                                                  NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                                                                  [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventLabelKey];
-                                                                  [trackingDictionary setValue:@"FacebookLoginSuccess" forKey:kRIEventActionKey];
-                                                                  [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-                                                                  [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventUserIdKey];
-                                                                  [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-                                                                  [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-                                                                  [trackingDictionary setValue:customerObject.gender forKey:kRIEventGenderKey];
-                                                                  [trackingDictionary setValue:customerObject.createdAt forKey:kRIEventAccountDateKey];
-                                                                  
-                                                                  NSDate* now = [NSDate date];
-                                                                  NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                                                                  [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-                                                                  NSDate *dateOfBirth = [dateFormatter dateFromString:customerObject.birthday];
-                                                                  NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
-                                                                  [trackingDictionary setValue:[NSNumber numberWithInteger:[ageComponents year]] forKey:kRIEventAgeKey];
-                                                                  [trackingDictionary setValue:@"Checkou" forKey:kRIEventLocationKey];
-                                                                  NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-                                                                  [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-                                                                  
-                                                                  [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookLoginSuccess]
-                                                                                                            data:[trackingDictionary copy]];
-                                                                  
-                                                                  trackingDictionary = [[NSMutableDictionary alloc] init];
-                                                                  [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-                                                                  [trackingDictionary setValue:@"CheckoutAboutYou" forKey:kRIEventActionKey];
-                                                                  [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
-                                                                  [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAboutYou]
-                                                                                                            data:[trackingDictionary copy]];
-                                                                  
-                                                                  [self.loginDynamicForm resetValues];
-                                                                  
-                                                                  [self hideLoading];
-                                                                  
-                                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                                                                                      object:nil];
-                                                                  
-                                                                  [JAUtils goToNextStep:nextStep];
-                                                                  
-                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
-                                                                  [self hideLoading];
-                                                                  
-                                                                  NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                                                                  [trackingDictionary setValue:@"LoginFailed" forKey:kRIEventActionKey];
-                                                                  [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-                                                                  [trackingDictionary setValue:@"Checkout" forKey:kRIEventLocationKey];
-                                                                  
-                                                                  [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookLoginFail]
-                                                                                                            data:[trackingDictionary copy]];
-                                                                  
-                                                                  [self showMessage:STRING_ERROR success:NO];
-                                                              }];
-                         
                      }
-                 }
-                 else
-                 {
-                     [self showMessage:[error description] success:NO];
-                 }
-             }];
-        [connection start];
-    }
-    else
-    {
-        [self showMessage:[error description] success:NO];
-    }
+                     else
+                     {
+                         [self showMessage:[error description] success:NO];
+                     }
+                 }];
+            [connection start];
+        }
+        else
+        {
+            [self showMessage:[error description] success:NO];
+        }
+    }];
 }
-
-/*!
- @abstract Sent to the delegate when the button was used to logout.
- @param loginButton The button that was clicked.
- */
-- (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton
-{
-    
-}
-
 
 
 -(void)loginButtonPressed
