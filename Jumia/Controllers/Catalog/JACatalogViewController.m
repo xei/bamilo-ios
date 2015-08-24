@@ -530,15 +530,38 @@
                                                                                   }
                                                                                   
                                                                                   [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-                                                                                  [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
                                                                                   [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-                                                                                  [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
                                                                                   [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                                                                                  
+                                                                                  
+                                                                                  if(self.categoryId)
+                                                                                  {
+                                                                                      [trackingDictionary setValue:self.categoryId forKey:kRIEventCategoryIdKey];
+                                                                                      [trackingDictionary setValue:[RICategory getTree:self.categoryName] forKey:kRIEventTreeKey];
+                                                                                  }
                                                                                   
                                                                                   [trackingDictionary setValue:self.searchString forKey:kRIEventQueryKey];
                                                                                   
-                                                                                  [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookSearch]
-                                                                                                                            data:[trackingDictionary copy]];
+                                                                                  if ([RICustomer checkIfUserIsLogged]) {
+                                                                                      [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                                                                                      [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+                                                                                      [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
+                                                                                          RIAddress *shippingAddress = (RIAddress *)[adressList objectForKey:@"shipping"];
+                                                                                          [trackingDictionary setValue:shippingAddress.city forKey:kRIEventCityKey];
+                                                                                          [trackingDictionary setValue:shippingAddress.customerAddressRegion forKey:kRIEventRegionKey];
+                                                                                          
+                                                                                          [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookSearch]
+                                                                                                                                    data:[trackingDictionary copy]];
+                                                                                          
+                                                                                      } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+                                                                                          NSLog(@"ERROR: getting customer");
+                                                                                          [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookSearch]
+                                                                                                                                    data:[trackingDictionary copy]];
+                                                                                      }];
+                                                                                  }else{
+                                                                                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookSearch]
+                                                                                                                                data:[trackingDictionary copy]];
+                                                                                  }
                                                                                   
                                                                                   NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
                                                                                   [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
@@ -707,6 +730,8 @@
                                                                           else if(VALID_NOTEMPTY(category, RICategory))
                                                                           {
                                                                               categoryName = category.name;
+                                                                          }else{
+                                                                              categoryName = self.navBarLayout.title;
                                                                           }
                                                                           
                                                                           if (ISEMPTY(self.navBarLayout.title)) {
@@ -750,9 +775,7 @@
                                                                               }
                                                                               
                                                                               [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-                                                                              [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
                                                                               [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-                                                                              [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
                                                                               [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
 
                                                                               if(VALID_NOTEMPTY(categoryName, NSString))
@@ -760,11 +783,11 @@
                                                                                   [trackingDictionary setValue:categoryName forKey:kRIEventCategoryNameKey];
                                                                               }
                                                                               
-                                                                              if(VALID_NOTEMPTY(category, RICategory))
+                                                                              if(VALID_NOTEMPTY(category, RICategory) && category.uid)
                                                                               {
                                                                                   [trackingDictionary setValue:category.uid forKey:kRIEventCategoryIdKey];
                                                                               }
-                                                                              else if(VALID_NOTEMPTY(categoryId, NSString))
+                                                                              else if(categoryId)
                                                                               {
                                                                                   [trackingDictionary setValue:categoryId forKey:kRIEventCategoryIdKey];
                                                                                   [trackingDictionary setValue:[RICategory getTree:categoryId] forKey:kRIEventTreeKey];
@@ -772,8 +795,23 @@
                                                                               
                                                                               [trackingDictionary setValue:productsToTrack forKey:kRIEventSkusKey];
                                                                               
-                                                                              [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewListing]
-                                                                                                                        data:[trackingDictionary copy]];
+                                                                              if ([RICustomer checkIfUserIsLogged]) {
+                                                                                  [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                                                                                  [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+                                                                                  [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
+                                                                                      RIAddress *shippingAddress = (RIAddress *)[adressList objectForKey:@"shipping"];
+                                                                                      [trackingDictionary setValue:shippingAddress.city forKey:kRIEventCityKey];
+                                                                                      [trackingDictionary setValue:shippingAddress.customerAddressRegion forKey:kRIEventRegionKey];
+                                                                                      
+                                                                                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewListing] data:[trackingDictionary copy]];
+                                                                                      
+                                                                                  } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+                                                                                      NSLog(@"ERROR: getting customer");
+                                                                                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewListing] data:[trackingDictionary copy]];
+                                                                                  }];
+                                                                              }else{
+                                                                                  [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewListing] data:[trackingDictionary copy]];
+                                                                              }
                                                                               
                                                                               NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
                                                                               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];

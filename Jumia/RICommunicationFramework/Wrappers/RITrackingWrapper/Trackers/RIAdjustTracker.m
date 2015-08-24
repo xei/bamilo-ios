@@ -40,6 +40,8 @@
 #define kAdjustEventTotalTransactionKey @"total_transaction"
 #define kAdjustEventCurrencyKey         @"currency"
 #define kAdjustEventQuantityKey         @"quantity"
+#define kAdjustEventCityKey             @"city"
+#define kAdjustEventRegionKey           @"region"
 
 NSString * const kRIAdjustToken = @"kRIAdjustToken";
 
@@ -389,6 +391,8 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         
         ADJEvent *event = [ADJEvent eventWithEventToken:eventKey];
         [self addCallbackParameters:data toEvent:event withAmountOfTransactions:amountOfTransactions];
+        NSLog(@"event.eventToken: %@", event.eventToken);
+        NSLog(@"event.callbackParameters: %@", event.callbackParameters);
         [Adjust trackEvent:event];
     }
 }
@@ -403,14 +407,14 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     
     if(VALID_NOTEMPTY([data objectForKey:kRILaunchEventDeviceModelDataKey], NSString))
     {
-        [event addCallbackParameter:kRILaunchEventDeviceModelDataKey value:[data objectForKey:kAdjustEventDeviceModelDataKey]];
-        [event addPartnerParameter:kRILaunchEventDeviceModelDataKey value:[data objectForKey:kAdjustEventDeviceModelDataKey]];
+        [event addCallbackParameter:kAdjustEventDeviceModelDataKey value:[data objectForKey:kRILaunchEventDeviceModelDataKey]];
+        [event addPartnerParameter:kAdjustEventDeviceModelDataKey value:[data objectForKey:kRILaunchEventDeviceModelDataKey]];
     }
     
     if(VALID_NOTEMPTY([data objectForKey:kRILaunchEventDurationDataKey], NSString))
     {
-        [event addCallbackParameter:kRILaunchEventDurationDataKey value:[data objectForKey:kAdjustEventDurationDataKey]];
-        [event addPartnerParameter:kRILaunchEventDurationDataKey value:[data objectForKey:kAdjustEventDurationDataKey]];
+        [event addCallbackParameter:kAdjustEventDurationDataKey value:[data objectForKey:kRILaunchEventDurationDataKey]];
+        [event addPartnerParameter:kAdjustEventDurationDataKey value:[data objectForKey:kRILaunchEventDurationDataKey]];
     }
     
     if(VALID_NOTEMPTY([data objectForKey:kRIEventShopCountryKey], NSString))
@@ -424,6 +428,20 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     {
         [event addCallbackParameter:kAdjustEventUserIdKey value:[data objectForKey:kRIEventUserIdKey]];
         [event addPartnerParameter:kAdjustEventUserIdKey value:[data objectForKey:kRIEventUserIdKey]];
+    }
+    
+    NSString *region = [data objectForKey:kRIEventRegionKey];
+    if(VALID_NOTEMPTY(region, NSString))
+    {
+        [event addCallbackParameter:kAdjustEventRegionKey value:region];
+        [event addPartnerParameter:kAdjustEventRegionKey value:region];
+    }
+    
+    NSString *city = [data objectForKey:kRIEventCityKey];
+    if(VALID_NOTEMPTY(city, NSString))
+    {
+        [event addCallbackParameter:kAdjustEventCityKey value:city];
+        [event addPartnerParameter:kAdjustEventCityKey value:city];
     }
     
     NSString *sku = [data objectForKey:kRIEventSkuKey];
@@ -656,13 +674,15 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     [launchEvent addPartnerParameter:kAdjustEventDeviceModelDataKey value:[dataDictionary objectForKey:kRILaunchEventDeviceModelDataKey]];
     [launchEvent addCallbackParameter:kAdjustEventDurationDataKey value:[dataDictionary objectForKey:kRILaunchEventDurationDataKey]];
     [launchEvent addPartnerParameter:kAdjustEventDurationDataKey value:[dataDictionary objectForKey:kRILaunchEventDurationDataKey]];
+    NSLog(@"event.eventToken: %@", launchEvent.eventToken);
+    NSLog(@"event.callbackParameters: %@", launchEvent.callbackParameters);
     [Adjust trackEvent:launchEvent];
     
     // Second Adjust launch event
     ADJEvent *event;
     if ([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
     {
-    event = [ADJEvent eventWithEventToken:@"xnjttw"];
+        event = [ADJEvent eventWithEventToken:@"xnjttw"];
         
     }else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
     {
@@ -677,8 +697,6 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         event = [ADJEvent eventWithEventToken:@"tly4ql"];
     }
     
-    [event addCallbackParameter:@"country" value:@"b"];
-    [event addPartnerParameter:@"country" value:@"b"];
     if ([dataDictionary objectForKey:kRIEventShopCountryKey])
     {
         [event addCallbackParameter:kAdjustEventShopCountryKey value:[dataDictionary objectForKey:kRIEventShopCountryKey]];
@@ -696,6 +714,16 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         [event addCallbackParameter:kAdjustEventGenderKey value:gender];
         [event addPartnerParameter:kAdjustEventGenderKey value:gender];
     }
+    
+    [event addCallbackParameter:kAdjustEventAppVersionDataKey value:[dataDictionary objectForKey:kRILaunchEventAppVersionDataKey]];
+    [event addPartnerParameter:kAdjustEventAppVersionDataKey value:[dataDictionary objectForKey:kRILaunchEventAppVersionDataKey]];
+    [event addCallbackParameter:kAdjustEventDurationDataKey value:[dataDictionary objectForKey:kRILaunchEventDurationDataKey]];
+    [event addPartnerParameter:kAdjustEventDurationDataKey value:[dataDictionary objectForKey:kRILaunchEventDurationDataKey]];
+    [event addCallbackParameter:kAdjustEventDeviceModelDataKey value:[dataDictionary objectForKey:kRILaunchEventDeviceModelDataKey]];
+    [event addPartnerParameter:kAdjustEventDeviceModelDataKey value:[dataDictionary objectForKey:kRILaunchEventDeviceModelDataKey]];
+    
+    NSLog(@"event.eventToken: %@", event.eventToken);
+    NSLog(@"event.callbackParameters: %@", event.callbackParameters);
     [Adjust trackEvent:event];
 }
 

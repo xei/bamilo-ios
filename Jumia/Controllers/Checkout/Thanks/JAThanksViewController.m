@@ -128,19 +128,12 @@
     
     NSMutableArray *viewCartTrackingProducts = [[NSMutableArray alloc] init];
     
-    NSMutableDictionary *productDic = [NSMutableDictionary new];
-    NSMutableArray *productsArray = [NSMutableArray new];
-    
     NSDictionary* teaserTrackingInfoDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey];
     
     for (int i = 0; i < self.checkout.cart.cartItems.count; i++) {
         trackingDictionary = [[NSMutableDictionary alloc] init];
         
         RICartItem *cartItem = [self.checkout.cart.cartItems objectAtIndex:i];
-        
-        [productDic setValue:self.orderNumber forKey:kRIEcommerceTransactionIdKey];
-        [productDic setValue:cartItem.name forKey:kRIEventProductNameKey];
-        [productDic setValue:cartItem.sku forKey:kRIEventSkuKey];
         
         BOOL isConverted = YES;
         NSString *discount = @"false";
@@ -177,18 +170,17 @@
         
         // Since we're sending the converted price, we have to send the currency as EUR.
         // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-        [productDic setValue:priceNumber forKey:kRIEventPriceKey];
+        [trackingDictionary setValue:priceNumber forKey:kRIEventPriceKey];
         if(isConverted)
         {
-            [productDic setObject:@"EUR" forKey:kRIEventCurrencyCodeKey];
+            [trackingDictionary setObject:@"EUR" forKey:kRIEventCurrencyCodeKey];
         }
         else
         {
-            [productDic setObject:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+            [trackingDictionary setObject:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
         }
 
-        [productDic setValue:cartItem.quantity forKey:kRIEventQuantityKey];
-        [productsArray addObject:productDic];
+        [trackingDictionary setValue:cartItem.quantity forKey:kRIEventQuantityKey];
         
         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
         NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
@@ -204,14 +196,14 @@
        
         // Since we're sending the converted price, we have to send the currency as EUR.
         // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-        [productDic setValue:priceNumber forKey:kRIEventPriceKey];
+        [trackingDictionary setValue:priceNumber forKey:kRIEventPriceKey];
         if(isConverted)
         {
-            [productDic setObject:@"EUR" forKey:kRIEventCurrencyCodeKey];
+            [trackingDictionary setObject:@"EUR" forKey:kRIEventCurrencyCodeKey];
         }
         else
         {
-            [productDic setObject:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+            [trackingDictionary setObject:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
         }
 
         [trackingDictionary setValue:discount forKey:kRIEventDiscountKey];
@@ -221,8 +213,27 @@
         [trackingDictionary setValue:[self.checkout.cart.cartCleanValue stringValue] forKey:kRIEventTotalTransactionKey];
         [trackingDictionary setValue:self.orderNumber forKey:kRIEventTransactionIdKey];
         
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewTransaction]
-                                                  data:[trackingDictionary copy]];
+        if ([RICustomer checkIfUserIsLogged]) {
+            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+            [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+            [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
+                RIAddress *shippingAddress = (RIAddress *)[adressList objectForKey:@"shipping"];
+                [trackingDictionary setValue:shippingAddress.city forKey:kRIEventCityKey];
+                [trackingDictionary setValue:shippingAddress.customerAddressRegion forKey:kRIEventRegionKey];
+                
+                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewTransaction]
+                                                          data:[trackingDictionary copy]];
+                
+            } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+                NSLog(@"ERROR: getting customer");
+                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewTransaction]
+                                                          data:[trackingDictionary copy]];
+            }];
+        }else{
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewTransaction]
+                                                      data:[trackingDictionary copy]];
+        }
+        
         float value = [cartItem.price floatValue];
         [FBSDKAppEvents logPurchase:value currency:@"EUR" parameters:@{FBSDKAppEventParameterNameContentID: cartItem.sku,
                                                                   FBSDKAppEventParameterNameContentType:cartItem.name}];
@@ -232,14 +243,14 @@
         
         // Since we're sending the converted price, we have to send the currency as EUR.
         // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-        [productDic setValue:priceNumber forKey:kRIEventPriceKey];
+        [viewCartTrackingProduct setValue:priceNumber forKey:kRIEventPriceKey];
         if(isConverted)
         {
-            [productDic setObject:@"EUR" forKey:kRIEventCurrencyCodeKey];
+            [viewCartTrackingProduct setObject:@"EUR" forKey:kRIEventCurrencyCodeKey];
         }
         else
         {
-            [productDic setObject:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
+            [viewCartTrackingProduct setObject:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
         }
         
         [viewCartTrackingProduct setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
