@@ -391,8 +391,6 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         
         ADJEvent *event = [ADJEvent eventWithEventToken:eventKey];
         [self addCallbackParameters:data toEvent:event withAmountOfTransactions:amountOfTransactions];
-        NSLog(@"event.eventToken: %@", event.eventToken);
-        NSLog(@"event.callbackParameters: %@", event.callbackParameters);
         [Adjust trackEvent:event];
     }
 }
@@ -674,8 +672,6 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     [launchEvent addPartnerParameter:kAdjustEventDeviceModelDataKey value:[dataDictionary objectForKey:kRILaunchEventDeviceModelDataKey]];
     [launchEvent addCallbackParameter:kAdjustEventDurationDataKey value:[dataDictionary objectForKey:kRILaunchEventDurationDataKey]];
     [launchEvent addPartnerParameter:kAdjustEventDurationDataKey value:[dataDictionary objectForKey:kRILaunchEventDurationDataKey]];
-    NSLog(@"event.eventToken: %@", launchEvent.eventToken);
-    NSLog(@"event.callbackParameters: %@", launchEvent.callbackParameters);
     [Adjust trackEvent:launchEvent];
     
     // Second Adjust launch event
@@ -721,9 +717,6 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
     [event addPartnerParameter:kAdjustEventDurationDataKey value:[dataDictionary objectForKey:kRILaunchEventDurationDataKey]];
     [event addCallbackParameter:kAdjustEventDeviceModelDataKey value:[dataDictionary objectForKey:kRILaunchEventDeviceModelDataKey]];
     [event addPartnerParameter:kAdjustEventDeviceModelDataKey value:[dataDictionary objectForKey:kRILaunchEventDeviceModelDataKey]];
-    
-    NSLog(@"event.eventToken: %@", event.eventToken);
-    NSLog(@"event.callbackParameters: %@", event.callbackParameters);
     [Adjust trackEvent:event];
 }
 
