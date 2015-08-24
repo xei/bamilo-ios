@@ -204,10 +204,10 @@
             [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
             
             NSString *discount = @"false";
-            NSString *price = [product.priceEuroConverted stringValue];
+            NSNumber *price = product.priceEuroConverted;
             if (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted floatValue] > 0.0f)
             {
-                price = [product.specialPriceEuroConverted stringValue];
+                price = product.specialPriceEuroConverted;
                 discount = @"true";
             }
             
@@ -231,11 +231,31 @@
                     [trackingDictionary setValue:tempProduct.variation forKey:kRIEventSizeKey];
                 }
             }
-            
+            [trackingDictionary setValue:@"1" forKey:kRIEventQuantityKey];
             [trackingDictionary setValue:[NSString stringWithFormat:@"%.2f",totalWishlistValue] forKey:kRIEventTotalWishlistKey];
             
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewWishlist]
-                                                      data:[trackingDictionary copy]];
+            if ([RICustomer checkIfUserIsLogged]) {
+                [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+                [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
+                    RIAddress *shippingAddress = (RIAddress *)[adressList objectForKey:@"shipping"];
+                    [trackingDictionary setValue:shippingAddress.city forKey:kRIEventCityKey];
+                    [trackingDictionary setValue:shippingAddress.customerAddressRegion forKey:kRIEventRegionKey];
+                    
+                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewWishlist]
+                                                              data:[trackingDictionary copy]];
+                    
+                } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+                    NSLog(@"ERROR: getting customer");
+                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewWishlist]
+                                                              data:[trackingDictionary copy]];
+                }];
+            }else{
+                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewWishlist]
+                                                          data:[trackingDictionary copy]];
+            }
+            
+            
         }
         
         // notify the InAppNotification SDK that this the active view controller
