@@ -212,6 +212,8 @@ typedef NS_ENUM(NSInteger, RICartState) {
 #define kRIEventLocationKey             @"RIEventLocationKey"
 #define kRIEventAccountDateKey          @"RIEventAccountDateKey"
 #define kRIEventAgeKey                  @"RIEventAgeKey"
+#define kRIEventCityKey                 @"RIEventCityKey"
+#define kRIEventRegionKey               @"RIEventRegionKey"
 #define kRIEventRatingKey               @"RIEventRatingKey"
 #define kRIEventRatingPriceKey          @"RIEventRatingPriceKey"
 #define kRIEventRatingAppearanceKey     @"RIEventRatingAppearanceKey"

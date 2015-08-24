@@ -243,8 +243,29 @@
             [trackingDictionary setValue:cartItem.variation forKey:kRIEventSizeKey];
             [trackingDictionary setValue:[cartData.cartValue stringValue] forKey:kRIEventTotalCartKey];
 
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewCart]
-                                                      data:[trackingDictionary copy]];
+            
+            if ([RICustomer checkIfUserIsLogged]) {
+                [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+                [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
+                    RIAddress *shippingAddress = (RIAddress *)[adressList objectForKey:@"shipping"];
+                    [trackingDictionary setValue:shippingAddress.city forKey:kRIEventCityKey];
+                    [trackingDictionary setValue:shippingAddress.customerAddressRegion forKey:kRIEventRegionKey];
+                    
+                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewCart]
+                                                              data:[trackingDictionary copy]];
+                    
+                } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+                    NSLog(@"ERROR: getting customer");
+                    
+                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewCart]
+                                                              data:[trackingDictionary copy]];
+                }];
+            }else{
+                
+                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewCart]
+                                                          data:[trackingDictionary copy]];
+            }
             
             float value = [cartItem.price floatValue];
             [FBSDKAppEvents logEvent:FBSDKAppEventNameInitiatedCheckout
