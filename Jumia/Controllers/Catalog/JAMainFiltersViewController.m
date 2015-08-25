@@ -12,7 +12,7 @@
 #import "JAClickableView.h"
 #import "JAPriceFiltersView.h"
 #import "JAGenericFiltersView.h"
-
+#import "JAMainFilterCell.h"
 
 @interface JAMainFiltersViewController ()
 
@@ -200,83 +200,17 @@
 {
     NSString *cellIdentifier = @"mainFilterCell";
     
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    JAMainFilterCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (ISEMPTY(cell)) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+        cell = [[JAMainFilterCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    //remove the clickable view
-    for (UIView* view in cell.subviews) {
-        if ([view isKindOfClass:[JAClickableView class]]) { //remove the clickable view
-            [view removeFromSuperview];
-        } else {
-            for (UIView* subview in view.subviews) {
-                if ([subview isKindOfClass:[JAClickableView class]]) { //remove the clickable view
-                    [subview removeFromSuperview];
-                }
-            }
-        }
-    }
-    //add the new clickable view
-    JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                                   0.0f,
-                                                                                   self.tableView.frame.size.width,
-                                                                                   44.0f)];
-    clickView.tag = indexPath.row;
-    [clickView addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [cell addSubview:clickView];
-    
-    UILabel* mainLabel = [UILabel new];
-    mainLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
-    mainLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    [clickView addSubview:mainLabel];
-    
-    UILabel* subLabel = [UILabel new];
-    subLabel.font = [UIFont fontWithName:kFontLightName size:14.0f];
-    subLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    [clickView addSubview:subLabel];
-    
-    UIImage* accessoryImage = [UIImage imageNamed:@"arrow_gotoarea"];
-    UIImageView* customAccessoryImageView = [[UIImageView alloc] initWithImage:accessoryImage];
-    [clickView addSubview:customAccessoryImageView];
-    
-    CGFloat margin = 13.0f;
-    customAccessoryImageView.frame = CGRectMake(clickView.frame.size.width - margin - accessoryImage.size.width,
-                                                (clickView.frame.size.height - accessoryImage.size.height)/2,
-                                                accessoryImage.size.width,
-                                                accessoryImage.size.height);
-    
-    CGFloat remainingWidth = clickView.frame.size.width - margin*3 - accessoryImage.size.width;
-    
-    CGFloat verticalMargin = 2.0f;
-    mainLabel.frame = CGRectMake(margin,
-                                 verticalMargin,
-                                 remainingWidth,
-                                 (clickView.frame.size.height / 2) - verticalMargin);
-    subLabel.frame = CGRectMake(margin,
-                                CGRectGetMaxY(mainLabel.frame),
-                                remainingWidth,
-                                (clickView.frame.size.height / 2) - verticalMargin);
-    
-    UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                 clickView.frame.size.height - 1,
-                                                                 clickView.frame.size.width,
-                                                                 1.0f)];
-    separator.backgroundColor = UIColorFromRGB(0xcccccc);
-    [clickView addSubview:separator];
-    
-
     RIFilter* filter = [self.filtersArray objectAtIndex:indexPath.row];
-    mainLabel.text = filter.name;
-    subLabel.text = [self stringWithSelectedOptionsFromFilter:filter];
-
     
-    if (RI_IS_RTL) {
-        [clickView flipSubviewAlignments];
-        [clickView flipSubviewImages];
-        [clickView flipSubviewPositions];
-    }
+    [cell setupWithFilter:filter options:[self stringWithSelectedOptionsFromFilter:filter] width:tableView.frame.size.width];
+    cell.clickView.tag = indexPath.row;
+    [cell.clickView addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }
