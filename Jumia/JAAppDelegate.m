@@ -432,6 +432,8 @@
     NSString* appName = [APP_NAME lowercaseString];
     if ([appName isEqualToString:@"بامیلو"]) {
         appName = @"bamilo";
+    } else if ([appName isEqualToString:@"shop.com.mm"]) {
+        appName = @"shop";
     }
     if ((urlScheme != nil && [urlScheme isEqualToString:appName]) || (urlScheme != nil && [facebookSchema isEqualToString:urlScheme]))
     {
