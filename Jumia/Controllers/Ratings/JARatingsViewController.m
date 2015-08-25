@@ -156,13 +156,15 @@ UITableViewDataSource
                                                  name:kOpenMenuNotification
                                                object:nil];
     
-   
-        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-        {
-            if (!self.ratingsForm) {
-                [self ratingsRequests];
-            }
+    
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        if (!self.ratingsForm) {
+            [self ratingsRequests];
+        } else {
+            [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
         }
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated
