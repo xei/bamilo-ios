@@ -477,6 +477,9 @@ JADynamicFormDelegate
                                                                   [trackingDictionary setValue:@"My account" forKey:kRIEventLocationKey];
                                                               }
                                                               
+                                                              NSNumber *numberOfPurchases = [[NSUserDefaults standardUserDefaults] objectForKey:kRIEventAmountTransactions];
+                                                              [trackingDictionary setValue:numberOfPurchases forKey:kRIEventAmountTransactions];
+                                                              
                                                               [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookLoginSuccess]
                                                                                                         data:[trackingDictionary copy]];
                                                               
@@ -627,6 +630,9 @@ JADynamicFormDelegate
              NSDate *dateOfBirth = [dateFormatter dateFromString:customerObject.birthday];
              NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
              [trackingDictionary setValue:[NSNumber numberWithInteger:[ageComponents year]] forKey:kRIEventAgeKey];
+             
+             NSNumber *numberOfPurchases = [[NSUserDefaults standardUserDefaults] objectForKey:kRIEventAmountTransactions];
+             [trackingDictionary setValue:numberOfPurchases forKey:kRIEventAmountTransactions];
              
              [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLoginSuccess]
                                                        data:[trackingDictionary copy]];
