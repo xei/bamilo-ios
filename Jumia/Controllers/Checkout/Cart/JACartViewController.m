@@ -690,9 +690,9 @@
             self.priceRulesLabel = [[UILabel alloc] initWithFrame:CGRectZero];
             [self.priceRulesLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
             [self.priceRulesLabel setTextColor:UIColorFromRGB(0x666666)];
-            [self.priceRulesLabel setNumberOfLines:0];
             [self.subtotalView addSubview:self.priceRulesLabel];
         }
+        [self.priceRulesLabel setNumberOfLines:[[[self cart] priceRules] allKeys].count];
         [self.priceRulesLabel setText:priceRuleKeysString];
         [self.priceRulesLabel sizeToFit];
         [self.priceRulesLabel setFrame:CGRectMake(6.0f,
@@ -704,9 +704,11 @@
             self.priceRulesValue = [[UILabel alloc] initWithFrame:CGRectZero];
             [self.priceRulesValue setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
             [self.priceRulesValue setTextColor:UIColorFromRGB(0x666666)];
-            [self.priceRulesValue setNumberOfLines:0];
+            [self.priceRulesValue setTextAlignment:NSTextAlignmentRight];
             [self.subtotalView addSubview:self.priceRulesValue];
         }
+        [self.priceRulesValue setNumberOfLines:[[[self cart] priceRules] allKeys].count];
+        [self.priceRulesValue setWidth:self.subtotalView.width];
         [self.priceRulesValue setText:priceRuleValuesString];
         [self.priceRulesValue sizeToFit];
         [self.priceRulesValue setFrame:CGRectMake(self.subtotalView.frame.size.width - self.priceRulesValue.frame.size.width - 4.0f,
