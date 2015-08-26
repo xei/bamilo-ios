@@ -14,7 +14,7 @@
 #import  "GAI.h"
 
 #define kGTMEventGaPropertyIdKey                @"gaPropertyId"
-#define kGTMEventKey                            @"transaction"
+#define kGTMEventKey                            @"event"
 #define kGTMEventSourceKey                      @"source"
 #define kGTMEventCampaignKey                    @"campaign"
 #define kGTMEventAppVersionKey                  @"appVersion"
@@ -87,6 +87,9 @@ NSString *kGTMToken = @"kGTMToken";
 
 @interface RIGTMTracker ()
 <TAGContainerOpenerNotifier>
+{
+    NSTimer *_refreshTimer;
+}
 
 @property (nonatomic, strong) TAGManager *tagManager;
 @property (nonatomic, strong) TAGContainer *container;
@@ -221,6 +224,7 @@ NSString *kGTMToken = @"kGTMToken";
     // The container should have already been opened, otherwise events pushed to
     // the data layer will not fire tags in that container.
     TAGDataLayer *dataLayer = [TAGManager instance].dataLayer;
+    [[TAGManager instance].logger setLogLevel:kTAGLoggerLogLevelDebug];
     
     for(NSDictionary *event in self.pendingEvents)
     {
@@ -228,6 +232,17 @@ NSString *kGTMToken = @"kGTMToken";
     }
     
     self.pendingEvents = [[NSMutableArray alloc] init];
+    
+    _refreshTimer = [NSTimer scheduledTimerWithTimeInterval:60*60
+                                                         target:self
+                                                       selector:@selector(refreshContainer:)
+                                                       userInfo:nil
+                                                        repeats:YES];
+}
+
+- (void)refreshContainer:(NSTimer *)timer
+{
+    [self.container refresh];
 }
 
 - (void)pushEvent:(NSMutableDictionary *)event
@@ -271,6 +286,8 @@ NSString *kGTMToken = @"kGTMToken";
         }
     };
     [[TAGManager instance] dispatchWithCompletionHandler:self.dispatchHandler];
+    [_refreshTimer invalidate];
+    _refreshTimer = nil;
 }
 
 #pragma mark - RILaunchEventTracker implementation
