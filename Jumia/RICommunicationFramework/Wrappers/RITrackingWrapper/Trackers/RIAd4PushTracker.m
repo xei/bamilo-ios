@@ -70,7 +70,7 @@
 #define kAd4PushProfileLastCartProductSKUKey                @"lastCartProductSKU"
 #define kAd4PushProfileLastCategoryAddedToCartKey           @"lastCategoryAddedToCart"
 
-#define kAd4PushProfilelastPushNotificationOpenedKey        @"lastPushNotificationOpened"
+#define kAd4PushProfilelastPushNotificationOpenedKey        @"lastPNOpened"
 
 #define kAd4PushProfileStoreGAIdKey                         @"gps_adid"
 

@@ -1031,22 +1031,29 @@
             andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
     [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
-        
+        BOOL found = NO;
         for (RIProduct* currentProduct in favoriteProducts) {
             if ([currentProduct.sku isEqualToString:product.sku]) {
                 //found it
                 
-                if (VALID_NOTEMPTY(currentProduct.recentlyViewedDate, NSDate)) {
+                if (VALID_NOTEMPTY(currentProduct.favoriteAddDate, NSDate)) {
                     //do not delete, just remove favorite variable
                     currentProduct.favoriteAddDate = nil;
+                    found = YES;
                 } else {
                     [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
                 }
                 [[RIDataBaseWrapper sharedInstance] saveContext];
             }
         }
-        if (successBlock) {
-            successBlock();
+        if (found) {
+            if (successBlock) {
+                successBlock();
+            }
+        }else{
+            if (failureBlock) {
+                failureBlock(RIApiResponseUnknownError, nil);
+            }
         }
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         if (failureBlock) {
