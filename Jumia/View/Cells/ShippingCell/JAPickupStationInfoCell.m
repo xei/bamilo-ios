@@ -284,8 +284,6 @@
     
     totalHeight += 16;
     
-    NSLog(@"totalHeight: %f", totalHeight);
-    
     return totalHeight;
 }
 
