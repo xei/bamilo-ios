@@ -112,11 +112,6 @@ UIAlertViewDelegate
                                              selector:@selector(hideKeyboards)
                                                  name:kOpenMenuNotification
                                                object:nil];
-    if (!self.ratingsForm)
-        [self ratingsRequests];
-    else
-        [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
-    
 }
 
 -(void) viewWillDisappear:(BOOL)animated
@@ -124,6 +119,14 @@ UIAlertViewDelegate
     //[super viewWillDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    if (!self.ratingsForm)
+        [self ratingsRequests];
+    else
+        [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
 }
 
 - (void)ratingsRequests

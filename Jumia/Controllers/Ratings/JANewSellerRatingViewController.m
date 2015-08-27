@@ -109,12 +109,6 @@ UIAlertViewDelegate
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
-    
-    if (!self.reviewsForm) {
-        [self formRequest];
-    } else {
-        [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
-    }
 }
 
 -(void) viewWillDisappear:(BOOL)animated
@@ -122,6 +116,15 @@ UIAlertViewDelegate
     //[super viewWillDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    if (!self.reviewsForm) {
+        [self formRequest];
+    } else {
+        [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+    }
 }
 
 - (void)formRequest
