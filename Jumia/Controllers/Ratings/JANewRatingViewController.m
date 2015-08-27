@@ -114,6 +114,9 @@ UIAlertViewDelegate
                                                object:nil];
     if (!self.ratingsForm)
         [self ratingsRequests];
+    else
+        [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+    
 }
 
 -(void) viewWillDisappear:(BOOL)animated

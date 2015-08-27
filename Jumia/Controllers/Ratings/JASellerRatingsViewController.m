@@ -128,17 +128,6 @@ UITableViewDataSource
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
-    
-    if(self.requestsDone)
-    {
-        [self setupViews];
-    }
-    else
-    {
-        [self showLoading];
-        
-        [self sellerReviewsRequest];
-    }
 }
 
 - (void)addReviewsToTable:(NSArray*)reviews
@@ -221,6 +210,17 @@ UITableViewDataSource
     [super viewDidAppear:animated];
     
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"SellerReviewsScreen"];
+    
+    if(self.requestsDone)
+    {
+        [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+    }
+    else
+    {
+        [self showLoading];
+        
+        [self sellerReviewsRequest];
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -232,22 +232,22 @@ UITableViewDataSource
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     [self showLoading];
     
     [self hideViews];
     
     [self.reviewsDynamicForm resignResponder];
     
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     [self hideLoading];
     
     [self setupViews];
     
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 - (void)formRequest
