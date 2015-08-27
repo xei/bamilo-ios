@@ -396,6 +396,7 @@ UITableViewDataSource
         [self.tableViewComments setHidden:YES];
         [self.emptyReviewsView setHidden:NO];
         [self setupEmptyReviewsView];
+        [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.contentSize.width, CGRectGetMaxY(self.emptyReviewsView.frame))];
     }
     
     self.tableViewComments.delegate = self;
