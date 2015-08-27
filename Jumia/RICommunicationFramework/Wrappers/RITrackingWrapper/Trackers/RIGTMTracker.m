@@ -1121,6 +1121,7 @@ NSString *kGTMToken = @"kGTMToken";
     RIDebugLog(@"GTM - Tracking static page with statickPageKey: %@", staticPageKey);
     
     NSMutableDictionary *pushedData = [[NSMutableDictionary alloc] init];
+    [pushedData setObject:@"openStaticPage" forKey:kGTMEventKey];
     [pushedData setObject:staticPageKey forKey:kGTMEventStaticPageKey];
     
     [self pushEvent:pushedData];
