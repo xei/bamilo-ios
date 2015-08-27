@@ -17,7 +17,7 @@
 #define kGTMEventKey                            @"event"
 #define kGTMEventSourceKey                      @"source"
 #define kGTMEventCampaignKey                    @"campaign"
-#define kGTMEventAppVersionKey                  @"appVersion"
+#define kGTMEventAppVersionKey                  @"app version"
 #define kGTMEventShopCountryKey                 @"shopCountry"
 #define kGTMEventLoginMethodKey                 @"loginMethod"
 #define kGTMEventLoginLocationKey               @"loginLocation"
@@ -77,10 +77,10 @@
 #define kGTMEventTransactionProductQuantityKey  @"quantity"
 #define kGTMEventScreenNameKey                  @"screenName"
 #define kGTMEventLoadTimeKey                    @"loadTime"
-#define kGTMEventInstallNetworkKey              @"installNetwork"
-#define kGTMEventInstallAdgroupKey              @"installAdgroup"
-#define kGTMEventInstallCampaignKey             @"installCampaign"
-#define kGTMEventInstallCreativeKey             @"installCreative"
+#define kGTMEventInstallNetworkKey              @"InstallNetwork"
+#define kGTMEventInstallAdgroupKey              @"InstallAdgroup"
+#define kGTMEventInstallCampaignKey             @"InstallCampaign"
+#define kGTMEventInstallCreativeKey             @"InstallCreative"
 #define kGTMEventStaticPageKey                  @"staticPageKey"
 
 NSString *kGTMToken = @"kGTMToken";
@@ -336,6 +336,11 @@ NSString *kGTMToken = @"kGTMToken";
             case RIEventLoginSuccess:
                 [pushedData setObject:@"login" forKey:kGTMEventKey];
                 [pushedData setObject:@"Email Auth" forKey:kGTMEventLoginMethodKey];
+                
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventLocationKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventLocationKey] forKey:kGTMEventLoginLocationKey];
+                }
 
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventAgeKey], NSNumber))
                 {
@@ -355,6 +360,10 @@ NSString *kGTMToken = @"kGTMToken";
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventUserIdKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventUserIdKey] forKey:kGTMEventCustomerIdKey];
+                }
+                
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventAmountTransactions], NSNumber)) {
+                    [pushedData setObject:[data objectForKey:kRIEventAmountTransactions] forKey:kGTMEventNumberPurchasesKey];
                 }
                 break;
             case RIEventFacebookLoginSuccess:
@@ -385,6 +394,10 @@ NSString *kGTMToken = @"kGTMToken";
                 {
                     [pushedData setObject:[data objectForKey:kRIEventAccountDateKey] forKey:kGTMEventAccountCreationDateKey];
                 }
+                
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventAmountTransactions], NSNumber)) {
+                    [pushedData setObject:[data objectForKey:kRIEventAmountTransactions] forKey:kGTMEventNumberPurchasesKey];
+                }
                 break;
             case RIEventAutoLoginSuccess:
                 [pushedData setObject:@"autoLogin" forKey:kGTMEventKey];
@@ -407,6 +420,10 @@ NSString *kGTMToken = @"kGTMToken";
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventAccountDateKey], NSString))
                 {
                     [pushedData setObject:[data objectForKey:kRIEventAccountDateKey] forKey:kGTMEventAccountCreationDateKey];
+                }
+                
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventAmountTransactions], NSNumber)) {
+                    [pushedData setObject:[data objectForKey:kRIEventAmountTransactions] forKey:kGTMEventNumberPurchasesKey];
                 }
                 break;
             case RIEventLoginFail:
@@ -643,7 +660,7 @@ NSString *kGTMToken = @"kGTMToken";
                 
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventSubCategoryNameKey], NSString))
                 {
-                    [pushedData setObject:[data objectForKey:kRIEventSubCategoryNameKey] forKey:kGTMEventProductSubCategoryKey];
+                    [pushedData setObject:[data objectForKey:kRIEventSubCategoryNameKey] forKey:kGTMEventSubCategoryKey];
                 }
                 
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventCurrencyCodeKey], NSString))
@@ -739,6 +756,16 @@ NSString *kGTMToken = @"kGTMToken";
                 {
                     [pushedData setObject:[data objectForKey:kRIEventRatingQualityKey] forKey:kGTMEventRatingQualityKey];
                 }
+                
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventCategoryNameKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventCategoryNameKey] forKey:kGTMEventCategoryKey];
+                }
+                
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventSubCategoryNameKey], NSString))
+                {
+                    [pushedData setObject:[data objectForKey:kRIEventSubCategoryNameKey] forKey:kGTMEventSubCategoryKey];
+                }
                 break;
             case RIEventViewRatings:
                 [pushedData setObject:@"viewRating" forKey:kGTMEventKey];
@@ -759,12 +786,12 @@ NSString *kGTMToken = @"kGTMToken";
                 
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventCategoryNameKey], NSString))
                 {
-                    [pushedData setObject:[data objectForKey:kRIEventCategoryNameKey] forKey:kGTMEventProductCategoryKey];
+                    [pushedData setObject:[data objectForKey:kRIEventCategoryNameKey] forKey:kGTMEventCategoryKey];
                 }
                 
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventSubCategoryNameKey], NSString))
                 {
-                    [pushedData setObject:[data objectForKey:kRIEventSubCategoryNameKey] forKey:kGTMEventProductSubCategoryKey];
+                    [pushedData setObject:[data objectForKey:kRIEventSubCategoryNameKey] forKey:kGTMEventSubCategoryKey];
                 }
                 
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventRatingKey], NSString))
@@ -797,7 +824,7 @@ NSString *kGTMToken = @"kGTMToken";
                 
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventSubCategoryNameKey], NSString))
                 {
-                    [pushedData setObject:[data objectForKey:kRIEventSubCategoryNameKey] forKey:kGTMEventProductSubCategoryKey];
+                    [pushedData setObject:[data objectForKey:kRIEventSubCategoryNameKey] forKey:kGTMEventSubCategoryKey];
                 }
                 
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventPageNumberKey], NSNumber))
@@ -841,7 +868,7 @@ NSString *kGTMToken = @"kGTMToken";
                 
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventCategoryNameKey], NSString))
                 {
-                    [pushedData setObject:[data objectForKey:kRIEventCategoryNameKey] forKey:kGTMEventProductCategoryKey];
+                    [pushedData setObject:[data objectForKey:kRIEventCategoryNameKey] forKey:kGTMEventCategoryKey];
                 }
                 
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventSubCategoryNameKey], NSString))
@@ -884,7 +911,7 @@ NSString *kGTMToken = @"kGTMToken";
                 
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventRatingKey], NSNumber))
                 {
-                    [pushedData setObject:[data objectForKey:kRIEventRatingKey] forKey:kGTMEventProductRatingKey];
+                    [pushedData setObject:[data objectForKey:kRIEventRatingKey] forKey:kGTMEventAverageRatingTotalKey];
                 }
                 break;
             case RIEventViewCart:
@@ -943,11 +970,12 @@ NSString *kGTMToken = @"kGTMToken";
                 }
                 break;
             case RIEventCloseApp:
-                [pushedData setObject:@"openScreen" forKey:kGTMEventKey];
+                [pushedData setObject:@"closeApp" forKey:kGTMEventKey];
+//                [pushedData setObject:@"openScreen" forKey:kGTMEventKey];
                 [pushedData setObject:[data objectForKey:kRIEventScreenNameKey] forKey:kGTMEventScreenNameKey];
                 break;
             case RIEventInstallViaAdjust:
-                [pushedData setObject:@"appInstall" forKey:kGTMEventKey];
+                [pushedData setObject:@"App Install" forKey:kGTMEventKey];
 
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventNetworkKey], NSString))
                 {
@@ -1093,6 +1121,7 @@ NSString *kGTMToken = @"kGTMToken";
     RIDebugLog(@"GTM - Tracking static page with statickPageKey: %@", staticPageKey);
     
     NSMutableDictionary *pushedData = [[NSMutableDictionary alloc] init];
+    [pushedData setObject:@"openStaticPage" forKey:kGTMEventKey];
     [pushedData setObject:staticPageKey forKey:kGTMEventStaticPageKey];
     
     [self pushEvent:pushedData];

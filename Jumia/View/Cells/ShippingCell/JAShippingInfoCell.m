@@ -48,7 +48,10 @@
     
     
     [self.label setAttributedText:finalshippingFeeString];
+    
+    // this triggers the constraints error output
     self.label.translatesAutoresizingMaskIntoConstraints = YES;
+    
     self.label.textAlignment = NSTextAlignmentLeft;
     self.label.frame = CGRectMake(27.0f,
                                   0.0f,
@@ -87,7 +90,10 @@
     
     
     [self.deliveryTimeLabel setAttributedText:finalDeliveryTimeString];
+    
+    // this triggers the constraints error output
     self.deliveryTimeLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    
     self.deliveryTimeLabel.textAlignment = NSTextAlignmentLeft;
     self.deliveryTimeLabel.frame = CGRectMake(27.0f,
                                               CGRectGetMaxY(_shippingFeeAlert.frame) + 4,

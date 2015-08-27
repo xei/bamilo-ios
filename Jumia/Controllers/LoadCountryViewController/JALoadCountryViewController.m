@@ -364,6 +364,9 @@
             [trackingDictionary setValue:self.customer.birthday forKey:kRIEventBirthDayKey];
             [trackingDictionary setValue:self.customer.createdAt forKey:kRIEventAccountDateKey];
             
+            NSNumber *numberOfPurchases = [[NSUserDefaults standardUserDefaults] objectForKey:kRIEventAmountTransactions];
+            [trackingDictionary setValue:numberOfPurchases forKey:kRIEventAmountTransactions];
+            
             NSDate* now = [NSDate date];
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setDateFormat:@"yyyy-MM-dd"];

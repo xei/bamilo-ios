@@ -18,6 +18,7 @@
 #import "JAUtils.h"
 #import "RIProduct.h"
 #import <FBSDKCoreKit/FBSDKAppEvents.h>
+#import "RICategory.h"
 
 #define kDistanceBetweenStarsAndText 70.0f
 
@@ -113,6 +114,9 @@ UIAlertViewDelegate
                                                object:nil];
     if (!self.ratingsForm)
         [self ratingsRequests];
+    else
+        [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+    
 }
 
 -(void) viewWillDisappear:(BOOL)animated
@@ -579,6 +583,8 @@ UIAlertViewDelegate
             [globalRateDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
             [globalRateDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
             [globalRateDictionary setValue:price forKey:kRIEventPriceKey];
+            [globalRateDictionary setValue:[RICategory getCategoryName:[self.product.categoryIds firstObject]] forKey:kRIEventCategoryNameKey];
+            [globalRateDictionary setValue:[RICategory getCategoryName:[self.product.categoryIds lastObject]] forKey:kRIEventSubCategoryNameKey];
             
             for (UIView *component in currentDynamicForm.formViews)
             {

@@ -396,6 +396,7 @@ UITableViewDataSource
         [self.tableViewComments setHidden:YES];
         [self.emptyReviewsView setHidden:NO];
         [self setupEmptyReviewsView];
+        [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.contentSize.width, CGRectGetMaxY(self.emptyReviewsView.frame))];
     }
     
     self.tableViewComments.delegate = self;
@@ -1063,6 +1064,8 @@ UITableViewDataSource
             [globalRateDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
             [globalRateDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
             [globalRateDictionary setValue:price forKey:kRIEventPriceKey];
+            [globalRateDictionary setValue:[RICategory getCategoryName:[self.product.categoryIds firstObject]] forKey:kRIEventCategoryNameKey];
+            [globalRateDictionary setValue:[RICategory getCategoryName:[self.product.categoryIds lastObject]] forKey:kRIEventSubCategoryNameKey];
             
             for (UIView *component in currentDynamicForm.formViews)
             {

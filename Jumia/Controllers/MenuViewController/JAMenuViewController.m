@@ -90,7 +90,9 @@ UIAlertViewDelegate
                                                object:nil];
     
     
+    // this triggers the constraints error output
     self.tableViewMenu.translatesAutoresizingMaskIntoConstraints = YES;
+    
     self.tableViewMenu.separatorColor = [UIColor whiteColor];
     
     // Added because of the footer space
