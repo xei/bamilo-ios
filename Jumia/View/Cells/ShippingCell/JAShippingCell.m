@@ -28,7 +28,9 @@
                                       self.checkMark.frame.size.height);
     
     
+    // this triggers the constraints error output
     self.label.translatesAutoresizingMaskIntoConstraints = YES;
+    
     self.label.font = [UIFont fontWithName:kFontLightName size:self.label.font.pointSize];
     self.label.textAlignment = NSTextAlignmentLeft;
     [self.label setText:[shippingMethod label]];
