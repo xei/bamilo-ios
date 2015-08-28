@@ -174,13 +174,12 @@ UICollectionViewDelegateFlowLayout>
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self showLoading];
     
     [self.contentScrollView setHidden:YES];
     [_bottomView setHidden:YES];
     
     [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
-    
-    [self getAddressList];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -188,11 +187,12 @@ UICollectionViewDelegateFlowLayout>
     [super viewDidAppear:animated];
     
     [[RITrackingWrapper sharedInstance]trackScreenWithName:@"AddressesList"];
+    
+    [self getAddressList];
 }
 
 - (void)getAddressList
 {
-    [self showLoading];
     
     [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
         
