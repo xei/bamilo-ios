@@ -131,7 +131,7 @@ UIAlertViewDelegate
 
 - (void)ratingsRequests
 {
-    self.numberOfRequests = 0;
+    _numberOfRequests = 0;
     
     [self hideViews];
     if(RIApiResponseSuccess != self.apiResponse)
@@ -148,22 +148,8 @@ UIAlertViewDelegate
     {
         [self showLoading];
     }
-    
-    if ([[RICountryConfiguration getCurrentConfiguration].ratingIsEnabled boolValue]) {
-        self.numberOfRequests++;
-        [RIForm getForm:@"rating"
-           successBlock:^(RIForm *form)
-         {
-             self.ratingsForm = form;
-             self.numberOfRequests--;
-         } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-             self.apiResponse = apiResponse;
-             self.numberOfRequests--;
-         }];
-    }
-    
-    if ([[RICountryConfiguration getCurrentConfiguration].reviewIsEnabled boolValue]) {
-        self.numberOfRequests++;
+    typedef void (^GetReviewDynamicFormBlock)(void);
+    GetReviewDynamicFormBlock getReviewFormBlock = ^void{
         [RIForm getForm:@"review"
            successBlock:^(RIForm *form)
          {
@@ -173,7 +159,34 @@ UIAlertViewDelegate
              self.apiResponse = apiResponse;
              self.numberOfRequests--;
          }];
+    };
+    typedef void (^GetRatingDynamicFormBlock)(void);
+    GetRatingDynamicFormBlock getRatingFormBlock = ^void{
+        [RIForm getForm:@"rating"
+           successBlock:^(RIForm *form)
+         {
+             self.ratingsForm = form;
+             self.numberOfRequests--;
+         } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+             self.apiResponse = apiResponse;
+             self.numberOfRequests--;
+         }];
+    };
+    
+    if ([[RICountryConfiguration getCurrentConfiguration].ratingIsEnabled boolValue]) {
+        self.numberOfRequests++;
     }
+    if ([[RICountryConfiguration getCurrentConfiguration].reviewIsEnabled boolValue]) {
+        self.numberOfRequests++;
+    }
+    if ([[RICountryConfiguration getCurrentConfiguration].ratingIsEnabled boolValue]) {
+        getRatingFormBlock();
+    }
+    if ([[RICountryConfiguration getCurrentConfiguration].reviewIsEnabled boolValue]) {
+        getReviewFormBlock();
+    }
+    
+    
 }
 
 - (void)hideViews
@@ -272,16 +285,13 @@ UIAlertViewDelegate
 
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    [self hideViews];
-    
-    [self showLoading];
-    
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [self hideViews];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [self hideLoading];
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     
     if(UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation || UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)
     {
@@ -290,14 +300,7 @@ UIAlertViewDelegate
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:nil userInfo:userInfo];
     }
-    else
-    {
-        [self.topView setHidden:NO];
-        [self.scrollView setHidden:NO];
-        [self setupViews];
-    }
     
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 -(void)setupViews
@@ -319,14 +322,13 @@ UIAlertViewDelegate
                                          scrollViewWidth,
                                          self.view.frame.size.height - CGRectGetMaxY(self.topView.frame))];
     self.scrollViewInitialRect = self.scrollView.frame;
-    
-    if(VALID(self.centerView, UIView))
-    {
-        [self.centerView removeFromSuperview];
+
+    if (!self.centerView) {
+        self.centerView = [[UIView alloc] init];
+        self.centerView.backgroundColor = [UIColor whiteColor];
+        self.centerView.layer.cornerRadius = 5.0f;
+        [self.scrollView addSubview:self.centerView];
     }
-    self.centerView = [[UIView alloc] init];
-    self.centerView.backgroundColor = [UIColor whiteColor];
-    self.centerView.layer.cornerRadius = 5.0f;
     
     CGFloat centerViewWidth = scrollViewWidth - (2 * horizontalMargin);
     CGFloat dynamicFormHorizontalMargin = 6.0f;
@@ -335,108 +337,113 @@ UIAlertViewDelegate
         dynamicFormHorizontalMargin = 250.0f;
     }
     
-    if(VALID_NOTEMPTY(self.fixedLabel, UILabel))
+    if(!VALID_NOTEMPTY(self.fixedLabel, UILabel))
     {
-        [self.fixedLabel removeFromSuperview];
+        self.fixedLabel = [[UILabel alloc] initWithFrame:CGRectMake(dynamicFormHorizontalMargin,
+                                                                    verticalMargin,
+                                                                    centerViewWidth - (2 * dynamicFormHorizontalMargin),
+                                                                    16.0f)];
+        self.fixedLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
+        self.fixedLabel.text = STRING_RATE_PRODUCT;
+        self.fixedLabel.textColor = UIColorFromRGB(0x666666);
+        [self.centerView addSubview:self.fixedLabel];
     }
-    
-    self.fixedLabel = [[UILabel alloc] initWithFrame:CGRectMake(dynamicFormHorizontalMargin,
-                                                                verticalMargin,
-                                                                centerViewWidth - (2 * dynamicFormHorizontalMargin),
-                                                                16.0f)];
-    self.fixedLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
-    self.fixedLabel.text = STRING_RATE_PRODUCT;
-    self.fixedLabel.textColor = UIColorFromRGB(0x666666);
-    [self.centerView addSubview:self.fixedLabel];
 
     CGFloat currentY = CGRectGetMaxY(self.fixedLabel.frame) + 12.0f;
     CGFloat spaceBetweenFormFields = 6.0f;
     
     if (self.ratingsForm) {
-        NSInteger count = 0;
-        CGFloat initialContentY = 0;
-        self.ratingsDynamicForm = [[JADynamicForm alloc] initWithForm:self.ratingsForm
-                                                     startingPosition:initialContentY
-                                                            widthSize:centerViewWidth
-                                                   hasFieldNavigation:YES];
-        
-        self.ratingsContentView = [UIView new];
-        for (UIView *view in self.ratingsDynamicForm.formViews)
-        {
-            view.tag = count;
-            CGRect frame = view.frame;
-            if(isiPad)
-            {
-                frame.origin.x = dynamicFormHorizontalMargin;
-                if (![view isKindOfClass:[JAAddRatingView class]]) {
-                    frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
-                }
-            }
-            else
-            {
-                frame.size.width = centerViewWidth;
-            }
-
-            view.frame = frame;
+        if (!self.ratingsContentView) {
+            NSInteger count = 0;
+            CGFloat initialContentY = 0;
+            self.ratingsDynamicForm = [[JADynamicForm alloc] initWithForm:self.ratingsForm
+                                                         startingPosition:initialContentY
+                                                                widthSize:centerViewWidth
+                                                       hasFieldNavigation:YES];
             
-            [self.ratingsContentView addSubview:view];
-            initialContentY += view.frame.size.height + spaceBetweenFormFields;
-            count++;
+            self.ratingsContentView = [UIView new];
+            for (UIView *view in self.ratingsDynamicForm.formViews)
+            {
+                view.tag = count;
+                CGRect frame = view.frame;
+                if(isiPad)
+                {
+                    frame.origin.x = dynamicFormHorizontalMargin;
+                    if (![view isKindOfClass:[JAAddRatingView class]]) {
+                        frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
+                    }
+                }
+                else
+                {
+                    frame.size.width = centerViewWidth;
+                }
+                
+                view.frame = frame;
+                
+                [self.ratingsContentView addSubview:view];
+                initialContentY += view.frame.size.height + spaceBetweenFormFields;
+                count++;
+            }
+            
+            [self.ratingsContentView setFrame:CGRectMake(0.0,
+                                                         currentY,
+                                                         centerViewWidth,
+                                                         initialContentY)];
+            [self.centerView addSubview:self.ratingsContentView];
         }
-        
-        [self.ratingsContentView setFrame:CGRectMake(0.0,
-                                                     currentY,
-                                                     centerViewWidth,
-                                                     initialContentY)];
-        [self.centerView addSubview:self.ratingsContentView];
         
     }
     
     if (self.reviewsForm) {
-        CGFloat initialContentY = 0;
-        self.reviewsDynamicForm = [[JADynamicForm alloc] initWithForm:self.reviewsForm
-                                                     startingPosition:initialContentY
-                                                            widthSize:centerViewWidth
-                                                   hasFieldNavigation:YES];
-        self.reviewsContentView = [UIView new];
-        for (int i = 0; i < self.reviewsDynamicForm.formViews.count; i++)
+        if (!self.reviewsContentView)
         {
-            UIView* view = [self.reviewsDynamicForm.formViews objectAtIndex:i];
-            view.tag = i;
-            CGRect frame = view.frame;
-            if(isiPad)
+            CGFloat initialContentY = 0;
+            self.reviewsDynamicForm = [[JADynamicForm alloc] initWithForm:self.reviewsForm
+                                                         startingPosition:initialContentY
+                                                                widthSize:centerViewWidth
+                                                       hasFieldNavigation:YES];
+            self.reviewsContentView = [UIView new];
+            for (int i = 0; i < self.reviewsDynamicForm.formViews.count; i++)
             {
-                frame.origin.x = dynamicFormHorizontalMargin;
-                frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
-            }
-            else
-            {
-                frame.size.width = centerViewWidth;
-            }
-            if (NO == [view isKindOfClass:[JAAddRatingView class]]) {
-                if (VALID_NOTEMPTY(self.ratingsForm, RIForm) && VALID_NOTEMPTY(self.reviewsForm, RIForm)) {
-                    //has switch
-                    frame.origin.y = frame.origin.y + kDistanceBetweenStarsAndText;
+                UIView* view = [self.reviewsDynamicForm.formViews objectAtIndex:i];
+                view.tag = i;
+                CGRect frame = view.frame;
+                if(isiPad)
+                {
+                    frame.origin.x = dynamicFormHorizontalMargin;
+                    frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
                 }
-            }
-            view.frame = frame;
-            
-            [self.reviewsContentView addSubview:view];
+                else
+                {
+                    frame.size.width = centerViewWidth;
+                }
+                if (NO == [view isKindOfClass:[JAAddRatingView class]]) {
+                    if (VALID_NOTEMPTY(self.ratingsForm, RIForm) && VALID_NOTEMPTY(self.reviewsForm, RIForm)) {
+                        //has switch
+                        frame.origin.y = frame.origin.y + kDistanceBetweenStarsAndText;
+                    }
+                }
+                view.frame = frame;
+                
+                [self.reviewsContentView addSubview:view];
 
-            initialContentY += view.frame.size.height + spaceBetweenFormFields;
+                initialContentY += view.frame.size.height + spaceBetweenFormFields;
+            }
+            
+            if (VALID_NOTEMPTY(self.ratingsForm, RIForm) && VALID_NOTEMPTY(self.reviewsForm, RIForm)) {
+                //has switch
+                initialContentY += kDistanceBetweenStarsAndText;
+            }
+            [self.reviewsContentView setFrame:CGRectMake(0.0,
+                                                         currentY,
+                                                         centerViewWidth,
+                                                         initialContentY)];
+            [self.centerView addSubview:self.reviewsContentView];
         }
-        if (VALID_NOTEMPTY(self.ratingsForm, RIForm) && VALID_NOTEMPTY(self.reviewsForm, RIForm)) {
-            //has switch
-            initialContentY += kDistanceBetweenStarsAndText;
-        }
-        [self.reviewsContentView setFrame:CGRectMake(0.0,
-                                                     currentY,
-                                                     centerViewWidth,
-                                                     initialContentY)];
-        [self.centerView addSubview:self.reviewsContentView];
     }
 
-
+    CGFloat modeSwitchY = currentY + self.ratingsContentView.frame.size.height;
+    
     if (self.isShowingRating && VALID_NOTEMPTY(self.ratingsContentView, UIView)) {
         self.reviewsContentView.hidden = YES;
         currentY += self.ratingsContentView.frame.size.height;
@@ -446,40 +453,42 @@ UIAlertViewDelegate
     }
     
     if (VALID_NOTEMPTY(self.ratingsForm, RIForm) && VALID_NOTEMPTY(self.reviewsForm, RIForm)) {
-        //show the switch
-        self.modeSwitch = [UISwitch new];
-        [self.modeSwitch addTarget:self action:@selector(switchBetweenModes) forControlEvents:UIControlEventTouchUpInside];
-        CGFloat modeSwitchX = 10.0f;
-        if (isiPad) {
-            modeSwitchX = 260.0f;
+        if (!self.modeSwitch) {
+            //show the switch
+            self.modeSwitch = [UISwitch new];
+            [self.modeSwitch addTarget:self action:@selector(switchBetweenModes) forControlEvents:UIControlEventTouchUpInside];
+            [self.modeSwitch setY:modeSwitchY];
+            [self.centerView addSubview:self.modeSwitch];
+            
+            CGFloat modeSwitchX = 10.0f;
+            if (isiPad) {
+                modeSwitchX = 260.0f;
+            }
+            [self.modeSwitch setX:modeSwitchX];
+            
+            CGFloat writeReviewLabelX = CGRectGetMaxX(self.modeSwitch.frame) + 15.0f;
+            CGFloat maxWriteReviewWidth = centerViewWidth - writeReviewLabelX;
+            UILabel* writeReviewLabel = [UILabel new];
+            writeReviewLabel.textColor = UIColorFromRGB(0x666666);
+            writeReviewLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
+            writeReviewLabel.numberOfLines = 2;
+            writeReviewLabel.text = STRING_WRITE_FULL_REVIEW;
+            [writeReviewLabel sizeToFit];
+            CGFloat finalWidth = writeReviewLabel.frame.size.width;
+            CGFloat finalHeight = writeReviewLabel.frame.size.height;
+            CGFloat yOffset = 5.0f;
+            if (maxWriteReviewWidth < writeReviewLabel.frame.size.width) {
+                finalWidth = maxWriteReviewWidth;
+                finalHeight *= 2;
+                yOffset = 0.0f;
+            }
+            [writeReviewLabel setFrame:CGRectMake(writeReviewLabelX,
+                                                  self.modeSwitch.frame.origin.y + yOffset,
+                                                  finalWidth,
+                                                  finalHeight)];
+            [self.centerView addSubview:writeReviewLabel];
+            
         }
-        [self.modeSwitch setFrame:CGRectMake(modeSwitchX,
-                                             currentY,
-                                             self.modeSwitch.frame.size.width,
-                                             self.modeSwitch.frame.size.height)];
-        [self.centerView addSubview:self.modeSwitch];
-        
-        CGFloat writeReviewLabelX = CGRectGetMaxX(self.modeSwitch.frame) + 15.0f;
-        CGFloat maxWriteReviewWidth = centerViewWidth - writeReviewLabelX;
-        UILabel* writeReviewLabel = [UILabel new];
-        writeReviewLabel.textColor = UIColorFromRGB(0x666666);
-        writeReviewLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
-        writeReviewLabel.numberOfLines = 2;
-        writeReviewLabel.text = STRING_WRITE_FULL_REVIEW;
-        [writeReviewLabel sizeToFit];
-        CGFloat finalWidth = writeReviewLabel.frame.size.width;
-        CGFloat finalHeight = writeReviewLabel.frame.size.height;
-        CGFloat yOffset = 5.0f;
-        if (maxWriteReviewWidth < writeReviewLabel.frame.size.width) {
-            finalWidth = maxWriteReviewWidth;
-            finalHeight *= 2;
-            yOffset = 0.0f;
-        }
-        [writeReviewLabel setFrame:CGRectMake(writeReviewLabelX,
-                                              self.modeSwitch.frame.origin.y + yOffset,
-                                              finalWidth,
-                                              finalHeight)];
-        [self.centerView addSubview:writeReviewLabel];
         
         currentY += self.modeSwitch.frame.size.height + 50.0f;
     } else {
@@ -487,43 +496,45 @@ UIAlertViewDelegate
         currentY += 38.0f;
     }
     
-    NSString *imageNameFormat = @"orangeMedium_%@";
-    if(isiPad)
-    {
-        imageNameFormat = @"orangeMediumPortrait_%@";
-    }
-    UIImage* buttonImageNormal = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, @"normal"]];
-    UIImage* buttonImageHighlighted = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, @"highlighted"]];
-    UIImage* buttonImageDisabled = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, @"disabled"]];
-    self.sendReviewButton = [[UIButton alloc] initWithFrame:CGRectMake(6.0f,
-                                                                       currentY,
-                                                                       centerViewWidth - 12.f,
-                                                                       buttonImageNormal.size.height)];
-    [self.sendReviewButton setTitle:STRING_SEND_REVIEW
-                           forState:UIControlStateNormal];
-    [self.sendReviewButton setTitleColor:UIColorFromRGB(0x4e4e4e)
-                                forState:UIControlStateNormal];
-    self.sendReviewButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:16.0f];
-    [self.sendReviewButton setBackgroundImage:buttonImageNormal forState:UIControlStateNormal];
-    [self.sendReviewButton setBackgroundImage:buttonImageHighlighted forState:UIControlStateHighlighted];
-    [self.sendReviewButton setBackgroundImage:buttonImageHighlighted forState:UIControlStateSelected];
-    [self.sendReviewButton setBackgroundImage:buttonImageDisabled forState:UIControlStateDisabled];
-    [self.sendReviewButton addTarget:self action:@selector(sendReview:) forControlEvents:UIControlEventTouchUpInside];
-    [self.centerView addSubview:self.sendReviewButton];
+    if (!self.sendReviewButton) {
+        NSString *imageNameFormat = @"orangeMedium_%@";
+        if(isiPad)
+        {
+            imageNameFormat = @"orangeMediumPortrait_%@";
+        }
+        UIImage* buttonImageNormal = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, @"normal"]];
+        UIImage* buttonImageHighlighted = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, @"highlighted"]];
+        UIImage* buttonImageDisabled = [UIImage imageNamed:[NSString stringWithFormat:imageNameFormat, @"disabled"]];
+        self.sendReviewButton = [[UIButton alloc] initWithFrame:CGRectMake(6.0f,
+                                                                           currentY,
+                                                                           centerViewWidth - 12.f,
+                                                                           buttonImageNormal.size.height)];
+        [self.sendReviewButton setTitle:STRING_SEND_REVIEW
+                               forState:UIControlStateNormal];
+        [self.sendReviewButton setTitleColor:UIColorFromRGB(0x4e4e4e)
+                                    forState:UIControlStateNormal];
+        self.sendReviewButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:16.0f];
+        [self.sendReviewButton setBackgroundImage:buttonImageNormal forState:UIControlStateNormal];
+        [self.sendReviewButton setBackgroundImage:buttonImageHighlighted forState:UIControlStateHighlighted];
+        [self.sendReviewButton setBackgroundImage:buttonImageHighlighted forState:UIControlStateSelected];
+        [self.sendReviewButton setBackgroundImage:buttonImageDisabled forState:UIControlStateDisabled];
+        [self.sendReviewButton addTarget:self action:@selector(sendReview:) forControlEvents:UIControlEventTouchUpInside];
+        [self.centerView addSubview:self.sendReviewButton];
+        
+        [self.centerView setFrame:CGRectMake(horizontalMargin,
+                                             verticalMargin,
+                                             centerViewWidth,
+                                             CGRectGetMaxY(self.sendReviewButton.frame) + verticalMargin)];
+        
+        self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width,
+                                                 self.centerView.frame.size.height + self.centerView.frame.origin.y);
     
-    [self.centerView setFrame:CGRectMake(horizontalMargin,
-                                         verticalMargin,
-                                         centerViewWidth,
-                                         CGRectGetMaxY(self.sendReviewButton.frame) + verticalMargin)];
-    [self.scrollView addSubview:self.centerView];
-    
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width,
-                                             self.centerView.frame.size.height + self.centerView.frame.origin.y);
-    
-    [self.scrollView setHidden:NO];
-    
-    if (RI_IS_RTL) {
-        [self.view flipAllSubviews];
+        [self.scrollView setHidden:NO];
+        
+        if (RI_IS_RTL) {
+            [self.view flipAllSubviews];
+        }
+        
     }
 }
 
