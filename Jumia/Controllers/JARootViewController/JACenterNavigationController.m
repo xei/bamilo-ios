@@ -1520,12 +1520,18 @@
     }
 }
 
-- (void) closeCurrentScreenNotificaion:(NSNotification*)notification
+- (void)closeCurrentScreenNotificaion:(NSNotification*)notification
 {
     BOOL animated = YES;
     if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"animated"], NSNumber))
     {
         animated = [[notification.userInfo objectForKey:@"animated"] boolValue];
+    }
+    if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY(notification.object, UIViewController))
+    {
+        if ([self topViewController] != notification.object) {
+            return;
+        }
     }
     [self popViewControllerAnimated:animated];
 }

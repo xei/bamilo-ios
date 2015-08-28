@@ -123,10 +123,22 @@ UIAlertViewDelegate
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+    
     if (!self.ratingsForm)
         [self ratingsRequests];
-    else
-        [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+}
+
+- (void)viewDidLayoutSubviews
+{
+    if(UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation || UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)
+    {
+        NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
+        [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:self userInfo:userInfo];
+        return;
+    }
 }
 
 - (void)ratingsRequests
@@ -298,9 +310,8 @@ UIAlertViewDelegate
         NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
         [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:nil userInfo:userInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:self userInfo:userInfo];
     }
-    
 }
 
 -(void)setupViews
