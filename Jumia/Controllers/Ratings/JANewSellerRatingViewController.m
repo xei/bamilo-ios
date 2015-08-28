@@ -122,8 +122,6 @@ UIAlertViewDelegate
 {
     if (!self.reviewsForm) {
         [self formRequest];
-    } else {
-        [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
     }
 }
 
@@ -232,6 +230,19 @@ UIAlertViewDelegate
     [self.topView setHidden:NO];
 }
 
+- (void)viewDidLayoutSubviews
+{
+    
+    if(UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation || UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)
+    {
+        NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
+        [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:self userInfo:userInfo];
+        return;
+    }
+}
+
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [self hideViews];
@@ -250,7 +261,7 @@ UIAlertViewDelegate
         NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
         [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:nil userInfo:userInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:self userInfo:userInfo];
     }
     else
     {
