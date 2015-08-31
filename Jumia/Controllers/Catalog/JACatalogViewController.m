@@ -1662,6 +1662,7 @@
 - (void)selectedSortingMethod:(RICatalogSorting)catalogSorting
 {
     if (catalogSorting != self.sortingMethod) {
+        [self killScroll];
         self.sortingMethod = catalogSorting;
         [self.catalogTopView setSorting:self.sortingMethod];
         
@@ -1681,6 +1682,14 @@
                                                   data:[trackingDictionary copy]];
 
     }
+}
+
+- (void)killScroll
+{
+    CGPoint offset = self.collectionView.contentOffset;
+    offset.x -= .1;
+    offset.y -= .1;
+    [self.collectionView setContentOffset:offset animated:YES];
 }
 
 @end
