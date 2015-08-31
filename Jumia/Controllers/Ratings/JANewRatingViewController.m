@@ -135,8 +135,9 @@ UIAlertViewDelegate
     {
         NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
         [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:self userInfo:userInfo];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC/1.5), dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:self userInfo:userInfo];
+        });
         return;
     }
 }
