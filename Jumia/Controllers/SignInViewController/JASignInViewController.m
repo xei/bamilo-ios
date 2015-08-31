@@ -100,6 +100,7 @@ JADynamicFormDelegate
                                            1); //width and height will be reset later
     [self.facebookButton addTarget:self action:@selector(facebookLoginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.facebookButton setTitle:STRING_LOGIN_WITH_FACEBOOK forState:UIControlStateNormal];
+    [self.facebookButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:self.facebookButton.titleLabel.font.pointSize]];
     [self.loginView addSubview:self.facebookButton];
     
     self.loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
