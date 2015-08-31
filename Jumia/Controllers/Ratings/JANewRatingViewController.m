@@ -422,7 +422,10 @@ UIAlertViewDelegate
                 if(isiPad)
                 {
                     frame.origin.x = dynamicFormHorizontalMargin;
-                    frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
+                    if (NO == [view isKindOfClass:[JAAddRatingView class]]) {
+                        frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
+                    }else
+                        frame.size.width = centerViewWidth;
                 }
                 else
                 {
@@ -432,8 +435,10 @@ UIAlertViewDelegate
                     if (VALID_NOTEMPTY(self.ratingsForm, RIForm) && VALID_NOTEMPTY(self.reviewsForm, RIForm)) {
                         //has switch
                         frame.origin.y = frame.origin.y + kDistanceBetweenStarsAndText;
+                        frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
                     }
                 }
+                
                 view.frame = frame;
                 
                 [self.reviewsContentView addSubview:view];
