@@ -859,6 +859,10 @@
         NSNumber* isShippingAddress = [notification.userInfo objectForKey:@"is_shipping_address"];
         NSNumber* showBackButton = [notification.userInfo objectForKey:@"show_back_button"];
         NSNumber* fromCheckout = [notification.userInfo objectForKey:@"from_checkout"];
+        NSNumber *animated = @YES;
+        if ([notification.userInfo objectForKey:@"animated"]) {
+            animated = [notification.userInfo objectForKey:@"animated"];
+        }
         
         addAddressVC.isBillingAddress = [isBillingAddress boolValue];
         addAddressVC.isShippingAddress = [isShippingAddress boolValue];
@@ -884,7 +888,7 @@
             addAddressVC.navBarLayout.showLogo = NO;
         }
         
-        [self pushViewController:addAddressVC animated:YES];
+        [self pushViewController:addAddressVC animated:animated.boolValue];
     }
 }
 
@@ -1516,12 +1520,18 @@
     }
 }
 
-- (void) closeCurrentScreenNotificaion:(NSNotification*)notification
+- (void)closeCurrentScreenNotificaion:(NSNotification*)notification
 {
     BOOL animated = YES;
     if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"animated"], NSNumber))
     {
         animated = [[notification.userInfo objectForKey:@"animated"] boolValue];
+    }
+    if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY(notification.object, UIViewController))
+    {
+        if ([self topViewController] != notification.object) {
+            return;
+        }
     }
     [self popViewControllerAnimated:animated];
 }

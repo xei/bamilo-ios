@@ -80,6 +80,10 @@
     } else {
         if(sizeGuideImage == nil)
         {
+            if (!self.sizeGuideUrl) {
+                [self showErrorView:NO startingY:0.0f selector:@selector(positionViews) objects:nil];
+                return ;
+            }
             [self removeErrorView];
             [self showLoading];
             
@@ -92,6 +96,10 @@
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self hideLoading];
+                    if (!imageData) {
+                        [self showErrorView:NO startingY:0.0f selector:@selector(positionViews) objects:nil];
+                        return;
+                    }
                     UIImage *image = [UIImage imageWithData:imageData];
                     sizeGuideImage = image;
                     [self setupScrollViewBasedOnImage:sizeGuideImage];
