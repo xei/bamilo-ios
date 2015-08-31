@@ -224,7 +224,7 @@ NSString *kGTMToken = @"kGTMToken";
     // The container should have already been opened, otherwise events pushed to
     // the data layer will not fire tags in that container.
     TAGDataLayer *dataLayer = [TAGManager instance].dataLayer;
-    [[TAGManager instance].logger setLogLevel:kTAGLoggerLogLevelDebug];
+    [[TAGManager instance].logger setLogLevel:kTAGLoggerLogLevelNone];
     
     for(NSDictionary *event in self.pendingEvents)
     {
