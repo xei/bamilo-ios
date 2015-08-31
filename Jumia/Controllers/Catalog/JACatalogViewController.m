@@ -1687,8 +1687,9 @@
 - (void)killScroll
 {
     CGPoint offset = self.collectionView.contentOffset;
-    offset.x -= .1;
     offset.y -= .1;
+    [self.collectionView setContentOffset:offset animated:YES];
+    offset.y += .1;
     [self.collectionView setContentOffset:offset animated:YES];
 }
 
