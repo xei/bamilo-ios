@@ -690,6 +690,7 @@
         self.facebookLoginButton = [UIButton new];
         [self.facebookLoginButton setTitle:STRING_LOGIN_WITH_FACEBOOK forState:UIControlStateNormal];
         [self.facebookLoginButton addTarget:self action:@selector(facebookLoginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [self.facebookLoginButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:self.facebookLoginButton.titleLabel.font.pointSize]];
         [self.loginFormView addSubview:self.facebookLoginButton];
     }
     // Signup
