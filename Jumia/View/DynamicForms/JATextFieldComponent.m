@@ -38,6 +38,7 @@
 
 - (void)setupWithField:(RIField*)field
 {
+    // this triggers the constraints error output
     self.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.storedValue = @"";
@@ -68,6 +69,7 @@
 
 -(void)setupWithLabel:(NSString*)label value:(NSString*)value mandatory:(BOOL)mandatory
 {
+    // this triggers the constraints error output
     self.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.storedValue = @"";
