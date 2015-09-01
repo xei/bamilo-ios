@@ -225,7 +225,7 @@ JAPickerScrollViewDelegate
     }
     self.isLoadingOrders = YES;
     
-    [RIOrder getOrdersPage:[NSNumber numberWithInteger:self.currentOrdersPage]
+    [RIOrder getOrdersPage:[NSNumber numberWithInteger:self.currentOrdersPage+1]
                   maxItems:[NSNumber numberWithInteger:kOrdersPerPage]
           withSuccessBlock:^(NSArray *orders, NSInteger ordersTotal) {
               [self.orders addObjectsFromArray:orders];
