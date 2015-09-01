@@ -73,14 +73,13 @@
     [_favoriteButton setXRightAligned:6.f];
     _favoriteButtonRect = _favoriteButton.frame;
     
-    RICountryConfiguration* config = [RICountryConfiguration getCurrentConfiguration];
-    RILanguage* language = [config.languages firstObject];
+    NSString *langCode = [[NSUserDefaults standardUserDefaults] stringForKey:kLanguageCodeKey];
     NSString* imageName = @"ProductBadgeNew_";
-    if (NSNotFound != [language.langCode rangeOfString:@"fr"].location) {
+    if (NSNotFound != [langCode rangeOfString:@"fr"].location) {
         imageName = [imageName stringByAppendingString:@"fr"];
-    } else if (NSNotFound != [language.langCode rangeOfString:@"fa"].location) {
+    } else if (NSNotFound != [langCode rangeOfString:@"fa"].location) {
         imageName = [imageName stringByAppendingString:@"fa"];
-    } else if (NSNotFound != [language.langCode rangeOfString:@"pt"].location) {
+    } else if (NSNotFound != [langCode rangeOfString:@"pt"].location) {
         imageName = [imageName stringByAppendingString:@"pt"];
     } else {
         imageName = [imageName stringByAppendingString:@"en"];
