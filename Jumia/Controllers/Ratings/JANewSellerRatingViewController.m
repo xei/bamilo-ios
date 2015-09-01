@@ -31,6 +31,8 @@ UIAlertViewDelegate
 {
     JARatingsViewMedium* _ratingsView;
     CGFloat _ratingsViewWidth, _ratingsViewHeight;
+    BOOL _didAppeared;
+    BOOL _didSubViews;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *topView;
@@ -120,9 +122,45 @@ UIAlertViewDelegate
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+    _didAppeared = YES;
+    
+    if(_didSubViews)
+    {
+        if ([self landscapePopViewController]) {
+            return;
+        }
+    }
+    
     if (!self.reviewsForm) {
         [self formRequest];
     }
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    _didAppeared = NO;
+    _didSubViews = NO;
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    _didSubViews = YES;
+    if(_didAppeared)
+        [self landscapePopViewController];
+}
+
+- (BOOL)landscapePopViewController
+{
+    if(UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation || UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)
+    {
+        NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
+        [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:self userInfo:userInfo];
+        return YES;
+    }
+    return NO;
 }
 
 - (void)formRequest
@@ -228,21 +266,6 @@ UIAlertViewDelegate
                                       self.view.frame.size.width,
                                       topViewMinHeight)];
     [self.topView setHidden:NO];
-}
-
-- (void)viewDidLayoutSubviews
-{
-    
-    if(UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation || UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)
-    {
-        NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
-        [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC/1.5), dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:self userInfo:userInfo];
-        });
-        return;
-    }
 }
 
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
