@@ -137,9 +137,21 @@
     
     [self.sizeLabel setX:96.f];
     self.sizeLabel.font = [UIFont fontWithName:kFontLightName size:self.sizeLabel.font.pointSize];
-    self.sizeLabel.text = cartItem.variation;
+    
+    NSString *variationString = [cartItem.variation lowercaseString];
+    if ([@"1" isEqualToString:variationString] ||
+        [@"," isEqualToString:variationString] ||
+        [@"..." isEqualToString:variationString] ||
+        [@"." isEqualToString:variationString] ||
+        [@"\u2026" isEqualToString:variationString] )
+    {
+        variationString = @"";
+    }
+    
+    self.sizeLabel.text = variationString;
     [self.sizeLabel setNumberOfLines:1];
     [self.sizeLabel sizeToFit];
+    [self.sizeLabel setBackgroundColor:[UIColor greenColor]];
     
     self.discountLabel.font = [UIFont fontWithName:kFontBoldName size:self.discountLabel.font.pointSize];
     self.discountLabel.text = [NSString stringWithFormat:@"-%ld%%",[cartItem.savingPercentage longValue]];
