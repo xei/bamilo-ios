@@ -150,7 +150,6 @@
     self.sizeLabel.text = variationString;
     [self.sizeLabel setNumberOfLines:1];
     [self.sizeLabel sizeToFit];
-    [self.sizeLabel setBackgroundColor:[UIColor greenColor]];
     
     self.discountLabel.font = [UIFont fontWithName:kFontBoldName size:self.discountLabel.font.pointSize];
     self.discountLabel.text = [NSString stringWithFormat:@"-%ld%%",[cartItem.savingPercentage longValue]];
