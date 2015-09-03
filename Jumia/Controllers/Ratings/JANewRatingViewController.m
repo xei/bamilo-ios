@@ -132,7 +132,6 @@ UIAlertViewDelegate
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    NSLog(@"viewDidAppear");
     [super viewDidAppear:animated];
     _didAppeared = YES;
     
@@ -149,18 +148,35 @@ UIAlertViewDelegate
 
 - (void)viewDidLayoutSubviews
 {
-    NSLog(@"viewDidLayoutSubviews");
     [super viewDidLayoutSubviews];
     _didSubViews = YES;
     if(_didAppeared)
        [self landscapePopViewController];
 }
 
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [self hideViews];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    if(UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation || UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)
+    {
+        NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
+        [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:self userInfo:userInfo];
+    }
+}
+
 - (BOOL)landscapePopViewController
 {
     if(UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation || UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)
     {
-        NSLog(@"viewDidLayoutSubviews interfaceOrientation");
         NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
         [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:self userInfo:userInfo];
@@ -321,25 +337,6 @@ UIAlertViewDelegate
                                       self.view.frame.size.width,
                                       topViewMinHeight)];
     [self.topView setHidden:NO];
-}
-
--(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    [self hideViews];
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    
-    if(UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation || UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)
-    {
-        NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
-        [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:self userInfo:userInfo];
-    }
 }
 
 -(void)setupViews

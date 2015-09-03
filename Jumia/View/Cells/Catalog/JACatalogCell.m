@@ -35,14 +35,13 @@
     
     [self.backgroundContentView sendSubviewToBack:self.productImageView];
     
-    RICountryConfiguration* config = [RICountryConfiguration getCurrentConfiguration];
-    RILanguage* language = [config.languages firstObject];
+    NSString *langCode = [[NSUserDefaults standardUserDefaults] stringForKey:kLanguageCodeKey];
     NSString* imageName = @"ProductBadgeNew_";
-    if (NSNotFound != [language.langCode rangeOfString:@"fr"].location) {
+    if (NSNotFound != [langCode rangeOfString:@"fr"].location) {
         imageName = [imageName stringByAppendingString:@"fr"];
-    } else if (NSNotFound != [language.langCode rangeOfString:@"fa"].location) {
+    } else if (NSNotFound != [langCode rangeOfString:@"fa"].location) {
         imageName = [imageName stringByAppendingString:@"fa"];
-    } else if (NSNotFound != [language.langCode rangeOfString:@"pt"].location) {
+    } else if (NSNotFound != [langCode rangeOfString:@"pt"].location) {
         imageName = [imageName stringByAppendingString:@"pt"];
     } else {
         imageName = [imageName stringByAppendingString:@"en"];
@@ -137,7 +136,18 @@
     
     [self.sizeLabel setX:96.f];
     self.sizeLabel.font = [UIFont fontWithName:kFontLightName size:self.sizeLabel.font.pointSize];
-    self.sizeLabel.text = cartItem.variation;
+    
+    NSString *variationString = [cartItem.variation lowercaseString];
+    if ([@"1" isEqualToString:variationString] ||
+        [@"," isEqualToString:variationString] ||
+        [@"..." isEqualToString:variationString] ||
+        [@"." isEqualToString:variationString] ||
+        [@"\u2026" isEqualToString:variationString] )
+    {
+        variationString = @"";
+    }
+    
+    self.sizeLabel.text = variationString;
     [self.sizeLabel setNumberOfLines:1];
     [self.sizeLabel sizeToFit];
     
