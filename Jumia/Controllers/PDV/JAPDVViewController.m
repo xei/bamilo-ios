@@ -46,6 +46,9 @@ JAPDVGalleryDelegate,
 JAPickerDelegate,
 JAActivityViewControllerDelegate
 >
+{
+    BOOL _needRefreshProduct;
+}
 
 @property (strong, nonatomic) UIScrollView *mainScrollView;
 @property (strong, nonatomic) UIScrollView *landscapeScrollView;
@@ -117,7 +120,7 @@ JAActivityViewControllerDelegate
                                                  name: UIApplicationDidEnterBackgroundNotification
                                                object: nil];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductChangedNotification object:self.productUrl];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -136,7 +139,10 @@ JAActivityViewControllerDelegate
     if(self.hasLoaddedProduct)
     {
         [self removeSuperviews];
-        [self fillTheViews];
+        if (_needRefreshProduct)
+            [self loadCompleteProduct];
+        else
+            [self fillTheViews];
     }
     else
     {
@@ -158,12 +164,15 @@ JAActivityViewControllerDelegate
 
 - (void)updatedProduct:(NSNotification*)notification
 {
-    RIProduct* newProduct = notification.object;
-    if (VALID_NOTEMPTY(newProduct, RIProduct)) {
-        self.product = newProduct;
-        [self removeSuperviews];
-        [self fillTheViews];
+    NSString* productUrl = notification.object;
+    if ([self.productUrl isEqualToString:productUrl]) {
+        _needRefreshProduct = YES;
     }
+}
+
+- (void)setProduct:(RIProduct *)product
+{
+    _product = product;
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -340,6 +349,7 @@ JAActivityViewControllerDelegate
     
     if (VALID_NOTEMPTY(self.productUrl, NSString)) {
         [RIProduct getCompleteProductWithUrl:self.productUrl successBlock:^(id product) {
+            _needRefreshProduct = NO;
             self.apiResponse = RIApiResponseSuccess;
             
             [self loadedProduct:product];
@@ -608,7 +618,7 @@ JAActivityViewControllerDelegate
     
     [RIProduct addToRecentlyViewed:product successBlock:^(RIProduct *product) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                            object:self.product];
+                                                            object:self.productUrl];
         [self requestReviews];
     } andFailureBlock:nil];
     
@@ -2155,7 +2165,7 @@ JAActivityViewControllerDelegate
             }
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                                object:self.product];
+                                                                object:self.productUrl];
             
             [self showMessage:STRING_ADDED_TO_WISHLIST success:YES];
             
@@ -2195,7 +2205,7 @@ JAActivityViewControllerDelegate
             [self showMessage:STRING_REMOVED_FROM_WISHLIST success:YES];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                                object:self.product];
+                                                                object:self.productUrl];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             
             [self showMessage:STRING_ERROR_ADDING_TO_WISHLIST success:NO];
