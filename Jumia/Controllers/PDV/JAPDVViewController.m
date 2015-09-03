@@ -159,7 +159,7 @@ JAActivityViewControllerDelegate
 - (void)updatedProduct:(NSNotification*)notification
 {
     RIProduct* newProduct = notification.object;
-    if (VALID_NOTEMPTY(newProduct, RIProduct)) {
+    if (VALID_NOTEMPTY(newProduct, RIProduct) && [newProduct.sku isEqualToString:self.product.sku]) {
         self.product = newProduct;
         [self removeSuperviews];
         [self fillTheViews];
