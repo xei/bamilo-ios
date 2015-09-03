@@ -1508,7 +1508,6 @@ JAActivityViewControllerDelegate
                                                                     data:[trackingDictionary copy]];
                           
                           NSMutableDictionary *tracking = [NSMutableDictionary new];
-                          [tracking setValue:[NSDate new] forKey:kRIEventDateLastAddedToCartKey];
                           [tracking setValue:self.product.name forKey:kRIEventProductNameKey];
                           [tracking setValue:self.product.sku forKey:kRIEventSkuKey];
                           if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet)) {

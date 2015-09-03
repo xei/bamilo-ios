@@ -450,7 +450,6 @@
                       
                       
                       NSMutableDictionary *tracking = [NSMutableDictionary new];
-                      [tracking setValue:[NSDate new] forKey:kRIEventDateLastAddedToCartKey];
                       [tracking setValue:product.name forKey:kRIEventProductNameKey];
                       [tracking setValue:product.sku forKey:kRIEventSkuKey];
                       if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet)) {
