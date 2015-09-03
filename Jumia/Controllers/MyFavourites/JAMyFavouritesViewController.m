@@ -633,7 +633,6 @@
                                                                              data:[trackingDictionary copy]];
                                    
                                    NSMutableDictionary *tracking = [NSMutableDictionary new];
-                                   [tracking setValue:[NSDate new] forKey:kRIEventDateLastAddedToCartKey];
                                    [tracking setValue:product.name forKey:kRIEventProductNameKey];
                                    [tracking setValue:product.sku forKey:kRIEventSkuKey];
                                    if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet)) {
@@ -887,7 +886,6 @@
                       [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
                       
                       NSMutableDictionary *tracking = [NSMutableDictionary new];
-                      [tracking setValue:[NSDate new] forKey:kRIEventDateLastAddedToCartKey];
                       [tracking setValue:product.name forKey:kRIEventProductNameKey];
                       [tracking setValue:product.sku forKey:kRIEventSkuKey];
                       if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet)) {
@@ -933,7 +931,6 @@
                           [[NSUserDefaults standardUserDefaults] synchronize];
                           
                           NSMutableDictionary *tracking = [NSMutableDictionary new];
-                          [tracking setValue:[NSDate new] forKey:kRIEventDateLastAddedToCartKey];
                           [tracking setValue:product.name forKey:kRIEventProductNameKey];
                           [tracking setValue:product.sku forKey:kRIEventSkuKey];
                           [tracking setValue:[product.categoryIds lastObject] forKey:kRIEventLastCategoryAddedToCartKey];

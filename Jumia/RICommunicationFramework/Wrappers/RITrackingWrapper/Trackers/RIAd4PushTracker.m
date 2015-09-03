@@ -508,10 +508,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 [BMA4STracker updateDeviceInfo:deviceInfo];
                 break;
             case RIEventLastAddedToCart:
-                if([data objectForKey:kRIEventDateLastAddedToCartKey])
-                {
-                    [deviceInfo setObject:[data objectForKey:kRIEventDateLastAddedToCartKey] forKey:kAd4PushProfileDateLastAddedToCartKey];
-                }
+                [deviceInfo setObject:currentDate forKey:kAd4PushProfileDateLastAddedToCartKey];
                 if([data objectForKey:kRIEventProductNameKey])
                 {
                     [deviceInfo setObject:[data objectForKey:kRIEventProductNameKey] forKey:kAd4PushProfileLastCartProductNameKey];
