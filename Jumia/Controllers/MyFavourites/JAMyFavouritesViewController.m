@@ -101,6 +101,24 @@
     self.flowLayout.minimumInteritemSpacing = 0;
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     [self.collectionView setCollectionViewLayout:self.flowLayout];
+    
+    self.collectionView.frame = CGRectMake(6.0f,
+                                           self.collectionView.frame.origin.y,
+                                           self.view.frame.size.width - 6.0f*2,
+                                           self.view.frame.size.height);
+    
+    self.emptyFavoritesView.frame = CGRectMake(self.emptyFavoritesView.frame.origin.x,
+                                               self.emptyFavoritesView.frame.origin.y,
+                                               self.view.frame.size.width - self.emptyFavoritesView.frame.origin.x * 2,
+                                               300.0f);
+    self.emptyFavoritesImageView.frame = CGRectMake((self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2,
+                                                    56.0f,
+                                                    self.emptyFavoritesImageView.frame.size.width,
+                                                    self.emptyFavoritesImageView.frame.size.height);
+    self.emptyFavoritesLabel.frame = CGRectMake(12.0f,
+                                                183.0f,
+                                                self.emptyFavoritesView.frame.size.width - 12*2,
+                                                self.emptyFavoritesLabel.frame.size.height);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -117,6 +135,24 @@
     [super viewDidAppear:animated];
     
     [[RITrackingWrapper sharedInstance]trackScreenWithName:@"Favourites"];
+    
+    self.collectionView.frame = CGRectMake(6.0f,
+                                           self.collectionView.frame.origin.y,
+                                           self.view.frame.size.width - 6.0f*2,
+                                           self.view.frame.size.height);
+    
+    self.emptyFavoritesView.frame = CGRectMake(self.emptyFavoritesView.frame.origin.x,
+                                               self.emptyFavoritesView.frame.origin.y,
+                                               self.view.frame.size.width - self.emptyFavoritesView.frame.origin.x * 2,
+                                               300.0f);
+    self.emptyFavoritesImageView.frame = CGRectMake((self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2,
+                                                    56.0f,
+                                                    self.emptyFavoritesImageView.frame.size.width,
+                                                    self.emptyFavoritesImageView.frame.size.height);
+    self.emptyFavoritesLabel.frame = CGRectMake(12.0f,
+                                                183.0f,
+                                                self.emptyFavoritesView.frame.size.width - 12*2,
+                                                self.emptyFavoritesLabel.frame.size.height);
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -131,7 +167,7 @@
                                            self.view.frame.size.height);
     [self.collectionView reloadData];
     
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+//    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
         self.emptyFavoritesView.frame = CGRectMake(self.emptyFavoritesView.frame.origin.x,
                                                    self.emptyFavoritesView.frame.origin.y,
                                                    self.view.frame.size.width - self.emptyFavoritesView.frame.origin.x * 2,
@@ -144,7 +180,7 @@
                                                     183.0f,
                                                     self.emptyFavoritesView.frame.size.width - 12*2,
                                                     self.emptyFavoritesLabel.frame.size.height);
-    }
+//    }
     
     [self changeViewToInterfaceOrientation:self.interfaceOrientation];
 }
