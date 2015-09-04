@@ -115,6 +115,9 @@ UIAlertViewDelegate
                                              selector:@selector(hideKeyboards)
                                                  name:kOpenMenuNotification
                                                object:nil];
+    
+    if (!self.ratingsForm)
+        [self ratingsRequests];
 }
 
 -(void) viewWillDisappear:(BOOL)animated
@@ -141,9 +144,6 @@ UIAlertViewDelegate
             return;
         }
     }
-    
-    if (!self.ratingsForm)
-        [self ratingsRequests];
 }
 
 - (void)viewDidLayoutSubviews
