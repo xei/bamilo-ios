@@ -423,7 +423,7 @@ UICollectionViewDelegateFlowLayout
             }
             else
             {
-                collectionViewHeight += 53.0f; // JAShippingInfoCell Height
+                collectionViewHeight += 70.0f; // JAShippingInfoCell Height
             }
         }
         
@@ -606,7 +606,7 @@ UICollectionViewDelegateFlowLayout
         if(indexPath.row <= self.collectionViewIndexSelected.row || indexPath.row > (self.collectionViewIndexSelected.row + [self.pickupStationsForRegion count] + 1))
         {
             // Shipping method title cell
-            sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, 44.0f);
+            sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, 40.0f);
         }
         else if(indexPath.row == (self.collectionViewIndexSelected.row + 1))
         {
