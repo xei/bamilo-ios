@@ -491,7 +491,6 @@
                                                                 data:[trackingDictionary copy]];
                       
                       NSMutableDictionary *tracking = [NSMutableDictionary new];
-                      [tracking setValue:[NSDate date] forKey:kRIEventDateLastAddedToCartKey];
                       [tracking setValue:self.backupCampaignProduct.name forKey:kRIEventProductNameKey];
                       [tracking setValue:self.backupCampaignProduct.sku forKey:kRIEventSkuKey];
                       [tracking setValue:nil forKey:kRIEventLastCategoryAddedToCartKey];
