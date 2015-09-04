@@ -111,6 +111,10 @@ UIAlertViewDelegate
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
+    
+    if (!self.reviewsForm) {
+        [self formRequest];
+    }
 }
 
 -(void) viewWillDisappear:(BOOL)animated
@@ -130,10 +134,6 @@ UIAlertViewDelegate
         if ([self landscapePopViewController]) {
             return;
         }
-    }
-    
-    if (!self.reviewsForm) {
-        [self formRequest];
     }
 }
 
