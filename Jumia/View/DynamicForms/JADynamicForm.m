@@ -324,7 +324,7 @@
     
     if(-1 != birthdayFieldPosition && VALID_NOTEMPTY(dayField, RIField) && VALID_NOTEMPTY(monthField, RIField) && VALID_NOTEMPTY(yearField, RIField))
     {
-        [birthDateComponent setupWithLabel:@"Birthday" day:dayField month:monthField year:yearField];
+        [birthDateComponent setupWithLabel:STRING_BIRTHDAY day:dayField month:monthField year:yearField];
         [birthDateComponent.textField setDelegate:self];
         [birthDateComponent.textField setReturnKeyType:returnKeyType];
         
