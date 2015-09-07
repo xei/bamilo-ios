@@ -178,8 +178,12 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
 {
     RIDebugLog(@"Ad4Push - Registering for remote notifications.");
     
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *formattedDateString = [dateFormatter stringFromDate:[NSDate date]];
+    
     NSMutableDictionary *deviceInfo = [[NSMutableDictionary alloc] init];
-    [deviceInfo setObject:[NSDate date] forKey:kAd4PushProfilelastPushNotificationOpenedKey];
+    [deviceInfo setObject:formattedDateString forKey:kAd4PushProfilelastPushNotificationOpenedKey];
     [BMA4STracker updateDeviceInfo:deviceInfo];
     
     id tracker = [BMA4SNotification sharedBMA4S];
