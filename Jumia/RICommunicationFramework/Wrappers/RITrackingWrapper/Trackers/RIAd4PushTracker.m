@@ -612,16 +612,8 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
     
     NSNumber *total = [data objectForKey:kRIEcommerceTotalValueKey];
     [deviceInfo setObject:total forKey:kAd4PushProfileCartValueKey];
-    
-    CGFloat grandTotalValue = 0.0f;
-    NSNumber *grandTotal = [[NSUserDefaults standardUserDefaults] objectForKey:kAd4PushProfilePurchaseGrandTotalKey];
-    if(VALID_NOTEMPTY(grandTotal, NSNumber))
-    {
-        grandTotalValue = [grandTotal floatValue];
-    }
-    grandTotalValue += [total floatValue];
-    grandTotal = [NSNumber numberWithFloat:grandTotalValue];
-    [[NSUserDefaults standardUserDefaults] setObject:grandTotal forKey:kAd4PushProfilePurchaseGrandTotalKey];
+
+    NSNumber *grandTotal = [data objectForKey:kRIEcommerceGrandTotalValueKey];
     [deviceInfo setObject:grandTotal forKey:kAd4PushProfilePurchaseGrandTotalKey];
     
     NSInteger numberOfProducts = 0;

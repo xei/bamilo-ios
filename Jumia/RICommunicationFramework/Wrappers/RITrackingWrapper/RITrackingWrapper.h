@@ -343,6 +343,8 @@ typedef NS_ENUM(NSInteger, RIEventType) {
 #define kRIEcommerceCurrencyKey             @"RIEcommerceCurrencyKey"
 #define kRIEcommerceTotalValueKey           @"RIEcommerceTotalValueKey"
 #define kRIEcommerceConvertedTotalValueKey  @"RIEcommerceConvertedTotalValueKey"
+#define kRIEcommerceGrandTotalValueKey      @"RIEcommerceGrandTotalValueKey"
+#define kRIEcommerceConvertedGrandTotalValueKey @"RIEcommerceConvertedGrandTotalValueKey"
 #define kRIEcommerceSkusKey                 @"RIEcommerceSkusValueKey"
 #define kRIEcommerceGuestKey                @"RIEcommerceGuestKey"
 #define kRIEcommerceProducts                @"RIEcommerceProducts"
