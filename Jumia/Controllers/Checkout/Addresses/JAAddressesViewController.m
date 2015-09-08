@@ -460,6 +460,7 @@ UICollectionViewDelegateFlowLayout>
     [_bottomView setHidden:NO];
     
     if (RI_IS_RTL) {
+        [_bottomView setTotalValue:_bottomView.totalValue];
         [self.view flipAllSubviews];
     }
 }

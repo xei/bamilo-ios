@@ -92,6 +92,8 @@
         [_submitButton setX:self.width/2 + 5];
         [_submitButton setWidth:self.width/2 - 10];
         [_totalView setX:0];
+        [_totalLabel setTextAlignment:NSTextAlignmentLeft];
+        [_totalLabelValue setTextAlignment:NSTextAlignmentLeft];
     }
 }
 
