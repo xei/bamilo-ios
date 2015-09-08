@@ -369,16 +369,27 @@
     [ecommerceDictionary setValue:self.checkout.orderSummary.shippingAmount forKey:kRIEcommerceShippingKey];
     [ecommerceDictionary setValue:self.checkout.orderSummary.taxAmount forKey:kRIEcommerceTaxKey];
     
-    NSNumber *grandTotal = self.cart.cartValue;
+    NSNumber *total = self.cart.cartValue;
 
-    NSNumber *convertedGrandTotal = [NSNumber numberWithFloat:0.0f];
+    NSNumber *convertedTotal = [NSNumber numberWithFloat:0.0f];
     if(VALID_NOTEMPTY(self.cart.cartValueEuroConverted, NSNumber))
     {
-        convertedGrandTotal = self.cart.cartValueEuroConverted;
+        convertedTotal = self.cart.cartValueEuroConverted;
     }
     
-    [ecommerceDictionary setValue:grandTotal forKey:kRIEcommerceTotalValueKey];
-    [ecommerceDictionary setValue:convertedGrandTotal forKey:kRIEcommerceConvertedTotalValueKey];
+    [ecommerceDictionary setValue:total forKey:kRIEcommerceTotalValueKey];
+    [ecommerceDictionary setValue:convertedTotal forKey:kRIEcommerceConvertedTotalValueKey];
+    
+    NSNumber *grandTotal = self.checkout.orderSummary.grandTotal;
+    
+    NSNumber *convertedGrandTotal = [NSNumber numberWithFloat:0.0f];
+    if(VALID_NOTEMPTY(self.checkout.orderSummary.grandTotalEuroConverted, NSNumber))
+    {
+        convertedGrandTotal = self.checkout.orderSummary.grandTotalEuroConverted;
+    }
+    
+    [ecommerceDictionary setValue:grandTotal forKey:kRIEcommerceGrandTotalValueKey];
+    [ecommerceDictionary setValue:convertedGrandTotal forKey:kRIEcommerceConvertedGrandTotalValueKey];
     
     if([RICustomer wasSignup])
     {

@@ -47,6 +47,7 @@
 @interface RIOrder : NSObject
 
 @property (nonatomic, strong) NSNumber *grandTotal;
+@property (nonatomic, strong) NSNumber *grandTotalEuroConverted;
 @property (nonatomic, strong) NSNumber *shippingAmount;
 @property (nonatomic, strong) NSNumber *extraCost;
 @property (nonatomic, strong) NSNumber *installmentFees;

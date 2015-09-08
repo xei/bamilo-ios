@@ -31,6 +31,10 @@
         order.grandTotal = [orderObject objectForKey:@"grand_total"];
     }
     
+    if (VALID_NOTEMPTY([orderObject objectForKey:@"grand_total_converted"], NSNumber)) {
+        order.grandTotalEuroConverted = [orderObject objectForKey:@"grand_total_converted"];
+    }
+    
     if (VALID_NOTEMPTY([orderObject objectForKey:@"shipping_amount"], NSNumber)) {
         order.shippingAmount = [orderObject objectForKey:@"shipping_amount"];
     }
