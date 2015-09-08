@@ -546,7 +546,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
             case RIEventRateProduct:
                 if ([data objectForKey:kRIEventSkuKey])
                 {
-                    [deviceInfo setObject:[data objectForKey:kRIEventSkuKey] forKey:kAd4PushProfileLastProductSharedKey];
+                    [deviceInfo setObject:[data objectForKey:kRIEventSkuKey] forKey:kAd4PushProfileLastProductReviewedKey];
                 }
                 [BMA4STracker updateDeviceInfo:deviceInfo];
                 break;
