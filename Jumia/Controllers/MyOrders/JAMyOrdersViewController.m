@@ -101,9 +101,6 @@ JAPickerScrollViewDelegate
     self.navBarLayout.title = STRING_MY_ORDERS;
     
     self.sortList = [NSArray arrayWithObjects:STRING_ORDER_TRACKING, STRING_MY_ORDER_HISTORY, nil];
-    if (RI_IS_RTL) {
-        self.sortList = [NSArray arrayWithObjects:STRING_MY_ORDER_HISTORY, STRING_ORDER_TRACKING, nil];
-    }
     
     [self.contentScrollView setPagingEnabled:YES];
     [self.contentScrollView setScrollEnabled:NO];
@@ -215,24 +212,6 @@ JAPickerScrollViewDelegate
     }
 }
 
-- (void)appWillEnterForeground
-{
-    self.animatedScroll = NO;
-    
-    [self selectedIndex:0];
-    
-    [self setupMyOrdersViews:self.view.frame.size.width height:self.view.frame.size.height interfaceOrientation:self.interfaceOrientation];
-    
-    self.myOrdersPickerScrollView.startingIndex = self.selectedIndex;
-    
-    //this will trigger load methods
-    [self.myOrdersPickerScrollView setOptions:self.sortList];
-    
-    [self setupViews];
-    
-    [self hideLoading];
-}
-
 - (void) loadOrders
 {
     if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
@@ -292,13 +271,24 @@ JAPickerScrollViewDelegate
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [self setupMyOrdersViews:self.view.frame.size.width height:self.view.frame.size.height interfaceOrientation:self.interfaceOrientation];
-    
     [self setupViews];
     
     [self hideLoading];
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+}
+
+- (void)appWillEnterForeground
+{
+    [self showLoading];
+    
+    if (RI_IS_RTL) {
+        [self.myOrdersPickerScrollView flipAllSubviews];
+    }
+    
+    [self setupViews];
+    
+    [self hideLoading];
 }
 
 - (void)setupViews
