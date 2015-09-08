@@ -617,8 +617,13 @@ JAActivityViewControllerDelegate
     }
     
     [RIProduct addToRecentlyViewed:product successBlock:^(RIProduct *product) {
+        NSDictionary *userInfo = nil;
+        if (self.product.favoriteAddDate) {
+            userInfo = [NSDictionary dictionaryWithObject:self.product.favoriteAddDate forKey:@"favoriteAddDate"];
+        }
         [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                            object:self.productUrl];
+                                                            object:self.productUrl
+                                                          userInfo:userInfo];
         [self requestReviews];
     } andFailureBlock:nil];
     
@@ -2163,8 +2168,13 @@ JAActivityViewControllerDelegate
                 self.product.favoriteAddDate = nil;
             }
             
+            NSDictionary *userInfo = nil;
+            if (self.product.favoriteAddDate) {
+                userInfo = [NSDictionary dictionaryWithObject:self.product.favoriteAddDate forKey:@"favoriteAddDate"];
+            }
             [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                                object:self.productUrl];
+                                                                object:self.productUrl
+                                                              userInfo:userInfo];
             
             [self showMessage:STRING_ADDED_TO_WISHLIST success:YES];
             
@@ -2202,9 +2212,13 @@ JAActivityViewControllerDelegate
                                                       data:[trackingDictionary copy]];
             
             [self showMessage:STRING_REMOVED_FROM_WISHLIST success:YES];
-            
+            NSDictionary *userInfo = nil;
+            if (self.product.favoriteAddDate) {
+                userInfo = [NSDictionary dictionaryWithObject:self.product.favoriteAddDate forKey:@"favoriteAddDate"];
+            }
             [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                                object:self.productUrl];
+                                                                object:self.productUrl
+                                                              userInfo:userInfo];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             
             [self showMessage:STRING_ERROR_ADDING_TO_WISHLIST success:NO];

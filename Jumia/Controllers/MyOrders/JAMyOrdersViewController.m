@@ -185,8 +185,6 @@ JAPickerScrollViewDelegate
     [self.ordersCollectionView setHidden:YES];
     
     [self.contentScrollView addSubview:self.ordersCollectionView];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotateFromInterfaceOrientation:) name:kAppWillEnterForeground object:nil];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -215,6 +213,32 @@ JAPickerScrollViewDelegate
     } else {
         [self setupViews];
     }
+}
+
+- (void)appWillEnterForeground
+{
+    [self.contentScrollView setHidden:YES];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [NSThread sleepForTimeInterval:.5];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIView animateWithDuration:.3 animations:^{
+                [self.contentScrollView setHidden:NO];
+            }];
+        });
+    });
+    
+    [self setupMyOrdersViews:self.view.frame.size.width height:self.view.frame.size.height interfaceOrientation:self.interfaceOrientation];
+    
+    self.myOrdersPickerScrollView.startingIndex = self.selectedIndex;
+    
+    //this will trigger load methods
+    [self.myOrdersPickerScrollView setOptions:self.sortList];
+    
+    [self setupViews];
+    
+    [self selectedIndex:_pickerScrollIndex];
+    
+    [self hideLoading];
 }
 
 - (void) loadOrders
@@ -279,8 +303,6 @@ JAPickerScrollViewDelegate
     [self setupMyOrdersViews:self.view.frame.size.width height:self.view.frame.size.height interfaceOrientation:self.interfaceOrientation];
     
     [self setupViews];
-    
-    [self selectedIndex:_pickerScrollIndex];
     
     [self hideLoading];
     

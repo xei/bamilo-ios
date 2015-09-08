@@ -283,6 +283,8 @@
     }
     
     [[RITrackingWrapper sharedInstance] applicationDidEnterBackground:application];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kAppDidEnterBackground object:nil];
 }
 
 // In case the app was sent into the background when there was no network connection, we will use
