@@ -179,7 +179,7 @@ UICollectionViewDelegateFlowLayout>
     [self.contentScrollView setHidden:YES];
     [_bottomView setHidden:YES];
     
-    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+    [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:.3];
 }
 
 -(void)viewDidAppear:(BOOL)animated
