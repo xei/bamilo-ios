@@ -217,15 +217,9 @@ JAPickerScrollViewDelegate
 
 - (void)appWillEnterForeground
 {
-    [self.contentScrollView setHidden:YES];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [NSThread sleepForTimeInterval:.5];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [UIView animateWithDuration:.3 animations:^{
-                [self.contentScrollView setHidden:NO];
-            }];
-        });
-    });
+    self.animatedScroll = NO;
+    
+    [self selectedIndex:0];
     
     [self setupMyOrdersViews:self.view.frame.size.width height:self.view.frame.size.height interfaceOrientation:self.interfaceOrientation];
     
@@ -235,8 +229,6 @@ JAPickerScrollViewDelegate
     [self.myOrdersPickerScrollView setOptions:self.sortList];
     
     [self setupViews];
-    
-    [self selectedIndex:_pickerScrollIndex];
     
     [self hideLoading];
 }
@@ -311,8 +303,6 @@ JAPickerScrollViewDelegate
 
 - (void)setupViews
 {
-    self.animatedScroll = NO;
-    
     self.contentScrollView.contentSize = CGSizeMake(self.view.frame.size.width * [self.sortList count], self.view.frame.size.height - self.myOrdersPickerScrollView.frame.size.height);
     
     [self setupMyOrdersViews:self.view.frame.size.width height:self.view.frame.size.height - self.myOrdersPickerScrollView.frame.size.height interfaceOrientation:self.interfaceOrientation];
