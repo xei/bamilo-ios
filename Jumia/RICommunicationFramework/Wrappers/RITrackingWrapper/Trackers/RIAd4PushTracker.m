@@ -124,6 +124,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         [events addObject:[NSNumber numberWithInt:RIEventShareSMS]];
         [events addObject:[NSNumber numberWithInt:RIEventShareTwitter]];
         [events addObject:[NSNumber numberWithInt:RIEventRateProduct]];
+        [events addObject:[NSNumber numberWithInt:RIEventMostViewedBrand]];
         
         self.registeredEvents = [events copy];
     }
@@ -207,7 +208,9 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         return;
     }
     
-    [[BMA4SNotification sharedBMA4S] didReceiveRemoteNotification:userInfo];
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        [[BMA4SNotification sharedBMA4S] didReceiveRemoteNotification:userInfo];
+    });
 }
 
 - (void)applicationDidReceiveLocalNotification:(UILocalNotification *)notification
@@ -220,8 +223,9 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         RIRaiseError(@"Missing Ad4Push tracker");
         return;
     }
-    
-    [[BMA4SNotification sharedBMA4S] didReceiveLocalNotification:notification];
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        [[BMA4SNotification sharedBMA4S] didReceiveLocalNotification:notification];
+    });
 }
 
 #pragma mark - RIOpenURL protocol
@@ -608,16 +612,8 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
     
     NSNumber *total = [data objectForKey:kRIEcommerceTotalValueKey];
     [deviceInfo setObject:total forKey:kAd4PushProfileCartValueKey];
-    
-    CGFloat grandTotalValue = 0.0f;
-    NSNumber *grandTotal = [[NSUserDefaults standardUserDefaults] objectForKey:kAd4PushProfilePurchaseGrandTotalKey];
-    if(VALID_NOTEMPTY(grandTotal, NSNumber))
-    {
-        grandTotalValue = [grandTotal floatValue];
-    }
-    grandTotalValue += [total floatValue];
-    grandTotal = [NSNumber numberWithFloat:grandTotalValue];
-    [[NSUserDefaults standardUserDefaults] setObject:grandTotal forKey:kAd4PushProfilePurchaseGrandTotalKey];
+
+    NSNumber *grandTotal = [data objectForKey:kRIEcommerceGrandTotalValueKey];
     [deviceInfo setObject:grandTotal forKey:kAd4PushProfilePurchaseGrandTotalKey];
     
     NSInteger numberOfProducts = 0;

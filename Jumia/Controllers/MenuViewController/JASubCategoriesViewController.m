@@ -261,7 +261,7 @@ UITableViewDelegate
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventTopCategory]
                                                       data:[NSDictionary dictionaryWithObject:[RICategory getTopCategory:self.currentCategory] forKey:kRIEventCategoryNameKey]];
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastViewedCategory] data:[NSDictionary dictionaryWithObject:self.currentCategory.uid forKey:kRIEventLastViewedCategoryKey]];
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastViewedCategory] data:[NSDictionary dictionaryWithObject:self.currentCategory.name forKey:kRIEventLastViewedCategoryKey]];
             return;
         }
     } else {
@@ -304,7 +304,7 @@ UITableViewDelegate
                                                             object:@{@"category":category}];
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventTopCategory]
                                                   data:[NSDictionary dictionaryWithObject:[RICategory getTopCategory:category] forKey:kRIEventCategoryNameKey]];
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastViewedCategory] data:[NSDictionary dictionaryWithObject:category.uid
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastViewedCategory] data:[NSDictionary dictionaryWithObject:category.name
                                                                                                                                            forKey:kRIEventLastViewedCategoryKey]];
     }
 }
