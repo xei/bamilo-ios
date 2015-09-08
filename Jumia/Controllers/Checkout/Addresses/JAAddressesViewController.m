@@ -179,7 +179,7 @@ UICollectionViewDelegateFlowLayout>
     [self.contentScrollView setHidden:YES];
     [_bottomView setHidden:YES];
     
-    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+    [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:.3];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -460,6 +460,7 @@ UICollectionViewDelegateFlowLayout>
     [_bottomView setHidden:NO];
     
     if (RI_IS_RTL) {
+        [_bottomView setTotalValue:_bottomView.totalValue];
         [self.view flipAllSubviews];
     }
 }

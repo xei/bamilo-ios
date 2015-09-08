@@ -565,6 +565,7 @@
         [self.subtotalTitle setBackgroundColor:[UIColor clearColor]];
         [self.subtotalView addSubview:self.subtotalTitle];
     }
+    [self.subtotalTitle setTextAlignment:NSTextAlignmentLeft];
     [self.subtotalTitle setFrame:CGRectMake(horizontalMargin, 0.0f, self.cartScrollView.frame.size.width - (2 * horizontalMargin), 26.0f)];
     
     if (!self.subtotalTitleSeparator) {
@@ -591,7 +592,7 @@
         [self.articlesCount setText:[NSString stringWithFormat:STRING_ITEMS_CART, cartCount]];
     }
     [self.articlesCount sizeToFit];
-    [self.articlesCount setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.subtotalTitleSeparator.frame) + 10.0f, 50.f, self.articlesCount.frame.size.height)];
+    [self.articlesCount setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.subtotalTitleSeparator.frame) + 10.0f, self.articlesCount.width, self.articlesCount.frame.size.height)];
     
     CGRect articleNumberWidth = [self.articlesCount.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)
                                                                        options:NSStringDrawingUsesLineFragmentOrigin

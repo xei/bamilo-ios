@@ -60,10 +60,11 @@
     [self.label sizeToFit];
     
     if (!_shippingFeeAlert) {
-        _shippingFeeAlert = [[UILabel alloc] initWithFrame:CGRectMake(self.label.x, CGRectGetMaxY(self.label.frame) + 4, self.contentView.width, self.label.height)];
+        _shippingFeeAlert = [[UILabel alloc] initWithFrame:CGRectMake(27.0f, CGRectGetMaxY(self.label.frame) + 4, self.contentView.width, self.label.height)];
         [self.contentView addSubview:_shippingFeeAlert];
     }
     
+    [_shippingFeeAlert setX:27.0f];
     [_shippingFeeAlert setTextColor:self.label.textColor];
     [_shippingFeeAlert setText:STRING_SHIPPING_FEE_INFO];
     [_shippingFeeAlert setFont:[UIFont fontWithName:kFontLightName size:11.0f]];
