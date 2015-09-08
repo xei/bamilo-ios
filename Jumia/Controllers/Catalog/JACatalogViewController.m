@@ -198,11 +198,6 @@
                                                  name:kDidPressNavBar
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(changedFavoriteStateOfProduct:)
-                                                 name:kProductChangedNotification
-                                               object:nil];
-    
     self.apiResponse = RIApiResponseSuccess;
     
     if (self.forceShowBackButton)
@@ -264,6 +259,11 @@
         CGPoint contentOffset = self.collectionView.contentOffset;
         [self.collectionView setContentOffset:contentOffset];
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updatedProduct:)
+                                                 name:kProductChangedNotification
+                                               object:nil];
 }
 
 - (void)viewDidLayoutSubviews
@@ -278,6 +278,7 @@
 {
     [super viewDidAppear:animated];
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"ShopCatalogList"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductChangedNotification object:nil];
 }
  
 - (void)setupViews
@@ -1290,19 +1291,21 @@
 }
 
 #pragma mark - kProductChangedNotification
-- (void)changedFavoriteStateOfProduct:(NSNotification*)notification;
+
+- (void)updatedProduct:(NSNotification *)notification
 {
-    RIProduct* product = (RIProduct*) notification.object;
-    
-    if (VALID_NOTEMPTY(product, RIProduct)) {
-        for (int i = 0; i < self.productsArray.count; i++)
-        {
-            RIProduct* currentProduct = [self.productsArray objectAtIndex:i];
-            if ([currentProduct.sku isEqualToString:product.sku])
-            {
-                currentProduct.favoriteAddDate = product.favoriteAddDate;
-                [self.collectionView reloadItemsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]]];
-            }
+    NSString* productUrl = notification.object;
+    int i = 0;
+    for(; i < self.productsArray.count; i++)
+    {
+        RIProduct *product = [self.productsArray objectAtIndex:i];
+        if ([productUrl isEqualToString:product.url]) {
+            product.favoriteAddDate = nil;
+            if (notification.userInfo && [notification.userInfo objectForKey:@"favoriteAddDate"]) {
+                NSDate *date =[notification.userInfo objectForKey:@"favoriteAddDate"];
+                product.favoriteAddDate = date;
+            }else
+                product.favoriteAddDate = nil;
         }
     }
 }
@@ -1475,9 +1478,13 @@
                                         [self hideLoading];
                                         
                                         [self showMessage:STRING_ADDED_TO_WISHLIST success:YES];
-                                        
+                                        NSDictionary *userInfo = nil;
+                                        if (product.favoriteAddDate) {
+                                            userInfo = [NSDictionary dictionaryWithObject:product.favoriteAddDate forKey:@"favoriteAddDate"];
+                                        }
                                         [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                                                            object:product];
+                                                                                            object:product
+                                                                                          userInfo:userInfo];
                                         
                                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                                         NSString *addToWishlistError = STRING_ERROR_ADDING_TO_WISHLIST;
@@ -1530,8 +1537,13 @@
             
             [self showMessage:STRING_REMOVED_FROM_WISHLIST success:YES];
             
+            NSDictionary *userInfo = nil;
+            if (product.favoriteAddDate) {
+                userInfo = [NSDictionary dictionaryWithObject:product.favoriteAddDate forKey:@"favoriteAddDate"];
+            }
             [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                                object:product];
+                                                                object:product
+                                                              userInfo:userInfo];
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             [self hideLoading];
