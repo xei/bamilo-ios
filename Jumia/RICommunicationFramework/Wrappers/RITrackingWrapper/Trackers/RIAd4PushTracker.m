@@ -124,6 +124,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         [events addObject:[NSNumber numberWithInt:RIEventShareSMS]];
         [events addObject:[NSNumber numberWithInt:RIEventShareTwitter]];
         [events addObject:[NSNumber numberWithInt:RIEventRateProduct]];
+        [events addObject:[NSNumber numberWithInt:RIEventMostViewedBrand]];
         
         self.registeredEvents = [events copy];
     }
