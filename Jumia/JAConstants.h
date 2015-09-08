@@ -20,6 +20,7 @@
 #define kExternalPaymentValue @"NOTIFICATION_EXTERNAL_PAYMENT_VALUE"
 #define kDeactivateExternalPaymentNotification @"NOTIFICATION_DEACTIVATE_EXTERNAL_PAYMENT_VALUE"
 #define kAppWillEnterForeground @"NOTIFICATION_APP_WILL_ENTER_FOREGROUND"
+#define kAppDidEnterBackground @"NOTIFICATION_APP_DID_ENTER_BACKGROUND"
 #define kHomeShouldReload @"NOTIFICATION_HOME_SHOULD_RELOAD"
 #define kSideMenuShouldReload @"NOTIFICATION_SIDE_MENU_SHOULD_RELOAD"
 //************

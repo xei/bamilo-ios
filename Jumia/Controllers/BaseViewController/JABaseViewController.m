@@ -123,6 +123,15 @@
     self.loadingAnimation.center = self.loadingView.center;
     
     self.loadingView.alpha = 0.0f;
+    
+}
+
+- (void)appWillEnterForeground
+{
+}
+
+- (void)appDidEnterBackground
+{
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -209,6 +218,9 @@
                                                  name:kOpenMenuNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground) name:kAppWillEnterForeground object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground) name:kAppDidEnterBackground object:nil];
+    
     if (self.searchBarIsVisible) {
         [self showSearchBar];
     }
@@ -218,6 +230,8 @@
     [super viewWillDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenMenuNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAppWillEnterForeground object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAppDidEnterBackground object:nil];
 }
 
 - (void)sideMenuIsOpening {
