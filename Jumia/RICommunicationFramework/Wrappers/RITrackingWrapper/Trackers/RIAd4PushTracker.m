@@ -207,7 +207,9 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         return;
     }
     
-    [[BMA4SNotification sharedBMA4S] didReceiveRemoteNotification:userInfo];
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        [[BMA4SNotification sharedBMA4S] didReceiveRemoteNotification:userInfo];
+    });
 }
 
 - (void)applicationDidReceiveLocalNotification:(UILocalNotification *)notification
@@ -220,8 +222,9 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         RIRaiseError(@"Missing Ad4Push tracker");
         return;
     }
-    
-    [[BMA4SNotification sharedBMA4S] didReceiveLocalNotification:notification];
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        [[BMA4SNotification sharedBMA4S] didReceiveLocalNotification:notification];
+    });
 }
 
 #pragma mark - RIOpenURL protocol
