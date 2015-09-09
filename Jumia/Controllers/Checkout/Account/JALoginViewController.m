@@ -429,10 +429,11 @@
     CGFloat centerWidth = 54.0f;
     CGFloat halfSeparatorWidth = (buttonWidth - centerWidth) / 2;
     if ([[RICountryConfiguration getCurrentConfiguration].facebookAvailable boolValue]){
-        [self.facebookLoginSeparatorLeftView setFrame:CGRectMake(0.0f, (self.facebookLoginSeparatorLabel.frame.size.height - 1.0f) / 2.0f, halfSeparatorWidth, 1.0f)];
-        [self.facebookLoginSeparatorLabel setFrame:CGRectMake(CGRectGetMaxX(self.facebookLoginSeparatorLeftView.frame) + 15.0f, 0.0f, self.facebookLoginSeparatorLabel.frame.size.width, self.facebookLoginSeparatorLabel.frame.size.height)];
-        [self.facebookLoginSeparatorRightView setFrame:CGRectMake(halfSeparatorWidth + centerWidth, (self.facebookLoginSeparatorLabel.frame.size.height - 1.0f) / 2.0f, halfSeparatorWidth, 1.0f)];
         [self.facebookLoginSeparator setFrame:CGRectMake(6.0f, self.loginFormHeight, buttonWidth, self.facebookLoginSeparatorLabel.frame.size.height)];
+        CGFloat separatorWidth = self.facebookLoginSeparator.width/2 - self.facebookLoginSeparatorLabel.width/2 - 15;
+        [self.facebookLoginSeparatorLeftView setFrame:CGRectMake(0.0f, (self.facebookLoginSeparatorLabel.frame.size.height - 1.0f) / 2.0f, separatorWidth, 1.0f)];
+        [self.facebookLoginSeparatorLabel setFrame:CGRectMake(CGRectGetMaxX(self.facebookLoginSeparatorLeftView.frame) + 15.0f, 0.0f, self.facebookLoginSeparatorLabel.frame.size.width, self.facebookLoginSeparatorLabel.frame.size.height)];
+        [self.facebookLoginSeparatorRightView setFrame:CGRectMake(self.facebookLoginSeparator.width - separatorWidth, (self.facebookLoginSeparatorLabel.frame.size.height - 1.0f) / 2.0f, separatorWidth, 1.0f)];
         self.loginFormHeight += self.facebookLoginSeparator.frame.size.height;
         
         self.loginFormHeight += 11.0f;
@@ -451,10 +452,12 @@
     self.signupFormHeight += 12.0f;
     
     if ([[RICountryConfiguration getCurrentConfiguration].facebookAvailable boolValue]){
-        [self.facebookSignupSeparatorLeftView setFrame:CGRectMake(0.0f, (self.facebookSignupSeparatorLabel.frame.size.height - 1.0f) / 2.0f, halfSeparatorWidth, 1.0f)];
-        [self.facebookSignupSeparatorLabel setFrame:CGRectMake(CGRectGetMaxX(self.facebookSignupSeparatorLeftView.frame) + 15.0f, 0.0f, self.facebookSignupSeparatorLabel.frame.size.width, self.facebookSignupSeparatorLabel.frame.size.height)];
-        [self.facebookSignupSeparatorRightView setFrame:CGRectMake(halfSeparatorWidth + centerWidth, (self.facebookSignupSeparatorLabel.frame.size.height - 1.0f) / 2.0f, halfSeparatorWidth, 1.0f)];
+        
         [self.facebookSignupSeparator setFrame:CGRectMake(6.0f, self.signupFormHeight, buttonWidth, self.facebookSignupSeparatorLabel.frame.size.height)];
+        CGFloat separatorWidth = self.facebookSignupSeparator.width/2 - self.facebookSignupSeparatorLabel.width/2 - 15;
+        [self.facebookSignupSeparatorLeftView setFrame:CGRectMake(0.0f, (self.facebookSignupSeparatorLabel.frame.size.height - 1.0f) / 2.0f, separatorWidth, 1.0f)];
+        [self.facebookSignupSeparatorLabel setFrame:CGRectMake(CGRectGetMaxX(self.facebookSignupSeparatorLeftView.frame) + 15.0f, 0.0f, self.facebookSignupSeparatorLabel.frame.size.width, self.facebookSignupSeparatorLabel.frame.size.height)];
+        [self.facebookSignupSeparatorRightView setFrame:CGRectMake(self.facebookSignupSeparator.width - separatorWidth, (self.facebookSignupSeparatorLabel.frame.size.height - 1.0f) / 2.0f, separatorWidth, 1.0f)];
         self.signupFormHeight += self.facebookSignupSeparator.frame.size.height;
         self.signupFormHeight += 11.0f;
         [self.facebookSingupButton setFrame:CGRectMake(6.0f, self.signupFormHeight, buttonWidth, 44.0f)];

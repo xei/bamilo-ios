@@ -50,6 +50,7 @@
     [_totalLabel setFont:[UIFont systemFontOfSize:16]];
     [_totalLabel setTextColor:[UIColor colorWithRed:0.3059 green:0.3059 blue:0.3059 alpha:1]];
     [_totalLabel setFrame:CGRectMake(23, _totalView.height/2 - _totalLabel.height/2, _totalLabel.width, _totalLabel.height)];
+    [_totalLabel setFont:[UIFont fontWithName:kFontRegularName size:_totalLabel.font.pointSize]];
     [_totalView addSubview:_totalLabel];
     
     _totalLabelValue = [[UILabel alloc] initWithFrame:CGRectZero];
