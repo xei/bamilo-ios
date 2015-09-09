@@ -737,6 +737,7 @@
         // Facebook Signup
         self.facebookSingupButton = [UIButton new];
         [self.facebookSingupButton setTitle:STRING_SIGNUP_WITH_FACEBOOK forState:UIControlStateNormal];
+        [self.facebookSingupButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:self.facebookSingupButton.titleLabel.font.pointSize]];
         [self.facebookSingupButton addTarget:self action:@selector(facebookLoginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.signUpFormView addSubview:self.facebookSingupButton];
     }
