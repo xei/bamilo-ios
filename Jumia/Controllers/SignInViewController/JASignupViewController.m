@@ -310,6 +310,7 @@ JADatePickerDelegate
     
     if (RI_IS_RTL) {
         [self.view flipAllSubviews];
+        [self.headerLabel setTextAlignment:NSTextAlignmentRight];
     }
 }
 
