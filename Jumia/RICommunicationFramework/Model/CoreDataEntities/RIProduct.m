@@ -125,6 +125,7 @@
                            successBlock:(void (^)(id product))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
+    url = [url  stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
                                                             parameters:nil
                                                         httpMethodPost:YES
@@ -232,6 +233,7 @@
                         successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories, RIBanner* banner))successBlock
                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
+    url = [url  stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *finalURL = [NSURL URLWithString:url];
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:finalURL
                                                             parameters:nil
