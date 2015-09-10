@@ -1,15 +1,15 @@
 //
 //  BMA4STracker+Analytics.h
-//  Accengage 
+//  Accengage SDK 
 //
-//  Copyright (c) 2010-2014 Accengage. All rights reserved.
+//  Copyright (c) 2010-2015 Accengage. All rights reserved.
 //
 
 #import "BMA4STracker.h"
 /**
  You can track purchase after purchase validation. You have to create one purchase item for each item of the purchase list.
  */
-@interface BMA4SPurchasedItem : NSObject
+@interface BMA4SPurchasedItem : NSObject <NSCoding>
 
 /**
  ID of the product that you want to track (ex: AB310)

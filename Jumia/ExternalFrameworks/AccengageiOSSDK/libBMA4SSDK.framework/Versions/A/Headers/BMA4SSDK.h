@@ -2,8 +2,7 @@
 //  BMA4SSDK.h
 //  Accengage SDK 
 //
-//  Created by Nicolas LOURENCO on 09/09/2014.
-//  Copyright (c) 2014 Accengage. All rights reserved.
+//  Copyright (c) 2010-2015 Accengage. All rights reserved.
 //
 
 #ifndef BMA4SSDK_BMA4SSDK_h
@@ -12,6 +11,7 @@
 //import all header files of BMA4S Project
 #import "A4SWebView.h"
 #import "BMA4SInAppNotification.h"
+#import "BMA4SInAppNotificationDataSource.h"
 #import "BMA4SInBox.h"
 #import "BMA4SInBoxButton.h"
 #import "BMA4SInBoxMessage.h"
@@ -21,5 +21,4 @@
 #import "BMA4STracker+Analytics.h"
 #import "BMA4STracker+Members.h"
 #import "BMA4SViewController.h"
-
 #endif

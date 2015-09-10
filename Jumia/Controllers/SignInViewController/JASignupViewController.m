@@ -134,6 +134,13 @@ JADatePickerDelegate
     [self getRegisterForm];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+}
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -303,6 +310,7 @@ JADatePickerDelegate
     
     if (RI_IS_RTL) {
         [self.view flipAllSubviews];
+        [self.headerLabel setTextAlignment:NSTextAlignmentRight];
     }
 }
 
@@ -360,7 +368,10 @@ JADatePickerDelegate
         [trackingDictionary setValue:@"CreateSuccess" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
         [trackingDictionary setValue:((RICustomer *)object).idCustomer forKey:kRIEventUserIdKey];
+        [trackingDictionary setValue:((RICustomer *)object).firstName forKey:kRIEventUserFirstNameKey];
+        [trackingDictionary setValue:((RICustomer *)object).lastName forKey:kRIEventUserLastNameKey];
         [trackingDictionary setValue:((RICustomer *)object).gender forKey:kRIEventGenderKey];
+        [trackingDictionary setValue:((RICustomer *)object).birthday forKey:kRIEventBirthDayKey];
         [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
         [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
@@ -397,18 +408,17 @@ JADatePickerDelegate
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                             object:nil];
-        
-        if(VALID_NOTEMPTY(self.nextNotification, NSNotification))
+        if (self.fromSideMenu) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+        }else if(VALID_NOTEMPTY(self.nextNotification, NSNotification))
         {
             [self.navigationController popViewControllerAnimated:NO];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:self.nextNotification.name
                                                                 object:self.nextNotification.object
                                                               userInfo:self.nextNotification.userInfo];
-        }
-        else
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+        }else{
+            [self.navigationController popViewControllerAnimated:NO];
         }
         
     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
@@ -461,11 +471,11 @@ JADatePickerDelegate
     
     NSMutableDictionary *userInfo = nil;
     
+    userInfo = [[NSMutableDictionary alloc] init];
+    [userInfo setObject:[NSNumber numberWithBool:self.fromSideMenu] forKey:@"from_side_menu"];
     if(VALID_NOTEMPTY(self.nextNotification, NSNotification))
     {
-        userInfo = [[NSMutableDictionary alloc] init];
         [userInfo setObject:self.nextNotification forKey:@"notification"];
-        [userInfo setObject:[NSNumber numberWithBool:self.fromSideMenu] forKey:@"from_side_menu"];
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification

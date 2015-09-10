@@ -35,6 +35,8 @@
 - (void)initialSetup;
 {
     self.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    // this triggers the constraints error output
     self.editButton.translatesAutoresizingMaskIntoConstraints = YES;
     self.backButton.translatesAutoresizingMaskIntoConstraints = YES;
     self.leftButton.translatesAutoresizingMaskIntoConstraints = YES;

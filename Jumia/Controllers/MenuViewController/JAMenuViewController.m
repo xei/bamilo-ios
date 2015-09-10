@@ -12,8 +12,9 @@
 #import "JAUtils.h"
 #import "RISearchSuggestion.h"
 #import "RICustomer.h"
-#import <FacebookSDK/FacebookSDK.h>
-#import <FacebookSDK/FBSession.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBAudienceNetwork/FBAudienceNetwork.h>
 #import "RISearchSuggestion.h"
 #import "RICart.h"
 #import "JAClickableView.h"
@@ -59,7 +60,7 @@ UIAlertViewDelegate
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     self.screenName = @"LeftMenu";
     
     self.title = @"";
@@ -89,7 +90,9 @@ UIAlertViewDelegate
                                                object:nil];
     
     
+    // this triggers the constraints error output
     self.tableViewMenu.translatesAutoresizingMaskIntoConstraints = YES;
+    
     self.tableViewMenu.separatorColor = [UIColor whiteColor];
     
     // Added because of the footer space
@@ -267,8 +270,8 @@ UIAlertViewDelegate
                     [self showLoading];
                     
                     __block NSString *custumerId = [RICustomer getCustomerId];
-                    [[FBSession activeSession] closeAndClearTokenInformation];
-                    [FBSession setActiveSession:nil];
+                    
+                    [[[FBSDKLoginManager alloc] init] logOut];
                     
                     [RICustomer logoutCustomerWithSuccessBlock:^
                      {

@@ -92,7 +92,7 @@
         return;
     }
     _processedViews = [_views mutableCopy];
-    if (_infinite) {
+    if (_infinite && _processedViews.count > 1) {
         /*
          http://stackoverflow.com/questions/15351231/duplicate-existing-uiview-in-a-scrollview-programmatically-storyboard
          It probably doesn't archive/unarchive "everything" (or I probably should RTFM) because for example it doesn't "bring back" the UIView in the same "configuration" I archived it. I have a CAGradientLayer among other things and it seems to me the "newView" (or archivedData) has the View being fully Opaque.
@@ -121,7 +121,9 @@
         
     }
     _processedViews = [modifiedArray copy];
-    [self loadPageComponent];
+    if (_processedViews.count > 1) {
+        [self loadPageComponent];
+    }
     [self scrollToTag:_infinite?1:0];
     _first = YES;
 }

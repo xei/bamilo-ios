@@ -75,10 +75,10 @@
     return instance;
 }
 
--(void)saveContext
+-(BOOL)saveContext
 {
     if(![self.managedObjectContext hasChanges]) {
-        return;
+        return YES;
     }
     
     BOOL saved = NO;
@@ -87,13 +87,24 @@
         saved = [self.managedObjectContext save:&error];
     }
     @catch (NSException *exception) {
-        NSLog(@"Error while saving %@",(id)[exception userInfo] ? : (id)[exception reason]);
+        NSLog(@"ExceptionError while saving %@",(id)[exception userInfo] ? : (id)[exception reason]);
+        return NO;
     }
+    if (error) {
+        NSLog(@"Error while saving %@", error);
+        return NO;
+    }
+    return YES;
 }
 
 -(void)insertManagedObject:(NSManagedObject*)object
 {
-    [self.managedObjectContext insertObject:object];
+    if (object.managedObjectContext) {
+        return;
+    }
+    if (![object.managedObjectContext isEqual:self.managedObjectContext]) {
+        [self.managedObjectContext insertObject:object];
+    }
 }
 
 - (void) resetApplicationModel

@@ -153,6 +153,7 @@
 #define STRING_OPENING_HOURS RILocalizedString(@"string_opening_hours", nil)
 #define STRING_PLEASE_SELECT RILocalizedString(@"string_please_select", nil)
 #define STRING_SHIPPING_FEE RILocalizedString(@"order_summary_shipping_fee_label", nil)
+#define STRING_SHIPPING_FEE_INFO RILocalizedString(@"shipping_fee_info", nil)
 
 #define STRING_CHECKOUT_PAYMENT RILocalizedString(@"checkout_header_step_4", nil)
 #define STRING_PAYMENT RILocalizedString(@"payment", nil)
@@ -272,6 +273,7 @@
 
 #define STRING_SIZE_GUIDE RILocalizedString(@"size_guide_label", nil)
 
+#define STRING_BIRTHDAY RILocalizedString(@"birthday", nil)
 #define STRING_MY_ADDRESSES RILocalizedString(@"my_addresses", nil)
 #define STRING_CREATE_EDIT_ADDRESS RILocalizedString(@"create_edit_address", nil)
 #define STRING_APP_SHARING RILocalizedString(@"app_sharing", nil)

@@ -14,6 +14,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *labelText;
 @property (weak, nonatomic) IBOutlet UISwitch *switchComponent;
+@property (weak, nonatomic) IBOutlet UIButton *urlButton;
 
 + (JACheckBoxComponent *)getNewJACheckBoxComponent;
 

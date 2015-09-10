@@ -10,6 +10,7 @@
 #import "JAClickableView.h"
 #import "JAShareActivityProvider.h"
 #import "JAActivityViewController.h"
+#import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 #import "AQSFacebookMessengerActivity.h"
 #import "JBWhatsAppActivity.h"
 
@@ -279,7 +280,7 @@
     CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     
     [self setupViews:newWidth toInterfaceOrientation:toInterfaceOrientation];
-
+    
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -372,14 +373,14 @@
                                                          self.accountSettingsTitleLabel.frame.size.height)];
     
     [self.notificationSettingsTitleLabel setFrame: CGRectMake(6.0f,
-                                                         self.notificationSettingsTitleLabel.frame.origin.y,
-                                                         self.notificationSettingsTitleLabel.frame.size.width,
-                                                         self.notificationSettingsTitleLabel.frame.size.height)];
+                                                              self.notificationSettingsTitleLabel.frame.origin.y,
+                                                              self.notificationSettingsTitleLabel.frame.size.width,
+                                                              self.notificationSettingsTitleLabel.frame.size.height)];
     
     [self.appSharingTitleLabel setFrame: CGRectMake(6.0f,
-                                                         self.appSharingTitleLabel.frame.origin.y,
-                                                         self.appSharingTitleLabel.frame.size.width,
-                                                         self.appSharingTitleLabel.frame.size.height)];
+                                                    self.appSharingTitleLabel.frame.origin.y,
+                                                    self.appSharingTitleLabel.frame.size.width,
+                                                    self.appSharingTitleLabel.frame.size.height)];
     
     [self.userDataArrow setFrame:CGRectMake(self.accountView.frame.size.width - self.userDataArrow.frame.size.width - rightMargin,
                                             self.userDataArrow.frame.origin.y,
@@ -477,7 +478,7 @@
                                             self.shareAppArrow.frame.size.height)];
     
     if(RI_IS_RTL){
-    
+        
         [self.accountView  flipSubviewPositions];
         [self.accountView flipSubviewImages];
         [self.notificationView flipSubviewPositions];
@@ -486,7 +487,7 @@
         
         
         if(self.stillRTL){
-        
+            
             [self.accountView flipSubviewAlignments];
             [self.notificationView flipSubviewAlignments];
             [self.appSharingView flipSubviewAlignments];
@@ -587,7 +588,7 @@
 
 - (void)shareApp:(id)sender
 {
-
+    
     //JAShareActivityProvider *provider = [[JAShareActivityProvider alloc] initForAppShare];
     
     NSArray *appActivities = @[];
@@ -595,45 +596,45 @@
     UIActivity *fbmActivity = [[AQSFacebookMessengerActivity alloc] init];
     UIActivity *whatsAppActivity = [[JBWhatsAppActivity alloc] init];
     WhatsAppMessage *whatsAppMsg;
-
+    
     JAActivityViewController  *activityController = [[JAActivityViewController alloc] init];
     NSString *shareTheAppString = [[NSString alloc] initWithString:[NSString stringWithFormat:STRING_SHARE_APP, APP_NAME]];
     if(!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")){
-
+        
         appActivities = @[fbmActivity, whatsAppActivity];
     }
     
-           if ([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
-            {
-                whatsAppMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",shareTheAppString, kAppStoreUrl] forABID:nil];
-
-                activityController = [[JAActivityViewController alloc] initWithActivityItems:@[shareTheAppString, [NSURL URLWithString:kAppStoreUrl], whatsAppMsg ] applicationActivities:appActivities];
-                                                        
-            }else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
-                {
-                    whatsAppMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",shareTheAppString, kAppStoreUrlDaraz] forABID:nil];
-
-                    activityController = [[JAActivityViewController alloc] initWithActivityItems:@[shareTheAppString, [NSURL URLWithString:kAppStoreUrlDaraz], whatsAppMsg] applicationActivities:appActivities];
-                                                        
-            }else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
-                {
-                    whatsAppMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",shareTheAppString, kAppStoreUrlShop] forABID:nil];
-
-                    activityController = [[JAActivityViewController alloc] initWithActivityItems:@[shareTheAppString, [NSURL URLWithString:kAppStoreUrlShop], whatsAppMsg] applicationActivities:appActivities];
-                                                        
-            }else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
-                {
-                    whatsAppMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",shareTheAppString, kAppStoreUrlBamilo]  forABID:nil];
-
-                    activityController = [[JAActivityViewController alloc] initWithActivityItems:@[shareTheAppString, [NSURL URLWithString:kAppStoreUrlBamilo], whatsAppMsg] applicationActivities:appActivities];
-            }
-                                                    
-                                                                                             
+    if ([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
+    {
+        whatsAppMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",shareTheAppString, kAppStoreUrl] forABID:nil];
+        
+        activityController = [[JAActivityViewController alloc] initWithActivityItems:@[shareTheAppString, [NSURL URLWithString:kAppStoreUrl], whatsAppMsg ] applicationActivities:appActivities];
+        
+    }else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
+    {
+        whatsAppMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",shareTheAppString, kAppStoreUrlDaraz] forABID:nil];
+        
+        activityController = [[JAActivityViewController alloc] initWithActivityItems:@[shareTheAppString, [NSURL URLWithString:kAppStoreUrlDaraz], whatsAppMsg] applicationActivities:appActivities];
+        
+    }else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+    {
+        whatsAppMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",shareTheAppString, kAppStoreUrlShop] forABID:nil];
+        
+        activityController = [[JAActivityViewController alloc] initWithActivityItems:@[shareTheAppString, [NSURL URLWithString:kAppStoreUrlShop], whatsAppMsg] applicationActivities:appActivities];
+        
+    }else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
+    {
+        whatsAppMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",shareTheAppString, kAppStoreUrlBamilo]  forABID:nil];
+        
+        activityController = [[JAActivityViewController alloc] initWithActivityItems:@[shareTheAppString, [NSURL URLWithString:kAppStoreUrlBamilo], whatsAppMsg] applicationActivities:appActivities];
+    }
+    
+    
     
     [activityController setValue:[NSString stringWithFormat:STRING_SHARE_APP, APP_NAME] forKey:@"subject"];
     
     
-
+    
     activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
     
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())

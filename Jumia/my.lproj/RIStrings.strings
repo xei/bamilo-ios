@@ -204,7 +204,7 @@
 
 "signup_label" = "စာရင္းသြင္းရန္";
 
-"facebook_signup_button_text" = "Facebook အေကာင့္ျဖင့္ ထည္႕သြင္းမည္";
+"facebook_signup_button_text" = "Facebook စာရင္းသြင္းရန္";
 
 "facebook_login_button_text" = "Facebook ျဖင့္ ၀င္မည္";
 
@@ -544,7 +544,7 @@
 
 "string_wizard_back_top" = "အေပၚသို႕ ျပန္သြားရန္ status bar ကို ႏွိပ္ပါ";
 
-"shops_of_the_week" = "ဤအပတ္၏ အေရာင္းရဆံုးမ်ား";
+"shops_of_the_week" = "လူၾကိဳက္အမ်ားဆံုး တံဆိပ္မ်ား";
 
 "featured_stores" = "အေရာင္းဆိုင္မ်ား";
 
@@ -557,4 +557,8 @@
 "kickout_message_3" = "၀ဘ္ဆိုဒ္ကို ပိုမိုေကာင္းမြန္ေအာင္ ျပင္ဆင္ေနသျဖင့္ ေနာက္တစ္ၾကိမ္ ထပ္ၾကိဳးစားၾကည္႕ပါ";
 
 "search_placeholder" = "အမွတ္တံဆိပ္ျဖင့္ ကုန္ပစၥည္းမ်ားရွာေဖြရန္";
+
+"shipping_fee_info" = "အား စုစုေပါင္းပမာဏသို႕ထည္႕သြင္းျပီးပါျပီ";
+
+"birthday" = "ေမြးေန႔";
 

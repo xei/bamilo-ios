@@ -101,9 +101,6 @@ JAPickerScrollViewDelegate
     self.navBarLayout.title = STRING_MY_ORDERS;
     
     self.sortList = [NSArray arrayWithObjects:STRING_ORDER_TRACKING, STRING_MY_ORDER_HISTORY, nil];
-    if (RI_IS_RTL) {
-        self.sortList = [NSArray arrayWithObjects:STRING_MY_ORDER_HISTORY, STRING_ORDER_TRACKING, nil];
-    }
     
     [self.contentScrollView setPagingEnabled:YES];
     [self.contentScrollView setScrollEnabled:NO];
@@ -185,8 +182,6 @@ JAPickerScrollViewDelegate
     [self.ordersCollectionView setHidden:YES];
     
     [self.contentScrollView addSubview:self.ordersCollectionView];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotateFromInterfaceOrientation:) name:kAppWillEnterForeground object:nil];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -225,7 +220,7 @@ JAPickerScrollViewDelegate
     }
     self.isLoadingOrders = YES;
     
-    [RIOrder getOrdersPage:[NSNumber numberWithInteger:self.currentOrdersPage]
+    [RIOrder getOrdersPage:[NSNumber numberWithInteger:self.currentOrdersPage+1]
                   maxItems:[NSNumber numberWithInteger:kOrdersPerPage]
           withSuccessBlock:^(NSArray *orders, NSInteger ordersTotal) {
               [self.orders addObjectsFromArray:orders];
@@ -276,23 +271,28 @@ JAPickerScrollViewDelegate
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [self setupMyOrdersViews:self.view.frame.size.width height:self.view.frame.size.height interfaceOrientation:self.interfaceOrientation];
-    
     [self setupViews];
-    
-    [self selectedIndex:_pickerScrollIndex];
     
     [self hideLoading];
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
+- (void)appWillEnterForeground
+{
+    [self showLoading];
+    
+    if (RI_IS_RTL) {
+        [self.myOrdersPickerScrollView flipAllSubviews];
+    }
+    
+    [self setupViews];
+    
+    [self hideLoading];
+}
+
 - (void)setupViews
 {
-    self.animatedScroll = NO;
-    
-    [self.myOrdersPickerScrollView setNeedsLayout];
-    
     self.contentScrollView.contentSize = CGSizeMake(self.view.frame.size.width * [self.sortList count], self.view.frame.size.height - self.myOrdersPickerScrollView.frame.size.height);
     
     [self setupMyOrdersViews:self.view.frame.size.width height:self.view.frame.size.height - self.myOrdersPickerScrollView.frame.size.height interfaceOrientation:self.interfaceOrientation];

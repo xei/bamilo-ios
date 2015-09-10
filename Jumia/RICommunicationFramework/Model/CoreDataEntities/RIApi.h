@@ -24,6 +24,7 @@
 @property (nonatomic, retain) NSString * actionName;
 @property (nonatomic, retain) NSString * countryIso;
 @property (nonatomic, retain) NSString * countryName;
+@property (nonatomic, retain) NSString * countryUserAgentInjection;
 @property (nonatomic, retain) NSNumber * curVersion;
 @property (nonatomic, retain) NSNumber * minVersion;
 @property (nonatomic, retain) NSOrderedSet *sections;
@@ -56,14 +57,15 @@
  */
 + (RIApi *)parseApi:(NSDictionary *)api
          countryIso:(NSString *)countryIso
-        countryName:(NSString *)countryName;
+        countryName:(NSString *)countryName
+countryUserAgentInjection:(NSString*)countryUserAgentInjection;
 
 /**
  *  Save in the core data a given RIApi
  *
  *  @param the RIApi to save
  */
-+ (void)saveApi:(RIApi *)api;
++ (void)saveApi:(RIApi *)api andContext:(BOOL)save;
 
 /**
  *  Check if the app was allready started
@@ -92,6 +94,13 @@
  *  @return the country name
  */
 + (NSString *)getCountryNameInUse;
+
+/**
+ *  get the current country user agent injection
+ *
+ *  @return the country user agent injection
+ */
++ (NSString *)getCountryUserAgentInjection;
 
 /**
  *  get the current country api information

@@ -53,13 +53,29 @@
         [trackingDictionary setValue:[numberOfSessions stringValue] forKey:kRIEventAmountSessions];
     }
     
-    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
     [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-    [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
     [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookHome]
-                                              data:[trackingDictionary copy]];
+    if ([RICustomer checkIfUserIsLogged]) {
+        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+        [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+        [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
+                RIAddress *shippingAddress = (RIAddress *)[adressList objectForKey:@"shipping"];
+                [trackingDictionary setValue:shippingAddress.city forKey:kRIEventCityKey];
+                [trackingDictionary setValue:shippingAddress.customerAddressRegion forKey:kRIEventRegionKey];
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookHome]
+                                                      data:[trackingDictionary copy]];
+            
+        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+            NSLog(@"ERROR: getting customer");
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookHome]
+                                                      data:[trackingDictionary copy]];
+        }];
+    }else{
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookHome]
+                                                  data:[trackingDictionary copy]];
+    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(campaignTimerEnded)
@@ -180,12 +196,6 @@
         
         // notify the InAppNotification SDK that this the active view controller
         [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
-        
-        [RIPromotion getPromotionWithSuccessBlock:^(RIPromotion *promotion) {
-            [self loadPromotion:promotion];
-        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
-
-        }];
 
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
         if(self.firstLoading)

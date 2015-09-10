@@ -23,6 +23,7 @@
 @dynamic actionName;
 @dynamic countryIso;
 @dynamic countryName;
+@dynamic countryUserAgentInjection;
 @dynamic curVersion;
 @dynamic minVersion;
 @dynamic sections;
@@ -35,6 +36,7 @@
     NSString *url;
     NSString *countryIso;
     NSString *name;
+    NSString *countryUserAgentInjection;
     
     if (ISEMPTY(country))
     {
@@ -45,6 +47,7 @@
             url = api.countryUrl;
             countryIso = api.countryIso;
             name = api.countryName;
+            countryUserAgentInjection = api.countryUserAgentInjection;
         }
     }
     else
@@ -53,12 +56,14 @@
         url = country.url;
         countryIso = country.countryIso;
         name = country.name;
+        countryUserAgentInjection = country.userAgentInjection;
     }
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", url, RI_API_VERSION, RI_API_INFO]]
                                                             parameters:nil httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
+                                                    userAgentInjection:countryUserAgentInjection
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
                                                               NSMutableDictionary* metadata = [[NSMutableDictionary alloc] initWithDictionary:[jsonObject objectForKey:@"metadata"]];
@@ -70,7 +75,8 @@
                                                                   
                                                                   RIApi* newApi = [RIApi parseApi:metadata
                                                                                        countryIso:countryIso
-                                                                                      countryName:name];
+                                                                                      countryName:name
+                                                                        countryUserAgentInjection:countryUserAgentInjection];
                                                                   
                                                                   BOOL hasUpdate = NO;
                                                                   BOOL isUpdateMandatory = NO;
@@ -109,7 +115,7 @@
                                                                               hasDownloadedFacebookConfigs = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsHasDownloadedFacebookConfigs];
                                                                           }
                                                                           
-                                                                          if ([newSection.name isEqualToString:@"countryconfs"] && NO == hasDownloadedFacebookConfigs) {
+                                                                          if ([newSection.name isEqualToString:@"configurations"] && NO == hasDownloadedFacebookConfigs) {
                                                                               
                                                                               sectionNeedsDownload = YES;
                                                                           } else {
@@ -129,7 +135,7 @@
                                                                           
                                                                           if (sectionNeedsDownload) {
                                                                               
-                                                                              [RIApi requestSectionContent:newSection forCountry:url deleteOldContent:reloadAPI successBlock:^() {
+                                                                              [RIApi requestSectionContent:newSection forCountry:url countryUserAgentInjection:countryUserAgentInjection deleteOldContent:reloadAPI successBlock:^() {
                                                                                   
                                                                               } andFailureBlock:^(RIApiResponse apiResponse,  id error) {
                                                                                   
@@ -139,7 +145,7 @@
                                                                       
                                                                       //save new api in coredata
                                                                       [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RIApi class])];
-                                                                      [RIApi saveApi:newApi];
+                                                                      [RIApi saveApi:newApi andContext:YES];
                                                                   }
                                                                   
                                                                   successBlock(newApi, hasUpdate, isUpdateMandatory);
@@ -220,6 +226,18 @@
     }
 }
 
++ (NSString *)getCountryUserAgentInjection;
+{
+    NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
+    
+    if (0 == apiArray.count) {
+        return @"";
+    } else {
+        RIApi *api = [apiArray firstObject];
+        return api.countryUserAgentInjection;
+    }
+}
+
 + (RIApi *)getApiInformation
 {
     NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
@@ -237,6 +255,7 @@
 + (RIApi *)parseApi:(NSDictionary*)api
          countryIso:(NSString *)countryIso
         countryName:(NSString *)countryName
+countryUserAgentInjection:(NSString*)countryUserAgentInjection
 {
     RIApi* newApi = (RIApi*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIApi class])];
     
@@ -255,6 +274,11 @@
         newApi.countryName = countryName;
     }
 
+    if (VALID_NOTEMPTY(countryUserAgentInjection, NSString))
+    {
+        newApi.countryUserAgentInjection = countryUserAgentInjection;
+    }
+    
     if ([api objectForKey:@"countryUrl"])
     {
         newApi.countryUrl = [api objectForKey:@"countryUrl"];
@@ -291,18 +315,22 @@
     return newApi;
 }
 
-+ (void)saveApi:(RIApi*)api
++ (void)saveApi:(RIApi*)api andContext:(BOOL)save
 {
     for (RISection* section in api.sections) {
-        [RISection saveSection:section];
+        [RISection saveSection:section andContext:NO];
     }
     
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:api];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
 }
 
 + (void)requestSectionContent:(RISection*)section
                    forCountry:(NSString*)url
+    countryUserAgentInjection:(NSString*)countryUserAgentInjection
              deleteOldContent:(BOOL)deleteOldContent
                  successBlock:(void (^)(void))successBlock
               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray* errorMessages))failureBlock
@@ -310,7 +338,7 @@
     if ([section.name isEqualToString:@"categories"])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
-        [RICategory loadCategoriesIntoDatabaseForCountry:url withSuccessBlock:^(id categories) {
+        [RICategory loadCategoriesIntoDatabaseForCountry:url countryUserAgentInjection:countryUserAgentInjection withSuccessBlock:^(id categories) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:kSideMenuShouldReload object:nil];
             successBlock();
@@ -320,7 +348,7 @@
         }];
     } else if ([section.name isEqualToString:@"forms"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
-        [RIFormIndex loadFormIndexesIntoDatabaseForCountry:url deleteOldIndexes:deleteOldContent withSuccessBlock:^(id formIndexes) {
+        [RIFormIndex loadFormIndexesIntoDatabaseForCountry:url countryUserAgentInjection:countryUserAgentInjection deleteOldIndexes:deleteOldContent withSuccessBlock:^(id formIndexes) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             successBlock();
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
@@ -332,6 +360,7 @@
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
         [RITeaserGrouping loadTeasersIntoDatabaseForCountryUrl:url
+                                     countryUserAgentInjection:countryUserAgentInjection
                                               withSuccessBlock:^(NSArray *teaserGroupings) {
                                                   [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
                                                   [[NSNotificationCenter defaultCenter] postNotificationName:kHomeShouldReload object:nil];
@@ -344,16 +373,16 @@
     else if ([section.name isEqualToString:@"imageresolutions"])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
-        [RIImageResolution loadImageResolutionsIntoDatabaseForCountry:url withSuccessBlock:^{
+        [RIImageResolution loadImageResolutionsIntoDatabaseForCountry:url countryUserAgentInjection:countryUserAgentInjection withSuccessBlock:^{
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         }];
     }
-    else if ([section.name isEqualToString:@"countryconfs"])
+    else if ([section.name isEqualToString:@"configurations"])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
-        [RICountry loadCountryConfigurationForCountry:url withSuccessBlock:^(RICountryConfiguration *configuration) {
+        [RICountry loadCountryConfigurationForCountry:url userAgentInjection:countryUserAgentInjection withSuccessBlock:^(RICountryConfiguration *configuration) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
@@ -362,7 +391,7 @@
     else if ([section.name isEqualToString:@"static_blocks"])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
-        [RIStaticBlockIndex loadStaticBlockIndexesIntoDatabaseForCountry:url withSuccessBlock:^(id staticBlockIndexes) {
+        [RIStaticBlockIndex loadStaticBlockIndexesIntoDatabaseForCountry:url countryUserAgentInjection:countryUserAgentInjection withSuccessBlock:^(id staticBlockIndexes) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];

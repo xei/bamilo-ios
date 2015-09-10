@@ -22,11 +22,16 @@
 #import "JAOrderSummaryView.h"
 #import "UIImage+Mirror.h"
 #import "UIView+Mirror.h"
+#import "JACheckoutBottomView.h"
 
 @interface JAAddressesViewController ()
 <UICollectionViewDataSource,
 UICollectionViewDelegate,
 UICollectionViewDelegateFlowLayout>
+{
+    // Bottom view
+    JACheckoutBottomView *_bottomView;
+}
 
 // Steps
 @property (weak, nonatomic) IBOutlet UIImageView *stepBackground;
@@ -49,9 +54,6 @@ UICollectionViewDelegateFlowLayout>
 @property (strong, nonatomic) NSArray *secondCollectionViewAddresses;
 @property (strong, nonatomic) NSIndexPath *secondCollectionViewIndexSelected;
 
-// Bottom view
-@property (strong, nonatomic) JAButtonWithBlur *bottomView;
-
 // Order summary
 @property (strong, nonatomic) JAOrderSummaryView *orderSummary;
 
@@ -67,7 +69,7 @@ UICollectionViewDelegateFlowLayout>
 - (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects
 {
     [self.contentScrollView setHidden:YES];
-    [self.bottomView setHidden:YES];
+    [_bottomView setHidden:YES];
     
     if(self.fromCheckout)
     {
@@ -164,24 +166,20 @@ UICollectionViewDelegateFlowLayout>
     [self.contentScrollView addSubview:self.secondAddressesCollectionView];
     [self.view addSubview:self.contentScrollView];
     
-    self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectMake(0.0f,
-                                                                         self.view.frame.size.height - self.bottomView.frame.size.height,
-                                                                         self.view.frame.size.width,
-                                                                         self.bottomView.frame.size.height)
-                                                  orientation:UIInterfaceOrientationPortrait];
-    [self.view addSubview:self.bottomView];
+    _bottomView = [[JACheckoutBottomView alloc] initWithFrame:CGRectMake(0.f, self.view.frame.size.height - 56, self.view.frame.size.width, 56) orientation:self.interfaceOrientation];
+    [_bottomView setTotalValue:self.cart.cartValueFormatted];
+    [self.view addSubview:_bottomView];
 }
 
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self showLoading];
     
     [self.contentScrollView setHidden:YES];
-    [self.bottomView setHidden:YES];
+    [_bottomView setHidden:YES];
     
-    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
-    
-    [self getAddressList];
+    [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:.3];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -189,11 +187,12 @@ UICollectionViewDelegateFlowLayout>
     [super viewDidAppear:animated];
     
     [[RITrackingWrapper sharedInstance]trackScreenWithName:@"AddressesList"];
+    
+    [self getAddressList];
 }
 
 - (void)getAddressList
 {
-    [self showLoading];
     
     [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
         
@@ -212,7 +211,7 @@ UICollectionViewDelegateFlowLayout>
             }
             
             [self.contentScrollView setHidden:NO];
-            [self.bottomView setHidden:NO];
+            [_bottomView setHidden:NO];
             
             [self hideLoading];
             
@@ -265,6 +264,21 @@ UICollectionViewDelegateFlowLayout>
         
         [self hideLoading];
     }];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    if (self.fromCheckout) {
+        if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
+            [_bottomView setNoTotal:YES];
+        }else{
+            [_bottomView setNoTotal:NO];
+        }
+    }else{
+        [_bottomView setNoTotal:YES];
+    }
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -370,7 +384,8 @@ UICollectionViewDelegateFlowLayout>
                                                                                  scrollViewStartY,
                                                                                  self.view.frame.size.width - width - orderSummaryRightMargin,
                                                                                  self.view.frame.size.height - scrollViewStartY)];
-        [self.orderSummary loadWithCart:self.cart shippingFee:NO];
+        
+        [self.orderSummary loadWithCart:self.cart];
         [self.view addSubview:self.orderSummary];
     }
     
@@ -424,26 +439,28 @@ UICollectionViewDelegateFlowLayout>
     [self.firstAddressesCollectionView reloadData];
     [self.secondAddressesCollectionView reloadData];
     
-    [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, CGRectGetMaxY(self.secondAddressesCollectionView.frame) + self.bottomView.frame.size.height)];
+    [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, CGRectGetMaxY(self.secondAddressesCollectionView.frame) + _bottomView.frame.size.height)];
     
     [self.contentScrollView setHidden:NO];
     
-    [self.bottomView reloadFrame:CGRectMake(0.0f,
-                                            self.view.frame.size.height - self.bottomView.frame.size.height,
+    [_bottomView setFrame:CGRectMake(0.0f,
+                                            self.view.frame.size.height - _bottomView.frame.size.height,
                                             width,
-                                            self.bottomView.frame.size.height)];
+                                            _bottomView.frame.size.height)];
     if(self.fromCheckout)
     {
-        [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
+        [_bottomView setButtonText:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
     }
     else
     {
-        [self.bottomView addButton:STRING_SAVE_LABEL target:self action:@selector(nextStepButtonPressed)];
+        [_bottomView setNoTotal:YES];
+        [_bottomView setButtonText:STRING_SAVE_LABEL target:self action:@selector(nextStepButtonPressed)];
     }
     
-    [self.bottomView setHidden:NO];
+    [_bottomView setHidden:NO];
     
     if (RI_IS_RTL) {
+        [_bottomView setTotalValue:_bottomView.totalValue];
         [self.view flipAllSubviews];
     }
 }

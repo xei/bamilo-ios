@@ -19,15 +19,17 @@
 #import "RICartItem.h"
 #import "RICustomer.h"
 #import "RIAddress.h"
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKAppEvents.h>
 
 @interface JACartViewController () {
     BOOL _emptyImageFlipOnce;
+    BOOL _firstLoading;
+    UILabel *_shippingFeeLabel;
+    UILabel *_shippingFeeValueLabel;
 }
 
 @property (nonatomic, strong) NSString *voucherCode;
 @property (nonatomic, assign) CGRect keyboardFrame;
-@property (nonatomic, assign) BOOL firstLoading;
 @property (nonatomic, strong) JAPicker *picker;
 @property (nonatomic, assign) BOOL requestDone;
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
@@ -53,7 +55,7 @@
     
     self.apiResponse = RIApiResponseSuccess;
     
-    self.firstLoading = YES;
+    _firstLoading = YES;
     
     self.A4SViewControllerAlias = @"CART";
     
@@ -107,7 +109,7 @@
     [self.emptyCartLabel setX:self.view.width/2-self.emptyCartLabel.width/2];
     [self.emptyCartImageView setX:self.view.width/2-self.emptyCartImageView.width/2];
     
-    if (!_emptyImageFlipOnce)
+    if (!_emptyImageFlipOnce && RI_IS_RTL)
         [self.emptyCartImageView flipViewImage];
     _emptyImageFlipOnce = YES;
     
@@ -181,10 +183,27 @@
         NSMutableDictionary *trackingDictionary = nil;
         NSMutableArray *viewCartTrackingProducts = [[NSMutableArray alloc] init];
         [self removeErrorView];
+
+        //reset teaserTrackingInfo for items that have been removed somehow (i.e. logout)
+        NSDictionary* teaserTrackingInfoDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey];
+        NSMutableDictionary* newteaserTrackingInfoDictionary = [NSMutableDictionary new];
+        [teaserTrackingInfoDictionary enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+            BOOL exists = NO;
+            for (RICartItem *cartItem in self.cart.cartItems) {
+                if ([key isEqualToString:cartItem.sku]) {
+                    exists = YES;
+                    break;
+                }
+            }
+            if (exists) {
+                [newteaserTrackingInfoDictionary setObject:obj forKey:key];
+            }
+        }];
+        [[NSUserDefaults standardUserDefaults] setObject:newteaserTrackingInfoDictionary forKey:kSkusFromTeaserInCartKey];
         
         for (int i = 0; i < self.cart.cartItems.count; i++) {
             RICartItem *cartItem = [[self.cart cartItems] objectAtIndex:i];
-
+            
             trackingDictionary = [[NSMutableDictionary alloc] init];
             NSMutableDictionary *viewCartTrackingProduct = [[NSMutableDictionary alloc] init];
 
@@ -224,16 +243,37 @@
             [trackingDictionary setValue:cartItem.variation forKey:kRIEventSizeKey];
             [trackingDictionary setValue:[cartData.cartValue stringValue] forKey:kRIEventTotalCartKey];
 
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewCart]
-                                                      data:[trackingDictionary copy]];
+            
+            if ([RICustomer checkIfUserIsLogged]) {
+                [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+                [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
+                    RIAddress *shippingAddress = (RIAddress *)[adressList objectForKey:@"shipping"];
+                    [trackingDictionary setValue:shippingAddress.city forKey:kRIEventCityKey];
+                    [trackingDictionary setValue:shippingAddress.customerAddressRegion forKey:kRIEventRegionKey];
+                    
+                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewCart]
+                                                              data:[trackingDictionary copy]];
+                    
+                } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+                    NSLog(@"ERROR: getting customer");
+                    
+                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewCart]
+                                                              data:[trackingDictionary copy]];
+                }];
+            }else{
+                
+                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewCart]
+                                                          data:[trackingDictionary copy]];
+            }
             
             float value = [cartItem.price floatValue];
-            [FBAppEvents logEvent:FBAppEventNameInitiatedCheckout
+            [FBSDKAppEvents logEvent:FBSDKAppEventNameInitiatedCheckout
                         valueToSum:value
                        parameters:@{
-                                    FBAppEventParameterNameContentID:cartItem.sku,
-                                    FBAppEventParameterNameNumItems:cartItem.quantity,
-                                    FBAppEventParameterNameCurrency: @"EUR"}];
+                                    FBSDKAppEventParameterNameContentID:cartItem.sku,
+                                    FBSDKAppEventParameterNameNumItems:cartItem.quantity,
+                                    FBSDKAppEventParameterNameCurrency: @"EUR"}];
         }
         
         trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -257,11 +297,11 @@
         [self loadCartInfo];
         [self hideLoading];
         
-        if(self.firstLoading)
+        if(_firstLoading)
         {
             NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
             [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-            self.firstLoading = NO;
+            _firstLoading = NO;
         }
         
         // notify the InAppNotification SDK that this the active view controller
@@ -271,11 +311,11 @@
         self.apiResponse = apiResponse;
         self.requestDone = YES;
         
-        if(self.firstLoading)
+        if(_firstLoading)
         {
             NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
             [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-            self.firstLoading = NO;
+            _firstLoading = NO;
         }
         
         if(RIApiResponseMaintenancePage == apiResponse)
@@ -502,34 +542,46 @@
         [self.useCouponButton setEnabled:NO];
     }
     
-    if(VALID_NOTEMPTY(self.subtotalView, UIView))
-    {
-        [self.subtotalView removeFromSuperview];
-    }
-    
     // Remove left and right margins, plus extra 12.0f so that we have a margin between the fields.
     // The division by 2 is because we have 2 fields in each line.
     
     // subtotal
-    self.subtotalView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.couponView.frame) + 3.0f, self.cartScrollView.frame.size.width, 0.0f)];
-    [self.subtotalView setBackgroundColor:UIColorFromRGB(0xffffff)];
-    self.subtotalView.layer.cornerRadius = 5.0f;
+    if (!self.subtotalView) {
+        self.subtotalView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.couponView.frame) + 3.0f, self.cartScrollView.frame.size.width, 0.0f)];
+        [self.subtotalView setBackgroundColor:UIColorFromRGB(0xffffff)];
+        self.subtotalView.layer.cornerRadius = 5.0f;
+        [self.cartScrollView addSubview:self.subtotalView];
+    }
+    [self.subtotalView setFrame:CGRectMake(0.0f,
+                                           CGRectGetMaxY(self.couponView.frame) + 3.0f,
+                                           self.cartScrollView.frame.size.width,
+                                           100)];
     
-    self.subtotalTitle = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, 0.0f, self.cartScrollView.frame.size.width - (2 * horizontalMargin), 26.0f)];
-    [self.subtotalTitle setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
-    [self.subtotalTitle setTextColor:UIColorFromRGB(0x4e4e4e)];
-    [self.subtotalTitle setText:STRING_SUBTOTAL];
-    [self.subtotalTitle setBackgroundColor:[UIColor clearColor]];
-    [self.subtotalView addSubview:self.subtotalTitle];
+    if (!self.subtotalTitle) {
+        self.subtotalTitle = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, 0.0f, self.cartScrollView.frame.size.width - (2 * horizontalMargin), 26.0f)];
+        [self.subtotalTitle setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
+        [self.subtotalTitle setTextColor:UIColorFromRGB(0x4e4e4e)];
+        [self.subtotalTitle setText:STRING_SUBTOTAL];
+        [self.subtotalTitle setBackgroundColor:[UIColor clearColor]];
+        [self.subtotalView addSubview:self.subtotalTitle];
+    }
+    [self.subtotalTitle setTextAlignment:NSTextAlignmentLeft];
+    [self.subtotalTitle setFrame:CGRectMake(horizontalMargin, 0.0f, self.cartScrollView.frame.size.width - (2 * horizontalMargin), 26.0f)];
     
-    self.subtotalTitleSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.subtotalTitle.frame), self.cartScrollView.frame.size.width, 1.0f)];
-    [self.subtotalTitleSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
-    [self.subtotalView addSubview:self.subtotalTitleSeparator];
+    if (!self.subtotalTitleSeparator) {
+        self.subtotalTitleSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.subtotalTitle.frame), self.cartScrollView.frame.size.width, 1.0f)];
+        [self.subtotalTitleSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+        [self.subtotalView addSubview:self.subtotalTitleSeparator];
+    }
+    [self.subtotalTitleSeparator setFrame:CGRectMake(0.0f, CGRectGetMaxY(self.subtotalTitle.frame), self.cartScrollView.frame.size.width, 1.0f)];
     
-    self.articlesCount = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.articlesCount setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
-    [self.articlesCount setTextColor:UIColorFromRGB(0x666666)];
-    [self.articlesCount setBackgroundColor:[UIColor clearColor]];
+    if (!self.articlesCount) {
+        self.articlesCount = [[UILabel alloc] initWithFrame:CGRectZero];
+        [self.articlesCount setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
+        [self.articlesCount setTextColor:UIColorFromRGB(0x666666)];
+        [self.articlesCount setBackgroundColor:[UIColor clearColor]];
+        [self.subtotalView addSubview:self.articlesCount];
+    }
     NSInteger cartCount = [[[self cart] cartCount] integerValue];
     if(1 == cartCount)
     {
@@ -540,13 +592,16 @@
         [self.articlesCount setText:[NSString stringWithFormat:STRING_ITEMS_CART, cartCount]];
     }
     [self.articlesCount sizeToFit];
-    [self.articlesCount setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.subtotalTitleSeparator.frame) + 10.0f, 50.f, self.articlesCount.frame.size.height)];
-    [self.subtotalView addSubview:self.articlesCount];
+    [self.articlesCount setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.subtotalTitleSeparator.frame) + 10.0f, self.articlesCount.width, self.articlesCount.frame.size.height)];
     
     CGRect articleNumberWidth = [self.articlesCount.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)
                                                                        options:NSStringDrawingUsesLineFragmentOrigin
                                                                     attributes:@{NSFontAttributeName:self.articlesCount.font} context:nil];
-    self.totalPriceView = [[JAPriceView alloc] init];
+    
+    if (!self.totalPriceView) {
+        self.totalPriceView = [[JAPriceView alloc] init];
+        [self.subtotalView addSubview:self.totalPriceView];
+    }
     
     if(VALID_NOTEMPTY([[self cart] cartUnreducedValueFormatted], NSString))
     {
@@ -567,7 +622,47 @@
                                            CGRectGetMaxY(self.subtotalTitleSeparator.frame) + 10.0f,
                                            self.totalPriceView.frame.size.width,
                                            self.totalPriceView.frame.size.height);
-    [self.subtotalView addSubview:self.totalPriceView];
+    
+    if (!self.cartVatLabel) {
+        self.cartVatLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        [self.subtotalView addSubview:self.cartVatLabel];
+    }
+    
+    [self.cartVatLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
+    [self.cartVatLabel setTextColor:UIColorFromRGB(0x666666)];
+    [self.cartVatLabel setText:[self.cart vatLabel]];
+    [self.cartVatLabel sizeToFit];
+    [self.cartVatLabel setBackgroundColor:[UIColor clearColor]];
+    
+    [self.cartVatLabel setFrame:CGRectMake(self.articlesCount.x,
+                                           CGRectGetMaxY(self.articlesCount.frame) + 4.f,
+                                           self.cartVatLabel.frame.size.width,
+                                           self.cartVatLabel.frame.size.height)];
+    
+    if (!self.cartVatValue) {
+        self.cartVatValue = [[UILabel alloc] initWithFrame:CGRectZero];
+        [self.subtotalView addSubview:self.cartVatValue];
+    }
+    
+    [self.cartVatValue setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
+    [self.cartVatValue setTextColor:UIColorFromRGB(0x666666)];
+    if ([[self.cart vatLabelEnabled] boolValue]) {
+        [self.cartVatValue setText:[self.cart vatValueFormatted]];
+        [self.cartVatValue setHidden:NO];
+    }else{
+        [self.cartVatValue setHidden:YES];
+    }
+    [self.cartVatValue sizeToFit];
+    [self.cartVatValue setBackgroundColor:[UIColor clearColor]];
+    [self.cartVatValue setFrame:CGRectMake(self.subtotalView.frame.size.width - self.cartVatValue.frame.size.width - 4.0f,
+                                          CGRectGetMaxY(self.articlesCount.frame) + 4.f,
+                                          self.cartVatValue.frame.size.width,
+                                           self.cartVatValue.frame.size.height)];
+    
+    
+    CGFloat nextElementPosY = CGRectGetMaxY(self.cartVatLabel.frame);
+    
+    
     
     NSString *priceRuleKeysString = @"";
     NSString *priceRuleValuesString = @"";
@@ -590,181 +685,202 @@
         }
     }
     
-    self.cartVatLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.cartVatLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
-    [self.cartVatLabel setTextColor:UIColorFromRGB(0x666666)];
-    [self.cartVatLabel setText:[NSString stringWithFormat:STRING_TAX_INC, STRING_VAT]];
-    [self.cartVatLabel sizeToFit];
-    [self.cartVatLabel setBackgroundColor:[UIColor clearColor]];
-    
-    [self.cartVatLabel setFrame:CGRectMake(articleNumberWidth.size.width + 10.0f,
-                                           self.articlesCount.frame.origin.y,
-                                           self.cartVatLabel.frame.size.width,
-                                           self.cartVatLabel.frame.size.height)];
-    
-    CGFloat extraCostYPos = CGRectGetMaxY(self.articlesCount.frame);
-    
-    
     if(VALID_NOTEMPTY(priceRuleKeysString, NSString) && VALID_NOTEMPTY(priceRuleValuesString, NSString))
     {
-        self.priceRulesLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [self.priceRulesLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
-        [self.priceRulesLabel setTextColor:UIColorFromRGB(0x666666)];
+        if (!self.priceRulesLabel) {
+            self.priceRulesLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+            [self.priceRulesLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
+            [self.priceRulesLabel setTextColor:UIColorFromRGB(0x666666)];
+            [self.subtotalView addSubview:self.priceRulesLabel];
+        }
+        [self.priceRulesLabel setNumberOfLines:[[[self cart] priceRules] allKeys].count];
         [self.priceRulesLabel setText:priceRuleKeysString];
-        [self.priceRulesLabel setNumberOfLines:0];
-        [self.priceRulesLabel setBackgroundColor:[UIColor clearColor]];
         [self.priceRulesLabel sizeToFit];
         [self.priceRulesLabel setFrame:CGRectMake(6.0f,
-                                                  CGRectGetMaxY(self.articlesCount.frame) + 4.0f,
+                                                  CGRectGetMaxY(self.cartVatLabel.frame) + 4.0f,
                                                   self.priceRulesLabel.frame.size.width,
                                                   self.priceRulesLabel.frame.size.height)];
         
-        [self.subtotalView addSubview:self.priceRulesLabel];
-        
-        
-        self.priceRulesValue = [[UILabel alloc] initWithFrame:CGRectZero];
-        [self.priceRulesValue setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
-        [self.priceRulesValue setTextColor:UIColorFromRGB(0x666666)];
+        if (!self.priceRulesValue) {
+            self.priceRulesValue = [[UILabel alloc] initWithFrame:CGRectZero];
+            [self.priceRulesValue setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
+            [self.priceRulesValue setTextColor:UIColorFromRGB(0x666666)];
+            [self.priceRulesValue setTextAlignment:NSTextAlignmentRight];
+            [self.subtotalView addSubview:self.priceRulesValue];
+        }
+        [self.priceRulesValue setNumberOfLines:[[[self cart] priceRules] allKeys].count];
+        [self.priceRulesValue setWidth:self.subtotalView.width];
         [self.priceRulesValue setText:priceRuleValuesString];
-        [self.priceRulesValue setNumberOfLines:0];
-        [self.priceRulesValue setBackgroundColor:[UIColor clearColor]];
         [self.priceRulesValue sizeToFit];
         [self.priceRulesValue setFrame:CGRectMake(self.subtotalView.frame.size.width - self.priceRulesValue.frame.size.width - 4.0f,
-                                                  CGRectGetMaxY(self.articlesCount.frame) + 4.0f,
+                                                  CGRectGetMaxY(self.cartVatLabel.frame) + 4.0f,
                                                   self.priceRulesValue.frame.size.width,
                                                   self.priceRulesValue.frame.size.height)];
         
-        [self.subtotalView addSubview:self.priceRulesValue];
+        nextElementPosY = CGRectGetMaxY(self.priceRulesLabel.frame) + 4.f;
         
-        extraCostYPos = CGRectGetMaxY(self.articlesCount.frame) + self.priceRulesLabel.frame.size.height + 4.0f;
-       
+        [self.priceRulesLabel setHidden:NO];
+        [self.priceRulesValue setHidden:NO];
     }
     else
     {
         if(VALID_NOTEMPTY(self.priceRulesLabel, UILabel))
         {
-            [self.priceRulesLabel removeFromSuperview];
+            [self.priceRulesLabel setHidden:YES];
         }
         if(VALID_NOTEMPTY(self.priceRulesValue, UILabel))
         {
-            [self.priceRulesValue removeFromSuperview];
+            [self.priceRulesValue setHidden:YES];
         }
-        
-        extraCostYPos = CGRectGetMaxY(self.articlesCount.frame);
 
     }
-    [self.subtotalView addSubview:self.cartVatLabel];
-
     
-    self.extraCostsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.extraCostsLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
-    [self.extraCostsLabel setTextColor:UIColorFromRGB(0x666666)];
-    [self.extraCostsLabel setText:STRING_EXTRA_COSTS];
-    [self.extraCostsLabel sizeToFit];
-    [self.extraCostsLabel setBackgroundColor:[UIColor clearColor]];
+    if (VALID_NOTEMPTY(self.cart.shippingValue, NSNumber) && self.cart.shippingValue.floatValue != 0.f) {
+        if (!_shippingFeeLabel) {
+            _shippingFeeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+            [_shippingFeeLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
+            [_shippingFeeLabel setTextColor:UIColorFromRGB(0x666666)];
+            [_shippingFeeLabel setText:STRING_SHIPPING_FEE];
+            [_shippingFeeLabel sizeToFit];
+            [self.subtotalView addSubview:_shippingFeeLabel];
+        }
+        [_shippingFeeLabel setX:6];
+        [_shippingFeeLabel setY:nextElementPosY];
+        [_shippingFeeLabel setHidden:NO];
+        
+        if (!_shippingFeeValueLabel) {
+            _shippingFeeValueLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+            [_shippingFeeValueLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
+            [_shippingFeeValueLabel setTextColor:UIColorFromRGB(0x666666)];
+            [self.subtotalView addSubview:_shippingFeeValueLabel];
+        }
+        [_shippingFeeValueLabel setText:self.cart.shippingValueFormatted];
+        [_shippingFeeValueLabel sizeToFit];
+        [_shippingFeeValueLabel setX:CGRectGetMaxX(self.subtotalView.frame) - _shippingFeeValueLabel.width - 4.f];
+        [_shippingFeeValueLabel setY:nextElementPosY];
+        nextElementPosY = CGRectGetMaxY(_shippingFeeLabel.frame) + 4.f;
+        [_shippingFeeValueLabel setHidden:NO];
+    }else{
+        if (!_shippingFeeLabel) {
+            [_shippingFeeLabel setHidden:YES];
+        }
+        if (!_shippingFeeValueLabel) {
+            [_shippingFeeValueLabel setHidden:YES];
+        }
+    }
+
+    if (!self.extraCostsLabel) {
+        self.extraCostsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        [self.extraCostsLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
+        [self.extraCostsLabel setTextColor:UIColorFromRGB(0x666666)];
+        [self.extraCostsLabel setText:STRING_EXTRA_COSTS];
+        [self.extraCostsLabel sizeToFit];
+        [self.subtotalView addSubview:self.extraCostsLabel];
+    }
     [self.extraCostsLabel setFrame:CGRectMake(6.0f,
-                                              extraCostYPos,
+                                              nextElementPosY,
                                               self.extraCostsLabel.frame.size.width,
                                               self.extraCostsLabel.frame.size.height)];
-    [self.subtotalView addSubview:self.extraCostsLabel];
     
-    self.extraCostsValue = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.extraCostsValue setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
-    [self.extraCostsValue setTextColor:UIColorFromRGB(0x666666)];
+    
+    if (!self.extraCostsValue) {
+        self.extraCostsValue = [[UILabel alloc] initWithFrame:CGRectZero];
+        [self.extraCostsValue setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
+        [self.extraCostsValue setTextColor:UIColorFromRGB(0x666666)];
+        [self.subtotalView addSubview:self.extraCostsValue];
+    }
     [self.extraCostsValue setText:[[self cart] extraCostsFormatted]];
     [self.extraCostsValue sizeToFit];
-    [self.extraCostsValue setBackgroundColor:[UIColor clearColor]];
     [self.extraCostsValue setFrame:CGRectMake(self.subtotalView.frame.size.width - self.extraCostsValue.frame.size.width - 4.0f,
-                                              extraCostYPos,
+                                              nextElementPosY,
                                               self.extraCostsValue.frame.size.width,
                                               self.extraCostsValue.frame.size.height)];
-    [self.subtotalView addSubview:self.extraCostsValue];
     
-    self.totalLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.totalLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
-    [self.totalLabel setTextColor:UIColorFromRGB(0x666666)];
-    [self.totalLabel setText:STRING_TOTAL];
-    [self.totalLabel sizeToFit];
-    [self.totalLabel setBackgroundColor:[UIColor clearColor]];
-    
-    self.totalValue = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.totalValue setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
-    [self.totalValue setTextColor:UIColorFromRGB(0xcc0000)];
-    [self.totalValue setText:[[self cart] cartValueFormatted]];
-    [self.totalValue sizeToFit];
-    [self.totalValue setBackgroundColor:[UIColor clearColor]];
+    if([self.cart.extraCosts integerValue] == 0) {
+        [self.extraCostsLabel setHidden:YES];
+        [self.extraCostsValue setHidden:YES];
+    }else{
+        [self.extraCostsLabel setHidden:NO];
+        [self.extraCostsValue setHidden:NO];
+        nextElementPosY = CGRectGetMaxY(self.extraCostsLabel.frame) + 4.f;
+    }
     
     if(VALID_NOTEMPTY([[self cart] couponMoneyValue], NSNumber) && 0.0f < [[[self cart] couponMoneyValue] floatValue])
     {
-        self.couponLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [self.couponLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
-        [self.couponLabel setTextColor:UIColorFromRGB(0x3aaa35)];
-        [self.couponLabel setText:STRING_VOUCHER];
-        [self.couponLabel sizeToFit];
+        if (!self.couponLabel) {
+            self.couponLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+            [self.couponLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
+            [self.couponLabel setTextColor:UIColorFromRGB(0x3aaa35)];
+            [self.couponLabel setText:STRING_VOUCHER];
+            [self.couponLabel sizeToFit];
+            [self.subtotalView addSubview:self.couponLabel];
+        }
         [self.couponLabel setBackgroundColor:[UIColor clearColor]];
         [self.couponLabel setFrame:CGRectMake(6.0f,
-                                              CGRectGetMaxY(self.extraCostsLabel.frame),
+                                              nextElementPosY,
                                               self.couponLabel.frame.size.width,
                                               self.couponLabel.frame.size.height)];
-        [self.subtotalView addSubview:self.couponLabel];
         
-        self.couponValue = [[UILabel alloc] initWithFrame:CGRectZero];
-        [self.couponValue setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
-        [self.couponValue setTextColor:UIColorFromRGB(0x3aaa35)];
+        if (!self.couponValue) {
+            self.couponValue = [[UILabel alloc] initWithFrame:CGRectZero];
+            [self.couponValue setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
+            [self.couponValue setTextColor:UIColorFromRGB(0x3aaa35)];
+            [self.subtotalView addSubview:self.couponValue];
+        }
         [self.couponValue setText:[NSString stringWithFormat:@"- %@", [[self cart] couponMoneyValueFormatted]]];
         [self.couponValue sizeToFit];
-        [self.couponValue setBackgroundColor:[UIColor clearColor]];
         [self.couponValue setFrame:CGRectMake(self.subtotalView.frame.size.width - self.couponValue.frame.size.width - 4.0f,
-                                              CGRectGetMaxY(self.extraCostsLabel.frame),
+                                              nextElementPosY,
                                               self.couponValue.frame.size.width,
                                               self.couponValue.frame.size.height)];
-        [self.subtotalView addSubview:self.couponValue];
         
-        [self.totalLabel setFrame:CGRectMake(6.0f,
-                                             CGRectGetMaxY(self.couponLabel.frame) + 4.0f,
-                                             self.totalLabel.frame.size.width,
-                                             self.totalLabel.frame.size.height)];
-        
-        [self.totalValue setFrame:CGRectMake(self.subtotalView.frame.size.width - self.totalValue.frame.size.width - 4.0f,
-                                             CGRectGetMaxY(self.couponLabel.frame) + 4.0f,
-                                             self.totalValue.frame.size.width,
-                                             self.totalValue.frame.size.height)];
+        nextElementPosY = CGRectGetMaxY(self.couponValue.frame) + 4.f;
+        [self.couponLabel setHidden:NO];
+        [self.couponValue setHidden:NO];
     }
     else
     {
         if(VALID_NOTEMPTY(self.couponLabel, UILabel))
         {
-            [self.couponLabel removeFromSuperview];
+            [self.couponLabel setHidden:YES];
         }
         if(VALID_NOTEMPTY(self.couponValue, UILabel))
         {
-            [self.couponValue removeFromSuperview];
+            [self.couponValue setHidden:YES];
         }
         
-        [self.totalLabel setFrame:CGRectMake(6.0f,
-                                             CGRectGetMaxY(self.extraCostsLabel.frame) + 4.0f,
-                                             self.totalLabel.frame.size.width,
-                                             self.totalLabel.frame.size.height)];
-        
-        [self.totalValue setFrame:CGRectMake(self.subtotalView.frame.size.width - self.totalValue.frame.size.width - 4.0f,
-                                             CGRectGetMaxY(self.extraCostsLabel.frame) + 4.0f,
-                                             self.totalValue.frame.size.width,
-                                             self.totalValue.frame.size.height)];
     }
     
-    [self.subtotalView addSubview:self.totalLabel];
-    [self.subtotalView addSubview:self.totalValue];
-    
-    [self.subtotalView setFrame:CGRectMake(0.0f,
-                                           CGRectGetMaxY(self.couponView.frame) + 3.0f,
-                                           self.cartScrollView.frame.size.width,
-                                           CGRectGetMaxY(self.totalValue.frame) + 10.0f)];
-    [self.cartScrollView addSubview:self.subtotalView];
-    
-    if(VALID_NOTEMPTY(self.checkoutButton, UIButton))
+    if (!self.totalLabel)
     {
-        [self.checkoutButton removeFromSuperview];
+        self.totalLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        [self.totalLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
+        [self.totalLabel setTextColor:UIColorFromRGB(0x666666)];
+        [self.totalLabel setText:STRING_TOTAL];
+        [self.totalLabel sizeToFit];
+        [self.subtotalView addSubview:self.totalLabel];
     }
+    
+    if (!self.totalValue) {
+        self.totalValue = [[UILabel alloc] initWithFrame:CGRectZero];
+        [self.totalValue setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
+        [self.totalValue setTextColor:UIColorFromRGB(0xcc0000)];
+        [self.subtotalView addSubview:self.totalValue];
+    }
+    [self.totalValue setText:[[self cart] cartValueFormatted]];
+    [self.totalValue sizeToFit];
+    
+    [self.totalLabel setFrame:CGRectMake(6.0f,
+                                         nextElementPosY + 8.0f,
+                                         self.totalLabel.frame.size.width,
+                                         self.totalLabel.frame.size.height)];
+    
+    [self.totalValue setFrame:CGRectMake(self.subtotalView.frame.size.width - self.totalValue.frame.size.width - 4.0f,
+                                         nextElementPosY+ 8.0f,
+                                         self.totalValue.frame.size.width,
+                                         self.totalValue.frame.size.height)];
+    
+    [self.subtotalView setHeight:CGRectGetMaxY(self.totalValue.frame) + 10.0f];
     
     NSString *greyButtonName = @"greyBig_%@";
     NSString *orangeButtonName = @"orangeBig_%@";
@@ -782,23 +898,24 @@
         }
     }
     
-    self.checkoutButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *checkoutButtonImageNormal = [UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"normal"]];
-    [self.checkoutButton setBackgroundImage:checkoutButtonImageNormal forState:UIControlStateNormal];
-    [self.checkoutButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]] forState:UIControlStateHighlighted];
-    [self.checkoutButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]] forState:UIControlStateSelected];
-    [self.checkoutButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"disabled"]] forState:UIControlStateDisabled];
-    [self.checkoutButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
-    [self.checkoutButton setTitle:STRING_PROCEED_TO_CHECKOUT forState:UIControlStateNormal];
-    [self.checkoutButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    [self.checkoutButton addTarget:self action:@selector(checkoutButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-//    [self.checkoutButton setX:self.view.width/2 - self.checkoutButton.width/2];
-//    [self.checkoutButton setY:CGRectGetMaxY(self.subtotalView.frame) + 6.0f];
+    if (!self.checkoutButton) {
+        self.checkoutButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.checkoutButton setBackgroundImage:checkoutButtonImageNormal forState:UIControlStateNormal];
+        [self.checkoutButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]] forState:UIControlStateHighlighted];
+        [self.checkoutButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]] forState:UIControlStateSelected];
+        [self.checkoutButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"disabled"]] forState:UIControlStateDisabled];
+        [self.checkoutButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
+        [self.checkoutButton setTitle:STRING_PROCEED_TO_CHECKOUT forState:UIControlStateNormal];
+        [self.checkoutButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+        [self.checkoutButton addTarget:self action:@selector(checkoutButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self.cartScrollView addSubview:self.checkoutButton];
+    }
+    
     [self.checkoutButton setFrame:CGRectMake(0.0f,
                                              CGRectGetMaxY(self.subtotalView.frame) + 6.0f,
                                              checkoutButtonImageNormal.size.width,
                                              checkoutButtonImageNormal.size.height)];
-    [self.cartScrollView addSubview:self.checkoutButton];
     
     [self.cartScrollView setContentSize:CGSizeMake(self.cartScrollView.frame.size.width,
                                                    self.cartScrollView.frame.origin.y + CGRectGetMaxY(self.checkoutButton.frame) + 6.0f)];
@@ -870,6 +987,11 @@
         [RICart removeProductWithQuantity:[product.quantity stringValue]
                                       sku:product.simpleSku
                          withSuccessBlock:^(RICart *cart) {
+                             
+                             NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
+                             [skusFromTeaserInCart removeObjectForKey:product.sku];
+                             [[NSUserDefaults standardUserDefaults] setObject:[skusFromTeaserInCart copy] forKey:kSkusFromTeaserInCartKey];
+                             
                              self.cart = cart;
                              
                              NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -891,6 +1013,12 @@
                              
                              [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromCart]
                                                                        data:[trackingDictionary copy]];
+                             
+                             NSMutableDictionary *tracking = [NSMutableDictionary new];
+                             [tracking setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+                             [tracking setValue:cart.cartCount forKey:kRIEventQuantityKey];
+                             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+                                                                       data:[tracking copy]];
                              
                              NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                              [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
@@ -977,6 +1105,15 @@
     {
         [RICart removeVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;
+            
+            NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+            
+            NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
+            [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+            [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+                                                      data:[trackingDictionary copy]];
             self.voucherCode = voucherCode;
             
             [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kUserDefaultsVoucherCode];
@@ -996,6 +1133,15 @@
         [RICart addVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;
             self.voucherCode = voucherCode;
+            
+            NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+            
+            NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
+            [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+            [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+                                                      data:[trackingDictionary copy]];
 
             [[NSUserDefaults standardUserDefaults] setObject:voucherCode forKey:kUserDefaultsVoucherCode];
             
@@ -1022,7 +1168,7 @@
             [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
             
             [trackingDictionary setValue:[NSNumber numberWithInteger:[[self.cart cartItems] count]] forKey:kRIEventQuantityKey];
-            [trackingDictionary setValue:[self.cart cartValue] forKey:kRIEventTotalCartKey];
+            [trackingDictionary setValue:[self.cart cartValueEuroConverted] forKey:kRIEventTotalCartKey];
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutStart]
                                                       data:[trackingDictionary copy]];
@@ -1285,6 +1431,12 @@
         [RICart changeQuantityInProducts:quantitiesToChange
                         withSuccessBlock:^(RICart *cart) {
                             self.cart = cart;
+                            
+                            NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
+                            [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+                            [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+                            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+                                                                      data:[trackingDictionary copy]];
                             
                             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                             [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];

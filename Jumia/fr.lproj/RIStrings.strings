@@ -128,9 +128,9 @@
 
 "related_items" = "Produits Similaires";
 
-"product_features_title" = "Spécificités du produit";
+"product_features_title" = "Caractéristiques du produit";
 
-"description" = "Déscription";
+"description" = "Description";
 
 "key_features" = "Fonctionnalités";
 
@@ -192,7 +192,7 @@
 
 "extra_costs_label" = "Frais Supplémentaires";
 
-"my_order_voucher_label" = "Code promotionel";
+"my_order_voucher_label" = "Code promotionnel";
 
 "my_order_total_label" = "Total";
 
@@ -296,7 +296,7 @@
 
 "recentsearch_clear_searches" = "Effacer les Recherches Récentes";
 
-"recentlyview_no_searches" = "Aucun Dernier Produit Vu";
+"recentlyview_no_searches" = "Aucun produit vu récemment";
 
 "recentlyview_clear_viewed" = "Effacer les Derniers Produits Vus";
 
@@ -308,15 +308,15 @@
 
 "option2_description" = "Changez votre mot de passe, e-mail, etc...";
 
-"myaccount_email_notifications" = "Préférence E-mails";
+"myaccount_email_notifications" = "Notifications Email";
 
-"option3_description" = "S\'inscrire ou Se désinscrire";
+"option3_description" = "S'inscrire ou se désinscrire";
 
 "section_title_notification" = "Paramètres de notification";
 
 "notifications" = "Notifications";
 
-"notifications_summary" = "Recevez offres exclusives et mises à jour";
+"notifications_summary" = "Recevez des offres exclusives et mises à jour personnelles";
 
 "sound" = "Son";
 
@@ -332,7 +332,7 @@
 
 "thank_you_order_title" = "Merci!";
 
-"order_success" = "Votre commande a été enregistré avec succès, sous le numéro suivant:";
+"order_success" = "Votre commande a été enregistré avec succès,sous le numéro suivant:";
 
 "order_track_success" = "Vous pouvez suivre le statut de votre commande en allant dans la rubrique dédiée dans l'application";
 
@@ -372,7 +372,7 @@
 
 "product_specifications" = "Caractéristiques";
 
-"go_shop_text" = "J\'achète";
+"go_shop_text" = "J’achète";
 
 "promotion_tip_tap_text" = "Cliquez sur la case ci-dessus pour copier le code dans le presse-papier et gardez le ainsi à portée de main pour le paiement final";
 
@@ -382,7 +382,7 @@
 
 "string_no_newtork" = "Aucune connection.";
 
-"internet_no_connection_details_label" = "Un problème de connection s'est produit, Veuillez essayer à nouveau";
+"internet_no_connection_details_label" = "Un problème de connexion s'est produit, Veuillez essayer à nouveau";
 
 "string_oops" = "Oups!";
 
@@ -400,7 +400,7 @@
 
 "fallback_maintenance_text" = "iest actuellement en maintenance.";
 
-"fallback_maintenance_text_bottom" = "Nous allons essayer d\'être bref, réessayer dans quelques secondes";
+"fallback_maintenance_text_bottom" = "Nous allons essayer d’être bref, réessayer dans quelques secondes";
 
 "fallback_best" = "Première boutique de vente en ligne";
 
@@ -408,11 +408,11 @@
 
 "fallback_doorstep" = "À VOTRE PORTE";
 
-"got_it" = "J\'ai Compris";
+"got_it" = "J'ai Compris";
 
 "home_tip_text" = "Faites défiler vers la gauche ou la droite pour changer de catégorie";
 
-"products_tip_swipe_text" = "Balayer à la gauche ou droite pour changer de classement";
+"products_tip_swipe_text" = "Balayer à gauche ou à droite pour changer de classement";
 
 "tip_favourite_text" = "Cliquez pour ajouter ce produit aux Favoris, et voir la liste complète dans Mon Profil";
 
@@ -420,9 +420,9 @@
 
 "tip_swipe_text" = "Balayez vers la gauche ou la droite pour observer les différentes images";
 
-"tip_tap_text" = "Cliquez pour voir l\'ensemble \ndes images produit";
+"tip_tap_text" = "Cliquez pour voir l'ensemble des images produit";
 
-"pinch_to_zoom_label" = "Pincez pour zommer";
+"pinch_to_zoom_label" = "Pincez pour zoomer \n";
 
 "fallback_audio_ios" = "Son & Image";
 
@@ -464,9 +464,9 @@
 
 "app_sharing" = "Partage d'application";
 
-"share_the_app" = "Partagez l'application Jumia";
+"share_the_app" = "Partagez l'Application";
 
-"can_share_app_with_friends" = "Vous pouvez partager l'application avec vos amis";
+"can_share_app_with_friends" = "Vous pouvez maintenant partager l'application avec vos amis";
 
 "install_app_ios" = "Installez le% @ iOS en un instant";
 
@@ -474,7 +474,7 @@
 
 "delivery_time" = "Délai de livraison:";
 
-"product_outof_stock" = "Le produit n\'est plus disponible";
+"product_outof_stock" = "Le produit n'est plus disponible";
 
 "products_outof_stock" = "Les articles sont en rupture de stock";
 
@@ -482,7 +482,7 @@
 
 "my_orders_label" = "Mes Commandes";
 
-"my_order_history_label" = "Mon Historique d'achats";
+"my_order_history_label" = "Mes historiques d'achats";
 
 "my_order_tracking_label" = "Statut de la Commande";
 
@@ -510,7 +510,7 @@
 
 "other_sellers" = "Autres Vendeurs";
 
-"same_product_from_other_sellers" = "Même produit chez d'autres vendeurs";
+"same_product_from_other_sellers" = "Même produit provenant d'un autre vendeur";
 
 "from" = "DE";
 
@@ -532,7 +532,7 @@
 
 "login_to_rate" = "Veuillez connecter pour noter";
 
-"my_order_item_label" = "produit";
+"my_order_item_label" = "Produit";
 
 "my_order_items_label" = "Produits";
 
@@ -540,13 +540,13 @@
 
 "string_addresses_saved_as_default" = "Adresses sauvées par défaut";
 
-"review_this_seller" = "Évaluer maintenant ce vendeur !";
+"review_this_seller" = "Evaluer maintenant ce vendeur !";
 
 "string_wizard_back_top" = "Appuyez sur la barre d'état pour faire défiler le catalogue haut de la page";
 
-"shops_of_the_week" = "Meilleures Marques";
+"shops_of_the_week" = "Boutiques de la semaine";
 
-"featured_stores" = "Nos Boutiques";
+"featured_stores" = "Boutiques en vedette";
 
 "see_more_offers" = "Voir plus d'offres";
 
@@ -557,3 +557,8 @@
 "kickout_message_3" = "Nous voulons vous offrir la meilleure expérience de shopping possible, alors nous aimerions vous demander de réessayer plus tard.";
 
 "search_placeholder" = "Recherche de produits, marques ...";
+
+"shipping_fee_info" = "Frais ajoutés au total de votre montant";
+
+"birthday" = "Anniversaire";
+

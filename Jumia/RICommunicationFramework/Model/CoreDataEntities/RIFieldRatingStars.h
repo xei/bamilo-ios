@@ -19,6 +19,6 @@
 @property (nonatomic, retain) RIField *field;
 
 + (RIFieldRatingStars*)parseFieldRatingStars:(NSDictionary*)json;
-+ (void)saveFieldRatingStars:(RIFieldRatingStars *)fieldRatingStars;
++ (void)saveFieldRatingStars:(RIFieldRatingStars *)fieldRatingStars andContext:(BOOL)save;
 
 @end

@@ -13,32 +13,83 @@
 @implementation JAUtils
 
 + (void) goToCheckout:(RICheckout*)checkout
-{       
-    if([@"createAddress" isEqualToString:checkout.nextStep])
-    {
+{
+    NSString* nextStep;
+    if (VALID_NOTEMPTY(checkout, RICheckout)) {
+        nextStep = checkout.nextStep;
+    } else if ([checkout isKindOfClass:[NSDictionary class]]) {
+        //$$$ IN VERSION 1.8 we can remove this stupid NSDictionary cast because using the form "type" we can always parse the result correctly
+        //$$$ if you are reading this after 1.8 has been implemnted, please remove this "else"
+        NSDictionary* realCheckout = (NSDictionary*)checkout;
+        nextStep = [realCheckout objectForKey:@"next_step"];
     }
-    else if([@"billing" isEqualToString:checkout.nextStep])
+    
+    if([@"createAddress" isEqualToString:nextStep])
+    {
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button", @"from_checkout"]];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
+                                                            object:checkout
+                                                          userInfo:userInfo];
+    }
+    else if([@"billing" isEqualToString:nextStep])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
                                                             object:@{@"animated":[NSNumber numberWithBool:YES]}
                                                           userInfo:@{@"from_checkout":[NSNumber numberWithBool:YES]}];
     }
-    else if([@"shippingMethod" isEqualToString:checkout.nextStep])
+    else if([@"shippingMethod" isEqualToString:nextStep])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutShippingScreenNotification
+                                                            object:checkout
+                                                          userInfo:nil];
+    }
+    else if([@"paymentMethod" isEqualToString:nextStep])
+    {        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutPaymentScreenNotification
+                                                            object:checkout
+                                                          userInfo:nil];
+    }
+    else if([@"finish" isEqualToString:nextStep])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutFinishScreenNotification
+                                                            object:checkout
+                                                          userInfo:nil];
+    }
+}
+
++ (void) goToNextStep:(NSString*)nextStep
+{
+    if([@"createAddress" isEqualToString:nextStep])
+    {
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button", @"from_checkout"]];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
+                                                            object:nil
+                                                          userInfo:userInfo];
+    }
+    else if([@"billing" isEqualToString:nextStep])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+                                                            object:@{@"animated":[NSNumber numberWithBool:YES]}
+                                                          userInfo:@{@"from_checkout":[NSNumber numberWithBool:YES]}];
+    }
+    else if([@"shippingMethod" isEqualToString:nextStep])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutShippingScreenNotification
                                                             object:nil
                                                           userInfo:nil];
     }
-    else if([@"paymentMethod" isEqualToString:checkout.nextStep])
-    {        
+    else if([@"paymentMethod" isEqualToString:nextStep])
+    {
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutPaymentScreenNotification
                                                             object:nil
                                                           userInfo:nil];
     }
-    else if([@"finish" isEqualToString:checkout.nextStep])
+    else if([@"finish" isEqualToString:nextStep])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutFinishScreenNotification
-                                                            object:checkout
+                                                            object:nil
                                                           userInfo:nil];
     }
 }

@@ -92,27 +92,34 @@
                 }
             }
         } else {
-            
+            NSString *brands = [NSString new];
             for (RIFilterOption* filterOption in filter.options) {
                 
                 if (filterOption.selected) {
+                    
+                    filterOption.val = [filterOption.val stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
+                    filterOption.val = [filterOption.val stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+                    
+                    if ([filter.uid isEqualToString:@"brand"]) {
+                        if (!VALID_NOTEMPTY(brands, NSString)) {
+                            brands = [NSString stringWithFormat:@"&q=%@", filterOption.val];
+                        }else{
+                            brands = [NSString stringWithFormat:@"%@--%@", brands, filterOption.val];
+                        }
+                    }
                     if (ISEMPTY(urlString)) {
-                        
                         NSString* filterUidString = filter.uid;
                         urlString = [NSString stringWithFormat:@"%@=%@", filterUidString, filterOption.val];
-                        urlString = [urlString stringByReplacingOccurrencesOfString:@"_" withString:@"%20"];
-                        urlString = [urlString stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
-                        if ([filter.uid isEqualToString:@"brand"]) {
-                            NSString* extraQuery = [NSString stringWithFormat:@"q=%@", filterOption.val];
-                            extraQuery = [extraQuery stringByReplacingOccurrencesOfString:@"_" withString:@"%20"];
-                            extraQuery = [extraQuery stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
-                            urlString = [NSString stringWithFormat:@"%@&%@", urlString, extraQuery];
-                        }
                     } else {
                         urlString = [NSString stringWithFormat:@"%@--%@", urlString, filterOption.val];
                     }
                 }
             }
+            
+            if (VALID_NOTEMPTY(brands, NSString)) {
+                urlString = [NSString stringWithFormat:@"%@%@", urlString, brands];
+            }
+            
         }
     }
     

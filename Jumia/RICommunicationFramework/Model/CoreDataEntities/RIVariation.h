@@ -30,7 +30,7 @@
  *
  *  @param the RIVariation to be saved
  */
-+ (void)saveVariation:(RIVariation*)variation;
++ (void)saveVariation:(RIVariation*)variation andContext:(BOOL)save;
 
 
 @end

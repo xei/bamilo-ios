@@ -38,14 +38,20 @@
     return newVariation;
 }
 
-+ (void)saveVariation:(RIVariation*)variation;
++ (void)saveVariation:(RIVariation*)variation andContext:(BOOL)save;
 {
-    if (VALID_NOTEMPTY(variation.image, RIImage)) {
-        [RIImage saveImage:variation.image];
+    if (variation.image) {
+        NSArray *images = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIImage class])];
+        if (![images containsObject:variation.image]) {
+            [[RIDataBaseWrapper sharedInstance] insertManagedObject:variation.image];
+        }
     }
     
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:variation];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 @end

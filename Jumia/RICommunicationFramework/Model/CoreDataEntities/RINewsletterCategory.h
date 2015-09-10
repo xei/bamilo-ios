@@ -18,7 +18,7 @@
 
 + (RINewsletterCategory *)parseNewsletterCategory:(NSDictionary *)json;
 
-+ (void)saveNewsLetterCategory:(RINewsletterCategory *)newsletterCategory;
++ (void)saveNewsLetterCategory:(RINewsletterCategory *)newsletterCategory andContext:(BOOL)save;
 
 + (NSArray *)getNewsletter;
 

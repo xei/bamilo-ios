@@ -17,6 +17,7 @@
 @dynamic form;
 
 + (NSString*)loadFormIndexesIntoDatabaseForCountry:(NSString*)countryUrl
+                         countryUserAgentInjection:(NSString *)countryUserAgentInjection
                                   deleteOldIndexes:(BOOL)deleteOldIndexes
                                   withSuccessBlock:(void (^)(id formIndexes))successBlock
                                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
@@ -25,6 +26,7 @@
                                                             parameters:nil httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
+                                                    userAgentInjection:countryUserAgentInjection
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
@@ -68,7 +70,7 @@
         successBlock(lastForm);
         return nil;
     } else {
-        return [RIFormIndex loadFormIndexesIntoDatabaseForCountry:[RIApi getCountryUrlInUse] deleteOldIndexes:YES withSuccessBlock:^(id formIndexes) {
+        return [RIFormIndex loadFormIndexesIntoDatabaseForCountry:[RIApi getCountryUrlInUse] countryUserAgentInjection:[RIApi getCountryUserAgentInjection] deleteOldIndexes:YES withSuccessBlock:^(id formIndexes) {
             formIndexes = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIFormIndex class]) withPropertyName:@"uid" andPropertyValue:formIndexID];
             if(VALID_NOTEMPTY(formIndexes, NSArray))
             {
@@ -94,7 +96,7 @@
             if (VALID_NOTEMPTY(formIndexJSON, NSDictionary)) {
                 
                 RIFormIndex* formIndex = [RIFormIndex parseFormIndex:formIndexJSON];
-                [RIFormIndex saveFormIndex:formIndex];
+                [RIFormIndex saveFormIndex:formIndex andContext:YES];
                 [newFormIndexes addObject:formIndex];
             }
         }
@@ -116,14 +118,17 @@
     return newFormIndex;
 }
 
-+ (void)saveFormIndex:(RIFormIndex*)formIndex;
++ (void)saveFormIndex:(RIFormIndex*)formIndex andContext:(BOOL)save;
 {
     if (VALID_NOTEMPTY(formIndex.form, RIForm)) {
-        [RIForm saveForm:formIndex.form];
+        [RIForm saveForm:formIndex.form andContext:NO];
     }
     
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:formIndex];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 #pragma mark - Cancel requests

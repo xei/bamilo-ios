@@ -552,11 +552,13 @@
     {
         JASignupViewController *signUpVC = [[JASignupViewController alloc] init];
         
-        if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSNotification))
-        {
+        if(VALID_NOTEMPTY(notification, NSNotification)) {
             signUpVC.navBarLayout.showBackButton = ![[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
             signUpVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
-            signUpVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
+            if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSNotification))
+            {
+                signUpVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
+            }
             [self popViewControllerAnimated:NO];
         }
         else
@@ -857,6 +859,10 @@
         NSNumber* isShippingAddress = [notification.userInfo objectForKey:@"is_shipping_address"];
         NSNumber* showBackButton = [notification.userInfo objectForKey:@"show_back_button"];
         NSNumber* fromCheckout = [notification.userInfo objectForKey:@"from_checkout"];
+        NSNumber *animated = @YES;
+        if ([notification.userInfo objectForKey:@"animated"]) {
+            animated = [notification.userInfo objectForKey:@"animated"];
+        }
         
         addAddressVC.isBillingAddress = [isBillingAddress boolValue];
         addAddressVC.isShippingAddress = [isShippingAddress boolValue];
@@ -882,7 +888,7 @@
             addAddressVC.navBarLayout.showLogo = NO;
         }
         
-        [self pushViewController:addAddressVC animated:YES];
+        [self pushViewController:addAddressVC animated:animated.boolValue];
     }
 }
 
@@ -1309,6 +1315,9 @@
         } else {
             [catalog.navBarLayout setShowBackButton:YES];;
         }
+        if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
+            catalog.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
+        }
         
         [self pushViewController:catalog animated:YES];
     }
@@ -1330,12 +1339,18 @@
     //this is used in deeplinking
     NSString* campaignId = [notification.userInfo objectForKey:@"campaign_id"];
     
+    NSString* cameFromTeasers;
+    if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
+        cameFromTeasers = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
+    }
+    
     if (VALID_NOTEMPTY(teaserGrouping, RITeaserGrouping))
     {
         JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
         
         campaignsVC.teaserGrouping = teaserGrouping;
         campaignsVC.startingTitle = title;
+        campaignsVC.teaserTrackingInfo = cameFromTeasers;
         
         [self pushViewController:campaignsVC animated:YES];
     }
@@ -1344,12 +1359,14 @@
         JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
         
         campaignsVC.campaignId = campaignId;
+        campaignsVC.teaserTrackingInfo = cameFromTeasers;
         
         [self pushViewController:campaignsVC animated:YES];
     } else if (VALID_NOTEMPTY(campaignUrl, NSString)) {
         JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
         
         campaignsVC.campaignUrl = campaignUrl;
+        campaignsVC.teaserTrackingInfo = cameFromTeasers;
         
         [self pushViewController:campaignsVC animated:YES];
     }
@@ -1408,6 +1425,10 @@
             pdv.showBackButton = YES;
         }
         
+        if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
+            pdv.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
+        }
+        
         [self pushViewController:pdv animated:YES];
     }
 }
@@ -1431,6 +1452,9 @@
     if([notification.userInfo objectForKey:@"title"])
     {
         viewController.navBarLayout.title = [notification.userInfo objectForKey:@"title"];
+    }
+    if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
+        viewController.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
     }
     
     if (VALID_NOTEMPTY(url, NSString))
@@ -1488,16 +1512,26 @@
         catalog.navBarLayout.title = category.name;
         catalog.navBarLayout.backButtonTitle = STRING_ALL_CATEGORIES;
         
+        if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
+            catalog.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
+        }
+        
         [self pushViewController:catalog animated:YES];
     }
 }
 
-- (void) closeCurrentScreenNotificaion:(NSNotification*)notification
+- (void)closeCurrentScreenNotificaion:(NSNotification*)notification
 {
     BOOL animated = YES;
     if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"animated"], NSNumber))
     {
         animated = [[notification.userInfo objectForKey:@"animated"] boolValue];
+    }
+    if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY(notification.object, UIViewController))
+    {
+        if ([self topViewController] != notification.object) {
+            return;
+        }
     }
     [self popViewControllerAnimated:animated];
 }

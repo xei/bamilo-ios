@@ -1,8 +1,8 @@
 //
 //  BMA4SInBoxMessage.h
-//  Accengage 
+//  Accengage SDK 
 //
-//  Copyright (c) 2010-2014 Accengage. All rights reserved.
+//  Copyright (c) 2010-2015 Accengage. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -14,7 +14,14 @@ extern NSString *const BMA4SInBoxMessageWillInteract;
 @class BMA4SInBoxMessageContent;
 @class BMA4SInBoxMessage;
 
+/**
+ *  A block object to be executed as a result of an interaction with message
+ *
+ *  @param message the message
+ *  @param content message content
+ */
 typedef void (^BMA4SInBoxDisplayHandler)(BMA4SInBoxMessage *message, BMA4SInBoxMessageContent *content);
+
 /**
  Define a BMA4SInBoxMessage object with her properties and method instance
  */

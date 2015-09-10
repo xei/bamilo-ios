@@ -22,6 +22,6 @@
 + (RIFieldDataSetComponent *)parseDataSetComponentWithString:(NSString *)text;
 + (RIFieldDataSetComponent *)parseDataSetComponentWithDictionary:(NSDictionary *)dictionary;
 
-+ (void)saveFieldDataSetComponent:(RIFieldDataSetComponent *)component;
++ (void)saveFieldDataSetComponent:(RIFieldDataSetComponent *)component andContext:(BOOL)save;
 
 @end

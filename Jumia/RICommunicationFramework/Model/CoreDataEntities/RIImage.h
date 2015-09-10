@@ -32,7 +32,7 @@
  *
  *  @param the RIImage to be saved
  */
-+ (void)saveImage:(RIImage*)image;
++ (void)saveImage:(RIImage*)image andContext:(BOOL)save;
 
 @end
 

@@ -10,6 +10,7 @@
 #import "RIAddress.h"
 #import "RIForm.h"
 #import "RINewsletterCategory.h"
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 @interface RICustomer ()
 
@@ -162,6 +163,7 @@
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary))
@@ -220,6 +222,7 @@
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                               if (metadata && [metadata isKindOfClass:[NSDictionary class]]) {
@@ -248,6 +251,7 @@
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICustomer class])];
                                                               [[RIDataBaseWrapper sharedInstance] saveContext];
@@ -278,6 +282,7 @@
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               successBlock();
                                                           } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
@@ -306,6 +311,7 @@
     }
     else
     {
+        [[[FBSDKLoginManager alloc] init] logOut];
         return NO;
     }
 }
@@ -394,7 +400,7 @@
         }
     }
     
-    [RICustomer saveCustomer:customer];
+    [RICustomer saveCustomer:customer andContext:YES];
     
     return customer;
 }
@@ -465,19 +471,22 @@
     
     [self updateCustomerNewsletterWithJson:json];
     
-    [RICustomer saveCustomer:customer];
+    [RICustomer saveCustomer:customer andContext:YES];
     
     return customer;
 }
 
-+ (void)saveCustomer:(RICustomer *)customer
++ (void)saveCustomer:(RICustomer *)customer andContext:(BOOL)save
 {
     for (RIAddress *address in customer.addresses) {
-        [RIAddress saveAddress:address];
+        [RIAddress saveAddress:address andContext:NO];
     }
     
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:customer];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 #pragma mark - Save newsletter preferences
@@ -494,7 +503,7 @@
         for (NSDictionary *dic in newsletterArray)
         {
             RINewsletterCategory *newsletter = [RINewsletterCategory parseNewsletterCategory:dic];
-            [RINewsletterCategory saveNewsLetterCategory:newsletter];
+            [RINewsletterCategory saveNewsLetterCategory:newsletter andContext:YES];
         }
     }
     else if ([json objectForKey:@"newsletter_subscription"])
@@ -507,7 +516,7 @@
         for (NSDictionary *dic in newsletterArray)
         {
             RINewsletterCategory *newsletter = [RINewsletterCategory parseNewsletterCategory:dic];
-            [RINewsletterCategory saveNewsLetterCategory:newsletter];
+            [RINewsletterCategory saveNewsLetterCategory:newsletter andContext:YES];
         }
     }
 }

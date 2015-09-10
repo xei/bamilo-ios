@@ -13,7 +13,7 @@
 #import "RICustomer.h"
 #import "JAUtils.h"
 #import "JAProductListFlowLayout.h"
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKAppEvents.h>
 
 @interface JAOtherOffersViewController ()
 
@@ -341,12 +341,27 @@
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                 data:[trackingDictionary copy]];
                       
+                      
+                      NSMutableDictionary *tracking = [NSMutableDictionary new];
+                      [tracking setValue:self.product.name forKey:kRIEventProductNameKey];
+                      [tracking setValue:self.product.sku forKey:kRIEventSkuKey];
+                      if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet)) {
+                          [tracking setValue:[self.product.categoryIds lastObject] forKey:kRIEventLastCategoryAddedToCartKey];
+                      }
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
+                      
+                      tracking = [NSMutableDictionary new];
+                      [tracking setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+                      [tracking setValue:cart.cartCount forKey:kRIEventQuantityKey];
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+                                                                data:[tracking copy]];
+                      
                       float value = [price floatValue];
-                      [FBAppEvents logEvent:FBAppEventNameAddedToCart
+                      [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToCart
                                  valueToSum:value
-                                 parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
-                                               FBAppEventParameterNameContentType : self.product.name,
-                                               FBAppEventParameterNameContentID   : self.product.sku}];
+                                 parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
+                                               FBSDKAppEventParameterNameContentType : self.product.name,
+                                               FBSDKAppEventParameterNameContentID   : self.product.sku}];
                       
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];

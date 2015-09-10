@@ -34,10 +34,17 @@
     return newSection;
 }
 
-+ (void)saveSection:(RISection*)section;
++ (void)saveSection:(RISection*)section andContext:(BOOL)save;
 {
+    if (section.api) {
+        [[RIDataBaseWrapper sharedInstance] insertManagedObject:section.api];
+    }
+    
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:section];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 @end

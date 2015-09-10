@@ -19,7 +19,7 @@
 #import "RICustomer.h"
 #import "JAUtils.h"
 #import "RICategory.h"
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKAppEvents.h>
 
 #define kDistanceBetweenStarsAndText 70.0f
 
@@ -156,11 +156,15 @@ UITableViewDataSource
                                                  name:kOpenMenuNotification
                                                object:nil];
     
-   
-        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-        {
+    
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        if (!self.ratingsForm) {
             [self ratingsRequests];
+        } else {
+            [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
         }
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -392,6 +396,7 @@ UITableViewDataSource
         [self.tableViewComments setHidden:YES];
         [self.emptyReviewsView setHidden:NO];
         [self setupEmptyReviewsView];
+        [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.contentSize.width, CGRectGetMaxY(self.emptyReviewsView.frame))];
     }
     
     self.tableViewComments.delegate = self;
@@ -1025,7 +1030,9 @@ UITableViewDataSource
         currentDynamicForm = self.ratingsDynamicForm;
         if ([[RICountryConfiguration getCurrentConfiguration].ratingRequiresLogin boolValue] && NO == [RICustomer checkIfUserIsLogged]) {
             [self hideLoading];
-            [self showMessage:STRING_LOGIN_TO_RATE success:NO];
+            NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
+            [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfoLogin];
             return;
         }
     } else {
@@ -1033,7 +1040,9 @@ UITableViewDataSource
         currentDynamicForm = self.reviewsDynamicForm;
         if ([[RICountryConfiguration getCurrentConfiguration].reviewRequiresLogin boolValue] && NO == [RICustomer checkIfUserIsLogged]) {
             [self hideLoading];
-            [self showMessage:STRING_LOGIN_TO_REVIEW success:NO];
+            NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
+            [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfoLogin];
             return;
         }
     }
@@ -1055,6 +1064,8 @@ UITableViewDataSource
             [globalRateDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
             [globalRateDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
             [globalRateDictionary setValue:price forKey:kRIEventPriceKey];
+            [globalRateDictionary setValue:[RICategory getCategoryName:[self.product.categoryIds firstObject]] forKey:kRIEventCategoryNameKey];
+            [globalRateDictionary setValue:[RICategory getCategoryName:[self.product.categoryIds lastObject]] forKey:kRIEventSubCategoryNameKey];
             
             for (UIView *component in currentDynamicForm.formViews)
             {
@@ -1100,11 +1111,11 @@ UITableViewDataSource
                                                               data:[trackingDictionary copy]];
                     
                     float value = [@(ratingView.rating) floatValue];
-                    [FBAppEvents logEvent:FBAppEventNameRated
+                    [FBSDKAppEvents logEvent:FBSDKAppEventNameRated
                                valueToSum:value
-                               parameters:@{FBAppEventParameterNameContentType: self.product.name,
-                                            FBAppEventParameterNameContentID: self.product.sku,
-                                            FBAppEventParameterNameMaxRatingValue: @5 }];
+                               parameters:@{FBSDKAppEventParameterNameContentType: self.product.name,
+                                            FBSDKAppEventParameterNameContentID: self.product.sku,
+                                            FBSDKAppEventParameterNameMaxRatingValue: @5 }];
                 }
             }
             

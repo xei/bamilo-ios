@@ -12,6 +12,7 @@
 
 @property (nonatomic, retain) NSString * label;
 @property (nonatomic, retain) NSString * deliveryTime;
+@property (nonatomic, retain) NSNumber *shippingFee;
 
 + (RIShippingMethod *)parseShippingMethod:(NSDictionary *)shippingMethodJSON;
 

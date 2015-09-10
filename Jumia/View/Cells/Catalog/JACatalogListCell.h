@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "JACatalogCell.h"
+#import "UIButton+Extensions.h"
 
 #define JACatalogViewControllerListCellHeight_ipad 103.0f
 #define JACatalogViewControllerListCellHeight 98.0f

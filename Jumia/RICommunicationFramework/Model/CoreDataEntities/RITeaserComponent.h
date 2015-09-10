@@ -35,6 +35,6 @@
 + (RITeaserComponent*)parseTeaserComponent:(NSDictionary*)teaserComponentJSON
                                    country:(RICountryConfiguration*)country;
 
-+ (void)saveTeaserComponent:(RITeaserComponent *)teaserComponent;
++ (void)saveTeaserComponent:(RITeaserComponent *)teaserComponent andContext:(BOOL)save;
 
 @end

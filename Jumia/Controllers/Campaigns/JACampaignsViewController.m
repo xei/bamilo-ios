@@ -11,7 +11,7 @@
 #import "RICampaign.h"
 #import "RICustomer.h"
 #import "JAUtils.h"
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKAppEvents.h>
 #import "RITeaserComponent.h"
 
 @interface JACampaignsViewController ()
@@ -84,7 +84,7 @@
     
     self.isLoaded = NO;
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCampaign] data:trackingDictionary];
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCampaigns] data:trackingDictionary];
     
     
     UISwipeGestureRecognizer *leftSwipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
@@ -348,7 +348,7 @@
     JACampaignPageView* campaignPageView = [self.campaignPages objectAtIndex:index];
     [self.scrollView scrollRectToVisible:campaignPageView.frame animated:YES];
     if (NO == campaignPageView.isLoaded) {
-        [self loadCampaignPageAtIndex:[NSNumber numberWithInt:index]];
+        [self loadCampaignPageAtIndex:[NSNumber numberWithLong:index]];
     }
 }
 
@@ -380,12 +380,18 @@
 
 - (void)openCampaignWithSku:(NSString*)sku;
 {
+    
+    NSMutableDictionary* userInfo = [NSMutableDictionary new];
+    [userInfo setObject:sku forKey:@"sku"];
+    [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"show_back_button"];
+    if (self.teaserTrackingInfo) {
+        [userInfo setObject:self.teaserTrackingInfo forKey:@"teaserTrackingInfo"];
+    }
     //the flag shouldPerformButtonActions is used to fix the scrolling, if the campaignPages.count is 1, then it is not needed
     if (self.shouldPerformButtonActions || 1 == self.campaignPages.count) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                             object:nil
-                                                          userInfo:@{ @"sku" : sku ,
-                                                                      @"show_back_button" : [NSNumber numberWithBool:YES]}];
+                                                          userInfo:userInfo];
     }
 }
 
@@ -433,6 +439,17 @@
                             simple:self.backupSimpleSku
                   withSuccessBlock:^(RICart *cart) {
                       
+                      if (VALID_NOTEMPTY(self.teaserTrackingInfo, NSString)) {
+                          NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
+                          
+                          NSString* obj = [skusFromTeaserInCart objectForKey:self.backupCampaignProduct.sku];
+                          
+                          if (ISEMPTY(obj)) {
+                              [skusFromTeaserInCart setValue:self.teaserTrackingInfo forKey:self.backupCampaignProduct.sku];
+                              [[NSUserDefaults standardUserDefaults] setObject:[skusFromTeaserInCart copy] forKey:kSkusFromTeaserInCartKey];
+                          }
+                      }
+                      
                       NSNumber *price = self.backupCampaignProduct.priceEuroConverted;
                       if(VALID_NOTEMPTY(self.backupCampaignProduct.specialPriceEuroConverted, NSNumber) && [self.backupCampaignProduct.specialPriceEuroConverted floatValue] > 0.0f)
                       {
@@ -473,12 +490,24 @@
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                 data:[trackingDictionary copy]];
                       
+                      NSMutableDictionary *tracking = [NSMutableDictionary new];
+                      [tracking setValue:self.backupCampaignProduct.name forKey:kRIEventProductNameKey];
+                      [tracking setValue:self.backupCampaignProduct.sku forKey:kRIEventSkuKey];
+                      [tracking setValue:nil forKey:kRIEventLastCategoryAddedToCartKey];
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
+                      
+                      trackingDictionary = [NSMutableDictionary new];
+                      [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+                      [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+                                                                data:[trackingDictionary copy]];
+                      
                       float value = [price floatValue];
-                      [FBAppEvents logEvent:FBAppEventNameAddedToCart
+                      [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToCart
                                     valueToSum:value
-                                 parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
-                                               FBAppEventParameterNameContentType : self.backupCampaignProduct.name,
-                                               FBAppEventParameterNameContentID   : self.backupCampaignProduct.sku}];
+                                 parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
+                                               FBSDKAppEventParameterNameContentType : self.backupCampaignProduct.name,
+                                               FBSDKAppEventParameterNameContentID   : self.backupCampaignProduct.sku}];
 
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];

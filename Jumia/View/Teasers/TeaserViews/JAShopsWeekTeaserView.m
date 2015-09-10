@@ -68,4 +68,10 @@
     }
 }
 
+- (NSString*)teaserTrackingInfoForIndex:(NSInteger)index;
+{
+    NSString* teaserTrackingInfo = [NSString stringWithFormat:@"Shops_Week_%ld",(long)index];
+    return teaserTrackingInfo;
+}
+
 @end

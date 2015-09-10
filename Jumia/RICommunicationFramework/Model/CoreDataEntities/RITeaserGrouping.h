@@ -21,6 +21,7 @@
 @interface RITeaserGrouping (CoreDataGeneratedAccessors)
 
 + (NSString*)loadTeasersIntoDatabaseForCountryUrl:(NSString*)countryUrl
+                        countryUserAgentInjection:(NSString *)countryUserAgentInjection
                                  withSuccessBlock:(void (^)(NSArray* teaserGroupings))successBlock
                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 + (NSString*)getTeaserGroupingsWithSuccessBlock:(void (^)(NSArray* teaserGroupings))successBlock

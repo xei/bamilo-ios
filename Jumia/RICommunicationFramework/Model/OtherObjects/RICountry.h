@@ -18,6 +18,7 @@
 @property (strong, nonatomic) NSString *countryIso;
 @property (assign, nonatomic) BOOL forceHttps;
 @property (assign, nonatomic) BOOL isLive;
+@property (strong, nonatomic) NSString* userAgentInjection;
 
 /**
  * Method to request the countries of the application
@@ -37,6 +38,7 @@
  * @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)loadCountryConfigurationForCountry:(NSString*)countryUrl
+                              userAgentInjection:(NSString*)userAgentInjection
                                 withSuccessBlock:(void (^)(RICountryConfiguration *configuration))successBlock
                                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 

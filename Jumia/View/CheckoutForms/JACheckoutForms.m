@@ -84,8 +84,9 @@
                                                        0.0f,
                                                        width,
                                                        totalHeight)];
-                
-                [paymentMethodView flipAllSubviews];
+                if (RI_IS_RTL) {
+                    [paymentMethodView flipAllSubviews];
+                }
                 [self.paymentMethodFormViews setValue:paymentMethodView forKey:paymentMethod.uid];
             }
         }

@@ -114,6 +114,14 @@
     NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:self.mutableData
                                                                  options:kNilOptions
                                                                    error:&error];
+
+    if (RI_RESPONSE_LOGGER) {
+        if (error) {
+            NSLog(@"//////////////////// START RESPONSE ERROR \n responseERROR: %@", error);
+        }else
+            NSLog(@"//////////////////// START RESPONSE \n responseJSON: %@", responseJSON);
+        NSLog(@"//////////////////// END RESPONSE");
+    }
     
     if(VALID_NOTEMPTY(error, NSError) || ISEMPTY(responseJSON) || ISEMPTY([responseJSON objectForKey:@"success"]) || ![[responseJSON objectForKey:@"success"] boolValue]) {
         [[RIURLCacheWrapper sharedInstance] removeRequestFromLocalCache:[connection originalRequest]

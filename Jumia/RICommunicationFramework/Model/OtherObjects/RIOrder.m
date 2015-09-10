@@ -31,6 +31,10 @@
         order.grandTotal = [orderObject objectForKey:@"grand_total"];
     }
     
+    if (VALID_NOTEMPTY([orderObject objectForKey:@"grand_total_converted"], NSNumber)) {
+        order.grandTotalEuroConverted = [orderObject objectForKey:@"grand_total_converted"];
+    }
+    
     if (VALID_NOTEMPTY([orderObject objectForKey:@"shipping_amount"], NSNumber)) {
         order.shippingAmount = [orderObject objectForKey:@"shipping_amount"];
     }
@@ -121,6 +125,7 @@
              httpMethodPost:YES
              cacheType:RIURLCacheNoCache
              cacheTime:RIURLCacheDefaultTime
+             userAgentInjection:[RIApi getCountryUserAgentInjection]
              successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                  
                  dispatch_async(dispatch_get_main_queue(), ^{
@@ -179,6 +184,7 @@
                        httpMethodPost:YES
                        cacheType:RIURLCacheNoCache
                        cacheTime:RIURLCacheDefaultTime
+                       userAgentInjection:[RIApi getCountryUserAgentInjection]
                        successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                            
                            dispatch_async(dispatch_get_main_queue(), ^{

@@ -18,6 +18,7 @@
     
     JARatingsView *_ratingsView;
     UILabel *_numberOfReviewsLabel;
+    BOOL _ratingRefresh;
 }
 
 @end
@@ -66,6 +67,8 @@
     _ratingsView.rating = 0;
     _ratingsViewRect = _ratingsView.frame;
     [self addSubview:_ratingsView];
+    [_ratingsView setHidden:YES];
+    [_numberOfReviewsLabel setHidden:YES];
 }
 
 - (void)reloadViews
@@ -80,8 +83,7 @@
     
     [_numberOfReviewsLabel setX:CGRectGetMaxX(_ratingsView.frame) + JACatalogCellPriceLabelOffsetX + 10];
     
-    CGPoint center = _numberOfReviewsLabel.center;
-    [_ratingsView setCenter:CGPointMake(_ratingsView.center.x, center.y)];
+    [_ratingsView setY:_numberOfReviewsLabel.y];
 
     if (RI_IS_RTL) {
         [_numberOfReviewsLabel flipViewPositionInsideSuperview];
@@ -99,16 +101,34 @@
 {
     [super loadWithProduct:product];
     
+    
+    if (0 == [product.sum integerValue] && _ratingsView.rating != 0) {
+        [_ratingsView setHidden:YES];
+        [_numberOfReviewsLabel setHidden:YES];
+    }else if (0 != [product.sum integerValue] && _ratingsView.rating == 0) {
+        [_ratingsView setHidden:NO];
+        [_numberOfReviewsLabel setHidden:NO];
+    }
+    
     _ratingsView.rating = [product.avr integerValue];
     
-    if (1 == [product.sum integerValue]) {
-        _numberOfReviewsLabel.text = STRING_RATING;
-    } else {
-        _numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_RATINGS, [product.sum integerValue]];
+    BOOL refresh = NO;
+    if (0 != [product.sum integerValue]) {
+        
+        if (!_ratingRefresh) {
+            refresh = YES;
+            _ratingRefresh = YES;
+        }
+        
+        if (1 == [product.sum integerValue]) {
+            _numberOfReviewsLabel.text = STRING_RATING;
+        } else {
+            _numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_RATINGS, [product.sum integerValue]];
+        }
+        [_numberOfReviewsLabel sizeToFit];
     }
-    [_numberOfReviewsLabel sizeToFit];
     
-    if (_lastWidth != self.width) {
+    if (_lastWidth != self.width || refresh) {
         [self reloadViews];
     }
 }

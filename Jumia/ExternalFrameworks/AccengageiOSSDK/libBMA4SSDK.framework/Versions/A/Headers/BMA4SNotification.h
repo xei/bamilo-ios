@@ -1,8 +1,8 @@
 //
 //  BMA4SNotification.h
-//  Accengage 
+//  Accengage SDK 
 //
-//  Copyright (c) 2010-2014 Accengage. All rights reserved.
+//  Copyright (c) 2010-2015 Accengage. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -119,6 +119,14 @@
  @param location A CLLocation object which represent the location of the user
  */
 - (void) updateLocation:(CLLocation*)location;
+
+/**
+ This method is used to activate the geofence service.
+ 
+ If you want to use the geofencing function, call the following method in the
+ didFinishLaunchingWithOptions method of your appDelegate.m
+ */
+- (void) enableGeofenceService;
 
 /**
  If TRUE, allow the SDK to change every inApp banner or rich push superView
