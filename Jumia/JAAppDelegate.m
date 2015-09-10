@@ -10,8 +10,10 @@
 #import "JARootViewController.h"
 #import "JAUtils.h"
 #import "RIAdjustTracker.h"
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <HockeySDK/HockeySDK.h>
+#import <GoogleAppIndexing/GoogleAppIndexing.h>
+#import "RIProduct.h"
 
 #define kSessionDuration 1800.0f
 #define IS_IOS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
@@ -27,6 +29,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+//    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RIProduct class])];
     self.startLoadingTime = [NSDate date];
     
     //fonts
@@ -123,7 +126,7 @@
                                                                             delegate:self];
 #endif
     
-    [FBLoginView class];
+    [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
     
     [self checkSession];
     
@@ -280,6 +283,8 @@
     }
     
     [[RITrackingWrapper sharedInstance] applicationDidEnterBackground:application];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kAppDidEnterBackground object:nil];
 }
 
 // In case the app was sent into the background when there was no network connection, we will use
@@ -396,11 +401,10 @@
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation
 {
-    BOOL urlWasHandled = [FBAppCall handleOpenURL:url
-                                sourceApplication:sourceApplication
-                                  fallbackHandler:^(FBAppCall *call) {
-                                      NSLog(@"Unhandled deep link: %@", url);
-                                  }];
+    url = [GSDDeepLink handleDeepLink:url];
+    [Adjust appWillOpenUrl:url];
+    
+    BOOL urlWasHandled = [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
     
     if (!urlWasHandled && VALID_NOTEMPTY(url, NSURL))
     {
@@ -427,7 +431,13 @@
         facebookSchema = [NSString stringWithFormat:@"fb%@", faceAppId];
     }
     
-    if ((urlScheme != nil && [urlScheme isEqualToString:@"jumia"]) || (urlScheme != nil && [facebookSchema isEqualToString:urlScheme]))
+    NSString* appName = [APP_NAME lowercaseString];
+    if ([appName isEqualToString:@"بامیلو"]) {
+        appName = @"bamilo";
+    } else if ([appName isEqualToString:@"shop.com.mm"]) {
+        appName = @"shop";
+    }
+    if ((urlScheme != nil && [urlScheme isEqualToString:appName]) || (urlScheme != nil && [facebookSchema isEqualToString:urlScheme]))
     {
         NSMutableDictionary *pushNotification = [NSMutableDictionary dictionaryWithObject:@"" forKey:@"u"];
         
@@ -535,7 +545,7 @@
 
 -(void)applicationDidBecomeActive:(UIApplication *)application
 {
-    [FBAppEvents activateApp];
+    [FBSDKAppEvents activateApp];
 }
 
 

@@ -175,7 +175,7 @@
         [self.descriptionLabel setX:width-kJAReviewCellHorizontalMargins-self.descriptionLabel.width];
         [self.descriptionLabel setTextAlignment:NSTextAlignmentRight];
     }else{
-        [self.descriptionLabel setTextAlignment:NSTextAlignmentRight];
+        [self.descriptionLabel setTextAlignment:NSTextAlignmentLeft];
     }
     
     [self addSubview:self.descriptionLabel];

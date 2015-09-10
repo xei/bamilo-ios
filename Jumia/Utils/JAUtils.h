@@ -12,6 +12,7 @@
 @interface JAUtils : NSObject
 
 + (void) goToCheckout:(RICheckout*)checkout;
++ (void) goToNextStep:(NSString*)nextStep;
 
 + (unsigned int)intFromHexString:(NSString *) hexStr;
 

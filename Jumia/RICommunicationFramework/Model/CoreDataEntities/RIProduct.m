@@ -94,25 +94,25 @@
 @dynamic ratingAverage;
 @dynamic ratingsTotal;
 @dynamic reviewsTotal;
-@dynamic seller;
 @dynamic offersMinPrice;
 @dynamic offersMinPriceEuroConverted;
 @dynamic offersMinPriceFormatted;
 @dynamic offersTotal;
-@dynamic relatedProducts;
-@dynamic referredFromProduct;
 @dynamic bucketActive;
 @dynamic shortSummary;
 @dynamic summary;
-@dynamic specifications;
+@dynamic numberOfTimesSeen;
 
 @synthesize categoryIds;
+@synthesize relatedProducts;
+@synthesize specifications;
+@synthesize seller;
 
 + (NSString *)getCompleteProductWithSku:(NSString*)sku
                            successBlock:(void (^)(id product))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
-    NSString *finalUrl = [NSString stringWithFormat:@"%@%@catalog.html?sku=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, sku];
+    NSString *finalUrl = [NSString stringWithFormat:@"%@%@catalog/detail?sku=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, sku];
     return [RIProduct getCompleteProductWithUrl:finalUrl
                                    successBlock:^(id product) {
                                        successBlock(product);
@@ -125,11 +125,13 @@
                            successBlock:(void (^)(id product))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
+    url = [url  stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
                                                             parameters:nil
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
@@ -208,15 +210,20 @@
     if ([url rangeOfString:@"?"].location != NSNotFound) {
         particle = @"&";
     }
+    NSString *sortingString = [RIProduct urlComponentForSortingMethod:sortingMethod];
+    if (VALID_NOTEMPTY(sortingString, NSString)) {
+        sortingString = [NSString stringWithFormat:@"&%@", sortingString];
+    }
+    
     if(VALID_NOTEMPTY(filtersString, NSString))
     {
-
-        fullUrl = [NSString stringWithFormat:@"%@%@page=%ld&maxitems=%ld&%@&%@", url, particle, (long)page, (long)maxItems, [RIProduct urlComponentForSortingMethod:sortingMethod], filtersString];
+        fullUrl = [NSString stringWithFormat:@"%@%@page=%ld&maxitems=%ld%@%@", url, particle, (long)page, (long)maxItems, sortingString, [NSString stringWithFormat:@"&%@" ,filtersString]];
     }
     else
     {
-        fullUrl = [NSString stringWithFormat:@"%@%@page=%ld&maxitems=%ld&%@", url, particle, (long)page, (long)maxItems, [RIProduct urlComponentForSortingMethod:sortingMethod]];
+        fullUrl = [NSString stringWithFormat:@"%@%@page=%ld&maxitems=%ld%@", url, particle, (long)page, (long)maxItems, sortingString];
     }
+    fullUrl = [fullUrl stringByReplacingOccurrencesOfString:@"http://integration-www.jumia.ug/mobapi/v1.7/integration-www.jumia.ug/" withString:@"http://integration-www.jumia.ug/mobapi/v1.7/"];
     return [RIProduct getProductsWithFullUrl:fullUrl
                                 successBlock:successBlock
                              andFailureBlock:failureBlock];
@@ -226,13 +233,14 @@
                         successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories, RIBanner* banner))successBlock
                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
-    url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    url = [url  stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *finalURL = [NSURL URLWithString:url];
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:finalURL
                                                             parameters:nil
                                                         httpMethodPost:NO
                                                              cacheType:RIURLCacheDBCache
                                                              cacheTime:RIURLCacheDefaultTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
                                                                   
@@ -334,6 +342,7 @@
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheDBCache
                                                              cacheTime:RIURLCacheDefaultTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
                                                                   
@@ -576,14 +585,16 @@
         
         if([dataDic objectForKey:@"specifications"]){
             NSArray* specificationsJSON = [dataDic objectForKey:@"specifications"];
+
+            NSMutableSet* newSpecifications = [NSMutableSet new];
             for (NSDictionary *specifJSON in specificationsJSON){
                 if(VALID_NOTEMPTY(specifJSON, NSDictionary)){
                     
                     RISpecification *newSpecification = [RISpecification parseSpecification:specifJSON];
-                    [newProduct addSpecificationsObject:newSpecification];
-                
+                    [newSpecifications addObject:newSpecification];
                 }
             }
+            newProduct.specifications = [newSpecifications copy];
         }
         
         if ([dataDic objectForKey:@"variations"]) {
@@ -647,7 +658,6 @@
             if (VALID_NOTEMPTY(sellerJSON, NSDictionary)) {
                 
                 RISeller* seller = [RISeller parseSeller:sellerJSON];
-                seller.product = newProduct;
                 newProduct.seller = seller;
             }
         }
@@ -672,18 +682,18 @@
             NSArray* relatedProductsArray = [dataDic objectForKey:@"related_products"];
             if (VALID_NOTEMPTY(relatedProductsArray, NSArray)) {
                 
+                NSMutableSet *newRelatedProducts = [NSMutableSet new];
                 for (NSDictionary* relatedProductJSON in relatedProductsArray) {
-                    
                     if (VALID_NOTEMPTY(relatedProductJSON, NSDictionary)) {
                         
                         NSMutableDictionary* fakeData = [NSMutableDictionary new];
                         [fakeData setObject:relatedProductJSON forKey:@"data"];
                         
                         RIProduct* relatedProduct = [RIProduct parseProduct:fakeData country:country];
-                        relatedProduct.referredFromProduct = newProduct;
-                        [newProduct addRelatedProductsObject:relatedProduct];
+                        [newRelatedProducts addObject:relatedProduct];
                     }
                 }
+                newProduct.relatedProducts = [newRelatedProducts copy];
             }
         }
     }
@@ -789,7 +799,7 @@
             product.recentlyViewedDate = [NSDate date];
             product.favoriteAddDate = currentProduct.favoriteAddDate;
             [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
-            [RIProduct saveProduct:product];
+            [RIProduct saveProduct:product andContext:YES];
             productExists = YES;
             break;
         }
@@ -797,7 +807,7 @@
     if (NO == productExists) {
         //did not find it, so save the product
         product.recentlyViewedDate = [NSDate date];
-        [RIProduct saveProduct:product];
+        [RIProduct saveProduct:product andContext:YES];
     }
     
     //now we need to check if there are more than 15 products
@@ -861,10 +871,11 @@
                     product.recentlyViewedDate = [NSDate date];
                     product.favoriteAddDate = currentProduct.favoriteAddDate;
                     [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
+                    [[RIDataBaseWrapper sharedInstance] saveContext];
                     //already deleted
                     shouldDelete = NO;
                     
-                    [RIProduct saveProduct:product];
+                    [RIProduct saveProduct:product andContext:YES];
                     
                     break;
                 }
@@ -1001,7 +1012,7 @@
                 [[RIDataBaseWrapper sharedInstance] saveContext];
             } else {
                 [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
-                [RIProduct saveProduct:product];
+                [RIProduct saveProduct:product andContext:YES];
             }
             productExists = YES;
             break;
@@ -1009,7 +1020,7 @@
     }
     if (NO == productExists) {
         product.favoriteAddDate = [NSDate date];
-        [RIProduct saveProduct:product];
+        [RIProduct saveProduct:product andContext:YES];
     }
     
     if (successBlock) {
@@ -1022,22 +1033,29 @@
             andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
     [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
-        
+        BOOL found = NO;
         for (RIProduct* currentProduct in favoriteProducts) {
             if ([currentProduct.sku isEqualToString:product.sku]) {
                 //found it
                 
-                if (VALID_NOTEMPTY(currentProduct.recentlyViewedDate, NSDate)) {
+                if (VALID_NOTEMPTY(currentProduct.favoriteAddDate, NSDate)) {
                     //do not delete, just remove favorite variable
                     currentProduct.favoriteAddDate = nil;
+                    found = YES;
                 } else {
                     [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
                 }
                 [[RIDataBaseWrapper sharedInstance] saveContext];
             }
         }
-        if (successBlock) {
-            successBlock();
+        if (found) {
+            if (successBlock) {
+                successBlock();
+            }
+        }else{
+            if (failureBlock) {
+                failureBlock(RIApiResponseUnknownError, nil);
+            }
         }
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         if (failureBlock) {
@@ -1069,6 +1087,7 @@
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
@@ -1098,32 +1117,73 @@
                                                           }];
 }
 
++ (NSString*)getTopBrand:(RIProduct *)seenProduct
+{
+    [RIProduct seenProduct:seenProduct];
+    
+    NSMutableDictionary *brandsDictionary = [NSMutableDictionary new];
+    NSString *topBrand = nil;
+    NSArray* databaseBrands = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIProduct class]) withPropertyName:@"brand"];
+    for(RIProduct *product in databaseBrands)
+    {
+        if(ISEMPTY(topBrand))
+        {
+            topBrand = product.brand;
+            [brandsDictionary setObject:product.numberOfTimesSeen forKey:product.brand];
+        }
+        else
+        {
+            if (VALID_NOTEMPTY([brandsDictionary objectForKey:product.brand], NSNumber)) {
+                NSNumber *sum = [NSNumber numberWithLong:[[brandsDictionary objectForKey:product.brand] longValue] + [product.numberOfTimesSeen longValue]];
+                [brandsDictionary setObject:sum forKey:product.brand];
+            }else{
+                [brandsDictionary setObject:product.numberOfTimesSeen forKey:product.brand];
+            }
+            if([brandsDictionary[topBrand] longValue] < [brandsDictionary[product.brand] longValue])
+            {
+                topBrand = product.brand;
+            }
+        }
+    }
+    
+    return topBrand;
+}
+
++ (void)seenProduct:(RIProduct *)seenProduct
+{
+    if(VALID_NOTEMPTY(seenProduct, RIProduct))
+    {
+        seenProduct.numberOfTimesSeen = [NSNumber numberWithInt:([seenProduct.numberOfTimesSeen intValue] + 1)];
+    }
+}
+
 #pragma mark - Save method
 
-+ (void)saveProduct:(RIProduct *)product
++ (void)saveProduct:(RIProduct *)product andContext:(BOOL)save
 {
     for (RIImage* image in product.images) {
-        [RIImage saveImage:image];
+//        if (!image.product) {
+//            image.product = product;
+//        }
+        [RIImage saveImage:image andContext:NO];
     }
     for (RIProductSimple* productSimple in product.productSimples) {
-        [RIProductSimple saveProductSimple:productSimple];
+//        if (!productSimple.product) {
+//            productSimple.product = product;
+//        }
+        [RIProductSimple saveProductSimple:productSimple andContext:NO];
     }
     for (RIVariation* variation in product.variations) {
-        [RIVariation saveVariation:variation];
-    }
-    for(RISpecification *specification in product.specifications){
-        [RISpecification saveSpecification:specification];
-    }
-//    for (RIProduct* relatedProduct in product.relatedProducts) {
-//        [RIProduct saveProduct:relatedProduct];
-//    }
-    
-    if (VALID_NOTEMPTY(product.seller, RISeller)) {
-        [RISeller saveSeller:product.seller];
+//        if (!variation.product) {
+//            variation.product = product;
+//        }
+        [RIVariation saveVariation:variation andContext:NO];
     }
     
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:product];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
 }
 
 @end

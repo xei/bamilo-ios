@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSString *city;
 @property (nonatomic, strong) NSString *openingHours;
 @property (nonatomic, strong) NSString *pickupstationRegionId;
+@property (nonatomic, strong) NSNumber *shippingFee;
 @property (nonatomic, strong) NSArray *paymentMethods;
 @property (nonatomic, strong) NSDictionary *regions;
 

@@ -24,6 +24,7 @@
 @dynamic extension;
 
 + (NSString*)loadImageResolutionsIntoDatabaseForCountry:(NSString*)countryUrl
+                              countryUserAgentInjection:(NSString *)countryUserAgentInjection
                                        withSuccessBlock:(void (^)())successBlock
                                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
 {
@@ -31,6 +32,7 @@
                                                             parameters:nil httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
+                                                    userAgentInjection:countryUserAgentInjection
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary)) {
@@ -131,7 +133,7 @@
         if (VALID_NOTEMPTY(imageResolutionObject, NSDictionary))
         {
             RIImageResolution* imageResolution = [RIImageResolution parseImageResolution:imageResolutionObject];
-            [RIImageResolution saveImageResolution:imageResolution];
+            [RIImageResolution saveImageResolution:imageResolution andContext:YES];
             [imageResolutions addObject:imageResolution];
         }
     }
@@ -166,10 +168,13 @@
     return imageResolution;
 }
 
-+ (void)saveImageResolution:(RIImageResolution *)imageResolution
++ (void)saveImageResolution:(RIImageResolution *)imageResolution andContext:(BOOL)save
 {
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:imageResolution];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 /**

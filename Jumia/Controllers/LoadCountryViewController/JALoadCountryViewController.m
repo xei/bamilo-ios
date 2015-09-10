@@ -323,7 +323,7 @@
                                        {
                                            [RIGoogleAnalyticsTracker initGATrackerWithId:configuration.gaId];
                                            
-                                           [RIGTMTracker initWithGTMTrackerId:configuration.gtmId];
+                                           [[RIGTMTracker sharedInstance] setGTMTrackerId:configuration.gtmId andGaId:configuration.gaId];
                                             
                                            self.configurationRequestCount--;
                                        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
@@ -358,8 +358,14 @@
         {
             [trackingDictionary setValue:self.customer.idCustomer forKey:kRIEventLabelKey];
             [trackingDictionary setValue:self.customer.idCustomer forKey:kRIEventUserIdKey];
+            [trackingDictionary setValue:self.customer.firstName forKey:kRIEventUserFirstNameKey];
+            [trackingDictionary setValue:self.customer.lastName forKey:kRIEventUserLastNameKey];
             [trackingDictionary setValue:self.customer.gender forKey:kRIEventGenderKey];
+            [trackingDictionary setValue:self.customer.birthday forKey:kRIEventBirthDayKey];
             [trackingDictionary setValue:self.customer.createdAt forKey:kRIEventAccountDateKey];
+            
+            NSNumber *numberOfPurchases = [[NSUserDefaults standardUserDefaults] objectForKey:kRIEventAmountTransactions];
+            [trackingDictionary setValue:numberOfPurchases forKey:kRIEventAmountTransactions];
             
             NSDate* now = [NSDate date];
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];

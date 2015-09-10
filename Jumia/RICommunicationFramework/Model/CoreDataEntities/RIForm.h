@@ -44,7 +44,7 @@
  * @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString*)getForm:(NSString*)formIndexID
-      extraArguments:(NSDictionary*)extraArguments
+        forceRequest:(BOOL)forceRequest
         successBlock:(void (^)(id form))successBlock
         failureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 
@@ -92,7 +92,7 @@
 
 + (void)cancelRequest:(NSString *)operationID;
 
-+ (void)saveForm:(RIForm *)form;
++ (void)saveForm:(RIForm *)form andContext:(BOOL)save;
 
 + (RIForm *)parseForm:(NSDictionary *)formJSON;
 

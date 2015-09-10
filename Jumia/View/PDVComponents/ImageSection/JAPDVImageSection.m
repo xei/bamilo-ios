@@ -293,7 +293,7 @@
             currentY += self.sellerDeliveryLabel.frame.size.height;
         }
         currentY += 16.0f;
-        [self setHeight:CGRectGetMaxY(_sellerDeliveryLabel.frame) + 6.f];
+        [self setHeight:currentY];
     }
     
     [self setY:currentY];

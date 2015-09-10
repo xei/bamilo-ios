@@ -23,6 +23,9 @@
 @interface JAAddNewAddressViewController ()
 <JADynamicFormDelegate,
 JAPickerDelegate>
+{
+    CGFloat _genderRadioHeight;
+}
 
 // Steps
 @property (weak, nonatomic) IBOutlet UIImageView *stepBackground;
@@ -110,10 +113,6 @@ JAPickerDelegate>
     self.hasErrors = NO;
     
     self.extraParameters = nil;
-    if([RICustomer wasSignup])
-    {
-        self.extraParameters = [NSDictionary dictionaryWithObject:@"true" forKey:@"showGender"];
-    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -164,15 +163,25 @@ JAPickerDelegate>
     typedef void (^GetBillingDynamicFormBlock)(void);
     GetBillingDynamicFormBlock getBillingDynamicFormBlock = ^void{
         [RIForm getForm:@"addresscreate"
-         extraArguments:nil
+           forceRequest:YES
            successBlock:^(RIForm *form)
          {
              self.billingDynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:self.billingAddressViewCurrentY widthSize:self.billingContentView.frame.size.width hasFieldNavigation:NO];
              
              [self.billingDynamicForm setDelegate:self];
              
+             _genderRadioHeight = 0;
+             CGFloat offset = 0;
              for(UIView *view in self.billingDynamicForm.formViews)
              {
+                 if ([view isKindOfClass:[JARadioComponent class]]) {
+                     if([(JARadioComponent *)view isComponentWithKey:@"gender"])
+                     {
+                         _genderRadioHeight += offset;
+                         continue;
+                     }
+                 }
+                 offset = view.height;
                  [self.billingContentView addSubview:view];
              }
              self.numberOfGetFormRequests--;
@@ -190,7 +199,7 @@ JAPickerDelegate>
     };
     
     [RIForm getForm:@"addresscreate"
-     extraArguments:self.extraParameters
+       forceRequest:YES
        successBlock:^(RIForm *form)
     {
          self.shippingDynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:self.shippingAddressViewCurrentY widthSize:self.shippingContentView.frame.size.width hasFieldNavigation:NO];
@@ -346,7 +355,7 @@ JAPickerDelegate>
 -(void)initBillingAddressView
 {
     self.billingContentView = [[UIView alloc] init];
-    self.billingContentView.frame = CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width, self.contentScrollView.frame.size.height);
+    self.billingContentView.frame = CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width, self.contentScrollView.frame.size.height - _genderRadioHeight);
     [self.billingContentView setBackgroundColor:UIColorFromRGB(0xffffff)];
     self.billingContentView.layer.cornerRadius = 5.0f;
     [self.billingContentView setHidden:YES];
@@ -488,7 +497,7 @@ JAPickerDelegate>
                                                                                  scrollViewStartY,
                                                                                  self.view.frame.size.width - width - orderSummaryRightMargin,
                                                                                  self.view.frame.size.height - scrollViewStartY)];
-        [self.orderSummary loadWithCart:self.cart shippingFee:NO];
+        [self.orderSummary loadWithCart:self.cart];
         [self.view addSubview:self.orderSummary];
         self.orderSummaryOriginalHeight = self.orderSummary.frame.size.height;
     }
@@ -507,7 +516,7 @@ JAPickerDelegate>
     [self.billingContentView setFrame:CGRectMake(6.0f,
                                                  6.0f,
                                                  self.contentScrollView.frame.size.width - 12.0f,
-                                                 self.billingContentView.frame.size.height)];
+                                                 self.billingContentView.frame.size.height - _genderRadioHeight)];
     
     for(UIView *view in self.shippingDynamicForm.formViews)
     {
@@ -566,7 +575,7 @@ JAPickerDelegate>
     [self.billingContentView setFrame:CGRectMake(6.0f,
                                                  CGRectGetMaxY(self.shippingContentView.frame) + 6.0f,
                                                  self.contentScrollView.frame.size.width - 12.0f,
-                                                 self.billingAddressViewCurrentY + 12.0f)];
+                                                 self.billingAddressViewCurrentY + 12.0f - _genderRadioHeight)];
     
     self.billingHeaderLabel.textAlignment = NSTextAlignmentLeft;
     [self.billingHeaderLabel setFrame:CGRectMake(6.0f,
@@ -614,7 +623,7 @@ JAPickerDelegate>
     [self.shippingHeaderLabel setText:STRING_SHIPPING_ADDRESSES];
     
     [self.billingContentView setHidden:NO];
-    [self.billingContentView setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.shippingContentView.frame) + 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.billingAddressViewCurrentY + 12.0f)];
+    [self.billingContentView setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.shippingContentView.frame) + 6.0f, self.contentScrollView.frame.size.width - 12.0f, self.billingAddressViewCurrentY + 12.0f - _genderRadioHeight)];
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, self.shippingContentView.frame.origin.y + self.shippingContentView.frame.size.height + 6.0f + self.billingContentView.frame.size.height + self.bottomView.frame.size.height)];
 }
 

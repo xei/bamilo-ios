@@ -34,4 +34,6 @@
 @property (nonatomic, strong)NSNumber* sortingMethodFromPush;
 @property (assign, nonatomic)BOOL forceShowBackButton;
 
+@property (nonatomic, strong) NSString* teaserTrackingInfo;
+
 @end

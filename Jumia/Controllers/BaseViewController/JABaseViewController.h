@@ -79,6 +79,15 @@
  */
 - (void)removeKickoutView;
 
+/**
+ * Method triggered when app will enter to foreground
+ */
+- (void)appWillEnterForeground;
+
+/**
+ * Method triggered when app did enter to foreground
+ */
+- (void)appDidEnterBackground;
 
 @end
 

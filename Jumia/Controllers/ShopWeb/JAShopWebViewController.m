@@ -7,11 +7,16 @@
 //
 
 #import "JAShopWebViewController.h"
-#import "GTMNSString+HTML.h"
+#import "RIHtmlShop.h"
+#import "RIFeaturedBoxTeaserGrouping.h"
+#import "JATopSellersTeaserView.h"
 
 @interface JAShopWebViewController ()
 
+@property (nonatomic, strong)RIHtmlShop* htmlShop;
+@property (nonatomic, strong)UIScrollView* scrollView;
 @property (nonatomic, strong)UIWebView* webView;
+@property (nonatomic, strong)NSMutableArray* topSellerTeaserViewsArray;
 @property (nonatomic, assign)BOOL isLoaded;
 
 @end
@@ -22,9 +27,15 @@
 {
     [super viewDidLoad];
     
+    self.searchBarIsVisible = YES;
+    
+    self.scrollView = [UIScrollView new];
+    [self.view addSubview:self.scrollView];
+    
     self.webView = [UIWebView new];
     self.webView.delegate = self;
-    [self.view addSubview:self.webView];
+    self.webView.scrollView.scrollEnabled = NO;
+    [self.scrollView addSubview:self.webView];
     
     self.isLoaded = NO;
 }
@@ -33,35 +44,76 @@
 {
     [super viewWillAppear:animated];
     
-    [self.webView setFrame:[self viewBounds]];
+    NSString *staticKey = [[[[self.url componentsSeparatedByString:@"main/getstatic/?key="] lastObject] componentsSeparatedByString:@"&"] firstObject];
+    
+    [[RITrackingWrapper sharedInstance] trackStaticPage:staticKey];
+    
+    [self.scrollView setFrame:[self viewBounds]];
+    [self.webView setFrame:CGRectMake(self.scrollView.bounds.origin.x,
+                                      self.scrollView.bounds.origin.y,
+                                      self.scrollView.bounds.size.width,
+                                      1.0f)];
     
     if (NO == self.isLoaded) {
-        NSURL* url = [NSURL URLWithString:self.url];
-        [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url parameters:nil httpMethodPost:YES cacheType:RIURLCacheNoCache cacheTime:RIURLCacheDefaultTime successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-            self.searchBarIsVisible = YES;
-            NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
-            NSDictionary *data = [metadata objectForKey:@"data"];
-            NSString* htmlRaw = [data objectForKey:@"html"];
-            NSString *htmlStep = [htmlRaw gtm_stringByUnescapingFromHTML];
-            NSString *htmlFinal = [htmlStep gtm_stringByUnescapingFromHTML];
-            
+        
+        [RIHtmlShop getHtmlShopForUrlString:self.url successBlock:^(RIHtmlShop *htmlShop) {
+            self.htmlShop = htmlShop;
             self.isLoaded = YES;
-            [self.webView loadHTMLString:htmlFinal baseURL:url];
+            
             [self removeErrorView];
-        } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObjectt) {
+            [self.webView loadHTMLString:self.htmlShop.html baseURL:[NSURL URLWithString:self.url]];
+            
+        } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
             if (RIApiResponseNoInternetConnection == apiResponse) {
                 [self showErrorView:YES startingY:0.0f selector:@selector(viewWillAppear:) objects:nil];
             } else {
                 [self showErrorView:NO startingY:0.0f selector:@selector(viewWillAppear:) objects:nil];
             }
         }];
+    } else {
+        [self loadViews];
     }
+}
+
+- (void)loadViews
+{
+    self.webView.frame = CGRectMake(0.0f,
+                                    0.0f,
+                                    self.webView.scrollView.contentSize.width,
+                                    self.webView.scrollView.contentSize.height);
+    
+    for (JATopSellersTeaserView* topSellersTeaserView in self.topSellerTeaserViewsArray) {
+        [topSellersTeaserView removeFromSuperview];
+    }
+    
+    CGFloat yPosition = CGRectGetMaxY(self.webView.frame);
+    self.topSellerTeaserViewsArray = [NSMutableArray new];
+    for (RIFeaturedBoxTeaserGrouping* featuredBox in self.htmlShop.featuredBoxesArray) {
+        
+        JATopSellersTeaserView* topSellersTeaserView = [[JATopSellersTeaserView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                                                                yPosition,
+                                                                                                                self.scrollView.frame.size.width,
+                                                                                                                1)]; //height is set by the view itself
+        [self.scrollView addSubview:topSellersTeaserView];
+        topSellersTeaserView.featuredBoxTeaserGrouping = featuredBox;
+        [topSellersTeaserView load];
+        
+        [self.topSellerTeaserViewsArray addObject:topSellersTeaserView];
+        yPosition += topSellersTeaserView.frame.size.height;
+    }
+    
+    if (self.htmlShop.featuredBoxesArray.count > 0) {
+        yPosition += 6.0f;
+    }
+    
+    self.scrollView.contentSize = CGSizeMake(self.webView.scrollView.contentSize.width,
+                                             yPosition);
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    [self.webView setFrame:self.view.bounds];
+    [self.webView loadHTMLString:self.htmlShop.html baseURL:[NSURL URLWithString:self.url]];
 }
 
 - (BOOL)webView:(UIWebView *)webView
@@ -74,28 +126,34 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     if (VALID_NOTEMPTY(parts, NSArray) && 2 == parts.count) {
         NSString* identifier = [parts objectAtIndex:0];
         NSString* url = [parts objectAtIndex:1];
+        
         if (VALID_NOTEMPTY(identifier, NSString) && VALID_NOTEMPTY(url, NSString)) {
 
+            NSMutableDictionary* userInfo = [NSMutableDictionary new];
+            [userInfo setObject:url forKey:@"url"];
+            [userInfo setObject:STRING_BACK forKey:@"show_back_button_title"];
+            
+            if (self.teaserTrackingInfo) {
+                [userInfo setObject:self.teaserTrackingInfo forKey:@"teaserTrackingInfo"];
+            }
+            
             if ([identifier isEqualToString:@"pdv"]) {
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                                     object:nil
-                                                                  userInfo:@{ @"url" : url,
-                                                                              @"show_back_button_title" : STRING_BACK}];
+                                                                  userInfo:userInfo];
                 
             } else if ([identifier isEqualToString:@"catalog"]) {
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithCatalogUrlNofication
                                                                     object:nil
-                                                                  userInfo:@{ @"url" : url,
-                                                                              @"show_back_button_title" : STRING_BACK}];
+                                                                  userInfo:userInfo];
                 
             } else if ([identifier isEqualToString:@"campaign"]) {
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectCampaignNofication
                                                                     object:nil
-                                                                  userInfo:@{ @"url" : url,
-                                                                              @"show_back_button_title" : STRING_BACK}];
+                                                                  userInfo:userInfo];
                 
             }
             
@@ -104,6 +162,16 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     
     
     return YES;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [self.scrollView setFrame:[self viewBounds]];
+    [self.webView setFrame:CGRectMake(self.scrollView.bounds.origin.x,
+                                      self.scrollView.bounds.origin.y,
+                                      self.scrollView.bounds.size.width,
+                                      1.0f)];
+    [self loadViews];
 }
 
 @end

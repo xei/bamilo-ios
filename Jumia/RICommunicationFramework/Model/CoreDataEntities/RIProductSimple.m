@@ -129,10 +129,13 @@
     return newProductSimple;
 }
 
-+ (void)saveProductSimple:(RIProductSimple*)productSimple;
++ (void)saveProductSimple:(RIProductSimple*)productSimple andContext:(BOOL)save;
 {
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:productSimple];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 @end

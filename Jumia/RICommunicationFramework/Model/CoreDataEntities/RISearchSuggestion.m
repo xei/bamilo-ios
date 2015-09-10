@@ -55,7 +55,7 @@
 }
 
 + (void)saveSearchSuggestionOnDB:(NSString *)query
-                  isRecentSearch:(BOOL)isRecentSearch
+                  isRecentSearch:(BOOL)isRecentSearch andContext:(BOOL)save
 {
     if(VALID_NOTEMPTY(query, NSString))
     {
@@ -93,11 +93,16 @@
                  }];
                 
                 [[RIDataBaseWrapper sharedInstance] deleteObject:[searches lastObject]];
-                [[RIDataBaseWrapper sharedInstance] saveContext];
+                if (save) {
+                    [[RIDataBaseWrapper sharedInstance] saveContext];
+                }
+                
             }
 
             [[RIDataBaseWrapper sharedInstance] insertManagedObject:newSearchSuggestion];
-            [[RIDataBaseWrapper sharedInstance] saveContext];
+            if (save) {
+                [[RIDataBaseWrapper sharedInstance] saveContext];
+            }
         }
     }
 }
@@ -111,6 +116,7 @@
                                                         httpMethodPost:NO
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               NSMutableArray *suggestions = [[NSMutableArray alloc] init];
                                                               
@@ -183,7 +189,33 @@
                      successBlock:(void (^)(NSArray *results, NSArray *filters, NSNumber *productCount, RIBanner *banner))successBlock
                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
 {
-    query = [query stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *tempUrl = [NSString stringWithFormat:@"%@%@search/", [RIApi getCountryUrlInUse], RI_API_VERSION];
+    
+    NSString *sortingString = [RIProduct urlComponentForSortingMethod:sortingMethod];
+    
+    if (VALID_NOTEMPTY(sortingString, NSString)) {
+        sortingString = [NSString stringWithFormat:@"&%@", sortingString];
+    }
+    
+    NSString *filtersString = [RIFilter urlWithFiltersArray:filters];
+    if(VALID_NOTEMPTY(filtersString, NSString))
+    {
+        if(NSNotFound == [@"q" rangeOfString:filtersString].location)
+        {
+            tempUrl = [NSString stringWithFormat:@"%@?setDevice=mobileApi&q=%@&page=%@&maxitems=%@%@&%@", tempUrl, query, page, maxItems,
+                       sortingString, filtersString];
+        }
+        else
+        {
+            tempUrl = [NSString stringWithFormat:@"%@?setDevice=mobileApi&page=%@&maxitems=%@%@&%@", tempUrl, page, maxItems,
+                          sortingString, filtersString];
+        }
+    }
+    else
+    {
+        tempUrl = [NSString stringWithFormat:@"%@?setDevice=mobileApi&q=%@&page=%@&maxitems=%@%@", tempUrl, query, page, maxItems,
+                   sortingString];
+    }
     
     BOOL discountMode = NO;
     for (RIFilter* filter in filters)
@@ -197,35 +229,9 @@
             }
         }
     }
-    
-    NSString *tempUrl = [NSString stringWithFormat:@"%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION];
     if (discountMode)
     {
-        tempUrl = [NSString stringWithFormat:@"%@search/special-price/", tempUrl];
-    }
-    else
-    {
-        tempUrl = [NSString stringWithFormat:@"%@search/", tempUrl];
-    }
-    
-    NSString *filtersString = [RIFilter urlWithFiltersArray:filters];
-    if(VALID_NOTEMPTY(filtersString, NSString))
-    {
-        if(NSNotFound == [@"q" rangeOfString:filtersString].location)
-        {
-            tempUrl = [NSString stringWithFormat:@"%@?setDevice=mobileApi&q=%@&page=%@&maxitems=%@&%@&%@", tempUrl, query, page, maxItems,
-                       [RIProduct urlComponentForSortingMethod:sortingMethod], filtersString];
-        }
-        else
-        {
-            tempUrl = [NSString stringWithFormat:@"%@?setDevice=mobileApi&page=%@&maxitems=%@&%@&%@", tempUrl, page, maxItems,
-                          [RIProduct urlComponentForSortingMethod:sortingMethod], filtersString];
-        }
-    }
-    else
-    {
-        tempUrl = [NSString stringWithFormat:@"%@?setDevice=mobileApi&q=%@&page=%@&maxitems=%@&%@", tempUrl, query, page, maxItems,
-                   [RIProduct urlComponentForSortingMethod:sortingMethod]];
+        tempUrl = [NSString stringWithFormat:@"%@&special_price=1", tempUrl];
     }
 
     tempUrl = [tempUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -236,6 +242,7 @@
                                                         httpMethodPost:NO
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
                                                                   NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];

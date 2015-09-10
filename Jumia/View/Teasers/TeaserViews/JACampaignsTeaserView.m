@@ -80,14 +80,22 @@
     RITeaserComponent* mainCampaign = [self.teaserComponentsToUse firstObject];
     
     CGFloat labelTopMargin = 6.0f;
+    CGFloat marginBetweenLabels = 6.0f;
+    CGFloat currentY = labelTopMargin;
     CGFloat halfWidth = mainClickableView.bounds.size.width/2;
     
-    UILabel* titleLabel = [UILabel new];
+    UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, halfWidth, 50)];
     titleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
+    [titleLabel setLineBreakMode:NSLineBreakByTruncatingTail];
+    titleLabel.numberOfLines=2;
     titleLabel.text = mainCampaign.title;
     [titleLabel sizeToFit];
+    [titleLabel setFrame:CGRectMake(0,
+                                    currentY,
+                                    halfWidth,
+                                    titleLabel.height)];
     [clockView addSubview:titleLabel];
     
     [self.clockLabel removeFromSuperview];
@@ -110,8 +118,9 @@
                                                     userInfo:nil
                                                      repeats:YES];
     }
+    currentY = CGRectGetMaxY(titleLabel.frame) + marginBetweenLabels;
     
-    UILabel* subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, halfWidth, 1)];
+    UILabel* subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, halfWidth, 50)];
     subTitleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
     subTitleLabel.textColor = [UIColor blackColor];
     subTitleLabel.textAlignment = NSTextAlignmentCenter;
@@ -120,18 +129,12 @@
     [subTitleLabel sizeToFit];
     [clockView addSubview:subTitleLabel];
     
-    CGFloat clockViewWidth = MAX(subTitleLabel.frame.size.width, titleLabel.frame.size.width);
-    clockViewWidth = MAX(clockViewWidth, self.clockLabel.frame.size.width);
+    [subTitleLabel setFrame:CGRectMake(0,
+                                       currentY,
+                                       halfWidth,
+                                       subTitleLabel.frame.size.height)];
     
-    CGFloat currentY = labelTopMargin;
-    CGFloat marginBetweenLabels = 6.0f;
-    
-    [titleLabel setFrame:CGRectMake(clockView.bounds.origin.x,
-                                    currentY,
-                                    clockViewWidth,
-                                    titleLabel.frame.size.height)];
-    
-    currentY += titleLabel.frame.size.height + marginBetweenLabels;
+    CGFloat clockViewWidth = mainClickableView.width/2;
     
     [self.clockLabel setFrame:CGRectMake(clockView.bounds.origin.x,
                                          currentY,
@@ -142,14 +145,9 @@
         currentY += self.clockLabel.frame.size.height + marginBetweenLabels;
     }
     
-    [subTitleLabel setFrame:CGRectMake(clockView.bounds.origin.x,
-                                       currentY,
-                                       clockViewWidth,
-                                       subTitleLabel.frame.size.height)];
+    currentY = CGRectGetMaxY(subTitleLabel.frame) + labelTopMargin;
     
-    currentY += subTitleLabel.frame.size.height;
-    
-    [clockView setFrame:CGRectMake((halfWidth - clockViewWidth) / 2,
+    [clockView setFrame:CGRectMake(0,
                                    (mainAreaHeight - currentY) / 2,
                                    clockViewWidth,
                                    currentY)];
@@ -251,6 +249,7 @@
     titleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.numberOfLines=2;
     titleLabel.text = mainCampaign.title;
     [titleLabel sizeToFit];
     [clockView addSubview:titleLabel];
@@ -286,13 +285,12 @@
     [subTitleLabel sizeToFit];
     [clockView addSubview:subTitleLabel];
     
-    CGFloat clockViewWidth = MAX(subTitleLabel.frame.size.width, titleLabel.frame.size.width);
-    clockViewWidth = MAX(clockViewWidth, self.clockLabel.frame.size.width);
+    CGFloat clockViewWidth = mainClickableView.width/2;
     
     CGFloat currentY = labelTopMargin;
     CGFloat marginBetweenLabels = 6.0f;
     
-    [titleLabel setFrame:CGRectMake(clockView.bounds.origin.x,
+    [titleLabel setFrame:CGRectMake(0,
                                     currentY,
                                     clockViewWidth,
                                     titleLabel.frame.size.height)];
@@ -308,7 +306,7 @@
         currentY += self.clockLabel.frame.size.height + marginBetweenLabels;
     }
     
-    [subTitleLabel setFrame:CGRectMake(clockView.bounds.origin.x,
+    [subTitleLabel setFrame:CGRectMake(0,
                                        currentY,
                                        clockViewWidth,
                                        subTitleLabel.frame.size.height)];
@@ -420,6 +418,12 @@
         self.clockLabel.text = timeString;
         [self.clockLabel sizeToFit];
     }
+}
+
+- (NSString*)teaserTrackingInfoForIndex:(NSInteger)index;
+{
+    NSString* teaserTrackingInfo = @"Campaigns_Teaser";
+    return teaserTrackingInfo;
 }
 
 @end

@@ -30,7 +30,7 @@
     [self.scrollView setFrame:self.bounds];
 }
 
-- (void)loadWithCart:(RICart *)cart shippingFee:(BOOL)shippingFee
+- (void)loadWithCart:(RICart *)cart
 {
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
     [self addSubview:self.scrollView];
@@ -79,22 +79,41 @@
         }
         
         NSString *shippingFeeValue = nil;
-        if(shippingFee)
+        if (0 == [cart.shippingValue integerValue])
         {
-            if (0 == [cart.shippingValue integerValue])
-            {
-                shippingFeeValue = STRING_FREE;
-            }
-            else
-            {
-                shippingFeeValue = cart.shippingValueFormatted;
-            }
+            shippingFeeValue = STRING_FREE;
+        }
+        else
+        {
+            shippingFeeValue = cart.shippingValueFormatted;
+        }
+        
+        NSString *extraCostsValue = nil;
+        if (0 == [cart.extraCosts integerValue])
+        {
+            extraCostsValue = STRING_FREE;
+        }
+        else
+        {
+            extraCostsValue = cart.extraCostsFormatted;
+        }
+        
+        NSString *voucherCostsValue = nil;
+        if (0 == [cart.couponMoneyValue integerValue])
+        {
+            voucherCostsValue = STRING_FREE;
+        }
+        else
+        {
+            voucherCostsValue = cart.couponMoneyValueFormatted;
         }
         
         currentY = [self loadTotalSectionInPositionY:currentY
                                             subtotal:cart.cartValueFormatted
-                                               extra:cart.extraCostsFormatted
-                                         shippingFee:shippingFeeValue];
+                                          priceRules:cart.priceRules
+                                               extra:extraCostsValue
+                                         shippingFee:shippingFeeValue
+                                             voucher:voucherCostsValue];
         
         self.extraCosts = cart.extraCostsFormatted;
         
@@ -108,11 +127,11 @@
     }
 }
 
-- (void)loadWithCheckout:(RICheckout*)checkout shippingMethod:(BOOL)shippingMethod shippingFee:(BOOL)shippingFee
+- (void)loadWithCheckout:(RICheckout*)checkout shippingMethod:(BOOL)shippingMethod
 {
     if(VALID_NOTEMPTY(checkout, RICheckout))
     {
-        [self loadWithCart:checkout.cart shippingFee:shippingFee];
+        [self loadWithCart:checkout.cart];
         
         RIOrder *orderSummary = checkout.orderSummary;
         if(VALID_NOTEMPTY(orderSummary, RIOrder))
@@ -312,8 +331,10 @@
 
 - (CGFloat)loadTotalSectionInPositionY:(CGFloat)currentY
                               subtotal:(NSString*)subtotal
+                            priceRules:(NSDictionary *)priceRules
                                  extra:(NSString*)extra
                            shippingFee:(NSString*)shippingFee
+                               voucher:(NSString*)voucher
 {
     currentY += 15.0f;
     
@@ -339,7 +360,37 @@
     
     currentY += subtotalLabel.frame.size.height + 7.0f;
     
-    if(VALID_NOTEMPTY(shippingFee, NSString))
+    if (VALID_NOTEMPTY(priceRules, NSDictionary)) {
+        
+        for (NSString *ruleKey in priceRules) {
+            NSString *ruleValue = [priceRules objectForKey:ruleKey];
+            
+            UILabel* priceRuleLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+                                                                                  currentY,
+                                                                                  self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                                  1.0f)];
+            priceRuleLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
+            priceRuleLabel.textColor = UIColorFromRGB(0x4e4e4e);
+            priceRuleLabel.text = ruleKey;
+            [priceRuleLabel sizeToFit];
+            [self.cartView addSubview:priceRuleLabel];
+            
+            UILabel* priceRuleValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+                                                                                       currentY,
+                                                                                       self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                                       priceRuleLabel.frame.size.height)];
+            priceRuleValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
+            priceRuleValueLabel.textColor = UIColorFromRGB(0x4e4e4e);
+            priceRuleValueLabel.text = ruleValue;
+            priceRuleValueLabel.textAlignment = NSTextAlignmentRight;
+            [self.cartView addSubview:priceRuleValueLabel];
+            
+            currentY += priceRuleValueLabel.frame.size.height;
+        }
+        currentY += 7.f;
+    }
+    
+    if(![shippingFee isEqualToString:STRING_FREE])
     {
         UILabel* shippingFeeLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
                                                                               currentY,
@@ -370,33 +421,58 @@
         currentY += shippingFeeValueLabel.frame.size.height + 7.0f;
     }
     
-    UILabel* extraLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
-                                                                    currentY,
-                                                                    self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
-                                                                    1.0f)];
-    extraLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-    extraLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    extraLabel.text = STRING_EXTRA_COSTS;
-    [extraLabel sizeToFit];
-    [self.cartView addSubview:extraLabel];
-    
-    UILabel* extraValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
-                                                                         currentY,
-                                                                         self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
-                                                                         extraLabel.frame.size.height)];
-    extraValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-    extraValueLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    extraValueLabel.text = extra;
-    extraValueLabel.textAlignment = NSTextAlignmentRight;
-    
-    if([self.extraCosts integerValue ] == 0){
-        [extraLabel setHidden:YES];
-        [extraValueLabel setHidden:YES];
+    if(![extra isEqualToString:STRING_FREE]){
+        UILabel* extraLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+                                                                        currentY,
+                                                                        self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                        1.0f)];
+        extraLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
+        extraLabel.textColor = UIColorFromRGB(0x4e4e4e);
+        extraLabel.text = STRING_EXTRA_COSTS;
+        [extraLabel sizeToFit];
+        [self.cartView addSubview:extraLabel];
+        
+        UILabel* extraValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+                                                                             currentY,
+                                                                             self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                             extraLabel.frame.size.height)];
+        extraValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
+        extraValueLabel.textColor = UIColorFromRGB(0x4e4e4e);
+        extraValueLabel.text = extra;
+        extraValueLabel.textAlignment = NSTextAlignmentRight;
+        
+        [self.cartView addSubview:extraValueLabel];
+        
+        currentY += extraLabel.frame.size.height + 7.0f;
     }
     
-    [self.cartView addSubview:extraValueLabel];
     
-    currentY += extraLabel.frame.size.height + 10.0f;
+    if(![voucher isEqualToString:STRING_FREE]){
+        UILabel* voucherLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+                                                                        currentY,
+                                                                        self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                        1.0f)];
+        voucherLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
+        voucherLabel.textColor = UIColorFromRGB(0x3aaa35);
+        voucherLabel.text = STRING_VOUCHER;
+        [voucherLabel sizeToFit];
+        [self.cartView addSubview:voucherLabel];
+        
+        UILabel* voucherValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+                                                                             currentY,
+                                                                             self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                             voucherLabel.frame.size.height)];
+        voucherValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
+        voucherValueLabel.textColor = UIColorFromRGB(0x3aaa35);
+        voucherValueLabel.text = [NSString stringWithFormat:@"- %@", voucher];
+        voucherValueLabel.textAlignment = NSTextAlignmentRight;
+        currentY += voucherLabel.frame.size.height + 7.0f;
+        
+        [self.cartView addSubview:voucherValueLabel];
+    }
+    
+    currentY += 3.f;
+    
     
     return currentY;
 }

@@ -15,7 +15,7 @@
 #import "RICart.h"
 #import "RICustomer.h"
 #import "RICategory.h"
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKAppEvents.h>
 #import "JAProductListFlowLayout.h"
 
 @interface JAMyFavouritesViewController ()
@@ -101,6 +101,24 @@
     self.flowLayout.minimumInteritemSpacing = 0;
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     [self.collectionView setCollectionViewLayout:self.flowLayout];
+    
+    self.collectionView.frame = CGRectMake(6.0f,
+                                           self.collectionView.frame.origin.y,
+                                           self.view.frame.size.width - 6.0f*2,
+                                           self.view.frame.size.height);
+    
+    self.emptyFavoritesView.frame = CGRectMake(self.emptyFavoritesView.frame.origin.x,
+                                               self.emptyFavoritesView.frame.origin.y,
+                                               self.view.frame.size.width - self.emptyFavoritesView.frame.origin.x * 2,
+                                               300.0f);
+    self.emptyFavoritesImageView.frame = CGRectMake((self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2,
+                                                    56.0f,
+                                                    self.emptyFavoritesImageView.frame.size.width,
+                                                    self.emptyFavoritesImageView.frame.size.height);
+    self.emptyFavoritesLabel.frame = CGRectMake(12.0f,
+                                                183.0f,
+                                                self.emptyFavoritesView.frame.size.width - 12*2,
+                                                self.emptyFavoritesLabel.frame.size.height);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -117,6 +135,24 @@
     [super viewDidAppear:animated];
     
     [[RITrackingWrapper sharedInstance]trackScreenWithName:@"Favourites"];
+    
+    self.collectionView.frame = CGRectMake(6.0f,
+                                           self.collectionView.frame.origin.y,
+                                           self.view.frame.size.width - 6.0f*2,
+                                           self.view.frame.size.height);
+    
+    self.emptyFavoritesView.frame = CGRectMake(self.emptyFavoritesView.frame.origin.x,
+                                               self.emptyFavoritesView.frame.origin.y,
+                                               self.view.frame.size.width - self.emptyFavoritesView.frame.origin.x * 2,
+                                               300.0f);
+    self.emptyFavoritesImageView.frame = CGRectMake((self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2,
+                                                    56.0f,
+                                                    self.emptyFavoritesImageView.frame.size.width,
+                                                    self.emptyFavoritesImageView.frame.size.height);
+    self.emptyFavoritesLabel.frame = CGRectMake(12.0f,
+                                                183.0f,
+                                                self.emptyFavoritesView.frame.size.width - 12*2,
+                                                self.emptyFavoritesLabel.frame.size.height);
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -131,7 +167,7 @@
                                            self.view.frame.size.height);
     [self.collectionView reloadData];
     
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+//    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
         self.emptyFavoritesView.frame = CGRectMake(self.emptyFavoritesView.frame.origin.x,
                                                    self.emptyFavoritesView.frame.origin.y,
                                                    self.view.frame.size.width - self.emptyFavoritesView.frame.origin.x * 2,
@@ -144,7 +180,7 @@
                                                     183.0f,
                                                     self.emptyFavoritesView.frame.size.width - 12*2,
                                                     self.emptyFavoritesLabel.frame.size.height);
-    }
+//    }
     
     [self changeViewToInterfaceOrientation:self.interfaceOrientation];
 }
@@ -204,10 +240,10 @@
             [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
             
             NSString *discount = @"false";
-            NSString *price = [product.priceEuroConverted stringValue];
+            NSNumber *price = product.priceEuroConverted;
             if (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted floatValue] > 0.0f)
             {
-                price = [product.specialPriceEuroConverted stringValue];
+                price = product.specialPriceEuroConverted;
                 discount = @"true";
             }
             
@@ -231,11 +267,31 @@
                     [trackingDictionary setValue:tempProduct.variation forKey:kRIEventSizeKey];
                 }
             }
-            
+            [trackingDictionary setValue:@"1" forKey:kRIEventQuantityKey];
             [trackingDictionary setValue:[NSString stringWithFormat:@"%.2f",totalWishlistValue] forKey:kRIEventTotalWishlistKey];
             
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewWishlist]
-                                                      data:[trackingDictionary copy]];
+            if ([RICustomer checkIfUserIsLogged]) {
+                [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+                [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
+                    RIAddress *shippingAddress = (RIAddress *)[adressList objectForKey:@"shipping"];
+                    [trackingDictionary setValue:shippingAddress.city forKey:kRIEventCityKey];
+                    [trackingDictionary setValue:shippingAddress.customerAddressRegion forKey:kRIEventRegionKey];
+                    
+                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewWishlist]
+                                                              data:[trackingDictionary copy]];
+                    
+                } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+                    NSLog(@"ERROR: getting customer");
+                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewWishlist]
+                                                              data:[trackingDictionary copy]];
+                }];
+            }else{
+                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewWishlist]
+                                                          data:[trackingDictionary copy]];
+            }
+            
+            
         }
         
         // notify the InAppNotification SDK that this the active view controller
@@ -578,12 +634,15 @@
                                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                          data:[trackingDictionary copy]];
                                
+                               [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventAddFromWishlistToCart]
+                                                                         data:[NSDictionary dictionaryWithObject:product.sku forKey:kRIEventProductFavToCartKey]];
+                               
                                float value = [price floatValue];
-                               [FBAppEvents logEvent:FBAppEventNameAddedToCart
+                               [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToCart
                                           valueToSum:value
-                                          parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
-                                                        FBAppEventParameterNameContentType : product.name,
-                                                        FBAppEventParameterNameContentID   : product.sku}];
+                                          parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
+                                                        FBSDKAppEventParameterNameContentType : product.name,
+                                                        FBSDKAppEventParameterNameContentID   : product.sku}];
 
                                [RIProduct removeFromFavorites:product successBlock:^(void) {
                                    
@@ -608,6 +667,24 @@
                                    
                                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
                                                                              data:[trackingDictionary copy]];
+                                   
+                                   NSMutableDictionary *tracking = [NSMutableDictionary new];
+                                   [tracking setValue:product.name forKey:kRIEventProductNameKey];
+                                   [tracking setValue:product.sku forKey:kRIEventSkuKey];
+                                   if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet)) {
+                                       [tracking setValue:[product.categoryIds lastObject] forKey:kRIEventLastCategoryAddedToCartKey];
+                                   }
+                                   [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
+                                   
+                                   [[NSUserDefaults standardUserDefaults] setObject:product.sku forKey:kRIEventProductFavToCartKey];
+                                   [[NSUserDefaults standardUserDefaults] synchronize];
+                                   
+                                   tracking = [NSMutableDictionary new];
+                                   [tracking setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+                                   [tracking setValue:cart.cartCount forKey:kRIEventQuantityKey];
+                                   [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+                                                                             data:[tracking copy]];
+                                   
                                } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                                }];
                            }
@@ -679,14 +756,10 @@
             self.totalProdutsInWishlist -= [favoriteProducts count];
         }
         
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventAddFromWishlistToCart] data:[NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:self.totalProdutsInWishlist] forKey:kRIEventNumberOfProductsKey]];
-        
         [self updateListsWith:favoriteProducts];
         
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventAddFromWishlistToCart] data:[NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:self.totalProdutsInWishlist] forKey:kRIEventNumberOfProductsKey]];
-        
         [self hideLoading];
     }];
 }
@@ -837,16 +910,31 @@
                                                                 data:[trackingDictionary copy]];
                       
                       float value = [price floatValue];
-                      [FBAppEvents logEvent:FBAppEventNameAddedToCart
+                      [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToCart
                                  valueToSum:value
-                                 parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
-                                               FBAppEventParameterNameContentType : product.name,
-                                               FBAppEventParameterNameContentID   : product.sku}];
+                                 parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
+                                               FBSDKAppEventParameterNameContentType : product.name,
+                                               FBSDKAppEventParameterNameContentID   : product.sku}];
 
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       
                       [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
+                      
+                      NSMutableDictionary *tracking = [NSMutableDictionary new];
+                      [tracking setValue:product.name forKey:kRIEventProductNameKey];
+                      [tracking setValue:product.sku forKey:kRIEventSkuKey];
+                      if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet)) {
+                          [tracking setValue:[product.categoryIds lastObject] forKey:kRIEventLastCategoryAddedToCartKey];
+                      }
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
+                      
+                      
+                      tracking = [NSMutableDictionary new];
+                      [tracking setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+                      [tracking setValue:cart.cartCount forKey:kRIEventQuantityKey];
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+                                                                data:[tracking copy]];
                       
                       [RIProduct removeFromFavorites:product successBlock:^(void) {
                           
@@ -871,6 +959,19 @@
                           
                           [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
                                                                     data:[trackingDictionary copy]];
+                          
+                          [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInteger:RIEventAddFromWishlistToCart]
+                                                                    data:[NSDictionary dictionaryWithObject:product.sku forKey:kRIEventProductFavToCartKey]];
+                          
+                          [[NSUserDefaults standardUserDefaults] setObject:product.sku forKey:kRIEventProductFavToCartKey];
+                          [[NSUserDefaults standardUserDefaults] synchronize];
+                          
+                          NSMutableDictionary *tracking = [NSMutableDictionary new];
+                          [tracking setValue:product.name forKey:kRIEventProductNameKey];
+                          [tracking setValue:product.sku forKey:kRIEventSkuKey];
+                          [tracking setValue:[product.categoryIds lastObject] forKey:kRIEventLastCategoryAddedToCartKey];
+                          [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
+                          
                           
                           [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
                               [self updateListsWith:favoriteProducts];

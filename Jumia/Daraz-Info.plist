@@ -15,27 +15,28 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.2</string>
+	<string>1.3</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>com.jumia.ios.dev</string>
+			<string>com.Daraz.ios.dev</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>tagmanager.c.com.jumia.ios.dev</string>
+				<string>tagmanager.c.com.daraz.ios.dev</string>
 			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.jumia.ios.dev</string>
+			<string>com.daraz.ios.dev</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>Jumia</string>
+				<string>Daraz</string>
+				<string>gsd-Daraz</string>
 			</array>
 		</dict>
 		<dict>
@@ -46,7 +47,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>4.0</string>
+	<string>6.0</string>
 	<key>FacebookAppID</key>
 	<string>669323149842984</string>
 	<key>FacebookDisplayName</key>

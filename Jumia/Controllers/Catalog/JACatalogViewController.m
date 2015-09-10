@@ -17,7 +17,7 @@
 #import "JAUndefinedSearchView.h"
 #import "JAFilteredNoResultsView.h"
 #import "JAAppDelegate.h"
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKAppEvents.h>
 #import "JANavigationBarView.h"
 #import "UIImageView+JA.h"
 #import "UIImageView+WebCache.h"
@@ -137,7 +137,7 @@
             [self addUndefinedSearchView:self.undefinedBackup frame:CGRectMake(6.0f,
                                                                                self.catalogTopView.frame.origin.y,
                                                                                [self viewBounds].size.width - 12.0f,
-                                                                               [self viewBounds].size.height - self.catalogTopView.frame.origin.y)];
+                                                                               [self viewBounds].size.height)];
         }
         else
         {
@@ -196,11 +196,6 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(navBarClicked)
                                                  name:kDidPressNavBar
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(changedFavoriteStateOfProduct:)
-                                                 name:kProductChangedNotification
                                                object:nil];
     
     self.apiResponse = RIApiResponseSuccess;
@@ -264,6 +259,11 @@
         CGPoint contentOffset = self.collectionView.contentOffset;
         [self.collectionView setContentOffset:contentOffset];
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updatedProduct:)
+                                                 name:kProductChangedNotification
+                                               object:nil];
 }
 
 - (void)viewDidLayoutSubviews
@@ -278,6 +278,7 @@
 {
     [super viewDidAppear:animated];
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"ShopCatalogList"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductChangedNotification object:nil];
 }
  
 - (void)setupViews
@@ -300,6 +301,7 @@
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     
+    [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogBannerCell" bundle:nil] forCellWithReuseIdentifier:@"bannerCell"];
     [self.collectionView registerClass:[JACatalogListCollectionViewCell class] forCellWithReuseIdentifier:@"JACatalogListCollectionViewCell"];
     [self.collectionView registerClass:[JACatalogGridCollectionViewCell class] forCellWithReuseIdentifier:@"JACatalogGridCollectionViewCell"];
     
@@ -415,7 +417,7 @@
         [self addUndefinedSearchView:self.undefinedBackup frame:CGRectMake(6.0f,
                                                                            self.catalogTopView.frame.origin.y,
                                                                            [self viewBounds].size.width - 12.0f,
-                                                                           [self viewBounds].size.height - self.catalogTopView.frame.origin.y)];
+                                                                           [self viewBounds].size.height)];
     }
     
     [self.catalogTopView repositionForWidth:self.view.frame.size.width];
@@ -469,7 +471,7 @@
             
             self.isLoadingMoreProducts =YES;
             
-            self.searchSuggestionOperationID = [RISearchSuggestion getResultsForSearch:self.searchString
+            self.searchSuggestionOperationID = [RISearchSuggestion getResultsForSearch:[self.searchString stringByReplacingOccurrencesOfString:@" " withString:@"+"]
                                                                                   page:[pageNumber stringValue]
                                                                               maxItems:[NSString stringWithFormat:@"%ld",(long)self.maxProducts]
                                                                          sortingMethod:self.sortingMethod
@@ -517,9 +519,9 @@
                                                                                   
                                                                                   [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSearch]
                                                                                                                             data:[trackingDictionary copy]];
-                                                                                  [FBAppEvents logEvent:FBAppEventNameSearched
-                                                                                             parameters:@{FBAppEventParameterNameSearchString: self.searchString,
-                                                                                                          FBAppEventParameterNameSuccess: @1 }];
+                                                                                  [FBSDKAppEvents logEvent:FBSDKAppEventNameSearched
+                                                                                             parameters:@{FBSDKAppEventParameterNameSearchString: self.searchString,
+                                                                                                          FBSDKAppEventParameterNameSuccess: @1 }];
                                                                                   
                                                                                   trackingDictionary = [[NSMutableDictionary alloc] init];
                                                                                   NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
@@ -529,15 +531,38 @@
                                                                                   }
                                                                                   
                                                                                   [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-                                                                                  [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
                                                                                   [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-                                                                                  [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
                                                                                   [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+                                                                                  
+                                                                                  
+                                                                                  if(self.categoryId)
+                                                                                  {
+                                                                                      [trackingDictionary setValue:self.categoryId forKey:kRIEventCategoryIdKey];
+                                                                                      [trackingDictionary setValue:[RICategory getTree:self.categoryName] forKey:kRIEventTreeKey];
+                                                                                  }
                                                                                   
                                                                                   [trackingDictionary setValue:self.searchString forKey:kRIEventQueryKey];
                                                                                   
-                                                                                  [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookSearch]
-                                                                                                                            data:[trackingDictionary copy]];
+                                                                                  if ([RICustomer checkIfUserIsLogged]) {
+                                                                                      [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                                                                                      [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+                                                                                      [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
+                                                                                          RIAddress *shippingAddress = (RIAddress *)[adressList objectForKey:@"shipping"];
+                                                                                          [trackingDictionary setValue:shippingAddress.city forKey:kRIEventCityKey];
+                                                                                          [trackingDictionary setValue:shippingAddress.customerAddressRegion forKey:kRIEventRegionKey];
+                                                                                          
+                                                                                          [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookSearch]
+                                                                                                                                    data:[trackingDictionary copy]];
+                                                                                          
+                                                                                      } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+                                                                                          NSLog(@"ERROR: getting customer");
+                                                                                          [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookSearch]
+                                                                                                                                    data:[trackingDictionary copy]];
+                                                                                      }];
+                                                                                  }else{
+                                                                                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookSearch]
+                                                                                                                                data:[trackingDictionary copy]];
+                                                                                  }
                                                                                   
                                                                                   NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
                                                                                   [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
@@ -614,9 +639,9 @@
                                                                                   }
                                                                               }
                                                                               
-                                                                              [FBAppEvents logEvent:FBAppEventNameSearched
-                                                                                         parameters:@{FBAppEventParameterNameSearchString:self.searchString  ,
-                                                                                                      FBAppEventParameterNameSuccess: @0 }];
+                                                                              [FBSDKAppEvents logEvent:FBSDKAppEventNameSearched
+                                                                                         parameters:@{FBSDKAppEventParameterNameSearchString:self.searchString  ,
+                                                                                                      FBSDKAppEventParameterNameSuccess: @0 }];
                                                                               
                                                                               self.isLoadingMoreProducts = NO;
                                                                               [self hideLoading];                                                                              
@@ -706,6 +731,8 @@
                                                                           else if(VALID_NOTEMPTY(category, RICategory))
                                                                           {
                                                                               categoryName = category.name;
+                                                                          }else{
+                                                                              categoryName = self.navBarLayout.title;
                                                                           }
                                                                           
                                                                           if (ISEMPTY(self.navBarLayout.title)) {
@@ -749,9 +776,7 @@
                                                                               }
                                                                               
                                                                               [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-                                                                              [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
                                                                               [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-                                                                              [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
                                                                               [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
 
                                                                               if(VALID_NOTEMPTY(categoryName, NSString))
@@ -759,11 +784,11 @@
                                                                                   [trackingDictionary setValue:categoryName forKey:kRIEventCategoryNameKey];
                                                                               }
                                                                               
-                                                                              if(VALID_NOTEMPTY(category, RICategory))
+                                                                              if(VALID_NOTEMPTY(category, RICategory) && category.uid)
                                                                               {
                                                                                   [trackingDictionary setValue:category.uid forKey:kRIEventCategoryIdKey];
                                                                               }
-                                                                              else if(VALID_NOTEMPTY(categoryId, NSString))
+                                                                              else if(categoryId)
                                                                               {
                                                                                   [trackingDictionary setValue:categoryId forKey:kRIEventCategoryIdKey];
                                                                                   [trackingDictionary setValue:[RICategory getTree:categoryId] forKey:kRIEventTreeKey];
@@ -771,8 +796,23 @@
                                                                               
                                                                               [trackingDictionary setValue:productsToTrack forKey:kRIEventSkusKey];
                                                                               
-                                                                              [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewListing]
-                                                                                                                        data:[trackingDictionary copy]];
+                                                                              if ([RICustomer checkIfUserIsLogged]) {
+                                                                                  [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+                                                                                  [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+                                                                                  [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
+                                                                                      RIAddress *shippingAddress = (RIAddress *)[adressList objectForKey:@"shipping"];
+                                                                                      [trackingDictionary setValue:shippingAddress.city forKey:kRIEventCityKey];
+                                                                                      [trackingDictionary setValue:shippingAddress.customerAddressRegion forKey:kRIEventRegionKey];
+                                                                                      
+                                                                                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewListing] data:[trackingDictionary copy]];
+                                                                                      
+                                                                                  } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+                                                                                      NSLog(@"ERROR: getting customer");
+                                                                                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewListing] data:[trackingDictionary copy]];
+                                                                                  }];
+                                                                              }else{
+                                                                                  [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewListing] data:[trackingDictionary copy]];
+                                                                              }
                                                                               
                                                                               NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
                                                                               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
@@ -989,6 +1029,10 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (VALID_NOTEMPTY(self.banner, RIBanner) && 0 == indexPath.row) {
+        return self.bannerImage.frame.size;
+    }
+    
     if ([self.cellIdentifier isEqualToString:@"listCell"])
         return CGSizeMake(308, 97);
     else if ([self.cellIdentifier isEqualToString:@"listCell_ipad_portrait"])
@@ -1005,11 +1049,6 @@
     else
         return CGSizeZero;
     
-//    if (VALID_NOTEMPTY(self.banner, RIBanner) && 0 == indexPath.row) {
-//        return self.bannerImage.frame.size;
-//    } else {
-//        return [self getLayoutItemSizeForInterfaceOrientation:self.interfaceOrientation];
-//    }
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
@@ -1131,26 +1170,28 @@
     
     NSString *temp = self.category.name;
     
+    NSMutableDictionary* userInfo = [NSMutableDictionary new];
+    [userInfo setObject:product.url forKey:@"url"];
+    [userInfo setObject:@"YES" forKey:@"fromCatalog"];
+    [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"show_back_button"];
+    
+    if (self.teaserTrackingInfo) {
+        [userInfo setObject:self.teaserTrackingInfo forKey:@"teaserTrackingInfo"];
+    }
     
     if (temp.length > 0) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                            object:nil
-                                                          userInfo:@{ @"url" : product.url,
-                                                                      @"fromCatalog" : @"YES",
-                                                                      @"category" : self.category,
-                                                                      @"show_back_button" : [NSNumber numberWithBool:YES]}];
+        [userInfo setObject:self.category forKey:@"category"];
         [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"cat_/%@/%@",self.category.urlKey
                                                                  ,product.name]];
     }
     else
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                            object:nil
-                                                          userInfo:@{ @"url" : product.url,
-                                                                      @"fromCatalog" : @"YES",
-                                                                      @"show_back_button" : [NSNumber numberWithBool:YES]}];
         [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"Search_%@",product.name]];
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                        object:nil
+                                                      userInfo:userInfo];
 }
 
 #pragma mark - JAMainFiltersViewControllerDelegate
@@ -1179,12 +1220,13 @@
                             
                             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventIndividualFilter]
                                                                       data:[NSDictionary dictionaryWithObject:filter.name forKey:kRIEventFilterTypeKey]];
-                            
-                            [trackingDictionary setObject:filter.name forKey:kRIEventPriceFilterKey];
+
+                                [trackingDictionary setObject:[NSString stringWithFormat:@"%ld-%ld", (long)filterOption.lowerValue, (long)filterOption.upperValue] forKey:kRIEventPriceFilterKey];
                             
                             filtersSelected = YES;
                         }
                         if (filterOption.discountOnly) {
+                            [trackingDictionary setObject:@1 forKey:kRIEventSpecialPriceFilterKey];
                             filtersSelected = YES;
                         }
                     }
@@ -1199,11 +1241,33 @@
                                                                       data:[NSDictionary dictionaryWithObject:filter.name forKey:kRIEventFilterTypeKey]];
                             if([@"brand" isEqualToString:filter.uid])
                             {
-                                [trackingDictionary setObject:filter.name forKey:kRIEventBrandFilterKey];
+                                if ([trackingDictionary objectForKey:kRIEventBrandFilterKey]) {
+                                    [trackingDictionary setObject:[NSString stringWithFormat:@"%@,%@", [trackingDictionary objectForKey:kRIEventBrandFilterKey], filterOption.name] forKey:kRIEventBrandFilterKey];
+                                }else{
+                                    [trackingDictionary setObject:filterOption.name forKey:kRIEventBrandFilterKey];
+                                }
                             }
                             else if([@"color_family" isEqualToString:filter.uid])
                             {
-                                [trackingDictionary setObject:filter.name forKey:kRIEventColorFilterKey];
+                                if ([trackingDictionary objectForKey:kRIEventColorFilterKey]) {
+                                    [trackingDictionary setObject:[NSString stringWithFormat:@"%@,%@", [trackingDictionary objectForKey:kRIEventColorFilterKey], filterOption.name] forKey:kRIEventColorFilterKey];
+                                }else{
+                                    [trackingDictionary setObject:filterOption.name forKey:kRIEventColorFilterKey];
+                                }
+                            }else if([@"size" isEqualToString:filter.uid])
+                            {
+                                if ([trackingDictionary objectForKey:kRIEventSizeFilterKey]) {
+                                    [trackingDictionary setObject:[NSString stringWithFormat:@"%@,%@", [trackingDictionary objectForKey:kRIEventSizeFilterKey], filterOption.name] forKey:kRIEventSizeFilterKey];
+                                }else{
+                                    [trackingDictionary setObject:filterOption.name forKey:kRIEventSizeFilterKey];
+                                }
+                            }else if([@"category" isEqualToString:filter.uid])
+                            {
+                                if ([trackingDictionary objectForKey:kRIEventCategoryFilterKey]) {
+                                    [trackingDictionary setObject:[NSString stringWithFormat:@"%@,%@", [trackingDictionary objectForKey:kRIEventCategoryFilterKey], filterOption.name] forKey:kRIEventCategoryFilterKey];
+                                }else{
+                                    [trackingDictionary setObject:filterOption.name forKey:kRIEventCategoryFilterKey];
+                                }
                             }
                             
                             filtersSelected = YES;
@@ -1227,19 +1291,21 @@
 }
 
 #pragma mark - kProductChangedNotification
-- (void)changedFavoriteStateOfProduct:(NSNotification*)notification;
+
+- (void)updatedProduct:(NSNotification *)notification
 {
-    RIProduct* product = (RIProduct*) notification.object;
-    
-    if (VALID_NOTEMPTY(product, RIProduct)) {
-        for (int i = 0; i < self.productsArray.count; i++)
-        {
-            RIProduct* currentProduct = [self.productsArray objectAtIndex:i];
-            if ([currentProduct.sku isEqualToString:product.sku])
-            {
-                currentProduct.favoriteAddDate = product.favoriteAddDate;
-                [self.collectionView reloadItemsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]]];
-            }
+    NSString* productUrl = notification.object;
+    int i = 0;
+    for(; i < self.productsArray.count; i++)
+    {
+        RIProduct *product = [self.productsArray objectAtIndex:i];
+        if ([productUrl isEqualToString:product.url]) {
+            product.favoriteAddDate = nil;
+            if (notification.userInfo && [notification.userInfo objectForKey:@"favoriteAddDate"]) {
+                NSDate *date =[notification.userInfo objectForKey:@"favoriteAddDate"];
+                product.favoriteAddDate = date;
+            }else
+                product.favoriteAddDate = nil;
         }
     }
 }
@@ -1402,19 +1468,23 @@
                                         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]
                                                                                   data:[trackingDictionary copy]];
                                         float value = [price floatValue];
-                                        [FBAppEvents logEvent:FBAppEventNameAddedToWishlist
+                                        [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToWishlist
                                                    valueToSum:value
-                                                   parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
-                                                                 FBAppEventParameterNameContentType : product.name,
-                                                                 FBAppEventParameterNameContentID   : product.sku}];
+                                                   parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
+                                                                 FBSDKAppEventParameterNameContentType : product.name,
+                                                                 FBSDKAppEventParameterNameContentID   : product.sku}];
                                         
                                         
                                         [self hideLoading];
                                         
                                         [self showMessage:STRING_ADDED_TO_WISHLIST success:YES];
-                                        
+                                        NSDictionary *userInfo = nil;
+                                        if (product.favoriteAddDate) {
+                                            userInfo = [NSDictionary dictionaryWithObject:product.favoriteAddDate forKey:@"favoriteAddDate"];
+                                        }
                                         [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                                                            object:product];
+                                                                                            object:product
+                                                                                          userInfo:userInfo];
                                         
                                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                                         NSString *addToWishlistError = STRING_ERROR_ADDING_TO_WISHLIST;
@@ -1467,8 +1537,13 @@
             
             [self showMessage:STRING_REMOVED_FROM_WISHLIST success:YES];
             
+            NSDictionary *userInfo = nil;
+            if (product.favoriteAddDate) {
+                userInfo = [NSDictionary dictionaryWithObject:product.favoriteAddDate forKey:@"favoriteAddDate"];
+            }
             [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                                object:product];
+                                                                object:product
+                                                              userInfo:userInfo];
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             [self hideLoading];
@@ -1583,7 +1658,7 @@
         [self addUndefinedSearchView:self.undefinedBackup frame:CGRectMake(6.0f,
                                                                            self.catalogTopView.frame.origin.y,
                                                                            [self viewBounds].size.width - 12.0f,
-                                                                           [self viewBounds].size.height - self.catalogTopView.frame.origin.y)];
+                                                                           [self viewBounds].size.height)];
         [self.undefinedView didRotate];
     }
 
@@ -1599,6 +1674,7 @@
 - (void)selectedSortingMethod:(RICatalogSorting)catalogSorting
 {
     if (catalogSorting != self.sortingMethod) {
+        [self killScroll];
         self.sortingMethod = catalogSorting;
         [self.catalogTopView setSorting:self.sortingMethod];
         
@@ -1618,6 +1694,15 @@
                                                   data:[trackingDictionary copy]];
 
     }
+}
+
+- (void)killScroll
+{
+    CGPoint offset = self.collectionView.contentOffset;
+    offset.y -= .1;
+    [self.collectionView setContentOffset:offset animated:YES];
+    offset.y += .1;
+    [self.collectionView setContentOffset:offset animated:YES];
 }
 
 @end

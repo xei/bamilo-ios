@@ -40,6 +40,7 @@ typedef NSUInteger RIImageType;
  * @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString*)loadImageResolutionsIntoDatabaseForCountry:(NSString*)countryUrl
+                              countryUserAgentInjection:(NSString *)countryUserAgentInjection
                                        withSuccessBlock:(void (^)())successBlock
                                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 

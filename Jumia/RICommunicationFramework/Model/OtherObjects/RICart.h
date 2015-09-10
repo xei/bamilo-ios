@@ -32,6 +32,8 @@
 @property (strong, nonatomic) NSNumber *vatValue;
 @property (strong, nonatomic) NSString *vatValueFormatted;
 @property (strong, nonatomic) NSNumber *vatValueEuroConverted;
+@property (strong, nonatomic) NSNumber *vatLabelEnabled;
+@property (strong, nonatomic) NSString *vatLabel;
 @property (strong, nonatomic) NSNumber *sumCosts;
 @property (strong, nonatomic) NSNumber *sumCostsEuroConverted;
 @property (strong, nonatomic) NSNumber *sumCostsValue;

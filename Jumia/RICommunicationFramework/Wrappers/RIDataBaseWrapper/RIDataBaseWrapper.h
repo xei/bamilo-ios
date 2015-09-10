@@ -11,7 +11,7 @@
 @interface RIDataBaseWrapper : NSObject
 
 + (RIDataBaseWrapper *)sharedInstance;
--(void)saveContext;
+-(BOOL)saveContext;
 -(void)insertManagedObject:(NSManagedObject*)object;
 -(NSManagedObject *)temporaryManagedObjectOfType:(NSString *)objectType;
 -(NSManagedObject *)managedObjectOfType:(NSString *)objectType;

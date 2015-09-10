@@ -56,6 +56,7 @@
                        httpMethodPost:YES
                        cacheType:RIURLCacheNoCache
                        cacheTime:RIURLCacheDefaultTime
+                       userAgentInjection:[RIApi getCountryUserAgentInjection]
                        successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                            
                            if ([jsonObject objectForKey:@"metadata"]) {

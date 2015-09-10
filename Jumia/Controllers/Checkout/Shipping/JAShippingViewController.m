@@ -19,6 +19,7 @@
 #import "RICustomer.h"
 #import "UIView+Mirror.h"
 #import "UIImage+Mirror.h"
+#import "JACheckoutBottomView.h"
 
 #define kPickupStationKey @"pickupstation"
 
@@ -28,6 +29,10 @@ UICollectionViewDataSource,
 UICollectionViewDelegate,
 UICollectionViewDelegateFlowLayout
 >
+{
+    // Bottom view
+    JACheckoutBottomView *_bottomView;
+}
 
 // Steps
 @property (weak, nonatomic) IBOutlet UIImageView *stepBackground;
@@ -38,9 +43,6 @@ UICollectionViewDelegateFlowLayout
 // Shipping methods
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UICollectionView *collectionView;
-
-// Bottom view
-@property (strong, nonatomic) JAButtonWithBlur *bottomView;
 
 // Picker view
 @property (strong, nonatomic) JAPicker *picker;
@@ -104,8 +106,6 @@ UICollectionViewDelegateFlowLayout
     [super viewWillAppear:animated];
 
     self.apiResponse = RIApiResponseSuccess;
-
-    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
     
     [self continueLoading];
 }
@@ -122,6 +122,12 @@ UICollectionViewDelegateFlowLayout
     if(VALID(self.picker, JAPicker))
     {
         [self.picker removeFromSuperview];
+    }
+    
+    if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
+        [_bottomView setNoTotal:YES];
+    }else{
+        [_bottomView setNoTotal:NO];
     }
     
     [self showLoading];
@@ -226,13 +232,9 @@ UICollectionViewDelegateFlowLayout
     [self.scrollView addSubview:self.collectionView];
     [self.view addSubview:self.scrollView];
     
-    self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero orientation:UIInterfaceOrientationPortrait];
-    
-    [self.bottomView setFrame:CGRectMake(0.0f,
-                                         self.view.frame.size.height - 64.0f - self.bottomView.frame.size.height,
-                                         self.view.frame.size.width,
-                                         self.bottomView.frame.size.height)];
-    [self.view addSubview:self.bottomView];
+    _bottomView = [[JACheckoutBottomView alloc] initWithFrame:CGRectMake(0.f, self.view.frame.size.height - 56, self.view.frame.size.width, 56) orientation:self.interfaceOrientation];
+    [_bottomView setTotalValue:self.checkout.cart.cartValueFormatted];
+    [self.view addSubview:_bottomView];
 }
 
 - (void) setupStepView:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
@@ -376,7 +378,7 @@ UICollectionViewDelegateFlowLayout
                                                                                  self.stepBackground.frame.size.height,
                                                                                  self.view.frame.size.width - width - orderSummaryRightMargin,
                                                                                  self.view.frame.size.height - self.stepBackground.frame.size.height)];
-        [self.orderSummary loadWithCheckout:self.checkout shippingMethod:NO shippingFee:NO];
+        [self.orderSummary loadWithCheckout:self.checkout shippingMethod:NO];
         [self.view addSubview:self.orderSummary];
     }
     
@@ -385,11 +387,12 @@ UICollectionViewDelegateFlowLayout
                                              self.scrollView.frame.size.width - 12.0f,
                                              self.collectionView.frame.size.height)];
     
-    [self.bottomView reloadFrame:CGRectMake(0.0f,
-                                            self.view.frame.size.height - self.bottomView.frame.size.height,
-                                            width,
-                                            self.bottomView.frame.size.height)];
-    [self.bottomView addButton:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
+    [_bottomView setFrame:CGRectMake(0.0f,
+                                             self.view.frame.size.height - 56,
+                                             width,
+                                             56)];
+    [_bottomView setButtonText:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
+    [_bottomView setTotalValue:self.checkout.cart.cartValueFormatted];
     
     [self reloadCollectionView];
     
@@ -420,7 +423,7 @@ UICollectionViewDelegateFlowLayout
             }
             else
             {
-                collectionViewHeight += 53.0f; // JAShippingInfoCell Height
+                collectionViewHeight += 70.0f; // JAShippingInfoCell Height
             }
         }
         
@@ -433,7 +436,7 @@ UICollectionViewDelegateFlowLayout
                          }];
         
         [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
-                                                   self.collectionView.frame.origin.y + collectionViewHeight + self.bottomView.frame.size.height + 6.0f)];
+                                                   self.collectionView.frame.origin.y + collectionViewHeight + _bottomView.frame.size.height + 6.0f)];
         
     }
     
@@ -566,11 +569,6 @@ UICollectionViewDelegateFlowLayout
             {
                 CGFloat size = [JAPickupStationInfoCell getHeightForPickupStation:pickupStation];
                 
-                if(size < 120.0f)
-                {
-                    size = 120.0f;
-                }
-                
                 [self.pickupStationHeightsForRegion addObject:[NSNumber numberWithFloat:size]];
             }
             
@@ -608,7 +606,7 @@ UICollectionViewDelegateFlowLayout
         if(indexPath.row <= self.collectionViewIndexSelected.row || indexPath.row > (self.collectionViewIndexSelected.row + [self.pickupStationsForRegion count] + 1))
         {
             // Shipping method title cell
-            sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, 44.0f);
+            sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, 40.0f);
         }
         else if(indexPath.row == (self.collectionViewIndexSelected.row + 1))
         {
@@ -620,7 +618,7 @@ UICollectionViewDelegateFlowLayout
             else
             {
                 // JAShippingInfoCell Height
-                sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, 53.0f);
+                sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, 60.0f);
             }
         }
         else
@@ -629,8 +627,9 @@ UICollectionViewDelegateFlowLayout
             if([kPickupStationKey isEqualToString:[self.selectedShippingMethod lowercaseString]])
             {
                 NSInteger index = indexPath.row - self.collectionViewIndexSelected.row - 2;
-                NSLog(@"sizeForItemAtIndexPath %ld = %@", (long)indexPath.row, [[self.pickupStationHeightsForRegion objectAtIndex:index] stringValue]);
-                sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, [[self.pickupStationHeightsForRegion objectAtIndex:index] floatValue]);
+                CGFloat pickupStationInfoCellHeight = [JAPickupStationInfoCell getHeightForPickupStation:[self.pickupStationsForRegion objectAtIndex:index]];
+                
+                return CGSizeMake(self.collectionView.frame.size.width, pickupStationInfoCellHeight);
             }
         }
     }
@@ -764,7 +763,11 @@ UICollectionViewDelegateFlowLayout
                     RIShippingMethod *shippingMethod = [shippingMethodDictionary objectForKey:shippingMethodKey];
                     if(VALID_NOTEMPTY(shippingMethod, RIShippingMethod))
                     {
-                        [shippingInfoCell loadWithShippingFee:shippingFee deliveryTime:shippingMethod.deliveryTime];
+                        NSString *shippingFeeString = [RICountryConfiguration formatPrice:shippingMethod.shippingFee country:[RICountryConfiguration getCurrentConfiguration]];
+                        if ([shippingMethod.shippingFee isEqualToNumber:[NSNumber numberWithInteger:0]]) {
+                            shippingFeeString = STRING_FREE;
+                        }
+                        [shippingInfoCell loadWithShippingFee:shippingFeeString deliveryTime:shippingMethod.deliveryTime];
                     }
                 }
                 

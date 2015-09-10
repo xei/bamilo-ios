@@ -19,6 +19,7 @@
 @dynamic parent;
 
 + (NSString *)loadCategoriesIntoDatabaseForCountry:(NSString *)country
+                         countryUserAgentInjection:(NSString *)countryUserAgentInjection
                                   withSuccessBlock:(void (^)(id categories))successBlock
                                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
 {
@@ -26,7 +27,9 @@
                                                             parameters:nil httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
+                                                    userAgentInjection:countryUserAgentInjection
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary)) {
                                                                   NSArray* data = [metadata objectForKey:@"data"];
@@ -68,7 +71,7 @@
             failureBlock(RIApiResponseUnknownError, nil);
         }
     } else {
-        [RICategory loadCategoriesIntoDatabaseForCountry:[RIApi getCountryUrlInUse] withSuccessBlock:^(id categories) {
+        [RICategory loadCategoriesIntoDatabaseForCountry:[RIApi getCountryUrlInUse] countryUserAgentInjection:[RIApi getCountryUserAgentInjection]withSuccessBlock:^(id categories) {
             
             NSArray* parentCategories = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RICategory class]) withPropertyName:@"parent" andPropertyValue:nil];
             if (VALID_NOTEMPTY(parentCategories, NSArray)) {
@@ -91,7 +94,7 @@
             failureBlock(RIApiResponseUnknownError, nil);
         }
     } else {
-        [RICategory loadCategoriesIntoDatabaseForCountry:[RIApi getCountryUrlInUse] withSuccessBlock:^(id categories) {
+        [RICategory loadCategoriesIntoDatabaseForCountry:[RIApi getCountryUrlInUse] countryUserAgentInjection:[RIApi getCountryUserAgentInjection] withSuccessBlock:^(id categories) {
             
             NSArray* databaseCategories = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICategory class])];
             if (VALID_NOTEMPTY(databaseCategories, NSArray)) {
@@ -131,7 +134,7 @@
         if (VALID_NOTEMPTY(categoryJSON, NSDictionary)) {
             RICategory* category = [RICategory parseCategory:categoryJSON];
             if (persistData) {
-                [RICategory saveCategory:category];
+                [RICategory saveCategory:category andContext:YES];
             }
             [newCategories addObject:category];
         }
@@ -255,14 +258,17 @@
     return newCategory;
 }
 
-+ (void)saveCategory:(RICategory *)category
++ (void)saveCategory:(RICategory *)category andContext:(BOOL)save
 {
     for (RICategory* childCategory in category.children) {
-        [RICategory saveCategory:childCategory];
+        [RICategory saveCategory:childCategory andContext:NO];
     }
     
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:category];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 

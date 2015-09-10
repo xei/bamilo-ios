@@ -20,10 +20,11 @@
                successBlock:(void (^)(id staticBlock))successBlock
                failureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 + (NSString*)loadStaticBlockIndexesIntoDatabaseForCountry:(NSString*)countryUrl
+                                countryUserAgentInjection:(NSString *)countryUserAgentInjection
                                          withSuccessBlock:(void (^)(id staticBlockIndexes))successBlock
                                           andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 + (NSArray*)parseStaticBlockIndexes:(NSDictionary*)staticBlockIndexesJSON;
 + (RIStaticBlockIndex*)parseStaticBlockIndex:(NSDictionary*)staticBlockIndexJSON;
-+ (void)saveStaticBlockIndex:(RIStaticBlockIndex*)staticBlockIndex;
++ (void)saveStaticBlockIndex:(RIStaticBlockIndex*)staticBlockIndex andContext:(BOOL)save;
 
 @end

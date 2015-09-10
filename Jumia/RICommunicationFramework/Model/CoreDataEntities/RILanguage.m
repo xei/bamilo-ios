@@ -36,10 +36,13 @@
     return newLanguage;
 }
 
-+ (void)saveLanguage:(RILanguage *)language
++ (void)saveLanguage:(RILanguage *)language andContext:(BOOL)save
 {
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:language];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 @end

@@ -37,6 +37,7 @@
     [self.paymentMethodDetailsView setHidden:YES];
     [self addSubview:self.paymentMethodDetailsView];
     
+    // this triggers the constraints error output
     self.clickableView.translatesAutoresizingMaskIntoConstraints = YES;
     
     if (isSelected) {
@@ -76,7 +77,9 @@
                                         self.frame.size.width,
                                         1.0f)];
     
+    // this triggers the constraints error output
     self.label.translatesAutoresizingMaskIntoConstraints = YES;
+    
     self.label.font = [UIFont fontWithName:kFontLightName size:self.label.font.pointSize];
     self.label.textAlignment = NSTextAlignmentLeft;
     [self.label setText:paymentMethod.label];

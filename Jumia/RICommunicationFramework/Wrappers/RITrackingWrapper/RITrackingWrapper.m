@@ -75,7 +75,7 @@ static dispatch_once_t sharedInstanceToken;
     RINewRelicTracker *newRelicTracker = [[RINewRelicTracker alloc] init];
     RIAdjustTracker *adjustTracker = [[RIAdjustTracker alloc] init];
     [adjustTracker setDelegate:delegate];
-    RIGTMTracker *gtmTracker = [[RIGTMTracker alloc] init];
+    RIGTMTracker *gtmTracker = [RIGTMTracker sharedInstance];
     
     self.trackers = @[googleAnalyticsTracker, bugsenseTracker, ad4PushTracker, newRelicTracker, adjustTracker, gtmTracker];
     
@@ -297,6 +297,22 @@ static dispatch_once_t sharedInstanceToken;
     [self RI_callTrackersConformToProtocol:@protocol(RICampaignTracker)
                                   selector:@selector(trackCampaignWithName:)
                                  arguments:@[campaignName]];
+}
+
+#pragma mark - RIStaticPageTracker
+
+- (void)trackStaticPage:(NSString *)staticPageKey
+{
+    RIDebugLog(@"Tracking static page with staticPageKey '%@'", staticPageKey);
+    
+    if (!self.trackers) {
+        RIRaiseError(@"Invalid call with non-existent trackers. Initialisation may have failed.");
+        return;
+    }
+    
+    [self RI_callTrackersConformToProtocol:@protocol(RIStaticPageTracker)
+                                  selector:@selector(trackStaticPage:)
+                                 arguments:@[staticPageKey]];
 }
 
 #pragma mark - Private methods

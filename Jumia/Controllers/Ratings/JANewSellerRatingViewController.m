@@ -19,7 +19,7 @@
 #import "RIProduct.h"
 #import "RISeller.h"
 #import "JARatingsViewMedium.h"
-#import <FacebookSDK/FacebookSDK.h>
+//#import <FacebookSDK/FacebookSDK.h>
 
 #define kDistanceBetweenStarsAndText 70.0f
 
@@ -31,6 +31,8 @@ UIAlertViewDelegate
 {
     JARatingsViewMedium* _ratingsView;
     CGFloat _ratingsViewWidth, _ratingsViewHeight;
+    BOOL _didAppeared;
+    BOOL _didSubViews;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *topView;
@@ -67,16 +69,6 @@ UIAlertViewDelegate
 {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
-    
     if(VALID_NOTEMPTY(self.product.sku, NSString))
     {
         self.screenName = [NSString stringWithFormat:@"WriteSellerRatingScreen / %@", self.product.sku];
@@ -110,7 +102,19 @@ UIAlertViewDelegate
                                                  name:kOpenMenuNotification
                                                object:nil];
     
-    [self formRequest];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
+    if (!self.reviewsForm) {
+        [self formRequest];
+    }
 }
 
 -(void) viewWillDisappear:(BOOL)animated
@@ -118,6 +122,75 @@ UIAlertViewDelegate
     //[super viewWillDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    _didAppeared = YES;
+    
+    if(_didSubViews)
+    {
+        if ([self landscapePopViewController]) {
+            return;
+        }
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    _didAppeared = NO;
+    _didSubViews = NO;
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    _didSubViews = YES;
+    if(_didAppeared)
+        [self landscapePopViewController];
+}
+
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self hideViews];
+    
+    [self showLoading];
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self hideLoading];
+    
+    if(UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation || UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)
+    {
+        NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
+        [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:self userInfo:userInfo];
+    }
+    else
+    {
+        [self.topView setHidden:NO];
+        [self.scrollView setHidden:NO];
+    }
+    
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+}
+
+- (BOOL)landscapePopViewController
+{
+    if(UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation || UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)
+    {
+        [self hideLoading];
+        NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
+        [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:self userInfo:userInfo];
+        return YES;
+    }
+    return NO;
 }
 
 - (void)formRequest
@@ -223,35 +296,6 @@ UIAlertViewDelegate
                                       self.view.frame.size.width,
                                       topViewMinHeight)];
     [self.topView setHidden:NO];
-}
-
--(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    [self hideViews];
-    
-    [self showLoading];
-    
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    [self hideLoading];
-    
-    if(UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation || UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)
-    {
-        NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
-        [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:nil userInfo:userInfo];
-    }
-    else
-    {
-        [self.topView setHidden:NO];
-        [self.scrollView setHidden:NO];
-    }
-    
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 -(void)setupViews
@@ -413,7 +457,9 @@ UIAlertViewDelegate
     currentDynamicForm = self.reviewsDynamicForm;
     if ([[RICountryConfiguration getCurrentConfiguration].reviewRequiresLogin boolValue] && NO == [RICustomer checkIfUserIsLogged]) {
         [self hideLoading];
-        [self showMessage:STRING_LOGIN_TO_REVIEW success:NO];
+        NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
+        [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfoLogin];
         return;
     }
     

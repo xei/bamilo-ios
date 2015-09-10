@@ -107,6 +107,8 @@
                 if([@"email" isEqualToString:field.type])
                 {
                     [textField.textField setKeyboardType:UIKeyboardTypeEmailAddress];
+                }else{
+                    textField.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
                 }
                 
                 if([@"address-form" isEqualToString:[self.form uid]] && [textField isComponentWithKey:@"fk_customer_address_city"] && VALID_NOTEMPTY([values objectForKey:@"city"], NSString))
@@ -180,6 +182,11 @@
                 [textField setupWithField:field];
                 [textField.textField setDelegate:self];
                 [textField.textField setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
+                
+                if ([@"phone" isEqualToString:field.key]) {
+                    textField.textField.keyboardType = UIKeyboardTypePhonePad;
+                }
+                
                 [textField.textField setReturnKeyType:returnKeyType];
                 
                 CGRect frame = textField.frame;
@@ -317,7 +324,7 @@
     
     if(-1 != birthdayFieldPosition && VALID_NOTEMPTY(dayField, RIField) && VALID_NOTEMPTY(monthField, RIField) && VALID_NOTEMPTY(yearField, RIField))
     {
-        [birthDateComponent setupWithLabel:@"Birthday" day:dayField month:monthField year:yearField];
+        [birthDateComponent setupWithLabel:STRING_BIRTHDAY day:dayField month:monthField year:yearField];
         [birthDateComponent.textField setDelegate:self];
         [birthDateComponent.textField setReturnKeyType:returnKeyType];
         

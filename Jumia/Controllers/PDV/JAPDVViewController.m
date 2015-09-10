@@ -31,7 +31,8 @@
 #import "JAUtils.h"
 #import "RICustomer.h"
 #import "JAPDVWizardView.h"
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKAppEvents.h>
+#import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 #import "AQSFacebookMessengerActivity.h"
 #import "JAPDVBundles.h"
 #import "JAPDVBundleSingleItem.h"
@@ -45,6 +46,9 @@ JAPDVGalleryDelegate,
 JAPickerDelegate,
 JAActivityViewControllerDelegate
 >
+{
+    BOOL _needRefreshProduct;
+}
 
 @property (strong, nonatomic) UIScrollView *mainScrollView;
 @property (strong, nonatomic) UIScrollView *landscapeScrollView;
@@ -116,7 +120,7 @@ JAActivityViewControllerDelegate
                                                  name: UIApplicationDidEnterBackgroundNotification
                                                object: nil];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductChangedNotification object:self.productUrl];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -135,7 +139,10 @@ JAActivityViewControllerDelegate
     if(self.hasLoaddedProduct)
     {
         [self removeSuperviews];
-        [self fillTheViews];
+        if (_needRefreshProduct)
+            [self loadCompleteProduct];
+        else
+            [self fillTheViews];
     }
     else
     {
@@ -157,12 +164,15 @@ JAActivityViewControllerDelegate
 
 - (void)updatedProduct:(NSNotification*)notification
 {
-    RIProduct* newProduct = notification.object;
-    if (VALID_NOTEMPTY(newProduct, RIProduct)) {
-        self.product = newProduct;
-        [self removeSuperviews];
-        [self fillTheViews];
+    NSString* productUrl = notification.object;
+    if ([self.productUrl isEqualToString:productUrl]) {
+        _needRefreshProduct = YES;
     }
+}
+
+- (void)setProduct:(RIProduct *)product
+{
+    _product = product;
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -339,6 +349,7 @@ JAActivityViewControllerDelegate
     
     if (VALID_NOTEMPTY(self.productUrl, NSString)) {
         [RIProduct getCompleteProductWithUrl:self.productUrl successBlock:^(id product) {
+            _needRefreshProduct = NO;
             self.apiResponse = RIApiResponseSuccess;
             
             [self loadedProduct:product];
@@ -471,10 +482,35 @@ JAActivityViewControllerDelegate
     if(VALID_NOTEMPTY(self.category, RICategory))
     {
         [trackingDictionary setValue:[RICategory getTree:self.category.uid] forKey:kRIEventTreeKey];
+    }else if (VALID_NOTEMPTY(product.categoryIds, NSOrderedSet))
+    {
+        [trackingDictionary setValue:[RICategory getTree:[product.categoryIds firstObject]] forKey:kRIEventTreeKey];
     }
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewProduct]
-                                              data:[trackingDictionary copy]];
+    
+    if ([RICustomer checkIfUserIsLogged]) {
+        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+        [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
+        [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
+            RIAddress *shippingAddress = (RIAddress *)[adressList objectForKey:@"shipping"];
+            [trackingDictionary setValue:shippingAddress.city forKey:kRIEventCityKey];
+            [trackingDictionary setValue:shippingAddress.customerAddressRegion forKey:kRIEventRegionKey];
+            
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewProduct]
+                                                      data:[trackingDictionary copy]];
+            
+        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+            NSLog(@"ERROR: getting customer");
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewProduct]
+                                                      data:[trackingDictionary copy]];
+        }];
+    }else{
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewProduct]
+                                                  data:[trackingDictionary copy]];
+    }
     
     trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];
@@ -564,11 +600,11 @@ JAActivityViewControllerDelegate
                                               data:[trackingDictionary copy]];
     
     float value = [price floatValue];
-    [FBAppEvents logEvent:FBAppEventNameViewedContent
+    [FBSDKAppEvents logEvent:FBSDKAppEventNameViewedContent
                valueToSum: value
-               parameters:@{FBAppEventParameterNameContentID: self.product.sku,
-                            FBAppEventParameterNameContentType: self.product.name,
-                            FBAppEventParameterNameCurrency:@"EUR"}];
+               parameters:@{FBSDKAppEventParameterNameContentID: self.product.sku,
+                            FBSDKAppEventParameterNameContentType: self.product.name,
+                            FBSDKAppEventParameterNameCurrency:@"EUR"}];
     
     
     
@@ -581,10 +617,17 @@ JAActivityViewControllerDelegate
     }
     
     [RIProduct addToRecentlyViewed:product successBlock:^(RIProduct *product) {
+        NSDictionary *userInfo = nil;
+        if (self.product.favoriteAddDate) {
+            userInfo = [NSDictionary dictionaryWithObject:self.product.favoriteAddDate forKey:@"favoriteAddDate"];
+        }
         [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                            object:self.product];
+                                                            object:self.productUrl
+                                                          userInfo:userInfo];
         [self requestReviews];
     } andFailureBlock:nil];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventMostViewedBrand] data:[NSDictionary dictionaryWithObject:[RIProduct getTopBrand:product] forKey:kRIEventBrandKey]];
 }
 
 - (void)retryAddToCart
@@ -1222,6 +1265,7 @@ JAActivityViewControllerDelegate
     }
         
     // Share with Facebook Messenger and WhatsApp
+    
     UIActivity *fbmActivity = [[AQSFacebookMessengerActivity alloc] init];
     UIActivity *whatsAppActivity = [[JBWhatsAppActivity alloc] init];
     
@@ -1376,6 +1420,17 @@ JAActivityViewControllerDelegate
                                 simple:self.currentSimple.sku
                       withSuccessBlock:^(RICart *cart) {
                           
+                          if (VALID_NOTEMPTY(self.teaserTrackingInfo, NSString)) {
+                              NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
+                              
+                              NSString* obj = [skusFromTeaserInCart objectForKey:self.product.sku];
+                              
+                              if (ISEMPTY(obj)) {
+                                  [skusFromTeaserInCart setValue:self.teaserTrackingInfo forKey:self.product.sku];
+                                  [[NSUserDefaults standardUserDefaults] setObject:[skusFromTeaserInCart copy] forKey:kSkusFromTeaserInCartKey];
+                              }
+                          }
+                          
                           NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f)? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
                           
                           NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -1467,12 +1522,26 @@ JAActivityViewControllerDelegate
                           [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                     data:[trackingDictionary copy]];
                           
+                          NSMutableDictionary *tracking = [NSMutableDictionary new];
+                          [tracking setValue:self.product.name forKey:kRIEventProductNameKey];
+                          [tracking setValue:self.product.sku forKey:kRIEventSkuKey];
+                          if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet)) {
+                              [tracking setValue:[self.product.categoryIds lastObject] forKey:kRIEventLastCategoryAddedToCartKey];
+                          }
+                          [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
+                          
+                          tracking = [NSMutableDictionary new];
+                          [tracking setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+                          [tracking setValue:cart.cartCount forKey:kRIEventQuantityKey];
+                          [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+                                                                    data:[tracking copy]];
+                          
                           float value = [price floatValue];
-                          [FBAppEvents logEvent:FBAppEventNameAddedToCart
+                          [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToCart
                                      valueToSum:value
-                                     parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
-                                                   FBAppEventParameterNameContentType : self.product.name,
-                                                   FBAppEventParameterNameContentID   : self.product.sku}];
+                                     parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
+                                                   FBSDKAppEventParameterNameContentType : self.product.name,
+                                                   FBSDKAppEventParameterNameContentID   : self.product.sku}];
                           
                           NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                           [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
@@ -1809,11 +1878,17 @@ JAActivityViewControllerDelegate
                                                                        data:[trackingDictionary copy]];
                              
                              float value = [price floatValue];
-                             [FBAppEvents logEvent:FBAppEventNameAddedToCart
+                             [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToCart
                                         valueToSum:value
-                                        parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
-                                                      FBAppEventParameterNameContentType : self.product.name,
-                                                      FBAppEventParameterNameContentID   : self.product.sku}];
+                                        parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
+                                                      FBSDKAppEventParameterNameContentType : self.product.name,
+                                                      FBSDKAppEventParameterNameContentID   : self.product.sku}];
+                             
+                             trackingDictionary = [NSMutableDictionary new];
+                             [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+                             [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+                             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+                                                                       data:[trackingDictionary copy]];
                              
                              NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                              [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
@@ -2081,11 +2156,11 @@ JAActivityViewControllerDelegate
                                                       data:[trackingDictionary copy]];
             
             float value = [price floatValue];
-            [FBAppEvents logEvent:FBAppEventNameAddedToWishlist
+            [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToWishlist
                        valueToSum:value
-                       parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
-                                     FBAppEventParameterNameContentType : self.product.name,
-                                     FBAppEventParameterNameContentID   : self.product.sku}];
+                       parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
+                                     FBSDKAppEventParameterNameContentType : self.product.name,
+                                     FBSDKAppEventParameterNameContentID   : self.product.sku}];
             
             if (button.selected) {
                 self.product.favoriteAddDate = [NSDate date];
@@ -2093,8 +2168,13 @@ JAActivityViewControllerDelegate
                 self.product.favoriteAddDate = nil;
             }
             
+            NSDictionary *userInfo = nil;
+            if (self.product.favoriteAddDate) {
+                userInfo = [NSDictionary dictionaryWithObject:self.product.favoriteAddDate forKey:@"favoriteAddDate"];
+            }
             [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                                object:self.product];
+                                                                object:self.productUrl
+                                                              userInfo:userInfo];
             
             [self showMessage:STRING_ADDED_TO_WISHLIST success:YES];
             
@@ -2132,9 +2212,13 @@ JAActivityViewControllerDelegate
                                                       data:[trackingDictionary copy]];
             
             [self showMessage:STRING_REMOVED_FROM_WISHLIST success:YES];
-            
+            NSDictionary *userInfo = nil;
+            if (self.product.favoriteAddDate) {
+                userInfo = [NSDictionary dictionaryWithObject:self.product.favoriteAddDate forKey:@"favoriteAddDate"];
+            }
             [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                                object:self.product];
+                                                                object:self.productUrl
+                                                              userInfo:userInfo];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             
             [self showMessage:STRING_ERROR_ADDING_TO_WISHLIST success:NO];

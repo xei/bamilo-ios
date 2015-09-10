@@ -16,7 +16,7 @@
 #import "RICustomer.h"
 #import "JAProductListFlowLayout.h"
 #import "RICategory.h"
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKAppEvents.h>
 
 @interface JARecentlyViewedViewController ()
 
@@ -448,12 +448,27 @@
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                 data:[trackingDictionary copy]];
                       
+                      
+                      NSMutableDictionary *tracking = [NSMutableDictionary new];
+                      [tracking setValue:product.name forKey:kRIEventProductNameKey];
+                      [tracking setValue:product.sku forKey:kRIEventSkuKey];
+                      if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet)) {
+                          [tracking setValue:[product.categoryIds lastObject] forKey:kRIEventLastCategoryAddedToCartKey];
+                      }
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
+                      
+                      tracking = [NSMutableDictionary new];
+                      [tracking setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
+                      [tracking setValue:cart.cartCount forKey:kRIEventQuantityKey];
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
+                                                                data:[tracking copy]];
+                      
                       float value = [price floatValue];
-                      [FBAppEvents logEvent:FBAppEventNameAddedToCart
+                      [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToCart
                                  valueToSum:value
-                                 parameters:@{ FBAppEventParameterNameCurrency    : @"EUR",
-                                               FBAppEventParameterNameContentType : product.name,
-                                               FBAppEventParameterNameContentID   : product.sku}];
+                                 parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
+                                               FBSDKAppEventParameterNameContentType : product.name,
+                                               FBSDKAppEventParameterNameContentID   : product.sku}];
                       
                       [RIProduct removeFromRecentlyViewed:product];
                       

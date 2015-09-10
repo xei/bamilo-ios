@@ -48,6 +48,7 @@
                 numberOfRetries:(NSInteger)numberOfRetries
                       cacheType:(RIURLCacheType)cacheType
                       cacheTime:(RIURLCacheTime)cacheTime
+             userAgentInjection:(NSString*)userAgentInjection
                    successBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* jsonObject))successBlock
                    failureBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject))failureBlock
 {
@@ -67,7 +68,8 @@
                       httpMethodPost:post
                              timeOut:timeOut
                            cacheType:cacheType
-                           cacheTime:cacheTime];
+                           cacheTime:cacheTime
+                  userAgentInjection:userAgentInjection];
     
     return operationID;
 }
@@ -79,6 +81,7 @@
                 numberOfRetries:(NSInteger)numberOfRetries
                       cacheType:(RIURLCacheType)cacheType
                       cacheTime:(RIURLCacheTime)cacheTime
+             userAgentInjection:(NSString*)userAgentInjection
                    successBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* jsonObject))successBlock
                    failureBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject))failureBlock
 {
@@ -98,7 +101,8 @@
                       httpMethodPost:post
                              timeOut:RI_HTTP_REQUEST_TIMEOUT
                            cacheType:cacheType
-                           cacheTime:cacheTime];
+                           cacheTime:cacheTime
+                  userAgentInjection:userAgentInjection];
     
     return operationID;
 }
@@ -109,6 +113,7 @@
                         timeOut:(NSInteger)timeOut
                       cacheType:(RIURLCacheType)cacheType
                       cacheTime:(RIURLCacheTime)cacheTime
+             userAgentInjection:(NSString*)userAgentInjection
                    successBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* jsonObject))successBlock
                    failureBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject))failureBlock
 {
@@ -125,7 +130,8 @@
                       httpMethodPost:post
                              timeOut:timeOut
                            cacheType:cacheType
-                           cacheTime:cacheTime];
+                           cacheTime:cacheTime
+                  userAgentInjection:userAgentInjection];
     
     return operationID;
 }
@@ -135,6 +141,7 @@
                  httpMethodPost:(BOOL)post
                       cacheType:(RIURLCacheType)cacheType
                       cacheTime:(RIURLCacheTime)cacheTime
+             userAgentInjection:(NSString*)userAgentInjection
                    successBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* jsonObject))successBlock
                    failureBlock:(void(^)(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject))failureBlock
 {
@@ -151,7 +158,8 @@
                       httpMethodPost:post
                              timeOut:RI_HTTP_REQUEST_TIMEOUT
                            cacheType:cacheType
-                           cacheTime:cacheTime];
+                           cacheTime:cacheTime
+                  userAgentInjection:userAgentInjection];
     
     return operationID;
 }
@@ -163,13 +171,15 @@
                            timeOut:(NSInteger)timeOut
                          cacheType:(RIURLCacheType)cacheType
                          cacheTime:(RIURLCacheTime)cacheTime
+                userAgentInjection:(NSString*)userAgentInjection
 {
     operation.cacheType = cacheType;
     operation.cacheTime = cacheTime;
     
     operation.request = [self RI_getURLRequestForOperation:operation url:url
                                             httpMethodPost:post
-                                            withParameters:parameters];
+                                            withParameters:parameters
+                         userAgentInjection:userAgentInjection];
     
     operation.request.timeoutInterval = timeOut;
     
@@ -217,8 +227,14 @@
                                                   url:(NSURL *)url
                                        httpMethodPost:(BOOL)post
                                        withParameters:(NSDictionary *)parameters
+                                   userAgentInjection:(NSString*)userAgentInjection
 {
     operation.request = [NSMutableURLRequest requestWithURL:url];
+    
+    if (RI_REQUEST_LOGGER) {
+        NSLog(@"///////////// START REQUEST \n url: %@ \n parameters: %@", url, parameters);
+        NSLog(@"///////////// END REQUEST");
+    }
     
     if (post) {
         [operation.request setHTTPMethod:RI_HTTP_METHOD_POST];
@@ -263,10 +279,10 @@
         }
     }
     
-    NSString *authStr = [NSString stringWithFormat:@"%@:%@", RI_USERNAME, RI_PASSWORD];
-    NSData *authData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *authValue = [NSString stringWithFormat:@"Basic %@", [authData base64EncodedStringWithOptions:0]];
-    [operation.request setValue:authValue forHTTPHeaderField:@"Authorization"];
+//    NSString *authStr = [NSString stringWithFormat:@"%@:%@", RI_USERNAME, RI_PASSWORD];
+//    NSData *authData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
+//    NSString *authValue = [NSString stringWithFormat:@"Basic %@", [authData base64EncodedStringWithOptions:0]];
+//    [operation.request setValue:authValue forHTTPHeaderField:@"Authorization"];
     
     if(RI_MOBAPI_HEADERS_ENABLED) {
         [operation.request setValue:RI_MOBAPI_VERSION_HEADER_VERSION_VALUE forHTTPHeaderField:RI_MOBAPI_VERSION_HEADER_VERSION_NAME];
@@ -285,13 +301,19 @@
         }
     }
     
+    NSString* userAgent;
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {
-        [operation.request addValue:RI_HTTP_USER_AGENT_HEADER_IPAD_VALUE forHTTPHeaderField:RI_HTTP_USER_AGENT_HEADER_NAME];
+        userAgent = RI_HTTP_USER_AGENT_HEADER_IPAD_VALUE;
     }
     else
-    {    [operation.request addValue:RI_HTTP_USER_AGENT_HEADER_IPHONE_VALUE forHTTPHeaderField:RI_HTTP_USER_AGENT_HEADER_NAME];
+    {
+        userAgent = RI_HTTP_USER_AGENT_HEADER_IPHONE_VALUE;
     }
+    if (VALID_NOTEMPTY(userAgentInjection, NSString)) {
+        userAgent = [NSString stringWithFormat:@"%@ %@", userAgent, userAgentInjection];
+    }
+    [operation.request addValue:userAgent forHTTPHeaderField:RI_HTTP_USER_AGENT_HEADER_NAME];
     
     return operation.request;
 }

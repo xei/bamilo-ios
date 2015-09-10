@@ -133,7 +133,7 @@
     
     [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICountryConfiguration class])];
     
-    [RICountryConfiguration saveConfiguration:newConfig];
+    [RICountryConfiguration saveConfiguration:newConfig andContext:YES];
     
     return newConfig;
 }
@@ -215,14 +215,17 @@
     return formattedPrice;
 }
 
-+ (void)saveConfiguration:(RICountryConfiguration *)configuration
++ (void)saveConfiguration:(RICountryConfiguration *)configuration andContext:(BOOL)save
 {
     for (RILanguage *language in configuration.languages) {
-        [RILanguage saveLanguage:language];
+        [RILanguage saveLanguage:language andContext:NO];
     }
     
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:configuration];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
+    if (save) {
+        [[RIDataBaseWrapper sharedInstance] saveContext];
+    }
+    
 }
 
 + (RICountryConfiguration *)getCurrentConfiguration

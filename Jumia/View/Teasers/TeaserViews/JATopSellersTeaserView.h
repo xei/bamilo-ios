@@ -7,7 +7,10 @@
 //
 
 #import "JATeaserView.h"
+#import "RIFeaturedBoxTeaserGrouping.h"
 
 @interface JATopSellersTeaserView : JATeaserView
+
+@property (nonatomic, strong)RIFeaturedBoxTeaserGrouping* featuredBoxTeaserGrouping;
 
 @end

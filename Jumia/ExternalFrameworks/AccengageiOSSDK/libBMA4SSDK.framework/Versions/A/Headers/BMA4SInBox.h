@@ -2,7 +2,7 @@
 //  BMA4SInBox.h
 //  Accengage SDK 
 //
-//  Copyright (c) 2010-2014 Accengage. All rights reserved.
+//  Copyright (c) 2010-2015 Accengage. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -11,25 +11,45 @@
 
 extern NSString *const BMA4SInBoxDataChanged;
 
- /** State of the loading */
-
+ /** 
+  * State of the loading 
+  */
 typedef NS_ENUM(NSUInteger, BMA4SInBoxLoadingResult) {
     /** 
-     Use this type in the class/instance method call to signify the state of the loading: Cancelled
+     * Use this type in the class/instance method call to signify the state of the loading: Cancelled
      */
     BMA4SInBoxLoadingResultCancelled,
     /** 
-     Use this type in the class/instance method call to signify the state of the loading: Failed
+     * Use this type in the class/instance method call to signify the state of the loading: Failed
      */
     BMA4SInBoxLoadingResultFailed,
     /**
-     Use this type in the class/instance method call to signify the state of the loading: Loaded
+     * Use this type in the class/instance method call to signify the state of the loading: Loaded
      */
     BMA4SInBoxLoadingResultLoaded
 };
 
+/**
+ *  A block object to be executed when the inbox is loaded
+ *
+ *  @param result loading result
+ *  @param inbox  loaded inbox
+ */
 typedef void(^BMA4SInBoxLoadedWithResult)(BMA4SInBoxLoadingResult result, BMA4SInBox *inbox);
+
+/**
+ *  Success block of loading of an inbox message
+ *
+ *  @param message        loaded message
+ *  @param requestedIndex message index
+ */
 typedef void(^BMA4SInBoxMessageLoaded)(BMA4SInBoxMessage *message, NSUInteger requestedIndex);
+
+/**
+ *  Failure block of loading of an inbox message
+ *
+ *  @param requestedIndex message index
+ */
 typedef void(^BMA4SInBoxMessageError)(NSUInteger requestedIndex);
 
 

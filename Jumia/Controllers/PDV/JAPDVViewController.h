@@ -25,4 +25,6 @@
 
 @property (nonatomic, retain) NSString* A4SViewControllerAlias;
 
+@property (nonatomic, strong) NSString* teaserTrackingInfo;
+
 @end

@@ -101,6 +101,20 @@ typedef NS_ENUM(NSInteger, RICartState) {
 @end
 
 /**
+ *  This protocol implements tracking to static pages
+ */
+@protocol RIStaticPageTracker <NSObject>
+
+/**
+ *  Track how many times the static pages are opened and seen in the app, given its staticPageKey
+ *
+ *  @param name The staticPageKey
+ */
+- (void)trackStaticPage:(NSString *)staticPageKey;
+
+@end
+
+/**
  *  API protocol for exception tracking
  */
 @protocol RIExceptionTracking <NSObject>
@@ -149,62 +163,75 @@ typedef NS_ENUM(NSInteger, RICartState) {
 /**
  *  Protocol constants
  */
-#define kRIEventTypeKey             @"RIEventTypeKey"
-#define kRIEventValueKey            @"RIEventValueKey"
-#define kRIEventActionKey           @"RIEventActionKey"
-#define kRIEventLabelKey            @"RIEventLabelKey"
-#define kRIEventCategoryKey         @"RIEventCategoryKey"
-#define kRIEventShopCountryKey      @"RIEventShopCountryKey"
-#define kRIEventUserIdKey           @"RIEventUserIdKey"
-#define kRIEventSkuKey              @"RIEventSkuKey"
-#define kRIEventProductNameKey      @"RIEventProductNameKey"
-#define kRIEventCurrencyCodeKey     @"RIEventCurrencyCodeKey"
-#define kRIEventPriceKey            @"RIEventPriceKey"
-#define kRIEventGenderKey           @"RIEventGenderKey"
-#define kRIEventAmountTransactions  @"RIEventAmountTransactions"
-#define kRIEventAmountSessions      @"RIEventAmountSessions"
-#define kRIEventCategoryIdKey       @"RIEventCategoryIdKey"
-#define kRIEventSkusKey             @"RIEventSkusKey"
-#define kRIEventCategoryNameKey     @"RIEventCategoryNameKey"
-#define kRIEventSubCategoryNameKey  @"RIEventSubCategoryNameKey"
-#define kRIEventTreeKey             @"RIEventTreeKey"
-#define kRIEventQueryKey            @"RIEventQueryKey"
-#define kRIEventProductKey          @"RIEventProductKey"
-#define kRIEventProductsKey         @"RIEventProducstKey"
-#define kRIEventKeywordsKey         @"RIEventKeywordsKey"
-#define kRIEventNewCustomerKey      @"RIEventNewCustomerKey"
-#define kRIEventDiscountKey         @"RIEventDiscountKey"
-#define kRIEventBrandKey            @"RIEventBrandKey"
-#define kRIEventSizeKey             @"RIEventSizeKey"
-#define kRIEventTotalWishlistKey    @"RIEventTotalWishlistKey"
-#define kRIEventQuantityKey         @"RIEventQuantityKey"
-#define kRIEventTotalCartKey        @"RIEventTotalCartKey"
-#define kRIEventTransactionIdKey    @"RIEventTransactionIdKey"
-#define kRIEventTotalTransactionKey @"RIEventTotalTransactionKey"
-#define kRIEventUserFirstNameKey    @"RIEventUserFirstNameKey"
-#define kRIEventBrandFilterKey      @"RIEventBrandFilterKey"
-#define kRIEventColorFilterKey      @"RIEventColorFilterKey"
-#define kRIEventCategoryFilterKey   @"RIEventCategoryFilterKey"
-#define kRIEventPriceFilterKey      @"RIEventPriceFilterKey"
-#define kRIEventNumberOfProductsKey @"RIEventNumberOfProductsKey"
-#define kRIEventTopCategoryKey      @"RIEventTopCategoryKey"
-#define kRIEventLocationKey         @"RIEventLocationKey"
-#define kRIEventAccountDateKey      @"RIEventAccountDateKey"
-#define kRIEventAgeKey              @"RIEventAgeKey"
-#define kRIEventRatingKey           @"RIEventRatingKey"
-#define kRIEventRatingPriceKey      @"RIEventRatingPriceKey"
-#define kRIEventRatingAppearanceKey @"RIEventRatingAppearanceKey"
-#define kRIEventRatingQualityKey    @"RIEventRatingQualityKey"
-#define kRIEventPageNumberKey       @"RIEventPageNumberKey"
-#define kRIEventFilterTypeKey       @"RIEventFilterTypeKey"
-#define kRIEventSortTypeKey         @"RIEventSortTypeKey"
-#define kRIEventPaymentMethodKey    @"RIEventPaymentMethodKey"
-#define kRIEventScreenNameKey       @"RIEventScreenNameKey"
-#define kRIEventColorKey            @"RIEventColorKey"
-#define kRIEventNetworkKey          @"RIEventNetworkKey"
-#define kRIEventAdgroupKey          @"RIEventAdgroupKey"
-#define kRIEventCampaignKey         @"RIEventCampaignKey"
-#define kRIEventCreativeKey         @"RIEventCreativeKey"
+#define kRIEventTypeKey                 @"RIEventTypeKey"
+#define kRIEventValueKey                @"RIEventValueKey"
+#define kRIEventActionKey               @"RIEventActionKey"
+#define kRIEventLabelKey                @"RIEventLabelKey"
+#define kRIEventCategoryKey             @"RIEventCategoryKey"
+#define kRIEventShopCountryKey          @"RIEventShopCountryKey"
+#define kRIEventUserIdKey               @"RIEventUserIdKey"
+#define kRIEventSkuKey                  @"RIEventSkuKey"
+#define kRIEventProductNameKey          @"RIEventProductNameKey"
+#define kRIEventCurrencyCodeKey         @"RIEventCurrencyCodeKey"
+#define kRIEventPriceKey                @"RIEventPriceKey"
+#define kRIEventGenderKey               @"RIEventGenderKey"
+#define kRIEventBirthDayKey             @"RIEventBirthDayKey"
+#define kRIEventAmountTransactions      @"RIEventAmountTransactions"
+#define kRIEventAmountValueTransactions @"RIEventAmountValueTransactions"
+#define kRIEventAmountSessions          @"RIEventAmountSessions"
+#define kRIEventCategoryIdKey           @"RIEventCategoryIdKey"
+#define kRIEventSkusKey                 @"RIEventSkusKey"
+#define kRIEventCategoryNameKey         @"RIEventCategoryNameKey"
+#define kRIEventLastViewedCategoryKey   @"RIEventLastViewedCategoryKey"
+#define kRIEventSubCategoryNameKey      @"RIEventSubCategoryNameKey"
+#define kRIEventTreeKey                 @"RIEventTreeKey"
+#define kRIEventQueryKey                @"RIEventQueryKey"
+#define kRIEventProductKey              @"RIEventProductKey"
+#define kRIEventProductsKey             @"RIEventProducstKey"
+#define kRIEventKeywordsKey             @"RIEventKeywordsKey"
+#define kRIEventNewCustomerKey          @"RIEventNewCustomerKey"
+#define kRIEventDiscountKey             @"RIEventDiscountKey"
+#define kRIEventBrandKey                @"RIEventBrandKey"
+#define kRIEventSizeKey                 @"RIEventSizeKey"
+#define kRIEventTotalWishlistKey        @"RIEventTotalWishlistKey"
+#define kRIEventQuantityKey             @"RIEventQuantityKey"
+#define kRIEventTotalCartKey            @"RIEventTotalCartKey"
+#define kRIEventTransactionIdKey        @"RIEventTransactionIdKey"
+#define kRIEventTotalTransactionKey     @"RIEventTotalTransactionKey"
+#define kRIEventUserFirstNameKey        @"RIEventUserFirstNameKey"
+#define kRIEventUserLastNameKey         @"RIEventUserLastNameKey"
+#define kRIEventBrandFilterKey          @"RIEventBrandFilterKey"
+#define kRIEventColorFilterKey          @"RIEventColorFilterKey"
+#define kRIEventSizeFilterKey           @"RIEventSizeFilterKey"
+#define kRIEventCategoryFilterKey       @"RIEventCategoryFilterKey"
+#define kRIEventPriceFilterKey          @"RIEventPriceFilterKey"
+#define kRIEventSpecialPriceFilterKey   @"RIEventSpecialPriceFilterKey"
+#define kRIEventNumberOfProductsKey     @"RIEventNumberOfProductsKey"
+#define kRIEventProductFavToCartKey     @"RIEventProductFavToCartKey"
+#define kRIEventTopCategoryKey          @"RIEventTopCategoryKey"
+#define kRIEventLocationKey             @"RIEventLocationKey"
+#define kRIEventAccountDateKey          @"RIEventAccountDateKey"
+#define kRIEventAgeKey                  @"RIEventAgeKey"
+#define kRIEventCityKey                 @"RIEventCityKey"
+#define kRIEventRegionKey               @"RIEventRegionKey"
+#define kRIEventRatingKey               @"RIEventRatingKey"
+#define kRIEventRatingPriceKey          @"RIEventRatingPriceKey"
+#define kRIEventRatingAppearanceKey     @"RIEventRatingAppearanceKey"
+#define kRIEventRatingQualityKey        @"RIEventRatingQualityKey"
+#define kRIEventPageNumberKey           @"RIEventPageNumberKey"
+#define kRIEventFilterTypeKey           @"RIEventFilterTypeKey"
+#define kRIEventSortTypeKey             @"RIEventSortTypeKey"
+#define kRIEventPaymentMethodKey        @"RIEventPaymentMethodKey"
+#define kRIEventScreenNameKey           @"RIEventScreenNameKey"
+#define kRIEventColorKey                @"RIEventColorKey"
+#define kRIEventNetworkKey              @"RIEventNetworkKey"
+#define kRIEventAdgroupKey              @"RIEventAdgroupKey"
+#define kRIEventCampaignKey             @"RIEventCampaignKey"
+#define kRIEventCampaignIdKey           @"RIEventCampaignIdKey"
+#define kRIEventCreativeKey             @"RIEventCreativeKey"
+#define kRIEventDateLastAddedToCartKey  @"RIEventDateLastAddedToCartKey"
+#define kRIEventLastCategoryAddedToCartKey @"RIEventLastCategoryAddedToCartKey"
+#define kRIEventGAIdKey                 @"RIEventGAIdKey"
 
 /**
  *  Struct to identify events
@@ -261,7 +288,7 @@ typedef NS_ENUM(NSInteger, RIEventType) {
     RIEventFacebookViewCart = 48,
     RIEventFacebookViewTransaction = 49,
     RIEventChangeCountry = 50,
-    RIEventViewCampaign = 51,
+    RIEventViewCampaigns = 51,
     RIEventTopCategory = 52,
     RIEventAddFromWishlistToCart = 53,
     RIEventSignupSuccess = 54,
@@ -278,7 +305,14 @@ typedef NS_ENUM(NSInteger, RIEventType) {
     RIEventCheckoutPaymentFail = 65,
     RIEventCloseApp = 66,
     RIEventOpenApp = 67,
-    RIEventInstallViaAdjust = 68
+    RIEventInstallViaAdjust = 68,
+    RIEventTeaserPurchase = 69,
+    RIEventTeaserClick = 70,
+    RIEventViewCampaign = 71,
+    RIEventLastViewedCategory = 72,
+    RIEventCart = 73,
+    RIEventLastAddedToCart = 74,
+    RIEventMostViewedBrand = 75
 };
 
 /**
@@ -309,6 +343,8 @@ typedef NS_ENUM(NSInteger, RIEventType) {
 #define kRIEcommerceCurrencyKey             @"RIEcommerceCurrencyKey"
 #define kRIEcommerceTotalValueKey           @"RIEcommerceTotalValueKey"
 #define kRIEcommerceConvertedTotalValueKey  @"RIEcommerceConvertedTotalValueKey"
+#define kRIEcommerceGrandTotalValueKey      @"RIEcommerceGrandTotalValueKey"
+#define kRIEcommerceConvertedGrandTotalValueKey @"RIEcommerceConvertedGrandTotalValueKey"
 #define kRIEcommerceSkusKey                 @"RIEcommerceSkusValueKey"
 #define kRIEcommerceGuestKey                @"RIEcommerceGuestKey"
 #define kRIEcommerceProducts                @"RIEcommerceProducts"
@@ -423,7 +459,8 @@ typedef NS_ENUM(NSInteger, RIEventType) {
     RIEcommerceEventTracking,
     RITrackingTiming,
     RILaunchEventTracker,
-    RICampaignTracker
+    RICampaignTracker,
+    RIStaticPageTracker
 >
 
 /**
