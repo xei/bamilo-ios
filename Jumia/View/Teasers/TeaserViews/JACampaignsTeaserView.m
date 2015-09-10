@@ -92,10 +92,9 @@
     titleLabel.numberOfLines=2;
     titleLabel.text = mainCampaign.title;
     [titleLabel sizeToFit];
-    [titleLabel setFrame:CGRectMake(0,
-                                    currentY,
-                                    halfWidth,
-                                    titleLabel.height)];
+    [titleLabel setY:currentY];
+    [titleLabel setWidth:halfWidth];
+    
     [clockView addSubview:titleLabel];
     
     [self.clockLabel removeFromSuperview];
@@ -120,6 +119,17 @@
     }
     currentY = CGRectGetMaxY(titleLabel.frame) + marginBetweenLabels;
     
+    CGFloat clockViewWidth = mainClickableView.width/2;
+    
+    [self.clockLabel setFrame:CGRectMake(0,
+                                         currentY,
+                                         halfWidth,
+                                         self.clockLabel.frame.size.height)];
+    
+    if (0 < self.clockLabel.frame.size.height) {
+        currentY += self.clockLabel.frame.size.height + marginBetweenLabels;
+    }
+    
     UILabel* subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, halfWidth, 50)];
     subTitleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
     subTitleLabel.textColor = [UIColor blackColor];
@@ -133,17 +143,6 @@
                                        currentY,
                                        halfWidth,
                                        subTitleLabel.frame.size.height)];
-    
-    CGFloat clockViewWidth = mainClickableView.width/2;
-    
-    [self.clockLabel setFrame:CGRectMake(clockView.bounds.origin.x,
-                                         currentY,
-                                         clockViewWidth,
-                                         self.clockLabel.frame.size.height)];
-    
-    if (0 < self.clockLabel.frame.size.height) {
-        currentY += self.clockLabel.frame.size.height + marginBetweenLabels;
-    }
     
     currentY = CGRectGetMaxY(subTitleLabel.frame) + labelTopMargin;
     
@@ -416,7 +415,9 @@
 //        }
         
         self.clockLabel.text = timeString;
+        CGFloat width = self.clockLabel.width;
         [self.clockLabel sizeToFit];
+        [self.clockLabel setWidth:width];
     }
 }
 
