@@ -21,7 +21,6 @@
 @interface RIApi : NSManagedObject
 
 @property (nonatomic, retain) NSString * countryUrl;
-@property (nonatomic, retain) NSString * actionName;
 @property (nonatomic, retain) NSString * countryIso;
 @property (nonatomic, retain) NSString * countryName;
 @property (nonatomic, retain) NSString * countryUserAgentInjection;

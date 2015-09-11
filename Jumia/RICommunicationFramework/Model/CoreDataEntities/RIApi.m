@@ -20,7 +20,6 @@
 @implementation RIApi
 
 @dynamic countryUrl;
-@dynamic actionName;
 @dynamic countryIso;
 @dynamic countryName;
 @dynamic countryUserAgentInjection;
@@ -258,11 +257,6 @@
 countryUserAgentInjection:(NSString*)countryUserAgentInjection
 {
     RIApi* newApi = (RIApi*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIApi class])];
-    
-    if ([api objectForKey:@"action_name"])
-    {
-        newApi.actionName = [api objectForKey:@"action_name"];
-    }
     
     if (VALID_NOTEMPTY(countryIso, NSString))
     {
