@@ -39,8 +39,7 @@
                 NSMutableArray* newBundleProducts = [NSMutableArray new];
                 for (NSDictionary* productJSON in bundleProductsArray) {
                     if (VALID_NOTEMPTY(productJSON, NSDictionary)) {
-                        NSDictionary* fakeData = [NSDictionary dictionaryWithObject:productJSON forKey:@"data"];
-                        RIProduct *product = [RIProduct parseProduct:fakeData country:country];
+                        RIProduct *product = [RIProduct parseProduct:productJSON country:country];
                         [newBundleProducts addObject:product];
                     }
                 }
@@ -107,6 +106,7 @@
 @synthesize relatedProducts;
 @synthesize specifications;
 @synthesize seller;
+@synthesize shareUrl;
 
 + (NSString *)getCompleteProductWithSku:(NSString*)sku
                            successBlock:(void (^)(id product))successBlock
@@ -138,10 +138,15 @@
                                                                   NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                                   if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                                   {
-                                                                      RIProduct* newProduct = [RIProduct parseProduct:metadata country:configuration];
-                                                                      if (VALID_NOTEMPTY(newProduct, RIProduct) && VALID_NOTEMPTY(newProduct.sku, NSString)) {
-                                                                          successBlock(newProduct);
-                                                                      } else {
+                                                                      NSDictionary* data = [metadata objectForKey:@"data"];
+                                                                      if (VALID_NOTEMPTY(data, NSDictionary)) {
+                                                                          RIProduct* newProduct = [RIProduct parseProduct:data country:configuration];
+                                                                          if (VALID_NOTEMPTY(newProduct, RIProduct) && VALID_NOTEMPTY(newProduct.sku, NSString)) {
+                                                                              successBlock(newProduct);
+                                                                          } else {
+                                                                              failureBlock(apiResponse, nil);
+                                                                          }
+                                                                      }else {
                                                                           failureBlock(apiResponse, nil);
                                                                       }
                                                                   } else
@@ -267,15 +272,9 @@
                                                                           banner = [RIBanner parseBanner:bannerJSON];
                                                                       }
                                                                       
-                                                                      
-                                                                      NSArray* categoriesJSON = [metadata objectForKey:@"categories"];
-                                                                      
-                                                                      NSArray* categoriesArray;
-                                                                      
-                                                                      if (VALID_NOTEMPTY(categoriesJSON, NSArray)) {
-                                                                          
-                                                                          categoriesArray = [RICategory parseCategories:categoriesJSON persistData:NO];
-                                                                          
+                                                                      NSArray* categoriesArray = [NSArray new];
+                                                                      if (VALID_NOTEMPTY([metadata objectForKey:@"categories"], NSString)) {
+                                                                          categoriesArray = [[metadata objectForKey:@"categories"] componentsSeparatedByString:@","];
                                                                       }
                                                                       
                                                                       NSString* productCount = [metadata objectForKey:@"product_count"];
@@ -412,7 +411,8 @@
 {
     RIProduct* newProduct = (RIProduct*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIProduct class])];
     
-    NSDictionary *dataDic = [productJSON objectForKey:@"data"];
+//    NSDictionary *dataDic = [productJSON objectForKey:@"data"];
+    NSDictionary *dataDic = [productJSON copy];
     
     if (VALID_NOTEMPTY(dataDic, NSDictionary)) {
         if ([dataDic objectForKey:@"sku"]) {
@@ -489,7 +489,7 @@
         }
         
         if ([dataDic objectForKey:@"max_saving_percentage"]) {
-            newProduct.maxSavingPercentage = [dataDic objectForKey:@"max_saving_percentage"];
+            newProduct.maxSavingPercentage = [NSString stringWithFormat:@"%@", [dataDic objectForKey:@"max_saving_percentage"]];
         }
         
         if ([dataDic objectForKey:@"ratings_total"]) {
@@ -548,7 +548,7 @@
             newProduct.attributeSetId = [dataDic objectForKey:@"attribute_set_id"];
         }
         if ([dataDic objectForKey:@"categories"]) {
-            newProduct.categoryIds = [NSOrderedSet orderedSetWithArray:[dataDic objectForKey:@"categories"]];
+            newProduct.categoryIds = [NSOrderedSet orderedSetWithArray:[[dataDic objectForKey:@"categories"] componentsSeparatedByString:@","]];
         }
         
         if ([dataDic objectForKey:@"size_guide"]) {
@@ -570,6 +570,12 @@
                     }];
                 }
             }
+        
+        if ([dataDic objectForKey:@"share_url"]) {
+            if (VALID_NOTEMPTY([dataDic objectForKey:@"share_url"], NSString)) {
+                newProduct.shareUrl = [dataDic objectForKey:@"share_url"];
+            }
+        }
         
         if ([dataDic objectForKey:@"simples"]) {
             NSArray* productSimplesJSON = [dataDic objectForKey:@"simples"];
@@ -622,21 +628,6 @@
                     [newProduct addImagesObject:image];
                 }
             }
-            
-        } else if ([productJSON objectForKey:@"images"]) {
-            //in catalog request, we have images out of the data dictionary
-            NSArray* imagesJSONArray = [productJSON objectForKey:@"images"];
-            if (imagesJSONArray && [imagesJSONArray isKindOfClass:[NSArray class]]) {
-                
-                for (NSDictionary* imageJSON in imagesJSONArray) {
-                    if (VALID_NOTEMPTY(imageJSON, NSDictionary)) {
-                        
-                        RIImage* image = [RIImage parseImage:imageJSON];
-                        image.product = newProduct;
-                        [newProduct addImagesObject:image];
-                    }
-                }
-            }
         } else if ([dataDic objectForKey:@"image"]) {
             //a related item only has one image url, inside the data dictionary
             NSDictionary* imageDic = [NSDictionary dictionaryWithObject:[dataDic objectForKey:@"image"] forKey:@"image"];
@@ -685,11 +676,7 @@
                 NSMutableSet *newRelatedProducts = [NSMutableSet new];
                 for (NSDictionary* relatedProductJSON in relatedProductsArray) {
                     if (VALID_NOTEMPTY(relatedProductJSON, NSDictionary)) {
-                        
-                        NSMutableDictionary* fakeData = [NSMutableDictionary new];
-                        [fakeData setObject:relatedProductJSON forKey:@"data"];
-                        
-                        RIProduct* relatedProduct = [RIProduct parseProduct:fakeData country:country];
+                        RIProduct* relatedProduct = [RIProduct parseProduct:relatedProductJSON country:country];
                         [newRelatedProducts addObject:relatedProduct];
                     }
                 }

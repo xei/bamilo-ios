@@ -1321,10 +1321,6 @@
     {
         [userInfo setObject:self.filtersArray forKey:@"filtersArray"];
     }
-    if(VALID(self.categoriesArray, NSArray))
-    {
-        [userInfo setObject:self.categoriesArray forKey:@"categoriesArray"];
-    }
     if(VALID(self.filterCategory, RICategory))
     {
         [userInfo setObject:self.filterCategory forKey:@"selectedCategory"];
