@@ -77,12 +77,12 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSString *summary;
 @property (nonatomic, retain) NSNumber *numberOfTimesSeen;
 
-
 //Not a coredata relationship
 @property (nonatomic, retain) NSOrderedSet *categoryIds;
 @property (nonatomic, retain) NSSet *relatedProducts;
 @property (nonatomic, retain) NSSet *specifications;
 @property (nonatomic, retain) RISeller *seller;
+@property (nonatomic, retain) NSString *shareUrl;
 
 /**
  *  Method to load a product and all its details given his sku. This method uses getCompleteProductWithUrl:successBlock:andFailureBlock:
