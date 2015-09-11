@@ -108,7 +108,7 @@
                                 action:@selector(backViewPressed)
                       forControlEvents:UIControlEventTouchUpInside];
     
-    [self.imageView setImageWithURL:[NSURL URLWithString:[campaignProduct.imagesUrls firstObject]]
+    [self.imageView setImageWithURL:[NSURL URLWithString:campaignProduct.imagesUrl]
                    placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
     
     //OFFER ENDED
