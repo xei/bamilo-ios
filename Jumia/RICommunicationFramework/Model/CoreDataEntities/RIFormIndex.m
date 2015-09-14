@@ -108,8 +108,8 @@
 {
     RIFormIndex* newFormIndex = (RIFormIndex*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIFormIndex class])];
     
-    if ([formIndexJSON objectForKey:@"id"]) {
-        newFormIndex.uid = [formIndexJSON objectForKey:@"id"];
+    if ([formIndexJSON objectForKey:@"type"]) {
+        newFormIndex.uid = [formIndexJSON objectForKey:@"type"];
     }
     if ([formIndexJSON objectForKey:@"url"]) {
         newFormIndex.url = [formIndexJSON objectForKey:@"url"];

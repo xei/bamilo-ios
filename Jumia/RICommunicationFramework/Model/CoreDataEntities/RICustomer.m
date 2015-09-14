@@ -168,11 +168,11 @@
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                               {
-                                                                  NSDictionary* userObject = [metadata objectForKey:@"user"];
+                                                                  NSDictionary* userObject = [metadata objectForKey:@"customer_entity"];
                                                                   if (VALID_NOTEMPTY(userObject, NSDictionary))
                                                                   {
                                                                       NSString* nextStep = @"";
-                                                                      NSDictionary* nextStepJSON = [metadata objectForKey:@"native_checkout"];
+                                                                      NSDictionary* nextStepJSON = [metadata objectForKey:@"multistep_entity"];
                                                                       if (VALID_NOTEMPTY(nextStepJSON, NSDictionary)) {
                                                                           NSString* nextStepValue = [nextStepJSON objectForKey:@"next_step"];
                                                                           if (VALID_NOTEMPTY(nextStepValue, NSString)) {
@@ -351,8 +351,8 @@
 {
     RICustomer *customer = (RICustomer *)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RICustomer class])];
     
-    if ([json objectForKey:@"id_customer"]) {
-        customer.idCustomer = [json objectForKey:@"id_customer"];
+    if ([json objectForKey:@"id"]) {
+        customer.idCustomer = [json objectForKey:@"id"];
     }
     
     if ([json objectForKey:@"email"]) {
@@ -409,8 +409,8 @@
 {
     RICustomer *customer = (RICustomer *)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RICustomer class])];
     
-    if ([json objectForKey:@"id_customer"]) {
-        customer.idCustomer = [json objectForKey:@"id_customer"];
+    if ([json objectForKey:@"id"]) {
+        customer.idCustomer = [json objectForKey:@"id"];
     }
     
     if ([json objectForKey:@"email"]) {
