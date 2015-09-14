@@ -102,5 +102,5 @@ NSString *const RI_API_BUNDLE = @"catalog/bundle/sku/";
 NSString *const RI_API_ADD_BUNDLE = @"order/addbundle/";
 NSString *const RI_API_PRODUCT_OFFERS = @"?all_offers=1";
 NSString *const RI_API_SELLER_RATING = @"?seller_rating=1&per_page=%d&page=%d";
-NSString *const RI_API_PROD_RATING = @"?rating=%d&page=%d";
+NSString *const RI_API_PROD_RATING = @"&rating=%d&page=%d";
 NSString *const RI_API_PROD_VALIDATE = @"catalog/validate/";

@@ -235,8 +235,8 @@
                                                                   if([@"login" isEqualToString:form.formIndex.uid])
                                                                   {
                                                                       responseProcessed = YES;
-                                                                      RICustomer *customer = [RICustomer parseCustomerWithJson:[metadata objectForKey:@"user"] plainPassword:password loginMethod:@"normal"];
-                                                                      NSDictionary* nativeCheckoutDic = [metadata objectForKey:@"native_checkout"];
+                                                                      RICustomer *customer = [RICustomer parseCustomerWithJson:[metadata objectForKey:@"customer_entity"] plainPassword:password loginMethod:@"normal"];
+                                                                      NSDictionary* nativeCheckoutDic = [metadata objectForKey:@"multistep_entity"];
                                                                       NSMutableDictionary* successDic = [NSMutableDictionary dictionaryWithDictionary:nativeCheckoutDic];
                                                                       [successDic setValue:customer forKey:@"customer"];
                                                                       successBlock([successDic copy]);
