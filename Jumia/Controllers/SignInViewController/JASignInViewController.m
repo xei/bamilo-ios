@@ -625,12 +625,14 @@ JADynamicFormDelegate
              [trackingDictionary setValue:customerObject.gender forKey:kRIEventGenderKey];
              [trackingDictionary setValue:customerObject.createdAt forKey:kRIEventAccountDateKey];
              
-             NSDate* now = [NSDate date];
-             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-             [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-             NSDate *dateOfBirth = [dateFormatter dateFromString:customerObject.birthday];
-             NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
-             [trackingDictionary setValue:[NSNumber numberWithInteger:[ageComponents year]] forKey:kRIEventAgeKey];
+             if (customerObject.birthday) {
+                 NSDate* now = [NSDate date];
+                 NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                 [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+                 NSDate *dateOfBirth = [dateFormatter dateFromString:customerObject.birthday];
+                 NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
+                 [trackingDictionary setValue:[NSNumber numberWithInteger:[ageComponents year]] forKey:kRIEventAgeKey];
+             }
              
              NSNumber *numberOfPurchases = [[NSUserDefaults standardUserDefaults] objectForKey:kRIEventAmountTransactions];
              [trackingDictionary setValue:numberOfPurchases forKey:kRIEventAmountTransactions];

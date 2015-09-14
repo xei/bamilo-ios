@@ -152,7 +152,7 @@ JADynamicFormDelegate
     
     self.apiResponse = RIApiResponseSuccess;
     
-    [RIForm getForm:@"changepassword"
+    [RIForm getForm:@"change_password"
        successBlock:^(RIForm *form)
      {
          self.changePasswordForm = [[JADynamicForm alloc] initWithForm:form
