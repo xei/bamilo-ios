@@ -1057,9 +1057,9 @@
     if(VALID_NOTEMPTY([self.currentItem maxQuantity], NSNumber) && 0 < [[self.currentItem maxQuantity] integerValue])
     {
         NSInteger maxQuantity = [[self.currentItem maxQuantity] integerValue];
-        if(VALID_NOTEMPTY([self.currentItem stock], NSNumber) && [[self.currentItem stock] integerValue] < [[self.currentItem maxQuantity] integerValue])
+        if(VALID_NOTEMPTY([self.currentItem maxQuantity], NSNumber))
         {
-            maxQuantity = [[self.currentItem stock] integerValue];
+            maxQuantity = [[self.currentItem maxQuantity] integerValue];
         }
         
         for (int i = 0; i < maxQuantity; i++)

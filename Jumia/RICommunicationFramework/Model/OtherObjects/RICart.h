@@ -17,9 +17,7 @@
 @property (strong, nonatomic) NSNumber *cartValueEuroConverted;
 @property (strong, nonatomic) NSNumber *cartUnreducedValue;
 @property (strong, nonatomic) NSString *cartUnreducedValueFormatted;
-@property (strong, nonatomic) NSNumber *cartCleanValue;
-@property (strong, nonatomic) NSString *cartCleanValueFormatted;
-@property (strong, nonatomic) NSNumber *cartCleanValueEuroConverted;
+@property (strong, nonatomic) NSString *couponCode;
 @property (strong, nonatomic) NSNumber *couponMoneyValue;
 @property (strong, nonatomic) NSString *couponMoneyValueFormatted;
 @property (strong, nonatomic) NSNumber *couponMoneyValueEuroConverted;
@@ -41,6 +39,16 @@
 @property (strong, nonatomic) NSDictionary *priceRules;
 @property (strong, nonatomic) NSNumber *subTotal;
 @property (strong, nonatomic) NSString *subTotalFormatted;
+
+/**
+ * new params (NOT USED)
+ */
+@property (strong, nonatomic) NSNumber *deliveryDiscountAmount;
+@property (strong, nonatomic) NSNumber *deliveryDiscountAmountConverted;
+@property (strong, nonatomic) NSNumber *deliveryDiscountCartRuleDiscount;
+@property (strong, nonatomic) NSNumber *deliveryDiscountCartRuleDiscountConverted;
+@property (strong, nonatomic) NSNumber *deliveryDiscountCouponMoneyValue;
+@property (strong, nonatomic) NSNumber *deliveryDiscountCouponMoneyValueConverted;
 
 /**
  *  Method to add a product to the cart
