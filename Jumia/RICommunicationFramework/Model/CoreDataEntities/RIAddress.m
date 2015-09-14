@@ -172,10 +172,10 @@
         newAddress.customerAddressCityId = [addressJSON objectForKey:@"fk_customer_address_city"];
     }
     if ([addressJSON objectForKey:@"is_default_billing"]) {
-        newAddress.isDefaultBilling = [addressJSON objectForKey:@"is_default_billing"];
+        newAddress.isDefaultBilling = [NSString stringWithFormat:@"%@", [addressJSON objectForKey:@"is_default_billing"]];
     }
     if ([addressJSON objectForKey:@"is_default_shipping"]) {
-        newAddress.isDefaultShipping = [addressJSON objectForKey:@"is_default_shipping"];
+        newAddress.isDefaultShipping = [NSString stringWithFormat:@"%@", [addressJSON objectForKey:@"is_default_shipping"]];
     }
     if ([addressJSON objectForKey:@"hidden"]) {
         newAddress.hidden = [addressJSON objectForKey:@"hidden"];
