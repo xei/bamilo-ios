@@ -226,8 +226,12 @@
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                               if (metadata && [metadata isKindOfClass:[NSDictionary class]]) {
-                                                                  successBlock([self parseCustomerWithJson:metadata]);
+                                                                  if (VALID_NOTEMPTY([metadata objectForKey:@"customer_entity"], NSDictionary)) {
+                                                                      successBlock([self parseCustomerWithJson:[metadata objectForKey:@"customer_entity"]]);
+                                                                      return;
+                                                                  }
                                                               }
+                                                              failureBlock(apiResponse, nil);
                                                           } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
@@ -383,8 +387,8 @@
         customer.createdAt = [json objectForKey:@"created_at"];
     }
     
-    if ([json objectForKey:@"address_collection"]) {
-        NSDictionary *addressesObject = [json objectForKey:@"address_collection"];
+    if ([json objectForKey:@"address_list"]) {
+        NSDictionary *addressesObject = [json objectForKey:@"address_list"];
         if(VALID_NOTEMPTY(addressesObject, addressesObject))
         {
             NSArray *addressesObjectKeys = [addressesObject allKeys];
@@ -407,35 +411,7 @@
 
 + (RICustomer *)parseCustomerWithJson:(NSDictionary *)json plainPassword:(NSString*)plainPassword loginMethod:(NSString*)loginMethod
 {
-    RICustomer *customer = (RICustomer *)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RICustomer class])];
-    
-    if ([json objectForKey:@"id"]) {
-        customer.idCustomer = [json objectForKey:@"id"];
-    }
-    
-    if ([json objectForKey:@"email"]) {
-        customer.email = [json objectForKey:@"email"];
-    }
-    
-    if ([json objectForKey:@"first_name"]) {
-        customer.firstName = [json objectForKey:@"first_name"];
-    }
-    
-    if ([json objectForKey:@"last_name"]) {
-        customer.lastName = [json objectForKey:@"last_name"];
-    }
-    
-    if ([json objectForKey:@"birthday"]) {
-        customer.birthday = [json objectForKey:@"birthday"];
-    }
-    
-    if ([json objectForKey:@"gender"]) {
-        customer.gender = [json objectForKey:@"gender"];
-    }
-    
-    if ([json objectForKey:@"password"]) {
-        customer.password = [json objectForKey:@"password"];
-    }
+    RICustomer *customer = [RICustomer parseCustomerWithJson:json];
     
     if(VALID_NOTEMPTY(loginMethod, NSString))
     {
@@ -446,27 +422,6 @@
     if([@"normal" isEqualToString:loginMethod] && VALID_NOTEMPTY(plainPassword, NSString))
     {
         customer.plainPassword = plainPassword;
-    }
-    
-    if ([json objectForKey:@"created_at"]) {
-        customer.createdAt = [json objectForKey:@"created_at"];
-    }
-    
-    if ([json objectForKey:@"address_collection"]) {
-        NSDictionary *addressesObject = [json objectForKey:@"address_collection"];
-        if(VALID_NOTEMPTY(addressesObject, addressesObject))
-        {
-            NSArray *addressesObjectKeys = [addressesObject allKeys];
-            if(VALID_NOTEMPTY(addressesObjectKeys, NSArray))
-            {
-                for(NSString *addressObjectKey in addressesObjectKeys)
-                {
-                    RIAddress *address = [RIAddress parseAddressFromCustomer:addressObjectKey jsonObject:[addressesObject objectForKey:addressObjectKey]];
-                    address.customer = customer;
-                    [customer addAddressesObject:address];
-                }
-            }
-        }
     }
     
     [self updateCustomerNewsletterWithJson:json];
