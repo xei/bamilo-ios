@@ -20,8 +20,6 @@
 #import "UIImage+Mirror.h"
 #import "JACheckoutBottomView.h"
 
-#define kUserDefaultsVoucherCode @"userDefaultsVoucherCode"
-
 @interface JAPaymentViewController ()
 <UICollectionViewDataSource,
 UICollectionViewDelegate,
@@ -545,7 +543,6 @@ UITextFieldDelegate>
     {
         [RICart removeVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;
-            [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kUserDefaultsVoucherCode];
             NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
             [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
             [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
@@ -566,7 +563,6 @@ UITextFieldDelegate>
     {
         [RICart addVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;
-            [[NSUserDefaults standardUserDefaults] setObject:voucherCode forKey:kUserDefaultsVoucherCode];
             NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
             [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
             [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];

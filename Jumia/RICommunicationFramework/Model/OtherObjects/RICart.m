@@ -26,9 +26,10 @@
                                                               
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
                                                                   NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
-                                                                  if (VALID_NOTEMPTY(metadata, NSDictionary))
+                                                                  if (VALID_NOTEMPTY(metadata, NSDictionary) && VALID_NOTEMPTY([metadata objectForKey:@"cart_entity"], NSDictionary))
                                                                   {
-                                                                      sucessBlock([RICart parseCart:[jsonObject objectForKey:@"metadata"] country:configuration]);
+                                                                          NSDictionary *cartEntity = [metadata objectForKey:@"cart_entity"];
+                                                                          sucessBlock([RICart parseCart:cartEntity country:configuration]);
                                                                   } else
                                                                   {
                                                                       failureBlock(apiResponse, nil);
@@ -128,9 +129,10 @@
                                                               
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
                                                                   NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
-                                                                  if (VALID_NOTEMPTY(metadata, NSDictionary))
+                                                                  if (VALID_NOTEMPTY(metadata, NSDictionary) && VALID_NOTEMPTY([metadata objectForKey:@"cart_entity"], NSDictionary))
                                                                   {
-                                                                      sucessBlock([RICart parseCart:[jsonObject objectForKey:@"metadata"] country:configuration]);
+                                                                      NSDictionary *cartEntity = [metadata objectForKey:@"cart_entity"];
+                                                                      sucessBlock([RICart parseCart:cartEntity country:configuration]);
                                                                   } else
                                                                   {
                                                                       failureBlock(apiResponse, nil);
@@ -718,15 +720,16 @@
     }
     
     if (VALID_NOTEMPTY([json objectForKey:@"coupon"], NSDictionary)) {
-        if (VALID_NOTEMPTY([json objectForKey:@"code"], NSString)) {
-            cart.couponCode = [json objectForKey:@"code"];
+        NSDictionary *couponDic = [json objectForKey:@"coupon"];
+        if (VALID_NOTEMPTY([couponDic objectForKey:@"code"], NSString)) {
+            cart.couponCode = [couponDic objectForKey:@"code"];
         }
-        if (VALID_NOTEMPTY([json objectForKey:@"value"], NSNumber)) {
-            cart.couponMoneyValue = [json objectForKey:@"value"];
+        if (VALID_NOTEMPTY([couponDic objectForKey:@"value"], NSNumber)) {
+            cart.couponMoneyValue = [couponDic objectForKey:@"value"];
             cart.couponMoneyValueFormatted = [RICountryConfiguration formatPrice:cart.couponMoneyValue country:country];
         }
-        if (VALID_NOTEMPTY([json objectForKey:@"value_converted"], NSNumber)) {
-            cart.couponMoneyValueEuroConverted = [json objectForKey:@"value_converted"];
+        if (VALID_NOTEMPTY([couponDic objectForKey:@"value_converted"], NSNumber)) {
+            cart.couponMoneyValueEuroConverted = [couponDic objectForKey:@"value_converted"];
         }
     }
     

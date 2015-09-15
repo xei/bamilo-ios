@@ -9,8 +9,6 @@
 #import "JABaseViewController.h"
 #import "JAPicker.h"
 
-#define kUserDefaultsVoucherCode @"userDefaultsVoucherCode"
-
 @class JAPriceView;
 @class RICart;
 @class RICartItem;

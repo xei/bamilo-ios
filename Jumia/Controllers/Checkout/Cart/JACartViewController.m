@@ -28,7 +28,6 @@
     UILabel *_shippingFeeValueLabel;
 }
 
-@property (nonatomic, strong) NSString *voucherCode;
 @property (nonatomic, assign) CGRect keyboardFrame;
 @property (nonatomic, strong) JAPicker *picker;
 @property (nonatomic, assign) BOOL requestDone;
@@ -520,10 +519,8 @@
     {
         [self.useCouponButton setTitle:STRING_REMOVE forState:UIControlStateNormal];
         
-        NSString* voucherCode = [[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultsVoucherCode];
-        
-        if (VALID_NOTEMPTY(voucherCode, NSString)) {
-            [self.couponTextField setText:voucherCode];
+        if (VALID_NOTEMPTY(self.cart.couponCode, NSString)) {
+            [self.couponTextField setText:self.cart.couponCode];
             [self.couponTextField setEnabled:NO];
         }
     }
@@ -532,9 +529,9 @@
         [self.useCouponButton setTitle:STRING_USE forState:UIControlStateNormal];
     }
     
-    if(VALID_NOTEMPTY(self.voucherCode, NSString))
+    if(VALID_NOTEMPTY(self.cart.couponCode, NSString))
     {
-        [self.couponTextField setText:self.voucherCode];
+        [self.couponTextField setText:self.cart.couponCode];
         [self.couponTextField setEnabled:NO];
     }
     else if(!VALID_NOTEMPTY([self.couponTextField text], NSString))
@@ -1114,10 +1111,6 @@
             [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
                                                       data:[trackingDictionary copy]];
-            self.voucherCode = voucherCode;
-            
-            [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kUserDefaultsVoucherCode];
-            
             [self setupCart];
             [self.couponTextField setEnabled:YES];
              [self.couponTextField setText:@""];
@@ -1132,7 +1125,6 @@
     {
         [RICart addVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;
-            self.voucherCode = voucherCode;
             
             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
             [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
@@ -1142,9 +1134,6 @@
             [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
                                                       data:[trackingDictionary copy]];
-
-            [[NSUserDefaults standardUserDefaults] setObject:voucherCode forKey:kUserDefaultsVoucherCode];
-            
             [self setupCart];
             [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
