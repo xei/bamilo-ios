@@ -569,9 +569,9 @@ JADatePickerDelegate
         [self.picker setDelegate:self];
         
         NSMutableArray *dataSource = [[NSMutableArray alloc] init];
-        if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY([self.radioComponent dataset], NSArray))
+        if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY([self.radioComponent options], NSArray))
         {
-            dataSource = [[self.radioComponent dataset] copy];
+            dataSource = [[self.radioComponent options] copy];
         }
         
         NSString *selectedValue = [radioComponent getSelectedValue];
@@ -606,9 +606,9 @@ JADatePickerDelegate
 {
     if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent))
     {
-        if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY([self.radioComponent dataset], NSArray) && selectedRow < [[self.radioComponent dataset] count])
+        if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY([self.radioComponent options], NSArray) && selectedRow < [[self.radioComponent options] count])
         {
-            [self.radioComponent setValue:[[self.radioComponent dataset] objectAtIndex:selectedRow]];
+            [self.radioComponent setValue:[[self.radioComponent options] objectAtIndex:selectedRow]];
         }
     }
     

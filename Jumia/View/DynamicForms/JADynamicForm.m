@@ -78,22 +78,13 @@
         returnKeyType = UIReturnKeyDone;
     }
     
-    RIField *dayField = nil;
-    RIField *monthField = nil;
-    RIField *yearField = nil;
-    NSInteger birthdayFieldPosition = -1;
-    JABirthDateComponent *birthDateComponent = [JABirthDateComponent getNewJABirthDateComponent];
-    
     NSInteger lastTextFieldIndex = 0;
     self.formViews = [[NSMutableArray alloc] init];
     for (int i = 0; i < [fields count]; i++)
     {
         RIField *field = [fields objectAtIndex:i];
         NSInteger tag = [self.formViews count];
-        if(-1 != birthdayFieldPosition)
-        {
-            tag++;
-        }
+        tag++;
         
         if ([@"string" isEqualToString:field.type] || [@"text" isEqualToString:field.type] || [@"email" isEqualToString:field.type])
         {
@@ -149,57 +140,44 @@
         }
         else if ([field.type isEqualToString:@"integer"] || [field.type isEqualToString:@"number"])
         {
-            if([@"day" isEqualToString:field.key] || [@"month" isEqualToString:field.key] || [@"year" isEqualToString:field.key])
-            {
-                if([@"day" isEqualToString:field.key])
-                {
-                    dayField = field;
-                }
-                else if([@"month" isEqualToString:field.key])
-                {
-                    monthField = field;
-                }
-                else if([@"year" isEqualToString:field.key])
-                {
-                    yearField = field;
-                }
-                if(-1 == birthdayFieldPosition)
-                {
-                    birthdayFieldPosition = [self.formViews count];
-                    
-                    CGRect frame = birthDateComponent.frame;
-                    frame.origin.y = startingY;
-                    birthDateComponent.frame = frame;
-                    startingY += birthDateComponent.frame.size.height;
-                    
-                    [birthDateComponent.textField setTag:birthdayFieldPosition];
-                    [birthDateComponent setTag:birthdayFieldPosition];
-                }
+            JATextFieldComponent *textField = [JATextFieldComponent getNewJATextFieldComponent];
+            [textField setupWithField:field];
+            [textField.textField setDelegate:self];
+            [textField.textField setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
+            
+            if ([@"phone" isEqualToString:field.key]) {
+                textField.textField.keyboardType = UIKeyboardTypePhonePad;
             }
-            else
-            {
-                JATextFieldComponent *textField = [JATextFieldComponent getNewJATextFieldComponent];
-                [textField setupWithField:field];
-                [textField.textField setDelegate:self];
-                [textField.textField setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
-                
-                if ([@"phone" isEqualToString:field.key]) {
-                    textField.textField.keyboardType = UIKeyboardTypePhonePad;
-                }
-                
-                [textField.textField setReturnKeyType:returnKeyType];
-                
-                CGRect frame = textField.frame;
-                frame.origin.y = startingY;
-                textField.frame = frame;
-                startingY += textField.frame.size.height;
-  
-                [textField.textField setTag:tag];
-                [textField setTag:tag];
-                
-                lastTextFieldIndex = [self.formViews count];
-                [self.formViews addObject:textField];
-            }
+            
+            [textField.textField setReturnKeyType:returnKeyType];
+            
+            CGRect frame = textField.frame;
+            frame.origin.y = startingY;
+            textField.frame = frame;
+            startingY += textField.frame.size.height;
+
+            [textField.textField setTag:tag];
+            [textField setTag:tag];
+            
+            lastTextFieldIndex = [self.formViews count];
+            [self.formViews addObject:textField];
+        }
+        else if ([field.type isEqualToString:@"date"])
+        {
+            JABirthDateComponent *birthDateComponent = [JABirthDateComponent getNewJABirthDateComponent];
+            [birthDateComponent setupWithField:field];
+            [birthDateComponent.textField setDelegate:self];
+            [birthDateComponent.textField setReturnKeyType:returnKeyType];
+            
+            CGRect frame = birthDateComponent.frame;
+            frame.origin.y = startingY;
+            birthDateComponent.frame = frame;
+            startingY += birthDateComponent.frame.size.height;
+            
+            [birthDateComponent.textField setTag:tag];
+            [birthDateComponent setTag:tag];
+            lastTextFieldIndex = [self.formViews count];
+            [self.formViews addObject:birthDateComponent];
         }
         else if ([@"radio" isEqualToString:field.type] || [@"list" isEqualToString:field.type])
         {
@@ -320,20 +298,6 @@
                 }
             }
         }
-    }
-    
-    if(-1 != birthdayFieldPosition && VALID_NOTEMPTY(dayField, RIField) && VALID_NOTEMPTY(monthField, RIField) && VALID_NOTEMPTY(yearField, RIField))
-    {
-        [birthDateComponent setupWithLabel:STRING_BIRTHDAY day:dayField month:monthField year:yearField];
-        [birthDateComponent.textField setDelegate:self];
-        [birthDateComponent.textField setReturnKeyType:returnKeyType];
-        
-        if(lastTextFieldIndex >= birthdayFieldPosition)
-        {
-            lastTextFieldIndex++;
-        }
-        
-        [self.formViews insertObject:birthDateComponent atIndex:birthdayFieldPosition];
     }
     
     if(lastTextFieldIndex < [self.formViews count])
