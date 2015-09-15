@@ -891,9 +891,9 @@ JAPickerDelegate>
     }
     else if([radioComponent isComponentWithKey:@"gender"])
     {
-        if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY([self.radioComponent dataset], NSArray))
+        if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY([self.radioComponent options], NSArray))
         {
-            self.radioComponentDataset  = [[self.radioComponent dataset] copy];
+            self.radioComponentDataset  = [[self.radioComponent options] copy];
             
             [self setupPickerView];
         }

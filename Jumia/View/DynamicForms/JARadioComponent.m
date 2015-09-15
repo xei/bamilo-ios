@@ -7,6 +7,7 @@
 //
 
 #import "JARadioComponent.h"
+#import "RIFieldOption.h"
 #import "RIFieldDataSetComponent.h"
 #import "RIRegion.h"
 #import "RICity.h"
@@ -74,6 +75,14 @@
             [contentArray addObject:component.value];
         }
         self.dataset = [contentArray copy];
+    }
+    else if(VALID_NOTEMPTY(field.options, NSOrderedSet))
+    {
+        NSMutableArray *contentArray = [[NSMutableArray alloc] init];
+        for (RIFieldOption *component in field.options) {
+            [contentArray addObject:component.value];
+        }
+        self.options = [contentArray copy];
     }
     else if(VALID_NOTEMPTY(field.apiCall, NSString))
     {

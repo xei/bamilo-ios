@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UILabel *requiredSymbol;
 @property (strong, nonatomic) NSArray *dataset;
+@property (strong, nonatomic) NSArray *options;
 @property (strong, nonatomic) NSString *apiCall;
 
 +(JARadioComponent *)getNewJARadioComponent;
