@@ -90,8 +90,6 @@
 @dynamic productSimples;
 @dynamic variations;
 @dynamic sizeGuideUrl;
-@dynamic ratingAverage;
-@dynamic ratingsTotal;
 @dynamic reviewsTotal;
 @dynamic offersMinPrice;
 @dynamic offersMinPriceEuroConverted;
@@ -107,6 +105,7 @@
 @synthesize specifications;
 @synthesize seller;
 @synthesize shareUrl;
+@synthesize isWishlisted;
 
 + (NSString *)getCompleteProductWithSku:(NSString*)sku
                            successBlock:(void (^)(id product))successBlock
@@ -179,7 +178,7 @@
                                 filters:(NSArray*)filters
                              filterType:(NSString*)filterType
                             filterValue:(NSString*)filterValue
-                           successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories, RIBanner* banner))successBlock
+                           successBlock:(void (^)(RICatalog *catalog))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
     NSString* fullUrl = @"";
@@ -235,7 +234,7 @@
 }
 
 + (NSString *)getProductsWithFullUrl:(NSString*)url
-                        successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories, RIBanner* banner))successBlock
+                        successBlock:(void (^)(RICatalog *catalog))successBlock
                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
     url = [url  stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -253,51 +252,13 @@
                                                                   
                                                                   if (VALID_NOTEMPTY(metadata, NSDictionary)) {
                                                                       
-                                                                      NSArray* filtersJSON = [metadata objectForKey:@"filters"];
+                                                                      RICatalog *catalog = [RICatalog parseCatalog:metadata forCountryConfiguration:configuration];
                                                                       
-                                                                      NSArray* filtersArray;
-                                                                      
-                                                                      if (VALID_NOTEMPTY(filtersJSON, NSArray)) {
-                                                                          
-                                                                          filtersArray = [RIFilter parseFilters:filtersJSON];
-                                                                          
-                                                                      }
-                                                                      
-                                                                      NSDictionary *bannerJSON = [metadata objectForKey:@"banner"];
-                                                                      
-                                                                      RIBanner *banner;
-                                                                      
-                                                                      if(VALID_NOTEMPTY(bannerJSON, NSDictionary))
-                                                                      {
-                                                                          banner = [RIBanner parseBanner:bannerJSON];
-                                                                      }
-                                                                      
-                                                                      NSArray* categoriesArray = [NSArray new];
-                                                                      if (VALID_NOTEMPTY([metadata objectForKey:@"categories"], NSString)) {
-                                                                          categoriesArray = [[metadata objectForKey:@"categories"] componentsSeparatedByString:@","];
-                                                                      }
-                                                                      
-                                                                      NSString* productCount = [metadata objectForKey:@"product_count"];
-                                                                      
-                                                                      NSString *categoryId = [metadata objectForKey:@"category_ids"];
-                                                                      
-                                                                      NSArray* results = [metadata objectForKey:@"results"];
-                                                                      
-                                                                      if (VALID_NOTEMPTY(results, NSArray)) {
-                                                                          
-                                                                          NSMutableArray* products = [NSMutableArray new];
-                                                                          
-                                                                          for (NSDictionary* productJSON in results) {
-                                                                              
-                                                                              RIProduct* product = [RIProduct parseProduct:productJSON country:configuration];
-                                                                              [products addObject:product];
-                                                                          }
-                                                                          
+                                                                      if (VALID_NOTEMPTY(catalog.products, NSArray)) {
                                                                           dispatch_async(dispatch_get_main_queue(), ^{
-                                                                              successBlock(products, productCount, filtersArray, categoryId, categoriesArray, banner);
+                                                                              successBlock(catalog);
                                                                           });
-                                                                      }
-                                                                      else
+                                                                      }else
                                                                       {
                                                                           failureBlock(RIApiResponseAPIError, nil);
                                                                       }
@@ -492,26 +453,15 @@
             newProduct.maxSavingPercentage = [NSString stringWithFormat:@"%@", [dataDic objectForKey:@"max_saving_percentage"]];
         }
         
-        if ([dataDic objectForKey:@"ratings_total"]) {
-            NSDictionary *ratingsDic = [dataDic objectForKey:@"ratings_total"];
-            if (VALID_NOTEMPTY(ratingsDic, NSDictionary)) {
-                if (VALID_NOTEMPTY([ratingsDic objectForKey:@"avr"], NSNumber)) {
-                    newProduct.avr = [ratingsDic objectForKey:@"avr"];
-                }
-                if (VALID_NOTEMPTY([ratingsDic objectForKey:@"sum"], NSNumber)) {                    newProduct.sum = [ratingsDic objectForKey:@"sum"];
-                }
-            }
-        }
-        
         if ([dataDic objectForKey:@"rating_reviews_summary"]) {
             NSDictionary *ratingsDic = [dataDic objectForKey:@"rating_reviews_summary"];
             if (VALID_NOTEMPTY(ratingsDic, NSDictionary)) {
                 if (VALID_NOTEMPTY([ratingsDic objectForKey:@"average"], NSNumber)) {
-                    newProduct.ratingAverage = [ratingsDic objectForKey:@"average"];
+                    newProduct.avr = [ratingsDic objectForKey:@"average"];
                 }
                 if (VALID_NOTEMPTY([ratingsDic objectForKey:@"ratings_total"], NSNumber)) {
-                    newProduct.ratingsTotal = [ratingsDic objectForKey:@"ratings_total"];
-                }
+                    newProduct.sum = [ratingsDic objectForKey:@"ratings_total"];
+                }   
                 if (VALID_NOTEMPTY([ratingsDic objectForKey:@"reviews_total"], NSNumber)) {
                     newProduct.reviewsTotal = [ratingsDic objectForKey:@"reviews_total"];
                 }
@@ -651,6 +601,10 @@
                 RISeller* seller = [RISeller parseSeller:sellerJSON];
                 newProduct.seller = seller;
             }
+        }
+        
+        if (VALID_NOTEMPTY([dataDic objectForKey:@"is_wishlist"], NSNumber)) {
+            newProduct.isWishlisted = [dataDic objectForKey:@"is_wishlist"];
         }
         
         if ([dataDic objectForKey:@"offers"]) {

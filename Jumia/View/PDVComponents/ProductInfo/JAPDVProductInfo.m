@@ -117,11 +117,11 @@
 {
     NSString* ratingString = @"";
     NSString* reviewString = @"";
-    if (VALID_NOTEMPTY(product.ratingsTotal, NSNumber)) {
-        if (1 == [product.ratingsTotal integerValue]) {
+    if (VALID_NOTEMPTY(product.sum, NSNumber)) {
+        if (1 == [product.sum integerValue]) {
             ratingString = STRING_RATING;
         } else {
-            ratingString = [NSString stringWithFormat:STRING_RATINGS, [product.ratingsTotal integerValue]];
+            ratingString = [NSString stringWithFormat:STRING_RATINGS, [product.sum integerValue]];
         }
     }
     
@@ -145,13 +145,13 @@
             
             finalString = [NSString stringWithFormat:@"%@ / %@", ratingString, reviewString];
             
-            if (0 == [product.ratingsTotal integerValue] && 0 == [product.reviewsTotal integerValue]) {
+            if (0 == [product.sum integerValue] && 0 == [product.reviewsTotal integerValue]) {
                 
                 finalString = STRING_RATE_NOW;
             }
         } else {
             
-            if (0 == [product.ratingsTotal integerValue]) {
+            if (0 == [product.sum integerValue]) {
                 
                 finalString = STRING_RATE_NOW;
             }
@@ -258,7 +258,7 @@
     [self setPriceWithNewValue:product.specialPriceFormatted
                    andOldValue:product.priceFormatted];
     
-    [self setNumberOfStars:[product.ratingAverage integerValue]];
+    [self setNumberOfStars:[product.sum integerValue]];
     
     self.numberOfReviewsLabel.text = [self ratingAndReviewString:product];
     
@@ -404,7 +404,7 @@
     [self setPriceWithNewValue:product.specialPriceFormatted
                    andOldValue:product.priceFormatted];
     
-    [self setNumberOfStars:[product.ratingAverage integerValue]];
+    [self setNumberOfStars:[product.sum integerValue]];
     
     self.numberOfReviewsLabel.text = [self ratingAndReviewString:product];
     
