@@ -8,7 +8,6 @@
 
 #import "JAMyAccountViewController.h"
 #import "JAClickableView.h"
-#import "JAShareActivityProvider.h"
 #import "JAActivityViewController.h"
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 #import "AQSFacebookMessengerActivity.h"
@@ -588,9 +587,6 @@
 
 - (void)shareApp:(id)sender
 {
-    
-    //JAShareActivityProvider *provider = [[JAShareActivityProvider alloc] initForAppShare];
-    
     NSArray *appActivities = @[];
     
     UIActivity *fbmActivity = [[AQSFacebookMessengerActivity alloc] init];
