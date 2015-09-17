@@ -24,7 +24,6 @@
 #import "JAProductDetailsViewController.h"
 #import "JANewRatingViewController.h"
 #import "JAAppDelegate.h"
-#import "JAShareActivityProvider.h"
 #import "JAActivityViewController.h"
 #import "RICountry.h"
 #import "JAButtonWithBlur.h"
