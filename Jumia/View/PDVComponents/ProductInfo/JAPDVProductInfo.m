@@ -258,7 +258,7 @@
     [self setPriceWithNewValue:product.specialPriceFormatted
                    andOldValue:product.priceFormatted];
     
-    [self setNumberOfStars:[product.sum integerValue]];
+    [self setNumberOfStars:[product.avr integerValue]];
     
     self.numberOfReviewsLabel.text = [self ratingAndReviewString:product];
     
@@ -404,7 +404,7 @@
     [self setPriceWithNewValue:product.specialPriceFormatted
                    andOldValue:product.priceFormatted];
     
-    [self setNumberOfStars:[product.sum integerValue]];
+    [self setNumberOfStars:[product.avr integerValue]];
     
     self.numberOfReviewsLabel.text = [self ratingAndReviewString:product];
     
