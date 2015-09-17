@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import "RIBanner.h"
+#import "RICatalog.h"
 
 
 @class RIImage, RIProductSimple, RIVariation, RIBundle, RISeller;
@@ -65,9 +66,8 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSOrderedSet *productSimples;
 @property (nonatomic, retain) NSOrderedSet *variations;
 @property (nonatomic, retain) NSString* sizeGuideUrl;
-@property (nonatomic, retain) NSNumber * ratingAverage;
-@property (nonatomic, retain) NSNumber * ratingsTotal;
 @property (nonatomic, retain) NSNumber * reviewsTotal;
+
 @property (nonatomic, retain) NSNumber * offersMinPrice;
 @property (nonatomic, retain) NSNumber * offersMinPriceEuroConverted;
 @property (nonatomic, retain) NSNumber * offersTotal;
@@ -83,6 +83,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSSet *specifications;
 @property (nonatomic, retain) RISeller *seller;
 @property (nonatomic, retain) NSString *shareUrl;
+@property (nonatomic, retain) NSNumber *isWishlisted;
 
 /**
  *  Method to load a product and all its details given his sku. This method uses getCompleteProductWithUrl:successBlock:andFailureBlock:
@@ -133,7 +134,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
                                 filters:(NSArray*)filters
                              filterType:(NSString*)filterType
                             filterValue:(NSString*)filterValue
-                           successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories, RIBanner* banner))successBlock
+                           successBlock:(void (^)(RICatalog *catalog))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
@@ -146,7 +147,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *  @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)getProductsWithFullUrl:(NSString*)url
-                        successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories, RIBanner* banner))successBlock
+                        successBlock:(void (^)(RICatalog *catalog))successBlock
                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**

@@ -186,7 +186,7 @@
                          maxItems:(NSString *)maxItems
                     sortingMethod:(RICatalogSorting)sortingMethod
                           filters:(NSArray*)filters
-                     successBlock:(void (^)(NSArray *results, NSArray *filters, NSNumber *productCount, RIBanner *banner))successBlock
+                     successBlock:(void (^)(RICatalog *catalog))successBlock
                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
 {
     NSString *tempUrl = [NSString stringWithFormat:@"%@%@search/", [RIApi getCountryUrlInUse], RI_API_VERSION];
@@ -246,48 +246,17 @@
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
                                                                   NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
-                                                                  NSDictionary *results = [metadata objectForKey:@"results"];
                                                                   
-                                                                  NSNumber *productCountValue = [NSNumber numberWithInt:0];
-                                                                  id productCount = [metadata objectForKey:@"product_count"];
-                                                                  if(VALID_NOTEMPTY(productCount, NSNumber))
-                                                                  {
-                                                                      productCountValue = productCount;
+                                                                  RICatalog *catalog = [RICatalog parseCatalog:metadata forCountryConfiguration:configuration];
+                                                                  if (VALID_NOTEMPTY(catalog, RICatalog) && VALID_NOTEMPTY(catalog.products, NSArray)) {
+                                                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                                                          successBlock(catalog);
+                                                                      });
+                                                                  }else{
+                                                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                                                          failureBlock(apiResponse, nil, nil);
+                                                                      });
                                                                   }
-                                                                  else if(VALID_NOTEMPTY(productCount, NSString))
-                                                                  {
-                                                                      NSString *productCountStirng = productCount;
-                                                                      productCountValue = [NSNumber numberWithInt:[productCountStirng intValue]];
-                                                                  }
-                                                                  
-                                                                  NSDictionary *bannerJSON = [metadata objectForKey:@"banner"];
-                                                                  
-                                                                  RIBanner *banner;
-                                                                  
-                                                                  if(VALID_NOTEMPTY(bannerJSON, NSDictionary))
-                                                                  {
-                                                                      banner = [RIBanner parseBanner:bannerJSON];
-                                                                  }
-                                                                  
-                                                                  NSArray* filtersJSON = [metadata objectForKey:@"filters"];
-                                                                  
-                                                                  NSArray* filtersArray;
-                                                                  
-                                                                  if (VALID_NOTEMPTY(filtersJSON, NSArray)) {
-                                                                      
-                                                                      filtersArray = [RIFilter parseFilters:filtersJSON];
-                                                                      
-                                                                  }
-
-                                                                  NSMutableArray *temp = [NSMutableArray new];
-                                                                  
-                                                                  for (NSDictionary *dic in results) {
-                                                                      [temp addObject:[RIProduct parseProduct:dic country:configuration]];
-                                                                  }
-                                                                  
-                                                                  dispatch_async(dispatch_get_main_queue(), ^{
-                                                                      successBlock([temp copy], filtersArray, productCountValue, banner);
-                                                                  });
                                                                   
                                                               } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                                                   

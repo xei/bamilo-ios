@@ -1093,6 +1093,7 @@
 		9AB488871B727B2C00886A44 /* UIImage+WithColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372E1B679740004905B4 /* UIImage+WithColor.m */; };
 		9AB488881B727B2D00886A44 /* UIImage+WithColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372E1B679740004905B4 /* UIImage+WithColor.m */; };
 		9AB488891B727B2D00886A44 /* UIImage+WithColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372E1B679740004905B4 /* UIImage+WithColor.m */; };
+		9AB4CFCA1BA9C7D1007326C7 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
 		9ABCAEEE1B0F6A2C00A69271 /* UIView+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ABCAEED1B0F6A2C00A69271 /* UIView+Mirror.m */; };
 		9ABCAEF81B0F8FEE00A69271 /* UIView+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ABCAEED1B0F6A2C00A69271 /* UIView+Mirror.m */; };
 		9ABCAEF91B0F8FEE00A69271 /* UIView+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ABCAEED1B0F6A2C00A69271 /* UIView+Mirror.m */; };
@@ -3232,6 +3233,8 @@
 		9A9CD3031B7251490061ACE0 /* BMA4SiPhoneWebViewNotifView-nobuttons.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneWebViewNotifView-nobuttons.xib"; sourceTree = "<group>"; };
 		9AB4887E1B72748500886A44 /* JAShopWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAShopWebViewController.h; sourceTree = "<group>"; };
 		9AB4887F1B72748500886A44 /* JAShopWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAShopWebViewController.m; sourceTree = "<group>"; };
+		9AB4CFC81BA9C7D1007326C7 /* RICatalog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICatalog.h; sourceTree = "<group>"; };
+		9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICatalog.m; sourceTree = "<group>"; };
 		9ABCAEEC1B0F6A2C00A69271 /* UIView+Mirror.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Mirror.h"; path = "Categories/UIView+Mirror.h"; sourceTree = "<group>"; };
 		9ABCAEED1B0F6A2C00A69271 /* UIView+Mirror.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Mirror.m"; path = "Categories/UIView+Mirror.m"; sourceTree = "<group>"; };
 		9AC4D6931B45A1EF00036F1C /* JACatalogListCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogListCollectionViewCell.h; sourceTree = "<group>"; };
@@ -5440,6 +5443,8 @@
 				CE8C92941B86164000C77706 /* RISpecificationAttribute.m */,
 				CE8C929A1B861F2100C77706 /* RISeller.h */,
 				CE8C929B1B861F2100C77706 /* RISeller.m */,
+				9AB4CFC81BA9C7D1007326C7 /* RICatalog.h */,
+				9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */,
 			);
 			path = OtherObjects;
 			sourceTree = "<group>";
@@ -8240,6 +8245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5A302C919811E9200F71726 /* RIProductSimple.m in Sources */,
+				9AB4CFCA1BA9C7D1007326C7 /* RICatalog.m in Sources */,
 				B542546B19AE9F7500C792FF /* JACartListHeaderView.m in Sources */,
 				B5B5FDA519D95B6D008B8059 /* RINewsletterCategory.m in Sources */,
 				B59DCA6619B710DA00DE7960 /* FXBlurView.m in Sources */,
