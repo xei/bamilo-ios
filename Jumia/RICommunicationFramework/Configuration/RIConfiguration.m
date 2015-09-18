@@ -100,6 +100,8 @@ NSString *const RI_RATE_CONVERSION = @"http://rate-exchange.appspot.com/currency
 NSString *const RI_GET_CAMPAIGN = @"campaign/get/?campaign_slug=%@";
 NSString *const RI_API_BUNDLE = @"catalog/bundle/sku/";
 NSString *const RI_API_ADD_BUNDLE = @"order/addbundle/";
+NSString *const RI_API_ADD_TO_WISHLIST = @"wishlist/addproduct/";
+NSString *const RI_API_REMOVE_FOM_WISHLIST = @"wishlist/removeproduct/";
 NSString *const RI_API_PRODUCT_OFFERS = @"?all_offers=1";
 NSString *const RI_API_SELLER_RATING = @"?seller_rating=1&per_page=%d&page=%d";
 NSString *const RI_API_PROD_RATING = @"&rating=%d&page=%d";
