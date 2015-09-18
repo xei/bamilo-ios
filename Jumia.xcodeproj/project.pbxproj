@@ -83,7 +83,6 @@
 		4A1270F8198795AF004142F5 /* JASubCategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1270F7198795AF004142F5 /* JASubCategoriesViewController.m */; };
 		4A18856419B8A368003337FC /* JAActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A18856319B8A368003337FC /* JAActivityViewController.m */; };
 		4A1892D219939A0C0036F327 /* JAReviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1892D119939A0C0036F327 /* JAReviewCell.m */; };
-		4A19C51019D018F10070D194 /* JAShareActivityProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A19C50F19D018F10070D194 /* JAShareActivityProvider.m */; };
 		4A19C51419D019100070D194 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A19C51319D019100070D194 /* Reachability.m */; };
 		4A19C51919D01ABE0070D194 /* JANoConnectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A19C51819D01ABE0070D194 /* JANoConnectionView.m */; };
 		4A1C00D81987F2EB00A0109E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302FB19811F2200F71726 /* UIKit.framework */; };
@@ -253,7 +252,6 @@
 		73a2376ce1e1395d429b0dff /* RIFieldOption.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C61BBF19B0BB7F00840E93 /* RIFieldOption.m */; };
 		73e27fe926d9b8bfdf5533aa /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B5007AC119A4E8EC0024035A /* HockeySDKResources.bundle */; };
 		74184dc81a4fcd636b69e8c2 /* JAUserDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE865BC19C9D7C400406159 /* JAUserDataViewController.m */; };
-		74575dc39b7757725904ad3d /* JAShareActivityProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A19C50F19D018F10070D194 /* JAShareActivityProvider.m */; };
 		74acae0cc3cb94fc8c207de4 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A19C51319D019100070D194 /* Reachability.m */; };
 		74ae21885fff40a8bed5b863 /* RIShippingMethodForm.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F21986C41D0094C92C /* RIShippingMethodForm.m */; };
 		74c288d3007d11abbcd827d3 /* RIAd4PushTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302B319811E9200F71726 /* RIAd4PushTracker.m */; };
@@ -1613,7 +1611,6 @@
 		CE9ADB571AB34C4600D56481 /* RIOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302A119811E9200F71726 /* RIOperation.m */; };
 		CE9ADB581AB34C4600D56481 /* UIImageView+JA.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C1E33619BA1E73009C422C /* UIImageView+JA.m */; };
 		CE9ADB591AB34C4600D56481 /* JAThanksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59D196619C333F4004843C3 /* JAThanksViewController.m */; };
-		CE9ADB5A1AB34C4600D56481 /* JAShareActivityProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A19C50F19D018F10070D194 /* JAShareActivityProvider.m */; };
 		CE9ADB5B1AB34C4600D56481 /* RICountry.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029319811E9200F71726 /* RICountry.m */; };
 		CE9ADB5C1AB34C4600D56481 /* RIProductRatings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A944FF41992805100C02734 /* RIProductRatings.m */; };
 		CE9ADB5D1AB34C4600D56481 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBE2A7A1A9E312F00F457FA /* GTMNSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -1970,7 +1967,6 @@
 		CE9ADD511AB6D6E900D56481 /* RIOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302A119811E9200F71726 /* RIOperation.m */; };
 		CE9ADD521AB6D6E900D56481 /* UIImageView+JA.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C1E33619BA1E73009C422C /* UIImageView+JA.m */; };
 		CE9ADD531AB6D6E900D56481 /* JAThanksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59D196619C333F4004843C3 /* JAThanksViewController.m */; };
-		CE9ADD541AB6D6E900D56481 /* JAShareActivityProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A19C50F19D018F10070D194 /* JAShareActivityProvider.m */; };
 		CE9ADD551AB6D6E900D56481 /* RICountry.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029319811E9200F71726 /* RICountry.m */; };
 		CE9ADD561AB6D6E900D56481 /* RIProductRatings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A944FF41992805100C02734 /* RIProductRatings.m */; };
 		CE9ADD571AB6D6E900D56481 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBE2A7A1A9E312F00F457FA /* GTMNSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -2327,7 +2323,6 @@
 		CE9ADF4B1AB6D78200D56481 /* RIOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302A119811E9200F71726 /* RIOperation.m */; };
 		CE9ADF4C1AB6D78200D56481 /* UIImageView+JA.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C1E33619BA1E73009C422C /* UIImageView+JA.m */; };
 		CE9ADF4D1AB6D78200D56481 /* JAThanksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59D196619C333F4004843C3 /* JAThanksViewController.m */; };
-		CE9ADF4E1AB6D78200D56481 /* JAShareActivityProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A19C50F19D018F10070D194 /* JAShareActivityProvider.m */; };
 		CE9ADF4F1AB6D78200D56481 /* RICountry.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029319811E9200F71726 /* RICountry.m */; };
 		CE9ADF501AB6D78200D56481 /* RIProductRatings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A944FF41992805100C02734 /* RIProductRatings.m */; };
 		CE9ADF511AB6D78200D56481 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = CEBE2A7A1A9E312F00F457FA /* GTMNSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -2936,8 +2931,6 @@
 		4A18856319B8A368003337FC /* JAActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAActivityViewController.m; sourceTree = "<group>"; };
 		4A1892D019939A0C0036F327 /* JAReviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAReviewCell.h; sourceTree = "<group>"; };
 		4A1892D119939A0C0036F327 /* JAReviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAReviewCell.m; sourceTree = "<group>"; };
-		4A19C50E19D018F10070D194 /* JAShareActivityProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAShareActivityProvider.h; path = Utils/JAShareActivityProvider.h; sourceTree = "<group>"; };
-		4A19C50F19D018F10070D194 /* JAShareActivityProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAShareActivityProvider.m; path = Utils/JAShareActivityProvider.m; sourceTree = "<group>"; };
 		4A19C51219D019100070D194 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		4A19C51319D019100070D194 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		4A19C51719D01ABE0070D194 /* JANoConnectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANoConnectionView.h; sourceTree = "<group>"; };
@@ -4811,8 +4804,6 @@
 			isa = PBXGroup;
 			children = (
 				4A19C51119D019100070D194 /* Reachability */,
-				4A19C50E19D018F10070D194 /* JAShareActivityProvider.h */,
-				4A19C50F19D018F10070D194 /* JAShareActivityProvider.m */,
 				B50B03A9198A8861002046DF /* JAUtils.h */,
 				B50B03AA198A8861002046DF /* JAUtils.m */,
 			);
@@ -8045,7 +8036,6 @@
 				CEED47311A7B973B006D9CE7 /* JAPDVBundleSingleItem.m in Sources */,
 				e3ca2d59f72455e53096afbc /* UIImageView+JA.m in Sources */,
 				85f0b6e186127c0b70b1f3e7 /* JAThanksViewController.m in Sources */,
-				74575dc39b7757725904ad3d /* JAShareActivityProvider.m in Sources */,
 				8cb5f5fbf86ddac3c1390d87 /* RICountry.m in Sources */,
 				0038baca6e7694481dd2aab4 /* RIProductRatings.m in Sources */,
 				df9ac75b2b86dba7a92360ac /* UIImageView+WebCache.m in Sources */,
@@ -8289,7 +8279,6 @@
 				B5C1E33719BA1E73009C422C /* UIImageView+JA.m in Sources */,
 				9A7EE9851B5546A0004E2505 /* ADJLogger.m in Sources */,
 				B59D196719C333F4004843C3 /* JAThanksViewController.m in Sources */,
-				4A19C51019D018F10070D194 /* JAShareActivityProvider.m in Sources */,
 				B5A302D519811E9200F71726 /* RICountry.m in Sources */,
 				4A944FF51992805100C02734 /* RIProductRatings.m in Sources */,
 				9A7EE9991B5546A0004E2505 /* ADJTimerCycle.m in Sources */,
@@ -8560,7 +8549,6 @@
 				9A7EE9871B5546A0004E2505 /* ADJLogger.m in Sources */,
 				CE9ADB581AB34C4600D56481 /* UIImageView+JA.m in Sources */,
 				CE9ADB591AB34C4600D56481 /* JAThanksViewController.m in Sources */,
-				CE9ADB5A1AB34C4600D56481 /* JAShareActivityProvider.m in Sources */,
 				CE9ADB5B1AB34C4600D56481 /* RICountry.m in Sources */,
 				9A7EE99B1B5546A0004E2505 /* ADJTimerCycle.m in Sources */,
 				CE9ADB5C1AB34C4600D56481 /* RIProductRatings.m in Sources */,
@@ -8821,7 +8809,6 @@
 				9A7EE9881B5546A0004E2505 /* ADJLogger.m in Sources */,
 				CE9ADD521AB6D6E900D56481 /* UIImageView+JA.m in Sources */,
 				CE9ADD531AB6D6E900D56481 /* JAThanksViewController.m in Sources */,
-				CE9ADD541AB6D6E900D56481 /* JAShareActivityProvider.m in Sources */,
 				CE9ADD551AB6D6E900D56481 /* RICountry.m in Sources */,
 				9A7EE99C1B5546A0004E2505 /* ADJTimerCycle.m in Sources */,
 				CE9ADD561AB6D6E900D56481 /* RIProductRatings.m in Sources */,
@@ -9081,7 +9068,6 @@
 				9A7EE9891B5546A0004E2505 /* ADJLogger.m in Sources */,
 				CE9ADF4C1AB6D78200D56481 /* UIImageView+JA.m in Sources */,
 				CE9ADF4D1AB6D78200D56481 /* JAThanksViewController.m in Sources */,
-				CE9ADF4E1AB6D78200D56481 /* JAShareActivityProvider.m in Sources */,
 				CE9ADF4F1AB6D78200D56481 /* RICountry.m in Sources */,
 				9A7EE99D1B5546A0004E2505 /* ADJTimerCycle.m in Sources */,
 				CE9ADF501AB6D78200D56481 /* RIProductRatings.m in Sources */,
