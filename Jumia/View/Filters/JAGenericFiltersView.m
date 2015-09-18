@@ -186,6 +186,10 @@
         RIFilterOption* filterOption = [self.filter.options objectAtIndex:indexPath.row];
         customTextLabel.text = filterOption.name;
         
+        if ([@"rating" isEqualToString:self.filter.uid]) {
+            customTextLabel.text = [NSString stringWithFormat:@"%@", filterOption.average];
+        }
+        
         if (RI_IS_RTL) {
             [clickView flipSubviewAlignments];
             [clickView flipSubviewPositions];
