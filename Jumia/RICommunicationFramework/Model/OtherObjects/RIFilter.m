@@ -39,6 +39,12 @@
         if ([filterOptionJSON objectForKey:@"image_url"]) {
             newFilterOption.colorImageUrl = [filterOptionJSON objectForKey:@"image_url"];
         }
+        if (VALID_NOTEMPTY([filterOptionJSON objectForKey:@"average"], NSNumber)) {
+            newFilterOption.average = [filterOptionJSON objectForKey:@"average"];
+        }
+        if (VALID_NOTEMPTY([filterOptionJSON objectForKey:@"total_products"], NSNumber)) {
+            newFilterOption.totalProducts = [filterOptionJSON objectForKey:@"total_products"];
+        }
     }
     
     //initial state
@@ -100,18 +106,11 @@
                     filterOption.val = [filterOption.val stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
                     filterOption.val = [filterOption.val stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
                     
-                    if ([filter.uid isEqualToString:@"brand"]) {
-                        if (!VALID_NOTEMPTY(brands, NSString)) {
-                            brands = [NSString stringWithFormat:@"&q=%@", filterOption.val];
-                        }else{
-                            brands = [NSString stringWithFormat:@"%@--%@", brands, filterOption.val];
-                        }
-                    }
                     if (ISEMPTY(urlString)) {
                         NSString* filterUidString = filter.uid;
                         urlString = [NSString stringWithFormat:@"%@=%@", filterUidString, filterOption.val];
                     } else {
-                        urlString = [NSString stringWithFormat:@"%@--%@", urlString, filterOption.val];
+                        urlString = [NSString stringWithFormat:@"%@%@%@", urlString, filter.filterSeparator, filterOption.val];
                     }
                 }
             }
@@ -137,7 +136,9 @@
             if (VALID_NOTEMPTY(filterJSON, NSDictionary)) {
                 RIFilter* newFilter = [RIFilter parseFilter:filterJSON];
                 
-                [newFiltersArray addObject:newFilter];
+                if (VALID_NOTEMPTY(newFilter, RIFilter)) {
+                    [newFiltersArray addObject:newFilter];
+                }
             }
         }
     }
@@ -157,6 +158,13 @@
         if ([filterJSON objectForKey:@"name"]) {
             newFilter.name = [filterJSON objectForKey:@"name"];
         }
+        if ([filterJSON objectForKey:@"filter_separator"]) {
+            newFilter.filterSeparator = [filterJSON objectForKey:@"filter_separator"];
+        }
+        if ([[newFilter.name uppercaseString] isEqualToString:[@"category" uppercaseString]]) {
+            return nil;
+        }
+        
         if ([filterJSON objectForKey:@"multi"]) {
             NSNumber* multi = [filterJSON objectForKey:@"multi"];
             newFilter.multi = [multi boolValue];

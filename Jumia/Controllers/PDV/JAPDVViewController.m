@@ -442,7 +442,7 @@ JAActivityViewControllerDelegate
         [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
                                                             object:self.productUrl
                                                           userInfo:userInfo];
-        [self requestReviews];
+        [self requestBundles];
     } andFailureBlock:nil];
     
     [self trackingEventMostViewedBrand];
@@ -556,30 +556,8 @@ JAActivityViewControllerDelegate
     [self.view bringSubviewToFront:self.wizardView];
 }
 
-- (void)requestReviews
-{
-    /*[RIProductRatings getRatingsForProductWithUrl:[NSString stringWithFormat:@"%@?rating=1&page=1", self.product.url] //@"http://www.jumia.com.ng/mobapi/v1.4/Asha-302---Black-7546.html?rating=1&page=1"
-                                     successBlock:^(RIProductRatings *ratings) {
-                                         
-                                         self.commentsCount = ratings.reviews.count;
-                                         
-                                         self.productRatings = ratings;
-     
-                                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-                                         
-                                         [self requestBundles];
-                                         
-                                         [self hideLoading];
-                                     }];*/
-    
-    [self requestBundles];
-    
-    [self hideLoading];
-}
-
 - (void)requestBundles
 {
-    [self showLoading];
     //fill the views
     [RIProduct getBundleWithSku:self.product.sku successBlock:^(RIBundle* bundle) {
         self.productBundle = bundle;
@@ -1570,13 +1548,13 @@ JAActivityViewControllerDelegate
 
 - (void)addToFavoritesPressed:(UIButton*)button
 {
-    button.selected = !button.selected;
     
-    if (button.selected)
+    if (!VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate))
     {
         //add to favorites
         [RIProduct addToFavorites:self.product successBlock:^{
-            //[self hideLoading];
+//            [self hideLoading];
+            button.selected = YES;
             
             [self trackingEventAddToWishlist];
             
@@ -1606,6 +1584,7 @@ JAActivityViewControllerDelegate
         [RIProduct removeFromFavorites:self.product successBlock:^(void) {
             //update favoriteProducts
             //[self hideLoading];
+            button.selected = NO;
             
             [self trackingEventRemoveFromWishlist];
             

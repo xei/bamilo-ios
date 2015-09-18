@@ -226,13 +226,17 @@
             RIFilterOption* option = [filter.options firstObject];
             
             string = [NSString stringWithFormat:@"%ld - %ld", (long)option.lowerValue, (long)option.upperValue];
-            
-        } else {
+        }else{
+        
             NSMutableArray* selectedOptionsNames = [NSMutableArray new];
             
             for (RIFilterOption* option in filter.options) {
                 if (option.selected) {
-                    [selectedOptionsNames addObject:option.name];
+                    NSString *name = option.name;
+                    if ([filter.uid isEqualToString:@"rating"]) {
+                        name = [NSString stringWithFormat:@"%@",option.val];
+                    }
+                    [selectedOptionsNames addObject:name];
                 }
             }
             
