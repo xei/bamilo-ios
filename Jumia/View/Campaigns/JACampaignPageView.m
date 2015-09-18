@@ -260,6 +260,12 @@
     if(VALID_NOTEMPTY(selectedSimple.size, NSString))
     {
         [self.chosenSimpleNames replaceObjectAtIndex:self.lastPressedCampaignProductCell.tag withObject:selectedSimple.size];
+        
+        if (NOT_NIL(self.lastPressedCampaignProductCell.onSelected)) {
+            self.lastPressedCampaignProductCell.chosenSize = selectedSimple.size;
+            self.lastPressedCampaignProductCell.onSelected();
+        }
+        
         [self.collectionView reloadData];
     }
 }
