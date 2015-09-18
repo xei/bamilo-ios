@@ -1147,13 +1147,13 @@
 
     [self showLoading];
     
-    if (!button.selected)
+    if (!VALID_NOTEMPTY(product.favoriteAddDate, NSDate))
     {
         //add to favorites
         [RIProduct getCompleteProductWithUrl:product.url
                                 successBlock:^(id completeProduct) {
                                     [RIProduct addToFavorites:completeProduct successBlock:^{
-                                        button.selected = !button.selected;
+                                        button.selected = YES;
                                         product.favoriteAddDate = [NSDate date];
                                         
                                         [self trackingEventAddToWishList:product];
@@ -1188,7 +1188,7 @@
                                 }];
     } else {
         [RIProduct removeFromFavorites:product successBlock:^(void) {
-            button.selected = !button.selected;
+            button.selected = NO;
             product.favoriteAddDate = nil;
             
             [self trackingEventRemoveFromWishlist:product];

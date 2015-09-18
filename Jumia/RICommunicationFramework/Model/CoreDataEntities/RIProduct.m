@@ -105,7 +105,6 @@
 @synthesize specifications;
 @synthesize seller;
 @synthesize shareUrl;
-@synthesize isWishlisted;
 
 + (NSString *)getCompleteProductWithSku:(NSString*)sku
                            successBlock:(void (^)(id product))successBlock
@@ -604,7 +603,11 @@
         }
         
         if (VALID_NOTEMPTY([dataDic objectForKey:@"is_wishlist"], NSNumber)) {
-            newProduct.isWishlisted = [dataDic objectForKey:@"is_wishlist"];
+            if ([[dataDic objectForKey:@"is_wishlist"] integerValue] ==1) {
+                newProduct.favoriteAddDate = [NSDate new];
+            }else{
+                newProduct.favoriteAddDate = nil;
+            }
         }
         
         if ([dataDic objectForKey:@"offers"]) {
@@ -940,67 +943,79 @@
           successBlock:(void (^)(void))successBlock
        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
-    NSArray* allProducts = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIProduct class])];
-
-    BOOL productExists = NO;
-    for (RIProduct* currentProduct in allProducts) {
-        if ([currentProduct.sku isEqualToString:product.sku]) {
-            
-            //found it, so just change the product by deleting the previous entry
-            product.recentlyViewedDate = currentProduct.recentlyViewedDate;
-            product.favoriteAddDate = [NSDate date];
-            if (product == currentProduct) {
-                [[RIDataBaseWrapper sharedInstance] saveContext];
-            } else {
-                [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
-                [RIProduct saveProduct:product andContext:YES];
-            }
-            productExists = YES;
-            break;
-        }
-    }
-    if (NO == productExists) {
-        product.favoriteAddDate = [NSDate date];
-        [RIProduct saveProduct:product andContext:YES];
-    }
     
-    if (successBlock) {
+    NSString *finalUrl = [NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_ADD_TO_WISHLIST];
+    NSDictionary *parameters = [NSDictionary dictionaryWithObject:product.sku forKey:@"sku"];
+    [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl] parameters:parameters httpMethodPost:YES cacheType:RIURLCacheNoCache cacheTime:RIURLCacheDefaultTime userAgentInjection:[RIApi getCountryUserAgentInjection] successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+        
+        NSArray* allProducts = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIProduct class])];
+        
+        BOOL productExists = NO;
+        for (RIProduct* currentProduct in allProducts) {
+            if ([currentProduct.sku isEqualToString:product.sku]) {
+                
+                //found it, so just change the product by deleting the previous entry
+                product.recentlyViewedDate = currentProduct.recentlyViewedDate;
+                product.favoriteAddDate = [NSDate date];
+                if (product == currentProduct) {
+                    [[RIDataBaseWrapper sharedInstance] saveContext];
+                } else {
+                    [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
+                    [RIProduct saveProduct:product andContext:YES];
+                }
+                productExists = YES;
+                break;
+            }
+        }
+        if (NO == productExists) {
+            product.favoriteAddDate = [NSDate date];
+            [RIProduct saveProduct:product andContext:YES];
+        }
         successBlock();
-    }
+    } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
+        if (errorObject) {
+            failureBlock(apiResponse, [NSArray arrayWithObject:[errorObject localizedDescription]]);
+        }else{
+            failureBlock(apiResponse, nil);
+        }
+    }];
 }
 
 + (void)removeFromFavorites:(RIProduct*)product
                successBlock:(void (^)(void))successBlock
             andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
-    [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
-        BOOL found = NO;
-        for (RIProduct* currentProduct in favoriteProducts) {
-            if ([currentProduct.sku isEqualToString:product.sku]) {
-                //found it
-                
-                if (VALID_NOTEMPTY(currentProduct.favoriteAddDate, NSDate)) {
-                    //do not delete, just remove favorite variable
-                    currentProduct.favoriteAddDate = nil;
-                    found = YES;
-                } else {
-                    [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
+    NSString *finalUrl = [NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_REMOVE_FOM_WISHLIST];
+    NSDictionary *parameters = [NSDictionary dictionaryWithObject:product.sku forKey:@"sku"];
+    [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl] parameters:parameters httpMethodPost:YES cacheType:RIURLCacheNoCache cacheTime:RIURLCacheDefaultTime userAgentInjection:[RIApi getCountryUserAgentInjection] successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+        
+        [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
+            BOOL found = NO;
+            for (RIProduct* currentProduct in favoriteProducts) {
+                if ([currentProduct.sku isEqualToString:product.sku]) {
+                    //found it
+                    
+                    if (VALID_NOTEMPTY(currentProduct.favoriteAddDate, NSDate)) {
+                        //do not delete, just remove favorite variable
+                        currentProduct.favoriteAddDate = nil;
+                        found = YES;
+                    } else {
+                        [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
+                    }
+                    [[RIDataBaseWrapper sharedInstance] saveContext];
                 }
-                [[RIDataBaseWrapper sharedInstance] saveContext];
             }
-        }
-        if (found) {
-            if (successBlock) {
-                successBlock();
-            }
-        }else{
+            successBlock();
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             if (failureBlock) {
-                failureBlock(RIApiResponseUnknownError, nil);
+                failureBlock(apiResponse, error);
             }
-        }
-    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-        if (failureBlock) {
-            failureBlock(apiResponse, error);
+        }];
+    } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
+        if (errorObject) {
+            failureBlock(apiResponse, [NSArray arrayWithObject:[errorObject localizedDescription]]);
+        }else{
+            failureBlock(apiResponse, nil);
         }
     }];
 }
