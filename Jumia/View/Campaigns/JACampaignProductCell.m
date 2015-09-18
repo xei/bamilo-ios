@@ -63,6 +63,8 @@
     self.campaignProduct = campaignProduct;
     self.chosenSize = chosenSize;
     
+    self.onSelected = nil;
+    
     self.backgroundColor = [UIColor clearColor];
     
     self.backgroundContentView.translatesAutoresizingMaskIntoConstraints = YES;
@@ -392,6 +394,13 @@
                 RICampaignProductSimple* simple = [self.campaignProduct.productSimples firstObject];
                 simpleSku = simple.sku;
             } else {
+                if ([self.chosenSize isEqualToString:@""]) {
+                    [self sizeButtonPressed];
+                    self.onSelected = ^{
+                        [self buyButtonPressed];
+                    };
+                    return;
+                }
                 for (RICampaignProductSimple* simple in self.campaignProduct.productSimples) {
                     if ([self.chosenSize isEqualToString:simple.size]) {
                         //found it

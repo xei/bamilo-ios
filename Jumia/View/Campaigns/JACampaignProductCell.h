@@ -27,6 +27,10 @@
 @property (nonatomic, readonly)RICampaignProduct* campaignProduct;
 @property (nonatomic, strong)NSString* chosenSize;
 
+typedef void(^OnSelected)(void);
+
+@property (nonatomic, copy) OnSelected onSelected;
+
 - (void)loadWithCampaignProduct:(RICampaignProduct*)campaignProduct
            elapsedTimeInSeconds:(NSInteger)elapsedTimeInSeconds
                      chosenSize:(NSString*)chosenSize
