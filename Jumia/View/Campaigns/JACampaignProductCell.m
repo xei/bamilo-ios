@@ -396,8 +396,9 @@
             } else {
                 if ([self.chosenSize isEqualToString:@""]) {
                     [self sizeButtonPressed];
+                    __weak typeof(self) weakSelf = self;
                     self.onSelected = ^{
-                        [self buyButtonPressed];
+                        [weakSelf buyButtonPressed];
                     };
                     return;
                 }
