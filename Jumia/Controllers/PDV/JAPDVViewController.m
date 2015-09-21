@@ -163,7 +163,7 @@ JAActivityViewControllerDelegate
 - (void)updatedProduct:(NSNotification*)notification
 {
     NSString* productUrl = notification.object;
-    if ([self.productUrl isEqualToString:productUrl]) {
+    if (!VALID_NOTEMPTY(productUrl, NSString) || [self.productUrl isEqualToString:productUrl]) {
         _needRefreshProduct = YES;
     }
 }
@@ -181,6 +181,16 @@ JAActivityViewControllerDelegate
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updatedProduct:)
                                                  name:kProductChangedNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self  
+                                             selector:@selector(updatedProduct:)
+                                                 name:kUserLoggedInNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updatedProduct:)
+                                                 name:kUserLoggedOutNotification
                                                object:nil];
 }
 

@@ -270,6 +270,16 @@ typedef void (^ProcessActionBlock)(void);
                                              selector:@selector(updatedProduct:)
                                                  name:kProductChangedNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updatedProduct:)
+                                                 name:kUserLoggedInNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updatedProduct:)
+                                                 name:kUserLoggedOutNotification
+                                               object:nil];
 }
 
 - (void)viewDidLayoutSubviews
@@ -1081,6 +1091,11 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)updatedProduct:(NSNotification *)notification
 {
+    if (!VALID_NOTEMPTY(notification.object, NSString)) {
+        [self resetCatalog];
+        [self loadMoreProducts];
+        return;
+    }
     NSString* productUrl = notification.object;
     int i = 0;
     for(; i < self.productsArray.count; i++)
