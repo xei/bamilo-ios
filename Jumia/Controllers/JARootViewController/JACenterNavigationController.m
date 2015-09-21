@@ -493,12 +493,22 @@
 #pragma mark Favorites Screen
 - (void)showFavoritesViewController:(NSNotification*)notification
 {
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAMyFavouritesViewController class]])
-    {
-        JAMyFavouritesViewController *myFavouritesViewController = [[JAMyFavouritesViewController alloc]initWithNibName:@"JAMyFavouritesViewController" bundle:nil];
-
-        [self pushViewController:myFavouritesViewController animated:NO];
+    if(![RICustomer checkIfUserIsLogged]) {
+        NSNotification *nextNotification = [NSNotification notificationWithName:kShowFavoritesScreenNotification object:nil userInfo:nil];
+        
+        NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
+        [userInfo setObject:nextNotification forKey:@"notification"];
+        [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfo];
+        return;
+    }else{
+        UIViewController *topViewController = [self topViewController];
+        if (![topViewController isKindOfClass:[JAMyFavouritesViewController class]])
+        {
+            JAMyFavouritesViewController *myFavouritesViewController = [[JAMyFavouritesViewController alloc]initWithNibName:@"JAMyFavouritesViewController" bundle:nil];
+            
+            [self pushViewController:myFavouritesViewController animated:NO];
+        }
     }
 }
 
