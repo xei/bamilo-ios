@@ -204,7 +204,12 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *
  */
 + (void)getFavoriteProductsWithSuccessBlock:(void (^)(NSArray *favoriteProducts))successBlock
-                            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+                               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+
++ (void)getFavoriteProductsForPage:(NSInteger)page
+                          maxItems:(NSInteger)maxItems
+                      SuccessBlock:(void (^)(NSArray *favoriteProducts))successBlock
+                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
  *  Method to add a product to favorites list (and save it in coredata)

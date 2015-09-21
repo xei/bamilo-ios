@@ -741,7 +741,6 @@
             
             //found it, so just change the product by deleting the previous entry
             product.recentlyViewedDate = [NSDate date];
-            product.favoriteAddDate = currentProduct.favoriteAddDate;
             [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
             [RIProduct saveProduct:product andContext:YES];
             productExists = YES;
@@ -920,23 +919,59 @@
 #pragma mark - Favorites
 
 + (void)getFavoriteProductsWithSuccessBlock:(void (^)(NSArray *favoriteProducts))successBlock
-                            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
-    NSArray* productsWithVariable = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIProduct class]) withPropertyName:@"favoriteAddDate"];
-    NSMutableArray* favoriteProducts = [NSMutableArray new];
-    for (RIProduct* product in productsWithVariable) {
-        if (VALID_NOTEMPTY(product.favoriteAddDate, NSDate)) {
-            [favoriteProducts addObject:product];
+    [RIProduct getFavoriteProductsForPage:-1 maxItems:-1 SuccessBlock:successBlock andFailureBlock:failureBlock];
+}
+
++ (void)getFavoriteProductsForPage:(NSInteger)page
+                          maxItems:(NSInteger)maxItems
+                      SuccessBlock:(void (^)(NSArray *favoriteProducts))successBlock
+                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+{
+    NSString *finalUrl = [NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_WISHLIST];
+    NSMutableDictionary *parameters = [NSMutableDictionary new];
+    if (page != -1) {
+        [parameters setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
+    }
+    if (maxItems != -1) {
+        [parameters setObject:[NSNumber numberWithInteger:maxItems] forKey:@"per_page"];
+    }
+    [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl] parameters:parameters httpMethodPost:YES cacheType:RIURLCacheNoCache cacheTime:RIURLCacheDefaultTime userAgentInjection:[RIApi getCountryUserAgentInjection] successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+        if (VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary)) {
+            NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
+            if (VALID_NOTEMPTY([metadata objectForKey:@"products"], NSArray)) {
+                NSArray *productsArray = [metadata objectForKey:@"products"];
+                NSMutableArray *favoriteProducts = [NSMutableArray new];
+                for (NSDictionary *productDict in productsArray) {
+                    if (VALID_NOTEMPTY(productDict, NSDictionary)) {
+                        RIProduct *product = [RIProduct parseProduct:productDict country:[RICountryConfiguration getCurrentConfiguration]];
+                        if (VALID_NOTEMPTY(product, RIProduct)) {
+                            [favoriteProducts addObject:product];
+                            [RIProduct saveProduct:product andContext:YES];
+                        }
+                    }
+                }
+                
+                if (VALID(favoriteProducts, NSArray) && successBlock) {
+                    NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"favoriteAddDate" ascending:NO];
+                    NSArray *sorted = [favoriteProducts sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateDescriptor]];
+                    successBlock(sorted);
+                    return;
+                }
+            }
         }
-    }
-    
-    if (VALID(favoriteProducts, NSArray) && successBlock) {
-        NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"favoriteAddDate" ascending:NO];
-        NSArray *sorted = [favoriteProducts sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateDescriptor]];
-        successBlock(sorted);
-    } else if (failureBlock) {
-        failureBlock(RIApiResponseUnknownError, nil);
-    }
+        if (failureBlock) {
+            failureBlock(RIApiResponseUnknownError, nil);
+        }
+        
+    } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
+        if (errorObject) {
+            failureBlock(apiResponse, [NSArray arrayWithObject:[errorObject localizedDescription]]);
+        }else{
+            failureBlock(apiResponse, nil);
+        }
+    }];
 }
 
 + (void)addToFavorites:(RIProduct*)product
@@ -976,6 +1011,14 @@
         if (errorObject) {
             failureBlock(apiResponse, [NSArray arrayWithObject:[errorObject localizedDescription]]);
         }else{
+            if (VALID_NOTEMPTY([errorJsonObject objectForKey:@"messages"], NSDictionary)) {
+                NSDictionary *messages = [errorJsonObject objectForKey:@"messages"];
+                if (VALID_NOTEMPTY([messages objectForKey:@"error"], NSArray)) {
+                    NSArray *errors = [messages objectForKey:@"error"];
+                    failureBlock(apiResponse, errors);
+                    return;
+                }
+            }
             failureBlock(apiResponse, nil);
         }
     }];
