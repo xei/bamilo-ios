@@ -59,6 +59,10 @@
     }
     CGFloat currentX = 6.0f;
     
+    if (self.frame.size.width-currentX > componentWidth*self.teaserGrouping.teaserComponents.count) {
+        componentWidth = (self.frame.size.width-currentX*2) / self.teaserGrouping.teaserComponents.count;
+    }
+    
     for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
         RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
         
