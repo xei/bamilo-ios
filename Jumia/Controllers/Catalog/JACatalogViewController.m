@@ -33,8 +33,14 @@
 #define JACatalogViewControllerMaxProducts 36
 #define JACatalogViewControllerMaxProducts_ipad 46
 
+typedef void (^ProcessActionBlock)(void);
+
 @interface JACatalogViewController ()
 <JAFilteredNoResulsViewDelegate>
+{
+    BOOL _needRefreshProduct;
+    ProcessActionBlock _processActionBlock;
+}
 
 @property (nonatomic, strong)JACatalogWizardView* wizardView;
 @property (nonatomic, strong) JAFilteredNoResultsView *filteredNoResultsView;
@@ -280,6 +286,39 @@
     [self trackingEventScreenName:@"ShopCatalogList"];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductChangedNotification object:nil];
 }
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    BOOL alreadyShowedWizardCatalog = [[NSUserDefaults standardUserDefaults] boolForKey:kJACatalogWizardUserDefaultsKey];
+    if(alreadyShowedWizardCatalog == NO)
+    {
+        self.wizardView = [[JACatalogWizardView alloc] initWithFrame:self.view.bounds];
+        [self.view addSubview:self.wizardView];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJACatalogWizardUserDefaultsKey];
+    }
+    
+    [self changeViewToInterfaceOrientation:self.interfaceOrientation];
+    
+    if (VALID_NOTEMPTY(self.undefinedBackup, RIUndefinedSearchTerm)){
+        
+        [self.undefinedView removeFromSuperview];
+        [self addUndefinedSearchView:self.undefinedBackup frame:CGRectMake(6.0f,
+                                                                           self.catalogTopView.frame.origin.y,
+                                                                           [self viewBounds].size.width - 12.0f,
+                                                                           [self viewBounds].size.height)];
+    }
+    
+    [self.catalogTopView repositionForWidth:self.view.frame.size.width];
+    
+    if (_needRefreshProduct) {
+        
+        if (_processActionBlock) {
+            _processActionBlock();
+        }
+    }
+}
  
 - (void)setupViews
 {
@@ -395,32 +434,6 @@
          
          [self hideLoading];
      }];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    BOOL alreadyShowedWizardCatalog = [[NSUserDefaults standardUserDefaults] boolForKey:kJACatalogWizardUserDefaultsKey];
-    if(alreadyShowedWizardCatalog == NO)
-    {
-        self.wizardView = [[JACatalogWizardView alloc] initWithFrame:self.view.bounds];
-        [self.view addSubview:self.wizardView];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJACatalogWizardUserDefaultsKey];
-    }
-    
-    [self changeViewToInterfaceOrientation:self.interfaceOrientation];
-    
-    if (VALID_NOTEMPTY(self.undefinedBackup, RIUndefinedSearchTerm)){
-        
-        [self.undefinedView removeFromSuperview];
-        [self addUndefinedSearchView:self.undefinedBackup frame:CGRectMake(6.0f,
-                                                                           self.catalogTopView.frame.origin.y,
-                                                                           [self viewBounds].size.width - 12.0f,
-                                                                           [self viewBounds].size.height)];
-    }
-    
-    [self.catalogTopView repositionForWidth:self.view.frame.size.width];
 }
 
 - (void)resetCatalog
@@ -1136,16 +1149,32 @@
 
 - (void)addToFavoritesPressed:(UIButton*)button
 {
+    [self showLoading];
     self.backupButton = button;
     
-    [self continueAddingToFavouritesWithButton:self.backupButton];
-}
-
-- (void)continueAddingToFavouritesWithButton:(UIButton *)button
-{
+    if(![RICustomer checkIfUserIsLogged]) {
+        [self hideLoading];
+        _needRefreshProduct = YES;
+        
+        __weak typeof (self) weakSelf = self;
+        _processActionBlock = ^(void){
+            _needRefreshProduct = NO;
+            if(![RICustomer checkIfUserIsLogged]) {
+                return;
+            }else{
+                [weakSelf resetCatalog];
+                [weakSelf loadMoreProducts];
+            }
+        };
+        
+        NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
+        [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfoLogin];
+        return;
+    }
+    
     RIProduct* product = [self.productsArray objectAtIndex:button.tag];
 
-    [self showLoading];
     
     if (!VALID_NOTEMPTY(product.favoriteAddDate, NSDate))
     {

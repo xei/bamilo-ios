@@ -1548,21 +1548,26 @@ JAActivityViewControllerDelegate
 
 - (void)addToFavoritesPressed:(UIButton*)button
 {
+    [self showLoading];
+    if(![RICustomer checkIfUserIsLogged]) {
+        [self hideLoading];
+        _needRefreshProduct = YES;
+        NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
+        [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfoLogin];
+        return;
+    }
     
     if (!VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate))
     {
         //add to favorites
         [RIProduct addToFavorites:self.product successBlock:^{
-//            [self hideLoading];
+            [self hideLoading];
             button.selected = YES;
             
-            [self trackingEventAddToWishlist];
+            self.product.favoriteAddDate = [NSDate date];
             
-            if (button.selected) {
-                self.product.favoriteAddDate = [NSDate date];
-            } else {
-                self.product.favoriteAddDate = nil;
-            }
+            [self trackingEventAddToWishlist];
             
             NSDictionary *userInfo = nil;
             if (self.product.favoriteAddDate) {
@@ -1576,6 +1581,7 @@ JAActivityViewControllerDelegate
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             
+            [self hideLoading];
             [self showMessage:STRING_ERROR_ADDING_TO_WISHLIST success:NO];
         }];
     }
@@ -1583,8 +1589,10 @@ JAActivityViewControllerDelegate
     {
         [RIProduct removeFromFavorites:self.product successBlock:^(void) {
             //update favoriteProducts
-            //[self hideLoading];
+            [self hideLoading];
             button.selected = NO;
+            
+            self.product.favoriteAddDate = nil;
             
             [self trackingEventRemoveFromWishlist];
             
@@ -1598,6 +1606,7 @@ JAActivityViewControllerDelegate
                                                               userInfo:userInfo];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             
+            [self hideLoading];
             [self showMessage:STRING_ERROR_ADDING_TO_WISHLIST success:NO];
         }];
     }
