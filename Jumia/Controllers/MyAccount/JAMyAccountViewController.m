@@ -593,7 +593,7 @@
     UIActivity *whatsAppActivity = [[JBWhatsAppActivity alloc] init];
     WhatsAppMessage *whatsAppMsg;
     
-    JAActivityViewController  *activityController = [[JAActivityViewController alloc] init];
+    JAActivityViewController  *activityController = [[JAActivityViewController alloc] initWithActivityItems:@[] applicationActivities:appActivities];
     NSString *shareTheAppString = [[NSString alloc] initWithString:[NSString stringWithFormat:STRING_SHARE_APP, APP_NAME]];
     if(!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")){
         
