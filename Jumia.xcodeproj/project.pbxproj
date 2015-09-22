@@ -379,6 +379,10 @@
 		9A1737311B68EBAF004905B4 /* JACheckoutBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */; };
 		9A1737321B68EBAF004905B4 /* JACheckoutBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */; };
 		9A1737331B68EBB0004905B4 /* JACheckoutBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */; };
+		9A189E441BB190020039BC14 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
+		9A189E451BB190020039BC14 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
+		9A189E461BB190030039BC14 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
+		9A189E471BB190030039BC14 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
 		9A2036AE1B21DE0F00F36F55 /* JANewRatingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A2036AD1B21DE0F00F36F55 /* JANewRatingViewController.xib */; };
 		9A2036AF1B21DFC200F36F55 /* JANewRatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E4C1A6515F600F3E92D /* JANewRatingViewController.m */; };
 		9A2036B01B21ED7100F36F55 /* JACartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A2D1B18B3C50028105D /* JACartViewController.xib */; };
@@ -8032,6 +8036,7 @@
 				CEA86E011A49D247000032AD /* JACampaignBannerCell.m in Sources */,
 				f30fa9e7d7b939469d4b3c6b /* JAForgotPasswordViewController.m in Sources */,
 				CEABEEC81A126652000D0CF8 /* JAGenericFiltersView.m in Sources */,
+				9A189E471BB190030039BC14 /* RICatalog.m in Sources */,
 				51686b7e16269d6e716c8f70 /* RIOperation.m in Sources */,
 				CEED47311A7B973B006D9CE7 /* JAPDVBundleSingleItem.m in Sources */,
 				e3ca2d59f72455e53096afbc /* UIImageView+JA.m in Sources */,
@@ -8503,6 +8508,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A189E461BB190030039BC14 /* RICatalog.m in Sources */,
 				CE9ADB351AB34C4600D56481 /* RIProductSimple.m in Sources */,
 				CE9ADB361AB34C4600D56481 /* JACartListHeaderView.m in Sources */,
 				CE9ADB371AB34C4600D56481 /* RINewsletterCategory.m in Sources */,
@@ -8763,6 +8769,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A189E451BB190020039BC14 /* RICatalog.m in Sources */,
 				CE9ADD2F1AB6D6E900D56481 /* RIProductSimple.m in Sources */,
 				CE9ADD301AB6D6E900D56481 /* JACartListHeaderView.m in Sources */,
 				CE9ADD311AB6D6E900D56481 /* RINewsletterCategory.m in Sources */,
@@ -9023,6 +9030,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A189E441BB190020039BC14 /* RICatalog.m in Sources */,
 				CE9ADF291AB6D78200D56481 /* RIProductSimple.m in Sources */,
 				CE9ADF2A1AB6D78200D56481 /* JACartListHeaderView.m in Sources */,
 				CE9ADF2B1AB6D78200D56481 /* RINewsletterCategory.m in Sources */,
