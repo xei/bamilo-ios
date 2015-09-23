@@ -326,6 +326,11 @@
     }
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return STRING_REMOVE_FILTER;
+}
+
 - (BOOL)rowHasFiltersSelected:(NSInteger)row
 {
     RIFilter* filter = [self.filtersArray objectAtIndex:row];
