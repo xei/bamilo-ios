@@ -444,6 +444,40 @@
     
 }
 
++ (NSDictionary *)toJSON:(RICustomer*)customer {
+    NSMutableDictionary * json = [[NSMutableDictionary alloc] init];
+    
+    [json setValue:customer.idCustomer forKey:@"id"];
+    
+    [json setValue:customer.email forKey:@"email"];
+    
+    [json setValue:customer.firstName forKey:@"first_name"];
+    
+    [json setValue:customer.lastName forKey:@"last_name"];
+    
+    [json setValue:customer.birthday forKey:@"birthday"];
+    
+    [json setValue:customer.gender forKey:@"gender"];
+    
+    [json setValue:customer.loginMethod forKey:@"login_method"];
+    
+    [json setValue:customer.password forKey:@"password"];
+    
+    [json setValue:customer.plainPassword forKey:@"plain_password"];
+    
+    [json setValue:customer.createdAt forKey:@"created_at"];
+    
+    NSMutableArray * addresses = [[NSMutableArray alloc] init];
+    
+    for ( RIAddress* addr in customer.addresses) {
+        [addresses addObject:[RIAddress toJSON:addr]];
+    }
+    
+    [json setValue:addresses forKey:@"address_list"];
+    
+    return json;
+}
+
 #pragma mark - Save newsletter preferences
 
 + (void)updateCustomerNewsletterWithJson:(NSDictionary *)json
