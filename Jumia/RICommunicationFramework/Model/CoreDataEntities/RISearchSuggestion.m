@@ -189,7 +189,7 @@
                      successBlock:(void (^)(RICatalog *catalog))successBlock
                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
 {
-    NSString *tempUrl = [NSString stringWithFormat:@"%@%@search/", [RIApi getCountryUrlInUse], RI_API_VERSION];
+    NSString *tempUrl = [NSString stringWithFormat:@"%@%@search/find/", [RIApi getCountryUrlInUse], RI_API_VERSION];
     
     NSString *sortingString = [RIProduct urlComponentForSortingMethod:sortingMethod];
     
