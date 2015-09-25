@@ -40,4 +40,7 @@
 
 - (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize;
 
+- (void)setPriceWithNewValue:(NSString *)newValue
+                 andOldValue:(NSString *)oldValue;
+
 @end

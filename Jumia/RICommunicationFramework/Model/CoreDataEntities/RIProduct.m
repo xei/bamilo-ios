@@ -105,6 +105,7 @@
 @synthesize specifications;
 @synthesize seller;
 @synthesize shareUrl;
+@synthesize priceRange;
 
 + (NSString *)getCompleteProductWithSku:(NSString*)sku
                            successBlock:(void (^)(id product))successBlock
@@ -375,6 +376,7 @@
     NSDictionary *dataDic = [productJSON copy];
     
     if (VALID_NOTEMPTY(dataDic, NSDictionary)) {
+        
         if ([dataDic objectForKey:@"sku"]) {
             newProduct.sku = [dataDic objectForKey:@"sku"];
         }
@@ -428,6 +430,16 @@
 
         if ([dataDic objectForKey:@"price_converted"]) {
             newProduct.priceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"price_converted"] floatValue]];
+        }
+        
+        if ([dataDic objectForKey:@"price_range"]) {
+            
+            NSArray * separatedNumbers = [[NSString stringWithString:[dataDic objectForKey:@"price_range"]]
+                                          componentsSeparatedByString:@"-"];
+            
+            newProduct.priceRange =[NSString stringWithFormat:@"%@ - %@",
+                                    [RICountryConfiguration formatPrice:[separatedNumbers firstObject] country:country],
+                                    [RICountryConfiguration formatPrice:[separatedNumbers lastObject] country:country]];
         }
 
         if ([dataDic objectForKey:@"special_price"]) {

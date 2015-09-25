@@ -255,8 +255,13 @@
     }
     
     
-    [self setPriceWithNewValue:product.specialPriceFormatted
-                   andOldValue:product.priceFormatted];
+    if (VALID_NOTEMPTY(product.priceRange, NSString)) {
+        [self setPriceWithNewValue:product.priceRange
+                        andOldValue:nil];
+    } else {
+        [self setPriceWithNewValue:product.specialPriceFormatted
+                       andOldValue:product.priceFormatted];
+    }
     
     [self setNumberOfStars:[product.avr integerValue]];
     
@@ -401,8 +406,13 @@
                                      subView.frame.size.height)];
     }
     
-    [self setPriceWithNewValue:product.specialPriceFormatted
-                   andOldValue:product.priceFormatted];
+    if (VALID_NOTEMPTY(product.priceRange, NSString)) {
+        [self setPriceWithNewValue:product.priceRange
+                        andOldValue:nil];
+    } else {
+        [self setPriceWithNewValue:product.specialPriceFormatted
+                       andOldValue:product.priceFormatted];
+    }
     
     [self setNumberOfStars:[product.avr integerValue]];
     

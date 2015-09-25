@@ -1422,6 +1422,9 @@ JAActivityViewControllerDelegate
 {
     self.currentSimple = [self.pickerDataSource objectAtIndex:selectedRow];
     
+    [self.productInfoSection setPriceWithNewValue:self.currentSimple.specialPriceFormatted
+                                      andOldValue:self.currentSimple.priceFormatted];
+    
     NSString* option = self.currentSimple.variation;
     if (ISEMPTY(option)) {
         option = @"";
