@@ -692,7 +692,7 @@ typedef void (^ProcessActionBlock)(void);
             }
             else if(RIApiResponseAPIError == apiResponse)
             {
-                [self showNoResultsView:CGRectGetMaxY(self.catalogTopView.frame) undefinedSearchTerm:nil];
+                [self showNoResultsView:CGRectGetMaxY(self.catalogTopView.frame) undefinedSearchTerm:undefSearchTerm];
             }
         }
     }
