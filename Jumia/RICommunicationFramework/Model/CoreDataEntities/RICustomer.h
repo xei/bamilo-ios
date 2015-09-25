@@ -90,6 +90,14 @@
 
 + (RICustomer *)parseCustomerWithJson:(NSDictionary *)json plainPassword:(NSString*)plainPassword loginMethod:(NSString*)loginMethod;
 
+/**
+ *  Method to create a parse-able dictionary representing a customer
+ *
+ *
+ *  @return Dictionary representing customer
+ */
++ (NSDictionary *)toJSON:(RICustomer*)customer;
+
 /** Method to cancel the request
  *
  * @param the operationID

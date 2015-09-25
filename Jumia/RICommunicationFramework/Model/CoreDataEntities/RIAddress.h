@@ -51,6 +51,8 @@
 
 + (RIAddress*)parseAddressFromCustomer:(NSString*)uid jsonObject:(NSDictionary*)addressJSON;
 
++ (NSDictionary*)toJSON:(RIAddress*)address;
+
 + (void)saveAddress:(RIAddress *)address andContext:(BOOL)save;
 
 @end
