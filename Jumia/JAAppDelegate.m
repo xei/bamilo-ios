@@ -142,7 +142,9 @@
                              [UIColor orangeColor], NSForegroundColorAttributeName,
                              [UIFont fontWithName:kFontLightName size:18.0f], NSFontAttributeName,nil] forState:UIControlStateSelected];
     
-    NSDictionary *cookieProperties = [[NSUserDefaults standardUserDefaults] objectForKey:kPHPSESSIDCookie];
+    
+    NSString* phpSessIDCookie = [NSString stringWithFormat:@"%@%@",kPHPSESSIDCookie,[RIApi getCountryIsoInUse]];
+    NSDictionary *cookieProperties = [[NSUserDefaults standardUserDefaults] objectForKey:phpSessIDCookie];
     if(VALID_NOTEMPTY(cookieProperties, NSDictionary))
     {
         NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
