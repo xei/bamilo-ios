@@ -28,6 +28,9 @@
 @end
 
 @implementation JAMainFiltersViewController
+{
+@private BOOL swipping;
+}
 
 - (void)viewDidLoad
 {
@@ -210,6 +213,7 @@
     
     [cell setupWithFilter:filter options:[self stringWithSelectedOptionsFromFilter:filter] width:tableView.frame.size.width];
     cell.clickView.tag = indexPath.row;
+    [cell.clickView setEnabled:NO];
     [cell.clickView addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
@@ -264,6 +268,11 @@
         sender.selected = YES;
         self.lastSelectedClickView = sender;
     }
+    
+    if(swipping){
+        return;
+    }
+    
     [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
 }
 
@@ -319,6 +328,7 @@
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    swipping = YES;
     if ([self rowHasFiltersSelected:indexPath.row]) {
         return UITableViewCellEditingStyleDelete;
     } else {
