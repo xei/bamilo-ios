@@ -16,6 +16,7 @@
 #import "RICountry.h"
 #import "RICountryConfiguration.h"
 #import "RIStaticBlockIndex.h"
+#import "RICustomer.h"
 
 @implementation RIApi
 
@@ -51,6 +52,17 @@
     }
     else
     {
+        //save customer information so the app will remember him if he returns to the current
+        //country
+        [RICustomer getCustomerWithSuccessBlock:^(id customer){
+        
+            [[NSUserDefaults standardUserDefaults] setObject:[RICustomer toJSON:customer]
+                                forKey:[NSString stringWithFormat:@"customer_%@",[RIApi getCountryIsoInUse]]];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages){
+        }];
+        
         [[RIDataBaseWrapper sharedInstance] resetApplicationModel];
         url = country.url;
         countryIso = country.countryIso;
@@ -145,6 +157,15 @@
                                                                       //save new api in coredata
                                                                       [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RIApi class])];
                                                                       [RIApi saveApi:newApi andContext:YES];
+                                                                      
+                                                                      NSString* customer = [NSString stringWithFormat:@"customer_%@",newApi.countryIso];
+                                                                      NSDictionary* dict = [[NSUserDefaults standardUserDefaults] objectForKey:customer];
+                                                                      if (VALID_NOTEMPTY(dict,NSDictionary)) {
+                                                                          [RICustomer parseCustomerWithJson:dict
+                                                                                              plainPassword:[dict objectForKeyedSubscript:@"plain_password"]
+                                                                                              loginMethod:[dict objectForKeyedSubscript:@"login_method"]];
+                                                                      }
+                                                                      
                                                                   }
                                                                   
                                                                   successBlock(newApi, hasUpdate, isUpdateMandatory);

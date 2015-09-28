@@ -19,6 +19,9 @@
 #import "JAProductListFlowLayout.h"
 
 @interface JAMyFavouritesViewController ()
+{
+    BOOL _needRefreshProduct;
+}
 
 @property (weak, nonatomic) IBOutlet UIView *emptyFavoritesView;
 @property (weak, nonatomic) IBOutlet UILabel *emptyFavoritesLabel;
@@ -206,6 +209,20 @@
 - (void)getFavorites
 {
     [self showLoading];
+    
+    if(![RICustomer checkIfUserIsLogged]) {
+        [self hideLoading];
+        if (_needRefreshProduct) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+            return;
+        }
+        _needRefreshProduct = YES;
+        NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
+        [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfoLogin];
+        return;
+    }
+    _needRefreshProduct = NO;
     
     [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
         CGFloat totalWishlistValue = 0.0f;

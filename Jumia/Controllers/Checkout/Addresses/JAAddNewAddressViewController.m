@@ -162,7 +162,7 @@ JAPickerDelegate>
     
     typedef void (^GetBillingDynamicFormBlock)(void);
     GetBillingDynamicFormBlock getBillingDynamicFormBlock = ^void{
-        [RIForm getForm:@"addresscreate"
+        [RIForm getForm:@"address"
            forceRequest:YES
            successBlock:^(RIForm *form)
          {
@@ -198,7 +198,7 @@ JAPickerDelegate>
          }];
     };
     
-    [RIForm getForm:@"addresscreate"
+    [RIForm getForm:@"address"
        forceRequest:YES
        successBlock:^(RIForm *form)
     {

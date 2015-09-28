@@ -252,7 +252,7 @@
            self.numberOfFormsToLoad--;
        }];
     
-    [RIForm getForm:@"registersignup"
+    [RIForm getForm:@"register_signup"
        successBlock:^(RIForm *form) {
            
            self.signupDynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:7.0f];
@@ -427,7 +427,6 @@
     UIImage *facebookHighlightImage = [UIImage imageNamed:[NSString stringWithFormat:facebookImageNameFormatter, @"highlighted"]];
     
     CGFloat centerWidth = 54.0f;
-    CGFloat halfSeparatorWidth = (buttonWidth - centerWidth) / 2;
     if ([[RICountryConfiguration getCurrentConfiguration].facebookAvailable boolValue]){
         [self.facebookLoginSeparator setFrame:CGRectMake(6.0f, self.loginFormHeight, buttonWidth, self.facebookLoginSeparatorLabel.frame.size.height)];
         CGFloat separatorWidth = self.facebookLoginSeparator.width/2 - self.facebookLoginSeparatorLabel.width/2 - 15;

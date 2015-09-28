@@ -247,7 +247,7 @@
                                                                       RICustomer *customer = [RICustomer parseCustomerWithJson:metadata plainPassword:password loginMethod:@"normal"];
                                                                       successBlock(customer);
                                                                   }
-                                                                  else if([@"registersignup" isEqualToString:form.formIndex.uid])
+                                                                  else if([@"register_signup" isEqualToString:form.formIndex.uid])
                                                                   {
                                                                       NSDictionary *data = [metadata copy];
                                                                       if (VALID_NOTEMPTY([metadata objectForKey:@"data"], NSDictionary)) {
@@ -263,7 +263,7 @@
                                                                           successBlock([successDic copy]);
                                                                       }
                                                                   }
-                                                                  else if([@"addressedit" isEqualToString:form.formIndex.uid] || [@"addresscreate" isEqualToString:form.formIndex.uid])
+                                                                  else if([@"address" isEqualToString:form.formIndex.uid] || [@"address" isEqualToString:form.formIndex.uid])
                                                                   {
                                                                       responseProcessed = YES;
                                                                       RICheckout *checkout = [RICheckout parseCheckout:metadata country:nil];
