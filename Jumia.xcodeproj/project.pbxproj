@@ -1484,6 +1484,10 @@
 		CE3AF90E19DBF68400D8C51B /* RICampaign.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF90D19DBF68400D8C51B /* RICampaign.m */; };
 		CE3AF91219DD5D6700D8C51B /* JAPromotionPopUp.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF91119DD5D6700D8C51B /* JAPromotionPopUp.m */; };
 		CE3AF91A19DD8BC400D8C51B /* RIPromotion.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF91919DD8BC400D8C51B /* RIPromotion.m */; };
+		CE3E44741BB40A3500697352 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
+		CE3E44751BB40A3500697352 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
+		CE3E44761BB40A3600697352 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
+		CE3E44771BB40A3600697352 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
 		CE3FC5A71990E209003B4A27 /* JAPickerScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3FC5A61990E209003B4A27 /* JAPickerScrollView.m */; };
 		CE3FC5AE1990E25C003B4A27 /* JACatalogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3FC5AD1990E25C003B4A27 /* JACatalogViewController.m */; };
 		CE4054B71B29EFB300E9CD1A /* JARecentlyViewedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE4054B61B29EFB300E9CD1A /* JARecentlyViewedViewController.xib */; };
@@ -8033,6 +8037,7 @@
 				CEA86E011A49D247000032AD /* JACampaignBannerCell.m in Sources */,
 				f30fa9e7d7b939469d4b3c6b /* JAForgotPasswordViewController.m in Sources */,
 				CEABEEC81A126652000D0CF8 /* JAGenericFiltersView.m in Sources */,
+				CE3E44741BB40A3500697352 /* RICatalog.m in Sources */,
 				51686b7e16269d6e716c8f70 /* RIOperation.m in Sources */,
 				CEED47311A7B973B006D9CE7 /* JAPDVBundleSingleItem.m in Sources */,
 				e3ca2d59f72455e53096afbc /* UIImageView+JA.m in Sources */,
@@ -8504,6 +8509,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE3E44751BB40A3500697352 /* RICatalog.m in Sources */,
 				CE9ADB351AB34C4600D56481 /* RIProductSimple.m in Sources */,
 				CE9ADB361AB34C4600D56481 /* JACartListHeaderView.m in Sources */,
 				CE9ADB371AB34C4600D56481 /* RINewsletterCategory.m in Sources */,
@@ -8764,6 +8770,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE3E44761BB40A3600697352 /* RICatalog.m in Sources */,
 				CE9ADD2F1AB6D6E900D56481 /* RIProductSimple.m in Sources */,
 				CE9ADD301AB6D6E900D56481 /* JACartListHeaderView.m in Sources */,
 				CE9ADD311AB6D6E900D56481 /* RINewsletterCategory.m in Sources */,
@@ -9024,6 +9031,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE3E44771BB40A3600697352 /* RICatalog.m in Sources */,
 				CE9ADF291AB6D78200D56481 /* RIProductSimple.m in Sources */,
 				CE9ADF2A1AB6D78200D56481 /* JACartListHeaderView.m in Sources */,
 				CE9ADF2B1AB6D78200D56481 /* RINewsletterCategory.m in Sources */,

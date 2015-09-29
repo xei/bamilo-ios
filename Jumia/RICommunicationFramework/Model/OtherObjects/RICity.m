@@ -17,7 +17,7 @@
 {
     if(VALID_NOTEMPTY(regionId, NSString))
     {
-        url = [url stringByReplacingOccurrencesOfString:@"fk_customer_address_region" withString:regionId];
+        url = [url stringByReplacingOccurrencesOfString:@"--region_id--" withString:regionId];
     }
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
@@ -68,19 +68,17 @@
 {
     RICity* newCity = [[RICity alloc] init];
     
-    if(VALID_NOTEMPTY([cityObject objectForKey:@"id"], NSString))
-    {
-        newCity.uid = [cityObject objectForKey:@"id"];
-    }
-    
     if(VALID_NOTEMPTY([cityObject objectForKey:@"value"], NSString))
     {
         newCity.value = [cityObject objectForKey:@"value"];
+    } else if (VALID_NOTEMPTY([cityObject objectForKey:@"value"], NSNumber)) {
+        NSNumber* value = [cityObject objectForKey:@"value"];
+        newCity.value = [value stringValue];
     }
     
-    if(VALID_NOTEMPTY([cityObject objectForKey:@"group"], NSString))
+    if(VALID_NOTEMPTY([cityObject objectForKey:@"label"], NSString))
     {
-        newCity.group = [cityObject objectForKey:@"group"];
+        newCity.label = [cityObject objectForKey:@"label"];
     }
     
     return newCity;

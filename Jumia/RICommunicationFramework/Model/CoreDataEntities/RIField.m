@@ -22,7 +22,6 @@
 @dynamic required;
 @dynamic requiredMessage;
 @dynamic type;
-@dynamic uid;
 @dynamic value;
 @dynamic dataSet;
 @dynamic apiCall;
@@ -33,7 +32,9 @@
 @dynamic linkUrl;
 @dynamic pattern;
 @dynamic patternMessage;
-@dynamic relatedField;
+@dynamic relatedFields;
+@dynamic parentField;
+@dynamic checked;
 
 + (RIField *)parseField:(NSDictionary *)fieldJSON;
 {
@@ -45,25 +46,45 @@
     if ([fieldJSON objectForKey:@"type"]) {
         newField.type = [fieldJSON objectForKey:@"type"];
     }
-
-    id value = [fieldJSON objectForKey:@"value"];
-    if (VALID(value, NSString))
-    {
-        newField.value = (NSString *)value;
-    }
-    else if(VALID(value, NSNumber))
-    {
-        newField.value = [((NSNumber *)value) stringValue];
-    }
-    
-    if ([fieldJSON objectForKey:@"id"]) {
-        newField.uid = [fieldJSON objectForKey:@"id"];
-    }
     if ([fieldJSON objectForKey:@"name"]) {
         newField.name = [fieldJSON objectForKey:@"name"];
     }
     if ([fieldJSON objectForKey:@"label"]) {
         newField.label = [fieldJSON objectForKey:@"label"];
+    }
+    id value = [fieldJSON objectForKey:@"value"];
+    if (VALID(value, NSString)) {
+        newField.value = (NSString *)value;
+    }
+    else if(VALID(value, NSNumber)) {
+        newField.value = [((NSNumber *)value) stringValue];
+    }
+    if ([fieldJSON objectForKey:@"checked"]) {
+        newField.checked = [fieldJSON objectForKey:@"checked"];
+    }
+    
+    if(VALID_NOTEMPTY([fieldJSON objectForKey:@"api_call"], NSString)) {
+        newField.apiCall = [fieldJSON objectForKey:@"api_call"];
+    }
+    if ([fieldJSON objectForKey:@"link_text"]) {
+        newField.linkText = [fieldJSON objectForKey:@"link_text"];
+    }
+    if ([fieldJSON objectForKey:@"link_url"]) {
+        newField.linkUrl = [fieldJSON objectForKey:@"link_url"];
+    }
+    
+    
+    if ([fieldJSON objectForKey:@"options"]) {
+        NSArray *optionsArray = [fieldJSON objectForKey:@"options"];
+        
+        for (NSDictionary *optionObject in optionsArray) {
+            if(VALID_NOTEMPTY(optionObject, NSDictionary))
+            {
+                RIFieldOption *option = [RIFieldOption parseFieldOption:optionObject];
+                option.field = newField;
+                [newField addOptionsObject:option];
+            }
+        }
     }
     
     if (VALID_NOTEMPTY([fieldJSON objectForKey:@"dataset"], NSArray))
@@ -85,16 +106,6 @@
                 [newField addDataSetObject:component];
             }
         }
-        
-
-    }
-    else if (VALID_NOTEMPTY([fieldJSON objectForKey:@"dataset"], NSDictionary))
-    {
-        NSDictionary *dataSetDictionary = [fieldJSON objectForKey:@"dataset"];
-        if(VALID_NOTEMPTY([dataSetDictionary objectForKey:@"api_call"], NSString))
-        {
-            newField.apiCall = [dataSetDictionary objectForKey:@"api_call"];
-        }
     }
     
     if (VALID_NOTEMPTY([fieldJSON objectForKey:@"data_set"], NSArray)) {
@@ -110,23 +121,11 @@
         }
     }
     
-    if ([fieldJSON objectForKey:@"options"]) {
-        NSArray *optionsArray = [fieldJSON objectForKey:@"options"];
-        
-        for (NSDictionary *optionObject in optionsArray) {
-            if(VALID_NOTEMPTY(optionObject, NSDictionary))
-            {
-                RIFieldOption *option = [RIFieldOption parseFieldOption:optionObject];
-                option.field = newField;
-                [newField addOptionsObject:option];
-            }
-        }
-    }
-    
+    //RULES PARSING
     NSDictionary* rules = [fieldJSON objectForKey:@"rules"];
     
-   if (VALID_NOTEMPTY(rules, NSDictionary)) {
-
+    if (VALID_NOTEMPTY(rules, NSDictionary)) {
+        
         if([rules objectForKey:@"match"]){
             NSDictionary *match = [rules objectForKey:@"match"];
             if(VALID_NOTEMPTY(match, NSDictionary)){
@@ -157,16 +156,26 @@
         }
     }
     
-    if ([fieldJSON objectForKey:@"link_text"]) {
-        newField.linkText = [fieldJSON objectForKey:@"link_text"];
-    }
     
-    if ([fieldJSON objectForKey:@"link_url"]) {
-        newField.linkUrl = [fieldJSON objectForKey:@"link_url"];
-    }
-    
-    if ([fieldJSON objectForKey:@"related_field"]) {
-        newField.relatedField = [fieldJSON objectForKey:@"related_field"];
+    if ([fieldJSON objectForKey:@"related_data"]) {
+        
+        NSDictionary* relatedJSON = [fieldJSON objectForKey:@"related_data"];
+
+        NSString* typeForRelatedFields = [relatedJSON objectForKey:@"type"];
+        NSString* nameForRelatedFields = [relatedJSON objectForKey:@"name"];
+        
+        NSArray* relatedFieldsArrayJSON = [relatedJSON objectForKey:@"fields"];
+        for (NSDictionary* relatedFieldJSON in relatedFieldsArrayJSON) {
+            if (VALID_NOTEMPTY(relatedFieldJSON, NSDictionary)) {
+                
+                RIField* relatedField = [RIField parseField:relatedFieldJSON];
+                relatedField.parentField = newField;
+                relatedField.type = typeForRelatedFields;
+                relatedField.name = nameForRelatedFields;
+                
+                [newField addRelatedFieldsObject:relatedField];
+            }
+        }
     }
     
     return newField;
@@ -176,6 +185,15 @@
 {
     for (RIFieldRatingStars* fieldRatingStars in field.ratingStars) {
         [RIFieldRatingStars saveFieldRatingStars:fieldRatingStars andContext:NO];
+    }
+    for (RIFieldOption* fieldOption in field.options) {
+        [RIFieldOption saveFieldOption:fieldOption andContext:NO];
+    }
+    for (RIFieldDataSetComponent* datasetComponent in field.dataSet) {
+        [RIFieldDataSetComponent saveFieldDataSetComponent:datasetComponent andContext:NO];
+    }
+    for (RIField* relatedField in field.relatedFields) {
+        [RIField saveField:relatedField andContext:NO];
     }
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:field];
     if (save) {

@@ -178,9 +178,24 @@
     }
     else
     {
-        if (self.field.pattern.length > 0)
-        {
-            if (![self validateInputWithString:self.textField.text andRegularExpression:self.field.pattern])
+        __block NSString* pattern;
+        if (VALID_NOTEMPTY(self.relatedComponent, JARadioRelatedComponent)) {
+            NSDictionary* dict = [self.relatedComponent getValues];
+            [dict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+                for (RIField* relatedField in self.field.relatedFields) {
+                    if ([relatedField.value isEqualToString:obj] && VALID_NOTEMPTY(relatedField.pattern, NSString)) {
+                        pattern = relatedField.pattern;
+                        break;
+                    }
+                }
+            }];
+            
+        } else if (VALID_NOTEMPTY(self.field.pattern, NSString)) {
+            pattern = self.field.pattern;
+        }
+        
+        if (VALID_NOTEMPTY(pattern, NSString)) {
+            if (![self validateInputWithString:self.textField.text andRegularExpression:pattern])
             {
                 [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
                 [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];
@@ -199,7 +214,7 @@
                 return NO;
             }
             
-            if(VALID_NOTEMPTY(self.field.max, NSNumber) && [self.field.max intValue] < [self.textField.text length])
+            if(VALID_NOTEMPTY(self.field.max, NSNumber) && 0 != [self.field.max integerValue] && [self.field.max intValue] < [self.textField.text length])
             {
                 [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
                 [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];

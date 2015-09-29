@@ -10,13 +10,8 @@
 
 @interface RIRegion : NSObject
 
-@property (nonatomic, retain) NSString * uid;
-@property (nonatomic, retain) NSString * fkCountry;
-@property (nonatomic, retain) NSString * code;
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSString * sort;
-@property (nonatomic, retain) NSString * createdAt;
-@property (nonatomic, retain) NSString * updatedAt;
+@property (nonatomic, retain) NSString * value;
+@property (nonatomic, retain) NSString * label;
 
 + (NSString *)getRegionsForUrl:(NSString*)url
                  successBlock:(void (^)(NSArray *regions))successBlock

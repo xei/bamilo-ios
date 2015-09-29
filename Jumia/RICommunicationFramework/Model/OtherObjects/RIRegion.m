@@ -62,39 +62,17 @@
 {
     RIRegion *newRegion = [[RIRegion alloc] init];
     
-    if(VALID_NOTEMPTY([regionObject objectForKey:@"id_customer_address_region"], NSString))
+    if(VALID_NOTEMPTY([regionObject objectForKey:@"value"], NSString))
     {
-        newRegion.uid = [regionObject objectForKey:@"id_customer_address_region"];
+        newRegion.value = [regionObject objectForKey:@"value"];
+    } else if (VALID_NOTEMPTY([regionObject objectForKey:@"value"], NSNumber)) {
+        NSNumber* value = [regionObject objectForKey:@"value"];
+        newRegion.value = [value stringValue];
     }
     
-    if(VALID_NOTEMPTY([regionObject objectForKey:@"fk_country"], NSString))
+    if(VALID_NOTEMPTY([regionObject objectForKey:@"label"], NSString))
     {
-        newRegion.fkCountry = [regionObject objectForKey:@"fk_country"];
-    }
-    
-    if(VALID_NOTEMPTY([regionObject objectForKey:@"code"], NSString))
-    {
-        newRegion.code = [regionObject objectForKey:@"code"];
-    }
-    
-    if(VALID_NOTEMPTY([regionObject objectForKey:@"name"], NSString))
-    {
-        newRegion.name = [regionObject objectForKey:@"name"];
-    }
-    
-    if(VALID_NOTEMPTY([regionObject objectForKey:@"sort"], NSString))
-    {
-        newRegion.sort = [regionObject objectForKey:@"sort"];
-    }
-    
-    if(VALID_NOTEMPTY([regionObject objectForKey:@"created_at"], NSString))
-    {
-        newRegion.createdAt = [regionObject objectForKey:@"created_at"];
-    }
-    
-    if(VALID_NOTEMPTY([regionObject objectForKey:@"updated_at"], NSString))
-    {
-        newRegion.updatedAt = [regionObject objectForKey:@"updated_at"];
+        newRegion.label = [regionObject objectForKey:@"label"];
     }
     
     return newRegion;

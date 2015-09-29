@@ -9,12 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "RIField.h"
 #import "JADynamicField.h"
+#import "JARadioRelatedComponent.h"
 
 @interface JATextFieldComponent : JADynamicField
 
 @property (assign, nonatomic) BOOL hasError;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UILabel *requiredSymbol;
+
+@property (nonatomic, strong)JARadioRelatedComponent* relatedComponent;
 
 -(BOOL)isValid;
 

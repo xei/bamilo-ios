@@ -88,36 +88,33 @@
         
         if ([@"string" isEqualToString:field.type] || [@"text" isEqualToString:field.type] || [@"email" isEqualToString:field.type])
         {
-            if(!([@"address-form" isEqualToString:[self.form uid]] && [@"city" isEqualToString:field.key]))
+            JATextFieldComponent *textField = [JATextFieldComponent getNewJATextFieldComponent];
+            [textField setupWithField:field];
+            [textField.textField setDelegate:self];
+            [textField.textField setReturnKeyType:returnKeyType];
+            
+            if([@"email" isEqualToString:field.type])
             {
-                JATextFieldComponent *textField = [JATextFieldComponent getNewJATextFieldComponent];
-                [textField setupWithField:field];
-                [textField.textField setDelegate:self];
-                [textField.textField setReturnKeyType:returnKeyType];
-                
-                if([@"email" isEqualToString:field.type])
-                {
-                    [textField.textField setKeyboardType:UIKeyboardTypeEmailAddress];
-                }else{
-                    textField.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
-                }
-                
-                if([@"address-form" isEqualToString:[self.form uid]] && [textField isComponentWithKey:@"fk_customer_address_city"] && VALID_NOTEMPTY([values objectForKey:@"city"], NSString))
-                {
-                    [textField setValue:[values objectForKey:@"city"]];
-                }
-                
-                CGRect frame = textField.frame;
-                frame.origin.y = startingY;
-                textField.frame = frame;
-                startingY += textField.frame.size.height;
-                
-                [textField.textField setTag:tag];
-                [textField setTag:tag];
-                
-                lastTextFieldIndex = [self.formViews count];
-                [self.formViews addObject:textField];
+                [textField.textField setKeyboardType:UIKeyboardTypeEmailAddress];
+            }else{
+                textField.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
             }
+            
+            if([@"address" isEqualToString:[self.form type]] && [textField isComponentWithKey:@"city"] && VALID_NOTEMPTY([values objectForKey:@"city"], NSString))
+            {
+                [textField setValue:[values objectForKey:@"city"]];
+            }
+            
+            CGRect frame = textField.frame;
+            frame.origin.y = startingY;
+            textField.frame = frame;
+            startingY += textField.frame.size.height;
+            
+            [textField.textField setTag:tag];
+            [textField setTag:tag];
+            
+            lastTextFieldIndex = [self.formViews count];
+            [self.formViews addObject:textField];
         }
         else if ([@"password" isEqualToString:field.type] || [@"password2" isEqualToString:field.type])
         {
@@ -181,55 +178,69 @@
         }
         else if ([@"radio" isEqualToString:field.type] || [@"list" isEqualToString:field.type])
         {
-            if(!([@"address-form" isEqualToString:[self.form uid]] && [@"city" isEqualToString:field.key]))
+            JARadioComponent *radioComponent = [JARadioComponent getNewJARadioComponent];
+            [radioComponent setupWithField:field];
+            [radioComponent.textField setDelegate:self];
+            [radioComponent.textField setReturnKeyType:returnKeyType];
+            
+            CGRect frame = radioComponent.frame;
+            frame.origin.y = startingY;
+            radioComponent.frame = frame;
+            startingY += radioComponent.frame.size.height;
+            
+            
+            [radioComponent.textField setTag:tag];
+            [radioComponent setTag:tag];
+            
+            lastTextFieldIndex = [self.formViews count];
+            [self.formViews addObject:radioComponent];
+            
+            if([radioComponent isComponentWithKey:@"region"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
             {
-                JARadioComponent *radioComponent = [JARadioComponent getNewJARadioComponent];
-                [radioComponent setupWithField:field];
-                [radioComponent.textField setDelegate:self];
-                [radioComponent.textField setReturnKeyType:returnKeyType];
-                
-                CGRect frame = radioComponent.frame;
-                frame.origin.y = startingY;
-                radioComponent.frame = frame;
-                startingY += radioComponent.frame.size.height;
-                
-
-                [radioComponent.textField setTag:tag];
-                [radioComponent setTag:tag];
-                
-                lastTextFieldIndex = [self.formViews count];
-                [self.formViews addObject:radioComponent];
-                
-                if([radioComponent isComponentWithKey:@"fk_customer_address_region"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
-                {
-                    self.regionsComponent = radioComponent;
-                }
-                else if([radioComponent isComponentWithKey:@"fk_customer_address_city"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
-                {
-                    self.citiesComponent = radioComponent;
-                }
+                self.regionsComponent = radioComponent;
+            }
+            else if([radioComponent isComponentWithKey:@"city"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
+            {
+                self.citiesComponent = radioComponent;
             }
         }
-        else if ([@"radio_related" isEqualToString:field.type])
+        else if ([@"related_number" isEqualToString:field.type])
         {
             //we only accept two options, no more, no less
-            if (2 == field.dataSet.count) {
+            if (2 == field.relatedFields.count) {
+                
+                JATextFieldComponent *textField = [JATextFieldComponent getNewJATextFieldComponent];
+                [textField setupWithField:field];
+                [textField.textField setDelegate:self];
+                [textField.textField setReturnKeyType:returnKeyType];
+                
+                CGRect frame = textField.frame;
+                frame.origin.y = startingY;
+                textField.frame = frame;
+                startingY += textField.frame.size.height;
+                
+                [textField.textField setTag:tag];
+                [textField setTag:tag];
+                
+                lastTextFieldIndex = [self.formViews count];
+                [self.formViews addObject:textField];
                 
                 JARadioRelatedComponent* radioRelated = [JARadioRelatedComponent getNewJARadioRelatedComponent];
                 [radioRelated setupWithField:field];
                 
-                CGRect frame = radioRelated.frame;
+                frame = radioRelated.frame;
                 frame.origin.y = startingY;
                 radioRelated.frame = frame;
                 startingY += radioRelated.frame.size.height;
                 
                 [self.formViews addObject:radioRelated];
-
+                
+                textField.relatedComponent = radioRelated;
             }
         }
         else if (0 != [field.type rangeOfString:@"checkbox"].length)
         {
-            if(!([[self.form uid] rangeOfString:@"_Customer_RegistrationForm"].location==NSNotFound) && [@"newsletter_categories_subscribed" isEqualToString:field.key])
+            if([@"register" isEqualToString:self.form.type] && [@"newsletter_categories_subscribed" isEqualToString:field.key])
             {
                 JACheckBoxComponent *check = [JACheckBoxComponent getNewJACheckBoxComponent];
                 [check setupWithField:field];
@@ -442,15 +453,9 @@
             else if ([view isKindOfClass:[JARadioComponent class]])
             {
                 JARadioComponent *radioComponent = (JARadioComponent*) view;
-                
-                if(([@"Alice_Module_Mobapi_Form_Ext1m4_Customer_RegistrationForm" isEqualToString:[self.form uid]] || [@"address-form" isEqualToString:[self.form uid]]) && [radioComponent isComponentWithKey:@"gender"])
+                if(([@"register" isEqualToString:[self.form type]] || [@"address" isEqualToString:[self.form type]]) && [radioComponent isComponentWithKey:@"gender"])
                 {
                     genderComponent = radioComponent;
-                }
-                
-                if([@"address-form" isEqualToString:[self.form uid]] && [radioComponent isComponentWithKey:@"fk_customer_address_city"])
-                {
-                    [parameters setValue:radioComponent.textField.text forKey:[self getFieldNameForKey:@"city"]];
                 }
                 
                 if(VALID_NOTEMPTY([radioComponent getValues], NSDictionary))
@@ -467,7 +472,7 @@
             {
                 JACheckBoxComponent *checkBoxComponent = (JACheckBoxComponent*) view;
                 
-                if([@"Alice_Module_Mobapi_Form_Ext1m4_Customer_RegistrationForm" isEqualToString:[self.form uid]] && [checkBoxComponent isComponentWithKey:@"newsletter_categories_subscribed"])
+                if([@"register" isEqualToString:[self.form type]] && [checkBoxComponent isComponentWithKey:@"newsletter_categories_subscribed"])
                 {
                     categoriesNewsletterComponent = checkBoxComponent;
                 }
@@ -494,7 +499,7 @@
                 {
                     [parameters addEntriesFromDictionary:[textFieldComponent getValues]];
                 }
-                if([@"address-form" isEqualToString:[self.form uid]] && [textFieldComponent isComponentWithKey:@"fk_customer_address_city"])
+                if([@"address" isEqualToString:[self.form type]] && [textFieldComponent isComponentWithKey:@"city"])
                 {
                     [parameters setValue:textFieldComponent.textField.text forKey:[self getFieldNameForKey:@"city"]];
                 }
@@ -592,11 +597,11 @@
         if([formView isKindOfClass:[JARadioComponent class]])
         {
             JARadioComponent *radioComponent = (JARadioComponent*) formView;
-            if([radioComponent isComponentWithKey:@"fk_customer_address_region"])
+            if([radioComponent isComponentWithKey:@"region"])
             {
                 [radioComponent setRegionValue:region];
             }
-            else if([radioComponent isComponentWithKey:@"fk_customer_address_city"])
+            else if([radioComponent isComponentWithKey:@"city"])
             {
                 [radioComponent setCityValue:nil];
             }
@@ -611,7 +616,7 @@
         if([formView isKindOfClass:[JARadioComponent class]])
         {
             JARadioComponent *radioComponent = (JARadioComponent*) formView;
-            if([radioComponent isComponentWithKey:@"fk_customer_address_city"])
+            if([radioComponent isComponentWithKey:@"city"])
             {
                 [radioComponent setCityValue:city];
             }

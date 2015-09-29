@@ -114,34 +114,31 @@ JAPickerDelegate>
 
     self.apiResponse = RIApiResponseSuccess;
     
-    [RIForm getForm:@"addressedit"
-       successBlock:^(RIForm *form)
-     {
-         self.dynamicForm = [[JADynamicForm alloc] initWithForm:form values:[self getAddressValues] startingPosition:self.addressViewCurrentY hasFieldNavigation:NO];
-         
-         [self.dynamicForm setDelegate:self];
-         
-         for(UIView *view in self.dynamicForm.formViews)
-         {
-             [self.contentView addSubview:view];
-         }
-         
-         [self removeErrorView];
-         [self finishedFormLoading];
-     }
-       failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
-     {
-         self.apiResponse = apiResponse;
-         
-         BOOL noInternetConnection = NO;
-         if (RIApiResponseNoInternetConnection == self.apiResponse)
-         {
-             noInternetConnection = YES;
-         }
-         
-         [self showErrorView:noInternetConnection startingY:0.0f selector:@selector(getForm) objects:nil];
-         [self hideLoading];
-     }];
+    [RIForm getFormWithUrl:[NSString stringWithFormat:@"addressedit?id=%@", self.editAddress.uid]
+              successBlock:^(RIForm *form) {
+                  self.dynamicForm = [[JADynamicForm alloc] initWithForm:form values:[self getAddressValues] startingPosition:self.addressViewCurrentY hasFieldNavigation:NO];
+                  
+                  [self.dynamicForm setDelegate:self];
+                  
+                  for(UIView *view in self.dynamicForm.formViews)
+                  {
+                      [self.contentView addSubview:view];
+                  }
+                  
+                  [self removeErrorView];
+                  [self finishedFormLoading];
+              } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+                  self.apiResponse = apiResponse;
+                  
+                  BOOL noInternetConnection = NO;
+                  if (RIApiResponseNoInternetConnection == self.apiResponse)
+                  {
+                      noInternetConnection = YES;
+                  }
+                  
+                  [self showErrorView:noInternetConnection startingY:0.0f selector:@selector(getForm) objects:nil];
+                  [self hideLoading];
+              }];
 }
 
 - (void) hideKeyboard
@@ -446,6 +443,10 @@ JAPickerDelegate>
 -(void)saveChangesButtonPressed
 {
     [self showLoading];
+    if ([self.dynamicForm checkErrors]) {
+        [self hideLoading];
+        return;
+    }
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithDictionary:[self.dynamicForm getValues]];
     
@@ -538,13 +539,13 @@ JAPickerDelegate>
     
     self.radioComponent = radioComponent;
     
-    if([radioComponent isComponentWithKey:@"fk_customer_address_region"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
+    if([radioComponent isComponentWithKey:@"region"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
     {
         self.radioComponentDataset = self.regionsDataset;
         
         [self setupPickerView];
     }
-    else if([radioComponent isComponentWithKey:@"fk_customer_address_city"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
+    else if([radioComponent isComponentWithKey:@"city"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
     {
         if(VALID_NOTEMPTY(self.citiesDataset, NSArray))
         {
@@ -556,7 +557,7 @@ JAPickerDelegate>
         {
             NSString *url = [radioComponent getApiCallUrl];
             [self showLoading];
-            [RICity getCitiesForUrl:url region:[self.selectedRegion uid] successBlock:^(NSArray *regions)
+            [RICity getCitiesForUrl:url region:[self.selectedRegion value] successBlock:^(NSArray *regions)
              {
                  self.citiesDataset = [regions copy];
                  self.radioComponentDataset = [regions copy];
@@ -584,17 +585,17 @@ JAPickerDelegate>
                 id selectedObject = [self.radioComponentDataset objectAtIndex:i];
                 if(VALID_NOTEMPTY(selectedObject, RIRegion))
                 {
-                    if([selectedValue isEqualToString:[selectedObject uid]])
+                    if([selectedValue isEqualToString:[(RIRegion*)selectedObject value]])
                     {
-                        selectedRow = ((RIRegion*)selectedObject).name;
+                        selectedRow = ((RIRegion*)selectedObject).label;
                         break;
                     }
                 }
                 else if(VALID_NOTEMPTY(selectedObject, RICity))
                 {
-                    if([selectedValue isEqualToString:[selectedObject uid]])
+                    if([selectedValue isEqualToString:[(RICity*)selectedObject value]])
                     {
-                        selectedRow = ((RICity*)selectedObject).value;
+                        selectedRow = ((RICity*)selectedObject).label;
                         break;
                     }
                 }
@@ -617,11 +618,11 @@ JAPickerDelegate>
             NSString *title = @"";
             if(VALID_NOTEMPTY(currentObject, RIRegion))
             {
-                title = ((RIRegion*) currentObject).name;
+                title = ((RIRegion*) currentObject).label;
             }
             else if(VALID_NOTEMPTY(currentObject, RICity))
             {
-                title = ((RICity*) currentObject).value;
+                title = ((RICity*) currentObject).label;
             }
             [dataSource addObject:title];
         }
@@ -665,7 +666,7 @@ JAPickerDelegate>
                  {
                      for(RIRegion *region in regions)
                      {
-                         if([selectedValue isEqualToString:[region uid]])
+                         if([selectedValue isEqualToString:[region value]])
                          {
                              self.selectedRegion = region;
                              [self.dynamicForm setRegionValue:region];
@@ -682,7 +683,7 @@ JAPickerDelegate>
                  
                  if(VALID_NOTEMPTY(self.selectedRegion, RIRegion) && VALID_NOTEMPTY(citiesComponent, JARadioComponent))
                  {
-                     [RICity getCitiesForUrl:[citiesComponent getApiCallUrl] region:[self.selectedRegion uid] successBlock:^(NSArray *cities) {
+                     [RICity getCitiesForUrl:[citiesComponent getApiCallUrl] region:[self.selectedRegion value] successBlock:^(NSArray *cities) {
                          self.citiesDataset = [cities copy];
                          
                          NSString *selectedValue = [self.editAddress customerAddressCityId];
@@ -692,7 +693,7 @@ JAPickerDelegate>
                              {
                                  for(RICity *city in cities)
                                  {
-                                     if([selectedValue isEqualToString:[city uid]])
+                                     if([selectedValue isEqualToString:[city value]])
                                      {
                                          self.selectedCity = city;
                                          [self.dynamicForm setCityValue:self.selectedCity];
@@ -735,7 +736,7 @@ JAPickerDelegate>
         {
             id selectedObject = [self.radioComponentDataset objectAtIndex:selectedRow];
             
-            if(VALID_NOTEMPTY(selectedObject, RIRegion) && ![[selectedObject uid] isEqualToString:[self.selectedRegion uid]])
+            if(VALID_NOTEMPTY(selectedObject, RIRegion) && ![[(RIRegion*)selectedObject value] isEqualToString:[self.selectedRegion value]])
             {
                 self.selectedRegion = selectedObject;
                 self.selectedCity = nil;

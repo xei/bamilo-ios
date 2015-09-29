@@ -10,9 +10,8 @@
 
 @interface RICity : NSObject
 
-@property (nonatomic, retain) NSString * uid;
 @property (nonatomic, retain) NSString * value;
-@property (nonatomic, retain) NSString * group;
+@property (nonatomic, retain) NSString * label;
 
 + (NSString *)getCitiesForUrl:(NSString*)url
                        region:(NSString*)regionId

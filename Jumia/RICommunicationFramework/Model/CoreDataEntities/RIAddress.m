@@ -130,10 +130,16 @@
 
 + (RIAddress*)parseAddress:(NSDictionary*)addressJSON
 {
+    //$$$ REVIEW THIS SHIT
     RIAddress* newAddress = (RIAddress *)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIAddress class])];
     
-    if ([addressJSON objectForKey:@"id_customer_address"]) {
-        newAddress.uid = [addressJSON objectForKey:@"id_customer_address"];
+    if ([addressJSON objectForKey:@"id"]) {
+        id addressID = [addressJSON objectForKey:@"id"];
+        if ([addressID isKindOfClass:[NSString class]]) {
+            newAddress.uid = addressID;
+        } else if ([addressID isKindOfClass:[NSNumber class]]) {
+            newAddress.uid = [(NSNumber*)addressID stringValue];
+        }
     }
     else if ([addressJSON objectForKey:@"customer_address_id"]) {
         newAddress.uid = [addressJSON objectForKey:@"customer_address_id"];
@@ -165,10 +171,10 @@
     if ([addressJSON objectForKey:@"fk_country"]) {
         newAddress.countryId = [addressJSON objectForKey:@"fk_country"];
     }
-    if ([addressJSON objectForKey:@"fk_customer_address_region"]) {
+    if ([addressJSON objectForKey:@"region"]) {
         newAddress.customerAddressRegionId = [addressJSON objectForKey:@"fk_customer_address_region"];
     }
-    if ([addressJSON objectForKey:@"fk_customer_address_city"]) {
+    if ([addressJSON objectForKey:@"city"]) {
         newAddress.customerAddressCityId = [addressJSON objectForKey:@"fk_customer_address_city"];
     }
     if ([addressJSON objectForKey:@"is_default_billing"]) {

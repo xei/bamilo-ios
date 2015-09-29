@@ -110,8 +110,8 @@
 {
     if(VALID_NOTEMPTY(value, RIRegion))
     {
-        self.storedValue = [value uid];
-        [self.textField setText:[value name]];
+        self.storedValue = [value value];
+        [self.textField setText:[value label]];
     }
     else
     {
@@ -124,8 +124,8 @@
 {
     if(VALID_NOTEMPTY(value, RICity))
     {
-        self.storedValue = [value uid];
-        [self.textField setText:[value value]];
+        self.storedValue = [value value];
+        [self.textField setText:[value label]];
     }
     else
     {

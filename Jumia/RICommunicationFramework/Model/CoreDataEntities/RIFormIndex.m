@@ -12,7 +12,7 @@
 
 @implementation RIFormIndex
 
-@dynamic uid;
+@dynamic type;
 @dynamic url;
 @dynamic form;
 
@@ -53,11 +53,11 @@
                                                           }];
 }
 
-+ (NSString*)getFormWithIndexId:(NSString*)formIndexID
-                   successBlock:(void (^)(RIFormIndex *formIndex))successBlock
-                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
++ (NSString*)getFormWithType:(NSString*)formIndexType
+                successBlock:(void (^)(RIFormIndex *formIndex))successBlock
+             andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 {
-    NSArray* formIndexes = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIFormIndex class]) withPropertyName:@"uid" andPropertyValue:formIndexID];
+    NSArray* formIndexes = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIFormIndex class]) withPropertyName:@"type" andPropertyValue:formIndexType];
     if(VALID_NOTEMPTY(formIndexes, NSArray))
     {
         RIFormIndex* lastForm = [formIndexes lastObject];
@@ -71,7 +71,7 @@
         return nil;
     } else {
         return [RIFormIndex loadFormIndexesIntoDatabaseForCountry:[RIApi getCountryUrlInUse] countryUserAgentInjection:[RIApi getCountryUserAgentInjection] deleteOldIndexes:YES withSuccessBlock:^(id formIndexes) {
-            formIndexes = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIFormIndex class]) withPropertyName:@"uid" andPropertyValue:formIndexID];
+            formIndexes = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIFormIndex class]) withPropertyName:@"type" andPropertyValue:formIndexType];
             if(VALID_NOTEMPTY(formIndexes, NSArray))
             {
                 successBlock([formIndexes objectAtIndex:0]);
@@ -109,7 +109,7 @@
     RIFormIndex* newFormIndex = (RIFormIndex*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIFormIndex class])];
     
     if ([formIndexJSON objectForKey:@"type"]) {
-        newFormIndex.uid = [formIndexJSON objectForKey:@"type"];
+        newFormIndex.type = [formIndexJSON objectForKey:@"type"];
     }
     if ([formIndexJSON objectForKey:@"url"]) {
         newFormIndex.url = [formIndexJSON objectForKey:@"url"];
