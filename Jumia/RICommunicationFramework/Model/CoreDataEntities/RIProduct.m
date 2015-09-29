@@ -959,6 +959,9 @@
                     successBlock(sorted);
                     return;
                 }
+            } else {
+                successBlock([[NSArray alloc] init]);
+                return;
             }
         }
         if (failureBlock) {
