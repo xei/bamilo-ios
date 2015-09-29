@@ -277,10 +277,17 @@
                                                                   }
                                                               }
 
+                                                              NSString* type;
+                                                              if (VALID_NOTEMPTY(form.type, NSString)) {
+                                                                  type = form.type;
+                                                              } else if (VALID_NOTEMPTY(form.formIndex.type, NSString)) {
+                                                                  type = form.formIndex.type;
+                                                              }
+                                                              
                                                               BOOL responseProcessed = NO;
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                               {
-                                                                  if([@"login" isEqualToString:form.formIndex.type])
+                                                                  if([@"login" isEqualToString:type])
                                                                   {
                                                                       responseProcessed = YES;
                                                                       RICustomer *customer = [RICustomer parseCustomerWithJson:[metadata objectForKey:@"customer_entity"] plainPassword:password loginMethod:@"normal"];
@@ -289,13 +296,13 @@
                                                                       [successDic setValue:customer forKey:@"customer"];
                                                                       successBlock([successDic copy]);
                                                                   }
-                                                                  else if([@"register" isEqualToString:form.formIndex.type])
+                                                                  else if([@"register" isEqualToString:type])
                                                                   {
                                                                       responseProcessed = YES;
                                                                       RICustomer *customer = [RICustomer parseCustomerWithJson:metadata plainPassword:password loginMethod:@"normal"];
                                                                       successBlock(customer);
                                                                   }
-                                                                  else if([@"register_signup" isEqualToString:form.formIndex.type])
+                                                                  else if([@"register_signup" isEqualToString:type])
                                                                   {
                                                                       NSDictionary *data = [metadata copy];
                                                                       if (VALID_NOTEMPTY([metadata objectForKey:@"data"], NSDictionary)) {
@@ -311,13 +318,13 @@
                                                                           successBlock([successDic copy]);
                                                                       }
                                                                   }
-                                                                  else if([@"address" isEqualToString:form.formIndex.type])
+                                                                  else if([@"address" isEqualToString:type])
                                                                   {
                                                                       responseProcessed = YES;
                                                                       RICheckout *checkout = [RICheckout parseCheckout:metadata country:nil];
                                                                       successBlock(checkout);
                                                                   }
-                                                                  else if ([@"manage_newsletters" isEqualToString:form.formIndex.type])
+                                                                  else if ([@"manage_newsletters" isEqualToString:type])
                                                                   {
                                                                       [RICustomer updateCustomerNewsletterWithJson:metadata];
                                                                       responseProcessed = YES;

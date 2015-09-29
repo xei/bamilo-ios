@@ -41,12 +41,10 @@
                   successBlock:(void (^)(void))successBlock
                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 {
-    NSDictionary *parameters = @{@"id": address.uid};
+    NSString* type = isBilling?@"billing":@"shipping";
+    NSDictionary *parameters = @{@"id": address.uid, @"type" : type};
     
-    NSString* urlPart = RI_API_GET_CUSTOMER_SELECT_DEFAULT_SHIPPING_ADDRESS;
-    if (isBilling) {
-        urlPart = RI_API_GET_CUSTOMER_SELECT_DEFAULT_BILLING_ADDRESS;
-    }
+    NSString* urlPart = RI_API_GET_CUSTOMER_SELECT_DEFAULT;
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, urlPart]]
                                                             parameters:parameters httpMethodPost:YES
@@ -112,13 +110,13 @@
     
     NSMutableArray* otherAddressesArray = [NSMutableArray new];
     
-    NSDictionary* otherAddressJSONArray = [addressListJSON objectForKey:@"other"];
-    if (VALID_NOTEMPTY(otherAddressJSONArray, NSDictionary)) {
-        [otherAddressJSONArray enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-            if (VALID_NOTEMPTY(obj, NSDictionary)) {
-                [otherAddressesArray addObject:[RIAddress parseAddress:obj]];
+    NSArray* otherAddressJSONArray = [addressListJSON objectForKey:@"other"];
+    if (VALID_NOTEMPTY(otherAddressJSONArray, NSArray)) {
+        for (NSDictionary* otherAddressJSON in otherAddressJSONArray) {
+            if (VALID_NOTEMPTY(otherAddressJSON, NSDictionary)) {
+                [otherAddressesArray addObject:[RIAddress parseAddress:otherAddressJSON]];
             }
-        }];
+        }
     }
     
     if (VALID_NOTEMPTY(otherAddressesArray, NSMutableArray)) {
