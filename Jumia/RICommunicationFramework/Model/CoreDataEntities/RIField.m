@@ -35,6 +35,7 @@
 @dynamic relatedFields;
 @dynamic parentField;
 @dynamic checked;
+@dynamic dateFormat;
 
 + (RIField *)parseField:(NSDictionary *)fieldJSON;
 {
@@ -61,6 +62,9 @@
     }
     if ([fieldJSON objectForKey:@"checked"]) {
         newField.checked = [fieldJSON objectForKey:@"checked"];
+    }
+    if ([fieldJSON objectForKey:@"format"]) {
+        newField.dateFormat = [fieldJSON objectForKey:@"format"];
     }
     
     if(VALID_NOTEMPTY([fieldJSON objectForKey:@"api_call"], NSString)) {

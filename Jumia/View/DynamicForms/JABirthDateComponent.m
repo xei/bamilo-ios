@@ -9,13 +9,10 @@
 #import "JABirthDateComponent.h"
 
 @interface JABirthDateComponent ()
-{
-    RIField *_field;
-    NSInteger _storedDay;
-    NSInteger _storedMonth;
-    NSInteger _storedYear;
-    NSString *_storedValue;
-}
+
+@property (nonatomic, strong)RIField* field;
+@property (nonatomic, strong)NSDate* storedDate;
+@property (nonatomic, strong)NSString* storedValue;
 
 @end
 
@@ -47,10 +44,6 @@
     
     self.hasError = NO;
     
-    _storedDay = -1;
-    _storedMonth = -1;
-    _storedYear = -1;
-    
     if(VALID_NOTEMPTY(field.label, NSString))
     {
         [self.textField setPlaceholder:field.label];
@@ -80,39 +73,19 @@
 
 -(void)setValue:(NSDate*)date
 {
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *components = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:date];
+    self.storedDate = date;
     
-    _storedDay = [components day];
-    _storedMonth = [components month];
-    _storedYear = [components year];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:self.field.dateFormat];
     
+    NSString *stringFromDate = [formatter stringFromDate:date];
     
-    NSString *day = [NSString stringWithFormat:@"%ld", (long)_storedDay];
-    NSString *month = [NSString stringWithFormat:@"%ld", (long)_storedMonth];
-    if (_storedDay < 10) {
-        day = [NSString stringWithFormat:@"0%ld", (long)_storedDay];
-    }
-    if (_storedMonth < 10) {
-        month = [NSString stringWithFormat:@"0%ld", (long)_storedMonth];
-    }
-    
-    [self.textField setText:[NSString stringWithFormat:@"%@-%@-%ld", day, month, (long)_storedYear]];
+    [self.textField setText:stringFromDate];
 }
 
 -(NSDate*)getDate
 {
-    NSDate *value = nil;
-    if(-1 != _storedDay && -1 != _storedMonth && -1 != _storedYear)
-    {
-        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        NSDateComponents *components = [[NSDateComponents alloc] init];
-        [components setDay:_storedDay];
-        [components setMonth:_storedMonth];
-        [components setYear:_storedYear];
-        value = [calendar dateFromComponents:components];
-    }
-    return value;
+    return self.storedDate;
 }
 
 -(NSMutableDictionary*)getValues
@@ -178,9 +151,7 @@
 {
     [self cleanError];
     
-    _storedDay = -1;
-    _storedMonth = -1;
-    _storedYear = -1;
+    self.storedDate = nil;
     
     [self.textField setText:@""];
 }

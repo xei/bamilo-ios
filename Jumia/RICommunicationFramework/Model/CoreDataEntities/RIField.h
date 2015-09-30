@@ -26,6 +26,7 @@
 @property (nonatomic, retain) NSOrderedSet * ratingStars;
 @property (nonatomic, retain) NSOrderedSet * options;
 @property (nonatomic, retain) NSOrderedSet * dataSet;
+@property (nonatomic, retain) NSString * dateFormat;
 
 //related data
 @property (nonatomic, retain) RIField * parentField;
