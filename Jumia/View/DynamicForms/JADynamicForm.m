@@ -418,6 +418,7 @@
 
 -(BOOL)checkErrors
 {
+    self.firstErrorInFields = nil;
     BOOL hasErrors = NO;
     if(VALID_NOTEMPTY(self.formViews, NSMutableArray))
     {
@@ -428,6 +429,11 @@
                 if (![obj isValid])
                 {
                     hasErrors = YES;
+                    if (ISEMPTY(self.firstErrorInFields)) {
+                        if ([obj respondsToSelector:@selector(currentErrorMessage)]) {
+                            self.firstErrorInFields = [obj currentErrorMessage];
+                        }
+                    }
                 }
             }
         }

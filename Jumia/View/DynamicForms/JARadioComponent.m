@@ -182,10 +182,12 @@
     {
         [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
         [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];
+        self.currentErrorMessage = self.field.requiredMessage;
         
         return NO;
     }
     
+    self.currentErrorMessage = nil;
     [self.textField setTextColor:UIColorFromRGB(0x666666)];
     [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
     

@@ -21,6 +21,7 @@
 @property (strong, nonatomic) NSArray *dataset;
 @property (strong, nonatomic) NSArray *options;
 @property (strong, nonatomic) NSString *apiCall;
+@property (nonatomic, strong) NSString* currentErrorMessage;
 
 +(JARadioComponent *)getNewJARadioComponent;
 

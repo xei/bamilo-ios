@@ -667,9 +667,13 @@ JAPickerDelegate>
 {
     [self showLoading];
     BOOL billingHasErrors = [self.billingDynamicForm checkErrors];
-    BOOL shippingHasErrors = [self.shippingDynamicForm checkErrors];
-    if (shippingHasErrors ||
-        (![self.billingContentView isHidden] && billingHasErrors)) {
+    if ([self.shippingDynamicForm checkErrors]) {
+        [self showMessage:self.shippingDynamicForm.firstErrorInFields success:NO];
+        [self hideLoading];
+        return;
+    }
+    if (![self.billingContentView isHidden] && billingHasErrors) {
+        [self showMessage:self.billingDynamicForm.firstErrorInFields success:NO];
         [self hideLoading];
         return;
     }

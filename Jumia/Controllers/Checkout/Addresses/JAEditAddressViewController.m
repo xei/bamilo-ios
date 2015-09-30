@@ -444,6 +444,7 @@ JAPickerDelegate>
 {
     [self showLoading];
     if ([self.dynamicForm checkErrors]) {
+        [self showMessage:self.dynamicForm.firstErrorInFields success:NO];
         [self hideLoading];
         return;
     }

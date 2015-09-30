@@ -16,6 +16,7 @@
 @property (assign, nonatomic) BOOL hasError;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UILabel *requiredSymbol;
+@property (nonatomic, strong) NSString* currentErrorMessage;
 
 @property (nonatomic, strong)JARadioRelatedComponent* relatedComponent;
 

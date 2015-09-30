@@ -54,6 +54,7 @@
 @property (strong, nonatomic) NSMutableArray *formViews;
 @property (strong, nonatomic) id<JADynamicFormDelegate> delegate;
 @property (assign, nonatomic) BOOL hasFieldNavigation;
+@property (nonatomic, strong) NSString* firstErrorInFields;
 
 -(id)initWithForm:(RIForm*)form startingPosition:(CGFloat)startingY;
 

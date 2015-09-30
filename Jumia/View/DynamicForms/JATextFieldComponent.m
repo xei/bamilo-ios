@@ -173,18 +173,21 @@
     {
         [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
         [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];
+        self.currentErrorMessage = self.field.requiredMessage;
         
         return NO;
     }
     else
     {
         __block NSString* pattern;
+        __block NSString* errorMessage;
         if (VALID_NOTEMPTY(self.relatedComponent, JARadioRelatedComponent)) {
             NSDictionary* dict = [self.relatedComponent getValues];
             [dict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
                 for (RIField* relatedField in self.field.relatedFields) {
                     if ([relatedField.value isEqualToString:obj] && VALID_NOTEMPTY(relatedField.pattern, NSString)) {
                         pattern = relatedField.pattern;
+                        errorMessage = relatedField.patternMessage;
                         break;
                     }
                 }
@@ -192,6 +195,7 @@
             
         } else if (VALID_NOTEMPTY(self.field.pattern, NSString)) {
             pattern = self.field.pattern;
+            errorMessage = self.field.patternMessage;
         }
         
         if (VALID_NOTEMPTY(pattern, NSString)) {
@@ -199,6 +203,7 @@
             {
                 [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
                 [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];
+                self.currentErrorMessage = errorMessage;
                 
                 return NO;
             }
@@ -210,6 +215,7 @@
             {
                 [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
                 [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];
+                self.currentErrorMessage = self.field.patternMessage;
                 
                 return NO;
             }
@@ -218,12 +224,14 @@
             {
                 [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
                 [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];
+                self.currentErrorMessage = self.field.patternMessage;
                 
                 return NO;
             }
         }
     }
     
+    self.currentErrorMessage = nil;
     [self.textField setTextColor:UIColorFromRGB(0x666666)];
     [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
     
