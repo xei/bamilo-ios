@@ -9,9 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "JAProductInfoBaseLine.h"
 
+#define kProductInfoSingleLineHeight 48
+
 @interface JAProductInfoRatingLine : JAProductInfoBaseLine
 
 @property (nonatomic) NSNumber *ratingAverage;
 @property (nonatomic) NSNumber *ratingSum;
+
+- (void)setSellerRatingAverage:(NSNumber *)ratingAverage;
 
 @end

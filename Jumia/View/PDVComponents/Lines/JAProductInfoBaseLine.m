@@ -7,18 +7,41 @@
 //
 
 #import "JAProductInfoBaseLine.h"
-#import "JAClickableView.h"
 
 @interface JAProductInfoBaseLine ()
 
-@property (nonatomic) JAClickableView *clickableView;
 @property (nonatomic) UILabel *arrow;
+@property (nonatomic) UIView *topSeparator;
+@property (nonatomic) UIView *bottomSeparator;
 
 @end
 
 @implementation JAProductInfoBaseLine
 
 @synthesize label = _label;
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self setDefauls];
+    }
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self setDefauls];
+    }
+    return self;
+}
+
+- (void)setDefauls
+{
+    [self setEnabled:NO];
+}
 
 - (UILabel *)label
 {
@@ -40,28 +63,11 @@
     [_label setY:self.height/2-_label.height/2];
 }
 
-- (void)setClickable:(BOOL)clickable
-{
-    _clickable = clickable;
-    [self.clickableView setEnabled:_clickable];
-    [self.arrow setEnabled:_clickable];
-    [self setUserInteractionEnabled:YES];
-}
-
-- (JAClickableView *)clickableView
-{
-    if (!VALID_NOTEMPTY(_clickableView, JAClickableView)) {
-        _clickableView = [[JAClickableView alloc] initWithFrame:self.frame];
-        [self addSubview:_clickableView];
-    }
-    return _clickableView;
-}
-
 - (void)addTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents
 {
-    [self setClickable:YES];
-    [self setUserInteractionEnabled:YES];
-    [self.clickableView addTarget:target action:action forControlEvents:controlEvents];
+    [self setEnabled:YES];
+    [self.arrow setEnabled:YES];
+    [super addTarget:target action:action forControlEvents:controlEvents];
 }
 
 - (UILabel *)arrow
@@ -83,6 +89,62 @@
     [_label setText:title];
     [_label sizeToFit];
     [_label setY:self.height/2-_label.height/2];
+}
+
+- (void)setTopSeparatorVisibility:(BOOL)topSeparatorVisibility
+{
+    _topSeparatorVisibility = topSeparatorVisibility;
+    [self.topSeparator setHidden:!_topSeparatorVisibility];
+}
+
+- (void)setBottomSeparatorVisibility:(BOOL)bottomSeparatorVisibility
+{
+    _bottomSeparatorVisibility = bottomSeparatorVisibility;
+    [self.bottomSeparator setHidden:!_bottomSeparatorVisibility];
+}
+
+- (void)setTopSeparatorWidth:(CGFloat)topSeparatorWidth
+{
+    _topSeparatorWidth = topSeparatorWidth;
+    [self.topSeparator setHeight:_topSeparatorWidth];
+}
+
+- (void)setBottomSeparatorWidth:(CGFloat)bottomSeparatorWidth
+{
+    _bottomSeparatorWidth = bottomSeparatorWidth;
+    [self.bottomSeparator setHeight:_bottomSeparatorWidth];
+}
+
+- (void)setBottomSeparatorColor:(UIColor *)bottomSeparatorColor
+{
+    _bottomSeparatorColor = bottomSeparatorColor;
+    [self.bottomSeparator setBackgroundColor:_bottomSeparatorColor];
+}
+
+- (void)setTopSeparatorColor:(UIColor *)topSeparatorColor
+{
+    _topSeparatorColor = topSeparatorColor;
+    [self.topSeparator setBackgroundColor:_topSeparatorColor];
+}
+
+- (UIView *)topSeparator
+{
+    if (!VALID_NOTEMPTY(_topSeparator, UIView)) {
+        _topSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width, 1)];
+        [_topSeparator setBackgroundColor:JABlack400Color];
+        [self addSubview:_topSeparator];
+    }
+    return _topSeparator;
+}
+
+- (UIView *)bottomSeparator
+{
+    if (!VALID_NOTEMPTY(_bottomSeparator, UIView)) {
+        _bottomSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, self.height-1, self.width, 1)];
+        [_bottomSeparator setBackgroundColor:JABlack400Color];
+        [self addSubview:_bottomSeparator];
+    }
+    return _bottomSeparator;
 }
 
 @end
