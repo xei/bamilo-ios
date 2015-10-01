@@ -244,7 +244,7 @@
     {
         if (_selectedIndexPage == view.tag) {
             CGFloat scrollOffset = view.x + view.width/2 - self.width/2;
-            if (scrollOffset < 0) {
+            if (scrollOffset < 0 || self.width > _pageComponentView.contentSize.width) {
                 scrollOffset = 0;
             }else if (_pageComponentView.contentSize.width - scrollOffset < self.width)
             {
