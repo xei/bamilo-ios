@@ -10,8 +10,7 @@
 #import "RIField.h"
 #import "JADynamicField.h"
 
-@class RIRegion;
-@class RICity;
+@class RILocale;
 
 @interface JARadioComponent : JADynamicField
 
@@ -31,9 +30,9 @@
 
 -(void)setValue:(NSString*)value;
 
--(void)setRegionValue:(RIRegion*)value;
+-(void)setRegionValue:(RILocale*)value;
 
--(void)setCityValue:(RICity*)value;
+-(void)setCityValue:(RILocale*)value;
 
 -(NSDictionary*)getValues;
 

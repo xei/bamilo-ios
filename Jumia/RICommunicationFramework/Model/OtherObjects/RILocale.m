@@ -1,14 +1,28 @@
 //
-//  RICity.m
+//  RILocale.m
 //  Jumia
 //
-//  Created by Pedro Lopes on 02/09/14.
-//  Copyright (c) 2014 Rocket Internet. All rights reserved.
+//  Created by Telmo Pinto on 30/09/15.
+//  Copyright (c) 2015 Rocket Internet. All rights reserved.
 //
 
-#import "RICity.h"
+#import "RILocale.h"
 
-@implementation RICity
+@implementation RILocale
+
++ (NSString *)getPostcodeForUrl:(NSString*)url
+                           city:(NSString*)cityId
+                   successBlock:(void (^)(NSArray *postcodes))successBlock
+                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+{
+    if(VALID_NOTEMPTY(cityId, NSString))
+    {
+        url = [url stringByReplacingOccurrencesOfString:@"--city_id--" withString:cityId];
+    }
+    
+    return [self getLocalesForUrl:url successBlock:successBlock andFailureBlock:failureBlock];
+}
+
 
 + (NSString *)getCitiesForUrl:(NSString*)url
                        region:(NSString*)regionId
@@ -20,17 +34,31 @@
         url = [url stringByReplacingOccurrencesOfString:@"--region_id--" withString:regionId];
     }
     
+    return [self getLocalesForUrl:url successBlock:successBlock andFailureBlock:failureBlock];
+}
+
++ (NSString *)getRegionsForUrl:(NSString*)url
+                  successBlock:(void (^)(NSArray *regions))successBlock
+               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
+{
+    return [self getLocalesForUrl:url successBlock:successBlock andFailureBlock:failureBlock];
+}
+
++ (NSString *)getLocalesForUrl:(NSString*)url
+                  successBlock:(void (^)(NSArray *regions))successBlock
+               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
+{
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
                                                             parameters:nil
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
-                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {                                                              
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                               {
-                                                                  successBlock([RICity parseCities:metadata]);
+                                                                  successBlock([RILocale parseLocaleArray:metadata]);
                                                               } else
                                                               {
                                                                   failureBlock(apiResponse, nil);
@@ -50,38 +78,39 @@
                                                           }];
 }
 
-+ (NSArray*)parseCities:(NSDictionary*)jsonObject
+
++ (NSArray*)parseLocaleArray:(NSDictionary*)jsonObject
 {
-    NSMutableArray *cities = [[NSMutableArray alloc] init];
+    NSMutableArray *localesMutableArray = [[NSMutableArray alloc] init];
     if(VALID_NOTEMPTY([jsonObject objectForKey:@"data"], NSArray))
     {
         NSArray *dataArray = [jsonObject objectForKey:@"data"];
-        for(NSDictionary *cityObject in dataArray)
+        for(NSDictionary *localeJSON in dataArray)
         {
-            [cities addObject:[RICity parseRegion:cityObject]];
+            [localesMutableArray addObject:[RILocale parseLocale:localeJSON]];
         }
     }
-    return [cities copy];
+    return [localesMutableArray copy];
 }
 
-+ (RICity*)parseRegion:(NSDictionary*)cityObject
++ (RILocale*)parseLocale:(NSDictionary*)localeObject
 {
-    RICity* newCity = [[RICity alloc] init];
+    RILocale* newLocale = [[RILocale alloc] init];
     
-    if(VALID_NOTEMPTY([cityObject objectForKey:@"value"], NSString))
+    if(VALID_NOTEMPTY([localeObject objectForKey:@"value"], NSString))
     {
-        newCity.value = [cityObject objectForKey:@"value"];
-    } else if (VALID_NOTEMPTY([cityObject objectForKey:@"value"], NSNumber)) {
-        NSNumber* value = [cityObject objectForKey:@"value"];
-        newCity.value = [value stringValue];
+        newLocale.value = [localeObject objectForKey:@"value"];
+    } else if (VALID_NOTEMPTY([localeObject objectForKey:@"value"], NSNumber)) {
+        NSNumber* value = [localeObject objectForKey:@"value"];
+        newLocale.value = [value stringValue];
     }
     
-    if(VALID_NOTEMPTY([cityObject objectForKey:@"label"], NSString))
+    if(VALID_NOTEMPTY([localeObject objectForKey:@"label"], NSString))
     {
-        newCity.label = [cityObject objectForKey:@"label"];
+        newLocale.label = [localeObject objectForKey:@"label"];
     }
     
-    return newCity;
+    return newLocale;
 }
 
 

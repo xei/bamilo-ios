@@ -9,8 +9,7 @@
 #import "JARadioComponent.h"
 #import "RIFieldOption.h"
 #import "RIFieldDataSetComponent.h"
-#import "RIRegion.h"
-#import "RICity.h"
+#import "RILocale.h"
 
 @interface JARadioComponent ()
 
@@ -106,9 +105,9 @@
     [self.textField setText:value];
 }
 
--(void)setRegionValue:(RIRegion*)value
+-(void)setRegionValue:(RILocale*)value
 {
-    if(VALID_NOTEMPTY(value, RIRegion))
+    if(VALID_NOTEMPTY(value, RILocale))
     {
         self.storedValue = [value value];
         [self.textField setText:[value label]];
@@ -120,9 +119,9 @@
     }
 }
 
--(void)setCityValue:(RICity*)value
+-(void)setCityValue:(RILocale*)value
 {
-    if(VALID_NOTEMPTY(value, RICity))
+    if(VALID_NOTEMPTY(value, RILocale))
     {
         self.storedValue = [value value];
         [self.textField setText:[value label]];

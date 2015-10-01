@@ -12,8 +12,7 @@
 #import "JAOrderSummaryView.h"
 #import "JAPicker.h"
 #import "RICheckout.h"
-#import "RIRegion.h"
-#import "RICity.h"
+#import "RILocale.h"
 #import "UIView+Mirror.h"
 #import "UIImage+Mirror.h"
 
@@ -37,8 +36,8 @@ JAPickerDelegate>
 @property (strong, nonatomic) UIView *headerSeparator;
 @property (strong, nonatomic) JADynamicForm *dynamicForm;
 @property (assign, nonatomic) CGFloat addressViewCurrentY;
-@property (strong, nonatomic) RIRegion *selectedRegion;
-@property (strong, nonatomic) RICity *selectedCity;
+@property (strong, nonatomic) RILocale *selectedRegion;
+@property (strong, nonatomic) RILocale *selectedCity;
 @property (strong, nonatomic) NSArray *citiesDataset;
 
 // Picker view
@@ -558,7 +557,7 @@ JAPickerDelegate>
         {
             NSString *url = [radioComponent getApiCallUrl];
             [self showLoading];
-            [RICity getCitiesForUrl:url region:[self.selectedRegion value] successBlock:^(NSArray *regions)
+            [RILocale getCitiesForUrl:url region:[self.selectedRegion value] successBlock:^(NSArray *regions)
              {
                  self.citiesDataset = [regions copy];
                  self.radioComponentDataset = [regions copy];
@@ -583,20 +582,12 @@ JAPickerDelegate>
         {
             for (int i = 0; i < [self.radioComponentDataset count]; i++)
             {
-                id selectedObject = [self.radioComponentDataset objectAtIndex:i];
-                if(VALID_NOTEMPTY(selectedObject, RIRegion))
+                RILocale* selectedObject = [self.radioComponentDataset objectAtIndex:i];
+                if(VALID_NOTEMPTY(selectedObject, RILocale))
                 {
-                    if([selectedValue isEqualToString:[(RIRegion*)selectedObject value]])
+                    if([selectedValue isEqualToString:selectedObject.value])
                     {
-                        selectedRow = ((RIRegion*)selectedObject).label;
-                        break;
-                    }
-                }
-                else if(VALID_NOTEMPTY(selectedObject, RICity))
-                {
-                    if([selectedValue isEqualToString:[(RICity*)selectedObject value]])
-                    {
-                        selectedRow = ((RICity*)selectedObject).label;
+                        selectedRow = selectedObject.label;
                         break;
                     }
                 }
@@ -614,16 +605,12 @@ JAPickerDelegate>
     NSMutableArray *dataSource = [[NSMutableArray alloc] init];
     if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY(self.radioComponentDataset, NSArray))
     {
-        for(id currentObject in self.radioComponentDataset)
+        for(RILocale* currentObject in self.radioComponentDataset)
         {
             NSString *title = @"";
-            if(VALID_NOTEMPTY(currentObject, RIRegion))
+            if(VALID_NOTEMPTY(currentObject, RILocale))
             {
-                title = ((RIRegion*) currentObject).label;
-            }
-            else if(VALID_NOTEMPTY(currentObject, RICity))
-            {
-                title = ((RICity*) currentObject).label;
+                title = currentObject.label;
             }
             [dataSource addObject:title];
         }
@@ -657,7 +644,7 @@ JAPickerDelegate>
         if(!VALID_NOTEMPTY(self.regionsDataset, NSArray))
         {
             [self showLoading];
-            [RIRegion getRegionsForUrl:[regionComponent getApiCallUrl] successBlock:^(NSArray *regions)
+            [RILocale getRegionsForUrl:[regionComponent getApiCallUrl] successBlock:^(NSArray *regions)
              {
                  self.regionsDataset = [regions copy];
                  
@@ -665,9 +652,9 @@ JAPickerDelegate>
                  
                  if(VALID_NOTEMPTY(selectedValue, NSString) && VALID_NOTEMPTY(regions, NSArray))
                  {
-                     for(RIRegion *region in regions)
+                     for(RILocale *region in regions)
                      {
-                         if([selectedValue isEqualToString:[region value]])
+                         if([selectedValue isEqualToString:region.value])
                          {
                              self.selectedRegion = region;
                              [self.dynamicForm setRegionValue:region];
@@ -682,9 +669,9 @@ JAPickerDelegate>
                      [regionComponent setRegionValue:self.selectedRegion];
                  }
                  
-                 if(VALID_NOTEMPTY(self.selectedRegion, RIRegion) && VALID_NOTEMPTY(citiesComponent, JARadioComponent))
+                 if(VALID_NOTEMPTY(self.selectedRegion, RILocale) && VALID_NOTEMPTY(citiesComponent, JARadioComponent))
                  {
-                     [RICity getCitiesForUrl:[citiesComponent getApiCallUrl] region:[self.selectedRegion value] successBlock:^(NSArray *cities) {
+                     [RILocale getCitiesForUrl:[citiesComponent getApiCallUrl] region:self.selectedRegion.value successBlock:^(NSArray *cities) {
                          self.citiesDataset = [cities copy];
                          
                          NSString *selectedValue = [self.editAddress customerAddressCityId];
@@ -692,9 +679,9 @@ JAPickerDelegate>
                          {
                              if(VALID_NOTEMPTY(selectedValue, NSString))
                              {
-                                 for(RICity *city in cities)
+                                 for(RILocale *city in cities)
                                  {
-                                     if([selectedValue isEqualToString:[city value]])
+                                     if([selectedValue isEqualToString:city.value])
                                      {
                                          self.selectedCity = city;
                                          [self.dynamicForm setCityValue:self.selectedCity];
@@ -703,7 +690,7 @@ JAPickerDelegate>
                                  }
                              }
                              
-                             if(!VALID_NOTEMPTY(self.selectedCity, RICity))
+                             if(!VALID_NOTEMPTY(self.selectedCity, RILocale))
                              {
                                  self.selectedCity =  [cities objectAtIndex:0];
                                  [self.dynamicForm setCityValue:self.selectedCity];
@@ -735,21 +722,25 @@ JAPickerDelegate>
     {
         if(VALID_NOTEMPTY(self.radioComponentDataset, NSArray) && selectedRow < [self.radioComponentDataset count])
         {
-            id selectedObject = [self.radioComponentDataset objectAtIndex:selectedRow];
+            RILocale* selectedObject = [self.radioComponentDataset objectAtIndex:selectedRow];
             
-            if(VALID_NOTEMPTY(selectedObject, RIRegion) && ![[(RIRegion*)selectedObject value] isEqualToString:[self.selectedRegion value]])
-            {
-                self.selectedRegion = selectedObject;
-                self.selectedCity = nil;
-                self.citiesDataset = nil;
+            if (VALID_NOTEMPTY(selectedObject, RILocale)) {
                 
-                [self.dynamicForm setRegionValue:selectedObject];
-            }
-            else if(VALID_NOTEMPTY(selectedObject, RICity))
-            {
-                self.selectedCity = selectedObject;
-                
-                [self.dynamicForm setCityValue:selectedObject];
+                if ([self.radioComponent isComponentWithKey:@"region"] && ![selectedObject.value isEqualToString:self.selectedRegion.value]) {
+                    
+                    self.selectedRegion = selectedObject;
+                    self.selectedCity = nil;
+                    self.citiesDataset = nil;
+                    
+                    [self.dynamicForm setRegionValue:selectedObject];
+                    
+                } else if ([self.radioComponent isComponentWithKey:@"city"] && ![selectedObject.value isEqualToString:self.selectedCity.value]) {
+                    
+                    self.selectedCity = selectedObject;
+                    
+                    [self.dynamicForm setCityValue:selectedObject];
+                    
+                }
             }
         }
     }

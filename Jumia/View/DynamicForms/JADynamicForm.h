@@ -14,8 +14,7 @@
 #import "JACheckBoxWithOptionsComponent.h"
 
 @class RIForm;
-@class RIRegion;
-@class RICity;
+@class RILocale;
 
 @protocol JADynamicFormDelegate <NSObject>
 
@@ -70,9 +69,9 @@
 
 -(void)resetValues;
 
--(void)setRegionValue:(RIRegion*)region;
+-(void)setRegionValue:(RILocale*)region;
 
--(void)setCityValue:(RICity*)city;
+-(void)setCityValue:(RILocale*)city;
 
 -(void)resignResponder;
 

@@ -13,8 +13,7 @@
 #import "JAOrderSummaryView.h"
 #import "JAPicker.h"
 #import "RIForm.h"
-#import "RIRegion.h"
-#import "RICity.h"
+#import "RILocale.h"
 #import "RICheckout.h"
 #import "RICustomer.h"
 #import "UIView+Mirror.h"
@@ -45,8 +44,8 @@ JAPickerDelegate>
 @property (strong, nonatomic) UIView *shippingHeaderSeparator;
 @property (strong, nonatomic) JADynamicForm *shippingDynamicForm;
 @property (assign, nonatomic) CGFloat shippingAddressViewCurrentY;
-@property (strong, nonatomic) RIRegion *shippingSelectedRegion;
-@property (strong, nonatomic) RICity *shippingSelectedCity;
+@property (strong, nonatomic) RILocale *shippingSelectedRegion;
+@property (strong, nonatomic) RILocale *shippingSelectedCity;
 @property (strong, nonatomic) NSArray *shippingCitiesDataset;
 
 // Billing Address
@@ -55,8 +54,8 @@ JAPickerDelegate>
 @property (strong, nonatomic) UIView *billingHeaderSeparator;
 @property (strong, nonatomic) JADynamicForm *billingDynamicForm;
 @property (assign, nonatomic) CGFloat billingAddressViewCurrentY;
-@property (strong, nonatomic) RIRegion *billingSelectedRegion;
-@property (strong, nonatomic) RICity *billingSelectedCity;
+@property (strong, nonatomic) RILocale *billingSelectedRegion;
+@property (strong, nonatomic) RILocale *billingSelectedCity;
 @property (strong, nonatomic) NSArray *billingCitiesDataset;
 
 // Picker view
@@ -862,10 +861,10 @@ JAPickerDelegate>
             {
                 NSString *url = [radioComponent getApiCallUrl];
                 [self showLoading];
-                [RICity getCitiesForUrl:url region:[self.shippingSelectedRegion value] successBlock:^(NSArray *regions)
+                [RILocale getCitiesForUrl:url region:self.shippingSelectedRegion.value successBlock:^(NSArray *cities)
                  {
-                     self.shippingCitiesDataset = [regions copy];
-                     self.radioComponentDataset = [regions copy];
+                     self.shippingCitiesDataset = [cities copy];
+                     self.radioComponentDataset = [cities copy];
                      
                      [self hideLoading];
                      [self setupPickerView];
@@ -887,10 +886,10 @@ JAPickerDelegate>
             {
                 NSString *url = [radioComponent getApiCallUrl];
                 [self showLoading];
-                [RICity getCitiesForUrl:url region:[self.billingSelectedRegion value] successBlock:^(NSArray *regions)
+                [RILocale getCitiesForUrl:url region:self.billingSelectedRegion.value successBlock:^(NSArray *cities)
                  {
-                     self.billingCitiesDataset = [regions copy];
-                     self.radioComponentDataset = [regions copy];
+                     self.billingCitiesDataset = [cities copy];
+                     self.radioComponentDataset = [cities copy];
                      
                      [self hideLoading];
                      [self setupPickerView];
@@ -922,20 +921,12 @@ JAPickerDelegate>
         {
             for (int i = 0; i < [self.radioComponentDataset count]; i++)
             {
-                id selectedObject = [self.radioComponentDataset objectAtIndex:i];
-                if(VALID_NOTEMPTY(selectedObject, RIRegion))
+                RILocale* selectedObject = [self.radioComponentDataset objectAtIndex:i];
+                if(VALID_NOTEMPTY(selectedObject, RILocale))
                 {
-                    if([selectedValue isEqualToString:[(RIRegion*)selectedObject value]])
+                    if([selectedValue isEqualToString:selectedObject.value])
                     {
-                        selectedRow = ((RIRegion*)selectedObject).label;
-                        break;
-                    }
-                }
-                else if(VALID_NOTEMPTY(selectedObject, RICity))
-                {
-                    if([selectedValue isEqualToString:[(RICity*)selectedObject value]])
-                    {
-                        selectedRow = ((RICity*)selectedObject).label;
+                        selectedRow = selectedObject.label;
                         break;
                     }
                 }
@@ -956,13 +947,9 @@ JAPickerDelegate>
         for(id currentObject in self.radioComponentDataset)
         {
             NSString *title = @"";
-            if(VALID_NOTEMPTY(currentObject, RIRegion))
+            if(VALID_NOTEMPTY(currentObject, RILocale))
             {
-                title = ((RIRegion*) currentObject).label;
-            }
-            else if(VALID_NOTEMPTY(currentObject, RICity))
-            {
-                title = ((RICity*) currentObject).label;
+                title = ((RILocale*) currentObject).label;
             }
             else if(VALID_NOTEMPTY(currentObject, NSString))
             {
@@ -1000,7 +987,7 @@ JAPickerDelegate>
         if(!VALID_NOTEMPTY(self.regionsDataset, NSArray))
         {
             [self showLoading];
-            [RIRegion getRegionsForUrl:[regionComponent getApiCallUrl] successBlock:^(NSArray *regions)
+            [RILocale getRegionsForUrl:[regionComponent getApiCallUrl] successBlock:^(NSArray *regions)
              {
                  self.regionsDataset = [regions copy];
                  
@@ -1008,9 +995,9 @@ JAPickerDelegate>
                  
                  if(VALID_NOTEMPTY(selectedValue, NSString) && VALID_NOTEMPTY(regions, NSArray))
                  {
-                     for(RIRegion *region in regions)
+                     for(RILocale *region in regions)
                      {
-                         if([selectedValue isEqualToString:[region value]])
+                         if([selectedValue isEqualToString:region.value])
                          {
                              self.shippingSelectedRegion = region;
                              self.billingSelectedRegion = region;
@@ -1030,15 +1017,15 @@ JAPickerDelegate>
                      [regionComponent setRegionValue:self.shippingSelectedRegion];
                  }
                  
-                 if(VALID_NOTEMPTY(self.shippingSelectedRegion, RIRegion) && VALID_NOTEMPTY(citiesComponent, JARadioComponent))
+                 if(VALID_NOTEMPTY(self.shippingSelectedRegion, RILocale) && VALID_NOTEMPTY(citiesComponent, JARadioComponent))
                  {
-                     [RICity getCitiesForUrl:[citiesComponent getApiCallUrl] region:[self.shippingSelectedRegion value] successBlock:^(NSArray *cities) {
+                     [RILocale getCitiesForUrl:[citiesComponent getApiCallUrl] region:self.shippingSelectedRegion.value successBlock:^(NSArray *cities) {
                          self.shippingCitiesDataset = [cities copy];
                          self.billingCitiesDataset = [cities copy];
                          
                          if(VALID_NOTEMPTY(cities, NSArray))
                          {
-                             RICity *city = [cities objectAtIndex:0];
+                             RILocale *city = [cities objectAtIndex:0];
                              
                              self.shippingSelectedCity = city;
                              self.billingSelectedCity = city;
@@ -1076,7 +1063,7 @@ JAPickerDelegate>
             
             if(self.shippingContentView == [self.radioComponent superview])
             {
-                if(VALID_NOTEMPTY(selectedObject, RIRegion) && ![[(RIRegion*)selectedObject value] isEqualToString:[self.shippingSelectedRegion value]])
+                if(VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"region"] && ![[(RILocale*)selectedObject value] isEqualToString:[self.shippingSelectedRegion value]])
                 {
                     self.shippingSelectedRegion = selectedObject;
                     self.shippingSelectedCity = nil;
@@ -1084,7 +1071,7 @@ JAPickerDelegate>
                     
                     [self.shippingDynamicForm setRegionValue:selectedObject];
                 }
-                else if(VALID_NOTEMPTY(selectedObject, RICity))
+                else if(VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"city"])
                 {
                     self.shippingSelectedCity = selectedObject;
                     
@@ -1097,7 +1084,7 @@ JAPickerDelegate>
             }
             else if(self.billingContentView == [self.radioComponent superview])
             {
-                if(VALID_NOTEMPTY(selectedObject, RIRegion) && ![[(RIRegion*) selectedObject value] isEqualToString:[self.billingSelectedRegion value]])
+                if(VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"region"]  && ![[(RILocale*) selectedObject value] isEqualToString:[self.billingSelectedRegion value]])
                 {
                     self.billingSelectedRegion = selectedObject;
                     self.billingSelectedCity = nil;
@@ -1105,7 +1092,7 @@ JAPickerDelegate>
                     
                     [self.billingDynamicForm setRegionValue:selectedObject];
                 }
-                else if(VALID_NOTEMPTY(selectedObject, RICity))
+                else if(VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"city"])
                 {
                     self.billingSelectedCity = selectedObject;
                     

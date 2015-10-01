@@ -596,7 +596,7 @@
     }
 }
 
--(void)setRegionValue:(RIRegion*)region
+-(void)setRegionValue:(RILocale*)region
 {
     for(UIView *formView in self.formViews)
     {
@@ -615,7 +615,7 @@
     }
 }
 
--(void)setCityValue:(RICity*)city
+-(void)setCityValue:(RILocale*)city
 {
     for(UIView *formView in self.formViews)
     {
