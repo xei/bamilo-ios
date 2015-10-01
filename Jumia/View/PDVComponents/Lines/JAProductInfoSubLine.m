@@ -38,21 +38,11 @@
 {
 }
 
-- (UIView *)bottomSeparator
-{
-    if (!VALID_NOTEMPTY(_bottomSeparator, UIView)) {
-        _bottomSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width, .5)];
-        [_bottomSeparator setYBottomAligned:0];
-        [_bottomSeparator setBackgroundColor:JABlack400Color];
-        [self addSubview:_bottomSeparator];
-    }
-    return _bottomSeparator;
-}
-
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
-    [self.bottomSeparator setYBottomAligned:0];
+    [self setBottomSeparatorVisibility:YES];
+    [self setBottomSeparatorColor:JABlack400Color];
 }
 
 - (UILabel *)label

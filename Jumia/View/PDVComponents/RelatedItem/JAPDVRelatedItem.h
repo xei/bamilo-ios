@@ -7,14 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JAPDVSingleRelatedItem.h"
 
 @interface JAPDVRelatedItem : UIView
 
-@property (weak, nonatomic) IBOutlet UILabel *topLabel;
-@property (weak, nonatomic) IBOutlet UIScrollView *relatedItemsScrollView;
+@property (nonatomic) NSString *headerText;
 
-+ (JAPDVRelatedItem *)getNewPDVRelatedItemSection;
-
-- (void)setupWithFrame:(CGRect)frame;
+- (void)addRelatedItemView:(JAPDVSingleRelatedItem *)itemView;
 
 @end

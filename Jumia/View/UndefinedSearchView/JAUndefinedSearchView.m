@@ -219,29 +219,17 @@
             arrayToUse = convertedProd;
         }
 
-        
+#warning TODO THIS
         for (int i = 0; i < featuredBox.products.count; i++) {
             RISearchTypeProduct* product = [arrayToUse objectAtIndex:i];
             if (product.imagesArray.count > 0)
             {
-                JAPDVSingleRelatedItem *singleItem = [JAPDVSingleRelatedItem getNewPDVSingleRelatedItem];
+                JAPDVSingleRelatedItem *singleItem = [[JAPDVSingleRelatedItem alloc] initWithFrame:CGRectZero];
                 
                 CGRect tempFrame = singleItem.frame;
                 tempFrame.origin.x = currentX;
                 singleItem.frame = tempFrame;
-                
-                if (product.imagesArray.count > 0) {
-                    NSString *url = [product.imagesArray firstObject];
-                    [singleItem.imageViewItem setImageWithURL:[NSURL URLWithString:url]
-                                             placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
-                } else {
-                    [singleItem.imageViewItem setImage:[UIImage imageNamed:@"placeholder_scrollable"]];
-                }
-                
-                singleItem.labelBrand.text = product.brand;
-                singleItem.labelName.text = product.name;
-                singleItem.productUrl = product.url;
-                singleItem.labelPrice.text = product.priceFormatted;
+                [singleItem setSearchTypeProduct:product];
                 
                 singleItem.tag = i;
                 [singleItem addTarget:self

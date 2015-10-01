@@ -96,4 +96,9 @@
     self.x = [self superview].width/2 - self.width/2;
 }
 
+- (void)setYCenterAligned
+{
+    self.y = [self superview].height/2 - self.height/2;
+}
+
 @end

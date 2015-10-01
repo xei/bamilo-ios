@@ -12,13 +12,14 @@
 
 @interface JAScrolledImageGalleryView () <UIScrollViewDelegate> {
     UIScrollView *_scrollView;
-    UIView *_pageComponentView;
+    UIScrollView *_pageComponentView;
     BOOL _first;
     NSMutableArray *_processedViews;
     SelectPageBlock _selectPageBlock;
     id _targetSelector;
     SEL _selector;
     NSArray *_urlImages;
+    CGFloat _scrollAnimation;
 }
 
 @end
@@ -197,8 +198,17 @@
         i = RI_IS_RTL?((int)numberOfViews-1):1;
     }
     
-    _pageComponentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, (_infinite?numberOfViews-1:numberOfViews)*48 + (numberOfViews-1)*6, 48)];
-    [_pageComponentView setX:self.width/2-_pageComponentView.width/2];
+    _pageComponentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, (_infinite?numberOfViews-1:numberOfViews)*48 + (numberOfViews-1)*6, 48)];
+    [_pageComponentView setShowsHorizontalScrollIndicator:NO];
+    
+    if (_pageComponentView.width > self.width) {
+        _pageComponentView.x = 0;
+        [_pageComponentView setContentSize:CGSizeMake(_pageComponentView.width, _pageComponentView.contentSize.height)];
+        [_pageComponentView setWidth:self.width];
+        
+    }else{
+        [_pageComponentView setX:self.width/2-_pageComponentView.width/2];
+    }
     [self addSubview:_pageComponentView];
     [_pageComponentView setYBottomAligned:10];
     
@@ -225,7 +235,6 @@
 
 - (void)tapSmallImage:(UIGestureRecognizer *)gesture
 {
-    NSLog(@"tapSmallImage: %ld", (long)gesture.view.tag);
     [self scrollToTag:gesture.view.tag];
 }
 
@@ -233,9 +242,19 @@
 {
     for (UIImageView *view in _pageComponentView.subviews)
     {
-        if (_selectedIndexPage == view.tag)
+        if (_selectedIndexPage == view.tag) {
+            CGFloat scrollOffset = view.x + view.width/2 - self.width/2;
+            if (scrollOffset < 0) {
+                scrollOffset = 0;
+            }else if (_pageComponentView.contentSize.width - scrollOffset < self.width)
+            {
+                scrollOffset = _pageComponentView.contentSize.width - self.width;
+            }
+            [UIView animateWithDuration:.2 animations:^{
+                [_pageComponentView setContentOffset:CGPointMake(scrollOffset, _pageComponentView.contentOffset.y)];
+            }];
             [view.layer setBorderColor:UIColorFromRGB(0xf68b1e).CGColor];
-        else
+        }else
             [view.layer setBorderColor:UIColorFromRGB(0x202020).CGColor];
     }
 }
@@ -248,8 +267,11 @@
         numberOfViews = [_processedViews count];
     }
     [self sendEvent];
-    [_scrollView setContentOffset:CGPointMake([self getViewWithTag:_selectedIndexPage].x, 0)];
-    [self reloadPageComponent];
+    [UIView animateWithDuration:_scrollAnimation animations:^{
+        [_scrollView setContentOffset:CGPointMake([self getViewWithTag:_selectedIndexPage].x, 0)];
+        [self reloadPageComponent];
+    }];
+    _scrollAnimation = .3f;
 }
 
 - (NSInteger)selectedIndexPage
@@ -265,8 +287,10 @@
     }
     _selectedIndexPage = newPage;
     if (_infinite && _selectedIndexPage < 1) {
+        _scrollAnimation = 0;
         [self setSelectedIndexPage:[_processedViews count]-2];
     }else if (_infinite && _selectedIndexPage >= [_processedViews count]-1) {
+        _scrollAnimation = 0;
         [self setSelectedIndexPage:1];
     }else{
         [self reloadPageComponent];
