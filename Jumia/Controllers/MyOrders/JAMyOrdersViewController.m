@@ -224,13 +224,19 @@ JAPickerScrollViewDelegate
                   maxItems:[NSNumber numberWithInteger:kOrdersPerPage]
           withSuccessBlock:^(NSArray *orders, NSInteger ordersTotal) {
               [self.orders addObjectsFromArray:orders];
+              
+              NSInteger previousOrdersTotal = self.ordersTotal;
               self.ordersTotal = ordersTotal;
               
               self.isLoadingOrders = NO;
               [self hideLoading];
               [self removeErrorView];
-              
-              [self setupViews];
+
+              if (previousOrdersTotal > 0) {
+                  [self.ordersCollectionView reloadData];
+              } else {
+                  [self setupViews];
+              }
           }
            andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
                self.apiResponse = apiResponse;

@@ -210,11 +210,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incrementRequestCount) name:RISectionRequestStartedNotificationName object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decrementRequestCount) name:RISectionRequestEndedNotificationName object:nil];
-    
-    if(VALID_NOTEMPTY(self.selectedCountry, RICountry))
-    {
-        [RICommunicationWrapper deleteSessionCookie];
-    }
+
     self.apiRequestId = [RIApi startApiWithCountry:self.selectedCountry
                                          reloadAPI:YES
                                       successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory)

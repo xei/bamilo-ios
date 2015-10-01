@@ -216,6 +216,54 @@
     return newAddress;
 }
 
++ (NSDictionary*)toJSON:(RIAddress*)address{
+    NSMutableDictionary * addressJSON = [[NSMutableDictionary alloc] init];
+    
+    [addressJSON setValue:address.uid forKey:@"id_customer_address"];
+    
+    [addressJSON setValue:address.uid forKey:@"customer_address_id"];
+    
+    [addressJSON setValue:address.firstName forKey:@"first_name"];
+    
+    [addressJSON setValue:address.lastName forKey:@"last_name"];
+    
+    [addressJSON setValue:address.address forKey:@"address1"];
+    
+    [addressJSON setValue:address.address2 forKey:@"address2"];
+    
+    [addressJSON setValue:address.city forKey:@"city"];
+    
+    [addressJSON setValue:address.postcode forKey:@"postcode"];
+    
+    [addressJSON setValue:address.phone forKey:@"phone"];
+    
+    [addressJSON setValue:address.customerId forKey:@"fk_customer"];
+    
+    [addressJSON setValue:address.countryId forKey:@"fk_country"];
+    
+    [addressJSON setValue:address.customerAddressRegionId forKey:@"fk_customer_address_region"];
+    
+    [addressJSON setValue:address.customerAddressCityId forKey:@"fk_customer_address_city"];
+    
+    [addressJSON setValue:address.isDefaultBilling forKey:@"is_default_billing"];
+    
+    [addressJSON setValue:address.isDefaultShipping forKey:@"is_default_shipping"];
+    
+    [addressJSON setValue:address.hidden forKey:@"hidden"];
+    
+    [addressJSON setValue:address.createdAt forKey:@"created_at"];
+    
+    [addressJSON setValue:address.updatedAt forKey:@"updated_at"];
+    
+    [addressJSON setValue:address.createdBy forKey:@"created_by"];
+    
+    [addressJSON setValue:address.customerAddressRegion forKey:@"customer_address_region"];
+    
+    [addressJSON setValue:address.locale forKey:@"_locale"];
+    
+    return addressJSON;
+}
+
 + (void)saveAddress:(RIAddress *)address andContext:(BOOL)save
 {
     [[RIDataBaseWrapper sharedInstance] insertManagedObject:address];
