@@ -24,6 +24,7 @@
 @dynamic countryId;
 @dynamic customerAddressRegionId;
 @dynamic customerAddressCityId;
+@dynamic customerAddressPostcodeId;
 @dynamic isDefaultBilling;
 @dynamic isDefaultShipping;
 @dynamic hidden;
@@ -170,10 +171,13 @@
         newAddress.countryId = [addressJSON objectForKey:@"fk_country"];
     }
     if ([addressJSON objectForKey:@"region"]) {
-        newAddress.customerAddressRegionId = [addressJSON objectForKey:@"fk_customer_address_region"];
+        newAddress.customerAddressRegionId = [addressJSON objectForKey:@"region"];
     }
     if ([addressJSON objectForKey:@"city"]) {
-        newAddress.customerAddressCityId = [addressJSON objectForKey:@"fk_customer_address_city"];
+        newAddress.customerAddressCityId = [addressJSON objectForKey:@"city"];
+    }
+    if ([addressJSON objectForKey:@"postcode"]) {
+        newAddress.customerAddressPostcodeId = [addressJSON objectForKey:@"postcode"];
     }
     if ([addressJSON objectForKey:@"is_default_billing"]) {
         newAddress.isDefaultBilling = [NSString stringWithFormat:@"%@", [addressJSON objectForKey:@"is_default_billing"]];

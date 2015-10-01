@@ -8,6 +8,7 @@
         <attribute name="createdAt" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createdBy" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="customerAddressCityId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="customerAddressPostcodeId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="customerAddressRegion" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="customerAddressRegionId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="customerId" optional="YES" attributeType="String" syncable="YES"/>
@@ -273,7 +274,7 @@
         <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIProduct" inverseName="variations" inverseEntity="RIProduct" syncable="YES"/>
     </entity>
     <elements>
-        <element name="RIAddress" positionX="90" positionY="666" width="128" height="373"/>
+        <element name="RIAddress" positionX="90" positionY="666" width="128" height="390"/>
         <element name="RIApi" positionX="-308" positionY="227" width="128" height="163"/>
         <element name="RICategory" positionX="-261" positionY="27" width="128" height="150"/>
         <element name="RICountryConfiguration" positionX="-459" positionY="-423" width="128" height="285"/>

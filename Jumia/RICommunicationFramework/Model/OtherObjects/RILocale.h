@@ -13,10 +13,10 @@
 @property (nonatomic, retain) NSString * value;
 @property (nonatomic, retain) NSString * label;
 
-+ (NSString *)getPostcodeForUrl:(NSString*)url
-                           city:(NSString*)cityId
-                   successBlock:(void (^)(NSArray *postcodes))successBlock
-                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
++ (NSString *)getPostcodesForUrl:(NSString*)url
+                            city:(NSString*)cityId
+                    successBlock:(void (^)(NSArray *postcodes))successBlock
+                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 + (NSString *)getCitiesForUrl:(NSString*)url
                        region:(NSString*)regionId

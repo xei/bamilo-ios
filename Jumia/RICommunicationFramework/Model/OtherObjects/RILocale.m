@@ -10,10 +10,10 @@
 
 @implementation RILocale
 
-+ (NSString *)getPostcodeForUrl:(NSString*)url
-                           city:(NSString*)cityId
-                   successBlock:(void (^)(NSArray *postcodes))successBlock
-                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
++ (NSString *)getPostcodesForUrl:(NSString*)url
+                            city:(NSString*)cityId
+                    successBlock:(void (^)(NSArray *postcodes))successBlock
+                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
     if(VALID_NOTEMPTY(cityId, NSString))
     {

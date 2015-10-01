@@ -43,7 +43,7 @@
 /**
  * Method that tells if we need to download regions and cities
  */
-- (void)downloadRegions:(JARadioComponent *)regionComponent cities:(JARadioComponent*) citiesComponent;
+- (void)downloadLocalesForComponents:(NSDictionary*)componentDictionary;
 
 @end
 
@@ -72,6 +72,8 @@
 -(void)setRegionValue:(RILocale*)region;
 
 -(void)setCityValue:(RILocale*)city;
+
+-(void)setPostcodeValue:(RILocale*)postcode;
 
 -(void)resignResponder;
 

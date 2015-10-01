@@ -18,8 +18,9 @@
 
 @property (nonatomic, strong) UITextField* currentTextField;
 
-@property (nonatomic, strong) JARadioComponent *regionsComponent;
-@property (nonatomic, strong) JARadioComponent *citiesComponent;
+@property (nonatomic, strong) JARadioComponent *regionComponent;
+@property (nonatomic, strong) JARadioComponent *cityComponent;
+@property (nonatomic, strong) JARadioComponent *postcodeComponent;
 
 @end
 
@@ -65,8 +66,18 @@
 - (void)setDelegate:(id<JADynamicFormDelegate>)delegate
 {
     _delegate = delegate;
-    if (self.delegate && [self.delegate respondsToSelector:@selector(downloadRegions:cities:)]) {
-        [self.delegate performSelector:@selector(downloadRegions:cities:) withObject:self.regionsComponent withObject:self.citiesComponent];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(downloadLocalesForComponents:)]) {
+        NSMutableDictionary* componentDictionary = [NSMutableDictionary new];
+        if (VALID_NOTEMPTY(self.regionComponent, JARadioComponent)) {
+            [componentDictionary setObject:self.regionComponent forKey:@"regionComponent"];
+        }
+        if (VALID_NOTEMPTY(self.cityComponent, JARadioComponent)) {
+            [componentDictionary setObject:self.cityComponent forKey:@"cityComponent"];
+        }
+        if (VALID_NOTEMPTY(self.postcodeComponent, JARadioComponent)) {
+            [componentDictionary setObject:self.postcodeComponent forKey:@"postcodeComponent"];
+        }
+        [self.delegate performSelector:@selector(downloadLocalesForComponents:) withObject:componentDictionary];
     }
 }
 
@@ -197,11 +208,15 @@
             
             if([radioComponent isComponentWithKey:@"region"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
             {
-                self.regionsComponent = radioComponent;
+                self.regionComponent = radioComponent;
             }
             else if([radioComponent isComponentWithKey:@"city"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
             {
-                self.citiesComponent = radioComponent;
+                self.cityComponent = radioComponent;
+            }
+            else if([radioComponent isComponentWithKey:@"postcode"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
+            {
+                self.postcodeComponent = radioComponent;
             }
         }
         else if ([@"related_number" isEqualToString:field.type])
@@ -605,11 +620,15 @@
             JARadioComponent *radioComponent = (JARadioComponent*) formView;
             if([radioComponent isComponentWithKey:@"region"])
             {
-                [radioComponent setRegionValue:region];
+                [radioComponent setLocaleValue:region];
             }
             else if([radioComponent isComponentWithKey:@"city"])
             {
-                [radioComponent setCityValue:nil];
+                [radioComponent setLocaleValue:nil];
+            }
+            else if ([radioComponent isComponentWithKey:@"postcode"])
+            {
+                [radioComponent setLocaleValue:nil];
             }
         }
     }
@@ -624,7 +643,26 @@
             JARadioComponent *radioComponent = (JARadioComponent*) formView;
             if([radioComponent isComponentWithKey:@"city"])
             {
-                [radioComponent setCityValue:city];
+                [radioComponent setLocaleValue:city];
+            }
+            else if ([radioComponent isComponentWithKey:@"postcode"])
+            {
+                [radioComponent setLocaleValue:nil];
+            }
+        }
+    }
+}
+
+-(void)setPostcodeValue:(RILocale*)postcode
+{
+    for(UIView *formView in self.formViews)
+    {
+        if([formView isKindOfClass:[JARadioComponent class]])
+        {
+            JARadioComponent *radioComponent = (JARadioComponent*) formView;
+            if([radioComponent isComponentWithKey:@"postcode"])
+            {
+                [radioComponent setLocaleValue:postcode];
             }
         }
     }

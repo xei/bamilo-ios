@@ -30,9 +30,7 @@
 
 -(void)setValue:(NSString*)value;
 
--(void)setRegionValue:(RILocale*)value;
-
--(void)setCityValue:(RILocale*)value;
+-(void)setLocaleValue:(RILocale*)locale;
 
 -(NSDictionary*)getValues;
 

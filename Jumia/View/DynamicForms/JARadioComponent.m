@@ -105,26 +105,12 @@
     [self.textField setText:value];
 }
 
--(void)setRegionValue:(RILocale*)value
+-(void)setLocaleValue:(RILocale*)locale
 {
-    if(VALID_NOTEMPTY(value, RILocale))
+    if(VALID_NOTEMPTY(locale, RILocale))
     {
-        self.storedValue = [value value];
-        [self.textField setText:[value label]];
-    }
-    else
-    {
-        self.storedValue = @"";
-        [self.textField setText:@""];
-    }
-}
-
--(void)setCityValue:(RILocale*)value
-{
-    if(VALID_NOTEMPTY(value, RILocale))
-    {
-        self.storedValue = [value value];
-        [self.textField setText:[value label]];
+        self.storedValue = locale.value;
+        [self.textField setText:locale.label];
     }
     else
     {
