@@ -813,9 +813,16 @@ JAPickerDelegate>
                 } else if ([self.radioComponent isComponentWithKey:@"city"] && ![selectedObject.value isEqualToString:self.selectedCity.value]) {
                     
                     self.selectedCity = selectedObject;
+                    self.selectedPostcode = nil;
+                    self.postcodesDataset = nil;
                     
                     [self.dynamicForm setCityValue:selectedObject];
                     
+                } else if ([self.radioComponent isComponentWithKey:@"postcode"] && ![selectedObject.value isEqualToString:self.selectedPostcode.value])
+                {
+                    self.selectedPostcode = selectedObject;
+                    
+                    [self.dynamicForm setPostcodeValue:selectedObject];
                 }
             }
         }

@@ -1173,8 +1173,16 @@ JAPickerDelegate>
                 else if(VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"city"])
                 {
                     self.shippingSelectedCity = selectedObject;
+                    self.shippingSelectedPostcode = nil;
+                    self.shippingPostcodesDataset = nil;
                     
                     [self.shippingDynamicForm setCityValue:selectedObject];
+                }
+                else if(VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"postcode"])
+                {
+                    self.shippingSelectedPostcode = selectedObject;
+                    
+                    [self.shippingDynamicForm setPostcodeValue:selectedObject];
                 }
                 else if(VALID_NOTEMPTY(selectedObject, NSString))
                 {
@@ -1194,8 +1202,16 @@ JAPickerDelegate>
                 else if(VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"city"])
                 {
                     self.billingSelectedCity = selectedObject;
+                    self.billingSelectedPostcode = nil;
+                    self.billingPostcodesDataset = nil;
                     
                     [self.billingDynamicForm setCityValue:selectedObject];
+                }
+                else if(VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"postcode"])
+                {
+                    self.billingSelectedPostcode = selectedObject;
+                    
+                    [self.billingDynamicForm setPostcodeValue:selectedObject];
                 }
                 else if(VALID_NOTEMPTY(selectedObject, NSString))
                 {
