@@ -932,10 +932,10 @@
     NSString *finalUrl = [NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_WISHLIST];
     NSMutableDictionary *parameters = [NSMutableDictionary new];
     if (page != -1) {
-        [parameters setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
+        [parameters setObject:[NSString stringWithFormat:@"%ld",(long)page] forKey:@"page"];
     }
     if (maxItems != -1) {
-        [parameters setObject:[NSNumber numberWithInteger:maxItems] forKey:@"per_page"];
+        [parameters setObject:[NSString stringWithFormat:@"%ld",(long)maxItems] forKey:@"per_page"];
     }
     [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl] parameters:parameters httpMethodPost:YES cacheType:RIURLCacheNoCache cacheTime:RIURLCacheDefaultTime userAgentInjection:[RIApi getCountryUserAgentInjection] successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
         if (VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary)) {
@@ -957,6 +957,11 @@
                     NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"favoriteAddDate" ascending:NO];
                     NSArray *sorted = [favoriteProducts sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateDescriptor]];
                     successBlock(sorted);
+                    return;
+                }
+            } else {
+                if (successBlock) {
+                    successBlock([[NSArray alloc] init]);
                     return;
                 }
             }
