@@ -63,7 +63,7 @@
     [_discountLabel setTextAlignment:NSTextAlignmentCenter];
     [self addSubview:_discountLabel];
     
-    _favoriteButtonRect = CGRectMake(0, 10, 24, 24);
+    _favoriteButtonRect = CGRectMake(0, 10, 18, 18);
     _favoriteButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_favoriteButton setHitTestEdgeInsets:UIEdgeInsetsMake(-10, -10, -10, -10)];
     [_favoriteButton setFrame:_favoriteButtonRect];
