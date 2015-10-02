@@ -39,6 +39,7 @@
 #import "JAOtherOffersView.h"
 #import "JBWhatsAppActivity.h"
 #import "JAProductInfoHeaderLine.h"
+#import "JABottomBar.h"
 
 @interface JAPDVViewController ()
 <
@@ -62,7 +63,8 @@ JAActivityViewControllerDelegate
 @property (strong, nonatomic) JAPicker *picker;
 @property (strong, nonatomic) NSMutableArray *pickerDataSource;
 @property (strong, nonatomic) JAPDVGallery *galleryPaged;
-@property (strong, nonatomic) JAButtonWithBlur *ctaView;
+//@property (strong, nonatomic) JAButtonWithBlur *ctaView;
+@property (strong, nonatomic) JABottomBar *ctaView;
 @property (assign, nonatomic) NSInteger commentsCount;
 @property (assign, nonatomic) BOOL openPickerFromCart;
 @property (strong, nonatomic) RIProductSimple *currentSimple;
@@ -511,7 +513,8 @@ JAActivityViewControllerDelegate
      CTA Buttons
      *******/
     
-    self.ctaView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero orientation:self.interfaceOrientation];
+    self.ctaView = [[JABottomBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 49)];
+//    self.ctaView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero orientation:self.interfaceOrientation];
     
     BOOL isiPadInLandscape = NO;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -552,18 +555,21 @@ JAActivityViewControllerDelegate
                                                  self.mainScrollView.frame.size.height - self.ctaView.frame.size.height)];
     }
     
+    [self.ctaView addSmallButton:[UIImage imageNamed:@"placeholder_pdv"] target:self action:@selector(shareProduct)];
     UIDevice *device = [UIDevice currentDevice];
     if ([[device model] isEqualToString:@"iPhone"] || [[device model] isEqualToString:@"iPhone Simulator"])
     {
-        [self.ctaView addButton:STRING_CALL_TO_ORDER
-                         target:self
-                         action:@selector(callToOrder)];
+//        [self.ctaView addButton:STRING_CALL_TO_ORDER
+//                         target:self
+//                         action:@selector(callToOrder)];
+        [self.ctaView addSmallButton:[UIImage imageNamed:@"placeholder_pdv"] target:self action:@selector(callToOrder)];
     }
     
     
-    [self.ctaView addButton:STRING_ADD_TO_SHOPPING_CART
-                     target:self
-                     action:@selector(addToCart)];
+    [self.ctaView addButton:STRING_BUY_NOW target:self action:@selector(addToCart)];
+//    [self.ctaView addButton:STRING_ADD_TO_SHOPPING_CART
+//                     target:self
+//                     action:@selector(addToCart)];
     
     //make sure wizard is in front
     [self.view bringSubviewToFront:self.wizardView];
@@ -1043,126 +1049,122 @@ JAActivityViewControllerDelegate
 
 - (void)shareProduct    // TODO
 {
-//    NSString *url = self.product.url;
-//    
-//    if(NSNotFound != [url rangeOfString:RI_MOBAPI_PREFIX].location)
-//    {
-//        url = [url stringByReplacingOccurrencesOfString:RI_MOBAPI_PREFIX withString:@""];
-//    }
-//    
-//    if(NSNotFound != [url rangeOfString:RI_API_VERSION].location)
-//    {
-//        url = [url stringByReplacingOccurrencesOfString:RI_API_VERSION withString:@""];
-//    }
-//        
-//    // Share with Facebook Messenger and WhatsApp
-//    
-//    UIActivity *fbmActivity = [[AQSFacebookMessengerActivity alloc] init];
-//    UIActivity *whatsAppActivity = [[JBWhatsAppActivity alloc] init];
-//    
-//    NSArray *objectToShare = @[fbmActivity, whatsAppActivity];;
-//    
-//    WhatsAppMessage *whatsappMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",STRING_SHARE_PRODUCT_MESSAGE, url] forABID:nil];
-//    
-//    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_PRODUCT_MESSAGE, [NSURL URLWithString:url], whatsappMsg] applicationActivities:nil];
-//    
-//    if(!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")){
-//       
-//        activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_PRODUCT_MESSAGE, [NSURL URLWithString:url], whatsappMsg] applicationActivities:objectToShare];
-//         
-//    }
-//    
-//    
-//    activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
-//    
-//    [activityController setValue:[NSString stringWithFormat:STRING_SHARE_OBJECT, APP_NAME]
-//                          forKey:@"subject"];
-//    
-//    
-//    activityController.completionHandler = ^(NSString *activityType, BOOL completed)
-//    {
-//        [self trackingEventShared:activityType];
-//    };
-//    
-//    
-//    
-//    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-//    {
-//        CGRect sharePopoverRect = CGRectMake(self.imageSection.shareButton.frame.size.width,
-//                                             self.imageSection.shareButton.frame.size.height / 2,
-//                                             0.0f,
-//                                             0.0f);
-//        
-//        UIPopoverController* popoverController =
-//        [[UIPopoverController alloc] initWithContentViewController:activityController];
-//        [popoverController presentPopoverFromRect:sharePopoverRect inView:self.imageSection.shareButton permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-//        popoverController.passthroughViews = nil;
-//        self.currentPopoverController = popoverController;
-//    }
-//    else
-//    {
-//        [self presentViewController:activityController animated:YES completion:nil];
-//    }
+    NSString *url = self.product.url;
+    
+    if(NSNotFound != [url rangeOfString:RI_MOBAPI_PREFIX].location)
+    {
+        url = [url stringByReplacingOccurrencesOfString:RI_MOBAPI_PREFIX withString:@""];
+    }
+    
+    if(NSNotFound != [url rangeOfString:RI_API_VERSION].location)
+    {
+        url = [url stringByReplacingOccurrencesOfString:RI_API_VERSION withString:@""];
+    }
+        
+    // Share with Facebook Messenger and WhatsApp
+    
+    UIActivity *fbmActivity = [[AQSFacebookMessengerActivity alloc] init];
+    UIActivity *whatsAppActivity = [[JBWhatsAppActivity alloc] init];
+    
+    NSArray *objectToShare = @[fbmActivity, whatsAppActivity];;
+    
+    WhatsAppMessage *whatsappMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",STRING_SHARE_PRODUCT_MESSAGE, url] forABID:nil];
+    
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_PRODUCT_MESSAGE, [NSURL URLWithString:url], whatsappMsg] applicationActivities:nil];
+    
+    if(!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")){
+       
+        activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_PRODUCT_MESSAGE, [NSURL URLWithString:url], whatsappMsg] applicationActivities:objectToShare];
+         
+    }
+    
+    
+    activityController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList];
+    
+    [activityController setValue:[NSString stringWithFormat:STRING_SHARE_OBJECT, APP_NAME]
+                          forKey:@"subject"];
+    
+    
+    activityController.completionHandler = ^(NSString *activityType, BOOL completed)
+    {
+        [self trackingEventShared:activityType];
+    };
+    
+    
+    
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        CGRect sharePopoverRect = CGRectMake(self.ctaView.frame.size.width,
+                                             self.ctaView.frame.size.height / 2,
+                                             0.0f,
+                                             0.0f);
+        
+        UIPopoverController* popoverController =
+        [[UIPopoverController alloc] initWithContentViewController:activityController];
+        [popoverController presentPopoverFromRect:sharePopoverRect inView:self.ctaView permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        popoverController.passthroughViews = nil;
+        self.currentPopoverController = popoverController;
+    }
+    else
+    {
+        [self presentViewController:activityController animated:YES completion:nil];
+    }
 }
 
-- (void)addToCart   // TODO
+- (void)addToCart
 {
-//    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation) && ([self.imageSection.sizeLabel.text isEqualToString:STRING_SIZE]))
-//    {
-//        self.openPickerFromCart = YES;
-//        [self showSizePicker];
-//    }
-//    else if ([self.productInfoSection.sizeLabel.text isEqualToString:STRING_SIZE])
+#warning TODO
+//    if((UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation) && ([self.imageSection.sizeLabel.text isEqualToString:STRING_SIZE])) || [self.productInfoSection.sizeLabel.text isEqualToString:STRING_SIZE])
 //    {
 //        self.openPickerFromCart = YES;
 //        [self showSizePicker];
 //    }
 //    else
 //    {
-//        [self showLoading];
-//        
-//        [RICart addProductWithQuantity:@"1"
-//                                   sku:self.product.sku
-//                                simple:self.currentSimple.sku
-//                      withSuccessBlock:^(RICart *cart) {
-//                          
-//                          if (VALID_NOTEMPTY(self.teaserTrackingInfo, NSString)) {
-//                              NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
-//                              
-//                              NSString* obj = [skusFromTeaserInCart objectForKey:self.product.sku];
-//                              
-//                              if (ISEMPTY(obj)) {
-//                                  [skusFromTeaserInCart setValue:self.teaserTrackingInfo forKey:self.product.sku];
-//                                  [[NSUserDefaults standardUserDefaults] setObject:[skusFromTeaserInCart copy] forKey:kSkusFromTeaserInCartKey];
-//                              }
-//                          }
-//                          
-//                          [self trackingEventAddToCart:cart];
-//                          
-//                          NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
-//                          [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
-//                          
-//                          [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
-//                          
-//                          [self hideLoading];
-//                          
-//                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-//                          
-//                          [self hideLoading];
-//                          
-//                          NSString *addToCartError = STRING_ERROR_ADDING_TO_CART;
-//                          NSString *results = [[errorMessages valueForKey:@"description"] componentsJoinedByString:@""];
-//                          if([results  isEqualToString: @"order_product_sold_out"]){
-//                              
-//                              addToCartError = STRING_PRODCUTS_OUT_OF_STOCK;
-//                          }
-//                          if (RIApiResponseNoInternetConnection == apiResponse)
-//                          {
-//                              addToCartError = STRING_NO_CONNECTION;
-//                          }
-//                          
-//                          [self showMessage:addToCartError success:NO];
-//                      }];
+        [self showLoading];
+        
+        [RICart addProductWithQuantity:@"1"
+                                   sku:self.product.sku
+                                simple:self.currentSimple.sku
+                      withSuccessBlock:^(RICart *cart) {
+                          
+                          if (VALID_NOTEMPTY(self.teaserTrackingInfo, NSString)) {
+                              NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
+                              
+                              NSString* obj = [skusFromTeaserInCart objectForKey:self.product.sku];
+                              
+                              if (ISEMPTY(obj)) {
+                                  [skusFromTeaserInCart setValue:self.teaserTrackingInfo forKey:self.product.sku];
+                                  [[NSUserDefaults standardUserDefaults] setObject:[skusFromTeaserInCart copy] forKey:kSkusFromTeaserInCartKey];
+                              }
+                          }
+                          
+                          [self trackingEventAddToCart:cart];
+                          
+                          NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
+                          [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+                          
+                          [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
+                          
+                          [self hideLoading];
+                          
+                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                          
+                          [self hideLoading];
+                          
+                          NSString *addToCartError = STRING_ERROR_ADDING_TO_CART;
+                          NSString *results = [[errorMessages valueForKey:@"description"] componentsJoinedByString:@""];
+                          if([results  isEqualToString: @"order_product_sold_out"]){
+                              
+                              addToCartError = STRING_PRODCUTS_OUT_OF_STOCK;
+                          }
+                          if (RIApiResponseNoInternetConnection == apiResponse)
+                          {
+                              addToCartError = STRING_NO_CONNECTION;
+                          }
+                          
+                          [self showMessage:addToCartError success:NO];
+                      }];
 //    }
 }
 
