@@ -41,7 +41,7 @@
 {
     NSString *defaultSufix = @"_default";
     if (fashion) {
-        defaultSufix = @"";
+//        defaultSufix = @"";
     }
     
     NSArray *xib = [[NSBundle mainBundle] loadNibNamed:[NSString stringWithFormat:@"JAPDVImageSection%@", defaultSufix]
