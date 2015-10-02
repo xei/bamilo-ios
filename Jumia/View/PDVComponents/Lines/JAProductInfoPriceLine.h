@@ -8,6 +8,8 @@
 
 #import "JAProductInfoBaseLine.h"
 
+#define kProductInfoSingleLineHeight 48
+
 @interface JAProductInfoPriceLine : JAProductInfoBaseLine
 
 @property (nonatomic) NSInteger priceOff;

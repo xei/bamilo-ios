@@ -1,16 +1,50 @@
 //
-//  RIRegion.m
+//  RILocale.m
 //  Jumia
 //
-//  Created by Pedro Lopes on 02/09/14.
-//  Copyright (c) 2014 Rocket Internet. All rights reserved.
+//  Created by Telmo Pinto on 30/09/15.
+//  Copyright (c) 2015 Rocket Internet. All rights reserved.
 //
 
-#import "RIRegion.h"
+#import "RILocale.h"
 
-@implementation RIRegion
+@implementation RILocale
+
++ (NSString *)getPostcodesForUrl:(NSString*)url
+                            city:(NSString*)cityId
+                    successBlock:(void (^)(NSArray *postcodes))successBlock
+                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+{
+    if(VALID_NOTEMPTY(cityId, NSString))
+    {
+        url = [url stringByReplacingOccurrencesOfString:@"--city_id--" withString:cityId];
+    }
+    
+    return [self getLocalesForUrl:url successBlock:successBlock andFailureBlock:failureBlock];
+}
+
+
++ (NSString *)getCitiesForUrl:(NSString*)url
+                       region:(NSString*)regionId
+                 successBlock:(void (^)(NSArray *cities))successBlock
+              andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
+{
+    if(VALID_NOTEMPTY(regionId, NSString))
+    {
+        url = [url stringByReplacingOccurrencesOfString:@"--region_id--" withString:regionId];
+    }
+    
+    return [self getLocalesForUrl:url successBlock:successBlock andFailureBlock:failureBlock];
+}
 
 + (NSString *)getRegionsForUrl:(NSString*)url
+                  successBlock:(void (^)(NSArray *regions))successBlock
+               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
+{
+    return [self getLocalesForUrl:url successBlock:successBlock andFailureBlock:failureBlock];
+}
+
++ (NSString *)getLocalesForUrl:(NSString*)url
                   successBlock:(void (^)(NSArray *regions))successBlock
                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
@@ -20,11 +54,11 @@
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
-                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {                                                              
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                               {
-                                                                  successBlock([RIRegion parseRegions:metadata]);
+                                                                  successBlock([RILocale parseLocaleArray:metadata]);
                                                               } else
                                                               {
                                                                   failureBlock(apiResponse, nil);
@@ -44,60 +78,40 @@
                                                           }];
 }
 
-+ (NSArray*)parseRegions:(NSDictionary*)jsonObject
+
++ (NSArray*)parseLocaleArray:(NSDictionary*)jsonObject
 {
-    NSMutableArray *regions = [[NSMutableArray alloc] init];
+    NSMutableArray *localesMutableArray = [[NSMutableArray alloc] init];
     if(VALID_NOTEMPTY([jsonObject objectForKey:@"data"], NSArray))
     {
         NSArray *dataArray = [jsonObject objectForKey:@"data"];
-        for(NSDictionary *regionObject in dataArray)
+        for(NSDictionary *localeJSON in dataArray)
         {
-            [regions addObject:[RIRegion parseRegion:regionObject]];
+            [localesMutableArray addObject:[RILocale parseLocale:localeJSON]];
         }
     }
-    return [regions copy];
+    return [localesMutableArray copy];
 }
 
-+ (RIRegion*)parseRegion:(NSDictionary*)regionObject
++ (RILocale*)parseLocale:(NSDictionary*)localeObject
 {
-    RIRegion *newRegion = [[RIRegion alloc] init];
+    RILocale* newLocale = [[RILocale alloc] init];
     
-    if(VALID_NOTEMPTY([regionObject objectForKey:@"id_customer_address_region"], NSString))
+    if(VALID_NOTEMPTY([localeObject objectForKey:@"value"], NSString))
     {
-        newRegion.uid = [regionObject objectForKey:@"id_customer_address_region"];
+        newLocale.value = [localeObject objectForKey:@"value"];
+    } else if (VALID_NOTEMPTY([localeObject objectForKey:@"value"], NSNumber)) {
+        NSNumber* value = [localeObject objectForKey:@"value"];
+        newLocale.value = [value stringValue];
     }
     
-    if(VALID_NOTEMPTY([regionObject objectForKey:@"fk_country"], NSString))
+    if(VALID_NOTEMPTY([localeObject objectForKey:@"label"], NSString))
     {
-        newRegion.fkCountry = [regionObject objectForKey:@"fk_country"];
+        newLocale.label = [localeObject objectForKey:@"label"];
     }
     
-    if(VALID_NOTEMPTY([regionObject objectForKey:@"code"], NSString))
-    {
-        newRegion.code = [regionObject objectForKey:@"code"];
-    }
-    
-    if(VALID_NOTEMPTY([regionObject objectForKey:@"name"], NSString))
-    {
-        newRegion.name = [regionObject objectForKey:@"name"];
-    }
-    
-    if(VALID_NOTEMPTY([regionObject objectForKey:@"sort"], NSString))
-    {
-        newRegion.sort = [regionObject objectForKey:@"sort"];
-    }
-    
-    if(VALID_NOTEMPTY([regionObject objectForKey:@"created_at"], NSString))
-    {
-        newRegion.createdAt = [regionObject objectForKey:@"created_at"];
-    }
-    
-    if(VALID_NOTEMPTY([regionObject objectForKey:@"updated_at"], NSString))
-    {
-        newRegion.updatedAt = [regionObject objectForKey:@"updated_at"];
-    }
-    
-    return newRegion;
+    return newLocale;
 }
+
 
 @end

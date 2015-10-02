@@ -27,4 +27,6 @@
 + (JAPDVBundleSingleItem *)getNewPDVBundleSingleItem;
 + (JAPDVBundleSingleItem *)getNewPDVBundleSingleItemWithSize;
 
+- (void)addSelectTarget:(id)target action:(SEL)selector;
+
 @end

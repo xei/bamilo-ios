@@ -8,6 +8,8 @@
 
 #import "JAProductInfoBaseLine.h"
 
+#define kProductInfoSubLineHeight 48
+
 @interface JAProductInfoSubLine : JAProductInfoBaseLine
 
 @end

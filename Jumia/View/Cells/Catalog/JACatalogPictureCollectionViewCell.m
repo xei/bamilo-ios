@@ -119,7 +119,7 @@
         }
         
         if (1 == [product.sum integerValue]) {
-            _numberOfReviewsLabel.text = STRING_NRATINGS;
+            _numberOfReviewsLabel.text = @"";
         } else {
             _numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_NRATINGS, [product.sum integerValue]];
         }

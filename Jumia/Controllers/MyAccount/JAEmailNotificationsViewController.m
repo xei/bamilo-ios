@@ -74,7 +74,7 @@ JADynamicFormDelegate
     {
         [self showLoading];
     }
-    [RIForm getForm:@"managenewsletters"
+    [RIForm getForm:@"manage_newsletters"
        successBlock:^(RIForm *form) {
            
            self.form = form;

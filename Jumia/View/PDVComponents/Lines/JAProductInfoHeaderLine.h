@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "JAProductInfoBaseLine.h"
 
+#define kProductInfoHeaderLineHeight 64
+
 @interface JAProductInfoHeaderLine : JAProductInfoBaseLine
 
 @end
