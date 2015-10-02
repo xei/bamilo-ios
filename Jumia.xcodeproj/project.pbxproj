@@ -276,9 +276,12 @@
 		876d96c3d745466130991f03 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3022019811E8A00F71726 /* MKAnnotationView+WebCache.m */; };
 		886c5fa519e7301d1103b66d /* JAPaymentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DBF3719C0AF9600D4678A /* JAPaymentCell.m */; };
 		894B0D781BB2F80A00199251 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
-		894B0D791BB2F80A00199251 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
-		894B0D7A1BB2F80B00199251 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
-		894B0D7B1BB2F80B00199251 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
+		89C7AF501BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C7AF4F1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m */; };
+		89C7AF511BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C7AF4F1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m */; };
+		89C7AF521BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C7AF4F1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m */; };
+		89C7AF531BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C7AF4F1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m */; };
+		89C7AF541BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C7AF4F1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m */; };
+		89C7AF551BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C7AF4F1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m */; };
 		8C38E18719CF16F50007F6F9 /* JAMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C38E18619CF16F50007F6F9 /* JAMessageView.m */; };
 		8C38E18919CF170F0007F6F9 /* JAMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C38E18819CF170F0007F6F9 /* JAMessageView.xib */; };
 		8c281b362211f7077d4edb4b /* RINewsletterCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FDA419D95B6D008B8059 /* RINewsletterCategory.m */; };
@@ -3085,6 +3088,8 @@
 		6CF4AE831ADEABBB0024EC34 /* JACatalogBannerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogBannerCell.h; sourceTree = "<group>"; };
 		6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogBannerCell.m; sourceTree = "<group>"; };
 		6af3ca12ac4f2d50fa243e2b /* calabash.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; path = calabash.framework; sourceTree = "<group>"; };
+		89C7AF4E1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogPictureCollectionViewCell.h; sourceTree = "<group>"; };
+		89C7AF4F1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogPictureCollectionViewCell.m; sourceTree = "<group>"; };
 		8C38E18519CF16F50007F6F9 /* JAMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMessageView.h; sourceTree = "<group>"; };
 		8C38E18619CF16F50007F6F9 /* JAMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMessageView.m; sourceTree = "<group>"; };
 		8C38E18819CF170F0007F6F9 /* JAMessageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAMessageView.xib; sourceTree = "<group>"; };
@@ -5991,6 +5996,8 @@
 				9AC4D69B1B4699B800036F1C /* JACatalogCollectionViewCell.m */,
 				9AC4D6A11B4A903100036F1C /* JACatalogGridCollectionViewCell.h */,
 				9AC4D6A21B4A903100036F1C /* JACatalogGridCollectionViewCell.m */,
+				89C7AF4E1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.h */,
+				89C7AF4F1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m */,
 			);
 			path = Catalog;
 			sourceTree = "<group>";
@@ -8228,6 +8235,7 @@
 				CE73BB781AA6042E002336B3 /* JANewSellerRatingViewController.m in Sources */,
 				62add1971fcfac7a3f4f4acc /* JAPDVViewController.m in Sources */,
 				36d44c903225b19fe74884ab /* JAColorView.m in Sources */,
+				89C7AF521BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */,
 				df8c4f5769b8468c440e00e1 /* RICountryConfiguration.m in Sources */,
 				a7db6ed31621c11e28c044a6 /* JACheckoutForms.m in Sources */,
 				9A7EE9411B554696004E2505 /* ADJActivityState.m in Sources */,
@@ -8545,6 +8553,7 @@
 				B5A301AE19811D0700F71726 /* main.m in Sources */,
 				B5A3025D19811E8A00F71726 /* UIButton+WebCache.m in Sources */,
 				B5CBFF661A10B33D0050C553 /* JARatingsViewMedium.m in Sources */,
+				89C7AF501BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */,
 				B5A3025C19811E8A00F71726 /* SDWebImagePrefetcher.m in Sources */,
 				9A7EE9B41B554706004E2505 /* NSData+ADJAdditions.m in Sources */,
 				CE3FC5A71990E209003B4A27 /* JAPickerScrollView.m in Sources */,
@@ -8603,6 +8612,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89C7AF511BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */,
 				B5A301C819811D0700F71726 /* JumiaTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8821,6 +8831,7 @@
 				CE9ADBF51AB34C4600D56481 /* JADynamicForm.m in Sources */,
 				CE9ADBF61AB34C4600D56481 /* main.m in Sources */,
 				CE9ADBF71AB34C4600D56481 /* UIButton+WebCache.m in Sources */,
+				89C7AF531BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */,
 				9A1737311B68EBAF004905B4 /* JACheckoutBottomView.m in Sources */,
 				CE9ADBF81AB34C4600D56481 /* JARatingsViewMedium.m in Sources */,
 				CE9ADBFA1AB34C4600D56481 /* SDWebImagePrefetcher.m in Sources */,
@@ -9089,6 +9100,7 @@
 				CE9ADDEF1AB6D6E900D56481 /* JADynamicForm.m in Sources */,
 				CE9ADDF01AB6D6E900D56481 /* main.m in Sources */,
 				CE9ADDF11AB6D6E900D56481 /* UIButton+WebCache.m in Sources */,
+				89C7AF541BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */,
 				9A1737321B68EBAF004905B4 /* JACheckoutBottomView.m in Sources */,
 				CE9ADDF21AB6D6E900D56481 /* JARatingsViewMedium.m in Sources */,
 				CE9ADDF41AB6D6E900D56481 /* SDWebImagePrefetcher.m in Sources */,
@@ -9357,6 +9369,7 @@
 				CECD05A01ADFF2DB00EC51E3 /* RITeaserComponent.m in Sources */,
 				CE9ADFE81AB6D78200D56481 /* RIFormIndex.m in Sources */,
 				CE9ADFE91AB6D78200D56481 /* JADynamicForm.m in Sources */,
+				89C7AF551BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */,
 				CE9ADFEA1AB6D78200D56481 /* main.m in Sources */,
 				CE9ADFEB1AB6D78200D56481 /* UIButton+WebCache.m in Sources */,
 				CE9ADFEC1AB6D78200D56481 /* JARatingsViewMedium.m in Sources */,
