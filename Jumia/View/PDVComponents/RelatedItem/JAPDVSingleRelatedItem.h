@@ -9,16 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "JAClickableView.h"
 #import "RIProduct.h"
+#import "RISearchSuggestion.h"
 
 @interface JAPDVSingleRelatedItem : JAClickableView
 
-@property (weak, nonatomic) IBOutlet UIImageView *imageViewItem;
-@property (weak, nonatomic) IBOutlet UILabel *labelBrand;
-@property (weak, nonatomic) IBOutlet UILabel *labelName;
-@property (weak, nonatomic) IBOutlet UILabel *labelPrice;
 @property (strong, nonatomic) RIProduct *product;
+@property (strong, nonatomic) RISearchTypeProduct *searchTypeProduct;
 @property (strong, nonatomic) NSString *productUrl;
-
-+ (JAPDVSingleRelatedItem *)getNewPDVSingleRelatedItem;
 
 @end

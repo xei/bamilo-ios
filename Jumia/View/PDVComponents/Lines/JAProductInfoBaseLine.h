@@ -7,14 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JAClickableView.h"
 
-@interface JAProductInfoBaseLine : UIView
+@interface JAProductInfoBaseLine : JAClickableView
 
-@property (nonatomic) BOOL clickable;
 @property (nonatomic, readonly) UILabel *label;
+@property (nonatomic) BOOL topSeparatorVisibility;
+@property (nonatomic) BOOL bottomSeparatorVisibility;
+@property (nonatomic) UIColor *topSeparatorColor;
+@property (nonatomic) UIColor *bottomSeparatorColor;
+@property (nonatomic) CGFloat topSeparatorWidth;
+@property (nonatomic) CGFloat bottomSeparatorWidth;
 
 - (void)setTitle:(NSString *)title;
-
-- (void)addTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents;
 
 @end

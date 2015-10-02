@@ -27,7 +27,10 @@
         newSeller.minDeliveryTime = [sellerJSON objectForKey:@"min_delivery_time"];
     }
     if ([sellerJSON objectForKey:@"max_delivery_time"]) {
-        newSeller.minDeliveryTime = [sellerJSON objectForKey:@"max_delivery_time"];
+        newSeller.maxDeliveryTime = [sellerJSON objectForKey:@"max_delivery_time"];
+    }
+    if ([sellerJSON objectForKey:@"is_global"]) {
+        newSeller.isGlobal = ((NSNumber *)[sellerJSON objectForKey:@"is_global"]).boolValue;
     }
     
     if ([sellerJSON objectForKey:@"reviews"]) {

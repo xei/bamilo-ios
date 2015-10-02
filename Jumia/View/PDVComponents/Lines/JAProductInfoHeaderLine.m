@@ -36,9 +36,8 @@
 - (void)setDefaults
 {
     [self setBackgroundColor:UIColorFromRGB(0xf0f0f0)];
-    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width, .5)];
-    [separator setBackgroundColor:[UIColor grayColor]];
-    [self addSubview:separator];
+    [self setTopSeparatorVisibility:YES];
+    [self setTopSeparatorColor:JABlack800Color];
 }
 
 - (UILabel *)label
