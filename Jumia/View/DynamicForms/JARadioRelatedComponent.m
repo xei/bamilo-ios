@@ -54,13 +54,15 @@
     
     self.field = field;
     
-    RIFieldDataSetComponent* alternativeComponent = [field.dataSet lastObject];
+    RIField* lastRelatedField = [field.relatedFields lastObject];
     
-    NSString* text = alternativeComponent.label;
+    NSString* text = lastRelatedField.label;
     
     [self.switchComponent addTarget:self action:@selector(changedState:) forControlEvents:UIControlEventValueChanged];
     [self.switchComponent setAccessibilityLabel:text];
     self.labelText.text = text;
+    
+    self.switchComponent.on = [lastRelatedField.checked boolValue];
     
     [self resetValue];
 }
@@ -100,13 +102,13 @@
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     if(VALID_NOTEMPTY(self.storedValue, NSString) || [[self.field required] boolValue])
     {
-        RIFieldDataSetComponent* selectedComponent;
+        RIField* selectedRelatedField;
         if (VALID_NOTEMPTY(self.storedValue, NSString)) {
-            selectedComponent = [self.field.dataSet lastObject];
+            selectedRelatedField = [self.field.relatedFields lastObject];
         } else {
-            selectedComponent = [self.field.dataSet firstObject];
+            selectedRelatedField = [self.field.relatedFields firstObject];
         }
-        [parameters setValue:selectedComponent.value forKey:self.field.name];
+        [parameters setValue:selectedRelatedField.value forKey:selectedRelatedField.name];
     }
     return parameters;
 }

@@ -9,8 +9,7 @@
 #import "JARadioComponent.h"
 #import "RIFieldOption.h"
 #import "RIFieldDataSetComponent.h"
-#import "RIRegion.h"
-#import "RICity.h"
+#import "RILocale.h"
 
 @interface JARadioComponent ()
 
@@ -106,26 +105,12 @@
     [self.textField setText:value];
 }
 
--(void)setRegionValue:(RIRegion*)value
+-(void)setLocaleValue:(RILocale*)locale
 {
-    if(VALID_NOTEMPTY(value, RIRegion))
+    if(VALID_NOTEMPTY(locale, RILocale))
     {
-        self.storedValue = [value uid];
-        [self.textField setText:[value name]];
-    }
-    else
-    {
-        self.storedValue = @"";
-        [self.textField setText:@""];
-    }
-}
-
--(void)setCityValue:(RICity*)value
-{
-    if(VALID_NOTEMPTY(value, RICity))
-    {
-        self.storedValue = [value uid];
-        [self.textField setText:[value value]];
+        self.storedValue = locale.value;
+        [self.textField setText:locale.label];
     }
     else
     {
@@ -182,10 +167,12 @@
     {
         [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
         [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];
+        self.currentErrorMessage = self.field.requiredMessage;
         
         return NO;
     }
     
+    self.currentErrorMessage = nil;
     [self.textField setTextColor:UIColorFromRGB(0x666666)];
     [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
     

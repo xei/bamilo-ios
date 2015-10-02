@@ -105,6 +105,8 @@
 @synthesize specifications;
 @synthesize seller;
 @synthesize shareUrl;
+@synthesize vertical;
+@synthesize fashion;
 
 + (NSString *)getCompleteProductWithSku:(NSString*)sku
                            successBlock:(void (^)(id product))successBlock
@@ -371,7 +373,6 @@
 {
     RIProduct* newProduct = (RIProduct*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIProduct class])];
     
-//    NSDictionary *dataDic = [productJSON objectForKey:@"data"];
     NSDictionary *dataDic = [productJSON copy];
     
     if (VALID_NOTEMPTY(dataDic, NSDictionary)) {
@@ -593,8 +594,8 @@
         
         newProduct.favoriteAddDate = [RIProduct productIsFavoriteInDatabase:newProduct];
         
-        if ([dataDic objectForKey:@"seller"]) {
-            NSDictionary* sellerJSON = [dataDic objectForKey:@"seller"];
+        if ([dataDic objectForKey:@"seller_entity"]) {
+            NSDictionary* sellerJSON = [dataDic objectForKey:@"seller_entity"];
             if (VALID_NOTEMPTY(sellerJSON, NSDictionary)) {
                 
                 RISeller* seller = [RISeller parseSeller:sellerJSON];
@@ -624,6 +625,14 @@
                     newProduct.offersTotal = [NSNumber numberWithInteger:[[offersJSON objectForKey:@"total"] integerValue]];
                 }
             }
+        }
+        
+        if (VALID_NOTEMPTY([dataDic objectForKey:@"vertical"], NSString)) {
+            NSString *vertical = [dataDic objectForKey:@"vertical"];
+            if ([vertical isEqualToString:@"fashion"]) {
+                newProduct.fashion = YES;
+            }
+            newProduct.vertical = vertical;
         }
         
         if ([dataDic objectForKey:@"related_products"]) {
@@ -932,10 +941,10 @@
     NSString *finalUrl = [NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_WISHLIST];
     NSMutableDictionary *parameters = [NSMutableDictionary new];
     if (page != -1) {
-        [parameters setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
+        [parameters setObject:[NSString stringWithFormat:@"%ld",(long)page] forKey:@"page"];
     }
     if (maxItems != -1) {
-        [parameters setObject:[NSNumber numberWithInteger:maxItems] forKey:@"per_page"];
+        [parameters setObject:[NSString stringWithFormat:@"%ld",(long)maxItems] forKey:@"per_page"];
     }
     [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl] parameters:parameters httpMethodPost:YES cacheType:RIURLCacheNoCache cacheTime:RIURLCacheDefaultTime userAgentInjection:[RIApi getCountryUserAgentInjection] successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
         if (VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary)) {
@@ -960,8 +969,10 @@
                     return;
                 }
             } else {
-                successBlock([[NSArray alloc] init]);
-                return;
+                if (successBlock) {
+                    successBlock([[NSArray alloc] init]);
+                    return;
+                }
             }
         }
         if (failureBlock) {
@@ -1155,6 +1166,9 @@
 {
     if(VALID_NOTEMPTY(seenProduct, RIProduct))
     {
+        if (VALID_NOTEMPTY(seenProduct.numberOfTimesSeen, NSNumber)) {
+            seenProduct.numberOfTimesSeen = [NSNumber numberWithInt:0];
+        }
         seenProduct.numberOfTimesSeen = [NSNumber numberWithInt:([seenProduct.numberOfTimesSeen intValue] + 1)];
     }
 }
