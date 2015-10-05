@@ -275,6 +275,14 @@
 		876d96c3d745466130991f03 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3022019811E8A00F71726 /* MKAnnotationView+WebCache.m */; };
 		886c5fa519e7301d1103b66d /* JAPaymentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DBF3719C0AF9600D4678A /* JAPaymentCell.m */; };
 		894B0D781BB2F80A00199251 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
+		89AB5C2E1BC2B01B00BA38E5 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89AB5C2D1BC2B01B00BA38E5 /* SafariServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		89C177BA1BC2DC47006D3B19 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89AB5C2D1BC2B01B00BA38E5 /* SafariServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		89C177BB1BC2DC48006D3B19 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89AB5C2D1BC2B01B00BA38E5 /* SafariServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		89C177BC1BC2DC49006D3B19 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89AB5C2D1BC2B01B00BA38E5 /* SafariServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		89C177BD1BC2DC4A006D3B19 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89AB5C2D1BC2B01B00BA38E5 /* SafariServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		89C177BE1BC2EC16006D3B19 /* JAPDVProductInfoSellerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC0B9B01BBC4C4A001F4ADE /* JAPDVProductInfoSellerInfo.m */; settings = {ASSET_TAGS = (); }; };
+		89C177BF1BC2EC17006D3B19 /* JAPDVProductInfoSellerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC0B9B01BBC4C4A001F4ADE /* JAPDVProductInfoSellerInfo.m */; settings = {ASSET_TAGS = (); }; };
+		89C177C01BC2EC17006D3B19 /* JAPDVProductInfoSellerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC0B9B01BBC4C4A001F4ADE /* JAPDVProductInfoSellerInfo.m */; settings = {ASSET_TAGS = (); }; };
 		89C7AF501BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C7AF4F1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m */; };
 		89C7AF511BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C7AF4F1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m */; };
 		89C7AF521BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C7AF4F1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m */; };
@@ -1146,7 +1154,7 @@
 		9ABCAEF81B0F8FEE00A69271 /* UIView+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ABCAEED1B0F6A2C00A69271 /* UIView+Mirror.m */; };
 		9ABCAEF91B0F8FEE00A69271 /* UIView+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ABCAEED1B0F6A2C00A69271 /* UIView+Mirror.m */; };
 		9ABCAEFA1B0F8FEF00A69271 /* UIView+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ABCAEED1B0F6A2C00A69271 /* UIView+Mirror.m */; };
-		9AC0B9B11BBC4C4A001F4ADE /* JAPDVProductInfoSellerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC0B9B01BBC4C4A001F4ADE /* JAPDVProductInfoSellerInfo.m */; settings = {ASSET_TAGS = (); }; };
+		9AC0B9B11BBC4C4A001F4ADE /* JAPDVProductInfoSellerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC0B9B01BBC4C4A001F4ADE /* JAPDVProductInfoSellerInfo.m */; };
 		9AC4D6951B45A1EF00036F1C /* JACatalogListCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC4D6941B45A1EF00036F1C /* JACatalogListCollectionViewCell.m */; };
 		9AC4D6961B45A51900036F1C /* JACatalogListCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC4D6941B45A1EF00036F1C /* JACatalogListCollectionViewCell.m */; };
 		9AC4D6971B45A51900036F1C /* JACatalogListCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC4D6941B45A1EF00036F1C /* JACatalogListCollectionViewCell.m */; };
@@ -1538,10 +1546,6 @@
 		CE3AF90E19DBF68400D8C51B /* RICampaign.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF90D19DBF68400D8C51B /* RICampaign.m */; };
 		CE3AF91219DD5D6700D8C51B /* JAPromotionPopUp.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF91119DD5D6700D8C51B /* JAPromotionPopUp.m */; };
 		CE3AF91A19DD8BC400D8C51B /* RIPromotion.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF91919DD8BC400D8C51B /* RIPromotion.m */; };
-		CE3E44741BB40A3500697352 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
-		CE3E44751BB40A3500697352 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
-		CE3E44761BB40A3600697352 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
-		CE3E44771BB40A3600697352 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
 		CE3FC5A71990E209003B4A27 /* JAPickerScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3FC5A61990E209003B4A27 /* JAPickerScrollView.m */; };
 		CE3FC5AE1990E25C003B4A27 /* JACatalogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3FC5AD1990E25C003B4A27 /* JACatalogViewController.m */; };
 		CE4054B71B29EFB300E9CD1A /* JARecentlyViewedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE4054B61B29EFB300E9CD1A /* JARecentlyViewedViewController.xib */; };
@@ -2766,7 +2770,7 @@
 		CED30C24199CAA5C00C67F4B /* JAGenericFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C23199CAA5C00C67F4B /* JAGenericFilterViewController.m */; };
 		CED30C27199CBF0E00C67F4B /* JAColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C26199CBF0E00C67F4B /* JAColorView.m */; };
 		CED30C2A199CC8F200C67F4B /* JAColorFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C29199CC8F200C67F4B /* JAColorFilterCell.m */; };
-		CED7C51F1B78E0560070C855 /* GoogleAppIndexing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED7C51C1B78E0560070C855 /* GoogleAppIndexing.framework */; };
+		CED7C51F1B78E0560070C855 /* GoogleAppIndexing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED7C51C1B78E0560070C855 /* GoogleAppIndexing.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CED7C5201B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED7C51C1B78E0560070C855 /* GoogleAppIndexing.framework */; };
 		CED7C5211B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED7C51C1B78E0560070C855 /* GoogleAppIndexing.framework */; };
 		CED7C5221B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED7C51C1B78E0560070C855 /* GoogleAppIndexing.framework */; };
@@ -3088,6 +3092,7 @@
 		6CF4AE831ADEABBB0024EC34 /* JACatalogBannerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogBannerCell.h; sourceTree = "<group>"; };
 		6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogBannerCell.m; sourceTree = "<group>"; };
 		6af3ca12ac4f2d50fa243e2b /* calabash.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; path = calabash.framework; sourceTree = "<group>"; };
+		89AB5C2D1BC2B01B00BA38E5 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		89C7AF4E1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogPictureCollectionViewCell.h; sourceTree = "<group>"; };
 		89C7AF4F1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogPictureCollectionViewCell.m; sourceTree = "<group>"; };
 		8C38E18519CF16F50007F6F9 /* JAMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMessageView.h; sourceTree = "<group>"; };
@@ -3910,6 +3915,7 @@
 				53f9e54fb2236b4a9a33201e /* CoreText.framework in Frameworks */,
 				CED7C5201B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */,
 				12a1d1e4c6768298e7b485d4 /* CoreTelephony.framework in Frameworks */,
+				89C177BA1BC2DC47006D3B19 /* SafariServices.framework in Frameworks */,
 				6343e651aae2fa544731ccd2 /* Social.framework in Frameworks */,
 				f86a3b267a8e343aedfa85f7 /* QuartzCore.framework in Frameworks */,
 				e0fb727d71cd8dec8a6f3ba8 /* UIKit.framework in Frameworks */,
@@ -3938,6 +3944,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89AB5C2E1BC2B01B00BA38E5 /* SafariServices.framework in Frameworks */,
 				9A0F9BAB1B5E7DE600569DF2 /* StoreKit.framework in Frameworks */,
 				9A0F9BA91B5E7DB400569DF2 /* CoreMotion.framework in Frameworks */,
 				9A0F9BA71B5E7D3600569DF2 /* AVFoundation.framework in Frameworks */,
@@ -3995,6 +4002,7 @@
 				CE9ADC261AB34C4600D56481 /* AdSupport.framework in Frameworks */,
 				CE9ADC271AB34C4600D56481 /* Security.framework in Frameworks */,
 				CE9ADC281AB34C4600D56481 /* CoreText.framework in Frameworks */,
+				89C177BB1BC2DC48006D3B19 /* SafariServices.framework in Frameworks */,
 				CED7C5211B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */,
 				CE9ADC291AB34C4600D56481 /* CoreTelephony.framework in Frameworks */,
 				CE9ADC2A1AB34C4600D56481 /* Social.framework in Frameworks */,
@@ -4036,6 +4044,7 @@
 				CE9ADE201AB6D6E900D56481 /* AdSupport.framework in Frameworks */,
 				CE9ADE211AB6D6E900D56481 /* Security.framework in Frameworks */,
 				CE9ADE221AB6D6E900D56481 /* CoreText.framework in Frameworks */,
+				89C177BC1BC2DC49006D3B19 /* SafariServices.framework in Frameworks */,
 				CED7C5221B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */,
 				CE9ADE231AB6D6E900D56481 /* CoreTelephony.framework in Frameworks */,
 				CE9ADE241AB6D6E900D56481 /* Social.framework in Frameworks */,
@@ -4077,6 +4086,7 @@
 				CE9AE01A1AB6D78200D56481 /* AdSupport.framework in Frameworks */,
 				CE9AE01B1AB6D78200D56481 /* Security.framework in Frameworks */,
 				CE9AE01C1AB6D78200D56481 /* CoreText.framework in Frameworks */,
+				89C177BD1BC2DC4A006D3B19 /* SafariServices.framework in Frameworks */,
 				CED7C5231B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */,
 				CE9AE01D1AB6D78200D56481 /* CoreTelephony.framework in Frameworks */,
 				CE9AE01E1AB6D78200D56481 /* Social.framework in Frameworks */,
@@ -5304,6 +5314,7 @@
 		B5A301D119811E7600F71726 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				89AB5C2D1BC2B01B00BA38E5 /* SafariServices.framework */,
 				9A0F9BAA1B5E7DE600569DF2 /* StoreKit.framework */,
 				9A0F9BA81B5E7DB400569DF2 /* CoreMotion.framework */,
 				9A0F9BA61B5E7D3600569DF2 /* AVFoundation.framework */,
@@ -6465,7 +6476,11 @@
 					};
 					B5A301C019811D0700F71726 = {
 						CreatedOnToolsVersion = 6.0;
+						DevelopmentTeam = PYN25BXZ9L;
 						TestTargetID = B5A301A719811D0700F71726;
+					};
+					CE9ADF271AB6D78200D56481 = {
+						DevelopmentTeam = PYN25BXZ9L;
 					};
 				};
 			};
@@ -8694,6 +8709,7 @@
 				CE8C92901B8615F500C77706 /* RISpecification.m in Sources */,
 				9A189E6D1BB31AF70039BC14 /* JAProductInfoSingleLine.m in Sources */,
 				CE9ADB6D1AB34C4600D56481 /* JACatalogListCell.m in Sources */,
+				89C177BE1BC2EC16006D3B19 /* JAPDVProductInfoSellerInfo.m in Sources */,
 				9A7EE9961B5546A0004E2505 /* ADJRequestHandler.m in Sources */,
 				CE9ADB6E1AB34C4600D56481 /* JASellerRatingsViewController.m in Sources */,
 				CE9ADB6F1AB34C4600D56481 /* JASignInViewController.m in Sources */,
@@ -8962,6 +8978,7 @@
 				CE8C92911B8615F500C77706 /* RISpecification.m in Sources */,
 				9A189E6E1BB31AF70039BC14 /* JAProductInfoSingleLine.m in Sources */,
 				CE9ADD671AB6D6E900D56481 /* JACatalogListCell.m in Sources */,
+				89C177C01BC2EC17006D3B19 /* JAPDVProductInfoSellerInfo.m in Sources */,
 				9A7EE9971B5546A0004E2505 /* ADJRequestHandler.m in Sources */,
 				CE9ADD681AB6D6E900D56481 /* JASellerRatingsViewController.m in Sources */,
 				CE9ADD691AB6D6E900D56481 /* JASignInViewController.m in Sources */,
@@ -9230,6 +9247,7 @@
 				CE8C92921B8615F500C77706 /* RISpecification.m in Sources */,
 				9A189E6F1BB31AF70039BC14 /* JAProductInfoSingleLine.m in Sources */,
 				9A7EE9981B5546A0004E2505 /* ADJRequestHandler.m in Sources */,
+				89C177BF1BC2EC17006D3B19 /* JAPDVProductInfoSellerInfo.m in Sources */,
 				CE9ADF621AB6D78200D56481 /* JASellerRatingsViewController.m in Sources */,
 				CE9ADF631AB6D78200D56481 /* JASignInViewController.m in Sources */,
 				CE9ADF641AB6D78200D56481 /* RIConfiguration.m in Sources */,
@@ -9549,7 +9567,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Laurent de Tapol (6PWYUM26GW)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -9571,7 +9590,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c8314895-2f65-4307-adfd-85c099bd3a3f";
+				PROVISIONING_PROFILE = "45c655f4-3e2d-4905-8056-522f9036bfd5";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9582,7 +9601,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Jumia.app/Jumia";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -9597,7 +9617,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3ea7301a-bf5f-46e1-9488-749531251bb7";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
 			name = Hockey;
@@ -9654,7 +9674,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Laurent de Tapol (6PWYUM26GW)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -9676,7 +9697,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c8314895-2f65-4307-adfd-85c099bd3a3f";
+				PROVISIONING_PROFILE = "45c655f4-3e2d-4905-8056-522f9036bfd5";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9687,7 +9708,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Jumia.app/Jumia";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -9702,7 +9724,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3ea7301a-bf5f-46e1-9488-749531251bb7";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
 			name = HockeyLive;
@@ -9842,7 +9864,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Laurent de Tapol (6PWYUM26GW)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -9864,7 +9887,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c8314895-2f65-4307-adfd-85c099bd3a3f";
+				PROVISIONING_PROFILE = "45c655f4-3e2d-4905-8056-522f9036bfd5";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9877,7 +9900,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Laurent de Tapol (6PWYUM26GW)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -9899,7 +9923,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c8314895-2f65-4307-adfd-85c099bd3a3f";
+				PROVISIONING_PROFILE = "45c655f4-3e2d-4905-8056-522f9036bfd5";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
@@ -9909,7 +9933,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Jumia.app/Jumia";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -9924,7 +9949,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3ea7301a-bf5f-46e1-9488-749531251bb7";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
 			name = Debug;
@@ -9933,7 +9958,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Jumia.app/Jumia";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -9944,7 +9970,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3ea7301a-bf5f-46e1-9488-749531251bb7";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
 			name = Release;
@@ -9956,6 +9982,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -9992,6 +10019,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -10028,6 +10056,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -10064,6 +10093,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -10099,6 +10129,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -10135,6 +10166,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -10171,6 +10203,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -10207,6 +10240,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -10241,7 +10275,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -10267,7 +10303,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "83f53783-a654-427a-8316-c594edece2ea";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -10280,7 +10316,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -10306,7 +10344,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "83f53783-a654-427a-8316-c594edece2ea";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -10319,7 +10357,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -10345,7 +10385,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "83f53783-a654-427a-8316-c594edece2ea";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -10358,7 +10398,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
@@ -10381,7 +10423,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "83f53783-a654-427a-8316-c594edece2ea";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
