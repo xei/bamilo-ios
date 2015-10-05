@@ -21,7 +21,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *wishListButton;
 @property (weak, nonatomic) IBOutlet UIScrollView *imageScrollView;
-@property (weak, nonatomic) IBOutlet UILabel *discountLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *separatorImageView;
 @property (weak, nonatomic) IBOutlet UILabel *productNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *productDescriptionLabel;
