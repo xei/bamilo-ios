@@ -56,6 +56,7 @@
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [button setTitle:name forState:UIControlStateNormal];
+    [button.titleLabel setFont:JABody2Font];
     [button setBackgroundColor:JAOrange1Color];
     [button setTintColor:[UIColor whiteColor]];
     [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
@@ -67,6 +68,7 @@
 - (void)addSmallButton:(UIImage *)image target:(id)target action:(SEL)action
 {
     UIButton *smallButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [[smallButton imageView] setContentMode:UIViewContentModeCenter];
     [smallButton setImage:image forState:UIControlStateNormal];
     [smallButton setBackgroundColor:JABlack900Color];
     [smallButton setTintColor:[UIColor whiteColor]];

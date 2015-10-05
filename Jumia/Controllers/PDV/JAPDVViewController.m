@@ -555,14 +555,14 @@ JAActivityViewControllerDelegate
                                                  self.mainScrollView.frame.size.height - self.ctaView.frame.size.height)];
     }
     
-    [self.ctaView addSmallButton:[UIImage imageNamed:@"placeholder_pdv"] target:self action:@selector(shareProduct)];
+    [self.ctaView addSmallButton:[UIImage imageNamed:@"btn_share"] target:self action:@selector(shareProduct)];
     UIDevice *device = [UIDevice currentDevice];
     if ([[device model] isEqualToString:@"iPhone"] || [[device model] isEqualToString:@"iPhone Simulator"])
     {
 //        [self.ctaView addButton:STRING_CALL_TO_ORDER
 //                         target:self
 //                         action:@selector(callToOrder)];
-        [self.ctaView addSmallButton:[UIImage imageNamed:@"placeholder_pdv"] target:self action:@selector(callToOrder)];
+        [self.ctaView addSmallButton:[UIImage imageNamed:@"ic_calltoorder"] target:self action:@selector(callToOrder)];
     }
     
     
@@ -656,67 +656,67 @@ JAActivityViewControllerDelegate
     mainScrollViewY += (6.0f + self.imageSection.frame.size.height);
     
     
-    /*******
-     Colors / Variation
-     *******/
-    
-    if (VALID_NOTEMPTY(self.product.variations, NSOrderedSet))
-    {
-        self.variationsSection.frame = CGRectMake(6.0f,
-                                                  mainScrollViewY,
-                                                  self.variationsSection.frame.size.width,
-                                                  self.variationsSection.frame.size.height);
-        
-        [self.variationsSection.variationsScrollView setFrame:CGRectMake(6.0f,
-                                                                         _variationsSection.variationsScrollView.frame.origin.y,
-                                                                         _variationsSection.bounds.size.width - 12.0f,
-                                                                         _variationsSection.variationsScrollView.bounds.size.height)];
-        
-        self.variationsSection.titleLabel.text = STRING_MORE_CHOICES;
-        
-        CGFloat currentX = 0.0;
-        
-        CGFloat viewHeight = self.variationsSection.variationsScrollView.frame.size.height;
-        CGFloat imageHeight = 30.0f;
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        {
-            imageHeight = 71.0f;
-        }
-        
-        for (int i = 0; i < [self.product.variations count]; i++)
-        {
-            RIVariation *variation = [self.product.variations objectAtIndex:i];
-            
-            JAClickableView* variationClickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
-                                                                                                        0.0f,
-                                                                                                        viewHeight,
-                                                                                                        viewHeight)];
-            variationClickableView.tag = i;
-            [variationClickableView addTarget:self
-                                       action:@selector(openVariation:)
-                             forControlEvents:UIControlEventTouchUpInside];
-            [self.variationsSection.variationsScrollView addSubview:variationClickableView];
-            
-            UIImageView *newImageView = [[UIImageView alloc] initWithFrame:CGRectMake((variationClickableView.bounds.size.width - imageHeight) / 2,
-                                                                                      (variationClickableView.bounds.size.height - imageHeight) / 2,
-                                                                                      imageHeight,
-                                                                                      imageHeight)];
-            [newImageView setImageWithURL:[NSURL URLWithString:variation.image.url]
-                         placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
-            [newImageView changeImageHeight:imageHeight andWidth:0.0f];
-            [variationClickableView addSubview:newImageView];
-            
-            currentX += variationClickableView.frame.size.width;
-        }
-        
-        [self.variationsSection.variationsScrollView setContentSize:CGSizeMake(currentX,
-                                                                               viewHeight
-                                                                               )];
-        
-        [self.mainScrollView addSubview:self.variationsSection];
-        
-        mainScrollViewY += (6.0f + self.variationsSection.frame.size.height);
-    }
+//    /*******
+//     Colors / Variation
+//     *******/
+//    
+//    if (VALID_NOTEMPTY(self.product.variations, NSOrderedSet))
+//    {
+//        self.variationsSection.frame = CGRectMake(6.0f,
+//                                                  mainScrollViewY,
+//                                                  self.variationsSection.frame.size.width,
+//                                                  self.variationsSection.frame.size.height);
+//        
+//        [self.variationsSection.variationsScrollView setFrame:CGRectMake(6.0f,
+//                                                                         _variationsSection.variationsScrollView.frame.origin.y,
+//                                                                         _variationsSection.bounds.size.width - 12.0f,
+//                                                                         _variationsSection.variationsScrollView.bounds.size.height)];
+//        
+//        self.variationsSection.titleLabel.text = STRING_MORE_CHOICES;
+//        
+//        CGFloat currentX = 0.0;
+//        
+//        CGFloat viewHeight = self.variationsSection.variationsScrollView.frame.size.height;
+//        CGFloat imageHeight = 30.0f;
+//        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+//        {
+//            imageHeight = 71.0f;
+//        }
+//        
+//        for (int i = 0; i < [self.product.variations count]; i++)
+//        {
+//            RIVariation *variation = [self.product.variations objectAtIndex:i];
+//            
+//            JAClickableView* variationClickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
+//                                                                                                        0.0f,
+//                                                                                                        viewHeight,
+//                                                                                                        viewHeight)];
+//            variationClickableView.tag = i;
+//            [variationClickableView addTarget:self
+//                                       action:@selector(openVariation:)
+//                             forControlEvents:UIControlEventTouchUpInside];
+//            [self.variationsSection.variationsScrollView addSubview:variationClickableView];
+//            
+//            UIImageView *newImageView = [[UIImageView alloc] initWithFrame:CGRectMake((variationClickableView.bounds.size.width - imageHeight) / 2,
+//                                                                                      (variationClickableView.bounds.size.height - imageHeight) / 2,
+//                                                                                      imageHeight,
+//                                                                                      imageHeight)];
+//            [newImageView setImageWithURL:[NSURL URLWithString:variation.image.url]
+//                         placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
+//            [newImageView changeImageHeight:imageHeight andWidth:0.0f];
+//            [variationClickableView addSubview:newImageView];
+//            
+//            currentX += variationClickableView.frame.size.width;
+//        }
+//        
+//        [self.variationsSection.variationsScrollView setContentSize:CGSizeMake(currentX,
+//                                                                               viewHeight
+//                                                                               )];
+//        
+//        [self.mainScrollView addSubview:self.variationsSection];
+//        
+//        mainScrollViewY += (6.0f + self.variationsSection.frame.size.height);
+//    }
     
     /*******
      Other Offers Section
@@ -1005,7 +1005,8 @@ JAActivityViewControllerDelegate
 - (void) openVariation:(UIControl*)sender
 {
     RIVariation *variation = [self.product.variations objectAtIndex:sender.tag];
-    self.productUrl = variation.link;
+    self.productUrl = nil;
+    self.productSku = variation.sku;
     [self loadCompleteProduct];
 }
 
