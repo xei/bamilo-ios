@@ -4117,7 +4117,8 @@
 				9A7A772C1B2F0A9C002F530F /* JAPDVGallery.h */,
 				9A7A772D1B2F0A9C002F530F /* JAPDVGallery.m */,
 			);
-			path = Gallery;
+			name = Gallery;
+			path = ../Gallery;
 			sourceTree = "<group>";
 		};
 		4A1892CF199399EC0036F327 /* ReviewCell */ = {
@@ -4381,7 +4382,6 @@
 				CEA86DA01A39F7FA000032AD /* JAPageControl */,
 				B5C9C7011A1A5E540065AFD4 /* JADatePicker */,
 				B5C2B0651A0911AB00B4872D /* JAPicker */,
-				4A01EE5E199259B6005F5AD1 /* Gallery */,
 				4AE730B2198F8AAB000CA1DD /* ImageSection */,
 				4AE730B5198F8AAB000CA1DD /* Variations */,
 				4AE730B4198F8AAB000CA1DD /* RelatedItem */,
@@ -4393,6 +4393,7 @@
 		4AE730B2198F8AAB000CA1DD /* ImageSection */ = {
 			isa = PBXGroup;
 			children = (
+				4A01EE5E199259B6005F5AD1 /* Gallery */,
 				4AE730B6198F8ACA000CA1DD /* JAPDVImageSection.h */,
 				4AE730B7198F8ACA000CA1DD /* JAPDVImageSection.m */,
 				4AE730C8198F8C8B000CA1DD /* JAPDVImageSection.xib */,

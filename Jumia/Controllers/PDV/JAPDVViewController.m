@@ -124,7 +124,7 @@ JAActivityViewControllerDelegate
                                                  name: UIApplicationDidEnterBackgroundNotification
                                                object: nil];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductChangedNotification object:self.productUrl];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductChangedNotification object:self.product.sku];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -167,8 +167,8 @@ JAActivityViewControllerDelegate
 
 - (void)updatedProduct:(NSNotification*)notification
 {
-    NSString* productUrl = notification.object;
-    if (!VALID_NOTEMPTY(productUrl, NSString) || [self.productUrl isEqualToString:productUrl]) {
+    NSString* sku = notification.object;
+    if (!VALID_NOTEMPTY(sku, NSString) || [self.product.sku isEqualToString:sku]) {
         _needRefreshProduct = YES;
     }
 }
@@ -456,7 +456,7 @@ JAActivityViewControllerDelegate
             userInfo = [NSDictionary dictionaryWithObject:self.product.favoriteAddDate forKey:@"favoriteAddDate"];
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                            object:self.productUrl
+                                                            object:self.product.sku
                                                           userInfo:userInfo];
         [self requestBundles];
     } andFailureBlock:nil];
@@ -1581,7 +1581,7 @@ JAActivityViewControllerDelegate
                 userInfo = [NSDictionary dictionaryWithObject:self.product.favoriteAddDate forKey:@"favoriteAddDate"];
             }
             [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                                object:self.productUrl
+                                                                object:self.product.sku
                                                               userInfo:userInfo];
             
             [self showMessage:STRING_ADDED_TO_WISHLIST success:YES];
@@ -1609,7 +1609,7 @@ JAActivityViewControllerDelegate
                 userInfo = [NSDictionary dictionaryWithObject:self.product.favoriteAddDate forKey:@"favoriteAddDate"];
             }
             [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                                object:self.productUrl
+                                                                object:self.product.sku
                                                               userInfo:userInfo];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             
