@@ -32,14 +32,14 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
     
     NSMutableAttributedString* finalPriceString;
     NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [UIFont fontWithName:kFontRegularName size:fontSize], NSFontAttributeName,
-                                UIColorFromRGB(0xcc0000), NSForegroundColorAttributeName, nil];
+                                JAList1Font, NSFontAttributeName,
+                                JABlackColor, NSForegroundColorAttributeName, nil];
 
     if (VALID_NOTEMPTY(specialPrice, NSString) && VALID_NOTEMPTY(price, NSString))
     {
         NSDictionary* oldPriceAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                            [UIFont fontWithName:kFontLightName size:fontSize], NSFontAttributeName,
-                                            UIColorFromRGB(0xcccccc), NSForegroundColorAttributeName, nil];
+                                            JAList2Font, NSFontAttributeName,
+                                            JABlack800Color, NSForegroundColorAttributeName, nil];
         
         NSRange oldPriceRange = NSMakeRange(RI_IS_RTL?0:(specialPrice.length + 1), RI_IS_RTL?specialPrice.length:price.length);
         
@@ -105,7 +105,7 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
                                   oldPriceLabel.frame.size.width,
                                   1.0f);
         
-        _strike.backgroundColor = UIColorFromRGB(0xcccccc);
+        _strike.backgroundColor = JABlack800Color;
     }else{
         if (_strike) {
             [_strike removeFromSuperview];

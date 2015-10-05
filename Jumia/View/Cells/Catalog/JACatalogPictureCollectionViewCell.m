@@ -1,18 +1,15 @@
 //
-//  JACatalogListCollectionViewCell.m
+//  JACatalogPictureCollectionViewCell.m
 //  Jumia
 //
-//  Created by josemota on 7/2/15.
+//  Created by miguelseabra on 30/09/15.
 //  Copyright (c) 2015 Rocket Internet. All rights reserved.
 //
 
-#import "JACatalogListCollectionViewCell.h"
-#import "RIProduct.h"
-#import "RIImage.h"
-#import "UIImageView+WebCache.h"
+#import "JACatalogPictureCollectionViewCell.h"
 #import "JARatingsView.h"
 
-@interface JACatalogListCollectionViewCell () {
+@interface JACatalogPictureCollectionViewCell () {
     CGFloat _lastWidth;
     CGRect _ratingsViewRect;
     
@@ -23,7 +20,7 @@
 
 @end
 
-@implementation JACatalogListCollectionViewCell
+@implementation JACatalogPictureCollectionViewCell
 
 - (instancetype)init
 {
@@ -57,6 +54,7 @@
 
 - (void)initViews
 {
+    self.cellType = JACatalogCollectionViewPictureCell;
     [super initViews];
     
     _numberOfReviewsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -74,17 +72,17 @@
 - (void)reloadViews
 {
     [super reloadViews];
-    [_numberOfReviewsLabel setY:CGRectGetMaxY(self.priceView.frame) + 7.f];
+    [_numberOfReviewsLabel setY:CGRectGetMaxY(self.priceView.frame) + 8.f];
     
-    [_ratingsView setFrame:CGRectMake(80,
+    [_ratingsView setFrame:CGRectMake(16,
                                       _numberOfReviewsLabel.y,
                                       _ratingsViewRect.size.width,
                                       _ratingsViewRect.size.height)];
     
     [_numberOfReviewsLabel setX:CGRectGetMaxX(_ratingsView.frame) + JACatalogCellPriceLabelOffsetX + 10];
     
-    [_ratingsView setY:_numberOfReviewsLabel.y];
-
+    [_ratingsView setY:_numberOfReviewsLabel.y + 4.f];
+    
     if (RI_IS_RTL) {
         [_numberOfReviewsLabel flipViewPositionInsideSuperview];
         [_ratingsView flipViewPositionInsideSuperview];
@@ -132,5 +130,6 @@
         [self reloadViews];
     }
 }
+
 
 @end

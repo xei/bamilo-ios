@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JAClickableView.h"
 #import "JASortingView.h"
+#import "JACatalogCollectionViewCell.h"
 
 @protocol JACatalogTopViewDelegate <NSObject>
 
@@ -30,7 +31,7 @@
 @property (weak, nonatomic) IBOutlet JAClickableView *sortingButton;
 @property (weak, nonatomic) IBOutlet JAClickableView *filterButton;
 @property (weak, nonatomic) IBOutlet JAClickableView *viewModeButton;
-@property (nonatomic, assign) BOOL gridSelected;
+@property (nonatomic, assign) JACatalogCollectionViewCellType cellTypeSelected;
 @property (nonatomic, assign) BOOL filterSelected;
 
 - (void)setSorting:(RICatalogSorting)sorting;
