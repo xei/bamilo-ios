@@ -50,6 +50,8 @@
 
 "string_filters" = "Filters";
 
+"string_remove_filter" = "Remove";
+
 "categories_toplevel_title" = "All Categories";
 
 "string_apply" = "Apply";

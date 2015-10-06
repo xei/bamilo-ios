@@ -1136,12 +1136,12 @@ typedef void (^ProcessActionBlock)(void);
         [self loadMoreProducts];
         return;
     }
-    NSString* productUrl = notification.object;
+    NSString* sku = notification.object;
     int i = 0;
     for(; i < self.productsArray.count; i++)
     {
         RIProduct *product = [self.productsArray objectAtIndex:i];
-        if ([productUrl isEqualToString:product.url]) {
+        if ([sku isEqualToString:product.sku]) {
             product.favoriteAddDate = nil;
             if (notification.userInfo && [notification.userInfo objectForKey:@"favoriteAddDate"]) {
                 NSDate *date =[notification.userInfo objectForKey:@"favoriteAddDate"];
@@ -1250,7 +1250,7 @@ typedef void (^ProcessActionBlock)(void);
                                             userInfo = [NSDictionary dictionaryWithObject:product.favoriteAddDate forKey:@"favoriteAddDate"];
                                         }
                                         [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                                                            object:product
+                                                                                            object:product.sku
                                                                                           userInfo:userInfo];
                                         
                                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
@@ -1287,7 +1287,7 @@ typedef void (^ProcessActionBlock)(void);
                 userInfo = [NSDictionary dictionaryWithObject:product.favoriteAddDate forKey:@"favoriteAddDate"];
             }
             [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                                object:product
+                                                                object:product.sku
                                                               userInfo:userInfo];
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {

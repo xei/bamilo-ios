@@ -13,7 +13,9 @@
 
 @implementation RIVariation
 
-@dynamic link;
+@dynamic brand;
+@dynamic name;
+@dynamic price;
 @dynamic sku;
 @dynamic image;
 @dynamic product;
@@ -22,8 +24,14 @@
 {
     RIVariation* newVariation = (RIVariation*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIVariation class])];
     
-    if ([variation objectForKey:@"link"]) {
-        newVariation.link = [variation objectForKey:@"link"];
+    if ([variation objectForKey:@"brand"]) {
+        newVariation.brand = [variation objectForKey:@"brand"];
+    }
+    if ([variation objectForKey:@"name"]) {
+        newVariation.name = [variation objectForKey:@"name"];
+    }
+    if ([variation objectForKey:@"price"]) {
+        newVariation.brand = [variation objectForKey:@"price"];
     }
     if ([variation objectForKey:@"sku"]) {
         newVariation.sku = [variation objectForKey:@"sku"];

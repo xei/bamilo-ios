@@ -34,6 +34,7 @@
 #define STRING_TRACK_MY_ORDER RILocalizedString(@"nav_track_order", nil)
 #define STRING_CHOOSE_COUNTRY RILocalizedString(@"nav_country", nil)
 #define STRING_FILTERS RILocalizedString(@"string_filters", nil)
+#define STRING_REMOVE_FILTER RILocalizedString(@"string_remove_filter", nil)
 #define STRING_ALL_CATEGORIES RILocalizedString(@"categories_toplevel_title", nil)
 #define STRING_APPLY RILocalizedString(@"string_apply", nil)
 #define STRING_SEARCH RILocalizedString(@"search_label", nil)
