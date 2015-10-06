@@ -86,6 +86,8 @@
 
 "string_ratings" = "%d ratings";
 
+"string_nratings" = "(%d)";
+
 "string_review" = "1 review";
 
 "string_reviews" = "%d reviews";
@@ -368,7 +370,7 @@
 
 "campaing_timer_end" = "Ends in:";
 
-"string_format_off_label" = "%d%% OFF";
+"string_format_off_label" = "-%d%% OFF";
 
 "campaigns_label" = "Campaigns";
 

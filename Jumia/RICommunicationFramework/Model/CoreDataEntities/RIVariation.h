@@ -13,8 +13,10 @@
 
 @interface RIVariation : NSManagedObject
 
-@property (nonatomic, retain) NSString * link;
-@property (nonatomic, retain) NSString * sku;
+@property (nonatomic, retain) NSString *brand;
+@property (nonatomic, retain) NSString *name;
+@property (nonatomic, retain) NSString *price;
+@property (nonatomic, retain) NSString *sku;
 @property (nonatomic, retain) RIImage *image;
 @property (nonatomic, retain) RIProduct *product;
 

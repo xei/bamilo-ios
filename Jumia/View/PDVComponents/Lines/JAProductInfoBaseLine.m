@@ -10,7 +10,7 @@
 
 @interface JAProductInfoBaseLine ()
 
-@property (nonatomic) UILabel *arrow;
+@property (nonatomic) UIImageView *arrow;
 @property (nonatomic) UIView *topSeparator;
 @property (nonatomic) UIView *bottomSeparator;
 
@@ -66,17 +66,16 @@
 - (void)addTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents
 {
     [self setEnabled:YES];
-    [self.arrow setEnabled:YES];
+    [self.arrow setHidden:NO];
     [super addTarget:target action:action forControlEvents:controlEvents];
 }
 
-- (UILabel *)arrow
+- (UIImageView *)arrow
 {
     if (!VALID_NOTEMPTY(_arrow, UILabel)) {
-        _arrow = [[UILabel alloc] initWithFrame:CGRectMake(self.width - 16, 6, 10, self.height-12)];
-        [_arrow setTextColor:JABlack400Color];
-        [_arrow setText:@">"];
-        [_arrow sizeToFit];
+        _arrow = [[UIImageView alloc] initWithFrame:CGRectMake(self.width - 16, 6, 8, 12)];
+        [_arrow setImage:[UIImage imageNamed:@"arrow_moreinfo"]];
+        [_arrow setHidden:YES];
         [_arrow setX:self.width - 16 - _arrow.width];
         [_arrow setY:self.height/2 - _arrow.height/2];
         [self addSubview:_arrow];

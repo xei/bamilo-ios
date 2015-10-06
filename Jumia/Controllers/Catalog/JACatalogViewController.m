@@ -27,6 +27,7 @@
 #import "JACatalogCollectionViewCell.h"
 #import "JACatalogListCollectionViewCell.h"
 #import "JACatalogGridCollectionViewCell.h"
+#import "JACatalogPictureCollectionViewCell.h"
 
 #define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
@@ -341,7 +342,7 @@ typedef void (^ProcessActionBlock)(void);
                                              [self viewBounds].origin.y,
                                              [self viewBounds].size.width,
                                              self.catalogTopView.frame.size.height)];
-    self.catalogTopView.gridSelected = NO;
+    self.catalogTopView.cellTypeSelected = JACatalogCollectionViewListCell;
     self.catalogTopView.delegate = self;
     [self.view addSubview:self.catalogTopView];
     self.catalogTopView.sortingButton.enabled = NO;
@@ -353,6 +354,7 @@ typedef void (^ProcessActionBlock)(void);
     [self.collectionView registerNib:[UINib nibWithNibName:@"JACatalogBannerCell" bundle:nil] forCellWithReuseIdentifier:@"bannerCell"];
     [self.collectionView registerClass:[JACatalogListCollectionViewCell class] forCellWithReuseIdentifier:@"JACatalogListCollectionViewCell"];
     [self.collectionView registerClass:[JACatalogGridCollectionViewCell class] forCellWithReuseIdentifier:@"JACatalogGridCollectionViewCell"];
+    [self.collectionView registerClass:[JACatalogPictureCollectionViewCell class] forCellWithReuseIdentifier:@"JACatalogPictureCollectionViewCell"];
     
     self.flowLayout = [[JAProductListFlowLayout alloc] init];
     self.flowLayout.manualCellSpacing = 6.0f;
@@ -370,8 +372,8 @@ typedef void (^ProcessActionBlock)(void);
     [self.catalogTopView setSorting:self.sortingMethod];
     [self.catalogTopView repositionForWidth:self.view.frame.size.width];
     
-    NSNumber* gridSelected = [[NSUserDefaults standardUserDefaults] objectForKey:JACatalogGridSelected];
-    self.catalogTopView.gridSelected = [gridSelected boolValue];
+    NSNumber* cellTypeSelected = [[NSUserDefaults standardUserDefaults] objectForKey:JACatalogGridSelected];
+    self.catalogTopView.cellTypeSelected = [cellTypeSelected integerValue];
 }
 
 - (void)getCategories
@@ -722,30 +724,52 @@ typedef void (^ProcessActionBlock)(void);
         
         if(UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
             
-            if (self.catalogTopView.gridSelected) {
-                width = 254.0f;
-                height = JACatalogViewControllerGridCellHeight_ipad;
-            } else {
-                width = 381.0f;
-                height = JACatalogViewControllerListCellHeight_ipad;
+            switch (self.catalogTopView.cellTypeSelected) {
+                case JACatalogCollectionViewGridCell:
+                    width = JACatalogViewControllerGridCellWidth_ipad_portrait;
+                    height = JACatalogViewControllerGridCellHeight_ipad;
+                    break;
+                case JACatalogCollectionViewListCell:
+                    width = JACatalogViewControllerListCellWidth_ipad_portrait;
+                    height = JACatalogViewControllerListCellHeight_ipad;
+                    break;
+                case JACatalogCollectionViewPictureCell:
+                    width = JACatalogViewControllerPictureCellWidth_ipad_portrait;
+                    height = JACatalogViewControllerPictureCellHeight_ipad;
+                    break;
             }
         } else {
-            if (self.catalogTopView.gridSelected) {
-                width = 204.0f;
-                height = JACatalogViewControllerGridCellHeight_ipad;
-            } else {
-                width = 339.0f;
-                height = JACatalogViewControllerListCellHeight_ipad;
+            switch (self.catalogTopView.cellTypeSelected) {
+                case JACatalogCollectionViewGridCell:
+                    width = JACatalogViewControllerGridCellWidth_ipad_landscape
+                    ;
+                    height = JACatalogViewControllerGridCellHeight_ipad;
+                    break;
+                case JACatalogCollectionViewListCell:
+                    width = JACatalogViewControllerListCellWidth_ipad_landscape;
+                    height = JACatalogViewControllerListCellHeight_ipad;
+                case JACatalogCollectionViewPictureCell:
+                    width = JACatalogViewControllerPictureCellWidth_ipad_landscape;
+                    height = JACatalogViewControllerPictureCellHeight_ipad;
+                    break;
             }
         }
     } else {
-        if (self.catalogTopView.gridSelected) {
-            width = 157.0f;
-            height = JACatalogViewControllerGridCellHeight;
-        } else {
-            //use view instead of collection view, the list cell has the insets inside itself;
-            width = [self viewBounds].size.width;
-            height = JACatalogViewControllerListCellHeight;
+        switch (self.catalogTopView.cellTypeSelected) {
+            case JACatalogCollectionViewGridCell:
+                width = JACatalogViewControllerGridCellWidth;
+                height = JACatalogViewControllerGridCellHeight;
+                break;
+            case JACatalogCollectionViewListCell:
+                //use view instead of collection view, the list cell has the insets inside itself;
+//                width = [self viewBounds].size.width;
+                width = JACatalogViewControllerListCellWidth;
+                height = JACatalogViewControllerListCellHeight;
+                break;
+            case JACatalogCollectionViewPictureCell:
+                width = JACatalogViewControllerPictureCellWidth;
+                height = JACatalogViewControllerPictureCellHeight;
+                break;
         }
     }
     
@@ -755,8 +779,9 @@ typedef void (^ProcessActionBlock)(void);
 - (void)changeViewToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     self.bannerImage = nil;
-    if (self.catalogTopView.gridSelected) {
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+    switch (self.catalogTopView.cellTypeSelected) {
+        case JACatalogCollectionViewGridCell:
+            if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             if (UIInterfaceOrientationPortrait == interfaceOrientation || UIInterfaceOrientationPortraitUpsideDown == interfaceOrientation) {
                 self.cellIdentifier = @"gridCell_ipad_portrait";
             } else {
@@ -765,8 +790,9 @@ typedef void (^ProcessActionBlock)(void);
         } else {
             self.cellIdentifier = @"gridCell";
         }
-    } else {
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            break;
+        case JACatalogCollectionViewListCell:
+            if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             if (UIInterfaceOrientationPortrait == interfaceOrientation || UIInterfaceOrientationPortraitUpsideDown == interfaceOrientation) {
                 self.cellIdentifier = @"listCell_ipad_portrait";
             } else {
@@ -775,6 +801,18 @@ typedef void (^ProcessActionBlock)(void);
         } else {
             self.cellIdentifier = @"listCell";
         }
+            break;
+        case JACatalogCollectionViewPictureCell:
+            if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+                if (UIInterfaceOrientationPortrait == interfaceOrientation || UIInterfaceOrientationPortraitUpsideDown == interfaceOrientation) {
+                    self.cellIdentifier = @"pictureCell_ipad_portrait";
+                } else {
+                    self.cellIdentifier = @"pictureCell_ipad_landscape";
+                }
+            } else {
+                self.cellIdentifier = @"pictureCell";
+            }
+            break;
     }
     
     if(VALID_NOTEMPTY(self.collectionView.superview, UIView))
@@ -789,26 +827,42 @@ typedef void (^ProcessActionBlock)(void);
 
 - (NSInteger)getNumberOfCellsInScreenForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    if (self.catalogTopView.gridSelected) {
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            if (UIInterfaceOrientationPortrait == interfaceOrientation || UIInterfaceOrientationPortraitUpsideDown == interfaceOrientation) {
-                return 15;
-            } else {
-                return 20;
+    switch (self.catalogTopView.cellTypeSelected) {
+        case JACatalogCollectionViewGridCell:
+            if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+                if (UIInterfaceOrientationPortrait == interfaceOrientation || UIInterfaceOrientationPortraitUpsideDown == interfaceOrientation) {
+                    return 15;
+                } else {
+                    return 20;
+                }
+            }else{
+                return 7;
             }
-        }else{
-            return 7;
-        }
-    } else {
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            if (UIInterfaceOrientationPortrait == interfaceOrientation || UIInterfaceOrientationPortraitUpsideDown == interfaceOrientation) {
-                return 18;
-            } else {
-                return 21;
+            break;
+            
+        case JACatalogCollectionViewListCell:
+            if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+                if (UIInterfaceOrientationPortrait == interfaceOrientation || UIInterfaceOrientationPortraitUpsideDown == interfaceOrientation) {
+                    return 18;
+                } else {
+                    return 21;
+                }
+            }else{
+                return 5;
             }
-        }else{
-            return 5;
-        }
+            break;
+            
+        case JACatalogCollectionViewPictureCell:
+            if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+                if (UIInterfaceOrientationPortrait == interfaceOrientation || UIInterfaceOrientationPortraitUpsideDown == interfaceOrientation) {
+                    return 18;
+                } else {
+                    return 21;
+                }
+            }else{
+                return 5;
+            }
+            break;
     }
 }
 
@@ -835,23 +889,7 @@ typedef void (^ProcessActionBlock)(void);
     if (VALID_NOTEMPTY(self.banner, RIBanner) && 0 == indexPath.row) {
         return self.bannerImage.frame.size;
     }
-    
-    if ([self.cellIdentifier isEqualToString:@"listCell"])
-        return CGSizeMake(308, 97);
-    else if ([self.cellIdentifier isEqualToString:@"listCell_ipad_portrait"])
-        return CGSizeMake(375, 97);
-    else if ([self.cellIdentifier isEqualToString:@"listCell_ipad_landscape"])
-        return CGSizeMake(333.33, 97);
-    
-    else if ([self.cellIdentifier isEqualToString:@"gridCell"])
-        return CGSizeMake(151, 206);
-    else if ([self.cellIdentifier isEqualToString:@"gridCell_ipad_portrait"])
-        return CGSizeMake(248, 212);
-    else if ([self.cellIdentifier isEqualToString:@"gridCell_ipad_landscape"])
-        return CGSizeMake(197.6, 212);
-    else
-        return CGSizeZero;
-    
+    return [self getLayoutItemSizeForInterfaceOrientation:[UIApplication sharedApplication].statusBarOrientation];
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
@@ -884,8 +922,10 @@ typedef void (^ProcessActionBlock)(void);
     
     if ([self.cellIdentifier hasPrefix:@"grid"]) {
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JACatalogGridCollectionViewCell" forIndexPath:indexPath];
-    }else{
+    }else if ([self.cellIdentifier hasPrefix:@"list"]) {
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JACatalogListCollectionViewCell" forIndexPath:indexPath];
+    } else if ([self.cellIdentifier hasPrefix:@"picture"]) {
+        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JACatalogPictureCollectionViewCell" forIndexPath:indexPath];
     }
     
     cell.favoriteButton.tag = realIndex;
@@ -1096,12 +1136,12 @@ typedef void (^ProcessActionBlock)(void);
         [self loadMoreProducts];
         return;
     }
-    NSString* productUrl = notification.object;
+    NSString* sku = notification.object;
     int i = 0;
     for(; i < self.productsArray.count; i++)
     {
         RIProduct *product = [self.productsArray objectAtIndex:i];
-        if ([productUrl isEqualToString:product.url]) {
+        if ([sku isEqualToString:product.sku]) {
             product.favoriteAddDate = nil;
             if (notification.userInfo && [notification.userInfo objectForKey:@"favoriteAddDate"]) {
                 NSDate *date =[notification.userInfo objectForKey:@"favoriteAddDate"];
@@ -1146,7 +1186,7 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)viewModeChanged;
 {
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.catalogTopView.gridSelected] forKey:JACatalogGridSelected];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:self.catalogTopView.cellTypeSelected] forKey:JACatalogGridSelected];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self changeViewToInterfaceOrientation:self.interfaceOrientation];
@@ -1210,7 +1250,7 @@ typedef void (^ProcessActionBlock)(void);
                                             userInfo = [NSDictionary dictionaryWithObject:product.favoriteAddDate forKey:@"favoriteAddDate"];
                                         }
                                         [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                                                            object:product
+                                                                                            object:product.sku
                                                                                           userInfo:userInfo];
                                         
                                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
@@ -1247,7 +1287,7 @@ typedef void (^ProcessActionBlock)(void);
                 userInfo = [NSDictionary dictionaryWithObject:product.favoriteAddDate forKey:@"favoriteAddDate"];
             }
             [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                                object:product
+                                                                object:product.sku
                                                               userInfo:userInfo];
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
@@ -1426,10 +1466,17 @@ typedef void (^ProcessActionBlock)(void);
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-    if (self.catalogTopView.gridSelected) {
-        [trackingDictionary setValue:@"Grid" forKey:kRIEventActionKey];
-    } else {
-        [trackingDictionary setValue:@"List" forKey:kRIEventActionKey];
+    
+    switch (self.catalogTopView.cellTypeSelected) {
+        case JACatalogCollectionViewListCell:
+            [trackingDictionary setValue:@"List" forKey:kRIEventActionKey];
+            break;
+        case JACatalogCollectionViewGridCell:
+            [trackingDictionary setValue:@"Grid" forKey:kRIEventActionKey];
+            break;
+        case JACatalogCollectionViewPictureCell:
+            [trackingDictionary setValue:@"Picture" forKey:kRIEventActionKey];
+            break;
     }
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCatalog]

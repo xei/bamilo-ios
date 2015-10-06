@@ -80,24 +80,7 @@
     NSMutableArray *validViews = [NSMutableArray new];
     if (VALID_NOTEMPTY(views, NSArray)) {
         for (NSString *urlImage in views) {
-            UIImageView* imageView = [[UIImageView alloc] init];
-            [imageView setFrame:CGRectMake(0, 0, 272, 340)];
-            [imageView setX:self.width/2-imageView.width/2];
-            [imageView setY:(self.height-60)/2-imageView.height/2];
-            [validViews addObject:imageView];
-            [imageView setImageWithURL:[NSURL URLWithString:urlImage] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"] options:SDWebImageCacheMemoryOnly success:^(UIImage *image, BOOL cached) {
-                int i = 0;
-                for (NSString *url in _urlImages) {
-                    if ([url isEqualToString:urlImage]) {
-                        UIImageView *imageV = [validViews objectAtIndex:i];
-                        [imageV setWidth:340*image.size.width/image.size.height];
-                        [imageV setHeight:340];
-                        [imageV setX:self.width/2-imageV.width/2];
-                        [imageV setY:(self.height-60)/2-imageV.height/2];
-                    }
-                    i++;
-                }
-            } failure:nil];
+            [validViews addObject:[self getImageViewForImageUrl:urlImage]];
         }
     }else{
         UIImageView* imageView = [[UIImageView alloc] init];
@@ -107,45 +90,27 @@
     }
     
     if (_infinite && validViews.count > 1) {
-        UIImageView* firstImageView = [[UIImageView alloc] init];
-        [firstImageView setFrame:CGRectMake(0, 0, 272, 340)];
-        [firstImageView setX:self.width/2-firstImageView.width/2];
-        [firstImageView setY:(self.height-60)/2-firstImageView.height/2];
-        [validViews addObject:firstImageView];
-        [firstImageView setImageWithURL:[NSURL URLWithString:[_urlImages firstObject]] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"] options:SDWebImageCacheMemoryOnly success:^(UIImage *image, BOOL cached) {
-            int i = 0;
-            for (NSString *url in _urlImages) {
-                if ([url isEqualToString:[_urlImages firstObject]]) {
-                    UIImageView *imageV = [validViews objectAtIndex:i];
-                    [imageV setWidth:340*image.size.width/image.size.height];
-                    [imageV setHeight:340];
-                    [imageV setX:self.width/2-imageV.width/2];
-                    [imageV setY:(self.height-60)/2-imageV.height/2];
-                }
-                i++;
-            }
-        } failure:nil];
-        UIImageView* lastImageView = [[UIImageView alloc] init];
-        [lastImageView setFrame:CGRectMake(0, 0, 272, 340)];
-        [lastImageView setX:self.width/2-lastImageView.width/2];
-        [lastImageView setY:(self.height-60)/2-lastImageView.height/2];
-        [validViews insertObject:lastImageView atIndex:0];
-        [lastImageView setImageWithURL:[NSURL URLWithString:[_urlImages lastObject]] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"] options:SDWebImageCacheMemoryOnly success:^(UIImage *image, BOOL cached) {
-            int i = 0;
-            for (NSString *url in _urlImages) {
-                if ([url isEqualToString:[_urlImages lastObject]]) {
-                    UIImageView *imageV = [validViews objectAtIndex:i];
-                    [imageV setWidth:340*image.size.width/image.size.height];
-                    [imageV setHeight:340];
-                    [imageV setX:self.width/2-imageV.width/2];
-                    [imageV setY:(self.height-60)/2-imageV.height/2];
-                }
-                i++;
-            }
-        } failure:nil];
+        [validViews addObject:[self getImageViewForImageUrl:[_urlImages firstObject]]];
+        [validViews insertObject:[self getImageViewForImageUrl:[_urlImages lastObject]] atIndex:0];
     }
     _views = [validViews copy];
     [self loadViews];
+}
+
+- (UIImageView *)getImageViewForImageUrl:(NSString *)imageURL
+{
+    UIImageView* imageView = [[UIImageView alloc] init];
+    [imageView setFrame:CGRectMake(0, 0, 272, 340)];
+    [imageView setImage:[UIImage imageNamed:@"placeholder_pdv"]];
+    [imageView setX:self.width/2-imageView.width/2];
+
+    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:imageURL]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        if (error || ((NSHTTPURLResponse *) response).statusCode != 200) {
+            return;
+        }
+        [imageView setImage:[UIImage imageWithData:data]];
+    }];
+    return imageView;
 }
 
 - (void)loadViews
@@ -244,7 +209,7 @@
     {
         if (_selectedIndexPage == view.tag) {
             CGFloat scrollOffset = view.x + view.width/2 - self.width/2;
-            if (scrollOffset < 0) {
+            if (scrollOffset < 0 || self.width > _pageComponentView.contentSize.width) {
                 scrollOffset = 0;
             }else if (_pageComponentView.contentSize.width - scrollOffset < self.width)
             {
