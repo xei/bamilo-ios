@@ -927,9 +927,9 @@
                              
                              
                              [RICustomer loginCustomerByFacebookWithParameters:parameters
-                                                                  successBlock:^(RICustomer* customer, NSString* nextStep) {
+                                                                  successBlock:^(NSDictionary* entities, NSString* nextStep) {
                                                                       
-                                                                      RICustomer *customerObject = ((RICustomer *)customer);
+                                                                      RICustomer *customerObject = [entities objectForKey:@"customer"];
                                                                       
                                                                       NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                                                                       [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventLabelKey];

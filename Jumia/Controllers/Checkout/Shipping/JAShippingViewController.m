@@ -14,12 +14,12 @@
 #import "JAPickupStationInfoCell.h"
 #import "JAUtils.h"
 #import "JAOrderSummaryView.h"
-#import "RICheckout.h"
 #import "RIShippingMethodPickupStationOption.h"
 #import "RICustomer.h"
 #import "UIView+Mirror.h"
 #import "UIImage+Mirror.h"
 #import "JACheckoutBottomView.h"
+#import "RIShippingMethodForm.h"
 
 #define kPickupStationKey @"pickupstation"
 
@@ -52,7 +52,7 @@ UICollectionViewDelegateFlowLayout
 // Order summary
 @property (strong, nonatomic) JAOrderSummaryView *orderSummary;
 
-@property (strong, nonatomic) RICheckout *checkout;
+@property (strong, nonatomic) RICart *cart;
 @property (strong, nonatomic) RIShippingMethodForm* shippingMethodForm;
 @property (strong, nonatomic) NSArray *shippingMethods;
 @property (strong, nonatomic) NSDictionary *pickupStationRegions;
@@ -157,13 +157,13 @@ UICollectionViewDelegateFlowLayout
         [self showLoading];
     }
     
-    [RICheckout getShippingMethodFormWithSuccessBlock:^(RICheckout *checkout)
+    [RICart getShippingMethodFormWithSuccessBlock:^(RICart *cart)
      {
-         self.checkout = checkout;
-         self.shippingMethodForm = checkout.shippingMethodForm;
+         self.cart = cart;
+         self.shippingMethodForm = cart.shippingMethodForm;
          
          // LIST OF AVAILABLE SHIPPING METHODS
-         self.shippingMethods = [RIShippingMethodForm getShippingMethods:checkout.shippingMethodForm];
+         self.shippingMethods = [RIShippingMethodForm getShippingMethods:cart.shippingMethodForm];
          
          [self finishedLoadingShippingMethods];
          [self removeErrorView];
@@ -233,7 +233,7 @@ UICollectionViewDelegateFlowLayout
     [self.view addSubview:self.scrollView];
     
     _bottomView = [[JACheckoutBottomView alloc] initWithFrame:CGRectMake(0.f, self.view.frame.size.height - 56, self.view.frame.size.width, 56) orientation:self.interfaceOrientation];
-    [_bottomView setTotalValue:self.checkout.cart.cartValueFormatted];
+    [_bottomView setTotalValue:self.cart.cartValueFormatted];
     [self.view addSubview:_bottomView];
 }
 
@@ -378,7 +378,7 @@ UICollectionViewDelegateFlowLayout
                                                                                  self.stepBackground.frame.size.height,
                                                                                  self.view.frame.size.width - width - orderSummaryRightMargin,
                                                                                  self.view.frame.size.height - self.stepBackground.frame.size.height)];
-        [self.orderSummary loadWithCheckout:self.checkout shippingMethod:NO];
+        [self.orderSummary loadWithCart:self.cart shippingMethod:NO];
         [self.view addSubview:self.orderSummary];
     }
     
@@ -392,7 +392,7 @@ UICollectionViewDelegateFlowLayout
                                              width,
                                              56)];
     [_bottomView setButtonText:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
-    [_bottomView setTotalValue:self.checkout.cart.cartValueFormatted];
+    [_bottomView setTotalValue:self.cart.cartValueFormatted];
     
     [self reloadCollectionView];
     
@@ -523,15 +523,15 @@ UICollectionViewDelegateFlowLayout
         if(!hasError)
         {
             [self showLoading];
-            [RICheckout setShippingMethod:self.shippingMethodForm
-                               parameters:[parameters copy]
-                             successBlock:^(RICheckout *checkout) {
-                                 
+            [RICart setShippingMethod:self.shippingMethodForm
+                           parameters:[parameters copy]
+                         successBlock:^(RICart *cart) {
+                             
                                  [self hideLoading];
                                  
-                                 self.checkout=checkout;
+                                 self.cart=cart;
                                  
-                                 [JAUtils goToCheckout:self.checkout];
+                                 [JAUtils goToNextStep:self.cart.nextStep];
                                  
                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                  [self hideLoading];
@@ -748,8 +748,8 @@ UICollectionViewDelegateFlowLayout
             {
                 NSString *cellIdentifier = @"shippingInfoCell";
                 JAShippingInfoCell *shippingInfoCell = (JAShippingInfoCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-                NSString *shippingFee = [[self.checkout cart] shippingValueFormatted];
-                if(0 == [[[self.checkout cart] shippingValue] integerValue])
+                NSString *shippingFee = [self.cart shippingValueFormatted];
+                if(0 == [[self.cart shippingValue] integerValue])
                 {
                     shippingFee = STRING_FREE;
                 }

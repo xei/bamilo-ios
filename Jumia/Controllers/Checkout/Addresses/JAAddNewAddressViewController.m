@@ -14,7 +14,6 @@
 #import "JAPicker.h"
 #import "RIForm.h"
 #import "RILocale.h"
-#import "RICheckout.h"
 #import "RICustomer.h"
 #import "UIView+Mirror.h"
 #import "UIImage+Mirror.h"
@@ -75,7 +74,6 @@ JAPickerDelegate>
 @property (assign, nonatomic) NSInteger numberOfRequests;
 @property (assign, nonatomic) NSInteger numberOfGetFormRequests;
 @property (assign, nonatomic) BOOL hasErrors;
-@property (strong, nonatomic) RICheckout *checkout;
 
 @property (strong, nonatomic) JACheckBoxComponent *checkBoxComponent;
 
@@ -728,7 +726,8 @@ JAPickerDelegate>
              [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAddAddressSuccess]
                                                        data:nil];
              
-             self.checkout = object;
+             NSDictionary* entitiesDictionary = (NSDictionary*) object;
+             self.cart = [entitiesDictionary objectForKey:@"cart"];
              [self.billingDynamicForm resetValues];
              self.numberOfRequests--;
          } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
@@ -762,7 +761,8 @@ JAPickerDelegate>
           parameters:shippingParameters
         successBlock:^(id object)
      {
-         self.checkout = object;
+         NSDictionary* entitiesDictionary = (NSDictionary*)object;
+         self.cart = [entitiesDictionary objectForKey:@"cart"];
          [self.shippingDynamicForm resetValues];
          self.numberOfRequests--;
      } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
@@ -803,7 +803,7 @@ JAPickerDelegate>
     {
         if(self.fromCheckout)
         {
-            [JAUtils goToCheckout:self.checkout];
+            [JAUtils goToNextStep:self.cart.nextStep];
         }
         else
         {

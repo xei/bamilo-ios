@@ -8,6 +8,7 @@
 
 #import "JAOrderSummaryView.h"
 #import "RICartItem.h"
+#import "RIAddress.h"
 
 #define JAOrderSummaryViewTextMargin 6.0f
 
@@ -127,24 +128,17 @@
     }
 }
 
-- (void)loadWithCheckout:(RICheckout*)checkout shippingMethod:(BOOL)shippingMethod
+- (void)loadWithCart:(RICart*)cart shippingMethod:(BOOL)shippingMethod;
 {
-    if(VALID_NOTEMPTY(checkout, RICheckout))
+    if(VALID_NOTEMPTY(cart, RICart))
     {
-        [self loadWithCart:checkout.cart];
+        [self loadWithCart:cart];
         
-        RIOrder *orderSummary = checkout.orderSummary;
-        if(VALID_NOTEMPTY(orderSummary, RIOrder))
-        {
-            RIAddress *shippingAddress = orderSummary.shippingAddress;
-            RIAddress *billingAddress = orderSummary.billingAddress;
-            [self loadWithShippingAddress:shippingAddress billingAddress:billingAddress];
-            
-            if(shippingMethod)
-            {
-                [self loadWithShippingMethod:orderSummary.shippingMethod];
-            }
-        }
+        [self loadWithShippingAddress:cart.shippingAddress billingAddress:cart.billingAddress];
+        
+        if (shippingMethod) {
+            [self loadWithShippingMethod:cart.shippingMethod];
+        }        
     }
 }
 

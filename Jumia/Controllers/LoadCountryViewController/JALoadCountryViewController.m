@@ -311,9 +311,9 @@
                                   }];
         }
         
-        self.customerRequestId = [RICustomer autoLogin:^(BOOL success, RICustomer *customer, NSString *loginMethod)
+        self.customerRequestId = [RICustomer autoLogin:^(BOOL success, NSDictionary *entities, NSString *loginMethod)
                                   {
-                                      self.customer = customer;
+                                      self.customer = [entities objectForKey:@"customer"];
                                       self.loginMethod = loginMethod;
                                       [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration)
                                        {

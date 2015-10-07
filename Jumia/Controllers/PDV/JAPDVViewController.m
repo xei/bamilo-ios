@@ -39,6 +39,7 @@
 #import "JAOtherOffersView.h"
 #import "JBWhatsAppActivity.h"
 #import "JAProductInfoHeaderLine.h"
+#import "RIAddress.h"
 
 @interface JAPDVViewController ()
 <

@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class RICheckout;
+@class RICart;
 @class RIPaymentInformation;
 
 @interface JAExternalPaymentsViewController : JABaseViewController
 
-@property (strong, nonatomic) RICheckout *checkout;
+@property (strong, nonatomic) RICart *cart;
 @property (strong, nonatomic) RIPaymentInformation *paymentInformation;
 
 @end

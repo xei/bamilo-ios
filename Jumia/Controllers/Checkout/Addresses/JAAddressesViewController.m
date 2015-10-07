@@ -12,7 +12,6 @@
 #import "JASwitchCell.h"
 #import "JAAddNewAddressCell.h"
 #import "JAUtils.h"
-#import "RICheckout.h"
 #import "RIAddress.h"
 #import "RIForm.h"
 #import "RIField.h"
@@ -974,8 +973,8 @@ UICollectionViewDelegateFlowLayout>
     if (self.fromCheckout) {
         [self showLoading];
         
-        [RICheckout getBillingAddressFormWithSuccessBlock:^(RICheckout *checkout) {
-            RIForm *billingForm = checkout.billingAddressForm;
+        [RICart getCheckoutAddressFormsWithSuccessBlock:^(RICart *cart) {
+            RIForm *billingForm = cart.addressForm;
             
             NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
             for (RIField *field in [billingForm fields])
@@ -995,13 +994,13 @@ UICollectionViewDelegateFlowLayout>
                 }
             }
             
-            [RICheckout setBillingAddress:checkout.billingAddressForm parameters:parameters successBlock:^(RICheckout *checkout) {
+            [RICart setBillingAddress:cart.addressForm parameters:parameters successBlock:^(RICart *cart) {
                 
                 [self hideLoading];
                 
                 if(self.fromCheckout)
                 {
-                    [JAUtils goToCheckout:checkout];
+                    [JAUtils goToNextStep:cart.nextStep];
                 }
                 else
                 {

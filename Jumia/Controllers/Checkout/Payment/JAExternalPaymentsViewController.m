@@ -8,7 +8,6 @@
 
 #import "JAExternalPaymentsViewController.h"
 #import "RIPaymentInformation.h"
-#import "RICheckout.h"
 
 @interface JAExternalPaymentsViewController ()
 <UIWebViewDelegate>
@@ -181,7 +180,7 @@
         
         if(VALID_NOTEMPTY(orderNumber, NSString))
         {
-            NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[orderNumber, self.checkout] forKeys:@[@"order_number", @"checkout"]];
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[orderNumber, self.cart] forKeys:@[@"order_number", @"cart"]];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutThanksScreenNotification
                                                                 object:nil

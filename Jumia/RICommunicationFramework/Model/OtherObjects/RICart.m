@@ -8,6 +8,9 @@
 
 #import "RICart.h"
 #import "RICartItem.h"
+#import "RIShippingMethodForm.h"
+#import "RIPaymentMethodForm.h"
+#import "RIPaymentInformation.h"
 
 @implementation RICart
 
@@ -541,6 +544,18 @@
     cart.cartUnreducedValue = nil;
     cart.cartUnreducedValueFormatted = nil;
     
+    //Parse stuff outside of cart_entity
+    if ([json objectForKey:@"addresses"]) {
+        RIForm* address = [RIForm parseForm:[json objectForKey:@"addresses"]];
+        cart.addressForm = address;
+    }
+    
+    if ([json objectForKey:@"multistep_entity"]) {
+        NSDictionary* nextStep = [json objectForKey:@"multistep_entity"];
+        cart.nextStep = [nextStep objectForKey:@"next_step"];
+    }
+    
+    //From here on out we're parsing stuff inside cart_entity
     if ([json objectForKey:@"cart_entity"]) {
         NSDictionary* cart = [json objectForKey:@"cart_entity"];
         if (VALID_NOTEMPTY(cart, NSDictionary)) {
@@ -733,7 +748,318 @@
         }
     }
     
+    //$$$ FROM CHECKOUT
+    
+    if(VALID_NOTEMPTY([json objectForKey:@"shippingMethodForm"], NSDictionary))
+    {
+        cart.shippingMethodForm = [RIShippingMethodForm parseForm:[json objectForKey:@"shippingMethodForm"]];
+    }
+    
+    if(VALID_NOTEMPTY([json objectForKey:@"paymentMethodForm"], NSDictionary))
+    {
+        cart.paymentMethodForm = [RIPaymentMethodForm parseForm:[json objectForKey:@"paymentMethodForm"]];
+    }
+    
+    if(VALID_NOTEMPTY([json objectForKey:@"next_step"], NSString))
+    {
+        cart.nextStep = [json objectForKey:@"next_step"];
+    }
+    
+    if(VALID_NOTEMPTY([json objectForKey:@"order_nr"], NSString))
+    {
+        cart.orderNr = [json objectForKey:@"order_nr"];
+    }
+    
+    if(VALID_NOTEMPTY([json objectForKey:@"customer_first_name"], NSString))
+    {
+        cart.customerFirstMame = [json objectForKey:@"customer_first_name"];
+    }
+    
+    if(VALID_NOTEMPTY([json objectForKey:@"customer_last_name"], NSString))
+    {
+        cart.customerLastName = [json objectForKey:@"customer_last_name"];
+    }
+    
+    if([json objectForKey:@"payment"])
+    {
+        cart.paymentInformation = [RIPaymentInformation parsePaymentInfo:[json objectForKey:@"payment"]];
+    }
+
+    
     return cart;
 }
+
+
+//$$$ FROM CHECKOUT
+//$$$ CHECK IF ALL THESE METHODS ARE PARSING CORRECTLY
+
++ (NSString*)getCheckoutAddressFormsWithSuccessBlock:(void (^)(RICart *cart))successBlock
+                                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
+{
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_MULTISTEP_ADDRESSES]]
+                                                            parameters:nil
+                                                        httpMethodPost:YES
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              
+                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                                                                  
+                                                                  if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
+                                                                  {
+                                                                      successBlock([RICart parseCart:[jsonObject objectForKey:@"metadata"] country:configuration]);
+                                                                  } else
+                                                                  {
+                                                                      failureBlock(apiResponse, nil);
+                                                                  }
+                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                                                                  
+                                                              }];
+                                                              
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                              if(NOTEMPTY(errorJsonObject))
+                                                              {
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+                                                              } else if(NOTEMPTY(errorObject))
+                                                              {
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(apiResponse, errorArray);
+                                                              } else
+                                                              {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }
+                                                          }];
+}
+
++ (NSString*)setBillingAddress:(RIForm*)form
+                    parameters:(NSDictionary*)parameters
+                  successBlock:(void (^)(RICart *cart))successBlock
+               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
+{
+    return [RIForm sendForm:form parameters:parameters successBlock:^(id object) {
+        if(VALID_NOTEMPTY(object, NSDictionary)) {
+            
+            RICart* cart = [object objectForKey:@"cart"];
+            
+            successBlock(cart);
+            
+        } else {
+            
+            failureBlock(RIApiResponseUnknownError, nil);
+        }
+    } andFailureBlock:failureBlock];
+}
+
+
++ (NSString*)setShippingAddress:(RIForm*)form
+                     parameters:(NSDictionary*)parameters
+                   successBlock:(void (^)(RICart *cart))successBlock
+                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
+{
+    return [RIForm sendForm:form successBlock:^(id object) {
+        [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+            if(VALID_NOTEMPTY(object, NSDictionary))
+            {
+                successBlock([RICart parseCart:object country:configuration]);
+            } else
+            {
+                failureBlock(RIApiResponseUnknownError, nil);
+            }
+        } andFailureBlock:^(RIApiResponse apiResponse,  id errorMessages) {
+            failureBlock(apiResponse, nil);
+        }];
+    } andFailureBlock:failureBlock];
+}
+
++ (NSString*)getShippingMethodFormWithSuccessBlock:(void (^)(RICart *cart))successBlock
+                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
+{
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_SHIPPING_METHODS_FORM]]
+                                                            parameters:nil
+                                                        httpMethodPost:YES
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                                                                  if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
+                                                                  {
+                                                                      successBlock([RICart parseCart:[jsonObject objectForKey:@"metadata"] country:configuration]);
+                                                                  } else
+                                                                  {
+                                                                      failureBlock(apiResponse, nil);
+                                                                  }
+                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }];
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                              if(NOTEMPTY(errorJsonObject))
+                                                              {
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+                                                              } else if(NOTEMPTY(errorObject))
+                                                              {
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(apiResponse, errorArray);
+                                                              } else
+                                                              {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }
+                                                          }];
+}
+
++ (NSString*)setShippingMethod:(RIShippingMethodForm*)form
+                    parameters:(NSDictionary*)parameters
+                  successBlock:(void (^)(RICart *cart))successBlock
+               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
+{
+    BOOL isPostRequest = [@"post" isEqualToString:[form.method lowercaseString]];
+    
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:form.action]
+                                                            parameters:parameters
+                                                        httpMethodPost:isPostRequest
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                                                                  if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
+                                                                  {
+                                                                      successBlock([RICart parseCart:[jsonObject objectForKey:@"metadata"] country:configuration]);
+                                                                  } else
+                                                                  {
+                                                                      failureBlock(apiResponse, nil);
+                                                                  }
+                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }];
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                              if(NOTEMPTY(errorJsonObject))
+                                                              {
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+                                                              } else if(NOTEMPTY(errorObject))
+                                                              {
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(apiResponse, errorArray);
+                                                              } else
+                                                              {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }
+                                                          }];
+}
+
+
++ (NSString*)getPaymentMethodFormWithSuccessBlock:(void (^)(RICart *cart))successBlock
+                                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
+{
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_PAYMENT_METHODS_FORM]]
+                                                            parameters:nil
+                                                        httpMethodPost:YES
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                                                                  if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
+                                                                  {
+                                                                      successBlock([RICart parseCart:[jsonObject objectForKey:@"metadata"] country:configuration]);
+                                                                  } else
+                                                                  {
+                                                                      failureBlock(apiResponse, nil);
+                                                                  }
+                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }];
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                              if(NOTEMPTY(errorJsonObject))
+                                                              {
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+                                                              } else if(NOTEMPTY(errorObject))
+                                                              {
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(apiResponse, errorArray);
+                                                              } else
+                                                              {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }
+                                                          }];
+}
+
++ (NSString*)setPaymentMethod:(RIPaymentMethodForm *)form
+                   parameters:(NSDictionary*)parameters
+                 successBlock:(void (^)(RICart *cart))successBlock
+              andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
+{
+    BOOL isPostRequest = [@"post" isEqualToString:[form.method lowercaseString]];
+    
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:form.action]
+                                                            parameters:parameters
+                                                        httpMethodPost:isPostRequest
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                                                                  if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
+                                                                  {
+                                                                      successBlock([RICart parseCart:[jsonObject objectForKey:@"metadata"] country:configuration]);
+                                                                  } else
+                                                                  {
+                                                                      failureBlock(apiResponse, nil);
+                                                                  }
+                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }];
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                              if(NOTEMPTY(errorJsonObject))
+                                                              {
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+                                                              } else if(NOTEMPTY(errorObject))
+                                                              {
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(apiResponse, errorArray);
+                                                              } else
+                                                              {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }
+                                                          }];
+}
+
++ (NSString*)finishCheckoutWithSuccessBlock:(void (^)(RICart *cart))successBlock
+                            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
+{
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_FINISH_CHECKOUT]]
+                                                            parameters:nil
+                                                        httpMethodPost:YES
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                                                                  if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
+                                                                  {
+                                                                      successBlock([RICart parseCart:[jsonObject objectForKey:@"metadata"] country:configuration]);
+                                                                  } else
+                                                                  {
+                                                                      failureBlock(apiResponse, nil);
+                                                                  }
+                                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }];
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                              if(NOTEMPTY(errorJsonObject))
+                                                              {
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+                                                              } else if(NOTEMPTY(errorObject))
+                                                              {
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(apiResponse, errorArray);
+                                                              } else
+                                                              {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }
+                                                          }];
+}
+
 
 @end
