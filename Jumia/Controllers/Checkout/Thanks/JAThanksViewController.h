@@ -12,6 +12,5 @@
 @interface JAThanksViewController : JABaseViewController
 
 @property (strong, nonatomic) RICart *cart;
-@property (strong, nonatomic) NSString *orderNumber;
 
 @end

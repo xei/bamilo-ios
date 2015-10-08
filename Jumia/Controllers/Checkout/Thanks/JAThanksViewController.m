@@ -79,7 +79,7 @@
     
     //STRING_ORDER_TRACK_LINK
     self.orderNumberField.font = [UIFont fontWithName:kFontBoldName size:self.orderNumberField.font.pointSize];
-    [self.orderNumberField setText:self.orderNumber];
+    [self.orderNumberField setText:self.cart.orderNr];
     self.orderNumberField.textColor = UIColorFromRGB(0x4e4e4e);
     
     [self.orderCopyButton addTarget:self action:@selector(copyOrderNumber) forControlEvents:UIControlEventTouchUpInside];
@@ -122,7 +122,7 @@
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"Finished" forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
-    [trackingDictionary setValue:[NSNumber numberWithInteger:[self.orderNumber integerValue]] forKey:kRIEventValueKey];
+    [trackingDictionary setValue:[NSNumber numberWithInteger:[self.cart.orderNr integerValue]] forKey:kRIEventValueKey];
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutEnd]
                                               data:[trackingDictionary copy]];
@@ -212,7 +212,7 @@
         [trackingDictionary setValue:cartItem.variation forKey:kRIEventSizeKey];
         [trackingDictionary setValue:isNewCustomer forKey:kRIEventNewCustomerKey];
         [trackingDictionary setValue:[self.cart.cartValue stringValue] forKey:kRIEventTotalTransactionKey];
-        [trackingDictionary setValue:self.orderNumber forKey:kRIEventTransactionIdKey];
+        [trackingDictionary setValue:self.cart.orderNr forKey:kRIEventTransactionIdKey];
         
         if ([RICustomer checkIfUserIsLogged]) {
             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
@@ -267,7 +267,7 @@
     [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
     [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
-    [trackingDictionary setValue:self.orderNumber forKey:kRIEventTransactionIdKey];
+    [trackingDictionary setValue:self.cart.orderNr forKey:kRIEventTransactionIdKey];
     [trackingDictionary setValue:isNewCustomer forKey:kRIEventNewCustomerKey];
 
     if(VALID_NOTEMPTY(viewCartTrackingProducts, NSMutableArray))
@@ -286,7 +286,7 @@
         [customerDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
         [customerDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
         [customerDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-        [customerDictionary setValue:self.orderNumber forKey:kRIEcommerceTransactionIdKey];
+        [customerDictionary setValue:self.cart.orderNr forKey:kRIEcommerceTransactionIdKey];
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithFloat:RIEventGuestCustomer] data:customerDictionary];
     }
     
@@ -296,7 +296,7 @@
     [ecommerceDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
     [ecommerceDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
     [ecommerceDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-    [ecommerceDictionary setValue:self.orderNumber forKey:kRIEcommerceTransactionIdKey];
+    [ecommerceDictionary setValue:self.cart.orderNr forKey:kRIEcommerceTransactionIdKey];
     [ecommerceDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEcommerceCurrencyKey];
     [ecommerceDictionary setValue:numberOfPurchases forKey:kRIEventAmountTransactions];
     [ecommerceDictionary setValue:self.cart.paymentMethod forKey:kRIEcommercePaymentMethodKey];
@@ -460,7 +460,7 @@
 
 - (void)goToTrackOrders
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowMyOrdersScreenNotification object:self.orderNumber];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowMyOrdersScreenNotification object:self.cart.orderNr];
 }
 
 @end

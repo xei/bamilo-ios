@@ -14,6 +14,5 @@
 @interface JAExternalPaymentsViewController : JABaseViewController
 
 @property (strong, nonatomic) RICart *cart;
-@property (strong, nonatomic) RIPaymentInformation *paymentInformation;
 
 @end

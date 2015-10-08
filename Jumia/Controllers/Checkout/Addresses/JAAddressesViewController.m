@@ -979,23 +979,17 @@ UICollectionViewDelegateFlowLayout>
             NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
             for (RIField *field in [billingForm fields])
             {
-                if([@"billingForm[billingAddressId]" isEqualToString:[field name]])
+                if([@"addresses[billing_id]" isEqualToString:[field name]])
                 {
                     [parameters setValue:[self.billingAddress uid] forKey:[field name]];
                 }
-                else if([@"billingForm[shippingAddressId]" isEqualToString:[field name]])
+                else if([@"addresses[shipping_id]" isEqualToString:[field name]])
                 {
                     [parameters setValue:[self.shippingAddress uid] forKey:[field name]];
                 }
-                else if([@"billingForm[shippingAddressDifferent]" isEqualToString:[field name]])
-                {
-                    //Yes, the true and false are switched for this api request...
-                    [parameters setValue:[[self.billingAddress uid] isEqualToString:[self.shippingAddress uid]] ? @"1" : @"0" forKey:[field name]];
-                }
             }
             
-            [RICart setBillingAddress:cart.addressForm parameters:parameters successBlock:^(RICart *cart) {
-                
+            [RICart setCheckoutAddresses:cart.addressForm parameters:parameters successBlock:^(RICart *cart) {
                 [self hideLoading];
                 
                 if(self.fromCheckout)
@@ -1008,7 +1002,7 @@ UICollectionViewDelegateFlowLayout>
                                                                         object:nil
                                                                       userInfo:nil];
                 }
-            } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+            } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
                 
                 NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                 [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];

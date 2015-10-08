@@ -59,20 +59,23 @@
 @property (nonatomic, strong) NSString *nextStep;
 @property (nonatomic, strong) RIForm *addressForm;
 @property (nonatomic, strong) RIShippingMethodForm *shippingMethodForm;
+@property (nonatomic, strong) NSString *shippingMethod;
 @property (nonatomic, strong) RIPaymentMethodForm *paymentMethodForm;
+@property (nonatomic, strong) NSString *paymentMethod;
+@property (nonatomic, strong) RIAddress *shippingAddress;
+@property (nonatomic, strong) RIAddress *billingAddress;
+
+//CHECKOUT FINISH
 @property (nonatomic, strong) NSString *orderNr;
 @property (nonatomic, strong) NSString *customerFirstMame;
 @property (nonatomic, strong) NSString *customerLastName;
 @property (nonatomic, strong) RIPaymentInformation *paymentInformation;
 
-//$$$ FROM CHECKOUT ORDER - PARSE THIS
 
+//not yet parsed
 @property (nonatomic, strong) NSString *discountCouponCode;
 @property (nonatomic, strong) NSString *discountCouponValue;
-@property (nonatomic, strong) NSString *paymentMethod;
-@property (nonatomic, strong) NSString *shippingMethod;
-@property (nonatomic, strong) RIAddress *shippingAddress;
-@property (nonatomic, strong) RIAddress *billingAddress;
+
 
 /**
  *  Method to add a product to the cart
@@ -211,32 +214,18 @@
                                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
- * Method to set the billing address needed for checkout process
+ * Method to set the addresses needed for checkout process
  *
- * @param the billing address form
+ * @param the address form
  * @param the parameters to send along with the form
  * @param the block where the success response can be processed
  * @param the block where the failure response can be processed
  * @return a string with the operationID that can be used to cancel the operation
  */
-+ (NSString*)setBillingAddress:(RIForm*)form
-                    parameters:(NSDictionary*)parameters
-                  successBlock:(void (^)(RICart *cart))successBlock
-               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
-
-/**
- * Method to set the shipping address needed for checkout process
- *
- * @param the shipping address form
- * @param the parameters to send along with the form
- * @param the block where the success response can be processed
- * @param the block where the failure response can be processed
- * @return a string with the operationID that can be used to cancel the operation
- */
-+ (NSString*)setShippingAddress:(RIForm*)form
-                     parameters:(NSDictionary*)parameters
-                   successBlock:(void (^)(RICart *cart))successBlock
-                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
++ (NSString*)setCheckoutAddresses:(RIForm*)form
+                       parameters:(NSDictionary*)parameters
+                     successBlock:(void (^)(RICart *cart))successBlock
+                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 
 /**
