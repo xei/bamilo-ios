@@ -274,6 +274,16 @@
 		870b4ebe400fa2c7ddaa09d5 /* JAPriceFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDEB98D199BA4140022BAB5 /* JAPriceFilterViewController.m */; };
 		876d96c3d745466130991f03 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3022019811E8A00F71726 /* MKAnnotationView+WebCache.m */; };
 		886c5fa519e7301d1103b66d /* JAPaymentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DBF3719C0AF9600D4678A /* JAPaymentCell.m */; };
+		892EB9311BC6795800FBF094 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 892EB9301BC6795800FBF094 /* libGoogleAnalytics.a */; settings = {ASSET_TAGS = (); }; };
+		892EB9321BC6795800FBF094 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 892EB9301BC6795800FBF094 /* libGoogleAnalytics.a */; settings = {ASSET_TAGS = (); }; };
+		892EB9331BC6795800FBF094 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 892EB9301BC6795800FBF094 /* libGoogleAnalytics.a */; settings = {ASSET_TAGS = (); }; };
+		892EB9341BC6795800FBF094 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 892EB9301BC6795800FBF094 /* libGoogleAnalytics.a */; settings = {ASSET_TAGS = (); }; };
+		892EB9351BC6795800FBF094 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 892EB9301BC6795800FBF094 /* libGoogleAnalytics.a */; settings = {ASSET_TAGS = (); }; };
+		892EB9401BC679A800FBF094 /* libTagManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 892EB93F1BC679A800FBF094 /* libTagManager.a */; settings = {ASSET_TAGS = (); }; };
+		892EB9411BC679A800FBF094 /* libTagManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 892EB93F1BC679A800FBF094 /* libTagManager.a */; settings = {ASSET_TAGS = (); }; };
+		892EB9421BC679A800FBF094 /* libTagManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 892EB93F1BC679A800FBF094 /* libTagManager.a */; settings = {ASSET_TAGS = (); }; };
+		892EB9431BC679A800FBF094 /* libTagManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 892EB93F1BC679A800FBF094 /* libTagManager.a */; settings = {ASSET_TAGS = (); }; };
+		892EB9441BC679A800FBF094 /* libTagManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 892EB93F1BC679A800FBF094 /* libTagManager.a */; settings = {ASSET_TAGS = (); }; };
 		894B0D781BB2F80A00199251 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
 		89AB5C2E1BC2B01B00BA38E5 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89AB5C2D1BC2B01B00BA38E5 /* SafariServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		89C177BA1BC2DC47006D3B19 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89AB5C2D1BC2B01B00BA38E5 /* SafariServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -993,10 +1003,6 @@
 		B524311F19EC1163001E532C /* JAMaintenancePage.m in Sources */ = {isa = PBXBuildFile; fileRef = B524311E19EC1163001E532C /* JAMaintenancePage.m */; };
 		B524312119EC117F001E532C /* JAMaintenancePage.xib in Resources */ = {isa = PBXBuildFile; fileRef = B524312019EC117F001E532C /* JAMaintenancePage.xib */; };
 		B530D57119C1998B0052FEDA /* JACheckoutForms.m in Sources */ = {isa = PBXBuildFile; fileRef = B530D57019C1998B0052FEDA /* JACheckoutForms.m */; };
-		B5376A2E1A3B51BD009C03AD /* libAdIdAccess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5376A231A3B51BD009C03AD /* libAdIdAccess.a */; };
-		B5376A2F1A3B51BD009C03AD /* libAdIdAccess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5376A231A3B51BD009C03AD /* libAdIdAccess.a */; };
-		B5376A301A3B51BD009C03AD /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5376A241A3B51BD009C03AD /* libGoogleAnalyticsServices.a */; };
-		B5376A311A3B51BD009C03AD /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5376A241A3B51BD009C03AD /* libGoogleAnalyticsServices.a */; };
 		B542546B19AE9F7500C792FF /* JACartListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B542546919AE9F7500C792FF /* JACartListHeaderView.m */; };
 		B542546C19AE9F7500C792FF /* JACartListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */; };
 		B55BFB9519E6A83E0098467E /* JALoadCountryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B55BFB9419E6A83E0098467E /* JALoadCountryViewController.m */; };
@@ -1562,7 +1568,6 @@
 		CE9ADC211AB34C4600D56481 /* JARootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242DF1986569000E37C90 /* JARootViewController.m */; };
 		CE9ADC221AB34C4600D56481 /* RIShippingMethodPickupStationOption.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682EE1986C41D0094C92C /* RIShippingMethodPickupStationOption.m */; };
 		CE9ADC241AB34C4600D56481 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FBD58919CAF26800BD9510 /* iAd.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		CE9ADC251AB34C4600D56481 /* libAdIdAccess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5376A231A3B51BD009C03AD /* libAdIdAccess.a */; };
 		CE9ADC261AB34C4600D56481 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302E919811ECB00F71726 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CE9ADC271AB34C4600D56481 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5007AC719A4E92F0024035A /* Security.framework */; };
 		CE9ADC281AB34C4600D56481 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5007AC519A4E9170024035A /* CoreText.framework */; };
@@ -1573,7 +1578,6 @@
 		CE9ADC2D1AB34C4600D56481 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F919811F1E00F71726 /* CoreGraphics.framework */; };
 		CE9ADC2F1AB34C4600D56481 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F719811F1A00F71726 /* Foundation.framework */; };
 		CE9ADC301AB34C4600D56481 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F519811F1500F71726 /* ImageIO.framework */; };
-		CE9ADC311AB34C4600D56481 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5376A241A3B51BD009C03AD /* libGoogleAnalyticsServices.a */; };
 		CE9ADC321AB34C4600D56481 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F319811F0200F71726 /* CoreLocation.framework */; };
 		CE9ADC331AB34C4600D56481 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F119811EEA00F71726 /* SystemConfiguration.framework */; };
 		CE9ADC341AB34C4600D56481 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302EF19811EE300F71726 /* CoreData.framework */; };
@@ -1916,7 +1920,6 @@
 		CE9ADE1B1AB6D6E900D56481 /* JARootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242DF1986569000E37C90 /* JARootViewController.m */; };
 		CE9ADE1C1AB6D6E900D56481 /* RIShippingMethodPickupStationOption.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682EE1986C41D0094C92C /* RIShippingMethodPickupStationOption.m */; };
 		CE9ADE1E1AB6D6E900D56481 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FBD58919CAF26800BD9510 /* iAd.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		CE9ADE1F1AB6D6E900D56481 /* libAdIdAccess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5376A231A3B51BD009C03AD /* libAdIdAccess.a */; };
 		CE9ADE201AB6D6E900D56481 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302E919811ECB00F71726 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CE9ADE211AB6D6E900D56481 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5007AC719A4E92F0024035A /* Security.framework */; };
 		CE9ADE221AB6D6E900D56481 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5007AC519A4E9170024035A /* CoreText.framework */; };
@@ -1927,7 +1930,6 @@
 		CE9ADE271AB6D6E900D56481 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F919811F1E00F71726 /* CoreGraphics.framework */; };
 		CE9ADE291AB6D6E900D56481 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F719811F1A00F71726 /* Foundation.framework */; };
 		CE9ADE2A1AB6D6E900D56481 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F519811F1500F71726 /* ImageIO.framework */; };
-		CE9ADE2B1AB6D6E900D56481 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5376A241A3B51BD009C03AD /* libGoogleAnalyticsServices.a */; };
 		CE9ADE2C1AB6D6E900D56481 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F319811F0200F71726 /* CoreLocation.framework */; };
 		CE9ADE2D1AB6D6E900D56481 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F119811EEA00F71726 /* SystemConfiguration.framework */; };
 		CE9ADE2E1AB6D6E900D56481 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302EF19811EE300F71726 /* CoreData.framework */; };
@@ -2270,7 +2272,6 @@
 		CE9AE0151AB6D78200D56481 /* JARootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242DF1986569000E37C90 /* JARootViewController.m */; };
 		CE9AE0161AB6D78200D56481 /* RIShippingMethodPickupStationOption.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682EE1986C41D0094C92C /* RIShippingMethodPickupStationOption.m */; };
 		CE9AE0181AB6D78200D56481 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FBD58919CAF26800BD9510 /* iAd.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		CE9AE0191AB6D78200D56481 /* libAdIdAccess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5376A231A3B51BD009C03AD /* libAdIdAccess.a */; };
 		CE9AE01A1AB6D78200D56481 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302E919811ECB00F71726 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CE9AE01B1AB6D78200D56481 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5007AC719A4E92F0024035A /* Security.framework */; };
 		CE9AE01C1AB6D78200D56481 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5007AC519A4E9170024035A /* CoreText.framework */; };
@@ -2281,7 +2282,6 @@
 		CE9AE0211AB6D78200D56481 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F919811F1E00F71726 /* CoreGraphics.framework */; };
 		CE9AE0231AB6D78200D56481 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F719811F1A00F71726 /* Foundation.framework */; };
 		CE9AE0241AB6D78200D56481 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F519811F1500F71726 /* ImageIO.framework */; };
-		CE9AE0251AB6D78200D56481 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5376A241A3B51BD009C03AD /* libGoogleAnalyticsServices.a */; };
 		CE9AE0261AB6D78200D56481 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F319811F0200F71726 /* CoreLocation.framework */; };
 		CE9AE0271AB6D78200D56481 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F119811EEA00F71726 /* SystemConfiguration.framework */; };
 		CE9AE0281AB6D78200D56481 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302EF19811EE300F71726 /* CoreData.framework */; };
@@ -2817,6 +2817,23 @@
 		6CF4AE831ADEABBB0024EC34 /* JACatalogBannerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogBannerCell.h; sourceTree = "<group>"; };
 		6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogBannerCell.m; sourceTree = "<group>"; };
 		6af3ca12ac4f2d50fa243e2b /* calabash.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; path = calabash.framework; sourceTree = "<group>"; };
+		892EB9251BC6795800FBF094 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
+		892EB9261BC6795800FBF094 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
+		892EB9271BC6795800FBF094 /* GAIEcommerceFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceFields.h; sourceTree = "<group>"; };
+		892EB9281BC6795800FBF094 /* GAIEcommerceProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceProduct.h; sourceTree = "<group>"; };
+		892EB9291BC6795800FBF094 /* GAIEcommerceProductAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceProductAction.h; sourceTree = "<group>"; };
+		892EB92A1BC6795800FBF094 /* GAIEcommercePromotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommercePromotion.h; sourceTree = "<group>"; };
+		892EB92B1BC6795800FBF094 /* GAIFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIFields.h; sourceTree = "<group>"; };
+		892EB92C1BC6795800FBF094 /* GAILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAILogger.h; sourceTree = "<group>"; };
+		892EB92D1BC6795800FBF094 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
+		892EB92E1BC6795800FBF094 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
+		892EB9301BC6795800FBF094 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics.a; sourceTree = "<group>"; };
+		892EB9391BC679A800FBF094 /* TAGContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAGContainer.h; sourceTree = "<group>"; };
+		892EB93A1BC679A800FBF094 /* TAGContainerOpener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAGContainerOpener.h; sourceTree = "<group>"; };
+		892EB93B1BC679A800FBF094 /* TAGDataLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAGDataLayer.h; sourceTree = "<group>"; };
+		892EB93C1BC679A800FBF094 /* TAGLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAGLogger.h; sourceTree = "<group>"; };
+		892EB93D1BC679A800FBF094 /* TAGManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAGManager.h; sourceTree = "<group>"; };
+		892EB93F1BC679A800FBF094 /* libTagManager.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTagManager.a; sourceTree = "<group>"; };
 		89AB5C2D1BC2B01B00BA38E5 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		89C7AF4E1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogPictureCollectionViewCell.h; sourceTree = "<group>"; };
 		89C7AF4F1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogPictureCollectionViewCell.m; sourceTree = "<group>"; };
@@ -3062,23 +3079,6 @@
 		B524312019EC117F001E532C /* JAMaintenancePage.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAMaintenancePage.xib; path = MaintenancePage/JAMaintenancePage.xib; sourceTree = "<group>"; };
 		B530D56F19C1998B0052FEDA /* JACheckoutForms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACheckoutForms.h; path = CheckoutForms/JACheckoutForms.h; sourceTree = "<group>"; };
 		B530D57019C1998B0052FEDA /* JACheckoutForms.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACheckoutForms.m; path = CheckoutForms/JACheckoutForms.m; sourceTree = "<group>"; };
-		B5376A0F1A3B51BD009C03AD /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
-		B5376A101A3B51BD009C03AD /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
-		B5376A111A3B51BD009C03AD /* GAIEcommerceFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceFields.h; sourceTree = "<group>"; };
-		B5376A121A3B51BD009C03AD /* GAIEcommerceProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceProduct.h; sourceTree = "<group>"; };
-		B5376A131A3B51BD009C03AD /* GAIEcommerceProductAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceProductAction.h; sourceTree = "<group>"; };
-		B5376A141A3B51BD009C03AD /* GAIEcommercePromotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommercePromotion.h; sourceTree = "<group>"; };
-		B5376A151A3B51BD009C03AD /* GAIFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIFields.h; sourceTree = "<group>"; };
-		B5376A161A3B51BD009C03AD /* GAILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAILogger.h; sourceTree = "<group>"; };
-		B5376A171A3B51BD009C03AD /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
-		B5376A181A3B51BD009C03AD /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
-		B5376A1D1A3B51BD009C03AD /* TAGContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAGContainer.h; sourceTree = "<group>"; };
-		B5376A1E1A3B51BD009C03AD /* TAGContainerOpener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAGContainerOpener.h; sourceTree = "<group>"; };
-		B5376A1F1A3B51BD009C03AD /* TAGDataLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAGDataLayer.h; sourceTree = "<group>"; };
-		B5376A201A3B51BD009C03AD /* TAGLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAGLogger.h; sourceTree = "<group>"; };
-		B5376A211A3B51BD009C03AD /* TAGManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAGManager.h; sourceTree = "<group>"; };
-		B5376A231A3B51BD009C03AD /* libAdIdAccess.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAdIdAccess.a; sourceTree = "<group>"; };
-		B5376A241A3B51BD009C03AD /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
 		B542546819AE9F7500C792FF /* JACartListHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACartListHeaderView.h; path = Jumia/View/Headers/JACartListHeaderView.h; sourceTree = SOURCE_ROOT; };
 		B542546919AE9F7500C792FF /* JACartListHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACartListHeaderView.m; path = Jumia/View/Headers/JACartListHeaderView.m; sourceTree = SOURCE_ROOT; };
 		B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JACartListHeaderView.xib; path = Jumia/View/Headers/JACartListHeaderView.xib; sourceTree = SOURCE_ROOT; };
@@ -3576,14 +3576,15 @@
 				9A0F9BBA1B5E809F00569DF2 /* CoreMedia.framework in Frameworks */,
 				9A0F9BB91B5E809900569DF2 /* CoreMotion.framework in Frameworks */,
 				9A0F9BB81B5E809200569DF2 /* AVFoundation.framework in Frameworks */,
+				892EB9321BC6795800FBF094 /* libGoogleAnalytics.a in Frameworks */,
 				9A0F9B6C1B5E58E900569DF2 /* Bolts.framework in Frameworks */,
 				5355c508299fc4a38da605af /* iAd.framework in Frameworks */,
 				9A0F9B8F1B5E58E900569DF2 /* FBSDKShareKit.framework in Frameworks */,
 				ea1aa2216afe07e1a408922b /* AdSupport.framework in Frameworks */,
 				949b3b889f1812b6607bfdd1 /* Security.framework in Frameworks */,
 				9A0F9B8A1B5E58E900569DF2 /* FBSDKMessengerShareKit.framework in Frameworks */,
-				B5376A311A3B51BD009C03AD /* libGoogleAnalyticsServices.a in Frameworks */,
 				53f9e54fb2236b4a9a33201e /* CoreText.framework in Frameworks */,
+				892EB9411BC679A800FBF094 /* libTagManager.a in Frameworks */,
 				CED7C5201B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */,
 				12a1d1e4c6768298e7b485d4 /* CoreTelephony.framework in Frameworks */,
 				89C177BA1BC2DC47006D3B19 /* SafariServices.framework in Frameworks */,
@@ -3597,7 +3598,6 @@
 				3d2cabe0544154cdb6c84858 /* CoreLocation.framework in Frameworks */,
 				493ee8c7cdee5713716e427d /* SystemConfiguration.framework in Frameworks */,
 				9A0F9B801B5E58E900569DF2 /* FBSDKCoreKit.framework in Frameworks */,
-				B5376A2F1A3B51BD009C03AD /* libAdIdAccess.a in Frameworks */,
 				9A0F9B851B5E58E900569DF2 /* FBSDKLoginKit.framework in Frameworks */,
 				2019056beecdaa6b000bb3e9 /* CoreData.framework in Frameworks */,
 				25c9299d2bbdbe392f20baf2 /* libsqlite3.dylib in Frameworks */,
@@ -3621,19 +3621,18 @@
 				9A0F9BA71B5E7D3600569DF2 /* AVFoundation.framework in Frameworks */,
 				9A0F9BA51B5E7D0000569DF2 /* CoreMedia.framework in Frameworks */,
 				B5FBD58A19CAF26800BD9510 /* iAd.framework in Frameworks */,
-				B5376A2E1A3B51BD009C03AD /* libAdIdAccess.a in Frameworks */,
 				B5A302EA19811ECB00F71726 /* AdSupport.framework in Frameworks */,
 				B5007AC819A4E92F0024035A /* Security.framework in Frameworks */,
 				B5007AC619A4E9170024035A /* CoreText.framework in Frameworks */,
 				CED7C51F1B78E0560070C855 /* GoogleAppIndexing.framework in Frameworks */,
 				B5FE9FB119A1F362006F7D63 /* CoreTelephony.framework in Frameworks */,
+				892EB9311BC6795800FBF094 /* libGoogleAnalytics.a in Frameworks */,
 				4A2FD84A19913FCA00C65C1D /* Social.framework in Frameworks */,
 				4A4ABF0E198B9DE600342D92 /* QuartzCore.framework in Frameworks */,
 				4A1C00D81987F2EB00A0109E /* UIKit.framework in Frameworks */,
 				B5A302FA19811F1E00F71726 /* CoreGraphics.framework in Frameworks */,
 				B5A302F819811F1A00F71726 /* Foundation.framework in Frameworks */,
 				B5A302F619811F1500F71726 /* ImageIO.framework in Frameworks */,
-				B5376A301A3B51BD009C03AD /* libGoogleAnalyticsServices.a in Frameworks */,
 				B5A302F419811F0200F71726 /* CoreLocation.framework in Frameworks */,
 				B5A302F219811EEA00F71726 /* SystemConfiguration.framework in Frameworks */,
 				9A9CD3091B72514A0061ACE0 /* libBMA4SSDK.framework in Frameworks */,
@@ -3645,6 +3644,7 @@
 				B5FE9FB319A1F4C6006F7D63 /* NewRelicAgent.framework in Frameworks */,
 				B5007AC219A4E8EC0024035A /* HockeySDK.framework in Frameworks */,
 				9A0F9BA21B5E5CAC00569DF2 /* Bolts.framework in Frameworks */,
+				892EB9401BC679A800FBF094 /* libTagManager.a in Frameworks */,
 				9A0F9BA11B5E5CA900569DF2 /* FBAudienceNetwork.framework in Frameworks */,
 				9A0F9BA01B5E5CA200569DF2 /* FBSDKCoreKit.framework in Frameworks */,
 				9A0F9B9F1B5E5C9D00569DF2 /* FBSDKLoginKit.framework in Frameworks */,
@@ -3669,13 +3669,13 @@
 				9A0F9BB51B5E807500569DF2 /* CoreMotion.framework in Frameworks */,
 				9A0F9BB41B5E806D00569DF2 /* CoreMedia.framework in Frameworks */,
 				CE9ADC241AB34C4600D56481 /* iAd.framework in Frameworks */,
-				CE9ADC251AB34C4600D56481 /* libAdIdAccess.a in Frameworks */,
 				CE9ADC261AB34C4600D56481 /* AdSupport.framework in Frameworks */,
 				CE9ADC271AB34C4600D56481 /* Security.framework in Frameworks */,
 				CE9ADC281AB34C4600D56481 /* CoreText.framework in Frameworks */,
 				89C177BB1BC2DC48006D3B19 /* SafariServices.framework in Frameworks */,
 				CED7C5211B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */,
 				CE9ADC291AB34C4600D56481 /* CoreTelephony.framework in Frameworks */,
+				892EB9331BC6795800FBF094 /* libGoogleAnalytics.a in Frameworks */,
 				CE9ADC2A1AB34C4600D56481 /* Social.framework in Frameworks */,
 				CE9ADC2B1AB34C4600D56481 /* QuartzCore.framework in Frameworks */,
 				CE9ADC2C1AB34C4600D56481 /* UIKit.framework in Frameworks */,
@@ -3683,7 +3683,6 @@
 				CE9ADC2F1AB34C4600D56481 /* Foundation.framework in Frameworks */,
 				9A0F9B861B5E58E900569DF2 /* FBSDKLoginKit.framework in Frameworks */,
 				CE9ADC301AB34C4600D56481 /* ImageIO.framework in Frameworks */,
-				CE9ADC311AB34C4600D56481 /* libGoogleAnalyticsServices.a in Frameworks */,
 				9A0F9B901B5E58E900569DF2 /* FBSDKShareKit.framework in Frameworks */,
 				9A0F9B771B5E58E900569DF2 /* FBAudienceNetwork.framework in Frameworks */,
 				CE9ADC321AB34C4600D56481 /* CoreLocation.framework in Frameworks */,
@@ -3694,6 +3693,7 @@
 				CE9ADC351AB34C4600D56481 /* libsqlite3.dylib in Frameworks */,
 				9A0F9B8B1B5E58E900569DF2 /* FBSDKMessengerShareKit.framework in Frameworks */,
 				CE9ADC361AB34C4600D56481 /* libz.dylib in Frameworks */,
+				892EB9421BC679A800FBF094 /* libTagManager.a in Frameworks */,
 				CE9ADC371AB34C4600D56481 /* CFNetwork.framework in Frameworks */,
 				9A0F9B811B5E58E900569DF2 /* FBSDKCoreKit.framework in Frameworks */,
 				CE9ADC381AB34C4600D56481 /* BugSense-iOS.framework in Frameworks */,
@@ -3711,13 +3711,13 @@
 				9A0F9BB11B5E805300569DF2 /* CoreMotion.framework in Frameworks */,
 				9A0F9BB01B5E804C00569DF2 /* CoreMedia.framework in Frameworks */,
 				CE9ADE1E1AB6D6E900D56481 /* iAd.framework in Frameworks */,
-				CE9ADE1F1AB6D6E900D56481 /* libAdIdAccess.a in Frameworks */,
 				CE9ADE201AB6D6E900D56481 /* AdSupport.framework in Frameworks */,
 				CE9ADE211AB6D6E900D56481 /* Security.framework in Frameworks */,
 				CE9ADE221AB6D6E900D56481 /* CoreText.framework in Frameworks */,
 				89C177BC1BC2DC49006D3B19 /* SafariServices.framework in Frameworks */,
 				CED7C5221B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */,
 				CE9ADE231AB6D6E900D56481 /* CoreTelephony.framework in Frameworks */,
+				892EB9341BC6795800FBF094 /* libGoogleAnalytics.a in Frameworks */,
 				CE9ADE241AB6D6E900D56481 /* Social.framework in Frameworks */,
 				CE9ADE251AB6D6E900D56481 /* QuartzCore.framework in Frameworks */,
 				CE9ADE261AB6D6E900D56481 /* UIKit.framework in Frameworks */,
@@ -3725,7 +3725,6 @@
 				CE9ADE291AB6D6E900D56481 /* Foundation.framework in Frameworks */,
 				9A0F9B871B5E58E900569DF2 /* FBSDKLoginKit.framework in Frameworks */,
 				CE9ADE2A1AB6D6E900D56481 /* ImageIO.framework in Frameworks */,
-				CE9ADE2B1AB6D6E900D56481 /* libGoogleAnalyticsServices.a in Frameworks */,
 				9A0F9B911B5E58E900569DF2 /* FBSDKShareKit.framework in Frameworks */,
 				9A0F9B781B5E58E900569DF2 /* FBAudienceNetwork.framework in Frameworks */,
 				CE9ADE2C1AB6D6E900D56481 /* CoreLocation.framework in Frameworks */,
@@ -3736,6 +3735,7 @@
 				CE9ADE2F1AB6D6E900D56481 /* libsqlite3.dylib in Frameworks */,
 				9A0F9B8C1B5E58E900569DF2 /* FBSDKMessengerShareKit.framework in Frameworks */,
 				CE9ADE301AB6D6E900D56481 /* libz.dylib in Frameworks */,
+				892EB9431BC679A800FBF094 /* libTagManager.a in Frameworks */,
 				CE9ADE311AB6D6E900D56481 /* CFNetwork.framework in Frameworks */,
 				9A0F9B821B5E58E900569DF2 /* FBSDKCoreKit.framework in Frameworks */,
 				CE9ADE321AB6D6E900D56481 /* BugSense-iOS.framework in Frameworks */,
@@ -3753,13 +3753,13 @@
 				9A0F9BAD1B5E801800569DF2 /* CoreMotion.framework in Frameworks */,
 				9A0F9BAC1B5E800700569DF2 /* AVFoundation.framework in Frameworks */,
 				CE9AE0181AB6D78200D56481 /* iAd.framework in Frameworks */,
-				CE9AE0191AB6D78200D56481 /* libAdIdAccess.a in Frameworks */,
 				CE9AE01A1AB6D78200D56481 /* AdSupport.framework in Frameworks */,
 				CE9AE01B1AB6D78200D56481 /* Security.framework in Frameworks */,
 				CE9AE01C1AB6D78200D56481 /* CoreText.framework in Frameworks */,
 				89C177BD1BC2DC4A006D3B19 /* SafariServices.framework in Frameworks */,
 				CED7C5231B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */,
 				CE9AE01D1AB6D78200D56481 /* CoreTelephony.framework in Frameworks */,
+				892EB9351BC6795800FBF094 /* libGoogleAnalytics.a in Frameworks */,
 				CE9AE01E1AB6D78200D56481 /* Social.framework in Frameworks */,
 				CE9AE01F1AB6D78200D56481 /* QuartzCore.framework in Frameworks */,
 				CE9AE0201AB6D78200D56481 /* UIKit.framework in Frameworks */,
@@ -3767,7 +3767,6 @@
 				CE9AE0231AB6D78200D56481 /* Foundation.framework in Frameworks */,
 				9A0F9B881B5E58E900569DF2 /* FBSDKLoginKit.framework in Frameworks */,
 				CE9AE0241AB6D78200D56481 /* ImageIO.framework in Frameworks */,
-				CE9AE0251AB6D78200D56481 /* libGoogleAnalyticsServices.a in Frameworks */,
 				9A0F9B921B5E58E900569DF2 /* FBSDKShareKit.framework in Frameworks */,
 				9A0F9B791B5E58E900569DF2 /* FBAudienceNetwork.framework in Frameworks */,
 				CE9AE0261AB6D78200D56481 /* CoreLocation.framework in Frameworks */,
@@ -3778,6 +3777,7 @@
 				CE9AE0291AB6D78200D56481 /* libsqlite3.dylib in Frameworks */,
 				9A0F9B8D1B5E58E900569DF2 /* FBSDKMessengerShareKit.framework in Frameworks */,
 				CE9AE02A1AB6D78200D56481 /* libz.dylib in Frameworks */,
+				892EB9441BC679A800FBF094 /* libTagManager.a in Frameworks */,
 				CE9AE02B1AB6D78200D56481 /* CFNetwork.framework in Frameworks */,
 				9A0F9B831B5E58E900569DF2 /* FBSDKCoreKit.framework in Frameworks */,
 				CE9AE02C1AB6D78200D56481 /* BugSense-iOS.framework in Frameworks */,
@@ -4175,6 +4175,85 @@
 				CEED472B1A7B973B006D9CE7 /* JAPDVBundleSingleItemWithSize.xib */,
 			);
 			name = Bundles;
+			sourceTree = "<group>";
+		};
+		892EB9221BC6795800FBF094 /* GoogleAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				892EB9231BC6795800FBF094 /* Headers */,
+				892EB92F1BC6795800FBF094 /* Libraries */,
+			);
+			path = GoogleAnalytics;
+			sourceTree = "<group>";
+		};
+		892EB9231BC6795800FBF094 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				892EB9241BC6795800FBF094 /* Public */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		892EB9241BC6795800FBF094 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				892EB9251BC6795800FBF094 /* GAI.h */,
+				892EB9261BC6795800FBF094 /* GAIDictionaryBuilder.h */,
+				892EB9271BC6795800FBF094 /* GAIEcommerceFields.h */,
+				892EB9281BC6795800FBF094 /* GAIEcommerceProduct.h */,
+				892EB9291BC6795800FBF094 /* GAIEcommerceProductAction.h */,
+				892EB92A1BC6795800FBF094 /* GAIEcommercePromotion.h */,
+				892EB92B1BC6795800FBF094 /* GAIFields.h */,
+				892EB92C1BC6795800FBF094 /* GAILogger.h */,
+				892EB92D1BC6795800FBF094 /* GAITrackedViewController.h */,
+				892EB92E1BC6795800FBF094 /* GAITracker.h */,
+			);
+			path = Public;
+			sourceTree = "<group>";
+		};
+		892EB92F1BC6795800FBF094 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				892EB9301BC6795800FBF094 /* libGoogleAnalytics.a */,
+			);
+			path = Libraries;
+			sourceTree = "<group>";
+		};
+		892EB9361BC679A800FBF094 /* GoogleTagManager */ = {
+			isa = PBXGroup;
+			children = (
+				892EB9371BC679A800FBF094 /* Headers */,
+				892EB93E1BC679A800FBF094 /* Libraries */,
+			);
+			path = GoogleTagManager;
+			sourceTree = "<group>";
+		};
+		892EB9371BC679A800FBF094 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				892EB9381BC679A800FBF094 /* Public */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		892EB9381BC679A800FBF094 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				892EB9391BC679A800FBF094 /* TAGContainer.h */,
+				892EB93A1BC679A800FBF094 /* TAGContainerOpener.h */,
+				892EB93B1BC679A800FBF094 /* TAGDataLayer.h */,
+				892EB93C1BC679A800FBF094 /* TAGLogger.h */,
+				892EB93D1BC679A800FBF094 /* TAGManager.h */,
+			);
+			path = Public;
+			sourceTree = "<group>";
+		};
+		892EB93E1BC679A800FBF094 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				892EB93F1BC679A800FBF094 /* libTagManager.a */,
+			);
+			path = Libraries;
 			sourceTree = "<group>";
 		};
 		8C38E17F19CF164A0007F6F9 /* ErrorViews */ = {
@@ -4698,62 +4777,6 @@
 			name = CheckoutForms;
 			sourceTree = "<group>";
 		};
-		B5376A0B1A3B51BD009C03AD /* GoogleAnalyticsServicesiOS_3.10 */ = {
-			isa = PBXGroup;
-			children = (
-				B5376A0C1A3B51BD009C03AD /* GoogleAnalytics */,
-				B5376A1A1A3B51BD009C03AD /* GoogleTagManager */,
-				B5376A231A3B51BD009C03AD /* libAdIdAccess.a */,
-				B5376A241A3B51BD009C03AD /* libGoogleAnalyticsServices.a */,
-			);
-			path = GoogleAnalyticsServicesiOS_3.10;
-			sourceTree = "<group>";
-		};
-		B5376A0C1A3B51BD009C03AD /* GoogleAnalytics */ = {
-			isa = PBXGroup;
-			children = (
-				B5376A0E1A3B51BD009C03AD /* Library */,
-			);
-			path = GoogleAnalytics;
-			sourceTree = "<group>";
-		};
-		B5376A0E1A3B51BD009C03AD /* Library */ = {
-			isa = PBXGroup;
-			children = (
-				B5376A0F1A3B51BD009C03AD /* GAI.h */,
-				B5376A101A3B51BD009C03AD /* GAIDictionaryBuilder.h */,
-				B5376A111A3B51BD009C03AD /* GAIEcommerceFields.h */,
-				B5376A121A3B51BD009C03AD /* GAIEcommerceProduct.h */,
-				B5376A131A3B51BD009C03AD /* GAIEcommerceProductAction.h */,
-				B5376A141A3B51BD009C03AD /* GAIEcommercePromotion.h */,
-				B5376A151A3B51BD009C03AD /* GAIFields.h */,
-				B5376A161A3B51BD009C03AD /* GAILogger.h */,
-				B5376A171A3B51BD009C03AD /* GAITrackedViewController.h */,
-				B5376A181A3B51BD009C03AD /* GAITracker.h */,
-			);
-			path = Library;
-			sourceTree = "<group>";
-		};
-		B5376A1A1A3B51BD009C03AD /* GoogleTagManager */ = {
-			isa = PBXGroup;
-			children = (
-				B5376A1C1A3B51BD009C03AD /* Library */,
-			);
-			path = GoogleTagManager;
-			sourceTree = "<group>";
-		};
-		B5376A1C1A3B51BD009C03AD /* Library */ = {
-			isa = PBXGroup;
-			children = (
-				B5376A1D1A3B51BD009C03AD /* TAGContainer.h */,
-				B5376A1E1A3B51BD009C03AD /* TAGContainerOpener.h */,
-				B5376A1F1A3B51BD009C03AD /* TAGDataLayer.h */,
-				B5376A201A3B51BD009C03AD /* TAGLogger.h */,
-				B5376A211A3B51BD009C03AD /* TAGManager.h */,
-			);
-			path = Library;
-			sourceTree = "<group>";
-		};
 		B55BFB9219E6A83E0098467E /* LoadCountryViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -4964,6 +4987,8 @@
 		B5A301D219811E8900F71726 /* ExternalFrameworks */ = {
 			isa = PBXGroup;
 			children = (
+				892EB9361BC679A800FBF094 /* GoogleTagManager */,
+				892EB9221BC6795800FBF094 /* GoogleAnalytics */,
 				CED7C51A1B78E0560070C855 /* GoogleAppIndexing */,
 				9A0F9BBC1B5EAD5F00569DF2 /* AQSFacebookMessengerActivity */,
 				9A7EE9CA1B556FD6004E2505 /* FacebookSDK */,
@@ -4972,7 +4997,6 @@
 				CE28EE571A9397C6000A264C /* WhatsAppActivity */,
 				B5B5FDA919D99D05008B8059 /* AccengageiOSSDK */,
 				B59DCA6319B710DA00DE7960 /* FXBlurView */,
-				B5376A0B1A3B51BD009C03AD /* GoogleAnalyticsServicesiOS_3.10 */,
 				B5007ABD19A4E8EC0024035A /* HockeySDK.embeddedframework */,
 				B5FE9FB219A1F4C6006F7D63 /* NewRelicAgent.framework */,
 				CEDEB98F199BA8FA0022BAB5 /* NMRangeSlider */,
@@ -8841,6 +8865,8 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
@@ -8929,6 +8955,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10/",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
@@ -9036,6 +9064,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10/",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
@@ -9098,6 +9128,8 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
@@ -9226,6 +9258,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10/",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
@@ -9262,6 +9296,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10/",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
@@ -9344,6 +9380,8 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10/",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
@@ -9381,6 +9419,8 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10/",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
@@ -9418,6 +9458,8 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10/",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
@@ -9455,6 +9497,8 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10/",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
@@ -9491,6 +9535,8 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10/",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
@@ -9528,6 +9574,8 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10/",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
@@ -9565,6 +9613,8 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10/",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
@@ -9602,6 +9652,8 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10/",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
@@ -9642,6 +9694,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10/",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
@@ -9683,6 +9737,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10/",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
@@ -9724,6 +9780,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10/",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
@@ -9762,6 +9820,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10/",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
@@ -9798,6 +9858,8 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
@@ -9842,6 +9904,8 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
