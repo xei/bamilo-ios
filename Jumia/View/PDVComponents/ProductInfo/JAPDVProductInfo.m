@@ -66,6 +66,7 @@
     yOffset = CGRectGetMaxY(priceLine.frame);
     
     JAProductInfoRatingLine *ratingLine = [[JAProductInfoRatingLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
+    [ratingLine setFashion:product.fashion];
     [ratingLine setTopSeparatorVisibility:YES];
     [ratingLine setRatingAverage:product.avr];
     [ratingLine setRatingSum:product.sum];
@@ -114,31 +115,32 @@
         
         BOOL needMoreSpecifications = NO;
         for (RISpecification *specification in product.specifications) {
-            if ([specification.headLabel isEqualToString:@"details"]) {
-                int i = 0;
-                for (RISpecificationAttribute *attribute in specification.specificationAttributes) {
-                    i++;
-                    if (i==5) {
-                        needMoreSpecifications = YES;
-                        UILabel *retLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, yOffset, frame.size.width - 32, 0)];
-                        [retLabel setTextColor:JABlackColor];
-                        [retLabel setFont:JACaptionFont];
-                        retLabel.numberOfLines = 0;
-                        [retLabel setText:[NSString stringWithFormat:@"..."]];
-                        [retLabel sizeToFit];
-                        [self addSubview:retLabel];
-                        yOffset = CGRectGetMaxY(retLabel.frame);
-                        break;
-                    }
-                    UILabel *specificationsContentLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, yOffset, frame.size.width - 32, 0)];
-                    [specificationsContentLabel setTextColor:JABlackColor];
-                    [specificationsContentLabel setFont:JACaptionFont];
-                    specificationsContentLabel.numberOfLines = 0;
-                    [specificationsContentLabel setText:[NSString stringWithFormat:@"%@:\n %@", attribute.key, attribute.value]];
-                    [specificationsContentLabel sizeToFit];
-                    [self addSubview:specificationsContentLabel];
-                    yOffset = CGRectGetMaxY(specificationsContentLabel.frame);
+            int i = 0;
+            for (RISpecificationAttribute *attribute in specification.specificationAttributes) {
+                if (!VALID_NOTEMPTY(attribute.key, NSString) || !VALID_NOTEMPTY(attribute.value, NSString) || [(NSString *)attribute.value isEqualToString:@""]) {
+                    continue;
                 }
+                i++;
+                if (i==5) {
+                    needMoreSpecifications = YES;
+                    UILabel *retLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, yOffset, frame.size.width - 32, 0)];
+                    [retLabel setTextColor:JABlackColor];
+                    [retLabel setFont:JACaptionFont];
+                    retLabel.numberOfLines = 0;
+                    [retLabel setText:[NSString stringWithFormat:@"..."]];
+                    [retLabel sizeToFit];
+                    [self addSubview:retLabel];
+                    yOffset = CGRectGetMaxY(retLabel.frame);
+                    break;
+                }
+                UILabel *specificationsContentLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, yOffset, frame.size.width - 32, 0)];
+                [specificationsContentLabel setTextColor:JABlackColor];
+                [specificationsContentLabel setFont:JACaptionFont];
+                specificationsContentLabel.numberOfLines = 0;
+                [specificationsContentLabel setText:[NSString stringWithFormat:@"%@:\n %@", attribute.key, attribute.value]];
+                [specificationsContentLabel sizeToFit];
+                [self addSubview:specificationsContentLabel];
+                yOffset = CGRectGetMaxY(specificationsContentLabel.frame);
             }
         }
         yOffset += 16.f;

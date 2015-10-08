@@ -13,6 +13,8 @@
 @interface JAPDVBundles() {
     BOOL _withSize;
     NSMutableArray *_bundlesArray;
+    id _buyBundleTarget;
+    SEL _buyBundleSelector;
 }
 
 @property (nonatomic) UIScrollView *bundlesScrollView;
@@ -134,10 +136,18 @@
     [self.buyBundleLine setY:CGRectGetMaxY(self.bundlesScrollView.frame)];
     [self setHeight:CGRectGetMaxY(self.buyBundleLine.frame)];
 }
-#warning TODO buy Bundle combo
+
+- (void)addBuyingBundleTarget:(id)target action:(SEL)action
+{
+    _buyBundleTarget = target;
+    _buyBundleSelector = action;
+}
+
 - (void)buyBundleCombo
 {
-    NSLog(@"buyBundleCombo");
+    if (_buyBundleTarget && [_buyBundleTarget respondsToSelector:_buyBundleSelector]) {
+        ((void (*)(id, SEL))[_buyBundleTarget methodForSelector:_buyBundleSelector])(_buyBundleTarget, _buyBundleSelector);
+    }
 }
 
 @end

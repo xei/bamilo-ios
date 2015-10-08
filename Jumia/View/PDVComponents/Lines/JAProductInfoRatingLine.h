@@ -13,6 +13,7 @@
 
 @interface JAProductInfoRatingLine : JAProductInfoBaseLine
 
+@property (nonatomic) BOOL fashion;
 @property (nonatomic) NSNumber *ratingAverage;
 @property (nonatomic) NSNumber *ratingSum;
 

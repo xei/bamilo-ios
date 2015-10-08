@@ -56,7 +56,9 @@
 - (JAProductInfoRatingLine *)sellerRatingLine
 {
     if (!VALID_NOTEMPTY(_sellerRatingLine, JAProductInfoRatingLine)) {
-        _sellerRatingLine = [[JAProductInfoRatingLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.sellerNameLabel.frame), self.width, 25)];
+        _sellerRatingLine = [[JAProductInfoRatingLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.sellerNameLabel.frame), self.width, 0)];
+        [_sellerRatingLine setHidden:YES];
+//        _sellerRatingLine = [[JAProductInfoRatingLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.sellerNameLabel.frame), self.width, 25)];
         [_sellerRatingLine setTopSeparatorVisibility:NO];
         [_sellerRatingLine setBottomSeparatorVisibility:NO];
         [self addSubview:_sellerRatingLine];
