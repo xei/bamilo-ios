@@ -70,6 +70,7 @@
     self.product = product;
     
     CGFloat width = frame.size.width;
+    CGFloat imagesPageHeight = 365;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
@@ -78,6 +79,7 @@
         {
             width = frame.size.width - 6.0f;
         }
+        imagesPageHeight = 550;
     }
     [self setWidth:width];
     
@@ -96,7 +98,8 @@
     
     [self.imageScrollView setWidth:width];
     [self.imageScrollView setHidden:YES];
-    CGRect imagePageFrame = CGRectMake(0, CGRectGetMaxY(self.productDescriptionLabel.frame), self.width, 365);
+    
+    CGRect imagePageFrame = CGRectMake(0, CGRectGetMaxY(self.productDescriptionLabel.frame), self.width, imagesPageHeight);
     _imagesPagedView = [[JAScrolledImageGalleryView alloc] initWithFrame:imagePageFrame];
     [_imagesPagedView setInfinite:YES];
 //    [_imagesPagedView addTarget:self action:@selector(imageViewPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -504,7 +507,18 @@
             [items addObject:image.url];
         }
         if (items.count > 1) {
-            [_imagesPagedView setHeight:400];
+            
+            UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+            {
+                if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
+                {
+                    [_imagesPagedView setHeight:550];
+                }else{
+                    [_imagesPagedView setHeight:450];
+                }
+            }else
+                [_imagesPagedView setHeight:400];
         }
     }
     [self setHeight:CGRectGetMaxY(_imagesPagedView.frame)];

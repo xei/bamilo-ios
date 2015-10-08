@@ -340,7 +340,7 @@ JAActivityViewControllerDelegate
         }
     }
     
-    if(VALID_NOTEMPTY(self.ctaView, JAButtonWithBlur))
+    if(VALID_NOTEMPTY(self.ctaView, JABottomBar))
     {
         [self.ctaView removeFromSuperview];
     }
@@ -883,8 +883,15 @@ JAActivityViewControllerDelegate
                 singleItemWidth = self.mainScrollView.width/4 - 5;
             }
             
-            if (isiPadInLandscape) {
-                singleItemHeight = 300;
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+            {
+                UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+                if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
+                {
+                    singleItemHeight = 350;
+                }else{
+                    singleItemHeight = 280;
+                }
             }
             
             JAPDVSingleRelatedItem *singleItem = [[JAPDVSingleRelatedItem alloc] initWithFrame:CGRectMake(0, 0, singleItemWidth, singleItemHeight)];
