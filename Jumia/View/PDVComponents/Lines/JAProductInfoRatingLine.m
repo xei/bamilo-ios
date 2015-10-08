@@ -33,12 +33,17 @@
 
 - (UIImage *)getEmptyStar
 {
-    return [UIImage imageNamed:@"img_rating_star_big_empty"];
+    return [UIImage imageNamed:@"img_rating_star_medium_empty"];
 }
 
 - (UIImage *)getFilledStar
 {
-    return [UIImage imageNamed:@"img_rating_star_big_full"];
+    if (self.fashion) {
+        return [UIImage imageNamed:@"img_rating_star_fashion_medium_full"];
+    }else{
+        return [UIImage imageNamed:@"img_rating_star_medium_full"];
+    }
+    
 }
 
 - (UIImageView *)star1

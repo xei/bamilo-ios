@@ -11,6 +11,7 @@
 #import "JAPriceView.h"
 #import "JAClickableView.h"
 #import "UIButton+Extensions.h"
+#import "RIVariation.h"
 
 #define JACatalogCellContentCornerRadius 3.0f
 #define JACatalogCellNormalFont [UIFont fontWithName:kFontRegularName size:10.0f]
@@ -46,5 +47,6 @@ typedef NS_ENUM(NSUInteger, JACatalogCollectionViewCellType) {
 - (void)initViews;
 - (void)reloadViews;
 - (void)loadWithProduct:(RIProduct*)product;
+- (void)loadWithVariation:(RIVariation*)variation;
 
 @end

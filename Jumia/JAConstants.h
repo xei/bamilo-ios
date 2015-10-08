@@ -84,6 +84,8 @@
 #define kShowSizeGuideNotification @"NOTIFICATION_SHOW_SIZE_GUIDE"
 #define kProductChangedNotification @"NOTIFICATION_PRODUCT_CHANGED"
 #define kOpenSpecificationsScreen @"NOTIFICATION_SHOW_SPECIFICATIONS_SCREEN"
+#define kOpenProductBundlesScreen @"NOTIFICATION_SHOW_BUNDLES_SCREEN"
+#define kOpenProductVariationsScreen @"NOTIFICATION_SHOW_VARIATIONS_SCREEN"
 
 //teasers
 #define kDidSelectTeaserWithCatalogUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_CATALOG_URL"

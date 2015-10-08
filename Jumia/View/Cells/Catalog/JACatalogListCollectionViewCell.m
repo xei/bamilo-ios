@@ -133,4 +133,15 @@
     }
 }
 
+- (void)loadWithVariation:(RIVariation *)variation
+{
+    [super loadWithVariation:variation];
+    
+    BOOL refresh = NO;
+    
+    if (_lastWidth != self.width || refresh) {
+        [self reloadViews];
+    }
+}
+
 @end

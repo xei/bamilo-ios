@@ -11,16 +11,19 @@
 #import "JAClickableView.h"
 
 @interface JAScrolledImageGalleryView () <UIScrollViewDelegate> {
-    UIScrollView *_scrollView;
     UIScrollView *_pageComponentView;
-    BOOL _first;
+    BOOL _first, _tap;
     NSMutableArray *_processedViews;
     SelectPageBlock _selectPageBlock;
-    id _targetSelector;
+    id _target;
     SEL _selector;
+    id _imageClickedTarget;
+    SEL _imageClickedSelector;
     NSArray *_urlImages;
     CGFloat _scrollAnimation;
 }
+
+@property (nonatomic) UIScrollView *scrollView;
 
 @end
 
@@ -57,12 +60,6 @@
 
 - (void)setDefaults
 {
-    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.width, 365)];
-    _scrollView.delegate = self;
-    [_scrollView setPagingEnabled:YES];
-    [_scrollView setShowsHorizontalScrollIndicator:NO];
-    [self addSubview:_scrollView];
-    
     if (_infinite)
         _selectedIndexPage = 1;
     else
@@ -74,6 +71,18 @@
     
 }
 
+- (UIScrollView *)scrollView
+{
+    if (!VALID_NOTEMPTY(_scrollView, UIScrollView)) {
+        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.width, 365)];
+        _scrollView.delegate = self;
+        [_scrollView setPagingEnabled:YES];
+        [_scrollView setShowsHorizontalScrollIndicator:NO];
+        [self addSubview:_scrollView];
+    }
+    return _scrollView;
+}
+
 - (void)setViews:(NSArray *)views
 {
     _urlImages = views;
@@ -83,9 +92,9 @@
             [validViews addObject:[self getImageViewForImageUrl:urlImage]];
         }
     }else{
-        UIImageView* imageView = [[UIImageView alloc] init];
+        JAClickableView* imageView = [[JAClickableView alloc] init];
         [imageView setFrame:CGRectMake(0, 0, 272, 340)];
-        [imageView setImage:[UIImage imageNamed:@"placeholder_pdv"]];
+        [imageView setImage:[UIImage imageNamed:@"placeholder_pdv"] forState:UIControlStateNormal];
         [validViews addObject:imageView];
     }
     
@@ -97,41 +106,42 @@
     [self loadViews];
 }
 
-- (UIImageView *)getImageViewForImageUrl:(NSString *)imageURL
+- (JAClickableView *)getImageViewForImageUrl:(NSString *)imageURL
 {
-    UIImageView* imageView = [[UIImageView alloc] init];
+    JAClickableView* imageView = [[JAClickableView alloc] init];
     [imageView setFrame:CGRectMake(0, 0, 272, 340)];
-    [imageView setImage:[UIImage imageNamed:@"placeholder_pdv"]];
+    [imageView setImage:[UIImage imageNamed:@"placeholder_pdv"] forState:UIControlStateNormal];
     [imageView setX:self.width/2-imageView.width/2];
+    [imageView addTarget:self action:@selector(sendImageClickEvent) forControlEvents:UIControlEventTouchUpInside];
 
     [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:imageURL]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         if (error || ((NSHTTPURLResponse *) response).statusCode != 200) {
             return;
         }
-        [imageView setImage:[UIImage imageWithData:data]];
+        [imageView setImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
     }];
     return imageView;
 }
 
 - (void)loadViews
 {
-    [[_scrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [[self.scrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     if (!_views || [_views count] == 0) {
         return;
     }
     _processedViews = [_views mutableCopy];
-    [_scrollView setContentSize:CGSizeMake(_scrollView.width*[_processedViews count], _scrollView.height)];
+    [self.scrollView setContentSize:CGSizeMake(self.scrollView.width*[_processedViews count], self.scrollView.height)];
     int j = 0;
     NSMutableArray* modifiedArray = [NSMutableArray new];
     for (int i = RI_IS_RTL?(int)[_processedViews count]-1:0;RI_IS_RTL?i>=0:i<=([_processedViews count]-1);RI_IS_RTL?i--:i++) {
         UIView *view = [_processedViews objectAtIndex:i];
-        UIView *baseView = [[UIView alloc] initWithFrame:_scrollView.frame];
+        UIView *baseView = [[UIView alloc] initWithFrame:self.scrollView.frame];
         [baseView addSubview:view];
         [baseView setX:j*self.width];
         [baseView setY:0];
         [baseView setTag:i];
         [modifiedArray addObject:baseView];
-        [_scrollView addSubview:baseView];
+        [self.scrollView addSubview:baseView];
         j++;
         
     }
@@ -146,8 +156,8 @@
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
-    [_scrollView setWidth:self.width];
-    [_scrollView setHeight:312];
+    [self.scrollView setWidth:self.width];
+    [self.scrollView setHeight:340];
     if (_processedViews) {
         [self loadViews];
     }
@@ -200,6 +210,7 @@
 
 - (void)tapSmallImage:(UIGestureRecognizer *)gesture
 {
+    _tap = YES;
     [self scrollToTag:gesture.view.tag];
 }
 
@@ -232,11 +243,17 @@
         numberOfViews = [_processedViews count];
     }
     [self sendEvent];
-    [UIView animateWithDuration:_scrollAnimation animations:^{
-        [_scrollView setContentOffset:CGPointMake([self getViewWithTag:_selectedIndexPage].x, 0)];
+    if (!_tap) {
+        [self.scrollView setContentOffset:CGPointMake([self getViewWithTag:_selectedIndexPage].x, 0)];
         [self reloadPageComponent];
-    }];
+    }else{
+        [UIView animateWithDuration:_scrollAnimation animations:^{
+            [self.scrollView setContentOffset:CGPointMake([self getViewWithTag:_selectedIndexPage].x, 0)];
+            [self reloadPageComponent];
+        }];
+    }
     _scrollAnimation = .3f;
+    _tap = NO;
 }
 
 - (NSInteger)selectedIndexPage
@@ -266,7 +283,7 @@
 - (NSInteger)getVisibleViewNumber
 {
     for (UIView *view in _processedViews) {
-        if (view.x == _scrollView.contentOffset.x) {
+        if (view.x == self.scrollView.contentOffset.x) {
             return view.tag;
         }
     }
@@ -304,8 +321,14 @@
 
 - (void)getPageChangedTarget:(id)target selector:(SEL)selector
 {
-    _targetSelector = target;
+    _target = target;
     _selector = selector;
+}
+
+- (void)addImageClickedTarget:(id)target selector:(SEL)selector
+{
+    _imageClickedTarget = target;
+    _imageClickedSelector = selector;
 }
 
 - (void)sendEvent
@@ -313,8 +336,15 @@
     if (_selectPageBlock) {
         _selectPageBlock(_selectedIndexPage);
     }
-    if (_targetSelector && _selector) {
-        ((void (*)(id, SEL))[_targetSelector methodForSelector:_selector])(_targetSelector, _selector);
+    if (_target && _selector) {
+        ((void (*)(id, SEL))[_target methodForSelector:_selector])(_target, _selector);
+    }
+}
+
+- (void)sendImageClickEvent
+{
+    if (_imageClickedTarget && _imageClickedSelector) {
+        ((void (*)(id, SEL))[_imageClickedTarget methodForSelector:_imageClickedSelector])(_imageClickedTarget, _imageClickedSelector);
     }
 }
 

@@ -57,6 +57,8 @@
 #import "JASellerRatingsViewController.h"
 #import "JANewSellerRatingViewController.h"
 #import "JAShopWebViewController.h"
+#import "JABundlesViewController.h"
+#import "JAPDVVariationsViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -312,6 +314,16 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showNewRatingScreen:)
                                                  name:kShowNewRatingScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showProductBundlesScreen:)
+                                                 name:kOpenProductBundlesScreen
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showProductVariationsScreen:)
+                                                 name:kOpenProductVariationsScreen
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -1244,6 +1256,47 @@
         }
         
         [self pushViewController:otherOffersVC animated:YES];
+    }
+}
+
+- (void)showProductBundlesScreen:(NSNotification *)notification
+{
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JABundlesViewController class]]) {
+        
+        JABundlesViewController* bundlesVC = [[JABundlesViewController alloc] init];
+        
+        if (notification.object && [notification.object isKindOfClass:[RIProduct class]]) {
+            bundlesVC.product = notification.object;
+        }
+        if (VALID_NOTEMPTY(notification.userInfo, NSDictionary)) {
+            if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"product.bundles"], NSArray)) {
+                bundlesVC.bundles = [notification.userInfo objectForKey:@"product.bundles"];
+            }
+        }
+        
+        [self pushViewController:bundlesVC animated:YES];
+    }
+}
+
+
+- (void)showProductVariationsScreen:(NSNotification *)notification
+{
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JAPDVVariationsViewController class]]) {
+        
+        JAPDVVariationsViewController* variationsVC = [[JAPDVVariationsViewController alloc] init];
+        
+        if (notification.object && [notification.object isKindOfClass:[RIProduct class]]) {
+            variationsVC.product = notification.object;
+        }
+        if (VALID_NOTEMPTY(notification.userInfo, NSDictionary)) {
+            if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"product.variations"], NSArray)) {
+                variationsVC.variations = [notification.userInfo objectForKey:@"product.variations"];
+            }
+        }
+        
+        [self pushViewController:variationsVC animated:YES];
     }
 }
 
