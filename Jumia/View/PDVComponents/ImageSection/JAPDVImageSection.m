@@ -40,28 +40,10 @@
 + (JAPDVImageSection *)getNewPDVImageSection:(BOOL)fashion
 {
     NSString *defaultSufix = @"_default";
-    if (fashion) {
-//        defaultSufix = @"";
-    }
     
     NSArray *xib = [[NSBundle mainBundle] loadNibNamed:[NSString stringWithFormat:@"JAPDVImageSection%@", defaultSufix]
                                                  owner:nil
                                                options:nil];
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-        xib = [[NSBundle mainBundle] loadNibNamed:[NSString stringWithFormat:@"JAPDVImageSection~iPad_Portrait%@", defaultSufix]
-                                            owner:nil
-                                          options:nil];
-        
-        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
-        {
-            xib = [[NSBundle mainBundle] loadNibNamed:[NSString stringWithFormat:@"JAPDVImageSection~iPad_Landscape%@", defaultSufix]
-                                                owner:nil
-                                              options:nil];
-        }
-    }
     
     for (NSObject *obj in xib) {
         if ([obj isKindOfClass:[JAPDVImageSection class]]) {
@@ -117,56 +99,44 @@
     CGRect imagePageFrame = CGRectMake(0, CGRectGetMaxY(self.productDescriptionLabel.frame), self.width, 365);
     _imagesPagedView = [[JAScrolledImageGalleryView alloc] initWithFrame:imagePageFrame];
     [_imagesPagedView setInfinite:YES];
+//    [_imagesPagedView addTarget:self action:@selector(imageViewPressed:) forControlEvents:UIControlEventTouchUpInside];
+    if (VALID_NOTEMPTY(product.images, NSOrderedSet)) {
+        if (product.images.count > 1)
+        {
+            [_imagesPagedView addImageClickedTarget:self selector:@selector(imageViewPressed)];
+        }
+    }
     [self addSubview:_imagesPagedView];
     [self bringSubviewToFront:self.wishListButton];
-    
-    if (product.fashion) {
-        [_imagesPagedView setY:16.f];
-        [self.productDescriptionLabel setYBottomOf:self.productNameLabel at:0.f];
-        [self.productNameLabel setYBottomOf:self.imageScrollView at:16.f];
-    }else{
-        [self.productNameLabel setY:14.f];
-        [self.productDescriptionLabel setYBottomOf:self.productNameLabel at:0.f];
-        [_imagesPagedView setYBottomOf:self.productDescriptionLabel at:16.f];
-    }
     
     [self.separatorImageView setWidth:width];
     
     [self loadWithImages:[product.images array]];
     
-//    self.discountLabel.font = [UIFont fontWithName:kFontBoldName size:self.discountLabel.font.pointSize];
-//    if (VALID_NOTEMPTY(product.maxSavingPercentage, NSString))
+    if (product.fashion) {
+        [_imagesPagedView setY:16.f];
+        [self.productNameLabel setYBottomOf:_imagesPagedView at:16.f];
+        [self.productDescriptionLabel setYBottomOf:self.productNameLabel at:0.f];
+        [self setHeight:CGRectGetMaxY(self.productDescriptionLabel.frame) + 16.f];
+    }else{
+        [self.productNameLabel setY:14.f];
+        [self.productDescriptionLabel setYBottomOf:self.productNameLabel at:0.f];
+        [_imagesPagedView setYBottomOf:self.productDescriptionLabel at:16.f];
+        [self setHeight:CGRectGetMaxY(_imagesPagedView.frame)];
+    }
+    
+//    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 //    {
-//        self.discountLabel.text = [NSString stringWithFormat:@"-%@%%", product.maxSavingPercentage];
-//    } else
-//    {
-//        self.discountLabel.hidden = YES;
-//    }
-    
-    
-    
-//    UIImage *img = [UIImage imageNamed:@"img_badge_discount"];
-//    CGSize imgSize = self.discountLabel.frame.size;
-//    
-//    UIGraphicsBeginImageContext(imgSize);
-//    [img drawInRect:CGRectMake(0,0,imgSize.width,imgSize.height)];
-//    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-//    UIGraphicsEndImageContext();
-//    
-//    self.discountLabel.backgroundColor = [UIColor colorWithPatternImage:newImage];
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
-        {
-            [self setupForLandscape:frame product:product preSelectedSize:preSelectedSize];
-        }
+//        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+//        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
+//        {
+//            [self setupForLandscape:frame product:product preSelectedSize:preSelectedSize];
+//        }
 //        else
 //        {
 //            [self setupForPortrait:frame product:product];
 //        }
-    }
+//    }
 //    else
 //    {
 //        [self setupForPortrait:frame product:product];
@@ -181,10 +151,10 @@
 //    [_wishListButton setImage:[UIImage imageNamed:@"FavButtonPressed"] forState:UIControlStateSelected];
 ////    [_wishListButton setImage:[UIImage imageNamed:@"FavButton"] forState:UIControlStateDisabled];
     [_wishListButton setX:0];
-    [_wishListButton setY:CGRectGetMaxY(_productDescriptionLabel.frame)];
+    [_wishListButton setY:_imagesPagedView.y];
 //    [_wishListButton.layer setBorderColor:[UIColor blackColor].CGColor];
 //    [_wishListButton.layer setBorderWidth:1];
-    [self bringSubviewToFront:_wishListButton];
+//    [self bringSubviewToFront:_wishListButton];
     
 }
 
@@ -545,7 +515,7 @@
     [self bringSubviewToFront:_wishListButton];
 }
 
-- (void)imageViewPressed:(UIControl*)sender
+- (void)imageViewPressed
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(imageClickedAtIndex:)]) {
         [self.delegate imageClickedAtIndex:_imagesPagedView.selectedIndexPage];

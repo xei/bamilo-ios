@@ -282,4 +282,46 @@
     _discountLabel.font = JACaptionFont;
 }
 
+- (void)loadWithVariation:(RIVariation *)variation
+{
+    [_brandLabel setText:variation.brand];
+    [_nameLabel setText:variation.name];
+    
+    
+    RIImage* firstImage = variation.image;
+    
+    [_productImageView setImageWithURL:[NSURL URLWithString:firstImage.url]
+                      placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
+    [_priceView loadWithPrice:variation.price
+                 specialPrice:nil
+                     fontSize:10.0f
+        specialPriceOnTheLeft:YES];
+    
+    switch (_cellType) {
+        case JACatalogCollectionViewGridCell:
+            [_priceView setX:6];
+            break;
+            
+        case JACatalogCollectionViewListCell:
+            [_priceView setX:80];
+            break;
+            
+        case JACatalogCollectionViewPictureCell:
+            [_priceView setX:16];
+            break;
+    }
+    
+    if (RI_IS_RTL) {
+        [_priceView flipViewPositionInsideSuperview];
+    }
+    
+    _recentProductImageView.hidden = YES;
+    _discountLabel.hidden = YES;
+    _favoriteButton.hidden = YES;
+    
+    if (RI_IS_RTL) {
+        [_priceView flipViewPositionInsideSuperview];
+    }
+}
+
 @end

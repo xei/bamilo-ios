@@ -31,7 +31,7 @@
         newVariation.name = [variation objectForKey:@"name"];
     }
     if ([variation objectForKey:@"price"]) {
-        newVariation.brand = [variation objectForKey:@"price"];
+        newVariation.price = [variation objectForKey:@"price"];
     }
     if ([variation objectForKey:@"sku"]) {
         newVariation.sku = [variation objectForKey:@"sku"];

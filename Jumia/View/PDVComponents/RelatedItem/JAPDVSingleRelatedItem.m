@@ -27,11 +27,6 @@
     self = [super initWithFrame:frame];
     
     if (self) {
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(updatedProduct:)
-                                                     name:kProductChangedNotification
-                                                   object:nil];
     }
     
     return self;
@@ -85,6 +80,7 @@
         _favoriteImage = [[UIImageView alloc] initWithFrame:CGRectZero];
         [_favoriteImage setContentMode:UIViewContentModeCenter];
         [_favoriteImage setImage:[UIImage imageNamed:@"FavButton"]];
+        [_favoriteImage setHidden:YES];
         [self addSubview:_favoriteImage];
     }
     return _favoriteImage;
@@ -98,9 +94,6 @@
         RIImage *imageTemp = [product.images firstObject];
         UIImage *placeHolderImage = [UIImage imageNamed:@"placeholder_scrollable"];
         [self.imageViewItem setY:6.f];
-//        [self.imageViewItem setWidth:placeHolderImage.size.width];
-//        [self.imageViewItem setHeight:placeHolderImage.size.height];
-        
         
         CGFloat ratio = placeHolderImage.size.height/placeHolderImage.size.width;
         self.imageViewItem.width = self.width - 30;
@@ -138,8 +131,15 @@
     self.labelBrand.text = product.brand;
     
     [self.favoriteImage setFrame:CGRectMake(self.width - 28, 10, 22, 22)];
-    if (VALID_NOTEMPTY(product.favoriteAddDate, NSDate)) {
+    [self setFavorite:VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate)];
+}
+
+- (void)setFavorite:(BOOL)favorite
+{
+    if (favorite) {
         [self.favoriteImage setImage:[UIImage imageNamed:@"FavButtonPressed"]];
+    }else{
+        [self.favoriteImage setImage:[UIImage imageNamed:@"FavButton"]];
     }
 }
 
@@ -156,20 +156,6 @@
     self.labelBrand.text = product.brand;
     self.labelName.text = product.name;
     self.labelPrice.text = product.priceFormatted;
-}
-
-- (void)updatedProduct:(NSNotification*)notification
-{
-    NSString* sku = notification.object;
-    if (!VALID_NOTEMPTY(sku, NSString) || [self.product.sku isEqualToString:sku]) {
-        NSDate *favoriteDate = nil;
-        if (VALID_NOTEMPTY(notification.userInfo, NSDictionary) && [notification.userInfo objectForKey:@"favoriteAddDate"])
-        {
-            favoriteDate = [notification.userInfo objectForKey:@"favoriteAddDate"];
-        }
-        _product.favoriteAddDate = favoriteDate;
-        self.product = _product;
-    }
 }
 
 @end

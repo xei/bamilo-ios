@@ -35,6 +35,7 @@
 
 @implementation JABaseViewController
 
+#warning incorrect height
 - (CGRect)viewBounds {
     CGFloat offset = 0.0f;
     if (self.searchBarIsVisible) {
@@ -44,6 +45,21 @@
                       self.view.bounds.origin.y + offset,
                       self.view.bounds.size.width,
                       self.view.bounds.size.height - offset);
+}
+
+- (CGRect)bounds {
+    CGFloat offset = 0.0f;
+    CGFloat heightOffset = 0.0f;
+    if (self.searchBarIsVisible) {
+        offset = kSearchViewBarHeight;
+    }
+    if (self.navigationController.navigationBar) {
+        heightOffset = CGRectGetMaxY(self.navigationController.navigationBar.frame);
+    }
+    return CGRectMake(self.view.bounds.origin.x,
+                      self.view.bounds.origin.y + offset,
+                      self.view.bounds.size.width,
+                      self.view.bounds.size.height - offset - heightOffset);
 }
 
 -(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{

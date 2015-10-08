@@ -18,4 +18,6 @@
 - (instancetype)initWithFrame:(CGRect)frame withSize:(BOOL)withSize;
 - (void)addBundleItemView:(JAPDVBundleSingleItem *)itemView;
 
+- (void)addBuyingBundleTarget:(id)target action:(SEL)action;
+
 @end
