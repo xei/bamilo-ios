@@ -741,13 +741,13 @@ typedef void (^ProcessActionBlock)(void);
         } else {
             switch (self.catalogTopView.cellTypeSelected) {
                 case JACatalogCollectionViewGridCell:
-                    width = JACatalogViewControllerGridCellWidth_ipad_landscape
-                    ;
+                    width = JACatalogViewControllerGridCellWidth_ipad_landscape;
                     height = JACatalogViewControllerGridCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewListCell:
                     width = JACatalogViewControllerListCellWidth_ipad_landscape;
                     height = JACatalogViewControllerListCellHeight_ipad;
+                    break;
                 case JACatalogCollectionViewPictureCell:
                     width = JACatalogViewControllerPictureCellWidth_ipad_landscape;
                     height = JACatalogViewControllerPictureCellHeight_ipad;
