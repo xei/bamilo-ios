@@ -40,28 +40,10 @@
 + (JAPDVImageSection *)getNewPDVImageSection:(BOOL)fashion
 {
     NSString *defaultSufix = @"_default";
-    if (fashion) {
-//        defaultSufix = @"";
-    }
     
     NSArray *xib = [[NSBundle mainBundle] loadNibNamed:[NSString stringWithFormat:@"JAPDVImageSection%@", defaultSufix]
                                                  owner:nil
                                                options:nil];
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-        xib = [[NSBundle mainBundle] loadNibNamed:[NSString stringWithFormat:@"JAPDVImageSection~iPad_Portrait%@", defaultSufix]
-                                            owner:nil
-                                          options:nil];
-        
-        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
-        {
-            xib = [[NSBundle mainBundle] loadNibNamed:[NSString stringWithFormat:@"JAPDVImageSection~iPad_Landscape%@", defaultSufix]
-                                                owner:nil
-                                              options:nil];
-        }
-    }
     
     for (NSObject *obj in xib) {
         if ([obj isKindOfClass:[JAPDVImageSection class]]) {
@@ -97,22 +79,33 @@
             width = frame.size.width - 6.0f;
         }
     }
+    [self setWidth:width];
     
-    self.productNameLabel.font = [UIFont fontWithName:kFontMediumName size:self.productNameLabel.font.pointSize];
+    self.productNameLabel.font = JAList1Font;
+    self.productNameLabel.textColor = JABlackColor;
     self.productNameLabel.text = product.brand;
-
-    self.productDescriptionLabel.font = [UIFont fontWithName:kFontRegularName size:self.productDescriptionLabel.font.pointSize];
+    [self.productNameLabel setX:16.f];
+    
+    self.productDescriptionLabel.font = JACaptionFont;
+    [self.productDescriptionLabel setTextColor:JABlack800Color];
     self.productDescriptionLabel.numberOfLines = 2;
     self.productDescriptionLabel.text = product.name;
     [self.productDescriptionLabel sizeToFit];
-    
-    [self setWidth:width];
+    [self.productDescriptionLabel setYBottomOf:self.productNameLabel at:0.f];
+    [self.productDescriptionLabel setX:16.f];
     
     [self.imageScrollView setWidth:width];
     [self.imageScrollView setHidden:YES];
     CGRect imagePageFrame = CGRectMake(0, CGRectGetMaxY(self.productDescriptionLabel.frame), self.width, 365);
     _imagesPagedView = [[JAScrolledImageGalleryView alloc] initWithFrame:imagePageFrame];
     [_imagesPagedView setInfinite:YES];
+//    [_imagesPagedView addTarget:self action:@selector(imageViewPressed:) forControlEvents:UIControlEventTouchUpInside];
+    if (VALID_NOTEMPTY(product.images, NSOrderedSet)) {
+        if (product.images.count > 1)
+        {
+            [_imagesPagedView addImageClickedTarget:self selector:@selector(imageViewPressed)];
+        }
+    }
     [self addSubview:_imagesPagedView];
     [self bringSubviewToFront:self.wishListButton];
     
@@ -120,57 +113,48 @@
     
     [self loadWithImages:[product.images array]];
     
-    self.discountLabel.font = [UIFont fontWithName:kFontBoldName size:self.discountLabel.font.pointSize];
-    if (VALID_NOTEMPTY(product.maxSavingPercentage, NSString))
-    {
-        self.discountLabel.text = [NSString stringWithFormat:@"-%@%%", product.maxSavingPercentage];
-    } else
-    {
-        self.discountLabel.hidden = YES;
+    if (product.fashion) {
+        [_imagesPagedView setY:16.f];
+        [self.productNameLabel setYBottomOf:_imagesPagedView at:16.f];
+        [self.productDescriptionLabel setYBottomOf:self.productNameLabel at:0.f];
+        [self setHeight:CGRectGetMaxY(self.productDescriptionLabel.frame) + 16.f];
+    }else{
+        [self.productNameLabel setY:14.f];
+        [self.productDescriptionLabel setYBottomOf:self.productNameLabel at:0.f];
+        [_imagesPagedView setYBottomOf:self.productDescriptionLabel at:16.f];
+        [self setHeight:CGRectGetMaxY(_imagesPagedView.frame)];
     }
     
-    
-    
-    UIImage *img = [UIImage imageNamed:@"img_badge_discount"];
-    CGSize imgSize = self.discountLabel.frame.size;
-    
-    UIGraphicsBeginImageContext(imgSize);
-    [img drawInRect:CGRectMake(0,0,imgSize.width,imgSize.height)];
-    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    self.discountLabel.backgroundColor = [UIColor colorWithPatternImage:newImage];
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
-        {
-            [self setupForLandscape:frame product:product preSelectedSize:preSelectedSize];
-        }
+//    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+//    {
+//        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+//        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
+//        {
+//            [self setupForLandscape:frame product:product preSelectedSize:preSelectedSize];
+//        }
 //        else
 //        {
 //            [self setupForPortrait:frame product:product];
 //        }
-    }
+//    }
 //    else
 //    {
 //        [self setupForPortrait:frame product:product];
 //    }
     
-    [_discountLabel setX: CGRectGetMaxX([_discountLabel superview].frame) - _discountLabel.bounds.size.width - 12.0f];
-    [_discountLabel setY: CGRectGetMaxY(_imageScrollView.frame) - _discountLabel.bounds.size.height - 20.0f];
-    [_discountLabel.layer setZPosition:100];
+//    [_discountLabel setX: CGRectGetMaxX([_discountLabel superview].frame) - _discountLabel.bounds.size.width - 12.0f];
+//    [_discountLabel setY: CGRectGetMaxY(_imageScrollView.frame) - _discountLabel.bounds.size.height - 20.0f];
+//    [_discountLabel.layer setZPosition:100];
     
 //    [_wishListButton setImage:[UIImage imageNamed:@"FavButton"] forState:UIControlStateNormal];
 ////    [_wishListButton setImage:[UIImage imageNamed:@"FavButtonPressed"] forState:UIControlStateHighlighted];
 //    [_wishListButton setImage:[UIImage imageNamed:@"FavButtonPressed"] forState:UIControlStateSelected];
 ////    [_wishListButton setImage:[UIImage imageNamed:@"FavButton"] forState:UIControlStateDisabled];
     [_wishListButton setX:0];
-    [_wishListButton setY:CGRectGetMaxY(_productDescriptionLabel.frame)];
+    [_wishListButton setY:_imagesPagedView.y];
 //    [_wishListButton.layer setBorderColor:[UIColor blackColor].CGColor];
 //    [_wishListButton.layer setBorderWidth:1];
-    [self bringSubviewToFront:_wishListButton];
+//    [self bringSubviewToFront:_wishListButton];
     
 }
 
@@ -531,7 +515,7 @@
     [self bringSubviewToFront:_wishListButton];
 }
 
-- (void)imageViewPressed:(UIControl*)sender
+- (void)imageViewPressed
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(imageClickedAtIndex:)]) {
         [self.delegate imageClickedAtIndex:_imagesPagedView.selectedIndexPage];

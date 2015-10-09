@@ -10,64 +10,19 @@
 #import "JAProductInfoHeaderLine.h"
 
 @interface JAPDVRelatedItem ()
+{
+    CGSize _lastItemSize;
+}
 
 @property (nonatomic) JAProductInfoHeaderLine *topLabel;
 @property (nonatomic) UIView *horizontalSeparator;
 @property (nonatomic) UIView *verticalSeparator;
+@property (nonatomic) NSMutableArray *viewsArray;
+@property (nonatomic) NSMutableArray *verticalSeparators;
 
 @end
 
 @implementation JAPDVRelatedItem
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        [self setDefaults];
-    }
-    return self;
-}
-
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    
-    if (self) {
-        [self setDefaults];
-    }
-    
-    return self;
-}
-
-- (void)setDefaults
-{
-}
-
-- (JAProductInfoHeaderLine *)topLabel
-{
-    if (!VALID_NOTEMPTY(_topLabel, JAProductInfoHeaderLine)) {
-        _topLabel = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, 0, self.width, kProductInfoHeaderLineHeight)];
-        [_topLabel.label setText:[@"You may also like" uppercaseString]];
-        [_topLabel.label sizeToFit];
-        [self addSubview:_topLabel];
-    }
-    return _topLabel;
-}
-
-- (void)setHeaderText:(NSString *)headerText
-{
-    _headerText = headerText;
-    [self.topLabel.label setText:_headerText];
-}
-
-- (void)addRelatedItemView:(JAPDVSingleRelatedItem *)itemView
-{
-    CGFloat headerOffset = CGRectGetMaxY(self.topLabel.frame);
-    itemView.y += headerOffset;
-    [self addSubview:itemView];
-    [self setHeight:CGRectGetMaxY(itemView.frame)];
-    [self reloadSeparators];
-}
 
 - (UIView *)horizontalSeparator
 {
@@ -89,10 +44,94 @@
     return _verticalSeparator;
 }
 
-- (void)reloadSeparators
+- (NSMutableArray *)verticalSeparators
 {
+    if (!VALID_NOTEMPTY(_verticalSeparators, NSMutableArray)) {
+        _verticalSeparators = [NSMutableArray new];
+    }
+    return _verticalSeparators;
+}
+
+- (JAProductInfoHeaderLine *)topLabel
+{
+    if (!VALID_NOTEMPTY(_topLabel, JAProductInfoHeaderLine)) {
+        _topLabel = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, 0, self.width, kProductInfoHeaderLineHeight)];
+        [_topLabel.label setText:[@"You may also like" uppercaseString]];
+        [_topLabel.label sizeToFit];
+        [self addSubview:_topLabel];
+    }
+    return _topLabel;
+}
+
+- (void)setHeaderText:(NSString *)headerText
+{
+    _headerText = headerText;
+    [self.topLabel.label setText:_headerText];
+}
+
+- (NSMutableArray *)viewsArray
+{
+    if (!VALID_NOTEMPTY(_viewsArray, NSMutableArray)) {
+        _viewsArray = [NSMutableArray new];
+    }
+    return _viewsArray;
+}
+
+- (void)addRelatedItemView:(JAPDVSingleRelatedItem *)itemView
+{
+    CGFloat headerOffset = CGRectGetMaxY(self.topLabel.frame);
+    itemView.y += headerOffset;
+    _lastItemSize = itemView.frame.size;
+    [self addSubview:itemView];
+    [self.viewsArray addObject:itemView];
+    [self setHeight:CGRectGetMaxY(itemView.frame)];
+    if (self.height >= _lastItemSize.height*2) {
+        [self reloadCrossSeparators];
+    }else{
+        [self reloadVerticalSeparators];
+    }
+}
+
+- (void)reloadCrossSeparators
+{
+    [self.horizontalSeparator setHidden:NO];
+    [self.verticalSeparator setHidden:NO];
+    for (UIView *separator in self.verticalSeparators) {
+        [separator removeFromSuperview];
+    }
+    [self.verticalSeparators removeAllObjects];
+    
     [self.horizontalSeparator setFrame:CGRectMake(0, self.topLabel.height + (self.height - self.topLabel.height)/2, self.width, 1)];
-    [self.verticalSeparator setFrame:CGRectMake(self.width/2, self.topLabel.height, 1, self.height - self.topLabel.height)];
+    [self.verticalSeparator setFrame:CGRectMake(self.width/2, self.topLabel.height, 1, CGRectGetMaxY([(UIView *)[self.viewsArray lastObject] frame]) - CGRectGetMaxY(self.topLabel.frame))];
+    NSLog(@"self.height: %f, self.verticalSeparator.height: %f, CGRectGetMaxY(itemView.frame): %f", self.height, self.verticalSeparator.height, CGRectGetMaxY([(UIView *)[self.viewsArray lastObject] frame]));
+}
+
+- (void)reloadVerticalSeparators
+{
+    [self.horizontalSeparator setHidden:YES];
+    [self.verticalSeparator setHidden:YES];
+    UIView *lastView;
+    for (int i = 0; i < self.viewsArray.count; i++) {
+        UIView *view = [self.viewsArray objectAtIndex:i];
+        if (lastView) {
+            CGFloat middlePoint = [self getMiddlePointFrom:CGRectGetMaxX(lastView.frame) andSecondPoint:view.x];
+            if (i < self.verticalSeparators.count) {
+                UIView *separator = [self.verticalSeparators objectAtIndex:i];
+                [separator setFrame:CGRectMake(middlePoint, self.topLabel.height, 1, self.height - self.topLabel.height)];
+            }else{
+                UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(middlePoint, self.topLabel.height, 1, self.height - self.topLabel.height)];
+                [separator setBackgroundColor:JABlack700Color];
+                [self addSubview:separator];
+                [self.verticalSeparators addObject:separator];
+            }
+        }
+        lastView = view;
+    }
+}
+
+- (CGFloat)getMiddlePointFrom:(CGFloat)firstPoint andSecondPoint:(CGFloat)secondPoint
+{
+    return firstPoint + (firstPoint - secondPoint)/2;
 }
 
 @end

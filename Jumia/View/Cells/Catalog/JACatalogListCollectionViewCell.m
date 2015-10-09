@@ -60,8 +60,8 @@
     [super initViews];
     
     _numberOfReviewsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    _numberOfReviewsLabel.font = JACatalogCellLightFont;
-    _numberOfReviewsLabel.textColor = JACatalogCellGrayFontColor;
+    _numberOfReviewsLabel.font = JABody3Font;
+    _numberOfReviewsLabel.textColor = JABlack800Color;
     [self addSubview:_numberOfReviewsLabel];
     _ratingsView = [JARatingsView getNewJARatingsView];
     _ratingsView.rating = 0;
@@ -121,12 +121,23 @@
         }
         
         if (1 == [product.sum integerValue]) {
-            _numberOfReviewsLabel.text = STRING_RATING;
+            _numberOfReviewsLabel.text = @"";
         } else {
-            _numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_RATINGS, [product.sum integerValue]];
+            _numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_NRATINGS, [product.sum integerValue]];
         }
         [_numberOfReviewsLabel sizeToFit];
     }
+    
+    if (_lastWidth != self.width || refresh) {
+        [self reloadViews];
+    }
+}
+
+- (void)loadWithVariation:(RIVariation *)variation
+{
+    [super loadWithVariation:variation];
+    
+    BOOL refresh = NO;
     
     if (_lastWidth != self.width || refresh) {
         [self reloadViews];

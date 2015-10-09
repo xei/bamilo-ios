@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JAClickableView.h"
 
 typedef void (^SelectPageBlock)(NSInteger pageIndex);
 
@@ -21,5 +22,7 @@ typedef void (^SelectPageBlock)(NSInteger pageIndex);
 - (void)getPageChanged:(SelectPageBlock)page;
 
 - (void)getPageChangedTarget:(id)target selector:(SEL)selector;
+
+- (void)addImageClickedTarget:(id)target selector:(SEL)selector;
 
 @end

@@ -23,11 +23,13 @@
 @interface JAPDVProductInfo()
 
 @property (nonatomic, strong) RIProduct* product;
+@property (nonatomic) id variationsTarget;
 @property (nonatomic) id sizeTarget;
 @property (nonatomic) id reviewsTarget;
 @property (nonatomic) id sellerReviewsTarget;
 @property (nonatomic) id otherOffersTarget;
 @property (nonatomic) id specificationsTarget;
+@property (nonatomic) SEL variationsSelector;
 @property (nonatomic) SEL sizeSelector;
 @property (nonatomic) SEL reviewsSelector;
 @property (nonatomic) SEL sellerReviewsSelector;
@@ -63,12 +65,9 @@
     [self addSubview:priceLine];
     yOffset = CGRectGetMaxY(priceLine.frame);
     
-    UIView *priceSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, yOffset, self.width, 1)];
-    [priceSeparator setBackgroundColor:JABlack400Color];
-    [self addSubview:priceSeparator];
-    yOffset = CGRectGetMaxY(priceSeparator.frame);
-    
     JAProductInfoRatingLine *ratingLine = [[JAProductInfoRatingLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
+    [ratingLine setFashion:product.fashion];
+    [ratingLine setTopSeparatorVisibility:YES];
     [ratingLine setRatingAverage:product.avr];
     [ratingLine setRatingSum:product.sum];
     [ratingLine addTarget:self action:@selector(tapReviewsLine) forControlEvents:UIControlEventTouchUpInside];
@@ -110,52 +109,61 @@
     if (VALID_NOTEMPTY(product.specifications, NSSet)) {
         JAProductInfoHeaderLine *headerSpecifications = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoHeaderLineHeight)];
         [headerSpecifications.label setText:[STRING_SPECIFICATIONS uppercaseString]];
+        [headerSpecifications.label sizeToFit];
         [self addSubview:headerSpecifications];
         yOffset = CGRectGetMaxY(headerSpecifications.frame) + 16.f;
         
         BOOL needMoreSpecifications = NO;
         for (RISpecification *specification in product.specifications) {
-            if ([specification.headLabel isEqualToString:@"details"]) {
-                int i = 0;
-                for (RISpecificationAttribute *attribute in specification.specificationAttributes) {
-                    i++;
-                    if (i==5) {
-                        needMoreSpecifications = YES;
-                        UILabel *retLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, yOffset, frame.size.width - 32, 0)];
-                        [retLabel setTextColor:JABlackColor];
-                        [retLabel setFont:JACaptionFont];
-                        retLabel.numberOfLines = 0;
-                        [retLabel setText:[NSString stringWithFormat:@"..."]];
-                        [retLabel sizeToFit];
-                        [self addSubview:retLabel];
-                        yOffset = CGRectGetMaxY(retLabel.frame);
-                        break;
-                    }
-                    UILabel *specificationsContentLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, yOffset, frame.size.width - 32, 0)];
-                    [specificationsContentLabel setTextColor:JABlackColor];
-                    [specificationsContentLabel setFont:JACaptionFont];
-                    specificationsContentLabel.numberOfLines = 0;
-                    [specificationsContentLabel setText:[NSString stringWithFormat:@"%@:\n %@", attribute.key, attribute.value]];
-                    [specificationsContentLabel sizeToFit];
-                    [self addSubview:specificationsContentLabel];
-                    yOffset = CGRectGetMaxY(specificationsContentLabel.frame);
+            int i = 0;
+            for (RISpecificationAttribute *attribute in specification.specificationAttributes) {
+                if (!VALID_NOTEMPTY(attribute.key, NSString) || !VALID_NOTEMPTY(attribute.value, NSString) || [(NSString *)attribute.value isEqualToString:@""]) {
+                    continue;
                 }
+                i++;
+                if (i==5) {
+                    needMoreSpecifications = YES;
+                    UILabel *retLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, yOffset, frame.size.width - 32, 0)];
+                    [retLabel setTextColor:JABlackColor];
+                    [retLabel setFont:JACaptionFont];
+                    retLabel.numberOfLines = 0;
+                    [retLabel setText:[NSString stringWithFormat:@"..."]];
+                    [retLabel sizeToFit];
+                    [self addSubview:retLabel];
+                    yOffset = CGRectGetMaxY(retLabel.frame);
+                    break;
+                }
+                UILabel *specificationsContentLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, yOffset, frame.size.width - 32, 0)];
+                [specificationsContentLabel setTextColor:JABlackColor];
+                [specificationsContentLabel setFont:JACaptionFont];
+                specificationsContentLabel.numberOfLines = 0;
+                [specificationsContentLabel setText:[NSString stringWithFormat:@"%@:\n %@", attribute.key, attribute.value]];
+                [specificationsContentLabel sizeToFit];
+                [self addSubview:specificationsContentLabel];
+                yOffset = CGRectGetMaxY(specificationsContentLabel.frame);
             }
         }
         yOffset += 16.f;
         if (needMoreSpecifications) {
-            UIView *specificationsSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, yOffset + 6.f, self.width, .5)];
-            [specificationsSeparator setBackgroundColor:JABlack400Color];
-            [self addSubview:specificationsSeparator];
-            yOffset = CGRectGetMaxY(specificationsSeparator.frame);
-            
-            JAProductInfoSubLine *singleSpecificationReadMore = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
+            JAProductInfoSubLine *subSpecificationReadMore = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
+            [subSpecificationReadMore setTopSeparatorVisibility:YES];
 #warning TODO String
-            [singleSpecificationReadMore.label setText:@"More specifications"];
-            [singleSpecificationReadMore addTarget:self action:@selector(tapSpecificationsLine) forControlEvents:UIControlEventTouchUpInside];
-            [self addSubview:singleSpecificationReadMore];
-            yOffset = CGRectGetMaxY(singleSpecificationReadMore.frame);
+            [subSpecificationReadMore.label setText:@"More specifications"];
+            [subSpecificationReadMore addTarget:self action:@selector(tapSpecificationsLine) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:subSpecificationReadMore];
+            yOffset = CGRectGetMaxY(subSpecificationReadMore.frame);
         }
+    }
+    
+    if (VALID_NOTEMPTY(product.variations, NSOrderedSet)) {
+        JAProductInfoSingleLine *singleVariations = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
+        [singleVariations setTopSeparatorVisibility:YES];
+#warning TODO String
+        [singleVariations.label setText:@"See other variations"];
+        [singleVariations.label sizeToFit];
+        [singleVariations addTarget:self action:@selector(tapVariationsLine) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:singleVariations];
+        yOffset = CGRectGetMaxY(singleVariations.frame);
     }
     
     if (VALID_NOTEMPTY(product.summary, NSString)) {
@@ -173,12 +181,8 @@
         [self addSubview:descriptionContentLabel];
         yOffset = CGRectGetMaxY(descriptionContentLabel.frame) + 16.f;
         
-        UIView *descriptionSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, yOffset + 6.f, self.width, .5)];
-        [descriptionSeparator setBackgroundColor:JABlack400Color];
-        [self addSubview:descriptionSeparator];
-        yOffset = CGRectGetMaxY(descriptionSeparator.frame);
-        
         JAProductInfoSubLine *singleDescriptionReadMore = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
+        [singleDescriptionReadMore setTopSeparatorVisibility:YES];
 #warning TODO String
         [singleDescriptionReadMore.label setText:@"Read more"];
         [singleDescriptionReadMore addTarget:self action:@selector(tapSpecificationsLine) forControlEvents:UIControlEventTouchUpInside];
@@ -196,6 +200,13 @@
     CGRect rect = label.frame;
     
     return ceil(rect.size.height / font.lineHeight);
+}
+
+- (void)tapVariationsLine
+{
+    if (self.variationsTarget && [self.variationsTarget respondsToSelector:self.variationsSelector]) {
+        ((void (*)(id, SEL))[self.variationsTarget methodForSelector:self.variationsSelector])(self.variationsTarget, self.variationsSelector);
+    }
 }
 
 - (void)tapSizeLine
@@ -233,6 +244,11 @@
     }
 }
 
+- (void)addVariationsTarget:(id)target action:(SEL)action
+{
+    self.variationsTarget = target;
+    self.variationsSelector = action;
+}
 
 - (void)addSizeTarget:(id)target action:(SEL)action
 {

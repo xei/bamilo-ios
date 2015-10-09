@@ -555,15 +555,11 @@
         
         if ([dataDic objectForKey:@"variations"]) {
             NSDictionary* variationsJSON = [dataDic objectForKey:@"variations"];
-            if (VALID_NOTEMPTY(variationsJSON, NSDictionary)) {
-                
-                [variationsJSON enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-                    
-                    RIVariation* variation = [RIVariation parseVariation:obj];
-                    variation.sku = key;
-                    variation.product = newProduct;
+            if (VALID_NOTEMPTY(variationsJSON, NSArray)) {
+                for (NSDictionary *varDictionary in variationsJSON) {
+                    RIVariation* variation = [RIVariation parseVariation:varDictionary];
                     [newProduct addVariationsObject:variation];
-                }];
+                }
             }
         }
         

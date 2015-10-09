@@ -23,6 +23,7 @@
  * This method returns the correct bounds to be used, taking the searchBar positioning into account
  */
 - (CGRect)viewBounds;
+- (CGRect)bounds;
 
 /**
  * Method to force Nav bar to reload. This is called in viewWillAppear

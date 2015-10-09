@@ -16,6 +16,7 @@
 @property (nonatomic) UILabel *labelBrand;
 @property (nonatomic) UILabel *labelName;
 @property (nonatomic) UILabel *labelPrice;
+@property (nonatomic) UIImageView *favoriteImage;
 
 @end
 
@@ -73,16 +74,26 @@
     return _imageViewItem;
 }
 
+- (UIImageView *)favoriteImage
+{
+    if (!VALID_NOTEMPTY(_favoriteImage, UIImageView)) {
+        _favoriteImage = [[UIImageView alloc] initWithFrame:CGRectZero];
+        [_favoriteImage setContentMode:UIViewContentModeCenter];
+        [_favoriteImage setImage:[UIImage imageNamed:@"FavButton"]];
+        [_favoriteImage setHidden:YES];
+        [self addSubview:_favoriteImage];
+    }
+    return _favoriteImage;
+}
+
 - (void)setProduct:(RIProduct *)product
 {
+    _product = product;
     if (VALID_NOTEMPTY(product.images, NSOrderedSet))
     {
         RIImage *imageTemp = [product.images firstObject];
         UIImage *placeHolderImage = [UIImage imageNamed:@"placeholder_scrollable"];
         [self.imageViewItem setY:6.f];
-//        [self.imageViewItem setWidth:placeHolderImage.size.width];
-//        [self.imageViewItem setHeight:placeHolderImage.size.height];
-        
         
         CGFloat ratio = placeHolderImage.size.height/placeHolderImage.size.width;
         self.imageViewItem.width = self.width - 30;
@@ -119,6 +130,17 @@
     [self.labelBrand setHeight:20];
     self.labelBrand.text = product.brand;
     
+    [self.favoriteImage setFrame:CGRectMake(self.width - 28, 10, 22, 22)];
+    [self setFavorite:VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate)];
+}
+
+- (void)setFavorite:(BOOL)favorite
+{
+    if (favorite) {
+        [self.favoriteImage setImage:[UIImage imageNamed:@"FavButtonPressed"]];
+    }else{
+        [self.favoriteImage setImage:[UIImage imageNamed:@"FavButton"]];
+    }
 }
 
 - (void)setSearchTypeProduct:(RISearchTypeProduct *)product
@@ -134,7 +156,6 @@
     self.labelBrand.text = product.brand;
     self.labelName.text = product.name;
     self.labelPrice.text = product.priceFormatted;
-    
 }
 
 @end

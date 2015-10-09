@@ -50,6 +50,8 @@
 
 "string_filters" = "Filters";
 
+"string_remove_filter" = "Remove";
+
 "categories_toplevel_title" = "All Categories";
 
 "string_apply" = "Apply";
@@ -83,6 +85,8 @@
 "string_rating" = "1 rating";
 
 "string_ratings" = "%d ratings";
+
+"string_nratings" = "(%d)";
 
 "string_review" = "1 review";
 
@@ -366,7 +370,7 @@
 
 "campaing_timer_end" = "Ends in:";
 
-"string_format_off_label" = "%d%% OFF";
+"string_format_off_label" = "-%d%% OFF";
 
 "campaigns_label" = "Campaigns";
 
