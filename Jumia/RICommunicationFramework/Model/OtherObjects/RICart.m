@@ -537,6 +537,28 @@
 
 #pragma mark - Parsers
 
++ (RICart *)parseCheckoutFinish:(NSDictionary*)json
+                        forCart:(RICart*)cart
+{
+    if(VALID_NOTEMPTY([json objectForKey:@"order_nr"], NSString)) {
+        cart.orderNr = [json objectForKey:@"order_nr"];
+    }
+    
+    if(VALID_NOTEMPTY([json objectForKey:@"customer_first_name"], NSString)) {
+        cart.customerFirstMame = [json objectForKey:@"customer_first_name"];
+    }
+    
+    if(VALID_NOTEMPTY([json objectForKey:@"customer_last_name"], NSString)) {
+        cart.customerLastName = [json objectForKey:@"customer_last_name"];
+    }
+    
+    if([json objectForKey:@"payment"]) {
+        cart.paymentInformation = [RIPaymentInformation parsePaymentInfo:[json objectForKey:@"payment"]];
+    }
+    
+    return cart;
+}
+
 + (RICart *)parseCart:(NSDictionary *)entitiesJSON country:(RICountryConfiguration*)country
 {
     RICart *cart = [[RICart alloc] init];
@@ -565,22 +587,6 @@
     if (VALID_NOTEMPTY([entitiesJSON objectForKey:@"multistep_entity"], NSDictionary) ) {
         NSDictionary* nextStep = [entitiesJSON objectForKey:@"multistep_entity"];
         cart.nextStep = [nextStep objectForKey:@"next_step"];
-    }
-    
-    if(VALID_NOTEMPTY([entitiesJSON objectForKey:@"order_nr"], NSString)) {
-        cart.orderNr = [entitiesJSON objectForKey:@"order_nr"];
-    }
-    
-    if(VALID_NOTEMPTY([entitiesJSON objectForKey:@"customer_first_name"], NSString)) {
-        cart.customerFirstMame = [entitiesJSON objectForKey:@"customer_first_name"];
-    }
-    
-    if(VALID_NOTEMPTY([entitiesJSON objectForKey:@"customer_last_name"], NSString)) {
-        cart.customerLastName = [entitiesJSON objectForKey:@"customer_last_name"];
-    }
-    
-    if([entitiesJSON objectForKey:@"payment"]) {
-        cart.paymentInformation = [RIPaymentInformation parsePaymentInfo:[entitiesJSON objectForKey:@"payment"]];
     }
     
     
@@ -1008,8 +1014,9 @@
                                                           }];
 }
 
-+ (NSString*)finishCheckoutWithSuccessBlock:(void (^)(RICart *cart))successBlock
-                            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
++ (NSString*)finishCheckoutForCart:(RICart*)cart
+                  withSuccessBlock:(void (^)(RICart *cart))successBlock
+                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_FINISH_CHECKOUT]]
                                                             parameters:nil
@@ -1021,7 +1028,8 @@
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
                                                                   if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
                                                                   {
-                                                                      successBlock([RICart parseCart:[jsonObject objectForKey:@"metadata"] country:configuration]);
+                                                                      successBlock([RICart parseCheckoutFinish:[jsonObject objectForKey:@"metadata"]
+                                                                                                       forCart:cart]);
                                                                   } else
                                                                   {
                                                                       failureBlock(apiResponse, nil);

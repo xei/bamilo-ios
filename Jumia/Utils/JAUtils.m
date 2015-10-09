@@ -13,6 +13,7 @@
 @implementation JAUtils
 
 + (void) goToNextStep:(NSString*)nextStep
+             userInfo:(NSDictionary*)userInfo
 {
     if([@"createAddress" isEqualToString:nextStep])
     {
@@ -32,19 +33,19 @@
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutShippingScreenNotification
                                                             object:nil
-                                                          userInfo:nil];
+                                                          userInfo:nil]; //this screen loads the cart itself
     }
     else if([@"paymentMethod" isEqualToString:nextStep])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutPaymentScreenNotification
                                                             object:nil
-                                                          userInfo:nil];
+                                                          userInfo:nil]; //this screen loads the cart itself
     }
     else if([@"finish" isEqualToString:nextStep])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutFinishScreenNotification
                                                             object:nil
-                                                          userInfo:nil];
+                                                          userInfo:userInfo];
     }
 }
 

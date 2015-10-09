@@ -11,7 +11,8 @@
 
 @interface JAUtils : NSObject
 
-+ (void) goToNextStep:(NSString*)nextStep;
++ (void) goToNextStep:(NSString*)nextStep
+             userInfo:(NSDictionary*)userInfo;
 
 + (unsigned int)intFromHexString:(NSString *) hexStr;
 

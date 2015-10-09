@@ -971,7 +971,8 @@
                                                                       [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                                                                                           object:nil];
                                                                       
-                                                                      [JAUtils goToNextStep:nextStep];
+                                                                      [JAUtils goToNextStep:nextStep
+                                                                                   userInfo:nil];
                                                                       
                                                                   } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
                                                                       [self hideLoading];
@@ -1070,7 +1071,8 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                                 object:nil];
             
-            [JAUtils goToNextStep:nextStep];
+            [JAUtils goToNextStep:nextStep
+                         userInfo:nil];
         }
         
         [self hideLoading];
@@ -1139,7 +1141,8 @@
         NSDictionary *responseDictionary = (NSDictionary *)object;
         NSString* nextStep = [responseDictionary objectForKey:@"next_step"];
         
-        [JAUtils goToNextStep:nextStep];
+        [JAUtils goToNextStep:nextStep
+                     userInfo:nil];
         
     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];

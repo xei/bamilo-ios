@@ -994,7 +994,9 @@ UICollectionViewDelegateFlowLayout>
                 
                 if(self.fromCheckout)
                 {
-                    [JAUtils goToNextStep:cart.nextStep];
+                    NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:@"cart"];
+                    [JAUtils goToNextStep:cart.nextStep
+                                 userInfo:userInfo];
                 }
                 else
                 {

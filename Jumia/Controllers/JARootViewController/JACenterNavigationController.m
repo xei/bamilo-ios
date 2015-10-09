@@ -980,9 +980,7 @@
     {
         JAOrderViewController *orderVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"orderViewController"];
         
-        if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.object, RICart)) {
-            orderVC.cart = notification.object;
-        }
+        orderVC.cart = [notification.userInfo objectForKey:@"cart"];
         
         [self pushViewController:orderVC animated:YES];
     }

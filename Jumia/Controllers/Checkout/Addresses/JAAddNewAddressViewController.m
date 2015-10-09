@@ -803,7 +803,9 @@ JAPickerDelegate>
     {
         if(self.fromCheckout)
         {
-            [JAUtils goToNextStep:self.cart.nextStep];
+            NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:@"cart"];
+            [JAUtils goToNextStep:self.cart.nextStep
+                         userInfo:userInfo];
         }
         else
         {

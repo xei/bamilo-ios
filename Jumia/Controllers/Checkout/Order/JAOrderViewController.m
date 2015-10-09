@@ -865,7 +865,7 @@
         [self showLoading];
     }
     
-    [RICart finishCheckoutWithSuccessBlock:^(RICart *cart) {
+    [RICart finishCheckoutForCart:self.cart withSuccessBlock:^(RICart *cart) {
         NSLog(@"SUCCESS Finishing checkout");
         
         if(VALID_NOTEMPTY(cart.paymentInformation, RIPaymentInformation))

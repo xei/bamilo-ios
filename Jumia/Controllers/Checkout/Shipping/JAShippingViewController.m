@@ -530,8 +530,10 @@ UICollectionViewDelegateFlowLayout
                                  [self hideLoading];
                                  
                                  self.cart=cart;
-                                 
-                                 [JAUtils goToNextStep:self.cart.nextStep];
+                             
+                             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:@"cart"];
+                             [JAUtils goToNextStep:cart.nextStep
+                                          userInfo:userInfo];
                                  
                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                  [self hideLoading];
