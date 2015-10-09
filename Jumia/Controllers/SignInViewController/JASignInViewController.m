@@ -400,7 +400,10 @@ JADynamicFormDelegate
         [connection addRequest:requestMe
              completionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
                  //TODO: process me information@
-                 
+                 if([result objectForKey:@"email"] == NULL || [result objectForKey:@"birthday"] == NULL){
+                     [self showMessage:STRING_LOGIN_INCOMPLETE success:NO];
+                     return;
+                 }
                  if (error) {
                      NSLog(@"%@", error);
                      return;
