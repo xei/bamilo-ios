@@ -7,12 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RICheckout.h"
+#import "RICart.h"
 
 @interface JAUtils : NSObject
 
-+ (void) goToCheckout:(RICheckout*)checkout;
-+ (void) goToNextStep:(NSString*)nextStep;
++ (void) goToNextStep:(NSString*)nextStep
+             userInfo:(NSDictionary*)userInfo;
 
 + (unsigned int)intFromHexString:(NSString *) hexStr;
 

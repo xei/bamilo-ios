@@ -214,7 +214,7 @@ UIAlertViewDelegate
     
     if ([[RICountryConfiguration getCurrentConfiguration].reviewIsEnabled boolValue]) {
         self.numberOfRequests++;
-        [RIForm getForm:@"sellerreview"
+        [RIForm getForm:@"seller_review"
            successBlock:^(RIForm *form)
          {
              self.reviewsForm = form;

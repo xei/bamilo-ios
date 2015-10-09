@@ -11,7 +11,7 @@
 #import "RIFieldDataSetComponent.h"
 #import "RICustomer.h"
 #import "RIFieldOption.h"
-#import "RICheckout.h"
+#import "RICart.h"
 #import "RINewsletterCategory.h"
 
 @implementation RIForm
@@ -287,53 +287,36 @@
                                                               BOOL responseProcessed = NO;
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                               {
-                                                                  if([@"login" isEqualToString:type])
-                                                                  {
-                                                                      responseProcessed = YES;
-                                                                      RICustomer *customer = [RICustomer parseCustomerWithJson:[metadata objectForKey:@"customer_entity"] plainPassword:password loginMethod:@"normal"];
-                                                                      NSDictionary* nativeCheckoutDic = [metadata objectForKey:@"multistep_entity"];
-                                                                      NSMutableDictionary* successDic = [NSMutableDictionary dictionaryWithDictionary:nativeCheckoutDic];
-                                                                      [successDic setValue:customer forKey:@"customer"];
-                                                                      successBlock([successDic copy]);
-                                                                  }
-                                                                  else if([@"register" isEqualToString:type])
-                                                                  {
-                                                                      responseProcessed = YES;
-                                                                      RICustomer *customer = [RICustomer parseCustomerWithJson:metadata plainPassword:password loginMethod:@"normal"];
-                                                                      successBlock(customer);
-                                                                  }
-                                                                  else if([@"register_signup" isEqualToString:type])
-                                                                  {
-                                                                      NSDictionary *data = [metadata copy];
-                                                                      if (VALID_NOTEMPTY([metadata objectForKey:@"data"], NSDictionary)) {
-                                                                          data = [metadata objectForKey:@"data"];
-                                                                      }
-                                                                      if(VALID_NOTEMPTY(data, NSDictionary))
-                                                                      {
-                                                                          responseProcessed = YES;
-                                                                          RICustomer *customer = [RICustomer parseCustomerWithJson:[data objectForKey:@"user"] plainPassword:password loginMethod:@"signup"];
-                                                                          NSDictionary* nativeCheckoutDic = [data objectForKey:@"native_checkout"];
-                                                                          NSMutableDictionary* successDic = [NSMutableDictionary dictionaryWithDictionary:nativeCheckoutDic];
-                                                                          [successDic setValue:customer forKey:@"customer"];
-                                                                          successBlock([successDic copy]);
-                                                                      }
-                                                                  }
-                                                                  else if([@"address" isEqualToString:type])
-                                                                  {
-                                                                      responseProcessed = YES;
-                                                                      RICheckout *checkout = [RICheckout parseCheckout:metadata country:nil];
-                                                                      successBlock(checkout);
-                                                                  }
-                                                                  else if ([@"manage_newsletters" isEqualToString:type])
+//                                                                  if([@"register_signup" isEqualToString:type])
+//                                                                  {
+//                                                                      NSDictionary *data = [metadata copy];
+//                                                                      if (VALID_NOTEMPTY([metadata objectForKey:@"data"], NSDictionary)) {
+//                                                                          data = [metadata objectForKey:@"data"];
+//                                                                      }
+//                                                                      if(VALID_NOTEMPTY(data, NSDictionary))
+//                                                                      {
+//                                                                          responseProcessed = YES;
+//                                                                          RICustomer *customer = [RICustomer parseCustomerWithJson:[data objectForKey:@"user"] plainPassword:password loginMethod:@"signup"];
+//                                                                          NSDictionary* nativeCheckoutDic = [data objectForKey:@"native_checkout"];
+//                                                                          NSMutableDictionary* successDic = [NSMutableDictionary dictionaryWithDictionary:nativeCheckoutDic];
+//                                                                          [successDic setValue:customer forKey:@"customer"];
+//                                                                          successBlock([successDic copy]);
+//                                                                      }
+//                                                                  }
+//                                                                  else
+                                                                  
+                                                                  if ([@"manage_newsletters" isEqualToString:type])
                                                                   {
                                                                       [RICustomer updateCustomerNewsletterWithJson:metadata];
-                                                                      responseProcessed = YES;
                                                                       successBlock(nil);
+                                                                      responseProcessed = YES;
                                                                   }
                                                                   else
                                                                   {
+                                                                      NSDictionary* entities = [RIForm parseEntities:metadata plainPassword:password];
+
+                                                                      successBlock(entities);
                                                                       responseProcessed = YES;
-                                                                      successBlock(metadata);
                                                                   }
                                                               }
                                                               else
@@ -374,6 +357,36 @@
                                                                   failureBlock(apiResponse, nil);
                                                               }
                                                           }];
+}
+
++ (NSDictionary*)parseEntities:(NSDictionary*)entitiesJSON
+                 plainPassword:(NSString*)plainPassword
+{
+    NSMutableDictionary* newEntities = [NSMutableDictionary new];
+    
+    if ([entitiesJSON objectForKey:@"customer_entity"]) {
+        
+        RICustomer *newCustomer = [RICustomer parseCustomerWithJson:[entitiesJSON objectForKey:@"customer_entity"]
+                                                      plainPassword:plainPassword
+                                                        loginMethod:@"normal"];
+        [newEntities setObject:newCustomer forKey:@"customer"];
+    }
+    
+    if ([entitiesJSON objectForKey:@"cart_entity"]) {
+        
+        RICart *newCart = [RICart parseCart:entitiesJSON country:nil];
+        [newEntities setObject:newCart forKey:@"cart"];
+    }
+    
+    if ([entitiesJSON objectForKey:@"multistep_entity"]) {
+        
+        NSDictionary* nextStep = [entitiesJSON objectForKey:@"multistep_entity"];
+        if (VALID_NOTEMPTY(nextStep, NSDictionary)) {
+            [newEntities addEntriesFromDictionary:nextStep];
+        }
+    }
+    
+    return [newEntities copy];
 }
 
 + (RIForm *)parseForm:(NSDictionary *)formDict;

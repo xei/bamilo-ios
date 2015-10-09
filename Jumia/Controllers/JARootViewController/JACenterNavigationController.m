@@ -992,9 +992,7 @@
     {
         JAOrderViewController *orderVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"orderViewController"];
         
-        if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.object, RICheckout)) {
-            orderVC.checkout = notification.object;
-        }
+        orderVC.cart = [notification.userInfo objectForKey:@"cart"];
         
         [self pushViewController:orderVC animated:YES];
     }
@@ -1010,8 +1008,7 @@
         
         JAExternalPaymentsViewController *externalPaymentsVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"externalPaymentsViewController"];
         
-        externalPaymentsVC.checkout = [notification.userInfo objectForKey:@"checkout"];
-        externalPaymentsVC.paymentInformation = [notification.userInfo objectForKey:@"payment_information"];
+        externalPaymentsVC.cart = [notification.userInfo objectForKey:@"cart"];
         
         [self pushViewController:externalPaymentsVC animated:YES];
     }
@@ -1027,9 +1024,7 @@
         
         JAThanksViewController *thanksVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"thanksViewController"];
         
-        thanksVC.cart = self.cart;
-        thanksVC.checkout = [notification.userInfo objectForKey:@"checkout"];
-        thanksVC.orderNumber = [notification.userInfo objectForKey:@"order_number"];
+        thanksVC.cart = [notification.userInfo objectForKey:@"cart"];
         
         [self pushViewController:thanksVC animated:YES];
     }

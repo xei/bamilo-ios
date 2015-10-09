@@ -27,6 +27,7 @@
 #import "JACatalogCollectionViewCell.h"
 #import "JACatalogListCollectionViewCell.h"
 #import "JACatalogGridCollectionViewCell.h"
+#import "RIAddress.h"
 #import "JACatalogPictureCollectionViewCell.h"
 
 #define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"

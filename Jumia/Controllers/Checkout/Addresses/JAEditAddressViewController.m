@@ -11,10 +11,11 @@
 #import "JAUtils.h"
 #import "JAOrderSummaryView.h"
 #import "JAPicker.h"
-#import "RICheckout.h"
 #import "RILocale.h"
 #import "UIView+Mirror.h"
 #import "UIImage+Mirror.h"
+#import "RIAddress.h"
+#import "RIForm.h"
 
 @interface JAEditAddressViewController ()
 <JADynamicFormDelegate,
@@ -52,7 +53,6 @@ JAPickerDelegate>
 @property (strong, nonatomic) JAButtonWithBlur *bottomView;
 
 @property (assign, nonatomic) BOOL hasErrors;
-@property (strong, nonatomic) RICheckout *checkout;
 
 // Order summary
 @property (strong, nonatomic) JAOrderSummaryView *orderSummary;
@@ -460,11 +460,14 @@ JAPickerDelegate>
           parameters:parameters
         successBlock:^(id object)
      {
-         self.checkout = object;
+         NSDictionary* entitiesDictionary = (NSDictionary*)object;
+         self.cart = [entitiesDictionary objectForKey:@"cart"];
          [self.dynamicForm resetValues];
          if(self.fromCheckout)
          {
-             [JAUtils goToCheckout:self.checkout];
+             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:@"cart"];
+             [JAUtils goToNextStep:self.cart.nextStep
+                          userInfo:userInfo];
          }
          else
          {
