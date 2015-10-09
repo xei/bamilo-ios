@@ -745,21 +745,6 @@
     return textFieldShouldBeginEditing;
 }
 
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
-{
-    BOOL textFieldShouldEndEditing = NO;
-    UIView *view = [self viewWithTag:textField.tag];
-    if([view isKindOfClass:[JATextFieldComponent class]])
-    {
-        textFieldShouldEndEditing = YES;
-        
-        JATextFieldComponent *textFieldView = (JATextFieldComponent*)view;
-        [textFieldView setValue:textField.text];
-    }
-    
-    return textFieldShouldEndEditing;
-}
-
 - (NSString*)getFieldNameForKey:(NSString*)key
 {
     NSString *fieldId = @"";
