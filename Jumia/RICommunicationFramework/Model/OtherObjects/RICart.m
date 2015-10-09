@@ -11,6 +11,7 @@
 #import "RIShippingMethodForm.h"
 #import "RIPaymentMethodForm.h"
 #import "RIPaymentInformation.h"
+#import "RIAddress.h"
 
 @implementation RICart
 
@@ -791,6 +792,22 @@
             NSDictionary* payMethodDic = [cartEntityJSON objectForKey:@"payment_method"];
             if (VALID_NOTEMPTY([payMethodDic objectForKey:@"label"], NSString)) {
                 cart.paymentMethod = [payMethodDic objectForKey:@"label"];
+            }
+        }
+        
+        if (VALID_NOTEMPTY([cartEntityJSON objectForKey:@"billing_address"], NSDictionary)) {
+            NSDictionary* billingAddressJSON = [cartEntityJSON objectForKey:@"billing_address"];
+            RIAddress* billingAddress = [RIAddress parseAddress:billingAddressJSON];
+            if (VALID_NOTEMPTY(billingAddress, RIAddress)) {
+                cart.billingAddress = billingAddress;
+            }
+        }
+        
+        if (VALID_NOTEMPTY([cartEntityJSON objectForKey:@"shipping_address"], NSDictionary)) {
+            NSDictionary* shippingAddressJSON = [cartEntityJSON objectForKey:@"shipping_address"];
+            RIAddress* shippingAddress = [RIAddress parseAddress:shippingAddressJSON];
+            if (VALID_NOTEMPTY(shippingAddress, RIAddress)) {
+                cart.shippingAddress = shippingAddress;
             }
         }
     }

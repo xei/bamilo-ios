@@ -987,6 +987,10 @@ UICollectionViewDelegateFlowLayout>
                 {
                     [parameters setValue:[self.shippingAddress uid] forKey:[field name]];
                 }
+                else if([@"addresses[is_equal]" isEqualToString:[field name]])
+                {
+                    [parameters setValue:[[self.billingAddress uid] isEqualToString:[self.shippingAddress uid]] ? @"1" : @"0" forKey:[field name]];
+                }
             }
             
             [RICart setCheckoutAddresses:cart.addressForm parameters:parameters successBlock:^(RICart *cart) {
