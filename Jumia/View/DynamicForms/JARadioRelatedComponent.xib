@@ -13,6 +13,7 @@
             <subviews>
                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="or4-7n-9RV">
                     <rect key="frame" x="18" y="10" width="51" height="31"/>
+                    <animations/>
                     <constraints>
                         <constraint firstAttribute="height" constant="31" id="FUW-r3-Tvi"/>
                         <constraint firstAttribute="width" constant="49" id="OBd-Pz-F6o"/>
@@ -20,11 +21,13 @@
                 </switch>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="06D-re-hHb">
                     <rect key="frame" x="83" y="15" width="210" height="21"/>
+                    <animations/>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
+            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="06D-re-hHb" firstAttribute="leading" secondItem="or4-7n-9RV" secondAttribute="trailing" constant="16" id="6nP-gH-VZB"/>
@@ -43,9 +46,4 @@
             <point key="canvasLocation" x="458" y="275"/>
         </view>
     </objects>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>

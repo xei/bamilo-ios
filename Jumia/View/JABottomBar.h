@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+#define kBottomDefaultHeight 49
+
 @interface JABottomBar : UIView
 
-- (void)reloadFrame:(CGRect)frame;
 - (void)addSmallButton:(UIImage *)image target:(id)target action:(SEL)action;
 - (void)addButton:(NSString*)name target:(id)target action:(SEL)action;
 

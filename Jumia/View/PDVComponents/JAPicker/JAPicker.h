@@ -28,4 +28,9 @@
               previousText:(NSString *)previousText
            leftButtonTitle:(NSString*)leftButtonTitle;
 
+- (void)setDataSourceArray:(NSArray *)dataSource
+               pickerTitle:(NSString *)pickerTitle
+              previousText:(NSString *)previousText
+           leftButtonTitle:(NSString*)leftButtonTitle;
+
 @end
