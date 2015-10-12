@@ -45,18 +45,35 @@
 - (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize
 {
     [self setFrame:frame];
+    
+    BOOL isiPadInLandscape = NO;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
+        {
+            isiPadInLandscape = YES;
+        }
+    }
+    
     UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width, 1)];
     [separator setBackgroundColor:[UIColor grayColor]];
-    [self addSubview:separator];
+    if (!isiPadInLandscape) {
+        [self addSubview:separator];
+    }
     
     CGFloat yOffset = 0;
     
+    /*
+     *  PRICE
+     */
     
     JAProductInfoPriceLine *priceLine = [[JAProductInfoPriceLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
-    [priceLine.label setText:product.priceFormatted];
+    [priceLine setFashion:product.fashion];
+    [priceLine setTitle:product.priceFormatted];
     if (VALID_NOTEMPTY(product.specialPriceFormatted, NSString)) {
         [priceLine setOldPrice:product.priceFormatted];
-        [priceLine.label setText:product.specialPriceFormatted];
+        [priceLine setTitle:product.specialPriceFormatted];
     }
     if (VALID_NOTEMPTY(product.maxSavingPercentage, NSString)) {
         NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
@@ -67,6 +84,10 @@
     [self addSubview:priceLine];
     yOffset = CGRectGetMaxY(priceLine.frame);
     
+    /*
+     *  RATINGS
+     */
+    
     JAProductInfoRatingLine *ratingLine = [[JAProductInfoRatingLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
     [ratingLine setFashion:product.fashion];
     [ratingLine setTopSeparatorVisibility:YES];
@@ -76,10 +97,14 @@
     [self addSubview:ratingLine];
     yOffset = CGRectGetMaxY(ratingLine.frame);
     
-    if (VALID_NOTEMPTY(product.specifications, NSSet)) {
+    /*
+     *  SPECIFICATIONS
+     */
+    
+    if (VALID_NOTEMPTY(product.specifications, NSSet) && !product.fashion) {
         JAProductInfoHeaderLine *headerSpecifications = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoHeaderLineHeight)];
-        [headerSpecifications.label setText:[STRING_SPECIFICATIONS uppercaseString]];
-        [headerSpecifications.label sizeToFit];
+        [headerSpecifications setTitle:[STRING_SPECIFICATIONS uppercaseString]];
+        
         [self addSubview:headerSpecifications];
         yOffset = CGRectGetMaxY(headerSpecifications.frame) + 16.f;
         
@@ -118,16 +143,19 @@
             JAProductInfoSubLine *subSpecificationReadMore = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
             [subSpecificationReadMore setTopSeparatorVisibility:YES];
 #warning TODO String
-            [subSpecificationReadMore.label setText:@"More specifications"];
+            [subSpecificationReadMore setTitle:@"More specifications"];
             [subSpecificationReadMore addTarget:self action:@selector(tapSpecificationsLine) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:subSpecificationReadMore];
             yOffset = CGRectGetMaxY(subSpecificationReadMore.frame);
         }
     }
     
+    /*
+     *  SIZES
+     */
+    
     if (VALID_NOTEMPTY(product.productSimples, NSOrderedSet) && product.productSimples.count > 1)
     {
-#warning TODO String
         NSString *sizesText = @"";
         int i = 0;
         for (RIProductSimple *simple in product.productSimples) {
@@ -136,30 +164,40 @@
         }
         JAProductInfoSingleLine *singleSizes = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
         [singleSizes setTopSeparatorVisibility:YES];
-        [singleSizes.label setText:sizesText];
-        [singleSizes.label sizeToFit];
+        [singleSizes setTitle:sizesText];
         _sizesLabel = singleSizes.label;
         [singleSizes addTarget:self action:@selector(tapSizeLine) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:singleSizes];
         yOffset = CGRectGetMaxY(singleSizes.frame);
     }
     
+    /*
+     *  VARIATIONS
+     */
+    
     if (VALID_NOTEMPTY(product.variations, NSOrderedSet)) {
         JAProductInfoSingleLine *singleVariations = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
         [singleVariations setTopSeparatorVisibility:YES];
+        if (product.fashion) {
 #warning TODO String
-        [singleVariations.label setText:@"See other variations"];
-        [singleVariations.label sizeToFit];
+            [singleVariations setTitle:@"See other colors"];
+        }else{
+#warning TODO String
+            [singleVariations setTitle:@"See other variations"];
+        }
         [singleVariations addTarget:self action:@selector(tapVariationsLine) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:singleVariations];
         yOffset = CGRectGetMaxY(singleVariations.frame);
     }
     
+    /*
+     *  SELLER
+     */
+    
     if (VALID_NOTEMPTY(product.seller, RISeller)) {
         JAProductInfoHeaderLine *headerSeller = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoHeaderLineHeight)];
 #warning TODO String translation
-        [headerSeller.label setText:[@"Seller Information" uppercaseString]];
-        [headerSeller.label sizeToFit];
+        [headerSeller setTitle:[@"Seller Information" uppercaseString]];
         [self addSubview:headerSeller];
         yOffset = CGRectGetMaxY(headerSeller.frame) + 16.f;
         
@@ -171,11 +209,14 @@
         yOffset = CGRectGetMaxY(sellerInfoView.frame);
     }
     
+    /*
+     *  OTHER OFFERS
+     */
+    
     if (VALID_NOTEMPTY(product.offersTotal, NSNumber) && product.offersTotal.integerValue > 0) {
         JAProductInfoSubLine *otherOffers = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSubLineHeight)];
 #warning TODO String
-        [otherOffers.label setText:[NSString stringWithFormat:@"Other sellers starting from: %@", product.offersMinPriceFormatted]];
-        [otherOffers.label sizeToFit];
+        [otherOffers setTitle:[NSString stringWithFormat:@"Other sellers starting from: %@", product.offersMinPriceFormatted]];
         [otherOffers.label setYCenterAligned];
         [otherOffers setTopSeparatorVisibility:YES];
         [otherOffers setBottomSeparatorVisibility:NO];
@@ -185,9 +226,13 @@
         yOffset = CGRectGetMaxY(otherOffers.frame);
     }
     
+    /*
+     *  DESCRIPTION
+     */
+    
     if (VALID_NOTEMPTY(product.summary, NSString)) {
         JAProductInfoHeaderLine *headerDescription = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoHeaderLineHeight)];
-        [headerDescription.label setText:[STRING_DESCRIPTION uppercaseString]];
+        [headerDescription setTitle:[STRING_DESCRIPTION uppercaseString]];
         [self addSubview:headerDescription];
         yOffset = CGRectGetMaxY(headerDescription.frame) + 16.f;
         
@@ -203,7 +248,7 @@
         JAProductInfoSubLine *singleDescriptionReadMore = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
         [singleDescriptionReadMore setTopSeparatorVisibility:YES];
 #warning TODO String
-        [singleDescriptionReadMore.label setText:@"Read more"];
+        [singleDescriptionReadMore setTitle:@"Read more"];
         [singleDescriptionReadMore addTarget:self action:@selector(tapSpecificationsLine) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:singleDescriptionReadMore];
         yOffset = CGRectGetMaxY(singleDescriptionReadMore.frame);

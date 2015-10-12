@@ -24,7 +24,6 @@
     if (!VALID_NOTEMPTY(_collectionView, UICollectionView)) {
         UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
         _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
-//        [_collectionView setHeight:self.view.height - CGRectGetMaxY(self.navigationController.navigationBar.frame)];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         [self.view addSubview:_collectionView];
@@ -43,10 +42,6 @@
 - (void)setVariations:(NSArray *)variations
 {
     _variations = [variations copy];
-    
-//    for (RIVariation *variation in _variations) {
-//        variations set
-//    }
 }
 
 - (void)viewDidLoad {

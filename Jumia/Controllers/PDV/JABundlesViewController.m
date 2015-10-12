@@ -286,7 +286,7 @@ typedef void (^ProcessBundleChangesBlock)(NSArray *);
             totalPrice += product.price.integerValue;
     }
 #warning TODO String
-    [self.totalSubLine.label setText:[NSString stringWithFormat:@"Total:  %@", [RICountryConfiguration formatPrice:[NSNumber numberWithInteger:totalPrice] country:[RICountryConfiguration getCurrentConfiguration]]]];
+    [self.totalSubLine setTitle:[NSString stringWithFormat:@"Total:  %@", [RICountryConfiguration formatPrice:[NSNumber numberWithInteger:totalPrice] country:[RICountryConfiguration getCurrentConfiguration]]]];
     [self.totalSubLine.label sizeToFit];
     [self.totalSubLine.label setYCenterAligned];
 }

@@ -21,6 +21,7 @@
 @property (nonatomic, strong) JARatingsView* ratingsView;
 @property (weak, nonatomic) IBOutlet UILabel *ratingLabel;
 @property (nonatomic, strong) RIProductOffer *productOfferSeller;
+@property (nonatomic) UIView *separator;
 
 @end
 
@@ -35,9 +36,9 @@
     self.backgroundContentView.backgroundColor = [UIColor whiteColor];
     self.backgroundContentView.layer.cornerRadius = 5.0f;
     
-    [self.priceLabel setX:6.f];
-    self.priceLabel.font = [UIFont fontWithName:kFontBoldName size:self.priceLabel.font.pointSize];
-    self.priceLabel.textColor = UIColorFromRGB(0xcc0000);
+    [self.priceLabel setX:10.f];
+    self.priceLabel.font = JABody3Font;
+    self.priceLabel.textColor = JABlackColor;
     if (VALID_NOTEMPTY(productOffer.specialPriceFormatted, NSString)) {
         self.priceLabel.text = productOffer.specialPriceFormatted;
     } else {
@@ -45,10 +46,11 @@
     }
     [self.priceLabel sizeToFit];
     
-    [self.sellerLabel setX:6.f];
-    self.sellerLabel.font = [UIFont fontWithName:kFontBoldName size:self.sellerLabel.font.pointSize];
-    self.sellerLabel.textColor = UIColorFromRGB(0x666666);
+    [self.sellerLabel setX:10.f];
+    self.sellerLabel.font = JABody1Font;
+    self.sellerLabel.textColor = JABlackColor;
     self.sellerLabel.text = productOffer.seller.name;
+    self.sellerLabel.numberOfLines = 2;
     [self.sellerLabel sizeToFit];
     
     self.clickableView.layer.cornerRadius = 5.0f;
@@ -56,38 +58,56 @@
     [self.clickableView setWidth:self.backgroundContentView.width];
     [self.clickableView addTarget:self action:@selector(gotoCatalogSeller) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.deliveryLabel setX:6.f];
-    self.deliveryLabel.font = [UIFont fontWithName:kFontLightName size:self.deliveryLabel.font.pointSize];
-    self.deliveryLabel.textColor = UIColorFromRGB(0x666666);
+    [self.deliveryLabel setX:10.f];
+    self.deliveryLabel.font = JACaptionFont;
+    self.deliveryLabel.textColor = JABlack800Color;
     self.deliveryLabel.text = [NSString stringWithFormat:@"%@ %ld - %ld %@", STRING_DELIVERY_WITHIN, (long)[productOffer.minDeliveryTime integerValue], (long)[productOffer.maxDeliveryTime integerValue], STRING_DAYS];
     [self.deliveryLabel sizeToFit];
     
-    [self.ratingsView removeFromSuperview];
-    self.ratingsView = [JARatingsView getNewJARatingsView];
-    [self.ratingsView setFrame:CGRectMake(self.deliveryLabel.frame.origin.x,
-                                          self.deliveryLabel.frame.origin.y - self.ratingsView.frame.size.height - 5.0f,
-                                          self.ratingsView.frame.size.width,
-                                          self.ratingsView.frame.size.height)];
-    [self.ratingsView setRating:[productOffer.seller.reviewAverage integerValue]];
-    [self.backgroundContentView addSubview:self.ratingsView];
-    [self.ratingsView sizeToFit];
+//    [self.ratingsView removeFromSuperview];
+//    self.ratingsView = [JARatingsView getNewJARatingsView];
+//    [self.ratingsView setFrame:CGRectMake(self.deliveryLabel.frame.origin.x,
+//                                          self.deliveryLabel.frame.origin.y - self.ratingsView.frame.size.height - 5.0f,
+//                                          self.ratingsView.frame.size.width,
+//                                          self.ratingsView.frame.size.height)];
+//    [self.ratingsView setRating:[productOffer.seller.reviewAverage integerValue]];
+//    [self.backgroundContentView addSubview:self.ratingsView];
+//    [self.ratingsView sizeToFit];
+//    
+//    [self.ratingLabel setX:CGRectGetMaxX(self.ratingsView.frame) + 5.f];
+//    [self.ratingLabel setY:self.ratingsView.y];
+//    self.ratingLabel.font = JACaptionFont;
+//    self.ratingLabel.textColor = JABlack800Color;
+//    
+//    if (1 == [productOffer.seller.reviewTotal integerValue]) {
+//        self.ratingLabel.text = STRING_REVIEW;
+//    } else {
+//        self.ratingLabel.text = [NSString stringWithFormat:STRING_REVIEWS, [productOffer.seller.reviewTotal integerValue]];
+//    }
+    //    [self.ratingLabel sizeToFit];
     
-    [self.ratingLabel setX:CGRectGetMaxX(self.ratingsView.frame) + 5.f];
-    [self.ratingLabel setY:self.ratingsView.y];
-    self.ratingLabel.font = [UIFont fontWithName:kFontLightName size:self.ratingLabel.font.pointSize];
-    self.ratingLabel.textColor = UIColorFromRGB(0xcccccc);
+    [self.ratingLabel setHidden:YES];
+    [self.ratingsView setHidden:YES];
     
-    if (1 == [productOffer.seller.reviewTotal integerValue]) {
-        self.ratingLabel.text = STRING_REVIEW;
-    } else {
-        self.ratingLabel.text = [NSString stringWithFormat:STRING_REVIEWS, [productOffer.seller.reviewTotal integerValue]];
+    [self.addToCartButton setBackgroundColor:JAOrange1Color];
+    [self.addToCartButton setXRightAligned:16.f];
+    [self.addToCartButton setYCenterAligned];
+    self.addToCartButton.titleLabel.font = JABody2Font;
+    [self.addToCartButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+#warning TODO String
+    [self.addToCartButton setTitle:@"Buy Now" forState:UIControlStateNormal];
+    
+    if (!VALID_NOTEMPTY(self.separator, UIView)) {
+        self.separator = [[UIView alloc] initWithFrame:CGRectZero];
+        [self.separator setBackgroundColor:JABlack300Color];
+        [self addSubview:self.separator];
     }
-    [self.ratingLabel sizeToFit];
+    [self.separator setFrame:CGRectMake(0, self.height - 1, self.width, 1)];
     
-    [self.addToCartButton setXRightAligned:6.f];
-    self.addToCartButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.addToCartButton.titleLabel.font.pointSize];
-    [self.addToCartButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    [self.addToCartButton setTitle:STRING_ADD_TO_SHOPPING_CART forState:UIControlStateNormal];
+    CGFloat sellerLabelMaxWidth = self.addToCartButton.x - self.sellerLabel.x - 6.f;
+    if (self.sellerLabel.width > sellerLabelMaxWidth) {
+        [self.sellerLabel setWidth:sellerLabelMaxWidth];
+    }
     
     if (RI_IS_RTL) {
         [self.backgroundContentView flipAllSubviews];
