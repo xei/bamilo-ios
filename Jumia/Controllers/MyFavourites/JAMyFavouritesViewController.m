@@ -17,6 +17,7 @@
 #import "RICategory.h"
 #import <FBSDKCoreKit/FBSDKAppEvents.h>
 #import "JAProductListFlowLayout.h"
+#import "RIAddress.h"
 
 #define JAMyFavouritesViewControllerMaxProducts 20
 #define JAMyFavouritesViewControllerMaxProducts_ipad 34

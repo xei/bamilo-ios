@@ -15,6 +15,7 @@
 #import "JAPromotionPopUp.h"
 #import "JAAppDelegate.h"
 #import "JAFallbackView.h"
+#import "RIAddress.h"
 
 @interface JAHomeViewController ()
 

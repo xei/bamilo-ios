@@ -116,7 +116,7 @@
     
     [self.scrollView addSubview:self.contentView];
  
-    [RIForm getForm:@"forgotpassword"
+    [RIForm getForm:@"forgot_password"
        successBlock:^(RIForm *form)
      {
          self.dynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:0.0f];
@@ -286,6 +286,12 @@
     [self.dynamicForm resignResponder];
     
     [self showLoading];
+    
+    if ([self.dynamicForm checkErrors]) {
+        [self showMessage:self.dynamicForm.firstErrorInFields success:NO];
+        [self hideLoading];
+        return;
+    }
     
     [RIForm sendForm:[self.dynamicForm form]
           parameters:[self.dynamicForm getValues]

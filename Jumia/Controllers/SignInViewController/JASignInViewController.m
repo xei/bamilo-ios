@@ -400,7 +400,10 @@ JADynamicFormDelegate
         [connection addRequest:requestMe
              completionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
                  //TODO: process me information@
-                 
+                 if([result objectForKey:@"email"] == NULL || [result objectForKey:@"birthday"] == NULL){
+                     [self showMessage:STRING_LOGIN_INCOMPLETE success:NO];
+                     return;
+                 }
                  if (error) {
                      NSLog(@"%@", error);
                      return;
@@ -447,7 +450,9 @@ JADynamicFormDelegate
                      }
                      
                      [RICustomer loginCustomerByFacebookWithParameters:parameters
-                                                          successBlock:^(RICustomer* customer, NSString* nextStep) {
+                                                          successBlock:^(NSDictionary* entities, NSString* nextStep) {
+                                                              
+                                                              RICustomer* customer = [entities objectForKey:@"customer"];
                                                               
                                                               NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                                                               [trackingDictionary setValue:customer.idCustomer forKey:kRIEventLabelKey];

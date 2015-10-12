@@ -11,6 +11,8 @@
 #import "RICartItem.h"
 #import "RICustomer.h"
 #import "UIImageView+WebCache.h"
+#import "RIAddress.h"
+#import "RIPaymentInformation.h"
 
 #define kScrollViewTag 9999
 
@@ -205,8 +207,8 @@
 {
     UIView* orderContentView = [self placeContentViewWithTitle:STRING_MY_ORDER_LABEL atYPosition:yPosition scrollView:scrollView];
     
-    for (int i = 0; i < self.checkout.cart.cartItems.count; i++) {
-        RICartItem* cartItem = [self.checkout.cart.cartItems objectAtIndex:i];
+    for (int i = 0; i < self.cart.cartItems.count; i++) {
+        RICartItem* cartItem = [self.cart.cartItems objectAtIndex:i];
         if (0 != i) {
             [self placeGreySeparatorInContentView:orderContentView];
         }
@@ -312,8 +314,8 @@
     UILabel* articlesLabel = [UILabel new];
     articlesLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     articlesLabel.textColor = UIColorFromRGB(0x666666);
-    articlesLabel.text = [NSString stringWithFormat:STRING_ITEMS_CART, [self.checkout.cart.cartCount integerValue]];
-    if (1 == [self.checkout.cart.cartCount integerValue]) {
+    articlesLabel.text = [NSString stringWithFormat:STRING_ITEMS_CART, [self.cart.cartCount integerValue]];
+    if (1 == [self.cart.cartCount integerValue]) {
         articlesLabel.text = STRING_ITEM_CART;
     }
     [articlesLabel sizeToFit];
@@ -331,7 +333,7 @@
     totalLabel.textAlignment = NSTextAlignmentRight;
     totalLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     totalLabel.textColor = UIColorFromRGB(0x666666);
-    totalLabel.text = self.checkout.cart.subTotalFormatted;
+    totalLabel.text = self.cart.subTotalFormatted;
     [totalLabel sizeToFit];
     totalLabel.frame = CGRectMake(CGRectGetMaxX(articlesLabel.frame),
                                   articlesLabel.frame.origin.y,
@@ -341,21 +343,21 @@
     
     NSString *priceRuleKeysString = @"";
     NSString *priceRuleValuesString = @"";
-    if(VALID_NOTEMPTY( self.checkout.cart.priceRules, NSDictionary))
+    if(VALID_NOTEMPTY(self.cart.priceRules, NSDictionary))
     {
-        NSArray *priceRuleKeys = [self.checkout.cart.priceRules allKeys];
+        NSArray *priceRuleKeys = [self.cart.priceRules allKeys];
         
         for (NSString *priceRuleKey in priceRuleKeys)
         {
             if(ISEMPTY(priceRuleKeysString))
             {
                 priceRuleKeysString = priceRuleKey;
-                priceRuleValuesString = [self.checkout.cart.priceRules objectForKey:priceRuleKey];
+                priceRuleValuesString = [self.cart.priceRules objectForKey:priceRuleKey];
             }
             else
             {
                 priceRuleKeysString = [NSString stringWithFormat:@"%@\n%@", priceRuleKeysString, priceRuleKey];
-                priceRuleValuesString = [NSString stringWithFormat:@"%@\n%@", priceRuleValuesString, [self.checkout.cart.priceRules objectForKey:priceRuleKey]];
+                priceRuleValuesString = [NSString stringWithFormat:@"%@\n%@", priceRuleValuesString, [self.cart.priceRules objectForKey:priceRuleKey]];
             }
         }
     }
@@ -363,7 +365,7 @@
     UILabel* vatLabel = [UILabel new];
     vatLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     vatLabel.textColor = UIColorFromRGB(0x666666);
-    [vatLabel setText:self.checkout.cart.vatLabel];
+    [vatLabel setText:self.cart.vatLabel];
     [vatLabel sizeToFit];
     vatLabel.frame = CGRectMake(articlesLabel.x,
                                 CGRectGetMaxY(articlesLabel.frame),
@@ -373,8 +375,8 @@
     UILabel *cartVatValue = [[UILabel alloc] initWithFrame:CGRectZero];
     [cartVatValue setFont:[UIFont fontWithName:kFontLightName size:13.0f]];
     [cartVatValue setTextColor:UIColorFromRGB(0x666666)];
-    if ([[self.checkout.cart vatLabelEnabled] boolValue]) {
-        [cartVatValue setText:[self.checkout.cart vatValueFormatted]];
+    if ([[self.cart vatLabelEnabled] boolValue]) {
+        [cartVatValue setText:[self.cart vatValueFormatted]];
         [subtotalContentView addSubview:cartVatValue];
     }
     [cartVatValue sizeToFit];
@@ -425,7 +427,7 @@
         vatPositionY = CGRectGetMaxY(priceRulesLabel.frame);
     }
     
-    if (self.checkout.cart.shippingValue.floatValue != 0) {
+    if (self.cart.shippingValue.floatValue != 0) {
         UILabel* shippingLabel = [UILabel new];
         shippingLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         shippingLabel.textColor = UIColorFromRGB(0x666666);
@@ -441,8 +443,8 @@
         shippingValueLabel.textAlignment = NSTextAlignmentRight;
         shippingValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         shippingValueLabel.textColor = UIColorFromRGB(0x666666);
-        shippingValueLabel.text = self.checkout.cart.shippingValueFormatted;
-        if (0 == [self.checkout.cart.shippingValue integerValue]) {
+        shippingValueLabel.text = self.cart.shippingValueFormatted;
+        if (0 == [self.cart.shippingValue integerValue]) {
             shippingValueLabel.text = STRING_FREE;
         }
         [shippingValueLabel sizeToFit];
@@ -454,7 +456,7 @@
         nextYPos = CGRectGetMaxY(shippingLabel.frame);
     }
     
-    if (self.checkout.cart.extraCosts.floatValue != 0) {
+    if (self.cart.extraCosts.floatValue != 0) {
         UILabel* extraCostsLabel = [UILabel new];
         extraCostsLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         extraCostsLabel.textColor = UIColorFromRGB(0x666666);
@@ -470,7 +472,7 @@
         extraCostsValueLabel.textAlignment = NSTextAlignmentRight;
         extraCostsValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         extraCostsValueLabel.textColor = UIColorFromRGB(0x666666);
-        extraCostsValueLabel.text = self.checkout.cart.extraCostsFormatted;
+        extraCostsValueLabel.text = self.cart.extraCostsFormatted;
         [extraCostsValueLabel sizeToFit];
         extraCostsValueLabel.frame = CGRectMake(CGRectGetMaxX(extraCostsLabel.frame),
                                                 extraCostsLabel.frame.origin.y,
@@ -480,7 +482,7 @@
         nextYPos = CGRectGetMaxY(extraCostsLabel.frame);
     }
     
-    if (self.checkout.cart.couponMoneyValue.floatValue != 0) {
+    if (self.cart.couponMoneyValue.floatValue != 0) {
         UILabel *couponLabel = [UILabel new];
         [couponLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
         [couponLabel setTextColor:UIColorFromRGB(0x3aaa35)];
@@ -493,7 +495,7 @@
         UILabel *couponValueLabel = [UILabel new];
         [couponValueLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
         [couponValueLabel setTextColor:UIColorFromRGB(0x3aaa35)];
-        [couponValueLabel setText:[NSString stringWithFormat:@"- %@", self.checkout.cart.couponMoneyValueFormatted]];
+        [couponValueLabel setText:[NSString stringWithFormat:@"- %@", self.cart.couponMoneyValueFormatted]];
         [couponValueLabel sizeToFit];
         [couponValueLabel setX:CGRectGetMaxX(subtotalContentView.frame) - couponValueLabel.width - 4.f];
         [couponValueLabel setY:nextYPos];
@@ -522,7 +524,7 @@
     finalTotalValueLabel.textAlignment = NSTextAlignmentRight;
     finalTotalValueLabel.font = [UIFont fontWithName:kFontBoldName size:13.0f];
     finalTotalValueLabel.textColor = UIColorFromRGB(0x666666);
-    finalTotalValueLabel.text = self.checkout.cart.cartValueFormatted;
+    finalTotalValueLabel.text = self.cart.cartValueFormatted;
     [finalTotalValueLabel sizeToFit];
     finalTotalValueLabel.frame = CGRectMake(CGRectGetMaxX(finalTotalLabel.frame),
                                             finalTotalLabel.frame.origin.y,
@@ -540,14 +542,14 @@
 
 - (CGFloat)setupShippingAddressView:(UIScrollView*)scrollView atYPostion:(CGFloat)yPosition
 {
-    NSString* shippingAddress = [self getAddressStringFromAddress:self.checkout.orderSummary.shippingAddress];
+    NSString* shippingAddress = [self getAddressStringFromAddress:self.cart.shippingAddress];
     return [self setupGenericAddressViewWithTitle:STRING_SHIPPING_ADDRESSES address:shippingAddress editButtonSelector:@selector(editButtonForShippingAddress) scrollView:scrollView atYPostion:yPosition];
 }
 
 - (CGFloat)setupBillingAddressView:(UIScrollView*)scrollView atYPostion:(CGFloat)yPosition
 {
-    NSString* shippingAddress = [self getAddressStringFromAddress:self.checkout.orderSummary.shippingAddress];
-    NSString* billingAddress = [self getAddressStringFromAddress:self.checkout.orderSummary.billingAddress];
+    NSString* shippingAddress = [self getAddressStringFromAddress:self.cart.shippingAddress];
+    NSString* billingAddress = [self getAddressStringFromAddress:self.cart.billingAddress];
     if ([billingAddress isEqualToString:shippingAddress]) {
         billingAddress = STRING_BILLING_SAME_ADDRESSES;
     }
@@ -673,7 +675,7 @@
     UILabel* shippingMethodLabel = [UILabel new];
     shippingMethodLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
     shippingMethodLabel.textColor = UIColorFromRGB(0x666666);
-    shippingMethodLabel.text = self.checkout.orderSummary.shippingMethod;
+    shippingMethodLabel.text = self.cart.shippingMethod;
     shippingMethodLabel.numberOfLines = 0;
     [shippingMethodLabel sizeToFit];
     shippingMethodLabel.frame = CGRectMake(shippingContentView.bounds.origin.x + 6.0f,
@@ -699,7 +701,7 @@
     UILabel* paymentTitleLabel = [UILabel new];
     paymentTitleLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
     paymentTitleLabel.textColor = UIColorFromRGB(0x666666);
-    paymentTitleLabel.text = self.checkout.orderSummary.paymentMethod;
+    paymentTitleLabel.text = self.cart.paymentMethod;
     paymentTitleLabel.numberOfLines = 0;
     [paymentTitleLabel sizeToFit];
     paymentTitleLabel.frame = CGRectMake(paymentContentView.bounds.origin.x + 6.0f,
@@ -713,7 +715,7 @@
                                           paymentContentView.frame.size.width,
                                           CGRectGetMaxY(paymentTitleLabel.frame));
     
-    if (VALID_NOTEMPTY(self.checkout.orderSummary.discountCouponCode, NSString)) {
+    if (VALID_NOTEMPTY(self.cart.discountCouponCode, NSString)) {
         
         UILabel* couponTitleLabel = [UILabel new];
         couponTitleLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
@@ -730,7 +732,7 @@
         UILabel* couponCodeLabel = [UILabel new];
         couponCodeLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         couponCodeLabel.textColor = UIColorFromRGB(0x666666);
-        couponCodeLabel.text = self.checkout.orderSummary.discountCouponCode;
+        couponCodeLabel.text = self.cart.discountCouponCode;
         couponCodeLabel.numberOfLines = 0;
         [couponCodeLabel sizeToFit];
         couponCodeLabel.frame = CGRectMake(paymentContentView.bounds.origin.x + 6.0f,
@@ -863,14 +865,14 @@
         [self showLoading];
     }
     
-    [RICheckout finishCheckoutWithSuccessBlock:^(RICheckout *checkout) {
+    [RICart finishCheckoutForCart:self.cart withSuccessBlock:^(RICart *cart) {
         NSLog(@"SUCCESS Finishing checkout");
         
-        if(VALID_NOTEMPTY(checkout.paymentInformation, RIPaymentInformation))
+        if(VALID_NOTEMPTY(cart.paymentInformation, RIPaymentInformation))
         {
-            if(RIPaymentInformationCheckoutEnded == checkout.paymentInformation.type)
+            if(RIPaymentInformationCheckoutEnded == cart.paymentInformation.type)
             {
-                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[checkout.orderNr, self.checkout] forKeys:@[@"order_number", @"checkout"]];
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObject:cart forKey:@"cart"];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutThanksScreenNotification
                                                                     object:nil
@@ -879,7 +881,7 @@
             }
             else
             {
-                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[checkout.paymentInformation, self.checkout] forKeys:@[@"payment_information", @"checkout"]];
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObject:cart forKey:@"cart"];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutExternalPaymentsScreenNotification
                                                                     object:nil
