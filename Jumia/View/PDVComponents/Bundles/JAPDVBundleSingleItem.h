@@ -25,7 +25,6 @@
 @property (nonatomic, assign)BOOL selected;
 
 + (JAPDVBundleSingleItem *)getNewPDVBundleSingleItem;
-+ (JAPDVBundleSingleItem *)getNewPDVBundleSingleItemWithSize;
 
 - (void)addSelectTarget:(id)target action:(SEL)selector;
 

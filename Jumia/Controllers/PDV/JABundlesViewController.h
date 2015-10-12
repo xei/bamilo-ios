@@ -13,5 +13,9 @@
 
 @property (nonatomic) RIProduct *product;
 @property (nonatomic) NSArray *bundles;
+@property (nonatomic) NSMutableArray *selectedItems;
+@property (nonatomic) RIBundle *bundle;
+
+- (void)onBundleSelectionChanged:(void(^)(NSArray *selectedSkus))changes;
 
 @end

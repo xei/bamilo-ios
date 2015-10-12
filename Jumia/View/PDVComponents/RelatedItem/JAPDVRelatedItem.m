@@ -103,7 +103,6 @@
     
     [self.horizontalSeparator setFrame:CGRectMake(0, self.topLabel.height + (self.height - self.topLabel.height)/2, self.width, 1)];
     [self.verticalSeparator setFrame:CGRectMake(self.width/2, self.topLabel.height, 1, CGRectGetMaxY([(UIView *)[self.viewsArray lastObject] frame]) - CGRectGetMaxY(self.topLabel.frame))];
-    NSLog(@"self.height: %f, self.verticalSeparator.height: %f, CGRectGetMaxY(itemView.frame): %f", self.height, self.verticalSeparator.height, CGRectGetMaxY([(UIView *)[self.viewsArray lastObject] frame]));
 }
 
 - (void)reloadVerticalSeparators

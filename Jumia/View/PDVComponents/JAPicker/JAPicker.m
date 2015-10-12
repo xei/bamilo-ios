@@ -21,6 +21,8 @@ UIPickerViewDelegate
 @property (strong, nonatomic) UIButton *doneButton;
 @property (strong, nonatomic) UIButton *leftButton;
 
+@property (strong, nonatomic) UILabel *titleLabel;
+
 @end
 
 @implementation JAPicker
@@ -77,6 +79,7 @@ UIPickerViewDelegate
                                                    CGRectGetMinY(self.pickerView.frame) - 44.0f,
                                                    self.backgroundView.frame.size.width,
                                                    44.0f)];
+
     
     CGFloat doneButtonWidth = 62.0f;
     self.doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -127,11 +130,36 @@ UIPickerViewDelegate
               previousText:(NSString *)previousText
            leftButtonTitle:(NSString*)leftButtonTitle;
 {
+    [self setDataSourceArray:dataSource pickerTitle:nil previousText:previousText leftButtonTitle:leftButtonTitle];
+}
+
+- (void)setDataSourceArray:(NSArray *)dataSource
+               pickerTitle:(NSString *)pickerTitle
+              previousText:(NSString *)previousText
+           leftButtonTitle:(NSString*)leftButtonTitle
+{
     if (VALID_NOTEMPTY(leftButtonTitle, NSString)) {
         [self.leftButton setTitle:leftButtonTitle forState:UIControlStateNormal];
         self.leftButton.hidden = NO;
     } else {
         self.leftButton.hidden = YES;
+    }
+    
+    if (VALID_NOTEMPTY(pickerTitle, NSString)) {
+        self.titleLabel = [[UILabel alloc] init];
+        [self.titleLabel setText:pickerTitle];
+        [self.titleLabel setTextAlignment:NSTextAlignmentCenter];
+        [self.titleLabel setFrame:CGRectMake(0, 0, self.width, 44.0f)];
+        [self.buttonBackgroundView addSubview:self.titleLabel];
+        
+        UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, 44.0f, self.width, 1)];
+        [separator setBackgroundColor:[UIColor colorWithWhite:.4 alpha:.2]];
+        [self.buttonBackgroundView addSubview:separator];
+        
+        self.buttonBackgroundView.y -= 44.0f;
+        self.buttonBackgroundView.height += 44.0f;
+        self.doneButton.y += 44.0f;
+        self.leftButton.y += 44.0f;
     }
     
     self.dataSource = [NSArray arrayWithArray:dataSource];
