@@ -140,4 +140,8 @@
     [self reloadViews];
 }
 
+- (void)disableButton{
+    [_submitButton setEnabled:NO];
+}
+
 @end
