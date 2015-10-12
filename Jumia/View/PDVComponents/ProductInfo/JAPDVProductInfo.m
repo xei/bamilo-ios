@@ -20,7 +20,9 @@
 #import "RISpecificationAttribute.h"
 #import "JAPDVProductInfoSellerInfo.h"
 
-@interface JAPDVProductInfo()
+@interface JAPDVProductInfo() {
+    UILabel *_sizesLabel;
+}
 
 @property (nonatomic, strong) RIProduct* product;
 @property (nonatomic) id variationsTarget;
@@ -74,38 +76,6 @@
     [self addSubview:ratingLine];
     yOffset = CGRectGetMaxY(ratingLine.frame);
     
-    
-    if (VALID_NOTEMPTY(product.seller, RISeller)) {
-        
-        JAProductInfoHeaderLine *headerSeller = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoHeaderLineHeight)];
-#warning TODO String translation
-        [headerSeller.label setText:[@"Seller Information" uppercaseString]];
-        [headerSeller.label sizeToFit];
-        [self addSubview:headerSeller];
-        yOffset = CGRectGetMaxY(headerSeller.frame) + 16.f;
-        
-        JAPDVProductInfoSellerInfo *sellerInfoView = [[JAPDVProductInfoSellerInfo alloc] initWithFrame:CGRectMake(16, yOffset, self.width-32, 50)];
-        [sellerInfoView setSeller:product.seller];
-        [sellerInfoView addTarget:self action:@selector(tapSellerReviewsLine)];
-        [self addSubview:sellerInfoView];
-        
-        yOffset = CGRectGetMaxY(sellerInfoView.frame);
-    }
-    
-    if (VALID_NOTEMPTY(product.offersTotal, NSNumber) && product.offersTotal.integerValue > 0) {
-        JAProductInfoSubLine *otherOffers = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSubLineHeight)];
-#warning TODO String
-        [otherOffers.label setText:[NSString stringWithFormat:@"Other sellers starting from: %@", product.offersMinPriceFormatted]];
-        [otherOffers.label sizeToFit];
-        [otherOffers.label setYCenterAligned];
-        [otherOffers setTopSeparatorVisibility:YES];
-        [otherOffers setBottomSeparatorVisibility:NO];
-        [otherOffers addTarget:self action:@selector(tapOffersLine) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:otherOffers];
-        
-        yOffset = CGRectGetMaxY(otherOffers.frame);
-    }
-    
     if (VALID_NOTEMPTY(product.specifications, NSSet)) {
         JAProductInfoHeaderLine *headerSpecifications = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoHeaderLineHeight)];
         [headerSpecifications.label setText:[STRING_SPECIFICATIONS uppercaseString]];
@@ -155,6 +125,25 @@
         }
     }
     
+    if (VALID_NOTEMPTY(product.productSimples, NSOrderedSet) && product.productSimples.count > 1)
+    {
+#warning TODO String
+        NSString *sizesText = @"";
+        int i = 0;
+        for (RIProductSimple *simple in product.productSimples) {
+            sizesText = i==0?[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, simple.variation]:[NSString stringWithFormat:@"%@, %@", sizesText, simple.variation];
+            i++;
+        }
+        JAProductInfoSingleLine *singleSizes = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
+        [singleSizes setTopSeparatorVisibility:YES];
+        [singleSizes.label setText:sizesText];
+        [singleSizes.label sizeToFit];
+        _sizesLabel = singleSizes.label;
+        [singleSizes addTarget:self action:@selector(tapSizeLine) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:singleSizes];
+        yOffset = CGRectGetMaxY(singleSizes.frame);
+    }
+    
     if (VALID_NOTEMPTY(product.variations, NSOrderedSet)) {
         JAProductInfoSingleLine *singleVariations = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
         [singleVariations setTopSeparatorVisibility:YES];
@@ -164,6 +153,36 @@
         [singleVariations addTarget:self action:@selector(tapVariationsLine) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:singleVariations];
         yOffset = CGRectGetMaxY(singleVariations.frame);
+    }
+    
+    if (VALID_NOTEMPTY(product.seller, RISeller)) {
+        JAProductInfoHeaderLine *headerSeller = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoHeaderLineHeight)];
+#warning TODO String translation
+        [headerSeller.label setText:[@"Seller Information" uppercaseString]];
+        [headerSeller.label sizeToFit];
+        [self addSubview:headerSeller];
+        yOffset = CGRectGetMaxY(headerSeller.frame) + 16.f;
+        
+        JAPDVProductInfoSellerInfo *sellerInfoView = [[JAPDVProductInfoSellerInfo alloc] initWithFrame:CGRectMake(16, yOffset, self.width-32, 50)];
+        [sellerInfoView setSeller:product.seller];
+        [sellerInfoView addTarget:self action:@selector(tapSellerReviewsLine)];
+        [self addSubview:sellerInfoView];
+        
+        yOffset = CGRectGetMaxY(sellerInfoView.frame);
+    }
+    
+    if (VALID_NOTEMPTY(product.offersTotal, NSNumber) && product.offersTotal.integerValue > 0) {
+        JAProductInfoSubLine *otherOffers = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSubLineHeight)];
+#warning TODO String
+        [otherOffers.label setText:[NSString stringWithFormat:@"Other sellers starting from: %@", product.offersMinPriceFormatted]];
+        [otherOffers.label sizeToFit];
+        [otherOffers.label setYCenterAligned];
+        [otherOffers setTopSeparatorVisibility:YES];
+        [otherOffers setBottomSeparatorVisibility:NO];
+        [otherOffers addTarget:self action:@selector(tapOffersLine) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:otherOffers];
+        
+        yOffset = CGRectGetMaxY(otherOffers.frame);
     }
     
     if (VALID_NOTEMPTY(product.summary, NSString)) {
@@ -191,6 +210,15 @@
     }
     
     [self setHeight:yOffset];
+}
+
+- (void)setSizesText:(NSString *)sizesText
+{
+    _sizesText = sizesText;
+    if (VALID_NOTEMPTY(_sizesLabel, UILabel)) {
+        [_sizesLabel setText:sizesText];
+        [_sizesLabel sizeToFit];
+    }
 }
 
 - (int)lineCountForText:(UILabel *)label

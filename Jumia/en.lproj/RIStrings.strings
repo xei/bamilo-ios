@@ -212,6 +212,8 @@
 
 "facebook_login_button_text" = "Login with Facebook";
 
+"login_incomplete" = "Both email and birthday are required to login";
+
 "or_text" = "OR";
 
 "fgt_pass" = "Forgot Password?";

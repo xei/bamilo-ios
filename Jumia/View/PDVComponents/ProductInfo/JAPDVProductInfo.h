@@ -12,6 +12,8 @@
 
 @interface JAPDVProductInfo : UIView
 
+@property (nonatomic) NSString *sizesText;
+
 - (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize;
 
 - (void)addVariationsTarget:(id)target action:(SEL)action;
