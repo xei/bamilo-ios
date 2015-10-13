@@ -121,6 +121,7 @@
 
 #define STRING_SIGNUP RILocalizedString(@"signup_label", nil)
 #define STRING_LOGIN_WITH_FACEBOOK RILocalizedString(@"facebook_login_button_text", nil)
+#define STRING_LOGIN_INCOMPLETE RILocalizedString(@"login_incomplete", nil)
 #define STRING_OR RILocalizedString(@"or_text", nil)
 #define STRING_SIGNUP_WITH_FACEBOOK RILocalizedString(@"facebook_signup_button_text", nil)
 #define STRING_FORGOT_PASSWORD RILocalizedString(@"fgt_pass", nil)

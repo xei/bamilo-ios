@@ -26,7 +26,6 @@
 #import "JAAppDelegate.h"
 #import "JAActivityViewController.h"
 #import "RICountry.h"
-#import "JAButtonWithBlur.h"
 #import "JAUtils.h"
 #import "RICustomer.h"
 #import "JAPDVWizardView.h"
@@ -59,12 +58,10 @@ JAActivityViewControllerDelegate
 @property (strong, nonatomic) JAPDVVariations *variationsSection;
 @property (strong, nonatomic) JAPDVProductInfo *productInfoSection;
 @property (strong, nonatomic) JAPDVRelatedItem *relatedItemsView;
-//@property (strong, nonatomic) JAPDVRelatedItem *relatedItems;
 @property (strong, nonatomic) JAPDVBundles *bundleLayout;
 @property (strong, nonatomic) JAPicker *picker;
 @property (strong, nonatomic) NSMutableArray *pickerDataSource;
 @property (strong, nonatomic) JAPDVGallery *galleryPaged;
-//@property (strong, nonatomic) JAButtonWithBlur *ctaView;
 @property (strong, nonatomic) JABottomBar *ctaView;
 @property (assign, nonatomic) NSInteger commentsCount;
 @property (assign, nonatomic) BOOL openPickerFromCart;
@@ -76,6 +73,7 @@ JAActivityViewControllerDelegate
 @property (strong, nonatomic) NSMutableArray *bundleSingleItemsArray;
 @property (nonatomic, strong) JAOtherOffersView* otherOffersView;
 @property (nonatomic, assign) NSInteger indexOfBundleRelatedToSizePicker;
+@property (nonatomic) NSMutableArray *selectedBundles;
 
 @property (nonatomic, assign) BOOL hasLoaddedProduct;
 
@@ -84,6 +82,8 @@ JAActivityViewControllerDelegate
 @end
 
 @implementation JAPDVViewController
+
+@synthesize selectedBundles = _selectedBundles;
 
 #pragma mark - View lifecycle
 
@@ -341,7 +341,7 @@ JAActivityViewControllerDelegate
         }
     }
     
-    if(VALID_NOTEMPTY(self.ctaView, JAButtonWithBlur))
+    if(VALID_NOTEMPTY(self.ctaView, JABottomBar))
     {
         [self.ctaView removeFromSuperview];
     }
@@ -515,8 +515,7 @@ JAActivityViewControllerDelegate
      CTA Buttons
      *******/
     
-    self.ctaView = [[JABottomBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 49)];
-//    self.ctaView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero orientation:self.interfaceOrientation];
+    self.ctaView = [[JABottomBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kBottomDefaultHeight)];
     
     BOOL isiPadInLandscape = NO;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -541,17 +540,10 @@ JAActivityViewControllerDelegate
     UIDevice *device = [UIDevice currentDevice];
     if ([[device model] isEqualToString:@"iPhone"] || [[device model] isEqualToString:@"iPhone Simulator"])
     {
-//        [self.ctaView addButton:STRING_CALL_TO_ORDER
-//                         target:self
-//                         action:@selector(callToOrder)];
         [self.ctaView addSmallButton:[UIImage imageNamed:@"ic_calltoorder"] target:self action:@selector(callToOrder)];
     }
     
-    
     [self.ctaView addButton:STRING_BUY_NOW target:self action:@selector(addToCart)];
-//    [self.ctaView addButton:STRING_ADD_TO_SHOPPING_CART
-//                     target:self
-//                     action:@selector(addToCart)];
     
     //make sure wizard is in front
     [self.view bringSubviewToFront:self.wizardView];
@@ -618,9 +610,6 @@ JAActivityViewControllerDelegate
     
     if(isiPadInLandscape)
     {
-        [self.imageSection.sizeClickableView addTarget:self
-                                                action:@selector(showSizePicker)
-                                      forControlEvents:UIControlEventTouchUpInside];
         [self.landscapeScrollView addSubview:self.imageSection];
         landscapeScrollViewY = CGRectGetMaxY(self.imageSection.frame) + 6.0f;
     }else{
@@ -634,70 +623,7 @@ JAActivityViewControllerDelegate
         self.variationsSection = [JAPDVVariations getNewPDVVariationsSection];
         [self.variationsSection setupWithFrame:self.mainScrollView.frame];
     }
-    
-    
-    
-//    /*******
-//     Colors / Variation
-//     *******/
-//    
-//    if (VALID_NOTEMPTY(self.product.variations, NSOrderedSet))
-//    {
-//        self.variationsSection.frame = CGRectMake(6.0f,
-//                                                  mainScrollViewY,
-//                                                  self.variationsSection.frame.size.width,
-//                                                  self.variationsSection.frame.size.height);
-//        
-//        [self.variationsSection.variationsScrollView setFrame:CGRectMake(6.0f,
-//                                                                         _variationsSection.variationsScrollView.frame.origin.y,
-//                                                                         _variationsSection.bounds.size.width - 12.0f,
-//                                                                         _variationsSection.variationsScrollView.bounds.size.height)];
-//        
-//        self.variationsSection.titleLabel.text = STRING_MORE_CHOICES;
-//        
-//        CGFloat currentX = 0.0;
-//        
-//        CGFloat viewHeight = self.variationsSection.variationsScrollView.frame.size.height;
-//        CGFloat imageHeight = 30.0f;
-//        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-//        {
-//            imageHeight = 71.0f;
-//        }
-//        
-//        for (int i = 0; i < [self.product.variations count]; i++)
-//        {
-//            RIVariation *variation = [self.product.variations objectAtIndex:i];
-//            
-//            JAClickableView* variationClickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
-//                                                                                                        0.0f,
-//                                                                                                        viewHeight,
-//                                                                                                        viewHeight)];
-//            variationClickableView.tag = i;
-//            [variationClickableView addTarget:self
-//                                       action:@selector(openVariation:)
-//                             forControlEvents:UIControlEventTouchUpInside];
-//            [self.variationsSection.variationsScrollView addSubview:variationClickableView];
-//            
-//            UIImageView *newImageView = [[UIImageView alloc] initWithFrame:CGRectMake((variationClickableView.bounds.size.width - imageHeight) / 2,
-//                                                                                      (variationClickableView.bounds.size.height - imageHeight) / 2,
-//                                                                                      imageHeight,
-//                                                                                      imageHeight)];
-//            [newImageView setImageWithURL:[NSURL URLWithString:variation.image.url]
-//                         placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
-//            [newImageView changeImageHeight:imageHeight andWidth:0.0f];
-//            [variationClickableView addSubview:newImageView];
-//            
-//            currentX += variationClickableView.frame.size.width;
-//        }
-//        
-//        [self.variationsSection.variationsScrollView setContentSize:CGSizeMake(currentX,
-//                                                                               viewHeight
-//                                                                               )];
-//        
-//        [self.mainScrollView addSubview:self.variationsSection];
-//        
-//        mainScrollViewY += (6.0f + self.variationsSection.frame.size.height);
-//    }
+
     
     /*******
      Other Offers Section
@@ -726,17 +652,13 @@ JAActivityViewControllerDelegate
     CGRect productInfoSectionFrame = CGRectMake(0, 6, self.view.width, 0);
     [self.productInfoSection setupWithFrame:productInfoSectionFrame product:self.product preSelectedSize:self.preSelectedSize];
     [self.productInfoSection addReviewsTarget:self action:@selector(goToRatinsMainScreen)];
-    [self.productInfoSection addSpecificationsTarget:self action:@selector(gotoDetails)];
+    [self.productInfoSection addSpecificationsTarget:self action:@selector(goToDetails)];
     [self.productInfoSection addSizeTarget:self action:@selector(showSizePicker)];
     [self.productInfoSection addVariationsTarget:self action:@selector(goToVariationsScreen)];
     
     [self.productInfoSection setY:scrollViewY];
     
     [self.mainScrollView addSubview:self.productInfoSection];
-    
-    //        [self.productInfoSection.sizeClickableView addTarget:self
-    //                                                      action:@selector(showSizePicker)
-    //                                            forControlEvents:UIControlEventTouchUpInside];
     
     scrollViewY += (self.productInfoSection.frame.size.height);
     
@@ -759,23 +681,7 @@ JAActivityViewControllerDelegate
             
             RIProduct *bundleProduct = [self.productBundle.bundleProducts objectAtIndex:i];
             
-            JAPDVBundleSingleItem* bundleSingleItem;
-            if (VALID_NOTEMPTY(bundleProduct.productSimples, NSOrderedSet) && 1 < bundleProduct.productSimples.count) {
-                
-                bundleSingleItem = [JAPDVBundleSingleItem getNewPDVBundleSingleItemWithSize];
-                
-                atLeastOneProductHasSize = YES;
-                
-                [bundleSingleItem.sizeClickableView setTitle:STRING_SIZE forState:UIControlStateNormal];
-                [bundleSingleItem.sizeClickableView setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
-                [bundleSingleItem.sizeClickableView setFont:[UIFont fontWithName:kFontRegularName size:14.0f]];
-                bundleSingleItem.sizeClickableView.tag = i;
-                [bundleSingleItem.sizeClickableView addTarget:self
-                                                       action:@selector(showSizePickerForBundleSingleItem:)
-                                             forControlEvents:UIControlEventTouchUpInside];
-            } else {
-                bundleSingleItem = [JAPDVBundleSingleItem getNewPDVBundleSingleItem];
-            }
+            JAPDVBundleSingleItem* bundleSingleItem = [JAPDVBundleSingleItem getNewPDVBundleSingleItem];
             
             bundleSingleItem.selectedProduct.tag = i;
             
@@ -814,7 +720,17 @@ JAActivityViewControllerDelegate
                 bundleSingleItem.alwaysSelected = YES;
             }
             
-            bundleSingleItem.selected = YES; //selected by default
+            BOOL isSelected = YES;
+            if (VALID_NOTEMPTY(self.selectedBundles, NSMutableArray)) {
+                isSelected = NO;
+                for (NSString *sku in self.selectedBundles) {
+                    if ([sku isEqualToString:bundleSingleItem.product.sku]) {
+                        isSelected = YES;
+                        break;
+                    }
+                }
+            }
+            bundleSingleItem.selected = isSelected;
             
             [bundleSingleItem bringSubviewToFront:bundleSingleItem.selectedProduct];
             
@@ -832,13 +748,11 @@ JAActivityViewControllerDelegate
             [self.bundleLayout addBundleItemView:singleItem];
         }
         
-//        [self.bundleLayout.bundleScrollView setContentSize:CGSizeMake(bundleSingleItemStart, self.bundleLayout.bundleScrollView.frame.size.height)];
-        
         self.bundleLayout.frame = CGRectMake(6.0f,
                                              scrollViewY,
                                              self.bundleLayout.frame.size.width,
                                              self.bundleLayout.frame.size.height);
-        [self updateBundlesView];
+
         [self.mainScrollView addSubview:self.bundleLayout];
 
         [self.bundleLayout addBuyingBundleTarget:self action:@selector(goToBundlesScreen)];
@@ -869,10 +783,6 @@ JAActivityViewControllerDelegate
         CGFloat relatedItemX = .0f;
         CGFloat relatedItemY = 0;
         
-        //        self.relatedItems = [JAPDVRelatedItem getNewPDVRelatedItemSection];
-        //        [self.relatedItems setupWithFrame:self.mainScrollView.frame];
-        //        self.relatedItems.topLabel.text = STRING_RELATED_ITEMS;
-        
         NSArray* relatedProducts = [self.product.relatedProducts allObjects];
         
         for (int i = 0; i < relatedProducts.count; i++) {
@@ -884,14 +794,21 @@ JAActivityViewControllerDelegate
                 singleItemWidth = self.mainScrollView.width/4 - 5;
             }
             
-            if (isiPadInLandscape) {
-                singleItemHeight = 300;
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+            {
+                UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+                if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
+                {
+                    singleItemHeight = 350;
+                }else{
+                    singleItemHeight = 280;
+                }
             }
             
             JAPDVSingleRelatedItem *singleItem = [[JAPDVSingleRelatedItem alloc] initWithFrame:CGRectMake(0, 0, singleItemWidth, singleItemHeight)];
             singleItem.tag = i;
             [singleItem addTarget:self
-                           action:@selector(selectedRelatedItem:)
+                           action:@selector(goToSelectedRelatedItem:)
                  forControlEvents:UIControlEventTouchUpInside];
             
             CGRect tempFrame = singleItem.frame;
@@ -945,15 +862,7 @@ JAActivityViewControllerDelegate
 
 #pragma mark - Actions
 
-- (void) openVariation:(UIControl*)sender
-{
-    RIVariation *variation = [self.product.variations objectAtIndex:sender.tag];
-    self.productUrl = nil;
-    self.productSku = variation.sku;
-    [self loadCompleteProduct];
-}
-
-- (void)selectedRelatedItem:(UIControl*)sender
+- (void)goToSelectedRelatedItem:(UIControl*)sender
 {
     NSArray* relatedProducts = [self.product.relatedProducts allObjects];
     RIProduct *tempProduct = [relatedProducts objectAtIndex:sender.tag];
@@ -967,7 +876,7 @@ JAActivityViewControllerDelegate
     [self trackingEventScreenName:[NSString stringWithFormat:@"related_item_%@",tempProduct.name]];
 }
 
-- (void)gotoDetails
+- (void)goToDetails
 {
     NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
     if(VALID_NOTEMPTY(self.product, RIProduct))
@@ -1002,6 +911,22 @@ JAActivityViewControllerDelegate
             [userInfo setObject:self.productBundle.bundleProducts forKeyedSubscript:@"product.bundles"];
         }
     }
+    
+    __weak typeof(self) weakSelf = self;
+    id block = ^(NSArray *bundles){
+        weakSelf.selectedBundles = [NSMutableArray arrayWithArray:bundles];
+    };
+    
+    [userInfo setObject:block forKeyedSubscript:@"product.bundles.onChange"];
+    
+    if (self.selectedBundles) {
+        [userInfo setObject:self.selectedBundles forKeyedSubscript:@"product.bundles.selected"];
+    }
+    
+    if (self.productBundle) {
+        [userInfo setObject:self.productBundle forKeyedSubscript:@"product.bundle"];
+    }
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenProductBundlesScreen object:obj userInfo:userInfo];
 }
 
@@ -1019,7 +944,7 @@ JAActivityViewControllerDelegate
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenProductVariationsScreen object:obj userInfo:userInfo];
 }
 
-- (void)shareProduct    // TODO
+- (void)shareProduct
 {
     NSString *url = self.product.url;
     
@@ -1085,14 +1010,13 @@ JAActivityViewControllerDelegate
 
 - (void)addToCart
 {
-#warning TODO
-//    if((UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation) && ([self.imageSection.sizeLabel.text isEqualToString:STRING_SIZE])) || [self.productInfoSection.sizeLabel.text isEqualToString:STRING_SIZE])
-//    {
-//        self.openPickerFromCart = YES;
-//        [self showSizePicker];
-//    }
-//    else
-//    {
+    if(VALID_NOTEMPTY(self.product.productSimples, NSOrderedSet) && self.product.productSimples.count > 1 && !VALID_NOTEMPTY(self.productInfoSection.sizesText, NSString))
+    {
+        self.openPickerFromCart = YES;
+        [self showSizePicker];
+    }
+    else
+    {
         [self showLoading];
         
         [RICart addProductWithQuantity:@"1"
@@ -1137,7 +1061,7 @@ JAActivityViewControllerDelegate
                           
                           [self showMessage:addToCartError success:NO];
                       }];
-//    }
+    }
 }
 
 - (void)callToOrder
@@ -1152,66 +1076,37 @@ JAActivityViewControllerDelegate
     }];
 }
 
-- (void)showSizePickerForBundleSingleItem:(UIButton*)sender
+- (void)showSizePicker
 {
-    self.indexOfBundleRelatedToSizePicker = sender.tag;
-    
-    RIProduct* bundleProduct = [self.productBundle.bundleProducts objectAtIndex:sender.tag];
+    self.indexOfBundleRelatedToSizePicker = -1;
     
     self.pickerDataSource = [NSMutableArray new];
     NSMutableArray *options = [[NSMutableArray alloc] init];
     
-    if(VALID_NOTEMPTY(bundleProduct.productSimples, NSOrderedSet))
+    if(VALID_NOTEMPTY(self.product.productSimples, NSOrderedSet))
     {
-        for (RIProductSimple *simple in bundleProduct.productSimples)
+        for (RIProductSimple *simple in self.product.productSimples)
         {
             if ([simple.quantity integerValue] > 0)
             {
-                [self.pickerDataSource addObject:simple];
-                [options addObject:simple.variation];
+                if (VALID_NOTEMPTY(simple.variation, NSString)) {
+                    [self.pickerDataSource addObject:simple];
+                    [options addObject:simple.variation];
+                }
             }
         }
     }
     
-    JAPDVBundleSingleItem* bundleSingleItem = [self.bundleSingleItemsArray objectAtIndex:sender.tag];
+    NSString* sizeGuideTitle = nil;
+    if (VALID_NOTEMPTY(self.product.sizeGuideUrl, NSString)) {
+        sizeGuideTitle = STRING_SIZE_GUIDE;
+    }
     
-    [self loadSizePickerWithOptions:options
-                       previousText:bundleSingleItem.sizeClickableView.title
-                    leftButtonTitle:nil];
-}
-
-
-- (void)showSizePicker  // TODO
-{
-//    self.indexOfBundleRelatedToSizePicker = -1;
-//    
-//    self.pickerDataSource = [NSMutableArray new];
-//    NSMutableArray *options = [[NSMutableArray alloc] init];
-//    
-//    if(VALID_NOTEMPTY(self.product.productSimples, NSOrderedSet))
-//    {
-//        for (RIProductSimple *simple in self.product.productSimples)
-//        {
-//            if ([simple.quantity integerValue] > 0)
-//            {
-//                if (VALID_NOTEMPTY(simple.variation, NSString)) {
-//                    [self.pickerDataSource addObject:simple];
-//                    [options addObject:simple.variation];
-//                }
-//            }
-//        }
-//    }
-//    
-//    NSString* sizeGuideTitle = nil;
-//    if (VALID_NOTEMPTY(self.product.sizeGuideUrl, NSString)) {
-//        sizeGuideTitle = STRING_SIZE_GUIDE;
-//    }
-//    
-//    if (VALID_NOTEMPTY(options, NSMutableArray)) {
-//        [self loadSizePickerWithOptions:[options copy]
-//                           previousText:self.productInfoSection.sizeLabel.text
-//                        leftButtonTitle:sizeGuideTitle];
-//    }
+    if (VALID_NOTEMPTY(options, NSMutableArray)) {
+        [self loadSizePickerWithOptions:[options copy]
+                           previousText:self.productInfoSection.sizesText
+                        leftButtonTitle:sizeGuideTitle];
+    }
 }
 
 - (void)loadSizePickerWithOptions:(NSArray*)options
@@ -1255,220 +1150,75 @@ JAActivityViewControllerDelegate
     
     singleItem.selected = !singleItem.selected;
     
-    [self updateBundlesView];
-}
-
-- (void)updateBundlesView
-{
-    NSInteger numberOfSelected = 0;
-    CGFloat total = 0.0f;
-    for (int i = 0; i<self.productBundle.bundleProducts.count; i++) {
-        
-        JAPDVBundleSingleItem* singleItem = [self.bundleSingleItemsArray objectAtIndex:i];
-        
+    if (!self.selectedBundles) {
+        self.selectedBundles = [NSMutableArray new];
+        for (JAPDVBundleSingleItem *item in self.bundleSingleItemsArray) {
+            if (![item.product.sku isEqualToString:singleItem.product.sku]) {
+                [self.selectedBundles addObject:item.product.sku];
+            }
+        }
+    }else{
         if (singleItem.selected) {
-            numberOfSelected++;
-            
-            RIProduct* bundleProduct = [self.productBundle.bundleProducts objectAtIndex:i];
-            
-            if (VALID_NOTEMPTY(bundleProduct.specialPrice, NSNumber) && 0.0f == [bundleProduct.specialPrice floatValue]) {
-                total += [bundleProduct.price floatValue];
-            } else {
-                total += [bundleProduct.specialPrice floatValue];
-            }
+            [self.selectedBundles addObject:singleItem.product.sku];
+        }else{
+            [self.selectedBundles removeObject:singleItem.product.sku];
         }
-    }
-    
-    NSString* totalText = [NSString stringWithFormat:@"%@ %@", STRING_BUNDLE_TOTAL_PRICE, [RICountryConfiguration formatPrice:[NSNumber numberWithFloat:total] country:[RICountryConfiguration getCurrentConfiguration]]];
-#warning TODO Bundles Total
-//    [self.bundleLayout.totalLabel setText:totalText];
-//    
-//    if (1 >= numberOfSelected) {
-//        self.bundleLayout.buynowButton.enabled = NO;
-//    } else {
-//        self.bundleLayout.buynowButton.enabled = YES;
-//    }
-}
-
-//-(void)bundlesBuyNowPressed
-//{
-//    NSMutableArray* selectedProductSkus = [NSMutableArray new];
-//    NSMutableArray* selectedProductSimpleSkus = [NSMutableArray new];
-//    
-//    for (int i = 0; i<self.productBundle.bundleProducts.count; i++) {
-//        
-//        JAPDVBundleSingleItem* singleItem = [self.bundleSingleItemsArray objectAtIndex:i];
-//        
-//        if (singleItem.selected) {
-//            RIProduct* bundleProduct = [self.productBundle.bundleProducts objectAtIndex:i];
-//            
-//            
-//            if (1 == bundleProduct.productSimples.count)
-//            {
-//                //found it
-//                RIProductSimple *simple = [bundleProduct.productSimples firstObject];
-//                [selectedProductSimpleSkus addObject:simple.sku];
-//                [selectedProductSkus addObject:bundleProduct.sku];
-//            }
-//            else
-//            {
-//                //has more than one simple, lets check if there is a simple selected
-//                NSString* string = singleItem.sizeClickableView.title;
-//                if ([string isEqualToString:@""] || [string isEqualToString:STRING_SIZE])
-//                {
-//                    //nothing is selected, abort
-//                    
-//                    [self showMessage:STRING_CHOOSE_SIZE_FOR_ALL_PRODUCTS success:NO];
-//                    
-//                    [self addErrorToBundleSizeButtons];
-//                    return;
-//                }
-//                else
-//                {
-//                    for (RIProductSimple* simple in bundleProduct.productSimples) {
-//                        if ([string isEqualToString:simple.variation]) {
-//                            //found it
-//                            [selectedProductSimpleSkus addObject:simple.sku];
-//                            [selectedProductSkus addObject:bundleProduct.sku];
-//                            break;
-//                        }
-//                    }
-//                }
-//            }
-//
-//        }
-//    }
-//
-//    
-//    if (1 < selectedProductSkus.count) { //has to have more than one
-//        
-//        [self showLoading];
-//        
-//        [RICart addBundleProductsWithSkus:selectedProductSkus
-//                               simpleSkus:selectedProductSimpleSkus
-//                                 bundleId:self.productBundle.bundleId
-//                         withSuccessBlock:^(RICart *cart, NSArray *productsNotAdded) {
-//                             
-//                             [self trackingEventAddBundleToCart:cart];
-//                             
-//                             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
-//                             [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
-//                             
-//                             [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
-//                             
-//                             [self hideLoading];
-//                             
-//                         } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock) {
-//                             
-//                             [self hideLoading];
-//                             
-//                             NSString *addToCartError = STRING_ERROR_ADDING_TO_CART;
-//                             if (RIApiResponseNoInternetConnection == apiResponse)
-//                             {
-//                                 addToCartError = STRING_NO_CONNECTION;
-//                             }
-//                             
-//                             [self showMessage:addToCartError success:NO];
-//                         }];
-//        
-//    }
-//}
-
-//- (void)buyBundles:(NSArray *)skus
-//{
-//    [self showLoading];
-//    
-//    [RICart addBundleProductsWithSkus:selectedProductSkus
-//                           simpleSkus:selectedProductSimpleSkus
-//                             bundleId:self.productBundle.bundleId
-//                     withSuccessBlock:^(RICart *cart, NSArray *productsNotAdded) {
-//                         
-//                         [self trackingEventAddBundleToCart:cart];
-//                         
-//                         NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
-//                         [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
-//                         
-//                         [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
-//                         
-//                         [self hideLoading];
-//                         
-//                     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock) {
-//                         
-//                         [self hideLoading];
-//                         
-//                         NSString *addToCartError = STRING_ERROR_ADDING_TO_CART;
-//                         if (RIApiResponseNoInternetConnection == apiResponse)
-//                         {
-//                             addToCartError = STRING_NO_CONNECTION;
-//                         }
-//                         
-//                         [self showMessage:addToCartError success:NO];
-//                     }];
-//}
-
-- (void)addErrorToBundleSizeButtons
-{
-    for (JAPDVBundleSingleItem* bundleSingleItem in self.bundleSingleItemsArray) {
-        if (bundleSingleItem.selectedProduct.selected) {
-            if ([bundleSingleItem.sizeClickableView.title isEqualToString:@""] || [bundleSingleItem.sizeClickableView.title isEqualToString:STRING_SIZE]) {
-                [bundleSingleItem.sizeClickableView setTitleColor:UIColorFromRGB(0xcc0000) forState:UIControlStateNormal];
-            }
-        }
+        
     }
 }
 
 #pragma mark JAPickerDelegate
-- (void)selectedRow:(NSInteger)selectedRow  // TODO
+- (void)selectedRow:(NSInteger)selectedRow
 {
-//    self.currentSimple = [self.pickerDataSource objectAtIndex:selectedRow];
-//    
-//    NSString* option = self.currentSimple.variation;
-//    if (ISEMPTY(option)) {
-//        option = @"";
-//    }
-//    
-//    
-//    if (-1 == self.indexOfBundleRelatedToSizePicker) {
-//        //this means the picker was related to the main pdv product
-//        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-//        {
-//            UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-//            if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
-//            {
-//                [self.imageSection.sizeLabel setText:option];
-//            }
-//            else
-//            {
-//                [self.productInfoSection.sizeLabel setText:option];
-//            }
-//        }
-//        else
-//        {
-//            [self.productInfoSection.sizeLabel setText:option];
-//        }
-//    } else {
-//        JAPDVBundleSingleItem* bundleSingleItem = [self.bundleSingleItemsArray objectAtIndex:self.indexOfBundleRelatedToSizePicker];
-//        [bundleSingleItem.sizeClickableView setTitle:option forState:UIControlStateNormal];
-//        [bundleSingleItem.sizeClickableView setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
-//    }
-//    
-//    
-//    CGRect frame = self.picker.frame;
-//    frame.origin.y = self.view.frame.size.height;
-//    
-//    [UIView animateWithDuration:0.4f
-//                     animations:^{
-//                         self.picker.frame = frame;
-//                     } completion:^(BOOL finished) {
-//                         [self.picker removeFromSuperview];
-//                         self.picker = nil;
-//                         
-//                         if (self.openPickerFromCart)
-//                         {
-//                             self.openPickerFromCart = NO;
-//                             [self addToCart];
-//                         }
-//                     }];
+    self.currentSimple = [self.pickerDataSource objectAtIndex:selectedRow];
+    
+    NSString* option = self.currentSimple.variation;
+    if (ISEMPTY(option)) {
+        option = @"";
+    }
+    
+    
+    if (-1 == self.indexOfBundleRelatedToSizePicker) {
+        //this means the picker was related to the main pdv product
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+            if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
+            {
+                [self.imageSection.sizeLabel setText:option];
+            }
+            else
+            {
+                [self.productInfoSection setSizesText:option];
+            }
+        }
+        else
+        {
+            [self.productInfoSection setSizesText:option];
+        }
+    } else {
+        JAPDVBundleSingleItem* bundleSingleItem = [self.bundleSingleItemsArray objectAtIndex:self.indexOfBundleRelatedToSizePicker];
+        [bundleSingleItem.sizeClickableView setTitle:option forState:UIControlStateNormal];
+        [bundleSingleItem.sizeClickableView setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
+    }
+    
+    
+    CGRect frame = self.picker.frame;
+    frame.origin.y = self.view.frame.size.height;
+    
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         self.picker.frame = frame;
+                     } completion:^(BOOL finished) {
+                         [self.picker removeFromSuperview];
+                         self.picker = nil;
+                         
+                         if (self.openPickerFromCart)
+                         {
+                             self.openPickerFromCart = NO;
+                             [self addToCart];
+                         }
+                     }];
 }
 
 - (void)closePicker
@@ -1906,101 +1656,6 @@ JAActivityViewControllerDelegate
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                               data:[trackingDictionary copy]];
-    [self trackingEventCart:cart];
-}
-
-- (void)trackingEventAddBundleToCart:(RICart *)cart
-{
-    NSNumber *price = [self getPrice];
-    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-    [trackingDictionary setValue:((RIProduct *)[self.product.productSimples firstObject]).sku forKey:kRIEventLabelKey];
-    [trackingDictionary setValue:@"BundleAddToCart" forKey:kRIEventActionKey];
-    [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-    [trackingDictionary setValue:price forKey:kRIEventValueKey];
-    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-    [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-    
-    // Since we're sending the converted price, we have to send the currency as EUR.
-    // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-    [trackingDictionary setValue:price forKey:kRIEventPriceKey];
-    [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
-    
-    [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
-    [trackingDictionary setValue:self.product.name forKey:kRIEventProductNameKey];
-    
-    if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
-    {
-        NSArray *categoryIds = [self.product.categoryIds array];
-        [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryIdKey];
-    }
-    
-    [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandKey];
-    
-    NSString *discountPercentage = @"0";
-    if(VALID_NOTEMPTY(self.product.maxSavingPercentage, NSString))
-    {
-        discountPercentage = self.product.maxSavingPercentage;
-    }
-    [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
-    [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
-    [trackingDictionary setValue:@"1" forKey:kRIEventQuantityKey];
-    [trackingDictionary setValue:@"Product Detail screen" forKey:kRIEventLocationKey];
-    
-    NSString *categoryName = @"";
-    NSString *subCategoryName = @"";
-    if(VALID_NOTEMPTY(self.category, RICategory))
-    {
-        if(VALID_NOTEMPTY(self.category.parent, RICategory))
-        {
-            RICategory *parent = self.category.parent;
-            while (VALID_NOTEMPTY(parent.parent, RICategory))
-            {
-                parent = parent.parent;
-            }
-            categoryName = parent.name;
-            subCategoryName = self.category.name;
-        }
-        else
-        {
-            categoryName = self.category.name;
-        }
-    }
-    else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
-    {
-        NSArray *categoryIds = [self.product.categoryIds array];
-        NSInteger subCategoryIndex = [categoryIds count] - 1;
-        NSInteger categoryIndex = subCategoryIndex - 1;
-        
-        if(categoryIndex >= 0)
-        {
-            NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
-            categoryName = [RICategory getCategoryName:categoryId];
-            
-            NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
-            subCategoryName = [RICategory getCategoryName:subCategoryId];
-        }
-        else
-        {
-            NSString *categoryId = [categoryIds objectAtIndex:subCategoryIndex];
-            categoryName = [RICategory getCategoryName:categoryId];
-        }
-    }
-    
-    if(VALID_NOTEMPTY(categoryName, NSString))
-    {
-        [trackingDictionary setValue:categoryName forKey:kRIEventCategoryNameKey];
-    }
-    if(VALID_NOTEMPTY(subCategoryName, NSString))
-    {
-        [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryNameKey];
-    }
-    
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
-                                              data:[trackingDictionary copy]];
-    
     [self trackingEventCart:cart];
 }
 

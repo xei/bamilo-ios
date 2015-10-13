@@ -21,6 +21,8 @@
     SEL _imageClickedSelector;
     NSArray *_urlImages;
     CGFloat _scrollAnimation;
+    CGFloat _imageWidth;
+    CGFloat _imageHeight;
 }
 
 @property (nonatomic) UIScrollView *scrollView;
@@ -69,12 +71,21 @@
     _first = NO;
     _navigationCursorBottomPercentage = .05;
     
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        _imageWidth = 322;
+        _imageHeight = 402;
+    }else{
+        _imageWidth = 272;
+        _imageHeight = 340;
+    }
+    
 }
 
 - (UIScrollView *)scrollView
 {
     if (!VALID_NOTEMPTY(_scrollView, UIScrollView)) {
-        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.width, 365)];
+        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.width, _imageHeight + 25)];
         _scrollView.delegate = self;
         [_scrollView setPagingEnabled:YES];
         [_scrollView setShowsHorizontalScrollIndicator:NO];
@@ -93,7 +104,7 @@
         }
     }else{
         JAClickableView* imageView = [[JAClickableView alloc] init];
-        [imageView setFrame:CGRectMake(0, 0, 272, 340)];
+        [imageView setFrame:CGRectMake(0, 0, _imageWidth, _imageHeight)];
         [imageView setImage:[UIImage imageNamed:@"placeholder_pdv"] forState:UIControlStateNormal];
         [validViews addObject:imageView];
     }
@@ -109,7 +120,7 @@
 - (JAClickableView *)getImageViewForImageUrl:(NSString *)imageURL
 {
     JAClickableView* imageView = [[JAClickableView alloc] init];
-    [imageView setFrame:CGRectMake(0, 0, 272, 340)];
+    [imageView setFrame:CGRectMake(0, 0, _imageWidth, _imageHeight)];
     [imageView setImage:[UIImage imageNamed:@"placeholder_pdv"] forState:UIControlStateNormal];
     [imageView setX:self.width/2-imageView.width/2];
     [imageView addTarget:self action:@selector(sendImageClickEvent) forControlEvents:UIControlEventTouchUpInside];
@@ -157,7 +168,7 @@
 {
     [super setFrame:frame];
     [self.scrollView setWidth:self.width];
-    [self.scrollView setHeight:340];
+    [self.scrollView setHeight:_imageHeight];
     if (_processedViews) {
         [self loadViews];
     }

@@ -1268,6 +1268,15 @@
             if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"product.bundles"], NSArray)) {
                 bundlesVC.bundles = [notification.userInfo objectForKey:@"product.bundles"];
             }
+            if ([notification.userInfo objectForKey:@"product.bundles.onChange"]) {
+                [bundlesVC onBundleSelectionChanged:[notification.userInfo objectForKey:@"product.bundles.onChange"]];
+            }
+            if ([notification.userInfo objectForKeyedSubscript:@"product.bundles.selected"]) {
+                [bundlesVC setSelectedItems:[notification.userInfo objectForKey:@"product.bundles.selected"]];
+            }
+            if ([notification.userInfo objectForKeyedSubscript:@"product.bundle"]) {
+                [bundlesVC setBundle:[notification.userInfo objectForKey:@"product.bundle"]];
+            }
         }
         
         [self pushViewController:bundlesVC animated:YES];
