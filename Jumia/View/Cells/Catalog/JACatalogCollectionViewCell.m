@@ -292,7 +292,7 @@
     
     [_productImageView setImageWithURL:[NSURL URLWithString:firstImage.url]
                       placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
-    [_priceView loadWithPrice:variation.price
+    [_priceView loadWithPrice:[RICountryConfiguration formatPrice:[[NSNumberFormatter new] numberFromString:variation.price] country:[RICountryConfiguration getCurrentConfiguration]]
                  specialPrice:nil
                      fontSize:10.0f
         specialPriceOnTheLeft:YES];

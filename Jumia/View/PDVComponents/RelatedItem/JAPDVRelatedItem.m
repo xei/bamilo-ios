@@ -56,8 +56,8 @@
 {
     if (!VALID_NOTEMPTY(_topLabel, JAProductInfoHeaderLine)) {
         _topLabel = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, 0, self.width, kProductInfoHeaderLineHeight)];
-        [_topLabel.label setText:[@"You may also like" uppercaseString]];
-        [_topLabel.label sizeToFit];
+#warning TODO String
+        [_topLabel setTitle:[@"You may also like" uppercaseString]];
         [self addSubview:_topLabel];
     }
     return _topLabel;
@@ -66,7 +66,7 @@
 - (void)setHeaderText:(NSString *)headerText
 {
     _headerText = headerText;
-    [self.topLabel.label setText:_headerText];
+    [self.topLabel setTitle:_headerText];
 }
 
 - (NSMutableArray *)viewsArray

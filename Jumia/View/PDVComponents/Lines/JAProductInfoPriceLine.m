@@ -79,6 +79,13 @@
     self.priceOffLabel.width += 6.f;
     self.priceOffLabel.height = self.oldPriceLabel.height;
     [self.priceOffLabel setY:self.oldPriceLabel.y];
+    
+    UIColor *priceOffColor = JAOrange1Color;
+    if (self.fashion) {
+        priceOffColor = JABlack800Color;
+    }
+    [self.priceOffLabel setTextColor:priceOffColor];
+    [self.priceOffLabel.layer setBorderColor:priceOffColor.CGColor];
 }
 
 - (void)setOldPrice:(NSString *)oldPrice
@@ -88,6 +95,7 @@
     [self.label setY:self.height/2 - self.label.height/2];
     [self.oldPriceLabel setText:oldPrice];
     [self.oldPriceLabel sizeToFit];
+    [self.oldPriceLabel setX:CGRectGetMaxX(self.label.frame) + 10.f];
     [self.oldPriceLabel setY:self.height/2 - self.oldPriceLabel.height/2];
     [self.oldPriceLine setX:self.oldPriceLabel.x];
     [self.oldPriceLine setWidth:self.oldPriceLabel.width];
@@ -107,6 +115,14 @@
         [self addSubview:_oldPriceLine];
     }
     return _oldPriceLine;
+}
+
+- (void)setFashion:(BOOL)fashion
+{
+    _fashion = fashion;
+    if (self.priceOff) {
+        [self setPriceOff:_priceOff];
+    }
 }
 
 @end

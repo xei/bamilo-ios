@@ -12,6 +12,7 @@
 
 @interface JAProductInfoPriceLine : JAProductInfoBaseLine
 
+@property (nonatomic) BOOL fashion;
 @property (nonatomic) NSInteger priceOff;
 @property (nonatomic) NSString *oldPrice;
 
