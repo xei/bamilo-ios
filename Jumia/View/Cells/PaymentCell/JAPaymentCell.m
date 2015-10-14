@@ -83,6 +83,65 @@
     self.label.font = [UIFont fontWithName:kFontLightName size:self.label.font.pointSize];
     self.label.textAlignment = NSTextAlignmentLeft;
     [self.label setText:paymentMethod.label];
+    
+    self.label.frame = CGRectMake(17.0f,
+                                  11.0f,
+                                  self.clickableView.frame.size.width - self.checkMark.frame.size.width - 14.0f*2,
+                                  self.label.frame.size.height);
+    
+    self.checkMark.translatesAutoresizingMaskIntoConstraints = YES;
+    self.checkMark.frame = CGRectMake(self.clickableView.frame.size.width - self.checkMark.frame.size.width - 14.0f,
+                                      15.0f,
+                                      self.checkMark.frame.size.width,
+                                      self.checkMark.frame.size.height);
+    
+    if (RI_IS_RTL) {
+        [self.clickableView flipAllSubviews];
+    }
+}
+
+-(void)loadNoPaymentMethod:(NSString *)paymentMethod paymentMethodView:(UIView*)paymentMethodView {
+    
+    if(VALID_NOTEMPTY(self.separator, UIView))
+    {
+        [self.separator removeFromSuperview];
+    }
+    self.separator = [[UIView alloc] init];
+    [self.separator setBackgroundColor:UIColorFromRGB(0xcccccc)];
+    [self addSubview:self.separator];
+    
+    self.paymentMethodDetailsView = paymentMethodView;
+    [self.paymentMethodDetailsView setHidden:YES];
+    [self addSubview:self.paymentMethodDetailsView];
+    
+    // this triggers the constraints error output
+    self.clickableView.translatesAutoresizingMaskIntoConstraints = YES;
+    
+
+        
+    [self.checkMark setHidden:YES];
+    
+    [self setFrame:CGRectMake(self.frame.origin.x,
+                              self.frame.origin.y,
+                              self.frame.size.width,
+                              4004.0f)];
+    
+    [self.clickableView setFrame:self.bounds];
+    self.clickableView.enabled = YES;
+    
+    
+    [self.separator setFrame:CGRectMake(0.0f,
+                                        self.frame.size.height - 1.0f,
+                                        self.frame.size.width,
+                                        1.0f)];
+    
+    // this triggers the constraints error output
+    self.label.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.label.font = [UIFont fontWithName:kFontLightName size:self.label.font.pointSize];
+    self.label.textAlignment = NSTextAlignmentLeft;
+    [self.label setText:paymentMethod];
+    
     self.label.frame = CGRectMake(17.0f,
                                   11.0f,
                                   self.clickableView.frame.size.width - self.checkMark.frame.size.width - 14.0f*2,

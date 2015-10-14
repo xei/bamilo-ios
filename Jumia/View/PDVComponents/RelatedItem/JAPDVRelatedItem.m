@@ -56,8 +56,8 @@
 {
     if (!VALID_NOTEMPTY(_topLabel, JAProductInfoHeaderLine)) {
         _topLabel = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, 0, self.width, kProductInfoHeaderLineHeight)];
-        [_topLabel.label setText:[@"You may also like" uppercaseString]];
-        [_topLabel.label sizeToFit];
+#warning TODO String
+        [_topLabel setTitle:[@"You may also like" uppercaseString]];
         [self addSubview:_topLabel];
     }
     return _topLabel;
@@ -66,7 +66,7 @@
 - (void)setHeaderText:(NSString *)headerText
 {
     _headerText = headerText;
-    [self.topLabel.label setText:_headerText];
+    [self.topLabel setTitle:_headerText];
 }
 
 - (NSMutableArray *)viewsArray
@@ -103,7 +103,6 @@
     
     [self.horizontalSeparator setFrame:CGRectMake(0, self.topLabel.height + (self.height - self.topLabel.height)/2, self.width, 1)];
     [self.verticalSeparator setFrame:CGRectMake(self.width/2, self.topLabel.height, 1, CGRectGetMaxY([(UIView *)[self.viewsArray lastObject] frame]) - CGRectGetMaxY(self.topLabel.frame))];
-    NSLog(@"self.height: %f, self.verticalSeparator.height: %f, CGRectGetMaxY(itemView.frame): %f", self.height, self.verticalSeparator.height, CGRectGetMaxY([(UIView *)[self.viewsArray lastObject] frame]));
 }
 
 - (void)reloadVerticalSeparators

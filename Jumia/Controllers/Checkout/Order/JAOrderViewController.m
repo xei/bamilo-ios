@@ -194,8 +194,14 @@
     
     [self.scrollView setHidden:NO];
     
+    CGFloat offset = 0.0;
+    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0") && UIUserInterfaceIdiomPhone == UI_USER_INTERFACE_IDIOM()){
+        //For some reason on iphone ios9 the view controller's view doesn't take the nav bar into account
+        offset = 64.0f;
+    }
+    
     [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
-                                               self.scrollViewCurrentY + self.bottomView.frame.size.height)];
+                                               self.scrollViewCurrentY + self.bottomView.frame.size.height + offset)];
     [self hideLoading];
     
     if (RI_IS_RTL) {
@@ -764,8 +770,15 @@
         newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     }
     
+    
+    CGFloat offset = 0.0;
+    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0") && UIUserInterfaceIdiomPhone == UI_USER_INTERFACE_IDIOM()){
+        //For some reason on iphone ios9 the view controller's view doesn't take the nav bar into account
+        offset = 64.0f;
+    }
+    
     [self.bottomView reloadFrame:CGRectMake((self.view.frame.size.width - newWidth) / 2,
-                                            self.view.frame.size.height - self.bottomView.frame.size.height,
+                                            self.view.frame.size.height - self.bottomView.frame.size.height - offset,
                                             newWidth,
                                             self.bottomView.frame.size.height)];
     

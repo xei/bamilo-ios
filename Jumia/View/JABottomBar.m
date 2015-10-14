@@ -8,7 +8,7 @@
 
 #import "JABottomBar.h"
 
-#define kSmallButtonWidth 76
+#define kSmallButtonWidth 60
 
 @interface JABottomBar ()
 

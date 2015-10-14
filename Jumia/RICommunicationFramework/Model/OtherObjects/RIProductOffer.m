@@ -134,7 +134,7 @@
         }
     }
     
-    NSDictionary* sellerJSON = [productOfferJSON objectForKey:@"seller"];
+    NSDictionary* sellerJSON = [productOfferJSON objectForKey:@"seller_entity"];
 
     if (VALID_NOTEMPTY(sellerJSON, NSDictionary)) {
         
