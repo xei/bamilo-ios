@@ -86,7 +86,7 @@
 - (void)setHeaderText:(NSString *)headerText
 {
     _headerText = headerText;
-    [self.headerLine.label setText:_headerText];
+    [self.headerLine setTitle:_headerText];
 }
 
 - (void)addBundleItemView:(JAPDVBundleSingleItem *)itemView
@@ -131,7 +131,7 @@
         }
     }
     NSString* totalText = [NSString stringWithFormat:@"%@", [RICountryConfiguration formatPrice:[NSNumber numberWithFloat:total] country:[RICountryConfiguration getCurrentConfiguration]]];
-    [self.buyBundleLine.label setText:totalText];
+    [self.buyBundleLine setTitle:totalText];
     [self.buyBundleLine addTarget:self action:@selector(buyBundleCombo) forControlEvents:UIControlEventTouchUpInside];
     [self.buyBundleLine setY:CGRectGetMaxY(self.bundlesScrollView.frame)];
     [self setHeight:CGRectGetMaxY(self.buyBundleLine.frame)];

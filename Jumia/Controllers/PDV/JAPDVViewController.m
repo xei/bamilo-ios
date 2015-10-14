@@ -655,6 +655,7 @@ JAActivityViewControllerDelegate
     [self.productInfoSection addSpecificationsTarget:self action:@selector(goToDetails)];
     [self.productInfoSection addSizeTarget:self action:@selector(showSizePicker)];
     [self.productInfoSection addVariationsTarget:self action:@selector(goToVariationsScreen)];
+    [self.productInfoSection addOtherOffersTarget:self action:@selector(goToOtherSellersScreen)];
     
     [self.productInfoSection setY:scrollViewY];
     
@@ -671,8 +672,6 @@ JAActivityViewControllerDelegate
     if (VALID_NOTEMPTY(self.productBundle, RIBundle)) {
         CGFloat bundleSingleItemStart = 5.0f;
         self.bundleSingleItemsArray = [NSMutableArray new];
-
-        BOOL atLeastOneProductHasSize = NO;
         
         for(int i= 0;
             i<self.productBundle.bundleProducts.count;
@@ -737,12 +736,15 @@ JAActivityViewControllerDelegate
             bundleSingleItemStart += bundleSingleItem.frame.size.width + 5.0f;
         }
         
-        if (atLeastOneProductHasSize) {
-            self.bundleLayout = [[JAPDVBundles alloc] initWithFrame:CGRectMake(0, scrollViewY, self.mainScrollView.width, 300) withSize:YES];
-        } else {
-            self.bundleLayout = [[JAPDVBundles alloc] initWithFrame:CGRectMake(0, scrollViewY, self.mainScrollView.width, 300) withSize:NO];
+        
+        self.bundleLayout = [[JAPDVBundles alloc] initWithFrame:CGRectMake(0, scrollViewY, self.mainScrollView.width, 300) withSize:NO];
+        
+#warning TODO String
+        if (self.product.fashion) {
+            [self.bundleLayout setHeaderText:[@"Buy the look" uppercaseString]];
+        }else{
+            [self.bundleLayout setHeaderText:[@"Combos" uppercaseString]];
         }
-        [self.bundleLayout setHeaderText:[@"Buy the look" uppercaseString]];
         
         for (JAPDVBundleSingleItem* singleItem in self.bundleSingleItemsArray) {
             [self.bundleLayout addBundleItemView:singleItem];
@@ -942,6 +944,11 @@ JAActivityViewControllerDelegate
         }
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenProductVariationsScreen object:obj userInfo:userInfo];
+}
+
+- (void)goToOtherSellersScreen
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenOtherOffers object:self.product];
 }
 
 - (void)shareProduct

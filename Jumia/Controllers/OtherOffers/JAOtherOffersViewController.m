@@ -35,7 +35,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self.view setBackgroundColor:[UIColor whiteColor]];
     self.navBarLayout.showBackButton = YES;
     
     self.flowLayout = [JAProductListFlowLayout new];
@@ -52,9 +52,6 @@
     self.collectionView.dataSource = self;
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"JAOfferCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"offerCell"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"JAOfferCollectionViewCell_ipad_portrait" bundle:nil] forCellWithReuseIdentifier:@"offerCell_ipad_portrait"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"JAOfferCollectionViewCell_ipad_landscape" bundle:nil] forCellWithReuseIdentifier:@"offerCell_ipad_landscape"];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -79,13 +76,13 @@
                                       self.view.frame.size.width,
                                       1)];
     
-    CGFloat currentY = 15.0f;
-    CGFloat horizontalMargin = 12.0f;
+    CGFloat currentY = 10.0f;
+    CGFloat horizontalMargin = 16.0f;
     
     if (ISEMPTY(self.brandLabel)) {
         self.brandLabel = [UILabel new];
-        self.brandLabel.textColor = UIColorFromRGB(0x666666);
-        self.brandLabel.font = [UIFont fontWithName:kFontMediumName size:14.0f];
+        self.brandLabel.textColor = JABlackColor;
+        self.brandLabel.font = JAList1Font;
         [self.topView addSubview:self.brandLabel];
     }
     self.brandLabel.text = self.product.brand;
@@ -99,8 +96,8 @@
     
     if (ISEMPTY(self.nameLabel)) {
         self.nameLabel = [UILabel new];
-        self.nameLabel.textColor = UIColorFromRGB(0x666666);
-        self.nameLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
+        self.nameLabel.textColor = JABlack800Color;
+        self.nameLabel.font = JACaptionFont;
         self.nameLabel.numberOfLines = -1;
         [self.topView addSubview:self.nameLabel];
     }
@@ -124,41 +121,40 @@
                                           self.topView.frame.size.width,
                                           1);
 
+    currentY += self.separatorView.frame.size.height;
     
-    currentY += self.separatorView.frame.size.height + 12.0f;
-    
-    if (ISEMPTY(self.offersFromLabel)) {
-        self.offersFromLabel = [UILabel new];
-        self.offersFromLabel.textColor = UIColorFromRGB(0x666666);
-        self.offersFromLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
-        if (VALID_NOTEMPTY(self.productOffers, NSArray)) {
-            self.offersFromLabel.text = [NSString stringWithFormat:STRING_NUMBER_OFFERS_FROM, self.productOffers.count];
-        } else {
-            self.offersFromLabel.text = @" ";
-        }
-        [self.topView addSubview:self.offersFromLabel];
-    }
-    [self.offersFromLabel setFrame:CGRectMake(horizontalMargin,
-                                              currentY,
-                                              self.topView.frame.size.width - 2*horizontalMargin,
-                                              1)];
-    [self.offersFromLabel sizeToFit];
-    
-    if (ISEMPTY(self.priceLabel)) {
-        self.priceLabel = [UILabel new];
-        self.priceLabel.textColor = UIColorFromRGB(0xcc0000);
-        self.priceLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
-        [self.topView addSubview:self.priceLabel];
-    }
-    self.priceLabel.text = self.product.offersMinPriceFormatted;
-    [self.priceLabel setFrame:CGRectMake(CGRectGetMaxX(self.offersFromLabel.frame) + 4.0f,
-                                         currentY,
-                                         self.topView.frame.size.width - 2*horizontalMargin,
-                                         1)];
-    [self.priceLabel sizeToFit];
-
-    
-    currentY += self.priceLabel.frame.size.height + 14.0f;
+//    if (ISEMPTY(self.offersFromLabel)) {
+//        self.offersFromLabel = [UILabel new];
+//        self.offersFromLabel.textColor = UIColorFromRGB(0x666666);
+//        self.offersFromLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
+//        if (VALID_NOTEMPTY(self.productOffers, NSArray)) {
+//            self.offersFromLabel.text = [NSString stringWithFormat:STRING_NUMBER_OFFERS_FROM, self.productOffers.count];
+//        } else {
+//            self.offersFromLabel.text = @" ";
+//        }
+//        [self.topView addSubview:self.offersFromLabel];
+//    }
+//    [self.offersFromLabel setFrame:CGRectMake(horizontalMargin,
+//                                              currentY,
+//                                              self.topView.frame.size.width - 2*horizontalMargin,
+//                                              1)];
+//    [self.offersFromLabel sizeToFit];
+//    
+//    if (ISEMPTY(self.priceLabel)) {
+//        self.priceLabel = [UILabel new];
+//        self.priceLabel.textColor = UIColorFromRGB(0xcc0000);
+//        self.priceLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
+//        [self.topView addSubview:self.priceLabel];
+//    }
+//    self.priceLabel.text = self.product.offersMinPriceFormatted;
+//    [self.priceLabel setFrame:CGRectMake(CGRectGetMaxX(self.offersFromLabel.frame) + 4.0f,
+//                                         currentY,
+//                                         self.topView.frame.size.width - 2*horizontalMargin,
+//                                         1)];
+//    [self.priceLabel sizeToFit];
+//
+//    
+//    currentY += self.priceLabel.frame.size.height + 14.0f;
     
     [self.topView setFrame:CGRectMake(self.topView.frame.origin.x,
                                       self.topView.frame.origin.y,
@@ -220,15 +216,7 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
-            self.cellIdentifier = @"offerCell_ipad_landscape";
-        } else {
-            self.cellIdentifier = @"offerCell_ipad_portrait";
-        }
-    } else {
-        self.cellIdentifier = @"offerCell";
-    }
+    self.cellIdentifier = @"offerCell";
     
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
@@ -259,29 +247,29 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self getLayoutItemSizeForInterfaceOrientation:self.interfaceOrientation];
-}
-
-- (CGSize)getLayoutItemSizeForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    CGFloat width = 0.0f;
-    CGFloat height = 0.0f;
+//    return [self getLayoutItemSizeForInterfaceOrientation:self.interfaceOrientation];
+//}
+//
+//- (CGSize)getLayoutItemSizeForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+//{
+//    CGFloat width = 0.0f;
+//    CGFloat height = 0.0f;
+//    
+//    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+//        
+//        if(UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
+//            width = 375.0f;
+//            height = 104.0f;
+//        } else {
+//            width = 333.0f;
+//            height = 104.0f;
+//        }
+//    } else {
+//        width = self.view.frame.size.width - 12.f;
+//        height = 104.0f;
+//    }
     
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        
-        if(UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
-            width = 375.0f;
-            height = 104.0f;
-        } else {
-            width = 333.0f;
-            height = 104.0f;
-        }
-    } else {
-        width = self.view.frame.size.width - 12.f;
-        height = 104.0f;
-    }
-    
-    return CGSizeMake(width, height);
+    return CGSizeMake(self.collectionView.width, 104.f);
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
