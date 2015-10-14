@@ -1169,6 +1169,50 @@
     }
 }
 
+ + (NSString *)getRatingsDetails:(NSString *)sku successBlock:(void (^)(NSDictionary *))successBlock andFailureBlock:(void (^)(RIApiResponse, NSArray *))failureBlock
+{
+    NSString *finalUrl = [NSString stringWithFormat:@"%@%@catalog/details?sku=%@&rating=1", [RIApi getCountryUrlInUse], RI_API_VERSION, sku];
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl]
+                                                            parameters:nil
+                                                        httpMethodPost:YES
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheDefaultTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              
+                                                              NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                              if (VALID_NOTEMPTY(metadata, NSDictionary))
+                                                              {
+                                                                  NSDictionary* data = [metadata objectForKey:@"data"];
+                                                                  if (VALID_NOTEMPTY(data, NSDictionary)) {
+                                                                      NSDictionary* ratings = [data objectForKey:@"ratings"];
+                                                                      if (VALID_NOTEMPTY(ratings, NSDictionary)) {
+                                                                          NSDictionary* stars = [ratings objectForKey:@"by_stars"];
+                                                                          if (VALID_NOTEMPTY(stars, NSDictionary)) {
+                                                                              successBlock(stars);
+                                                                              return;
+                                                                          }
+                                                                      }
+                                                                  }
+                                                              }
+                                                              failureBlock(apiResponse, nil);
+                                                              
+                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
+                                                              if(NOTEMPTY(errorJsonObject))
+                                                              {
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+                                                              } else if(NOTEMPTY(errorObject))
+                                                              {
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(apiResponse, errorArray);
+                                                              } else
+                                                              {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }
+                                                          }];
+                                                    
+}
+
 #pragma mark - Save method
 
 + (void)saveProduct:(RIProduct *)product andContext:(BOOL)save
