@@ -17,5 +17,6 @@
 - (instancetype)initWithFrame:(CGRect)frame orientation:(UIInterfaceOrientation)orientation;
 
 - (void)setButtonText:(NSString *)text target:(id)target action:(SEL)selector;
+- (void)disableButton;
 
 @end
