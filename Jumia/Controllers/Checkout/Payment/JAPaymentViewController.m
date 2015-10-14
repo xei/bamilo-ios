@@ -440,6 +440,13 @@ UITextFieldDelegate>
                                               self.useCouponButton.frame.size.width,
                                               self.useCouponButton.frame.size.height)];
     
+    if (VALID(self.cart.couponMoneyValue, NSNumber)) {
+        self.couponTextField.text = self.cart.couponCode;
+        [self.useCouponButton setTitle:STRING_REMOVE forState:UIControlStateNormal];
+        [self.couponTextField setEnabled:NO];
+        [self.useCouponButton setEnabled:YES];
+    }
+    
     [_bottomView setFrame:CGRectMake(0.0f,
                                             self.view.frame.size.height - 56,
                                             width,
@@ -544,7 +551,7 @@ UITextFieldDelegate>
     [self showLoading];
     NSString *voucherCode = [self.couponTextField text];
     
-    if(VALID_NOTEMPTY([[self cart] couponMoneyValue], NSNumber) && 0.0f < [[[self cart] couponMoneyValue] floatValue])
+    if(VALID([[self cart] couponMoneyValue], NSNumber))
     {
         [RICart removeVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;

@@ -515,7 +515,7 @@
     
     [self.cartScrollView addSubview:self.couponView];
     
-    if(VALID_NOTEMPTY([[self cart] couponMoneyValue], NSNumber) && 0.0f < [[[self cart] couponMoneyValue] floatValue])
+    if(VALID([[self cart] couponMoneyValue], NSNumber))
     {
         [self.useCouponButton setTitle:STRING_REMOVE forState:UIControlStateNormal];
         
@@ -802,7 +802,7 @@
         nextElementPosY = CGRectGetMaxY(self.extraCostsLabel.frame) + 4.f;
     }
     
-    if(VALID_NOTEMPTY([[self cart] couponMoneyValue], NSNumber) && 0.0f < [[[self cart] couponMoneyValue] floatValue])
+    if(VALID([[self cart] couponMoneyValue], NSNumber))
     {
         if (!self.couponLabel) {
             self.couponLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -1098,7 +1098,7 @@
     [self showLoading];
     NSString *voucherCode = [self.couponTextField text];
     
-    if(VALID_NOTEMPTY([[self cart] couponMoneyValue], NSNumber) && 0.0f < [[[self cart] couponMoneyValue] floatValue])
+    if(VALID([[self cart] couponMoneyValue], NSNumber))
     {
         [RICart removeVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;
