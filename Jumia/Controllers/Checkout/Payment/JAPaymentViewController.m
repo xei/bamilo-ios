@@ -624,7 +624,7 @@ UITextFieldDelegate>
                     
                     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                     [trackingDictionary setValue:self.selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
-                    [trackingDictionary setValue:self.cart.cartValue forKey:kRIEventTotalTransactionKey];
+                    [trackingDictionary setValue:self.cart.cartValueEuroConverted forKey:kRIEventTotalTransactionKey];
                     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentFail]
                                                               data:[trackingDictionary copy]];
                     

@@ -240,7 +240,7 @@
             [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
             [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
             [trackingDictionary setValue:cartItem.variation forKey:kRIEventSizeKey];
-            [trackingDictionary setValue:[cartData.cartValue stringValue] forKey:kRIEventTotalCartKey];
+            [trackingDictionary setValue:cartData.cartValueEuroConverted forKey:kRIEventTotalCartKey];
 
             
             if ([RICustomer checkIfUserIsLogged]) {
@@ -288,7 +288,7 @@
         }
         
         [trackingDictionary setValue:[NSNumber numberWithInteger:[[cartData cartItems] count]] forKey:kRIEventQuantityKey];
-        [trackingDictionary setValue:[cartData cartValue] forKey:kRIEventTotalCartKey];
+        [trackingDictionary setValue:cartData.cartValueEuroConverted forKey:kRIEventTotalCartKey];
         
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCart]
                                                   data:[trackingDictionary copy]];
@@ -1006,7 +1006,7 @@
                              
                              [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
                              [trackingDictionary setValue:[product.quantity stringValue] forKey:kRIEventQuantityKey];
-                             [trackingDictionary setValue:cartValue forKey:kRIEventTotalCartKey];
+                             [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
                              
                              [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromCart]
                                                                        data:[trackingDictionary copy]];
@@ -1391,7 +1391,7 @@
         }
         [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
         [trackingDictionary setValue:@"Cart" forKey:kRIEventLocationKey];
-        [trackingDictionary setValue:self.cart.cartValue  forKey:kRIEventTotalCartKey];
+        [trackingDictionary setValue:self.cart.cartValueEuroConverted  forKey:kRIEventTotalCartKey];
         
         NSInteger quantity = 0;
         if(newQuantity > [[self.currentItem quantity] integerValue])
