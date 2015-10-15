@@ -35,6 +35,12 @@
     return _smallButtonsArray;
 }
 
+- (void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    [self reloadFrame:frame];
+}
+
 - (void)reloadFrame:(CGRect)frame
 {
     [self setBackgroundColor:JABlackColor];
