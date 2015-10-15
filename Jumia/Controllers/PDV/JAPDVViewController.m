@@ -1844,7 +1844,7 @@ JAActivityViewControllerDelegate
     [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];
     [trackingDictionary setValue:type forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-    [trackingDictionary setValue:self.product.price forKey:kRIEventValueKey];
+    [trackingDictionary setValue:self.product.priceEuroConverted forKey:kRIEventValueKey];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
     [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
     [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
@@ -1911,7 +1911,7 @@ JAActivityViewControllerDelegate
     [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"RelatedItem" forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-    [trackingDictionary setValue:product.price forKey:kRIEventValueKey];
+    [trackingDictionary setValue:product.priceEuroConverted forKey:kRIEventValueKey];
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRelatedItem]
                                               data:[trackingDictionary copy]];

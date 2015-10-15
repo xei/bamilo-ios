@@ -211,7 +211,7 @@
         [trackingDictionary setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
         [trackingDictionary setValue:cartItem.variation forKey:kRIEventSizeKey];
         [trackingDictionary setValue:isNewCustomer forKey:kRIEventNewCustomerKey];
-        [trackingDictionary setValue:[self.cart.cartValue stringValue] forKey:kRIEventTotalTransactionKey];
+        [trackingDictionary setValue:[self.cart.cartValueEuroConverted stringValue] forKey:kRIEventTotalTransactionKey];
         [trackingDictionary setValue:self.cart.orderNr forKey:kRIEventTransactionIdKey];
         
         if ([RICustomer checkIfUserIsLogged]) {

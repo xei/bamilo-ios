@@ -488,7 +488,7 @@
         nextYPos = CGRectGetMaxY(extraCostsLabel.frame);
     }
     
-    if (self.cart.couponMoneyValue.floatValue != 0) {
+    if (self.cart.couponMoneyValue != nil) {
         UILabel *couponLabel = [UILabel new];
         [couponLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
         [couponLabel setTextColor:UIColorFromRGB(0x3aaa35)];
