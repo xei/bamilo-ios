@@ -263,7 +263,7 @@
         uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO;
         uniqueCountry.isLive = YES;
 #if defined(STAGING) && STAGING
-        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO_INTEGRATION_MOBILE;
+        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO_STAGING;
         uniqueCountry.isLive = NO;
         uniqueCountry.userAgentInjection = RI_UNIQUE_COUNTRY_USER_AGENT_INJECTION_BAMILO_INTEGRATION_MOBILE;
 #endif
