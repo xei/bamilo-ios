@@ -16,7 +16,7 @@
 
 - (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize;
 
-- (void)setPriceWithNewValue:(NSString*)newValue andOldValue:(NSString*)oldValue;
+- (void)setSpecialPrice:(NSString*)special andPrice:(NSString*)price;
 
 - (void)addVariationsTarget:(id)target action:(SEL)action;
 

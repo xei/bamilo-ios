@@ -70,19 +70,13 @@
     /*
      *  PRICE
      */
-    
     _priceLine = [[JAProductInfoPriceLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
     [_priceLine setFashion:product.fashion];
     
     if (VALID_NOTEMPTY(product.priceRange, NSString)) {
         [_priceLine setTitle:product.priceRange];
-
     } else {
-    
-        [_priceLine setTitle:product.priceFormatted];
-        if (VALID_NOTEMPTY(product.specialPriceFormatted, NSString)) {
-            [self setPriceWithNewValue:product.specialPriceFormatted andOldValue:product.priceFormatted];
-        }
+        [self setSpecialPrice:product.specialPriceFormatted andPrice:product.priceFormatted];
     }
     if (VALID_NOTEMPTY(product.maxSavingPercentage, NSString)) {
         NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
@@ -166,10 +160,14 @@
     if (VALID_NOTEMPTY(product.productSimples, NSOrderedSet) && product.productSimples.count > 1)
     {
         NSString *sizesText = @"";
-        int i = 0;
-        for (RIProductSimple *simple in product.productSimples) {
-            sizesText = i==0?[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, simple.variation]:[NSString stringWithFormat:@"%@, %@", sizesText, simple.variation];
-            i++;
+        if (VALID_NOTEMPTY(preSelectedSize, NSString)) {
+            sizesText = [NSString stringWithFormat:STRING_SIZE_WITH_VALUE, preSelectedSize];
+        } else {
+            int i = 0;
+            for (RIProductSimple *simple in product.productSimples) {
+                sizesText = i==0?[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, simple.variation]:[NSString stringWithFormat:@"%@, %@", sizesText, simple.variation];
+                i++;
+            }
         }
         JAProductInfoSingleLine *singleSizes = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
         [singleSizes setTopSeparatorVisibility:YES];
@@ -274,12 +272,13 @@
         [_sizesLabel sizeToFit];
     }
 }
-- (void)setPriceWithNewValue:(NSString*)newValue andOldValue:(NSString*)oldValue
+- (void)setSpecialPrice:(NSString*)special andPrice:(NSString*)price
 {
-    [_priceLine setTitle:newValue];
+    [_priceLine setTitle:price];
     
-    if (VALID_NOTEMPTY(oldValue, NSString)) {
-        [_priceLine setOldPrice:oldValue];
+    if (VALID_NOTEMPTY(special, NSString)) {
+        [_priceLine setOldPrice:price];
+        [_priceLine setTitle:special];
     } else {
         [_priceLine setOldPrice:@""];
     }

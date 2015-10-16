@@ -637,6 +637,10 @@ JAActivityViewControllerDelegate
     self.productInfoSection = [[JAPDVProductInfo alloc] init];
     CGRect productInfoSectionFrame = CGRectMake(0, 6, self.view.width, 0);
     [self.productInfoSection setupWithFrame:productInfoSectionFrame product:self.product preSelectedSize:self.preSelectedSize];
+
+    if (VALID_NOTEMPTY(self.currentSimple, RIProductSimple)) {
+        [self.productInfoSection setSpecialPrice:self.currentSimple.specialPriceFormatted andPrice:self.currentSimple.priceFormatted];
+    }
     [self.productInfoSection addReviewsTarget:self action:@selector(goToReviews)];
     [self.productInfoSection addSpecificationsTarget:self action:@selector(goToSpecifications)];
     [self.productInfoSection addDescriptionTarget:self action:@selector(goToDescription)];
@@ -1006,7 +1010,7 @@ JAActivityViewControllerDelegate
 
 - (void)addToCart
 {
-    if(VALID_NOTEMPTY(self.product.productSimples, NSOrderedSet) && self.product.productSimples.count > 1 && !VALID_NOTEMPTY(self.productInfoSection.sizesText, NSString))
+    if(VALID_NOTEMPTY(self.product.productSimples, NSOrderedSet) && self.product.productSimples.count > 1 && !VALID_NOTEMPTY(self.preSelectedSize, NSString))
     {
         self.openPickerFromCart = YES;
         [self showSizePicker];
@@ -1168,14 +1172,11 @@ JAActivityViewControllerDelegate
 {
     self.currentSimple = [self.pickerDataSource objectAtIndex:selectedRow];
     
-    [self.productInfoSection setPriceWithNewValue:self.currentSimple.specialPriceFormatted
-                                      andOldValue:self.currentSimple.priceFormatted];
-    
     NSString* option = self.currentSimple.variation;
     if (ISEMPTY(option)) {
         option = @"";
     }
-    
+    self.preSelectedSize = option;
     
     if (-1 == self.indexOfBundleRelatedToSizePicker) {
         //this means the picker was related to the main pdv product
