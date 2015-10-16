@@ -48,7 +48,7 @@
 
 - (void)initViews
 {
-    self.grid = YES;
+    self.cellType = JACatalogCollectionViewGridCell;
     [super initViews];
 }
 

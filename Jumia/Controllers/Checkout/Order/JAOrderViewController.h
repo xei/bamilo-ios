@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RICheckout.h"
+#import "RICart.h"
 
 @interface JAOrderViewController : JABaseViewController
 
-@property (nonatomic, strong)RICheckout* checkout;
+@property (nonatomic, strong)RICart* cart;
 
 @end

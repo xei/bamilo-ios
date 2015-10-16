@@ -84,6 +84,8 @@
 #define kShowSizeGuideNotification @"NOTIFICATION_SHOW_SIZE_GUIDE"
 #define kProductChangedNotification @"NOTIFICATION_PRODUCT_CHANGED"
 #define kOpenSpecificationsScreen @"NOTIFICATION_SHOW_SPECIFICATIONS_SCREEN"
+#define kOpenProductBundlesScreen @"NOTIFICATION_SHOW_BUNDLES_SCREEN"
+#define kOpenProductVariationsScreen @"NOTIFICATION_SHOW_VARIATIONS_SCREEN"
 
 //teasers
 #define kDidSelectTeaserWithCatalogUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_CATALOG_URL"
@@ -151,3 +153,26 @@
 
 // Colors - Text
 #define JALabelGrey UIColorFromRGB(0xcccccc)
+
+
+#define JABlackColor UIColorFromRGB(0x000000)
+#define JABlack900Color UIColorFromRGB(0x202020)
+#define JABlack800Color UIColorFromRGB(0x808080)
+#define JABlack700Color UIColorFromRGB(0xC5C5C5)
+#define JABlack400Color UIColorFromRGB(0xE2E2E2)
+#define JABlack300Color UIColorFromRGB(0xF0F0F0)
+#define JABlack200Color UIColorFromRGB(0xF5F5F5)
+#define JAOrange1Color UIColorFromRGB(0xf68b1e)
+#define JAGreen1Color UIColorFromRGB(0xa3cf62)
+#define JABlue1Color UIColorFromRGB(0x416998)
+#define JASysBlueColor UIColorFromRGB(0x007aff)
+
+#define JADisplay1Font [UIFont fontWithName:@"HelveticaNeue" size:23]
+#define JADisplay2Font [UIFont fontWithName:@"HelveticaNeue" size:19]
+#define JAList1Font [UIFont fontWithName:@"HelveticaNeue-Medium" size:16]
+#define JAList2Font [UIFont fontWithName:@"HelveticaNeue" size:16]
+#define JABody1Font [UIFont fontWithName:@"HelveticaNeue-Bold" size:13]
+#define JABody2Font [UIFont fontWithName:@"HelveticaNeue-Medium" size:13]
+#define JABody3Font [UIFont fontWithName:@"HelveticaNeue" size:13]
+#define JACaptionFont [UIFont fontWithName:@"HelveticaNeue" size:11]
+

@@ -7,40 +7,29 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JAClickableView.h"
 
 @class RIProduct;
 
 @interface JAPDVProductInfo : UIView
 
-@property (weak, nonatomic) IBOutlet UILabel *oldPriceLabel;
-@property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
-@property (weak, nonatomic) IBOutlet JAClickableView *sizeClickableView;
-@property (weak, nonatomic) IBOutlet JAClickableView *reviewsClickableView;
-@property (weak, nonatomic) IBOutlet JAClickableView* specificationsClickableView;
-@property (weak, nonatomic) IBOutlet JAClickableView *otherOffersClickableView;
-@property (weak, nonatomic) IBOutlet UIImageView *star1;
-@property (weak, nonatomic) IBOutlet UIImageView *star2;
-@property (weak, nonatomic) IBOutlet UIImageView *star3;
-@property (weak, nonatomic) IBOutlet UIImageView *star4;
-@property (weak, nonatomic) IBOutlet UIImageView *star5;
-@property (weak, nonatomic) IBOutlet UILabel *numberOfReviewsLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *goToReviewsImageView;
-@property (weak, nonatomic) IBOutlet UILabel *specificationsLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *goToSpecificationsImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *priceSeparator;
-@property (weak, nonatomic) IBOutlet UIImageView *sizeImageViewSeparator;
-@property (weak, nonatomic) IBOutlet UIImageView *ratingsSeparator;
-
-@property (weak, nonatomic) IBOutlet UIButton *productFeaturesMore;
-@property (weak, nonatomic) IBOutlet UIButton *productDescriptionMore;
-@property (weak, nonatomic) IBOutlet UIImageView *goToOtherOffersImageView;
-
-+ (JAPDVProductInfo *)getNewPDVProductInfoSection;
+@property (nonatomic) NSString *sizesText;
 
 - (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize;
 
-- (void)setPriceWithNewValue:(NSString *)newValue
-                 andOldValue:(NSString *)oldValue;
+- (void)setPriceWithNewValue:(NSString*)newValue andOldValue:(NSString*)oldValue;
+
+- (void)addVariationsTarget:(id)target action:(SEL)action;
+
+- (void)addSizeTarget:(id)target action:(SEL)action;
+
+- (void)addReviewsTarget:(id)target action:(SEL)action;
+
+- (void)addSellerReviewsTarget:(id)target action:(SEL)action;
+
+- (void)addOtherOffersTarget:(id)target action:(SEL)action;
+
+- (void)addSpecificationsTarget:(id)target action:(SEL)action;
+
+- (void)addDescriptionTarget:(id)target action:(SEL)action;
 
 @end

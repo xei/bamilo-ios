@@ -16,19 +16,32 @@
 
 @implementation JACatalogTopView
 
-@synthesize gridSelected=_gridSelected;
-- (void)setGridSelected:(BOOL)gridSelected
+@synthesize cellTypeSelected = _cellTypeSelected;
+- (void)setCellTypeSelected:(JACatalogCollectionViewCellType)cellTypeSelected
 {
-    _gridSelected=gridSelected;
-    if (gridSelected) {
-        [self.viewModeButton setImage:[UIImage imageNamed:@"listIcon_normal"] forState:UIControlStateNormal];
-        [self.viewModeButton setImage:[UIImage imageNamed:@"listIcon_highlighted"] forState:UIControlStateSelected];
-        [self.viewModeButton setImage:[UIImage imageNamed:@"listIcon_highlighted"] forState:UIControlStateHighlighted];
-    } else {
-        [self.viewModeButton setImage:[UIImage imageNamed:@"gridIcon_normal"] forState:UIControlStateNormal];
-        [self.viewModeButton setImage:[UIImage imageNamed:@"gridIcon_highlighted"] forState:UIControlStateSelected];
-        [self.viewModeButton setImage:[UIImage imageNamed:@"gridIcon_highlighted"] forState:UIControlStateHighlighted];
+    _cellTypeSelected = cellTypeSelected;
+    
+    switch (cellTypeSelected) {
+        case JACatalogCollectionViewPictureCell:
+            [self.viewModeButton setImage:[UIImage imageNamed:@"view_list"] forState:UIControlStateNormal];
+            [self.viewModeButton setImage:[UIImage imageNamed:@"view_list_active"] forState:UIControlStateSelected];
+            [self.viewModeButton setImage:[UIImage imageNamed:@"view_list_active"] forState:UIControlStateHighlighted];
+            break;
+            
+            
+        case  JACatalogCollectionViewListCell:
+            [self.viewModeButton setImage:[UIImage imageNamed:@"view_grid"] forState:UIControlStateNormal];
+            [self.viewModeButton setImage:[UIImage imageNamed:@"view_grid_active"] forState:UIControlStateSelected];
+            [self.viewModeButton setImage:[UIImage imageNamed:@"view_grid_active"] forState:UIControlStateHighlighted];
+            break;
+            
+        case JACatalogCollectionViewGridCell:
+            [self.viewModeButton setImage:[UIImage imageNamed:@"view_singleline"] forState:UIControlStateNormal];
+            [self.viewModeButton setImage:[UIImage imageNamed:@"view_singleline_active"] forState:UIControlStateSelected];
+            [self.viewModeButton setImage:[UIImage imageNamed:@"view_singleline_active"] forState:UIControlStateHighlighted];
+            break;
     }
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(viewModeChanged)]) {
         [self.delegate viewModeChanged];
     }
@@ -98,7 +111,7 @@
     [self.filterButton addTarget:self action:@selector(filterButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.viewModeButton addTarget:self action:@selector(viewModeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    self.gridSelected = NO;
+    self.cellTypeSelected = JACatalogCollectionViewListCell;
     
     self.separatorView.backgroundColor = UIColorFromRGB(0xcccccc);
 }
@@ -194,7 +207,9 @@
 - (void)viewModeButtonPressed:(id)sender
 {
     //reverse selection
-    self.gridSelected = !self.gridSelected;
+    if (self.cellTypeSelected++ == JACatalogCollectionViewPictureCell) {
+        self.cellTypeSelected = JACatalogCollectionViewListCell;
+    }
 }
 
 

@@ -48,6 +48,7 @@
 #import "JAPriceFilterViewController.h"
 #import "JAGenericFilterViewController.h"
 #import "JAProductDetailsViewController.h"
+#import "JATabNavigationViewController.h"
 #import "JARatingsViewController.h"
 #import "JANewRatingViewController.h"
 #import "JASubCategoriesViewController.h"
@@ -57,6 +58,8 @@
 #import "JASellerRatingsViewController.h"
 #import "JANewSellerRatingViewController.h"
 #import "JAShopWebViewController.h"
+#import "JABundlesViewController.h"
+#import "JAPDVVariationsViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -312,6 +315,16 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showNewRatingScreen:)
                                                  name:kShowNewRatingScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showProductBundlesScreen:)
+                                                 name:kOpenProductBundlesScreen
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showProductVariationsScreen:)
+                                                 name:kOpenProductVariationsScreen
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -980,9 +993,7 @@
     {
         JAOrderViewController *orderVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"orderViewController"];
         
-        if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.object, RICheckout)) {
-            orderVC.checkout = notification.object;
-        }
+        orderVC.cart = [notification.userInfo objectForKey:@"cart"];
         
         [self pushViewController:orderVC animated:YES];
     }
@@ -998,8 +1009,7 @@
         
         JAExternalPaymentsViewController *externalPaymentsVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"externalPaymentsViewController"];
         
-        externalPaymentsVC.checkout = [notification.userInfo objectForKey:@"checkout"];
-        externalPaymentsVC.paymentInformation = [notification.userInfo objectForKey:@"payment_information"];
+        externalPaymentsVC.cart = [notification.userInfo objectForKey:@"cart"];
         
         [self pushViewController:externalPaymentsVC animated:YES];
     }
@@ -1015,9 +1025,7 @@
         
         JAThanksViewController *thanksVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"thanksViewController"];
         
-        thanksVC.cart = self.cart;
-        thanksVC.checkout = [notification.userInfo objectForKey:@"checkout"];
-        thanksVC.orderNumber = [notification.userInfo objectForKey:@"order_number"];
+        thanksVC.cart = [notification.userInfo objectForKey:@"cart"];
         
         [self pushViewController:thanksVC animated:YES];
     }
@@ -1152,17 +1160,42 @@
 - (void)showProductSpecificationScreen:(NSNotification*)notification
 {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAProductDetailsViewController class]])
+    if (![topViewController isKindOfClass:[JATabNavigationViewController class]])
     {
-        JAProductDetailsViewController *productDetailsViewController = [[JAProductDetailsViewController alloc] initWithNibName:@"JAProductDetailsViewController" bundle:nil];
+        JATabNavigationViewController *productDetailsViewController = [[JATabNavigationViewController alloc] init];
         
         if ([notification.userInfo objectForKey:@"product"]) {
             productDetailsViewController.product = [notification.userInfo objectForKey:@"product"];
+        }
+        if ([notification.userInfo objectForKey:@"product.screen"]) {
+            if ([[notification.userInfo objectForKey:@"product.screen"] isEqualToString:@"description"]) {
+                [productDetailsViewController setTabScreenEnum:kTabScreenDescription];
+            }else if ([[notification.userInfo objectForKey:@"product.screen"] isEqualToString:@"specifications"]) {
+                [productDetailsViewController setTabScreenEnum:kTabScreenSpecifications];
+            }else if ([[notification.userInfo objectForKey:@"product.screen"] isEqualToString:@"reviews"]) {
+                [productDetailsViewController setTabScreenEnum:kTabScreenReviews];
+            }
         }
         
         [self pushViewController:productDetailsViewController animated:YES];
     }
 }
+
+
+//- (void)showProductSpecificationScreen:(NSNotification*)notification
+//{
+//    UIViewController *topViewController = [self topViewController];
+//    if (![topViewController isKindOfClass:[JAProductDetailsViewController class]])
+//    {
+//        JAProductDetailsViewController *productDetailsViewController = [[JAProductDetailsViewController alloc] initWithNibName:@"JAProductDetailsViewController" bundle:nil];
+//        
+//        if ([notification.userInfo objectForKey:@"product"]) {
+//            productDetailsViewController.product = [notification.userInfo objectForKey:@"product"];
+//        }
+//        
+//        [self pushViewController:productDetailsViewController animated:YES];
+//    }
+//}
 
 - (void)showRatingsScreen:(NSNotification*)notification
 {
@@ -1244,6 +1277,56 @@
         }
         
         [self pushViewController:otherOffersVC animated:YES];
+    }
+}
+
+- (void)showProductBundlesScreen:(NSNotification *)notification
+{
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JABundlesViewController class]]) {
+        
+        JABundlesViewController* bundlesVC = [[JABundlesViewController alloc] init];
+        
+        if (notification.object && [notification.object isKindOfClass:[RIProduct class]]) {
+            bundlesVC.product = notification.object;
+        }
+        if (VALID_NOTEMPTY(notification.userInfo, NSDictionary)) {
+            if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"product.bundles"], NSArray)) {
+                bundlesVC.bundles = [notification.userInfo objectForKey:@"product.bundles"];
+            }
+            if ([notification.userInfo objectForKey:@"product.bundles.onChange"]) {
+                [bundlesVC onBundleSelectionChanged:[notification.userInfo objectForKey:@"product.bundles.onChange"]];
+            }
+            if ([notification.userInfo objectForKeyedSubscript:@"product.bundles.selected"]) {
+                [bundlesVC setSelectedItems:[notification.userInfo objectForKey:@"product.bundles.selected"]];
+            }
+            if ([notification.userInfo objectForKeyedSubscript:@"product.bundle"]) {
+                [bundlesVC setBundle:[notification.userInfo objectForKey:@"product.bundle"]];
+            }
+        }
+        
+        [self pushViewController:bundlesVC animated:YES];
+    }
+}
+
+
+- (void)showProductVariationsScreen:(NSNotification *)notification
+{
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JAPDVVariationsViewController class]]) {
+        
+        JAPDVVariationsViewController* variationsVC = [[JAPDVVariationsViewController alloc] init];
+        
+        if (notification.object && [notification.object isKindOfClass:[RIProduct class]]) {
+            variationsVC.product = notification.object;
+        }
+        if (VALID_NOTEMPTY(notification.userInfo, NSDictionary)) {
+            if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"product.variations"], NSArray)) {
+                variationsVC.variations = [notification.userInfo objectForKey:@"product.variations"];
+            }
+        }
+        
+        [self pushViewController:variationsVC animated:YES];
     }
 }
 

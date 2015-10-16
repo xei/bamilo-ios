@@ -7,97 +7,147 @@
 //
 
 #import "JAPDVBundles.h"
+#import "JAProductInfoHeaderLine.h"
+#import "JAProductInfoSingleLine.h"
 
-@interface JAPDVBundles()
+@interface JAPDVBundles() {
+    BOOL _withSize;
+    NSMutableArray *_bundlesArray;
+    id _buyBundleTarget;
+    SEL _buyBundleSelector;
+}
 
-@property (weak, nonatomic) IBOutlet UIImageView *titleSeparatorView;
-@property (weak, nonatomic) IBOutlet UIImageView *scrollSeparatorView;
-
+@property (nonatomic) UIScrollView *bundlesScrollView;
+@property (nonatomic) JAProductInfoHeaderLine *headerLine;
+@property (nonatomic) JAProductInfoSingleLine *buyBundleLine;
 
 @end
 
 @implementation JAPDVBundles
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame withSize:(BOOL)withSize
 {
     self = [super initWithFrame:frame];
     
     if (self) {
-        
+        _withSize = withSize;
+        _bundlesArray = [NSMutableArray new];
     }
     
     return self;
 }
 
-
-+ (JAPDVBundles *)getNewPDVBundle
+- (UIScrollView *)bundlesScrollView
 {
-    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JAPDVBundles"
-                                                 owner:nil
-                                               options:nil];
-    
-    for (NSObject *obj in xib) {
-        if ([obj isKindOfClass:[JAPDVBundles class]]) {
-            return (JAPDVBundles *)obj;
-        }
+    if (!VALID_NOTEMPTY(_bundlesScrollView, UIScrollView)) {
+        _bundlesScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.headerLine.height, self.width, 100)];
+        [self addSubview:_bundlesScrollView];
     }
-    
-    return nil;
+    return _bundlesScrollView;
 }
 
-+ (JAPDVBundles *)getNewPDVBundleWithSize
+- (JAProductInfoHeaderLine *)headerLine
 {
-    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JAPDVBundlesWithSize"
-                                                 owner:nil
-                                               options:nil];
-    
-    for (NSObject *obj in xib) {
-        if ([obj isKindOfClass:[JAPDVBundles class]]) {
-            return (JAPDVBundles *)obj;
-        }
+    if (!VALID(_headerLine, JAProductInfoHeaderLine)) {
+        _headerLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, 0, self.width, kProductInfoHeaderLineHeight)];
+#warning TODO String
+        [_headerLine setTitle:[@"Buy the look" uppercaseString]];
+        [self addSubview:_headerLine];
     }
-    
-    return nil;
+    return _headerLine;
 }
 
-
-- (void)setupWithFrame:(CGRect)frame
+- (JAProductInfoSingleLine *)buyBundleLine
 {
-    self.buynowButton.translatesAutoresizingMaskIntoConstraints = YES;
-    CGFloat width = frame.size.width-12.0f;
-    
-    self.layer.cornerRadius = 5.0f;
-    
-    //    [self.separatorView setBackgroundColor: UIColorFromRGB(0xfaa41a)];
-    [self.titleSeparatorView setWidth:width];
-    [self.scrollSeparatorView setWidth:width];
-    self.bundleTitle.font = [UIFont fontWithName:kFontRegularName size:self.bundleTitle.font.pointSize];
-    [self.bundleTitle setTextColor:UIColorFromRGB(0x4e4e4e)];
-    [self setFrame:CGRectMake(self.frame.origin.x,
-                              self.frame.origin.y,
-                              width,
-                              self.frame.size.height)];
-    [self.bundleScrollView setFrame:CGRectMake(self.bundleScrollView.frame.origin.x,
-                                               self.bundleScrollView.frame.origin.y,
-                                               width,
-                                               self.bundleScrollView.frame.size.height)];
-    
-    self.buynowButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [self.buynowButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    [self.buynowButton setTitle:STRING_BUY_NOW forState:UIControlStateNormal];
-    
-    [self.buynowButton setFrame:CGRectMake(width - 6.0f - self.buynowButton.frame.size.width,
-                                           self.buynowButton.frame.origin.y,
-                                           self.buynowButton.frame.size.width,
-                                           self.buynowButton.frame.size.height)];
-    
-    self.bundleTitle.text = STRING_BUNDLE_TITLE;
-    self.totalLabel.font = [UIFont fontWithName:kFontRegularName size:self.totalLabel.font.pointSize];
-    self.totalLabel.text = STRING_BUNDLE_TOTAL_PRICE;
-    [self.totalLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
-    [self.totalLabel setX:6.0f];
-    
-    self.layer.cornerRadius = 5.0f;
+    if (!VALID_NOTEMPTY(_buyBundleLine, JAProductInfoSingleLine)) {
+        _buyBundleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, 0, self.width, kProductInfoSingleLineHeight)];
+        [_buyBundleLine setTopSeparatorVisibility:YES];
+        [_buyBundleLine setBottomSeparatorVisibility:NO];
+        [_buyBundleLine.label setTextColor:JAOrange1Color];
+        [self addSubview:_buyBundleLine];
+    }
+    return _buyBundleLine;
+}
+
+- (UIView *)plusViewWithFrame:(CGRect)frame
+{
+    UIView *_plusView = [[UIView alloc] initWithFrame:frame];
+//        _plusView = [[UIView alloc] initWithFrame:CGRectMake(self.width/2 - 5, self.productImageView.height/2, 10, 10)];
+    UIView *horizontalLine = [[UIView alloc] initWithFrame:CGRectMake(0, _plusView.height/2-1, _plusView.width, 2)];
+    [horizontalLine setBackgroundColor:JABlack400Color];
+    [_plusView addSubview:horizontalLine];
+    UIView *verticalLine = [[UIView alloc] initWithFrame:CGRectMake(_plusView.width/2-1, 0, 2, _plusView.height)];
+    [verticalLine setBackgroundColor:JABlack400Color];
+    [_plusView addSubview:verticalLine];
+    [self addSubview:_plusView];
+    return _plusView;
+}
+
+- (void)setHeaderText:(NSString *)headerText
+{
+    _headerText = headerText;
+    [self.headerLine setTitle:_headerText];
+}
+
+- (void)addBundleItemView:(JAPDVBundleSingleItem *)itemView
+{
+    [self.bundlesScrollView addSubview:itemView];
+    if (CGRectGetMaxX(itemView.frame) < self.width) {
+        [self.bundlesScrollView setWidth:CGRectGetMaxX(itemView.frame)];
+        [self.bundlesScrollView setX:(self.width - CGRectGetMaxX(itemView.frame))/2];
+    }else if (self.bundlesScrollView.x != 0 || self.bundlesScrollView.width != self.width){
+        [self.bundlesScrollView setX:0];
+        [self.bundlesScrollView setWidth:self.width];
+    }
+    [itemView addSelectTarget:self action:@selector(refreshTotal)];
+    [self.bundlesScrollView setContentSize:CGSizeMake(CGRectGetMaxX(itemView.frame), itemView.height)];
+    if (_bundlesArray.count != 0) {
+        CGFloat plusSize = 15;
+        [self.bundlesScrollView addSubview:[self plusViewWithFrame:CGRectMake(itemView.x - plusSize/2 - 2.5, itemView.height/2, plusSize, plusSize)]];
+    }
+    if (self.bundlesScrollView.height < itemView.height) {
+        self.bundlesScrollView.height = itemView.height;
+    }
+    if (self.height < itemView.height) {
+        [self setHeight:itemView.height];
+    }
+    [_bundlesArray addObject:itemView];
+    [self refreshTotal];
+}
+
+- (void)refreshTotal
+{
+    CGFloat total = .0f;
+    for (JAPDVBundleSingleItem *bundleItem in _bundlesArray) {
+        if (bundleItem.selected) {
+            if (VALID_NOTEMPTY(bundleItem.product, RIProduct)) {
+                
+                if (VALID_NOTEMPTY(bundleItem.product.specialPrice, NSNumber) && 0.0f == [self.product.specialPrice floatValue]) {
+                    total += bundleItem.product.price.floatValue;
+                } else {
+                    total += bundleItem.product.specialPrice.floatValue;
+                }
+            }
+        }
+    }
+    NSString* totalText = [NSString stringWithFormat:@"%@", [RICountryConfiguration formatPrice:[NSNumber numberWithFloat:total] country:[RICountryConfiguration getCurrentConfiguration]]];
+    [self.buyBundleLine setTitle:totalText];
+    [self.buyBundleLine addTarget:self action:@selector(buyBundleCombo) forControlEvents:UIControlEventTouchUpInside];
+    [self.buyBundleLine setY:CGRectGetMaxY(self.bundlesScrollView.frame)];
+    [self setHeight:CGRectGetMaxY(self.buyBundleLine.frame)];
+}
+
+- (void)addBuyingBundleTarget:(id)target action:(SEL)action
+{
+    _buyBundleTarget = target;
+    _buyBundleSelector = action;
+}
+
+- (void)buyBundleCombo
+{
+    if (_buyBundleTarget && [_buyBundleTarget respondsToSelector:_buyBundleSelector]) {
+        ((void (*)(id, SEL))[_buyBundleTarget methodForSelector:_buyBundleSelector])(_buyBundleTarget, _buyBundleSelector);
+    }
 }
 
 @end

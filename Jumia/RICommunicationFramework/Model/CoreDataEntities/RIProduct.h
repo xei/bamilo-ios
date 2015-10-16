@@ -84,6 +84,8 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) RISeller *seller;
 @property (nonatomic, retain) NSString *shareUrl;
 @property (nonatomic, retain) NSString *priceRange;
+@property (nonatomic, retain) NSString *vertical;
+@property (nonatomic) BOOL fashion;
 
 /**
  *  Method to load a product and all its details given his sku. This method uses getCompleteProductWithUrl:successBlock:andFailureBlock:
@@ -256,6 +258,10 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 + (NSString*)getTopBrand:(RIProduct *)seenProduct;
+
++ (NSString *)getRatingsDetails:(NSString *)sku
+                       successBlock:(void (^)(NSDictionary* ratingsDictionary))successBlock
+                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 @end
 

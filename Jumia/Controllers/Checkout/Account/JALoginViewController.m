@@ -252,7 +252,7 @@
            self.numberOfFormsToLoad--;
        }];
     
-    [RIForm getForm:@"registersignup"
+    [RIForm getForm:@"register_signup"
        successBlock:^(RIForm *form) {
            
            self.signupDynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:7.0f];
@@ -427,7 +427,6 @@
     UIImage *facebookHighlightImage = [UIImage imageNamed:[NSString stringWithFormat:facebookImageNameFormatter, @"highlighted"]];
     
     CGFloat centerWidth = 54.0f;
-    CGFloat halfSeparatorWidth = (buttonWidth - centerWidth) / 2;
     if ([[RICountryConfiguration getCurrentConfiguration].facebookAvailable boolValue]){
         [self.facebookLoginSeparator setFrame:CGRectMake(6.0f, self.loginFormHeight, buttonWidth, self.facebookLoginSeparatorLabel.frame.size.height)];
         CGFloat separatorWidth = self.facebookLoginSeparator.width/2 - self.facebookLoginSeparatorLabel.width/2 - 15;
@@ -928,9 +927,9 @@
                              
                              
                              [RICustomer loginCustomerByFacebookWithParameters:parameters
-                                                                  successBlock:^(RICustomer* customer, NSString* nextStep) {
+                                                                  successBlock:^(NSDictionary* entities, NSString* nextStep) {
                                                                       
-                                                                      RICustomer *customerObject = ((RICustomer *)customer);
+                                                                      RICustomer *customerObject = [entities objectForKey:@"customer"];
                                                                       
                                                                       NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                                                                       [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventLabelKey];
@@ -972,7 +971,8 @@
                                                                       [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                                                                                           object:nil];
                                                                       
-                                                                      [JAUtils goToNextStep:nextStep];
+                                                                      [JAUtils goToNextStep:nextStep
+                                                                                   userInfo:nil];
                                                                       
                                                                   } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
                                                                       [self hideLoading];
@@ -1071,7 +1071,8 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                                 object:nil];
             
-            [JAUtils goToNextStep:nextStep];
+            [JAUtils goToNextStep:nextStep
+                         userInfo:nil];
         }
         
         [self hideLoading];
@@ -1140,7 +1141,8 @@
         NSDictionary *responseDictionary = (NSDictionary *)object;
         NSString* nextStep = [responseDictionary objectForKey:@"next_step"];
         
-        [JAUtils goToNextStep:nextStep];
+        [JAUtils goToNextStep:nextStep
+                     userInfo:nil];
         
     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];

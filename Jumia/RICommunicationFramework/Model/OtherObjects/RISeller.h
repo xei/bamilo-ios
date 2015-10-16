@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSNumber * reviewAverage;
 @property (nonatomic, retain) NSNumber * reviewTotal;
 @property (nonatomic, retain) NSString * url;
+@property (nonatomic) BOOL isGlobal;
 
 + (RISeller*)parseSeller:(NSDictionary*)sellerJSON;
 

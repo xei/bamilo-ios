@@ -50,6 +50,8 @@
 
 "string_filters" = "Filters";
 
+"string_remove_filter" = "Remove";
+
 "categories_toplevel_title" = "All Categories";
 
 "string_apply" = "Apply";
@@ -83,6 +85,8 @@
 "string_rating" = "1 rating";
 
 "string_ratings" = "%d ratings";
+
+"string_nratings" = "(%d)";
 
 "string_review" = "1 review";
 
@@ -188,6 +192,10 @@
 
 "shipping" = "Shipping";
 
+"shippment" = "Shippment";
+
+"fulfilled_by" = "Fulfillment by";
+
 "free_label" = "Free";
 
 "extra_costs_label" = "Extra Costs";
@@ -207,6 +215,8 @@
 "facebook_signup_button_text" = "Sign up with Facebook";
 
 "facebook_login_button_text" = "Login with Facebook";
+
+"login_incomplete" = "Both email and birthday are required to login";
 
 "or_text" = "OR";
 
@@ -366,7 +376,7 @@
 
 "campaing_timer_end" = "Ends in:";
 
-"string_format_off_label" = "%d%% OFF";
+"string_format_off_label" = "-%d%% OFF";
 
 "campaigns_label" = "Campaigns";
 

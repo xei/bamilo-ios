@@ -12,7 +12,6 @@
 #import "JASwitchCell.h"
 #import "JAAddNewAddressCell.h"
 #import "JAUtils.h"
-#import "RICheckout.h"
 #import "RIAddress.h"
 #import "RIForm.h"
 #import "RIField.h"
@@ -974,34 +973,34 @@ UICollectionViewDelegateFlowLayout>
     if (self.fromCheckout) {
         [self showLoading];
         
-        [RICheckout getBillingAddressFormWithSuccessBlock:^(RICheckout *checkout) {
-            RIForm *billingForm = checkout.billingAddressForm;
+        [RICart getCheckoutAddressFormsWithSuccessBlock:^(RICart *cart) {
+            RIForm *billingForm = cart.addressForm;
             
             NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
             for (RIField *field in [billingForm fields])
             {
-                if([@"billingForm[billingAddressId]" isEqualToString:[field name]])
+                if([@"addresses[billing_id]" isEqualToString:[field name]])
                 {
                     [parameters setValue:[self.billingAddress uid] forKey:[field name]];
                 }
-                else if([@"billingForm[shippingAddressId]" isEqualToString:[field name]])
+                else if([@"addresses[shipping_id]" isEqualToString:[field name]])
                 {
                     [parameters setValue:[self.shippingAddress uid] forKey:[field name]];
                 }
-                else if([@"billingForm[shippingAddressDifferent]" isEqualToString:[field name]])
+                else if([@"addresses[is_equal]" isEqualToString:[field name]])
                 {
-                    //Yes, the true and false are switched for this api request...
                     [parameters setValue:[[self.billingAddress uid] isEqualToString:[self.shippingAddress uid]] ? @"1" : @"0" forKey:[field name]];
                 }
             }
             
-            [RICheckout setBillingAddress:checkout.billingAddressForm parameters:parameters successBlock:^(RICheckout *checkout) {
-                
+            [RICart setCheckoutAddresses:cart.addressForm parameters:parameters successBlock:^(RICart *cart) {
                 [self hideLoading];
                 
                 if(self.fromCheckout)
                 {
-                    [JAUtils goToCheckout:checkout];
+                    NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:@"cart"];
+                    [JAUtils goToNextStep:cart.nextStep
+                                 userInfo:userInfo];
                 }
                 else
                 {
@@ -1009,7 +1008,7 @@ UICollectionViewDelegateFlowLayout>
                                                                         object:nil
                                                                       userInfo:nil];
                 }
-            } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+            } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
                 
                 NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                 [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];

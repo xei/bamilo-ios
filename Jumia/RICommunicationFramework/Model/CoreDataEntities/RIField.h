@@ -13,26 +13,32 @@
 
 @interface RIField : NSManagedObject
 
+@property (nonatomic, retain) RIForm * form;
 @property (nonatomic, retain) NSString * key;
-@property (nonatomic, retain) NSString * label;
-@property (nonatomic, retain) NSNumber * max;
-@property (nonatomic, retain) NSNumber * min;
 @property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSNumber * required;
-@property (nonatomic, retain) NSString * requiredMessage;
 @property (nonatomic, retain) NSString * type;
-@property (nonatomic, retain) NSString * uid;
+@property (nonatomic, retain) NSString * label;
 @property (nonatomic, retain) NSString * value;
-@property (nonatomic, retain) NSOrderedSet *dataSet;
+@property (nonatomic, retain) NSNumber * checked;
 @property (nonatomic, retain) NSString * apiCall;
-@property (nonatomic, retain) RIForm *form;
-@property (nonatomic, retain) NSOrderedSet *options;
-@property (nonatomic, retain) NSOrderedSet *ratingStars;
 @property (nonatomic, retain) NSString * linkText;
 @property (nonatomic, retain) NSString * linkUrl;
+@property (nonatomic, retain) NSOrderedSet * ratingStars;
+@property (nonatomic, retain) NSOrderedSet * options;
+@property (nonatomic, retain) NSOrderedSet * dataSet;
+@property (nonatomic, retain) NSString * dateFormat;
+
+//related data
+@property (nonatomic, retain) RIField * parentField;
+@property (nonatomic, retain) NSOrderedSet * relatedFields;
+
+//rules
+@property (nonatomic, retain) NSNumber * max;
+@property (nonatomic, retain) NSNumber * min;
+@property (nonatomic, retain) NSNumber * required;
+@property (nonatomic, retain) NSString * requiredMessage;
 @property (nonatomic, retain) NSString * pattern;
 @property (nonatomic, retain) NSString * patternMessage;
-@property (nonatomic, retain) NSString * relatedField;
 
 + (RIField *)parseField:(NSDictionary *)fieldJSON;
 + (void)saveField:(RIField *)field andContext:(BOOL)save;
@@ -71,4 +77,14 @@
 - (void)removeRatingStarsObject:(RIFieldRatingStars *)value;
 - (void)addRatingStars:(NSOrderedSet *)values;
 - (void)removeRatingStars:(NSOrderedSet *)values;
+- (void)insertObject:(RIField *)value inRelatedFieldsAtIndex:(NSUInteger)idx;
+- (void)removeObjectFromRelatedFieldsAtIndex:(NSUInteger)idx;
+- (void)insertRelatedFields:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
+- (void)removeRelatedFieldsAtIndexes:(NSIndexSet *)indexes;
+- (void)replaceObjectInRelatedFieldsAtIndex:(NSUInteger)idx withObject:(RIField *)value;
+- (void)replaceRelatedFieldsAtIndexes:(NSIndexSet *)indexes withRelatedFields:(NSArray *)values;
+- (void)addRelatedFieldsObject:(RIField *)value;
+- (void)removeRelatedFieldsObject:(RIField *)value;
+- (void)addRelatedFields:(NSOrderedSet *)values;
+- (void)removeRelatedFields:(NSOrderedSet *)values;
 @end

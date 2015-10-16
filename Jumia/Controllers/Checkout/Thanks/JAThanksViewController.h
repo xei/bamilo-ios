@@ -7,13 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RICheckout.h"
 #import "RICart.h"
 
 @interface JAThanksViewController : JABaseViewController
 
 @property (strong, nonatomic) RICart *cart;
-@property (strong, nonatomic) RICheckout *checkout;
-@property (strong, nonatomic) NSString *orderNumber;
 
 @end
