@@ -119,6 +119,13 @@
 
 - (void)categoryWasSelected:(RICategory*)category;
 {
+    UITableViewRowAnimation animationInsert = UITableViewRowAnimationLeft;
+    UITableViewRowAnimation animationDelete = UITableViewRowAnimationRight;
+    if (RI_IS_RTL) {
+        animationInsert = UITableViewRowAnimationRight;
+        animationDelete = UITableViewRowAnimationLeft;
+    }
+    
     //based on category, find the index
     NSInteger index = 0;
     for (int i = 0; i < self.tableViewCategoriesArray.count; i++) {
@@ -155,7 +162,7 @@
                 [deleteIndexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
             }
             [self.tableView beginUpdates];
-            [self.tableView deleteRowsAtIndexPaths:deleteIndexPaths withRowAnimation:UITableViewRowAnimationRight];
+            [self.tableView deleteRowsAtIndexPaths:deleteIndexPaths withRowAnimation:animationDelete];
             [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
             [self.tableView endUpdates];
             
@@ -171,7 +178,7 @@
                 [insertIndexPaths addObject:[NSIndexPath indexPathForRow:newIndex inSection:0]];
             }
             [self.tableView beginUpdates];
-            [self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationLeft];
+            [self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:animationInsert];
             [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
             [self.tableView endUpdates];
         }

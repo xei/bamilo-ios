@@ -151,6 +151,11 @@
                                             height-separatorHeight,
                                             self.backgroundClickableView.bounds.size.width - leftMargin,
                                             separatorHeight)];
+    
+    if (RI_IS_RTL) {
+        [self.backgroundClickableView flipAllSubviews];
+        [self.accessoryImageView flipViewImage];
+    }
 }
 
 + (CGFloat)heightForCategory:(RICategory*)category
