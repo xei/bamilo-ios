@@ -8,13 +8,16 @@
 
 #import "JAProductReviewsView.h"
 #import "JAProductInfoHeaderLine.h"
+#import "RIProductRatings.h"
+#import "JAReviewCollectionCell.h"
 
 #define kLeftSidePercentage 0.5f
 #define kBarWidth 85
 
-@interface JAProductReviewsView ()
+@interface JAProductReviewsView () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 {
     NSDictionary *_ratingsDictionary;
+    NSInteger _currentPage;
 }
 
 @property (nonatomic) UIScrollView *contentScrollView;
@@ -31,6 +34,8 @@
 
 @property (nonatomic) JAProductInfoHeaderLine *reviewsHeaderLine;
 @property (nonatomic) UICollectionView *collectionView;
+@property (nonatomic) RIProductRatings *productRatings;
+@property (nonatomic) NSMutableArray *reviewsArray;
 
 @end
 
@@ -53,6 +58,24 @@
         [self setDefaults];
     }
     return self;
+}
+
+- (UICollectionView *)collectionView
+{
+    CGRect frame = CGRectMake(0, CGRectGetMaxY(self.reviewsHeaderLine.frame), self.width, self.height - CGRectGetMaxY(self.reviewsHeaderLine.frame));
+    if (!VALID_NOTEMPTY(_collectionView, UICollectionView)) {
+        UICollectionViewFlowLayout* layout = [[UICollectionViewFlowLayout alloc] init];
+        _collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:layout];
+        [_collectionView setBackgroundColor:UIColorFromRGB(0xf0f0f0)];
+        _collectionView.delegate = self;
+        _collectionView.dataSource = self;
+        [_collectionView registerClass:[JAReviewCollectionCell class] forCellWithReuseIdentifier:@"JAReviewCollectionCell"];
+        [self addSubview:_collectionView];
+    }else if (!CGRectEqualToRect(_contentScrollView.frame, frame))
+    {
+        [_collectionView setFrame:frame];
+    }
+    return _collectionView;
 }
 
 - (void)setDefaults
@@ -177,8 +200,6 @@
     if (!VALID_NOTEMPTY(_ratingsHeaderLine, JAProductInfoHeaderLine)) {
         _ratingsHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:frame];
         [_ratingsHeaderLine setTopSeparatorVisibility:NO];
-#warning TODO String
-        [_ratingsHeaderLine setTitle:[@"RATINGS" uppercaseString]];
     }else if (!CGRectEqualToRect(frame, _ratingsHeaderLine.frame)){
         [_ratingsHeaderLine setFrame:frame];
     }
@@ -191,8 +212,6 @@
     if (!VALID_NOTEMPTY(_reviewsHeaderLine, JAProductInfoHeaderLine)) {
         _reviewsHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:frame];
         [_reviewsHeaderLine setTopSeparatorVisibility:NO];
-#warning TODO String
-        [_reviewsHeaderLine setTitle:[@"RATINGS" uppercaseString]];
     }else if (!CGRectEqualToRect(frame, _reviewsHeaderLine.frame)) {
         [_reviewsHeaderLine setFrame:frame];
     }
@@ -289,12 +308,10 @@
 {
     _product = product;
     
-    [RIProduct getRatingsDetails:_product.sku successBlock:^(NSDictionary *ratingsDictionary) {
-        _ratingsDictionary = ratingsDictionary;
-        [self fillGraphics];
-    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
-        
-    }];
+    [self setBackgroundColor:[UIColor whiteColor]];
+
+    [self requestRatings];
+    [self requestReviews];
     
     [self addSubview:self.contentScrollView];
     CGFloat yOffset = 0.f;
@@ -310,7 +327,12 @@
     [self.reviewsHeaderLine setY:yOffset];
     [self.contentScrollView addSubview:self.reviewsHeaderLine];
     yOffset = CGRectGetMaxY(self.reviewsHeaderLine.frame);
-    
+}
+
+- (void)setProductRatings:(RIProductRatings *)productRatings
+{
+    _productRatings = productRatings;
+    [self.collectionView reloadData];
 }
 
 - (UILabel *)getNumbersLabel
@@ -344,6 +366,63 @@
     return graphic;
 }
 
+- (NSMutableArray *)reviewsArray
+{
+    if (!VALID_NOTEMPTY(_reviewsArray, NSMutableArray)) {
+        _reviewsArray = [NSMutableArray new];
+    }
+    return _reviewsArray;
+}
+
+- (void)requestRatings
+{
+    [self.viewControllerEvents showLoading];
+    [RIProductRatings getRatingsDetails:_product.sku successBlock:^(NSDictionary *ratingsDictionary) {
+        _ratingsDictionary = ratingsDictionary;
+        [self fillGraphics];
+        [self.viewControllerEvents hideLoading];
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
+        
+        if(RIApiResponseSuccess != apiResponse)
+        {
+            if (RIApiResponseNoInternetConnection == apiResponse)
+            {
+                [self.viewControllerEvents showErrorView:YES startingY:0.0f selector:@selector(requestRatings) objects:nil];
+            }
+            else
+            {
+                [self.viewControllerEvents showErrorView:NO startingY:0.0f selector:@selector(requestRatings) objects:nil];
+            }
+        }
+        [self.viewControllerEvents hideLoading];
+    }];
+}
+
+- (void)requestReviews
+{
+    [self.viewControllerEvents showLoading];
+    [RIProductRatings getRatingsForProductWithUrl:self.product.url allowRating:1 pageNumber:(VALID_NOTEMPTY(self.productRatings, RIProductRatings)?self.productRatings.currentPage.intValue+1:1) successBlock:^(RIProductRatings *ratings) {
+        self.productRatings = ratings;
+        [self.reviewsArray addObjectsFromArray:self.productRatings.reviews];
+        _currentPage = self.productRatings.currentPage.integerValue;
+        [self.collectionView reloadData];
+        [self.viewControllerEvents hideLoading];
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+        if(RIApiResponseSuccess != apiResponse)
+        {
+            if (RIApiResponseNoInternetConnection == apiResponse)
+            {
+                [self.viewControllerEvents showErrorView:YES startingY:0.0f selector:@selector(requestReviews) objects:nil];
+            }
+            else
+            {
+                [self.viewControllerEvents showErrorView:NO startingY:0.0f selector:@selector(requestReviews) objects:nil];
+            }
+        }
+        [self.viewControllerEvents hideLoading];
+    }];
+}
+
 - (void)fillGraphics
 {
     for (NSNumber *starNumber in [self.starsViewDictionary allKeys]) {
@@ -370,6 +449,64 @@
 {
     [super setFrame:frame];
     [self contentScrollView];
+}
+
+#pragma mark - CollectionView
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    RIReview *productReview = [self.reviewsArray objectAtIndex:indexPath.row];
+    
+    
+    if((indexPath.row == ([self.reviewsArray count] - 1)) && (self.productRatings.currentPage != self.productRatings.totalPages))
+    {
+        [self requestReviews];
+    }
+    
+    JAReviewCollectionCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"JAReviewCollectionCell" forIndexPath:indexPath];
+    [cell setupWithReview:productReview width:[self getCellWidth] showSeparator:YES];
+    return cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    RIReview *productReview = [self.reviewsArray objectAtIndex:indexPath.row];
+    return [self getCellSizeForReview:productReview indexPath:indexPath];
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return self.reviewsArray.count;
+}
+
+- (CGFloat)getCellWidth
+{
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        
+        return 640.f;
+    }else{
+        return self.collectionView.width;
+    }
+}
+
+- (CGSize)getCellSizeForReview:(RIReview *)review indexPath:(NSIndexPath *)indexPath
+{
+    CGSize size = CGSizeMake([self getCellWidth], [JAReviewCollectionCell cellHeightWithReview:review width:[self getCellWidth]]);
+    return size;
+}
+
+- (BOOL)isLandscape
+{
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    
+    if(orientation == UIInterfaceOrientationLandscapeLeft)
+    {
+        return YES;
+    }else if(orientation == UIInterfaceOrientationLandscapeRight)
+    {
+        return YES;
+    }
+    return NO;
 }
 
 @end
