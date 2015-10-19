@@ -92,7 +92,6 @@
 #define kDidSelectTeaserWithPDVUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_PDV_URL"
 #define kDidSelectTeaserWithShopUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_SHOP_URL"
 #define kDidSelectCampaignNofication @"NOTIFICATION_DID_SELECT_CAMPAING"
-#define kDidSelectTeaserWithAllCategoriesNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_ALL_CATEGORIES"
 #define kDidSelectCategoryFromCenterPanelNotification @"NOTIFICATION_SELECTED_CATEGORY_FROM_CENTER_PANEL"
 
 //navbar notification
@@ -167,12 +166,12 @@
 #define JABlue1Color UIColorFromRGB(0x416998)
 #define JASysBlueColor UIColorFromRGB(0x007aff)
 
-#define JADisplay1Font [UIFont fontWithName:@"HelveticaNeue" size:24]
-#define JADisplay2Font [UIFont fontWithName:@"HelveticaNeue" size:20]
-#define JAList1Font [UIFont fontWithName:@"HelveticaNeue-Medium" size:17]
-#define JAList2Font [UIFont fontWithName:@"HelveticaNeue" size:17]
-#define JABody1Font [UIFont fontWithName:@"HelveticaNeue-Bold" size:14]
-#define JABody2Font [UIFont fontWithName:@"HelveticaNeue-Medium" size:14]
-#define JABody3Font [UIFont fontWithName:@"HelveticaNeue" size:14]
-#define JACaptionFont [UIFont fontWithName:@"HelveticaNeue" size:12]
+#define JADisplay1Font [UIFont fontWithName:@"HelveticaNeue" size:23]
+#define JADisplay2Font [UIFont fontWithName:@"HelveticaNeue" size:19]
+#define JAList1Font [UIFont fontWithName:@"HelveticaNeue-Medium" size:16]
+#define JAList2Font [UIFont fontWithName:@"HelveticaNeue" size:16]
+#define JABody1Font [UIFont fontWithName:@"HelveticaNeue-Bold" size:13]
+#define JABody2Font [UIFont fontWithName:@"HelveticaNeue-Medium" size:13]
+#define JABody3Font [UIFont fontWithName:@"HelveticaNeue" size:13]
+#define JACaptionFont [UIFont fontWithName:@"HelveticaNeue" size:11]
 

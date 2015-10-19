@@ -20,6 +20,8 @@
 #import "UIImage+Mirror.h"
 #import "JACheckoutBottomView.h"
 #import "RIShippingMethodForm.h"
+#import "RISellerDelivery.h"
+#import "JASellerDeliveryView.h"
 
 #define kPickupStationKey @"pickupstation"
 
@@ -63,6 +65,7 @@ UICollectionViewDelegateFlowLayout
 @property (strong, nonatomic) NSString *selectedShippingMethod;
 @property (strong, nonatomic) NSIndexPath *collectionViewIndexSelected;
 @property (strong, nonatomic) NSIndexPath *selectedPickupStationIndexPath;
+@property (strong, nonatomic) NSMutableArray *sellerDeliveryViews;
 
 @property (assign, nonatomic) RIApiResponse apiResponse;
 
@@ -107,6 +110,8 @@ UICollectionViewDelegateFlowLayout
 
     self.apiResponse = RIApiResponseSuccess;
     
+    self.sellerDeliveryViews = [[NSMutableArray alloc]init];
+
     [self continueLoading];
 }
 
@@ -144,6 +149,7 @@ UICollectionViewDelegateFlowLayout
     }
     
     [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
+    [self setupSellerDelivery:newWidth];
     
     [self hideLoading];
     
@@ -357,14 +363,38 @@ UICollectionViewDelegateFlowLayout
     [self hideLoading];
 }
 
+- (void) setupSellerDelivery:(CGFloat)width {
+    
+    if (VALID_ISEMPTY(self.sellerDeliveryViews, NSMutableArray)) {
+        NSInteger index = 1;
+        NSInteger max = [self.cart.sellerDelivery count];
+        for (RISellerDelivery* sell in self.cart.sellerDelivery) {
+            JASellerDeliveryView* seller = [[JASellerDeliveryView alloc] init];
+            [seller setupWithSellerDelivery:sell index:index++ ofMax:max width:width];
+            [self.scrollView addSubview:seller];
+            [self.sellerDeliveryViews addObject:seller];
+        }
+    }
+    CGFloat currentY = self.collectionView.frame.origin.y + self.collectionView.frame.size.height + 24.0f;
+    
+    if (VALID_NOTEMPTY(self.sellerDeliveryViews, NSMutableArray)) {
+     
+        for (JASellerDeliveryView *sell in self.sellerDeliveryViews) {
+            [UIView animateWithDuration:0.5f
+                             animations:^{
+                                 [sell setFrame:CGRectMake(sell.frame.origin.x, currentY,
+                                                           width-12.0f, sell.frame.size.height)];
+                             }];
+            currentY += sell.frame.size.height;
+        }
+        [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, currentY)];
+    }
+}
+
 - (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
     [self setupStepView:width toInterfaceOrientation:toInterfaceOrientation];
     
-    [self.scrollView setFrame:CGRectMake(0.0f,
-                                         self.stepBackground.frame.size.height,
-                                         width,
-                                         self.view.frame.size.height - self.stepBackground.frame.size.height)];
     
     if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
     {
@@ -382,18 +412,22 @@ UICollectionViewDelegateFlowLayout
         [self.view addSubview:self.orderSummary];
     }
     
+    [_bottomView setFrame:CGRectMake(0.0f,
+                                     self.view.frame.size.height - 56,
+                                     width,
+                                     56)];
+    [_bottomView setButtonText:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
+    [_bottomView setTotalValue:self.cart.cartValueFormatted];
+    
+    [self.scrollView setFrame:CGRectMake(0.0f,
+                                         self.stepBackground.frame.size.height,
+                                         width,
+                                         self.view.frame.size.height - self.stepBackground.frame.size.height - _bottomView.frame.size.height)];
+    
     [self.collectionView setFrame:CGRectMake(self.collectionView.frame.origin.x,
                                              self.collectionView.frame.origin.y,
                                              self.scrollView.frame.size.width - 12.0f,
                                              self.collectionView.frame.size.height)];
-    
-    [_bottomView setFrame:CGRectMake(0.0f,
-                                             self.view.frame.size.height - 56,
-                                             width,
-                                             56)];
-    [_bottomView setButtonText:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
-    [_bottomView setTotalValue:self.cart.cartValueFormatted];
-    
     [self reloadCollectionView];
     
     if (RI_IS_RTL) {
@@ -440,6 +474,7 @@ UICollectionViewDelegateFlowLayout
         
     }
     
+    [self setupSellerDelivery:self.scrollView.frame.size.width];
     [self.collectionView reloadData];
 }
 

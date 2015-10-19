@@ -323,6 +323,12 @@ JAActivityViewControllerDelegate
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+}
+
 - (void) removeSuperviews
 {
     [self.mainScrollView setHidden:YES];
@@ -623,26 +629,6 @@ JAActivityViewControllerDelegate
         self.variationsSection = [JAPDVVariations getNewPDVVariationsSection];
         [self.variationsSection setupWithFrame:self.mainScrollView.frame];
     }
-
-    
-    /*******
-     Other Offers Section
-     *******/
-    
-    if (isiPadInLandscape) {
-        if (VALID_NOTEMPTY(self.product.offersTotal, NSNumber) && 0 < [self.product.offersTotal integerValue]) {
-            self.otherOffersView = [JAOtherOffersView getNewOtherOffersView];
-            
-            [self.otherOffersView setupWithFrame:self.mainScrollView.frame product:self.product];
-            [self.otherOffersView setFrame:CGRectMake(6.0f,
-                                                      scrollViewY,
-                                                      self.otherOffersView.frame.size.width,
-                                                      self.otherOffersView.frame.size.height)];
-            
-            [self.mainScrollView addSubview:self.otherOffersView];
-        }
-    }
-
     
     /*******
      Product Info Section
@@ -651,8 +637,9 @@ JAActivityViewControllerDelegate
     self.productInfoSection = [[JAPDVProductInfo alloc] init];
     CGRect productInfoSectionFrame = CGRectMake(0, 6, self.view.width, 0);
     [self.productInfoSection setupWithFrame:productInfoSectionFrame product:self.product preSelectedSize:self.preSelectedSize];
-    [self.productInfoSection addReviewsTarget:self action:@selector(goToRatinsMainScreen)];
-    [self.productInfoSection addSpecificationsTarget:self action:@selector(goToDetails)];
+    [self.productInfoSection addReviewsTarget:self action:@selector(goToReviews)];
+    [self.productInfoSection addSpecificationsTarget:self action:@selector(goToSpecifications)];
+    [self.productInfoSection addDescriptionTarget:self action:@selector(goToDescription)];
     [self.productInfoSection addSizeTarget:self action:@selector(showSizePicker)];
     [self.productInfoSection addVariationsTarget:self action:@selector(goToVariationsScreen)];
     [self.productInfoSection addOtherOffersTarget:self action:@selector(goToOtherSellersScreen)];
@@ -878,28 +865,30 @@ JAActivityViewControllerDelegate
     [self trackingEventScreenName:[NSString stringWithFormat:@"related_item_%@",tempProduct.name]];
 }
 
-- (void)goToDetails
+- (void)goToDescription
+{
+    [self goToDetails:@"description"];
+}
+
+- (void)goToSpecifications
+{
+    [self goToDetails:@"specifications"];
+}
+
+- (void)goToReviews
+{
+    [self goToDetails:@"reviews"];
+}
+
+- (void)goToDetails:(NSString *)screen
 {
     NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
     if(VALID_NOTEMPTY(self.product, RIProduct))
     {
         [userInfo setObject:self.product forKey:@"product"];
     }
+    [userInfo setObject:screen forKey:@"product.screen"];
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowProductSpecificationScreenNotification object:nil userInfo:userInfo];
-}
-
-- (void)goToRatinsMainScreen
-{
-        NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
-        if(VALID_NOTEMPTY(self.product, RIProduct))
-        {
-            [userInfo setObject:self.product forKey:@"product"];
-        }
-        if(VALID_NOTEMPTY(self.productRatings, RIProductRatings))
-        {
-            [userInfo setObject:self.productRatings forKey:@"productRatings"];
-        }
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowRatingsScreenNotification object:nil userInfo:userInfo];
 }
 
 - (void)goToBundlesScreen
@@ -1446,7 +1435,7 @@ JAActivityViewControllerDelegate
     
     if(VALID_NOTEMPTY(self.category, RICategory))
     {
-        [trackingDictionary setValue:[RICategory getTree:self.category.uid] forKey:kRIEventTreeKey];
+        [trackingDictionary setValue:[RICategory getTree:self.category.label] forKey:kRIEventTreeKey];
     }else if (VALID_NOTEMPTY(product.categoryIds, NSOrderedSet))
     {
         [trackingDictionary setValue:[RICategory getTree:[product.categoryIds firstObject]] forKey:kRIEventTreeKey];
@@ -1523,12 +1512,12 @@ JAActivityViewControllerDelegate
             {
                 parent = parent.parent;
             }
-            categoryName = parent.name;
-            subCategoryName = self.category.name;
+            categoryName = parent.label;
+            subCategoryName = self.category.label;
         }
         else
         {
-            categoryName = self.category.name;
+            categoryName = self.category.label;
         }
     }
     else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
@@ -1623,12 +1612,12 @@ JAActivityViewControllerDelegate
             {
                 parent = parent.parent;
             }
-            categoryName = parent.name;
-            subCategoryName = self.category.name;
+            categoryName = parent.label;
+            subCategoryName = self.category.label;
         }
         else
         {
-            categoryName = self.category.name;
+            categoryName = self.category.label;
         }
     }
     else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
@@ -1776,12 +1765,12 @@ JAActivityViewControllerDelegate
             {
                 parent = parent.parent;
             }
-            categoryName = parent.name;
-            subCategoryName = self.category.name;
+            categoryName = parent.label;
+            subCategoryName = self.category.label;
         }
         else
         {
-            categoryName = self.category.name;
+            categoryName = self.category.label;
         }
     }
     else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
@@ -1855,7 +1844,7 @@ JAActivityViewControllerDelegate
     [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];
     [trackingDictionary setValue:type forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-    [trackingDictionary setValue:self.product.price forKey:kRIEventValueKey];
+    [trackingDictionary setValue:self.product.priceEuroConverted forKey:kRIEventValueKey];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
     [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
     [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
@@ -1874,12 +1863,12 @@ JAActivityViewControllerDelegate
             {
                 parent = parent.parent;
             }
-            categoryName = parent.name;
-            subCategoryName = self.category.name;
+            categoryName = parent.label;
+            subCategoryName = self.category.label;
         }
         else
         {
-            categoryName = self.category.name;
+            categoryName = self.category.label;
         }
     }
     else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
@@ -1922,7 +1911,7 @@ JAActivityViewControllerDelegate
     [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"RelatedItem" forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-    [trackingDictionary setValue:product.price forKey:kRIEventValueKey];
+    [trackingDictionary setValue:product.priceEuroConverted forKey:kRIEventValueKey];
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRelatedItem]
                                               data:[trackingDictionary copy]];

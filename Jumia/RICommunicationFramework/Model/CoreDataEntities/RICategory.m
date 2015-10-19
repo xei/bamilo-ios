@@ -10,10 +10,12 @@
 
 @implementation RICategory
 
-@dynamic apiUrl;
-@dynamic name;
-@dynamic uid;
+@dynamic label;
+@dynamic vertical;
 @dynamic urlKey;
+@dynamic apiUrl;
+@dynamic imageUrl;
+@dynamic level;
 @dynamic numberOfTimesSeen;
 @dynamic children;
 @dynamic parent;
@@ -153,12 +155,12 @@
         if(VALID_NOTEMPTY(savedCategoryArray, NSArray))
         {
             RICategory *savedCategory = [savedCategoryArray objectAtIndex:0];
-            categoryTree = savedCategory.name;
+            categoryTree = savedCategory.label;
             
             RICategory *parentCategory = savedCategory.parent;
             while (VALID_NOTEMPTY(parentCategory, RICategory))
             {
-                categoryTree = [NSString stringWithFormat:@"%@,%@", parentCategory.name, categoryTree];
+                categoryTree = [NSString stringWithFormat:@"%@,%@", parentCategory.label, categoryTree];
                 parentCategory = parentCategory.parent;
             }
         }
@@ -176,7 +178,7 @@
         if(VALID_NOTEMPTY(savedCategoryArray, NSArray))
         {
             RICategory *savedCategory = [savedCategoryArray objectAtIndex:0];
-            categoryName = savedCategory.name;
+            categoryName = savedCategory.label;
         }
     }
     return categoryName;
@@ -204,7 +206,7 @@
         }
     }
     
-    return topCategory.name;
+    return topCategory.label;
 }
 
 + (void)seenCategory:(RICategory*)seenCategory
@@ -217,25 +219,32 @@
 
 + (RICategory *)parseCategory:(NSDictionary *)category
 {
+    return [RICategory parseCategory:category level:0];
+}
+
++ (RICategory *)parseCategory:(NSDictionary *)category
+                        level:(NSInteger)level
+{
     RICategory* newCategory;
     
     newCategory = (RICategory*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RICategory class])];
     
+    newCategory.level = [NSNumber numberWithInteger:level];
     
-    if ([category objectForKey:@"id_catalog_category"]) {
-        newCategory.uid = [category objectForKey:@"id_catalog_category"];
+    if ([category objectForKey:@"label"]) {
+        newCategory.label = [category objectForKey:@"label"];
     }
-    if ([category objectForKey:@"name"]) {
-        newCategory.name = [category objectForKey:@"name"];
+    if ([category objectForKey:@"vertical"]) {
+        newCategory.vertical = [category objectForKey:@"vertical"];
     }
     if ([category objectForKey:@"url_key"]) {
         newCategory.urlKey = [category objectForKey:@"url_key"];
     }
-    if ([category objectForKey:@"url"]) {
-        newCategory.apiUrl = [category objectForKey:@"url"];
-    }
     if ([category objectForKey:@"api_url"]) {
         newCategory.apiUrl = [category objectForKey:@"api_url"];
+    }
+    if ([category objectForKey:@"image"]) {
+        newCategory.imageUrl = [category objectForKey:@"image"];
     }
     
     newCategory.numberOfTimesSeen = [NSNumber numberWithInt:0];
@@ -248,7 +257,7 @@
             
             if (VALID_NOTEMPTY(childJSON, NSDictionary)) {
                 
-                RICategory* child = [RICategory parseCategory:childJSON];
+                RICategory* child = [RICategory parseCategory:childJSON level:level+1];
                 child.parent = newCategory;
                 [newCategory addChildrenObject:child];
             }

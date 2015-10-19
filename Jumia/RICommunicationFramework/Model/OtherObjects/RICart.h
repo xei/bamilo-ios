@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@class RIShippingMethodForm, RIPaymentMethodForm, RIPaymentInformation, RIAddress, RIForm;
+@class RIShippingMethodForm, RIPaymentMethodForm, RIPaymentInformation,
+    RIAddress, RIForm, RISellerDelivery;
 
 @interface RICart : NSObject
 
@@ -64,6 +65,7 @@
 @property (nonatomic, strong) NSString *paymentMethod;
 @property (nonatomic, strong) RIAddress *shippingAddress;
 @property (nonatomic, strong) RIAddress *billingAddress;
+@property (strong, nonatomic) NSArray* sellerDelivery;
 
 //CHECKOUT FINISH
 @property (nonatomic, strong) NSString *orderNr;

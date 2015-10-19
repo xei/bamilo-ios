@@ -221,7 +221,7 @@ typedef void (^ProcessActionBlock)(void);
     {
         if(VALID_NOTEMPTY(self.category, RICategory))
         {
-            self.screenName = [NSString stringWithFormat:@"Catalog / %@", self.category.name];
+            self.screenName = [NSString stringWithFormat:@"Catalog / %@", self.category.label];
         }
         else
         {
@@ -393,7 +393,7 @@ typedef void (^ProcessActionBlock)(void);
          {
              if(VALID_NOTEMPTY(self.categoryId, NSString))
              {
-                 if ([self.categoryId isEqualToString:category.uid])
+                 if ([self.categoryId isEqualToString:category.label])
                  {
                      self.category = category;
                      break;
@@ -411,7 +411,7 @@ typedef void (^ProcessActionBlock)(void);
          
          if(VALID_NOTEMPTY(self.category, RICategory))
          {
-             self.navBarLayout.title = self.category.name;
+             self.navBarLayout.title = self.category.label;
              
              [self loadMoreProducts];
          }
@@ -589,12 +589,12 @@ typedef void (^ProcessActionBlock)(void);
             {
                 parent = parent.parent;
             }
-            categoryName = parent.name;
-            subCategoryName = self.category.name;
+            categoryName = parent.label;
+            subCategoryName = self.category.label;
         }
         else
         {
-            categoryName = self.category.name;
+            categoryName = self.category.label;
         }
     }else{
         categoryName = self.navBarLayout.title;
@@ -1012,7 +1012,7 @@ typedef void (^ProcessActionBlock)(void);
         count = 20;
     }
     
-    NSString *temp = self.category.name;
+    NSString *temp = self.category.label;
     
     NSMutableDictionary* userInfo = [NSMutableDictionary new];
     [userInfo setObject:product.url forKey:@"url"];
@@ -1335,9 +1335,9 @@ typedef void (^ProcessActionBlock)(void);
     if(VALID_NOTEMPTY(self.category, RICategory))
     {
         [userInfo setObject:self.category forKey:@"category"];
-        if(VALID_NOTEMPTY(self.category.name, NSString))
+        if(VALID_NOTEMPTY(self.category.label, NSString))
         {
-            [userInfo setObject:self.category.name forKey:@"previousCategory"];
+            [userInfo setObject:self.category.label forKey:@"previousCategory"];
         }
         else
         {
@@ -1538,12 +1538,12 @@ typedef void (^ProcessActionBlock)(void);
             {
                 parent = parent.parent;
             }
-            categoryName = parent.name;
-            subCategoryName = self.category.name;
+            categoryName = parent.label;
+            subCategoryName = self.category.label;
         }
         else
         {
-            categoryName = self.category.name;
+            categoryName = self.category.label;
         }
     }
     else if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet))

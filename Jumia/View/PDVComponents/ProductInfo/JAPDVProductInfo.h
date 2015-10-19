@@ -28,4 +28,6 @@
 
 - (void)addSpecificationsTarget:(id)target action:(SEL)action;
 
+- (void)addDescriptionTarget:(id)target action:(SEL)action;
+
 @end

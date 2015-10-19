@@ -31,7 +31,6 @@
 #import "JAOrderViewController.h"
 #import "JACatalogViewController.h"
 #import "JAPDVViewController.h"
-#import "JACategoriesViewController.h"
 #import "JARecentlyViewedViewController.h"
 #import "JACartViewController.h"
 #import "JAForgotPasswordViewController.h"
@@ -48,9 +47,9 @@
 #import "JAPriceFilterViewController.h"
 #import "JAGenericFilterViewController.h"
 #import "JAProductDetailsViewController.h"
+#import "JATabNavigationViewController.h"
 #import "JARatingsViewController.h"
 #import "JANewRatingViewController.h"
-#import "JASubCategoriesViewController.h"
 #import "RICart.h"
 #import "JASizeGuideViewController.h"
 #import "JAOtherOffersViewController.h"
@@ -254,11 +253,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didSelectTeaserWithShopUrl:)
                                                  name:kDidSelectTeaserWithShopUrlNofication
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didSelectTeaserWithAllCategories:)
-                                                 name:kDidSelectTeaserWithAllCategoriesNofication
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -1075,7 +1069,7 @@
         
         JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         
-        catalog.navBarLayout.title = category.name;
+        catalog.navBarLayout.title = category.label;
         catalog.category = category;
         
         [self pushViewController:catalog animated:YES];
@@ -1159,17 +1153,42 @@
 - (void)showProductSpecificationScreen:(NSNotification*)notification
 {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAProductDetailsViewController class]])
+    if (![topViewController isKindOfClass:[JATabNavigationViewController class]])
     {
-        JAProductDetailsViewController *productDetailsViewController = [[JAProductDetailsViewController alloc] initWithNibName:@"JAProductDetailsViewController" bundle:nil];
+        JATabNavigationViewController *productDetailsViewController = [[JATabNavigationViewController alloc] init];
         
         if ([notification.userInfo objectForKey:@"product"]) {
             productDetailsViewController.product = [notification.userInfo objectForKey:@"product"];
+        }
+        if ([notification.userInfo objectForKey:@"product.screen"]) {
+            if ([[notification.userInfo objectForKey:@"product.screen"] isEqualToString:@"description"]) {
+                [productDetailsViewController setTabScreenEnum:kTabScreenDescription];
+            }else if ([[notification.userInfo objectForKey:@"product.screen"] isEqualToString:@"specifications"]) {
+                [productDetailsViewController setTabScreenEnum:kTabScreenSpecifications];
+            }else if ([[notification.userInfo objectForKey:@"product.screen"] isEqualToString:@"reviews"]) {
+                [productDetailsViewController setTabScreenEnum:kTabScreenReviews];
+            }
         }
         
         [self pushViewController:productDetailsViewController animated:YES];
     }
 }
+
+
+//- (void)showProductSpecificationScreen:(NSNotification*)notification
+//{
+//    UIViewController *topViewController = [self topViewController];
+//    if (![topViewController isKindOfClass:[JAProductDetailsViewController class]])
+//    {
+//        JAProductDetailsViewController *productDetailsViewController = [[JAProductDetailsViewController alloc] initWithNibName:@"JAProductDetailsViewController" bundle:nil];
+//        
+//        if ([notification.userInfo objectForKey:@"product"]) {
+//            productDetailsViewController.product = [notification.userInfo objectForKey:@"product"];
+//        }
+//        
+//        [self pushViewController:productDetailsViewController animated:YES];
+//    }
+//}
 
 - (void)showRatingsScreen:(NSNotification*)notification
 {
@@ -1537,31 +1556,6 @@
 
 }
 
-- (void)didSelectTeaserWithAllCategories:(NSNotification*)notification
-{
-    JACategoriesViewController* categoriesViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"categoriesViewController"];
-    
-    categoriesViewController.navBarLayout.title = STRING_ALL_CATEGORIES;
-    
-    NSDictionary* objectdic = notification.object;
-    if (VALID_NOTEMPTY(objectdic, NSDictionary)) {
-        RICategory* category = [objectdic objectForKey:@"category"];
-        if (VALID_NOTEMPTY(category, RICategory)) {
-            categoriesViewController.currentCategory = category;
-        }
-    }
-    
-    NSDictionary* infodic = notification.userInfo;
-    if (VALID_NOTEMPTY(infodic, NSDictionary)) {
-        NSString* backTitle = [infodic objectForKey:@"backButtonTitle"];
-        if (VALID_NOTEMPTY(backTitle, NSString)) {
-            categoriesViewController.backTitle = backTitle;
-        }
-    }
-    
-    [self pushViewController:categoriesViewController animated:YES];
-}
-
 - (void)didSelectCategoryFromCenterPanel:(NSNotification*)notification
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
@@ -1576,7 +1570,7 @@
         
         catalog.category = category;
         
-        catalog.navBarLayout.title = category.name;
+        catalog.navBarLayout.title = category.label;
         catalog.navBarLayout.backButtonTitle = STRING_ALL_CATEGORIES;
         
         if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {

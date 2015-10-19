@@ -31,12 +31,14 @@
 @property (nonatomic) id sellerReviewsTarget;
 @property (nonatomic) id otherOffersTarget;
 @property (nonatomic) id specificationsTarget;
+@property (nonatomic) id descriptionTarget;
 @property (nonatomic) SEL variationsSelector;
 @property (nonatomic) SEL sizeSelector;
 @property (nonatomic) SEL reviewsSelector;
 @property (nonatomic) SEL sellerReviewsSelector;
 @property (nonatomic) SEL otherOffersSelector;
 @property (nonatomic) SEL specificationsSelector;
+@property (nonatomic) SEL descriptionSelector;
 
 @end
 
@@ -249,7 +251,7 @@
         [singleDescriptionReadMore setTopSeparatorVisibility:YES];
 #warning TODO String
         [singleDescriptionReadMore setTitle:@"Read more"];
-        [singleDescriptionReadMore addTarget:self action:@selector(tapSpecificationsLine) forControlEvents:UIControlEventTouchUpInside];
+        [singleDescriptionReadMore addTarget:self action:@selector(tapDescriptionLine) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:singleDescriptionReadMore];
         yOffset = CGRectGetMaxY(singleDescriptionReadMore.frame);
     }
@@ -317,6 +319,13 @@
     }
 }
 
+- (void)tapDescriptionLine
+{
+    if (self.descriptionTarget && [self.descriptionTarget respondsToSelector:self.descriptionSelector]) {
+        ((void (*)(id, SEL))[self.descriptionTarget methodForSelector:self.descriptionSelector])(self.descriptionTarget, self.descriptionSelector);
+    }
+}
+
 - (void)addVariationsTarget:(id)target action:(SEL)action
 {
     self.variationsTarget = target;
@@ -351,6 +360,12 @@
 {
     self.specificationsTarget = target;
     self.specificationsSelector = action;
+}
+
+- (void)addDescriptionTarget:(id)target action:(SEL)action
+{
+    self.descriptionTarget = target;
+    self.descriptionSelector = action;
 }
 
 @end
