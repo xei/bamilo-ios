@@ -104,7 +104,7 @@
         //not the last cell
         //check the next cell's category
         RICategory* nextCategory = [self.tableViewCategoriesArray objectAtIndex:indexPath.row + 1];
-        if (nextCategory.level > category.level) {
+        if ([nextCategory.level integerValue] > [category.level integerValue]) {
             isOpen = YES;
         }
         if (1 <= [nextCategory.level integerValue]) {
@@ -146,7 +146,7 @@
             //not the last cell
             //check the next cell's category
             RICategory* nextCategory = [self.tableViewCategoriesArray objectAtIndex:index + 1];
-            if (nextCategory.level > category.level) {
+            if ([nextCategory.level integerValue] > [category.level integerValue]) {
                 isOpen = YES;
             }
         }
