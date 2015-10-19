@@ -70,7 +70,8 @@
 {
     _seller = seller;
     [self.sellerNameLabel setText:seller.name];
-    [self.sellerRatingLine setSellerRatingAverage:seller.reviewAverage];
+    [self.sellerRatingLine setNoMargin:YES];
+    [self.sellerRatingLine setRatingAverage:seller.reviewAverage];
     [self.sellerRatingLine setRatingSum:seller.reviewTotal];
 #warning TODO String
     [self.sellerDeliveryLabel setText:@"Delivered through"];

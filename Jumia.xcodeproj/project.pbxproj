@@ -460,6 +460,7 @@
 		9A2036F31B25F39D00F36F55 /* JANoConnectionView~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A481B1DE1FF0028105D /* JANoConnectionView~iPad.xib */; };
 		9A2036F41B25F39E00F36F55 /* JANoConnectionView~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A481B1DE1FF0028105D /* JANoConnectionView~iPad.xib */; };
 		9A2036F51B25F39E00F36F55 /* JANoConnectionView~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A481B1DE1FF0028105D /* JANoConnectionView~iPad.xib */; };
+		9A2CD0B71BD113D300A878D2 /* JAReviewCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2CD0B61BD113D300A878D2 /* JAReviewCollectionCell.m */; settings = {ASSET_TAGS = (); }; };
 		9A38764A1BCD0CDC0088B186 /* JATabNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3876491BCD0CDB0088B186 /* JATabNavigationViewController.m */; settings = {ASSET_TAGS = (); }; };
 		9A38764B1BCD0CDC0088B186 /* JATabNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3876491BCD0CDB0088B186 /* JATabNavigationViewController.m */; settings = {ASSET_TAGS = (); }; };
 		9A38764C1BCD0CDC0088B186 /* JATabNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3876491BCD0CDB0088B186 /* JATabNavigationViewController.m */; settings = {ASSET_TAGS = (); }; };
@@ -2916,6 +2917,8 @@
 		9A189E891BB5630C0039BC14 /* JAProductInfoSubLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAProductInfoSubLine.h; path = Lines/JAProductInfoSubLine.h; sourceTree = "<group>"; };
 		9A189E8A1BB5630C0039BC14 /* JAProductInfoSubLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAProductInfoSubLine.m; path = Lines/JAProductInfoSubLine.m; sourceTree = "<group>"; };
 		9A2036AD1B21DE0F00F36F55 /* JANewRatingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JANewRatingViewController.xib; sourceTree = "<group>"; };
+		9A2CD0B51BD113D300A878D2 /* JAReviewCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAReviewCollectionCell.h; path = Details/Reviews/JAReviewCollectionCell.h; sourceTree = "<group>"; };
+		9A2CD0B61BD113D300A878D2 /* JAReviewCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAReviewCollectionCell.m; path = Details/Reviews/JAReviewCollectionCell.m; sourceTree = "<group>"; };
 		9A3876481BCD0CDB0088B186 /* JATabNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATabNavigationViewController.h; sourceTree = "<group>"; };
 		9A3876491BCD0CDB0088B186 /* JATabNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATabNavigationViewController.m; sourceTree = "<group>"; };
 		9A3876501BCD0DBE0088B186 /* JAProductDescriptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAProductDescriptionView.h; path = Details/JAProductDescriptionView.h; sourceTree = "<group>"; };
@@ -4417,9 +4420,19 @@
 			path = GTM;
 			sourceTree = "<group>";
 		};
+		9A2CD0B41BD1135C00A878D2 /* RatingsReviews */ = {
+			isa = PBXGroup;
+			children = (
+				9A2CD0B51BD113D300A878D2 /* JAReviewCollectionCell.h */,
+				9A2CD0B61BD113D300A878D2 /* JAReviewCollectionCell.m */,
+			);
+			name = RatingsReviews;
+			sourceTree = "<group>";
+		};
 		9A38764F1BCD0D500088B186 /* Details DescSpecReviews */ = {
 			isa = PBXGroup;
 			children = (
+				9A2CD0B41BD1135C00A878D2 /* RatingsReviews */,
 				9A3876481BCD0CDB0088B186 /* JATabNavigationViewController.h */,
 				9A3876491BCD0CDB0088B186 /* JATabNavigationViewController.m */,
 				9A3876501BCD0DBE0088B186 /* JAProductDescriptionView.h */,
@@ -7888,6 +7901,7 @@
 				9A189E5D1BB31AC70039BC14 /* JAProductInfoHeaderLine.m in Sources */,
 				B5A302BE19811E9200F71726 /* RIConfiguration.m in Sources */,
 				B58767FE19BB62B3001651D6 /* JAShippingCell.m in Sources */,
+				9A2CD0B71BD113D300A878D2 /* JAReviewCollectionCell.m in Sources */,
 				520A37CD1A48904B0046C8B1 /* JAMyOrdersViewController.m in Sources */,
 				9A7EE98F1B5546A0004E2505 /* ADJPackageHandler.m in Sources */,
 				9A7EE9A31B5546A0004E2505 /* Adjust.m in Sources */,

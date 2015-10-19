@@ -12,5 +12,6 @@
 @interface JAProductReviewsView : UIView
 
 @property (nonatomic) RIProduct *product;
+@property JABaseViewController *viewControllerEvents;
 
 @end
