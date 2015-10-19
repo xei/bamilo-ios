@@ -54,11 +54,12 @@
     self.category = category;
     
     CGFloat height = [JACategoriesSideMenuCell heightForCategory:category];
+    CGFloat width = 256.0f;
     UIColor* backgroundColor = UIColorFromRGB(0xf0f0f0);
     BOOL clickableViewIsEnabled = NO;
     CGFloat textTopOffset = 3.0f;
     CGFloat leftMargin = 16.0f;
-    CGFloat rightMargin = 80.0f;
+    CGFloat rightMargin = 16.0f;
     UIFont* font = [UIFont fontWithName:kFontMediumName size:17.0f];
     UIColor* textColor = [UIColor blackColor];
     NSString* cellText = [category.label uppercaseString];
@@ -124,7 +125,7 @@
     self.backgroundClickableView.backgroundColor = backgroundColor;
     [self.backgroundClickableView setFrame:CGRectMake(self.bounds.origin.x,
                                                       self.bounds.origin.y,
-                                                      self.bounds.size.width,
+                                                      width,
                                                       height)];
     self.backgroundClickableView.enabled = clickableViewIsEnabled;
     
