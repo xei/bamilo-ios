@@ -7,7 +7,7 @@
 //
 
 #import "JAMenuViewController.h"
-#import "JASubCategoriesViewController.h"
+#import "JACategoriesSideMenuViewController.h"
 #import "RICategory.h"
 #import "JAUtils.h"
 #import "RISearchSuggestion.h"
@@ -323,11 +323,9 @@ UIAlertViewDelegate
 
 - (void)showSubCategory
 {
-    JASubCategoriesViewController* subCategoriesViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"subCategoriesViewController"];
-    
-    subCategoriesViewController.categories = self.categories;
-    
-    [self.navigationController pushViewController:subCategoriesViewController animated:YES];
+    JACategoriesSideMenuViewController* categoriesViewController = [[JACategoriesSideMenuViewController alloc] init];
+    categoriesViewController.categoriesArray = self.categories;
+    [self.navigationController pushViewController:categoriesViewController animated:YES];
     
 }
 

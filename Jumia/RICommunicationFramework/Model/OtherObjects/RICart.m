@@ -12,6 +12,7 @@
 #import "RIPaymentMethodForm.h"
 #import "RIPaymentInformation.h"
 #import "RIAddress.h"
+#import "RISellerDelivery.h"
 
 @implementation RICart
 
@@ -809,6 +810,30 @@
             if (VALID_NOTEMPTY(shippingAddress, RIAddress)) {
                 cart.shippingAddress = shippingAddress;
             }
+        }
+        
+        if (VALID_NOTEMPTY([cartEntityJSON objectForKey:@"fulfillment"], NSArray)) {
+            NSArray* fulfillment = [cartEntityJSON objectForKey:@"fulfillment"];
+            NSMutableArray* sellers = [[NSMutableArray alloc] init];
+            
+            for (NSDictionary* seller in fulfillment) {
+                RISellerDelivery* sellerDelivery = [RISellerDelivery parseSellerDelivery:[seller objectForKey:@"seller_entity"]];
+                NSMutableArray* products = [[NSMutableArray alloc] init];
+                
+                for (NSDictionary* prod in [seller objectForKey:@"products"]) {
+                    NSString* simpleSku = [prod objectForKey:@"simple_sku"];
+                    
+                    for (RICartItem* cartItem in cart.cartItems) {
+                        if ([cartItem.simpleSku isEqual:simpleSku]) {
+                            [products addObject:cartItem];
+                            break;
+                        }
+                    }
+                }
+                sellerDelivery.products = [products copy];
+                [sellers addObject:sellerDelivery];
+            }
+            cart.sellerDelivery = sellers;
         }
     }
     

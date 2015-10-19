@@ -13,13 +13,17 @@
 
 @interface RICategory : NSManagedObject
 
-@property (nonatomic, retain) NSString * apiUrl;
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSString * uid;
+@property (nonatomic, retain) NSString * label;
+@property (nonatomic, retain) NSString * vertical;
 @property (nonatomic, retain) NSString * urlKey;
-@property (nonatomic, retain) NSNumber *numberOfTimesSeen;
-@property (nonatomic, retain) NSOrderedSet *children;
-@property (nonatomic, retain) RICategory *parent;
+@property (nonatomic, retain) NSString * apiUrl;
+@property (nonatomic, retain) NSString * imageUrl;
+
+@property (nonatomic, retain) NSNumber * level;
+@property (nonatomic, retain) NSNumber * numberOfTimesSeen;
+
+@property (nonatomic, retain) NSOrderedSet * children;
+@property (nonatomic, retain) RICategory * parent;
 
 /**
  *  Method to load categories from the server into core data.
