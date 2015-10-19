@@ -56,10 +56,12 @@
     CGFloat height = [JACategoriesSideMenuCell heightForCategory:category];
     UIColor* backgroundColor = UIColorFromRGB(0xf0f0f0);
     BOOL clickableViewIsEnabled = NO;
-    CGFloat textTopOffset = 2.0f;
-    CGFloat horizontalMargin = 8.0f;
-    UIFont* font = [UIFont fontWithName:kFontMediumName size:8.0f];
+    CGFloat textTopOffset = 3.0f;
+    CGFloat leftMargin = 16.0f;
+    CGFloat rightMargin = 80.0f;
+    UIFont* font = [UIFont fontWithName:kFontMediumName size:17.0f];
     UIColor* textColor = [UIColor blackColor];
+    NSString* cellText = [category.label uppercaseString];
     CGFloat accessoryImageWidth = 0.0f;
     CGFloat accessoryImageMargin = 0.0f;
     CGFloat iconImageWidth = 0.0f;
@@ -72,9 +74,10 @@
         clickableViewIsEnabled = YES;
         
         textTopOffset = 0.0f;
-    
-        accessoryImageWidth = 11.0f;
-        accessoryImageMargin = 8.0f;
+        cellText = category.label;
+        
+        accessoryImageWidth = 22.0f;
+        accessoryImageMargin = 16.0f;
         
         if (0 == category.children.count) {
             [self.accessoryImageView setImage:[UIImage imageNamed:@"sideMenuCell_arrow"]];
@@ -88,8 +91,8 @@
         
         if (VALID_NOTEMPTY(category.imageUrl, NSString)) {
             
-            iconImageWidth = 11.0f;
-            iconImageMargin = 8.0f;
+            iconImageWidth = 22.0f;
+            iconImageMargin = 16.0f;
             
             [self.iconImageView setImageWithURL:[NSURL URLWithString:category.imageUrl]
                                placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
@@ -104,11 +107,12 @@
         backgroundColor = [UIColor whiteColor];
         
         textTopOffset = 0.0f;
-        horizontalMargin = 16.0f;
-        font = [UIFont fontWithName:kFontRegularName size:6.0f];
+        leftMargin = 32.0f;
+        font = [UIFont fontWithName:kFontRegularName size:12.0f];
+        cellText = category.label;
         
-        accessoryImageWidth = 11.0f;
-        accessoryImageMargin = 8.0f;
+        accessoryImageWidth = 22.0f;
+        accessoryImageMargin = 16.0f;
         
         [self.accessoryImageView setImage:[UIImage imageNamed:@"sideMenuCell_arrow"]];
         
@@ -124,27 +128,27 @@
                                                       height)];
     self.backgroundClickableView.enabled = clickableViewIsEnabled;
     
-    [self.iconImageView setFrame:CGRectMake(horizontalMargin,
+    [self.iconImageView setFrame:CGRectMake(leftMargin,
                                             (height - iconImageWidth)/2,//image is square so width=height,
                                             iconImageWidth,
                                             iconImageWidth)];
     
-    [self.mainLabel setFrame:CGRectMake(horizontalMargin + iconImageWidth + iconImageMargin,
+    [self.mainLabel setFrame:CGRectMake(leftMargin + iconImageWidth + iconImageMargin,
                                         self.backgroundClickableView.bounds.origin.y + textTopOffset,
-                                        self.backgroundClickableView.bounds.size.width - horizontalMargin*2 - accessoryImageWidth - accessoryImageMargin - iconImageWidth - iconImageMargin,
+                                        self.backgroundClickableView.bounds.size.width - leftMargin - accessoryImageWidth - accessoryImageMargin - iconImageWidth - iconImageMargin - rightMargin,
                                         height)];
-    [self.mainLabel setText:category.label];
+    [self.mainLabel setText:cellText];
     [self.mainLabel setFont:font];
     [self.mainLabel setTextColor:textColor];
     
-    [self.accessoryImageView setFrame:CGRectMake(self.backgroundClickableView.bounds.size.width - horizontalMargin - accessoryImageWidth - 65,
+    [self.accessoryImageView setFrame:CGRectMake(self.backgroundClickableView.bounds.size.width - accessoryImageWidth - rightMargin,
                                                  (height - accessoryImageWidth)/2,//image is square so width=height
                                                  accessoryImageWidth,
                                                  accessoryImageWidth)];
     
-    [self.separatorView setFrame:CGRectMake(horizontalMargin,
+    [self.separatorView setFrame:CGRectMake(leftMargin,
                                             height-separatorHeight,
-                                            self.backgroundClickableView.bounds.size.width - horizontalMargin,
+                                            self.backgroundClickableView.bounds.size.width - leftMargin,
                                             separatorHeight)];
 }
 
@@ -152,9 +156,9 @@
 {
     CGFloat height = 0.0f;
     if (0 == [category.level integerValue]) {
-        height = 32.0f;
+        height = 64.0f;
     } else {
-        height = 24.0f;
+        height = 48.0f;
     }
     return height;
 }
