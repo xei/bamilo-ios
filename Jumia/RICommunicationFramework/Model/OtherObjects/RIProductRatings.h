@@ -52,6 +52,10 @@
                              successBlock:(void (^)(RIProductRatings *ratings))successBlock
                           andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
++ (NSString *)getRatingsDetails:(NSString *)sku
+                   successBlock:(void (^)(NSDictionary* ratingsDictionary))successBlock
+                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+
 /**
  *  Method to cancel the request
  *

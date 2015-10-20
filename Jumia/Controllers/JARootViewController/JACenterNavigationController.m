@@ -31,7 +31,6 @@
 #import "JAOrderViewController.h"
 #import "JACatalogViewController.h"
 #import "JAPDVViewController.h"
-#import "JACategoriesViewController.h"
 #import "JARecentlyViewedViewController.h"
 #import "JACartViewController.h"
 #import "JAForgotPasswordViewController.h"
@@ -51,7 +50,6 @@
 #import "JATabNavigationViewController.h"
 #import "JARatingsViewController.h"
 #import "JANewRatingViewController.h"
-#import "JASubCategoriesViewController.h"
 #import "RICart.h"
 #import "JASizeGuideViewController.h"
 #import "JAOtherOffersViewController.h"
@@ -255,11 +253,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didSelectTeaserWithShopUrl:)
                                                  name:kDidSelectTeaserWithShopUrlNofication
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didSelectTeaserWithAllCategories:)
-                                                 name:kDidSelectTeaserWithAllCategoriesNofication
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -1076,7 +1069,7 @@
         
         JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         
-        catalog.navBarLayout.title = category.name;
+        catalog.navBarLayout.title = category.label;
         catalog.category = category;
         
         [self pushViewController:catalog animated:YES];
@@ -1563,31 +1556,6 @@
 
 }
 
-- (void)didSelectTeaserWithAllCategories:(NSNotification*)notification
-{
-    JACategoriesViewController* categoriesViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"categoriesViewController"];
-    
-    categoriesViewController.navBarLayout.title = STRING_ALL_CATEGORIES;
-    
-    NSDictionary* objectdic = notification.object;
-    if (VALID_NOTEMPTY(objectdic, NSDictionary)) {
-        RICategory* category = [objectdic objectForKey:@"category"];
-        if (VALID_NOTEMPTY(category, RICategory)) {
-            categoriesViewController.currentCategory = category;
-        }
-    }
-    
-    NSDictionary* infodic = notification.userInfo;
-    if (VALID_NOTEMPTY(infodic, NSDictionary)) {
-        NSString* backTitle = [infodic objectForKey:@"backButtonTitle"];
-        if (VALID_NOTEMPTY(backTitle, NSString)) {
-            categoriesViewController.backTitle = backTitle;
-        }
-    }
-    
-    [self pushViewController:categoriesViewController animated:YES];
-}
-
 - (void)didSelectCategoryFromCenterPanel:(NSNotification*)notification
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
@@ -1602,7 +1570,7 @@
         
         catalog.category = category;
         
-        catalog.navBarLayout.title = category.name;
+        catalog.navBarLayout.title = category.label;
         catalog.navBarLayout.backButtonTitle = STRING_ALL_CATEGORIES;
         
         if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {

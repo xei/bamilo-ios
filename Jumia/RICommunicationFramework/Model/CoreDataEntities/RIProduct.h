@@ -259,10 +259,6 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 
 + (NSString*)getTopBrand:(RIProduct *)seenProduct;
 
-+ (NSString *)getRatingsDetails:(NSString *)sku
-                       successBlock:(void (^)(NSDictionary* ratingsDictionary))successBlock
-                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
-
 @end
 
 @interface RIProduct (CoreDataGeneratedAccessors)

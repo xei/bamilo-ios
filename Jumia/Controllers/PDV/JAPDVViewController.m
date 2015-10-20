@@ -1454,7 +1454,7 @@ JAActivityViewControllerDelegate
     
     if(VALID_NOTEMPTY(self.category, RICategory))
     {
-        [trackingDictionary setValue:[RICategory getTree:self.category.uid] forKey:kRIEventTreeKey];
+        [trackingDictionary setValue:[RICategory getTree:self.category.label] forKey:kRIEventTreeKey];
     }else if (VALID_NOTEMPTY(product.categoryIds, NSOrderedSet))
     {
         [trackingDictionary setValue:[RICategory getTree:[product.categoryIds firstObject]] forKey:kRIEventTreeKey];
@@ -1531,12 +1531,12 @@ JAActivityViewControllerDelegate
             {
                 parent = parent.parent;
             }
-            categoryName = parent.name;
-            subCategoryName = self.category.name;
+            categoryName = parent.label;
+            subCategoryName = self.category.label;
         }
         else
         {
-            categoryName = self.category.name;
+            categoryName = self.category.label;
         }
     }
     else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
@@ -1631,12 +1631,12 @@ JAActivityViewControllerDelegate
             {
                 parent = parent.parent;
             }
-            categoryName = parent.name;
-            subCategoryName = self.category.name;
+            categoryName = parent.label;
+            subCategoryName = self.category.label;
         }
         else
         {
-            categoryName = self.category.name;
+            categoryName = self.category.label;
         }
     }
     else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
@@ -1784,12 +1784,12 @@ JAActivityViewControllerDelegate
             {
                 parent = parent.parent;
             }
-            categoryName = parent.name;
-            subCategoryName = self.category.name;
+            categoryName = parent.label;
+            subCategoryName = self.category.label;
         }
         else
         {
-            categoryName = self.category.name;
+            categoryName = self.category.label;
         }
     }
     else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
@@ -1882,12 +1882,12 @@ JAActivityViewControllerDelegate
             {
                 parent = parent.parent;
             }
-            categoryName = parent.name;
-            subCategoryName = self.category.name;
+            categoryName = parent.label;
+            subCategoryName = self.category.label;
         }
         else
         {
-            categoryName = self.category.name;
+            categoryName = self.category.label;
         }
     }
     else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
