@@ -18,7 +18,7 @@
 
 #import <FBSDKCoreKit/FBSDKAppEvents.h>
 
-typedef void (^ProcessBundleChangesBlock)(NSArray *);
+typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 
 @interface JABundlesViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, JAPickerDelegate>
 {
@@ -32,10 +32,11 @@ typedef void (^ProcessBundleChangesBlock)(NSArray *);
 
 @property (nonatomic) UICollectionView *collectionView;
 @property (nonatomic) JABottomBar *bottomBar;
-@property (nonatomic) NSMutableDictionary *selectedItemsDictionary;
 @property (nonatomic) JAProductInfoSubLine *totalSubLine;
 @property (nonatomic) JAPicker *picker;
-@property (nonatomic) NSMutableDictionary *sizesSelection;
+
+@property (nonatomic) NSMutableDictionary* selectedButton;
+@property (nonatomic) NSMutableDictionary* sizeButton;
 
 @end
 
@@ -54,27 +55,11 @@ typedef void (^ProcessBundleChangesBlock)(NSArray *);
 - (void)setBundles:(NSArray *)bundles
 {
     _bundles = [bundles copy];
-    for (RIProduct *product in _bundles) {
-        [self.selectedItemsDictionary setValue:product forKey:product.sku];
-    }
 }
 
-- (void)setSelectedItems:(NSMutableArray *)selectedItems
+- (void)setSelectedItems:(NSMutableDictionary *)selectedItems
 {
     _selectedItems = selectedItems;
-    for (NSString *itemSkuFromDict in [self.selectedItemsDictionary allKeys]) {
-        BOOL isSelected = NO;
-        for (NSString *sku in _selectedItems) {
-            if ([sku isEqualToString:itemSkuFromDict]) {
-                isSelected = YES;
-                break;
-            }
-        }
-        if (!isSelected) {
-            [self.selectedItemsDictionary removeObjectForKey:itemSkuFromDict];
-        }
-        
-    }
 }
 
 - (UICollectionView *)collectionView
@@ -103,14 +88,6 @@ typedef void (^ProcessBundleChangesBlock)(NSArray *);
     return _bottomBar;
 }
 
-- (NSMutableDictionary *)selectedItemsDictionary
-{
-    if (!VALID_NOTEMPTY(_selectedItemsDictionary, NSMutableDictionary)) {
-        _selectedItemsDictionary = [NSMutableDictionary new];
-    }
-    return _selectedItemsDictionary;
-}
-
 - (JAProductInfoSubLine *)totalSubLine
 {
     if (!VALID_NOTEMPTY(_totalSubLine, JAProductInfoSubLine)) {
@@ -127,14 +104,6 @@ typedef void (^ProcessBundleChangesBlock)(NSArray *);
         _picker = [JAPicker new];
     }
     return _picker;
-}
-
-- (NSMutableDictionary *)sizesSelection
-{
-    if (!VALID_NOTEMPTY(_sizesSelection, NSMutableDictionary)) {
-        _sizesSelection = [NSMutableDictionary new];
-    }
-    return _sizesSelection;
 }
 
 #pragma mark - viewcontroller events
@@ -159,26 +128,92 @@ typedef void (^ProcessBundleChangesBlock)(NSArray *);
     
     [cell loadWithProduct:bundleProduct];
     
-    UIButton *select = [UIButton buttonWithType:UIButtonTypeCustom];
-    [select setFrame:cell.favoriteButton.frame];
-    select.tag = indexPath.row;
-    [select setImage:[UIImage imageNamed:@"check_empty"] forState:UIControlStateNormal];
-    [select setImage:[UIImage imageNamed:@"check"] forState:UIControlStateSelected];
-    [select setImage:[UIImage imageNamed:@"check"] forState:UIControlStateHighlighted];
-    [select setSelected:[self.selectedItemsDictionary objectForKey:bundleProduct.sku]?YES:NO];
-    [cell addSubview:select];
-    if (indexPath.row != 0) {
-        [select addTarget:self action:@selector(itemSelection:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    [cell.favoriteButton setHidden:YES];
+    if (VALID_NOTEMPTY(self.selectedButton, NSMutableDictionary) && [self.selectedButton objectForKey:[NSNumber numberWithInteger:indexPath.row]]) {
+        UIButton* sel = [self.selectedButton objectForKey:[NSNumber numberWithInteger:indexPath.row]];
+        [sel setSelected:[self.selectedItems objectForKey:bundleProduct.sku]?YES:NO];
 
+    } else {
+        if (!VALID(self.selectedButton, NSMutableDictionary)) {
+            self.selectedButton = [[NSMutableDictionary alloc]init];
+        }
+        
+        UIButton *select = [UIButton buttonWithType:UIButtonTypeCustom];
+        [select setFrame:cell.favoriteButton.frame];
+        select.tag = indexPath.row;
+        [select setImage:[UIImage imageNamed:@"check_empty"] forState:UIControlStateNormal];
+        [select setImage:[UIImage imageNamed:@"check"] forState:UIControlStateSelected];
+        [select setImage:[UIImage imageNamed:@"check"] forState:UIControlStateHighlighted];
+        [select setSelected:[self.selectedItems objectForKey:bundleProduct.sku]?YES:NO];
+        [cell addSubview:select];
+        if (indexPath.row != 0) {
+            [select addTarget:self action:@selector(itemSelection:) forControlEvents:UIControlEventTouchUpInside];
+        }
+        [self.selectedButton setObject:select forKey:[NSNumber numberWithInteger:indexPath.row]];
+        [cell.favoriteButton setHidden:YES];
+    }
     cell.feedbackView.tag = indexPath.row;
     [cell.feedbackView addTarget:self
                           action:@selector(clickableViewPressedInCell:)
                 forControlEvents:UIControlEventTouchUpInside];
     
     
+    if (VALID_NOTEMPTY(self.sizeButton, NSMutableDictionary) && [self.sizeButton objectForKey:[NSNumber numberWithInteger:indexPath.row]]) {
+        [self setCellSizeLabel:bundleProduct inCell:cell];
+        [cell.sizeButton.titleLabel sizeToFit];
+        
+    } else {
+        
+        if (!VALID(self.sizeButton, NSMutableDictionary)) {
+            self.sizeButton = [[NSMutableDictionary alloc]init];
+        }
+        
+        CGRect frame = CGRectMake(cell.priceView.frame.origin.x, cell.priceView.frame.origin.y+20.0f,
+                                  cell.priceView.frame.size.width, cell.priceView.frame.size.height);
+        
+        cell.sizeButton = [[UIButton alloc] initWithFrame:(frame)];
+        cell.sizeButton.tag = indexPath.row;
+        
+        [self.sizeButton setObject:cell.sizeButton forKey:[NSNumber numberWithInteger:indexPath.row]];
+        
+        if (1 >= [bundleProduct.productSimples count]) {
+            cell.sizeButton.hidden = YES;
+        } else {
+            cell.sizeButton.hidden = NO;
+        }
+        cell.sizeButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:cell.sizeButton.titleLabel.font.pointSize];
+        [cell.sizeButton setTitle:STRING_SIZE forState:UIControlStateNormal];
+        [cell.sizeButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
+        [cell.sizeButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+        [cell.sizeButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+
+        [self setCellSizeLabel:bundleProduct inCell:cell];
+        
+        [cell.sizeButton setFrame:frame];
+        [cell.sizeButton.titleLabel sizeToFit];
+        [cell.sizeButton addTarget:self
+                            action:@selector(sizeButtonPressed:)
+                  forControlEvents:UIControlEventTouchUpInside];
+        [cell addSubview:cell.sizeButton];
+    }
+
     return cell;
+}
+
+- (void)setCellSizeLabel:(RIProduct*)bundleProduct inCell:(JACatalogCollectionViewCell*)cell{
+    if ([self.selectedItems objectForKey:bundleProduct.sku]) {
+        RIProductSimple* pds = [self.selectedItems objectForKey:bundleProduct.sku];
+                [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, pds.variation]
+                                 forState:UIControlStateNormal];
+                
+                [cell.priceView loadWithPrice:pds.priceFormatted
+                                 specialPrice:pds.specialPriceFormatted
+                                     fontSize:10.0f
+                        specialPriceOnTheLeft:YES];
+        
+    } else {
+        [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, [[bundleProduct.productSimples firstObject] variation]]
+                         forState:UIControlStateNormal];
+    }
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -214,26 +249,29 @@ typedef void (^ProcessBundleChangesBlock)(NSArray *);
 - (void)itemSelection:(UIControl *)control
 {
     RIProduct *bundleProduct = [self.bundles objectAtIndex:control.tag];
-    if ([self.selectedItemsDictionary objectForKey:bundleProduct.sku]) {
+    if ([self.selectedItems objectForKey:bundleProduct.sku]) {
         [control setSelected:NO];
-        [self.selectedItemsDictionary removeObjectForKey:bundleProduct.sku];
+        [self.selectedItems removeObjectForKey:bundleProduct.sku];
     }else{
         [control setSelected:YES];
-        [self.selectedItemsDictionary setValue:bundleProduct forKey:bundleProduct.sku];
+        [self.selectedItems setValue:[bundleProduct.productSimples firstObject] forKey:bundleProduct.sku];
     }
     [self reloadPrice];
     if (changesBlock) {
-        changesBlock([self.selectedItemsDictionary allKeys]);
+        changesBlock(self.selectedItems);
     }
 }
 
 - (void)addComboToCart
 {
-    if (![self checkBundlesSizes]) {
-        return;
-    }
     [self showLoading];
-    [RICart addBundleProductsWithSkus:[self.selectedItemsDictionary allKeys] simpleSkus:[self.sizesSelection allValues] bundleId:self.bundle.bundleId withSuccessBlock:^(RICart *cart, NSArray *productsNotAdded) {
+    
+    NSMutableArray* simpleSku = [[NSMutableArray alloc]init];
+    for (RIProductSimple* simplePDV in self.selectedItems) {
+        [simpleSku addObject:simplePDV.sku];
+    }
+    
+    [RICart addBundleProductsWithSkus:[self.selectedItems allKeys] simpleSkus:simpleSku bundleId:self.bundle.bundleId withSuccessBlock:^(RICart *cart, NSArray *productsNotAdded) {
         
         [self hideLoading];
         
@@ -257,33 +295,22 @@ typedef void (^ProcessBundleChangesBlock)(NSArray *);
     }];
 }
 
-- (BOOL)checkBundlesSizes
-{
-    for (RIProduct *product in [self.selectedItemsDictionary allValues])
-    {
-        if (product.productSimples.count > 1) {
-            if (![self.sizesSelection objectForKey:product.sku]) {
-                _pickerInProcess = YES;
-                _pickerSku = product.sku;
-                [self openPickerForProduct:product];
-                return NO;
-            }
-        }else{
-            [self.sizesSelection setValue:((RIProductSimple *)[product.productSimples firstObject]).sku forKey:product.sku];
-        }
-    }
-    _pickerInProcess = NO;
-    return YES;
+- (void)sizeButtonPressed:(UIButton*)button {
+    
+    RIProduct* prod = [self.bundles objectAtIndex:button.tag];
+    _pickerSku = prod.sku;
+    [self openPickerForProduct:prod];
 }
 
 - (void)reloadPrice
 {
     NSInteger totalPrice = 0;
-    for (RIProduct *product in [self.selectedItemsDictionary allValues]) {
-        if (VALID_NOTEMPTY(product.specialPriceFormatted, NSString))
-            totalPrice += product.specialPrice.integerValue;
+    
+    for (RIProductSimple* bundleSimple in [self.selectedItems allValues]) {
+        if (VALID_NOTEMPTY(bundleSimple.specialPriceFormatted, NSString))
+            totalPrice += bundleSimple.specialPrice.integerValue;
         else
-            totalPrice += product.price.integerValue;
+            totalPrice += bundleSimple.price.integerValue;
     }
 #warning TODO String
     [self.totalSubLine setTitle:[NSString stringWithFormat:@"Total:  %@", [RICountryConfiguration formatPrice:[NSNumber numberWithInteger:totalPrice] country:[RICountryConfiguration getCurrentConfiguration]]]];
@@ -291,7 +318,7 @@ typedef void (^ProcessBundleChangesBlock)(NSArray *);
     [self.totalSubLine.label setYCenterAligned];
 }
 
-- (void)onBundleSelectionChanged:(void(^)(NSArray *selectedSkus))changes
+- (void)onBundleSelectionChanged:(void(^)(NSMutableDictionary *selectedSkus))changes
 {
     changesBlock = changes;
 }
@@ -307,7 +334,12 @@ typedef void (^ProcessBundleChangesBlock)(NSArray *);
 {
     NSMutableArray *sizes = [NSMutableArray new];
     for (RIProductSimple *simple in product.productSimples) {
-        [sizes addObject:simple.variation];
+        if ([simple.quantity integerValue] > 0)
+        {
+            if (VALID_NOTEMPTY(simple.variation, NSString)) {
+                [sizes addObject:simple.variation];
+            }
+        }
     }
     _pickerDataSource = [product.productSimples array];
     [self loadSizePickerWithOptions:sizes title:product.name previousText:@"" leftButtonTitle:nil];
@@ -351,8 +383,13 @@ typedef void (^ProcessBundleChangesBlock)(NSArray *);
 - (void)selectedRow:(NSInteger)selectedRow
 {
     RIProductSimple *simple = [_pickerDataSource objectAtIndex:selectedRow];
-    [self.sizesSelection setValue:simple.sku forKey:_pickerSku];
+    [self.selectedItems setObject:simple forKey:_pickerSku];
+    
+    changesBlock(self.selectedItems);
+    
     [self closePicker];
+    [self.collectionView reloadData];
+    [self reloadPrice];
 }
 
 - (void)closePicker

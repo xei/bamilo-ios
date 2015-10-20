@@ -73,7 +73,7 @@ JAActivityViewControllerDelegate
 @property (strong, nonatomic) NSMutableArray *bundleSingleItemsArray;
 @property (nonatomic, strong) JAOtherOffersView* otherOffersView;
 @property (nonatomic, assign) NSInteger indexOfBundleRelatedToSizePicker;
-@property (nonatomic) NSMutableArray *selectedBundles;
+@property (nonatomic) NSMutableDictionary *selectedBundles;
 
 @property (nonatomic, assign) BOOL hasLoaddedProduct;
 
@@ -578,6 +578,15 @@ JAActivityViewControllerDelegate
     
 }
 
+- (void)setProductBundle:(RIBundle *)productBundle {
+    _productBundle = productBundle;
+    self.selectedBundles = [[NSMutableDictionary alloc]init];
+    
+    for (RIProduct* pd in productBundle.bundleProducts) {
+        [self.selectedBundles setObject:[pd.productSimples firstObject] forKey:pd.sku];
+    }
+}
+
 #pragma mark - Fill the views
 
 - (void)fillTheViews
@@ -711,12 +720,18 @@ JAActivityViewControllerDelegate
             }
             
             BOOL isSelected = YES;
-            if (VALID_NOTEMPTY(self.selectedBundles, NSMutableArray)) {
+            if (VALID_NOTEMPTY(self.selectedBundles, NSMutableDictionary)) {
                 isSelected = NO;
-                for (NSString *sku in self.selectedBundles) {
-                    if ([sku isEqualToString:bundleSingleItem.product.sku]) {
-                        isSelected = YES;
-                        break;
+                if ([self.selectedBundles objectForKey:bundleSingleItem.product.sku]) {
+                    RIProductSimple* ps = [self.selectedBundles objectForKey:bundleSingleItem.product.sku];
+                    isSelected = YES;
+                    if(VALID_NOTEMPTY(ps, RIProductSimple)) {
+                        bundleSingleItem.productSimple = ps;
+                        if (0.0f == [ps.specialPrice floatValue]) {
+                            bundleSingleItem.productPriceLabel.text = ps.priceFormatted;
+                        } else {
+                            bundleSingleItem.productPriceLabel.text = ps.specialPriceFormatted;
+                        }
                     }
                 }
             }
@@ -908,8 +923,8 @@ JAActivityViewControllerDelegate
     }
     
     __weak typeof(self) weakSelf = self;
-    id block = ^(NSArray *bundles){
-        weakSelf.selectedBundles = [NSMutableArray arrayWithArray:bundles];
+    id block = ^(NSMutableDictionary *bundles){
+        weakSelf.selectedBundles = [bundles mutableCopy];
     };
     
     [userInfo setObject:block forKeyedSubscript:@"product.bundles.onChange"];
@@ -1151,17 +1166,17 @@ JAActivityViewControllerDelegate
     singleItem.selected = !singleItem.selected;
     
     if (!self.selectedBundles) {
-        self.selectedBundles = [NSMutableArray new];
+        self.selectedBundles = [[NSMutableDictionary alloc] init];
         for (JAPDVBundleSingleItem *item in self.bundleSingleItemsArray) {
             if (![item.product.sku isEqualToString:singleItem.product.sku]) {
-                [self.selectedBundles addObject:item.product.sku];
+                [self.selectedBundles setObject:[item.product.productSimples firstObject] forKey:item.product.sku];
             }
         }
     }else{
         if (singleItem.selected) {
-            [self.selectedBundles addObject:singleItem.product.sku];
+            [self.selectedBundles setObject:[singleItem.product.productSimples firstObject]  forKey:singleItem.product.sku];
         }else{
-            [self.selectedBundles removeObject:singleItem.product.sku];
+            [self.selectedBundles removeObjectForKey:singleItem.product.sku];
         }
         
     }
