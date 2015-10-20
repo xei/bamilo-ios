@@ -147,41 +147,41 @@
 
 + (NSString*)getTree:(NSString*)categoryId
 {
-    NSString *categoryTree = @"";
-    if(VALID_NOTEMPTY(categoryId, NSString))
-    {
-        NSArray* savedCategoryArray = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RICategory class]) withPropertyName:@"uid" andPropertyValue:categoryId];
-        
-        if(VALID_NOTEMPTY(savedCategoryArray, NSArray))
-        {
-            RICategory *savedCategory = [savedCategoryArray objectAtIndex:0];
-            categoryTree = savedCategory.label;
-            
-            RICategory *parentCategory = savedCategory.parent;
-            while (VALID_NOTEMPTY(parentCategory, RICategory))
-            {
-                categoryTree = [NSString stringWithFormat:@"%@,%@", parentCategory.label, categoryTree];
-                parentCategory = parentCategory.parent;
-            }
-        }
-    }
-    return categoryTree;
+//    NSString *categoryTree = @"";
+//    if(VALID_NOTEMPTY(categoryId, NSString))
+//    {
+//        NSArray* savedCategoryArray = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RICategory class]) withPropertyName:@"uid" andPropertyValue:categoryId];
+//        
+//        if(VALID_NOTEMPTY(savedCategoryArray, NSArray))
+//        {
+//            RICategory *savedCategory = [savedCategoryArray objectAtIndex:0];
+//            categoryTree = savedCategory.label;
+//            
+//            RICategory *parentCategory = savedCategory.parent;
+//            while (VALID_NOTEMPTY(parentCategory, RICategory))
+//            {
+//                categoryTree = [NSString stringWithFormat:@"%@,%@", parentCategory.label, categoryTree];
+//                parentCategory = parentCategory.parent;
+//            }
+//        }
+//    }
+    return categoryId;
 }
 
 + (NSString*)getCategoryName:(NSString*)categoryId
 {
-    NSString *categoryName = categoryId;
-    if(VALID_NOTEMPTY(categoryId, NSString))
-    {
-        NSArray* savedCategoryArray = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RICategory class]) withPropertyName:@"uid" andPropertyValue:categoryId];
-        
-        if(VALID_NOTEMPTY(savedCategoryArray, NSArray))
-        {
-            RICategory *savedCategory = [savedCategoryArray objectAtIndex:0];
-            categoryName = savedCategory.label;
-        }
-    }
-    return categoryName;
+//    NSString *categoryName = categoryId;
+//    if(VALID_NOTEMPTY(categoryId, NSString))
+//    {
+//        NSArray* savedCategoryArray = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RICategory class]) withPropertyName:@"uid" andPropertyValue:categoryId];
+//        
+//        if(VALID_NOTEMPTY(savedCategoryArray, NSArray))
+//        {
+//            RICategory *savedCategory = [savedCategoryArray objectAtIndex:0];
+//            categoryName = savedCategory.label;
+//        }
+//    }
+    return categoryId;
 }
 
 + (NSString*)getTopCategory:(RICategory*)seenCategory
