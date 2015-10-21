@@ -20,7 +20,7 @@
     NSInteger _currentPage;
 }
 
-@property (nonatomic) UIScrollView *contentScrollView;
+@property (nonatomic) UIView *topView;
 
 @property (nonatomic) JAProductInfoHeaderLine *ratingsHeaderLine;
 @property (nonatomic) UIView *ratingsView;
@@ -36,6 +36,10 @@
 @property (nonatomic) UICollectionView *collectionView;
 @property (nonatomic) RIProductRatings *productRatings;
 @property (nonatomic) NSMutableArray *reviewsArray;
+
+@property (nonatomic) UIView *writeReviewView;
+@property (nonatomic) UILabel *writeReviewLabel;
+@property (nonatomic) UIButton *writeReviewButton;
 
 @end
 
@@ -60,20 +64,48 @@
     return self;
 }
 
+- (UIView *)topView
+{
+    CGRect frame = CGRectMake(0, 0, self.collectionView.width, CGRectGetMaxY(_reviewsHeaderLine.frame));
+    if (!VALID_NOTEMPTY(_topView, UIView)) {
+        _topView = [[UIView alloc] initWithFrame:frame];
+        [_topView setBackgroundColor:[UIColor whiteColor]];
+        [self ratingsHeaderLine];
+        [self ratingsView];
+        [self reviewsHeaderLine];
+        [self writeReviewView];
+    }else if (!CGRectEqualToRect(_topView.frame, frame))
+    {
+        [_topView setFrame:frame];
+        [self ratingsHeaderLine];
+        [self ratingsView];
+        [self reviewsHeaderLine];
+        [self writeReviewView];
+    }
+    return _topView;
+}
+
 - (UICollectionView *)collectionView
 {
-    CGRect frame = CGRectMake(0, CGRectGetMaxY(self.reviewsHeaderLine.frame), self.width, self.height - CGRectGetMaxY(self.reviewsHeaderLine.frame));
+    CGRect frame = self.bounds;
     if (!VALID_NOTEMPTY(_collectionView, UICollectionView)) {
         UICollectionViewFlowLayout* layout = [[UICollectionViewFlowLayout alloc] init];
+        [layout setMinimumInteritemSpacing:0];
+        [layout setMinimumLineSpacing:10];
+        //                                      top, left, bottom, right
+        [layout setSectionInset:UIEdgeInsetsMake(0.f, 0.0, 10.0, 0.0)];
+        layout.scrollDirection = UICollectionViewScrollDirectionVertical;
         _collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:layout];
         [_collectionView setBackgroundColor:UIColorFromRGB(0xf0f0f0)];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         [_collectionView registerClass:[JAReviewCollectionCell class] forCellWithReuseIdentifier:@"JAReviewCollectionCell"];
+        [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"topView"];
         [self addSubview:_collectionView];
-    }else if (!CGRectEqualToRect(_contentScrollView.frame, frame))
+    }else if (!CGRectEqualToRect(_collectionView.frame, frame))
     {
         [_collectionView setFrame:frame];
+        [_collectionView.collectionViewLayout invalidateLayout];
     }
     return _collectionView;
 }
@@ -82,25 +114,9 @@
 {
 }
 
-- (UIScrollView *)contentScrollView
-{
-    CGRect frame = CGRectMake(0, 0, self.width, self.height);
-    if (!VALID_NOTEMPTY(_contentScrollView, UIScrollView)) {
-        _contentScrollView = [[UIScrollView alloc] initWithFrame:frame];
-    }else if (!CGRectEqualToRect(frame, _contentScrollView.frame))
-    {
-        [_contentScrollView setFrame:frame];
-        [self ratingsHeaderLine];
-        [self ratingsView];
-        [self reviewsHeaderLine];
-        [self collectionView];
-    }
-    return _contentScrollView;
-}
-
 - (UIView *)ratingsView
 {
-    CGRect frame = CGRectMake(16, CGRectGetMaxY(self.ratingsHeaderLine.frame) + 16.f, self.contentScrollView.width - 32, 100);
+    CGRect frame = CGRectMake(0, CGRectGetMaxY(self.ratingsHeaderLine.frame) + 16.f, _topView.width - 32, 180);
     if (!VALID_NOTEMPTY(_ratingsView, UIView)) {
         _ratingsView = [[UIView alloc] initWithFrame:frame];
         [_ratingsView addSubview:self.averageTitleLabel];
@@ -108,6 +124,7 @@
         [_ratingsView addSubview:self.totalUsersLabel];
         [_ratingsView addSubview:self.verticalSeparator];
         [_ratingsView addSubview:self.ratingsRightSideView];
+        [_ratingsView addSubview:self.writeReviewView];
     }else if (!CGRectEqualToRect(frame, _ratingsView.frame)) {
         [_ratingsView setFrame:frame];
         [self averageTitleLabel];
@@ -196,7 +213,7 @@
 
 - (JAProductInfoHeaderLine *)ratingsHeaderLine
 {
-    CGRect frame = CGRectMake(0, 0, self.width, kProductInfoHeaderLineHeight);
+    CGRect frame = CGRectMake(0, 0, self.topView.width, kProductInfoHeaderLineHeight);
     if (!VALID_NOTEMPTY(_ratingsHeaderLine, JAProductInfoHeaderLine)) {
         _ratingsHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:frame];
         [_ratingsHeaderLine setTopSeparatorVisibility:NO];
@@ -208,7 +225,7 @@
 
 - (JAProductInfoHeaderLine *)reviewsHeaderLine
 {
-    CGRect frame = CGRectMake(0, CGRectGetMaxY(self.ratingsView.frame) + 16.f, self.width, kProductInfoHeaderLineHeight);
+    CGRect frame = CGRectMake(0, CGRectGetMaxY(self.ratingsView.frame) + 16.f, _topView.width, kProductInfoHeaderLineHeight);
     if (!VALID_NOTEMPTY(_reviewsHeaderLine, JAProductInfoHeaderLine)) {
         _reviewsHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:frame];
         [_reviewsHeaderLine setTopSeparatorVisibility:NO];
@@ -216,6 +233,56 @@
         [_reviewsHeaderLine setFrame:frame];
     }
     return _reviewsHeaderLine;
+}
+
+- (UIView *)writeReviewView
+{
+    CGRect frame = CGRectMake(_topView.width/2 - 160, CGRectGetMaxY(self.verticalSeparator.frame), 320, 80);
+    if (!VALID_NOTEMPTY(_writeReviewView, UIView)) {
+        _writeReviewView = [[UIView alloc] initWithFrame:frame];
+        [_writeReviewView addSubview:self.writeReviewLabel];
+        [_writeReviewView addSubview:self.writeReviewButton];
+    }else if (!CGRectEqualToRect(frame, _writeReviewView.frame))
+    {
+        [_writeReviewView setFrame:frame];
+        [self writeReviewLabel];
+        [self writeReviewButton];
+    }
+    return _writeReviewView;
+}
+
+- (UILabel *)writeReviewLabel
+{
+    CGRect frame = CGRectMake(0, 10, _writeReviewView.width/2, _writeReviewView.height);
+    if (!VALID_NOTEMPTY(_writeReviewLabel, UILabel)) {
+        _writeReviewLabel = [[UILabel alloc] initWithFrame:frame];
+        [_writeReviewLabel setFont:JABody3Font];
+        [_writeReviewLabel setTextColor:JABlack800Color];
+        [_writeReviewLabel setTextAlignment:NSTextAlignmentCenter];
+        [_writeReviewLabel setNumberOfLines:2];
+#warning TODO String
+        [_writeReviewLabel setText:@"Have you tried this product? Rate it now"];
+    }else if (!CGRectEqualToRect(frame, _writeReviewView.frame)) {
+        [_writeReviewLabel setFrame:frame];
+    }
+    return _writeReviewLabel;
+}
+
+- (UIButton *)writeReviewButton
+{
+    CGRect frame = CGRectMake(_writeReviewView.width/2, 10, _writeReviewView.width/2, _writeReviewView.height);
+    if (!VALID_NOTEMPTY(_writeReviewButton, UIButton)) {
+        _writeReviewButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_writeReviewButton setTitleColor:JAOrange1Color forState:UIControlStateNormal];
+        [_writeReviewButton setTitleColor:JABlack800Color forState:UIControlStateHighlighted];
+        [_writeReviewButton setFrame:frame];
+#warning TODO String
+        [_writeReviewButton setTitle:@"Write a Review" forState:UIControlStateNormal];
+        [_writeReviewButton addTarget:self action:@selector(goToNewReview:) forControlEvents:UIControlEventTouchUpInside];
+    }else if (!CGRectEqualToRect(frame, _writeReviewButton.frame)) {
+        [_writeReviewButton setFrame:frame];
+    }
+    return _writeReviewButton;
 }
 
 - (void)setGraphicSide
@@ -297,8 +364,6 @@
     self.starsViewDictionary = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:graphic1, graphic2, graphic3, graphic4, graphic5, nil] forKeys:[NSArray arrayWithObjects:@1, @2, @3, @4, @5, nil]];
     self.starsTotalLabelDictionary = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:labelTotal1, labelTotal2, labelTotal3, labelTotal4, labelTotal5, nil] forKeys:[NSArray arrayWithObjects:@1, @2, @3, @4, @5, nil]];
     
-    [_ratingsView setHeight:CGRectGetMaxY(self.verticalSeparator.frame) + 16.f];
-    
     if (_ratingsDictionary) {
         [self fillGraphics];
     }
@@ -313,19 +378,18 @@
     [self requestRatings];
     [self requestReviews];
     
-    [self addSubview:self.contentScrollView];
     CGFloat yOffset = 0.f;
     [self.ratingsHeaderLine setTitle:[NSString stringWithFormat:@"RATINGS (%d)", _product.sum.intValue]];
     [self.ratingsHeaderLine setY:yOffset];
-    [self.contentScrollView addSubview:self.ratingsHeaderLine];
+    [self.topView addSubview:self.ratingsHeaderLine];
     yOffset = CGRectGetMaxY(self.ratingsHeaderLine.frame);
     
-    [self.contentScrollView addSubview:self.ratingsView];
+    [self.topView addSubview:self.ratingsView];
     yOffset = CGRectGetMaxY(self.ratingsView.frame);
     
     [self.reviewsHeaderLine setTitle:[NSString stringWithFormat:@"USER REVIEWS (%d)", _product.reviewsTotal.intValue]];
     [self.reviewsHeaderLine setY:yOffset];
-    [self.contentScrollView addSubview:self.reviewsHeaderLine];
+    [self.topView addSubview:self.reviewsHeaderLine];
     yOffset = CGRectGetMaxY(self.reviewsHeaderLine.frame);
 }
 
@@ -448,14 +512,58 @@
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
-    [self contentScrollView];
+    [self collectionView];
+}
+
+#pragma mark - Action
+
+- (void)goToNewReview:(id)sender
+{
+    NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
+    if(VALID_NOTEMPTY(self.product, RIProduct))
+    {
+        [userInfo setObject:self.product forKey:@"product"];
+    }
+    
+    if(VALID_NOTEMPTY(self.productRatings, RIProductRatings))
+    {
+        [userInfo setObject:self.productRatings forKey:@"productRatings"];
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowNewRatingScreenNotification object:nil userInfo:userInfo];
+}
+
+- (void)goToReviews:(id)sender
+{
+    NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
+    if(VALID_NOTEMPTY(self.product, RIProduct))
+    {
+        [userInfo setObject:self.product forKey:@"product"];
+    }
+    
+    if(VALID_NOTEMPTY(self.productRatings, RIProductRatings))
+    {
+        [userInfo setObject:self.productRatings forKey:@"productRatings"];
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowRatingsScreenNotification object:nil userInfo:userInfo];
 }
 
 #pragma mark - CollectionView
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    RIReview *productReview = [self.reviewsArray objectAtIndex:indexPath.row];
+    NSInteger arrayIndex = indexPath.row;
+    if (indexPath.row == 0) {
+        UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"topView" forIndexPath:indexPath];
+        if (cell.tag == 0) {
+            [cell addSubview:self.topView];
+        }
+        cell.tag = 1;
+        return cell;
+    }
+    arrayIndex--;
+    RIReview *productReview = [self.reviewsArray objectAtIndex:arrayIndex];
     
     
     if((indexPath.row == ([self.reviewsArray count] - 1)) && (self.productRatings.currentPage != self.productRatings.totalPages))
@@ -464,19 +572,26 @@
     }
     
     JAReviewCollectionCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"JAReviewCollectionCell" forIndexPath:indexPath];
+    [cell setUserInteractionEnabled:YES];
     [cell setupWithReview:productReview width:[self getCellWidth] showSeparator:YES];
+    [cell addTarget:self action:@selector(goToReviews:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    RIReview *productReview = [self.reviewsArray objectAtIndex:indexPath.row];
+    NSInteger arrayIndex = indexPath.row;
+    if (indexPath.row == 0) {
+        return self.topView.frame.size;
+    }
+    arrayIndex--;
+    RIReview *productReview = [self.reviewsArray objectAtIndex:arrayIndex];
     return [self getCellSizeForReview:productReview indexPath:indexPath];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.reviewsArray.count;
+    return self.reviewsArray.count + 1;
 }
 
 - (CGFloat)getCellWidth
@@ -487,6 +602,12 @@
     }else{
         return self.collectionView.width;
     }
+//    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+//        
+//        return 640.f;
+//    }else{
+//        return self.collectionView.width;
+//    }
 }
 
 - (CGSize)getCellSizeForReview:(RIReview *)review indexPath:(NSIndexPath *)indexPath

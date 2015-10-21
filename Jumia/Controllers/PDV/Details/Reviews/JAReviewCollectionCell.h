@@ -18,4 +18,6 @@
 + (CGFloat)cellHeightWithReview:(RIReview*)review
                           width:(CGFloat)width;
 
+- (void)addTarget:(id)target action:(nonnull SEL)action forControlEvents:(UIControlEvents)controlEvents;
+
 @end
