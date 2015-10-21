@@ -8,6 +8,7 @@
 
 #import "JAReviewCollectionCell.h"
 #import "JAProductInfoRatingLine.h"
+#import "JAClickableView.h"
 
 #define kXOffset 16
 
@@ -15,6 +16,7 @@
     CGFloat _descriptionLabelInitWidth;
 }
 
+@property (nonatomic, strong) JAClickableView *clickableArea;
 @property (nonatomic, strong) NSArray *ratingStarViews;
 @property (nonatomic, strong) NSArray *ratingLabels;
 @property (nonatomic, strong) UIView *ratingsView;
@@ -29,11 +31,20 @@
 
 @implementation JAReviewCollectionCell
 
+- (JAClickableView *)clickableArea
+{
+    if (!VALID_NOTEMPTY(_clickableArea, JAClickableView)) {
+        _clickableArea = [[JAClickableView alloc] initWithFrame:self.bounds];
+        [self addSubview:_clickableArea];
+    }
+    return _clickableArea;
+}
+
 - (UIView *)ratingsView
 {
     if (!VALID_NOTEMPTY(_ratingsView, UIView)) {
         _ratingsView = [[UIView alloc] initWithFrame:CGRectMake(0, 18, self.width - self.dateLabel.width, 70)];
-        [self addSubview:_ratingsView];
+        [self.clickableArea addSubview:_ratingsView];
     }
     return _ratingsView;
 }
@@ -71,7 +82,7 @@
         _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(kXOffset, 18, self.width - 32, 20)];
         [_dateLabel setFont:JABody3Font];
         [_dateLabel setTextColor:JABlack800Color];
-        [self addSubview:_dateLabel];
+        [self.clickableArea addSubview:_dateLabel];
     }
     return _dateLabel;
 }
@@ -82,7 +93,7 @@
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(kXOffset, CGRectGetMaxY(self.ratingsView.frame) + 10.f, self.width - 32, 20)];
         [_titleLabel setFont:JAList1Font];
         [_titleLabel setTextColor:JABlack900Color];
-        [self addSubview:_titleLabel];
+        [self.clickableArea addSubview:_titleLabel];
     }
     return _titleLabel;
 }
@@ -93,7 +104,7 @@
         _authorLabel = [[UILabel alloc] initWithFrame:CGRectMake(kXOffset, CGRectGetMaxY(self.titleLabel.frame), self.width - 32, 20)];
         [_authorLabel setFont:JABody3Font];
         [_authorLabel setTextColor:JABlack800Color];
-        [self addSubview:_authorLabel];
+        [self.clickableArea addSubview:_authorLabel];
     }
     return _authorLabel;
 }
@@ -104,8 +115,8 @@
         _descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(kXOffset, CGRectGetMaxY(self.authorLabel.frame) + 16, self.width - 32, 20)];
         [_descriptionLabel setFont:JABody3Font];
         [_descriptionLabel setTextColor:JABlack800Color];
-        [_descriptionLabel setNumberOfLines:0];
-        [self addSubview:_descriptionLabel];
+        [_descriptionLabel setNumberOfLines:5];
+        [self.clickableArea addSubview:_descriptionLabel];
     }
     return _descriptionLabel;
 }
@@ -115,7 +126,7 @@
     if (!VALID_NOTEMPTY(_separator, UIView)) {
         _separator = [[UIView alloc] initWithFrame:CGRectMake(0, self.height, self.width, 1)];
         [_separator setBackgroundColor:JABlack800Color];
-        [self addSubview:_separator];
+        [self.clickableArea addSubview:_separator];
     }
     return _separator;
 }
@@ -181,6 +192,8 @@
     
     [self setHeight:CGRectGetMaxY(self.descriptionLabel.frame) + 18];
     
+    [self.clickableArea setFrame:self.bounds];
+    
     if (showSeparator) {
         [self.separator setHidden:NO];
         [self.separator setWidth:self.width];
@@ -195,6 +208,11 @@
     JAReviewCollectionCell *cell = [JAReviewCollectionCell new];
     [cell setupWithReview:review width:width showSeparator:YES];
     return cell.height;
+}
+
+- (void)addTarget:(id)target action:(nonnull SEL)action forControlEvents:(UIControlEvents)controlEvents
+{
+    [self.clickableArea addTarget:target action:action forControlEvents:controlEvents];
 }
 
 @end

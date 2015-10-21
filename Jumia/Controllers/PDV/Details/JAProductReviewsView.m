@@ -533,6 +533,22 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowNewRatingScreenNotification object:nil userInfo:userInfo];
 }
 
+- (void)goToReviews:(id)sender
+{
+    NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
+    if(VALID_NOTEMPTY(self.product, RIProduct))
+    {
+        [userInfo setObject:self.product forKey:@"product"];
+    }
+    
+    if(VALID_NOTEMPTY(self.productRatings, RIProductRatings))
+    {
+        [userInfo setObject:self.productRatings forKey:@"productRatings"];
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowRatingsScreenNotification object:nil userInfo:userInfo];
+}
+
 #pragma mark - CollectionView
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -556,7 +572,9 @@
     }
     
     JAReviewCollectionCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"JAReviewCollectionCell" forIndexPath:indexPath];
+    [cell setUserInteractionEnabled:YES];
     [cell setupWithReview:productReview width:[self getCellWidth] showSeparator:YES];
+    [cell addTarget:self action:@selector(goToReviews:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 
@@ -584,6 +602,12 @@
     }else{
         return self.collectionView.width;
     }
+//    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+//        
+//        return 640.f;
+//    }else{
+//        return self.collectionView.width;
+//    }
 }
 
 - (CGSize)getCellSizeForReview:(RIReview *)review indexPath:(NSIndexPath *)indexPath
