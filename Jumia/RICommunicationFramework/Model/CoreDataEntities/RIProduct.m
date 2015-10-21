@@ -521,17 +521,17 @@
         }
         
         __block NSString* variationKey = @"";
-            NSDictionary* uniques = [dataDic objectForKey:@"uniques"];
-            if (VALID_NOTEMPTY(uniques, NSDictionary)) {
-                NSDictionary *attributes = [uniques objectForKey:@"attributes"];
-                if (VALID_NOTEMPTY(attributes, NSDictionary)) {
-                    [attributes enumerateKeysAndObjectsUsingBlock:^(id key, NSString* obj, BOOL *stop) {
-                        if (VALID_NOTEMPTY(obj, NSString)) {
-                            variationKey = obj;
-                        }
-                    }];
-                }
+        NSDictionary* uniques = [dataDic objectForKey:@"uniques"];
+        if (VALID_NOTEMPTY(uniques, NSDictionary)) {
+            NSDictionary *attributes = [uniques objectForKey:@"attributes"];
+            if (VALID_NOTEMPTY(attributes, NSDictionary)) {
+                [attributes enumerateKeysAndObjectsUsingBlock:^(id key, NSString* obj, BOOL *stop) {
+                    if (VALID_NOTEMPTY(obj, NSString)) {
+                        variationKey = obj;
+                    }
+                }];
             }
+        }
         
         if ([dataDic objectForKey:@"share_url"]) {
             if (VALID_NOTEMPTY([dataDic objectForKey:@"share_url"], NSString)) {

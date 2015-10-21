@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "RIProductOffer.h"
+#import "RIProductSimple.h"
 
 @interface JAOfferCollectionViewCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UIButton *addToCartButton;
+@property (weak, nonatomic) IBOutlet UIButton *sizeButton;
 
-- (void)loadWithProductOffer:(RIProductOffer*)productOffer;
-
+- (void)loadWithProductOffer:(RIProductOffer*)productOffer withProductSimple:(RIProductSimple* )productSimple;
+- (void)setProductSimple:(RIProductSimple*)productSimple;
 @end

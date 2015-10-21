@@ -8,6 +8,7 @@
 
 #import "RIProductOffer.h"
 #import "RISeller.h"
+#import "RIProductSimple.h"
 
 @implementation RIProductOffer
 
@@ -103,14 +104,15 @@
         }
         if ([productJSON objectForKey:@"simples"]) {
             NSArray* simplesArray = [productJSON objectForKey:@"simples"];
+            NSMutableArray* newSimples = [[NSMutableArray alloc]init];
             if (VALID_NOTEMPTY(simplesArray, NSArray)) {
-                NSDictionary* simpleJSON = [simplesArray objectAtIndex:0];
-                if (VALID_NOTEMPTY(simpleJSON, NSDictionary)) {
-                    if ([simpleJSON objectForKey:@"sku"]) {
-                        newProductOffer.simpleSku = [simpleJSON objectForKey:@"sku"];
-                    }
+                for (NSDictionary* simple in simplesArray) {
+                    [newSimples addObject:[RIProductSimple parseProductSimple:simple
+                                                                     country:country
+                                                                variationKey:Nil]];
                 }
             }
+            newProductOffer.productSimples = [newSimples copy];
         }
         if ([productJSON objectForKey:@"price"]) {
             newProductOffer.price = [productJSON objectForKey:@"price"];

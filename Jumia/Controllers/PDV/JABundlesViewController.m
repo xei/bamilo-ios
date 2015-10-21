@@ -312,8 +312,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
         else
             totalPrice += bundleSimple.price.integerValue;
     }
-#warning TODO String
-    [self.totalSubLine setTitle:[NSString stringWithFormat:@"Total:  %@", [RICountryConfiguration formatPrice:[NSNumber numberWithInteger:totalPrice] country:[RICountryConfiguration getCurrentConfiguration]]]];
+    [self.totalSubLine setTitle:[NSString stringWithFormat:@"%@: %@",STRING_TOTAL, [RICountryConfiguration formatPrice:[NSNumber numberWithInteger:totalPrice] country:[RICountryConfiguration getCurrentConfiguration]]]];
     [self.totalSubLine.label sizeToFit];
     [self.totalSubLine.label setYCenterAligned];
 }
@@ -333,15 +332,17 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 - (void)openPickerForProduct:(RIProduct *)product
 {
     NSMutableArray *sizes = [NSMutableArray new];
+    NSMutableArray *simples =[NSMutableArray new];
     for (RIProductSimple *simple in product.productSimples) {
         if ([simple.quantity integerValue] > 0)
         {
             if (VALID_NOTEMPTY(simple.variation, NSString)) {
                 [sizes addObject:simple.variation];
+                [simples addObject:simple];
             }
         }
     }
-    _pickerDataSource = [product.productSimples array];
+    _pickerDataSource = [simples copy];
     [self loadSizePickerWithOptions:sizes title:product.name previousText:@"" leftButtonTitle:nil];
 }
 
