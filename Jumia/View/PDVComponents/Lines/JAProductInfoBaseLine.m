@@ -86,7 +86,7 @@
 - (void)setTitle:(NSString *)title
 {
     [self.label setText:title];
-    CGFloat labelWidth = self.width - 40;
+    CGFloat labelWidth = self.width - 32;
     [self.label sizeToFit];
     [self.label setY:self.height/2-self.label.height/2];
     [self.label setWidth:labelWidth];

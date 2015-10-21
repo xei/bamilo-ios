@@ -37,6 +37,10 @@
 @property (nonatomic) RIProductRatings *productRatings;
 @property (nonatomic) NSMutableArray *reviewsArray;
 
+@property (nonatomic) UIView *writeReviewView;
+@property (nonatomic) UILabel *writeReviewLabel;
+@property (nonatomic) UIButton *writeReviewButton;
+
 @end
 
 @implementation JAProductReviewsView
@@ -62,19 +66,21 @@
 
 - (UIView *)topView
 {
-    CGRect frame = CGRectMake(0, 0, self.width, CGRectGetMaxY(self.reviewsHeaderLine.frame));
+    CGRect frame = CGRectMake(0, 0, self.collectionView.width, CGRectGetMaxY(_reviewsHeaderLine.frame));
     if (!VALID_NOTEMPTY(_topView, UIView)) {
         _topView = [[UIView alloc] initWithFrame:frame];
         [_topView setBackgroundColor:[UIColor whiteColor]];
         [self ratingsHeaderLine];
         [self ratingsView];
         [self reviewsHeaderLine];
+        [self writeReviewView];
     }else if (!CGRectEqualToRect(_topView.frame, frame))
     {
         [_topView setFrame:frame];
         [self ratingsHeaderLine];
         [self ratingsView];
         [self reviewsHeaderLine];
+        [self writeReviewView];
     }
     return _topView;
 }
@@ -110,7 +116,7 @@
 
 - (UIView *)ratingsView
 {
-    CGRect frame = CGRectMake(16, CGRectGetMaxY(self.ratingsHeaderLine.frame) + 16.f, self.width - 32, 100);
+    CGRect frame = CGRectMake(0, CGRectGetMaxY(self.ratingsHeaderLine.frame) + 16.f, _topView.width - 32, 180);
     if (!VALID_NOTEMPTY(_ratingsView, UIView)) {
         _ratingsView = [[UIView alloc] initWithFrame:frame];
         [_ratingsView addSubview:self.averageTitleLabel];
@@ -118,6 +124,7 @@
         [_ratingsView addSubview:self.totalUsersLabel];
         [_ratingsView addSubview:self.verticalSeparator];
         [_ratingsView addSubview:self.ratingsRightSideView];
+        [_ratingsView addSubview:self.writeReviewView];
     }else if (!CGRectEqualToRect(frame, _ratingsView.frame)) {
         [_ratingsView setFrame:frame];
         [self averageTitleLabel];
@@ -206,7 +213,7 @@
 
 - (JAProductInfoHeaderLine *)ratingsHeaderLine
 {
-    CGRect frame = CGRectMake(0, 0, self.width, kProductInfoHeaderLineHeight);
+    CGRect frame = CGRectMake(0, 0, self.topView.width, kProductInfoHeaderLineHeight);
     if (!VALID_NOTEMPTY(_ratingsHeaderLine, JAProductInfoHeaderLine)) {
         _ratingsHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:frame];
         [_ratingsHeaderLine setTopSeparatorVisibility:NO];
@@ -218,7 +225,7 @@
 
 - (JAProductInfoHeaderLine *)reviewsHeaderLine
 {
-    CGRect frame = CGRectMake(0, CGRectGetMaxY(self.ratingsView.frame) + 16.f, self.width, kProductInfoHeaderLineHeight);
+    CGRect frame = CGRectMake(0, CGRectGetMaxY(self.ratingsView.frame) + 16.f, _topView.width, kProductInfoHeaderLineHeight);
     if (!VALID_NOTEMPTY(_reviewsHeaderLine, JAProductInfoHeaderLine)) {
         _reviewsHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:frame];
         [_reviewsHeaderLine setTopSeparatorVisibility:NO];
@@ -226,6 +233,56 @@
         [_reviewsHeaderLine setFrame:frame];
     }
     return _reviewsHeaderLine;
+}
+
+- (UIView *)writeReviewView
+{
+    CGRect frame = CGRectMake(_topView.width/2 - 160, CGRectGetMaxY(self.verticalSeparator.frame), 320, 80);
+    if (!VALID_NOTEMPTY(_writeReviewView, UIView)) {
+        _writeReviewView = [[UIView alloc] initWithFrame:frame];
+        [_writeReviewView addSubview:self.writeReviewLabel];
+        [_writeReviewView addSubview:self.writeReviewButton];
+    }else if (!CGRectEqualToRect(frame, _writeReviewView.frame))
+    {
+        [_writeReviewView setFrame:frame];
+        [self writeReviewLabel];
+        [self writeReviewButton];
+    }
+    return _writeReviewView;
+}
+
+- (UILabel *)writeReviewLabel
+{
+    CGRect frame = CGRectMake(0, 10, _writeReviewView.width/2, _writeReviewView.height);
+    if (!VALID_NOTEMPTY(_writeReviewLabel, UILabel)) {
+        _writeReviewLabel = [[UILabel alloc] initWithFrame:frame];
+        [_writeReviewLabel setFont:JABody3Font];
+        [_writeReviewLabel setTextColor:JABlack800Color];
+        [_writeReviewLabel setTextAlignment:NSTextAlignmentCenter];
+        [_writeReviewLabel setNumberOfLines:2];
+#warning TODO String
+        [_writeReviewLabel setText:@"Have you tried this product? Rate it now"];
+    }else if (!CGRectEqualToRect(frame, _writeReviewView.frame)) {
+        [_writeReviewLabel setFrame:frame];
+    }
+    return _writeReviewLabel;
+}
+
+- (UIButton *)writeReviewButton
+{
+    CGRect frame = CGRectMake(_writeReviewView.width/2, 10, _writeReviewView.width/2, _writeReviewView.height);
+    if (!VALID_NOTEMPTY(_writeReviewButton, UIButton)) {
+        _writeReviewButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_writeReviewButton setTitleColor:JAOrange1Color forState:UIControlStateNormal];
+        [_writeReviewButton setTitleColor:JABlack800Color forState:UIControlStateHighlighted];
+        [_writeReviewButton setFrame:frame];
+#warning TODO String
+        [_writeReviewButton setTitle:@"Write a Review" forState:UIControlStateNormal];
+        [_writeReviewButton addTarget:self action:@selector(goToNewReview:) forControlEvents:UIControlEventTouchUpInside];
+    }else if (!CGRectEqualToRect(frame, _writeReviewButton.frame)) {
+        [_writeReviewButton setFrame:frame];
+    }
+    return _writeReviewButton;
 }
 
 - (void)setGraphicSide
@@ -456,6 +513,24 @@
 {
     [super setFrame:frame];
     [self collectionView];
+}
+
+#pragma mark - Action
+
+- (void)goToNewReview:(id)sender
+{
+    NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
+    if(VALID_NOTEMPTY(self.product, RIProduct))
+    {
+        [userInfo setObject:self.product forKey:@"product"];
+    }
+    
+    if(VALID_NOTEMPTY(self.productRatings, RIProductRatings))
+    {
+        [userInfo setObject:self.productRatings forKey:@"productRatings"];
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowNewRatingScreenNotification object:nil userInfo:userInfo];
 }
 
 #pragma mark - CollectionView
