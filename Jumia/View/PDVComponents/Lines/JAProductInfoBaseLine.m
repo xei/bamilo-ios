@@ -48,7 +48,7 @@
     if (!VALID_NOTEMPTY(_label, UILabel)) {
         _label = [[UILabel alloc] initWithFrame:CGRectMake(16, 6, self.width-32, self.height-12)];
         [_label setTextColor:JABlackColor];
-        [_label setText:@"set your text here."];
+        [_label setText:@""];
         [_label sizeToFit];
         [_label setY:self.height/2-_label.height/2];
         [self addSubview:_label];

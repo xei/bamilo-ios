@@ -553,6 +553,17 @@
         
     } else {
         [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, chosenSimpleName] forState:UIControlStateNormal];
+            
+            for (RIProductSimple* prds in product.productSimples) {
+                if ([prds.variation isEqual:chosenSimpleName]) {
+                    [cell.priceView loadWithPrice:prds.priceFormatted
+                                     specialPrice:prds.specialPriceFormatted
+                                         fontSize:10.0f
+                            specialPriceOnTheLeft:YES];
+                    break;
+                }
+            }
+
     }
     cell.sizeButton.tag = indexPath.row;
     [cell.sizeButton addTarget:self
@@ -646,7 +657,6 @@
     __block NSNumber *tempPrice = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted floatValue] > 0.0f) ? product.specialPriceEuroConverted : product.priceEuroConverted;
     
     [self showLoading];
-    
     [RIProduct removeFromFavorites:product successBlock:^(void) {
         
         [self removeErrorView];
@@ -947,14 +957,18 @@
     
     [self.chosenSimpleNames replaceObjectAtIndex:self.picker.tag withObject:simpleName];
     
+    JACatalogCell *cell = (JACatalogCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:self.picker.tag
+                                                                                                           inSection:0]];
+    [cell.priceView loadWithPrice:selectedSimple.priceFormatted
+                     specialPrice:selectedSimple.specialPriceFormatted
+                         fontSize:10.0f
+            specialPriceOnTheLeft:YES];
+    [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, simpleName] forState:UIControlStateNormal];
+    
     [self closePicker];
-    [self.collectionView reloadData];
     
     if (self.selectedSizeAndAddToCart)
     {
-        JACatalogCell *cell = (JACatalogCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:self.picker.tag
-                                                                                                               inSection:0]];
-        
         [cell.sizeButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
         [cell.sizeButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
         

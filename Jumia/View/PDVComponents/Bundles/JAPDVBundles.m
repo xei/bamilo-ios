@@ -9,6 +9,7 @@
 #import "JAPDVBundles.h"
 #import "JAProductInfoHeaderLine.h"
 #import "JAProductInfoSingleLine.h"
+#import "RIProductSimple.h"
 
 @interface JAPDVBundles() {
     BOOL _withSize;
@@ -121,12 +122,18 @@
     for (JAPDVBundleSingleItem *bundleItem in _bundlesArray) {
         if (bundleItem.selected) {
             if (VALID_NOTEMPTY(bundleItem.product, RIProduct)) {
-                
-                if (VALID_NOTEMPTY(bundleItem.product.specialPrice, NSNumber) && 0.0f == [self.product.specialPrice floatValue]) {
-                    total += bundleItem.product.price.floatValue;
-                } else {
-                    total += bundleItem.product.specialPrice.floatValue;
-                }
+                if (VALID_NOTEMPTY(bundleItem.productSimple, RIProductSimple)) {
+                    if (VALID_NOTEMPTY(bundleItem.productSimple.specialPrice, NSNumber) && 0.0f == [bundleItem.productSimple.specialPrice floatValue]) {
+                        total += bundleItem.productSimple.price.floatValue;
+                    } else {
+                        total += bundleItem.productSimple.specialPrice.floatValue;
+                    }
+                } else
+                    if (VALID_NOTEMPTY(bundleItem.product.specialPrice, NSNumber) && 0.0f == [self.product.specialPrice floatValue]) {
+                        total += bundleItem.product.price.floatValue;
+                    } else {
+                        total += bundleItem.product.specialPrice.floatValue;
+                    }
             }
         }
     }
