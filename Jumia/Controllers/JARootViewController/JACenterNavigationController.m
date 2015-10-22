@@ -78,6 +78,7 @@
     self.neeedsExternalPaymentMethod = NO;
     
     [self customizeNavigationBar];
+    [self customizeTabBar];
     
     self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
@@ -268,6 +269,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(closeTopTwoScreensNotificaion:)
                                                  name:kCloseTopTwoScreensNotification
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(changeTabBarWithNotification:)
+                                                 name:kChangeTabBarVisibility
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -1628,6 +1634,19 @@
     }
 }
 
+#pragma mark - Tab Bar
+
+- (void)customizeTabBar
+{
+    self.tabBarView = [[JATabBarView alloc] initWithFrame:CGRectMake(0.0,
+                                                                     self.view.frame.size.height - kTabBarHeight,
+                                                                     self.view.bounds.size.width,
+                                                                     kTabBarHeight)];
+    self.tabBarView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
+    [self.tabBarView initialSetup];
+    [self.view addSubview:self.tabBarView];
+}
+
 #pragma mark - Navigation Bar
 
 - (void)customizeNavigationBar
@@ -1667,6 +1686,12 @@
     UITapGestureRecognizer *touched = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goTop)];
     [self.navigationBarView.titleLabel addGestureRecognizer:touched];
     
+}
+
+- (void)changeTabBarWithNotification:(NSNotification*)notification
+{
+    NSNumber* isVisible = notification.object;
+    self.tabBarView.hidden = ![isVisible boolValue];
 }
 
 - (void)changeNavigationWithNotification:(NSNotification*)notification

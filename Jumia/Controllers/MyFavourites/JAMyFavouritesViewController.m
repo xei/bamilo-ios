@@ -81,6 +81,8 @@
     self.A4SViewControllerAlias = @"MYFAVOURITES";
     
     self.navBarLayout.title = STRING_MY_FAVOURITES;
+    self.navBarLayout.showCartButton = NO;
+    self.tabBarIsVisible = YES;
 
     self.totalProdutsInWishlist = 0;
     
@@ -115,12 +117,12 @@
     
     self.collectionView.frame = CGRectMake(6.0f,
                                            self.collectionView.frame.origin.y,
-                                           self.view.frame.size.width - 6.0f*2,
-                                           self.view.frame.size.height);
+                                           [self viewBounds].size.width - 6.0f*2,
+                                           [self viewBounds].size.height);
     
     self.emptyFavoritesView.frame = CGRectMake(self.emptyFavoritesView.frame.origin.x,
                                                self.emptyFavoritesView.frame.origin.y,
-                                               self.view.frame.size.width - self.emptyFavoritesView.frame.origin.x * 2,
+                                               [self viewBounds].size.width - self.emptyFavoritesView.frame.origin.x * 2,
                                                300.0f);
     self.emptyFavoritesImageView.frame = CGRectMake((self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2,
                                                     56.0f,
@@ -159,12 +161,12 @@
     
     self.collectionView.frame = CGRectMake(6.0f,
                                            self.collectionView.frame.origin.y,
-                                           self.view.frame.size.width - 6.0f*2,
-                                           self.view.frame.size.height);
+                                           [self viewBounds].size.width - 6.0f*2,
+                                           [self viewBounds].size.height);
     
     self.emptyFavoritesView.frame = CGRectMake(self.emptyFavoritesView.frame.origin.x,
                                                self.emptyFavoritesView.frame.origin.y,
-                                               self.view.frame.size.width - self.emptyFavoritesView.frame.origin.x * 2,
+                                               [self viewBounds].size.width - self.emptyFavoritesView.frame.origin.x * 2,
                                                300.0f);
     self.emptyFavoritesImageView.frame = CGRectMake((self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2,
                                                     56.0f,
@@ -184,14 +186,14 @@
     
     self.collectionView.frame = CGRectMake(6.0f,
                                            self.collectionView.frame.origin.y,
-                                           self.view.frame.size.width - 6.0f*2,
-                                           self.view.frame.size.height);
+                                           [self viewBounds].size.width - 6.0f*2,
+                                           [self viewBounds].size.height);
     [self.collectionView reloadData];
     
 //    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
         self.emptyFavoritesView.frame = CGRectMake(self.emptyFavoritesView.frame.origin.x,
                                                    self.emptyFavoritesView.frame.origin.y,
-                                                   self.view.frame.size.width - self.emptyFavoritesView.frame.origin.x * 2,
+                                                   [self viewBounds].size.width - self.emptyFavoritesView.frame.origin.x * 2,
                                                    300.0f);
         self.emptyFavoritesImageView.frame = CGRectMake((self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2,
                                                         56.0f,
@@ -879,7 +881,7 @@
         [self.picker removeFromSuperview];
     }
     
-    self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
+    self.picker = [[JAPicker alloc] initWithFrame:[self viewBounds]];
     [self.picker setTag:button.tag];
     [self.picker setDelegate:self];
     
@@ -906,8 +908,8 @@
                        previousText:simpleSize
                     leftButtonTitle:sizeGuideTitle];
     
-    CGFloat pickerViewHeight = self.view.frame.size.height;
-    CGFloat pickerViewWidth = self.view.frame.size.width;
+    CGFloat pickerViewHeight = [self viewBounds].size.height;
+    CGFloat pickerViewWidth = [self viewBounds].size.width;
     [self.picker setFrame:CGRectMake(0.0f,
                                      pickerViewHeight,
                                      pickerViewWidth,
@@ -956,7 +958,7 @@
 - (void)closePicker
 {
     CGRect frame = self.picker.frame;
-    frame.origin.y = self.view.frame.size.height;
+    frame.origin.y = [self viewBounds].size.height;
     
     [UIView animateWithDuration:0.4f
                      animations:^{

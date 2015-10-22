@@ -95,6 +95,7 @@
 #define kDidSelectCategoryFromCenterPanelNotification @"NOTIFICATION_SELECTED_CATEGORY_FROM_CENTER_PANEL"
 
 //navbar notification
+#define kChangeTabBarVisibility @"NOTIFICATION_CHANGE_TAB_BAR_VISIBILITY"
 #define kChangeNavigationBarNotification @"NOTIFICATION_CHANGE_NAVIGATION_BAR"
 #define kEditShouldChangeStateNotification @"EDIT_SHOULD_CHANGE_NOTIFICATION"
 #define kDoneShouldChangeStateNotification @"DONE_SHOULD_CHANGE_NOTIFICATION"

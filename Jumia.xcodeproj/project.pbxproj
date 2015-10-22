@@ -2463,6 +2463,11 @@
 		CEA106F71BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; settings = {ASSET_TAGS = (); }; };
 		CEA106F81BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; settings = {ASSET_TAGS = (); }; };
 		CEA106F91BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; settings = {ASSET_TAGS = (); }; };
+		CEA106FD1BD78CE500EF88B1 /* JATabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */; settings = {ASSET_TAGS = (); }; };
+		CEA106FE1BD78CE500EF88B1 /* JATabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */; settings = {ASSET_TAGS = (); }; };
+		CEA106FF1BD78CE500EF88B1 /* JATabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */; settings = {ASSET_TAGS = (); }; };
+		CEA107001BD78CE500EF88B1 /* JATabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */; settings = {ASSET_TAGS = (); }; };
+		CEA107011BD78CE500EF88B1 /* JATabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */; settings = {ASSET_TAGS = (); }; };
 		CEA2A1B31B25D20C00E5973F /* JADynamicField.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA2A1B21B25D20C00E5973F /* JADynamicField.m */; };
 		CEA2A1B41B25D20C00E5973F /* JADynamicField.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA2A1B21B25D20C00E5973F /* JADynamicField.m */; };
 		CEA2A1B51B25D20C00E5973F /* JADynamicField.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA2A1B21B25D20C00E5973F /* JADynamicField.m */; };
@@ -3489,6 +3494,8 @@
 		CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACategoriesSideMenuViewController.m; sourceTree = "<group>"; };
 		CEA106F31BD003EC00EF88B1 /* JACategoriesSideMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACategoriesSideMenuCell.h; path = CategoriesSideMenu/JACategoriesSideMenuCell.h; sourceTree = "<group>"; };
 		CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACategoriesSideMenuCell.m; path = CategoriesSideMenu/JACategoriesSideMenuCell.m; sourceTree = "<group>"; };
+		CEA106FB1BD78CE500EF88B1 /* JATabBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JATabBarView.h; path = GlobalTabBar/JATabBarView.h; sourceTree = "<group>"; };
+		CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JATabBarView.m; path = GlobalTabBar/JATabBarView.m; sourceTree = "<group>"; };
 		CEA2A1B11B25D20C00E5973F /* JADynamicField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JADynamicField.h; sourceTree = "<group>"; };
 		CEA2A1B21B25D20C00E5973F /* JADynamicField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JADynamicField.m; sourceTree = "<group>"; };
 		CEA86D9A1A374D32000032AD /* Model_1.3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.3.xcdatamodel; sourceTree = "<group>"; };
@@ -4024,6 +4031,7 @@
 				CEABEEB71A11186F000D0CF8 /* Filters */,
 				CE3FC5A41990E209003B4A27 /* GenericComponents */,
 				4A39213B198921A100B70A9C /* GlobalNavigationBar */,
+				CEA106FA1BD78A7000EF88B1 /* GlobalTabBar */,
 				B51777AF19A78FEB00ED0AC7 /* Headers */,
 				B57822581A37516800B4DD8B /* JAGradientLayer.h */,
 				B57822591A37516800B4DD8B /* JAGradientLayer.m */,
@@ -5863,6 +5871,15 @@
 				CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */,
 			);
 			name = CategoriesSideMenu;
+			sourceTree = "<group>";
+		};
+		CEA106FA1BD78A7000EF88B1 /* GlobalTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				CEA106FB1BD78CE500EF88B1 /* JATabBarView.h */,
+				CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */,
+			);
+			name = GlobalTabBar;
 			sourceTree = "<group>";
 		};
 		CEA86D9B1A3756A6000032AD /* SizeGuide */ = {
@@ -7713,6 +7730,7 @@
 				952aecdd0bf3e87bd38f9e12 /* RITrackingWrapper.m in Sources */,
 				3b2e034618cfeae11e103642 /* RIVariation.m in Sources */,
 				9A7EE9861B5546A0004E2505 /* ADJLogger.m in Sources */,
+				CEA106FE1BD78CE500EF88B1 /* JATabBarView.m in Sources */,
 				df135d936bd63706b4e3db54 /* JAMainFiltersViewController.m in Sources */,
 				9A55A6881BBECB07008EF4A6 /* JABottomBar.m in Sources */,
 				9AEA3B2A1B15DDA100771EEA /* UIView+Frame.m in Sources */,
@@ -7911,6 +7929,7 @@
 				CE445875198BD5D800CE7E8D /* JASmallTeaserView.m in Sources */,
 				4A7F7481198A4EDA00621C0D /* JACenterNavigationController.m in Sources */,
 				B59DCA5C19B7109300DE7960 /* JAAddNewAddressViewController.m in Sources */,
+				CEA106FD1BD78CE500EF88B1 /* JATabBarView.m in Sources */,
 				9A7EE9761B5546A0004E2505 /* ADJConfig.m in Sources */,
 				4A944FF8199290F200C02734 /* JARatingsViewController.m in Sources */,
 				CE283E681A714D4900F3E92D /* JAOtherOffersView.m in Sources */,
@@ -8196,6 +8215,7 @@
 				CE9ADBA61AB34C4600D56481 /* JASmallTeaserView.m in Sources */,
 				CE9ADBA71AB34C4600D56481 /* JACenterNavigationController.m in Sources */,
 				CE9ADBA81AB34C4600D56481 /* JAAddNewAddressViewController.m in Sources */,
+				CEA106FF1BD78CE500EF88B1 /* JATabBarView.m in Sources */,
 				9A7EE9781B5546A0004E2505 /* ADJConfig.m in Sources */,
 				CE9ADBA91AB34C4600D56481 /* JARatingsViewController.m in Sources */,
 				CE9ADBAA1AB34C4600D56481 /* JAOtherOffersView.m in Sources */,
@@ -8472,6 +8492,7 @@
 				CE9ADDA01AB6D6E900D56481 /* JASmallTeaserView.m in Sources */,
 				CE9ADDA11AB6D6E900D56481 /* JACenterNavigationController.m in Sources */,
 				CE9ADDA21AB6D6E900D56481 /* JAAddNewAddressViewController.m in Sources */,
+				CEA107001BD78CE500EF88B1 /* JATabBarView.m in Sources */,
 				9A7EE9791B5546A0004E2505 /* ADJConfig.m in Sources */,
 				CE9ADDA31AB6D6E900D56481 /* JARatingsViewController.m in Sources */,
 				CE9ADDA41AB6D6E900D56481 /* JAOtherOffersView.m in Sources */,
@@ -8748,6 +8769,7 @@
 				CE9ADF9A1AB6D78200D56481 /* JASmallTeaserView.m in Sources */,
 				CE9ADF9B1AB6D78200D56481 /* JACenterNavigationController.m in Sources */,
 				CE9ADF9C1AB6D78200D56481 /* JAAddNewAddressViewController.m in Sources */,
+				CEA107011BD78CE500EF88B1 /* JATabBarView.m in Sources */,
 				9A7EE97A1B5546A0004E2505 /* ADJConfig.m in Sources */,
 				CE9ADF9D1AB6D78200D56481 /* JARatingsViewController.m in Sources */,
 				CE9ADF9E1AB6D78200D56481 /* JAOtherOffersView.m in Sources */,

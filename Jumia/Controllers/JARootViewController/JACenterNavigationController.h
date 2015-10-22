@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "JANavigationBarView.h"
+#import "JATabBarView.h"
 
 @interface JACenterNavigationController : UINavigationController
 
 @property (strong, nonatomic) JANavigationBarView *navigationBarView;
+@property (strong, nonatomic) JATabBarView *tabBarView;
 
 @end
