@@ -649,6 +649,7 @@
     
     [RIProduct removeFromFavorites:product successBlock:^(void) {
         
+        [self removeErrorView];
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:tempSku forKey:kRIEventLabelKey];
         [trackingDictionary setValue:@"RemoveFromWishlist" forKey:kRIEventActionKey];
@@ -671,9 +672,19 @@
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
                                                   data:[trackingDictionary copy]];
         
+        [self showMessage:STRING_REMOVED_FROM_WISHLIST success:YES];
+        
         [self updateFavorites:button.tag];
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+        
+        BOOL noConnection = NO;
+        if (RIApiResponseNoInternetConnection == apiResponse)
+        {
+            noConnection = YES;
+        }
+        [self showErrorView:noConnection startingY:0.f selector:@selector(removeFromFavoritesPressed:) objects:[NSArray arrayWithObject:button]];
+        
         [self hideLoading];
     }];
 }

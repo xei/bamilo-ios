@@ -115,7 +115,7 @@
         _descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(kXOffset, CGRectGetMaxY(self.authorLabel.frame) + 16, self.width - 32, 20)];
         [_descriptionLabel setFont:JABody3Font];
         [_descriptionLabel setTextColor:JABlack800Color];
-        [_descriptionLabel setNumberOfLines:5];
+        [_descriptionLabel setNumberOfLines:0];
         [self.clickableArea addSubview:_descriptionLabel];
     }
     return _descriptionLabel;
