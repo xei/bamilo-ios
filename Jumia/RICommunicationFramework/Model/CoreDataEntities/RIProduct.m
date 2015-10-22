@@ -105,6 +105,7 @@
 @synthesize specifications;
 @synthesize seller;
 @synthesize shareUrl;
+@synthesize priceRange;
 @synthesize vertical;
 @synthesize fashion;
 
@@ -376,6 +377,7 @@
     NSDictionary *dataDic = [productJSON copy];
     
     if (VALID_NOTEMPTY(dataDic, NSDictionary)) {
+        
         if ([dataDic objectForKey:@"sku"]) {
             newProduct.sku = [dataDic objectForKey:@"sku"];
         }
@@ -429,6 +431,16 @@
 
         if ([dataDic objectForKey:@"price_converted"]) {
             newProduct.priceEuroConverted = [NSNumber numberWithFloat:[[dataDic objectForKey:@"price_converted"] floatValue]];
+        }
+        
+        if ([dataDic objectForKey:@"price_range"]) {
+            
+            NSArray * separatedNumbers = [[NSString stringWithString:[dataDic objectForKey:@"price_range"]]
+                                          componentsSeparatedByString:@"-"];
+            
+            newProduct.priceRange =[NSString stringWithFormat:@"%@ - %@",
+                                    [RICountryConfiguration formatPrice:[separatedNumbers firstObject] country:country],
+                                    [RICountryConfiguration formatPrice:[separatedNumbers lastObject] country:country]];
         }
 
         if ([dataDic objectForKey:@"special_price"]) {
@@ -509,17 +521,17 @@
         }
         
         __block NSString* variationKey = @"";
-            NSDictionary* uniques = [dataDic objectForKey:@"uniques"];
-            if (VALID_NOTEMPTY(uniques, NSDictionary)) {
-                NSDictionary *attributes = [uniques objectForKey:@"attributes"];
-                if (VALID_NOTEMPTY(attributes, NSDictionary)) {
-                    [attributes enumerateKeysAndObjectsUsingBlock:^(id key, NSString* obj, BOOL *stop) {
-                        if (VALID_NOTEMPTY(obj, NSString)) {
-                            variationKey = obj;
-                        }
-                    }];
-                }
+        NSDictionary* uniques = [dataDic objectForKey:@"uniques"];
+        if (VALID_NOTEMPTY(uniques, NSDictionary)) {
+            NSDictionary *attributes = [uniques objectForKey:@"attributes"];
+            if (VALID_NOTEMPTY(attributes, NSDictionary)) {
+                [attributes enumerateKeysAndObjectsUsingBlock:^(id key, NSString* obj, BOOL *stop) {
+                    if (VALID_NOTEMPTY(obj, NSString)) {
+                        variationKey = obj;
+                    }
+                }];
             }
+        }
         
         if ([dataDic objectForKey:@"share_url"]) {
             if (VALID_NOTEMPTY([dataDic objectForKey:@"share_url"], NSString)) {

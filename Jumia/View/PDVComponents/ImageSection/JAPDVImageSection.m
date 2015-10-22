@@ -306,8 +306,13 @@
                                                       1000.0f)];
     [self.productDescriptionLabel sizeToFit];
     
-    [self setPriceWithNewValue:product.specialPriceFormatted
-                   andOldValue:product.priceFormatted];
+    if (VALID_NOTEMPTY(product.priceRange, NSString)) {
+        [self setPriceWithNewValue:product.priceRange
+                       andOldValue:nil];
+    } else {
+        [self setPriceWithNewValue:product.specialPriceFormatted
+                       andOldValue:product.priceFormatted];
+    }
     
     
     CGFloat currentY = CGRectGetMaxY(self.priceView.frame) + 6.0f;
