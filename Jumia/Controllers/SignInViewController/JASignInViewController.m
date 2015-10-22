@@ -450,7 +450,7 @@ JADynamicFormDelegate
                      }
                      
                      [RICustomer loginCustomerByFacebookWithParameters:parameters
-                                                          successBlock:^(NSDictionary* entities, NSString* nextStep) {
+                                                          successBlock:^(NSDictionary* entities, NSArray *wishlistSkus, NSString* nextStep) {
                                                               
                                                               RICustomer* customer = [entities objectForKey:@"customer"];
                                                               
@@ -496,7 +496,7 @@ JADynamicFormDelegate
                                                                                                                   object:nil];
                                                               
                                                               [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                                                                                  object:nil];
+                                                                                                                  object:wishlistSkus];
                                                               if (self.fromSideMenu) {
                                                                   [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
                                                               }else
