@@ -56,13 +56,14 @@
 
 - (UIScrollView *)contentScrollView
 {
-    CGRect frame = CGRectMake(0, CGRectGetMaxY(self.tabBarView.frame), self.view.width, self.view.height - CGRectGetMaxY(self.tabBarView.frame) - CGRectGetMaxY(self.navigationController.navigationBar.frame));
+    CGRect frame = CGRectMake(0, CGRectGetMaxY(self.tabBarView.frame), self.view.width, self.view.height - CGRectGetMaxY(self.tabBarView.frame));
     if (!VALID_NOTEMPTY(_contentScrollView, UIScrollView)) {
         _contentScrollView = [[UIScrollView alloc] initWithFrame:frame];
         [_contentScrollView setDelegate:self];
         [_contentScrollView addSubview:self.descriptionView];
         [_contentScrollView addSubview:self.spectificationView];
         [_contentScrollView addSubview:self.reviewsView];
+        [self.reviewsView setViewControllerEvents:self];
         [_contentScrollView setPagingEnabled:YES];
         [_contentScrollView setShowsHorizontalScrollIndicator:NO];
         [_contentScrollView setContentSize:CGSizeMake(_contentScrollView.width*3, _contentScrollView.height)];
@@ -182,9 +183,6 @@
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.navBarLayout.showBackButton = YES;
-    if (VALID_NOTEMPTY(self.product, RIProduct)) {
-        [self setTitle:self.product.brand];
-    }
     
     [self.view addSubview:self.tabBarView];
     [self.view addSubview:self.contentScrollView];

@@ -1,4 +1,4 @@
-//
+ //
 //  JAPDVProductInfo.m
 //  Jumia
 //
@@ -22,6 +22,7 @@
 
 @interface JAPDVProductInfo() {
     UILabel *_sizesLabel;
+    JAProductInfoPriceLine *_priceLine;
 }
 
 @property (nonatomic, strong) RIProduct* product;
@@ -69,22 +70,22 @@
     /*
      *  PRICE
      */
+    _priceLine = [[JAProductInfoPriceLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
+    [_priceLine setFashion:product.fashion];
     
-    JAProductInfoPriceLine *priceLine = [[JAProductInfoPriceLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
-    [priceLine setFashion:product.fashion];
-    [priceLine setTitle:product.priceFormatted];
-    if (VALID_NOTEMPTY(product.specialPriceFormatted, NSString)) {
-        [priceLine setOldPrice:product.priceFormatted];
-        [priceLine setTitle:product.specialPriceFormatted];
+    if (VALID_NOTEMPTY(product.priceRange, NSString)) {
+        [_priceLine setTitle:product.priceRange];
+    } else {
+        [self setSpecialPrice:product.specialPriceFormatted andPrice:product.priceFormatted];
     }
     if (VALID_NOTEMPTY(product.maxSavingPercentage, NSString)) {
         NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
         f.numberStyle = NSNumberFormatterDecimalStyle;
         NSNumber *myNumber = [f numberFromString:product.maxSavingPercentage];
-        [priceLine setPriceOff:myNumber.integerValue];
+        [_priceLine setPriceOff:myNumber.integerValue];
     }
-    [self addSubview:priceLine];
-    yOffset = CGRectGetMaxY(priceLine.frame);
+    [self addSubview:_priceLine];
+    yOffset = CGRectGetMaxY(_priceLine.frame);
     
     /*
      *  RATINGS
@@ -159,10 +160,14 @@
     if (VALID_NOTEMPTY(product.productSimples, NSOrderedSet) && product.productSimples.count > 1)
     {
         NSString *sizesText = @"";
-        int i = 0;
-        for (RIProductSimple *simple in product.productSimples) {
-            sizesText = i==0?[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, simple.variation]:[NSString stringWithFormat:@"%@, %@", sizesText, simple.variation];
-            i++;
+        if (VALID_NOTEMPTY(preSelectedSize, NSString)) {
+            sizesText = [NSString stringWithFormat:STRING_SIZE_WITH_VALUE, preSelectedSize];
+        } else {
+            int i = 0;
+            for (RIProductSimple *simple in product.productSimples) {
+                sizesText = i==0?[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, simple.variation]:[NSString stringWithFormat:@"%@, %@", sizesText, simple.variation];
+                i++;
+            }
         }
         JAProductInfoSingleLine *singleSizes = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
         [singleSizes setTopSeparatorVisibility:YES];
@@ -265,6 +270,17 @@
     if (VALID_NOTEMPTY(_sizesLabel, UILabel)) {
         [_sizesLabel setText:sizesText];
         [_sizesLabel sizeToFit];
+    }
+}
+- (void)setSpecialPrice:(NSString*)special andPrice:(NSString*)price
+{
+    [_priceLine setTitle:price];
+    
+    if (VALID_NOTEMPTY(special, NSString)) {
+        [_priceLine setOldPrice:price];
+        [_priceLine setTitle:special];
+    } else {
+        [_priceLine setOldPrice:@""];
     }
 }
 

@@ -245,10 +245,17 @@
     [_productImageView setImageWithURL:[NSURL URLWithString:firstImage.url]
                       placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
     
-    [_priceView loadWithPrice:product.priceFormatted
-                 specialPrice:product.specialPriceFormatted
-                     fontSize:10.0f
-        specialPriceOnTheLeft:YES];
+    if (VALID_NOTEMPTY(product.priceRange, NSString)) {
+        [_priceView loadWithPrice:product.priceRange
+                     specialPrice:nil
+                         fontSize:10.0f
+            specialPriceOnTheLeft:YES];
+    } else {
+        [_priceView loadWithPrice:product.priceFormatted
+                     specialPrice:product.specialPriceFormatted
+                         fontSize:10.0f
+            specialPriceOnTheLeft:YES];
+    }
     
     switch (_cellType) {
         case JACatalogCollectionViewGridCell:

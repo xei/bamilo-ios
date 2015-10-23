@@ -8,6 +8,7 @@
 
 #import "JAOfferCollectionViewCell.h"
 #import "RISeller.h"
+#import "RIProductSimple.h"
 #import "JARatingsView.h"
 #import "JAClickableView.h"
 
@@ -18,8 +19,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sellerLabel;
 @property (weak, nonatomic) IBOutlet UILabel *deliveryLabel;
-@property (nonatomic, strong) JARatingsView* ratingsView;
-@property (weak, nonatomic) IBOutlet UILabel *ratingLabel;
 @property (nonatomic, strong) RIProductOffer *productOfferSeller;
 @property (nonatomic) UIView *separator;
 
@@ -27,10 +26,12 @@
 
 @implementation JAOfferCollectionViewCell
 
-- (void)loadWithProductOffer:(RIProductOffer*)productOffer
+- (void)loadWithProductOffer:(RIProductOffer*)productOffer withProductSimple:(RIProductSimple* )productSimple
 {
     self.backgroundColor = [UIColor clearColor];
     self.productOfferSeller = productOffer;
+    [self setProductSimple:productSimple];
+    
     [self.backgroundContentView setX:0.f];
     [self.backgroundContentView setWidth:self.width];
     self.backgroundContentView.backgroundColor = [UIColor whiteColor];
@@ -39,12 +40,6 @@
     [self.priceLabel setX:10.f];
     self.priceLabel.font = JABody3Font;
     self.priceLabel.textColor = JABlackColor;
-    if (VALID_NOTEMPTY(productOffer.specialPriceFormatted, NSString)) {
-        self.priceLabel.text = productOffer.specialPriceFormatted;
-    } else {
-        self.priceLabel.text = productOffer.priceFormatted;
-    }
-    [self.priceLabel sizeToFit];
     
     [self.sellerLabel setX:10.f];
     self.sellerLabel.font = JABody1Font;
@@ -64,38 +59,12 @@
     self.deliveryLabel.text = [NSString stringWithFormat:@"%@ %ld - %ld %@", STRING_DELIVERY_WITHIN, (long)[productOffer.minDeliveryTime integerValue], (long)[productOffer.maxDeliveryTime integerValue], STRING_DAYS];
     [self.deliveryLabel sizeToFit];
     
-//    [self.ratingsView removeFromSuperview];
-//    self.ratingsView = [JARatingsView getNewJARatingsView];
-//    [self.ratingsView setFrame:CGRectMake(self.deliveryLabel.frame.origin.x,
-//                                          self.deliveryLabel.frame.origin.y - self.ratingsView.frame.size.height - 5.0f,
-//                                          self.ratingsView.frame.size.width,
-//                                          self.ratingsView.frame.size.height)];
-//    [self.ratingsView setRating:[productOffer.seller.reviewAverage integerValue]];
-//    [self.backgroundContentView addSubview:self.ratingsView];
-//    [self.ratingsView sizeToFit];
-//    
-//    [self.ratingLabel setX:CGRectGetMaxX(self.ratingsView.frame) + 5.f];
-//    [self.ratingLabel setY:self.ratingsView.y];
-//    self.ratingLabel.font = JACaptionFont;
-//    self.ratingLabel.textColor = JABlack800Color;
-//    
-//    if (1 == [productOffer.seller.reviewTotal integerValue]) {
-//        self.ratingLabel.text = STRING_REVIEW;
-//    } else {
-//        self.ratingLabel.text = [NSString stringWithFormat:STRING_REVIEWS, [productOffer.seller.reviewTotal integerValue]];
-//    }
-    //    [self.ratingLabel sizeToFit];
-    
-    [self.ratingLabel setHidden:YES];
-    [self.ratingsView setHidden:YES];
-    
     [self.addToCartButton setBackgroundColor:JAOrange1Color];
     [self.addToCartButton setXRightAligned:16.f];
     [self.addToCartButton setYCenterAligned];
     self.addToCartButton.titleLabel.font = JABody2Font;
     [self.addToCartButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-#warning TODO String
-    [self.addToCartButton setTitle:@"Buy Now" forState:UIControlStateNormal];
+    [self.addToCartButton setTitle:STRING_BUY_NOW forState:UIControlStateNormal];
     
     if (!VALID_NOTEMPTY(self.separator, UIView)) {
         self.separator = [[UIView alloc] initWithFrame:CGRectZero];
@@ -112,6 +81,24 @@
     if (RI_IS_RTL) {
         [self.backgroundContentView flipAllSubviews];
     }
+}
+
+-(void)setProductSimple:(RIProductSimple*)productSimple {
+    if (VALID_NOTEMPTY(productSimple.specialPriceFormatted, NSString)) {
+        self.priceLabel.text = productSimple.specialPriceFormatted;
+    } else {
+        self.priceLabel.text = productSimple.priceFormatted;
+    }
+    [self.priceLabel sizeToFit];
+    
+    if ([self.productOfferSeller.productSimples count] > 1) {
+        [self.sizeButton setX:10.f];
+        self.sizeButton.titleLabel.font = JABody3Font;
+        [self.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE,productSimple.variation]
+                         forState:UIControlStateNormal];
+        [self.sizeButton setHidden:NO];
+    } else
+        [self.sizeButton setHidden:YES];
 }
 
 -(void)gotoCatalogSeller
