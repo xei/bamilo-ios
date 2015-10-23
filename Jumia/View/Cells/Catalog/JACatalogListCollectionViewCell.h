@@ -11,9 +11,6 @@
 
 #define JACatalogViewControllerListCellHeight_ipad 97.0f
 #define JACatalogViewControllerListCellHeight 97.0f
-#define JACatalogViewControllerListCellWidth_ipad_portrait 375.0f
-#define JACatalogViewControllerListCellWidth_ipad_landscape 333.0f
-#define JACatalogViewControllerListCellWidth 308.0f
 #define JACatalogViewControllerListCellNewLabelX 4.0f
 #define JACatalogViewControllerListCellNewLabelY 15.0f
 #define JACatalogViewControllerListCellNewLabelX_ipad -2.0f

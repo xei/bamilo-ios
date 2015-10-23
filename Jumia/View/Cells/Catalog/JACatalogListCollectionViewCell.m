@@ -83,7 +83,7 @@
     
     [_numberOfReviewsLabel setX:CGRectGetMaxX(_ratingsView.frame) + JACatalogCellPriceLabelOffsetX + 10];
     
-    [_ratingsView setY:_numberOfReviewsLabel.y];
+    [_ratingsView setY:_numberOfReviewsLabel.y + 4.f];
 
     if (RI_IS_RTL) {
         [_numberOfReviewsLabel flipViewPositionInsideSuperview];
