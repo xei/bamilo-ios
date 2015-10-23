@@ -7,7 +7,7 @@
 //
 
 #import "JAPDVVariationsViewController.h"
-#import "JACatalogListCollectionViewCell.h"
+#import "JAPDVVariationsCollectionViewCell.h"
 
 @interface JAPDVVariationsViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
@@ -25,7 +25,8 @@
     if (!VALID_NOTEMPTY(_collectionView, UICollectionView)) {
         
         UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
-        layout.minimumInteritemSpacing = 64.f;
+        layout.minimumInteritemSpacing = 0.f;
+        layout.minimumLineSpacing = 0.f;
         _collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:layout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
@@ -33,7 +34,7 @@
     }
     else {
         if (!CGRectEqualToRect(frame, _collectionView.frame)) {
-            [_collectionView.collectionViewLayout invalidateLayout];
+            [_collectionView reloadData];
             [_collectionView setFrame:frame];
         }
     }
@@ -57,13 +58,11 @@
     [super viewDidLoad];
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     self.navBarLayout.showBackButton = YES;
-    [self.collectionView registerClass:[JACatalogListCollectionViewCell class] forCellWithReuseIdentifier:@"JACatalogListCollectionViewCell"];
+    [self.collectionView registerClass:[JAPDVVariationsCollectionViewCell class] forCellWithReuseIdentifier:@"CellWithLines"];
 }
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
-    [self clearAllViewsFromCollectionView];
-    [self.collectionView reloadData];
     [self collectionView];
 }
 
@@ -71,10 +70,9 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     RIVariation *variationProduct = [self.variations objectAtIndex:indexPath.row];
     
-    JACatalogCollectionViewCell *cell = (JACatalogCollectionViewCell *)[self.collectionView dequeueReusableCellWithReuseIdentifier:@"JACatalogListCollectionViewCell" forIndexPath:indexPath];
+    JAPDVVariationsCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"CellWithLines" forIndexPath:indexPath];
     
     cell.favoriteButton.tag = indexPath.row;
     [cell.favoriteButton addTarget:self
@@ -88,6 +86,46 @@
     
     [cell loadWithVariation:variationProduct];
     
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        
+        if(UIDeviceOrientationPortrait == ([UIDevice currentDevice].orientation) || UIDeviceOrientationPortraitUpsideDown == ([UIDevice currentDevice].orientation)) {
+            cell.rightVerticalSeparator.hidden = YES;
+            if (indexPath.row == 0) {
+                cell.topHorizontalSeparator.hidden = NO;
+            }
+            else{
+                cell.topHorizontalSeparator.hidden = YES;
+            }
+            
+        }else{
+            
+            if (indexPath.row == 0 || indexPath.row == 1) {
+                cell.topHorizontalSeparator.hidden = NO;
+            }
+            else{
+               cell.topHorizontalSeparator.hidden = YES;
+            }
+            if (indexPath.row % 2 == 0) {
+                cell.rightVerticalSeparator.hidden = NO;
+            }
+            else{
+                cell.rightVerticalSeparator.hidden = YES;
+            }
+            
+        }
+    }
+    else {
+        cell.rightVerticalSeparator.hidden = YES;
+        if (indexPath.row == 0) {
+            cell.topHorizontalSeparator.hidden = NO;
+        }
+        else{
+            cell.topHorizontalSeparator.hidden = YES;
+        }
+    }
+    
+
+    
     return cell;
 }
 
@@ -98,32 +136,18 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    NSInteger nVariations = [self.collectionView numberOfItemsInSection:0];
-    
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         
         if(UIDeviceOrientationPortrait == ([UIDevice currentDevice].orientation) || UIDeviceOrientationPortraitUpsideDown == ([UIDevice currentDevice].orientation)) {
-            [self drawSeparators:(int)nVariations collectionView:collectionView];
-            return CGSizeMake(self.bounds.size.width - 64.f, 104.0f);
+
+            return CGSizeMake(self.bounds.size.width, 104.0f);
+
         } else {
-            if (nVariations % 2 == 0) {
-                nVariations = nVariations/2;
-            }
-            else{
-                nVariations = (nVariations+1)/2;
-            }
-            [self drawSeparators:(int)nVariations collectionView:collectionView];
-            return CGSizeMake((self.bounds.size.width/2) - 64.f, 104.0f);
+            return CGSizeMake((self.bounds.size.width/2), 104.0f);
         }
     } else {
-        return CGSizeMake(self.view.frame.size.width - 12.f, 104.0f);
+        return CGSizeMake(self.view.frame.size.width, 104.0f);
     }
-}
-
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-{
-    return UIEdgeInsetsMake(0,32,0,32);
 }
 
 #pragma mark - actions
@@ -156,19 +180,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)clearAllViewsFromCollectionView {
-    for (UIView *aView in [self.collectionView subviews]) {
-        if ([aView isKindOfClass:UIView.class]) {
-            [aView removeFromSuperview];
-        }
-    }
-}
 
-- (void)drawSeparators:(int)nLines collectionView:(UICollectionView *)collectionView{
-    for (int i = 1; i<=nLines; i++) {
-        UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, 104.0f*i, self.bounds.size.width, 1)];
-        [separator setBackgroundColor:[UIColor colorWithRed:0.867 green:0.878 blue:0.878 alpha:1]];
-        [collectionView addSubview:separator];
-    }
-}
 @end
