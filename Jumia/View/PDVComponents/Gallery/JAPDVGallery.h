@@ -10,6 +10,7 @@
 
 @protocol JAPDVGalleryDelegate <NSObject>
 
+- (void)onIndexChanged:(NSInteger)index;
 - (void)dismissGallery;
 
 @end

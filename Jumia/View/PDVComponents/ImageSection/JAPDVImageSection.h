@@ -20,7 +20,6 @@
 @interface JAPDVImageSection : UIView <UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *wishListButton;
-@property (weak, nonatomic) IBOutlet UIScrollView *imageScrollView;
 @property (weak, nonatomic) IBOutlet UIImageView *separatorImageView;
 @property (weak, nonatomic) IBOutlet UILabel *productNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *productDescriptionLabel;
@@ -34,5 +33,6 @@
 + (JAPDVImageSection *)getNewPDVImageSection:(BOOL)fashion;
 
 - (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize;
+- (void)goToGalleryIndex:(NSInteger)index;
 
 @end

@@ -170,6 +170,7 @@
 #define JADisplay2Font [UIFont fontWithName:@"HelveticaNeue" size:19]
 #define JAList1Font [UIFont fontWithName:@"HelveticaNeue-Medium" size:16]
 #define JAList2Font [UIFont fontWithName:@"HelveticaNeue" size:16]
+#define JAList3Font [UIFont fontWithName:@"HelveticaNeue-Bold" size:16]
 #define JABody1Font [UIFont fontWithName:@"HelveticaNeue-Bold" size:13]
 #define JABody2Font [UIFont fontWithName:@"HelveticaNeue-Medium" size:13]
 #define JABody3Font [UIFont fontWithName:@"HelveticaNeue" size:13]
