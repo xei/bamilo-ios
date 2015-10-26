@@ -59,18 +59,16 @@
         }
     }
     
-    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width, 1)];
-    [separator setBackgroundColor:[UIColor grayColor]];
-    if (!isiPadInLandscape) {
-        [self addSubview:separator];
-    }
-    
     CGFloat yOffset = 0;
     
     /*
      *  PRICE
      */
     _priceLine = [[JAProductInfoPriceLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
+    if (!isiPadInLandscape) {
+        [_priceLine setTopSeparatorVisibility:YES];
+    }
+    
     [_priceLine setFashion:product.fashion];
     
     if (VALID_NOTEMPTY(product.priceRange, NSString)) {
@@ -92,8 +90,9 @@
      */
     
     JAProductInfoRatingLine *ratingLine = [[JAProductInfoRatingLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
-    [ratingLine setFashion:product.fashion];
     [ratingLine setTopSeparatorVisibility:YES];
+    [ratingLine setBottomSeparatorVisibility:NO];
+    [ratingLine setFashion:product.fashion];
     [ratingLine setRatingAverage:product.avr];
     [ratingLine setRatingSum:product.sum];
     [ratingLine addTarget:self action:@selector(tapReviewsLine) forControlEvents:UIControlEventTouchUpInside];
@@ -135,7 +134,7 @@
                 [specificationsContentLabel setTextColor:JABlackColor];
                 [specificationsContentLabel setFont:JACaptionFont];
                 specificationsContentLabel.numberOfLines = 0;
-                [specificationsContentLabel setText:[NSString stringWithFormat:@"%@:\n %@", attribute.key, attribute.value]];
+                [specificationsContentLabel setText:[NSString stringWithFormat:@"- %@:\n %@", attribute.key, attribute.value]];
                 [specificationsContentLabel sizeToFit];
                 [self addSubview:specificationsContentLabel];
                 yOffset = CGRectGetMaxY(specificationsContentLabel.frame);
@@ -222,11 +221,10 @@
     
     if (VALID_NOTEMPTY(product.offersTotal, NSNumber) && product.offersTotal.integerValue > 0) {
         JAProductInfoSubLine *otherOffers = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSubLineHeight)];
+        [otherOffers setTopSeparatorVisibility:YES];
 #warning TODO String
         [otherOffers setTitle:[NSString stringWithFormat:@"Other sellers starting from: %@", product.offersMinPriceFormatted]];
         [otherOffers.label setYCenterAligned];
-        [otherOffers setTopSeparatorVisibility:YES];
-        [otherOffers setBottomSeparatorVisibility:NO];
         [otherOffers addTarget:self action:@selector(tapOffersLine) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:otherOffers];
         
@@ -268,7 +266,7 @@
 {
     _sizesText = sizesText;
     if (VALID_NOTEMPTY(_sizesLabel, UILabel)) {
-        [_sizesLabel setText:sizesText];
+        [_sizesLabel setText:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, sizesText]];
         [_sizesLabel sizeToFit];
     }
 }

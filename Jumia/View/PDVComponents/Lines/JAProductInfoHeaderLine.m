@@ -36,8 +36,6 @@
 - (void)setDefaults
 {
     [self setBackgroundColor:UIColorFromRGB(0xf0f0f0)];
-    [self setTopSeparatorVisibility:YES];
-    [self setTopSeparatorColor:JABlack800Color];
 }
 
 - (UILabel *)label

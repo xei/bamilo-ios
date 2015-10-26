@@ -35,6 +35,13 @@
     [_pageControl setInfinite:YES];
     [self addSubview:_pageControl];
     
+    [_pageControl getPageChanged:^(NSInteger pageIndex) {
+        if (self.delegate) {
+            _lastIndex = pageIndex;
+            [self.delegate onIndexChanged:pageIndex];
+        }
+    }];
+    
     NSMutableArray* imageViewsToScroll = [NSMutableArray new];
     NSMutableArray *items = [NSMutableArray new];
     for (int i = 0; i < source.count; i++)
@@ -66,6 +73,7 @@
         
         [imageView setImageWithURL:[NSURL URLWithString:image.url]
                   placeholderImage:[UIImage imageNamed:@"placeholder_gallery"]];
+        [imageView setBackgroundColor:[UIColor whiteColor]];
 
         [imageViewsToScroll addObject:imageView];
         
