@@ -311,7 +311,7 @@
                                   }];
         }
         
-        self.customerRequestId = [RICustomer autoLogin:^(BOOL success, NSDictionary *entities, NSString *loginMethod)
+        self.customerRequestId = [RICustomer autoLogin:^(BOOL success, NSDictionary *entities, NSArray *wishlistSkus, NSString *loginMethod)
                                   {
                                       self.customer = [entities objectForKey:@"customer"];
                                       self.loginMethod = loginMethod;

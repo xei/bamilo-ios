@@ -40,7 +40,7 @@ typedef void (^ProcessActionBlock)(void);
 @interface JACatalogViewController ()
 <JAFilteredNoResulsViewDelegate>
 {
-    BOOL _needRefreshProduct;
+    BOOL _needAddToFavBlock;
     ProcessActionBlock _processActionBlock;
 }
 
@@ -323,7 +323,7 @@ typedef void (^ProcessActionBlock)(void);
     
     [self.catalogTopView repositionForWidth:self.view.frame.size.width];
     
-    if (_needRefreshProduct) {
+    if (_needAddToFavBlock) {
         
         if (_processActionBlock) {
             _processActionBlock();
@@ -1128,25 +1128,40 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)updatedProduct:(NSNotification *)notification
 {
-    if (!VALID_NOTEMPTY(notification.object, NSString)) {
-        [self resetCatalog];
-        [self loadMoreProducts];
+    if (VALID_NOTEMPTY(notification.object, NSArray)) {
+        
+        for (NSString *sku in notification.object) {
+            int i = 0;
+            for(; i < self.productsArray.count; i++)
+            {
+                RIProduct *product = [self.productsArray objectAtIndex:i];
+                if ([sku isEqualToString:product.sku]) {
+                    product.favoriteAddDate = [NSDate new];
+                    break;
+                }
+            }
+        }
+        
+    }else if (VALID_NOTEMPTY(notification.object, NSString)) {
+        
+        NSString* sku = notification.object;
+        int i = 0;
+        for(; i < self.productsArray.count; i++)
+        {
+            RIProduct *product = [self.productsArray objectAtIndex:i];
+            if ([sku isEqualToString:product.sku]) {
+                product.favoriteAddDate = nil;
+                if (notification.userInfo && [notification.userInfo objectForKey:@"favoriteAddDate"]) {
+                    NSDate *date =[notification.userInfo objectForKey:@"favoriteAddDate"];
+                    product.favoriteAddDate = date;
+                }else
+                    product.favoriteAddDate = nil;
+            }
+        }
+    }else{
         return;
     }
-    NSString* sku = notification.object;
-    int i = 0;
-    for(; i < self.productsArray.count; i++)
-    {
-        RIProduct *product = [self.productsArray objectAtIndex:i];
-        if ([sku isEqualToString:product.sku]) {
-            product.favoriteAddDate = nil;
-            if (notification.userInfo && [notification.userInfo objectForKey:@"favoriteAddDate"]) {
-                NSDate *date =[notification.userInfo objectForKey:@"favoriteAddDate"];
-                product.favoriteAddDate = date;
-            }else
-                product.favoriteAddDate = nil;
-        }
-    }
+    [self.collectionView reloadData];
 }
 
 #pragma mark - JACatalogTopViewDelegate
@@ -1206,16 +1221,15 @@ typedef void (^ProcessActionBlock)(void);
     
     if(![RICustomer checkIfUserIsLogged]) {
         [self hideLoading];
-        _needRefreshProduct = YES;
+        _needAddToFavBlock = YES;
         
         __weak typeof (self) weakSelf = self;
         _processActionBlock = ^(void){
-            _needRefreshProduct = NO;
+            _needAddToFavBlock = NO;
             if(![RICustomer checkIfUserIsLogged]) {
                 return;
             }else{
-                [weakSelf resetCatalog];
-                [weakSelf loadMoreProducts];
+                [weakSelf addToFavoritesPressed:button];
             }
         };
         
@@ -1227,9 +1241,7 @@ typedef void (^ProcessActionBlock)(void);
     
     RIProduct* product = [self.productsArray objectAtIndex:button.tag];
 
-    
-    if (!VALID_NOTEMPTY(product.favoriteAddDate, NSDate))
-    {
+    if (!button.selected) {
         //add to favorites
         [RIProduct getCompleteProductWithUrl:product.url
                                 successBlock:^(id completeProduct) {
@@ -1249,6 +1261,8 @@ typedef void (^ProcessActionBlock)(void);
                                         [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
                                                                                             object:product.sku
                                                                                           userInfo:userInfo];
+                                        
+                                        [self.collectionView reloadData];
                                         
                                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                                         NSString *addToWishlistError = STRING_ERROR_ADDING_TO_WISHLIST;
