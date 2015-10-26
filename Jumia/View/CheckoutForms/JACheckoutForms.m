@@ -100,15 +100,16 @@
                                                                                   totalHeight,
                                                                                   width - (27.0f * 2),
                                                                                   1000.0f)];
-        [descriptionLabel setFont:[UIFont fontWithName:kFontLightName size:13.0f]];
+        [descriptionLabel setFont:[UIFont fontWithName:kFontLightName size:descriptionLabel.font.pointSize]];
         [descriptionLabel setNumberOfLines:0];
         [descriptionLabel setLineBreakMode:NSLineBreakByWordWrapping];
         [descriptionLabel setTextColor:UIColorFromRGB(0x666666)];
         [descriptionLabel setText:((RIPaymentMethodFormField*)[paymentMethodForm.fields firstObject]).value];
-        [descriptionLabel setTextAlignment:NSTextAlignmentLeft];
+        [descriptionLabel setTextAlignment:NSTextAlignmentCenter];
         [descriptionLabel sizeToFit];
+        [descriptionLabel setWidth:width - (27.0f * 2)];
         [paymentMethodView addSubview:descriptionLabel];
-        totalHeight += descriptionLabel.frame.size.height + 13.0f;
+        totalHeight += descriptionLabel.frame.size.height + 23.0f;
         
         [paymentMethodView setFrame:CGRectMake(0.0f,
                                                0.0f,
@@ -145,7 +146,13 @@
     
     if(VALID_NOTEMPTY(self.paymentMethodFormViews, NSMutableDictionary))
     {
-        UIView *paymentMethodView = [self.paymentMethodFormViews objectForKey:paymentMethod.uid];
+        
+        UIView *paymentMethodView;
+        if (VALID_NOTEMPTY(paymentMethod, RIPaymentMethodFormOption)) {
+            paymentMethodView = [self.paymentMethodFormViews objectForKey:paymentMethod.uid];
+        } else {
+            paymentMethodView = [self.paymentMethodFormViews objectForKey:@"0"];
+        }
         paymentMethodViewHeight = paymentMethodView.frame.size.height;
     }
     
