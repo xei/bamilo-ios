@@ -33,7 +33,7 @@
 // size picker view
 @property (strong, nonatomic) JAPicker *picker;
 @property (strong, nonatomic) NSMutableArray *pickerDataSource;
-@property (nonatomic, strong) NSMutableArray* chosenSimpleNames;
+@property (nonatomic, strong) NSMutableDictionary* chosenSimples;
 
 @property (strong, nonatomic) UIButton *backupButton; // for the retry connection, is necessary to store the button
 
@@ -109,10 +109,7 @@
                 
                 [self hideLoading];
                 self.productsArray = products;
-                self.chosenSimpleNames = [NSMutableArray new];
-                for (int i = 0; i < self.productsArray.count; i++) {
-                    [self.chosenSimpleNames addObject:@""];
-                }
+                self.chosenSimples = [NSMutableDictionary new];
                 
                 [self.collectionView reloadData];
                 
@@ -309,17 +306,21 @@
                                  action:@selector(addToCartPressed:)
                        forControlEvents:UIControlEventTouchUpInside];
         
-        NSString* chosenSimpleName = [self.chosenSimpleNames objectAtIndex:indexPath.row];
-        if ([chosenSimpleName isEqualToString:@""]) {
+        RIProductSimple* chosenSimple = [self.chosenSimples objectForKey:product.sku];
+        if (!VALID_NOTEMPTY(chosenSimple, RIProductSimple)) {
             [cell.sizeButton setTitle:STRING_SIZE forState:UIControlStateNormal];
         } else {
-            [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, chosenSimpleName] forState:UIControlStateNormal];
+            [cell.priceView loadWithPrice:chosenSimple.priceFormatted
+                             specialPrice:chosenSimple.specialPriceFormatted
+                                 fontSize:10.f specialPriceOnTheLeft:YES];
+            [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, chosenSimple.variation] forState:UIControlStateNormal];
         }
         
         cell.sizeButton.tag = indexPath.row;
         [cell.sizeButton addTarget:self
                             action:@selector(sizeButtonPressed:)
                   forControlEvents:UIControlEventTouchUpInside];
+        
         cell.feedbackView.tag = indexPath.row;
         [cell.feedbackView addTarget:self
                               action:@selector(clickableViewPressedInCell:)
@@ -367,8 +368,8 @@
     if (1 == product.productSimples.count) {
         productSimple = [product.productSimples firstObject];
     } else {
-        NSString* simpleName = [self.chosenSimpleNames objectAtIndex:button.tag];
-        if ([simpleName isEqualToString:@""]) {
+        RIProductSimple* simple = [self.chosenSimples objectForKey:product.sku];
+        if (!VALID_NOTEMPTY(simple, RIProductSimple)) {
             //NOTHING SELECTED
             
             self.selectedSizeAndAddToCart = YES;
@@ -376,12 +377,8 @@
             
             return;
         } else {
-            for (RIProductSimple* simple in product.productSimples) {
-                if ([simple.variation isEqualToString:simpleName]) {
-                    //found it
-                    productSimple = simple;
-                }
-            }
+            productSimple = simple;
+                
         }
     }
     
@@ -475,10 +472,7 @@
                       [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
                           
                           self.productsArray = recentlyViewedProducts;
-                          self.chosenSimpleNames = [NSMutableArray new];
-                          for (int i = 0; i < self.productsArray.count; i++) {
-                              [self.chosenSimpleNames addObject:@""];
-                          }
+                          self.chosenSimples = [NSMutableDictionary new];
                           [self.collectionView reloadData];
                           
                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
@@ -528,7 +522,7 @@
     self.backupButton = button;
     
     RIProduct* product = [self.productsArray objectAtIndex:button.tag];
-    NSString* simpleName = [self.chosenSimpleNames objectAtIndex:button.tag];
+    RIProductSimple* prevSimple = [self.chosenSimples objectForKey:product.sku];
     
     if(VALID(self.picker, JAPicker))
     {
@@ -543,15 +537,13 @@
     NSMutableArray *dataSource = [[NSMutableArray alloc] init];
     
     NSString *simpleSize = @"";
-    for (int i = 0; i < product.productSimples.count; i++)
-    {
-        RIProductSimple* simple = [product.productSimples objectAtIndex:i];
+    if (VALID_NOTEMPTY(prevSimple, RIProductSimple)) {
+        simpleSize = prevSimple.variation;
+    }
+    
+    for (RIProductSimple* simple in product.productSimples) {
         [self.pickerDataSource addObject:simple];
         [dataSource addObject:simple.variation];
-        if ([simple.variation isEqualToString:simpleName]) {
-            //found it
-            simpleSize = simple.variation;
-        }
     }
 
     NSString* sizeGuideTitle = nil;
@@ -585,12 +577,8 @@
     RIProduct* product = [self.productsArray objectAtIndex:self.picker.tag];
     
     RIProductSimple* selectedSimple = [product.productSimples objectAtIndex:selectedRow];
-    NSString* simpleName = @"";
-    if (VALID_NOTEMPTY(selectedSimple.variation, NSString)) {
-        simpleName = selectedSimple.variation;
-    }
     
-    [self.chosenSimpleNames replaceObjectAtIndex:self.picker.tag withObject:simpleName];
+    [self.chosenSimples setObject:selectedSimple forKey:product.sku];
     
     [self closePicker];
     [self.collectionView reloadData];
