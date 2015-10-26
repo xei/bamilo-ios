@@ -112,7 +112,7 @@
         }
     }
     
-    [cell setupWithCategory:category hasSeparator:hasSeparator isOpen:isOpen];
+    [cell setupWithCategory:category width:256.0f hasSeparator:hasSeparator isOpen:isOpen];
     
     return cell;
 }

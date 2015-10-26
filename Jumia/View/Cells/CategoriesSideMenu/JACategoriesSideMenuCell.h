@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JAGenericMenuCell.h"
 
 @class RICategory, JAClickableView;
 
@@ -17,14 +18,15 @@
 
 @end
 
-@interface JACategoriesSideMenuCell : UITableViewCell
+@interface JACategoriesSideMenuCell : JAGenericMenuCell
 
-@property (nonatomic, strong) JAClickableView* backgroundClickableView;
 @property (nonatomic, strong) RICategory* category;
 @property (nonatomic, assign) id<JACategoriesSideMenuCellDelegate> delegate;
 
-- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier;
-- (void)setupWithCategory:(RICategory*)category hasSeparator:(BOOL)hasSeparator isOpen:(BOOL)isOpen;
+- (void)setupWithCategory:(RICategory*)category
+                    width:(CGFloat)width
+             hasSeparator:(BOOL)hasSeparator
+                   isOpen:(BOOL)isOpen;
 
 + (CGFloat)heightForCategory:(RICategory*)category;
 

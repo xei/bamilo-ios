@@ -58,6 +58,7 @@
 #import "JAShopWebViewController.h"
 #import "JABundlesViewController.h"
 #import "JAPDVVariationsViewController.h"
+#import "JAMoreMenuViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -355,6 +356,11 @@
                                              selector:@selector(showSpecificationsScreen:)
                                                  name:kOpenSpecificationsScreen
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showMoreMenu)
+                                                 name:kShowMoreMenuScreenNotification
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -524,6 +530,19 @@
     }
 }
 
+#pragma mark MoreMenu
+- (void)showMoreMenu
+{
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JAMoreMenuViewController class]])
+    {
+        UIViewController* moreMenuViewController = [[JAMoreMenuViewController alloc] init];
+        
+        [self popToRootViewControllerAnimated:NO];
+        [self pushViewController:moreMenuViewController animated:NO];
+    }
+}
+
 #pragma mark Recent Searches Screen
 - (void)showRecentSearchesController:(NSNotification*)notification
 {
@@ -540,30 +559,17 @@
 #pragma mark Sign In Screen
 - (void)showSignInScreen:(NSNotification *)notification
 {
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JASignInViewController class]] && ![RICustomer checkIfUserIsLogged])
+    JASignInViewController *signInVC = [[JASignInViewController alloc] init];
+    
+    if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSNotification))
     {
-        JASignInViewController *signInVC = [[JASignInViewController alloc] init];
-        
-        if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSNotification))
-        {
-            signInVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
-        }
-        
-        NSNumber *fromSideMenu = [notification.userInfo objectForKey:@"from_side_menu"];
-        if (!VALID_NOTEMPTY(fromSideMenu, NSNumber)) {
-            //if nil, assume the default (YES)
-            fromSideMenu = [NSNumber numberWithBool:YES];
-        }
-        signInVC.fromSideMenu = [fromSideMenu boolValue];
-        signInVC.navBarLayout.showBackButton = ![fromSideMenu boolValue];
-        if ([fromSideMenu boolValue])
-        {
-            [self popToRootViewControllerAnimated:NO];
-        }
-        
-        [self pushViewController:signInVC animated:NO];
+        signInVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
     }
+    
+    signInVC.navBarLayout.showBackButton = YES;
+    signInVC.fromSideMenu = NO;
+    
+    [self pushViewController:signInVC animated:YES];
 }
 
 #pragma mark Sign Up Screen
@@ -615,7 +621,7 @@
     {
         JARecentlyViewedViewController *recentlyViewedViewController = [[JARecentlyViewedViewController alloc]initWithNibName:@"JARecentlyViewedViewController" bundle:nil];
         
-        [self pushViewController:recentlyViewedViewController animated:NO];
+        [self pushViewController:recentlyViewedViewController animated:YES];
     }
 }
 
@@ -656,8 +662,7 @@
             myOrderVC.selectedIndex = [[userInfo objectForKey:@"selected_index"] intValue];
         }        
         
-        [self popToRootViewControllerAnimated:NO];
-        [self pushViewController:myOrderVC animated:NO];
+        [self pushViewController:myOrderVC animated:YES];
     }
     else
     {
@@ -1790,7 +1795,7 @@
         [cartViewController setCart:self.cart];
         
         [self popToRootViewControllerAnimated:NO];
-        [self pushViewController:cartViewController animated:YES];
+        [self pushViewController:cartViewController animated:NO];
     }
     
 }

@@ -55,9 +55,6 @@
 - (void)buttonPressed:(UIButton*)sender
 {
     NSString* identifier = [kButtonIds objectAtIndex:sender.tag];
-    if (sender.tag == self.selectedIndex) {
-        return; //do nothing
-    }
     
     for (UIButton* button in self.tabButtonsArray) {
         button.selected = NO;
@@ -74,7 +71,7 @@
     } else if ([identifier isEqualToString:@"user"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowMyAccountScreenNotification object:nil];
     } else if ([identifier isEqualToString:@"more"]) {
-        NSLog(@"more");
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowMoreMenuScreenNotification object:nil];
     }
 }
 
