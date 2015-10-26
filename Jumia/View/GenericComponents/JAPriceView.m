@@ -101,7 +101,7 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
         }
         
         _strike.frame = CGRectMake(strikePosition,
-                                  _label.y + _label.height/2,
+                                  _label.y + _label.height/2 - 1.f,
                                   oldPriceLabel.frame.size.width,
                                   1.0f);
         

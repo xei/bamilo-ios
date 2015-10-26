@@ -160,7 +160,7 @@
     
     [_priceView setFrame:CGRectMake(16, 12, _textWidth, 15)];
     
-    _productImageViewRect = CGRectMake(6, 8, 268, 340);
+    _productImageViewRect = CGRectMake(self.width/2 - 268/2, 8, 268, 340);
     [_productImageView setFrame:_productImageViewRect];
     
     _discountLabelRect = CGRectMake(16, 392, 60, 19);
