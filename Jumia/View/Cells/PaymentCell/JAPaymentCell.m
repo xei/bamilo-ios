@@ -139,19 +139,13 @@
     self.label.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.label.font = [UIFont fontWithName:kFontLightName size:self.label.font.pointSize];
-    self.label.textAlignment = NSTextAlignmentLeft;
+    self.label.textAlignment = NSTextAlignmentCenter;
     [self.label setText:paymentMethod];
     
     self.label.frame = CGRectMake(17.0f,
                                   11.0f,
-                                  self.clickableView.frame.size.width - self.checkMark.frame.size.width - 14.0f*2,
+                                  self.clickableView.frame.size.width - 14.0f*2,
                                   self.label.frame.size.height);
-    
-    self.checkMark.translatesAutoresizingMaskIntoConstraints = YES;
-    self.checkMark.frame = CGRectMake(self.clickableView.frame.size.width - self.checkMark.frame.size.width - 14.0f,
-                                      15.0f,
-                                      self.checkMark.frame.size.width,
-                                      self.checkMark.frame.size.height);
     
     if (RI_IS_RTL) {
         [self.clickableView flipAllSubviews];
