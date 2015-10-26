@@ -124,7 +124,9 @@
     if (_processedViews.count > 1) {
         [self loadPageComponent];
     }
-    [self scrollToTag:_infinite?1:0];
+    if (!_first) {
+        [self scrollToTag:_infinite?1:0];
+    }
     _first = YES;
 }
 

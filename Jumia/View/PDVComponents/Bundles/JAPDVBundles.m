@@ -33,6 +33,7 @@
     if (self) {
         _withSize = withSize;
         _bundlesArray = [NSMutableArray new];
+        [self setBackgroundColor:JABlack300Color];
     }
     
     return self;
@@ -42,6 +43,7 @@
 {
     if (!VALID_NOTEMPTY(_bundlesScrollView, UIScrollView)) {
         _bundlesScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.headerLine.height, self.width, 100)];
+        [_bundlesScrollView setBackgroundColor:[UIColor whiteColor]];
         [self addSubview:_bundlesScrollView];
     }
     return _bundlesScrollView;
@@ -65,6 +67,8 @@
         [_buyBundleLine setTopSeparatorVisibility:YES];
         [_buyBundleLine setBottomSeparatorVisibility:NO];
         [_buyBundleLine.label setTextColor:JAOrange1Color];
+        [_buyBundleLine setBackgroundColor:[UIColor whiteColor]];
+        [self.buyBundleLine addTarget:self action:@selector(buyBundleCombo) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_buyBundleLine];
     }
     return _buyBundleLine;
@@ -113,6 +117,9 @@
         [self setHeight:itemView.height];
     }
     [_bundlesArray addObject:itemView];
+    [self.buyBundleLine setX:self.bundlesScrollView.x];
+    [self.buyBundleLine setWidth:self.bundlesScrollView.width];
+    
     [self refreshTotal];
 }
 
@@ -139,7 +146,6 @@
     }
     NSString* totalText = [NSString stringWithFormat:@"%@", [RICountryConfiguration formatPrice:[NSNumber numberWithFloat:total] country:[RICountryConfiguration getCurrentConfiguration]]];
     [self.buyBundleLine setTitle:totalText];
-    [self.buyBundleLine addTarget:self action:@selector(buyBundleCombo) forControlEvents:UIControlEventTouchUpInside];
     [self.buyBundleLine setY:CGRectGetMaxY(self.bundlesScrollView.frame)];
     [self setHeight:CGRectGetMaxY(self.buyBundleLine.frame)];
 }
