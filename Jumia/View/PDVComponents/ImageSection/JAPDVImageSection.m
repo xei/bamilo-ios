@@ -103,7 +103,7 @@
     }
     self.product = product;
     
-    self.productNameLabel.font = JAList3Font;
+    self.productNameLabel.font = JAListFont;
     self.productNameLabel.textColor = JABlackColor;
     self.productNameLabel.text = product.brand;
     [self.productNameLabel setX:16.f];
