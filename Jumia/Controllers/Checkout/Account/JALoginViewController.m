@@ -934,7 +934,7 @@
                              
                              
                              [RICustomer loginCustomerByFacebookWithParameters:parameters
-                                                                  successBlock:^(NSDictionary* entities, NSArray *wishlistSkus, NSString* nextStep) {
+                                                                  successBlock:^(NSDictionary* entities, NSString* nextStep) {
                                                                       
                                                                       RICustomer *customerObject = [entities objectForKey:@"customer"];
                                                                       
@@ -976,7 +976,7 @@
                                                                       [self hideLoading];
                                                                       
                                                                       [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                                                                                          object:wishlistSkus];
+                                                                                                                          object:customerObject.wishlistProducts];
                                                                       
                                                                       [JAUtils goToNextStep:nextStep
                                                                                    userInfo:nil];

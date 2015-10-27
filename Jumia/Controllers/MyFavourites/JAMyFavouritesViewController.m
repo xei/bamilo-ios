@@ -688,13 +688,12 @@
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         
-        BOOL noConnection = NO;
         if (RIApiResponseNoInternetConnection == apiResponse)
         {
-            noConnection = YES;
+            [self showMessage:STRING_NO_CONNECTION success:NO];
+        }else{
+            [self showMessage:STRING_ERROR_REMOVING_FROM_WISHLIST success:NO];
         }
-        [self showErrorView:noConnection startingY:0.f selector:@selector(removeFromFavoritesPressed:) objects:[NSArray arrayWithObject:button]];
-        
         [self hideLoading];
     }];
 }
