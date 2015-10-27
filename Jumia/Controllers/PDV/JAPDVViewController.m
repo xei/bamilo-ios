@@ -1217,9 +1217,9 @@ JAActivityViewControllerDelegate
         option = @"";
     }
     self.preSelectedSize = option;
-    
     [self.productInfoSection setSizesText:option];
-    
+    [self.productInfoSection setSpecialPrice:self.currentSimple.specialPriceFormatted
+                                    andPrice:self.currentSimple.priceFormatted];
     
     CGRect frame = self.picker.frame;
     frame.origin.y = self.view.frame.size.height;

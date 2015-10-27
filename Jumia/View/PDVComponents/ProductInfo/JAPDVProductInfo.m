@@ -272,6 +272,7 @@
         [_sizesLabel sizeToFit];
     }
 }
+
 - (void)setSpecialPrice:(NSString*)special andPrice:(NSString*)price
 {
     [_priceLine setTitle:price];
