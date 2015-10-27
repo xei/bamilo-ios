@@ -36,7 +36,7 @@
 
 "categories" = "Categories";
 
-"favourites" = "My Favourites";
+"favourites" = "Saved";
 
 "recent_searches" = "Recent Searches";
 
@@ -112,7 +112,7 @@
 
 "string_with_discount_only" = "With discount only";
 
-"favourite_no_favourites" = "You have no favourite items at the moment";
+"favourite_no_favourites" = "You have no saved items at the moment";
 
 "favourite_addalltocart" = "Add All Items to Cart";
 
@@ -354,13 +354,13 @@
 
 "enter_order_id" = "Please enter the order number";
 
-"products_added_favourite" = "Item added to My Favourites";
+"products_added_favourite" = "Item saved";
 
-"error_adding_to_wishlist" = "Error adding to favourites";
+"error_adding_to_wishlist" = "Error saving item";
 
-"products_removed_favourite" = "Item removed from My Favourites";
+"products_removed_favourite" = "Item removed from saved";
 
-"error_removing_from_wishlist" = "Error removing from favourites";
+"error_removing_from_wishlist" = "Error removing from saved";
 
 "error_add_to_cart_failed_for_x_products" = "Adding to cart failed for %d products";
 
@@ -424,7 +424,7 @@
 
 "products_tip_swipe_text" = "Swipe left or right to change the sort type";
 
-"tip_favourite_text" = "Click to favourite this product and view the full list in My Profile";
+"tip_favourite_text" = "Click to save this product and view the full list in My Profile";
 
 "tip_share_text" = "Click to share this product";
 

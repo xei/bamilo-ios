@@ -68,6 +68,8 @@
     self.screenName = @"CustomerAccount";
     
     self.navBarLayout.title = STRING_MY_ACCOUNT;
+    self.navBarLayout.showCartButton = NO;
+    self.tabBarIsVisible = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showUserDataSavedMessage)

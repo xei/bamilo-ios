@@ -113,7 +113,6 @@
 		4AE242DA1986547C00E37C90 /* JASidePanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242D91986547C00E37C90 /* JASidePanelController.m */; };
 		4AE242E01986569000E37C90 /* JARootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242DF1986569000E37C90 /* JARootViewController.m */; };
 		4AE242E51986570500E37C90 /* JAHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242E41986570500E37C90 /* JAHomeViewController.m */; };
-		4AE242E81986570F00E37C90 /* JAMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242E71986570F00E37C90 /* JAMenuViewController.m */; };
 		4AE730B8198F8ACA000CA1DD /* JAPDVImageSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE730B7198F8ACA000CA1DD /* JAPDVImageSection.m */; };
 		4AE730BB198F8AD6000CA1DD /* JAPDVVariations.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE730BA198F8AD6000CA1DD /* JAPDVVariations.m */; };
 		4AE730BE198F8ADF000CA1DD /* JAPDVRelatedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE730BD198F8ADF000CA1DD /* JAPDVRelatedItem.m */; };
@@ -152,7 +151,6 @@
 		6014fe7a5d5f1de210ba5b18 /* JASignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC7F93199BC124007D67F4 /* JASignupViewController.m */; };
 		62add1971fcfac7a3f4f4acc /* JAPDVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE730C6198F8B05000CA1DD /* JAPDVViewController.m */; };
 		6343e651aae2fa544731ccd2 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A2FD84919913FCA00C65C1D /* Social.framework */; };
-		63909af668fbc1eea2f99ca5 /* JAMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242E71986570F00E37C90 /* JAMenuViewController.m */; };
 		67f4a0b88343cac1bc885793 /* RIURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3028C19811E9200F71726 /* RIURLCache.m */; };
 		692CD25B1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 692CD25A1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m */; settings = {ASSET_TAGS = (); }; };
 		692CD25C1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 692CD25A1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m */; settings = {ASSET_TAGS = (); }; };
@@ -1297,6 +1295,21 @@
 		CE283E931A77899F00F3E92D /* JASellerRatingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E911A77899F00F3E92D /* JASellerRatingsViewController.m */; };
 		CE283E961A77981900F3E92D /* RISellerReviewInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E951A77981900F3E92D /* RISellerReviewInfo.m */; };
 		CE283E971A77981900F3E92D /* RISellerReviewInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E951A77981900F3E92D /* RISellerReviewInfo.m */; };
+		CE28A7971BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7961BD9475100B1FADA /* JAMoreMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
+		CE28A7981BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7961BD9475100B1FADA /* JAMoreMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
+		CE28A7991BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7961BD9475100B1FADA /* JAMoreMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
+		CE28A79A1BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7961BD9475100B1FADA /* JAMoreMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
+		CE28A79B1BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7961BD9475100B1FADA /* JAMoreMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
+		CE28A79F1BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */; settings = {ASSET_TAGS = (); }; };
+		CE28A7A01BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */; settings = {ASSET_TAGS = (); }; };
+		CE28A7A11BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */; settings = {ASSET_TAGS = (); }; };
+		CE28A7A21BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */; settings = {ASSET_TAGS = (); }; };
+		CE28A7A31BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */; settings = {ASSET_TAGS = (); }; };
+		CE28A7A61BDE987400B1FADA /* JATabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7A51BDE987400B1FADA /* JATabBarButton.m */; settings = {ASSET_TAGS = (); }; };
+		CE28A7A71BDE987400B1FADA /* JATabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7A51BDE987400B1FADA /* JATabBarButton.m */; settings = {ASSET_TAGS = (); }; };
+		CE28A7A81BDE987400B1FADA /* JATabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7A51BDE987400B1FADA /* JATabBarButton.m */; settings = {ASSET_TAGS = (); }; };
+		CE28A7A91BDE987400B1FADA /* JATabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7A51BDE987400B1FADA /* JATabBarButton.m */; settings = {ASSET_TAGS = (); }; };
+		CE28A7AA1BDE987400B1FADA /* JATabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7A51BDE987400B1FADA /* JATabBarButton.m */; settings = {ASSET_TAGS = (); }; };
 		CE28EE5A1A9397C6000A264C /* JBWhatsAppActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28EE591A9397C6000A264C /* JBWhatsAppActivity.m */; };
 		CE28EE5B1A9397C6000A264C /* JBWhatsAppActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28EE591A9397C6000A264C /* JBWhatsAppActivity.m */; };
 		CE2C6B6F1A03B50F006133C0 /* JACatalogGridCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2C6B6E1A03B50F006133C0 /* JACatalogGridCell_ipad_landscape.xib */; };
@@ -1484,7 +1497,6 @@
 		CE9ADB921AB34C4600D56481 /* JAColorFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C29199CC8F200C67F4B /* JAColorFilterCell.m */; };
 		CE9ADB931AB34C4600D56481 /* JAAddressesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B50B039F198A5434002046DF /* JAAddressesViewController.m */; };
 		CE9ADB951AB34C4600D56481 /* JAReviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1892D119939A0C0036F327 /* JAReviewCell.m */; };
-		CE9ADB971AB34C4600D56481 /* JAMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242E71986570F00E37C90 /* JAMenuViewController.m */; };
 		CE9ADB981AB34C4600D56481 /* RIProductOffer.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E6C1A726B3B00F3E92D /* RIProductOffer.m */; };
 		CE9ADB9A1AB34C4600D56481 /* JACatalogTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE06FCB61A88C3A5002FCD25 /* JACatalogTopView.m */; };
 		CE9ADB9B1AB34C4600D56481 /* JAPDVBundles.m in Sources */ = {isa = PBXBuildFile; fileRef = CEED47261A7B973B006D9CE7 /* JAPDVBundles.m */; };
@@ -1830,7 +1842,6 @@
 		CE9ADD8C1AB6D6E900D56481 /* JAColorFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C29199CC8F200C67F4B /* JAColorFilterCell.m */; };
 		CE9ADD8D1AB6D6E900D56481 /* JAAddressesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B50B039F198A5434002046DF /* JAAddressesViewController.m */; };
 		CE9ADD8F1AB6D6E900D56481 /* JAReviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1892D119939A0C0036F327 /* JAReviewCell.m */; };
-		CE9ADD911AB6D6E900D56481 /* JAMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242E71986570F00E37C90 /* JAMenuViewController.m */; };
 		CE9ADD921AB6D6E900D56481 /* RIProductOffer.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E6C1A726B3B00F3E92D /* RIProductOffer.m */; };
 		CE9ADD941AB6D6E900D56481 /* JACatalogTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE06FCB61A88C3A5002FCD25 /* JACatalogTopView.m */; };
 		CE9ADD951AB6D6E900D56481 /* JAPDVBundles.m in Sources */ = {isa = PBXBuildFile; fileRef = CEED47261A7B973B006D9CE7 /* JAPDVBundles.m */; };
@@ -2176,7 +2187,6 @@
 		CE9ADF861AB6D78200D56481 /* JAColorFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C29199CC8F200C67F4B /* JAColorFilterCell.m */; };
 		CE9ADF871AB6D78200D56481 /* JAAddressesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B50B039F198A5434002046DF /* JAAddressesViewController.m */; };
 		CE9ADF891AB6D78200D56481 /* JAReviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1892D119939A0C0036F327 /* JAReviewCell.m */; };
-		CE9ADF8B1AB6D78200D56481 /* JAMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242E71986570F00E37C90 /* JAMenuViewController.m */; };
 		CE9ADF8C1AB6D78200D56481 /* RIProductOffer.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E6C1A726B3B00F3E92D /* RIProductOffer.m */; };
 		CE9ADF8E1AB6D78200D56481 /* JACatalogTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE06FCB61A88C3A5002FCD25 /* JACatalogTopView.m */; };
 		CE9ADF8F1AB6D78200D56481 /* JAPDVBundles.m in Sources */ = {isa = PBXBuildFile; fileRef = CEED47261A7B973B006D9CE7 /* JAPDVBundles.m */; };
@@ -2453,16 +2463,21 @@
 		CE9AE1371AB8997600D56481 /* Daraz.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9AE1301AB8991700D56481 /* Daraz.xcassets */; };
 		CE9AE1381AB8997900D56481 /* Shop.com.mm.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9AE1321AB8993100D56481 /* Shop.com.mm.xcassets */; };
 		CE9AE1391AB8997B00D56481 /* Bamilo.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9AE1341AB8994F00D56481 /* Bamilo.xcassets */; };
-		CEA106ED1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */; };
-		CEA106EE1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */; };
-		CEA106EF1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */; };
-		CEA106F01BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */; };
-		CEA106F11BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */; };
-		CEA106F51BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; };
-		CEA106F61BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; };
-		CEA106F71BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; };
-		CEA106F81BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; };
-		CEA106F91BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; };
+		CEA106ED1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
+		CEA106EE1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
+		CEA106EF1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
+		CEA106F01BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
+		CEA106F11BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
+		CEA106F51BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; settings = {ASSET_TAGS = (); }; };
+		CEA106F61BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; settings = {ASSET_TAGS = (); }; };
+		CEA106F71BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; settings = {ASSET_TAGS = (); }; };
+		CEA106F81BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; settings = {ASSET_TAGS = (); }; };
+		CEA106F91BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; settings = {ASSET_TAGS = (); }; };
+		CEA106FD1BD78CE500EF88B1 /* JATabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */; settings = {ASSET_TAGS = (); }; };
+		CEA106FE1BD78CE500EF88B1 /* JATabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */; settings = {ASSET_TAGS = (); }; };
+		CEA106FF1BD78CE500EF88B1 /* JATabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */; settings = {ASSET_TAGS = (); }; };
+		CEA107001BD78CE500EF88B1 /* JATabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */; settings = {ASSET_TAGS = (); }; };
+		CEA107011BD78CE500EF88B1 /* JATabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */; settings = {ASSET_TAGS = (); }; };
 		CEA2A1B31B25D20C00E5973F /* JADynamicField.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA2A1B21B25D20C00E5973F /* JADynamicField.m */; };
 		CEA2A1B41B25D20C00E5973F /* JADynamicField.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA2A1B21B25D20C00E5973F /* JADynamicField.m */; };
 		CEA2A1B51B25D20C00E5973F /* JADynamicField.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA2A1B21B25D20C00E5973F /* JADynamicField.m */; };
@@ -2791,8 +2806,6 @@
 		4AE242DF1986569000E37C90 /* JARootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARootViewController.m; sourceTree = "<group>"; };
 		4AE242E31986570500E37C90 /* JAHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAHomeViewController.h; sourceTree = "<group>"; };
 		4AE242E41986570500E37C90 /* JAHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAHomeViewController.m; sourceTree = "<group>"; };
-		4AE242E61986570F00E37C90 /* JAMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMenuViewController.h; sourceTree = "<group>"; };
-		4AE242E71986570F00E37C90 /* JAMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMenuViewController.m; sourceTree = "<group>"; };
 		4AE730B6198F8ACA000CA1DD /* JAPDVImageSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVImageSection.h; sourceTree = "<group>"; };
 		4AE730B7198F8ACA000CA1DD /* JAPDVImageSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVImageSection.m; sourceTree = "<group>"; };
 		4AE730B9198F8AD6000CA1DD /* JAPDVVariations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVVariations.h; sourceTree = "<group>"; };
@@ -3382,6 +3395,12 @@
 		CE283E911A77899F00F3E92D /* JASellerRatingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASellerRatingsViewController.m; sourceTree = "<group>"; };
 		CE283E941A77981900F3E92D /* RISellerReviewInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RISellerReviewInfo.h; sourceTree = "<group>"; };
 		CE283E951A77981900F3E92D /* RISellerReviewInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RISellerReviewInfo.m; sourceTree = "<group>"; };
+		CE28A7951BD9475100B1FADA /* JAMoreMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMoreMenuViewController.h; sourceTree = "<group>"; };
+		CE28A7961BD9475100B1FADA /* JAMoreMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMoreMenuViewController.m; sourceTree = "<group>"; };
+		CE28A79D1BDA30B400B1FADA /* JAGenericMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAGenericMenuCell.h; path = GenericMenuCell/JAGenericMenuCell.h; sourceTree = "<group>"; };
+		CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAGenericMenuCell.m; path = GenericMenuCell/JAGenericMenuCell.m; sourceTree = "<group>"; };
+		CE28A7A41BDE987400B1FADA /* JATabBarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JATabBarButton.h; path = GlobalTabBar/JATabBarButton.h; sourceTree = "<group>"; };
+		CE28A7A51BDE987400B1FADA /* JATabBarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JATabBarButton.m; path = GlobalTabBar/JATabBarButton.m; sourceTree = "<group>"; };
 		CE28EE581A9397C6000A264C /* JBWhatsAppActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBWhatsAppActivity.h; sourceTree = "<group>"; };
 		CE28EE591A9397C6000A264C /* JBWhatsAppActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JBWhatsAppActivity.m; sourceTree = "<group>"; };
 		CE2C6B6E1A03B50F006133C0 /* JACatalogGridCell_ipad_landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogGridCell_ipad_landscape.xib; sourceTree = "<group>"; };
@@ -3493,6 +3512,8 @@
 		CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACategoriesSideMenuViewController.m; sourceTree = "<group>"; };
 		CEA106F31BD003EC00EF88B1 /* JACategoriesSideMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACategoriesSideMenuCell.h; path = CategoriesSideMenu/JACategoriesSideMenuCell.h; sourceTree = "<group>"; };
 		CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACategoriesSideMenuCell.m; path = CategoriesSideMenu/JACategoriesSideMenuCell.m; sourceTree = "<group>"; };
+		CEA106FB1BD78CE500EF88B1 /* JATabBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JATabBarView.h; path = GlobalTabBar/JATabBarView.h; sourceTree = "<group>"; };
+		CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JATabBarView.m; path = GlobalTabBar/JATabBarView.m; sourceTree = "<group>"; };
 		CEA2A1B11B25D20C00E5973F /* JADynamicField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JADynamicField.h; sourceTree = "<group>"; };
 		CEA2A1B21B25D20C00E5973F /* JADynamicField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JADynamicField.m; sourceTree = "<group>"; };
 		CEA86D9A1A374D32000032AD /* Model_1.3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.3.xcdatamodel; sourceTree = "<group>"; };
@@ -3957,6 +3978,7 @@
 		4A4ABF08198B902600342D92 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				CE28A79C1BDA307D00B1FADA /* GenericMenuCell */,
 				692CD2511BD7D50000DF6F49 /* PDVVariatons */,
 				CEA106F21BD003AC00EF88B1 /* CategoriesSideMenu */,
 				CE8C92A91B8B555600C77706 /* Filter */,
@@ -4029,6 +4051,7 @@
 				CEABEEB71A11186F000D0CF8 /* Filters */,
 				CE3FC5A41990E209003B4A27 /* GenericComponents */,
 				4A39213B198921A100B70A9C /* GlobalNavigationBar */,
+				CEA106FA1BD78A7000EF88B1 /* GlobalTabBar */,
 				B51777AF19A78FEB00ED0AC7 /* Headers */,
 				B57822581A37516800B4DD8B /* JAGradientLayer.h */,
 				B57822591A37516800B4DD8B /* JAGradientLayer.m */,
@@ -4076,10 +4099,10 @@
 		4AE242E2198656F500E37C90 /* MenuViewController */ = {
 			isa = PBXGroup;
 			children = (
-				4AE242E61986570F00E37C90 /* JAMenuViewController.h */,
-				4AE242E71986570F00E37C90 /* JAMenuViewController.m */,
 				CEA106EB1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.h */,
 				CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */,
+				CE28A7951BD9475100B1FADA /* JAMoreMenuViewController.h */,
+				CE28A7961BD9475100B1FADA /* JAMoreMenuViewController.m */,
 			);
 			path = MenuViewController;
 			sourceTree = "<group>";
@@ -5685,6 +5708,15 @@
 			name = OfferCell;
 			sourceTree = "<group>";
 		};
+		CE28A79C1BDA307D00B1FADA /* GenericMenuCell */ = {
+			isa = PBXGroup;
+			children = (
+				CE28A79D1BDA30B400B1FADA /* JAGenericMenuCell.h */,
+				CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */,
+			);
+			name = GenericMenuCell;
+			sourceTree = "<group>";
+		};
 		CE28EE571A9397C6000A264C /* WhatsAppActivity */ = {
 			isa = PBXGroup;
 			children = (
@@ -5888,6 +5920,17 @@
 				CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */,
 			);
 			name = CategoriesSideMenu;
+			sourceTree = "<group>";
+		};
+		CEA106FA1BD78A7000EF88B1 /* GlobalTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				CEA106FB1BD78CE500EF88B1 /* JATabBarView.h */,
+				CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */,
+				CE28A7A41BDE987400B1FADA /* JATabBarButton.h */,
+				CE28A7A51BDE987400B1FADA /* JATabBarButton.m */,
+			);
+			name = GlobalTabBar;
 			sourceTree = "<group>";
 		};
 		CEA86D9B1A3756A6000032AD /* SizeGuide */ = {
@@ -7572,6 +7615,8 @@
 				4b5ae89debacca2cb1f16964 /* RIForm.m in Sources */,
 				6014fe7a5d5f1de210ba5b18 /* JASignupViewController.m in Sources */,
 				2eb23f2dd745a7b0b0c14765 /* JAAppDelegate.m in Sources */,
+				CE28A7981BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */,
+				CE28A7A71BDE987400B1FADA /* JATabBarButton.m in Sources */,
 				c795918e6661f2b2410f9f58 /* RIFilter.m in Sources */,
 				CED9B5C11B5810ED0097EB30 /* RIHtmlShop.m in Sources */,
 				abfbf9f4e3ea7badd0389cb2 /* JACatalogViewController.m in Sources */,
@@ -7617,6 +7662,7 @@
 				6ad0a1988b1e51c37142c75b /* JACartViewController.m in Sources */,
 				CEA86E0F1A49D247000032AD /* JAPercentageBarView.m in Sources */,
 				b94cfa8d37757acab329072f /* JAPDVProductInfo.m in Sources */,
+				CE28A7A01BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */,
 				9A3876611BCD0DFD0088B186 /* JAProductReviewsView.m in Sources */,
 				842d7c4fad06679139869ced /* RIField.m in Sources */,
 				886c5fa519e7301d1103b66d /* JAPaymentCell.m in Sources */,
@@ -7640,7 +7686,6 @@
 				f216f801001f61223ca8024c /* JAColorFilterCell.m in Sources */,
 				ed304145f21e8a21401fd967 /* JAAddressesViewController.m in Sources */,
 				1c7fae3c0896dcfa1ef5ed50 /* JAReviewCell.m in Sources */,
-				63909af668fbc1eea2f99ca5 /* JAMenuViewController.m in Sources */,
 				9A7EE9951B5546A0004E2505 /* ADJRequestHandler.m in Sources */,
 				876d96c3d745466130991f03 /* MKAnnotationView+WebCache.m in Sources */,
 				9A3876681BCD121A0088B186 /* JATabButton.m in Sources */,
@@ -7725,6 +7770,7 @@
 				952aecdd0bf3e87bd38f9e12 /* RITrackingWrapper.m in Sources */,
 				3b2e034618cfeae11e103642 /* RIVariation.m in Sources */,
 				9A7EE9861B5546A0004E2505 /* ADJLogger.m in Sources */,
+				CEA106FE1BD78CE500EF88B1 /* JATabBarView.m in Sources */,
 				df135d936bd63706b4e3db54 /* JAMainFiltersViewController.m in Sources */,
 				9A55A6881BBECB07008EF4A6 /* JABottomBar.m in Sources */,
 				9AEA3B2A1B15DDA100771EEA /* UIView+Frame.m in Sources */,
@@ -7909,7 +7955,6 @@
 				CED30C2A199CC8F200C67F4B /* JAColorFilterCell.m in Sources */,
 				B50B03A0198A5434002046DF /* JAAddressesViewController.m in Sources */,
 				4A1892D219939A0C0036F327 /* JAReviewCell.m in Sources */,
-				4AE242E81986570F00E37C90 /* JAMenuViewController.m in Sources */,
 				CE283E6D1A726B3B00F3E92D /* RIProductOffer.m in Sources */,
 				9ABCAEEE1B0F6A2C00A69271 /* UIView+Mirror.m in Sources */,
 				9A7EE9801B5546A0004E2505 /* ADJEvent.m in Sources */,
@@ -7928,7 +7973,9 @@
 				CE445875198BD5D800CE7E8D /* JASmallTeaserView.m in Sources */,
 				4A7F7481198A4EDA00621C0D /* JACenterNavigationController.m in Sources */,
 				B59DCA5C19B7109300DE7960 /* JAAddNewAddressViewController.m in Sources */,
+				CEA106FD1BD78CE500EF88B1 /* JATabBarView.m in Sources */,
 				9A7EE9761B5546A0004E2505 /* ADJConfig.m in Sources */,
+				CE28A7A61BDE987400B1FADA /* JATabBarButton.m in Sources */,
 				4A944FF8199290F200C02734 /* JARatingsViewController.m in Sources */,
 				CE283E681A714D4900F3E92D /* JAOtherOffersView.m in Sources */,
 				6C40A88D1AD7E647001BFA16 /* RIBanner.m in Sources */,
@@ -7975,6 +8022,7 @@
 				B5A302C619811E9200F71726 /* RIImageResolution.m in Sources */,
 				9AEA3B261B15D4AC00771EEA /* UIView+Frame.m in Sources */,
 				B5A302E619811E9200F71726 /* RIURLCacheWrapper.m in Sources */,
+				CE28A79F1BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */,
 				B59DCA6A19B8521A00DE7960 /* JAButtonWithBlur.m in Sources */,
 				B50B039D198A5420002046DF /* JALoginViewController.m in Sources */,
 				CEA106ED1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */,
@@ -8028,6 +8076,7 @@
 				CE2FB75619938EA100E7CD00 /* JACatalogGridCell.m in Sources */,
 				4A39213A19891FC400B70A9C /* JAMyFavouritesViewController.m in Sources */,
 				4A18856419B8A368003337FC /* JAActivityViewController.m in Sources */,
+				CE28A7971BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */,
 				9A38764A1BCD0CDC0088B186 /* JATabNavigationViewController.m in Sources */,
 				9A7EE9BE1B554706004E2505 /* UIDevice+ADJAdditions.m in Sources */,
 				B59D195F19C33122004843C3 /* JAOrderViewController.m in Sources */,
@@ -8198,7 +8247,6 @@
 				CE9ADB921AB34C4600D56481 /* JAColorFilterCell.m in Sources */,
 				CE9ADB931AB34C4600D56481 /* JAAddressesViewController.m in Sources */,
 				CE9ADB951AB34C4600D56481 /* JAReviewCell.m in Sources */,
-				CE9ADB971AB34C4600D56481 /* JAMenuViewController.m in Sources */,
 				CE9ADB981AB34C4600D56481 /* RIProductOffer.m in Sources */,
 				9A189E7B1BB449CC0039BC14 /* JAProductInfoPriceLine.m in Sources */,
 				9A7EE9821B5546A0004E2505 /* ADJEvent.m in Sources */,
@@ -8216,7 +8264,9 @@
 				CE9ADBA61AB34C4600D56481 /* JASmallTeaserView.m in Sources */,
 				CE9ADBA71AB34C4600D56481 /* JACenterNavigationController.m in Sources */,
 				CE9ADBA81AB34C4600D56481 /* JAAddNewAddressViewController.m in Sources */,
+				CEA106FF1BD78CE500EF88B1 /* JATabBarView.m in Sources */,
 				9A7EE9781B5546A0004E2505 /* ADJConfig.m in Sources */,
+				CE28A7A81BDE987400B1FADA /* JATabBarButton.m in Sources */,
 				CE9ADBA91AB34C4600D56481 /* JARatingsViewController.m in Sources */,
 				CE9ADBAA1AB34C4600D56481 /* JAOtherOffersView.m in Sources */,
 				6C40A88E1AD7E647001BFA16 /* RIBanner.m in Sources */,
@@ -8263,6 +8313,7 @@
 				CE9ADBD01AB34C4600D56481 /* JATextFieldComponent.m in Sources */,
 				CE9ADBD11AB34C4600D56481 /* RIImageResolution.m in Sources */,
 				9AEA3B271B15DD9B00771EEA /* UIView+Frame.m in Sources */,
+				CE28A7A11BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */,
 				CE9ADBD21AB34C4600D56481 /* RIURLCacheWrapper.m in Sources */,
 				CE9ADBD31AB34C4600D56481 /* JAButtonWithBlur.m in Sources */,
 				CEA106EF1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */,
@@ -8316,6 +8367,7 @@
 				CE9ADBFD1AB34C4600D56481 /* JARecentSearchesViewController.m in Sources */,
 				CE9ADBFE1AB34C4600D56481 /* JACatalogGridCell.m in Sources */,
 				CE9ADBFF1AB34C4600D56481 /* JAMyFavouritesViewController.m in Sources */,
+				CE28A7991BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */,
 				9A38764C1BCD0CDC0088B186 /* JATabNavigationViewController.m in Sources */,
 				CE9ADC001AB34C4600D56481 /* JAActivityViewController.m in Sources */,
 				9A7EE9C01B554706004E2505 /* UIDevice+ADJAdditions.m in Sources */,
@@ -8477,7 +8529,6 @@
 				CE9ADD8C1AB6D6E900D56481 /* JAColorFilterCell.m in Sources */,
 				CE9ADD8D1AB6D6E900D56481 /* JAAddressesViewController.m in Sources */,
 				CE9ADD8F1AB6D6E900D56481 /* JAReviewCell.m in Sources */,
-				CE9ADD911AB6D6E900D56481 /* JAMenuViewController.m in Sources */,
 				CE9ADD921AB6D6E900D56481 /* RIProductOffer.m in Sources */,
 				9A189E7C1BB449CC0039BC14 /* JAProductInfoPriceLine.m in Sources */,
 				9A7EE9831B5546A0004E2505 /* ADJEvent.m in Sources */,
@@ -8495,7 +8546,9 @@
 				CE9ADDA01AB6D6E900D56481 /* JASmallTeaserView.m in Sources */,
 				CE9ADDA11AB6D6E900D56481 /* JACenterNavigationController.m in Sources */,
 				CE9ADDA21AB6D6E900D56481 /* JAAddNewAddressViewController.m in Sources */,
+				CEA107001BD78CE500EF88B1 /* JATabBarView.m in Sources */,
 				9A7EE9791B5546A0004E2505 /* ADJConfig.m in Sources */,
+				CE28A7A91BDE987400B1FADA /* JATabBarButton.m in Sources */,
 				CE9ADDA31AB6D6E900D56481 /* JARatingsViewController.m in Sources */,
 				CE9ADDA41AB6D6E900D56481 /* JAOtherOffersView.m in Sources */,
 				6C40A88F1AD7E647001BFA16 /* RIBanner.m in Sources */,
@@ -8542,6 +8595,7 @@
 				CE9ADDCA1AB6D6E900D56481 /* JATextFieldComponent.m in Sources */,
 				CE9ADDCB1AB6D6E900D56481 /* RIImageResolution.m in Sources */,
 				9AEA3B281B15DD9C00771EEA /* UIView+Frame.m in Sources */,
+				CE28A7A21BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */,
 				CE9ADDCC1AB6D6E900D56481 /* RIURLCacheWrapper.m in Sources */,
 				CE9ADDCD1AB6D6E900D56481 /* JAButtonWithBlur.m in Sources */,
 				CEA106F01BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */,
@@ -8595,6 +8649,7 @@
 				CE9ADDF71AB6D6E900D56481 /* JARecentSearchesViewController.m in Sources */,
 				CE9ADDF81AB6D6E900D56481 /* JACatalogGridCell.m in Sources */,
 				CE9ADDF91AB6D6E900D56481 /* JAMyFavouritesViewController.m in Sources */,
+				CE28A79A1BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */,
 				9A38764D1BCD0CDC0088B186 /* JATabNavigationViewController.m in Sources */,
 				CE9ADDFA1AB6D6E900D56481 /* JAActivityViewController.m in Sources */,
 				9A7EE9C11B554706004E2505 /* UIDevice+ADJAdditions.m in Sources */,
@@ -8754,7 +8809,6 @@
 				CE9ADF861AB6D78200D56481 /* JAColorFilterCell.m in Sources */,
 				CE9ADF871AB6D78200D56481 /* JAAddressesViewController.m in Sources */,
 				CE9ADF891AB6D78200D56481 /* JAReviewCell.m in Sources */,
-				CE9ADF8B1AB6D78200D56481 /* JAMenuViewController.m in Sources */,
 				CE9ADF8C1AB6D78200D56481 /* RIProductOffer.m in Sources */,
 				9A189E7D1BB449CC0039BC14 /* JAProductInfoPriceLine.m in Sources */,
 				9A7EE9841B5546A0004E2505 /* ADJEvent.m in Sources */,
@@ -8772,7 +8826,9 @@
 				CE9ADF9A1AB6D78200D56481 /* JASmallTeaserView.m in Sources */,
 				CE9ADF9B1AB6D78200D56481 /* JACenterNavigationController.m in Sources */,
 				CE9ADF9C1AB6D78200D56481 /* JAAddNewAddressViewController.m in Sources */,
+				CEA107011BD78CE500EF88B1 /* JATabBarView.m in Sources */,
 				9A7EE97A1B5546A0004E2505 /* ADJConfig.m in Sources */,
+				CE28A7AA1BDE987400B1FADA /* JATabBarButton.m in Sources */,
 				CE9ADF9D1AB6D78200D56481 /* JARatingsViewController.m in Sources */,
 				CE9ADF9E1AB6D78200D56481 /* JAOtherOffersView.m in Sources */,
 				6C40A8901AD7E647001BFA16 /* RIBanner.m in Sources */,
@@ -8819,6 +8875,7 @@
 				CE9ADFC21AB6D78200D56481 /* JAPriceFiltersView.m in Sources */,
 				CE9ADFC31AB6D78200D56481 /* RIFieldDataSetComponent.m in Sources */,
 				CE9ADFC41AB6D78200D56481 /* JATextFieldComponent.m in Sources */,
+				CE28A7A31BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */,
 				CE9ADFC51AB6D78200D56481 /* RIImageResolution.m in Sources */,
 				9AEA3B291B15DD9C00771EEA /* UIView+Frame.m in Sources */,
 				CEA106F11BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */,
@@ -8872,6 +8929,7 @@
 				CE9ADFEF1AB6D78200D56481 /* JAPickerScrollView.m in Sources */,
 				CE9ADFF11AB6D78200D56481 /* JARecentSearchesViewController.m in Sources */,
 				CE9ADFF21AB6D78200D56481 /* JACatalogGridCell.m in Sources */,
+				CE28A79B1BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */,
 				9A38764E1BCD0CDC0088B186 /* JATabNavigationViewController.m in Sources */,
 				CE9ADFF31AB6D78200D56481 /* JAMyFavouritesViewController.m in Sources */,
 				CE9ADFF41AB6D78200D56481 /* JAActivityViewController.m in Sources */,

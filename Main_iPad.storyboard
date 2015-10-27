@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <scenes>
         <!--Load Country View Controller-->
@@ -32,7 +32,7 @@
                         <viewControllerLayoutGuide type="bottom" id="n29-Vs-WBj"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="QSK-Dr-EhB">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="960"/>
+                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="top" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="TZg-ui-RiR">
@@ -41,10 +41,10 @@
                                 <inset key="separatorInset" minX="50" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell contentMode="top" selectionStyle="default" indentationWidth="10" reuseIdentifier="countryCell" rowHeight="44" id="t1L-4c-p8X" customClass="JACountryCell">
-                                        <rect key="frame" x="0.0" y="22" width="308" height="44"/>
+                                        <rect key="frame" x="0.0" y="22" width="756" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="t1L-4c-p8X" id="ak7-7M-4yY">
-                                            <rect key="frame" x="0.0" y="0.0" width="308" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="756" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="z50-1Y-6pz">
@@ -268,7 +268,7 @@
                         <viewControllerLayoutGuide type="bottom" id="D61-sL-kdA"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="uJ6-WL-Hv5">
-                        <rect key="frame" x="0.0" y="64" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WrU-up-wWh">
@@ -319,7 +319,7 @@
                         <viewControllerLayoutGuide type="bottom" id="0X6-w9-vvZ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="dNP-RW-M4p">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="960"/>
+                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="gds-pr-i35">
@@ -483,7 +483,7 @@
                         <viewControllerLayoutGuide type="bottom" id="WH6-b9-i8C"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="AUl-Tk-bYN">
-                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gRt-sH-U19">
@@ -640,7 +640,7 @@
                         <viewControllerLayoutGuide type="bottom" id="UY5-8R-1ep"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="zNv-Ur-e1Q">
-                        <rect key="frame" x="0.0" y="64" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eFX-qu-ogq" customClass="JAPickerScrollView">
@@ -690,10 +690,10 @@
             </objects>
             <point key="canvasLocation" x="2412" y="386"/>
         </scene>
-        <!--Menu View Controller-->
+        <!--Categories Side Menu View Controller-->
         <scene sceneID="QiH-sH-Lco">
             <objects>
-                <viewController id="5Wl-6B-JVF" customClass="JAMenuViewController" sceneMemberID="viewController">
+                <viewController id="5Wl-6B-JVF" customClass="JACategoriesSideMenuViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="QBP-Tb-Zb5"/>
                         <viewControllerLayoutGuide type="bottom" id="pDY-Ju-N9A"/>
@@ -701,40 +701,10 @@
                     <view key="view" contentMode="scaleToFill" id="NLF-gc-3Z6">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="SJj-1N-8NT">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="separatorColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="cell" rowHeight="44" id="f6a-kk-sUX">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="48"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="f6a-kk-sUX" id="uXF-kM-Uff">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="47"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="5Wl-6B-JVF" id="58k-gd-qmp"/>
-                                    <outlet property="delegate" destination="5Wl-6B-JVF" id="LXc-Iz-7iR"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="SJj-1N-8NT" secondAttribute="trailing" id="Dwg-C4-zzG"/>
-                            <constraint firstItem="pDY-Ju-N9A" firstAttribute="top" secondItem="SJj-1N-8NT" secondAttribute="bottom" id="HY0-f6-KBf"/>
-                            <constraint firstItem="SJj-1N-8NT" firstAttribute="leading" secondItem="NLF-gc-3Z6" secondAttribute="leading" id="TgV-bz-VGQ"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="bDI-HG-wIT"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <connections>
-                        <outlet property="searchDisplayController" destination="UsL-A1-izA" id="ETE-05-nP3"/>
-                        <outlet property="tableViewMenu" destination="SJj-1N-8NT" id="TyE-mg-osJ"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cYY-eb-Tgv" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <searchDisplayController id="UsL-A1-izA"/>
@@ -751,9 +721,4 @@
         <image name="tick_selected" width="14" height="14"/>
         <image name="trackNumberBox" width="148" height="30"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination"/>
-    </simulatedMetricsContainer>
 </document>
