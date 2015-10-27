@@ -25,7 +25,6 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "JASidePanelController.h"
-#import "JAMenuViewController.h"
 
 static char ja_kvoContext;
 
@@ -426,46 +425,46 @@ static char ja_kvoContext;
 
 - (void)updateLeftPanelInformation:(NSDictionary*)userInfo
 {
-    if (VALID_NOTEMPTY(_leftPanel, UINavigationController))
-    {
-        UINavigationController *navigationController = (UINavigationController *)_leftPanel;
-        if(VALID_NOTEMPTY([navigationController topViewController], JAMenuViewController))
-        {
-            JAMenuViewController* menuVC = (JAMenuViewController*) [navigationController topViewController];
-            [menuVC setCart:nil];
-            if([userInfo objectForKey:kUpdateCartNotificationValue])
-            {
-                [menuVC setCart:[userInfo objectForKey:kUpdateCartNotificationValue]];
-            }
-            
-            if([userInfo objectForKey:kExternalPaymentValue])
-            {
-                [menuVC setNeedsExternalPaymentMethod:[[userInfo objectForKey:kExternalPaymentValue] boolValue]];
-            }
-        }
-    }
+//    if (VALID_NOTEMPTY(_leftPanel, UINavigationController))
+//    {
+//        UINavigationController *navigationController = (UINavigationController *)_leftPanel;
+//        if(VALID_NOTEMPTY([navigationController topViewController], JAMenuViewController))
+//        {
+//            JAMenuViewController* menuVC = (JAMenuViewController*) [navigationController topViewController];
+//            [menuVC setCart:nil];
+//            if([userInfo objectForKey:kUpdateCartNotificationValue])
+//            {
+//                [menuVC setCart:[userInfo objectForKey:kUpdateCartNotificationValue]];
+//            }
+//            
+//            if([userInfo objectForKey:kExternalPaymentValue])
+//            {
+//                [menuVC setNeedsExternalPaymentMethod:[[userInfo objectForKey:kExternalPaymentValue] boolValue]];
+//            }
+//        }
+//    }
 }
 
 - (void)updateRightPanelInformation:(NSDictionary*)userInfo
 {
-    if (VALID_NOTEMPTY(_rightPanel, UINavigationController))
-    {
-        UINavigationController *navigationController = (UINavigationController *)_rightPanel;
-        if(VALID_NOTEMPTY([navigationController topViewController], JAMenuViewController))
-        {
-            JAMenuViewController* menuVC = (JAMenuViewController*) [navigationController topViewController];
-            [menuVC setCart:nil];
-            if([userInfo objectForKey:kUpdateCartNotificationValue])
-            {
-                [menuVC setCart:[userInfo objectForKey:kUpdateCartNotificationValue]];
-            }
-            
-            if([userInfo objectForKey:kExternalPaymentValue])
-            {
-                [menuVC setNeedsExternalPaymentMethod:[[userInfo objectForKey:kExternalPaymentValue] boolValue]];
-            }
-        }
-    }
+//    if (VALID_NOTEMPTY(_rightPanel, UINavigationController))
+//    {
+//        UINavigationController *navigationController = (UINavigationController *)_rightPanel;
+//        if(VALID_NOTEMPTY([navigationController topViewController], JAMenuViewController))
+//        {
+//            JAMenuViewController* menuVC = (JAMenuViewController*) [navigationController topViewController];
+//            [menuVC setCart:nil];
+//            if([userInfo objectForKey:kUpdateCartNotificationValue])
+//            {
+//                [menuVC setCart:[userInfo objectForKey:kUpdateCartNotificationValue]];
+//            }
+//            
+//            if([userInfo objectForKey:kExternalPaymentValue])
+//            {
+//                [menuVC setNeedsExternalPaymentMethod:[[userInfo objectForKey:kExternalPaymentValue] boolValue]];
+//            }
+//        }
+//    }
 }
 
 - (void)setRightPanel:(UIViewController *)rightPanel {

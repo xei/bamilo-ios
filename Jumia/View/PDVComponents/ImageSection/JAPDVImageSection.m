@@ -103,7 +103,7 @@
     }
     self.product = product;
     
-    self.productNameLabel.font = JAList3Font;
+    self.productNameLabel.font = JAListFont;
     self.productNameLabel.textColor = JABlackColor;
     self.productNameLabel.text = product.brand;
     [self.productNameLabel setX:16.f];
@@ -212,30 +212,6 @@
 }
 
 #pragma mark - ButtonActions
-
--(void)sellerRatingButtonPressed
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerReviews object:self.product];
-}   
-
--(void)gotoCatalogSeller
-{
-    NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
-    
-    if(VALID_NOTEMPTY(self.product.seller, RISeller))
-    {
-        [userInfo setObject:self.product.seller.name forKey:@"name"];
-    }
-    
-    if(VALID_NOTEMPTY(self.product.seller, RISeller))
-    {
-        [userInfo setObject:self.product.seller.url forKey:@"url"];
-    }
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:self.product.seller userInfo:userInfo];
-    
-    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"SellerPage"];
-}
 
 - (void)goToGalleryIndex:(NSInteger)index
 {

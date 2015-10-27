@@ -99,6 +99,7 @@ JAPickerScrollViewDelegate
     
     self.navBarLayout.showLogo = NO;
     self.navBarLayout.title = STRING_MY_ORDERS;
+    self.navBarLayout.showBackButton = YES;
     
     self.sortList = [NSArray arrayWithObjects:STRING_ORDER_TRACKING, STRING_MY_ORDER_HISTORY, nil];
     

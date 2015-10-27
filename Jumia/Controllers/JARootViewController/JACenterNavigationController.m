@@ -58,6 +58,7 @@
 #import "JAShopWebViewController.h"
 #import "JABundlesViewController.h"
 #import "JAPDVVariationsViewController.h"
+#import "JAMoreMenuViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -78,6 +79,7 @@
     self.neeedsExternalPaymentMethod = NO;
     
     [self customizeNavigationBar];
+    [self customizeTabBar];
     
     self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
@@ -269,6 +271,11 @@
                                              selector:@selector(closeTopTwoScreensNotificaion:)
                                                  name:kCloseTopTwoScreensNotification
                                                object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(changeTabBarWithNotification:)
+                                                 name:kChangeTabBarVisibility
+                                               object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(changeNavigationWithNotification:)
@@ -349,6 +356,11 @@
                                              selector:@selector(showSpecificationsScreen:)
                                                  name:kOpenSpecificationsScreen
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showMoreMenu)
+                                                 name:kShowMoreMenuScreenNotification
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -369,6 +381,7 @@
             [self popToRootViewControllerAnimated:NO];
         }
         
+        [self.tabBarView selectButtonAtIndex:0];
         JAHomeViewController *home = [JAHomeViewController new];
         [self pushViewController:home animated:NO];
     }
@@ -393,8 +406,17 @@
             country.navBarLayout.showMenuButton = [[notification.object objectForKey:@"show_menu_button"] boolValue];
         }
         
-        [self popToRootViewControllerAnimated:NO];
-        [self pushViewController:country animated:NO];
+        BOOL animated = NO;
+        country.navBarLayout.showBackButton = NO;
+        if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.object, NSDictionary))
+        {
+            country.navBarLayout.showBackButton = [[notification.object objectForKey:@"show_back_button"] boolValue];
+            animated = YES;
+        } else {
+            [self popToRootViewControllerAnimated:NO];
+        }
+        
+        [self pushViewController:country animated:animated];
     }
 }
 
@@ -504,7 +526,8 @@
         
         NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
         [userInfo setObject:nextNotification forKey:@"notification"];
-        [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
+        [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"tabbar_is_visible"];
+        [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"shows_back_button"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfo];
         return;
     }else{
@@ -515,6 +538,19 @@
             
             [self pushViewController:myFavouritesViewController animated:NO];
         }
+    }
+}
+
+#pragma mark MoreMenu
+- (void)showMoreMenu
+{
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JAMoreMenuViewController class]])
+    {
+        UIViewController* moreMenuViewController = [[JAMoreMenuViewController alloc] init];
+        
+        [self popToRootViewControllerAnimated:NO];
+        [self pushViewController:moreMenuViewController animated:NO];
     }
 }
 
@@ -534,30 +570,32 @@
 #pragma mark Sign In Screen
 - (void)showSignInScreen:(NSNotification *)notification
 {
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JASignInViewController class]] && ![RICustomer checkIfUserIsLogged])
+    JASignInViewController *signInVC = [[JASignInViewController alloc] init];
+    
+    if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSNotification))
     {
-        JASignInViewController *signInVC = [[JASignInViewController alloc] init];
-        
-        if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSNotification))
-        {
-            signInVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
-        }
-        
-        NSNumber *fromSideMenu = [notification.userInfo objectForKey:@"from_side_menu"];
-        if (!VALID_NOTEMPTY(fromSideMenu, NSNumber)) {
-            //if nil, assume the default (YES)
-            fromSideMenu = [NSNumber numberWithBool:YES];
-        }
-        signInVC.fromSideMenu = [fromSideMenu boolValue];
-        signInVC.navBarLayout.showBackButton = ![fromSideMenu boolValue];
-        if ([fromSideMenu boolValue])
-        {
-            [self popToRootViewControllerAnimated:NO];
-        }
-        
-        [self pushViewController:signInVC animated:NO];
+        signInVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
     }
+    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"shows_back_button"], NSNumber)) {
+        NSNumber* showsBack = [notification.userInfo objectForKey:@"shows_back_button"];
+        signInVC.navBarLayout.showBackButton = [showsBack boolValue];
+    } else {
+        signInVC.navBarLayout.showBackButton = YES;
+    }
+    signInVC.fromSideMenu = NO;
+    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"from_side_menu"], NSNumber)) {
+        NSNumber* fromSide = [notification.userInfo objectForKey:@"from_side_menu"];
+        signInVC.fromSideMenu = [fromSide boolValue];
+    }
+    BOOL animated = YES;
+    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"tabbar_is_visible"], NSNumber)) {
+        NSNumber* tabbarIsVisible = [notification.userInfo objectForKey:@"tabbar_is_visible"];
+        signInVC.tabBarIsVisible = [tabbarIsVisible boolValue];
+        [self popToRootViewControllerAnimated:NO];
+        animated = NO;
+    }
+    
+    [self pushViewController:signInVC animated:animated];
 }
 
 #pragma mark Sign Up Screen
@@ -609,7 +647,7 @@
     {
         JARecentlyViewedViewController *recentlyViewedViewController = [[JARecentlyViewedViewController alloc]initWithNibName:@"JARecentlyViewedViewController" bundle:nil];
         
-        [self pushViewController:recentlyViewedViewController animated:NO];
+        [self pushViewController:recentlyViewedViewController animated:YES];
     }
 }
 
@@ -650,8 +688,7 @@
             myOrderVC.selectedIndex = [[userInfo objectForKey:@"selected_index"] intValue];
         }        
         
-        [self popToRootViewControllerAnimated:NO];
-        [self pushViewController:myOrderVC animated:NO];
+        [self pushViewController:myOrderVC animated:YES];
     }
     else
     {
@@ -728,7 +765,7 @@
             signInViewController.fromSideMenu = NO;
             signInViewController.nextNotification = notification;
             
-            [self pushViewController:signInViewController animated:NO];
+            [self pushViewController:signInViewController animated:YES];
         }
     }
 }
@@ -762,7 +799,7 @@
             signInViewController.fromSideMenu = NO;
             signInViewController.nextNotification = notification;
             
-            [self pushViewController:signInViewController animated:NO];
+            [self pushViewController:signInViewController animated:YES];
         }
     }
 }
@@ -1628,6 +1665,19 @@
     }
 }
 
+#pragma mark - Tab Bar
+
+- (void)customizeTabBar
+{
+    self.tabBarView = [[JATabBarView alloc] initWithFrame:CGRectMake(0.0,
+                                                                     self.view.frame.size.height - kTabBarHeight,
+                                                                     self.view.bounds.size.width,
+                                                                     kTabBarHeight)];
+    self.tabBarView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
+    [self.tabBarView initialSetup];
+    [self.view addSubview:self.tabBarView];
+}
+
 #pragma mark - Navigation Bar
 
 - (void)customizeNavigationBar
@@ -1669,6 +1719,12 @@
     
 }
 
+- (void)changeTabBarWithNotification:(NSNotification*)notification
+{
+    NSNumber* isVisible = notification.object;
+    self.tabBarView.hidden = ![isVisible boolValue];
+}
+
 - (void)changeNavigationWithNotification:(NSNotification*)notification
 {
     JANavigationBarLayout* layout = notification.object;
@@ -1708,17 +1764,20 @@
         if(VALID_NOTEMPTY(self.cart, RICart))
         {
             [self.navigationBarView updateCartProductCount:self.cart.cartCount];
+            [self.tabBarView updateCartNumber:[self.cart.cartCount integerValue]];
         }
         else
         {
             [userInfo removeObjectForKey:kUpdateCartNotificationValue];
             [self.navigationBarView updateCartProductCount:0];
+            [self.tabBarView updateCartNumber:0];
         }
     }
     else
     {
         self.cart = nil;
         [self.navigationBarView updateCartProductCount:0];
+        [self.tabBarView updateCartNumber:0];
     }
 }
 
@@ -1765,7 +1824,7 @@
         [cartViewController setCart:self.cart];
         
         [self popToRootViewControllerAnimated:NO];
-        [self pushViewController:cartViewController animated:YES];
+        [self pushViewController:cartViewController animated:NO];
     }
     
 }

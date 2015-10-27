@@ -1249,6 +1249,8 @@ typedef void (^ProcessActionBlock)(void);
                                         button.selected = YES;
                                         product.favoriteAddDate = [NSDate date];
                                         
+                                        [self removeErrorView];
+                                        
                                         [self trackingEventAddToWishList:product];
                                         
                                         [self hideLoading];
@@ -1268,7 +1270,9 @@ typedef void (^ProcessActionBlock)(void);
                                         NSString *addToWishlistError = STRING_ERROR_ADDING_TO_WISHLIST;
                                         if(RIApiResponseNoInternetConnection == apiResponse)
                                         {
-                                            addToWishlistError = STRING_NO_CONNECTION;
+                                            [self showErrorView:YES startingY:0 selector:@selector(addToFavoritesPressed:) objects:[NSArray arrayWithObject:button]];
+                                            [self hideLoading];
+                                            return;
                                         }
                                         
                                         [self showMessage:addToWishlistError success:NO];
@@ -1276,6 +1280,13 @@ typedef void (^ProcessActionBlock)(void);
                                         [self hideLoading];
                                     }];
                                 } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+                                    
+                                    if(RIApiResponseNoInternetConnection == apiResponse)
+                                    {
+                                        [self showErrorView:YES startingY:0 selector:@selector(addToFavoritesPressed:) objects:[NSArray arrayWithObject:button]];
+                                        [self hideLoading];
+                                        return;
+                                    }
                                     
                                     [self showMessage:STRING_ERROR_ADDING_TO_WISHLIST success:NO];
                                     
@@ -1285,6 +1296,7 @@ typedef void (^ProcessActionBlock)(void);
         [RIProduct removeFromFavorites:product successBlock:^(void) {
             button.selected = NO;
             product.favoriteAddDate = nil;
+            [self removeErrorView];
             
             [self trackingEventRemoveFromWishlist:product];
             
@@ -1302,6 +1314,14 @@ typedef void (^ProcessActionBlock)(void);
                                                               userInfo:userInfo];
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+            
+            if(RIApiResponseNoInternetConnection == apiResponse)
+            {
+                [self showErrorView:YES startingY:0 selector:@selector(addToFavoritesPressed:) objects:[NSArray arrayWithObject:button]];
+                [self hideLoading];
+                return;
+            }
+            
             [self hideLoading];
             
             [self showMessage:STRING_ERROR_REMOVING_FROM_WISHLIST success:NO];

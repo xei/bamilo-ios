@@ -24,6 +24,8 @@
 
 - (void)addReviewsTarget:(id)target action:(SEL)action;
 
+- (void)addSellerCatalogTarget:(id)target action:(SEL)action;
+
 - (void)addSellerReviewsTarget:(id)target action:(SEL)action;
 
 - (void)addOtherOffersTarget:(id)target action:(SEL)action;

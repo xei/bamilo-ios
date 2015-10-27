@@ -59,6 +59,8 @@
     self.A4SViewControllerAlias = @"CART";
     
     self.navBarLayout.title = STRING_CART;
+    self.navBarLayout.showCartButton = NO;
+    self.tabBarIsVisible = YES;
     
     self.view.backgroundColor = JABackgroundGrey;
     
@@ -80,8 +82,8 @@
     self.flowLayout.minimumLineSpacing = 0;
     self.flowLayout.minimumInteritemSpacing = 0;
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    self.flowLayout.itemSize = CGSizeMake(self.view.frame.size.width, 90.0f);
-    [self.flowLayout setHeaderReferenceSize:CGSizeMake(self.view.frame.size.width - 12.0f, 26.0f)];
+    self.flowLayout.itemSize = CGSizeMake([self viewBounds].size.width, 90.0f);
+    [self.flowLayout setHeaderReferenceSize:CGSizeMake([self viewBounds].size.width - 12.0f, 26.0f)];
     
     self.productCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.flowLayout];
     [self.productCollectionView setBackgroundColor:JABackgroundGrey];
@@ -400,7 +402,7 @@
     
     self.screenName = @"CartWithItems";
     
-    CGFloat viewsWidth = self.view.frame.size.width - (2 * horizontalMargin);
+    CGFloat viewsWidth = [self viewBounds].size.width - (2 * horizontalMargin);
     CGFloat originY = 6.0f;
     
     [self.productCollectionView removeFromSuperview];
@@ -408,7 +410,7 @@
     
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
     {
-        viewsWidth = (self.view.frame.size.width - (3 * horizontalMargin)) / 2;
+        viewsWidth = ([self viewBounds].size.width - (3 * horizontalMargin)) / 2;
         
         self.flowLayout.itemSize = CGSizeMake(viewsWidth, itemSize);
         [self.flowLayout setHeaderReferenceSize:CGSizeMake(viewsWidth, headerSize)];
@@ -416,13 +418,13 @@
         [self.productsScrollView setFrame:CGRectMake(horizontalMargin,
                                                      0.0f,
                                                      viewsWidth,
-                                                     self.view.frame.size.height)];
+                                                     [self viewBounds].size.height)];
         [self.view addSubview:self.productsScrollView];
         
         [self.cartScrollView setFrame:CGRectMake(CGRectGetMaxX(self.productsScrollView.frame) + 6.0f,
                                                  0.0f,
                                                  viewsWidth,
-                                                 self.view.frame.size.height)];
+                                                 [self viewBounds].size.height)];
         
         [self.productsScrollView addSubview:self.productCollectionView];
         [self.productCollectionView setFrame:CGRectMake(0.0f,
@@ -442,7 +444,7 @@
         [self.cartScrollView setFrame:CGRectMake(6.0f,
                                                  0.0f,
                                                  viewsWidth,
-                                                 self.view.frame.size.height)];
+                                                 [self viewBounds].size.height)];
         
         [self.cartScrollView addSubview:self.productCollectionView];
         [self.productCollectionView setFrame:CGRectMake(0.0f,
@@ -591,7 +593,7 @@
     [self.articlesCount sizeToFit];
     [self.articlesCount setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.subtotalTitleSeparator.frame) + 10.0f, self.articlesCount.width, self.articlesCount.frame.size.height)];
     
-    CGRect articleNumberWidth = [self.articlesCount.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)
+    CGRect articleNumberWidth = [self.articlesCount.text boundingRectWithSize:CGSizeMake([self viewBounds].size.width, [self viewBounds].size.height)
                                                                        options:NSStringDrawingUsesLineFragmentOrigin
                                                                     attributes:@{NSFontAttributeName:self.articlesCount.font} context:nil];
     
@@ -1046,7 +1048,7 @@
         [self.picker removeFromSuperview];
     }
     
-    self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
+    self.picker = [[JAPicker alloc] initWithFrame:[self viewBounds]];
     [self.picker setDelegate:self];
     
     NSMutableArray *dataSource = [NSMutableArray new];
@@ -1071,8 +1073,8 @@
                        previousText:selectedItem
                     leftButtonTitle:nil];
     
-    CGFloat pickerViewHeight = self.view.frame.size.height;
-    CGFloat pickerViewWidth = self.view.frame.size.width;
+    CGFloat pickerViewHeight = [self viewBounds].size.height;
+    CGFloat pickerViewWidth = [self viewBounds].size.width;
     [self.picker setFrame:CGRectMake(0.0f,
                                      pickerViewHeight,
                                      pickerViewWidth,
@@ -1446,7 +1448,7 @@
     }
     
     CGRect frame = self.picker.frame;
-    frame.origin.y = self.view.frame.size.height;
+    frame.origin.y = [self viewBounds].size.height;
     
     [UIView animateWithDuration:0.4f
                      animations:^{
@@ -1460,7 +1462,7 @@
 - (void)closePicker
 {
     CGRect frame = self.picker.frame;
-    frame.origin.y = self.view.frame.size.height;
+    frame.origin.y = [self viewBounds].size.height;
     
     [UIView animateWithDuration:0.4f
                      animations:^{
@@ -1504,7 +1506,7 @@
     CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
     CGFloat height = kbSize.height;
-    if(self.view.frame.size.width == kbSize.height)
+    if([self viewBounds].size.width == kbSize.height)
     {
         height = kbSize.width;
     }

@@ -9,9 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "JACategoriesSideMenuCell.h"
 
-@interface JACategoriesSideMenuViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, JACategoriesSideMenuCellDelegate>
+@interface JACategoriesSideMenuViewController : JABaseViewController <UITableViewDataSource, UITableViewDelegate, JACategoriesSideMenuCellDelegate>
 
 @property (nonatomic, retain) NSString* A4SViewControllerAlias;
-@property (nonatomic, strong) NSArray* categoriesArray;
 
 @end

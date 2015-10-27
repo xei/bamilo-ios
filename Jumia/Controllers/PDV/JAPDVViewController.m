@@ -40,6 +40,7 @@
 #import "JAProductInfoHeaderLine.h"
 #import "RIAddress.h"
 #import "JABottomBar.h"
+#import "RISeller.h"
 
 @interface JAPDVViewController ()
 <
@@ -650,6 +651,7 @@ JAActivityViewControllerDelegate
     [self.productInfoSection addReviewsTarget:self action:@selector(goToReviews)];
     [self.productInfoSection addSpecificationsTarget:self action:@selector(goToSpecifications)];
     [self.productInfoSection addDescriptionTarget:self action:@selector(goToDescription)];
+    [self.productInfoSection addSellerCatalogTarget:self action:@selector(goToSellerCatalog)];
     [self.productInfoSection addSizeTarget:self action:@selector(showSizePicker)];
     [self.productInfoSection addVariationsTarget:self action:@selector(goToVariationsScreen)];
     [self.productInfoSection addOtherOffersTarget:self action:@selector(goToOtherSellersScreen)];
@@ -887,6 +889,26 @@ JAActivityViewControllerDelegate
 - (void)goToDescription
 {
     [self goToDetails:@"description"];
+}
+
+- (void)goToSellerCatalog
+{
+    NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
+    
+    if(VALID_NOTEMPTY(self.product.seller, RISeller))
+    {
+        [userInfo setObject:self.product.seller.name forKey:@"name"];
+    }
+    
+    if(VALID_NOTEMPTY(self.product.seller, RISeller))
+    {
+        [userInfo setObject:self.product.seller.url forKey:@"url"];
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:self.product.seller userInfo:userInfo];
+    
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"SellerPage"];
+    
 }
 
 - (void)goToSpecifications

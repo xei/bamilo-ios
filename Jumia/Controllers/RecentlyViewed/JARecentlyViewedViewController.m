@@ -65,6 +65,7 @@
     
     self.selectedSizeAndAddToCart = NO;
     self.navBarLayout.title = STRING_RECENTLY_VIEWED;
+    self.navBarLayout.showBackButton = YES;
     
     self.collectionView.backgroundColor = UIColorFromRGB(0xc8c8c8);
     
