@@ -12,6 +12,7 @@
 
 @interface JACategoriesSideMenuViewController ()
 
+@property (nonatomic, strong)NSArray* categoriesArray;
 @property (nonatomic, strong)UITableView* tableView;
 @property (nonatomic, strong)NSMutableArray* tableViewCategoriesArray;
 
@@ -24,10 +25,35 @@
 
     self.A4SViewControllerAlias = @"SUBCATEGORY";
     
+    self.tabBarIsVisible = YES;
+    
     // notify the InAppNotification SDK that this the active view controller
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popToRoot) name:kSideMenuShouldReload object:nil];
 
+    [RICategory getCategoriesWithSuccessBlock:^(id categories) {
+        
+        self.categoriesArray = [NSArray arrayWithArray:(NSArray *)categories];
+        [self categoriesLoaded];
+        
+        [self hideLoading];
+        
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+        
+        [self hideLoading];
+        
+        [self showMessage:STRING_ERROR success:NO];
+    }];
+    
+    self.tableView = [UITableView new];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [self.view addSubview:self.tableView];
+}
+
+- (void)categoriesLoaded
+{
     self.tableViewCategoriesArray = [NSMutableArray new];
     for (RICategory* category in self.categoriesArray) {
         [self.tableViewCategoriesArray addObject:category];
@@ -35,12 +61,7 @@
             [self.tableViewCategoriesArray addObject:levelOneCategory];
         }
     }
-    
-    self.tableView = [UITableView new];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    [self.view addSubview:self.tableView];
+    [self.tableView reloadData];
 }
 
 - (void)popToRoot
