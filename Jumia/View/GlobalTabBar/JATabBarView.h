@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-#define kTabBarHeight 44.0f
+#define kTabBarHeight 52.0f
 
 @interface JATabBarView : UIView
 
 - (void)initialSetup;
+- (void)selectButtonAtIndex:(NSInteger)index;
+
+- (void)updateCartNumber:(NSInteger)cartNumber;
 
 @end

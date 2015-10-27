@@ -1298,6 +1298,11 @@
 		CE28A7A11BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */; settings = {ASSET_TAGS = (); }; };
 		CE28A7A21BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */; settings = {ASSET_TAGS = (); }; };
 		CE28A7A31BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */; settings = {ASSET_TAGS = (); }; };
+		CE28A7A61BDE987400B1FADA /* JATabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7A51BDE987400B1FADA /* JATabBarButton.m */; settings = {ASSET_TAGS = (); }; };
+		CE28A7A71BDE987400B1FADA /* JATabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7A51BDE987400B1FADA /* JATabBarButton.m */; settings = {ASSET_TAGS = (); }; };
+		CE28A7A81BDE987400B1FADA /* JATabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7A51BDE987400B1FADA /* JATabBarButton.m */; settings = {ASSET_TAGS = (); }; };
+		CE28A7A91BDE987400B1FADA /* JATabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7A51BDE987400B1FADA /* JATabBarButton.m */; settings = {ASSET_TAGS = (); }; };
+		CE28A7AA1BDE987400B1FADA /* JATabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7A51BDE987400B1FADA /* JATabBarButton.m */; settings = {ASSET_TAGS = (); }; };
 		CE28EE5A1A9397C6000A264C /* JBWhatsAppActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28EE591A9397C6000A264C /* JBWhatsAppActivity.m */; };
 		CE28EE5B1A9397C6000A264C /* JBWhatsAppActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28EE591A9397C6000A264C /* JBWhatsAppActivity.m */; };
 		CE2C6B6F1A03B50F006133C0 /* JACatalogGridCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2C6B6E1A03B50F006133C0 /* JACatalogGridCell_ipad_landscape.xib */; };
@@ -3397,6 +3402,8 @@
 		CE28A7961BD9475100B1FADA /* JAMoreMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMoreMenuViewController.m; sourceTree = "<group>"; };
 		CE28A79D1BDA30B400B1FADA /* JAGenericMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAGenericMenuCell.h; path = GenericMenuCell/JAGenericMenuCell.h; sourceTree = "<group>"; };
 		CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAGenericMenuCell.m; path = GenericMenuCell/JAGenericMenuCell.m; sourceTree = "<group>"; };
+		CE28A7A41BDE987400B1FADA /* JATabBarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JATabBarButton.h; path = GlobalTabBar/JATabBarButton.h; sourceTree = "<group>"; };
+		CE28A7A51BDE987400B1FADA /* JATabBarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JATabBarButton.m; path = GlobalTabBar/JATabBarButton.m; sourceTree = "<group>"; };
 		CE28EE581A9397C6000A264C /* JBWhatsAppActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBWhatsAppActivity.h; sourceTree = "<group>"; };
 		CE28EE591A9397C6000A264C /* JBWhatsAppActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JBWhatsAppActivity.m; sourceTree = "<group>"; };
 		CE2C6B6E1A03B50F006133C0 /* JACatalogGridCell_ipad_landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogGridCell_ipad_landscape.xib; sourceTree = "<group>"; };
@@ -5904,6 +5911,8 @@
 			children = (
 				CEA106FB1BD78CE500EF88B1 /* JATabBarView.h */,
 				CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */,
+				CE28A7A41BDE987400B1FADA /* JATabBarButton.h */,
+				CE28A7A51BDE987400B1FADA /* JATabBarButton.m */,
 			);
 			name = GlobalTabBar;
 			sourceTree = "<group>";
@@ -7605,6 +7614,7 @@
 				6014fe7a5d5f1de210ba5b18 /* JASignupViewController.m in Sources */,
 				2eb23f2dd745a7b0b0c14765 /* JAAppDelegate.m in Sources */,
 				CE28A7981BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */,
+				CE28A7A71BDE987400B1FADA /* JATabBarButton.m in Sources */,
 				c795918e6661f2b2410f9f58 /* RIFilter.m in Sources */,
 				CED9B5C11B5810ED0097EB30 /* RIHtmlShop.m in Sources */,
 				abfbf9f4e3ea7badd0389cb2 /* JACatalogViewController.m in Sources */,
@@ -7959,6 +7969,7 @@
 				B59DCA5C19B7109300DE7960 /* JAAddNewAddressViewController.m in Sources */,
 				CEA106FD1BD78CE500EF88B1 /* JATabBarView.m in Sources */,
 				9A7EE9761B5546A0004E2505 /* ADJConfig.m in Sources */,
+				CE28A7A61BDE987400B1FADA /* JATabBarButton.m in Sources */,
 				4A944FF8199290F200C02734 /* JARatingsViewController.m in Sources */,
 				CE283E681A714D4900F3E92D /* JAOtherOffersView.m in Sources */,
 				6C40A88D1AD7E647001BFA16 /* RIBanner.m in Sources */,
@@ -8247,6 +8258,7 @@
 				CE9ADBA81AB34C4600D56481 /* JAAddNewAddressViewController.m in Sources */,
 				CEA106FF1BD78CE500EF88B1 /* JATabBarView.m in Sources */,
 				9A7EE9781B5546A0004E2505 /* ADJConfig.m in Sources */,
+				CE28A7A81BDE987400B1FADA /* JATabBarButton.m in Sources */,
 				CE9ADBA91AB34C4600D56481 /* JARatingsViewController.m in Sources */,
 				CE9ADBAA1AB34C4600D56481 /* JAOtherOffersView.m in Sources */,
 				6C40A88E1AD7E647001BFA16 /* RIBanner.m in Sources */,
@@ -8526,6 +8538,7 @@
 				CE9ADDA21AB6D6E900D56481 /* JAAddNewAddressViewController.m in Sources */,
 				CEA107001BD78CE500EF88B1 /* JATabBarView.m in Sources */,
 				9A7EE9791B5546A0004E2505 /* ADJConfig.m in Sources */,
+				CE28A7A91BDE987400B1FADA /* JATabBarButton.m in Sources */,
 				CE9ADDA31AB6D6E900D56481 /* JARatingsViewController.m in Sources */,
 				CE9ADDA41AB6D6E900D56481 /* JAOtherOffersView.m in Sources */,
 				6C40A88F1AD7E647001BFA16 /* RIBanner.m in Sources */,
@@ -8805,6 +8818,7 @@
 				CE9ADF9C1AB6D78200D56481 /* JAAddNewAddressViewController.m in Sources */,
 				CEA107011BD78CE500EF88B1 /* JATabBarView.m in Sources */,
 				9A7EE97A1B5546A0004E2505 /* ADJConfig.m in Sources */,
+				CE28A7AA1BDE987400B1FADA /* JATabBarButton.m in Sources */,
 				CE9ADF9D1AB6D78200D56481 /* JARatingsViewController.m in Sources */,
 				CE9ADF9E1AB6D78200D56481 /* JAOtherOffersView.m in Sources */,
 				6C40A8901AD7E647001BFA16 /* RIBanner.m in Sources */,

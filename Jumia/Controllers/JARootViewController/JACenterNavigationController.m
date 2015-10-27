@@ -516,7 +516,8 @@
         
         NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
         [userInfo setObject:nextNotification forKey:@"notification"];
-        [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
+        [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"tabbar_is_visible"];
+        [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"shows_back_button"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfo];
         return;
     }else{
@@ -565,11 +566,26 @@
     {
         signInVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
     }
-    
-    signInVC.navBarLayout.showBackButton = YES;
+    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"shows_back_button"], NSNumber)) {
+        NSNumber* showsBack = [notification.userInfo objectForKey:@"shows_back_button"];
+        signInVC.navBarLayout.showBackButton = [showsBack boolValue];
+    } else {
+        signInVC.navBarLayout.showBackButton = YES;
+    }
     signInVC.fromSideMenu = NO;
+    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"from_side_menu"], NSNumber)) {
+        NSNumber* fromSide = [notification.userInfo objectForKey:@"from_side_menu"];
+        signInVC.fromSideMenu = [fromSide boolValue];
+    }
+    BOOL animated = YES;
+    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"tabbar_is_visible"], NSNumber)) {
+        NSNumber* tabbarIsVisible = [notification.userInfo objectForKey:@"tabbar_is_visible"];
+        signInVC.tabBarIsVisible = [tabbarIsVisible boolValue];
+        [self popToRootViewControllerAnimated:NO];
+        animated = NO;
+    }
     
-    [self pushViewController:signInVC animated:YES];
+    [self pushViewController:signInVC animated:animated];
 }
 
 #pragma mark Sign Up Screen
@@ -739,7 +755,7 @@
             signInViewController.fromSideMenu = NO;
             signInViewController.nextNotification = notification;
             
-            [self pushViewController:signInViewController animated:NO];
+            [self pushViewController:signInViewController animated:YES];
         }
     }
 }
@@ -773,7 +789,7 @@
             signInViewController.fromSideMenu = NO;
             signInViewController.nextNotification = notification;
             
-            [self pushViewController:signInViewController animated:NO];
+            [self pushViewController:signInViewController animated:YES];
         }
     }
 }
@@ -1738,17 +1754,20 @@
         if(VALID_NOTEMPTY(self.cart, RICart))
         {
             [self.navigationBarView updateCartProductCount:self.cart.cartCount];
+            [self.tabBarView updateCartNumber:[self.cart.cartCount integerValue]];
         }
         else
         {
             [userInfo removeObjectForKey:kUpdateCartNotificationValue];
             [self.navigationBarView updateCartProductCount:0];
+            [self.tabBarView updateCartNumber:0];
         }
     }
     else
     {
         self.cart = nil;
         [self.navigationBarView updateCartProductCount:0];
+        [self.tabBarView updateCartNumber:0];
     }
 }
 
