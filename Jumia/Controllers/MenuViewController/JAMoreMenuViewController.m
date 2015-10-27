@@ -13,7 +13,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
-#define kCellTextArray @[STRING_MORE, STRING_LOGIN, STRING_RECENTLY_VIEWED, STRING_TRACK_MY_ORDER]
+#define kCellTextArray @[STRING_MORE, STRING_LOGIN, STRING_RECENTLY_VIEWED, STRING_TRACK_MY_ORDER, STRING_CHOOSE_COUNTRY]
 
 @interface JAMoreMenuViewController ()
 
@@ -89,7 +89,7 @@
     }
     
     [cell setupWithStyle:style
-                   width:self.tableView.frame.size.width
+                   width:self.view.frame.size.width
                 cellText:text
             iconImageURL:nil
       accessoryImageName:@"sideMenuCell_arrow"
@@ -117,6 +117,9 @@
             break;
         case 3:
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowMyOrdersScreenNotification object:nil];
+            break;
+        case 4:
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowChooseCountryScreenNotification object:@{@"show_back_button":[NSNumber numberWithBool:YES]}];
             break;
         default:
             break;
