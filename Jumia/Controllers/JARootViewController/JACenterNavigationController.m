@@ -381,6 +381,7 @@
             [self popToRootViewControllerAnimated:NO];
         }
         
+        [self.tabBarView selectButtonAtIndex:0];
         JAHomeViewController *home = [JAHomeViewController new];
         [self pushViewController:home animated:NO];
     }
