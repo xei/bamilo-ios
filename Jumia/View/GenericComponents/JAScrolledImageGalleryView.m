@@ -71,6 +71,11 @@
     _first = NO;
     _navigationCursorBottomPercentage = .05;
     
+    [self setDimensions];
+}
+
+- (void)setDimensions
+{
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
         _imageWidth = 322;
@@ -79,7 +84,6 @@
         _imageWidth = 272;
         _imageHeight = 340;
     }
-    
 }
 
 - (UIScrollView *)scrollView
@@ -146,9 +150,13 @@
     NSMutableArray* modifiedArray = [NSMutableArray new];
     for (int i = RI_IS_RTL?(int)[_processedViews count]-1:0;RI_IS_RTL?i>=0:i<=([_processedViews count]-1);RI_IS_RTL?i--:i++) {
         UIView *view = [_processedViews objectAtIndex:i];
-        UIView *baseView = [[UIView alloc] initWithFrame:self.scrollView.frame];
+        [view setX:(self.scrollView.width - view.width)/2];
+        [view setWidth:_imageWidth];
+        [view setHeight:_imageHeight];
+        UIView *baseView = [[UIView alloc] initWithFrame:self.scrollView.bounds];
+        [baseView setBackgroundColor:[UIColor whiteColor]];
         [baseView addSubview:view];
-        [baseView setX:j*self.width];
+        [baseView setX:j*self.scrollView.width];
         [baseView setY:0];
         [baseView setTag:i];
         [modifiedArray addObject:baseView];
@@ -160,7 +168,12 @@
     if (_processedViews.count > 1) {
         [self loadPageComponent];
     }
-    [self scrollToTag:_infinite?1:0];
+    if (!_first) {
+        [self scrollToTag:_infinite?1:0];
+    }else{
+        _scrollAnimation = 0;
+        [self scrollToTag:_selectedIndexPage];
+    }
     _first = YES;
 }
 
@@ -169,7 +182,11 @@
     [super setFrame:frame];
     [self.scrollView setWidth:self.width];
     [self.scrollView setHeight:_imageHeight];
-    if (_processedViews) {
+    if (_first) {
+        [self setDimensions];
+        for (UIView *subview in self.scrollView.subviews) {
+            [subview removeFromSuperview];
+        }
         [self loadViews];
     }
 }
@@ -217,6 +234,7 @@
         
         j++;
     }
+    [self reloadPageComponent];
 }
 
 - (void)tapSmallImage:(UIGestureRecognizer *)gesture

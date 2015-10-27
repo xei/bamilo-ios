@@ -9,8 +9,10 @@
 #import "JACatalogTopView.h"
 
 @interface JACatalogTopView()
-
-@property (weak, nonatomic) IBOutlet UIView *separatorView;
+{
+    UIView* _seperatorFilter;
+    UIView* _seperatorViewMode;
+}
 
 @end
 
@@ -113,61 +115,75 @@
     [self.viewModeButton addTarget:self action:@selector(viewModeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     self.cellTypeSelected = JACatalogCollectionViewListCell;
     
-    self.separatorView.backgroundColor = UIColorFromRGB(0xcccccc);
+    _seperatorFilter = [UIView new];
+    [_seperatorFilter setBackgroundColor:JABlack700Color];
+    [self addSubview:_seperatorFilter];
+    _seperatorViewMode = [UIView new];
+    [_seperatorViewMode setBackgroundColor:JABlack700Color];
+    [self addSubview:_seperatorViewMode];
 }
 
 - (void)repositionForWidth:(CGFloat)width
 {
-    CGFloat margin = 6.0f;
-    
     self.frame = CGRectMake(self.frame.origin.x,
                             self.frame.origin.y,
                             width,
                             self.frame.size.height);
     
-    
-    self.viewModeButton.frame = CGRectMake(width - self.viewModeButton.frame.size.width - margin,
-                                           margin,
-                                           self.viewModeButton.frame.size.width,
+    CGFloat modeButtonWidth = width*.2f;
+    self.viewModeButton.frame = CGRectMake(width - modeButtonWidth,
+                                           0,
+                                           modeButtonWidth,
                                            self.viewModeButton.frame.size.height);
     
-    CGFloat remainingWidth = width - self.viewModeButton.frame.size.width - margin*2;
-    CGFloat halfWidth = (remainingWidth-2)/2;
+    CGFloat remainingWidth = width - modeButtonWidth;
+    CGFloat halfWidth = (remainingWidth)/2;
     
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         
         
 
-        self.sortingBackView.frame = CGRectMake(margin,
-                                                margin,
-                                                halfWidth,
-                                                self.sortingButton.frame.size.height);
-        self.sortingButton.frame = CGRectMake(self.sortingBackView.frame.size.width - self.sortingButton.frame.size.width,
-                                              0.0f,
-                                              self.sortingButton.frame.size.width,
-                                              self.sortingButton.frame.size.height);
-        
-        self.filterBackView.frame = CGRectMake(CGRectGetMaxX(self.sortingBackView.frame) + 1.0,
-                                               margin,
+        self.filterBackView.frame = CGRectMake(0,
+                                               0,
                                                halfWidth,
                                                self.filterBackView.frame.size.height);
-        self.filterButton.frame = CGRectMake(0.0f,
+        self.filterButton.frame = CGRectMake(0,
                                              0.0f,
-                                             self.filterButton.frame.size.width,
-                                             self.filterButton.frame.size.height);
-        
-    }else{
-        
-        self.filterButton.frame = CGRectMake(self.viewModeButton.frame.origin.x - 1.0f - halfWidth,
-                                             margin,
                                              halfWidth,
                                              self.filterButton.frame.size.height);
         
-        self.sortingButton.frame = CGRectMake(self.filterButton.frame.origin.x - 1.0f - halfWidth,
-                                              margin,
+        
+        self.sortingBackView.frame = CGRectMake( CGRectGetMaxX(self.filterBackView.frame),
+                                                0,
+                                                halfWidth,
+                                                self.sortingBackView.frame.size.height);
+        self.sortingButton.frame = CGRectMake(0,
+                                              0.0f,
                                               halfWidth,
                                               self.sortingButton.frame.size.height);
+        
+        
+    }else{
+        self.filterButton.frame = CGRectMake(0,
+                                             0,
+                                             halfWidth,
+                                             self.filterButton.frame.size.height);
+        
+        self.sortingButton.frame = CGRectMake(CGRectGetMaxX(self.filterButton.frame),
+                                              0,
+                                              halfWidth,
+                                              self.sortingButton.frame.size.height);
+        
     }
+    CGFloat seperatorHeight = 32.f;
+    [_seperatorFilter setFrame:CGRectMake(halfWidth,
+                                          (self.frame.size.height - 1.f - seperatorHeight)/2.f,
+                                          1.f,
+                                          seperatorHeight)];
+    [_seperatorViewMode setFrame:CGRectMake(self.viewModeButton.frame.origin.x,
+                                            (self.frame.size.height - 1.f - seperatorHeight)/2.f,
+                                            1.f,
+                                            seperatorHeight)];
     
     if (RI_IS_RTL) {
         [self.viewModeButton flipViewPositionInsideSuperview];
@@ -175,7 +191,8 @@
         [self.sortingButton flipViewPositionInsideSuperview];
         [self.filterBackView flipViewPositionInsideSuperview];
         [self.filterButton flipViewPositionInsideSuperview];
-
+        [_seperatorViewMode flipAllSubviews];
+        [_seperatorFilter flipAllSubviews];
         //the sorting button will be aligned when the text is set, but we need to align the filters here
         [self.filterButton flipViewAlignment];
     }

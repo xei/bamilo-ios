@@ -7,7 +7,7 @@
 //
 
 #import "JAPDVVariationsViewController.h"
-#import "JACatalogListCollectionViewCell.h"
+#import "JAPDVVariationsCollectionViewCell.h"
 
 @interface JAPDVVariationsViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
@@ -21,12 +21,22 @@
 
 - (UICollectionView *)collectionView
 {
+    CGRect frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
     if (!VALID_NOTEMPTY(_collectionView, UICollectionView)) {
+        
         UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
-        _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
+        layout.minimumInteritemSpacing = 0.f;
+        layout.minimumLineSpacing = 0.f;
+        _collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:layout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         [self.view addSubview:_collectionView];
+    }
+    else {
+        if (!CGRectEqualToRect(frame, _collectionView.frame)) {
+            [_collectionView reloadData];
+            [_collectionView setFrame:frame];
+        }
     }
     return _collectionView;
 }
@@ -48,8 +58,12 @@
     [super viewDidLoad];
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     self.navBarLayout.showBackButton = YES;
-    
-    [self.collectionView registerClass:[JACatalogListCollectionViewCell class] forCellWithReuseIdentifier:@"JACatalogListCollectionViewCell"];
+    [self.collectionView registerClass:[JAPDVVariationsCollectionViewCell class] forCellWithReuseIdentifier:@"CellWithLines"];
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    [self collectionView];
 }
 
 #pragma mark - collectionView methods
@@ -58,7 +72,7 @@
 {
     RIVariation *variationProduct = [self.variations objectAtIndex:indexPath.row];
     
-    JACatalogCollectionViewCell *cell = (JACatalogCollectionViewCell *)[self.collectionView dequeueReusableCellWithReuseIdentifier:@"JACatalogListCollectionViewCell" forIndexPath:indexPath];
+    JAPDVVariationsCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"CellWithLines" forIndexPath:indexPath];
     
     cell.favoriteButton.tag = indexPath.row;
     [cell.favoriteButton addTarget:self
@@ -72,6 +86,46 @@
     
     [cell loadWithVariation:variationProduct];
     
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        
+        if(UIDeviceOrientationPortrait == ([UIDevice currentDevice].orientation) || UIDeviceOrientationPortraitUpsideDown == ([UIDevice currentDevice].orientation)) {
+            cell.rightVerticalSeparator.hidden = YES;
+            if (indexPath.row == 0) {
+                cell.topHorizontalSeparator.hidden = NO;
+            }
+            else{
+                cell.topHorizontalSeparator.hidden = YES;
+            }
+            
+        }else{
+            
+            if (indexPath.row == 0 || indexPath.row == 1) {
+                cell.topHorizontalSeparator.hidden = NO;
+            }
+            else{
+               cell.topHorizontalSeparator.hidden = YES;
+            }
+            if (indexPath.row % 2 == 0) {
+                cell.rightVerticalSeparator.hidden = NO;
+            }
+            else{
+                cell.rightVerticalSeparator.hidden = YES;
+            }
+            
+        }
+    }
+    else {
+        cell.rightVerticalSeparator.hidden = YES;
+        if (indexPath.row == 0) {
+            cell.topHorizontalSeparator.hidden = NO;
+        }
+        else{
+            cell.topHorizontalSeparator.hidden = YES;
+        }
+    }
+    
+
+    
     return cell;
 }
 
@@ -82,7 +136,18 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(self.view.width, JACatalogViewControllerListCellHeight);
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        
+        if(UIDeviceOrientationPortrait == ([UIDevice currentDevice].orientation) || UIDeviceOrientationPortraitUpsideDown == ([UIDevice currentDevice].orientation)) {
+
+            return CGSizeMake(self.bounds.size.width, 104.0f);
+
+        } else {
+            return CGSizeMake((self.bounds.size.width/2), 104.0f);
+        }
+    } else {
+        return CGSizeMake(self.view.frame.size.width, 104.0f);
+    }
 }
 
 #pragma mark - actions
@@ -114,5 +179,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 @end

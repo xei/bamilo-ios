@@ -8,9 +8,6 @@
 
 #import "JAProductInfoRatingLine.h"
 
-#define kStarWidth 18
-#define kStarHeight 18
-
 @interface JAProductInfoRatingLine ()
 
 @property (nonatomic) UIImageView *star1;
@@ -21,36 +18,34 @@
 
 @property (nonatomic) UILabel *ratingSumLabel;
 
-@property (nonatomic) BOOL sellerRating;
 @property (nonatomic) CGFloat lineXOffset;
+@property (nonatomic) NSString *imageSize;
 
 @end
 
 @implementation JAProductInfoRatingLine
 
-@synthesize ratingSumLabel = _ratingSumLabel;
-@synthesize lineXOffset = _lineXOffset;
+@synthesize ratingSumLabel = _ratingSumLabel, lineXOffset = _lineXOffset;
 
 - (UIImage *)getEmptyStar
 {
-    return [UIImage imageNamed:@"img_rating_star_medium_empty"];
+    return [UIImage imageNamed:[NSString stringWithFormat:@"img_rating_star_%@_empty", self.imageSize]];
 }
 
 - (UIImage *)getFilledStar
 {
     if (self.fashion) {
-        return [UIImage imageNamed:@"img_rating_star_fashion_medium_full"];
+        return [UIImage imageNamed:[NSString stringWithFormat:@"img_rating_star_fashion_%@_full", self.imageSize]];
     }else{
-        return [UIImage imageNamed:@"img_rating_star_medium_full"];
+        return [UIImage imageNamed:[NSString stringWithFormat:@"img_rating_star_%@_full", self.imageSize]];
     }
-    
 }
 
 - (UIImageView *)star1
 {
     if (!VALID_NOTEMPTY(_star1, UIImageView)) {
         _star1 = [[UIImageView alloc] initWithImage:[self getEmptyStar]];
-        [_star1 setFrame:CGRectMake(self.lineXOffset, self.height/2-kStarHeight/2, 18, 18)];
+        [_star1 setFrame:CGRectMake(self.lineXOffset, self.height/2-self.imageHeight/2, self.imageHeight, self.imageHeight)];
         [self addSubview:_star1];
     }
     return _star1;
@@ -60,7 +55,7 @@
 {
     if (!VALID_NOTEMPTY(_star2, UIImageView)) {
         _star2 = [[UIImageView alloc] initWithImage:[self getEmptyStar]];
-        [_star2 setFrame:CGRectMake(CGRectGetMaxX(self.star1.frame), self.height/2-kStarHeight/2, 18, 18)];
+        [_star2 setFrame:CGRectMake(CGRectGetMaxX(self.star1.frame) + 2.f, self.height/2-self.imageHeight/2, self.imageHeight, self.imageHeight)];
         [self addSubview:_star2];
     }
     return _star2;
@@ -70,7 +65,7 @@
 {
     if (!VALID_NOTEMPTY(_star3, UIImageView)) {
         _star3 = [[UIImageView alloc] initWithImage:[self getEmptyStar]];
-        [_star3 setFrame:CGRectMake(CGRectGetMaxX(self.star2.frame), self.height/2-kStarHeight/2, 18, 18)];
+        [_star3 setFrame:CGRectMake(CGRectGetMaxX(self.star2.frame) + 2.f, self.height/2-self.imageHeight/2, self.imageHeight, self.imageHeight)];
         [self addSubview:_star3];
     }
     return _star3;
@@ -80,7 +75,7 @@
 {
     if (!VALID_NOTEMPTY(_star4, UIImageView)) {
         _star4 = [[UIImageView alloc] initWithImage:[self getEmptyStar]];
-        [_star4 setFrame:CGRectMake(CGRectGetMaxX(self.star3.frame), self.height/2-kStarHeight/2, 18, 18)];
+        [_star4 setFrame:CGRectMake(CGRectGetMaxX(self.star3.frame) + 2.f, self.height/2-self.imageHeight/2, self.imageHeight, self.imageHeight)];
         [self addSubview:_star4];
     }
     return _star4;
@@ -90,7 +85,7 @@
 {
     if (!VALID_NOTEMPTY(_star5, UIImageView)) {
         _star5 = [[UIImageView alloc] initWithImage:[self getEmptyStar]];
-        [_star5 setFrame:CGRectMake(CGRectGetMaxX(self.star4.frame), self.height/2-kStarHeight/2, 18, 18)];
+        [_star5 setFrame:CGRectMake(CGRectGetMaxX(self.star4.frame) + 2.f, self.height/2-self.imageHeight/2, self.imageHeight, self.imageHeight)];
         [self addSubview:_star5];
     }
     return _star5;
@@ -110,21 +105,51 @@
     return _ratingSumLabel;
 }
 
+- (NSString *)imageSize
+{
+    switch (self.imageRatingSize) {
+        case kImageRatingSizeSmall:
+            return @"small";
+            break;
+        case kImageRatingSizeMedium:
+            return @"medium";
+            break;
+        case kImageRatingSizeBig:
+            return @"big";
+            break;
+            
+        default:
+            return @"medium";
+    }
+}
+
+- (CGFloat)imageHeight
+{
+    switch (self.imageRatingSize) {
+        case kImageRatingSizeSmall:
+            return 14.f;
+            break;
+        case kImageRatingSizeMedium:
+            return 18.f;
+            break;
+        case kImageRatingSizeBig:
+            return 22.f;
+            break;
+            
+        default:
+            return 18.f;
+    }
+}
+
 - (CGFloat)lineXOffset
 {
-    if (!self.sellerRating)
+    if (!self.noMargin)
     {
         _lineXOffset = 16.0f;
     }else{
         _lineXOffset = 0.f;
     }
     return _lineXOffset;
-}
-
-- (void)setSellerRatingAverage:(NSNumber *)ratingAverage
-{
-    self.sellerRating = YES;
-    [self setRatingAverage:ratingAverage];
 }
 
 - (void)setRatingAverage:(NSNumber *)ratingAverage

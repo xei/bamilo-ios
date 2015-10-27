@@ -40,11 +40,11 @@ typedef void (^ProcessActionBlock)(void);
 @interface JACatalogViewController ()
 <JAFilteredNoResulsViewDelegate>
 {
-    BOOL _needRefreshProduct;
+    BOOL _needAddToFavBlock;
     ProcessActionBlock _processActionBlock;
 }
 
-@property (nonatomic, strong)JACatalogWizardView* wizardView;
+@property (nonatomic, strong) JACatalogWizardView* wizardView;
 @property (nonatomic, strong) JAFilteredNoResultsView *filteredNoResultsView;
 
 @property (nonatomic, strong) JACatalogTopView* catalogTopView;
@@ -286,9 +286,8 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)viewDidLayoutSubviews
 {
-    [self.collectionView setX:6.0f];
-    [self.collectionView setWidth:self.view.width - 12.f];
-    [self.collectionView setHeight:self.view.height - self.collectionView.y];
+    [self.collectionView setWidth:self.view.width];
+    [self.collectionView setHeight:self.view.height - CGRectGetMaxY(self.catalogTopView.frame)];
     [self.catalogTopView repositionForWidth:self.view.frame.size.width];
 }
 
@@ -324,7 +323,7 @@ typedef void (^ProcessActionBlock)(void);
     
     [self.catalogTopView repositionForWidth:self.view.frame.size.width];
     
-    if (_needRefreshProduct) {
+    if (_needAddToFavBlock) {
         
         if (_processActionBlock) {
             _processActionBlock();
@@ -339,9 +338,9 @@ typedef void (^ProcessActionBlock)(void);
     self.isFirstLoadTracking = NO;
     
     self.catalogTopView = [JACatalogTopView getNewJACatalogTopView];
-    [self.catalogTopView setFrame:CGRectMake([self viewBounds].origin.x,
+    [self.catalogTopView setFrame:CGRectMake(0,
                                              [self viewBounds].origin.y,
-                                             [self viewBounds].size.width,
+                                             self.view.frame.size.width,
                                              self.catalogTopView.frame.size.height)];
     self.catalogTopView.cellTypeSelected = JACatalogCollectionViewListCell;
     self.catalogTopView.delegate = self;
@@ -349,6 +348,10 @@ typedef void (^ProcessActionBlock)(void);
     self.catalogTopView.sortingButton.enabled = NO;
     self.catalogTopView.filterButton.enabled = NO;
     
+    [self.collectionView setFrame:CGRectMake([self.collectionView frame].origin.x,
+                                            CGRectGetMaxY(self.catalogTopView.frame),
+                                            self.collectionView.frame.size.width,
+                                            self.view.frame.size.height - CGRectGetMaxY(self.catalogTopView.frame))];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     
@@ -358,8 +361,8 @@ typedef void (^ProcessActionBlock)(void);
     [self.collectionView registerClass:[JACatalogPictureCollectionViewCell class] forCellWithReuseIdentifier:@"JACatalogPictureCollectionViewCell"];
     
     self.flowLayout = [[JAProductListFlowLayout alloc] init];
-    self.flowLayout.manualCellSpacing = 6.0f;
-    self.flowLayout.minimumLineSpacing = 6.0f;
+    self.flowLayout.manualCellSpacing = 1.0f;
+    self.flowLayout.minimumLineSpacing = 1.0f;
     self.flowLayout.minimumInteritemSpacing = 0.f;
     //                                              top, left, bottom, right
     [self.flowLayout setSectionInset:UIEdgeInsetsMake(0.f, 0.0, 0.0, 0.0)];
@@ -727,30 +730,30 @@ typedef void (^ProcessActionBlock)(void);
             
             switch (self.catalogTopView.cellTypeSelected) {
                 case JACatalogCollectionViewGridCell:
-                    width = JACatalogViewControllerGridCellWidth_ipad_portrait;
+                    width = self.view.frame.size.width/3;
                     height = JACatalogViewControllerGridCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewListCell:
-                    width = JACatalogViewControllerListCellWidth_ipad_portrait;
+                    width = self.view.frame.size.width/2;
                     height = JACatalogViewControllerListCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewPictureCell:
-                    width = JACatalogViewControllerPictureCellWidth_ipad_portrait;
+                    width = self.view.frame.size.width/2;
                     height = JACatalogViewControllerPictureCellHeight_ipad;
                     break;
             }
         } else {
             switch (self.catalogTopView.cellTypeSelected) {
                 case JACatalogCollectionViewGridCell:
-                    width = JACatalogViewControllerGridCellWidth_ipad_landscape;
+                    width =  self.view.frame.size.width/3;
                     height = JACatalogViewControllerGridCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewListCell:
-                    width = JACatalogViewControllerListCellWidth_ipad_landscape;
+                    width =  self.view.frame.size.width/5;
                     height = JACatalogViewControllerListCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewPictureCell:
-                    width = JACatalogViewControllerPictureCellWidth_ipad_landscape;
+                    width =  self.view.frame.size.width/3;
                     height = JACatalogViewControllerPictureCellHeight_ipad;
                     break;
             }
@@ -758,17 +761,15 @@ typedef void (^ProcessActionBlock)(void);
     } else {
         switch (self.catalogTopView.cellTypeSelected) {
             case JACatalogCollectionViewGridCell:
-                width = JACatalogViewControllerGridCellWidth;
+                width = self.view.frame.size.width/2;
                 height = JACatalogViewControllerGridCellHeight;
                 break;
             case JACatalogCollectionViewListCell:
-                //use view instead of collection view, the list cell has the insets inside itself;
-//                width = [self viewBounds].size.width;
-                width = JACatalogViewControllerListCellWidth;
+                width = self.view.frame.size.width;
                 height = JACatalogViewControllerListCellHeight;
                 break;
             case JACatalogCollectionViewPictureCell:
-                width = JACatalogViewControllerPictureCellWidth;
+                width = self.view.frame.size.width;
                 height = JACatalogViewControllerPictureCellHeight;
                 break;
         }
@@ -891,11 +892,6 @@ typedef void (^ProcessActionBlock)(void);
         return self.bannerImage.frame.size;
     }
     return [self getLayoutItemSizeForInterfaceOrientation:[UIApplication sharedApplication].statusBarOrientation];
-}
-
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-{
-    return UIEdgeInsetsMake(3, 0, 0, 0);
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -1132,25 +1128,40 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)updatedProduct:(NSNotification *)notification
 {
-    if (!VALID_NOTEMPTY(notification.object, NSString)) {
-        [self resetCatalog];
-        [self loadMoreProducts];
+    if (VALID_NOTEMPTY(notification.object, NSArray)) {
+        
+        for (NSString *sku in notification.object) {
+            int i = 0;
+            for(; i < self.productsArray.count; i++)
+            {
+                RIProduct *product = [self.productsArray objectAtIndex:i];
+                if ([sku isEqualToString:product.sku]) {
+                    product.favoriteAddDate = [NSDate new];
+                    break;
+                }
+            }
+        }
+        
+    }else if (VALID_NOTEMPTY(notification.object, NSString)) {
+        
+        NSString* sku = notification.object;
+        int i = 0;
+        for(; i < self.productsArray.count; i++)
+        {
+            RIProduct *product = [self.productsArray objectAtIndex:i];
+            if ([sku isEqualToString:product.sku]) {
+                product.favoriteAddDate = nil;
+                if (notification.userInfo && [notification.userInfo objectForKey:@"favoriteAddDate"]) {
+                    NSDate *date =[notification.userInfo objectForKey:@"favoriteAddDate"];
+                    product.favoriteAddDate = date;
+                }else
+                    product.favoriteAddDate = nil;
+            }
+        }
+    }else{
         return;
     }
-    NSString* sku = notification.object;
-    int i = 0;
-    for(; i < self.productsArray.count; i++)
-    {
-        RIProduct *product = [self.productsArray objectAtIndex:i];
-        if ([sku isEqualToString:product.sku]) {
-            product.favoriteAddDate = nil;
-            if (notification.userInfo && [notification.userInfo objectForKey:@"favoriteAddDate"]) {
-                NSDate *date =[notification.userInfo objectForKey:@"favoriteAddDate"];
-                product.favoriteAddDate = date;
-            }else
-                product.favoriteAddDate = nil;
-        }
-    }
+    [self.collectionView reloadData];
 }
 
 #pragma mark - JACatalogTopViewDelegate
@@ -1210,16 +1221,15 @@ typedef void (^ProcessActionBlock)(void);
     
     if(![RICustomer checkIfUserIsLogged]) {
         [self hideLoading];
-        _needRefreshProduct = YES;
+        _needAddToFavBlock = YES;
         
         __weak typeof (self) weakSelf = self;
         _processActionBlock = ^(void){
-            _needRefreshProduct = NO;
+            _needAddToFavBlock = NO;
             if(![RICustomer checkIfUserIsLogged]) {
                 return;
             }else{
-                [weakSelf resetCatalog];
-                [weakSelf loadMoreProducts];
+                [weakSelf addToFavoritesPressed:button];
             }
         };
         
@@ -1231,15 +1241,15 @@ typedef void (^ProcessActionBlock)(void);
     
     RIProduct* product = [self.productsArray objectAtIndex:button.tag];
 
-    
-    if (!VALID_NOTEMPTY(product.favoriteAddDate, NSDate))
-    {
+    if (!button.selected) {
         //add to favorites
         [RIProduct getCompleteProductWithUrl:product.url
                                 successBlock:^(id completeProduct) {
                                     [RIProduct addToFavorites:completeProduct successBlock:^{
                                         button.selected = YES;
                                         product.favoriteAddDate = [NSDate date];
+                                        
+                                        [self removeErrorView];
                                         
                                         [self trackingEventAddToWishList:product];
                                         
@@ -1254,11 +1264,15 @@ typedef void (^ProcessActionBlock)(void);
                                                                                             object:product.sku
                                                                                           userInfo:userInfo];
                                         
+                                        [self.collectionView reloadData];
+                                        
                                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                                         NSString *addToWishlistError = STRING_ERROR_ADDING_TO_WISHLIST;
                                         if(RIApiResponseNoInternetConnection == apiResponse)
                                         {
-                                            addToWishlistError = STRING_NO_CONNECTION;
+                                            [self showErrorView:YES startingY:0 selector:@selector(addToFavoritesPressed:) objects:[NSArray arrayWithObject:button]];
+                                            [self hideLoading];
+                                            return;
                                         }
                                         
                                         [self showMessage:addToWishlistError success:NO];
@@ -1266,6 +1280,13 @@ typedef void (^ProcessActionBlock)(void);
                                         [self hideLoading];
                                     }];
                                 } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+                                    
+                                    if(RIApiResponseNoInternetConnection == apiResponse)
+                                    {
+                                        [self showErrorView:YES startingY:0 selector:@selector(addToFavoritesPressed:) objects:[NSArray arrayWithObject:button]];
+                                        [self hideLoading];
+                                        return;
+                                    }
                                     
                                     [self showMessage:STRING_ERROR_ADDING_TO_WISHLIST success:NO];
                                     
@@ -1275,6 +1296,7 @@ typedef void (^ProcessActionBlock)(void);
         [RIProduct removeFromFavorites:product successBlock:^(void) {
             button.selected = NO;
             product.favoriteAddDate = nil;
+            [self removeErrorView];
             
             [self trackingEventRemoveFromWishlist:product];
             
@@ -1292,6 +1314,14 @@ typedef void (^ProcessActionBlock)(void);
                                                               userInfo:userInfo];
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+            
+            if(RIApiResponseNoInternetConnection == apiResponse)
+            {
+                [self showErrorView:YES startingY:0 selector:@selector(addToFavoritesPressed:) objects:[NSArray arrayWithObject:button]];
+                [self hideLoading];
+                return;
+            }
+            
             [self hideLoading];
             
             [self showMessage:STRING_ERROR_REMOVING_FROM_WISHLIST success:NO];

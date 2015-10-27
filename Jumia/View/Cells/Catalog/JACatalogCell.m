@@ -67,10 +67,17 @@
     
     [self.priceView removeFromSuperview];
     self.priceView = [[JAPriceView alloc] init];
-    [self.priceView loadWithPrice:product.priceFormatted
-                     specialPrice:product.specialPriceFormatted
-                         fontSize:10.0f
-            specialPriceOnTheLeft:YES];
+    if (VALID_NOTEMPTY(product.priceRange, NSString)) {
+        [self.priceView loadWithPrice:product.priceRange
+                         specialPrice:nil
+                             fontSize:10.0f
+                specialPriceOnTheLeft:YES];
+    } else {
+        [self.priceView loadWithPrice:product.priceFormatted
+                         specialPrice:product.specialPriceFormatted
+                             fontSize:10.0f
+                specialPriceOnTheLeft:YES];
+    }
     [self.priceView sizeToFit];
     
     CGFloat priceXOffset = JACatalogCellPriceLabelOffsetX;

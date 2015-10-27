@@ -400,12 +400,12 @@ JADynamicFormDelegate
         [connection addRequest:requestMe
              completionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
                  //TODO: process me information@
-                 if([result objectForKey:@"email"] == NULL || [result objectForKey:@"birthday"] == NULL){
-                     [self showMessage:STRING_LOGIN_INCOMPLETE success:NO];
-                     return;
-                 }
                  if (error) {
                      NSLog(@"%@", error);
+                     return;
+                 }
+                 if([result objectForKey:@"email"] == NULL || [result objectForKey:@"birthday"] == NULL){
+                     [self showMessage:STRING_LOGIN_INCOMPLETE success:NO];
                      return;
                  }
                  if (![RICustomer checkIfUserIsLogged])
@@ -496,7 +496,7 @@ JADynamicFormDelegate
                                                                                                                   object:nil];
                                                               
                                                               [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                                                                                  object:nil];
+                                                                                                                  object:customer.wishlistProducts];
                                                               if (self.fromSideMenu) {
                                                                   [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
                                                               }else
@@ -646,7 +646,7 @@ JADynamicFormDelegate
                                                        data:[trackingDictionary copy]];
              
              [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                                 object:nil];
+                                                                 object:customerObject.wishlistProducts];
              
              if (self.fromSideMenu) {
                  [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];

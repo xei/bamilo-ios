@@ -11,11 +11,19 @@
 #import "JAOfferCollectionViewCell.h"
 #import "RICart.h"
 #import "RICustomer.h"
+#import "RISeller.h"
+#import "RIProductSimple.h"
 #import "JAUtils.h"
 #import "JAProductListFlowLayout.h"
+#import "JAPicker.h"
 #import <FBSDKCoreKit/FBSDKAppEvents.h>
 
-@interface JAOtherOffersViewController ()
+@interface JAOtherOffersViewController () <JAPickerDelegate>
+{
+    NSString *_pickerSku;
+    NSArray *_pickerDataSource;
+    BOOL _pickerInProcess;
+}
 
 @property (nonatomic, strong) UIView* topView;
 @property (nonatomic, strong) UILabel* brandLabel;
@@ -28,6 +36,9 @@
 @property (nonatomic, strong) JAProductListFlowLayout* flowLayout;
 @property (nonatomic, strong) NSString* cellIdentifier;
 @property (nonatomic, strong) NSArray* productOffers;
+@property (nonatomic, strong) NSMutableDictionary* selectedProductSimple;
+
+@property (nonatomic) JAPicker *picker;
 
 @end
 
@@ -123,39 +134,6 @@
 
     currentY += self.separatorView.frame.size.height;
     
-//    if (ISEMPTY(self.offersFromLabel)) {
-//        self.offersFromLabel = [UILabel new];
-//        self.offersFromLabel.textColor = UIColorFromRGB(0x666666);
-//        self.offersFromLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
-//        if (VALID_NOTEMPTY(self.productOffers, NSArray)) {
-//            self.offersFromLabel.text = [NSString stringWithFormat:STRING_NUMBER_OFFERS_FROM, self.productOffers.count];
-//        } else {
-//            self.offersFromLabel.text = @" ";
-//        }
-//        [self.topView addSubview:self.offersFromLabel];
-//    }
-//    [self.offersFromLabel setFrame:CGRectMake(horizontalMargin,
-//                                              currentY,
-//                                              self.topView.frame.size.width - 2*horizontalMargin,
-//                                              1)];
-//    [self.offersFromLabel sizeToFit];
-//    
-//    if (ISEMPTY(self.priceLabel)) {
-//        self.priceLabel = [UILabel new];
-//        self.priceLabel.textColor = UIColorFromRGB(0xcc0000);
-//        self.priceLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
-//        [self.topView addSubview:self.priceLabel];
-//    }
-//    self.priceLabel.text = self.product.offersMinPriceFormatted;
-//    [self.priceLabel setFrame:CGRectMake(CGRectGetMaxX(self.offersFromLabel.frame) + 4.0f,
-//                                         currentY,
-//                                         self.topView.frame.size.width - 2*horizontalMargin,
-//                                         1)];
-//    [self.priceLabel sizeToFit];
-//
-//    
-//    currentY += self.priceLabel.frame.size.height + 14.0f;
-    
     [self.topView setFrame:CGRectMake(self.topView.frame.origin.x,
                                       self.topView.frame.origin.y,
                                       self.topView.frame.size.width,
@@ -232,6 +210,24 @@
     }
 }
 
+- (void)setProductOffers:(NSArray *)productOffers {
+    _productOffers = productOffers;
+    
+    self.selectedProductSimple = [NSMutableDictionary new];
+    for (RIProductOffer* po in productOffers) {
+        [self.selectedProductSimple setValue:[po.productSimples firstObject] forKey:po.productSku];
+    }
+    
+}
+
+- (JAPicker *)picker
+{
+    if (!VALID_NOTEMPTY(_picker, JAPicker)) {
+        _picker = [JAPicker new];
+    }
+    return _picker;
+}
+
 
 #pragma mark - UICollectionView
 
@@ -247,28 +243,6 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    return [self getLayoutItemSizeForInterfaceOrientation:self.interfaceOrientation];
-//}
-//
-//- (CGSize)getLayoutItemSizeForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-//{
-//    CGFloat width = 0.0f;
-//    CGFloat height = 0.0f;
-//    
-//    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-//        
-//        if(UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
-//            width = 375.0f;
-//            height = 104.0f;
-//        } else {
-//            width = 333.0f;
-//            height = 104.0f;
-//        }
-//    } else {
-//        width = self.view.frame.size.width - 12.f;
-//        height = 104.0f;
-//    }
-    
     return CGSizeMake(self.collectionView.width, 104.f);
 }
 
@@ -278,10 +252,15 @@
     
     JAOfferCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:self.cellIdentifier forIndexPath:indexPath];
     
-    [cell loadWithProductOffer:offer];
+    [cell loadWithProductOffer:offer withProductSimple:[self.selectedProductSimple objectForKey:offer.productSku]];
     cell.addToCartButton.tag = indexPath.row;
     [cell.addToCartButton addTarget:self
                              action:@selector(addToCartButtonPressed:)
+                   forControlEvents:UIControlEventTouchUpInside];
+    
+    cell.sizeButton.tag = indexPath.row;
+    [cell.sizeButton addTarget:self
+                             action:@selector(sizeButtonPressed:)
                    forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
@@ -297,17 +276,19 @@
 - (void)addToCartButtonPressed:(UIButton*)sender
 {
     RIProductOffer* offer = [self.productOffers objectAtIndex:sender.tag];
+    RIProductSimple* simp =[self.selectedProductSimple objectForKey:offer.productSku];
+    NSString* simpleSku = simp.sku;
     
     [self showLoading];
     [RICart addProductWithQuantity:@"1"
                                sku:offer.productSku
-                            simple:offer.simpleSku
+                            simple:simpleSku
                   withSuccessBlock:^(RICart *cart) {
                       
                       NSNumber *price = offer.priceEuroConverted;
                       
                       NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                      [trackingDictionary setValue:offer.simpleSku forKey:kRIEventLabelKey];
+                      [trackingDictionary setValue:simpleSku forKey:kRIEventLabelKey];
                       [trackingDictionary setValue:@"SellerAddToCart" forKey:kRIEventActionKey];
                       [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
                       [trackingDictionary setValue:price forKey:kRIEventValueKey];
@@ -369,5 +350,97 @@
                   }];
 }
 
+- (void)sizeButtonPressed:(UIButton*)button {
+    
+    RIProductOffer* prod = [self.productOffers objectAtIndex:button.tag];
+    _pickerSku = prod.productSku;
+    [self openPickerForProduct:prod];
+}
+
+
+#pragma mark - picker
+
+- (void)openPickerForProduct:(RIProductOffer *)product
+{
+    NSMutableArray *sizes = [NSMutableArray new];
+    NSMutableArray *simples = [NSMutableArray new];
+    for (RIProductSimple *simple in product.productSimples) {
+        if ([simple.quantity integerValue] > 0)
+        {
+            if (VALID_NOTEMPTY(simple.variation, NSString)) {
+                [sizes addObject:simple.variation];
+                [simples addObject:simple];
+            }
+        }
+    }
+    _pickerDataSource = [simples copy];
+    [self loadSizePickerWithOptions:sizes title:product.seller.name previousText:@"" leftButtonTitle:nil];
+}
+
+- (void)loadSizePickerWithOptions:(NSArray*)options
+                            title:(NSString *)title
+                     previousText:(NSString*)previousText
+                  leftButtonTitle:(NSString*)leftButtonTitle
+{
+    if(VALID(self.picker, JAPicker))
+    {
+        [self.picker removeFromSuperview];
+    }
+    
+    self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
+    [self.picker setDelegate:self];
+    
+    [self.picker setDataSourceArray:options
+                        pickerTitle:title
+                       previousText:previousText
+                    leftButtonTitle:leftButtonTitle];
+    
+    CGFloat pickerViewHeight = self.view.frame.size.height;
+    CGFloat pickerViewWidth = self.view.frame.size.width;
+    [self.picker setFrame:CGRectMake(0.0f,
+                                     pickerViewHeight,
+                                     pickerViewWidth,
+                                     pickerViewHeight)];
+    [self.view addSubview:self.picker];
+    
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         [self.picker setFrame:CGRectMake(0.0f,
+                                                          0.0f,
+                                                          pickerViewWidth,
+                                                          pickerViewHeight)];
+                     }];
+}
+
+- (void)selectedRow:(NSInteger)selectedRow
+{
+    RIProductSimple *simple = [_pickerDataSource objectAtIndex:selectedRow];
+    [self.selectedProductSimple setObject:simple forKey:_pickerSku];
+    
+    [self closePicker];
+    [self.collectionView reloadData];
+}
+
+- (void)closePicker
+{
+    CGRect frame = self.picker.frame;
+    frame.origin.y = self.view.frame.size.height;
+    
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         self.picker.frame = frame;
+                     } completion:^(BOOL finished) {
+                         [self.picker removeFromSuperview];
+                         self.picker = nil;
+                     }];
+}
+
+- (void)leftButtonPressed;
+{
+    if (VALID_NOTEMPTY(self.product.sizeGuideUrl, NSString)) {
+        NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:self.product.sizeGuideUrl, @"sizeGuideUrl", nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowSizeGuideNotification object:nil userInfo:dic];
+    }
+}
 
 @end

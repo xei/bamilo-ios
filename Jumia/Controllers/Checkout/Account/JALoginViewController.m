@@ -871,7 +871,7 @@
 - (void)facebookLoginButtonPressed:(id)sender
 {
     FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
-    [login logInWithReadPermissions:@[@"public_profile", @"email", @"user_birthday"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+    [login logInWithReadPermissions:@[@"public_profile", @"email", @"user_birthday"] fromViewController:nil handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
         if (!error) {
             
             NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
@@ -881,7 +881,14 @@
             [connection addRequest:requestMe
                  completionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
                      //TODO: process me information@
-                     
+                     if (error) {
+                         NSLog(@"%@", error);
+                         return;
+                     }
+                     if([result objectForKey:@"email"] == NULL || [result objectForKey:@"birthday"] == NULL){
+                         [self showMessage:STRING_LOGIN_INCOMPLETE success:NO];
+                         return;
+                     }
                      if (!error)
                      {
                          if (![RICustomer checkIfUserIsLogged])
@@ -969,7 +976,7 @@
                                                                       [self hideLoading];
                                                                       
                                                                       [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                                                                                          object:nil];
+                                                                                                                          object:customerObject.wishlistProducts];
                                                                       
                                                                       [JAUtils goToNextStep:nextStep
                                                                                    userInfo:nil];

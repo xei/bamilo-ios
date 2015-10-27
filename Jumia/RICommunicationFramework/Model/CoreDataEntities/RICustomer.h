@@ -25,6 +25,8 @@
 @property (nonatomic, retain) NSString * loginMethod;
 @property (nonatomic, retain) NSOrderedSet *addresses;
 
+@property (nonatomic, retain) NSArray *wishlistProducts;
+
 + (NSString*)autoLogin:(void (^)(BOOL success, NSDictionary *entities, NSString *loginMethod))returnBlock;
 
 /**

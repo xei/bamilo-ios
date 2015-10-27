@@ -192,6 +192,10 @@
 
 "shipping" = "Shipping";
 
+"shipment_of" = "Shipment %ld of %ld";
+
+"fulfilled_by" = "Fulfillment by";
+
 "free_label" = "Free";
 
 "extra_costs_label" = "Extra Costs";

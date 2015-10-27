@@ -13,7 +13,7 @@
 @interface RIProductOffer : NSObject
 
 @property (nonatomic, strong) NSString* productSku;
-@property (nonatomic, strong) NSString* simpleSku;
+@property (nonatomic, strong) NSArray* productSimples;
 @property (nonatomic, strong) NSNumber* price;
 @property (nonatomic, strong) NSString* priceFormatted;
 @property (nonatomic, strong) NSNumber* priceEuroConverted;

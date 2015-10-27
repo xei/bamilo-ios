@@ -7,14 +7,13 @@
 //
 
 #import "JACatalogPictureCollectionViewCell.h"
-#import "JARatingsView.h"
+#import "JAProductInfoRatingLine.h"
 
 @interface JACatalogPictureCollectionViewCell () {
     CGFloat _lastWidth;
-    CGRect _ratingsViewRect;
+    CGRect _ratingLineRect;
     
-    JARatingsView *_ratingsView;
-    UILabel *_numberOfReviewsLabel;
+    JAProductInfoRatingLine *_ratingLine;
     BOOL _ratingRefresh;
 }
 
@@ -57,35 +56,27 @@
     self.cellType = JACatalogCollectionViewPictureCell;
     [super initViews];
     
-    _numberOfReviewsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    _numberOfReviewsLabel.font = JABody3Font;
-    _numberOfReviewsLabel.textColor = JABlack800Color;
-    [self addSubview:_numberOfReviewsLabel];
-    _ratingsView = [JARatingsView getNewJARatingsView];
-    _ratingsView.rating = 0;
-    _ratingsViewRect = _ratingsView.frame;
-    [self addSubview:_ratingsView];
-    [_ratingsView setHidden:YES];
-    [_numberOfReviewsLabel setHidden:YES];
+    _ratingLine = [[JAProductInfoRatingLine alloc] initWithFrame:CGRectZero];
+    _ratingLine.fashion = NO;
+    _ratingLine.imageRatingSize = kImageRatingSizeSmall;
+    _ratingLine.noMargin = YES;
+    _ratingLine.topSeparatorVisibility = NO;
+    _ratingLine.bottomSeparatorVisibility = NO;
+    [self addSubview:_ratingLine];
+    [_ratingLine setHidden:YES];
 }
 
 - (void)reloadViews
 {
     [super reloadViews];
-    [_numberOfReviewsLabel setY:CGRectGetMaxY(self.priceView.frame) + 8.f];
     
-    [_ratingsView setFrame:CGRectMake(16,
-                                      _numberOfReviewsLabel.y,
-                                      _ratingsViewRect.size.width,
-                                      _ratingsViewRect.size.height)];
-    
-    [_numberOfReviewsLabel setX:CGRectGetMaxX(_ratingsView.frame) + JACatalogCellPriceLabelOffsetX + 10];
-    
-    [_ratingsView setY:_numberOfReviewsLabel.y + 4.f];
+    [_ratingLine setFrame:CGRectMake(16,
+                                     CGRectGetMaxY(self.priceView.frame) + 14.f,
+                                     _ratingLineRect.size.width,
+                                     _ratingLineRect.size.height)];
     
     if (RI_IS_RTL) {
-        [_numberOfReviewsLabel flipViewPositionInsideSuperview];
-        [_ratingsView flipViewPositionInsideSuperview];
+        [_ratingLine flipViewPositionInsideSuperview];
     }
     _lastWidth = self.width;
 }
@@ -100,15 +91,14 @@
     [super loadWithProduct:product];
     
     
-    if (0 == [product.sum integerValue] && _ratingsView.rating != 0) {
-        [_ratingsView setHidden:YES];
-        [_numberOfReviewsLabel setHidden:YES];
-    }else if (0 != [product.sum integerValue] && _ratingsView.rating == 0) {
-        [_ratingsView setHidden:NO];
-        [_numberOfReviewsLabel setHidden:NO];
+    if (0 == [product.sum integerValue] && _ratingLine.ratingSum != 0) {
+        [_ratingLine setHidden:YES];
+    }else if (0 != [product.sum integerValue] && _ratingLine.ratingSum == 0) {
+        [_ratingLine setHidden:NO];
     }
     
-    _ratingsView.rating = [product.avr integerValue];
+    _ratingLine.ratingAverage = product.avr;
+    _ratingLine.ratingSum = product.sum;
     
     BOOL refresh = NO;
     if (0 != [product.sum integerValue]) {
@@ -117,13 +107,6 @@
             refresh = YES;
             _ratingRefresh = YES;
         }
-        
-        if (1 == [product.sum integerValue]) {
-            _numberOfReviewsLabel.text = @"";
-        } else {
-            _numberOfReviewsLabel.text = [NSString stringWithFormat:STRING_NRATINGS, [product.sum integerValue]];
-        }
-        [_numberOfReviewsLabel sizeToFit];
     }
     
     if (_lastWidth != self.width || refresh) {

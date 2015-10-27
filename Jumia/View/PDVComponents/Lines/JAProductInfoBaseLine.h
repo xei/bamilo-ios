@@ -16,8 +16,10 @@
 @property (nonatomic) BOOL bottomSeparatorVisibility;
 @property (nonatomic) UIColor *topSeparatorColor;
 @property (nonatomic) UIColor *bottomSeparatorColor;
-@property (nonatomic) CGFloat topSeparatorWidth;
-@property (nonatomic) CGFloat bottomSeparatorWidth;
+@property (nonatomic) CGFloat topSeparatorXOffset;
+@property (nonatomic) CGFloat topSeparatorBorderWidth;
+@property (nonatomic) CGFloat bottomSeparatorBorderWidth;
+@property (nonatomic) CGFloat bottomSeparatorXOffset;
 
 - (void)setTitle:(NSString *)title;
 

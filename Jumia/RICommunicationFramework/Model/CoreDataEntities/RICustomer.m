@@ -31,7 +31,7 @@
 @dynamic createdAt;
 @dynamic loginMethod;
 @dynamic addresses;
-@synthesize costumerRequestID;
+@synthesize costumerRequestID, wishlistProducts;
 
 + (NSString*)autoLogin:(void (^)(BOOL success, NSDictionary *entities, NSString *loginMethod))returnBlock
 {
@@ -404,6 +404,16 @@
                 }
             }
         }
+    }
+    
+    if (VALID_NOTEMPTY([json objectForKey:@"wishlist_products"], NSArray)) {
+        NSMutableArray *wishlist = [NSMutableArray new];
+        for (NSDictionary *dictionary in [json objectForKey:@"wishlist_products"]) {
+            if (VALID_NOTEMPTY([dictionary objectForKey:@"sku"], NSString)) {
+                [wishlist addObject:[dictionary objectForKey:@"sku"]];
+            }
+        }
+        customer.wishlistProducts = [wishlist copy];
     }
     
     [RICustomer saveCustomer:customer andContext:YES];

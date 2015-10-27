@@ -11,12 +11,19 @@
 
 #define kProductInfoSingleLineHeight 48
 
+typedef NS_ENUM(NSInteger, JAImageRatingSize) {
+    kImageRatingSizeMedium = 0,
+    kImageRatingSizeSmall = 1,
+    kImageRatingSizeBig = 2
+};
+
 @interface JAProductInfoRatingLine : JAProductInfoBaseLine
 
 @property (nonatomic) BOOL fashion;
 @property (nonatomic) NSNumber *ratingAverage;
 @property (nonatomic) NSNumber *ratingSum;
-
-- (void)setSellerRatingAverage:(NSNumber *)ratingAverage;
+@property (nonatomic) JAImageRatingSize imageRatingSize;
+@property (nonatomic) BOOL noMargin;
+@property (nonatomic, readonly) CGFloat imageHeight;
 
 @end
