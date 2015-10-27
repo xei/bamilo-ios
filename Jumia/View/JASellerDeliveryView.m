@@ -28,17 +28,16 @@
     
     width -= 12.0f;
     
-    self.contentView = [[UIView alloc]initWithFrame:CGRectMake(6.0f, 3.0f, width, 52.0f)];
+    self.contentView = [[UIView alloc]initWithFrame:CGRectMake(6.0f, 3.0f, width, 26.0f)];
     [self.contentView setBackgroundColor:[UIColor whiteColor]];
     self.contentView.layer.cornerRadius = 5.0f;
     
-    NSInteger currenty = 52;
+    NSInteger currenty = 26;
     
-    self.title = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, 20.0f, width, 52.0f)];
-    [self.title setText:[NSString stringWithFormat:@"%@ %ld of %ld",STRING_SHIPPMENT,(long)index,(long)max]];
+    self.title = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, 0.0f, width, 26.0f)];
+    [self.title setText:[NSString stringWithFormat:STRING_SHIPMENT_OF,(long)index,(long)max]];
     [self.title setFont:[UIFont fontWithName:@"HelveticaNeue" size:12.0f]];
     [self.title setTextColor:UIColorFromRGB(0x808080)];
-    [self.title sizeToFit];
     [self.contentView addSubview:self.title];
     
     //seperator
@@ -51,9 +50,11 @@
     for (RICartItem *prod in sellerDelivery.products) {
         //name
         currenty += 24.0f;
-        UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, currenty, width, 12.0f)];
+        UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, currenty, width-24.f, 12.0f)];
         [name setText:[NSString stringWithFormat:@"%@ ",prod.name]];
         [name setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
+        [name setNumberOfLines:0];
+        [name setLineBreakMode:NSLineBreakByWordWrapping];
         [name setTextColor:UIColorFromRGB(0x666666)];
         [name sizeToFit];
         [name setWidth:width-name.frame.origin.x*2];

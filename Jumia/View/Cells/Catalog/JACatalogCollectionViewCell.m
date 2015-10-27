@@ -124,7 +124,7 @@
     _productImageViewRect = CGRectMake(6, 8, 68, 85);
     [_productImageView setFrame:_productImageViewRect];
     
-    _discountLabelRect = CGRectMake(0, 71, 60, 19);
+    _discountLabelRect = CGRectMake(0, CGRectGetMaxY(self.nameLabel.frame) + JACatalogCellPriceLabelOffsetY + 10.f, 60, 19);
     [_discountLabel setFrame:_discountLabelRect];
     [_discountLabel setXRightAligned:16.f];
     _discountLabelRect = _discountLabel.frame;

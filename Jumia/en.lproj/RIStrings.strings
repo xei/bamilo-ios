@@ -192,7 +192,7 @@
 
 "shipping" = "Shipping";
 
-"shippment" = "Shippment";
+"shipment_of" = "Shipment %ld of %ld";
 
 "fulfilled_by" = "Fulfillment by";
 
