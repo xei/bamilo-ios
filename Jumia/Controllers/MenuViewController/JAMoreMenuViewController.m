@@ -29,6 +29,8 @@
     self.navBarLayout.showCartButton = NO;
     self.tabBarIsVisible = YES;
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     self.tableView = [UITableView new];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -99,10 +101,6 @@
         hasSeparator = NO;
     } else if (1 == indexPath.row && [RICustomer checkIfUserIsLogged]) {
         text = STRING_LOGOUT;
-    }
-    
-    if (indexPath.row == kCellTextArray.count-1) {
-        hasSeparator = NO;
     }
     
     [cell setupWithStyle:style

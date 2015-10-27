@@ -9,10 +9,11 @@
 #import "JATabBarButton.h"
 
 #define kLabelNormalTextColor [UIColor blackColor]
-#define kLabelHighlightedTextColor UIColorFromRGB(0xf68b1e)
+#define kLabelHighlightedTextColor JAOrange1Color
 
 @interface JATabBarButton ()
 
+@property (nonatomic, strong) UIView* separatorView;
 @property (nonatomic, strong) UIImageView* imageView;
 @property (nonatomic, strong) UIImage* normalImage;
 @property (nonatomic, strong) UIImage* highlightedImage;
@@ -46,6 +47,18 @@
         self.clickableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self addSubview:self.clickableView];
     }
+    
+    if (ISEMPTY(self.separatorView)) {
+        self.separatorView = [UIView new];
+        self.separatorView.backgroundColor = JABlack700Color;
+        self.separatorView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+        [self.clickableView addSubview:self.separatorView];
+    }
+    
+    [self.separatorView setFrame:CGRectMake(self.clickableView.bounds.origin.x,
+                                            self.clickableView.bounds.origin.y,
+                                            self.clickableView.bounds.size.width,
+                                            1)];
     
     if (ISEMPTY(self.imageView)) {
         self.imageView = [UIImageView new];
