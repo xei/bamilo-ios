@@ -56,6 +56,7 @@
         [name setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
         [name setTextColor:UIColorFromRGB(0x666666)];
         [name sizeToFit];
+        [name setWidth:width-name.frame.origin.x*2];
         [self.contentView addSubview:name];
         [self.prodName addObject:name];
         
