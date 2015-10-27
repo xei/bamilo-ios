@@ -519,8 +519,11 @@ UITextFieldDelegate>
             }
             
         } else {
+            if ([self.checkoutFormForPaymentMethod getPaymentMethodViewHeight:nil]) {
+                collectionViewHeight += [self.checkoutFormForPaymentMethod getPaymentMethodViewHeight:nil];
+            } else
                 collectionViewHeight += 44.0f;
-            }
+        }
             
         [UIView animateWithDuration:0.5f
                          animations:^{
@@ -653,7 +656,8 @@ UITextFieldDelegate>
         if(indexPath.row == self.collectionViewIndexSelected.row)
         {
             RIPaymentMethodFormOption *paymentMethod = [self.paymentMethods objectAtIndex:indexPath.row];
-            sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, 44.0f +[self.checkoutFormForPaymentMethod getPaymentMethodViewHeight:paymentMethod]);
+            sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width,
+                                                44.0f +[self.checkoutFormForPaymentMethod getPaymentMethodViewHeight:paymentMethod]);
         }
         else
         {

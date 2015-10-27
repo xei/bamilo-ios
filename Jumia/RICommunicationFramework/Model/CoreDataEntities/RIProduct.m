@@ -320,10 +320,7 @@
                                                                           
                                                                           for (NSDictionary* validProductJSON in valid) {
                                                                               
-                                                                              NSMutableDictionary* dataDict = [NSMutableDictionary new];
-                                                                              [dataDict setValue:validProductJSON forKey:@"data"];
-                                                                              
-                                                                              RIProduct* validProduct = [RIProduct parseProduct:dataDict country:configuration];
+                                                                              RIProduct* validProduct = [RIProduct parseProduct:validProductJSON country:configuration];
                                                                               [validProducts addObject:validProduct];
                                                                           }
                                                                           
