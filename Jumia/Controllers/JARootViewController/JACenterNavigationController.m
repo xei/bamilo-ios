@@ -406,8 +406,17 @@
             country.navBarLayout.showMenuButton = [[notification.object objectForKey:@"show_menu_button"] boolValue];
         }
         
-        [self popToRootViewControllerAnimated:NO];
-        [self pushViewController:country animated:NO];
+        BOOL animated = NO;
+        country.navBarLayout.showBackButton = NO;
+        if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.object, NSDictionary))
+        {
+            country.navBarLayout.showBackButton = [[notification.object objectForKey:@"show_back_button"] boolValue];
+            animated = YES;
+        } else {
+            [self popToRootViewControllerAnimated:NO];
+        }
+        
+        [self pushViewController:country animated:animated];
     }
 }
 

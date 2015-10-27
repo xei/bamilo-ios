@@ -13,7 +13,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
-#define kCellTextArray @[STRING_MORE, STRING_LOGIN, STRING_RECENTLY_VIEWED, STRING_TRACK_MY_ORDER]
+#define kCellTextArray @[STRING_MORE, STRING_LOGIN, STRING_RECENTLY_VIEWED, STRING_TRACK_MY_ORDER, STRING_CHOOSE_COUNTRY]
 
 @interface JAMoreMenuViewController ()
 
@@ -38,26 +38,11 @@
     [self.view addSubview:self.tableView];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewWillLayoutSubviews
 {
-    [super viewWillAppear:animated];
+    [super viewWillLayoutSubviews];
     
-    CGFloat maxHeight = [self viewBounds].size.height;
-    
-    CGFloat totalHeight = [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] +
-    ([self tableView:self.tableView numberOfRowsInSection:0] - 1) * [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
-    
-    if (maxHeight > totalHeight) {
-        [self.tableView setBounces:NO];
-    }
-    
-    CGFloat finalHeight = MIN(maxHeight, totalHeight);
-    
-    [self.tableView setFrame:CGRectMake([self viewBounds].origin.x,
-                                        [self viewBounds].origin.y,
-                                        [self viewBounds].size.width,
-                                        finalHeight)];
-    
+    [self.tableView setFrame:[self viewBounds]];
     [self.tableView reloadData];
 }
 
@@ -104,7 +89,7 @@
     }
     
     [cell setupWithStyle:style
-                   width:self.tableView.frame.size.width
+                   width:self.view.frame.size.width
                 cellText:text
             iconImageURL:nil
       accessoryImageName:@"sideMenuCell_arrow"
@@ -132,6 +117,9 @@
             break;
         case 3:
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowMyOrdersScreenNotification object:nil];
+            break;
+        case 4:
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowChooseCountryScreenNotification object:@{@"show_back_button":[NSNumber numberWithBool:YES]}];
             break;
         default:
             break;
