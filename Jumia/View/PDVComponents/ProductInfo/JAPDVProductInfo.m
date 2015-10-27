@@ -29,6 +29,7 @@
 @property (nonatomic) id variationsTarget;
 @property (nonatomic) id sizeTarget;
 @property (nonatomic) id reviewsTarget;
+@property (nonatomic) id sellerCatalogTarget;
 @property (nonatomic) id sellerReviewsTarget;
 @property (nonatomic) id otherOffersTarget;
 @property (nonatomic) id specificationsTarget;
@@ -36,6 +37,7 @@
 @property (nonatomic) SEL variationsSelector;
 @property (nonatomic) SEL sizeSelector;
 @property (nonatomic) SEL reviewsSelector;
+@property (nonatomic) SEL sellerCatalogSelector;
 @property (nonatomic) SEL sellerReviewsSelector;
 @property (nonatomic) SEL otherOffersSelector;
 @property (nonatomic) SEL specificationsSelector;
@@ -205,11 +207,11 @@
 #warning TODO String translation
         [headerSeller setTitle:[@"Seller Information" uppercaseString]];
         [self addSubview:headerSeller];
-        yOffset = CGRectGetMaxY(headerSeller.frame) + 16.f;
+        yOffset = CGRectGetMaxY(headerSeller.frame);
         
-        JAPDVProductInfoSellerInfo *sellerInfoView = [[JAPDVProductInfoSellerInfo alloc] initWithFrame:CGRectMake(16, yOffset, self.width-32, 50)];
+        JAPDVProductInfoSellerInfo *sellerInfoView = [[JAPDVProductInfoSellerInfo alloc] initWithFrame:CGRectMake(0, yOffset, self.width, 50)];
         [sellerInfoView setSeller:product.seller];
-        [sellerInfoView addTarget:self action:@selector(tapSellerReviewsLine)];
+        [sellerInfoView addTarget:self action:@selector(tapSellerCatalogLine)];
         [self addSubview:sellerInfoView];
         
         yOffset = CGRectGetMaxY(sellerInfoView.frame);
@@ -312,6 +314,13 @@
     }
 }
 
+- (void)tapSellerCatalogLine
+{
+    if (self.sellerCatalogTarget && [self.sellerCatalogTarget respondsToSelector:self.sellerCatalogSelector]) {
+        ((void (*)(id, SEL))[self.sellerCatalogTarget methodForSelector:self.sellerCatalogSelector])(self.sellerCatalogTarget, self.sellerCatalogSelector);
+    }
+}
+
 - (void)tapSellerReviewsLine
 {
     if (self.sellerReviewsTarget && [self.sellerReviewsTarget respondsToSelector:self.sellerReviewsSelector]) {
@@ -356,6 +365,12 @@
 {
     self.reviewsTarget = target;
     self.reviewsSelector = action;
+}
+
+- (void)addSellerCatalogTarget:(id)target action:(SEL)action
+{
+    self.sellerCatalogTarget = target;
+    self.sellerCatalogSelector = action;
 }
 
 - (void)addSellerReviewsTarget:(id)target action:(SEL)action

@@ -33,7 +33,7 @@
 @dynamic addresses;
 @synthesize costumerRequestID, wishlistProducts;
 
-+ (NSString*)autoLogin:(void (^)(BOOL success, NSDictionary *entities, NSArray *wishlistSkus, NSString *loginMethod))returnBlock
++ (NSString*)autoLogin:(void (^)(BOOL success, NSDictionary *entities, NSString *loginMethod))returnBlock
 {
     NSString *operationID = nil;
     
@@ -54,13 +54,13 @@
                                           @"gender": customerObject.gender };
             
             [RICustomer loginCustomerByFacebookWithParameters:parameters
-                                                 successBlock:^(NSDictionary *entities, NSArray *wishlistSkus, NSString* nextStep) {
+                                                 successBlock:^(NSDictionary *entities, NSString* nextStep) {
                                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                                         returnBlock(YES, entities, wishlistSkus, customerObject.loginMethod);
+                                                         returnBlock(YES, entities, customerObject.loginMethod);
                                                      });
                                                  } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
                                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                                         returnBlock(NO, nil, nil, customerObject.loginMethod);
+                                                         returnBlock(NO, nil, customerObject.loginMethod);
                                                      });
                                                  }];
         }
@@ -75,32 +75,32 @@
                             successBlock:^(id jsonObject)
                          {
                              dispatch_async(dispatch_get_main_queue(), ^{
-                                 returnBlock(YES, jsonObject, nil, customerObject.loginMethod);
+                                 returnBlock(YES, jsonObject, customerObject.loginMethod);
                              });
                          } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
                          {
                              dispatch_async(dispatch_get_main_queue(), ^{
-                                 returnBlock(NO, nil, nil, customerObject.loginMethod);
+                                 returnBlock(NO, nil, customerObject.loginMethod);
                              });
                          }];
                     } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
                     {
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            returnBlock(NO, nil, nil, customerObject.loginMethod);
+                            returnBlock(NO, nil, customerObject.loginMethod);
                         });
                     }];
         }
         else
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                returnBlock(NO, nil, nil, customerObject.loginMethod);
+                returnBlock(NO, nil, customerObject.loginMethod);
             });
         }
     }
     else
     {
         dispatch_async(dispatch_get_main_queue(), ^{
-            returnBlock(NO, nil, nil, nil);
+            returnBlock(NO, nil, nil);
         });
     }
     
@@ -155,7 +155,7 @@
 #pragma mark - Facebook Login
 
 + (NSString *)loginCustomerByFacebookWithParameters:(NSDictionary *)parameters
-                                       successBlock:(void (^)(NSDictionary *entities, NSArray *wishlistSkus, NSString* nextStep))successBlock
+                                       successBlock:(void (^)(NSDictionary *entities, NSString* nextStep))successBlock
                                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_FACEBOOK_LOGIN_CUSTOMER]]
@@ -182,7 +182,7 @@
                                                                       RICustomer* customer = [self parseCustomerWithJson:userObject plainPassword:nil loginMethod:@"facebook"];
                                                                       NSMutableDictionary* entities = [NSMutableDictionary new];
                                                                       [entities setValue:customer forKey:@"customer"];
-                                                                      successBlock(entities, customer.wishlistProducts, nextStep);
+                                                                      successBlock(entities, nextStep);
                                                                   } else
                                                                   {
                                                                       failureBlock(apiResponse, nil);
@@ -413,7 +413,7 @@
                 [wishlist addObject:[dictionary objectForKey:@"sku"]];
             }
         }
-        [customer setWishlistProducts:[wishlist copy]];
+        customer.wishlistProducts = [wishlist copy];
     }
     
     [RICustomer saveCustomer:customer andContext:YES];
