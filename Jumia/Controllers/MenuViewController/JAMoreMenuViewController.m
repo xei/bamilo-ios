@@ -38,26 +38,11 @@
     [self.view addSubview:self.tableView];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewWillLayoutSubviews
 {
-    [super viewWillAppear:animated];
+    [super viewWillLayoutSubviews];
     
-    CGFloat maxHeight = [self viewBounds].size.height;
-    
-    CGFloat totalHeight = [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] +
-    ([self tableView:self.tableView numberOfRowsInSection:0] - 1) * [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
-    
-    if (maxHeight > totalHeight) {
-        [self.tableView setBounces:NO];
-    }
-    
-    CGFloat finalHeight = MIN(maxHeight, totalHeight);
-    
-    [self.tableView setFrame:CGRectMake([self viewBounds].origin.x,
-                                        [self viewBounds].origin.y,
-                                        [self viewBounds].size.width,
-                                        finalHeight)];
-    
+    [self.tableView setFrame:[self viewBounds]];
     [self.tableView reloadData];
 }
 
