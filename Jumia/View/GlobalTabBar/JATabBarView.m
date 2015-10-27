@@ -53,6 +53,10 @@
     }
     
     [self updateCartNumber:0];
+    
+    if (RI_IS_RTL) {
+        [self flipAllSubviews];
+    }
 }
 
 - (void)buttonPressed:(UIControl*)sender
