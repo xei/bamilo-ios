@@ -229,6 +229,7 @@
                              fontSize:11.0f specialPriceOnTheLeft:NO];
     }
     [_savingLabel setX:_priceView.x];
+    [_savingLabel setY:self.savingLabel.frame.origin.y + 4.0f];
     self.savingLabel.font = [UIFont fontWithName:kFontRegularName size:11.0f];
     self.savingLabel.textColor = UIColorFromRGB(0x666666);
     self.savingLabel.text = STRING_CAMPAIGN_SAVE;
@@ -242,7 +243,7 @@
     self.savingMoneyLabel.text = campaignProduct.savePriceFormatted;
     [self.savingMoneyLabel sizeToFit];
     self.savingMoneyLabel.frame = CGRectMake(CGRectGetMaxX(self.savingLabel.frame) + 4.0f,
-                                             self.savingLabel.frame.origin.y + 4.0f,
+                                             self.savingLabel.frame.origin.y,
                                              self.savingMoneyLabel.frame.size.width,
                                              self.savingMoneyLabel.frame.size.height);
     [self.bottomContentView addSubview:self.savingMoneyLabel];

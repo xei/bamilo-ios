@@ -98,15 +98,18 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffMenuSwipePanelNotification
+                                                        object:nil];
+}
+
+-(void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
     if (self.isLoaded) {
         [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
     } else {
         [self loadCampaigns];
     }
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffMenuSwipePanelNotification
-                                                        object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -152,7 +155,7 @@
     [self.scrollView setFrame:CGRectMake(bounds.origin.x,
                                          CGRectGetMaxY(self.pickerScrollView.frame),
                                          width,
-                                         height - self.pickerScrollView.frame.size.height)];
+                                         height - self.pickerScrollView.frame.size.height )];
     
     if(VALID_NOTEMPTY(self.campaignPages, NSMutableArray))
     {
