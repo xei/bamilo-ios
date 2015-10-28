@@ -202,6 +202,8 @@ typedef void (^ProcessActionBlock)(void);
     
     [super viewDidLoad];
     
+    self.navBarLayout.showBackButton = YES;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(navBarClicked)
                                                  name:kDidPressNavBar
                                                object:nil];
