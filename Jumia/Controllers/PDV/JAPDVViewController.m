@@ -95,8 +95,8 @@ JAActivityViewControllerDelegate
         [_productImageSection.wishListButton addTarget:self
                                                     action:@selector(addToFavoritesPressed:)
                                           forControlEvents:UIControlEventTouchUpInside];
-        _productImageSection.wishListButton.selected = VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate);
     }
+    _productImageSection.wishListButton.selected = VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate);
     return _productImageSection;
 }
 
