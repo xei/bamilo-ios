@@ -119,11 +119,8 @@ JAActivityViewControllerDelegate
     
     self.A4SViewControllerAlias = @"PRODUCT";
     
-    self.navBarLayout.showBackButton = self.showBackButton;
-    if (self.showBackButton && self.previousCategory.length > 0)
-    {
-        [self.navBarLayout setShowBackButton:YES];
-    }
+    
+    self.navBarLayout.showBackButton = YES;
     
     self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self.mainScrollView setHidden:YES];

@@ -1538,16 +1538,6 @@
             pdv.preSelectedSize = [notification.userInfo objectForKey:@"size"];
         }
         
-        if([notification.userInfo objectForKey:@"show_back_button"])
-        {
-            pdv.showBackButton = [[notification.userInfo objectForKey:@"show_back_button"] boolValue];
-        }
-        
-        if([notification.userInfo objectForKey:@"show_back_button_title"])
-        {
-            pdv.showBackButton = YES;
-        }
-        
         if ([notification.userInfo objectForKey:@"teaserTrackingInfo"]) {
             pdv.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
         }
