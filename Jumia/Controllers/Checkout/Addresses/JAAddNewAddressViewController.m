@@ -668,13 +668,27 @@ JAPickerDelegate>
 -(void)createAddressButtonPressed
 {
     [self showLoading];
-    BOOL billingHasErrors = [self.billingDynamicForm checkErrors];
     if ([self.shippingDynamicForm checkErrors]) {
         [self showMessage:self.shippingDynamicForm.firstErrorInFields success:NO];
         [self hideLoading];
         return;
     }
-    if (![self.billingContentView isHidden] && billingHasErrors) {
+    
+//    NSString* selectedGender;
+//    //search for gender in shipping
+//    for (JADynamicField* dynamicField in self.shippingDynamicForm.formViews) {
+//        if (VALID_NOTEMPTY(dynamicField, JARadioComponent)) {
+//            JARadioComponent* radioComponent = (JARadioComponent*)dynamicField;
+//            selectedGender = [radioComponent getSelectedValue];
+//        }
+//    }
+//    for (JADynamicField* dynamicField in self.shippingDynamicForm.formViews) {
+//        if (VALID_NOTEMPTY(dynamicField, JARadioComponent)) {
+//            JARadioComponent* radioComponent = (JARadioComponent*)dynamicField;
+//            selectedGender = [radioComponent getSelectedValue];
+//        }
+//    }
+    if (![self.billingContentView isHidden] && [self.billingDynamicForm checkErrors]) {
         [self showMessage:self.billingDynamicForm.firstErrorInFields success:NO];
         [self hideLoading];
         return;
@@ -710,6 +724,10 @@ JAPickerDelegate>
         
         [billingParameters setValue:@"0" forKey:[self.shippingDynamicForm getFieldNameForKey:@"is_default_shipping"]];
         [billingParameters setValue:@"1" forKey:[self.shippingDynamicForm getFieldNameForKey:@"is_default_billing"]];
+        
+        NSString* shippingGenderFieldName = [self.shippingDynamicForm getFieldNameForKey:@"gender"];
+        NSString* shippingGenderValue = [shippingParameters objectForKey:shippingGenderFieldName];
+        [billingParameters setValue:shippingGenderValue forKey:shippingGenderFieldName];
         
         [RIForm sendForm:[self.billingDynamicForm form]
               parameters:billingParameters
