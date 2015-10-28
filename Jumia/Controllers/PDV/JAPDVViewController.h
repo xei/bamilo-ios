@@ -21,7 +21,6 @@
 @property (assign, nonatomic) BOOL fromCatalogue;
 @property (strong, nonatomic) NSString *previousCategory;
 @property (strong, nonatomic) NSString *preSelectedSize;
-@property (assign, nonatomic) BOOL showBackButton;
 
 @property (nonatomic, retain) NSString* A4SViewControllerAlias;
 
