@@ -111,7 +111,7 @@
 
 #define STRING_ERROR_CHANGING_QUANTITY RILocalizedString(@"error_add_to_shopping_cart_quantity", nil)
 #define STRING_SHIPPING RILocalizedString(@"shipping", nil)
-#define STRING_SHIPPMENT RILocalizedString(@"shippment", nil)
+#define STRING_SHIPMENT_OF RILocalizedString(@"shipment_of", nil)
 #define STRING_FULFILLED RILocalizedString(@"fulfilled_by", nil)
 #define STRING_FREE RILocalizedString(@"free_label", nil)
 #define STRING_EXTRA_COSTS RILocalizedString(@"extra_costs_label", nil)

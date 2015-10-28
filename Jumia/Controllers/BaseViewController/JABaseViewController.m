@@ -12,6 +12,7 @@
 #import "JAMaintenancePage.h"
 #import "JAKickoutView.h"
 #import "JAFallbackView.h"
+#import "JATabBarView.h"
 
 #define kSearchViewBarHeight 32.0f
 
@@ -35,16 +36,19 @@
 
 @implementation JABaseViewController
 
-#warning incorrect height
 - (CGRect)viewBounds {
-    CGFloat offset = 0.0f;
+    CGFloat topOffset = 0.0f;
+    CGFloat bottomOffset = 0.0f;
     if (self.searchBarIsVisible) {
-        offset = kSearchViewBarHeight;
+        topOffset += kSearchViewBarHeight;
+    }
+    if (self.tabBarIsVisible) {
+        bottomOffset += kTabBarHeight;
     }
     return CGRectMake(self.view.bounds.origin.x,
-                      self.view.bounds.origin.y + offset,
+                      self.view.bounds.origin.y + topOffset,
                       self.view.bounds.size.width,
-                      self.view.bounds.size.height - offset);
+                      self.view.bounds.size.height - topOffset - bottomOffset);
 }
 
 - (CGRect)bounds {
@@ -225,6 +229,7 @@
     [super viewWillAppear:animated];
     
     [self reloadNavBar];
+    [self reloadTabBar];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnMenuSwipePanelNotification
                                                         object:nil];
@@ -265,6 +270,11 @@
 - (void)reloadNavBar {
     [[NSNotificationCenter defaultCenter] postNotificationName:kChangeNavigationBarNotification
                                                         object:self.navBarLayout];
+}
+
+- (void)reloadTabBar {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kChangeTabBarVisibility
+                                                        object:[NSNumber numberWithBool:self.tabBarIsVisible]];
 }
 
 #pragma mark - Search Bar

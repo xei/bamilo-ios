@@ -119,11 +119,8 @@ JAActivityViewControllerDelegate
     
     self.A4SViewControllerAlias = @"PRODUCT";
     
-    self.navBarLayout.showBackButton = self.showBackButton;
-    if (self.showBackButton && self.previousCategory.length > 0)
-    {
-        [self.navBarLayout setShowBackButton:YES];
-    }
+    
+    self.navBarLayout.showBackButton = YES;
     
     self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self.mainScrollView setHidden:YES];
@@ -1217,9 +1214,9 @@ JAActivityViewControllerDelegate
         option = @"";
     }
     self.preSelectedSize = option;
-    
     [self.productInfoSection setSizesText:option];
-    
+    [self.productInfoSection setSpecialPrice:self.currentSimple.specialPriceFormatted
+                                    andPrice:self.currentSimple.priceFormatted];
     
     CGRect frame = self.picker.frame;
     frame.origin.y = self.view.frame.size.height;
