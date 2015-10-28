@@ -150,6 +150,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     [self.collectionView reloadData];
     [self totalSubLine];
     [self bottomBar];
+}
 
 #pragma mark - collectionView methods
 
@@ -196,6 +197,8 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
             cell.sizeButton.tag = indexPath.row;
             [cell.sizeButton.titleLabel sizeToFit];
             [self setCellSizeLabel:bundleProduct inCell:cell];
+            
+            [cell.sizeButton setHidden:NO];
             
         } else {
             if (VALID_NOTEMPTY(cell.sizeButton, UIButton)) {
