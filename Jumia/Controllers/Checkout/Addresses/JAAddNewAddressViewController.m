@@ -113,6 +113,8 @@ JAPickerDelegate>
     
     self.screenName = @"NewAddress";
     
+    self.navBarLayout.showBackButton = YES;
+    
     self.hasErrors = NO;
     
     self.extraParameters = nil;

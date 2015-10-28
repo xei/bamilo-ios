@@ -68,6 +68,8 @@ JAPickerDelegate>
     
     self.screenName = @"EditAddress";    
     
+    self.navBarLayout.showBackButton = YES;
+    
     self.hasErrors = NO;
     
     self.view.translatesAutoresizingMaskIntoConstraints = YES;

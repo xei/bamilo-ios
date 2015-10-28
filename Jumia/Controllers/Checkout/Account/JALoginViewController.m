@@ -95,7 +95,7 @@
     self.screenName = @"CheckoutStart";
     
     self.navBarLayout.title = STRING_CHECKOUT;
-    
+    self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showCartButton = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self

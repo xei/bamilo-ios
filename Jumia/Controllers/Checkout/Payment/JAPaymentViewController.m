@@ -93,7 +93,7 @@ UITextFieldDelegate>
     self.apiResponse = RIApiResponseSuccess;
     
     self.navBarLayout.title = STRING_CHECKOUT;
-    
+    self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showCartButton = NO;
     
     self.stepBackground.translatesAutoresizingMaskIntoConstraints = YES;

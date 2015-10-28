@@ -39,6 +39,7 @@
     
     self.navBarLayout.title = STRING_CHECKOUT;
     self.navBarLayout.showCartButton = NO;
+    self.navBarLayout.showBackButton = YES;
     
     self.view.backgroundColor = JABackgroundGrey;
 }
