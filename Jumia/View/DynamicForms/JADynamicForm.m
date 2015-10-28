@@ -236,6 +236,11 @@
                 [textField.textField setTag:tag];
                 [textField setTag:tag];
                 
+                [textField.textField setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
+                if ([@"phone" isEqualToString:field.key]) {
+                    textField.textField.keyboardType = UIKeyboardTypePhonePad;
+                }
+                
                 lastTextFieldIndex = [self.formViews count];
                 [self.formViews addObject:textField];
                 
