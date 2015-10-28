@@ -44,7 +44,7 @@
     [self addSubview:_brandLabel];
     
     _nameLabel = [[UILabel alloc] init];
-    [_nameLabel setFont:JABody1Font];
+    [_nameLabel setFont:JABody3Font];
     [_nameLabel setText:@"NameLabel"];
     _nameLabel.textColor = UIColorFromRGB(0x000000);
     [self addSubview:_nameLabel];
@@ -112,7 +112,6 @@
     
     [self setBackgroundColor:[UIColor whiteColor]];
     [self setClipsToBounds:YES];
-    [self.layer setCornerRadius:3.f];
 }
 
 - (void)initListViews
@@ -128,7 +127,7 @@
     _productImageViewRect = CGRectMake(6, 8, 68, 85);
     [_productImageView setFrame:_productImageViewRect];
     
-    _discountLabelRect = CGRectMake(0, 71, 65, 14);
+    _discountLabelRect = CGRectMake(0, CGRectGetMaxY(self.nameLabel.frame) + JACatalogCellPriceLabelOffsetY + 10.f, 60, 19);
     [_discountLabel setFrame:_discountLabelRect];
     [_discountLabel setXRightAligned:16.f];
     _discountLabelRect = _discountLabel.frame;
@@ -137,16 +136,16 @@
 - (void)initGridViews
 {
     _textWidth = self.width - 6 - 6;
-    _brandLabelRect = CGRectMake(6, 148, _textWidth, 15);
+    _brandLabelRect = CGRectMake(6, 164, _textWidth, 15);
     [_brandLabel setFrame:_brandLabelRect];
     
-    _nameLabelRect = CGRectMake(6, 162, _textWidth, 15);
+    _nameLabelRect = CGRectMake(6, 178, _textWidth, 15);
     [_nameLabel setFrame:_nameLabelRect];
     
     _productImageViewRect = CGRectMake(self.width/2 - 112/2, 8, 112, 140);
     [_productImageView setFrame:_productImageViewRect];
     
-    _discountLabelRect = CGRectMake(0, CGRectGetMaxY(_productImageViewRect) - 14, 65, 14);
+    _discountLabelRect = CGRectMake(0, CGRectGetMaxY(_productImageViewRect) +2, 60, 19);
     [_discountLabel setFrame:_discountLabelRect];
     [_discountLabel setXRightAligned:16.f];
     _discountLabelRect = _discountLabel.frame;
@@ -159,15 +158,15 @@
     _brandLabelRect = CGRectMake(16, 345, _textWidth, 15);
     [_brandLabel setFrame:_brandLabelRect];
     
-    _nameLabelRect = CGRectMake(16, 365, _textWidth, 15);
+    _nameLabelRect = CGRectMake(16, _brandLabelRect.origin.y +12, _textWidth, 15);
     [_nameLabel setFrame:_nameLabelRect];
     
     [_priceView setFrame:CGRectMake(16, 12, _textWidth, 15)];
     
-    _productImageViewRect = CGRectMake(6, 8, 268, 340);
+    _productImageViewRect = CGRectMake(self.width/2 - 268/2, 8, 268, 340);
     [_productImageView setFrame:_productImageViewRect];
     
-    _discountLabelRect = CGRectMake(16, 392, 65, 17);
+    _discountLabelRect = CGRectMake(16, 392, 60, 19);
     [_discountLabel setFrame:_discountLabelRect];
     [_discountLabel setXRightAligned:16.f];
     _discountLabelRect = _discountLabel.frame;
@@ -200,7 +199,7 @@
                                      _brandLabelRect.size.height)];
     
     [_nameLabel setFrame:CGRectMake(_nameLabelRect.origin.x,
-                                    _nameLabelRect.origin.y,
+                                    CGRectGetMaxY(_brandLabelRect) + 8.f,
                                     _textWidth,
                                     _nameLabelRect.size.height)];
     

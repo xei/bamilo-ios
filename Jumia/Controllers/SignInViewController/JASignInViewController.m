@@ -450,7 +450,7 @@ JADynamicFormDelegate
                      }
                      
                      [RICustomer loginCustomerByFacebookWithParameters:parameters
-                                                          successBlock:^(NSDictionary* entities, NSArray *wishlistSkus, NSString* nextStep) {
+                                                          successBlock:^(NSDictionary* entities, NSString* nextStep) {
                                                               
                                                               RICustomer* customer = [entities objectForKey:@"customer"];
                                                               
@@ -496,7 +496,7 @@ JADynamicFormDelegate
                                                                                                                   object:nil];
                                                               
                                                               [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                                                                                  object:wishlistSkus];
+                                                                                                                  object:customer.wishlistProducts];
                                                               if (self.fromSideMenu) {
                                                                   [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
                                                               }else
@@ -646,7 +646,7 @@ JADynamicFormDelegate
                                                        data:[trackingDictionary copy]];
              
              [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                                 object:nil];
+                                                                 object:customerObject.wishlistProducts];
              
              if (self.fromSideMenu) {
                  [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];

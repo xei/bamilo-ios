@@ -75,10 +75,23 @@
     _priceOff = priceOff;
     [self.priceOffLabel setText:[NSString stringWithFormat:@"-%ld%% OFF", (long)priceOff]];
     [self.priceOffLabel sizeToFit];
-    [self.priceOffLabel setXRightOf:self.oldPriceLabel at:10.f];
-    self.priceOffLabel.width += 6.f;
-    self.priceOffLabel.height = self.oldPriceLabel.height;
-    [self.priceOffLabel setY:self.oldPriceLabel.y];
+    
+    CGRect rect;
+    
+    if (VALID_NOTEMPTY(self.oldPrice, NSString)) {
+        rect = CGRectMake(CGRectGetMaxX(self.oldPriceLabel.frame)+10.f,
+                          self.oldPriceLabel.frame.origin.y,
+                          6.f, self.oldPriceLabel.frame.size.height);
+    } else {
+        rect = CGRectMake(CGRectGetMaxX(self.label.frame)+10.f,
+                          self.label.frame.origin.y,
+                          6.f, self.label.frame.size.height);
+        
+    }
+    [self.priceOffLabel setX:rect.origin.x];
+    self.priceOffLabel.width += rect.size.width;
+    self.priceOffLabel.height = rect.size.height;
+    [self.priceOffLabel setY:rect.origin.y];
     
     UIColor *priceOffColor = JAOrange1Color;
     if (self.fashion) {

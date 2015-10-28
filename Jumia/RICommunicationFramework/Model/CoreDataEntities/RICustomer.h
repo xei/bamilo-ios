@@ -25,9 +25,9 @@
 @property (nonatomic, retain) NSString * loginMethod;
 @property (nonatomic, retain) NSOrderedSet *addresses;
 
-@property (nonatomic) NSArray *wishlistProducts;
+@property (nonatomic, retain) NSArray *wishlistProducts;
 
-+ (NSString*)autoLogin:(void (^)(BOOL success, NSDictionary *entities, NSArray *wishlistSkus, NSString *loginMethod))returnBlock;
++ (NSString*)autoLogin:(void (^)(BOOL success, NSDictionary *entities, NSString *loginMethod))returnBlock;
 
 /**
  * Method to login user via facebook
@@ -38,7 +38,7 @@
  * @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)loginCustomerByFacebookWithParameters:(NSDictionary *)parameters
-                                       successBlock:(void (^)(NSDictionary *entities, NSArray *wishlistSkus, NSString* nextStep))successBlock
+                                       successBlock:(void (^)(NSDictionary *entities, NSString* nextStep))successBlock
                                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
 
 /**

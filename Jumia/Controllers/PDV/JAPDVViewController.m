@@ -40,6 +40,7 @@
 #import "JAProductInfoHeaderLine.h"
 #import "RIAddress.h"
 #import "JABottomBar.h"
+#import "RISeller.h"
 
 @interface JAPDVViewController ()
 <
@@ -54,7 +55,7 @@ JAActivityViewControllerDelegate
 @property (strong, nonatomic) UIScrollView *mainScrollView;
 @property (strong, nonatomic) UIScrollView *landscapeScrollView;
 @property (strong, nonatomic) RIProductRatings *productRatings;
-@property (strong, nonatomic) JAPDVImageSection *imageSection;
+@property (strong, nonatomic) JAPDVImageSection *productImageSection;
 @property (strong, nonatomic) JAPDVVariations *variationsSection;
 @property (strong, nonatomic) JAPDVProductInfo *productInfoSection;
 @property (strong, nonatomic) JAPDVRelatedItem *relatedItemsView;
@@ -85,6 +86,20 @@ JAActivityViewControllerDelegate
 
 @synthesize selectedBundles = _selectedBundles;
 
+- (JAPDVImageSection *)productImageSection
+{
+    if (!VALID_NOTEMPTY(_productImageSection, JAPDVImageSection)) {
+        
+        _productImageSection = [JAPDVImageSection getNewPDVImageSection:self.product.fashion];
+        _productImageSection.delegate = self;
+        [_productImageSection.wishListButton addTarget:self
+                                                    action:@selector(addToFavoritesPressed:)
+                                          forControlEvents:UIControlEventTouchUpInside];
+        _productImageSection.wishListButton.selected = VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate);
+    }
+    return _productImageSection;
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -104,13 +119,8 @@ JAActivityViewControllerDelegate
     
     self.A4SViewControllerAlias = @"PRODUCT";
     
-    self.navBarLayout.showLogo = NO;
     
-    self.navBarLayout.showBackButton = self.showBackButton;
-    if (self.showBackButton && self.previousCategory.length > 0)
-    {
-        [self.navBarLayout setShowBackButton:YES];
-    }
+    self.navBarLayout.showBackButton = YES;
     
     self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self.mainScrollView setHidden:YES];
@@ -231,11 +241,6 @@ JAActivityViewControllerDelegate
         [self.currentPopoverController dismissPopoverAnimated:NO];
     }
     
-    if (RIApiResponseNoInternetConnection != self.apiResponse)
-    {
-        [self showLoading];
-    }
-    
     [self.mainScrollView setHidden:YES];
     [self.landscapeScrollView setHidden:YES];
     [self.ctaView setHidden:YES];
@@ -247,6 +252,10 @@ JAActivityViewControllerDelegate
                                      self.view.frame.size.height + self.view.frame.origin.y,
                                      self.view.frame.size.width - self.view.frame.origin.y);
         [self.wizardView reloadForFrame:newFrame];
+    }
+    
+    if (VALID_NOTEMPTY(self.picker, JAPicker)) {
+        [self closePicker];
     }
     
     if(VALID_NOTEMPTY(self.galleryPaged, JAPDVGallery))
@@ -282,7 +291,6 @@ JAActivityViewControllerDelegate
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self fillTheViews];
-    [self hideLoading];
     
     if(VALID_NOTEMPTY(self.wizardView, JAPDVWizardView))
     {
@@ -350,11 +358,6 @@ JAActivityViewControllerDelegate
     if(VALID_NOTEMPTY(self.ctaView, JABottomBar))
     {
         [self.ctaView removeFromSuperview];
-    }
-    
-    if(VALID_NOTEMPTY(self.picker, JAPicker))
-    {
-        [self.picker removeFromSuperview];
     }
 }
 
@@ -447,7 +450,10 @@ JAActivityViewControllerDelegate
     
     self.product = product;
     self.productSku = product.sku;
-    [self setTitle:product.brand];
+    
+    [self.navBarLayout setTitle:product.brand];
+    [self reloadNavBar];
+    
     [self.wizardView setHasNoSeller:product.seller?NO:YES];
     
     [self trackingEventViewProduct:product];
@@ -514,7 +520,7 @@ JAActivityViewControllerDelegate
      CTA Buttons
      *******/
     
-    self.ctaView = [[JABottomBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kBottomDefaultHeight)];
+    self.ctaView = [[JABottomBar alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, kBottomDefaultHeight)];
     
     BOOL isiPadInLandscape = NO;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -544,8 +550,9 @@ JAActivityViewControllerDelegate
     
     [self.ctaView addButton:STRING_BUY_NOW target:self action:@selector(addToCart)];
     
-    //make sure wizard is in front
+    //make sure wizard and picker are in front
     [self.view bringSubviewToFront:self.wizardView];
+    [self.view bringSubviewToFront:self.picker];
 }
 
 - (void)requestBundles
@@ -603,26 +610,21 @@ JAActivityViewControllerDelegate
      Image Section
      *******/
     
-    self.imageSection = [JAPDVImageSection getNewPDVImageSection:self.product.fashion];
-    CGRect imageSectionFrame = self.mainScrollView.bounds;
-    [self.imageSection setupWithFrame:imageSectionFrame product:self.product preSelectedSize:self.preSelectedSize];
-    self.imageSection.delegate = self;
-    [self.imageSection.wishListButton addTarget:self
-                                         action:@selector(addToFavoritesPressed:)
-                               forControlEvents:UIControlEventTouchUpInside];
-    self.imageSection.wishListButton.selected = VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate);
-    self.imageSection.frame = CGRectMake(0.0f,
+    self.productImageSection.frame = CGRectMake(0.0f,
                                          scrollViewY,
-                                         self.imageSection.frame.size.width,
-                                         self.imageSection.frame.size.height);
+                                         self.productImageSection.frame.size.width,
+                                         self.productImageSection.frame.size.height);
+    
+    CGRect imageSectionFrame = self.mainScrollView.bounds;
+    [self.productImageSection setupWithFrame:imageSectionFrame product:self.product preSelectedSize:self.preSelectedSize];
     
     if(isiPadInLandscape)
     {
-        [self.landscapeScrollView addSubview:self.imageSection];
-        landscapeScrollViewY = CGRectGetMaxY(self.imageSection.frame) + 6.0f;
+        [self.landscapeScrollView addSubview:self.productImageSection];
+        landscapeScrollViewY = CGRectGetMaxY(self.productImageSection.frame) + 6.0f;
     }else{
-        [self.mainScrollView addSubview:self.imageSection];
-        scrollViewY = CGRectGetMaxY(self.imageSection.frame) + 6.0f;
+        [self.mainScrollView addSubview:self.productImageSection];
+        scrollViewY = CGRectGetMaxY(self.productImageSection.frame) + 6.0f;
     }
     
     
@@ -637,7 +639,7 @@ JAActivityViewControllerDelegate
      *******/
     
     self.productInfoSection = [[JAPDVProductInfo alloc] init];
-    CGRect productInfoSectionFrame = CGRectMake(0, 6, self.view.width, 0);
+    CGRect productInfoSectionFrame = CGRectMake(0, 6, self.mainScrollView.width, 0);
     [self.productInfoSection setupWithFrame:productInfoSectionFrame product:self.product preSelectedSize:self.preSelectedSize];
 
     if (VALID_NOTEMPTY(self.currentSimple, RIProductSimple)) {
@@ -646,6 +648,7 @@ JAActivityViewControllerDelegate
     [self.productInfoSection addReviewsTarget:self action:@selector(goToReviews)];
     [self.productInfoSection addSpecificationsTarget:self action:@selector(goToSpecifications)];
     [self.productInfoSection addDescriptionTarget:self action:@selector(goToDescription)];
+    [self.productInfoSection addSellerCatalogTarget:self action:@selector(goToSellerCatalog)];
     [self.productInfoSection addSizeTarget:self action:@selector(showSizePicker)];
     [self.productInfoSection addVariationsTarget:self action:@selector(goToVariationsScreen)];
     [self.productInfoSection addOtherOffersTarget:self action:@selector(goToOtherSellersScreen)];
@@ -661,6 +664,9 @@ JAActivityViewControllerDelegate
      *******/
     
     [self.bundleLayout removeFromSuperview];
+    for (UIView *subview in [self.bundleLayout subviews]) {
+        [subview removeFromSuperview];
+    }
     
     if (VALID_NOTEMPTY(self.productBundle, RIBundle)) {
         CGFloat bundleSingleItemStart = 5.0f;
@@ -758,6 +764,10 @@ JAActivityViewControllerDelegate
 
         [self.bundleLayout addBuyingBundleTarget:self action:@selector(goToBundlesScreen)];
         
+        
+        
+        
+        
         self.bundleLayout.frame = CGRectMake(.0f,
                                              scrollViewY,
                                              self.bundleLayout.frame.size.width,
@@ -765,6 +775,7 @@ JAActivityViewControllerDelegate
         [self.mainScrollView addSubview:self.bundleLayout];
         
         scrollViewY += (self.bundleLayout.frame.size.height);
+        
     }
     
     /*******
@@ -839,11 +850,6 @@ JAActivityViewControllerDelegate
     self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.frame.size.width, scrollViewY);
     self.landscapeScrollView.contentSize = CGSizeMake(self.landscapeScrollView.frame.size.width, landscapeScrollViewY);
     
-    if(VALID(self.picker, JAPicker))
-    {
-        [self showSizePicker];
-    }
-    
     //make sure wizard is in front
     [self.view bringSubviewToFront:self.wizardView];
     
@@ -880,6 +886,26 @@ JAActivityViewControllerDelegate
 - (void)goToDescription
 {
     [self goToDetails:@"description"];
+}
+
+- (void)goToSellerCatalog
+{
+    NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
+    
+    if(VALID_NOTEMPTY(self.product.seller, RISeller))
+    {
+        [userInfo setObject:self.product.seller.name forKey:@"name"];
+    }
+    
+    if(VALID_NOTEMPTY(self.product.seller, RISeller))
+    {
+        [userInfo setObject:self.product.seller.url forKey:@"url"];
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:self.product.seller userInfo:userInfo];
+    
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:@"SellerPage"];
+    
 }
 
 - (void)goToSpecifications
@@ -1121,13 +1147,15 @@ JAActivityViewControllerDelegate
                      previousText:(NSString*)previousText
                   leftButtonTitle:(NSString*)leftButtonTitle
 {
-    if(VALID(self.picker, JAPicker))
-    {
-        [self.picker removeFromSuperview];
+    if (!VALID_NOTEMPTY(self.picker, JAPicker)) {
+        
+        self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
+        [self.picker setDelegate:self];
     }
     
-    self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
-    [self.picker setDelegate:self];
+    if (![self.picker superview]) {
+        [self.view addSubview:self.picker];
+    }
     
     [self.picker setDataSourceArray:options
                        previousText:previousText
@@ -1139,7 +1167,8 @@ JAActivityViewControllerDelegate
                                      pickerViewHeight,
                                      pickerViewWidth,
                                      pickerViewHeight)];
-    [self.view addSubview:self.picker];
+    
+    [self.view bringSubviewToFront:self.picker];
     
     [UIView animateWithDuration:0.4f
                      animations:^{
@@ -1185,31 +1214,9 @@ JAActivityViewControllerDelegate
         option = @"";
     }
     self.preSelectedSize = option;
-    
-    if (-1 == self.indexOfBundleRelatedToSizePicker) {
-        //this means the picker was related to the main pdv product
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        {
-            UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-            if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
-            {
-                [self.imageSection.sizeLabel setText:option];
-            }
-            else
-            {
-                [self.productInfoSection setSizesText:option];
-            }
-        }
-        else
-        {
-            [self.productInfoSection setSizesText:option];
-        }
-    } else {
-        JAPDVBundleSingleItem* bundleSingleItem = [self.bundleSingleItemsArray objectAtIndex:self.indexOfBundleRelatedToSizePicker];
-        [bundleSingleItem.sizeClickableView setTitle:option forState:UIControlStateNormal];
-        [bundleSingleItem.sizeClickableView setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
-    }
-    
+    [self.productInfoSection setSizesText:option];
+    [self.productInfoSection setSpecialPrice:self.currentSimple.specialPriceFormatted
+                                    andPrice:self.currentSimple.priceFormatted];
     
     CGRect frame = self.picker.frame;
     frame.origin.y = self.view.frame.size.height;
@@ -1218,8 +1225,6 @@ JAActivityViewControllerDelegate
                      animations:^{
                          self.picker.frame = frame;
                      } completion:^(BOOL finished) {
-                         [self.picker removeFromSuperview];
-                         self.picker = nil;
                          
                          if (self.openPickerFromCart)
                          {
@@ -1239,7 +1244,6 @@ JAActivityViewControllerDelegate
                          self.picker.frame = frame;
                      } completion:^(BOOL finished) {
                          [self.picker removeFromSuperview];
-                         self.picker = nil;
                      }];
 }
 
@@ -1298,6 +1302,11 @@ JAActivityViewControllerDelegate
                          _galleryPaged.frame = openFrame;
                      } completion:nil];
     _galleryPaged.delegate = self;
+}
+
+- (void)onIndexChanged:(NSInteger)index
+{
+    [self.productImageSection goToGalleryIndex:index];
 }
 
 - (void)dismissGallery

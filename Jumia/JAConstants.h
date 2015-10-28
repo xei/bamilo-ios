@@ -53,6 +53,7 @@
 #define kShowSignUpScreenNotification @"NOTIFICATION_SHOW_SIGN_UP_SCREEN"
 #define kShowForgotPasswordScreenNotification @"NOTIFICATION_SHOW_FORGOT_PASSWORD_SCREEN"
 #define kShowFavoritesScreenNotification @"NOTIFICATION_SHOW_FAVORITES_SCREEN"
+#define kShowMoreMenuScreenNotification @"NOTIFICATION_MORE_MENU_SCREEN"
 #define kShowRecentSearchesScreenNotification @"NOTIFICATION_SHOW_RECENT_SEARCHES_SCREEN"
 #define kShowRecentlyViewedScreenNotification @"NOTIFICATION_SHOW_RECENTLY_VIEWED_SCREEN"
 #define kShowMyAccountScreenNotification @"NOTIFICATION_SHOW_MY_ACCOUNT_SCREEN"
@@ -95,6 +96,7 @@
 #define kDidSelectCategoryFromCenterPanelNotification @"NOTIFICATION_SELECTED_CATEGORY_FROM_CENTER_PANEL"
 
 //navbar notification
+#define kChangeTabBarVisibility @"NOTIFICATION_CHANGE_TAB_BAR_VISIBILITY"
 #define kChangeNavigationBarNotification @"NOTIFICATION_CHANGE_NAVIGATION_BAR"
 #define kEditShouldChangeStateNotification @"EDIT_SHOULD_CHANGE_NOTIFICATION"
 #define kDoneShouldChangeStateNotification @"DONE_SHOULD_CHANGE_NOTIFICATION"
@@ -168,6 +170,7 @@
 
 #define JADisplay1Font [UIFont fontWithName:@"HelveticaNeue" size:23]
 #define JADisplay2Font [UIFont fontWithName:@"HelveticaNeue" size:19]
+#define JAListFont [UIFont fontWithName:@"HelveticaNeue-Bold" size:16]
 #define JAList1Font [UIFont fontWithName:@"HelveticaNeue-Medium" size:16]
 #define JAList2Font [UIFont fontWithName:@"HelveticaNeue" size:16]
 #define JABody1Font [UIFont fontWithName:@"HelveticaNeue-Bold" size:13]

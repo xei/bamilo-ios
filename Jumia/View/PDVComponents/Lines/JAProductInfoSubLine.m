@@ -36,13 +36,14 @@
 
 - (void)setDefaults
 {
+    [self setTopSeparatorVisibility:YES];
+    [self setTopSeparatorXOffset:self.label.x];
 }
 
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
     [self setBottomSeparatorVisibility:YES];
-    [self setBottomSeparatorColor:JABlack400Color];
 }
 
 - (UILabel *)label

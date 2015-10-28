@@ -151,14 +151,6 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     [self totalSubLine];
     [self bottomBar];
 
-    if(UIDeviceOrientationPortrait == ([UIDevice currentDevice].orientation) || UIDeviceOrientationPortraitUpsideDown == ([UIDevice currentDevice].orientation)) {
-        _selectButtonFrame = CGRectMake(self.view.bounds.size.width - 100, 8, 30, 30);
-    }
-    else {
-        _selectButtonFrame = CGRectMake((self.view.bounds.size.width - 100)/2, 8, 30, 30);
-    }
-}
-
 #pragma mark - collectionView methods
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -198,42 +190,35 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
                           action:@selector(clickableViewPressedInCell:)
                 forControlEvents:UIControlEventTouchUpInside];
     
-    if (VALID_NOTEMPTY(self.sizeButton, NSMutableDictionary) && [self.sizeButton objectForKey:[NSNumber numberWithInteger:indexPath.row]]) {
-        [self setCellSizeLabel:bundleProduct inCell:cell];
-        [cell.sizeButton.titleLabel sizeToFit];
+    if ([bundleProduct.productSimples count] > 1) {
         
-    } else {
-        
-        if (!VALID(self.sizeButton, NSMutableDictionary)) {
-            self.sizeButton = [[NSMutableDictionary alloc]init];
-        }
-        
-        CGRect frame = CGRectMake(cell.priceView.frame.origin.x, cell.priceView.frame.origin.y+20.0f,
-                                  cell.priceView.frame.size.width, cell.priceView.frame.size.height);
-        
-        cell.sizeButton = [[UIButton alloc] initWithFrame:(frame)];
-        cell.sizeButton.tag = indexPath.row;
-        
-        [self.sizeButton setObject:cell.sizeButton forKey:[NSNumber numberWithInteger:indexPath.row]];
-        
-        if (1 >= [bundleProduct.productSimples count]) {
-            cell.sizeButton.hidden = YES;
+        if (VALID_NOTEMPTY(cell.sizeButton, UIButton) && [self.selectedItems objectForKey:bundleProduct.sku]) {
+            cell.sizeButton.tag = indexPath.row;
+            [cell.sizeButton.titleLabel sizeToFit];
+            [self setCellSizeLabel:bundleProduct inCell:cell];
+            
         } else {
-            cell.sizeButton.hidden = NO;
+            if (VALID_NOTEMPTY(cell.sizeButton, UIButton)) {
+                [cell.sizeButton removeFromSuperview];
+            }
+            CGRect frame = CGRectMake(cell.priceView.frame.origin.x, cell.priceView.frame.origin.y+20.0f,
+                                      cell.frame.size.width, cell.priceView.frame.size.height);
+            
+            cell.sizeButton = [[UIButton alloc] initWithFrame:(frame)];
+            cell.sizeButton.tag = indexPath.row;
+            cell.sizeButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:cell.sizeButton.titleLabel.font.pointSize];
+            [cell.sizeButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
+            [cell.sizeButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+            [cell.sizeButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+            [self setCellSizeLabel:bundleProduct inCell:cell];
+            [cell.sizeButton.titleLabel sizeToFit];
+            [cell.sizeButton addTarget:self
+                                action:@selector(sizeButtonPressed:)
+                      forControlEvents:UIControlEventTouchUpInside];
+            [cell addSubview:cell.sizeButton];
         }
-        cell.sizeButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:cell.sizeButton.titleLabel.font.pointSize];
-        [cell.sizeButton setTitle:STRING_SIZE forState:UIControlStateNormal];
-        [cell.sizeButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
-        [cell.sizeButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
-        [cell.sizeButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-
-        [self setCellSizeLabel:bundleProduct inCell:cell];
-        [cell.sizeButton setFrame:frame];
-        [cell.sizeButton.titleLabel sizeToFit];
-        [cell.sizeButton addTarget:self
-                            action:@selector(sizeButtonPressed:)
-                  forControlEvents:UIControlEventTouchUpInside];
-        [cell addSubview:cell.sizeButton];
+    } else {
+        [cell.sizeButton setHidden:YES];
     }
     
     [self hideUnwantedCellLines:cell position:indexPath.row];
@@ -244,17 +229,18 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 - (void)setCellSizeLabel:(RIProduct*)bundleProduct inCell:(JACatalogCollectionViewCell*)cell{
     if ([self.selectedItems objectForKey:bundleProduct.sku]) {
         RIProductSimple* pds = [self.selectedItems objectForKey:bundleProduct.sku];
-                [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, pds.variation]
-                                 forState:UIControlStateNormal];
-                
-                [cell.priceView loadWithPrice:pds.priceFormatted
-                                 specialPrice:pds.specialPriceFormatted
-                                     fontSize:10.0f
-                        specialPriceOnTheLeft:YES];
+        [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, pds.variation]
+                         forState:UIControlStateNormal];
+        
+        [cell.priceView loadWithPrice:pds.priceFormatted
+                         specialPrice:pds.specialPriceFormatted
+                             fontSize:10.0f
+                specialPriceOnTheLeft:YES];
         
     } else {
-        [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, [[bundleProduct.productSimples firstObject] variation]]
-                         forState:UIControlStateNormal];
+        RIProductSimple* simp = [bundleProduct.productSimples firstObject];
+        [self.selectedItems setObject:simp forKey:bundleProduct.sku];
+        [self setCellSizeLabel:bundleProduct inCell:cell];
     }
 }
 

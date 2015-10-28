@@ -29,6 +29,7 @@
 @property (nonatomic) id variationsTarget;
 @property (nonatomic) id sizeTarget;
 @property (nonatomic) id reviewsTarget;
+@property (nonatomic) id sellerCatalogTarget;
 @property (nonatomic) id sellerReviewsTarget;
 @property (nonatomic) id otherOffersTarget;
 @property (nonatomic) id specificationsTarget;
@@ -36,6 +37,7 @@
 @property (nonatomic) SEL variationsSelector;
 @property (nonatomic) SEL sizeSelector;
 @property (nonatomic) SEL reviewsSelector;
+@property (nonatomic) SEL sellerCatalogSelector;
 @property (nonatomic) SEL sellerReviewsSelector;
 @property (nonatomic) SEL otherOffersSelector;
 @property (nonatomic) SEL specificationsSelector;
@@ -59,18 +61,16 @@
         }
     }
     
-    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width, 1)];
-    [separator setBackgroundColor:[UIColor grayColor]];
-    if (!isiPadInLandscape) {
-        [self addSubview:separator];
-    }
-    
     CGFloat yOffset = 0;
     
     /*
      *  PRICE
      */
     _priceLine = [[JAProductInfoPriceLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
+    if (!isiPadInLandscape) {
+        [_priceLine setTopSeparatorVisibility:YES];
+    }
+    
     [_priceLine setFashion:product.fashion];
     
     if (VALID_NOTEMPTY(product.priceRange, NSString)) {
@@ -92,8 +92,9 @@
      */
     
     JAProductInfoRatingLine *ratingLine = [[JAProductInfoRatingLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
-    [ratingLine setFashion:product.fashion];
     [ratingLine setTopSeparatorVisibility:YES];
+    [ratingLine setBottomSeparatorVisibility:NO];
+    [ratingLine setFashion:product.fashion];
     [ratingLine setRatingAverage:product.avr];
     [ratingLine setRatingSum:product.sum];
     [ratingLine addTarget:self action:@selector(tapReviewsLine) forControlEvents:UIControlEventTouchUpInside];
@@ -135,7 +136,7 @@
                 [specificationsContentLabel setTextColor:JABlackColor];
                 [specificationsContentLabel setFont:JACaptionFont];
                 specificationsContentLabel.numberOfLines = 0;
-                [specificationsContentLabel setText:[NSString stringWithFormat:@"%@:\n %@", attribute.key, attribute.value]];
+                [specificationsContentLabel setText:[NSString stringWithFormat:@"- %@:\n %@", attribute.key, attribute.value]];
                 [specificationsContentLabel sizeToFit];
                 [self addSubview:specificationsContentLabel];
                 yOffset = CGRectGetMaxY(specificationsContentLabel.frame);
@@ -206,11 +207,11 @@
 #warning TODO String translation
         [headerSeller setTitle:[@"Seller Information" uppercaseString]];
         [self addSubview:headerSeller];
-        yOffset = CGRectGetMaxY(headerSeller.frame) + 16.f;
+        yOffset = CGRectGetMaxY(headerSeller.frame);
         
-        JAPDVProductInfoSellerInfo *sellerInfoView = [[JAPDVProductInfoSellerInfo alloc] initWithFrame:CGRectMake(16, yOffset, self.width-32, 50)];
+        JAPDVProductInfoSellerInfo *sellerInfoView = [[JAPDVProductInfoSellerInfo alloc] initWithFrame:CGRectMake(0, yOffset, self.width, 50)];
         [sellerInfoView setSeller:product.seller];
-        [sellerInfoView addTarget:self action:@selector(tapSellerReviewsLine)];
+        [sellerInfoView addTarget:self action:@selector(tapSellerCatalogLine)];
         [self addSubview:sellerInfoView];
         
         yOffset = CGRectGetMaxY(sellerInfoView.frame);
@@ -222,11 +223,10 @@
     
     if (VALID_NOTEMPTY(product.offersTotal, NSNumber) && product.offersTotal.integerValue > 0) {
         JAProductInfoSubLine *otherOffers = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSubLineHeight)];
+        [otherOffers setTopSeparatorVisibility:YES];
 #warning TODO String
         [otherOffers setTitle:[NSString stringWithFormat:@"Other sellers starting from: %@", product.offersMinPriceFormatted]];
         [otherOffers.label setYCenterAligned];
-        [otherOffers setTopSeparatorVisibility:YES];
-        [otherOffers setBottomSeparatorVisibility:NO];
         [otherOffers addTarget:self action:@selector(tapOffersLine) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:otherOffers];
         
@@ -268,10 +268,11 @@
 {
     _sizesText = sizesText;
     if (VALID_NOTEMPTY(_sizesLabel, UILabel)) {
-        [_sizesLabel setText:sizesText];
+        [_sizesLabel setText:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, sizesText]];
         [_sizesLabel sizeToFit];
     }
 }
+
 - (void)setSpecialPrice:(NSString*)special andPrice:(NSString*)price
 {
     [_priceLine setTitle:price];
@@ -311,6 +312,13 @@
 {
     if (self.reviewsTarget && [self.reviewsTarget respondsToSelector:self.reviewsSelector]) {
         ((void (*)(id, SEL))[self.reviewsTarget methodForSelector:self.reviewsSelector])(self.reviewsTarget, self.reviewsSelector);
+    }
+}
+
+- (void)tapSellerCatalogLine
+{
+    if (self.sellerCatalogTarget && [self.sellerCatalogTarget respondsToSelector:self.sellerCatalogSelector]) {
+        ((void (*)(id, SEL))[self.sellerCatalogTarget methodForSelector:self.sellerCatalogSelector])(self.sellerCatalogTarget, self.sellerCatalogSelector);
     }
 }
 
@@ -358,6 +366,12 @@
 {
     self.reviewsTarget = target;
     self.reviewsSelector = action;
+}
+
+- (void)addSellerCatalogTarget:(id)target action:(SEL)action
+{
+    self.sellerCatalogTarget = target;
+    self.sellerCatalogSelector = action;
 }
 
 - (void)addSellerReviewsTarget:(id)target action:(SEL)action
