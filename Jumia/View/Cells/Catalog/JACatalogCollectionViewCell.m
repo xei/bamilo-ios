@@ -60,7 +60,7 @@
     _discountLabel.layer.borderColor = [JAOrange1Color CGColor];
     _discountLabel.layer.borderWidth = 1.0f;
     [self addSubview:_discountLabel];
-    
+
     _favoriteButtonRect = CGRectMake(0, 10, 18, 18);
     _favoriteButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_favoriteButton setHitTestEdgeInsets:UIEdgeInsetsMake(-10, -10, -10, -10)];
@@ -104,6 +104,9 @@
             
         case JACatalogCollectionViewPictureCell:
             [self initPictureViews];
+            break;
+        default:
+            [self initListViews];
             break;
     }
     
@@ -172,6 +175,8 @@
 
 - (void)reloadViews
 {
+    _feedbackView.frame = self.bounds;
+    
     switch (_cellType) {
         case JACatalogCollectionViewGridCell:
             [self initGridViews];
@@ -183,6 +188,9 @@
             
         case JACatalogCollectionViewPictureCell:
             [self initPictureViews];
+            break;
+        default:
+            [self initListViews];
             break;
     }
     
@@ -269,6 +277,9 @@
         case JACatalogCollectionViewPictureCell:
             [_priceView setX:16];
             break;
+        default:
+            [_priceView setX:80];
+            break;
     }
     
     if (RI_IS_RTL) {
@@ -315,6 +326,9 @@
             
         case JACatalogCollectionViewPictureCell:
             [_priceView setX:16];
+            break;
+        default:
+            [_priceView setX:80];
             break;
     }
     
