@@ -95,7 +95,6 @@
     {
         RIField *field = [fields objectAtIndex:i];
         NSInteger tag = [self.formViews count];
-        tag++;
         
         if ([@"string" isEqualToString:field.type] || [@"text" isEqualToString:field.type] || [@"email" isEqualToString:field.type])
         {
