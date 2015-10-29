@@ -736,7 +736,7 @@ typedef void (^ProcessActionBlock)(void);
                     height = JACatalogViewControllerGridCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewListCell:
-                    width = self.view.frame.size.width/2;
+                    width = self.view.frame.size.width;
                     height = JACatalogViewControllerListCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewPictureCell:
@@ -751,7 +751,7 @@ typedef void (^ProcessActionBlock)(void);
                     height = JACatalogViewControllerGridCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewListCell:
-                    width =  self.view.frame.size.width/5;
+                    width =  self.view.frame.size.width/2;
                     height = JACatalogViewControllerListCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewPictureCell:

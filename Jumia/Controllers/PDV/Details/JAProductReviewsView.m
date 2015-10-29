@@ -87,7 +87,6 @@
 
 - (UICollectionView *)collectionView
 {
-    CGRect frame = self.bounds;
     if (!VALID_NOTEMPTY(_collectionView, UICollectionView)) {
         UICollectionViewFlowLayout* layout = [[UICollectionViewFlowLayout alloc] init];
         [layout setMinimumInteritemSpacing:0];
@@ -95,17 +94,17 @@
         //                                      top, left, bottom, right
         [layout setSectionInset:UIEdgeInsetsMake(0.f, 0.0, 10.0, 0.0)];
         layout.scrollDirection = UICollectionViewScrollDirectionVertical;
-        _collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:layout];
+        _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
         [_collectionView setBackgroundColor:UIColorFromRGB(0xf0f0f0)];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         [_collectionView registerClass:[JAReviewCollectionCell class] forCellWithReuseIdentifier:@"JAReviewCollectionCell"];
         [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"topView"];
         [self addSubview:_collectionView];
-    }else if (!CGRectEqualToRect(_collectionView.frame, frame))
+    }else if (!CGRectEqualToRect(_collectionView.frame, self.bounds))
     {
-        [_collectionView setFrame:frame];
-        [_collectionView performBatchUpdates:nil completion:nil];
+        [_collectionView setFrame:self.bounds];
+        [_collectionView reloadData];
     }
     return _collectionView;
 }

@@ -15,6 +15,7 @@
 #import "RIProductSimple.h"
 #import "JAUtils.h"
 #import "RICustomer.h"
+#import "JAPDVVariationsCollectionViewCell.h"
 
 #import <FBSDKCoreKit/FBSDKAppEvents.h>
 
@@ -36,12 +37,14 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 @property (nonatomic) JAPicker *picker;
 
 @property (nonatomic) NSMutableDictionary* selectedButton;
+@property (nonatomic) NSMutableDictionary* sizeButton;
+@property (nonatomic) CGRect selectButtonFrame;
 
 @end
 
 @implementation JABundlesViewController
 
-@synthesize bundles = _bundles, totalSubLine = _totalSubLine;
+@synthesize bundles = _bundles, totalSubLine = _totalSubLine, selectButtonFrame = _selectButtonFrame;
 
 - (NSArray *)bundles
 {
@@ -63,9 +66,14 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 
 - (UICollectionView *)collectionView
 {
+    CGRect frame = self.view.bounds;
+    frame.size.height-=kBottomDefaultHeight;
+    frame.size.height-=kProductInfoSubLineHeight;
     if (!VALID_NOTEMPTY(_collectionView, UICollectionView)) {
         UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
-        _collectionView = [[UICollectionView alloc] initWithFrame:self.viewBounds collectionViewLayout:layout];
+        layout.minimumInteritemSpacing = 0.f;
+        layout.minimumLineSpacing = 0.f;
+        _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
         [_collectionView setBackgroundColor:[UIColor whiteColor]];
         _collectionView.height -= 64;
         _collectionView.height -= self.bottomBar.height;
@@ -74,25 +82,43 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
         _collectionView.dataSource = self;
         [self.view addSubview:_collectionView];
     }
+    else {
+        if (!CGRectEqualToRect(frame, _collectionView.frame)) {
+            [_collectionView setFrame:frame];
+        }
+    }
     return _collectionView;
 }
 
 - (JABottomBar *)bottomBar
 {
+    CGRect frame = CGRectMake(0, CGRectGetMaxY(_collectionView.frame) + kBottomDefaultHeight, self.view.width, kBottomDefaultHeight);
     if (!VALID_NOTEMPTY(_bottomBar, JABottomBar)) {
         _bottomBar = [[JABottomBar alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_collectionView.frame) - kBottomDefaultHeight, self.view.width, kBottomDefaultHeight)];
+        [_bottomBar setBackgroundColor:[UIColor whiteColor]];
         [_bottomBar addButton:@"Buy Combo" target:self action:@selector(addComboToCart)];
         [self.view addSubview:_bottomBar];
+    }
+    else {
+        if (!CGRectEqualToRect(frame, _bottomBar.frame)) {
+            [_bottomBar setFrame:frame];
+        }
     }
     return _bottomBar;
 }
 
 - (JAProductInfoSubLine *)totalSubLine
 {
+    CGRect frame = CGRectMake(0, CGRectGetMaxY(_collectionView.frame), self.view.width, kProductInfoSubLineHeight);
     if (!VALID_NOTEMPTY(_totalSubLine, JAProductInfoSubLine)) {
         _totalSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_collectionView.frame) - kProductInfoSubLineHeight, self.view.width, kProductInfoSubLineHeight)];
         [_totalSubLine setTopSeparatorVisibility:YES];
         [self.view addSubview:_totalSubLine];
+    }
+    else {
+        if (!CGRectEqualToRect(frame, _totalSubLine.frame)) {
+            [_totalSubLine setFrame:frame];
+        }
     }
     return _totalSubLine;
 }
@@ -111,10 +137,19 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.navBarLayout.showBackButton = YES;
-    
-    [self.collectionView registerClass:[JACatalogListCollectionViewCell class] forCellWithReuseIdentifier:@"JACatalogListCollectionViewCell"];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [self.collectionView registerClass:[JAPDVVariationsCollectionViewCell class] forCellWithReuseIdentifier:@"CellWithLines"];
     
     [self reloadPrice];
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    [self.collectionView reloadData];
+    [self totalSubLine];
+    [self bottomBar];
 }
 
 #pragma mark - collectionView methods
@@ -123,7 +158,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 {
     RIProduct *bundleProduct = [self.bundles objectAtIndex:indexPath.row];
     
-    JACatalogCollectionViewCell *cell = (JACatalogCollectionViewCell *)[self.collectionView dequeueReusableCellWithReuseIdentifier:@"JACatalogListCollectionViewCell" forIndexPath:indexPath];
+    JAPDVVariationsCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"CellWithLines" forIndexPath:indexPath];
     
     [cell loadWithProduct:bundleProduct];
     
@@ -137,7 +172,8 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
         }
         
         UIButton *select = [UIButton buttonWithType:UIButtonTypeCustom];
-        [select setFrame:cell.favoriteButton.frame];
+
+        [select setFrame:CGRectMake(cell.favoriteButton.x, 8, 30, 30)];
         select.tag = indexPath.row;
         [select setImage:[UIImage imageNamed:@"check_empty"] forState:UIControlStateNormal];
         [select setImage:[UIImage imageNamed:@"check"] forState:UIControlStateSelected];
@@ -162,6 +198,8 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
             [cell.sizeButton.titleLabel sizeToFit];
             [self setCellSizeLabel:bundleProduct inCell:cell];
             
+            [cell.sizeButton setHidden:NO];
+            
         } else {
             if (VALID_NOTEMPTY(cell.sizeButton, UIButton)) {
                 [cell.sizeButton removeFromSuperview];
@@ -185,6 +223,8 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     } else {
         [cell.sizeButton setHidden:YES];
     }
+    
+    [self hideUnwantedCellLines:cell position:indexPath.row];
 
     return cell;
 }
@@ -214,7 +254,17 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(self.view.width, JACatalogViewControllerListCellHeight);
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        
+        if(UIDeviceOrientationPortrait == ([UIDevice currentDevice].orientation) || UIDeviceOrientationPortraitUpsideDown == ([UIDevice currentDevice].orientation)) {
+            return CGSizeMake(self.bounds.size.width, 104.0f);
+            
+        } else {
+            return CGSizeMake((self.bounds.size.width/2), 104.0f);
+        }
+    } else {
+        return CGSizeMake(self.view.frame.size.width, 104.0f);
+    }
 }
 
 #pragma mark - actions
@@ -316,6 +366,46 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)hideUnwantedCellLines:(JAPDVVariationsCollectionViewCell *)cell position:(NSInteger)index{
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        
+        if(UIDeviceOrientationPortrait == ([UIDevice currentDevice].orientation) || UIDeviceOrientationPortraitUpsideDown == ([UIDevice currentDevice].orientation)) {
+            cell.rightVerticalSeparator.hidden = YES;
+            if (index == 0) {
+                cell.topHorizontalSeparator.hidden = NO;
+            }
+            else{
+                cell.topHorizontalSeparator.hidden = YES;
+            }
+            
+        }else{
+            
+            if (index == 0 || index == 1) {
+                cell.topHorizontalSeparator.hidden = NO;
+            }
+            else{
+                cell.topHorizontalSeparator.hidden = YES;
+            }
+            if (index % 2 == 0) {
+                cell.rightVerticalSeparator.hidden = NO;
+            }
+            else{
+                cell.rightVerticalSeparator.hidden = YES;
+            }
+            
+        }
+    }
+    else {
+        cell.rightVerticalSeparator.hidden = YES;
+        if (index == 0) {
+            cell.topHorizontalSeparator.hidden = NO;
+        }
+        else{
+            cell.topHorizontalSeparator.hidden = YES;
+        }
+    }
 }
 
 #pragma mark - picker

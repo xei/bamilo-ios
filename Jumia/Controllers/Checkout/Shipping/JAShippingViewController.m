@@ -88,7 +88,7 @@ UICollectionViewDelegateFlowLayout
                                               data:[trackingDictionary copy]];
     
     self.navBarLayout.title = STRING_CHECKOUT;
-    
+    self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showCartButton = NO;
     
     self.pickupStationsForRegion = [[NSMutableArray alloc] init];

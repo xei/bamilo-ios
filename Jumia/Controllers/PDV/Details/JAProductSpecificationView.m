@@ -45,7 +45,7 @@
 - (UIView *)getKeyValueLineWithKey:(NSString *)key andValue:(NSString *)value
 {
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(16, 0, self.contentScrollView.width - 32, 36)];
-    UILabel *keyLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 8, lineView.width/3, lineView.height)];
+    UILabel *keyLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 8, lineView.width/3 - 16, lineView.height)];
     [keyLabel setNumberOfLines:0];
     [keyLabel setFont:JACaptionFont];
     [keyLabel setTextColor:JABlack800Color];
@@ -53,7 +53,7 @@
     [keyLabel sizeToFit];
     [lineView addSubview:keyLabel];
     
-    UILabel *valueLabel = [[UILabel alloc] initWithFrame:CGRectMake(lineView.width/3, 8, 2*lineView.width/3, lineView.height)];
+    UILabel *valueLabel = [[UILabel alloc] initWithFrame:CGRectMake(lineView.width/3 + 16, 8, 2*lineView.width/3 - 32, lineView.height)];
     [valueLabel setNumberOfLines:0];
     [valueLabel setFont:JACaptionFont];
     [valueLabel setTextColor:JABlackColor];
@@ -86,6 +86,10 @@
             yOffset = CGRectGetMaxY(line.frame);
         }
     }
+    
+    UIView *verticalSeparator = [[UIView alloc] initWithFrame:CGRectMake(self.contentScrollView.width/3, 0, 1, yOffset)];
+    [verticalSeparator setBackgroundColor:JABlack300Color];
+    [self.contentScrollView addSubview:verticalSeparator];
     
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.width, yOffset + 16.f)];
 }

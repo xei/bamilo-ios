@@ -43,10 +43,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
     [RICart changeQuantityInProducts:nil
                     withSuccessBlock:^(RICart *cart) {} andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {}];
-    if (VALID_NOTEMPTY(self.cart.discountCouponCode, NSString)) {
-        [RICart removeVoucherWithCode:self.cart.discountCouponCode
-                     withSuccessBlock:^(RICart *cart) {} andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {}];
-    }
     
     self.contentView.layer.cornerRadius = 5.0f;
     self.thankYouLabel.font = [UIFont fontWithName:kFontRegularName size:self.thankYouLabel.font.pointSize];
@@ -363,14 +359,14 @@
     [ecommerceDictionary setValue:[ecommerceSkusArray copy] forKey:kRIEcommerceSkusKey];
     [ecommerceDictionary setValue:[NSNumber numberWithFloat:averageValue] forKey:kRIEcommerceCartAverageValueKey];
     
-    if(VALID_NOTEMPTY(self.cart.discountCouponCode, NSString))
+    if(VALID_NOTEMPTY(self.cart.couponCode, NSString))
     {
-        [ecommerceDictionary setValue:self.cart.discountCouponCode forKey:kRIEcommerceCouponKey];
+        [ecommerceDictionary setValue:self.cart.couponCode forKey:kRIEcommerceCouponKey];
     }
     
-    if(VALID_NOTEMPTY(self.cart.discountCouponValue, NSNumber))
+    if(VALID_NOTEMPTY(self.cart.couponMoneyValueEuroConverted, NSNumber))
     {
-        [ecommerceDictionary setValue:self.cart.discountCouponValue forKey:kRIEcommerceCouponValue];
+        [ecommerceDictionary setValue:self.cart.couponMoneyValueEuroConverted forKey:kRIEcommerceCouponValue];
     }
     
     [ecommerceDictionary setValue:self.cart.shippingValue forKey:kRIEcommerceShippingKey];
