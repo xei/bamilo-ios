@@ -215,7 +215,12 @@
     
     self.selectedProductSimple = [NSMutableDictionary new];
     for (RIProductOffer* po in productOffers) {
-        [self.selectedProductSimple setValue:[po.productSimples firstObject] forKey:po.productSku];
+        for (RIProductSimple *simple in po.productSimples) {
+            if ([simple.quantity intValue] > 0) {
+                [self.selectedProductSimple setValue:simple forKey:po.productSku];
+                break;
+            }
+        }
     }
     
 }
