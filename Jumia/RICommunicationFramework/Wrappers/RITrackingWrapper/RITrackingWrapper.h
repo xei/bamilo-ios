@@ -230,6 +230,7 @@ typedef NS_ENUM(NSInteger, RICartState) {
 #define kRIEventCampaignIdKey           @"RIEventCampaignIdKey"
 #define kRIEventCreativeKey             @"RIEventCreativeKey"
 #define kRIEventDateLastAddedToCartKey  @"RIEventDateLastAddedToCartKey"
+#define kRIEventAttributeSetIDCartKey   @"RIEventAttributeSetIDCartKey"
 #define kRIEventLastCategoryAddedToCartKey @"RIEventLastCategoryAddedToCartKey"
 #define kRIEventGAIdKey                 @"RIEventGAIdKey"
 

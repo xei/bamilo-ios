@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) NSString *simpleSku;
 @property (nonatomic, strong) NSString *sku;
+@property (nonatomic, strong) NSNumber *attributeSetID;
 @property (nonatomic, strong) NSString *productUrl;
 @property (nonatomic, strong) NSString *imageUrl;
 @property (nonatomic, strong) NSNumber *quantity;
