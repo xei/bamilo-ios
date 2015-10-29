@@ -12,7 +12,6 @@
 #import "UIImageView+WebCache.h"
 #import "JARatingsView.h"
 
-
 @interface JAPDVVariationsCollectionViewCell()
 
 @property (nonatomic, strong) UIView* contentView;
@@ -43,10 +42,6 @@
     
     [_contentView addSubview:self.recentProductImageView];
     
-    [_contentView addSubview:self.favoriteButton];
-    
-    [_contentView addSubview:self.discountLabel];
-    
     [_contentView addSubview:self.sizeButton];
     
     [_contentView addSubview:self.feedbackView];
@@ -75,11 +70,14 @@
 {
     [super reloadViews];
     
+    self.nameLabel.width -= 64;
+    [self.discountLabel setX:self.frame.size.width - (32 + self.discountLabel.width)];
+    [self.favoriteButton setX:self.frame.size.width - (42 + self.favoriteButton.width)];
+    
     [_bottomHorizontalSeparator setWidth:self.frame.size.width];
     [_topHorizontalSeparator setWidth:self.frame.size.width];
     [_rightVerticalSeparator setX:self.frame.size.width - 1];
     [_rightVerticalSeparator setHeight:self.frame.size.height];
-
 }
 
 @end
