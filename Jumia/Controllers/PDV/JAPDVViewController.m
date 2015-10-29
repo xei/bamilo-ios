@@ -42,6 +42,8 @@
 #import "JABottomBar.h"
 #import "RISeller.h"
 
+typedef void (^ProcessActionBlock)(void);
+
 @interface JAPDVViewController ()
 <
 JAPDVGalleryDelegate,
@@ -50,6 +52,8 @@ JAActivityViewControllerDelegate
 >
 {
     BOOL _needRefreshProduct;
+    BOOL _needAddToFavBlock;
+    ProcessActionBlock _processActionBlock;
 }
 
 @property (strong, nonatomic) UIScrollView *mainScrollView;
@@ -176,19 +180,12 @@ JAActivityViewControllerDelegate
             }
         }
     }
-}
-
-- (void)updatedProduct:(NSNotification*)notification
-{
-    NSString* sku = notification.object;
-    if (!VALID_NOTEMPTY(sku, NSString) || [self.productSku isEqualToString:sku]) {
-        _needRefreshProduct = YES;
+    if (_needAddToFavBlock) {
+        
+        if (_processActionBlock) {
+            _processActionBlock();
+        }
     }
-}
-
-- (void)setProduct:(RIProduct *)product
-{
-    _product = product;
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -362,6 +359,24 @@ JAActivityViewControllerDelegate
     if(VALID_NOTEMPTY(self.ctaView, JABottomBar))
     {
         [self.ctaView removeFromSuperview];
+    }
+}
+
+#pragma mark - Product methods
+
+- (void)updatedProduct:(NSNotification*)notification
+{
+    if (VALID_NOTEMPTY(notification.object, NSArray)) {
+        for (id object in notification.object) {
+            if (VALID_NOTEMPTY(object, NSString) && [object isEqualToString:self.productSku]) {
+                self.product.favoriteAddDate = [NSDate new];
+                _needRefreshProduct = YES;
+                break;
+            }
+        }
+    }
+    if (VALID_NOTEMPTY(notification.object, NSString) && [self.productSku isEqualToString:notification.object]) {
+        _needRefreshProduct = YES;
     }
 }
 
@@ -1329,20 +1344,53 @@ JAActivityViewControllerDelegate
     }];
 }
 
-
 - (void)addToFavoritesPressed:(UIButton*)button
 {
-    [self showLoading];
+    if (!self.productImageSection.wishListButton.selected && !VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate))
+    {
+        [self addToFavorites:button];
+    }else if (self.productImageSection.wishListButton.selected && VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate))
+    {
+        [self removeFromFavorites:button];
+    }
+}
+
+- (BOOL)isUserLoggedInWithBlock:(ProcessActionBlock)block
+{
     if(![RICustomer checkIfUserIsLogged]) {
         [self hideLoading];
+        _needAddToFavBlock = YES;
+        _processActionBlock = block;
+        
         _needRefreshProduct = YES;
         NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
         [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfoLogin];
+        return NO;
+    }
+    return YES;
+}
+
+- (void)addToFavorites:(UIButton *)button
+{
+    [self showLoading];
+    
+    __weak typeof (self) weakSelf = self;
+    
+    BOOL logged = [self isUserLoggedInWithBlock:^{
+        _needAddToFavBlock = NO;
+        if(![RICustomer checkIfUserIsLogged]) {
+            return;
+        }else{
+            [weakSelf addToFavorites:button];
+        }
+    }];
+    
+    if (!logged) {
         return;
     }
     
-    if (!VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate))
+    if (!button.selected && !VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate))
     {
         //add to favorites
         [RIProduct addToFavorites:self.product successBlock:^{
@@ -1364,12 +1412,39 @@ JAActivityViewControllerDelegate
             [self showMessage:STRING_ADDED_TO_WISHLIST success:YES];
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-            
             [self hideLoading];
-            [self showMessage:STRING_ERROR_ADDING_TO_WISHLIST success:NO];
+            
+            NSString *errorMessage = STRING_ERROR_ADDING_TO_WISHLIST;
+            if (RIApiResponseNoInternetConnection == apiResponse)
+            {
+                errorMessage = STRING_NO_CONNECTION;
+            }
+            [self showMessage:errorMessage success:NO];
         }];
+    }else{
+        [self hideLoading];
     }
-    else
+}
+
+- (void)removeFromFavorites:(UIButton *)button
+{
+    [self showLoading];
+    
+    __weak typeof (self) weakSelf = self;
+    
+    BOOL logged = [self isUserLoggedInWithBlock:^{
+        _needAddToFavBlock = NO;
+        if(![RICustomer checkIfUserIsLogged]) {
+            return;
+        }else{
+            [weakSelf removeFromFavorites:button];
+        }
+    }];
+    
+    if (!logged) {
+        return;
+    }
+    if (self.productImageSection.wishListButton.selected && VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate))
     {
         [RIProduct removeFromFavorites:self.product successBlock:^(void) {
             //update favoriteProducts
@@ -1391,7 +1466,13 @@ JAActivityViewControllerDelegate
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             
             [self hideLoading];
-            [self showMessage:STRING_ERROR_ADDING_TO_WISHLIST success:NO];
+            
+            NSString *errorMessage = STRING_ERROR_REMOVING_FROM_WISHLIST;
+            if (RIApiResponseNoInternetConnection == apiResponse)
+            {
+                errorMessage = STRING_NO_CONNECTION;
+            }
+            [self showMessage:errorMessage success:NO];
         }];
     }
 }
