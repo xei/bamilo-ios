@@ -124,6 +124,12 @@
     [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
     [trackingDictionary setValue:[NSNumber numberWithInteger:[self.cart.orderNr integerValue]] forKey:kRIEventValueKey];
     
+    NSMutableString* attributeSetID = [NSMutableString new];
+    for( RICartItem* pd in [self.cart cartItems]) {
+        [attributeSetID appendFormat:@"%@;",[pd attributeSetID]];
+    }
+    [trackingDictionary setValue:[attributeSetID copy] forKey:kRIEventAttributeSetIDCartKey];
+    
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutEnd]
                                               data:[trackingDictionary copy]];
     
