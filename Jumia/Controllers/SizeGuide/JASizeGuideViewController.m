@@ -14,7 +14,8 @@
 
 @property (nonatomic, strong)UIImageView* imageView;
 @property (nonatomic, strong)UIScrollView* scrollView;
-@property (nonatomic, strong) JASizeGuideWizardView *wizardView;
+//$WIZ$
+//@property (nonatomic, strong) JASizeGuideWizardView *wizardView;
 
 @end
 
@@ -44,14 +45,15 @@
 
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    if(VALID_NOTEMPTY(self.wizardView, JASizeGuideWizardView))
-    {
-        CGRect newFrame = CGRectMake(self.wizardView.frame.origin.x,
-                                     self.wizardView.frame.origin.y,
-                                     self.view.frame.size.height + self.view.frame.origin.y,
-                                     self.view.frame.size.width - self.view.frame.origin.y);
-        [self.wizardView reloadForFrame:newFrame];
-    }
+    //$WIZ$
+//    if(VALID_NOTEMPTY(self.wizardView, JASizeGuideWizardView))
+//    {
+//        CGRect newFrame = CGRectMake(self.wizardView.frame.origin.x,
+//                                     self.wizardView.frame.origin.y,
+//                                     self.view.frame.size.height + self.view.frame.origin.y,
+//                                     self.view.frame.size.width - self.view.frame.origin.y);
+//        [self.wizardView reloadForFrame:newFrame];
+//    }
     
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
@@ -61,11 +63,12 @@
 {
     [self positionViews];
     
-    if(VALID_NOTEMPTY(self.wizardView, JASizeGuideWizardView))
-    {
-        [self.wizardView reloadForFrame:self.view.bounds];
-        [self.view bringSubviewToFront:self.wizardView];
-    }
+    //$WIZ$
+//    if(VALID_NOTEMPTY(self.wizardView, JASizeGuideWizardView))
+//    {
+//        [self.wizardView reloadForFrame:self.view.bounds];
+//        [self.view bringSubviewToFront:self.wizardView];
+//    }
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
@@ -103,12 +106,13 @@
                     UIImage *image = [UIImage imageWithData:imageData];
                     sizeGuideImage = image;
                     [self setupScrollViewBasedOnImage:sizeGuideImage];
-                    
-                    if(VALID_NOTEMPTY(self.wizardView, JASizeGuideWizardView))
-                    {
-                        [self.wizardView reloadForFrame:self.view.bounds];
-                        [self.view bringSubviewToFront:self.wizardView];
-                    }
+
+                    //$WIZ$
+//                    if(VALID_NOTEMPTY(self.wizardView, JASizeGuideWizardView))
+//                    {
+//                        [self.wizardView reloadForFrame:self.view.bounds];
+//                        [self.view bringSubviewToFront:self.wizardView];
+//                    }
                 });
             });
         }
@@ -120,8 +124,9 @@
         if([[NSUserDefaults standardUserDefaults] boolForKey:kJASizeGuideWizardUserDefaultsKey] == NO)
         {
             [self hideLoading];
-            self.wizardView = [[JASizeGuideWizardView alloc] initWithFrame:self.view.bounds];
-            [self setupWizardView:self.wizardView];
+            //$WIZ$
+//            self.wizardView = [[JASizeGuideWizardView alloc] initWithFrame:self.view.bounds];
+//            [self setupWizardView:self.wizardView];
         }
     }
 }
