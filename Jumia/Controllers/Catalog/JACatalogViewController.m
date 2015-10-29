@@ -349,7 +349,7 @@ typedef void (^ProcessActionBlock)(void);
                                              [self viewBounds].origin.y,
                                              self.view.frame.size.width,
                                              self.catalogTopView.frame.size.height)];
-    self.catalogTopView.cellTypeSelected = JACatalogCollectionViewListCell;
+    self.catalogTopView.cellTypeSelected = JACatalogCollectionViewGridCell;
     self.catalogTopView.delegate = self;
     [self.view addSubview:self.catalogTopView];
     self.catalogTopView.sortingButton.enabled = NO;
@@ -382,9 +382,6 @@ typedef void (^ProcessActionBlock)(void);
     }
     [self.catalogTopView setSorting:self.sortingMethod];
     [self.catalogTopView repositionForWidth:self.view.frame.size.width];
-    
-    NSNumber* cellTypeSelected = [[NSUserDefaults standardUserDefaults] objectForKey:JACatalogGridSelected];
-    self.catalogTopView.cellTypeSelected = [cellTypeSelected integerValue];
 }
 
 - (void)getCategories
@@ -745,14 +742,14 @@ typedef void (^ProcessActionBlock)(void);
                     height = JACatalogViewControllerListCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewPictureCell:
-                    width = self.view.frame.size.width/2;
+                    width = self.view.frame.size.width;
                     height = JACatalogViewControllerPictureCellHeight_ipad;
                     break;
             }
         } else {
             switch (self.catalogTopView.cellTypeSelected) {
                 case JACatalogCollectionViewGridCell:
-                    width =  self.view.frame.size.width/3;
+                    width =  self.view.frame.size.width/4;
                     height = JACatalogViewControllerGridCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewListCell:
@@ -760,7 +757,7 @@ typedef void (^ProcessActionBlock)(void);
                     height = JACatalogViewControllerListCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewPictureCell:
-                    width =  self.view.frame.size.width/3;
+                    width =  self.view.frame.size.width/2;
                     height = JACatalogViewControllerPictureCellHeight_ipad;
                     break;
             }
