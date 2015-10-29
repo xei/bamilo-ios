@@ -95,7 +95,6 @@
     {
         RIField *field = [fields objectAtIndex:i];
         NSInteger tag = [self.formViews count];
-        tag++;
         
         if ([@"string" isEqualToString:field.type] || [@"text" isEqualToString:field.type] || [@"email" isEqualToString:field.type])
         {
@@ -236,6 +235,11 @@
                 
                 [textField.textField setTag:tag];
                 [textField setTag:tag];
+                
+                [textField.textField setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
+                if ([@"phone" isEqualToString:field.key]) {
+                    textField.textField.keyboardType = UIKeyboardTypePhonePad;
+                }
                 
                 lastTextFieldIndex = [self.formViews count];
                 [self.formViews addObject:textField];
@@ -433,6 +437,7 @@
 
 -(BOOL)checkErrors
 {
+    NSString* genderFieldName = [self getFieldNameForKey:@"gender"];
     self.firstErrorInFields = nil;
     BOOL hasErrors = NO;
     if(VALID_NOTEMPTY(self.formViews, NSMutableArray))
@@ -441,12 +446,15 @@
         {
             if ([obj isKindOfClass:[JATextFieldComponent class]] || [obj isKindOfClass:[JABirthDateComponent class]] || [obj isKindOfClass:[JARadioComponent class]])
             {
-                if (![obj isValid])
-                {
-                    hasErrors = YES;
-                    if (ISEMPTY(self.firstErrorInFields)) {
-                        if ([obj respondsToSelector:@selector(currentErrorMessage)]) {
-                            self.firstErrorInFields = [obj currentErrorMessage];
+                //ignore gender as an error, can't evaluate it here because the billing address form has it but it isn't shown on screen.
+                if (NO == [[obj getFieldName] isEqualToString:genderFieldName]) {
+                    if (![obj isValid]) //ignore gender
+                    {
+                        hasErrors = YES;
+                        if (ISEMPTY(self.firstErrorInFields)) {
+                            if ([obj respondsToSelector:@selector(currentErrorMessage)]) {
+                                self.firstErrorInFields = [obj currentErrorMessage];
+                            }
                         }
                     }
                 }

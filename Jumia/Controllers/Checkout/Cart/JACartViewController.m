@@ -1161,6 +1161,12 @@
             [trackingDictionary setValue:[NSNumber numberWithInteger:[[self.cart cartItems] count]] forKey:kRIEventQuantityKey];
             [trackingDictionary setValue:[self.cart cartValueEuroConverted] forKey:kRIEventTotalCartKey];
             
+            NSMutableString* attributeSetID = [NSMutableString new];
+            for( RICartItem* pd in [self.cart cartItems]) {
+                [attributeSetID appendFormat:@"%@;",[pd attributeSetID]];
+            }
+            [trackingDictionary setValue:[attributeSetID copy] forKey:kRIEventAttributeSetIDCartKey];
+            
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutStart]
                                                       data:[trackingDictionary copy]];
             

@@ -93,6 +93,8 @@ UICollectionViewDelegateFlowLayout>
     
     self.shouldForceAddAddress = YES;
     
+    self.navBarLayout.showBackButton = YES;
+    
     self.screenName = @"Address";
     
     self.firstCollectionViewAddresses = [[NSArray alloc] init];

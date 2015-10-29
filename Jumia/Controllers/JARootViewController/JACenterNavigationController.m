@@ -1814,6 +1814,7 @@
         [cartViewController setCart:self.cart];
         
         [self popToRootViewControllerAnimated:NO];
+        [self.tabBarView selectButtonAtIndex:2];
         [self pushViewController:cartViewController animated:NO];
     }
     

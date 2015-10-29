@@ -93,7 +93,7 @@ UITextFieldDelegate>
     self.apiResponse = RIApiResponseSuccess;
     
     self.navBarLayout.title = STRING_CHECKOUT;
-    
+    self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showCartButton = NO;
     
     self.stepBackground.translatesAutoresizingMaskIntoConstraints = YES;
@@ -466,9 +466,9 @@ UITextFieldDelegate>
 
 -(void)finishedLoadingPaymentMethods
 {
-    if(VALID_NOTEMPTY(self.cart.discountCouponCode, NSString))
+    if(VALID_NOTEMPTY(self.cart.couponCode, NSString))
     {
-        [self.couponTextField setText:self.cart.discountCouponCode];
+        [self.couponTextField setText:self.cart.couponCode];
         [self.couponTextField setEnabled:NO];
         [self.useCouponButton setTitle:STRING_REMOVE forState:UIControlStateNormal];
     }
@@ -567,6 +567,8 @@ UITextFieldDelegate>
             [self.useCouponButton setTitle:STRING_USE forState:UIControlStateNormal];
             [self.couponTextField setEnabled: YES];
             [self.couponTextField setText:@""];
+            
+            [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
             [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
@@ -586,8 +588,9 @@ UITextFieldDelegate>
             
             [self.useCouponButton setTitle:STRING_REMOVE forState:UIControlStateNormal];
             [self.couponTextField setEnabled:NO];
-            [self hideLoading];
             
+            [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+            [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
             
