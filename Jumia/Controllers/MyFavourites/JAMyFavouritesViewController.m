@@ -142,13 +142,13 @@
     } else {
         self.maxPerPage = JAMyFavouritesViewControllerMaxProducts;
     }
+    
+    [self getFavorites];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    [self getFavorites];
     
     [self didRotateFromInterfaceOrientation:0];
 }
