@@ -43,20 +43,6 @@
 @property (strong, nonatomic) NSNumber *subTotal;
 @property (strong, nonatomic) NSString *subTotalFormatted;
 
-/**
- * new params (NOT USED)
- */
-@property (strong, nonatomic) NSNumber *deliveryDiscountAmount;
-@property (strong, nonatomic) NSNumber *deliveryDiscountAmountConverted;
-@property (strong, nonatomic) NSNumber *deliveryDiscountCartRuleDiscount;
-@property (strong, nonatomic) NSNumber *deliveryDiscountCartRuleDiscountConverted;
-@property (strong, nonatomic) NSNumber *deliveryDiscountCouponMoneyValue;
-@property (strong, nonatomic) NSNumber *deliveryDiscountCouponMoneyValueConverted;
-
-
-
-//$$$ FROM CHECKOUT
-
 @property (nonatomic, strong) NSString *nextStep;
 @property (nonatomic, strong) RIForm *addressForm;
 @property (nonatomic, strong) RIShippingMethodForm *shippingMethodForm;
@@ -73,10 +59,15 @@
 @property (nonatomic, strong) NSString *customerLastName;
 @property (nonatomic, strong) RIPaymentInformation *paymentInformation;
 
-
-//not yet parsed
-@property (nonatomic, strong) NSString *discountCouponCode;
-@property (nonatomic, strong) NSString *discountCouponValue;
+/**
+ * new params (NOT USED)
+ */
+@property (strong, nonatomic) NSNumber *deliveryDiscountAmount;
+@property (strong, nonatomic) NSNumber *deliveryDiscountAmountConverted;
+@property (strong, nonatomic) NSNumber *deliveryDiscountCartRuleDiscount;
+@property (strong, nonatomic) NSNumber *deliveryDiscountCartRuleDiscountConverted;
+@property (strong, nonatomic) NSNumber *deliveryDiscountCouponMoneyValue;
+@property (strong, nonatomic) NSNumber *deliveryDiscountCouponMoneyValueConverted;
 
 
 /**

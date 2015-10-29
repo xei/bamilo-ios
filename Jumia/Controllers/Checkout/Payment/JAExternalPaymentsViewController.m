@@ -26,7 +26,7 @@
     self.screenName = @"ExternalPayment";
     
     self.navBarLayout.showCartButton = NO;
-    
+    self.navBarLayout.showBackButton = YES;
     self.navBarLayout.title = STRING_CHECKOUT;
     
     self.webView.translatesAutoresizingMaskIntoConstraints = YES;
