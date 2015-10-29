@@ -23,6 +23,10 @@
         cartItem.sku = [info objectForKey:@"sku"];
     }
     
+    if (VALID_NOTEMPTY([info objectForKey:@"attribute_set_id"], NSNumber)) {
+        cartItem.attributeSetID = [info objectForKey:@"attribute_set_id"];
+    }
+    
     if (VALID_NOTEMPTY([info objectForKey:@"url"], NSString)) {
         cartItem.productUrl = [info objectForKey:@"url"];
     }
