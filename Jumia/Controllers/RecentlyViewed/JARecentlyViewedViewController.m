@@ -161,14 +161,16 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+}
+
+-(void) viewWillLayoutSubviews
+{
     [self didRotateFromInterfaceOrientation:0];
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
     [[RITrackingWrapper sharedInstance]trackScreenWithName:@"RecentlyViewed"];
 }
 

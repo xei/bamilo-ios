@@ -140,9 +140,7 @@ UIAlertViewDelegate
     
     if(_didSubViews)
     {
-        if ([self landscapePopViewController]) {
-            return;
-        }
+        [self setupViews];
     }
 }
 
@@ -151,32 +149,7 @@ UIAlertViewDelegate
     [super viewDidLayoutSubviews];
     _didSubViews = YES;
     if(_didAppeared)
-       [self landscapePopViewController];
-}
-
--(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-//    [self hideViews];
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    
-    [self landscapePopViewController];
-}
-
-- (BOOL)landscapePopViewController
-{
-//    if(UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation || UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)
-//    {
-//        NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];
-//        [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:self userInfo:userInfo];
-//        return YES;
-//    }
-    return NO;
+       [self setupViews];
 }
 
 - (void)ratingsRequests
@@ -377,104 +350,122 @@ UIAlertViewDelegate
         self.fixedLabel.text = STRING_RATE_PRODUCT;
         self.fixedLabel.textColor = UIColorFromRGB(0x666666);
         [self.centerView addSubview:self.fixedLabel];
+    }else{
+        [self.fixedLabel setFrame:CGRectMake(dynamicFormHorizontalMargin,
+                                            verticalMargin,
+                                            centerViewWidth - (2 * dynamicFormHorizontalMargin),
+                                            16.0f)];
     }
 
     CGFloat currentY = CGRectGetMaxY(self.fixedLabel.frame) + 12.0f;
     CGFloat spaceBetweenFormFields = 6.0f;
     
     if (self.ratingsForm) {
-        if (!self.ratingsContentView) {
             NSInteger count = 0;
             CGFloat initialContentY = 0;
+        
+        BOOL isNew = NO;
+        if (!self.ratingsContentView) {
             self.ratingsDynamicForm = [[JADynamicForm alloc] initWithForm:self.ratingsForm
                                                          startingPosition:initialContentY
                                                                 widthSize:centerViewWidth
                                                        hasFieldNavigation:YES];
             
             self.ratingsContentView = [UIView new];
-            for (UIView *view in self.ratingsDynamicForm.formViews)
+            [self.centerView addSubview:self.ratingsContentView];
+            isNew = YES;
+        }
+        
+        for (UIView *view in self.ratingsDynamicForm.formViews)
+        {
+            view.tag = count;
+            CGRect frame = view.frame;
+            if(isiPad)
             {
-                view.tag = count;
-                CGRect frame = view.frame;
-                if(isiPad)
-                {
-                    frame.origin.x = dynamicFormHorizontalMargin;
-                    if (![view isKindOfClass:[JAAddRatingView class]]) {
-                        frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
-                    }
+                frame.origin.x = dynamicFormHorizontalMargin;
+                if (![view isKindOfClass:[JAAddRatingView class]]) {
+                    frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
                 }
-                else
-                {
-                    frame.size.width = centerViewWidth;
-                }
-                
-                view.frame = frame;
-                
-                [self.ratingsContentView addSubview:view];
-                initialContentY += view.frame.size.height + spaceBetweenFormFields;
-                count++;
+            }
+            else
+            {
+                frame.size.width = centerViewWidth;
             }
             
-            [self.ratingsContentView setFrame:CGRectMake(0.0,
-                                                         currentY,
-                                                         centerViewWidth,
-                                                         initialContentY)];
-            [self.centerView addSubview:self.ratingsContentView];
+            view.frame = frame;
+            
+            if (isNew)
+                [self.ratingsContentView addSubview:view];
+            initialContentY += view.frame.size.height + spaceBetweenFormFields;
+            count++;
         }
+        
+        [self.ratingsContentView setFrame:CGRectMake(0.0,
+                                                     currentY,
+                                                     centerViewWidth,
+                                                     initialContentY)];
+        
         
     }
     
     if (self.reviewsForm) {
+        CGFloat initialContentY = 0;
+        BOOL isNew = NO;
         if (!self.reviewsContentView)
         {
-            CGFloat initialContentY = 0;
             self.reviewsDynamicForm = [[JADynamicForm alloc] initWithForm:self.reviewsForm
                                                          startingPosition:initialContentY
                                                                 widthSize:centerViewWidth
                                                        hasFieldNavigation:YES];
             self.reviewsContentView = [UIView new];
-            for (int i = 0; i < self.reviewsDynamicForm.formViews.count; i++)
+            [self.centerView addSubview:self.reviewsContentView];
+            isNew = YES;
+        }
+        
+        for (int i = 0; i < self.reviewsDynamicForm.formViews.count; i++)
+        {
+            UIView* view = [self.reviewsDynamicForm.formViews objectAtIndex:i];
+            view.tag = i;
+            CGRect frame = view.frame;
+            if(isiPad)
             {
-                UIView* view = [self.reviewsDynamicForm.formViews objectAtIndex:i];
-                view.tag = i;
-                CGRect frame = view.frame;
-                if(isiPad)
-                {
-                    frame.origin.x = dynamicFormHorizontalMargin;
-                    if (NO == [view isKindOfClass:[JAAddRatingView class]]) {
-                        frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
-                    }else
-                        frame.size.width = centerViewWidth;
-                }
-                else
-                {
-                    frame.size.width = centerViewWidth;
-                }
+                frame.origin.x = dynamicFormHorizontalMargin;
                 if (NO == [view isKindOfClass:[JAAddRatingView class]]) {
-                    if (VALID_NOTEMPTY(self.ratingsForm, RIForm) && VALID_NOTEMPTY(self.reviewsForm, RIForm)) {
+                    frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
+                }else
+                    frame.size.width = centerViewWidth;
+            }
+            else
+            {
+                frame.size.width = centerViewWidth;
+            }
+            if (NO == [view isKindOfClass:[JAAddRatingView class]]) {
+                if (VALID_NOTEMPTY(self.ratingsForm, RIForm) && VALID_NOTEMPTY(self.reviewsForm, RIForm)) {
+                    if (isNew) {
                         //has switch
                         frame.origin.y = frame.origin.y + kDistanceBetweenStarsAndText;
-                        frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
                     }
+                    frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
                 }
-                
-                view.frame = frame;
-                
-                [self.reviewsContentView addSubview:view];
-
-                initialContentY += view.frame.size.height + spaceBetweenFormFields;
             }
             
-            if (VALID_NOTEMPTY(self.ratingsForm, RIForm) && VALID_NOTEMPTY(self.reviewsForm, RIForm)) {
-                //has switch
-                initialContentY += kDistanceBetweenStarsAndText;
+            view.frame = frame;
+            
+            if (isNew) {
+                [self.reviewsContentView addSubview:view];
             }
-            [self.reviewsContentView setFrame:CGRectMake(0.0,
-                                                         currentY,
-                                                         centerViewWidth,
-                                                         initialContentY)];
-            [self.centerView addSubview:self.reviewsContentView];
+
+            initialContentY += view.frame.size.height + spaceBetweenFormFields;
         }
+        
+        if (VALID_NOTEMPTY(self.ratingsForm, RIForm) && VALID_NOTEMPTY(self.reviewsForm, RIForm)) {
+            //has switch
+            initialContentY += kDistanceBetweenStarsAndText;
+        }
+        [self.reviewsContentView setFrame:CGRectMake(0.0,
+                                                     currentY,
+                                                     centerViewWidth,
+                                                     initialContentY)];
     }
 
     CGFloat modeSwitchY = currentY + self.ratingsContentView.frame.size.height;
@@ -488,12 +479,15 @@ UIAlertViewDelegate
     }
     
     if (VALID_NOTEMPTY(self.ratingsForm, RIForm) && VALID_NOTEMPTY(self.reviewsForm, RIForm)) {
+        
+        BOOL isNew = NO;
         if (!self.modeSwitch) {
             //show the switch
             self.modeSwitch = [UISwitch new];
             [self.modeSwitch addTarget:self action:@selector(switchBetweenModes) forControlEvents:UIControlEventTouchUpInside];
             [self.modeSwitch setY:modeSwitchY];
             [self.centerView addSubview:self.modeSwitch];
+            isNew = YES;
             
             CGFloat modeSwitchX = 10.0f;
             if (isiPad) {
@@ -522,8 +516,9 @@ UIAlertViewDelegate
                                                   finalWidth,
                                                   finalHeight)];
             [self.centerView addSubview:writeReviewLabel];
-            
         }
+            
+        
         
         currentY += self.modeSwitch.frame.size.height + 50.0f;
     } else {
@@ -556,20 +551,25 @@ UIAlertViewDelegate
         [self.sendReviewButton addTarget:self action:@selector(sendReview:) forControlEvents:UIControlEventTouchUpInside];
         [self.centerView addSubview:self.sendReviewButton];
         
-        [self.centerView setFrame:CGRectMake(horizontalMargin,
-                                             verticalMargin,
-                                             centerViewWidth,
-                                             CGRectGetMaxY(self.sendReviewButton.frame) + verticalMargin)];
         
-        self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width,
-                                                 self.centerView.frame.size.height + self.centerView.frame.origin.y);
+    }
+    [self.sendReviewButton setFrame:CGRectMake(6.0f,
+                                              currentY,
+                                              centerViewWidth - 12.f,
+                                              self.sendReviewButton.height)];
     
-        [self.scrollView setHidden:NO];
-        
-        if (RI_IS_RTL) {
-            [self.view flipAllSubviews];
-        }
-        
+    [self.centerView setFrame:CGRectMake(horizontalMargin,
+                                         verticalMargin,
+                                         centerViewWidth,
+                                         CGRectGetMaxY(self.sendReviewButton.frame) + verticalMargin)];
+    
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width,
+                                             self.centerView.frame.size.height + self.centerView.frame.origin.y);
+    
+    [self.scrollView setHidden:NO];
+    
+    if (RI_IS_RTL) {
+        [self.view flipAllSubviews];
     }
 }
 

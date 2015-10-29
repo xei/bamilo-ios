@@ -37,16 +37,17 @@
 
 - (UILabel *)descriptionLabel
 {
-    CGRect frame = CGRectMake(16, 16, self.contentScrollView.width - 32, 300);
+    CGFloat width = self.contentScrollView.width - 32;
     if (!VALID_NOTEMPTY(_descriptionLabel, UILabel)) {
-        _descriptionLabel = [[UILabel alloc] initWithFrame:frame];
+        _descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, 16, self.contentScrollView.width - 32, 10)];
         [_descriptionLabel setFont:JACaptionFont];
         [_descriptionLabel setNumberOfLines:0];
         [self.contentScrollView addSubview:_descriptionLabel];
     }else{
-        if (!CGRectEqualToRect(frame, _descriptionLabel.frame)) {
-            [_descriptionLabel setFrame:frame];
-            [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.width, CGRectGetMaxY(self.descriptionLabel.frame) + 16.f)];
+        if (width != _descriptionLabel.width) {
+            [_descriptionLabel setWidth:width];
+            [_descriptionLabel sizeToFit];
+            [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.width, CGRectGetMaxY(_descriptionLabel.frame) + 16.f)];
         }
     }
     return _descriptionLabel;
@@ -72,10 +73,8 @@
     CGRect frame = CGRectMake(0, 0, self.width, self.height);
     if (!VALID_NOTEMPTY(_contentScrollView, UIScrollView)) {
         _contentScrollView = [[UIScrollView alloc] initWithFrame:frame];
-    }else{
-        if (!CGRectEqualToRect(frame, _contentScrollView.frame)) {
-            [_contentScrollView setFrame:frame];
-        }
+    }else if (!CGRectEqualToRect(frame, _contentScrollView.frame)) {
+        [_contentScrollView setFrame:frame];
     }
     return _contentScrollView;
 }

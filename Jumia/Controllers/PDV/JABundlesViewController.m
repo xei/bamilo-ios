@@ -15,6 +15,7 @@
 #import "RIProductSimple.h"
 #import "JAUtils.h"
 #import "RICustomer.h"
+#import "JAPDVVariationsCollectionViewCell.h"
 
 #import <FBSDKCoreKit/FBSDKAppEvents.h>
 
@@ -37,12 +38,13 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 
 @property (nonatomic) NSMutableDictionary* selectedButton;
 @property (nonatomic) NSMutableDictionary* sizeButton;
+@property (nonatomic) CGRect selectButtonFrame;
 
 @end
 
 @implementation JABundlesViewController
 
-@synthesize bundles = _bundles, totalSubLine = _totalSubLine;
+@synthesize bundles = _bundles, totalSubLine = _totalSubLine, selectButtonFrame = _selectButtonFrame;
 
 - (NSArray *)bundles
 {
@@ -64,9 +66,14 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 
 - (UICollectionView *)collectionView
 {
+    CGRect frame = self.view.bounds;
+    frame.size.height-=kBottomDefaultHeight;
+    frame.size.height-=kProductInfoSubLineHeight;
     if (!VALID_NOTEMPTY(_collectionView, UICollectionView)) {
         UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
-        _collectionView = [[UICollectionView alloc] initWithFrame:self.viewBounds collectionViewLayout:layout];
+        layout.minimumInteritemSpacing = 0.f;
+        layout.minimumLineSpacing = 0.f;
+        _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
         [_collectionView setBackgroundColor:[UIColor whiteColor]];
         _collectionView.height -= 64;
         _collectionView.height -= self.bottomBar.height;
@@ -75,25 +82,43 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
         _collectionView.dataSource = self;
         [self.view addSubview:_collectionView];
     }
+    else {
+        if (!CGRectEqualToRect(frame, _collectionView.frame)) {
+            [_collectionView setFrame:frame];
+        }
+    }
     return _collectionView;
 }
 
 - (JABottomBar *)bottomBar
 {
+    CGRect frame = CGRectMake(0, CGRectGetMaxY(_collectionView.frame) + kBottomDefaultHeight, self.view.width, kBottomDefaultHeight);
     if (!VALID_NOTEMPTY(_bottomBar, JABottomBar)) {
         _bottomBar = [[JABottomBar alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_collectionView.frame) - kBottomDefaultHeight, self.view.width, kBottomDefaultHeight)];
+        [_bottomBar setBackgroundColor:[UIColor whiteColor]];
         [_bottomBar addButton:@"Buy Combo" target:self action:@selector(addComboToCart)];
         [self.view addSubview:_bottomBar];
+    }
+    else {
+        if (!CGRectEqualToRect(frame, _bottomBar.frame)) {
+            [_bottomBar setFrame:frame];
+        }
     }
     return _bottomBar;
 }
 
 - (JAProductInfoSubLine *)totalSubLine
 {
+    CGRect frame = CGRectMake(0, CGRectGetMaxY(_collectionView.frame), self.view.width, kProductInfoSubLineHeight);
     if (!VALID_NOTEMPTY(_totalSubLine, JAProductInfoSubLine)) {
         _totalSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_collectionView.frame) - kProductInfoSubLineHeight, self.view.width, kProductInfoSubLineHeight)];
         [_totalSubLine setTopSeparatorVisibility:YES];
         [self.view addSubview:_totalSubLine];
+    }
+    else {
+        if (!CGRectEqualToRect(frame, _totalSubLine.frame)) {
+            [_totalSubLine setFrame:frame];
+        }
     }
     return _totalSubLine;
 }
@@ -112,10 +137,19 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.navBarLayout.showBackButton = YES;
-    
-    [self.collectionView registerClass:[JACatalogListCollectionViewCell class] forCellWithReuseIdentifier:@"JACatalogListCollectionViewCell"];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [self.collectionView registerClass:[JAPDVVariationsCollectionViewCell class] forCellWithReuseIdentifier:@"CellWithLines"];
     
     [self reloadPrice];
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    [self.collectionView reloadData];
+    [self totalSubLine];
+    [self bottomBar];
 }
 
 #pragma mark - collectionView methods
@@ -124,7 +158,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 {
     RIProduct *bundleProduct = [self.bundles objectAtIndex:indexPath.row];
     
-    JACatalogCollectionViewCell *cell = (JACatalogCollectionViewCell *)[self.collectionView dequeueReusableCellWithReuseIdentifier:@"JACatalogListCollectionViewCell" forIndexPath:indexPath];
+    JAPDVVariationsCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"CellWithLines" forIndexPath:indexPath];
     
     [cell loadWithProduct:bundleProduct];
     
@@ -138,7 +172,8 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
         }
         
         UIButton *select = [UIButton buttonWithType:UIButtonTypeCustom];
-        [select setFrame:cell.favoriteButton.frame];
+
+        [select setFrame:CGRectMake(cell.favoriteButton.x, 8, 30, 30)];
         select.tag = indexPath.row;
         [select setImage:[UIImage imageNamed:@"check_empty"] forState:UIControlStateNormal];
         [select setImage:[UIImage imageNamed:@"check"] forState:UIControlStateSelected];
@@ -156,45 +191,40 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
                           action:@selector(clickableViewPressedInCell:)
                 forControlEvents:UIControlEventTouchUpInside];
     
-    
-    if (VALID_NOTEMPTY(self.sizeButton, NSMutableDictionary) && [self.sizeButton objectForKey:[NSNumber numberWithInteger:indexPath.row]]) {
-        [self setCellSizeLabel:bundleProduct inCell:cell];
-        [cell.sizeButton.titleLabel sizeToFit];
+    if ([bundleProduct.productSimples count] > 1) {
         
-    } else {
-        
-        if (!VALID(self.sizeButton, NSMutableDictionary)) {
-            self.sizeButton = [[NSMutableDictionary alloc]init];
-        }
-        
-        CGRect frame = CGRectMake(cell.priceView.frame.origin.x, cell.priceView.frame.origin.y+20.0f,
-                                  cell.priceView.frame.size.width, cell.priceView.frame.size.height);
-        
-        cell.sizeButton = [[UIButton alloc] initWithFrame:(frame)];
-        cell.sizeButton.tag = indexPath.row;
-        
-        [self.sizeButton setObject:cell.sizeButton forKey:[NSNumber numberWithInteger:indexPath.row]];
-        
-        if (1 >= [bundleProduct.productSimples count]) {
-            cell.sizeButton.hidden = YES;
+        if (VALID_NOTEMPTY(cell.sizeButton, UIButton) && [self.selectedItems objectForKey:bundleProduct.sku]) {
+            cell.sizeButton.tag = indexPath.row;
+            [cell.sizeButton.titleLabel sizeToFit];
+            [self setCellSizeLabel:bundleProduct inCell:cell];
+            
+            [cell.sizeButton setHidden:NO];
+            
         } else {
-            cell.sizeButton.hidden = NO;
+            if (VALID_NOTEMPTY(cell.sizeButton, UIButton)) {
+                [cell.sizeButton removeFromSuperview];
+            }
+            CGRect frame = CGRectMake(cell.priceView.frame.origin.x, cell.priceView.frame.origin.y+20.0f,
+                                      cell.frame.size.width, cell.priceView.frame.size.height);
+            
+            cell.sizeButton = [[UIButton alloc] initWithFrame:(frame)];
+            cell.sizeButton.tag = indexPath.row;
+            cell.sizeButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:cell.sizeButton.titleLabel.font.pointSize];
+            [cell.sizeButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
+            [cell.sizeButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+            [cell.sizeButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+            [self setCellSizeLabel:bundleProduct inCell:cell];
+            [cell.sizeButton.titleLabel sizeToFit];
+            [cell.sizeButton addTarget:self
+                                action:@selector(sizeButtonPressed:)
+                      forControlEvents:UIControlEventTouchUpInside];
+            [cell addSubview:cell.sizeButton];
         }
-        cell.sizeButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:cell.sizeButton.titleLabel.font.pointSize];
-        [cell.sizeButton setTitle:STRING_SIZE forState:UIControlStateNormal];
-        [cell.sizeButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
-        [cell.sizeButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
-        [cell.sizeButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-
-        [self setCellSizeLabel:bundleProduct inCell:cell];
-        
-        [cell.sizeButton setFrame:frame];
-        [cell.sizeButton.titleLabel sizeToFit];
-        [cell.sizeButton addTarget:self
-                            action:@selector(sizeButtonPressed:)
-                  forControlEvents:UIControlEventTouchUpInside];
-        [cell addSubview:cell.sizeButton];
+    } else {
+        [cell.sizeButton setHidden:YES];
     }
+    
+    [self hideUnwantedCellLines:cell position:indexPath.row];
 
     return cell;
 }
@@ -202,17 +232,18 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 - (void)setCellSizeLabel:(RIProduct*)bundleProduct inCell:(JACatalogCollectionViewCell*)cell{
     if ([self.selectedItems objectForKey:bundleProduct.sku]) {
         RIProductSimple* pds = [self.selectedItems objectForKey:bundleProduct.sku];
-                [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, pds.variation]
-                                 forState:UIControlStateNormal];
-                
-                [cell.priceView loadWithPrice:pds.priceFormatted
-                                 specialPrice:pds.specialPriceFormatted
-                                     fontSize:10.0f
-                        specialPriceOnTheLeft:YES];
+        [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, pds.variation]
+                         forState:UIControlStateNormal];
+        
+        [cell.priceView loadWithPrice:pds.priceFormatted
+                         specialPrice:pds.specialPriceFormatted
+                             fontSize:10.0f
+                specialPriceOnTheLeft:YES];
         
     } else {
-        [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, [[bundleProduct.productSimples firstObject] variation]]
-                         forState:UIControlStateNormal];
+        RIProductSimple* simp = [bundleProduct.productSimples firstObject];
+        [self.selectedItems setObject:simp forKey:bundleProduct.sku];
+        [self setCellSizeLabel:bundleProduct inCell:cell];
     }
 }
 
@@ -223,7 +254,17 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(self.view.width, JACatalogViewControllerListCellHeight);
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        
+        if(UIDeviceOrientationPortrait == ([UIDevice currentDevice].orientation) || UIDeviceOrientationPortraitUpsideDown == ([UIDevice currentDevice].orientation)) {
+            return CGSizeMake(self.bounds.size.width, 104.0f);
+            
+        } else {
+            return CGSizeMake((self.bounds.size.width/2), 104.0f);
+        }
+    } else {
+        return CGSizeMake(self.view.frame.size.width, 104.0f);
+    }
 }
 
 #pragma mark - actions
@@ -325,6 +366,46 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)hideUnwantedCellLines:(JAPDVVariationsCollectionViewCell *)cell position:(NSInteger)index{
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        
+        if(UIDeviceOrientationPortrait == ([UIDevice currentDevice].orientation) || UIDeviceOrientationPortraitUpsideDown == ([UIDevice currentDevice].orientation)) {
+            cell.rightVerticalSeparator.hidden = YES;
+            if (index == 0) {
+                cell.topHorizontalSeparator.hidden = NO;
+            }
+            else{
+                cell.topHorizontalSeparator.hidden = YES;
+            }
+            
+        }else{
+            
+            if (index == 0 || index == 1) {
+                cell.topHorizontalSeparator.hidden = NO;
+            }
+            else{
+                cell.topHorizontalSeparator.hidden = YES;
+            }
+            if (index % 2 == 0) {
+                cell.rightVerticalSeparator.hidden = NO;
+            }
+            else{
+                cell.rightVerticalSeparator.hidden = YES;
+            }
+            
+        }
+    }
+    else {
+        cell.rightVerticalSeparator.hidden = YES;
+        if (index == 0) {
+            cell.topHorizontalSeparator.hidden = NO;
+        }
+        else{
+            cell.topHorizontalSeparator.hidden = YES;
+        }
+    }
 }
 
 #pragma mark - picker
