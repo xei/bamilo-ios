@@ -912,11 +912,13 @@
     for (int i = 0; i < product.productSimples.count; i++)
     {
         RIProductSimple* simple = [product.productSimples objectAtIndex:i];
-        [self.pickerDataSource addObject:simple];
-        [dataSource addObject:simple.variation];
-        if ([simple.variation isEqualToString:simpleName]) {
-            //found it
-            simpleSize = simple.variation;
+        if (simple.quantity.intValue > 0) {
+            [self.pickerDataSource addObject:simple];
+            [dataSource addObject:simple.variation];
+            if ([simple.variation isEqualToString:simpleName]) {
+                //found it
+                simpleSize = simple.variation;
+            }
         }
     }
     
