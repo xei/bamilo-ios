@@ -44,7 +44,8 @@ typedef void (^ProcessActionBlock)(void);
     ProcessActionBlock _processActionBlock;
 }
 
-@property (nonatomic, strong) JACatalogWizardView* wizardView;
+//$WIZ$
+//@property (nonatomic, strong) JACatalogWizardView* wizardView;
 @property (nonatomic, strong) JAFilteredNoResultsView *filteredNoResultsView;
 
 @property (nonatomic, strong) JACatalogTopView* catalogTopView;
@@ -117,16 +118,18 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects;
 {
-    if (VALID_NOTEMPTY(self.wizardView, JACatalogWizardView)) {
-        [self.wizardView removeFromSuperview];
-    }
+    //$WIZ$
+//    if (VALID_NOTEMPTY(self.wizardView, JACatalogWizardView)) {
+//        [self.wizardView removeFromSuperview];
+//    }
 
     [super showErrorView:isNoInternetConnection startingY:startingY selector:selector objects:objects];
 }
 
 -(void)showNoResultsView:(CGFloat)withVerticalPadding undefinedSearchTerm:(RIUndefinedSearchTerm*)undefinedSearchTerm
 {
-    [self.wizardView removeFromSuperview];
+    //$WIZ$
+//    [self.wizardView removeFromSuperview];
     
     self.filteredNoResultsView.delegate = nil;
     [self.filteredNoResultsView removeFromSuperview];
@@ -155,11 +158,12 @@ typedef void (^ProcessActionBlock)(void);
     else
     {
         self.filteredNoResultsView.delegate = self;
-        
-        if (VALID_NOTEMPTY(self.wizardView, JACatalogWizardView))
-        {
-            [self.wizardView removeFromSuperview];
-        }
+
+        //$WIZ$
+//        if (VALID_NOTEMPTY(self.wizardView, JACatalogWizardView))
+//        {
+//            [self.wizardView removeFromSuperview];
+//        }
     
         self.catalogTopView.hidden = YES;
         
@@ -303,14 +307,15 @@ typedef void (^ProcessActionBlock)(void);
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    BOOL alreadyShowedWizardCatalog = [[NSUserDefaults standardUserDefaults] boolForKey:kJACatalogWizardUserDefaultsKey];
-    if(alreadyShowedWizardCatalog == NO)
-    {
-        self.wizardView = [[JACatalogWizardView alloc] initWithFrame:self.view.bounds];
-        [self.view addSubview:self.wizardView];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJACatalogWizardUserDefaultsKey];
-    }
+
+    //$WIZ$
+//    BOOL alreadyShowedWizardCatalog = [[NSUserDefaults standardUserDefaults] boolForKey:kJACatalogWizardUserDefaultsKey];
+//    if(alreadyShowedWizardCatalog == NO)
+//    {
+//        self.wizardView = [[JACatalogWizardView alloc] initWithFrame:self.view.bounds];
+//        [self.view addSubview:self.wizardView];
+//        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJACatalogWizardUserDefaultsKey];
+//    }
     
     [self changeViewToInterfaceOrientation:self.interfaceOrientation];
     
@@ -1349,7 +1354,8 @@ typedef void (^ProcessActionBlock)(void);
     [self.undefinedView setupWithUndefinedSearchResult:undefSearch
                                             searchText:self.searchString
                                            orientation:self.interfaceOrientation];
-    [self.view bringSubviewToFront:self.wizardView];
+    //$WIZ$
+//    [self.view bringSubviewToFront:self.wizardView];
 }
 
 #pragma mark - Undefined view delegate
@@ -1397,14 +1403,15 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    if(VALID_NOTEMPTY(self.wizardView, JACatalogWizardView))
-    {
-        CGRect newFrame = CGRectMake(self.wizardView.frame.origin.x,
-                                     self.wizardView.frame.origin.y,
-                                     self.view.frame.size.height + self.view.frame.origin.y,
-                                     self.view.frame.size.width - self.view.frame.origin.y);
-        [self.wizardView reloadForFrame:newFrame];
-    }
+    //$WIZ$
+//    if(VALID_NOTEMPTY(self.wizardView, JACatalogWizardView))
+//    {
+//        CGRect newFrame = CGRectMake(self.wizardView.frame.origin.x,
+//                                     self.wizardView.frame.origin.y,
+//                                     self.view.frame.size.height + self.view.frame.origin.y,
+//                                     self.view.frame.size.width - self.view.frame.origin.y);
+//        [self.wizardView reloadForFrame:newFrame];
+//    }
     
     [self changeViewToInterfaceOrientation:toInterfaceOrientation];
     
@@ -1426,11 +1433,11 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    
-    if(VALID_NOTEMPTY(self.wizardView, JACatalogWizardView))
-    {
-        [self.wizardView reloadForFrame:self.view.bounds];
-    }
+//$WIZ$    
+//    if(VALID_NOTEMPTY(self.wizardView, JACatalogWizardView))
+//    {
+//        [self.wizardView reloadForFrame:self.view.bounds];
+//    }
     if (VALID_NOTEMPTY(self.undefinedBackup, RIUndefinedSearchTerm)){
         
         [self addUndefinedSearchView:self.undefinedBackup frame:CGRectMake(6.0f,
