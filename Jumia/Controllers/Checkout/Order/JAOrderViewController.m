@@ -722,7 +722,7 @@
                                           paymentContentView.frame.size.width,
                                           CGRectGetMaxY(paymentTitleLabel.frame));
     
-    if (VALID_NOTEMPTY(self.cart.discountCouponCode, NSString)) {
+    if (VALID_NOTEMPTY(self.cart.couponCode, NSString)) {
         
         UILabel* couponTitleLabel = [UILabel new];
         couponTitleLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
@@ -739,7 +739,7 @@
         UILabel* couponCodeLabel = [UILabel new];
         couponCodeLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         couponCodeLabel.textColor = UIColorFromRGB(0x666666);
-        couponCodeLabel.text = self.cart.discountCouponCode;
+        couponCodeLabel.text = self.cart.couponCode;
         couponCodeLabel.numberOfLines = 0;
         [couponCodeLabel sizeToFit];
         couponCodeLabel.frame = CGRectMake(paymentContentView.bounds.origin.x + 6.0f,
