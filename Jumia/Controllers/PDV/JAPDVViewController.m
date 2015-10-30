@@ -42,6 +42,8 @@
 #import "JABottomBar.h"
 #import "RISeller.h"
 
+typedef void (^ProcessActionBlock)(void);
+
 @interface JAPDVViewController ()
 <
 JAPDVGalleryDelegate,
@@ -50,6 +52,8 @@ JAActivityViewControllerDelegate
 >
 {
     BOOL _needRefreshProduct;
+    BOOL _needAddToFavBlock;
+    ProcessActionBlock _processActionBlock;
 }
 
 @property (strong, nonatomic) UIScrollView *mainScrollView;
@@ -67,7 +71,8 @@ JAActivityViewControllerDelegate
 @property (assign, nonatomic) NSInteger commentsCount;
 @property (assign, nonatomic) BOOL openPickerFromCart;
 @property (strong, nonatomic) RIProductSimple *currentSimple;
-@property (nonatomic, strong) JAPDVWizardView* wizardView;
+//$WIZ$
+//@property (nonatomic, strong) JAPDVWizardView* wizardView;
 @property (assign, nonatomic) RIApiResponse apiResponse;
 
 @property (strong, nonatomic) RIBundle *productBundle;
@@ -141,15 +146,16 @@ JAActivityViewControllerDelegate
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    BOOL alreadyShowedWizardPDV = [[NSUserDefaults standardUserDefaults] boolForKey:kJAPDVWizardUserDefaultsKey];
-    if(alreadyShowedWizardPDV == NO)
-    {
-        [self hideLoading];
-        self.wizardView = [[JAPDVWizardView alloc] initWithFrame:self.view.bounds];
-        [self.view addSubview:self.wizardView];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJAPDVWizardUserDefaultsKey];
-    }
+
+    //$WIZ$
+//    BOOL alreadyShowedWizardPDV = [[NSUserDefaults standardUserDefaults] boolForKey:kJAPDVWizardUserDefaultsKey];
+//    if(alreadyShowedWizardPDV == NO)
+//    {
+//        [self hideLoading];
+//        self.wizardView = [[JAPDVWizardView alloc] initWithFrame:self.view.bounds];
+//        [self.view addSubview:self.wizardView];
+//        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJAPDVWizardUserDefaultsKey];
+//    }
     
     if(self.hasLoaddedProduct)
     {
@@ -174,19 +180,12 @@ JAActivityViewControllerDelegate
             }
         }
     }
-}
-
-- (void)updatedProduct:(NSNotification*)notification
-{
-    NSString* sku = notification.object;
-    if (!VALID_NOTEMPTY(sku, NSString) || [self.productSku isEqualToString:sku]) {
-        _needRefreshProduct = YES;
+    if (_needAddToFavBlock) {
+        
+        if (_processActionBlock) {
+            _processActionBlock();
+        }
     }
-}
-
-- (void)setProduct:(RIProduct *)product
-{
-    _product = product;
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -244,15 +243,16 @@ JAActivityViewControllerDelegate
     [self.mainScrollView setHidden:YES];
     [self.landscapeScrollView setHidden:YES];
     [self.ctaView setHidden:YES];
-    
-    if(VALID_NOTEMPTY(self.wizardView, JAPDVWizardView))
-    {
-        CGRect newFrame = CGRectMake(self.wizardView.frame.origin.x,
-                                     self.wizardView.frame.origin.y,
-                                     self.view.frame.size.height + self.view.frame.origin.y,
-                                     self.view.frame.size.width - self.view.frame.origin.y);
-        [self.wizardView reloadForFrame:newFrame];
-    }
+
+    //$WIZ$
+//    if(VALID_NOTEMPTY(self.wizardView, JAPDVWizardView))
+//    {
+//        CGRect newFrame = CGRectMake(self.wizardView.frame.origin.x,
+//                                     self.wizardView.frame.origin.y,
+//                                     self.view.frame.size.height + self.view.frame.origin.y,
+//                                     self.view.frame.size.width - self.view.frame.origin.y);
+//        [self.wizardView reloadForFrame:newFrame];
+//    }
     
     if (VALID_NOTEMPTY(self.picker, JAPicker)) {
         [self closePicker];
@@ -291,11 +291,12 @@ JAActivityViewControllerDelegate
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self fillTheViews];
-    
-    if(VALID_NOTEMPTY(self.wizardView, JAPDVWizardView))
-    {
-        [self.wizardView reloadForFrame:self.view.bounds];
-    }
+
+    //$WIZ$
+//    if(VALID_NOTEMPTY(self.wizardView, JAPDVWizardView))
+//    {
+//        [self.wizardView reloadForFrame:self.view.bounds];
+//    }
     
     if(VALID_NOTEMPTY(self.galleryPaged, JAPDVGallery))
     {
@@ -358,6 +359,24 @@ JAActivityViewControllerDelegate
     if(VALID_NOTEMPTY(self.ctaView, JABottomBar))
     {
         [self.ctaView removeFromSuperview];
+    }
+}
+
+#pragma mark - Product methods
+
+- (void)updatedProduct:(NSNotification*)notification
+{
+    if (VALID_NOTEMPTY(notification.object, NSArray)) {
+        for (id object in notification.object) {
+            if (VALID_NOTEMPTY(object, NSString) && [object isEqualToString:self.productSku]) {
+                self.product.favoriteAddDate = [NSDate new];
+                _needRefreshProduct = YES;
+                break;
+            }
+        }
+    }
+    if (VALID_NOTEMPTY(notification.object, NSString) && [self.productSku isEqualToString:notification.object]) {
+        _needRefreshProduct = YES;
     }
 }
 
@@ -454,7 +473,8 @@ JAActivityViewControllerDelegate
     [self.navBarLayout setTitle:product.brand];
     [self reloadNavBar];
     
-    [self.wizardView setHasNoSeller:product.seller?NO:YES];
+    //$WIZ$
+//    [self.wizardView setHasNoSeller:product.seller?NO:YES];
     
     [self trackingEventViewProduct:product];
     
@@ -551,7 +571,8 @@ JAActivityViewControllerDelegate
     [self.ctaView addButton:STRING_BUY_NOW target:self action:@selector(addToCart)];
     
     //make sure wizard and picker are in front
-    [self.view bringSubviewToFront:self.wizardView];
+    //$WIZ$
+//    [self.view bringSubviewToFront:self.wizardView];
     [self.view bringSubviewToFront:self.picker];
 }
 
@@ -851,7 +872,8 @@ JAActivityViewControllerDelegate
     self.landscapeScrollView.contentSize = CGSizeMake(self.landscapeScrollView.frame.size.width, landscapeScrollViewY);
     
     //make sure wizard is in front
-    [self.view bringSubviewToFront:self.wizardView];
+    //$WIZ$
+//    [self.view bringSubviewToFront:self.wizardView];
     
     if (RI_IS_RTL) {
         [self.view flipAllSubviews];
@@ -1322,20 +1344,53 @@ JAActivityViewControllerDelegate
     }];
 }
 
-
 - (void)addToFavoritesPressed:(UIButton*)button
 {
-    [self showLoading];
+    if (!self.productImageSection.wishListButton.selected && !VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate))
+    {
+        [self addToFavorites:button];
+    }else if (self.productImageSection.wishListButton.selected && VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate))
+    {
+        [self removeFromFavorites:button];
+    }
+}
+
+- (BOOL)isUserLoggedInWithBlock:(ProcessActionBlock)block
+{
     if(![RICustomer checkIfUserIsLogged]) {
         [self hideLoading];
+        _needAddToFavBlock = YES;
+        _processActionBlock = block;
+        
         _needRefreshProduct = YES;
         NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
         [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfoLogin];
+        return NO;
+    }
+    return YES;
+}
+
+- (void)addToFavorites:(UIButton *)button
+{
+    [self showLoading];
+    
+    __weak typeof (self) weakSelf = self;
+    
+    BOOL logged = [self isUserLoggedInWithBlock:^{
+        _needAddToFavBlock = NO;
+        if(![RICustomer checkIfUserIsLogged]) {
+            return;
+        }else{
+            [weakSelf addToFavorites:button];
+        }
+    }];
+    
+    if (!logged) {
         return;
     }
     
-    if (!VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate))
+    if (!button.selected && !VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate))
     {
         //add to favorites
         [RIProduct addToFavorites:self.product successBlock:^{
@@ -1357,12 +1412,39 @@ JAActivityViewControllerDelegate
             [self showMessage:STRING_ADDED_TO_WISHLIST success:YES];
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-            
             [self hideLoading];
-            [self showMessage:STRING_ERROR_ADDING_TO_WISHLIST success:NO];
+            
+            NSString *errorMessage = STRING_ERROR_ADDING_TO_WISHLIST;
+            if (RIApiResponseNoInternetConnection == apiResponse)
+            {
+                errorMessage = STRING_NO_CONNECTION;
+            }
+            [self showMessage:errorMessage success:NO];
         }];
+    }else{
+        [self hideLoading];
     }
-    else
+}
+
+- (void)removeFromFavorites:(UIButton *)button
+{
+    [self showLoading];
+    
+    __weak typeof (self) weakSelf = self;
+    
+    BOOL logged = [self isUserLoggedInWithBlock:^{
+        _needAddToFavBlock = NO;
+        if(![RICustomer checkIfUserIsLogged]) {
+            return;
+        }else{
+            [weakSelf removeFromFavorites:button];
+        }
+    }];
+    
+    if (!logged) {
+        return;
+    }
+    if (self.productImageSection.wishListButton.selected && VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate))
     {
         [RIProduct removeFromFavorites:self.product successBlock:^(void) {
             //update favoriteProducts
@@ -1384,7 +1466,13 @@ JAActivityViewControllerDelegate
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             
             [self hideLoading];
-            [self showMessage:STRING_ERROR_ADDING_TO_WISHLIST success:NO];
+            
+            NSString *errorMessage = STRING_ERROR_REMOVING_FROM_WISHLIST;
+            if (RIApiResponseNoInternetConnection == apiResponse)
+            {
+                errorMessage = STRING_NO_CONNECTION;
+            }
+            [self showMessage:errorMessage success:NO];
         }];
     }
 }

@@ -95,7 +95,7 @@
     self.screenName = @"CheckoutStart";
     
     self.navBarLayout.title = STRING_CHECKOUT;
-    
+    self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showCartButton = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -1074,9 +1074,6 @@
                                                       data:[trackingDictionary copy]];
             
             [self.loginDynamicForm resetValues];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                                object:nil];
             
             [JAUtils goToNextStep:nextStep
                          userInfo:nil];

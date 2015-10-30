@@ -37,15 +37,24 @@
     self.backgroundContentView.backgroundColor = [UIColor whiteColor];
     self.backgroundContentView.layer.cornerRadius = 5.0f;
     
+    [self.addToCartButton setBackgroundColor:JAOrange1Color];
+    [self.addToCartButton setXRightAligned:16.f];
+    [self.addToCartButton setYCenterAligned];
+    self.addToCartButton.titleLabel.font = JABody2Font;
+    [self.addToCartButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.addToCartButton setTitle:STRING_BUY_NOW forState:UIControlStateNormal];
+    
+    [self.priceLabel setWidth:self.addToCartButton.x - 20];
     [self.priceLabel setX:10.f];
     self.priceLabel.font = JABody3Font;
     self.priceLabel.textColor = JABlackColor;
     
     [self.sellerLabel setX:10.f];
+    [self.sellerLabel setWidth:self.addToCartButton.x - 20];
     self.sellerLabel.font = JABody1Font;
     self.sellerLabel.textColor = JABlackColor;
-    self.sellerLabel.text = productOffer.seller.name;
     self.sellerLabel.numberOfLines = 2;
+    self.sellerLabel.text = productOffer.seller.name;
     [self.sellerLabel sizeToFit];
     
     self.clickableView.layer.cornerRadius = 5.0f;
@@ -53,18 +62,12 @@
     [self.clickableView setWidth:self.backgroundContentView.width];
     [self.clickableView addTarget:self action:@selector(gotoCatalogSeller) forControlEvents:UIControlEventTouchUpInside];
     
+    [self.deliveryLabel setWidth:self.addToCartButton.x - 20];
     [self.deliveryLabel setX:10.f];
     self.deliveryLabel.font = JACaptionFont;
     self.deliveryLabel.textColor = JABlack800Color;
     self.deliveryLabel.text = [NSString stringWithFormat:@"%@ %ld - %ld %@", STRING_DELIVERY_WITHIN, (long)[productOffer.minDeliveryTime integerValue], (long)[productOffer.maxDeliveryTime integerValue], STRING_DAYS];
     [self.deliveryLabel sizeToFit];
-    
-    [self.addToCartButton setBackgroundColor:JAOrange1Color];
-    [self.addToCartButton setXRightAligned:16.f];
-    [self.addToCartButton setYCenterAligned];
-    self.addToCartButton.titleLabel.font = JABody2Font;
-    [self.addToCartButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.addToCartButton setTitle:STRING_BUY_NOW forState:UIControlStateNormal];
     
     if (!VALID_NOTEMPTY(self.separator, UIView)) {
         self.separator = [[UIView alloc] initWithFrame:CGRectZero];
@@ -92,10 +95,12 @@
     [self.priceLabel sizeToFit];
     
     if ([self.productOfferSeller.productSimples count] > 1) {
+        [self.sizeButton setWidth:self.width-10-self.addToCartButton.x];
         [self.sizeButton setX:10.f];
         self.sizeButton.titleLabel.font = JABody3Font;
         [self.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE,productSimple.variation]
                          forState:UIControlStateNormal];
+        [self.sizeButton sizeToFit];
         [self.sizeButton setHidden:NO];
     } else
         [self.sizeButton setHidden:YES];
