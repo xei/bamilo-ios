@@ -48,8 +48,18 @@
     
     
     for (RICartItem *prod in sellerDelivery.products) {
-        //name
+        //qty
         currenty += 24.0f;
+        UILabel *qty = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, currenty, width, 12.0f)];
+        [qty setText:[NSString stringWithFormat:@"%@ %@ ",STRING_ORDER_QUANTITY,prod.quantity]];
+        [qty setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
+        [qty setTextColor:UIColorFromRGB(0x666666)];
+        [qty sizeToFit];
+        [self.contentView addSubview:qty];
+        [self.quantity addObject:qty];
+        
+        //name
+        currenty += qty.frame.size.height;
         UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, currenty, width-24.f, 12.0f)];
         [name setText:[NSString stringWithFormat:@"%@ ",prod.name]];
         [name setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
@@ -60,16 +70,6 @@
         [name setWidth:width-name.frame.origin.x*2];
         [self.contentView addSubview:name];
         [self.prodName addObject:name];
-        
-        //qty
-        currenty += name.frame.size.height;
-        UILabel *qty = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, currenty, width, 12.0f)];
-        [qty setText:[NSString stringWithFormat:@"%@ %@ ",STRING_ORDER_QUANTITY,prod.quantity]];
-        [qty setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
-        [qty setTextColor:UIColorFromRGB(0x666666)];
-        [qty sizeToFit];
-        [self.contentView addSubview:qty];
-        [self.quantity addObject:qty];
         
         currenty += qty.frame.size.height;
     }

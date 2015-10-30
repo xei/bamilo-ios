@@ -545,8 +545,10 @@
     }
     
     for (RIProductSimple* simple in product.productSimples) {
-        [self.pickerDataSource addObject:simple];
-        [dataSource addObject:simple.variation];
+        if (simple.quantity.intValue > 0) {
+            [self.pickerDataSource addObject:simple];
+            [dataSource addObject:simple.variation];
+        }
     }
 
     NSString* sizeGuideTitle = nil;

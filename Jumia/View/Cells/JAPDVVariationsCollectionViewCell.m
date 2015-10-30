@@ -70,6 +70,8 @@
 {
     [super reloadViews];
     
+    [self displayNameInMultipleLines];
+    
     self.nameLabel.width -= 64;
     [self.discountLabel setX:self.frame.size.width - (32 + self.discountLabel.width)];
     [self.favoriteButton setX:self.frame.size.width - (42 + self.favoriteButton.width)];
@@ -78,6 +80,30 @@
     [_topHorizontalSeparator setWidth:self.frame.size.width];
     [_rightVerticalSeparator setX:self.frame.size.width - 1];
     [_rightVerticalSeparator setHeight:self.frame.size.height];
+}
+
+- (void)displayNameInMultipleLines{
+    
+    [self.nameLabel setNumberOfLines:2];
+    [self.nameLabel setLineBreakMode:NSLineBreakByWordWrapping];
+    [self.nameLabel setTextAlignment:NSTextAlignmentLeft];
+    
+    if ([self lineCountForLabel:self.nameLabel] > 1) {
+        [self.nameLabel sizeToFit];
+
+        self.priceView.y += 15.0f;
+    }
+}
+
+- (int)lineCountForLabel:(UILabel *)label
+{
+    CGFloat labelWidth = label.frame.size.width;
+    int lineCount = 0;
+    CGSize textSize = CGSizeMake(labelWidth, MAXFLOAT);
+    long rHeight = lroundf([label sizeThatFits:textSize].height);
+    long charSize = lroundf(label.font.leading);
+    lineCount = (int)( rHeight / charSize );
+    return lineCount;
 }
 
 @end

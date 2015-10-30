@@ -347,7 +347,7 @@ typedef void (^ProcessActionBlock)(void);
                                              [self viewBounds].origin.y,
                                              self.view.frame.size.width,
                                              self.catalogTopView.frame.size.height)];
-    self.catalogTopView.cellTypeSelected = JACatalogCollectionViewListCell;
+    self.catalogTopView.cellTypeSelected = JACatalogCollectionViewGridCell;
     self.catalogTopView.delegate = self;
     [self.view addSubview:self.catalogTopView];
     self.catalogTopView.sortingButton.enabled = NO;
@@ -380,9 +380,6 @@ typedef void (^ProcessActionBlock)(void);
     }
     [self.catalogTopView setSorting:self.sortingMethod];
     [self.catalogTopView repositionForWidth:self.view.frame.size.width];
-    
-    NSNumber* cellTypeSelected = [[NSUserDefaults standardUserDefaults] objectForKey:JACatalogGridSelected];
-    self.catalogTopView.cellTypeSelected = [cellTypeSelected integerValue];
 }
 
 - (void)getCategories
@@ -743,14 +740,14 @@ typedef void (^ProcessActionBlock)(void);
                     height = JACatalogViewControllerListCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewPictureCell:
-                    width = self.view.frame.size.width/2;
+                    width = self.view.frame.size.width;
                     height = JACatalogViewControllerPictureCellHeight_ipad;
                     break;
             }
         } else {
             switch (self.catalogTopView.cellTypeSelected) {
                 case JACatalogCollectionViewGridCell:
-                    width =  self.view.frame.size.width/3;
+                    width =  self.view.frame.size.width/4;
                     height = JACatalogViewControllerGridCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewListCell:
@@ -758,7 +755,7 @@ typedef void (^ProcessActionBlock)(void);
                     height = JACatalogViewControllerListCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewPictureCell:
-                    width =  self.view.frame.size.width/3;
+                    width =  self.view.frame.size.width/2;
                     height = JACatalogViewControllerPictureCellHeight_ipad;
                     break;
             }
@@ -1134,7 +1131,6 @@ typedef void (^ProcessActionBlock)(void);
 - (void)updatedProduct:(NSNotification *)notification
 {
     if (VALID_NOTEMPTY(notification.object, NSArray)) {
-        
         for (NSString *sku in notification.object) {
             int i = 0;
             for(; i < self.productsArray.count; i++)
@@ -1221,83 +1217,109 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)addToFavoritesPressed:(UIButton*)button
 {
-    [self showLoading];
-    self.backupButton = button;
-    
+    RIProduct* product = [self.productsArray objectAtIndex:button.tag];
+    if (!button.selected && !VALID_NOTEMPTY(product.favoriteAddDate, NSDate))
+    {
+        [self addToFavorites:button];
+    }else if (button.selected && VALID_NOTEMPTY(product.favoriteAddDate, NSDate))
+    {
+        [self removeFromFavorites:button];
+    }
+}
+
+- (BOOL)isUserLoggedInWithBlock:(ProcessActionBlock)block
+{
     if(![RICustomer checkIfUserIsLogged]) {
         [self hideLoading];
         _needAddToFavBlock = YES;
-        
-        __weak typeof (self) weakSelf = self;
-        _processActionBlock = ^(void){
-            _needAddToFavBlock = NO;
-            if(![RICustomer checkIfUserIsLogged]) {
-                return;
-            }else{
-                [weakSelf addToFavoritesPressed:button];
-            }
-        };
-        
+        _processActionBlock = block;
         NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
         [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfoLogin];
+        return NO;
+    }
+    return YES;
+}
+
+- (void)addToFavorites:(UIButton *)button
+{
+    [self showLoading];
+    
+    __weak typeof (self) weakSelf = self;
+    
+    BOOL logged = [self isUserLoggedInWithBlock:^{
+        _needAddToFavBlock = NO;
+        if(![RICustomer checkIfUserIsLogged]) {
+            return;
+        }else{
+            [weakSelf addToFavorites:button];
+        }
+    }];
+    
+    if (!logged) {
         return;
     }
     
     RIProduct* product = [self.productsArray objectAtIndex:button.tag];
+    if (!button.selected && !VALID_NOTEMPTY(product.favoriteAddDate, NSDate))
+    {
+        [RIProduct addToFavorites:product successBlock:^{
+            button.selected = YES;
+            product.favoriteAddDate = [NSDate date];
+            
+            [self removeErrorView];
+            
+            [self trackingEventAddToWishList:product];
+            
+            [self hideLoading];
+            
+            [self showMessage:STRING_ADDED_TO_WISHLIST success:YES];
+            NSDictionary *userInfo = nil;
+            if (product.favoriteAddDate) {
+                userInfo = [NSDictionary dictionaryWithObject:product.favoriteAddDate forKey:@"favoriteAddDate"];
+            }
+            [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
+                                                                object:product.sku
+                                                              userInfo:userInfo];
+            
+            [self.collectionView reloadData];
+            
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+            
+            [self hideLoading];
+            NSString *errorMessage = STRING_ERROR_ADDING_TO_WISHLIST;
+            if (RIApiResponseNoInternetConnection == apiResponse)
+            {
+                errorMessage = STRING_NO_CONNECTION;
+            }
+            [self showMessage:errorMessage success:NO];
+        }];
+    }else{
+        [self hideLoading];
+    }
+}
 
-    if (!button.selected) {
-        //add to favorites
-        [RIProduct getCompleteProductWithUrl:product.url
-                                successBlock:^(id completeProduct) {
-                                    [RIProduct addToFavorites:completeProduct successBlock:^{
-                                        button.selected = YES;
-                                        product.favoriteAddDate = [NSDate date];
-                                        
-                                        [self removeErrorView];
-                                        
-                                        [self trackingEventAddToWishList:product];
-                                        
-                                        [self hideLoading];
-                                        
-                                        [self showMessage:STRING_ADDED_TO_WISHLIST success:YES];
-                                        NSDictionary *userInfo = nil;
-                                        if (product.favoriteAddDate) {
-                                            userInfo = [NSDictionary dictionaryWithObject:product.favoriteAddDate forKey:@"favoriteAddDate"];
-                                        }
-                                        [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                                                            object:product.sku
-                                                                                          userInfo:userInfo];
-                                        
-                                        [self.collectionView reloadData];
-                                        
-                                    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-                                        NSString *addToWishlistError = STRING_ERROR_ADDING_TO_WISHLIST;
-                                        if(RIApiResponseNoInternetConnection == apiResponse)
-                                        {
-                                            [self showErrorView:YES startingY:0 selector:@selector(addToFavoritesPressed:) objects:[NSArray arrayWithObject:button]];
-                                            [self hideLoading];
-                                            return;
-                                        }
-                                        
-                                        [self showMessage:addToWishlistError success:NO];
-                                        
-                                        [self hideLoading];
-                                    }];
-                                } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-                                    
-                                    if(RIApiResponseNoInternetConnection == apiResponse)
-                                    {
-                                        [self showErrorView:YES startingY:0 selector:@selector(addToFavoritesPressed:) objects:[NSArray arrayWithObject:button]];
-                                        [self hideLoading];
-                                        return;
-                                    }
-                                    
-                                    [self showMessage:STRING_ERROR_ADDING_TO_WISHLIST success:NO];
-                                    
-                                    [self hideLoading];
-                                }];
-    } else {
+- (void)removeFromFavorites:(UIButton *)button
+{
+    [self showLoading];
+    
+    __weak typeof (self) weakSelf = self;
+    
+    BOOL logged = [self isUserLoggedInWithBlock:^{
+        _needAddToFavBlock = NO;
+        if(![RICustomer checkIfUserIsLogged]) {
+            return;
+        }else{
+            [weakSelf removeFromFavorites:button];
+        }
+    }];
+    
+    if (!logged) {
+        return;
+    }
+    RIProduct* product = [self.productsArray objectAtIndex:button.tag];
+    if (button.selected && VALID_NOTEMPTY(product.favoriteAddDate, NSDate))
+    {
         [RIProduct removeFromFavorites:product successBlock:^(void) {
             button.selected = NO;
             product.favoriteAddDate = nil;
@@ -1320,17 +1342,17 @@ typedef void (^ProcessActionBlock)(void);
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             
-            if(RIApiResponseNoInternetConnection == apiResponse)
-            {
-                [self showErrorView:YES startingY:0 selector:@selector(addToFavoritesPressed:) objects:[NSArray arrayWithObject:button]];
-                [self hideLoading];
-                return;
-            }
-            
             [self hideLoading];
             
-            [self showMessage:STRING_ERROR_REMOVING_FROM_WISHLIST success:NO];
+            NSString *errorMessage = STRING_ERROR_REMOVING_FROM_WISHLIST;
+            if (RIApiResponseNoInternetConnection == apiResponse)
+            {
+                errorMessage = STRING_NO_CONNECTION;
+            }
+            [self showMessage:errorMessage success:NO];
         }];
+    }else{
+        [self hideLoading];
     }
 }
 

@@ -143,13 +143,13 @@
     } else {
         self.maxPerPage = JAMyFavouritesViewControllerMaxProducts;
     }
+    
+    [self getFavorites];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    [self getFavorites];
     
     [self didRotateFromInterfaceOrientation:0];
 }
@@ -913,11 +913,13 @@
     for (int i = 0; i < product.productSimples.count; i++)
     {
         RIProductSimple* simple = [product.productSimples objectAtIndex:i];
-        [self.pickerDataSource addObject:simple];
-        [dataSource addObject:simple.variation];
-        if ([simple.variation isEqualToString:simpleName]) {
-            //found it
-            simpleSize = simple.variation;
+        if (simple.quantity.intValue > 0) {
+            [self.pickerDataSource addObject:simple];
+            [dataSource addObject:simple.variation];
+            if ([simple.variation isEqualToString:simpleName]) {
+                //found it
+                simpleSize = simple.variation;
+            }
         }
     }
     

@@ -1075,9 +1075,6 @@
             
             [self.loginDynamicForm resetValues];
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                                object:nil];
-            
             [JAUtils goToNextStep:nextStep
                          userInfo:nil];
         }
