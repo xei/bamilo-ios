@@ -201,9 +201,7 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 - (void)viewDidLoad
-{
-    self.searchBarIsVisible = YES;
-    
+{    
     [super viewDidLoad];
     
     self.navBarLayout.showBackButton = YES;

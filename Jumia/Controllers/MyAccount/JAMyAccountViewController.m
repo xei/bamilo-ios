@@ -70,6 +70,7 @@
     self.navBarLayout.title = STRING_MY_ACCOUNT;
     self.navBarLayout.showCartButton = NO;
     self.tabBarIsVisible = YES;
+    self.searchBarIsVisible = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showUserDataSavedMessage)
@@ -296,7 +297,7 @@
 - (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
     [self.accountView setFrame:CGRectMake(self.accountView.frame.origin.x,
-                                          self.accountView.frame.origin.y,
+                                          [self viewBounds].origin.y + 6.0f,
                                           width - (self.accountView.frame.origin.x * 2),
                                           self.accountView.frame.size.height)];
     
@@ -316,7 +317,7 @@
                                                      self.addressesClickableView.frame.size.height)];
     
     [self.notificationView setFrame:CGRectMake(self.notificationView.frame.origin.x,
-                                               self.notificationView.frame.origin.y,
+                                               CGRectGetMaxY(self.accountView.frame) + 6.0f,
                                                width - (self.notificationView.frame.origin.x * 2),
                                                self.notificationView.frame.size.height)];
     
