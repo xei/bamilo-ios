@@ -223,6 +223,9 @@
     if (VALID_NOTEMPTY(self.kickoutView, JAKickoutView)) {
         [self.kickoutView setupKickoutView:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height) orientation:self.interfaceOrientation];
     }
+    if (VALID_NOTEMPTY(self.searchView, JASearchView)) {
+        [self.searchView resetFrame:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height) orientation:self.interfaceOrientation];
+    }
     if (self.searchBarIsVisible) {
         [self reloadSearchBar];
     }
