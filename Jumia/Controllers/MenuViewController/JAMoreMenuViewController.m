@@ -28,6 +28,7 @@
     
     self.navBarLayout.showCartButton = NO;
     self.tabBarIsVisible = YES;
+    self.searchBarIsVisible = YES;
     
     self.view.backgroundColor = [UIColor whiteColor];
     

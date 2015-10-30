@@ -49,7 +49,6 @@
 
 - (void)viewDidLoad
 {
-    self.searchBarIsVisible = YES;
     [super viewDidLoad];
     
     self.campaignIndex = -1;
