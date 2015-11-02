@@ -67,7 +67,7 @@ JADynamicFormDelegate
     
     self.navBarLayout.title = STRING_LOGIN;
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:[self viewBounds]];
     self.scrollView.clipsToBounds = YES;
     [self.view addSubview:self.scrollView];
     
@@ -146,7 +146,7 @@ JADynamicFormDelegate
     
     if(self.requestDone)
     {
-        [self setupViews:self.view.frame.size.width height:self.view.frame.size.height toInterfaceOrientation:self.interfaceOrientation];
+        [self setupViews:[self viewBounds].size.width height:[self viewBounds].size.height toInterfaceOrientation:self.interfaceOrientation];
         
         [self hideLoading];
     }
@@ -177,7 +177,7 @@ JADynamicFormDelegate
              [self.loginView addSubview:view];
          }
          
-         [self setupViews:self.view.frame.size.width height:self.view.frame.size.height toInterfaceOrientation:self.interfaceOrientation];
+         [self setupViews:[self viewBounds].size.width height:[self viewBounds].size.height toInterfaceOrientation:self.interfaceOrientation];
          
          [self.scrollView setHidden:NO];
          self.requestDone = YES;
@@ -218,8 +218,8 @@ JADynamicFormDelegate
     CGFloat horizontalMargin = 6.0f;
     CGFloat verticalMargin = 6.0f;
     
-    [self.scrollView setFrame:CGRectMake(0.0f,
-                                         0.0f,
+    [self.scrollView setFrame:CGRectMake([self viewBounds].origin.x,
+                                         [self viewBounds].origin.y,
                                          width,
                                          height)];
     
@@ -362,8 +362,8 @@ JADynamicFormDelegate
 {
     [self showLoading];
     
-    CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
-    CGFloat newHeight = self.view.frame.size.width + self.view.frame.origin.x;
+    CGFloat newWidth = [self viewBounds].size.height + [self viewBounds].origin.y;
+    CGFloat newHeight = [self viewBounds].size.width + [self viewBounds].origin.x;
     
     [self setupViews:newWidth height:newHeight toInterfaceOrientation:toInterfaceOrientation];
     
@@ -372,7 +372,7 @@ JADynamicFormDelegate
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [self setupViews:self.view.frame.size.width height:self.view.frame.size.height toInterfaceOrientation:self.interfaceOrientation];
+    [self setupViews:[self viewBounds].size.width height:[self viewBounds].size.height toInterfaceOrientation:self.interfaceOrientation];
     
     [self hideLoading];
     
