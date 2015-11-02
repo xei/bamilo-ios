@@ -23,12 +23,13 @@
 #import "UIImageView+WebCache.h"
 #import "JACampaignBannerCell.h"
 #import "JACatalogBannerCell.h"
-#import "JAProductListFlowLayout.h"
+#import "JAProductCollectionViewFlowLayout.h"
 #import "JACatalogCollectionViewCell.h"
 #import "JACatalogListCollectionViewCell.h"
 #import "JACatalogGridCollectionViewCell.h"
 #import "RIAddress.h"
 #import "JACatalogPictureCollectionViewCell.h"
+#import "JACollectionSeparator.h"
 
 #define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
@@ -50,7 +51,7 @@ typedef void (^ProcessActionBlock)(void);
 
 @property (nonatomic, strong) JACatalogTopView* catalogTopView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (nonatomic, strong) JAProductListFlowLayout* flowLayout;
+@property (nonatomic, strong) JAProductCollectionViewFlowLayout* flowLayout;
 @property (nonatomic, strong) NSMutableArray* productsArray;
 @property (nonatomic, strong) NSArray* filtersArray;
 @property (nonatomic, strong) NSArray* categoriesArray;
@@ -207,6 +208,8 @@ typedef void (^ProcessActionBlock)(void);
     [super viewDidLoad];
     
     self.navBarLayout.showBackButton = YES;
+    
+    [self.view setBackgroundColor:[UIColor whiteColor]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(navBarClicked)
                                                  name:kDidPressNavBar
@@ -367,10 +370,12 @@ typedef void (^ProcessActionBlock)(void);
     [self.collectionView registerClass:[JACatalogGridCollectionViewCell class] forCellWithReuseIdentifier:@"JACatalogGridCollectionViewCell"];
     [self.collectionView registerClass:[JACatalogPictureCollectionViewCell class] forCellWithReuseIdentifier:@"JACatalogPictureCollectionViewCell"];
     
-    self.flowLayout = [[JAProductListFlowLayout alloc] init];
-    self.flowLayout.manualCellSpacing = 1.0f;
+    self.flowLayout = [[JAProductCollectionViewFlowLayout alloc] init];
     self.flowLayout.minimumLineSpacing = 1.0f;
     self.flowLayout.minimumInteritemSpacing = 0.f;
+    [self.flowLayout registerClass:[JACollectionSeparator class] forDecorationViewOfKind:@"horizontalSeparator"];
+    [self.flowLayout registerClass:[JACollectionSeparator class] forDecorationViewOfKind:@"verticalSeparator"];
+
     //                                              top, left, bottom, right
     [self.flowLayout setSectionInset:UIEdgeInsetsMake(0.f, 0.0, 0.0, 0.0)];
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
@@ -385,6 +390,7 @@ typedef void (^ProcessActionBlock)(void);
     
     NSNumber* cellTypeSelected = [[NSUserDefaults standardUserDefaults] objectForKey:JACatalogGridSelected];
     self.catalogTopView.cellTypeSelected = [cellTypeSelected integerValue];
+    [self getLayoutItemSizeForInterfaceOrientation:[UIApplication sharedApplication].statusBarOrientation];
 }
 
 - (void)getCategories
@@ -781,7 +787,7 @@ typedef void (^ProcessActionBlock)(void);
                 break;
         }
     }
-    
+    self.flowLayout.itemSize = CGSizeMake(width, height);
     return CGSizeMake(width, height);
 }
 
@@ -943,6 +949,8 @@ typedef void (^ProcessActionBlock)(void);
                 forControlEvents:UIControlEventTouchUpInside];
     
     [cell loadWithProduct:product];
+    
+    [cell.sizeButton setHidden:YES];
     
     return cell;
     
