@@ -134,8 +134,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
                                    page:(NSInteger)page
                                maxItems:(NSInteger)maxItems
                                 filters:(NSArray*)filters
-                             filterType:(NSString*)filterType
-                            filterValue:(NSString*)filterValue
+                             filterPush:(NSString*)filterPush
                            successBlock:(void (^)(RICatalog *catalog))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 

@@ -538,7 +538,7 @@ typedef void (^ProcessActionBlock)(void);
                 
                 NSString* urlToUse = self.catalogUrl;
                 if (VALID_NOTEMPTY(self.categoryName, NSString)) {
-                    urlToUse = [NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, self.categoryName];
+                    urlToUse = [NSString stringWithFormat:@"%@%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_CATALOG, self.categoryName];
                 }
                 if (VALID_NOTEMPTY(self.category, RICategory) && VALID_NOTEMPTY(self.category.apiUrl, NSString)) {
                     urlToUse = self.category.apiUrl;
@@ -552,8 +552,7 @@ typedef void (^ProcessActionBlock)(void);
                                                                               page:[pageNumber integerValue]
                                                                           maxItems:self.maxProducts
                                                                            filters:self.filtersArray
-                                                                        filterType:self.filterType
-                                                                       filterValue:self.filterValue
+                                                                        filterPush:self.filterPush
                                                                       successBlock:processProductsBlock
                                                                    andFailureBlock:processCategoryProductsFailureBlock];
             }
