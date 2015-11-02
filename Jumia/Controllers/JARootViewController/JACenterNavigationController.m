@@ -613,12 +613,13 @@
             {
                 signUpVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
             }
-            [self popViewControllerAnimated:NO];
+//            [self popViewControllerAnimated:NO];
         }
         else
         {
             signUpVC.fromSideMenu = YES;
-            [self popToRootViewControllerAnimated:NO];
+            //$$$ NOT SURE ABOUT THIS
+//            [self popToRootViewControllerAnimated:NO];
         }
         
         [self pushViewController:signUpVC animated:NO];
