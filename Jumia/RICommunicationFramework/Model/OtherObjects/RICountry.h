@@ -19,6 +19,8 @@
 @property (assign, nonatomic) BOOL forceHttps;
 @property (assign, nonatomic) BOOL isLive;
 @property (strong, nonatomic) NSString* userAgentInjection;
+@property (strong, nonatomic) NSArray* languages;
+@property (strong, nonatomic) RILanguage* selectedLanguage;
 
 /**
  * Method to request the countries of the application

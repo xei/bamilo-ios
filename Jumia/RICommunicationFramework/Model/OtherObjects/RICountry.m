@@ -7,6 +7,7 @@
 //
 
 #import "RICountry.h"
+#import "RILanguage.h"
 
 @implementation RICountry
 
@@ -237,6 +238,18 @@
     
     if ([jsonObject objectForKey:@"user_agent"]) {
         country.userAgentInjection = [jsonObject objectForKey:@"user_agent"];
+    }
+    
+    if ([jsonObject objectForKey:@"languages"]) {
+        NSArray* languagesArrayJSON = [jsonObject objectForKey:@"languages"];
+        if (VALID_NOTEMPTY(languagesArrayJSON, NSArray)) {
+            NSMutableArray* languagesArray = [NSMutableArray new];
+            for (NSDictionary* languageJSON in languagesArrayJSON) {
+                RILanguage* newLanguage = [RILanguage parseLanguage:languageJSON];
+                [languagesArray addObject:newLanguage];
+            }
+            country.languages = [languagesArray copy];
+        }
     }
     
     return country;
