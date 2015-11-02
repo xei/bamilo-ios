@@ -44,6 +44,7 @@
     self.topTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
     self.bottomTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
     self.doneButton.translatesAutoresizingMaskIntoConstraints = YES;
+    self.searchButton.translatesAutoresizingMaskIntoConstraints = YES;
     self.cartButton.translatesAutoresizingMaskIntoConstraints = YES;
     self.cartCountLabel.translatesAutoresizingMaskIntoConstraints = YES;
     self.logoImageView.translatesAutoresizingMaskIntoConstraints = YES;
@@ -134,6 +135,9 @@
         [self showDoneButtonWithTitle:layout.doneButtonTitle];
     } else if (layout.showCartButton) {
         [self showCartButton];
+        if (layout.showSearchButton) {
+            [self showSearchButton];
+        }
     } else { //default
         [self hideRightItems];
     }
@@ -290,6 +294,18 @@
                                                  self.cartCountLabel.frame.size.height)];
         
         rightItemFrame = self.cartButton.frame;
+        if (!self.searchButton.hidden) {
+            
+            [self.searchButton setFrame:CGRectMake(self.cartButton.frame.origin.x - self.searchButton.frame.size.width,
+                                                   self.searchButton.frame.origin.y,
+                                                   self.searchButton.frame.size.width,
+                                                   self.searchButton.frame.size.height)];
+            
+            rightItemFrame = CGRectMake(self.searchButton.frame.origin.x,
+                                        self.searchButton.frame.origin.y,
+                                        self.searchButton.frame.size.width + self.cartButton.frame.size.width,
+                                        self.searchButton.frame.size.height);
+        }
     }
     
     CGRect leftItemFrame = CGRectZero;
@@ -400,6 +416,7 @@
     self.doneButton.hidden = NO;
     self.cartButton.hidden = YES;
     self.cartCountLabel.hidden = YES;
+    self.searchButton.hidden = YES;
 }
 
 - (void)showCartButton;
@@ -409,11 +426,17 @@
     self.cartCountLabel.hidden = NO;
 }
 
+- (void)showSearchButton
+{
+    self.searchButton.hidden = NO;
+}
+
 - (void)hideRightItems
 {
     self.doneButton.hidden = YES;
     self.cartButton.hidden = YES;
     self.cartCountLabel.hidden = YES;
+    self.searchButton.hidden = YES;
 }
 
 #pragma mark - Details

@@ -13,6 +13,8 @@
 #import "JAKickoutView.h"
 #import "JAFallbackView.h"
 #import "JATabBarView.h"
+#import "JASearchResultsView.h"
+#import "JASearchView.h"
 
 #define kSearchViewBarHeight 32.0f
 
@@ -31,6 +33,7 @@
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) UIImageView *searchIconImageView;
 @property (nonatomic, strong) JASearchResultsView *searchResultsView;
+@property (nonatomic, strong) JASearchView *searchView;
 
 @end
 
@@ -220,6 +223,9 @@
     if (VALID_NOTEMPTY(self.kickoutView, JAKickoutView)) {
         [self.kickoutView setupKickoutView:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height) orientation:self.interfaceOrientation];
     }
+    if (VALID_NOTEMPTY(self.searchView, JASearchView)) {
+        [self.searchView resetFrame:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height) orientation:self.interfaceOrientation];
+    }
     if (self.searchBarIsVisible) {
         [self reloadSearchBar];
     }
@@ -239,6 +245,11 @@
                                                  name:kOpenMenuNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showSearchView)
+                                                 name:kDidPressSearchButtonNotification
+                                               object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground) name:kAppWillEnterForeground object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground) name:kAppDidEnterBackground object:nil];
     
@@ -253,6 +264,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenMenuNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAppWillEnterForeground object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAppDidEnterBackground object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kDidPressSearchButtonNotification object:nil];
 }
 
 - (void)sideMenuIsOpening {
@@ -278,6 +290,16 @@
 }
 
 #pragma mark - Search Bar
+
+- (void)showSearchView
+{
+    UIView* window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
+    if (self.searchView) {
+        [self.searchView removeFromSuperview];
+    }
+    self.searchView = [[JASearchView alloc] initWithFrame:window.bounds];
+    [window addSubview:self.searchView];
+}
 
 - (void)showSearchBar {
     self.searchBarBackground = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x,
