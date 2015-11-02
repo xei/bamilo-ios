@@ -26,6 +26,8 @@
     self.A4SViewControllerAlias = @"SUBCATEGORY";
     
     self.tabBarIsVisible = YES;
+
+    self.view.backgroundColor = JANavBarBackgroundGrey;
     
     // notify the InAppNotification SDK that this the active view controller
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
@@ -84,13 +86,23 @@
 {
     [super viewWillAppear:animated];
     
-    [self.tableView setFrame:self.view.bounds];
+    //manually add the status bar height into the calculations
+    CGFloat statusBarHeight = 20.0f;
+    [self.tableView setFrame:CGRectMake(self.view.bounds.origin.x,
+                                        self.view.bounds.origin.y + statusBarHeight,
+                                        self.view.bounds.size.width,
+                                        self.view.bounds.size.height - statusBarHeight)];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
+    //manually add the status bar height into the calculations
+    CGFloat statusBarHeight = 20.0f;
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    [self.tableView setFrame:self.view.bounds];
+    [self.tableView setFrame:CGRectMake(self.view.bounds.origin.x,
+                                        self.view.bounds.origin.y + statusBarHeight,
+                                        self.view.bounds.size.width,
+                                        self.view.bounds.size.height - statusBarHeight)];
 }
 
 #pragma mark - UITableView
