@@ -15,6 +15,7 @@
 
 @interface JAMyAccountViewController ()
 
+@property (weak, nonatomic) IBOutlet UIScrollView* scrollView;
 @property (weak, nonatomic) IBOutlet UIView *accountView;
 @property (weak, nonatomic) IBOutlet UILabel *accountSettingsTitleLabel;
 @property (weak, nonatomic) IBOutlet UIView *accountViewTopSeparator;
@@ -296,8 +297,15 @@
 
 - (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
+    [self.scrollView setFrame:[self viewBounds]];
+    
+    CGFloat startingY = [self viewBounds].origin.y;
+    if (VALID_NOTEMPTY(self.scrollView, UIScrollView)) {
+        startingY = 0.0f;
+    }
+    
     [self.accountView setFrame:CGRectMake(self.accountView.frame.origin.x,
-                                          [self viewBounds].origin.y + 6.0f,
+                                          startingY + 6.0f,
                                           width - (self.accountView.frame.origin.x * 2),
                                           self.accountView.frame.size.height)];
     
@@ -330,6 +338,8 @@
                                                     self.shareAppClickableView.frame.origin.y,
                                                     self.appSharingView.frame.size.width,
                                                     self.shareAppClickableView.frame.size.height)];
+    
+    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, CGRectGetMaxY(self.appSharingView.frame) + 6.0f)];
     
     CGFloat leftMargin = 17.0f;
     CGFloat rightMargin = 17.0f;
