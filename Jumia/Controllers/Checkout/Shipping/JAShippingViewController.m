@@ -149,7 +149,6 @@ UICollectionViewDelegateFlowLayout
     }
     
     [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
-    [self setupSellerDelivery:newWidth];
     
     [self hideLoading];
     
@@ -382,10 +381,10 @@ UICollectionViewDelegateFlowLayout
         for (JASellerDeliveryView *sell in self.sellerDeliveryViews) {
             [UIView animateWithDuration:0.5f
                              animations:^{
-                                 [sell setFrame:CGRectMake(sell.frame.origin.x, currentY,
-                                                           width-12.0f, sell.frame.size.height)];
+                                 [sell setY:currentY];
                              }];
             currentY += sell.frame.size.height;
+            [sell updateWidth:width];
         }
         [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, currentY)];
     }
@@ -474,8 +473,8 @@ UICollectionViewDelegateFlowLayout
         
     }
     
-    [self setupSellerDelivery:self.scrollView.frame.size.width];
     [self.collectionView reloadData];
+    [self setupSellerDelivery:self.scrollView.frame.size.width];
 }
 
 - (void)openPicker
