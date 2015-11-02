@@ -263,7 +263,6 @@
                              action:@selector(addToCartButtonPressed:)
                    forControlEvents:UIControlEventTouchUpInside];
     
-    cell.sizeButton.tag = indexPath.row;
     [cell.sizeButton addTarget:self
                              action:@selector(sizeButtonPressed:)
                    forControlEvents:UIControlEventTouchUpInside];

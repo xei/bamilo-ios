@@ -116,15 +116,15 @@
 
 - (void)initListViews
 {
-    _textWidth = self.width - 80 - 30;
+    _textWidth = self.width - 90 - 30;
     
-    _brandLabelRect = CGRectMake(80, 9, _textWidth, 15);
+    _brandLabelRect = CGRectMake(90, 9, _textWidth, 15);
     [_brandLabel setFrame:_brandLabelRect];
     
-    _nameLabelRect = CGRectMake(80, 26, _textWidth, 15);
+    _nameLabelRect = CGRectMake(90, 26, _textWidth, 15);
     [_nameLabel setFrame:_nameLabelRect];
     
-    _productImageViewRect = CGRectMake(6, 8, 68, 85);
+    _productImageViewRect = CGRectMake(16, 8, 68, 85);
     [_productImageView setFrame:_productImageViewRect];
     
     _discountLabelRect = CGRectMake(0, CGRectGetMaxY(self.nameLabel.frame) + JACatalogCellPriceLabelOffsetY + 10.f, 60, 19);
@@ -135,11 +135,11 @@
 
 - (void)initGridViews
 {
-    _textWidth = self.width - 6 - 6;
-    _brandLabelRect = CGRectMake(6, 164, _textWidth, 15);
+    _textWidth = self.width - 16 - 16;
+    _brandLabelRect = CGRectMake(16, 164, _textWidth, 15);
     [_brandLabel setFrame:_brandLabelRect];
     
-    _nameLabelRect = CGRectMake(6, 178, _textWidth, 15);
+    _nameLabelRect = CGRectMake(16, 178, _textWidth, 15);
     [_nameLabel setFrame:_nameLabelRect];
     
     _productImageViewRect = CGRectMake(self.width/2 - 112/2, 8, 112, 140);
@@ -242,8 +242,34 @@
     //    NSLog(@"prepareForReuse");
 }
 
+- (void)setTag:(NSInteger)tag
+{
+    [super setTag:tag];
+    [self.feedbackView setTag:tag];
+    [self.sizeButton setTag:tag];
+}
+
+- (UIButton *)sizeButton
+{
+    if (!VALID_NOTEMPTY(_sizeButton, UIButton)) {
+        
+        CGRect frame = CGRectMake(self.priceView.frame.origin.x, self.priceView.frame.origin.y+20.0f,
+                                  self.frame.size.width, self.priceView.frame.size.height);
+        
+        _sizeButton = [[UIButton alloc] initWithFrame:(frame)];
+        _sizeButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:_sizeButton.titleLabel.font.pointSize];
+        [_sizeButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
+        [_sizeButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+        [_sizeButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+        [_sizeButton.titleLabel sizeToFit];
+        [self addSubview:_sizeButton];
+    }
+    return _sizeButton;
+}
+
 - (void)loadWithProduct:(RIProduct*)product
 {
+    _product = product;
     [_brandLabel setText:product.brand];
     [_nameLabel setText:product.name];
     
@@ -266,18 +292,18 @@
     
     switch (_cellType) {
         case JACatalogCollectionViewGridCell:
-            [_priceView setX:6];
+            [_priceView setX:16];
             break;
             
         case JACatalogCollectionViewListCell:
-            [_priceView setX:80];
+            [_priceView setX:90];
             break;
             
         case JACatalogCollectionViewPictureCell:
             [_priceView setX:16];
             break;
         default:
-            [_priceView setX:80];
+            [_priceView setX:90];
             break;
     }
     
@@ -301,6 +327,7 @@
 
 - (void)loadWithVariation:(RIVariation *)variation
 {
+    _variation = variation;
     [_brandLabel setText:variation.brand];
     [_nameLabel setText:variation.name];
     
@@ -316,18 +343,18 @@
     
     switch (_cellType) {
         case JACatalogCollectionViewGridCell:
-            [_priceView setX:6];
+            [_priceView setX:16];
             break;
             
         case JACatalogCollectionViewListCell:
-            [_priceView setX:80];
+            [_priceView setX:90];
             break;
             
         case JACatalogCollectionViewPictureCell:
             [_priceView setX:16];
             break;
         default:
-            [_priceView setX:80];
+            [_priceView setX:90];
             break;
     }
     
