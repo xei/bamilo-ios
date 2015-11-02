@@ -83,7 +83,8 @@
     self.navBarLayout.title = STRING_MY_FAVOURITES;
     self.navBarLayout.showCartButton = NO;
     self.tabBarIsVisible = YES;
-
+    self.searchBarIsVisible = YES;
+    
     self.totalProdutsInWishlist = 0;
     
     self.selectedSizeAndAddToCart = NO;
@@ -116,12 +117,12 @@
     [self.collectionView setCollectionViewLayout:self.flowLayout];
     
     self.collectionView.frame = CGRectMake(6.0f,
-                                           self.collectionView.frame.origin.y,
+                                           [self viewBounds].origin.y,
                                            [self viewBounds].size.width - 6.0f*2,
                                            [self viewBounds].size.height);
     
     self.emptyFavoritesView.frame = CGRectMake(self.emptyFavoritesView.frame.origin.x,
-                                               self.emptyFavoritesView.frame.origin.y,
+                                               [self viewBounds].origin.y + 6.0f,
                                                [self viewBounds].size.width - self.emptyFavoritesView.frame.origin.x * 2,
                                                300.0f);
     self.emptyFavoritesImageView.frame = CGRectMake((self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2,
@@ -142,13 +143,13 @@
     } else {
         self.maxPerPage = JAMyFavouritesViewControllerMaxProducts;
     }
-    
-    [self getFavorites];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self getFavorites];
     
     [self didRotateFromInterfaceOrientation:0];
 }

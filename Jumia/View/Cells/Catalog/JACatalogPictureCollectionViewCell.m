@@ -90,12 +90,10 @@
 {
     [super loadWithProduct:product];
     
-    
-    if (0 == [product.sum integerValue] && _ratingLine.ratingSum != 0) {
+    if (0 == [product.sum integerValue] ) {
         [_ratingLine setHidden:YES];
-    }else if (0 != [product.sum integerValue] && _ratingLine.ratingSum == 0) {
+    }else
         [_ratingLine setHidden:NO];
-    }
     
     _ratingLine.ratingAverage = product.avr;
     _ratingLine.ratingSum = product.sum;

@@ -613,12 +613,13 @@
             {
                 signUpVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
             }
-            [self popViewControllerAnimated:NO];
+//            [self popViewControllerAnimated:NO];
         }
         else
         {
             signUpVC.fromSideMenu = YES;
-            [self popToRootViewControllerAnimated:NO];
+            //$$$ NOT SURE ABOUT THIS
+//            [self popToRootViewControllerAnimated:NO];
         }
         
         [self pushViewController:signUpVC animated:NO];
@@ -1095,8 +1096,7 @@
     RICategory* category = [selectedItem objectForKey:@"category"];
     NSString* categoryId = [selectedItem objectForKey:@"category_id"];
     NSString* categoryName = [selectedItem objectForKey:@"category_name"];
-    NSString* filterType = [notification.userInfo objectForKey:@"filter_type"];
-    NSString* filterValue = [notification.userInfo objectForKey:@"filter_value"];
+    NSString* filterPush = [notification.userInfo objectForKey:@"filter"];
     NSNumber* sorting = [notification.userInfo objectForKey:@"sorting"];
     
     if (VALID_NOTEMPTY(category, RICategory))
@@ -1124,8 +1124,7 @@
         JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         
         catalog.categoryName = categoryName;
-        catalog.filterType = filterType;
-        catalog.filterValue = filterValue;
+        catalog.filterPush = filterPush;
         catalog.sortingMethodFromPush = sorting;
         
         [self pushViewController:catalog animated:YES];
@@ -1702,6 +1701,9 @@
     [self.navigationBarView.backButton addTarget:self
                                           action:@selector(back)
                                 forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationBarView.searchButton addTarget:self
+                                            action:@selector(search)
+                                  forControlEvents:UIControlEventTouchUpInside];
     
     self.navigationBarView.titleLabel.userInteractionEnabled = YES;
     UITapGestureRecognizer *touched = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goTop)];
@@ -1795,6 +1797,12 @@
 - (void)edit
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressEditNotification
+                                                        object:nil];
+}
+
+- (void)search
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressSearchButtonNotification
                                                         object:nil];
 }
 

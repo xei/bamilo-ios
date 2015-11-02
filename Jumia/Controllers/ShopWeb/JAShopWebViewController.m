@@ -27,8 +27,6 @@
 {
     [super viewDidLoad];
     
-    self.searchBarIsVisible = YES;
-    
     self.scrollView = [UIScrollView new];
     [self.view addSubview:self.scrollView];
     

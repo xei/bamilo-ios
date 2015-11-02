@@ -110,7 +110,6 @@ JAActivityViewControllerDelegate
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.searchBarIsVisible = NO;
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.apiResponse = RIApiResponseSuccess;
     if(VALID_NOTEMPTY(self.product.sku, NSString))

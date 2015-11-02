@@ -64,6 +64,7 @@
     CGFloat rightMargin = 16.0f;
     UIFont* font = [UIFont fontWithName:kFontMediumName size:17.0f];
     UIColor* textColor = [UIColor blackColor];
+    NSString* text = cellText;
     CGFloat accessoryImageWidth = 22.0f;
     CGFloat accessoryImageMargin = 16.0f;
     [self.accessoryImageView setImage:[UIImage imageNamed:accessoryImageName]];
@@ -89,6 +90,8 @@
         backgroundColor = UIColorFromRGB(0xf0f0f0);
         clickableViewIsEnabled = NO;
         textTopOffset = 3.0f;
+        
+        text = [cellText uppercaseString];
         
         accessoryImageWidth = 0.0f;
         accessoryImageMargin = 0.0f;
@@ -118,7 +121,7 @@
                                         self.backgroundClickableView.bounds.origin.y + textTopOffset,
                                         self.backgroundClickableView.bounds.size.width - leftMargin - accessoryImageWidth - accessoryImageMargin - iconImageWidth - iconImageMargin - rightMargin,
                                         height)];
-    [self.mainLabel setText:cellText];
+    [self.mainLabel setText:text];
     [self.mainLabel setFont:font];
     [self.mainLabel setTextColor:textColor];
     

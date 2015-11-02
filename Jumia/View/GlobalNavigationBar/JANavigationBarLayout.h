@@ -23,5 +23,6 @@
 @property (nonatomic, assign)BOOL showDoneButton;
 @property (nonatomic, strong)NSString* doneButtonTitle;
 @property (nonatomic, assign)BOOL showCartButton;
+@property (nonatomic, assign)BOOL showSearchButton;
 
 @end

@@ -202,9 +202,7 @@ typedef void (^ProcessActionBlock)(void);
 }
 
 - (void)viewDidLoad
-{
-    self.searchBarIsVisible = YES;
-    
+{    
     [super viewDidLoad];
     
     self.navBarLayout.showBackButton = YES;
@@ -352,7 +350,7 @@ typedef void (^ProcessActionBlock)(void);
                                              [self viewBounds].origin.y,
                                              self.view.frame.size.width,
                                              self.catalogTopView.frame.size.height)];
-    self.catalogTopView.cellTypeSelected = JACatalogCollectionViewListCell;
+    self.catalogTopView.cellTypeSelected = JACatalogCollectionViewGridCell;
     self.catalogTopView.delegate = self;
     [self.view addSubview:self.catalogTopView];
     self.catalogTopView.sortingButton.enabled = NO;
@@ -387,10 +385,6 @@ typedef void (^ProcessActionBlock)(void);
     }
     [self.catalogTopView setSorting:self.sortingMethod];
     [self.catalogTopView repositionForWidth:self.view.frame.size.width];
-    
-    NSNumber* cellTypeSelected = [[NSUserDefaults standardUserDefaults] objectForKey:JACatalogGridSelected];
-    self.catalogTopView.cellTypeSelected = [cellTypeSelected integerValue];
-    [self getLayoutItemSizeForInterfaceOrientation:[UIApplication sharedApplication].statusBarOrientation];
 }
 
 - (void)getCategories
@@ -549,7 +543,7 @@ typedef void (^ProcessActionBlock)(void);
                 
                 NSString* urlToUse = self.catalogUrl;
                 if (VALID_NOTEMPTY(self.categoryName, NSString)) {
-                    urlToUse = [NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, self.categoryName];
+                    urlToUse = [NSString stringWithFormat:@"%@%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_CATALOG, self.categoryName];
                 }
                 if (VALID_NOTEMPTY(self.category, RICategory) && VALID_NOTEMPTY(self.category.apiUrl, NSString)) {
                     urlToUse = self.category.apiUrl;
@@ -563,8 +557,7 @@ typedef void (^ProcessActionBlock)(void);
                                                                               page:[pageNumber integerValue]
                                                                           maxItems:self.maxProducts
                                                                            filters:self.filtersArray
-                                                                        filterType:self.filterType
-                                                                       filterValue:self.filterValue
+                                                                        filterPush:self.filterPush
                                                                       successBlock:processProductsBlock
                                                                    andFailureBlock:processCategoryProductsFailureBlock];
             }
@@ -751,14 +744,14 @@ typedef void (^ProcessActionBlock)(void);
                     height = JACatalogViewControllerListCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewPictureCell:
-                    width = self.view.frame.size.width/2;
+                    width = self.view.frame.size.width;
                     height = JACatalogViewControllerPictureCellHeight_ipad;
                     break;
             }
         } else {
             switch (self.catalogTopView.cellTypeSelected) {
                 case JACatalogCollectionViewGridCell:
-                    width =  self.view.frame.size.width/3;
+                    width =  self.view.frame.size.width/4;
                     height = JACatalogViewControllerGridCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewListCell:
@@ -766,7 +759,7 @@ typedef void (^ProcessActionBlock)(void);
                     height = JACatalogViewControllerListCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewPictureCell:
-                    width =  self.view.frame.size.width/3;
+                    width =  self.view.frame.size.width/2;
                     height = JACatalogViewControllerPictureCellHeight_ipad;
                     break;
             }

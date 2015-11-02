@@ -1376,6 +1376,11 @@
 		CE69B587198662E6005CC699 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE69B585198662E6005CC699 /* Main.storyboard */; };
 		CE73BB771AA60426002336B3 /* JANewSellerRatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE73BB761AA60426002336B3 /* JANewSellerRatingViewController.m */; };
 		CE73BB781AA6042E002336B3 /* JANewSellerRatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE73BB761AA60426002336B3 /* JANewSellerRatingViewController.m */; };
+		CE7CC08E1BE38B47006F4A56 /* JASearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7CC08D1BE38B47006F4A56 /* JASearchView.m */; settings = {ASSET_TAGS = (); }; };
+		CE7CC08F1BE38B47006F4A56 /* JASearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7CC08D1BE38B47006F4A56 /* JASearchView.m */; settings = {ASSET_TAGS = (); }; };
+		CE7CC0901BE38B47006F4A56 /* JASearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7CC08D1BE38B47006F4A56 /* JASearchView.m */; settings = {ASSET_TAGS = (); }; };
+		CE7CC0911BE38B47006F4A56 /* JASearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7CC08D1BE38B47006F4A56 /* JASearchView.m */; settings = {ASSET_TAGS = (); }; };
+		CE7CC0921BE38B47006F4A56 /* JASearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7CC08D1BE38B47006F4A56 /* JASearchView.m */; settings = {ASSET_TAGS = (); }; };
 		CE88F79F1A1CF64900A3A586 /* JAFavoriteListCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE88F79D1A1CF64900A3A586 /* JAFavoriteListCell_ipad_landscape.xib */; };
 		CE88F7A01A1CF64900A3A586 /* JAFavoriteListCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE88F79D1A1CF64900A3A586 /* JAFavoriteListCell_ipad_landscape.xib */; };
 		CE88F7A11A1CF64900A3A586 /* JAFavoriteListCell_ipad_portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE88F79E1A1CF64900A3A586 /* JAFavoriteListCell_ipad_portrait.xib */; };
@@ -3474,6 +3479,8 @@
 		CE73BB751AA60426002336B3 /* JANewSellerRatingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANewSellerRatingViewController.h; sourceTree = "<group>"; };
 		CE73BB761AA60426002336B3 /* JANewSellerRatingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANewSellerRatingViewController.m; sourceTree = "<group>"; };
 		CE73D4FF19E5866D0074F7F3 /* Model_1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.1.xcdatamodel; sourceTree = "<group>"; };
+		CE7CC08C1BE38B47006F4A56 /* JASearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASearchView.h; sourceTree = "<group>"; };
+		CE7CC08D1BE38B47006F4A56 /* JASearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASearchView.m; sourceTree = "<group>"; };
 		CE88F79D1A1CF64900A3A586 /* JAFavoriteListCell_ipad_landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAFavoriteListCell_ipad_landscape.xib; sourceTree = "<group>"; };
 		CE88F79E1A1CF64900A3A586 /* JAFavoriteListCell_ipad_portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAFavoriteListCell_ipad_portrait.xib; sourceTree = "<group>"; };
 		CE88F7A31A1DFFCD00A3A586 /* JAOrangeButtonCell_ipad_landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAOrangeButtonCell_ipad_landscape.xib; sourceTree = "<group>"; };
@@ -4235,6 +4242,8 @@
 		520A37CF1A4890CD0046C8B1 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				CE7CC08C1BE38B47006F4A56 /* JASearchView.h */,
+				CE7CC08D1BE38B47006F4A56 /* JASearchView.m */,
 				CE8DB8611AF916F90061807E /* JASearchResultsView.h */,
 				CE8DB8621AF916F90061807E /* JASearchResultsView.m */,
 			);
@@ -7754,6 +7763,7 @@
 				85b61709066677c2f1fcfd1c /* JARadioComponent.m in Sources */,
 				94d7dc4aac253d51f42cf556 /* RIFieldDataSetComponent.m in Sources */,
 				9A7EE9A91B5546A0004E2505 /* ADJUtil.m in Sources */,
+				CE7CC08F1BE38B47006F4A56 /* JASearchView.m in Sources */,
 				9A7EE9A41B5546A0004E2505 /* Adjust.m in Sources */,
 				027125b0e1eb09bbf6ac31b8 /* JATextFieldComponent.m in Sources */,
 				f8c3d3d4e4aeb8e1b38b80e7 /* RIImageResolution.m in Sources */,
@@ -8021,6 +8031,7 @@
 				CED30C27199CBF0E00C67F4B /* JAColorView.m in Sources */,
 				9A3876601BCD0DFD0088B186 /* JAProductReviewsView.m in Sources */,
 				CE8C929C1B861F2100C77706 /* RISeller.m in Sources */,
+				CE7CC08E1BE38B47006F4A56 /* JASearchView.m in Sources */,
 				B5A302C119811E9200F71726 /* RICountryConfiguration.m in Sources */,
 				B5C9C7041A1A5E6F0065AFD4 /* JADatePicker.m in Sources */,
 				B530D57119C1998B0052FEDA /* JACheckoutForms.m in Sources */,
@@ -8240,6 +8251,7 @@
 				CE9ADB751AB34C4600D56481 /* JAMyOrdersViewController.m in Sources */,
 				CE9ADB771AB34C4600D56481 /* JAFiltersView.m in Sources */,
 				CE9ADB7A1AB34C4600D56481 /* JACartViewController.m in Sources */,
+				CE7CC0901BE38B47006F4A56 /* JASearchView.m in Sources */,
 				CE9ADB7B1AB34C4600D56481 /* JAPDVProductInfo.m in Sources */,
 				CE9ADB7D1AB34C4600D56481 /* RIField.m in Sources */,
 				CE9ADB7F1AB34C4600D56481 /* JAPaymentCell.m in Sources */,
@@ -8522,6 +8534,7 @@
 				CE9ADD6F1AB6D6E900D56481 /* JAMyOrdersViewController.m in Sources */,
 				CE9ADD711AB6D6E900D56481 /* JAFiltersView.m in Sources */,
 				CE9ADD741AB6D6E900D56481 /* JACartViewController.m in Sources */,
+				CE7CC0911BE38B47006F4A56 /* JASearchView.m in Sources */,
 				CE9ADD751AB6D6E900D56481 /* JAPDVProductInfo.m in Sources */,
 				CE9ADD771AB6D6E900D56481 /* RIField.m in Sources */,
 				CE9ADD791AB6D6E900D56481 /* JAPaymentCell.m in Sources */,
@@ -8866,6 +8879,7 @@
 				CE9ADFB11AB6D78200D56481 /* JAUndefinedSearchView.m in Sources */,
 				CE9ADFB21AB6D78200D56481 /* RISellerReviewInfo.m in Sources */,
 				CEA106F91BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */,
+				CE7CC0921BE38B47006F4A56 /* JASearchView.m in Sources */,
 				CE9ADFB51AB6D78200D56481 /* JAAddNewAddressCell.m in Sources */,
 				CE9ADFB71AB6D78200D56481 /* JANavigationBarView.m in Sources */,
 				9A0F9BC31B5EAD9700569DF2 /* AQSFacebookMessengerActivity.m in Sources */,
