@@ -582,7 +582,7 @@
         
         return 640.f;
     }else{
-        return self.collectionView.width;
+        return self.collectionView.width - 32;
     }
 }
 

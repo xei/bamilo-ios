@@ -24,6 +24,27 @@
 
 @implementation JACatalogListCollectionViewCell
 
+@synthesize contentView = _contentView;
+
+- (UIButton *)selectorButton
+{
+    if (!VALID_NOTEMPTY(_selectorButton, UIButton)) {
+        _selectorButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_selectorButton setImage:[UIImage imageNamed:@"check_empty"] forState:UIControlStateNormal];
+        [_selectorButton setImage:[UIImage imageNamed:@"check"] forState:UIControlStateSelected];
+        [_selectorButton setImage:[UIImage imageNamed:@"check"] forState:UIControlStateHighlighted];
+    }
+    [_selectorButton setFrame:CGRectMake(self.favoriteButton.x, 8, 30, 30)];
+    [_selectorButton setXRightAligned:16];
+    return _selectorButton;
+}
+
+- (void)setTag:(NSInteger)tag
+{
+    [super setTag:tag];
+    [self.selectorButton setTag:tag];
+}
+
 - (instancetype)init
 {
     //    NSLog(@"init");
@@ -71,10 +92,11 @@
 - (void)reloadViews
 {
     [super reloadViews];
-    [_ratingLine setFrame:CGRectMake(80,
+    [_ratingLine setFrame:CGRectMake(90,
                                     CGRectGetMaxY(self.priceView.frame) + 14.f,
                                     _ratingLineRect.size.width,
-                                    _ratingLineRect.size.height)];
+                                     _ratingLineRect.size.height)];
+    [self.discountLabel setY:(CGRectGetMaxY(self.priceView.frame)+7.f)];
 
     if (RI_IS_RTL) {
         [_ratingLine flipViewPositionInsideSuperview];
@@ -91,12 +113,10 @@
 {
     [super loadWithProduct:product];
     
-    
-    if (0 == [product.sum integerValue] && _ratingLine.ratingSum != 0) {
+    if (0 == [product.sum integerValue] ) {
         [_ratingLine setHidden:YES];
-    }else if (0 != [product.sum integerValue] && _ratingLine.ratingSum == 0) {
+    }else
         [_ratingLine setHidden:NO];
-    }
     
     _ratingLine.ratingAverage = product.avr;
     _ratingLine.ratingSum = product.sum;

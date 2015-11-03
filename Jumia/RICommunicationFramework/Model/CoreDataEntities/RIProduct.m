@@ -178,17 +178,16 @@
                                    page:(NSInteger)page
                                maxItems:(NSInteger)maxItems
                                 filters:(NSArray*)filters
-                             filterType:(NSString*)filterType
-                            filterValue:(NSString*)filterValue
+                             filterPush:(NSString*)filterPush
                            successBlock:(void (^)(RICatalog *catalog))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
     NSString* fullUrl = @"";
     NSString *filtersString = @"";
 
-    if(VALID_NOTEMPTY(filterType, NSString) && VALID_NOTEMPTY(filterValue, NSString))
+    if(VALID_NOTEMPTY(filterPush, NSString))
     {
-        filtersString = [NSString stringWithFormat:@"%@=%@", filterType, filterValue];
+        filtersString = filterPush;
     }
     else
     {
@@ -223,7 +222,7 @@
     
     if(VALID_NOTEMPTY(filtersString, NSString))
     {
-        fullUrl = [NSString stringWithFormat:@"%@%@page=%ld&maxitems=%ld%@%@", url, particle, (long)page, (long)maxItems, sortingString, [NSString stringWithFormat:@"&%@" ,filtersString]];
+        fullUrl = [NSString stringWithFormat:@"%@%@page=%ld&maxitems=%ld%@%@", url, particle, (long)page, (long)maxItems, sortingString, [NSString stringWithFormat:@"%@" ,filtersString]];
     }
     else
     {

@@ -61,6 +61,7 @@
     self.navBarLayout.title = STRING_CART;
     self.navBarLayout.showCartButton = NO;
     self.tabBarIsVisible = YES;
+    self.searchBarIsVisible = YES;
     
     self.view.backgroundColor = JABackgroundGrey;
     
@@ -386,7 +387,9 @@
     [self.continueShoppingButton addTarget:self action:@selector(goToHomeScreen) forControlEvents:UIControlEventTouchUpInside];
     
     [self.emptyCartView setWidth:self.view.width-12.f];
+    [self.emptyCartView setY:[self viewBounds].origin.y+6.0f];
     [self.continueShoppingButton setWidth:self.view.width-12.f];
+    [self.continueShoppingButton setY:CGRectGetMaxY(self.emptyCartView.frame)+6.0f];
     [self.emptyCartLabel setX:self.view.width/2-self.emptyCartLabel.width/2];
     [self.emptyCartImageView setX:self.view.width/2-self.emptyCartImageView.width/2];
     
@@ -416,13 +419,13 @@
         [self.flowLayout setHeaderReferenceSize:CGSizeMake(viewsWidth, headerSize)];
         
         [self.productsScrollView setFrame:CGRectMake(horizontalMargin,
-                                                     0.0f,
+                                                     [self viewBounds].origin.y,
                                                      viewsWidth,
                                                      [self viewBounds].size.height)];
         [self.view addSubview:self.productsScrollView];
         
         [self.cartScrollView setFrame:CGRectMake(CGRectGetMaxX(self.productsScrollView.frame) + 6.0f,
-                                                 0.0f,
+                                                 [self viewBounds].origin.y,
                                                  viewsWidth,
                                                  [self viewBounds].size.height)];
         
@@ -442,7 +445,7 @@
         [self.flowLayout setHeaderReferenceSize:CGSizeMake(viewsWidth, headerSize)];
         
         [self.cartScrollView setFrame:CGRectMake(6.0f,
-                                                 0.0f,
+                                                 [self viewBounds].origin.y,
                                                  viewsWidth,
                                                  [self viewBounds].size.height)];
         
