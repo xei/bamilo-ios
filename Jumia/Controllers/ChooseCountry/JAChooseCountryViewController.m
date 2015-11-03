@@ -214,6 +214,9 @@ JAPickerDelegate
     if (self.selectedIndex)
     {
         RICountry *country = [self.countriesArray objectAtIndex:self.selectedIndex.row];
+        if (ISEMPTY(country.selectedLanguage)) {
+            country.selectedLanguage = [country.languages objectAtIndex:0];
+        }
         [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification object:country];
     }
 }
