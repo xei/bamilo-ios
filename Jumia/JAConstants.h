@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
+#define RI_IS_RTL [RILocalizationWrapper localizationIsRTL]
+
 // Notifications
 
 //************ app action notifications

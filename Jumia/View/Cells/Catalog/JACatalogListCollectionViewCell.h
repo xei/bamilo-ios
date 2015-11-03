@@ -18,4 +18,6 @@
 
 @interface JACatalogListCollectionViewCell : JACatalogCollectionViewCell
 
+@property (nonatomic) UIButton *selectorButton;
+
 @end

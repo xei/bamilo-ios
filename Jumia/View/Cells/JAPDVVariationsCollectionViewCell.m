@@ -20,7 +20,7 @@
 
 @implementation JAPDVVariationsCollectionViewCell
 
-@synthesize bottomHorizontalSeparator = _bottomHorizontalSeparator, topHorizontalSeparator = _topHorizontalSeparator, rightVerticalSeparator = _rightVerticalSeparator, contentView = _contentView;
+@synthesize contentView = _contentView, topHorizontalSeparator = _topHorizontalSeparator, bottomHorizontalSeparator = _bottomHorizontalSeparator, rightVerticalSeparator = _rightVerticalSeparator;
 
 - (void)initViews
 {
@@ -39,6 +39,12 @@
     [_contentView addSubview:self.brandLabel];
     
     [_contentView addSubview:self.nameLabel];
+    
+    [_contentView addSubview:self.favoriteButton];
+    
+    [_contentView addSubview:self.selectorButton];
+    
+    [_contentView addSubview:self.discountLabel];
     
     [_contentView addSubview:self.recentProductImageView];
     
@@ -68,6 +74,11 @@
 
 - (void)reloadViews
 {
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        [_contentView setFrame:CGRectMake(32.0f, 0, self.frame.size.width - 64.0f, self.frame.size.height)];
+    } else {
+        [_contentView setFrame:CGRectMake(12.0f, 0, self.frame.size.width - 24.0f , self.frame.size.height)];
+    }
     [super reloadViews];
     
     [self displayNameInMultipleLines];

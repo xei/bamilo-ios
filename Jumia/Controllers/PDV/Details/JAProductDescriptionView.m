@@ -62,7 +62,7 @@
 {
     _product = product;
     if (VALID_NOTEMPTY(_product.shortSummary, NSString)) {
-        [self.descriptionLabel setText:_product.summary];
+        [self.descriptionLabel setText:[NSString stringWithFormat:@"%@\n%@", _product.summary, _product.shortSummary]];
         [self.descriptionLabel sizeToFit];
         [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.width, CGRectGetMaxY(self.descriptionLabel.frame) + 16.f)];
     }

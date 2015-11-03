@@ -53,6 +53,7 @@
     // Do any additional setup after loading the view.
     self.screenName = @"SplashScreen";
     
+    self.navBarLayout.showCartButton = NO;
     
     self.coverView = [[UIView alloc] initWithFrame:self.view.bounds];
     self.coverView.backgroundColor = [UIColor blackColor];
