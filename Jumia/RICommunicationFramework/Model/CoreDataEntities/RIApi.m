@@ -24,6 +24,7 @@
 @dynamic countryUrl;
 @dynamic countryIso;
 @dynamic countryName;
+@dynamic countryFlag;
 @dynamic countryUserAgentInjection;
 @dynamic curVersion;
 @dynamic minVersion;
@@ -37,6 +38,7 @@
     NSString *url;
     NSString *countryIso;
     NSString *name;
+    NSString *flag;
     NSString *countryUserAgentInjection;
     
     if (ISEMPTY(country))
@@ -48,6 +50,7 @@
             url = api.countryUrl;
             countryIso = api.countryIso;
             name = api.countryName;
+            flag = api.countryFlag;
             countryUserAgentInjection = api.countryUserAgentInjection;
         }
     }
@@ -68,6 +71,7 @@
         url = country.url;
         countryIso = country.countryIso;
         name = country.name;
+        flag = country.flag;
         countryUserAgentInjection = country.userAgentInjection;
     }
     
@@ -88,6 +92,7 @@
                                                                   RIApi* newApi = [RIApi parseApi:metadata
                                                                                        countryIso:countryIso
                                                                                       countryName:name
+                                                                                      countryFlag:flag
                                                                         countryUserAgentInjection:countryUserAgentInjection];
                                                                   
                                                                   BOOL hasUpdate = NO;
@@ -247,6 +252,18 @@
     }
 }
 
++ (NSString *)getCountryFlagInUse;
+{
+    NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
+    
+    if (0 == apiArray.count) {
+        return @"";
+    } else {
+        RIApi *api = [apiArray firstObject];
+        return api.countryFlag;
+    }
+}
+
 + (NSString *)getCountryUserAgentInjection;
 {
     NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
@@ -276,6 +293,7 @@
 + (RIApi *)parseApi:(NSDictionary*)api
          countryIso:(NSString *)countryIso
         countryName:(NSString *)countryName
+        countryFlag:(NSString *)countryFlag
 countryUserAgentInjection:(NSString*)countryUserAgentInjection
 {
     RIApi* newApi = (RIApi*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIApi class])];
@@ -288,6 +306,11 @@ countryUserAgentInjection:(NSString*)countryUserAgentInjection
     if (VALID_NOTEMPTY(countryName, NSString))
     {
         newApi.countryName = countryName;
+    }
+    
+    if (VALID_NOTEMPTY(countryFlag, NSString))
+    {
+        newApi.countryFlag = countryFlag;
     }
 
     if (VALID_NOTEMPTY(countryUserAgentInjection, NSString))
