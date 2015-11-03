@@ -15,6 +15,12 @@
 #define RILocalizedString(key, comment) [RILocalizationWrapper localizedString:key]
 
 /**
+ * Method to check if app is RTL based on the strings that were et
+ *
+ */
++ (BOOL)localizationIsRTL;
+
+/**
  * Method to localize a string
  *
  * @param the key of the string to be localized

@@ -17,7 +17,7 @@
 @dynamic langName;
 @dynamic countryConfig;
 
-+ (RILanguage *)parseRILanguage:(NSDictionary *)json
++ (RILanguage *)parseLanguage:(NSDictionary *)json;
 {
     RILanguage *newLanguage = (RILanguage *)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RILanguage class])];
     

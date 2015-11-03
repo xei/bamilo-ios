@@ -18,11 +18,22 @@
                 <outlet property="appSharingSeparator" destination="GXv-Vt-iI1" id="BRW-zo-AjO"/>
                 <outlet property="appSharingTitleLabel" destination="5ce-Zb-5Hu" id="XzI-5a-W3U"/>
                 <outlet property="appSharingView" destination="JfU-dp-zRR" id="2IR-FD-c6d"/>
+                <outlet property="chooseCountryClickableView" destination="iRu-Iy-Ljn" id="Kzv-ww-W4B"/>
+                <outlet property="countryFlag" destination="9m6-hG-L1l" id="Xhj-6p-EEj"/>
+                <outlet property="countrySeparator" destination="H1Z-Y8-Ydg" id="qm1-xG-xSD"/>
+                <outlet property="countrySettingsTitleLabel" destination="Scj-7n-QUC" id="dml-m0-1hN"/>
+                <outlet property="countrySettingsView" destination="qMH-XA-k49" id="k61-aB-mUS"/>
+                <outlet property="countrySubtitleLabel" destination="As3-aT-Rq9" id="qgu-Jq-uSf"/>
+                <outlet property="countryTitleLabel" destination="GLz-Cf-0B6" id="qQB-Ax-EQ7"/>
                 <outlet property="emailAndAddressesSeparator" destination="cSV-kB-UZU" id="zy2-op-JBj"/>
-                <outlet property="emailArrow" destination="61Q-to-k60" id="jy1-3u-YZD"/>
                 <outlet property="emailClickableView" destination="CHU-kq-1gy" id="VTr-vO-SaY"/>
                 <outlet property="emailSubtitleLabel" destination="9Ll-CA-eUt" id="LPf-Eh-n9Z"/>
                 <outlet property="emailTitleLabel" destination="EfI-g7-PZK" id="qhN-yo-zEv"/>
+                <outlet property="languageArrow" destination="Mic-uD-o3y" id="cPZ-tQ-R7z"/>
+                <outlet property="languageClickableView" destination="Maa-S4-ArC" id="ZXg-3T-y5N"/>
+                <outlet property="languageSeparator" destination="Lqe-Kp-GYb" id="ULm-LZ-N1K"/>
+                <outlet property="languageSubtitleLabel" destination="fqT-Xf-PXu" id="a0L-Yd-wuc"/>
+                <outlet property="languageTitleLabel" destination="Udi-c2-BBw" id="8ho-X0-boX"/>
                 <outlet property="notificationAndSoundSeparator" destination="2EQ-8C-kRR" id="8ed-3n-Mje"/>
                 <outlet property="notificationSettingsTitleLabel" destination="6co-22-EUP" id="mdb-fL-n3m"/>
                 <outlet property="notificationSubtitleLabel" destination="Ztd-Z8-cNX" id="kcu-ya-2Vf"/>
@@ -249,6 +260,76 @@
                                 </label>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_gotoarea" id="vVp-Cn-Vch" userLabel="Share App Arrow">
                                     <rect key="frame" x="283" y="42" width="8" height="14"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                        <view contentMode="scaleToFill" id="qMH-XA-k49" userLabel="Country Settings">
+                            <rect key="frame" x="6" y="372" width="308" height="117"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Scj-7n-QUC" userLabel="Country Settings Title">
+                                    <rect key="frame" x="6" y="4" width="294" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <view contentMode="scaleToFill" id="H1Z-Y8-Ydg" userLabel="Country Separator">
+                                    <rect key="frame" x="0.0" y="26" width="308" height="1"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" red="0.7843137255" green="0.088048448599999996" blue="0.056397232249999998" alpha="1" colorSpace="calibratedRGB"/>
+                                </view>
+                                <view contentMode="scaleToFill" id="iRu-Iy-Ljn" userLabel="Choose Country Clickable View" customClass="JAClickableView">
+                                    <rect key="frame" x="0.0" y="27" width="308" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GLz-Cf-0B6" userLabel="Country Title">
+                                    <rect key="frame" x="17" y="33" width="256" height="19"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="As3-aT-Rq9" userLabel="Country Subtitle">
+                                    <rect key="frame" x="17" y="52" width="256" height="16"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="11"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <view contentMode="scaleToFill" id="Lqe-Kp-GYb" userLabel="Separator">
+                                    <rect key="frame" x="0.0" y="71" width="308" height="1"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                </view>
+                                <view contentMode="scaleToFill" id="Maa-S4-ArC" userLabel="Language View" customClass="JAClickableView">
+                                    <rect key="frame" x="0.0" y="72" width="308" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Udi-c2-BBw" userLabel="Language Title">
+                                    <rect key="frame" x="17" y="78" width="256" height="19"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fqT-Xf-PXu" userLabel="Language Subtitle">
+                                    <rect key="frame" x="17" y="97" width="256" height="16"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="11"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_gotoarea" id="Mic-uD-o3y" userLabel="Language Arrow">
+                                    <rect key="frame" x="283" y="87" width="8" height="14"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_gotoarea" id="9m6-hG-L1l" userLabel="Country Flag">
+                                    <rect key="frame" x="240" y="31" width="51" height="36"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
                             </subviews>

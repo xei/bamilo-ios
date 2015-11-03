@@ -12,6 +12,8 @@
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 #import "AQSFacebookMessengerActivity.h"
 #import "JBWhatsAppActivity.h"
+#import "RIApi.h"
+#import "UIImageView+WebCache.h"
 
 @interface JAMyAccountViewController ()
 
@@ -52,6 +54,20 @@
 @property (weak, nonatomic) IBOutlet UIImageView *shareAppArrow;
 @property (strong, nonatomic) UIPopoverController *currentPopoverController;
 @property (assign, nonatomic) BOOL stillRTL;
+
+@property (weak, nonatomic) IBOutlet UIView *countrySettingsView;
+@property (weak, nonatomic) IBOutlet UILabel *countrySettingsTitleLabel;
+@property (weak, nonatomic) IBOutlet UIView *countrySeparator;
+@property (weak, nonatomic) IBOutlet JAClickableView *chooseCountryClickableView;
+@property (weak, nonatomic) IBOutlet UILabel *countryTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *countrySubtitleLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *countryFlag;
+@property (weak, nonatomic) IBOutlet UIView *languageSeparator;
+@property (weak, nonatomic) IBOutlet JAClickableView *languageClickableView;
+@property (weak, nonatomic) IBOutlet UILabel *languageTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *languageSubtitleLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *languageArrow;
+
 
 @end
 
@@ -188,6 +204,65 @@
     
     self.shareAppArrow.translatesAutoresizingMaskIntoConstraints = YES;
     
+    
+    self.countrySettingsView.layer.cornerRadius = 5.0f;
+    self.countrySettingsView.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.countrySettingsTitleLabel.font = [UIFont fontWithName:kFontRegularName size:self.countrySettingsTitleLabel.font.pointSize];
+    self.countrySettingsTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.countrySettingsTitleLabel.text = STRING_CHOOSE_COUNTRY;
+    
+    self.countrySeparator.backgroundColor = UIColorFromRGB(0xfaa41a);
+    
+    self.countryTitleLabel.font = [UIFont fontWithName:kFontLightName size:self.countryTitleLabel.font.pointSize];
+    self.countryTitleLabel.textColor = UIColorFromRGB(0x666666);
+    self.countryTitleLabel.text = STRING_COUNTRY;
+    self.countryTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.countrySubtitleLabel.font = [UIFont fontWithName:kFontLightName size:self.countrySubtitleLabel.font.pointSize];
+    self.countrySubtitleLabel.textColor = UIColorFromRGB(0x666666);
+    self.countrySubtitleLabel.text = [RIApi getCountryNameInUse];
+    self.countrySubtitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.countryFlag.translatesAutoresizingMaskIntoConstraints = YES;
+    NSURL* flagURL = [NSURL URLWithString:[RIApi getCountryFlagInUse]];
+    [self.countryFlag setImageWithURL:flagURL];
+//    self.countryFlag.layer.cornerRadius = self.countryFlag.frame.size.height /2;
+//    self.countryFlag.layer.masksToBounds = YES;
+//    self.countryFlag.layer.borderWidth = 0;
+    
+    self.languageSeparator.backgroundColor = UIColorFromRGB(0xcccccc);
+    
+    BOOL hasMoreThanOneLanguage = [RICountryConfiguration getCurrentConfiguration].languages.count>1?YES:NO;
+    
+    self.languageTitleLabel.font = [UIFont fontWithName:kFontLightName size:self.languageTitleLabel.font.pointSize];
+    if (hasMoreThanOneLanguage) {
+        self.languageTitleLabel.textColor = UIColorFromRGB(0x666666);
+    } else {
+        self.languageTitleLabel.textColor = UIColorFromRGB(0xcccccc);
+    }
+    self.languageTitleLabel.text = STRING_LANGUAGE;
+    self.languageTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    self.languageSubtitleLabel.font = [UIFont fontWithName:kFontLightName size:self.languageSubtitleLabel.font.pointSize];
+    if (hasMoreThanOneLanguage) {
+        self.languageSubtitleLabel.textColor = UIColorFromRGB(0x666666);
+    } else {
+        self.languageSubtitleLabel.textColor = UIColorFromRGB(0xcccccc);
+    }
+    self.languageSubtitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    NSString *locale = [[NSUserDefaults standardUserDefaults] stringForKey:kLanguageCodeKey];
+    for (RILanguage* language in [RICountryConfiguration getCurrentConfiguration].languages) {
+        if ([language.langCode isEqualToString:locale]) {
+            //found it
+            self.languageSubtitleLabel.text = language.langName;
+        }
+    }
+
+    self.languageArrow.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    
     self.userDataClickableView.translatesAutoresizingMaskIntoConstraints = YES;
     [self.userDataClickableView addTarget:self
                                    action:@selector(pushUserData:)
@@ -207,6 +282,17 @@
     [self.shareAppClickableView addTarget:self
                                    action:@selector(shareApp:)
                          forControlEvents:UIControlEventTouchUpInside];
+    
+    self.chooseCountryClickableView.translatesAutoresizingMaskIntoConstraints = YES;
+    [self.chooseCountryClickableView addTarget:self
+                                        action:@selector(chooseCountry)
+                              forControlEvents:UIControlEventTouchUpInside];
+    
+    self.languageClickableView.translatesAutoresizingMaskIntoConstraints = YES;
+    [self.languageClickableView addTarget:self
+                                   action:@selector(chooseLanguage)
+                         forControlEvents:UIControlEventTouchUpInside];
+    self.languageClickableView.enabled = hasMoreThanOneLanguage;
     
     BOOL isNotiActive = [[NSUserDefaults standardUserDefaults] boolForKey: kChangeNotificationsOptions];
     BOOL isSoundActive = [[NSUserDefaults standardUserDefaults] boolForKey: kChangeSoundOptions];
@@ -339,7 +425,22 @@
                                                     self.appSharingView.frame.size.width,
                                                     self.shareAppClickableView.frame.size.height)];
     
-    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, CGRectGetMaxY(self.appSharingView.frame) + 6.0f)];
+    [self.countrySettingsView setFrame:CGRectMake(self.countrySettingsView.frame.origin.x,
+                                                  CGRectGetMaxY(self.appSharingView.frame) + 6.0f,
+                                                  width - (self.notificationView.frame.origin.x * 2),
+                                                  self.countrySettingsView.frame.size.height)];
+    
+    [self.chooseCountryClickableView setFrame:CGRectMake(self.chooseCountryClickableView.frame.origin.x,
+                                                         self.chooseCountryClickableView.frame.origin.y,
+                                                         self.countrySettingsView.frame.size.width,
+                                                         self.chooseCountryClickableView.frame.size.height)];
+    
+    [self.languageClickableView setFrame:CGRectMake(self.languageClickableView.frame.origin.x,
+                                                    self.languageClickableView.frame.origin.y,
+                                                    self.countrySettingsView.frame.size.width,
+                                                    self.languageClickableView.frame.size.height)];
+    
+    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, CGRectGetMaxY(self.countrySettingsView.frame) + 6.0f)];
     
     CGFloat leftMargin = 17.0f;
     CGFloat rightMargin = 17.0f;
@@ -378,6 +479,16 @@
                                                   self.appSharingSeparator.frame.origin.y,
                                                   self.accountView.frame.size.width,
                                                   self.appSharingSeparator.frame.size.height)];
+    
+    [self.countrySeparator setFrame:CGRectMake(self.countrySeparator.frame.origin.x,
+                                               self.countrySeparator.frame.origin.y,
+                                               self.countrySettingsView.frame.size.width,
+                                               self.countrySeparator.frame.size.height)];
+
+    [self.languageSeparator setFrame:CGRectMake(self.languageSeparator.frame.origin.x,
+                                                self.languageSeparator.frame.origin.y,
+                                                self.countrySettingsView.frame.size.width,
+                                                self.languageSeparator.frame.size.height)];
     
     [self.accountSettingsTitleLabel setFrame: CGRectMake(6.0f,
                                                          self.accountSettingsTitleLabel.frame.origin.y,
@@ -489,6 +600,36 @@
                                             self.shareAppArrow.frame.size.width,
                                             self.shareAppArrow.frame.size.height)];
     
+    [self.countryTitleLabel setFrame:CGRectMake(leftMargin,
+                                                self.countryTitleLabel.frame.origin.y,
+                                                self.countryTitleLabel.frame.size.width,
+                                                self.countryTitleLabel.frame.size.height)];
+    
+    [self.countrySubtitleLabel setFrame:CGRectMake(leftMargin,
+                                                   self.countrySubtitleLabel.frame.origin.y,
+                                                   self.countrySubtitleLabel.frame.size.width,
+                                                   self.countrySubtitleLabel.frame.size.height)];
+    
+    [self.countryFlag setFrame:CGRectMake(self.countrySettingsView.frame.size.width - self.countryFlag.frame.size.width - rightMargin,
+                                          self.countryFlag.frame.origin.y,
+                                          self.countryFlag.frame.size.width,
+                                          self.countryFlag.frame.size.height)];
+    
+    [self.languageTitleLabel setFrame:CGRectMake(leftMargin,
+                                                 self.languageTitleLabel.frame.origin.y,
+                                                 self.languageTitleLabel.frame.size.width,
+                                                 self.languageTitleLabel.frame.size.height)];
+    
+    [self.languageSubtitleLabel setFrame:CGRectMake(leftMargin,
+                                                    self.languageSubtitleLabel.frame.origin.y,
+                                                    self.languageSubtitleLabel.frame.size.width,
+                                                    self.languageSubtitleLabel.frame.size.height)];
+    
+    [self.languageArrow setFrame:CGRectMake(self.countrySettingsView.frame.size.width - self.languageArrow.frame.size.width - rightMargin,
+                                            self.languageArrow.frame.origin.y,
+                                            self.languageArrow.frame.size.width,
+                                            self.languageArrow.frame.size.height)];
+    
     if(RI_IS_RTL){
         
         [self.accountView  flipSubviewPositions];
@@ -496,13 +637,15 @@
         [self.notificationView flipSubviewPositions];
         [self.appSharingView flipSubviewPositions];
         [self.appSharingView flipSubviewImages];
-        
+        [self.countrySettingsView flipSubviewPositions];
+        [self.countrySettingsView flipSubviewImages];
         
         if(self.stillRTL){
             
             [self.accountView flipSubviewAlignments];
             [self.notificationView flipSubviewAlignments];
             [self.appSharingView flipSubviewAlignments];
+            [self.countrySettingsView flipSubviewAlignments];
             self.stillRTL= NO;
         }
         
@@ -674,6 +817,16 @@
 - (void)showEmailNotificationsSavedMessage
 {
     [self showMessage:STRING_PREFERENCES_UPDATED success:YES];
+}
+
+- (void)chooseCountry
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowChooseCountryScreenNotification object:@{@"show_back_button":[NSNumber numberWithBool:YES]}];
+}
+
+- (void)chooseLanguage
+{
+    
 }
 
 @end
