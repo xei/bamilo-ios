@@ -17,6 +17,7 @@
 #import "RICountryConfiguration.h"
 #import "RIStaticBlockIndex.h"
 #import "RICustomer.h"
+#import "RILanguage.h"
 
 @implementation RIApi
 

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "RICountryConfiguration.h"
+#import "RILanguage.h"
 
 @interface RICountry : NSObject
 

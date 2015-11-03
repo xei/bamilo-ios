@@ -7,7 +7,6 @@
 //
 
 #import "RICountry.h"
-#import "RILanguage.h"
 
 @implementation RICountry
 
@@ -271,6 +270,9 @@
 #endif
         return uniqueCountry;
     } else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
+        NSDictionary* languageJSON = @{@"code":@"fa",@"default":@1,@"name":@"Persian"};
+        RILanguage* language = [RILanguage parseLanguage:languageJSON];
+        uniqueCountry.selectedLanguage = language;
         uniqueCountry.name = RI_UNIQUE_COUNTRY_NAME_BAMILO;
         uniqueCountry.countryIso = RI_UNIQUE_COUNTRY_ISO_BAMILO;
         uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO;
