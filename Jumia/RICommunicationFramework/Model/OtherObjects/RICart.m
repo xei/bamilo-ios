@@ -704,11 +704,11 @@
                     cart.vatLabelEnabled = [vatDict objectForKey:@"label_configuration"];
                 }
                 if (VALID_NOTEMPTY([vatDict objectForKey:@"value"], NSNumber)) {
-                    cart.vatValue = [cartEntityJSON objectForKey:@"value"];
+                    cart.vatValue = [vatDict objectForKey:@"value"];
                     cart.vatValueFormatted = [RICountryConfiguration formatPrice:cart.vatValue country:country];
                 }
                 if (VALID_NOTEMPTY([vatDict objectForKey:@"value_converted"], NSNumber)) {
-                    cart.vatValueEuroConverted = [cartEntityJSON objectForKey:@"value_converted"];
+                    cart.vatValueEuroConverted = [vatDict objectForKey:@"value_converted"];
                 }
             }
         }
