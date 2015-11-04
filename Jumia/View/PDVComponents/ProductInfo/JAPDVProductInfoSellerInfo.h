@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "RISeller.h"
-#import "JAClickableView.h"
 
-@interface JAPDVProductInfoSellerInfo : JAClickableView
+@interface JAPDVProductInfoSellerInfo : UIView
 
 @property (nonatomic) RISeller *seller;
 
 - (void)addTarget:(id)target action:(SEL)action;
+- (void)addLinkTarget:(id)target action:(SEL)action;
 
 @end
