@@ -45,6 +45,11 @@
  */
 - (void)downloadLocalesForComponents:(NSDictionary*)componentDictionary;
 
+/**
+ * Method used when a done button is added to a numPad keyboard
+ */
+- (IBAction)doneClicked:(id)sender;
+
 @end
 
 @interface JADynamicForm : NSObject <UITextFieldDelegate>

@@ -796,6 +796,11 @@ JAPickerDelegate>
     }
 }
 
+- (IBAction)doneClicked:(id)sender
+{
+    [self.view endEditing:YES];
+}
+
 #pragma mark JAPickerDelegate
 - (void)selectedRow:(NSInteger)selectedRow
 {
