@@ -14,8 +14,13 @@
 #import "JBWhatsAppActivity.h"
 #import "RIApi.h"
 #import "UIImageView+WebCache.h"
+#import "JAPicker.h"
+#import "RICountry.h"
 
 @interface JAMyAccountViewController ()
+<
+JAPickerDelegate
+>
 
 @property (weak, nonatomic) IBOutlet UIScrollView* scrollView;
 @property (weak, nonatomic) IBOutlet UIView *accountView;
@@ -68,6 +73,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *languageSubtitleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *languageArrow;
 
+
+@property (nonatomic, strong) JAPicker* languagePicker;
+@property (nonatomic, strong) NSIndexPath* pickerIndexPath;
 
 @end
 
@@ -290,7 +298,7 @@
     
     self.languageClickableView.translatesAutoresizingMaskIntoConstraints = YES;
     [self.languageClickableView addTarget:self
-                                   action:@selector(chooseLanguage)
+                                   action:@selector(openLanguagePicker)
                          forControlEvents:UIControlEventTouchUpInside];
     self.languageClickableView.enabled = hasMoreThanOneLanguage;
     
@@ -359,6 +367,11 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
+    if(VALID(self.languagePicker, JAPicker))
+    {
+        [self.languagePicker removeFromSuperview];
+    }
+    
     if(VALID_NOTEMPTY(self.currentPopoverController, UIPopoverController))
     {
         [self.currentPopoverController dismissPopoverAnimated:NO];
@@ -425,22 +438,32 @@
                                                     self.appSharingView.frame.size.width,
                                                     self.shareAppClickableView.frame.size.height)];
     
-    [self.countrySettingsView setFrame:CGRectMake(self.countrySettingsView.frame.origin.x,
-                                                  CGRectGetMaxY(self.appSharingView.frame) + 6.0f,
-                                                  width - (self.notificationView.frame.origin.x * 2),
-                                                  self.countrySettingsView.frame.size.height)];
+    CGFloat scrollViewHeight = CGRectGetMaxY(self.appSharingView.frame) + 6.0f;
+    if (ISEMPTY([RICountry getUniqueCountry])) {
+        self.countrySettingsView.hidden = NO;
+        
+        [self.countrySettingsView setFrame:CGRectMake(self.countrySettingsView.frame.origin.x,
+                                                      CGRectGetMaxY(self.appSharingView.frame) + 6.0f,
+                                                      width - (self.notificationView.frame.origin.x * 2),
+                                                      self.countrySettingsView.frame.size.height)];
+        
+        [self.chooseCountryClickableView setFrame:CGRectMake(self.chooseCountryClickableView.frame.origin.x,
+                                                             self.chooseCountryClickableView.frame.origin.y,
+                                                             self.countrySettingsView.frame.size.width,
+                                                             self.chooseCountryClickableView.frame.size.height)];
+        
+        [self.languageClickableView setFrame:CGRectMake(self.languageClickableView.frame.origin.x,
+                                                        self.languageClickableView.frame.origin.y,
+                                                        self.countrySettingsView.frame.size.width,
+                                                        self.languageClickableView.frame.size.height)];
+        
+        scrollViewHeight = CGRectGetMaxY(self.countrySettingsView.frame) + 6.0f;
+    } else {
+        self.countrySettingsView.hidden = YES;
+    }
+
     
-    [self.chooseCountryClickableView setFrame:CGRectMake(self.chooseCountryClickableView.frame.origin.x,
-                                                         self.chooseCountryClickableView.frame.origin.y,
-                                                         self.countrySettingsView.frame.size.width,
-                                                         self.chooseCountryClickableView.frame.size.height)];
-    
-    [self.languageClickableView setFrame:CGRectMake(self.languageClickableView.frame.origin.x,
-                                                    self.languageClickableView.frame.origin.y,
-                                                    self.countrySettingsView.frame.size.width,
-                                                    self.languageClickableView.frame.size.height)];
-    
-    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, CGRectGetMaxY(self.countrySettingsView.frame) + 6.0f)];
+    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, scrollViewHeight)];
     
     CGFloat leftMargin = 17.0f;
     CGFloat rightMargin = 17.0f;
@@ -824,9 +847,67 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowChooseCountryScreenNotification object:@{@"show_back_button":[NSNumber numberWithBool:YES]}];
 }
 
-- (void)chooseLanguage
+#pragma mark - Picker
+
+-(void)removePickerView
 {
-    
+    if(VALID_NOTEMPTY(self.languagePicker, JAPicker))
+    {
+        [self.languagePicker removeFromSuperview];
+        self.languagePicker = nil;
+    }
 }
+
+- (void)openLanguagePicker
+{
+    [self removePickerView];
+    
+    self.languagePicker = [[JAPicker alloc] initWithFrame:self.view.frame];
+    [self.languagePicker setDelegate:self];
+    
+    NSMutableArray *dataSource = [[NSMutableArray alloc] init];
+    NSString* autoSelected;
+    for (RILanguage* language in [RICountryConfiguration getCurrentConfiguration].languages) {
+        if (VALID_NOTEMPTY(language, RILanguage)) {
+            [dataSource addObject:language.langName];
+            if ([language.langName isEqualToString:self.languageSubtitleLabel.text]) {
+                autoSelected = language.langName;
+            }
+        }
+    }
+    
+    [self.languagePicker setDataSourceArray:[dataSource copy]
+                               previousText:autoSelected
+                            leftButtonTitle:nil];
+    
+    CGFloat pickerViewHeight = self.view.frame.size.height;
+    CGFloat pickerViewWidth = self.view.frame.size.width;
+    [self.languagePicker setFrame:CGRectMake(0.0f,
+                                             pickerViewHeight,
+                                             pickerViewWidth,
+                                             pickerViewHeight)];
+    [self.view addSubview:self.languagePicker];
+    
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         [self.languagePicker setFrame:CGRectMake(0.0f,
+                                                                  0.0f,
+                                                                  pickerViewWidth,
+                                                                  pickerViewHeight)];
+                     }];
+}
+
+- (void)selectedRow:(NSInteger)selectedRow
+{
+    RILanguage* selectedLanguage = [[RICountryConfiguration getCurrentConfiguration].languages objectAtIndex:selectedRow];
+    if ([selectedLanguage.langName isEqualToString:self.languageSubtitleLabel.text]) {
+        //do nothing
+    } else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedLanguageNotification object:selectedLanguage];
+    }
+    
+    [self removePickerView];
+}
+
 
 @end
