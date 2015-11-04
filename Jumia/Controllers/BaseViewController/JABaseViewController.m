@@ -12,7 +12,6 @@
 #import "JAMaintenancePage.h"
 #import "JAKickoutView.h"
 #import "JAFallbackView.h"
-#import "JATabBarView.h"
 #import "JASearchResultsView.h"
 #import "JASearchView.h"
 
