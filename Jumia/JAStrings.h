@@ -339,4 +339,6 @@
 #define STRING_KICKOUT_MESSAGE_3 RILocalizedString(@"kickout_message_3", nil)
 #define STRING_SEARCH_PLACEHOLDER RILocalizedString(@"search_placeholder", nil)
 
+#define STRING_COMBOS RILocalizedString(@"combos", nil)
+
 #endif
