@@ -14,8 +14,12 @@
 #import "JBWhatsAppActivity.h"
 #import "RIApi.h"
 #import "UIImageView+WebCache.h"
+#import "JAPicker.h"
 
 @interface JAMyAccountViewController ()
+<
+JAPickerDelegate
+>
 
 @property (weak, nonatomic) IBOutlet UIScrollView* scrollView;
 @property (weak, nonatomic) IBOutlet UIView *accountView;
@@ -68,6 +72,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *languageSubtitleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *languageArrow;
 
+
+@property (nonatomic, strong) JAPicker* languagePicker;
+@property (nonatomic, strong) NSIndexPath* pickerIndexPath;
 
 @end
 
@@ -290,7 +297,7 @@
     
     self.languageClickableView.translatesAutoresizingMaskIntoConstraints = YES;
     [self.languageClickableView addTarget:self
-                                   action:@selector(chooseLanguage)
+                                   action:@selector(openLanguagePicker)
                          forControlEvents:UIControlEventTouchUpInside];
     self.languageClickableView.enabled = hasMoreThanOneLanguage;
     
@@ -359,6 +366,11 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
+    if(VALID(self.languagePicker, JAPicker))
+    {
+        [self.languagePicker removeFromSuperview];
+    }
+    
     if(VALID_NOTEMPTY(self.currentPopoverController, UIPopoverController))
     {
         [self.currentPopoverController dismissPopoverAnimated:NO];
@@ -824,9 +836,67 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowChooseCountryScreenNotification object:@{@"show_back_button":[NSNumber numberWithBool:YES]}];
 }
 
-- (void)chooseLanguage
+#pragma mark - Picker
+
+-(void)removePickerView
 {
-    
+    if(VALID_NOTEMPTY(self.languagePicker, JAPicker))
+    {
+        [self.languagePicker removeFromSuperview];
+        self.languagePicker = nil;
+    }
 }
+
+- (void)openLanguagePicker
+{
+    [self removePickerView];
+    
+    self.languagePicker = [[JAPicker alloc] initWithFrame:self.view.frame];
+    [self.languagePicker setDelegate:self];
+    
+    NSMutableArray *dataSource = [[NSMutableArray alloc] init];
+    NSString* autoSelected;
+    for (RILanguage* language in [RICountryConfiguration getCurrentConfiguration].languages) {
+        if (VALID_NOTEMPTY(language, RILanguage)) {
+            [dataSource addObject:language.langName];
+            if ([language.langName isEqualToString:self.languageSubtitleLabel.text]) {
+                autoSelected = language.langName;
+            }
+        }
+    }
+    
+    [self.languagePicker setDataSourceArray:[dataSource copy]
+                               previousText:autoSelected
+                            leftButtonTitle:nil];
+    
+    CGFloat pickerViewHeight = self.view.frame.size.height;
+    CGFloat pickerViewWidth = self.view.frame.size.width;
+    [self.languagePicker setFrame:CGRectMake(0.0f,
+                                             pickerViewHeight,
+                                             pickerViewWidth,
+                                             pickerViewHeight)];
+    [self.view addSubview:self.languagePicker];
+    
+    [UIView animateWithDuration:0.4f
+                     animations:^{
+                         [self.languagePicker setFrame:CGRectMake(0.0f,
+                                                                  0.0f,
+                                                                  pickerViewWidth,
+                                                                  pickerViewHeight)];
+                     }];
+}
+
+- (void)selectedRow:(NSInteger)selectedRow
+{
+    RILanguage* selectedLanguage = [[RICountryConfiguration getCurrentConfiguration].languages objectAtIndex:selectedRow];
+    if ([selectedLanguage.langName isEqualToString:self.languageSubtitleLabel.text]) {
+        //do nothing
+    } else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedLanguageNotification object:selectedLanguage];
+    }
+    
+    [self removePickerView];
+}
+
 
 @end

@@ -93,6 +93,11 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(selectedLanguage:)
+                                                 name:kSelectedLanguageNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showChooseCountry:)
                                                  name:kShowChooseCountryScreenNotification
                                                object:nil];
@@ -429,6 +434,21 @@
     }
 }
 
+- (void)selectedLanguage:(NSNotification*)notification
+{
+    RILanguage* language = notification.object;
+    
+    //the country is the same, so manually set language
+    
+    //save new language
+    [RILocalizationWrapper setLocalization:language.langCode];
+    //reload tab and nav
+    [self loadNavigationViews];
+    
+    //force country reload with the same country after setting the language
+    [self showLoadCountryScreen:nil];
+}
+
 - (void)showLoadCountryScreen:(NSNotification*)notification
 {
     RICountry* country = notification.object;
@@ -441,9 +461,7 @@
             //DO NOTHING
         } else {
             //save new language
-            [[NSUserDefaults standardUserDefaults] setObject:country.selectedLanguage.langCode forKey:kLanguageCodeKey];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            
+            [RILocalizationWrapper setLocalization:country.selectedLanguage.langCode];
             //reload tab and nav
             [self loadNavigationViews];
         }
