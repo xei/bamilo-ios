@@ -376,7 +376,10 @@
         [self.searchBar setSearchTextPositionAdjustment:UIOffsetMake(24.0f, 0)];
     }
     
-    [self.searchResultsView reloadFrame:[self viewBounds]];
+    [self.searchResultsView reloadFrame:CGRectMake([self viewBounds].origin.x,
+                                                   [self viewBounds].origin.y,
+                                                   [self viewBounds].size.width,
+                                                   [self viewBounds].size.height - kTabBarHeight)];
 }
 
 #pragma mark Search Bar && Search Results View Delegate
@@ -397,7 +400,10 @@
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar;
 {
-    self.searchResultsView = [[JASearchResultsView alloc] initWithFrame:[self viewBounds]];
+    self.searchResultsView = [[JASearchResultsView alloc] initWithFrame:CGRectMake([self viewBounds].origin.x,
+                                                                                   [self viewBounds].origin.y,
+                                                                                   [self viewBounds].size.width,
+                                                                                   [self viewBounds].size.height + kTabBarHeight)];
     self.searchResultsView.delegate = self;
     [self.view addSubview:self.searchResultsView];
     return YES;
