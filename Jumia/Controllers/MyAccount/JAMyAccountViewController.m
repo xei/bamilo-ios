@@ -862,7 +862,7 @@ JAPickerDelegate
 {
     [self removePickerView];
     
-    self.languagePicker = [[JAPicker alloc] initWithFrame:self.view.frame];
+    self.languagePicker = [[JAPicker alloc] initWithFrame:[self viewBounds]];
     [self.languagePicker setDelegate:self];
     
     NSMutableArray *dataSource = [[NSMutableArray alloc] init];
@@ -880,8 +880,8 @@ JAPickerDelegate
                                previousText:autoSelected
                             leftButtonTitle:nil];
     
-    CGFloat pickerViewHeight = self.view.frame.size.height;
-    CGFloat pickerViewWidth = self.view.frame.size.width;
+    CGFloat pickerViewHeight = [self viewBounds].size.height;
+    CGFloat pickerViewWidth = [self viewBounds].size.width;
     [self.languagePicker setFrame:CGRectMake(0.0f,
                                              pickerViewHeight,
                                              pickerViewWidth,
@@ -891,7 +891,7 @@ JAPickerDelegate
     [UIView animateWithDuration:0.4f
                      animations:^{
                          [self.languagePicker setFrame:CGRectMake(0.0f,
-                                                                  0.0f,
+                                                                  [self viewBounds].origin.y,
                                                                   pickerViewWidth,
                                                                   pickerViewHeight)];
                      }];
