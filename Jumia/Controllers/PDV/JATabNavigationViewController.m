@@ -183,6 +183,7 @@
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.navBarLayout.showBackButton = YES;
+    self.navBarLayout.title = self.product.brand;
     
     [self.view addSubview:self.tabBarView];
     [self.view addSubview:self.contentScrollView];

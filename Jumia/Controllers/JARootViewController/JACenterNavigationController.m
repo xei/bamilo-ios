@@ -59,6 +59,7 @@
 #import "JABundlesViewController.h"
 #import "JAPDVVariationsViewController.h"
 #import "JAMoreMenuViewController.h"
+#import "RICountry.h"
 
 @interface JACenterNavigationController ()
 
@@ -78,8 +79,7 @@
     
     self.neeedsExternalPaymentMethod = NO;
     
-    [self customizeNavigationBar];
-    [self customizeTabBar];
+    [self loadNavigationViews];
     
     self.mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
@@ -368,6 +368,15 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)loadNavigationViews
+{
+    [self.navigationBarView removeFromSuperview];
+    [self.tabBarView removeFromSuperview];
+    
+    [self customizeNavigationBar];
+    [self customizeTabBar];
+}
+
 #pragma mark Home Screen
 - (void)showHomeScreen:(NSNotification*)notification
 {
@@ -422,9 +431,25 @@
 
 - (void)showLoadCountryScreen:(NSNotification*)notification
 {
+    RICountry* country = notification.object;
+    
+    if (VALID_NOTEMPTY(country, RICountry) && VALID_NOTEMPTY(country.selectedLanguage, RILanguage)) {
+        
+        NSString *locale = [[NSUserDefaults standardUserDefaults] stringForKey:kLanguageCodeKey];
+        
+        if ([locale isEqualToString:country.selectedLanguage.langCode]) {
+            //DO NOTHING
+        } else {
+            //save new language
+            [RILocalizationWrapper setLocalization:country.selectedLanguage.langCode];
+            //reload tab and nav
+            [self loadNavigationViews];
+        }
+    }
+    
     JALoadCountryViewController *loadCountry = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"loadCountryViewController"];
     
-    loadCountry.selectedCountry = notification.object;
+    loadCountry.selectedCountry = country;
     loadCountry.pushNotification = notification.userInfo;
     
     [self setViewControllers:@[loadCountry]];

@@ -160,6 +160,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.navBarLayout.showBackButton = YES;
+    self.navBarLayout.title = STRING_COMBOS;
 }
 
 - (void)viewWillAppear:(BOOL)animated{

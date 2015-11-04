@@ -14,6 +14,7 @@
 
 @property (nonatomic, strong)UIControl* backView;
 @property (nonatomic, strong)UITableView* resultsTableView;
+@property (nonatomic, assign)CGRect resultsTableOriginalFrame;
 @property (nonatomic, strong)NSMutableArray* resultsArray;
 
 @property (nonatomic, assign)CGFloat currentKeyboardHeight;
@@ -46,6 +47,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.currentKeyboardHeight = 0.0f;
+        
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillShow:)
                                                      name:UIKeyboardWillShowNotification
@@ -78,6 +81,8 @@
         [self.resultsTableView registerClass:[UITableViewCell class]
                       forCellReuseIdentifier:@"cell"];
         self.resultsTableView.separatorColor = [UIColor clearColor];
+
+        self.resultsTableOriginalFrame = self.resultsTableView.frame;
         
         [self addSubview:self.resultsTableView];
         
@@ -90,10 +95,10 @@
 {
     self.frame = frame;
     self.backView.frame = self.bounds;
-    self.resultsTableView.frame = CGRectMake(self.bounds.origin.x,
-                                             self.bounds.origin.y,
-                                             self.bounds.size.width,
-                                             self.bounds.size.height - self.currentKeyboardHeight);
+    self.resultsTableView.frame = CGRectMake(self.resultsTableOriginalFrame.origin.x,
+                                             self.resultsTableOriginalFrame.origin.y,
+                                             self.resultsTableOriginalFrame.size.width,
+                                             self.resultsTableOriginalFrame.size.height - self.currentKeyboardHeight);
     [self.resultsTableView reloadData];
 }
 
@@ -335,10 +340,10 @@
     self.currentKeyboardHeight = height;
     
     [UIView animateWithDuration:0.3 animations:^{
-        [self.resultsTableView setFrame:CGRectMake(self.resultsTableView.frame.origin.x,
-                                                   self.resultsTableView.frame.origin.y,
-                                                   self.resultsTableView.frame.size.width,
-                                                   self.resultsTableView.frame.size.height - height)];
+        [self.resultsTableView setFrame:CGRectMake(self.resultsTableOriginalFrame.origin.x,
+                                                   self.resultsTableOriginalFrame.origin.y,
+                                                   self.resultsTableOriginalFrame.size.width,
+                                                   self.resultsTableOriginalFrame.size.height - self.currentKeyboardHeight)];
     }];
 }
 

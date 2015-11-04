@@ -18,6 +18,8 @@
 
 - (void)setSpecialPrice:(NSString*)special andPrice:(NSString*)price;
 
+- (CGFloat)getSellerInfoYPosition;
+
 - (void)addVariationsTarget:(id)target action:(SEL)action;
 
 - (void)addSizeTarget:(id)target action:(SEL)action;
@@ -25,6 +27,8 @@
 - (void)addReviewsTarget:(id)target action:(SEL)action;
 
 - (void)addSellerCatalogTarget:(id)target action:(SEL)action;
+
+- (void)addSellerLinkTarget:(id)target action:(SEL)action;
 
 - (void)addSellerReviewsTarget:(id)target action:(SEL)action;
 

@@ -14,6 +14,16 @@
 
 #define RILocalizedString(key, comment) [RILocalizationWrapper localizedString:key]
 
++(NSString*)getLocalization;
+
++(void)setLocalization:(NSString*)localization;
+
+/**
+ * Method to check if app is RTL based on the strings that were et
+ *
+ */
++ (BOOL)localizationIsRTL;
+
 /**
  * Method to localize a string
  *

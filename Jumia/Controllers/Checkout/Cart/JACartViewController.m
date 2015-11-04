@@ -1030,6 +1030,7 @@
                              [self hideLoading];
                          } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                              [self hideLoading];
+                             [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
                          }];
     }
 }
@@ -1087,7 +1088,7 @@
     [UIView animateWithDuration:0.4f
                      animations:^{
                          [self.picker setFrame:CGRectMake(0.0f,
-                                                          0.0f,
+                                                          [self viewBounds].origin.y,
                                                           pickerViewWidth,
                                                           pickerViewHeight)];
                      }];
@@ -1122,8 +1123,7 @@
             [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
-            
-            [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
+            [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
         }];
     }
     else
@@ -1143,8 +1143,14 @@
             [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
-            
-            [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
+            Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+            NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+            if (networkStatus == NotReachable) {
+                [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
+            }
+            else{
+                [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
+            }
         }];
     }
 }
@@ -1203,7 +1209,8 @@
                                                       data:[trackingDictionary copy]];
             
             [self hideLoading];
-            
+        
+            #warning TODO String
             [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
         }];
     }
@@ -1447,8 +1454,14 @@
                         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                             [self closePicker];
                             [self hideLoading];
-                            
-                            [self showMessage:STRING_ERROR_CHANGING_QUANTITY success:NO];
+                            Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+                            NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+                            if (networkStatus == NotReachable) {
+                                [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
+                            }
+                            else {
+                                [self showMessage:STRING_ERROR_CHANGING_QUANTITY success:NO];
+                            }
                         }];
     }
     else
@@ -1519,6 +1532,8 @@
     {
         height = kbSize.width;
     }
+    
+    height -= kTabBarHeight;//compensate for tab bar because keyboard is shown on top
     
     [UIView animateWithDuration:0.3 animations:^{
         [self.cartScrollView setHeight:self.cartScrollViewInitialFrame.size.height - height];

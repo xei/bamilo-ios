@@ -12,6 +12,7 @@
 {
     UIView* _seperatorFilter;
     UIView* _seperatorViewMode;
+    UIView* _seperatorBottom;
 }
 
 @end
@@ -121,6 +122,9 @@
     _seperatorViewMode = [UIView new];
     [_seperatorViewMode setBackgroundColor:JABlack700Color];
     [self addSubview:_seperatorViewMode];
+    _seperatorBottom = [UIView new];
+    [_seperatorBottom setBackgroundColor:JABlack700Color];
+    [self addSubview:_seperatorBottom];
 }
 
 - (void)repositionForWidth:(CGFloat)width
@@ -184,6 +188,8 @@
                                             (self.frame.size.height - 1.f - seperatorHeight)/2.f,
                                             1.f,
                                             seperatorHeight)];
+    [_seperatorBottom setFrame:CGRectMake(0, self.frame.size.height - 1.f,
+                                          width, 1.f)];
     
     if (RI_IS_RTL) {
         [self.viewModeButton flipViewPositionInsideSuperview];
@@ -191,8 +197,8 @@
         [self.sortingButton flipViewPositionInsideSuperview];
         [self.filterBackView flipViewPositionInsideSuperview];
         [self.filterButton flipViewPositionInsideSuperview];
-        [_seperatorViewMode flipAllSubviews];
-        [_seperatorFilter flipAllSubviews];
+        [_seperatorViewMode flipViewPositionInsideSuperview];
+        [_seperatorFilter flipViewPositionInsideSuperview];
         //the sorting button will be aligned when the text is set, but we need to align the filters here
         [self.filterButton flipViewAlignment];
     }

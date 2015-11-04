@@ -30,6 +30,7 @@
 @property (nonatomic, strong)JARatingsView* sellerRatings;
 @property (nonatomic, strong)UIButton* rateSellerButton;
 @property (nonatomic, strong)UILabel* numberOfSellerReviewsLabel;
+@property (nonatomic, strong)UIButton *globalButton;
 
 @property (nonatomic, strong)RIProduct* product;
 
@@ -102,6 +103,15 @@
         return;
     }
     self.product = product;
+    
+    if ([self.product.seller isGlobal]) {
+        self.globalButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIImage *plane = [UIImage imageNamed:@"plane_corner"];
+        
+        [self.globalButton setImage:plane forState:UIControlStateNormal];
+        [self.globalButton setFrame:CGRectMake(width - plane.size.width, 0, plane.size.width, plane.size.height)];
+        [self addSubview:self.globalButton];
+    }
     
     self.productNameLabel.font = JAListFont;
     self.productNameLabel.textColor = JABlackColor;
@@ -218,4 +228,8 @@
     [self.imagesPagedView setSelectedIndexPage:index];
 }
 
+- (void)addGlobalButtonTarget:(id)target action:(SEL)action
+{
+    [self.globalButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+}
 @end

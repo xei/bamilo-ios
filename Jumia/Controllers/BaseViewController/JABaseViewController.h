@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JANavigationBarLayout.h"
 #import "JASearchResultsView.h"
+#import "JATabBarView.h"
 
 @interface JABaseViewController : UIViewController <UISearchBarDelegate, JASearchResultsViewDelegate>
 
@@ -19,6 +20,7 @@
 @property (nonatomic, assign)BOOL firstLoading;
 @property (nonatomic, assign)BOOL searchBarIsVisible;
 @property (nonatomic, assign)BOOL tabBarIsVisible;
+@property (nonatomic, assign)BOOL searchViewAlwaysHidden;
 
 /**
  * This method returns the correct bounds to be used, taking the searchBar positioning into account

@@ -11,12 +11,6 @@
 BOOL const RI_REQUEST_LOGGER = NO;
 BOOL const RI_RESPONSE_LOGGER = NO;
 
-#if defined(FORCE_RTL) && FORCE_RTL
-BOOL const RI_IS_RTL = YES;
-#else
-BOOL const RI_IS_RTL = NO;
-#endif
-
 NSString *const RI_USERNAME = @"rocket";
 NSString *const RI_PASSWORD = @"z7euN7qfRD769BP";
 //NSString *const RI_PASSWORD = @"rock4me";
@@ -43,6 +37,8 @@ NSInteger RI_HTTP_REQUEST_TIMEOUT = 30;
 NSString *const RI_HTTP_USER_AGENT_HEADER_NAME = @"User-Agent";
 NSString *const RI_HTTP_USER_AGENT_HEADER_IPHONE_VALUE = @"iPhone: Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_0 like Mac OS X; en-us) AppleWebKit/532.9 (KHTML, like Gecko) Version/4.0.5 Mobile/8A293 Safari/6531.22.7";
 NSString *const RI_HTTP_USER_AGENT_HEADER_IPAD_VALUE = @"iPad: Mozilla/5.0(iPad; U; CPU iPhone OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B314 Safari/531.21.10";
+
+NSString *const RI_HTTP_USER_LANGUAGE_HEADER_NAME = @"User-Language";
 
 NSString *const RI_COUNTRIES_URL_JUMIA = @"http://www.jumia.com/mobapi/availablecountries";
 NSString *const RI_COUNTRIES_URL_JUMIA_STAGING = @"http://shareptcmobile.eu.pn/jtmobapi/";
