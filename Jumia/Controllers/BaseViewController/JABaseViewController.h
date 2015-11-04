@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JANavigationBarLayout.h"
 #import "JASearchResultsView.h"
+#import "JATabBarView.h"
 
 @interface JABaseViewController : UIViewController <UISearchBarDelegate, JASearchResultsViewDelegate>
 

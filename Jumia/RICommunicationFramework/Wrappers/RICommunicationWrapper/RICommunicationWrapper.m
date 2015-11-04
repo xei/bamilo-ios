@@ -314,7 +314,13 @@
     if (VALID_NOTEMPTY(userAgentInjection, NSString)) {
         userAgent = [NSString stringWithFormat:@"%@ %@", userAgent, userAgentInjection];
     }
+    
     [operation.request addValue:userAgent forHTTPHeaderField:RI_HTTP_USER_AGENT_HEADER_NAME];
+    
+    NSString* locale = [RILocalizationWrapper getLocalization];
+    if (VALID_NOTEMPTY(locale, NSString)) {
+        [operation.request addValue:locale forHTTPHeaderField:RI_HTTP_USER_LANGUAGE_HEADER_NAME];
+    }
     
     return operation.request;
 }

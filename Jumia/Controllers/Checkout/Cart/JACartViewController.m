@@ -1088,7 +1088,7 @@
     [UIView animateWithDuration:0.4f
                      animations:^{
                          [self.picker setFrame:CGRectMake(0.0f,
-                                                          0.0f,
+                                                          [self viewBounds].origin.y,
                                                           pickerViewWidth,
                                                           pickerViewHeight)];
                      }];
@@ -1532,6 +1532,8 @@
     {
         height = kbSize.width;
     }
+    
+    height -= kTabBarHeight;//compensate for tab bar because keyboard is shown on top
     
     [UIView animateWithDuration:0.3 animations:^{
         [self.cartScrollView setHeight:self.cartScrollViewInitialFrame.size.height - height];

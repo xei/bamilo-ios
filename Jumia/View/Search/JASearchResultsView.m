@@ -337,8 +337,7 @@
     {
         height = kbSize.width;
     }
-    //$$$ HARD VALUE 80.0f -> don't know why the keyboard has a height 80px higher then it should
-    self.currentKeyboardHeight = height - 80.0f;
+    self.currentKeyboardHeight = height;
     
     [UIView animateWithDuration:0.3 animations:^{
         [self.resultsTableView setFrame:CGRectMake(self.resultsTableOriginalFrame.origin.x,
