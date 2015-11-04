@@ -637,6 +637,7 @@ JAActivityViewControllerDelegate
     
     CGRect imageSectionFrame = self.mainScrollView.bounds;
     [self.productImageSection setupWithFrame:imageSectionFrame product:self.product preSelectedSize:self.preSelectedSize];
+    [self.productImageSection addGlobalButtonTarget:self action:@selector(showSeller)];
     
     if(isiPadInLandscape)
     {
@@ -646,7 +647,6 @@ JAActivityViewControllerDelegate
         [self.mainScrollView addSubview:self.productImageSection];
         scrollViewY = CGRectGetMaxY(self.productImageSection.frame) + 6.0f;
     }
-    
     
     if (VALID_NOTEMPTY(self.product.variations, NSOrderedSet))
     {
@@ -669,6 +669,7 @@ JAActivityViewControllerDelegate
     [self.productInfoSection addSpecificationsTarget:self action:@selector(goToSpecifications)];
     [self.productInfoSection addDescriptionTarget:self action:@selector(goToDescription)];
     [self.productInfoSection addSellerCatalogTarget:self action:@selector(goToSellerCatalog)];
+    [self.productInfoSection addSellerLinkTarget:self action:@selector(goToSellerLink)];
     [self.productInfoSection addSizeTarget:self action:@selector(showSizePicker)];
     [self.productInfoSection addVariationsTarget:self action:@selector(goToVariationsScreen)];
     [self.productInfoSection addOtherOffersTarget:self action:@selector(goToOtherSellersScreen)];
@@ -909,6 +910,12 @@ JAActivityViewControllerDelegate
     [self goToDetails:@"description"];
 }
 
+- (void)showSeller
+{
+    [self.mainScrollView setContentOffset:CGPointMake(0, self.productInfoSection.frame.origin.y + [self.productInfoSection getSellerInfoYPosition])
+                                 animated:YES];
+}
+
 - (void)goToSellerCatalog
 {
     NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
@@ -916,17 +923,31 @@ JAActivityViewControllerDelegate
     if(VALID_NOTEMPTY(self.product.seller, RISeller))
     {
         [userInfo setObject:self.product.seller.name forKey:@"name"];
-    }
-    
-    if(VALID_NOTEMPTY(self.product.seller, RISeller))
-    {
+
         [userInfo setObject:self.product.seller.url forKey:@"url"];
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:self.product.seller userInfo:userInfo];
     
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"SellerPage"];
+}
+
+- (void)goToSellerLink
+{
+    NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
     
+    if(VALID_NOTEMPTY(self.product.seller, RISeller))
+    {
+        if ([self.product.seller isGlobal]) {
+            [userInfo setObject:self.product.seller.linkTextGlobal forKey:@"title"];
+            [userInfo setObject:self.product.seller.linkUrlGlobal forKey:@"url"];
+            [userInfo setObject:STRING_BACK forKey:@"show_back_button_title"];
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithShopUrlNofication
+                                                                object:nil
+                                                              userInfo:userInfo];
+        }
+    }
 }
 
 - (void)goToSpecifications

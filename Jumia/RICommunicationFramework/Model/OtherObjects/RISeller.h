@@ -13,11 +13,16 @@
 @property (nonatomic, retain) NSString * uid;
 @property (nonatomic, retain) NSNumber * maxDeliveryTime;
 @property (nonatomic, retain) NSNumber * minDeliveryTime;
+@property (nonatomic, retain) NSString * deliveryTime;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * reviewAverage;
 @property (nonatomic, retain) NSNumber * reviewTotal;
 @property (nonatomic, retain) NSString * url;
 @property (nonatomic) BOOL isGlobal;
+@property (nonatomic, retain) NSString * shippingGlobal;
+@property (nonatomic, retain) NSString * linkTextGlobal;
+@property (nonatomic, retain) NSString * linkUrlGlobal;
+@property (nonatomic, retain) NSString * cmsInfo;
 
 + (RISeller*)parseSeller:(NSDictionary*)sellerJSON;
 

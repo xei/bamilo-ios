@@ -239,6 +239,18 @@
         country.userAgentInjection = [jsonObject objectForKey:@"user_agent"];
     }
     
+    if ([jsonObject objectForKey:@"languages"]) {
+        NSArray* languagesArrayJSON = [jsonObject objectForKey:@"languages"];
+        if (VALID_NOTEMPTY(languagesArrayJSON, NSArray)) {
+            NSMutableArray* languagesArray = [NSMutableArray new];
+            for (NSDictionary* languageJSON in languagesArrayJSON) {
+                RILanguage* newLanguage = [RILanguage parseLanguage:languageJSON];
+                [languagesArray addObject:newLanguage];
+            }
+            country.languages = [languagesArray copy];
+        }
+    }
+    
     return country;
 }
 
@@ -258,6 +270,9 @@
 #endif
         return uniqueCountry;
     } else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
+        NSDictionary* languageJSON = @{@"code":@"fa",@"default":@1,@"name":@"Persian"};
+        RILanguage* language = [RILanguage parseLanguage:languageJSON];
+        uniqueCountry.selectedLanguage = language;
         uniqueCountry.name = RI_UNIQUE_COUNTRY_NAME_BAMILO;
         uniqueCountry.countryIso = RI_UNIQUE_COUNTRY_ISO_BAMILO;
         uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO;

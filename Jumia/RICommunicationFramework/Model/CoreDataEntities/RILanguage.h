@@ -23,7 +23,7 @@
  *
  *  @return the parsed RILanguage
  */
-+ (RILanguage *)parseRILanguage:(NSDictionary *)json;
++ (RILanguage *)parseLanguage:(NSDictionary *)json;
 
 /**
  *  Save in the core data a given RILanguage

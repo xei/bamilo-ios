@@ -47,6 +47,7 @@
     [[RITrackingWrapper sharedInstance] trackStaticPage:staticKey];
     
     [self.scrollView setFrame:[self viewBounds]];
+    [self.scrollView setBackgroundColor:[UIColor whiteColor]];
     [self.webView setFrame:CGRectMake(self.scrollView.bounds.origin.x,
                                       self.scrollView.bounds.origin.y,
                                       self.scrollView.bounds.size.width,

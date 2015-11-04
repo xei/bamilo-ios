@@ -86,7 +86,7 @@
         NSArray *languagesArray = [json objectForKey:@"languages"];
         
         for (NSDictionary *dic in languagesArray) {
-            RILanguage *language = [RILanguage parseRILanguage:dic];
+            RILanguage *language = [RILanguage parseLanguage:dic];
             language.countryConfig = newConfig;
             
             if([language.langDefault boolValue])
@@ -127,9 +127,6 @@
             }
         }
     }
-    
-    [[NSUserDefaults standardUserDefaults] setObject:languageCode forKey:kLanguageCodeKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
     
     [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICountryConfiguration class])];
     

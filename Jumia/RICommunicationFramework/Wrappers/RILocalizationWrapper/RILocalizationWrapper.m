@@ -10,6 +10,25 @@
 
 @implementation RILocalizationWrapper
 
++(void)setLocalization:(NSString*)localization;
+{
+    [[NSUserDefaults standardUserDefaults] setObject:localization forKey:kLanguageCodeKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (BOOL)localizationIsRTL
+{
+    NSString *locale = [[NSUserDefaults standardUserDefaults] stringForKey:kLanguageCodeKey];
+    NSDictionary *componentsFromLocale =  [NSLocale componentsFromLocaleIdentifier:locale];
+    NSString *languageCode = [componentsFromLocale objectForKey:NSLocaleLanguageCode];
+    
+    if ([languageCode isEqualToString:@"ar"] || [languageCode isEqualToString:@"fa"]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 + (NSString *)localizedString:(NSString *)key;
 {
     NSString *locale = [[NSUserDefaults standardUserDefaults] stringForKey:kLanguageCodeKey];

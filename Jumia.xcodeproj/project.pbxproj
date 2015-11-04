@@ -2669,6 +2669,12 @@
 		CEED47351A7B973B006D9CE7 /* JAPDVBundleSingleItemWithSize.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEED472B1A7B973B006D9CE7 /* JAPDVBundleSingleItemWithSize.xib */; };
 		CEED47371A7B9D29006D9CE7 /* JAPDVBundlesWithSize.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEED47361A7B9D29006D9CE7 /* JAPDVBundlesWithSize.xib */; };
 		CEED47381A7B9D29006D9CE7 /* JAPDVBundlesWithSize.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEED47361A7B9D29006D9CE7 /* JAPDVBundlesWithSize.xib */; };
+		CEF0C48A1BE8EE42005B5B12 /* JAReviewCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2CD0B61BD113D300A878D2 /* JAReviewCollectionCell.m */; settings = {ASSET_TAGS = (); }; };
+		CEF0C48B1BE8EE43005B5B12 /* JAReviewCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2CD0B61BD113D300A878D2 /* JAReviewCollectionCell.m */; settings = {ASSET_TAGS = (); }; };
+		CEF0C48C1BE8EE43005B5B12 /* JAReviewCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2CD0B61BD113D300A878D2 /* JAReviewCollectionCell.m */; settings = {ASSET_TAGS = (); }; };
+		CEF0C48D1BE8EE44005B5B12 /* JAReviewCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2CD0B61BD113D300A878D2 /* JAReviewCollectionCell.m */; settings = {ASSET_TAGS = (); }; };
+		CEF0C48E1BE8EE56005B5B12 /* JASellerDeliveryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 898A24BF1BCE9EAF00BBEE31 /* JASellerDeliveryView.m */; settings = {ASSET_TAGS = (); }; };
+		CEF0C48F1BE8EE5F005B5B12 /* RISellerDelivery.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FB32541BCD41C5002A6FC2 /* RISellerDelivery.m */; settings = {ASSET_TAGS = (); }; };
 		a0fb37b44e2006622629d2c3 /* slider-default7-handle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB99D199BA8FA0022BAB5 /* slider-default7-handle@2x.png */; };
 		a21f2a2963e751f03c461b5c /* calabash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6af3ca12ac4f2d50fa243e2b /* calabash.framework */; };
 		a2b50e1f14acaf67564f97c8 /* slider-default7-track@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB99F199BA8FA0022BAB5 /* slider-default7-track@2x.png */; };
@@ -3645,6 +3651,7 @@
 		CEED472A1A7B973B006D9CE7 /* JAPDVBundleSingleItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAPDVBundleSingleItem.xib; path = Bundles/JAPDVBundleSingleItem.xib; sourceTree = "<group>"; };
 		CEED472B1A7B973B006D9CE7 /* JAPDVBundleSingleItemWithSize.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAPDVBundleSingleItemWithSize.xib; path = Bundles/JAPDVBundleSingleItemWithSize.xib; sourceTree = "<group>"; };
 		CEED47361A7B9D29006D9CE7 /* JAPDVBundlesWithSize.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAPDVBundlesWithSize.xib; path = Bundles/JAPDVBundlesWithSize.xib; sourceTree = "<group>"; };
+		CEF0C4891BE8C391005B5B12 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/RIStrings.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -6286,6 +6293,7 @@
 				pt,
 				my,
 				fa,
+				ar,
 			);
 			mainGroup = B5A3019F19811D0700F71726;
 			productRefGroup = B5A301A919811D0700F71726 /* Products */;
@@ -7778,6 +7786,7 @@
 				CE88F7BE1A23886100A3A586 /* JAOrderSummaryView.m in Sources */,
 				3fc6abd339ec5b39978481ff /* RISearchSuggestion.m in Sources */,
 				c98a2364f0dc0bb39541a1e3 /* RIPaymentMethodForm.m in Sources */,
+				CEF0C48A1BE8EE42005B5B12 /* JAReviewCollectionCell.m in Sources */,
 				CECD059D1ADFF2DB00EC51E3 /* RITeaserComponent.m in Sources */,
 				39d64ebd01d50db348ddca2c /* RINewRelicTracker.m in Sources */,
 				132783da23c3a550a0c52064 /* RIGoogleAnalyticsTracker.m in Sources */,
@@ -8400,6 +8409,7 @@
 				9AC4D6971B45A51900036F1C /* JACatalogListCollectionViewCell.m in Sources */,
 				CE9ADC031AB34C4600D56481 /* JASidePanelController.m in Sources */,
 				CE9ADC041AB34C4600D56481 /* JBWhatsAppActivity.m in Sources */,
+				CEF0C48B1BE8EE43005B5B12 /* JAReviewCollectionCell.m in Sources */,
 				9AC4D69E1B46A4FF00036F1C /* JACatalogCollectionViewCell.m in Sources */,
 				CED9B5C21B5810ED0097EB30 /* RIHtmlShop.m in Sources */,
 				CE9ADC051AB34C4600D56481 /* NMRangeSlider.m in Sources */,
@@ -8683,6 +8693,7 @@
 				9AC4D6981B45A51A00036F1C /* JACatalogListCollectionViewCell.m in Sources */,
 				CE9ADDFD1AB6D6E900D56481 /* JASidePanelController.m in Sources */,
 				CE9ADDFE1AB6D6E900D56481 /* JBWhatsAppActivity.m in Sources */,
+				CEF0C48C1BE8EE43005B5B12 /* JAReviewCollectionCell.m in Sources */,
 				9AC4D69F1B46A50000036F1C /* JACatalogCollectionViewCell.m in Sources */,
 				CED9B5C31B5810ED0097EB30 /* RIHtmlShop.m in Sources */,
 				CE9ADDFF1AB6D6E900D56481 /* NMRangeSlider.m in Sources */,
@@ -8859,6 +8870,7 @@
 				6C40A8901AD7E647001BFA16 /* RIBanner.m in Sources */,
 				CE9ADF9F1AB6D78200D56481 /* JACampaignsViewController.m in Sources */,
 				CE9ADFA01AB6D78200D56481 /* JAUserDataViewController.m in Sources */,
+				CEF0C48F1BE8EE5F005B5B12 /* RISellerDelivery.m in Sources */,
 				CE9ADFA11AB6D78200D56481 /* JACatalogWizardView.m in Sources */,
 				CE9ADFA31AB6D78200D56481 /* JAExternalPaymentsViewController.m in Sources */,
 				CE9ADFA41AB6D78200D56481 /* RIShippingMethod.m in Sources */,
@@ -9000,7 +9012,9 @@
 				9A9CD3081B72514A0061ACE0 /* BMA4SViewController.m in Sources */,
 				9A4F91181B3D5E7200E34C0B /* JAPDVWizardView.m in Sources */,
 				CE9AE0141AB6D78200D56481 /* RIDataBaseWrapper.m in Sources */,
+				CEF0C48D1BE8EE44005B5B12 /* JAReviewCollectionCell.m in Sources */,
 				CE9AE0151AB6D78200D56481 /* JARootViewController.m in Sources */,
+				CEF0C48E1BE8EE56005B5B12 /* JASellerDeliveryView.m in Sources */,
 				CE9AE0161AB6D78200D56481 /* RIShippingMethodPickupStationOption.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -9024,6 +9038,7 @@
 				CEAB62D11A7FE32B00B6F26E /* pt */,
 				CE9AE1211AB823C100D56481 /* my */,
 				CE3F81411AC5743000EB3916 /* fa */,
+				CEF0C4891BE8C391005B5B12 /* ar */,
 			);
 			name = RIStrings.strings;
 			sourceTree = "<group>";
@@ -9883,10 +9898,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"FORCE_RTL=1",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "Jumia/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -9926,10 +9938,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"FORCE_RTL=1",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "Jumia/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -9969,10 +9978,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"FORCE_RTL=1",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "Jumia/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -10012,7 +10018,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "FORCE_RTL=1";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = "Jumia/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

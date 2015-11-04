@@ -6,10 +6,13 @@
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
+#define RI_IS_RTL [RILocalizationWrapper localizationIsRTL]
+
 // Notifications
 
 //************ app action notifications
 #define kSelectedCountryNotification @"NOTIFICATION_SELECTED_COUNTRY"
+#define kSelectedLanguageNotification @"NOTIFICATION_SELECTED_LANGUAGE"
 #define kUpdateCountryNotification @"NOTIFICATION_UPDATE_COUNTRY"
 #define kUpdateCartNotification @"NOTIFICATION_UPDATE_CART"
 #define kUpdateCartNotificationValue @"NOTIFICATION_UPDATE_CART_VALUE"
@@ -177,4 +180,5 @@
 #define JABody2Font [UIFont fontWithName:@"HelveticaNeue-Medium" size:13]
 #define JABody3Font [UIFont fontWithName:@"HelveticaNeue" size:13]
 #define JACaptionFont [UIFont fontWithName:@"HelveticaNeue" size:11]
+#define JACaption2Font [UIFont fontWithName:@"HelveticaNeue-Bold" size:11]
 
