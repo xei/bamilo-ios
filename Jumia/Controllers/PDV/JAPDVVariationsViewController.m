@@ -58,6 +58,7 @@
     [super viewDidLoad];
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     self.navBarLayout.showBackButton = YES;
+    self.navBarLayout.title = STRING_VARIATIONS;
     [self.collectionView registerClass:[JAPDVVariationsCollectionViewCell class] forCellWithReuseIdentifier:@"CellWithLines"];
 }
 
