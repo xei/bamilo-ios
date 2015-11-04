@@ -62,7 +62,7 @@
     JAProductInfoRatingLine *ratingLine = [[JAProductInfoRatingLine alloc] initWithFrame:CGRectMake(kXOffset, 0, 100, 50)];
     [ratingLine setImageRatingSize:kImageRatingSizeSmall];
     [ratingLine setHeight:ratingLine.imageHeight];
-    [ratingLine setNoMargin:YES];
+    [ratingLine setLineContentXOffset:0.f];
     [ratingLine setTopSeparatorVisibility:NO];
     [ratingLine setBottomSeparatorVisibility:NO];
     return ratingLine;

@@ -12,14 +12,27 @@
 @interface JACatalogPictureCollectionViewCell () {
     CGFloat _lastWidth;
     CGRect _ratingLineRect;
-    
-    JAProductInfoRatingLine *_ratingLine;
     BOOL _ratingRefresh;
 }
+
+@property (nonatomic) JAProductInfoRatingLine *ratingLine;
 
 @end
 
 @implementation JACatalogPictureCollectionViewCell
+
+- (JAProductInfoRatingLine *)ratingLine
+{
+    if (!VALID_NOTEMPTY(_ratingLine, JAProductInfoRatingLine)) {
+        _ratingLine = [[JAProductInfoRatingLine alloc] initWithFrame:CGRectZero];
+        _ratingLine.fashion = NO;
+        _ratingLine.imageRatingSize = kImageRatingSizeSmall;
+        _ratingLine.lineContentXOffset = 0.f;
+        _ratingLine.topSeparatorVisibility = NO;
+        _ratingLine.bottomSeparatorVisibility = NO;
+    }
+    return _ratingLine;
+}
 
 - (instancetype)init
 {
@@ -53,32 +66,81 @@
 
 - (void)initViews
 {
-    self.cellType = JACatalogCollectionViewPictureCell;
     [super initViews];
-    
-    _ratingLine = [[JAProductInfoRatingLine alloc] initWithFrame:CGRectZero];
-    _ratingLine.fashion = NO;
-    _ratingLine.imageRatingSize = kImageRatingSizeSmall;
-    _ratingLine.noMargin = YES;
-    _ratingLine.topSeparatorVisibility = NO;
-    _ratingLine.bottomSeparatorVisibility = NO;
-    [self addSubview:_ratingLine];
-    [_ratingLine setHidden:YES];
+    [self addSubview:self.ratingLine];
 }
 
 - (void)reloadViews
 {
     [super reloadViews];
     
-    [_ratingLine setFrame:CGRectMake(16,
-                                     CGRectGetMaxY(self.priceView.frame) + 14.f,
-                                     _ratingLineRect.size.width,
-                                     _ratingLineRect.size.height)];
+    CGSize imageSize = CGSizeMake(268, 340);
+    CGFloat xOffset = 32.f;
+    CGFloat discountWidth = 60.f;
+    CGFloat brandYOffset = 355;
     
-    if (RI_IS_RTL) {
-        [_ratingLine flipViewPositionInsideSuperview];
+    if ([UIDevice currentDevice].userInterfaceIdiom != UIUserInterfaceIdiomPad) {
+        xOffset = 6.f;
     }
+    CGFloat textWidth = self.width - xOffset*2;
+    
+    CGRect brandLabelRect = CGRectMake(xOffset, brandYOffset, textWidth, 15);
+    if (!CGRectEqualToRect(brandLabelRect, self.brandLabel.frame)) {
+        [self.brandLabel setFrame:brandLabelRect];
+        [self setForRTL:self.brandLabel];
+    }
+    
+    CGRect nameLabelRect = CGRectMake(xOffset, CGRectGetMaxY(brandLabelRect), textWidth, 15);
+    if (!CGRectEqualToRect(nameLabelRect, self.nameLabel.frame)) {
+        [self.nameLabel setFrame:nameLabelRect];
+        [self setForRTL:self.nameLabel];
+    }
+    
+    [self.priceLine setFrame:CGRectMake(xOffset, CGRectGetMaxY(nameLabelRect) + 6.f, textWidth, 15)];
+    
+    CGRect productImageViewRect = CGRectMake(self.width/2 - imageSize.width/2, 8, imageSize.width, imageSize.height);
+    if (!CGRectEqualToRect(productImageViewRect, self.productImageView.frame)) {
+        [self.productImageView setFrame:productImageViewRect];
+        [self setForRTL:self.productImageView];
+    }
+    
+    CGRect priceLineRect = CGRectMake(xOffset, CGRectGetMaxY(nameLabelRect) + 6.f, textWidth, self.priceLine.height);
+    if (!CGRectEqualToRect(priceLineRect, self.priceLine.frame)) {
+        [self.priceLine setFrame:priceLineRect];
+    }
+    [self setForRTL:self.priceLine];
+    
+    CGFloat favX = self.favoriteButton.superview.width - self.favoriteButton.width - xOffset;
+    if (self.favoriteButton.x != favX) {
+        [self.favoriteButton setX:favX];
+        [self setForRTL:self.favoriteButton];
+    }
+    
+    CGRect ratingLineRect = CGRectMake(xOffset, CGRectGetMaxY(self.priceLine.frame) + 14.f, textWidth, self.ratingLine.imageHeight);
+    if (!CGRectEqualToRect(ratingLineRect, self.ratingLine.frame)) {
+        [self.ratingLine setFrame:ratingLineRect];
+    }
+        [self setForRTL:self.ratingLine];
+    //    }
+    
+    CGRect discountLabelRect = CGRectMake(self.discountLabel.superview.width - discountWidth - xOffset, CGRectGetMaxY(nameLabelRect), discountWidth, 19);
+    if (!CGRectEqualToRect(discountLabelRect, self.discountLabel.frame)) {
+        [self.discountLabel setFrame:discountLabelRect];
+        [self setForRTL:self.discountLabel];
+    }
+    
     _lastWidth = self.width;
+}
+
+- (void)setForRTL:(UIView *)view
+{
+    if (RI_IS_RTL) {
+        [view flipViewPositionInsideSuperview];
+        [view flipAllSubviews];
+        if ([view isKindOfClass:[UILabel class]] && [(UILabel *)view textAlignment] != NSTextAlignmentCenter) {
+            [(UILabel *)view setTextAlignment:NSTextAlignmentRight];
+        }
+    }
 }
 
 - (void)prepareForReuse
@@ -89,27 +151,17 @@
 - (void)loadWithProduct:(RIProduct*)product
 {
     [super loadWithProduct:product];
+    [self.priceLine setX:16];
     
     if (0 == [product.sum integerValue] ) {
         [_ratingLine setHidden:YES];
-    }else
+    }else{
         [_ratingLine setHidden:NO];
-    
-    _ratingLine.ratingAverage = product.avr;
-    _ratingLine.ratingSum = product.sum;
-    
-    BOOL refresh = NO;
-    if (0 != [product.sum integerValue]) {
         
-        if (!_ratingRefresh) {
-            refresh = YES;
-            _ratingRefresh = YES;
-        }
+        self.ratingLine.ratingAverage = product.avr;
+        self.ratingLine.ratingSum = product.sum;
     }
-    
-    if (_lastWidth != self.width || refresh) {
-        [self reloadViews];
-    }
+    [self reloadViews];
 }
 
 

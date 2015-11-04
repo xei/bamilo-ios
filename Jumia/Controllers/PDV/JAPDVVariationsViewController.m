@@ -7,11 +7,13 @@
 //
 
 #import "JAPDVVariationsViewController.h"
-#import "JAPDVVariationsCollectionViewCell.h"
+#import "JACatalogListCollectionViewCell.h"
+#import "JAProductCollectionViewFlowLayout.h"
 
 @interface JAPDVVariationsViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic) UICollectionView *collectionView;
+@property (nonatomic) JAProductCollectionViewFlowLayout *flowLayout;
 
 @end
 
@@ -19,15 +21,28 @@
 
 @synthesize variations = _variations;
 
+- (JAProductCollectionViewFlowLayout *)flowLayout
+{
+    if (!VALID_NOTEMPTY(_flowLayout, JAProductCollectionViewFlowLayout)) {
+        
+        _flowLayout = [[JAProductCollectionViewFlowLayout alloc] init];
+        _flowLayout.minimumLineSpacing = 1.0f;
+        _flowLayout.minimumInteritemSpacing = 0.f;
+        [_flowLayout registerClass:[JACollectionSeparator class] forDecorationViewOfKind:@"horizontalSeparator"];
+        [_flowLayout registerClass:[JACollectionSeparator class] forDecorationViewOfKind:@"verticalSeparator"];
+        
+        //                                              top, left, bottom, right
+        [self.flowLayout setSectionInset:UIEdgeInsetsMake(0.f, 0.0, 0.0, 0.0)];
+        self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+    }
+    return _flowLayout;
+}
+
 - (UICollectionView *)collectionView
 {
     CGRect frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
     if (!VALID_NOTEMPTY(_collectionView, UICollectionView)) {
-        
-        UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
-        layout.minimumInteritemSpacing = 0.f;
-        layout.minimumLineSpacing = 0.f;
-        _collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:layout];
+        _collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:self.flowLayout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         [self.view addSubview:_collectionView];
@@ -58,8 +73,8 @@
     [super viewDidLoad];
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     self.navBarLayout.showBackButton = YES;
+    [self.collectionView registerClass:[JACatalogListCollectionViewCell class] forCellWithReuseIdentifier:@"CellWithLines"];
     self.navBarLayout.title = STRING_VARIATIONS;
-    [self.collectionView registerClass:[JAPDVVariationsCollectionViewCell class] forCellWithReuseIdentifier:@"CellWithLines"];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -73,8 +88,9 @@
 {
     RIVariation *variationProduct = [self.variations objectAtIndex:indexPath.row];
     
-    JAPDVVariationsCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"CellWithLines" forIndexPath:indexPath];
-    
+    JACatalogListCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"CellWithLines" forIndexPath:indexPath];
+    [cell setHideRating:YES];
+    [cell loadWithVariation:variationProduct];
     cell.favoriteButton.tag = indexPath.row;
     [cell.favoriteButton addTarget:self
                             action:@selector(addToFavoritesPressed:)
@@ -84,48 +100,6 @@
     [cell.feedbackView addTarget:self
                           action:@selector(clickableViewPressedInCell:)
                 forControlEvents:UIControlEventTouchUpInside];
-    
-    [cell loadWithVariation:variationProduct];
-    
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        
-        if(UIDeviceOrientationPortrait == ([UIDevice currentDevice].orientation) || UIDeviceOrientationPortraitUpsideDown == ([UIDevice currentDevice].orientation)) {
-            cell.rightVerticalSeparator.hidden = YES;
-            if (indexPath.row == 0) {
-                cell.topHorizontalSeparator.hidden = NO;
-            }
-            else{
-                cell.topHorizontalSeparator.hidden = YES;
-            }
-            
-        }else{
-            
-            if (indexPath.row == 0 || indexPath.row == 1) {
-                cell.topHorizontalSeparator.hidden = NO;
-            }
-            else{
-               cell.topHorizontalSeparator.hidden = YES;
-            }
-            if (indexPath.row % 2 == 0) {
-                cell.rightVerticalSeparator.hidden = NO;
-            }
-            else{
-                cell.rightVerticalSeparator.hidden = YES;
-            }
-            
-        }
-    }
-    else {
-        cell.rightVerticalSeparator.hidden = YES;
-        if (indexPath.row == 0) {
-            cell.topHorizontalSeparator.hidden = NO;
-        }
-        else{
-            cell.topHorizontalSeparator.hidden = YES;
-        }
-    }
-    
-
     
     return cell;
 }
@@ -137,18 +111,22 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    CGSize size = CGSizeZero;
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         
         if(UIDeviceOrientationPortrait == ([UIDevice currentDevice].orientation) || UIDeviceOrientationPortraitUpsideDown == ([UIDevice currentDevice].orientation)) {
 
-            return CGSizeMake(self.bounds.size.width, 104.0f);
+            size = CGSizeMake(self.bounds.size.width, 104.0f);
 
         } else {
-            return CGSizeMake((self.bounds.size.width/2), 104.0f);
+            size = CGSizeMake((self.bounds.size.width/2), 104.0f);
         }
     } else {
-        return CGSizeMake(self.view.frame.size.width, 104.0f);
+        size = CGSizeMake(self.view.frame.size.width, 104.0f);
     }
+    
+    self.flowLayout.itemSize = size;
+    return size;
 }
 
 #pragma mark - actions
