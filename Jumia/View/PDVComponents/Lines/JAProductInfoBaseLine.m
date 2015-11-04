@@ -40,6 +40,7 @@
 
 - (void)setDefauls
 {
+    self.lineContentXOffset = 16.f;
     [self setEnabled:NO];
 }
 
@@ -54,7 +55,7 @@
 
 - (UILabel *)label
 {
-    CGRect frame = CGRectMake(16, 6, self.width-32, self.height-12);
+    CGRect frame = CGRectMake(self.lineContentXOffset, 6, self.width-32, self.height-12);
     if (!VALID_NOTEMPTY(_label, UILabel)) {
         _label = [[UILabel alloc] initWithFrame:frame];
         [_label setTextColor:JABlackColor];
@@ -93,6 +94,9 @@
         [_arrow setHidden:YES];
         [_arrow setX:self.width - 16 - _arrow.width];
         [_arrow setY:self.height/2 - _arrow.height/2];
+        if (RI_IS_RTL) {
+            [_arrow flipViewImage];
+        }
         [self addSubview:_arrow];
     }else if(!CGRectEqualToRect(frame, _arrow.frame)) {
         [_arrow setFrame:frame];

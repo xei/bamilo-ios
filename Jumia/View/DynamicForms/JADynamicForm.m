@@ -88,6 +88,19 @@
     {
         returnKeyType = UIReturnKeyDone;
     }
+    UIToolbar* keyboardDoneButtonView = [[UIToolbar alloc] init];
+    [keyboardDoneButtonView sizeToFit];
+    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc] initWithTitle:STRING_DONE
+                                                                   style:UIBarButtonItemStyleBordered target:self.delegate
+                                                                  action:@selector(doneClicked:)];
+    
+    if (!RI_IS_RTL) {
+        UIBarButtonItem *flexBarButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                                      target:nil action:nil];
+        [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:flexBarButton ,doneButton, nil]];
+    } else {
+        [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:doneButton, nil]];
+    }
     
     NSInteger lastTextFieldIndex = 0;
     self.formViews = [[NSMutableArray alloc] init];
@@ -154,6 +167,7 @@
             
             if ([@"phone" isEqualToString:field.key]) {
                 textField.textField.keyboardType = UIKeyboardTypePhonePad;
+                textField.textField.inputAccessoryView = keyboardDoneButtonView;
             }
             
             [textField.textField setReturnKeyType:returnKeyType];
@@ -239,6 +253,7 @@
                 [textField.textField setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
                 if ([@"phone" isEqualToString:field.key]) {
                     textField.textField.keyboardType = UIKeyboardTypePhonePad;
+                    textField.textField.inputAccessoryView = keyboardDoneButtonView;
                 }
                 
                 lastTextFieldIndex = [self.formViews count];

@@ -13,6 +13,7 @@
 @property (nonatomic) UILabel *priceOffLabel;
 @property (nonatomic) UILabel *oldPriceLabel;
 @property (nonatomic) UIView *oldPriceLine;
+@property (nonatomic) NSFont *priceFont;
 
 @end
 
@@ -38,6 +39,27 @@
 
 - (void)setDefaults
 {
+}
+
+- (void)setPriceSize:(JAPriceSize)priceSize
+{
+    _priceSize = priceSize;
+    [self.label setFont:[self priceSizeFont]];
+    [self.oldPriceLabel setFont:[self priceSizeFont]];
+}
+
+- (UIFont *)priceSizeFont
+{
+    switch (_priceSize) {
+        case kPriceSizeSmall:
+            return JACaptionFont;
+            
+        case kPriceSizeMedium:
+            return JAList1Font;
+            
+        default:
+            return JAList1Font;
+    }
 }
 
 - (UILabel *)priceOffLabel
@@ -116,7 +138,7 @@
 
 - (UILabel *)label
 {
-    [super.label setFont:JAList1Font];
+    [super.label setFont:[self priceSizeFont]];
     return super.label;
 }
 

@@ -136,6 +136,9 @@
     _seller = seller;
     [self.sellerNameLabel setText:seller.name];
     [self.sellerNameLabel sizeToFit];
+    [self.sellerRatingLine setLineContentXOffset:0.f];
+    [self.sellerRatingLine setRatingAverage:seller.reviewAverage];
+    [self.sellerRatingLine setRatingSum:seller.reviewTotal];
     
     
     [self.sellerDeliveryLabel setText:seller.deliveryTime];
