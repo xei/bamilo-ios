@@ -385,6 +385,11 @@ typedef void (^ProcessActionBlock)(void);
     }
     [self.catalogTopView setSorting:self.sortingMethod];
     [self.catalogTopView repositionForWidth:self.view.frame.size.width];
+    
+    if (VALID_NOTEMPTY([[NSUserDefaults standardUserDefaults] objectForKey:JACatalogGridSelected], NSNumber)) {
+        NSNumber* cellTypeSelected = [[NSUserDefaults standardUserDefaults] objectForKey:JACatalogGridSelected];
+        self.catalogTopView.cellTypeSelected = [cellTypeSelected integerValue];
+    }
 }
 
 - (void)getCategories
