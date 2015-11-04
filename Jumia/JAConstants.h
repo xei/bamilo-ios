@@ -12,7 +12,6 @@
 
 //************ app action notifications
 #define kSelectedCountryNotification @"NOTIFICATION_SELECTED_COUNTRY"
-#define kSelectedLanguageNotification @"NOTIFICATION_SELECTED_LANGUAGE"
 #define kUpdateCountryNotification @"NOTIFICATION_UPDATE_COUNTRY"
 #define kUpdateCartNotification @"NOTIFICATION_UPDATE_CART"
 #define kUpdateCartNotificationValue @"NOTIFICATION_UPDATE_CART_VALUE"

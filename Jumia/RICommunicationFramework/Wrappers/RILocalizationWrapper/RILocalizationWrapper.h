@@ -14,6 +14,8 @@
 
 #define RILocalizedString(key, comment) [RILocalizationWrapper localizedString:key]
 
++(NSString*)getLocalization;
+
 +(void)setLocalization:(NSString*)localization;
 
 /**

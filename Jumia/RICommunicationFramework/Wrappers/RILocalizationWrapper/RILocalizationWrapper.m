@@ -10,6 +10,12 @@
 
 @implementation RILocalizationWrapper
 
++(NSString*)getLocalization;
+{
+    NSString *locale = [[NSUserDefaults standardUserDefaults] stringForKey:kLanguageCodeKey];
+    return locale;
+}
+
 +(void)setLocalization:(NSString*)localization;
 {
     [[NSUserDefaults standardUserDefaults] setObject:localization forKey:kLanguageCodeKey];
