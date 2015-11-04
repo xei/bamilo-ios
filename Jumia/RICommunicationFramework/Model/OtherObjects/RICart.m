@@ -655,7 +655,7 @@
         if (VALID_NOTEMPTY([cartEntityJSON objectForKey:@"delivery"], NSDictionary)) {
             NSDictionary *deliveryDic = [cartEntityJSON objectForKey:@"delivery"];
             if (VALID_NOTEMPTY([deliveryDic objectForKey:@"amount"], NSNumber)) {
-                cart.shippingValue = [cartEntityJSON objectForKey:@"amount"];
+                cart.shippingValue = [deliveryDic objectForKey:@"amount"];
                 cart.shippingValueFormatted = [RICountryConfiguration formatPrice:cart.shippingValue country:country];
             }
             if (VALID_NOTEMPTY([deliveryDic objectForKey:@"amount_converted"], NSNumber)) {
