@@ -1124,7 +1124,6 @@
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
             [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
-            [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
         }];
     }
     else
@@ -1149,7 +1148,9 @@
             if (networkStatus == NotReachable) {
                 [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
             }
-            [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
+            else{
+                [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
+            }
         }];
     }
 }
