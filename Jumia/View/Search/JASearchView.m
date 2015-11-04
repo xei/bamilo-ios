@@ -15,6 +15,7 @@
 @property (nonatomic, strong)UIView* backView;
 @property (nonatomic, strong)UISearchBar* searchBar;
 @property (nonatomic, strong)UITableView* resultsTableView;
+@property (nonatomic, assign)CGRect resultsTableOriginalFrame;
 @property (nonatomic, strong)NSMutableArray* resultsArray;
 
 @end
@@ -78,6 +79,7 @@
                                                                               self.frame.size.width,
                                                                               self.frame.size.height - CGRectGetMaxY(self.searchBar.frame))
                                                              style:UITableViewStyleGrouped];
+        self.resultsTableOriginalFrame = self.resultsTableView.frame;
         
         self.resultsTableView.backgroundColor = UIColorFromRGB(0xffffff);
         self.resultsTableView.delegate = self;
@@ -387,28 +389,17 @@
     }
     
     [UIView animateWithDuration:0.3 animations:^{
-        [self.resultsTableView setFrame:CGRectMake(self.resultsTableView.frame.origin.x,
-                                                   self.resultsTableView.frame.origin.y,
-                                                   self.resultsTableView.frame.size.width,
-                                                   self.resultsTableView.frame.size.height - height)];
+        [self.resultsTableView setFrame:CGRectMake(self.resultsTableOriginalFrame.origin.x,
+                                                   self.resultsTableOriginalFrame.origin.y,
+                                                   self.resultsTableOriginalFrame.size.width,
+                                                   self.resultsTableOriginalFrame.size.height - height)];
     }];
 }
 
 - (void) keyboardWillHide:(NSNotification *)notification
 {
-    NSDictionary *userInfo = [notification userInfo];
-    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    CGFloat height = kbSize.height;
-    if(self.frame.size.width == kbSize.height)
-    {
-        height = kbSize.width;
-    }
-    
     [UIView animateWithDuration:0.3 animations:^{
-        [self.resultsTableView setFrame:CGRectMake(self.resultsTableView.frame.origin.x,
-                                                   self.resultsTableView.frame.origin.y,
-                                                   self.resultsTableView.frame.size.width,
-                                                   self.resultsTableView.frame.size.height + height)];
+        [self.resultsTableView setFrame:self.resultsTableOriginalFrame];
     }];
 }
 
