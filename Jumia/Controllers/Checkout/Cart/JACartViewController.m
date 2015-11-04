@@ -1088,7 +1088,7 @@
     [UIView animateWithDuration:0.4f
                      animations:^{
                          [self.picker setFrame:CGRectMake(0.0f,
-                                                          0.0f,
+                                                          [self viewBounds].origin.y,
                                                           pickerViewWidth,
                                                           pickerViewHeight)];
                      }];
