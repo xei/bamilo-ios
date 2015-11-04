@@ -15,6 +15,7 @@
 #import "RIApi.h"
 #import "UIImageView+WebCache.h"
 #import "JAPicker.h"
+#import "RICountry.h"
 
 @interface JAMyAccountViewController ()
 <
@@ -437,22 +438,32 @@ JAPickerDelegate
                                                     self.appSharingView.frame.size.width,
                                                     self.shareAppClickableView.frame.size.height)];
     
-    [self.countrySettingsView setFrame:CGRectMake(self.countrySettingsView.frame.origin.x,
-                                                  CGRectGetMaxY(self.appSharingView.frame) + 6.0f,
-                                                  width - (self.notificationView.frame.origin.x * 2),
-                                                  self.countrySettingsView.frame.size.height)];
+    CGFloat scrollViewHeight = CGRectGetMaxY(self.appSharingView.frame) + 6.0f;
+    if (ISEMPTY([RICountry getUniqueCountry])) {
+        self.countrySettingsView.hidden = NO;
+        
+        [self.countrySettingsView setFrame:CGRectMake(self.countrySettingsView.frame.origin.x,
+                                                      CGRectGetMaxY(self.appSharingView.frame) + 6.0f,
+                                                      width - (self.notificationView.frame.origin.x * 2),
+                                                      self.countrySettingsView.frame.size.height)];
+        
+        [self.chooseCountryClickableView setFrame:CGRectMake(self.chooseCountryClickableView.frame.origin.x,
+                                                             self.chooseCountryClickableView.frame.origin.y,
+                                                             self.countrySettingsView.frame.size.width,
+                                                             self.chooseCountryClickableView.frame.size.height)];
+        
+        [self.languageClickableView setFrame:CGRectMake(self.languageClickableView.frame.origin.x,
+                                                        self.languageClickableView.frame.origin.y,
+                                                        self.countrySettingsView.frame.size.width,
+                                                        self.languageClickableView.frame.size.height)];
+        
+        scrollViewHeight = CGRectGetMaxY(self.countrySettingsView.frame) + 6.0f;
+    } else {
+        self.countrySettingsView.hidden = YES;
+    }
+
     
-    [self.chooseCountryClickableView setFrame:CGRectMake(self.chooseCountryClickableView.frame.origin.x,
-                                                         self.chooseCountryClickableView.frame.origin.y,
-                                                         self.countrySettingsView.frame.size.width,
-                                                         self.chooseCountryClickableView.frame.size.height)];
-    
-    [self.languageClickableView setFrame:CGRectMake(self.languageClickableView.frame.origin.x,
-                                                    self.languageClickableView.frame.origin.y,
-                                                    self.countrySettingsView.frame.size.width,
-                                                    self.languageClickableView.frame.size.height)];
-    
-    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, CGRectGetMaxY(self.countrySettingsView.frame) + 6.0f)];
+    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, scrollViewHeight)];
     
     CGFloat leftMargin = 17.0f;
     CGFloat rightMargin = 17.0f;
