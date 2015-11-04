@@ -23,6 +23,7 @@
 @interface JAPDVProductInfo() {
     UILabel *_sizesLabel;
     JAProductInfoPriceLine *_priceLine;
+    CGFloat _sellerYPosition;
 }
 
 @property (nonatomic, strong) RIProduct* product;
@@ -30,6 +31,7 @@
 @property (nonatomic) id sizeTarget;
 @property (nonatomic) id reviewsTarget;
 @property (nonatomic) id sellerCatalogTarget;
+@property (nonatomic) id sellerLinkTarget;
 @property (nonatomic) id sellerReviewsTarget;
 @property (nonatomic) id otherOffersTarget;
 @property (nonatomic) id specificationsTarget;
@@ -38,6 +40,7 @@
 @property (nonatomic) SEL sizeSelector;
 @property (nonatomic) SEL reviewsSelector;
 @property (nonatomic) SEL sellerCatalogSelector;
+@property (nonatomic) SEL sellerLinkSelector;
 @property (nonatomic) SEL sellerReviewsSelector;
 @property (nonatomic) SEL otherOffersSelector;
 @property (nonatomic) SEL specificationsSelector;
@@ -203,6 +206,7 @@
      */
     
     if (VALID_NOTEMPTY(product.seller, RISeller)) {
+        _sellerYPosition = yOffset;
         JAProductInfoHeaderLine *headerSeller = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoHeaderLineHeight)];
 #warning TODO String translation
         [headerSeller setTitle:[@"Seller Information" uppercaseString]];
@@ -212,6 +216,7 @@
         JAPDVProductInfoSellerInfo *sellerInfoView = [[JAPDVProductInfoSellerInfo alloc] initWithFrame:CGRectMake(0, yOffset, self.width, 50)];
         [sellerInfoView setSeller:product.seller];
         [sellerInfoView addTarget:self action:@selector(tapSellerCatalogLine)];
+        [sellerInfoView addLinkTarget:self action:@selector(tapSellerLink)];
         [self addSubview:sellerInfoView];
         
         yOffset = CGRectGetMaxY(sellerInfoView.frame);
@@ -285,6 +290,11 @@
     }
 }
 
+- (CGFloat)getSellerInfoYPosition
+{
+    return _sellerYPosition;
+}
+
 - (int)lineCountForText:(UILabel *)label
 {
     UIFont *font = label.font;
@@ -319,6 +329,13 @@
 {
     if (self.sellerCatalogTarget && [self.sellerCatalogTarget respondsToSelector:self.sellerCatalogSelector]) {
         ((void (*)(id, SEL))[self.sellerCatalogTarget methodForSelector:self.sellerCatalogSelector])(self.sellerCatalogTarget, self.sellerCatalogSelector);
+    }
+}
+
+- (void)tapSellerLink
+{
+    if (self.sellerLinkTarget && [self.sellerLinkTarget respondsToSelector:self.sellerLinkSelector]) {
+        ((void (*)(id, SEL))[self.sellerLinkTarget methodForSelector:self.sellerLinkSelector])(self.sellerLinkTarget, self.sellerLinkSelector);
     }
 }
 
@@ -372,6 +389,12 @@
 {
     self.sellerCatalogTarget = target;
     self.sellerCatalogSelector = action;
+}
+
+- (void)addSellerLinkTarget:(id)target action:(SEL)action
+{
+    self.sellerLinkTarget = target;
+    self.sellerLinkSelector = action;
 }
 
 - (void)addSellerReviewsTarget:(id)target action:(SEL)action

@@ -34,5 +34,6 @@
 
 - (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize;
 - (void)goToGalleryIndex:(NSInteger)index;
+- (void)addGlobalButtonTarget:(id)target action:(SEL)action;
 
 @end

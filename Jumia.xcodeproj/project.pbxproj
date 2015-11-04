@@ -152,11 +152,11 @@
 		62add1971fcfac7a3f4f4acc /* JAPDVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE730C6198F8B05000CA1DD /* JAPDVViewController.m */; };
 		6343e651aae2fa544731ccd2 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A2FD84919913FCA00C65C1D /* Social.framework */; };
 		67f4a0b88343cac1bc885793 /* RIURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3028C19811E9200F71726 /* RIURLCache.m */; };
-		692CD25B1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 692CD25A1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m */; settings = {ASSET_TAGS = (); }; };
-		692CD25C1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 692CD25A1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m */; settings = {ASSET_TAGS = (); }; };
-		692CD25D1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 692CD25A1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m */; settings = {ASSET_TAGS = (); }; };
-		692CD25E1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 692CD25A1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m */; settings = {ASSET_TAGS = (); }; };
-		692CD25F1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 692CD25A1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		692CD25B1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 692CD25A1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m */; };
+		692CD25C1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 692CD25A1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m */; };
+		692CD25D1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 692CD25A1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m */; };
+		692CD25E1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 692CD25A1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m */; };
+		692CD25F1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 692CD25A1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m */; };
 		692fece832938452dbf8505a /* JATeaserPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE91B9B1989065A0078DFC9 /* JATeaserPageView.m */; };
 		69c7ac2a38a28dc5589a97ca /* JANavigationBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A392142198925E300B70A9C /* JANavigationBarView.xib */; };
 		6C18BD651AB87B7000905FD2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A301BB19811D0700F71726 /* Images.xcassets */; };
@@ -947,6 +947,8 @@
 		9AC4D6A51B4A926700036F1C /* JACatalogGridCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC4D6A21B4A903100036F1C /* JACatalogGridCollectionViewCell.m */; };
 		9AC4D6A61B4A926800036F1C /* JACatalogGridCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC4D6A21B4A903100036F1C /* JACatalogGridCollectionViewCell.m */; };
 		9AC4D6A71B4A926800036F1C /* JACatalogGridCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC4D6A21B4A903100036F1C /* JACatalogGridCollectionViewCell.m */; };
+		9AD15D481BE3F45400DD60DD /* JACollectionSeparator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D471BE3F45400DD60DD /* JACollectionSeparator.m */; };
+		9AD15D4B1BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D4A1BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.m */; };
 		9AE488621B0CE2640033F169 /* JARatingsViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AE488611B0CE2640033F169 /* JARatingsViewController~ipad.xib */; };
 		9AE488661B0E20240033F169 /* JARatingsViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AE488611B0CE2640033F169 /* JARatingsViewController~ipad.xib */; };
 		9AE488671B0E20250033F169 /* JARatingsViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AE488611B0CE2640033F169 /* JARatingsViewController~ipad.xib */; };
@@ -1295,21 +1297,21 @@
 		CE283E931A77899F00F3E92D /* JASellerRatingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E911A77899F00F3E92D /* JASellerRatingsViewController.m */; };
 		CE283E961A77981900F3E92D /* RISellerReviewInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E951A77981900F3E92D /* RISellerReviewInfo.m */; };
 		CE283E971A77981900F3E92D /* RISellerReviewInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E951A77981900F3E92D /* RISellerReviewInfo.m */; };
-		CE28A7971BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7961BD9475100B1FADA /* JAMoreMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
-		CE28A7981BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7961BD9475100B1FADA /* JAMoreMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
-		CE28A7991BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7961BD9475100B1FADA /* JAMoreMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
-		CE28A79A1BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7961BD9475100B1FADA /* JAMoreMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
-		CE28A79B1BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7961BD9475100B1FADA /* JAMoreMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
-		CE28A79F1BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */; settings = {ASSET_TAGS = (); }; };
-		CE28A7A01BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */; settings = {ASSET_TAGS = (); }; };
-		CE28A7A11BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */; settings = {ASSET_TAGS = (); }; };
-		CE28A7A21BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */; settings = {ASSET_TAGS = (); }; };
-		CE28A7A31BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */; settings = {ASSET_TAGS = (); }; };
-		CE28A7A61BDE987400B1FADA /* JATabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7A51BDE987400B1FADA /* JATabBarButton.m */; settings = {ASSET_TAGS = (); }; };
-		CE28A7A71BDE987400B1FADA /* JATabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7A51BDE987400B1FADA /* JATabBarButton.m */; settings = {ASSET_TAGS = (); }; };
-		CE28A7A81BDE987400B1FADA /* JATabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7A51BDE987400B1FADA /* JATabBarButton.m */; settings = {ASSET_TAGS = (); }; };
-		CE28A7A91BDE987400B1FADA /* JATabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7A51BDE987400B1FADA /* JATabBarButton.m */; settings = {ASSET_TAGS = (); }; };
-		CE28A7AA1BDE987400B1FADA /* JATabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7A51BDE987400B1FADA /* JATabBarButton.m */; settings = {ASSET_TAGS = (); }; };
+		CE28A7971BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7961BD9475100B1FADA /* JAMoreMenuViewController.m */; };
+		CE28A7981BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7961BD9475100B1FADA /* JAMoreMenuViewController.m */; };
+		CE28A7991BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7961BD9475100B1FADA /* JAMoreMenuViewController.m */; };
+		CE28A79A1BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7961BD9475100B1FADA /* JAMoreMenuViewController.m */; };
+		CE28A79B1BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7961BD9475100B1FADA /* JAMoreMenuViewController.m */; };
+		CE28A79F1BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */; };
+		CE28A7A01BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */; };
+		CE28A7A11BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */; };
+		CE28A7A21BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */; };
+		CE28A7A31BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */; };
+		CE28A7A61BDE987400B1FADA /* JATabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7A51BDE987400B1FADA /* JATabBarButton.m */; };
+		CE28A7A71BDE987400B1FADA /* JATabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7A51BDE987400B1FADA /* JATabBarButton.m */; };
+		CE28A7A81BDE987400B1FADA /* JATabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7A51BDE987400B1FADA /* JATabBarButton.m */; };
+		CE28A7A91BDE987400B1FADA /* JATabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7A51BDE987400B1FADA /* JATabBarButton.m */; };
+		CE28A7AA1BDE987400B1FADA /* JATabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7A51BDE987400B1FADA /* JATabBarButton.m */; };
 		CE28EE5A1A9397C6000A264C /* JBWhatsAppActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28EE591A9397C6000A264C /* JBWhatsAppActivity.m */; };
 		CE28EE5B1A9397C6000A264C /* JBWhatsAppActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28EE591A9397C6000A264C /* JBWhatsAppActivity.m */; };
 		CE2C6B6F1A03B50F006133C0 /* JACatalogGridCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2C6B6E1A03B50F006133C0 /* JACatalogGridCell_ipad_landscape.xib */; };
@@ -2468,21 +2470,21 @@
 		CE9AE1371AB8997600D56481 /* Daraz.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9AE1301AB8991700D56481 /* Daraz.xcassets */; };
 		CE9AE1381AB8997900D56481 /* Shop.com.mm.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9AE1321AB8993100D56481 /* Shop.com.mm.xcassets */; };
 		CE9AE1391AB8997B00D56481 /* Bamilo.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9AE1341AB8994F00D56481 /* Bamilo.xcassets */; };
-		CEA106ED1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
-		CEA106EE1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
-		CEA106EF1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
-		CEA106F01BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
-		CEA106F11BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */; settings = {ASSET_TAGS = (); }; };
-		CEA106F51BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; settings = {ASSET_TAGS = (); }; };
-		CEA106F61BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; settings = {ASSET_TAGS = (); }; };
-		CEA106F71BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; settings = {ASSET_TAGS = (); }; };
-		CEA106F81BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; settings = {ASSET_TAGS = (); }; };
-		CEA106F91BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; settings = {ASSET_TAGS = (); }; };
-		CEA106FD1BD78CE500EF88B1 /* JATabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */; settings = {ASSET_TAGS = (); }; };
-		CEA106FE1BD78CE500EF88B1 /* JATabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */; settings = {ASSET_TAGS = (); }; };
-		CEA106FF1BD78CE500EF88B1 /* JATabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */; settings = {ASSET_TAGS = (); }; };
-		CEA107001BD78CE500EF88B1 /* JATabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */; settings = {ASSET_TAGS = (); }; };
-		CEA107011BD78CE500EF88B1 /* JATabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */; settings = {ASSET_TAGS = (); }; };
+		CEA106ED1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */; };
+		CEA106EE1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */; };
+		CEA106EF1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */; };
+		CEA106F01BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */; };
+		CEA106F11BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106EC1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m */; };
+		CEA106F51BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; };
+		CEA106F61BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; };
+		CEA106F71BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; };
+		CEA106F81BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; };
+		CEA106F91BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; };
+		CEA106FD1BD78CE500EF88B1 /* JATabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */; };
+		CEA106FE1BD78CE500EF88B1 /* JATabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */; };
+		CEA106FF1BD78CE500EF88B1 /* JATabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */; };
+		CEA107001BD78CE500EF88B1 /* JATabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */; };
+		CEA107011BD78CE500EF88B1 /* JATabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */; };
 		CEA2A1B31B25D20C00E5973F /* JADynamicField.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA2A1B21B25D20C00E5973F /* JADynamicField.m */; };
 		CEA2A1B41B25D20C00E5973F /* JADynamicField.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA2A1B21B25D20C00E5973F /* JADynamicField.m */; };
 		CEA2A1B51B25D20C00E5973F /* JADynamicField.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA2A1B21B25D20C00E5973F /* JADynamicField.m */; };
@@ -3071,6 +3073,10 @@
 		9AC4D69B1B4699B800036F1C /* JACatalogCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogCollectionViewCell.m; sourceTree = "<group>"; };
 		9AC4D6A11B4A903100036F1C /* JACatalogGridCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogGridCollectionViewCell.h; sourceTree = "<group>"; };
 		9AC4D6A21B4A903100036F1C /* JACatalogGridCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogGridCollectionViewCell.m; sourceTree = "<group>"; };
+		9AD15D461BE3F45400DD60DD /* JACollectionSeparator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACollectionSeparator.h; path = CollectionViewLayouts/JACollectionSeparator.h; sourceTree = "<group>"; };
+		9AD15D471BE3F45400DD60DD /* JACollectionSeparator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACollectionSeparator.m; path = CollectionViewLayouts/JACollectionSeparator.m; sourceTree = "<group>"; };
+		9AD15D491BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAProductCollectionViewFlowLayout.h; path = CollectionViewLayouts/JAProductCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		9AD15D4A1BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAProductCollectionViewFlowLayout.m; path = CollectionViewLayouts/JAProductCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		9AE488611B0CE2640033F169 /* JARatingsViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JARatingsViewController~ipad.xib"; sourceTree = "<group>"; };
 		9AEA3B241B15D4AC00771EEA /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Frame.h"; path = "Categories/UIView+Frame.h"; sourceTree = "<group>"; };
 		9AEA3B251B15D4AC00771EEA /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Frame.m"; path = "Categories/UIView+Frame.m"; sourceTree = "<group>"; };
@@ -5888,6 +5894,10 @@
 			children = (
 				CE88F7AA1A1E33F000A3A586 /* JAProductListFlowLayout.h */,
 				CE88F7AB1A1E33F000A3A586 /* JAProductListFlowLayout.m */,
+				9AD15D461BE3F45400DD60DD /* JACollectionSeparator.h */,
+				9AD15D471BE3F45400DD60DD /* JACollectionSeparator.m */,
+				9AD15D491BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.h */,
+				9AD15D4A1BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.m */,
 			);
 			name = CollectionViewLayouts;
 			sourceTree = "<group>";
@@ -7886,6 +7896,7 @@
 				4A2FD84619912BC500C65C1D /* JAPDVSingleRelatedItem.m in Sources */,
 				9A7EE96C1B5546A0004E2505 /* ADJAttribution.m in Sources */,
 				9A7EE9671B5546A0004E2505 /* ADJAdjustFactory.m in Sources */,
+				9AD15D481BE3F45400DD60DD /* JACollectionSeparator.m in Sources */,
 				B5C682FA1986C41D0094C92C /* RIShippingMethodForm.m in Sources */,
 				B5A3025B19811E8A00F71726 /* SDWebImageManager.m in Sources */,
 				CEC3F71C19A5FDDA00DE12F6 /* JAButtonCell.m in Sources */,
@@ -8061,6 +8072,7 @@
 				B5A302DE19811E9200F71726 /* RITrackingWrapper.m in Sources */,
 				B5A302D319811E9200F71726 /* RIVariation.m in Sources */,
 				CEDEB986199A6F430022BAB5 /* JAMainFiltersViewController.m in Sources */,
+				9AD15D4B1BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.m in Sources */,
 				520A37C81A4444CC0046C8B1 /* JAFilteredNoResultsView.m in Sources */,
 				9A55A6951BC2E8AA008EF4A6 /* JABundlesViewController.m in Sources */,
 				CE88F7AC1A1E33F000A3A586 /* JAProductListFlowLayout.m in Sources */,

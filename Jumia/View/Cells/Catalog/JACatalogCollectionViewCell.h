@@ -44,6 +44,9 @@ typedef NS_ENUM(NSUInteger, JACatalogCollectionViewCellType) {
 @property (strong, nonatomic) JAPriceView *priceView;
 @property (nonatomic) JACatalogCollectionViewCellType cellType;
 
+@property (nonatomic) RIProduct *product;
+@property (nonatomic) RIVariation *variation;
+
 - (void)initViews;
 - (void)reloadViews;
 - (void)loadWithProduct:(RIProduct*)product;

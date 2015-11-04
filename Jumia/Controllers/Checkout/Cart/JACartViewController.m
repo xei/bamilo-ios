@@ -1030,6 +1030,7 @@
                              [self hideLoading];
                          } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                              [self hideLoading];
+                             [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
                          }];
     }
 }
@@ -1122,7 +1123,7 @@
             [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
-            
+            [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
             [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
         }];
     }
@@ -1143,7 +1144,11 @@
             [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
-            
+            Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+            NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+            if (networkStatus == NotReachable) {
+                [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
+            }
             [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
         }];
     }
@@ -1203,7 +1208,8 @@
                                                       data:[trackingDictionary copy]];
             
             [self hideLoading];
-            
+        
+            #warning TODO String
             [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
         }];
     }
@@ -1447,8 +1453,14 @@
                         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                             [self closePicker];
                             [self hideLoading];
-                            
-                            [self showMessage:STRING_ERROR_CHANGING_QUANTITY success:NO];
+                            Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+                            NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+                            if (networkStatus == NotReachable) {
+                                [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
+                            }
+                            else {
+                                [self showMessage:STRING_ERROR_CHANGING_QUANTITY success:NO];
+                            }
                         }];
     }
     else

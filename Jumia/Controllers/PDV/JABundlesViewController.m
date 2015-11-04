@@ -15,7 +15,6 @@
 #import "RIProductSimple.h"
 #import "JAUtils.h"
 #import "RICustomer.h"
-#import "JAPDVVariationsCollectionViewCell.h"
 
 #import <FBSDKCoreKit/FBSDKAppEvents.h>
 
@@ -36,8 +35,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 @property (nonatomic) JAProductInfoSubLine *totalSubLine;
 @property (nonatomic) JAPicker *picker;
 
-@property (nonatomic) NSMutableDictionary* selectedButton;
-@property (nonatomic) NSMutableDictionary* sizeButton;
+@property (nonatomic) NSMutableDictionary* sizeButtonDictionary;
 @property (nonatomic) CGRect selectButtonFrame;
 
 @end
@@ -85,6 +83,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     else {
         if (!CGRectEqualToRect(frame, _collectionView.frame)) {
             [_collectionView setFrame:frame];
+            [_collectionView reloadData];
         }
     }
     return _collectionView;
@@ -140,14 +139,15 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-    [self.collectionView registerClass:[JAPDVVariationsCollectionViewCell class] forCellWithReuseIdentifier:@"CellWithLines"];
+    [self.collectionView registerClass:[JACatalogListCollectionViewCell class] forCellWithReuseIdentifier:@"CellWithLines"];
+    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
     
     [self reloadPrice];
 }
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
-    [self.collectionView reloadData];
+    [self collectionView];
     [self totalSubLine];
     [self bottomBar];
 }
@@ -158,73 +158,46 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 {
     RIProduct *bundleProduct = [self.bundles objectAtIndex:indexPath.row];
     
-    JAPDVVariationsCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"CellWithLines" forIndexPath:indexPath];
-    
+    JACatalogListCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"CellWithLines" forIndexPath:indexPath];
     [cell loadWithProduct:bundleProduct];
     
-    if (VALID_NOTEMPTY(self.selectedButton, NSMutableDictionary) && [self.selectedButton objectForKey:[NSNumber numberWithInteger:indexPath.row]]) {
-        UIButton* sel = [self.selectedButton objectForKey:[NSNumber numberWithInteger:indexPath.row]];
-        [sel setSelected:[self.selectedItems objectForKey:bundleProduct.sku]?YES:NO];
-
-    } else {
-        if (!VALID(self.selectedButton, NSMutableDictionary)) {
-            self.selectedButton = [[NSMutableDictionary alloc]init];
-        }
-        
-        UIButton *select = [UIButton buttonWithType:UIButtonTypeCustom];
-
-        [select setFrame:CGRectMake(cell.favoriteButton.x, 8, 30, 30)];
-        select.tag = indexPath.row;
-        [select setImage:[UIImage imageNamed:@"check_empty"] forState:UIControlStateNormal];
-        [select setImage:[UIImage imageNamed:@"check"] forState:UIControlStateSelected];
-        [select setImage:[UIImage imageNamed:@"check"] forState:UIControlStateHighlighted];
-        [select setSelected:[self.selectedItems objectForKey:bundleProduct.sku]?YES:NO];
-        [cell addSubview:select];
-        if (indexPath.row != 0) {
-            [select addTarget:self action:@selector(itemSelection:) forControlEvents:UIControlEventTouchUpInside];
-        }
-        [self.selectedButton setObject:select forKey:[NSNumber numberWithInteger:indexPath.row]];
-        [cell.favoriteButton setHidden:YES];
+    if (![self.product.sku isEqualToString:bundleProduct.sku]) {
+        [cell.selectorButton addTarget:self action:@selector(itemSelection:) forControlEvents:UIControlEventTouchUpInside ];
+    }else{
+        [cell.selectorButton removeTarget:self action:@selector(itemSelection:) forControlEvents:UIControlEventTouchUpInside];
     }
-    cell.feedbackView.tag = indexPath.row;
+    
+    [cell.selectorButton setSelected:[self.selectedItems objectForKey:bundleProduct.sku]?YES:NO];
+    
+    [cell.favoriteButton setHidden:YES];
+    
+    [cell setTag:indexPath.row];
+    
     [cell.feedbackView addTarget:self
                           action:@selector(clickableViewPressedInCell:)
                 forControlEvents:UIControlEventTouchUpInside];
     
+    [cell.sizeButton addTarget:self
+                    action:@selector(sizeButtonPressed:)
+          forControlEvents:UIControlEventTouchUpInside];
+    
     if ([bundleProduct.productSimples count] > 1) {
         
         if (VALID_NOTEMPTY(cell.sizeButton, UIButton) && [self.selectedItems objectForKey:bundleProduct.sku]) {
-            cell.sizeButton.tag = indexPath.row;
             [cell.sizeButton.titleLabel sizeToFit];
             [self setCellSizeLabel:bundleProduct inCell:cell];
             
             [cell.sizeButton setHidden:NO];
             
         } else {
-            if (VALID_NOTEMPTY(cell.sizeButton, UIButton)) {
-                [cell.sizeButton removeFromSuperview];
-            }
-            CGRect frame = CGRectMake(cell.priceView.frame.origin.x, cell.priceView.frame.origin.y+20.0f,
-                                      cell.frame.size.width, cell.priceView.frame.size.height);
+            [cell.sizeButton setHidden:YES];
             
-            cell.sizeButton = [[UIButton alloc] initWithFrame:(frame)];
-            cell.sizeButton.tag = indexPath.row;
-            cell.sizeButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:cell.sizeButton.titleLabel.font.pointSize];
-            [cell.sizeButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
-            [cell.sizeButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
-            [cell.sizeButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-            [self setCellSizeLabel:bundleProduct inCell:cell];
-            [cell.sizeButton.titleLabel sizeToFit];
-            [cell.sizeButton addTarget:self
-                                action:@selector(sizeButtonPressed:)
-                      forControlEvents:UIControlEventTouchUpInside];
-            [cell addSubview:cell.sizeButton];
         }
     } else {
         [cell.sizeButton setHidden:YES];
     }
     
-    [self hideUnwantedCellLines:cell position:indexPath.row];
+//    [self hideUnwantedCellLines:cell position:indexPath.row];
 
     return cell;
 }
@@ -289,7 +262,12 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 
 - (void)itemSelection:(UIControl *)control
 {
+    NSLog(@"tag: %d", (int)control.tag);
     RIProduct *bundleProduct = [self.bundles objectAtIndex:control.tag];
+    
+    if ([bundleProduct.sku isEqualToString:self.product.sku]) {
+        return;
+    }
     if ([self.selectedItems objectForKey:bundleProduct.sku]) {
         [control setSelected:NO];
         [self.selectedItems removeObjectForKey:bundleProduct.sku];
@@ -301,6 +279,12 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     if (changesBlock) {
         changesBlock(self.selectedItems);
     }
+}
+
+- (void)setProduct:(RIProduct *)product
+{
+    _product = product;
+    NSLog(@"product.sku: %@ product.name: %@", product.sku, product.name);
 }
 
 - (void)addComboToCart
@@ -368,45 +352,45 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     // Dispose of any resources that can be recreated.
 }
 
-- (void)hideUnwantedCellLines:(JAPDVVariationsCollectionViewCell *)cell position:(NSInteger)index{
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        
-        if(UIDeviceOrientationPortrait == ([UIDevice currentDevice].orientation) || UIDeviceOrientationPortraitUpsideDown == ([UIDevice currentDevice].orientation)) {
-            cell.rightVerticalSeparator.hidden = YES;
-            if (index == 0) {
-                cell.topHorizontalSeparator.hidden = NO;
-            }
-            else{
-                cell.topHorizontalSeparator.hidden = YES;
-            }
-            
-        }else{
-            
-            if (index == 0 || index == 1) {
-                cell.topHorizontalSeparator.hidden = NO;
-            }
-            else{
-                cell.topHorizontalSeparator.hidden = YES;
-            }
-            if (index % 2 == 0) {
-                cell.rightVerticalSeparator.hidden = NO;
-            }
-            else{
-                cell.rightVerticalSeparator.hidden = YES;
-            }
-            
-        }
-    }
-    else {
-        cell.rightVerticalSeparator.hidden = YES;
-        if (index == 0) {
-            cell.topHorizontalSeparator.hidden = NO;
-        }
-        else{
-            cell.topHorizontalSeparator.hidden = YES;
-        }
-    }
-}
+//- (void)hideUnwantedCellLines:(JAPDVVariationsCollectionViewCell *)cell position:(NSInteger)index{
+//    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+//        
+//        if(UIDeviceOrientationPortrait == ([UIDevice currentDevice].orientation) || UIDeviceOrientationPortraitUpsideDown == ([UIDevice currentDevice].orientation)) {
+//            cell.rightVerticalSeparator.hidden = YES;
+//            if (index == 0) {
+//                cell.topHorizontalSeparator.hidden = NO;
+//            }
+//            else{
+//                cell.topHorizontalSeparator.hidden = YES;
+//            }
+//            
+//        }else{
+//            
+//            if (index == 0 || index == 1) {
+//                cell.topHorizontalSeparator.hidden = NO;
+//            }
+//            else{
+//                cell.topHorizontalSeparator.hidden = YES;
+//            }
+//            if (index % 2 == 0) {
+//                cell.rightVerticalSeparator.hidden = NO;
+//            }
+//            else{
+//                cell.rightVerticalSeparator.hidden = YES;
+//            }
+//            
+//        }
+//    }
+//    else {
+//        cell.rightVerticalSeparator.hidden = YES;
+//        if (index == 0) {
+//            cell.topHorizontalSeparator.hidden = NO;
+//        }
+//        else{
+//            cell.topHorizontalSeparator.hidden = YES;
+//        }
+//    }
+//}
 
 #pragma mark - picker
 
@@ -491,7 +475,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
                      }];
 }
 
-- (void)leftButtonPressed;
+- (void)leftButtonPressed
 {
     if (VALID_NOTEMPTY(self.product.sizeGuideUrl, NSString)) {
         NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:self.product.sizeGuideUrl, @"sizeGuideUrl", nil];

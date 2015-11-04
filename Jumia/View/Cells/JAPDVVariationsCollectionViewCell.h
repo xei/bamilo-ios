@@ -15,6 +15,7 @@
 @property (nonatomic) UIView *bottomHorizontalSeparator;
 @property (nonatomic) UIView *topHorizontalSeparator;
 @property (nonatomic) UIView *rightVerticalSeparator;
+@property (nonatomic) UIButton *selectorButton;
 
 - (void)initViews;
 - (void)reloadViews;
