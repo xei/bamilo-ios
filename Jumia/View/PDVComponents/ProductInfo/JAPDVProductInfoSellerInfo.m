@@ -137,7 +137,6 @@
     [self.sellerNameLabel setText:seller.name];
     [self.sellerNameLabel sizeToFit];
     
-    
     [self.sellerDeliveryLabel setText:seller.deliveryTime];
     [self.sellerDeliveryLabel setFont:JACaption2Font];
     [self.sellerDeliveryLabel setTextColor:JABlackColor];

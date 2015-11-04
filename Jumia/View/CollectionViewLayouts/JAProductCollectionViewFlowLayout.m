@@ -12,24 +12,30 @@
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
     NSArray* attributesToReturn = [super layoutAttributesForElementsInRect:rect];
+    
+    int init = (int)[(UICollectionViewLayoutAttributes*)[attributesToReturn firstObject] indexPath].row;
+    int last = (int)[(UICollectionViewLayoutAttributes*)[attributesToReturn lastObject] indexPath].row;
+    
     for (UICollectionViewLayoutAttributes* attributes in attributesToReturn) {
+        NSIndexPath* indexPath = attributes.indexPath;
         if (nil == attributes.representedElementKind) {
-            NSIndexPath* indexPath = attributes.indexPath;
             attributes.frame = [self layoutAttributesForItemAtIndexPath:indexPath].frame;
         }
     }
-    
-    return [attributesToReturn arrayByAddingObjectsFromArray:[self getLayoutAttributesForSeparatorsInRect:rect]];
+    return [attributesToReturn arrayByAddingObjectsFromArray:[self getLayoutAttributesForSeparatorsInRect:rect forInitIndex:init andLastIndex:last]];
 }
 
-- (NSArray*)getLayoutAttributesForSeparatorsInRect:(CGRect)rect {
+- (NSArray*)getLayoutAttributesForSeparatorsInRect:(CGRect)rect forInitIndex:(NSInteger)init andLastIndex:(NSInteger)last {
     NSInteger numberOfItemsPerLine = floorf(rect.size.width / self.itemSize.width);
-    
-    NSInteger firstCellIndexToShow = floorf(rect.origin.y / self.itemSize.height);
     NSInteger countOfItems = [self.collectionView.dataSource collectionView:self.collectionView numberOfItemsInSection:0];
     
+    if (countOfItems == 0) {
+        return nil;
+    }
+    
     NSMutableArray* decorationAttributes = [NSMutableArray new];
-    for (int i = (int)MAX(firstCellIndexToShow, 0); i <= countOfItems; i++) {
+    
+    for (int i = (int)init; i <= (int)last; i++) {
         if (i != 0 && i % numberOfItemsPerLine != 0) {
             UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForDecorationViewOfKind:@"verticalSeparator" atIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
             [decorationAttributes addObject:attributes];

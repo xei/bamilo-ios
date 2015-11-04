@@ -20,6 +20,7 @@
 @property (nonatomic) CGFloat topSeparatorBorderWidth;
 @property (nonatomic) CGFloat bottomSeparatorBorderWidth;
 @property (nonatomic) CGFloat bottomSeparatorXOffset;
+@property (nonatomic) CGFloat lineContentXOffset;
 
 - (void)setTitle:(NSString *)title;
 

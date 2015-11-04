@@ -18,6 +18,8 @@
 
 @interface JACatalogListCollectionViewCell : JACatalogCollectionViewCell
 
+@property (nonatomic) BOOL hideRating;
+@property (nonatomic) BOOL showSelector;
 @property (nonatomic) UIButton *selectorButton;
 
 @end
