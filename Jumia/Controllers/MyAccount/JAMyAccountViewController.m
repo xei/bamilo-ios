@@ -899,14 +899,35 @@ JAPickerDelegate
 
 - (void)selectedRow:(NSInteger)selectedRow
 {
+    [self removePickerView];
     RILanguage* selectedLanguage = [[RICountryConfiguration getCurrentConfiguration].languages objectAtIndex:selectedRow];
     if ([selectedLanguage.langName isEqualToString:self.languageSubtitleLabel.text]) {
         //do nothing
     } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedLanguageNotification object:selectedLanguage];
+        
+        [self showLoading];
+        [RICountry getCountriesWithSuccessBlock:^(id countries) {
+            //find country
+            for (RICountry* country in countries) {
+                if ([country.name isEqualToString:self.countrySubtitleLabel.text]) {
+                    //found it
+                    //find language
+                    for (RILanguage* language in country.languages) {
+                        if ([language.langCode isEqualToString:selectedLanguage.langCode]) {
+                            //found it
+                            country.selectedLanguage = language;
+                            [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification object:country];
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+            [self hideLoading];
+        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+            [self hideLoading];
+        }];
     }
-    
-    [self removePickerView];
 }
 
 

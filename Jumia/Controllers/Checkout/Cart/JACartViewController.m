@@ -1088,7 +1088,7 @@
     [UIView animateWithDuration:0.4f
                      animations:^{
                          [self.picker setFrame:CGRectMake(0.0f,
-                                                          0.0f,
+                                                          [self viewBounds].origin.y,
                                                           pickerViewWidth,
                                                           pickerViewHeight)];
                      }];
@@ -1124,7 +1124,6 @@
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
             [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
-            [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
         }];
     }
     else
@@ -1149,7 +1148,9 @@
             if (networkStatus == NotReachable) {
                 [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
             }
-            [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
+            else{
+                [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
+            }
         }];
     }
 }
@@ -1531,6 +1532,8 @@
     {
         height = kbSize.width;
     }
+    
+    height -= kTabBarHeight;//compensate for tab bar because keyboard is shown on top
     
     [UIView animateWithDuration:0.3 animations:^{
         [self.cartScrollView setHeight:self.cartScrollViewInitialFrame.size.height - height];
