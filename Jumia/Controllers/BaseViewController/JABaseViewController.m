@@ -297,8 +297,10 @@
     if (self.searchView) {
         [self.searchView removeFromSuperview];
     }
-    self.searchView = [[JASearchView alloc] initWithFrame:window.bounds];
-    [window addSubview:self.searchView];
+    if (NO == self.searchViewAlwaysHidden) {
+        self.searchView = [[JASearchView alloc] initWithFrame:window.bounds];
+        [window addSubview:self.searchView];
+    }
 }
 
 - (void)showSearchBar {

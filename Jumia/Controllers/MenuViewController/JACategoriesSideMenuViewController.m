@@ -26,6 +26,8 @@
     self.A4SViewControllerAlias = @"SUBCATEGORY";
     
     self.tabBarIsVisible = YES;
+    
+    self.searchViewAlwaysHidden = YES;
 
     self.view.backgroundColor = JANavBarBackgroundGrey;
     
