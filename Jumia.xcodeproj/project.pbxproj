@@ -152,11 +152,6 @@
 		62add1971fcfac7a3f4f4acc /* JAPDVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE730C6198F8B05000CA1DD /* JAPDVViewController.m */; };
 		6343e651aae2fa544731ccd2 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A2FD84919913FCA00C65C1D /* Social.framework */; };
 		67f4a0b88343cac1bc885793 /* RIURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3028C19811E9200F71726 /* RIURLCache.m */; };
-		692CD25B1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 692CD25A1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m */; };
-		692CD25C1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 692CD25A1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m */; };
-		692CD25D1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 692CD25A1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m */; };
-		692CD25E1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 692CD25A1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m */; };
-		692CD25F1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 692CD25A1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m */; };
 		692fece832938452dbf8505a /* JATeaserPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE91B9B1989065A0078DFC9 /* JATeaserPageView.m */; };
 		69c7ac2a38a28dc5589a97ca /* JANavigationBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A392142198925E300B70A9C /* JANavigationBarView.xib */; };
 		6C18BD651AB87B7000905FD2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A301BB19811D0700F71726 /* Images.xcassets */; };
@@ -2837,8 +2832,6 @@
 		520A37CC1A48904B0046C8B1 /* JAMyOrdersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMyOrdersViewController.m; sourceTree = "<group>"; };
 		52AC8FDA1A4056CB00E7C874 /* JASizeGuideWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASizeGuideWizardView.h; sourceTree = "<group>"; };
 		52AC8FDB1A4056CB00E7C874 /* JASizeGuideWizardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASizeGuideWizardView.m; sourceTree = "<group>"; };
-		692CD2591BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVVariationsCollectionViewCell.h; sourceTree = "<group>"; };
-		692CD25A1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVVariationsCollectionViewCell.m; sourceTree = "<group>"; };
 		6C18BDAB1A1B4CA300626706 /* JANewsletterComponent~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANewsletterComponent~iPad.xib"; sourceTree = "<group>"; };
 		6C40A88B1AD7E647001BFA16 /* RIBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIBanner.h; sourceTree = "<group>"; };
 		6C40A88C1AD7E647001BFA16 /* RIBanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIBanner.m; sourceTree = "<group>"; };
@@ -4253,8 +4246,6 @@
 		692CD2511BD7D50000DF6F49 /* PDVVariatons */ = {
 			isa = PBXGroup;
 			children = (
-				692CD2591BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.h */,
-				692CD25A1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m */,
 			);
 			name = PDVVariatons;
 			sourceTree = "<group>";
@@ -7769,7 +7760,6 @@
 				f8c3d3d4e4aeb8e1b38b80e7 /* RIImageResolution.m in Sources */,
 				b30c4e6be5c0c8eee6b4a94c /* RIURLCacheWrapper.m in Sources */,
 				1ab3cd2be973c7bdad01987e /* JAButtonWithBlur.m in Sources */,
-				692CD25C1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m in Sources */,
 				9A7EE97C1B5546A0004E2505 /* ADJDeviceInfo.m in Sources */,
 				b42870fb0eb0010aae996ca1 /* JALoginViewController.m in Sources */,
 				9A189E5E1BB31AC70039BC14 /* JAProductInfoHeaderLine.m in Sources */,
@@ -7910,7 +7900,6 @@
 				9A7A77251B2B4177002F530F /* JAPagedView.m in Sources */,
 				CE59BF191AE8097C0057F4E2 /* JAFeatureStoresTeaserView.m in Sources */,
 				4A454F4A199CE67500B44821 /* JAForgotPasswordViewController.m in Sources */,
-				692CD25B1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m in Sources */,
 				CE8C92AC1B8B555600C77706 /* JAMainFilterCell.m in Sources */,
 				CE2DBC6E1A603B160075C21F /* RIFieldRatingStars.m in Sources */,
 				B5A302DB19811E9200F71726 /* RIOperation.m in Sources */,
@@ -8204,7 +8193,6 @@
 				9A7EE9AA1B5546A0004E2505 /* ADJUtil.m in Sources */,
 				CE9ADB531AB34C4600D56481 /* JAOfferCollectionViewCell.m in Sources */,
 				9A7A77271B2B45F0002F530F /* JAPagedView.m in Sources */,
-				692CD25D1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m in Sources */,
 				CE9ADB541AB34C4600D56481 /* RIAdjustTracker.m in Sources */,
 				CE8C92AE1B8B555600C77706 /* JAMainFilterCell.m in Sources */,
 				CE59BF1B1AE8097C0057F4E2 /* JAFeatureStoresTeaserView.m in Sources */,
@@ -8487,7 +8475,6 @@
 				9A7EE9AB1B5546A0004E2505 /* ADJUtil.m in Sources */,
 				CE9ADD4D1AB6D6E900D56481 /* JAOfferCollectionViewCell.m in Sources */,
 				9A7A77281B2B45F1002F530F /* JAPagedView.m in Sources */,
-				692CD25E1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m in Sources */,
 				CE9ADD4E1AB6D6E900D56481 /* RIAdjustTracker.m in Sources */,
 				CE8C92AF1B8B555600C77706 /* JAMainFilterCell.m in Sources */,
 				CE59BF1C1AE8097C0057F4E2 /* JAFeatureStoresTeaserView.m in Sources */,
@@ -8800,7 +8787,6 @@
 				9A7EE9441B554696004E2505 /* ADJActivityState.m in Sources */,
 				CE9ADF601AB6D78200D56481 /* JANoConnectionView.m in Sources */,
 				CE9ADF611AB6D78200D56481 /* JACatalogListCell.m in Sources */,
-				692CD25F1BD8065A00DF6F49 /* JAPDVVariationsCollectionViewCell.m in Sources */,
 				CE8C92921B8615F500C77706 /* RISpecification.m in Sources */,
 				9A189E6F1BB31AF70039BC14 /* JAProductInfoSingleLine.m in Sources */,
 				9A7EE9981B5546A0004E2505 /* ADJRequestHandler.m in Sources */,

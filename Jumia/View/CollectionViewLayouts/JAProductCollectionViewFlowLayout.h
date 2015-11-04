@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JACollectionSeparator.h"
 
 @interface JAProductCollectionViewFlowLayout : UICollectionViewFlowLayout
 
