@@ -431,7 +431,7 @@
 
 - (NSMutableArray *)reviewsArray
 {
-    if (!VALID_NOTEMPTY(_reviewsArray, NSMutableArray)) {
+    if (!VALID(_reviewsArray, NSMutableArray)) {
         _reviewsArray = [NSMutableArray new];
     }
     return _reviewsArray;
@@ -466,7 +466,7 @@
     [self.viewControllerEvents showLoading];
     [RIProductRatings getRatingsForProductWithUrl:self.product.url allowRating:1 pageNumber:(VALID_NOTEMPTY(self.productRatings, RIProductRatings)?self.productRatings.currentPage.intValue+1:1) successBlock:^(RIProductRatings *ratings) {
         self.productRatings = ratings;
-        [self.reviewsArray addObjectsFromArray:self.productRatings.reviews];
+        [self.reviewsArray addObjectsFromArray:[self.productRatings.reviews mutableCopy]];
         _currentPage = self.productRatings.currentPage.integerValue;
         [self.collectionView reloadData];
         [self.viewControllerEvents hideLoading];

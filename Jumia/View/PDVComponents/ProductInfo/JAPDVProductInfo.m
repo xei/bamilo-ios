@@ -54,6 +54,10 @@
 {
     [self setFrame:frame];
     
+    if (product == nil) {
+        return;
+    }
+    
     BOOL isiPadInLandscape = NO;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
@@ -102,12 +106,14 @@
     [ratingLine setRatingSum:product.sum];
     [ratingLine addTarget:self action:@selector(tapReviewsLine) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:ratingLine];
+    
     yOffset = CGRectGetMaxY(ratingLine.frame);
     
     /*
      *  SPECIFICATIONS
      */
     
+    CGFloat preSpecificationOffset = yOffset;
     if (VALID_NOTEMPTY(product.specifications, NSSet) && !product.fashion) {
         JAProductInfoHeaderLine *headerSpecifications = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoHeaderLineHeight)];
         [headerSpecifications setTitle:[STRING_SPECIFICATIONS uppercaseString]];
@@ -115,9 +121,9 @@
         [self addSubview:headerSpecifications];
         yOffset = CGRectGetMaxY(headerSpecifications.frame) + 16.f;
         
+        int i = 0;
         BOOL needMoreSpecifications = NO;
         for (RISpecification *specification in product.specifications) {
-            int i = 0;
             for (RISpecificationAttribute *attribute in specification.specificationAttributes) {
                 if (!VALID_NOTEMPTY(attribute.key, NSString) || !VALID_NOTEMPTY(attribute.value, NSString) || [(NSString *)attribute.value isEqualToString:@""]) {
                     continue;
@@ -139,21 +145,30 @@
                 [specificationsContentLabel setTextColor:JABlackColor];
                 [specificationsContentLabel setFont:JACaptionFont];
                 specificationsContentLabel.numberOfLines = 0;
-                [specificationsContentLabel setText:[NSString stringWithFormat:@"- %@:\n %@", attribute.key, attribute.value]];
+                [specificationsContentLabel setText:[NSString stringWithFormat:@"- %@: %@", attribute.key, attribute.value]];
                 [specificationsContentLabel sizeToFit];
                 [self addSubview:specificationsContentLabel];
                 yOffset = CGRectGetMaxY(specificationsContentLabel.frame);
             }
+            
+            if (i==5)
+                break;
         }
         yOffset += 16.f;
-        if (needMoreSpecifications) {
-            JAProductInfoSubLine *subSpecificationReadMore = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
-            [subSpecificationReadMore setTopSeparatorVisibility:YES];
+        
+        if (i == 0) {
+            [headerSpecifications removeFromSuperview];
+            yOffset = preSpecificationOffset;
+        }else{
+            if (needMoreSpecifications) {
+                JAProductInfoSubLine *subSpecificationReadMore = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
+                [subSpecificationReadMore setTopSeparatorVisibility:YES];
 #warning TODO String
-            [subSpecificationReadMore setTitle:@"More specifications"];
-            [subSpecificationReadMore addTarget:self action:@selector(tapSpecificationsLine) forControlEvents:UIControlEventTouchUpInside];
-            [self addSubview:subSpecificationReadMore];
-            yOffset = CGRectGetMaxY(subSpecificationReadMore.frame);
+                [subSpecificationReadMore setTitle:@"Read more"];
+                [subSpecificationReadMore addTarget:self action:@selector(tapSpecificationsLine) forControlEvents:UIControlEventTouchUpInside];
+                [self addSubview:subSpecificationReadMore];
+                yOffset = CGRectGetMaxY(subSpecificationReadMore.frame);
+            }
         }
     }
     
