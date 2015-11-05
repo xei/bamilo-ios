@@ -27,9 +27,9 @@
     self.priceFilterOption = priceFilterOption;
     
     self.backgroundColor = [UIColor whiteColor];
-    self.priceRangeLabel.font = [UIFont fontWithName:kFontRegularName size:self.priceRangeLabel.font.pointSize];
+    self.priceRangeLabel.font = [UIFont fontWithName:kFontRegularName size:16.0f];
     self.priceRangeLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    self.discountLabel.font = [UIFont fontWithName:kFontRegularName size:self.discountLabel.font.pointSize];
+    self.discountLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
     self.discountLabel.textColor = UIColorFromRGB(0x4e4e4e);
     
     self.priceRangeSlider.stepValue = self.priceFilterOption.interval;

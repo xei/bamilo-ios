@@ -50,10 +50,10 @@
         }
     }
     
-    UIFont* labelFont = [UIFont fontWithName:kFontRegularName size:14.0f];
+    UIFont* labelFont = [UIFont fontWithName:kFontRegularName size:16.0f];
     NSString* cellText = [NSString stringWithFormat:@"%@",filter.name];
     if (0 < numberOfSelectedOptions) {
-        labelFont = [UIFont fontWithName:kFontBoldName size:14.0f];
+        labelFont = [UIFont fontWithName:kFontBoldName size:16.0f];
         cellText = [NSString stringWithFormat:@"%@ (%ld)",filter.name, (long)numberOfSelectedOptions];
     }
     UILabel* mainLabel = [UILabel new];
