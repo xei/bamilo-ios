@@ -8,7 +8,9 @@
 
 #import "JAProductInfoRatingLine.h"
 
-@interface JAProductInfoRatingLine ()
+@interface JAProductInfoRatingLine () {
+    CGSize _viewBounds;
+}
 
 @property (nonatomic) UIImageView *star1;
 @property (nonatomic) UIImageView *star2;
@@ -18,14 +20,11 @@
 
 @property (nonatomic) UILabel *ratingSumLabel;
 
-@property (nonatomic) CGFloat lineXOffset;
 @property (nonatomic) NSString *imageSize;
 
 @end
 
 @implementation JAProductInfoRatingLine
-
-@synthesize ratingSumLabel = _ratingSumLabel, lineXOffset = _lineXOffset;
 
 - (UIImage *)getEmptyStar
 {
@@ -43,64 +42,85 @@
 
 - (UIImageView *)star1
 {
+    CGRect frame = CGRectMake(self.lineContentXOffset, self.height/2-self.imageHeight/2, self.imageHeight, self.imageHeight);
     if (!VALID_NOTEMPTY(_star1, UIImageView)) {
         _star1 = [[UIImageView alloc] initWithImage:[self getEmptyStar]];
-        [_star1 setFrame:CGRectMake(self.lineXOffset, self.height/2-self.imageHeight/2, self.imageHeight, self.imageHeight)];
+        [_star1 setFrame:frame];
         [self addSubview:_star1];
+    }else if (!CGRectEqualToRect(_star1.frame, frame)) {
+        [_star1 setFrame:frame];
     }
     return _star1;
 }
 
 - (UIImageView *)star2
 {
+    CGRect frame = CGRectMake(CGRectGetMaxX(self.star1.frame) + 2.f, self.height/2-self.imageHeight/2, self.imageHeight, self.imageHeight);
     if (!VALID_NOTEMPTY(_star2, UIImageView)) {
         _star2 = [[UIImageView alloc] initWithImage:[self getEmptyStar]];
-        [_star2 setFrame:CGRectMake(CGRectGetMaxX(self.star1.frame) + 2.f, self.height/2-self.imageHeight/2, self.imageHeight, self.imageHeight)];
+        [_star2 setFrame:frame];
         [self addSubview:_star2];
+    }else if (!CGRectEqualToRect(_star2.frame, frame)) {
+        [_star2 setFrame:frame];
     }
     return _star2;
 }
 
 - (UIImageView *)star3
 {
+    CGRect frame = CGRectMake(CGRectGetMaxX(self.star2.frame) + 2.f, self.height/2-self.imageHeight/2, self.imageHeight, self.imageHeight);
     if (!VALID_NOTEMPTY(_star3, UIImageView)) {
         _star3 = [[UIImageView alloc] initWithImage:[self getEmptyStar]];
-        [_star3 setFrame:CGRectMake(CGRectGetMaxX(self.star2.frame) + 2.f, self.height/2-self.imageHeight/2, self.imageHeight, self.imageHeight)];
+        [_star3 setFrame:frame];
         [self addSubview:_star3];
+    }else if (!CGRectEqualToRect(_star3.frame, frame)) {
+        [_star3 setFrame:frame];
     }
     return _star3;
 }
 
 - (UIImageView *)star4
 {
+    CGRect frame = CGRectMake(CGRectGetMaxX(self.star3.frame) + 2.f, self.height/2-self.imageHeight/2, self.imageHeight, self.imageHeight);
     if (!VALID_NOTEMPTY(_star4, UIImageView)) {
         _star4 = [[UIImageView alloc] initWithImage:[self getEmptyStar]];
-        [_star4 setFrame:CGRectMake(CGRectGetMaxX(self.star3.frame) + 2.f, self.height/2-self.imageHeight/2, self.imageHeight, self.imageHeight)];
+        [_star4 setFrame:frame];
         [self addSubview:_star4];
+    }else if (!CGRectEqualToRect(_star4.frame, frame)) {
+        [_star4 setFrame:frame];
     }
     return _star4;
 }
 
 - (UIImageView *)star5
 {
+    CGRect frame = CGRectMake(CGRectGetMaxX(self.star4.frame) + 2.f, self.height/2-self.imageHeight/2, self.imageHeight, self.imageHeight);
     if (!VALID_NOTEMPTY(_star5, UIImageView)) {
         _star5 = [[UIImageView alloc] initWithImage:[self getEmptyStar]];
-        [_star5 setFrame:CGRectMake(CGRectGetMaxX(self.star4.frame) + 2.f, self.height/2-self.imageHeight/2, self.imageHeight, self.imageHeight)];
+        [_star5 setFrame:frame];
         [self addSubview:_star5];
+    }else if (!CGRectEqualToRect(_star5.frame, frame)) {
+        [_star5 setFrame:frame];
     }
     return _star5;
 }
 
 - (UILabel *)ratingSumLabel
 {
+    CGRect frame = CGRectMake(CGRectGetMaxX(self.star5.frame) + 6.f, (_viewBounds.height-self.imageHeight)/2, 30, self.imageHeight);
     if (!VALID_NOTEMPTY(_ratingSumLabel, UILabel)) {
-        _ratingSumLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.star5.frame) + 6.f, 10, 30, 30)];
+        _ratingSumLabel = [[UILabel alloc] initWithFrame:frame];
         [_ratingSumLabel setTextColor:[UIColor darkGrayColor]];
         [_ratingSumLabel setFont:JACaptionFont];
         [_ratingSumLabel setText:@"(0)"];
         [_ratingSumLabel sizeToFit];
         [_ratingSumLabel setY:self.height/2-_ratingSumLabel.height/2];
         [self addSubview:_ratingSumLabel];
+    }else if (!CGRectEqualToRect(_ratingSumLabel.frame, frame)) {
+        if ([_ratingSumLabel.text isEqualToString:@"(3)"]) {
+            NSLog(@"");
+        }
+        [_ratingSumLabel setFrame:frame];
     }
     return _ratingSumLabel;
 }
@@ -141,17 +161,6 @@
     }
 }
 
-- (CGFloat)lineXOffset
-{
-    if (!self.noMargin)
-    {
-        _lineXOffset = 16.0f;
-    }else{
-        _lineXOffset = 0.f;
-    }
-    return _lineXOffset;
-}
-
 - (void)setRatingAverage:(NSNumber *)ratingAverage
 {
     self.star1.image = ratingAverage.integerValue < 1 ?
@@ -184,6 +193,29 @@
     }else
         [self.ratingSumLabel setText:[NSString stringWithFormat:@"(%@)", ratingSum]];
     [self.ratingSumLabel sizeToFit];
+}
+
+- (void)reduceToMinimumSizeWidth
+{
+    [self setWidth:CGRectGetMaxX(self.ratingSumLabel.frame)];
+}
+
+- (void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    if ([self.label.text isEqualToString:@"(3)"]) {
+        NSLog(@"PRE self.label.frame: %@", NSStringFromCGRect(self.label.frame));
+    }
+    _viewBounds = frame.size;
+    [self star1];
+    [self star2];
+    [self star3];
+    [self star4];
+    [self star5];
+    [self ratingSumLabel];
+    if ([self.label.text isEqualToString:@"(3)"]) {
+        NSLog(@"POS self.label.frame: %@", NSStringFromCGRect(self.label.frame));
+    }
 }
 
 @end

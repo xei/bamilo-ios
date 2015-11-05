@@ -69,7 +69,7 @@
     self.normalImage = [UIImage imageNamed:imageName];
     self.highlightedImage = [UIImage imageNamed:highlightedImageName];
     [self.imageView setFrame:CGRectMake((self.clickableView.bounds.size.width - self.normalImage.size.width) / 2,
-                                        8.0f,
+                                        6.0f,
                                         self.normalImage.size.width,
                                         self.normalImage.size.height)];
     
@@ -93,7 +93,7 @@
     [self.label setText:title];
     [self.label sizeToFit];
     [self.label setFrame:CGRectMake(self.clickableView.bounds.origin.x,
-                                    self.clickableView.bounds.size.height - 8.0f - self.label.frame.size.height,
+                                    self.clickableView.bounds.size.height - 6.0f - self.label.frame.size.height,
                                     self.clickableView.bounds.size.width,
                                     self.label.frame.size.height)];
     
@@ -106,18 +106,18 @@
     //magic numbers... there's no way around it here
     CGRect frame;
     if (number < 10) {
-        frame = CGRectMake(self.imageView.bounds.size.width/2 + 4.0f,
-                           0.0f,
+        frame = CGRectMake(self.imageView.bounds.size.width/2 + 5.0f,
+                           3.0f,
                            10.0f,
                            12.0f);
     } else if (number < 100) {
         frame = CGRectMake(self.imageView.bounds.size.width/2 + 2.0f,
-                           0.0f,
+                           3.0f,
                            12.0f,
                            12.0f);
     } else {
         frame = CGRectMake(self.imageView.bounds.size.width/2 + 2.0f,
-                           0.0f,
+                           3.0f,
                            12.0f,
                            12.0f);
     }

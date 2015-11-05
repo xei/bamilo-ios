@@ -206,8 +206,6 @@
     
     if (VALID_NOTEMPTY(self.noConnectionView, JANoConnectionView)) {
         
-        NSLog(@"self.noConnectionView.x: %f", self.noConnectionView.x);
-        
         self.noConnectionView.frame = CGRectMake(_noConnectionViewFrame.origin.x,
                                                  _noConnectionViewFrame.origin.y,
                                                  screenWidth,
