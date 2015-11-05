@@ -1086,7 +1086,7 @@ JAActivityViewControllerDelegate
 
 - (void)addToCart
 {
-    if(VALID_NOTEMPTY(self.product.productSimples, NSOrderedSet) && self.product.productSimples.count > 1 && !VALID_NOTEMPTY(self.preSelectedSize, NSString))
+    if(VALID_NOTEMPTY(self.product.productSimples, NSOrderedSet) && self.product.productSimples.count > 1 && !VALID_NOTEMPTY(self.currentSimple, RIProductSimple))
     {
         self.openPickerFromCart = YES;
         [self showSizePicker];
@@ -1165,10 +1165,8 @@ JAActivityViewControllerDelegate
         {
             if ([simple.quantity integerValue] > 0)
             {
-                if (VALID_NOTEMPTY(simple.variation, NSString)) {
-                    [self.pickerDataSource addObject:simple];
-                    [options addObject:simple.variation];
-                }
+                [self.pickerDataSource addObject:simple];
+                [options addObject:simple.variation];
             }
         }
     }

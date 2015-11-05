@@ -330,9 +330,9 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 {
     [self showLoading];
     
-    NSMutableArray* simpleSku = [[NSMutableArray alloc]init];
-    for (RIProductSimple* simplePDV in self.selectedItems) {
-        [simpleSku addObject:simplePDV.sku];
+    NSMutableArray* simpleSku = [NSMutableArray new];
+    for (RIProductSimple *simple in [self.selectedItems allValues]) {
+        [simpleSku addObject:simple.sku];
     }
     
     [RICart addBundleProductsWithSkus:[self.selectedItems allKeys] simpleSkus:simpleSku bundleId:self.bundle.bundleId withSuccessBlock:^(RICart *cart, NSArray *productsNotAdded) {
