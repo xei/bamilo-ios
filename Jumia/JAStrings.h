@@ -307,6 +307,8 @@
 #define STRING_ORDER_QUANTITY RILocalizedString(@"my_order_quantity_label", nil)
 #define STRING_NO_ORDERS RILocalizedString(@"my_order_no_orders_label", nil)
 
+#define STRING_SELLER_INFO_WARRANTY RILocalizedString(@"seller_info_warranty", nil)
+
 #define STRING_LIKE_US RILocalizedString(@"like_us_on_facebook", nil)
 #define STRING_BUNDLE_TITLE RILocalizedString(@"bundle_title", nil)
 #define STRING_BUNDLE_TOTAL_PRICE RILocalizedString(@"bundle_total_price", nil)

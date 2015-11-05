@@ -206,7 +206,7 @@
     }
     
     if (seller.warranty != NULL) {
-        [self.sellerWarrantyLabel setText:seller.warranty];
+        [self.sellerWarrantyLabel setText:[NSString stringWithFormat:@"%@: %@", STRING_SELLER_INFO_WARRANTY, seller.warranty]];
         [self.sellerWarrantyLabel setFont:JACaption2Font];
         [self.sellerWarrantyLabel setTextColor:JABlackColor];
         [self.sellerWarrantyLabel sizeToFit];
