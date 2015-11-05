@@ -641,7 +641,9 @@ JAActivityViewControllerDelegate
     
     CGRect imageSectionFrame = self.mainScrollView.bounds;
     [self.productImageSection setupWithFrame:imageSectionFrame product:self.product preSelectedSize:self.preSelectedSize];
-    [self.productImageSection addGlobalButtonTarget:self action:@selector(showSeller)];
+    if (VALID_NOTEMPTY(self.product.seller, RISeller) && [self.product.seller isGlobal]) {
+        [self.productImageSection addGlobalButtonTarget:self action:@selector(showSeller)];
+    }
     
     if(isiPadInLandscape)
     {
