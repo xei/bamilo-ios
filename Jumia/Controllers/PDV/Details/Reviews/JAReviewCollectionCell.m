@@ -143,6 +143,7 @@
         JAProductInfoRatingLine *line = [self getNewRatingLine];
         [line setX:kXOffset];
         [line setRatingAverage:number];
+        [line setHiddenSum:YES];
         [self.ratingsView setHeight:CGRectGetMaxY(line.frame)];
         [self.ratingsView addSubview:line];
         [self.ratings setObject:line forKey:@""];

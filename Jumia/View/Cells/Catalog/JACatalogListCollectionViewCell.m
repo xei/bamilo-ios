@@ -149,8 +149,8 @@
     CGRect priceLineRect = CGRectMake(distXAfterImage, CGRectGetMaxY(nameLabelRect) + 6.f, textWidth, 15);
     if (!CGRectEqualToRect(priceLineRect, self.priceLine.frame)) {
         [self.priceLine setFrame:priceLineRect];
-        [self setForRTL:self.priceLine];
     }
+    [self setForRTL:self.priceLine];
     
     CGRect ratingRect = CGRectMake(distXAfterImage, CGRectGetMaxY(self.priceLine.frame) + 6.f, self.width - 2*distXAfterImage, self.ratingLine.imageHeight);
     if (!CGRectEqualToRect(ratingRect, self.ratingLine.frame)) {
@@ -168,6 +168,12 @@
     if (!CGRectEqualToRect(discountLabelRect, self.discountLabel.frame)) {
         [self.discountLabel setFrame:discountLabelRect];
         [self setForRTL:self.discountLabel];
+    }
+    
+    CGRect sizeButtonRect = CGRectMake(distXAfterImage, CGRectGetMaxY(priceLineRect), self.sizeButton.width, 15);
+    if (!CGRectEqualToRect(sizeButtonRect, self.sizeButton.frame)) {
+        [self.sizeButton setFrame:sizeButtonRect];
+        [self setForRTL:self.sizeButton];
     }
     
     CGFloat favX = self.favoriteButton.superview.width - self.favoriteButton.width - distXImage;
