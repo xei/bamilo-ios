@@ -161,10 +161,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-}
-
--(void) viewWillLayoutSubviews
-{
     [self didRotateFromInterfaceOrientation:0];
 }
 
@@ -172,6 +168,22 @@
 {
     [super viewDidAppear:animated];
     [[RITrackingWrapper sharedInstance]trackScreenWithName:@"RecentlyViewed"];
+    
+    self.collectionView.frame = CGRectMake(6.0f,
+                                           self.collectionView.frame.origin.y,
+                                           self.view.frame.size.width - 6.0f*2,
+                                           self.view.frame.size.height);
+    
+    self.emptyListView.frame = CGRectMake(self.emptyListView.frame.origin.x,
+                                          self.emptyListView.frame.origin.y,
+                                          self.view.frame.size.width - self.emptyListView.frame.origin.x * 2,
+                                          300.0f);
+    
+    self.emptyListImageView.frame = CGRectMake((self.emptyListView.frame.size.width - self.emptyListImageView.frame.size.width)/2,
+                                               56.0f,
+                                               self.emptyListImageView.frame.size.width,
+                                               self.emptyListImageView.frame.size.height);
+    
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -581,7 +593,7 @@
 {
     RIProduct* product = [self.productsArray objectAtIndex:self.picker.tag];
     
-    RIProductSimple* selectedSimple = [product.productSimples objectAtIndex:selectedRow];
+    RIProductSimple* selectedSimple = [self.pickerDataSource objectAtIndex:selectedRow];
     
     [self.chosenSimples setObject:selectedSimple forKey:product.sku];
     
