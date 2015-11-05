@@ -14,9 +14,11 @@
 @property (strong, nonatomic) JAColorView *colorView;
 @property (strong, nonatomic) UILabel *colorTitleLabel;
 @property (nonatomic, strong) UIImageView* customAccessoryView;
+@property (nonatomic, strong) UIView* separator;
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier
                             isLandscape:(BOOL)isLandscape
                                   frame:(CGRect)frame;
++ (CGFloat)height;
 
 @end

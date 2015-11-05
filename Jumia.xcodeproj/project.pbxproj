@@ -2550,6 +2550,16 @@
 		CED620531BEA5EFC00FA8403 /* JAProductCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D4A1BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.m */; settings = {ASSET_TAGS = (); }; };
 		CED620541BEA5EFC00FA8403 /* JAProductCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D4A1BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.m */; settings = {ASSET_TAGS = (); }; };
 		CED620551BEA5EFC00FA8403 /* JAProductCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D4A1BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.m */; settings = {ASSET_TAGS = (); }; };
+		CED620581BEB526B00FA8403 /* JAFiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED620571BEB526B00FA8403 /* JAFiltersViewController.m */; settings = {ASSET_TAGS = (); }; };
+		CED620591BEB526B00FA8403 /* JAFiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED620571BEB526B00FA8403 /* JAFiltersViewController.m */; settings = {ASSET_TAGS = (); }; };
+		CED6205A1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED620571BEB526B00FA8403 /* JAFiltersViewController.m */; settings = {ASSET_TAGS = (); }; };
+		CED6205B1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED620571BEB526B00FA8403 /* JAFiltersViewController.m */; settings = {ASSET_TAGS = (); }; };
+		CED6205C1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED620571BEB526B00FA8403 /* JAFiltersViewController.m */; settings = {ASSET_TAGS = (); }; };
+		CED6205F1BEB59A900FA8403 /* JAFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED6205E1BEB59A900FA8403 /* JAFilterCell.m */; settings = {ASSET_TAGS = (); }; };
+		CED620601BEB59A900FA8403 /* JAFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED6205E1BEB59A900FA8403 /* JAFilterCell.m */; settings = {ASSET_TAGS = (); }; };
+		CED620611BEB59A900FA8403 /* JAFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED6205E1BEB59A900FA8403 /* JAFilterCell.m */; settings = {ASSET_TAGS = (); }; };
+		CED620621BEB59A900FA8403 /* JAFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED6205E1BEB59A900FA8403 /* JAFilterCell.m */; settings = {ASSET_TAGS = (); }; };
+		CED620631BEB59A900FA8403 /* JAFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED6205E1BEB59A900FA8403 /* JAFilterCell.m */; settings = {ASSET_TAGS = (); }; };
 		CED7C51F1B78E0560070C855 /* GoogleAppIndexing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED7C51C1B78E0560070C855 /* GoogleAppIndexing.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CED7C5201B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED7C51C1B78E0560070C855 /* GoogleAppIndexing.framework */; };
 		CED7C5211B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED7C51C1B78E0560070C855 /* GoogleAppIndexing.framework */; };
@@ -3588,6 +3598,10 @@
 		CED30C26199CBF0E00C67F4B /* JAColorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAColorView.m; sourceTree = "<group>"; };
 		CED30C28199CC8F200C67F4B /* JAColorFilterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAColorFilterCell.h; sourceTree = "<group>"; };
 		CED30C29199CC8F200C67F4B /* JAColorFilterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAColorFilterCell.m; sourceTree = "<group>"; };
+		CED620561BEB526B00FA8403 /* JAFiltersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAFiltersViewController.h; sourceTree = "<group>"; };
+		CED620571BEB526B00FA8403 /* JAFiltersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAFiltersViewController.m; sourceTree = "<group>"; };
+		CED6205D1BEB59A900FA8403 /* JAFilterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAFilterCell.h; sourceTree = "<group>"; };
+		CED6205E1BEB59A900FA8403 /* JAFilterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAFilterCell.m; sourceTree = "<group>"; };
 		CED7C51C1B78E0560070C855 /* GoogleAppIndexing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppIndexing.framework; sourceTree = "<group>"; };
 		CED7C51E1B78E0560070C855 /* GoogleAppIndexingResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleAppIndexingResources.bundle; sourceTree = "<group>"; };
 		CED7C52B1B7A3A990070C855 /* Model_1.8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.8.xcdatamodel; sourceTree = "<group>"; };
@@ -5849,6 +5863,8 @@
 				CEDEB98D199BA4140022BAB5 /* JAPriceFilterViewController.m */,
 				CED30C22199CAA5C00C67F4B /* JAGenericFilterViewController.h */,
 				CED30C23199CAA5C00C67F4B /* JAGenericFilterViewController.m */,
+				CED620561BEB526B00FA8403 /* JAFiltersViewController.h */,
+				CED620571BEB526B00FA8403 /* JAFiltersViewController.m */,
 			);
 			path = Catalog;
 			sourceTree = "<group>";
@@ -5915,6 +5931,8 @@
 			children = (
 				CE8C92AA1B8B555600C77706 /* JAMainFilterCell.h */,
 				CE8C92AB1B8B555600C77706 /* JAMainFilterCell.m */,
+				CED6205D1BEB59A900FA8403 /* JAFilterCell.h */,
+				CED6205E1BEB59A900FA8403 /* JAFilterCell.m */,
 			);
 			path = Filter;
 			sourceTree = "<group>";
@@ -7601,6 +7619,7 @@
 				BB995B7D19F67A970090E081 /* JAFallbackView.m in Sources */,
 				CE8C928F1B8615F500C77706 /* RISpecification.m in Sources */,
 				BB9546A219F51FE400AC7D05 /* JAWizardView.m in Sources */,
+				CED620601BEB59A900FA8403 /* JAFilterCell.m in Sources */,
 				9A2036AF1B21DFC200F36F55 /* JANewRatingViewController.m in Sources */,
 				CEBEEE791A8CF20C001998E5 /* JACatalogTopView.m in Sources */,
 				BB95469F19F51F2200AC7D05 /* JACatalogWizardView.m in Sources */,
@@ -7668,6 +7687,7 @@
 				b858fbf852fa6e8b3d3449a9 /* JACampaignsTeaserView.m in Sources */,
 				9A7A772F1B2F182D002F530F /* JAPDVGallery.m in Sources */,
 				e76d2c90dc89f574c5611048 /* JASwitchCell.m in Sources */,
+				CED620591BEB526B00FA8403 /* JAFiltersViewController.m in Sources */,
 				9A7EE9721B5546A0004E2505 /* ADJAttributionHandler.m in Sources */,
 				520A37CE1A48904B0046C8B1 /* JAMyOrdersViewController.m in Sources */,
 				ecc9deac3f4a367450e9394f /* JAEditAddressViewController.m in Sources */,
@@ -7926,6 +7946,7 @@
 				B5C1E33719BA1E73009C422C /* UIImageView+JA.m in Sources */,
 				9A7EE9851B5546A0004E2505 /* ADJLogger.m in Sources */,
 				B59D196719C333F4004843C3 /* JAThanksViewController.m in Sources */,
+				CED620581BEB526B00FA8403 /* JAFiltersViewController.m in Sources */,
 				B5A302D519811E9200F71726 /* RICountry.m in Sources */,
 				4A944FF51992805100C02734 /* RIProductRatings.m in Sources */,
 				9A7EE9991B5546A0004E2505 /* ADJTimerCycle.m in Sources */,
@@ -8131,6 +8152,7 @@
 				B59DCA6F19B8712500DE7960 /* JAAddressCell.m in Sources */,
 				B5A302C719811E9200F71726 /* RILanguage.m in Sources */,
 				CE283E711A7296CD00F3E92D /* JAOtherOffersViewController.m in Sources */,
+				CED6205F1BEB59A900FA8403 /* JAFilterCell.m in Sources */,
 				B5240E481A496E59006264E9 /* JAMyOrderDetailView.m in Sources */,
 				B5A302E219811E9200F71726 /* RIAd4PushTracker.m in Sources */,
 				B5A302E419811E9200F71726 /* RIBugSenseTracker.m in Sources */,
@@ -8220,6 +8242,7 @@
 				CE9ADB571AB34C4600D56481 /* RIOperation.m in Sources */,
 				CE59BEF81AE7EF0A0057F4E2 /* JAShopTeaserView.m in Sources */,
 				9A7EE9871B5546A0004E2505 /* ADJLogger.m in Sources */,
+				CED6205A1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */,
 				CE9ADB581AB34C4600D56481 /* UIImageView+JA.m in Sources */,
 				CE9ADB591AB34C4600D56481 /* JAThanksViewController.m in Sources */,
 				CE9ADB5B1AB34C4600D56481 /* RICountry.m in Sources */,
@@ -8425,6 +8448,7 @@
 				CE9ADC0C1AB34C4600D56481 /* JAMainTeaserView.m in Sources */,
 				CE9ADC0E1AB34C4600D56481 /* JAAddressCell.m in Sources */,
 				CE9ADC0F1AB34C4600D56481 /* RILanguage.m in Sources */,
+				CED620611BEB59A900FA8403 /* JAFilterCell.m in Sources */,
 				CE9ADC101AB34C4600D56481 /* JAOtherOffersViewController.m in Sources */,
 				CE9ADC111AB34C4600D56481 /* JAMyOrderDetailView.m in Sources */,
 				CE9ADC121AB34C4600D56481 /* RIAd4PushTracker.m in Sources */,
@@ -8505,6 +8529,7 @@
 				CE9ADD511AB6D6E900D56481 /* RIOperation.m in Sources */,
 				CE59BEF91AE7EF0B0057F4E2 /* JAShopTeaserView.m in Sources */,
 				9A7EE9881B5546A0004E2505 /* ADJLogger.m in Sources */,
+				CED6205B1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */,
 				CE9ADD521AB6D6E900D56481 /* UIImageView+JA.m in Sources */,
 				CE9ADD531AB6D6E900D56481 /* JAThanksViewController.m in Sources */,
 				CE9ADD551AB6D6E900D56481 /* RICountry.m in Sources */,
@@ -8710,6 +8735,7 @@
 				CE9ADE061AB6D6E900D56481 /* JAMainTeaserView.m in Sources */,
 				CE9ADE081AB6D6E900D56481 /* JAAddressCell.m in Sources */,
 				CE9ADE091AB6D6E900D56481 /* RILanguage.m in Sources */,
+				CED620621BEB59A900FA8403 /* JAFilterCell.m in Sources */,
 				CE9ADE0A1AB6D6E900D56481 /* JAOtherOffersViewController.m in Sources */,
 				CE9ADE0B1AB6D6E900D56481 /* JAMyOrderDetailView.m in Sources */,
 				CE9ADE0C1AB6D6E900D56481 /* RIAd4PushTracker.m in Sources */,
@@ -8790,6 +8816,7 @@
 				CE9ADF4C1AB6D78200D56481 /* UIImageView+JA.m in Sources */,
 				CE9ADF4D1AB6D78200D56481 /* JAThanksViewController.m in Sources */,
 				CE9ADF4F1AB6D78200D56481 /* RICountry.m in Sources */,
+				CED6205C1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */,
 				9A7EE99D1B5546A0004E2505 /* ADJTimerCycle.m in Sources */,
 				CE9ADF501AB6D78200D56481 /* RIProductRatings.m in Sources */,
 				CE9ADF511AB6D78200D56481 /* GTMNSString+HTML.m in Sources */,
@@ -8995,6 +9022,7 @@
 				CE9AE0031AB6D78200D56481 /* RILanguage.m in Sources */,
 				CE9AE0041AB6D78200D56481 /* JAOtherOffersViewController.m in Sources */,
 				CE9AE0051AB6D78200D56481 /* JAMyOrderDetailView.m in Sources */,
+				CED620631BEB59A900FA8403 /* JAFilterCell.m in Sources */,
 				CE9AE0061AB6D78200D56481 /* RIAd4PushTracker.m in Sources */,
 				CE9AE0071AB6D78200D56481 /* RIBugSenseTracker.m in Sources */,
 				CE9AE0081AB6D78200D56481 /* JAMaintenancePage.m in Sources */,

@@ -61,6 +61,11 @@
 
 #pragma mark - UITableView
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [JAColorFilterCell height];
+}
+
 - (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
     return [UIView new];
@@ -86,21 +91,14 @@
                                                                 frame:CGRectMake(0.0f,
                                                                                  0.0f,
                                                                                  tableView.frame.size.width,
-                                                                                 44.0f)];
-            CGFloat separatorX = 50.0f;
-            if (self.isLandscape) {
-                separatorX += 20.0f;
-            }
-            UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(separatorX, 43.0f, self.tableView.frame.size.width - 50.0f, 1.0f)];
-            separator.backgroundColor = UIColorFromRGB(0xcccccc);
-            [cell addSubview:separator];
+                                                                                 1.0f)];//set inside the cell
             if (RI_IS_RTL) {
                 [cell flipAllSubviews];
             }
         }
         
         RIFilterOption* filterOption = [self.filter.options objectAtIndex:indexPath.row];
-        [(JAColorFilterCell*)cell colorTitleLabel].text = filterOption.name;
+        [(JAColorFilterCell*)cell colorTitleLabel].text = [NSString stringWithFormat:@"%@ (%ld)",filterOption.name, [filterOption.totalProducts longValue]];
         
         if (filterOption.colorHexValue) {
             [[(JAColorFilterCell*)cell colorView] setColorWithHexString:filterOption.colorHexValue];
@@ -146,7 +144,10 @@
             }
         }
         //add the new clickable view
-        JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, tableView.frame.size.width, 44.0f)];
+        JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                                       0.0f,
+                                                                                       tableView.frame.size.width,
+                                                                                       [JAColorFilterCell height])];
         clickView.tag = indexPath.row;
         [clickView addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:clickView];
@@ -161,7 +162,7 @@
                                                                      clickView.frame.size.height - 1,
                                                                      tableView.frame.size.width,
                                                                      1.0f)];
-        separator.backgroundColor = UIColorFromRGB(0xcccccc);
+        separator.backgroundColor = JABlack400Color;
         [clickView addSubview:separator];
         
         UIImage* customAccessoryIcon = [UIImage imageNamed:@"selectionCheckmark"];
@@ -184,7 +185,7 @@
         [clickView addSubview:customTextLabel];
         
         RIFilterOption* filterOption = [self.filter.options objectAtIndex:indexPath.row];
-        customTextLabel.text = filterOption.name;
+        customTextLabel.text = [NSString stringWithFormat:@"%@ (%ld)",filterOption.name, [filterOption.totalProducts longValue]];
         
         if ([@"rating" isEqualToString:self.filter.uid]) {
             customTextLabel.text = [NSString stringWithFormat:@"%@", filterOption.average];
@@ -228,13 +229,10 @@
     } else {
         NSNumber* newSelection = [NSNumber numberWithBool:![selected boolValue]];
         [self.selectedIndexes replaceObjectAtIndex:indexPath.row withObject:newSelection];
-        
     }
     
     [tableView reloadData];
-    if (YES == self.shouldAutosave) {
-        [self saveOptions];
-    }
+    [self saveOptions];
 }
 
 

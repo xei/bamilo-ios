@@ -60,6 +60,7 @@
 #import "JAPDVVariationsViewController.h"
 #import "JAMoreMenuViewController.h"
 #import "RICountry.h"
+#import "JAFiltersViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -1160,18 +1161,18 @@
 - (void)showFiltersScreen:(NSNotification*)notification
 {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAMainFiltersViewController class]])
+    if (![topViewController isKindOfClass:[JAFiltersViewController class]])
     {
-        JAMainFiltersViewController *mainFiltersViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"mainFiltersViewController"];
+        JAFiltersViewController* filtersViewController = [[JAFiltersViewController alloc] init];
         
         if ([notification.userInfo objectForKey:@"filtersArray"]) {
-            mainFiltersViewController.filtersArray = [notification.userInfo objectForKey:@"filtersArray"];
+            filtersViewController.filtersArray = [notification.userInfo objectForKey:@"filtersArray"];
         }
         if ([notification.userInfo objectForKey:@"delegate"]) {
-            mainFiltersViewController.delegate = [notification.userInfo objectForKey:@"delegate"];
+            filtersViewController.delegate = [notification.userInfo objectForKey:@"delegate"];
         }
         
-        [self pushViewController:mainFiltersViewController animated:YES];
+        [self pushViewController:filtersViewController animated:YES];
     }
 }
 

@@ -321,7 +321,6 @@
         [[NSNotificationCenter defaultCenter] postNotification:notification];
     } else if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation) && VALID_NOTEMPTY(filtersView, JAFiltersView)) {
         filtersView.filtersViewDelegate = self;
-        filtersView.shouldAutosave = YES;
         [self.landscapeContentView addSubview:filtersView];
     }
 }

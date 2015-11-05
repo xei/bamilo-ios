@@ -69,16 +69,12 @@
 - (IBAction)sliderMoved:(id)sender
 {
     self.priceRangeLabel.text = [NSString stringWithFormat:@"%d - %d", (int)self.priceRangeSlider.lowerValue, (int)self.priceRangeSlider.upperValue];
-    if (YES == self.shouldAutosave) {
-        [self saveOptions];
-    }
+    [self saveOptions];
 }
 
 - (void)switchMoved:(id)sender
 {
-    if (YES == self.shouldAutosave) {
-        [self saveOptions];
-    }
+    [self saveOptions];
 }
 
 @end

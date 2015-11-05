@@ -222,7 +222,7 @@
     
     if(VALID_NOTEMPTY(filtersString, NSString))
     {
-        fullUrl = [NSString stringWithFormat:@"%@%@page=%ld&maxitems=%ld%@%@", url, particle, (long)page, (long)maxItems, sortingString, [NSString stringWithFormat:@"%@" ,filtersString]];
+        fullUrl = [NSString stringWithFormat:@"%@%@page=%ld&maxitems=%ld%@%@", url, particle, (long)page, (long)maxItems, sortingString, [NSString stringWithFormat:@"&%@" ,filtersString]];
     }
     else
     {

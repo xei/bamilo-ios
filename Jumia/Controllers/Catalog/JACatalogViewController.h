@@ -13,6 +13,7 @@
 #import "JAPDVViewController.h"
 #import "JAUndefinedSearchView.h"
 #import "JASortingView.h"
+#import "JAFiltersViewController.h"
 
 @interface JACatalogViewController : JABaseViewController
 <
@@ -21,6 +22,7 @@
     UICollectionViewDataSource,
     UICollectionViewDelegate,
     JAMainFiltersViewControllerDelegate,
+    JAFiltersViewControllerDelegate,
     JAUndefinedSearchViewDelegate
 >
 

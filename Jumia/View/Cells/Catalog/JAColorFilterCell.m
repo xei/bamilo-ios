@@ -19,15 +19,12 @@
         self.frame = frame;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        CGFloat horizontalMargin = 0.0f;
-        if (isLandscape) {
-            horizontalMargin = 20.0f;
-        }
+        CGFloat height = [JAColorFilterCell height];
         
-        self.colorView = [[JAColorView alloc] initWithFrame:CGRectMake(horizontalMargin,
+        self.colorView = [[JAColorView alloc] initWithFrame:CGRectMake(0.0f,
                                                                        0.0f,
-                                                                       44.0f,
-                                                                       44.0f)];
+                                                                       54.0f,
+                                                                       height)];
         [self addSubview:self.colorView];
         
         self.colorTitleLabel = [[UILabel alloc] init];
@@ -35,9 +32,9 @@
         self.colorTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
         self.colorTitleLabel.text = @" ";
         [self.colorTitleLabel sizeToFit];
-        self.colorTitleLabel.frame = CGRectMake(50.0f + horizontalMargin,
-                                                (44.0f - self.colorTitleLabel.frame.size.height) / 2,
-                                                self.frame.size.width - 50.0f - horizontalMargin,
+        self.colorTitleLabel.frame = CGRectMake(50.0f,
+                                                (height - self.colorTitleLabel.frame.size.height) / 2,
+                                                self.frame.size.width - 50.0f,
                                                 self.colorTitleLabel.frame.size.height);
         [self addSubview:self.colorTitleLabel];
         
@@ -45,13 +42,25 @@
         UIImage* customAccessoryIcon = [UIImage imageNamed:@"selectionCheckmark"];
         self.customAccessoryView = [[UIImageView alloc] initWithImage:customAccessoryIcon];
         self.customAccessoryView.frame = CGRectMake(self.frame.size.width - 12.0f - customAccessoryIcon.size.width,
-                                                    (self.frame.size.height - customAccessoryIcon.size.height) / 2,
+                                                    (height - customAccessoryIcon.size.height) / 2,
                                                     customAccessoryIcon.size.width,
                                                     customAccessoryIcon.size.height);
         self.customAccessoryView.hidden = YES;
         [self addSubview:self.customAccessoryView];
+        
+        UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                     height - 1.0f,
+                                                                     self.frame.size.width,
+                                                                     1.0f)];
+        separator.backgroundColor = JABlack400Color;
+        [self addSubview:separator];
     }
     return self;
+}
+
++ (CGFloat)height
+{
+    return 48.0f;
 }
 
 @end

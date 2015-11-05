@@ -340,5 +340,6 @@
 #define STRING_SEARCH_PLACEHOLDER RILocalizedString(@"search_placeholder", nil)
 
 #define STRING_COMBOS RILocalizedString(@"combos", nil)
+#define STRING_CLEAR_ALL RILocalizedString(@"clear_all", nil)
 
 #endif
