@@ -12,6 +12,7 @@
 #import "JADynamicForm.h"
 #import "JAAddRatingView.h"
 #import "JAPagedView.h"
+#import "JAScrolledImageGalleryView.h"
 #import "JAPicker.h"
 #import "JAPriceView.h"
 
@@ -201,6 +202,8 @@
         } else if ([view isKindOfClass:[JADynamicField class]]) {
             continue;
         } else if ([view isKindOfClass:[JAPagedView class]]) {
+            continue;
+        } else if ([view isKindOfClass:[JAScrolledImageGalleryView class]]) {
             continue;
         } else if ([view isKindOfClass:[JAPicker class]]) {
             continue;

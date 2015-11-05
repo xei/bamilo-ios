@@ -21,19 +21,8 @@
     
 }
 
-@property (nonatomic, strong)JAPriceView* priceView;
-@property (nonatomic, assign)NSInteger numberOfImages;
-
-@property (nonatomic, strong)UILabel* soldByLabel;
-@property (nonatomic, strong)UIButton* sellerButton;
-@property (nonatomic, strong)UILabel* sellerDeliveryLabel;
-@property (nonatomic, strong)JARatingsView* sellerRatings;
-@property (nonatomic, strong)UIButton* rateSellerButton;
-@property (nonatomic, strong)UILabel* numberOfSellerReviewsLabel;
-@property (nonatomic, strong)UIButton *globalButton;
-
-@property (nonatomic, strong)RIProduct* product;
-
+@property (nonatomic, strong) UIButton *globalButton;
+@property (nonatomic, strong) RIProduct* product;
 @property (nonatomic, strong) JAScrolledImageGalleryView *imagesPagedView;
 
 @end
@@ -56,37 +45,86 @@
     return _imagesPagedView;
 }
 
-+ (JAPDVImageSection *)getNewPDVImageSection:(BOOL)fashion
+- (UIButton *)wishListButton
 {
-    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JAPDVImageSection"
-                                                 owner:nil
-                                               options:nil];
-    
-    for (NSObject *obj in xib) {
-        if ([obj isKindOfClass:[JAPDVImageSection class]]) {
-            return (JAPDVImageSection *)obj;
-        }
+    CGRect frame = CGRectMake(16.f, self.imagesPagedView.y, 25, 25);
+    if (!_wishListButton) {
+        _wishListButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_wishListButton setFrame:frame];
+        [_wishListButton setBackgroundImage:[UIImage imageNamed:@"FavButton"] forState:UIControlStateNormal];
+        [_wishListButton setBackgroundImage:[UIImage imageNamed:@"FavButtonPressed"] forState:UIControlStateHighlighted];
+        [_wishListButton setBackgroundImage:[UIImage imageNamed:@"FavButtonPressed"] forState:UIControlStateSelected];
+        [self addSubview:_wishListButton];
+    }else if (!CGRectEqualToRect(frame, _wishListButton.frame)) {
+//        [_wishListButton setFrame:frame];
     }
-    
-    return nil;
+    return _wishListButton;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (UIView *)separatorImageView
 {
-    self = [super initWithFrame:frame];
-    
-    if (self) {
-        
+    if (!_separatorImageView) {
+        _separatorImageView = [[UIView alloc] initWithFrame:CGRectMake(0, 449, self.width, 1)];
+        [_separatorImageView setBackgroundColor:JABlack300Color];
+        [self addSubview:_separatorImageView];
+    }else if (self.width != _separatorImageView.width)
+    {
+        [_separatorImageView setWidth:self.width];
+    }
+    return _separatorImageView;
+}
+
+- (UILabel *)productNameLabel
+{
+    CGRect frame = CGRectMake(16.f, 32.f, self.width - 16.f*2, 20);
+    if (!_productNameLabel) {
+        _productNameLabel = [[UILabel alloc] initWithFrame:frame];
+        _productNameLabel.font = JAListFont;
+        _productNameLabel.textColor = JABlackColor;
+        [_productNameLabel setTextAlignment:NSTextAlignmentLeft];
+        [self addSubview:_productNameLabel];
+    }else if (_productNameLabel.width != self.width - 16.f*2) {
+        [_productNameLabel setWidth:self.width - 16.f*2];
     }
     
-    return self;
+    return _productNameLabel;
+}
+
+- (UILabel *)productDescriptionLabel
+{
+    CGRect frame = CGRectMake(16.f, CGRectGetMaxY(self.productNameLabel.frame), self.width - 16.f*2, 60);
+    if (!_productDescriptionLabel) {
+        _productDescriptionLabel = [[UILabel alloc] initWithFrame:frame];
+        _productDescriptionLabel.font = JACaptionFont;
+        [_productDescriptionLabel setTextColor:JABlack800Color];
+        _productDescriptionLabel.numberOfLines = 2;
+        [_productDescriptionLabel setLineBreakMode:NSLineBreakByTruncatingTail];
+        [self addSubview:_productDescriptionLabel];
+    }else if (_productDescriptionLabel.width != self.width - 16.f*2) {
+        [_productDescriptionLabel setWidth:self.width - 16.f*2];
+        [_productDescriptionLabel setHeight:60];
+        [_productDescriptionLabel sizeToFit];
+    }
+    return _productDescriptionLabel;
+}
+
+- (UIButton *)globalButton
+{
+    if (_globalButton) {
+        _globalButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIImage *plane = [UIImage imageNamed:@"plane_corner"];
+        [_globalButton setImage:plane forState:UIControlStateNormal];
+        [_globalButton setFrame:CGRectMake(self.width - plane.size.width, 0, plane.size.width, plane.size.height)];
+        [self addSubview:_globalButton];
+    }
+    return _globalButton;
 }
 
 - (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize
 {
     CGFloat width = frame.size.width;
-    CGFloat imagesPageHeight = 365;
     
+    CGFloat imagesPageHeight = 365;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
@@ -98,86 +136,56 @@
     }
     [self setWidth:width];
     
-    if (VALID_NOTEMPTY(self.product, RIProduct) && self.product == product) {
+    if (!VALID_NOTEMPTY(product, RIProduct)) {
+        return;
+    }
+    
+    if (self.product == product) {
         [self reloadViews];
         return;
     }
     self.product = product;
     
     if ([self.product.seller isGlobal]) {
-        self.globalButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        UIImage *plane = [UIImage imageNamed:@"plane_corner"];
-        
-        [self.globalButton setImage:plane forState:UIControlStateNormal];
-        [self.globalButton setFrame:CGRectMake(width - plane.size.width, 0, plane.size.width, plane.size.height)];
-        [self addSubview:self.globalButton];
+        [self globalButton];
     }
+
+    [self.productNameLabel setText:product.brand];
     
-    self.productNameLabel.font = JAListFont;
-    self.productNameLabel.textColor = JABlackColor;
-    self.productNameLabel.text = product.brand;
-    [self.productNameLabel setX:16.f];
-    
-    self.productDescriptionLabel.font = JACaptionFont;
-    [self.productDescriptionLabel setTextColor:JABlack800Color];
-    self.productDescriptionLabel.numberOfLines = 2;
-    [self.productDescriptionLabel setLineBreakMode:NSLineBreakByTruncatingTail];
     self.productDescriptionLabel.text = product.name;
     [self.productDescriptionLabel sizeToFit];
     [self.productDescriptionLabel setYBottomOf:self.productNameLabel at:0.f];
-    [self.productDescriptionLabel setX:16.f];
     
     CGRect imagePageFrame = CGRectMake(0, CGRectGetMaxY(self.productDescriptionLabel.frame), self.width, imagesPageHeight);
     [self.imagesPagedView setFrame:imagePageFrame];
-    
-    [self bringSubviewToFront:self.wishListButton];
-    
-    [self.separatorImageView setWidth:width];
-    
     [self loadWithImages:[product.images array]];
     
-    if (product.fashion) {
-        [self.imagesPagedView setY:16.f];
-        [self.productNameLabel setYBottomOf:self.imagesPagedView at:16.f];
-        [self.productDescriptionLabel setYBottomOf:self.productNameLabel at:0.f];
-        [self setHeight:CGRectGetMaxY(self.productDescriptionLabel.frame) + 16.f];
-    }else{
-        [self.productNameLabel setY:14.f];
-        [self.productDescriptionLabel setYBottomOf:self.productNameLabel at:0.f];
-        [self.imagesPagedView setYBottomOf:self.productDescriptionLabel at:16.f];
-        [self setHeight:CGRectGetMaxY(self.imagesPagedView.frame)];
-    }
-    
-    [_wishListButton setX:0];
-    [_wishListButton setY:self.imagesPagedView.y];
+    [self reloadViews];
 }
 
 - (void)reloadViews
 {
-    [self.productNameLabel setWidth:self.width - self.productNameLabel.x*2];
-    [self.productDescriptionLabel setWidth:self.width - self.productDescriptionLabel.x*2];
+    [self.productNameLabel setX:16.f];
+    [self.productDescriptionLabel setX:16.f];
     [self imagesPagedView];
-}
-
--(void)selectedButton
-{
-    [self.sellerButton setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:0.06f]];
-}
-
-- (void)setPriceWithNewValue:(NSString *)newValue
-                 andOldValue:(NSString *)oldValue
-{
-    [self.priceView removeFromSuperview];
-    self.priceView = [[JAPriceView alloc] init];
-    [self.priceView loadWithPrice:oldValue
-                     specialPrice:newValue
-                         fontSize:14.0f
-            specialPriceOnTheLeft:YES];
-    self.priceView.frame = CGRectMake(6.0f,
-                                      CGRectGetMaxY(self.productDescriptionLabel.frame) + 3.0f,
-                                      self.priceView.frame.size.width,
-                                      self.priceView.frame.size.height);
-    [self addSubview:self.priceView];
+    [self separatorImageView];
+    [self.wishListButton setX:16.f];
+    [self.productNameLabel setTextAlignment:NSTextAlignmentLeft];
+    [self.productDescriptionLabel setTextAlignment:NSTextAlignmentLeft];
+    
+    if (self.product.fashion) {
+        [_imagesPagedView setY:16.f];
+        [_productNameLabel setYBottomOf:_imagesPagedView at:16.f];
+        [_productDescriptionLabel setYBottomOf:_productNameLabel at:0.f];
+        [self setHeight:CGRectGetMaxY(_productDescriptionLabel.frame) + 16.f];
+    }else{
+        [_productNameLabel setY:14.f];
+        [_productDescriptionLabel setYBottomOf:_productNameLabel at:0.f];
+        [_imagesPagedView setYBottomOf:_productDescriptionLabel at:16.f];
+        [self setHeight:CGRectGetMaxY(_imagesPagedView.frame)];
+    }
+    
+    [_wishListButton setY:_imagesPagedView.y];
 }
 
 - (void)loadWithImages:(NSArray *)imagesArray
@@ -207,14 +215,14 @@
     [self.separatorImageView setY:CGRectGetMaxY(self.imagesPagedView.frame)];
     [self.separatorImageView setHidden:YES];
     [self.imagesPagedView setViews:items];
-    [_wishListButton setY:self.imagesPagedView.y - 50];
+    [self.wishListButton setY:self.imagesPagedView.y - 50];
     
     if (self.product.images.count > 1)
     {
-        [_imagesPagedView addImageClickedTarget:self selector:@selector(imageViewPressed)];
+        [self.imagesPagedView addImageClickedTarget:self selector:@selector(imageViewPressed)];
     }
     
-    [self bringSubviewToFront:_wishListButton];
+    [self bringSubviewToFront:self.wishListButton];
 }
 
 - (void)imageViewPressed
