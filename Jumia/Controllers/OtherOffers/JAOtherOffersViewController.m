@@ -179,7 +179,7 @@
         
         [self hideLoading];
         
-        self.productOffers = productOffers;
+        self.productOffers = [productOffers copy];
         
         [self readjustOffersFromLabel];
         
@@ -262,7 +262,7 @@
     [cell.addToCartButton addTarget:self
                              action:@selector(addToCartButtonPressed:)
                    forControlEvents:UIControlEventTouchUpInside];
-    
+    cell.sizeButton.tag = indexPath.row;
     [cell.sizeButton addTarget:self
                              action:@selector(sizeButtonPressed:)
                    forControlEvents:UIControlEventTouchUpInside];
@@ -371,10 +371,8 @@
     for (RIProductSimple *simple in product.productSimples) {
         if ([simple.quantity integerValue] > 0)
         {
-            if (VALID_NOTEMPTY(simple.variation, NSString)) {
-                [sizes addObject:simple.variation];
-                [simples addObject:simple];
-            }
+            [sizes addObject:simple.variation];
+            [simples addObject:simple];
         }
     }
     _pickerDataSource = [simples copy];

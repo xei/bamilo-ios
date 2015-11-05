@@ -398,10 +398,8 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     for (RIProductSimple *simple in product.productSimples) {
         if ([simple.quantity integerValue] > 0)
         {
-            if (VALID_NOTEMPTY(simple.variation, NSString)) {
-                [sizes addObject:simple.variation];
-                [simples addObject:simple];
-            }
+            [sizes addObject:simple.variation];
+            [simples addObject:simple];
         }
     }
     _pickerDataSource = [simples copy];

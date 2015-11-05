@@ -235,18 +235,14 @@
         for (int i = 0; i < campaignProductCell.campaignProduct.productSimples.count; i++)
         {
             RICampaignProductSimple* simple = [campaignProductCell.campaignProduct.productSimples objectAtIndex:i];
-            if(VALID_NOTEMPTY(simple.size, NSString))
+            [dataSource addObject:simple.size];
+            if ([simple.size isEqualToString:campaignProductCell.chosenSize])
             {
-                [dataSource addObject:simple.size];
-                if ([simple.size isEqualToString:campaignProductCell.chosenSize])
-                {
-                    //found it
-                    simpleSize = simple.size;
-                }
+                //found it
+                simpleSize = simple.size;
             }
         }
     }
-    
     if (self.delegate && [self.delegate respondsToSelector:@selector(openPickerForCampaignPage:dataSource:previousText:)]) {
         [self.delegate openPickerForCampaignPage:self
                                       dataSource:[dataSource copy]
@@ -257,17 +253,13 @@
 - (void)selectedSizeIndex:(NSInteger)index;
 {
     RICampaignProductSimple* selectedSimple = [self.lastPressedCampaignProductCell.campaignProduct.productSimples objectAtIndex:index];
-    if(VALID_NOTEMPTY(selectedSimple.size, NSString))
-    {
-        [self.chosenSimpleNames replaceObjectAtIndex:self.lastPressedCampaignProductCell.tag withObject:selectedSimple.size];
-        
-        if (NOT_NIL(self.lastPressedCampaignProductCell.onSelected)) {
-            self.lastPressedCampaignProductCell.chosenSize = selectedSimple.size;
-            self.lastPressedCampaignProductCell.onSelected();
-        }
-        
-        [self.collectionView reloadData];
+    [self.chosenSimpleNames replaceObjectAtIndex:self.lastPressedCampaignProductCell.tag withObject:selectedSimple.size];
+    
+    if (NOT_NIL(self.lastPressedCampaignProductCell.onSelected)) {
+        self.lastPressedCampaignProductCell.chosenSize = selectedSimple.size;
+        self.lastPressedCampaignProductCell.onSelected();
     }
+    [self.collectionView reloadData];
 }
 
 @end
