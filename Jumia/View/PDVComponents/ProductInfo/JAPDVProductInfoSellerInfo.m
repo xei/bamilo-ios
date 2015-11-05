@@ -17,7 +17,9 @@
 @property (nonatomic) UILabel *sellerDeliveryLabel;
 @property (nonatomic) UILabel *sellerDeliveryTimeLabel;
 @property (nonatomic) UILabel *shippingGlobalLabel;
+@property (nonatomic) UILabel *sellerWarrantyLabel;
 @property (nonatomic) UIImageView *shippingIcon;
+@property (nonatomic) UIImageView *warrantyIcon;
 @property (nonatomic) UIButton* linkGlobalButton;
 @property (nonatomic) JAClickableView *clickableView;
 
@@ -131,6 +133,34 @@
     }
     return _linkGlobalButton;
 }
+
+- (UIImageView *)warrantyIcon
+{
+    if (!VALID_NOTEMPTY(_warrantyIcon, UIImageView)) {
+        _warrantyIcon = [UIImageView new];
+        [_warrantyIcon setImage:[UIImage imageNamed:@"warranty"]];
+        [_warrantyIcon sizeToFit];
+        [_warrantyIcon setX:self.sellerNameLabel.x];
+        [_warrantyIcon setY:CGRectGetMaxY(self.sellerNameLabel.frame)+16.f];
+        if (RI_IS_RTL) {
+            [_warrantyIcon flipViewImage];
+        }
+        [self.clickableView addSubview:_warrantyIcon];
+        [_warrantyIcon setHidden:YES];
+    }
+    return _warrantyIcon;
+}
+
+- (UILabel *)sellerWarrantyLabel
+{
+    if (!VALID_NOTEMPTY(_sellerWarrantyLabel, UILabel)) {
+        _sellerWarrantyLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, CGRectGetMaxY(self.sellerDeliveryLabel.frame) + 8.f, self.width-32, 20)];
+        [_sellerWarrantyLabel setFont:JABody3Font];
+        [_sellerWarrantyLabel setTextColor:JABlack800Color];
+        [self.clickableView addSubview:_sellerWarrantyLabel];
+    }
+    return _sellerWarrantyLabel;
+}
 - (void)setSeller:(RISeller *)seller
 {
     _seller = seller;
@@ -174,6 +204,17 @@
         [self setHeight:CGRectGetMaxY(self.sellerDeliveryLabel.frame) + 16.f];
     } else {
         [self setHeight:CGRectGetMaxY(self.linkGlobalButton.frame) + 16.f];
+    }
+    
+    if (seller.warranty != NULL) {
+        [self.sellerWarrantyLabel setText:seller.warranty];
+        [self.sellerWarrantyLabel setFont:JACaption2Font];
+        [self.sellerWarrantyLabel setTextColor:JABlackColor];
+        [self.sellerWarrantyLabel sizeToFit];
+        [self.sellerWarrantyLabel setX:CGRectGetMaxX(self.warrantyIcon.frame) + 16.f];
+        [self.warrantyIcon setHidden:NO];
+        [self.warrantyIcon setY:self.sellerWarrantyLabel.y];
+        [self setHeight:CGRectGetMaxY(self.sellerWarrantyLabel.frame) + 16.f];
     }
     
     [self.clickableView setHeight:[self height]];
