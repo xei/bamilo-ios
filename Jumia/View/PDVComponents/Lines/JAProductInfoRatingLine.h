@@ -25,6 +25,6 @@ typedef NS_ENUM(NSInteger, JAImageRatingSize) {
 @property (nonatomic) JAImageRatingSize imageRatingSize;
 @property (nonatomic, readonly) CGFloat imageHeight;
 
-- (void)reduceToMinimumSizeWidth;
+@property (nonatomic) BOOL hiddenSum;
 
 @end

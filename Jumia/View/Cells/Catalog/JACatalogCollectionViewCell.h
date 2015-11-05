@@ -50,6 +50,7 @@ typedef NS_ENUM(NSUInteger, JACatalogCollectionViewCellType) {
 - (void)reloadViews;
 - (void)loadWithProduct:(RIProduct*)product;
 - (void)loadWithVariation:(RIVariation*)variation;
-- (void)loadWithProductSimple:(RIProductSimple *)productSimple;
+
+- (void)setSimplePrice:(NSString *)price andOldPrice:(NSString *)oldPrice;
 
 @end
