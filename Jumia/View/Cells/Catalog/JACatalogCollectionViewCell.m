@@ -133,14 +133,11 @@
     if (!VALID_NOTEMPTY(_sizeButton, UIButton)) {
         
         CGRect frame = CGRectMake(self.priceLine.frame.origin.x, self.priceLine.frame.origin.y+20.0f,
-                                  self.frame.size.width, self.priceLine.frame.size.height);
+                                  self.width, self.priceLine.frame.size.height);
         
-        _sizeButton = [[UIButton alloc] initWithFrame:(frame)];
-        _sizeButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:_sizeButton.titleLabel.font.pointSize];
-        [_sizeButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
-        [_sizeButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
-        [_sizeButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-        [_sizeButton.titleLabel sizeToFit];
+        _sizeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [_sizeButton setFrame:(frame)];
+        _sizeButton.titleLabel.font = JACaptionFont;
     }
     return _sizeButton;
 }
@@ -241,9 +238,17 @@
     self.favoriteButton.hidden = YES;
 }
 
-- (void)loadWithProductSimple:(RIProductSimple *)productSimple
+
+- (void)setSimplePrice:(NSString *)price andOldPrice:(NSString *)oldPrice
 {
-    
+    if (!oldPrice) {
+        [self.product setPriceFormatted:price];
+        [self.product setSpecialPriceFormatted:nil];
+    }else{
+        [self.product setPriceFormatted:oldPrice];
+        [self.product setSpecialPriceFormatted:price];
+    }
+    [self loadWithProduct:self.product];
 }
 
 @end

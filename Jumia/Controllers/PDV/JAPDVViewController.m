@@ -613,6 +613,10 @@ JAActivityViewControllerDelegate
 {
     [self productLoaded];
     
+    if (self.product == nil) {
+        return;
+    }
+    
     CGFloat scrollViewY = .0f;
     CGFloat landscapeScrollViewY = 0.0f;
     

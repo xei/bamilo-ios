@@ -107,20 +107,19 @@
 
 - (UILabel *)ratingSumLabel
 {
-    CGRect frame = CGRectMake(CGRectGetMaxX(self.star5.frame) + 6.f, (_viewBounds.height-self.imageHeight)/2, 30, self.imageHeight);
+    CGRect frame = CGRectMake(CGRectGetMaxX(self.star5.frame) + 6.f, (_viewBounds.height-self.imageHeight)/2, _viewBounds.width - (CGRectGetMaxX(self.star5.frame) + 2*6.f), self.imageHeight);
     if (!VALID_NOTEMPTY(_ratingSumLabel, UILabel)) {
         _ratingSumLabel = [[UILabel alloc] initWithFrame:frame];
         [_ratingSumLabel setTextColor:[UIColor darkGrayColor]];
         [_ratingSumLabel setFont:JACaptionFont];
         [_ratingSumLabel setText:@"(0)"];
         [_ratingSumLabel sizeToFit];
+        [_ratingSumLabel setTextAlignment:NSTextAlignmentLeft];
         [_ratingSumLabel setY:self.height/2-_ratingSumLabel.height/2];
         [self addSubview:_ratingSumLabel];
     }else if (!CGRectEqualToRect(_ratingSumLabel.frame, frame)) {
-        if ([_ratingSumLabel.text isEqualToString:@"(3)"]) {
-            NSLog(@"");
-        }
         [_ratingSumLabel setFrame:frame];
+        [_ratingSumLabel setTextAlignment:NSTextAlignmentLeft];
     }
     return _ratingSumLabel;
 }
@@ -192,20 +191,13 @@
         [self.ratingSumLabel setText:@"Be the first to rate"];
     }else
         [self.ratingSumLabel setText:[NSString stringWithFormat:@"(%@)", ratingSum]];
-    [self.ratingSumLabel sizeToFit];
-}
-
-- (void)reduceToMinimumSizeWidth
-{
-    [self setWidth:CGRectGetMaxX(self.ratingSumLabel.frame)];
+    [_ratingSumLabel sizeToFit];
+    [self ratingSumLabel];
 }
 
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
-    if ([self.label.text isEqualToString:@"(3)"]) {
-        NSLog(@"PRE self.label.frame: %@", NSStringFromCGRect(self.label.frame));
-    }
     _viewBounds = frame.size;
     [self star1];
     [self star2];
@@ -213,9 +205,11 @@
     [self star4];
     [self star5];
     [self ratingSumLabel];
-    if ([self.label.text isEqualToString:@"(3)"]) {
-        NSLog(@"POS self.label.frame: %@", NSStringFromCGRect(self.label.frame));
-    }
+}
+
+- (void)setHiddenSum:(BOOL)hiddenSum
+{
+    [self.ratingSumLabel setHidden:hiddenSum];
 }
 
 @end
