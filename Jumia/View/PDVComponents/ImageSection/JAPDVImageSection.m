@@ -121,6 +121,7 @@
     self.productDescriptionLabel.font = JACaptionFont;
     [self.productDescriptionLabel setTextColor:JABlack800Color];
     self.productDescriptionLabel.numberOfLines = 2;
+    [self.productDescriptionLabel setLineBreakMode:NSLineBreakByTruncatingTail];
     self.productDescriptionLabel.text = product.name;
     [self.productDescriptionLabel sizeToFit];
     [self.productDescriptionLabel setYBottomOf:self.productNameLabel at:0.f];
@@ -153,6 +154,8 @@
 
 - (void)reloadViews
 {
+    [self.productNameLabel setWidth:self.width - self.productNameLabel.x*2];
+    [self.productDescriptionLabel setWidth:self.width - self.productDescriptionLabel.x*2];
     [self imagesPagedView];
 }
 

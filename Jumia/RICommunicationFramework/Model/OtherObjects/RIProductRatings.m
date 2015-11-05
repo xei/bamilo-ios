@@ -42,11 +42,11 @@
         newReview.userName = [reviewJSON objectForKey:@"name"];
     }
     
-    if ([reviewJSON objectForKey:@"title"]) {
+    if (VALID_NOTEMPTY([reviewJSON objectForKey:@"title"], NSString)) {
         newReview.title = [reviewJSON objectForKey:@"title"];
     }
     
-    if ([reviewJSON objectForKey:@"comment"]) {
+    if (VALID_NOTEMPTY([reviewJSON objectForKey:@"comment"], NSString)) {
         newReview.comment = [reviewJSON objectForKey:@"comment"];
     }
     

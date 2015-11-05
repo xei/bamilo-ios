@@ -239,14 +239,12 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
         RIProductSimple* pds = [self.selectedItems objectForKey:bundleProduct.sku];
         [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, pds.variation]
                          forState:UIControlStateNormal];
-        
+        [cell.sizeButton sizeToFit];
         
         if (VALID_NOTEMPTY(pds.specialPriceFormatted, NSString)) {
-            [cell.priceLine setTitle:pds.specialPriceFormatted];
-            [cell.priceLine setOldPrice:pds.priceFormatted];
+            [cell setSimplePrice:pds.specialPriceFormatted andOldPrice:pds.priceFormatted];
         }else{
-            [cell.priceLine setTitle:pds.priceFormatted];
-            [cell.priceLine setOldPrice:nil];
+            [cell setSimplePrice:pds.priceFormatted andOldPrice:nil];
         }
         
     } else {
