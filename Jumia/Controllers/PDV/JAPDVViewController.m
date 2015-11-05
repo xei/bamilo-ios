@@ -95,7 +95,7 @@ JAActivityViewControllerDelegate
 {
     if (!VALID_NOTEMPTY(_productImageSection, JAPDVImageSection)) {
         
-        _productImageSection = [JAPDVImageSection getNewPDVImageSection:self.product.fashion];
+        _productImageSection = [[JAPDVImageSection alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 500)];
         _productImageSection.delegate = self;
         [_productImageSection.wishListButton addTarget:self
                                                     action:@selector(addToFavoritesPressed:)
@@ -611,11 +611,11 @@ JAActivityViewControllerDelegate
 
 - (void)fillTheViews
 {
-    [self productLoaded];
-    
     if (self.product == nil) {
         return;
     }
+    
+    [self productLoaded];
     
     CGFloat scrollViewY = .0f;
     CGFloat landscapeScrollViewY = 0.0f;
