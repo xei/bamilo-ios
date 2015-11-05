@@ -112,7 +112,7 @@
 
 "string_with_discount_only" = "With discount only";
 
-"favourite_no_favourites" = "You have no saved items at the moment";
+"favourite_no_favourites" = "You do not have any product saved yet!";
 
 "favourite_addalltocart" = "Add All Items to Cart";
 
@@ -511,6 +511,8 @@
 "my_order_no_orders_label" = "You have placed no orders.";
 
 "like_us_on_facebook" = "Like us on Facebook";
+
+"seller_info_warranty" = "Warranty";
 
 "bundle_title" = "Frequently Bought Together";
 
