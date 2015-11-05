@@ -110,12 +110,16 @@
 
 - (UIButton *)globalButton
 {
-    if (_globalButton) {
+    if (!_globalButton) {
         _globalButton = [UIButton buttonWithType:UIButtonTypeCustom];
         UIImage *plane = [UIImage imageNamed:@"plane_corner"];
         [_globalButton setImage:plane forState:UIControlStateNormal];
         [_globalButton setFrame:CGRectMake(self.width - plane.size.width, 0, plane.size.width, plane.size.height)];
         [self addSubview:_globalButton];
+        if (RI_IS_RTL)
+        {
+            [_globalButton flipViewImage];
+        }
     }
     return _globalButton;
 }
@@ -145,10 +149,6 @@
         return;
     }
     self.product = product;
-    
-    if ([self.product.seller isGlobal]) {
-        [self globalButton];
-    }
 
     [self.productNameLabel setText:product.brand];
     
@@ -165,6 +165,9 @@
 
 - (void)reloadViews
 {
+    if ([self.product.seller isGlobal]) {
+        [self.globalButton setX:self.width-self.globalButton.width];
+    }
     [self.productNameLabel setX:16.f];
     [self.productDescriptionLabel setX:16.f];
     [self imagesPagedView];
