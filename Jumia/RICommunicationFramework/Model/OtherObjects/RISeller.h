@@ -22,6 +22,7 @@
 @property (nonatomic, retain) NSString * shippingGlobal;
 @property (nonatomic, retain) NSString * linkTextGlobal;
 @property (nonatomic, retain) NSString * linkUrlGlobal;
+@property (nonatomic, retain) NSString * warranty;
 @property (nonatomic, retain) NSString * cmsInfo;
 
 + (RISeller*)parseSeller:(NSDictionary*)sellerJSON;
