@@ -32,6 +32,9 @@
     if ([sellerJSON objectForKey:@"delivery_time"]) {
         newSeller.deliveryTime = [sellerJSON objectForKey:@"delivery_time"];
     }
+    if (VALID_NOTEMPTY([sellerJSON objectForKey:@"warranty"], NSString)) {
+        newSeller.warranty = [sellerJSON objectForKey:@"warranty"];
+    }
     if ([sellerJSON objectForKey:@"is_global"]) {
         newSeller.isGlobal = ((NSNumber *)[sellerJSON objectForKey:@"is_global"]).boolValue;
         
