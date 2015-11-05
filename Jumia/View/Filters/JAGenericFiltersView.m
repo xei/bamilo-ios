@@ -9,6 +9,7 @@
 #import "JAGenericFiltersView.h"
 #import "JAColorFilterCell.h"
 #import "JAClickableView.h"
+#import "JAProductInfoRatingLine.h"
 
 @interface JAGenericFiltersView()
 
@@ -124,6 +125,49 @@
         [clickView addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:clickView];
         
+    } else if ([@"rating" isEqualToString:self.filter.uid]) {
+        cellIdentifier = @"ratingCell";
+        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
+        if (ISEMPTY(cell)) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+        }
+        
+        for (UIView* view in cell.subviews) {
+            if ([view isKindOfClass:[JAProductInfoRatingLine class]] || [view isKindOfClass:[UIImageView class]]) { //remove the previous views
+                [view removeFromSuperview];
+            } else {
+                for (UIView* subview in view.subviews) {
+                    if ([subview isKindOfClass:[JAProductInfoRatingLine class]] || [view isKindOfClass:[UIImageView class]]) { //remove the previous view
+                        [subview removeFromSuperview];
+                    }
+                }
+            }
+        }
+        
+        JAProductInfoRatingLine* ratingLine = [[JAProductInfoRatingLine alloc] initWithFrame:CGRectMake(0.0f,
+                                                                                                        0.0f,
+                                                                                                        self.tableView.frame.size.width,
+                                                                                                        [JAColorFilterCell height])];
+        RIFilterOption* filterOption = [self.filter.options objectAtIndex:indexPath.row];
+        ratingLine.ratingAverage = filterOption.average;
+        ratingLine.ratingSum = filterOption.totalProducts;
+        ratingLine.imageRatingSize = kImageRatingSizeSmall;
+        ratingLine.bottomSeparatorVisibility = YES;
+        [cell addSubview:ratingLine];
+        
+        if (filterOption.selected) {
+            CGFloat margin = 12.0f;
+            UIImage* customAccessoryIcon = [UIImage imageNamed:@"selectionCheckmark"];
+            UIImageView* customAccessoryView = [[UIImageView alloc] initWithImage:customAccessoryIcon];
+            customAccessoryView.frame = CGRectMake(ratingLine.frame.size.width - margin - customAccessoryIcon.size.width,
+                                                   (ratingLine.frame.size.height - customAccessoryIcon.size.height) / 2,
+                                                   customAccessoryIcon.size.width,
+                                                   customAccessoryIcon.size.height);
+            [cell addSubview:customAccessoryView];
+        }
     } else {
         
         if (ISEMPTY(cell)) {
