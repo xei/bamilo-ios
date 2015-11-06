@@ -193,7 +193,7 @@
         self.emptyFavoritesView.frame = CGRectMake(self.emptyFavoritesView.frame.origin.x,
                                                    self.emptyFavoritesView.frame.origin.y,
                                                    [self viewBounds].size.width - self.emptyFavoritesView.frame.origin.x * 2,
-                                                   300.0f);
+                                                   [self viewBounds].size.height);
         self.emptyFavoritesImageView.frame = CGRectMake((self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2,
                                                         56.0f,
                                                         self.emptyFavoritesImageView.frame.size.width,
