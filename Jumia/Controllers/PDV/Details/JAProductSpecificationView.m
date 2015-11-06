@@ -116,6 +116,9 @@
 {
     [super setFrame:frame];
     [self contentScrollView];
+    if (RI_IS_RTL) {
+        [self flipAllSubviews];
+    }
 }
 
 @end
