@@ -16,9 +16,10 @@
 
 @interface JAFiltersView : UIView
 
-@property (nonatomic, assign)BOOL shouldAutosave;
 @property (nonatomic, assign)id<JAFiltersViewDelegate> filtersViewDelegate;
 
 - (void)saveOptions;
+
+- (void)reload;
 
 @end
