@@ -149,6 +149,7 @@
 {
     [super viewWillAppear:animated];
     
+    self.productsArray = nil;
     [self getFavorites];
     
     [self didRotateFromInterfaceOrientation:0];
