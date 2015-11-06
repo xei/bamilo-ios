@@ -66,6 +66,10 @@
     }else if (!CGRectEqualToRect(frame, _label.frame)) {
         [_label setFrame:frame];
         [_label sizeToFit];
+        CGFloat labelWidth = self.width - 2*self.lineContentXOffset - (self.width - self.arrow.x);
+        if (labelWidth < _label.width) {
+            [_label setWidth:labelWidth];
+        }
         [_label setYCenterAligned];
     }
     return _label;
@@ -107,9 +111,8 @@
 - (void)setTitle:(NSString *)title
 {
     [self.label setText:title];
-    CGFloat labelWidth = self.width - 32;
+    CGFloat labelWidth = self.width - self.lineContentXOffset;
     [self.label sizeToFit];
-    [self.label setY:self.height/2-self.label.height/2];
     [self.label setWidth:labelWidth];
 }
 

@@ -56,6 +56,26 @@
     return newFilterOption;
 }
 
+- (RIFilterOption*)copy
+{
+    RIFilterOption* newFilterOption = [[RIFilterOption alloc] init];
+    newFilterOption.name = [self.name copy];
+    newFilterOption.val = [self.val copy];
+    newFilterOption.max = self.max;
+    newFilterOption.min = self.min;
+    newFilterOption.interval = self.interval;
+    newFilterOption.colorHexValue = [self.colorHexValue copy];
+    newFilterOption.colorImageUrl = [self.colorImageUrl copy];
+    newFilterOption.average = [self.average copy];
+    newFilterOption.totalProducts = [self.totalProducts copy];
+    newFilterOption.selected = self.selected;
+    newFilterOption.lowerValue = self.lowerValue;
+    newFilterOption.upperValue = self.upperValue;
+    newFilterOption.discountOnly = self.discountOnly;
+
+    return newFilterOption;
+}
+
 @end
 
 @implementation RIFilter
@@ -190,6 +210,33 @@
             newFilter.options = [newFilterOptionsArray copy];
         }
     }
+    
+    return newFilter;
+}
+
++ (NSArray*)copyFiltersArray:(NSArray*)filtersArray;
+{
+    NSMutableArray* newFiltersArray = [NSMutableArray new];
+    for (RIFilter* filter in filtersArray) {
+        [newFiltersArray addObject:[filter copy]];
+    }
+    return [newFiltersArray copy];
+}
+
+- (RIFilter*)copy
+{
+    RIFilter* newFilter = [[RIFilter alloc] init];
+    
+    newFilter.uid = [self.uid copy];
+    newFilter.name = [self.name copy];
+    newFilter.multi = self.multi;
+    newFilter.filterSeparator = [self.filterSeparator copy];
+    NSMutableArray* newOptions = [NSMutableArray new];
+    for (RIFilterOption* option in self.options) {
+        RIFilterOption* newOption = [option copy];
+        [newOptions addObject:newOption];
+    }
+    newFilter.options = [newOptions copy];
     
     return newFilter;
 }
