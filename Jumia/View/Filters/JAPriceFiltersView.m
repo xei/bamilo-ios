@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet NMRangeSlider *priceRangeSlider;
 @property (weak, nonatomic) IBOutlet UISwitch *discountSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *discountLabel;
+@property (weak, nonatomic) IBOutlet UIView *contentView;
 
 @property (nonatomic, strong)RIFilterOption* priceFilterOption;
 
@@ -51,8 +52,24 @@
     [self.discountSwitch addTarget:self action:@selector(switchMoved:) forControlEvents:UIControlEventTouchUpInside];
     
     self.discountSwitch.translatesAutoresizingMaskIntoConstraints = YES;
+    self.contentView.translatesAutoresizingMaskIntoConstraints = YES;
+    self.contentView.frame = CGRectMake(16.0f,
+                                        (self.frame.size.height - self.contentView.frame.size.width)/2,
+                                        self.contentView.frame.size.width,
+                                        self.contentView.frame.size.height);
     if (RI_IS_RTL) {
-        [self flipSubviewPositions];
+        [self flipAllSubviews];
+    }
+}
+
+- (void)reload
+{
+    self.contentView.frame = CGRectMake(16.0f,
+                                        (self.frame.size.height - self.contentView.frame.size.width)/2,
+                                        self.contentView.frame.size.width,
+                                        self.contentView.frame.size.height);
+    if (RI_IS_RTL) {
+        [self.contentView flipViewPositionInsideSuperview];
     }
 }
 

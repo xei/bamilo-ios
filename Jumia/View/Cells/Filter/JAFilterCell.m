@@ -61,6 +61,7 @@
     mainLabel.font = labelFont;
     mainLabel.textColor = [UIColor blackColor];
     mainLabel.text = cellText;
+    mainLabel.textAlignment = NSTextAlignmentLeft;
     [mainLabel sizeToFit];
     mainLabel.frame = CGRectMake(margin,
                                  self.clickView.bounds.origin.y,
@@ -75,6 +76,11 @@
                                  self.clickView.bounds.size.width,
                                  1.0f);
     [self.clickView addSubview:separator];
+    
+    if (RI_IS_RTL) {
+        [mainLabel flipViewPositionInsideSuperview];
+        [mainLabel flipViewAlignment];
+    }
 }
 
 + (CGFloat)height;

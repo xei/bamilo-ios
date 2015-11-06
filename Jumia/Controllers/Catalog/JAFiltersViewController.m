@@ -138,7 +138,13 @@
                                               self.view.bounds.origin.y,
                                               self.view.bounds.size.width - self.tableView.frame.size.width,
                                               self.view.bounds.size.height - self.clearAllView.frame.size.height);
-    [self.currentFilterView reaload];
+    [self.currentFilterView reload];
+    
+    if (RI_IS_RTL) {
+        [self.tableView flipViewPositionInsideSuperview];
+        [self.verticalSeparator flipViewPositionInsideSuperview];
+        [self.currentFilterView flipViewPositionInsideSuperview];
+    }
 }
 
 #pragma mark - UITableView

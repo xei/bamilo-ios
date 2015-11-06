@@ -93,9 +93,8 @@
                                                                                  0.0f,
                                                                                  tableView.frame.size.width,
                                                                                  1.0f)];//set inside the cell
-            if (RI_IS_RTL) {
-                [cell flipAllSubviews];
-            }
+        } else {
+            [(JAColorFilterCell*)cell setupIsLandscape:self.isLandscape];
         }
         
         RIFilterOption* filterOption = [self.filter.options objectAtIndex:indexPath.row];
@@ -120,7 +119,7 @@
             }
         }
         //add the new clickable view
-        JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.frame.size.width, 44.0f)];
+        JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.frame.size.width, [JAColorFilterCell height])];
         clickView.tag = indexPath.row;
         [clickView addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:clickView];
@@ -157,6 +156,9 @@
         ratingLine.imageRatingSize = kImageRatingSizeSmall;
         ratingLine.bottomSeparatorVisibility = YES;
         [cell addSubview:ratingLine];
+        if (RI_IS_RTL) {
+            [ratingLine flipAllSubviews];
+        }
         
         if (filterOption.selected) {
             CGFloat margin = 12.0f;
@@ -167,6 +169,9 @@
                                                    customAccessoryIcon.size.width,
                                                    customAccessoryIcon.size.height);
             [cell addSubview:customAccessoryView];
+            if (RI_IS_RTL) {
+                [customAccessoryView flipViewPositionInsideSuperview];
+            }
         }
     } else {
         
@@ -220,12 +225,13 @@
         
         CGFloat remainingWidth = tableView.frame.size.width - customAccessoryView.frame.size.width - margin*2;
         UILabel* customTextLabel = [UILabel new];
-        customTextLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
+        customTextLabel.font = [UIFont fontWithName:kFontRegularName size:16.0f];
         customTextLabel.textColor = UIColorFromRGB(0x4e4e4e);
         customTextLabel.frame = CGRectMake(startingX,
                                            0.0f,
                                            remainingWidth,
                                            clickView.frame.size.height);
+        customTextLabel.textAlignment = NSTextAlignmentLeft;
         [clickView addSubview:customTextLabel];
         
         RIFilterOption* filterOption = [self.filter.options objectAtIndex:indexPath.row];
@@ -279,7 +285,7 @@
     [self saveOptions];
 }
 
-- (void)reaload
+- (void)reload
 {
     [self.tableView reloadData];
 }

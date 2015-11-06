@@ -20,6 +20,6 @@
 
 - (void)saveOptions;
 
-- (void)reaload;
+- (void)reload;
 
 @end

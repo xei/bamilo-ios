@@ -19,6 +19,7 @@
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier
                             isLandscape:(BOOL)isLandscape
                                   frame:(CGRect)frame;
+- (void)setupIsLandscape:(BOOL)landscape;
 + (CGFloat)height;
 
 @end
