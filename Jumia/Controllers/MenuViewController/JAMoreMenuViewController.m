@@ -117,7 +117,8 @@
             if ([RICustomer checkIfUserIsLogged]) {
                 [self logout];
             } else {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil];
+                NSDictionary* userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"from_side_menu"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfo];
             }
             break;
         }
