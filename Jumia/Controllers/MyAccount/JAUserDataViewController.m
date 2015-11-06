@@ -254,6 +254,9 @@ JADynamicFormDelegate
     
     CGFloat leftMargin = 17.0f;
     CGFloat dynamicFormleftMargin = 0.0f;
+    
+    [self.saveButton setFrame:CGRectMake(6.f, CGRectGetMaxY(self.changePasswordView.frame) + 6.0f, width - 6.f * 2, self.saveButton.frame.size.height)];
+    
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
     {
         leftMargin = 145.0f;
@@ -283,9 +286,6 @@ JADynamicFormDelegate
                                   self.changePasswordView.frame.size.width - (2 * dynamicFormleftMargin),
                                   view.frame.size.height)];
     }
-    
-    [self.saveButton setFrame:CGRectMake((width - self.saveButton.frame.size.width) / 2, CGRectGetMaxY(self.changePasswordView.frame) + 6.0f, self.saveButton.frame.size.width, self.saveButton.frame.size.height)];
-    
     [self.personalDataView setHidden:NO];
     [self.changePasswordView setHidden:NO];
     
