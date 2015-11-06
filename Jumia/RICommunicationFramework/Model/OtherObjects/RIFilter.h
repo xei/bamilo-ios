@@ -26,6 +26,8 @@
 @property (nonatomic, assign)NSInteger upperValue;
 @property (nonatomic, assign)BOOL discountOnly;
 
+- (RIFilterOption*)copy;
+
 /**
  *  Method to parse an RIFilterOption given a JSON object
  *
@@ -42,6 +44,10 @@
 @property (nonatomic, assign)BOOL multi;
 @property (nonatomic, strong)NSArray* options;
 @property (nonatomic, strong) NSString *filterSeparator;
+
++ (NSArray*)copyFiltersArray:(NSArray*)filtersArray;
+
+- (RIFilter*)copy;
 
 /**
  *  Method that returns the url component to add to the product request based on an array of RIFilters

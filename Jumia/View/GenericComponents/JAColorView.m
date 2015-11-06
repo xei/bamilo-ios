@@ -11,7 +11,7 @@
 
 @interface JAColorView()
 
-@property (nonatomic, strong)UIImageView* crop;
+@property (nonatomic, strong)UIView* centerView;
 
 @end
 
@@ -19,12 +19,22 @@
 
 - (void)setColorWithHexString:(NSString*)hexString;
 {
-    unsigned int colorInt = [JAUtils intFromHexString:hexString];
-    [self setBackgroundColor:UIColorFromRGB(colorInt)];
+    self.backgroundColor = [UIColor whiteColor];
     
-    [self.crop removeFromSuperview];
-    self.crop = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"filterColorCrop"]];
-    [self addSubview:self.crop];
+    CGFloat centerViewHeight = 22.0f;
+    CGFloat centerViewX = 16.0f;
+    [self.centerView removeFromSuperview];
+    self.centerView = [[UIView alloc] initWithFrame:CGRectMake(centerViewX,
+                                                               (self.frame.size.height - centerViewHeight) / 2,
+                                                               centerViewHeight,
+                                                               centerViewHeight)];
+    unsigned int colorInt = [JAUtils intFromHexString:hexString];
+    [self.centerView setBackgroundColor:UIColorFromRGB(colorInt)];
+    [self addSubview:self.centerView];
+    
+    self.centerView.layer.cornerRadius = self.centerView.frame.size.height /2;
+    self.centerView.layer.masksToBounds = YES;
+    self.centerView.layer.borderWidth = 0;
 }
 
 @end

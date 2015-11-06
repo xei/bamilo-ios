@@ -222,13 +222,12 @@
     
     if(VALID_NOTEMPTY(filtersString, NSString))
     {
-        fullUrl = [NSString stringWithFormat:@"%@%@page=%ld&maxitems=%ld%@%@", url, particle, (long)page, (long)maxItems, sortingString, [NSString stringWithFormat:@"%@" ,filtersString]];
+        fullUrl = [NSString stringWithFormat:@"%@%@page=%ld&maxitems=%ld%@%@", url, particle, (long)page, (long)maxItems, sortingString, [NSString stringWithFormat:@"&%@" ,filtersString]];
     }
     else
     {
         fullUrl = [NSString stringWithFormat:@"%@%@page=%ld&maxitems=%ld%@", url, particle, (long)page, (long)maxItems, sortingString];
     }
-    fullUrl = [fullUrl stringByReplacingOccurrencesOfString:@"http://integration-www.jumia.ug/mobapi/v1.7/integration-www.jumia.ug/" withString:@"http://integration-www.jumia.ug/mobapi/v1.7/"];
     return [RIProduct getProductsWithFullUrl:fullUrl
                                 successBlock:successBlock
                              andFailureBlock:failureBlock];
