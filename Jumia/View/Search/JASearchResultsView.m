@@ -32,14 +32,18 @@
         [RISearchSuggestion getSuggestionsForQuery:searchText
                                       successBlock:^(NSArray *suggestions) {
                                           dispatch_async(dispatch_get_main_queue(), ^{
-                                              [self.resultsArray removeAllObjects];
                                               self.resultsArray = [suggestions mutableCopy];
                                               [self addResultsTableViewToView];
                                           });
                                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                       }];
     } else {
-        [self removeResultsTableViewFromView];
+        self.resultsArray = [[RISearchSuggestion getRecentSearches] mutableCopy];
+        if (VALID_NOTEMPTY(self.resultsArray, NSMutableArray)) {
+            [self addResultsTableViewToView];
+        } else {
+            [self removeResultsTableViewFromView];
+        }
     }
 }
 
