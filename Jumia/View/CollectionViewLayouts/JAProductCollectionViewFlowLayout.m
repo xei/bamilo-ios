@@ -36,7 +36,7 @@
     NSMutableArray* decorationAttributes = [NSMutableArray new];
     
     for (int i = (int)init; i <= (int)last; i++) {
-        if (i != 0 && i % numberOfItemsPerLine != 0) {
+        if (last == i || (i+1 % numberOfItemsPerLine != 0)) {
             UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForDecorationViewOfKind:@"verticalSeparator" atIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
             [decorationAttributes addObject:attributes];
         }
@@ -101,6 +101,7 @@
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForDecorationViewOfKind:(NSString *)decorationViewKind atIndexPath:(NSIndexPath *)indexPath
 {
+//    NSInteger countOfItems = [self.collectionView.dataSource collectionView:self.collectionView numberOfItemsInSection:0];
     CGRect itemFrame = [self layoutAttributesForItemAtIndexPath:indexPath].frame;
     
     UICollectionViewLayoutAttributes *layoutAttributes = [[UICollectionViewLayoutAttributes layoutAttributesForDecorationViewOfKind:decorationViewKind withIndexPath:indexPath] copy];
@@ -112,9 +113,9 @@
         }
     }else if ([decorationViewKind isEqualToString:@"verticalSeparator"]){
         if (RI_IS_RTL) {
-            layoutAttributes.frame = CGRectMake(itemFrame.origin.x + itemFrame.size.width, itemFrame.origin.y, self.minimumLineSpacing, self.itemSize.height);
+            layoutAttributes.frame = CGRectMake(itemFrame.origin.x, itemFrame.origin.y, self.minimumLineSpacing, self.itemSize.height);
         }else{
-            layoutAttributes.frame = CGRectMake(itemFrame.origin.x -1, itemFrame.origin.y, self.minimumLineSpacing, self.itemSize.height);
+            layoutAttributes.frame = CGRectMake(itemFrame.origin.x + itemFrame.size.width, itemFrame.origin.y, self.minimumLineSpacing, self.itemSize.height);
         }
     }
     layoutAttributes.zIndex = 1000;

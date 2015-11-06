@@ -15,7 +15,8 @@
 
 @property (nonatomic, retain) NSString *brand;
 @property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSString *price;
+@property (nonatomic, retain) NSNumber *price;
+@property (nonatomic, retain) NSNumber *specialPrice;
 @property (nonatomic, retain) NSString *sku;
 @property (nonatomic, retain) RIImage *image;
 @property (nonatomic, retain) RIProduct *product;
