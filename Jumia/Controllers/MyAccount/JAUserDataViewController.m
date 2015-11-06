@@ -255,13 +255,13 @@ JADynamicFormDelegate
     CGFloat leftMargin = 17.0f;
     CGFloat dynamicFormleftMargin = 0.0f;
     
-    [self.saveButton setFrame:CGRectMake(6.f, CGRectGetMaxY(self.changePasswordView.frame) + 6.0f, width - 6.f * 2, self.saveButton.frame.size.height)];
-    
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
     {
         leftMargin = 145.0f;
         dynamicFormleftMargin = 128.0f;
     }
+    
+    [self.saveButton setFrame:CGRectMake(6.0f + dynamicFormleftMargin, CGRectGetMaxY(self.changePasswordView.frame) + 6.0f, self.changePasswordView.frame.size.width - (2 * dynamicFormleftMargin), self.saveButton.frame.size.height)];
     
     [self.contentScrollView setFrame:CGRectMake(0.0f,
                                                 self.contentScrollView.frame.origin.y,
