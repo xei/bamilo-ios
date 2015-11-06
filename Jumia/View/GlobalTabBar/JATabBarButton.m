@@ -79,6 +79,7 @@
         self.numberLabel.font = [UIFont fontWithName:kFontRegularName size:9.0];
         self.numberLabel.textColor = [UIColor whiteColor];
         self.numberLabel.adjustsFontSizeToFitWidth = YES;
+        self.numberLabel.textAlignment = NSTextAlignmentCenter;
         [self.imageView addSubview:self.numberLabel];
     }
     
@@ -106,7 +107,7 @@
     //magic numbers... there's no way around it here
     CGRect frame;
     if (number < 10) {
-        frame = CGRectMake(self.imageView.bounds.size.width/2 + 5.0f,
+        frame = CGRectMake(self.imageView.bounds.size.width/2 + 2.0f,
                            3.0f,
                            10.0f,
                            12.0f);
