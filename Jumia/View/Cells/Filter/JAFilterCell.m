@@ -14,6 +14,7 @@
 - (void)setupWithFilter:(RIFilter*)filter
          cellIsSelected:(BOOL)cellIsSelected
                   width:(CGFloat)width
+                 margin:(CGFloat)margin;
 {
     //remove the clickable view
     for (UIView* view in self.subviews) {
@@ -61,9 +62,9 @@
     mainLabel.textColor = [UIColor blackColor];
     mainLabel.text = cellText;
     [mainLabel sizeToFit];
-    mainLabel.frame = CGRectMake(16.0f,
+    mainLabel.frame = CGRectMake(margin,
                                  self.clickView.bounds.origin.y,
-                                 width - 16.0f,
+                                 width - margin,
                                  self.clickView.bounds.size.height);
     [self.clickView addSubview:mainLabel];
     

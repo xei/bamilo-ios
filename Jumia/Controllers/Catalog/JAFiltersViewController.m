@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSIndexPath* selectedIndexPath;
 @property (nonatomic, strong) JAClickableView* clearAllView;
 @property (nonatomic, strong) UIView* bottomSeparator;
+@property (nonatomic, strong) UIView* verticalSeparator;
 
 @end
 
@@ -49,6 +50,10 @@
     self.bottomSeparator = [[UIView alloc] init];
     self.bottomSeparator.backgroundColor = JABlack400Color;
     [self.clearAllView addSubview:self.bottomSeparator];
+    
+    self.verticalSeparator = [[UIView alloc] init];
+    self.verticalSeparator.backgroundColor = JABlack400Color;
+    [self.view addSubview:self.verticalSeparator];
     
     [self selectIndex:0];
     [self updateTitle];
@@ -114,16 +119,26 @@
                                             self.clearAllView.bounds.origin.y,
                                             self.clearAllView.bounds.size.width,
                                             1.0f);
-    
+    CGFloat sideBarWidth = 120.0f;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        sideBarWidth = 256.0f;
+    }
     self.tableView.frame = CGRectMake(self.view.bounds.origin.x,
                                       self.view.bounds.origin.y,
-                                      120.0f,
+                                      sideBarWidth,
                                       self.view.bounds.size.height - self.clearAllView.frame.size.height);
+    
+    self.verticalSeparator.frame = CGRectMake(CGRectGetMaxX(self.tableView.frame) - 1.0f,
+                                              self.tableView.frame.origin.y,
+                                              1.0f,
+                                              self.tableView.frame.size.height);
     
     self.currentFilterView.frame = CGRectMake(CGRectGetMaxX(self.tableView.frame),
                                               self.view.bounds.origin.y,
                                               self.view.bounds.size.width - self.tableView.frame.size.width,
                                               self.view.bounds.size.height - self.clearAllView.frame.size.height);
+    [self.currentFilterView reaload];
 }
 
 #pragma mark - UITableView
@@ -159,7 +174,13 @@
     if (indexPath.row == self.selectedIndexPath.row) {
         cellIsSelected = YES;
     }
-    [cell setupWithFilter:filter cellIsSelected:cellIsSelected width:tableView.frame.size.width];
+    
+    CGFloat margin = 16.0f;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        margin = 32.0f;
+    }
+    [cell setupWithFilter:filter cellIsSelected:cellIsSelected width:tableView.frame.size.width margin:margin];
     cell.clickView.tag = indexPath.row;
     [cell.clickView addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
     

@@ -17,4 +17,9 @@
     }
 }
 
+- (void)reaload
+{
+    //virtual, implement on subclasses
+}
+
 @end

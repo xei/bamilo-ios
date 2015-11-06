@@ -279,5 +279,10 @@
     [self saveOptions];
 }
 
+- (void)reaload
+{
+    [self.tableView reloadData];
+}
+
 
 @end

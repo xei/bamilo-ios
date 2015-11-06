@@ -17,7 +17,8 @@
 
 - (void)setupWithFilter:(RIFilter*)filter
          cellIsSelected:(BOOL)cellIsSelected
-                  width:(CGFloat)width;
+                  width:(CGFloat)width
+                 margin:(CGFloat)margin;
 
 + (CGFloat)height;
 
