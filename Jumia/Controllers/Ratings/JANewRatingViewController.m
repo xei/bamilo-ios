@@ -29,6 +29,7 @@ UIAlertViewDelegate
 >{
     BOOL _didAppeared;
     BOOL _didSubViews;
+    BOOL _didPressSendReviewOrKeyboard;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *topView;
@@ -517,9 +518,10 @@ UIAlertViewDelegate
                                                   finalHeight)];
             [self.centerView addSubview:writeReviewLabel];
         }
-            
-        
-        
+        //CHECK
+        if (_didPressSendReviewOrKeyboard) {
+            currentY -= 70.0f;
+        }
         currentY += self.modeSwitch.frame.size.height + 50.0f;
     } else {
         // Add space between last form field and send review button
@@ -557,7 +559,6 @@ UIAlertViewDelegate
                                               currentY,
                                               centerViewWidth - 12.f,
                                               self.sendReviewButton.height)];
-    
     [self.centerView setFrame:CGRectMake(horizontalMargin,
                                          verticalMargin,
                                          centerViewWidth,
@@ -587,6 +588,7 @@ UIAlertViewDelegate
 
 - (void)sendReview:(id)sender
 {
+    _didPressSendReviewOrKeyboard = TRUE;
     [self showLoading];
     
     [self.ratingsDynamicForm resignResponder];
@@ -739,27 +741,23 @@ UIAlertViewDelegate
 
 - (void) keyboardWillShow:(NSNotification *)notification
 {
+    _didPressSendReviewOrKeyboard = TRUE;
+    
     NSDictionary *userInfo = [notification userInfo];
     CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
-    CGFloat height = kbSize.height;
-    if(self.view.frame.size.width == kbSize.height)
-    {
-        height = kbSize.width;
-    }
     
-    [UIView animateWithDuration:0.3 animations:^{
-        [self.scrollView setFrame:CGRectMake(self.scrollViewInitialRect.origin.x,
-                                             self.scrollViewInitialRect.origin.y,
-                                             self.scrollViewInitialRect.size.width,
-                                             self.scrollViewInitialRect.size.height - height)];
-    }];
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    self.scrollView.contentInset = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
 }
 
 - (void) keyboardWillHide:(NSNotification *)notification
 {
     [UIView animateWithDuration:0.3 animations:^{
         [self.scrollView setFrame:self.scrollViewInitialRect];
+        [self.scrollView setContentOffset:CGPointMake(0, 0)
+                                 animated:YES];
     }];
 }
 
