@@ -75,6 +75,11 @@
     [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self loadTopView];
+}
+
 - (void)loadTopView
 {
     if (ISEMPTY(self.topView)) {
@@ -144,7 +149,7 @@
     [self.collectionView setFrame:CGRectMake(6.0f,
                                              CGRectGetMaxY(self.topView.frame),
                                              self.view.frame.size.width - 12.0f,
-                                             self.view.frame.size.height - CGRectGetMaxY(self.topView.frame))];
+                                             [self viewBounds].size.height  - CGRectGetMaxY(self.topView.frame))];
     
     if (RI_IS_RTL) {
         [self.topView flipAllSubviews];
