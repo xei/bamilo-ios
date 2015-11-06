@@ -42,9 +42,13 @@
 
 - (UIView *)ratingsView
 {
+    CGRect frame = CGRectMake(0, 18, self.width - self.dateLabel.width, 70);
     if (!VALID_NOTEMPTY(_ratingsView, UIView)) {
-        _ratingsView = [[UIView alloc] initWithFrame:CGRectMake(0, 18, self.width - self.dateLabel.width, 70)];
+        _ratingsView = [[UIView alloc] initWithFrame:frame];
         [self.clickableArea addSubview:_ratingsView];
+    }else if (!CGRectEqualToRect(_ratingsView.frame, frame))
+    {
+        [_ratingsView setFrame:frame];
     }
     return _ratingsView;
 }
@@ -89,22 +93,31 @@
 
 - (UILabel *)titleLabel
 {
+    CGRect frame = CGRectMake(kXOffset, CGRectGetMaxY(self.ratingsView.frame) + 10.f, self.width - 32, 20);
     if (!VALID_NOTEMPTY(_titleLabel, UILabel)) {
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(kXOffset, CGRectGetMaxY(self.ratingsView.frame) + 10.f, self.width - 32, 20)];
+        _titleLabel = [[UILabel alloc] initWithFrame:frame];
         [_titleLabel setFont:JAList1Font];
         [_titleLabel setTextColor:JABlack900Color];
         [self.clickableArea addSubview:_titleLabel];
+    }else if (CGRectEqualToRect(frame, _titleLabel.frame))
+    {
+        [_titleLabel setTextAlignment:NSTextAlignmentLeft];
+        [_titleLabel setFrame:frame];
     }
     return _titleLabel;
 }
 
 - (UILabel *)authorLabel
 {
+    CGRect frame = CGRectMake(kXOffset, CGRectGetMaxY(self.titleLabel.frame), self.width - 32, 20);
     if (!VALID_NOTEMPTY(_authorLabel, UILabel)) {
-        _authorLabel = [[UILabel alloc] initWithFrame:CGRectMake(kXOffset, CGRectGetMaxY(self.titleLabel.frame), self.width - 32, 20)];
+        _authorLabel = [[UILabel alloc] initWithFrame:frame];
         [_authorLabel setFont:JABody3Font];
         [_authorLabel setTextColor:JABlack800Color];
         [self.clickableArea addSubview:_authorLabel];
+    }else if (CGRectEqualToRect(frame, _authorLabel.frame)) {
+        [_authorLabel setTextAlignment:NSTextAlignmentLeft];
+        [_authorLabel setFrame:frame];
     }
     return _authorLabel;
 }
@@ -117,6 +130,8 @@
         [_descriptionLabel setTextColor:JABlack800Color];
         [_descriptionLabel setNumberOfLines:0];
         [self.clickableArea addSubview:_descriptionLabel];
+    }else if (_descriptionLabel.x != kXOffset) {
+        [_descriptionLabel setX:kXOffset];
     }
     return _descriptionLabel;
 }
@@ -185,8 +200,7 @@
     [self.dateLabel sizeToFit];
     [self.dateLabel setXRightAligned:16.f];
     [self.titleLabel setText:review.title];
-#warning TODO String
-    [self.authorLabel setText:[NSString stringWithFormat:@"by %@", review.userName]];
+    [self.authorLabel setText:[NSString stringWithFormat:STRING_BY_SOMEONE, review.userName]];
     [self.descriptionLabel setWidth:[self getDescriptionLabelInitWidth]];
     [self.descriptionLabel setText:review.comment];
     [self.descriptionLabel sizeToFit];

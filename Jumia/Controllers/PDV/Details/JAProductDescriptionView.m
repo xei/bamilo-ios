@@ -45,7 +45,9 @@
         [self.contentScrollView addSubview:_descriptionLabel];
     }else{
         if (width != _descriptionLabel.width) {
+            [_descriptionLabel setX:16.f];
             [_descriptionLabel setWidth:width];
+            [_descriptionLabel setTextAlignment:NSTextAlignmentLeft];
             [_descriptionLabel sizeToFit];
             [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.width, CGRectGetMaxY(_descriptionLabel.frame) + 16.f)];
         }
@@ -84,6 +86,9 @@
     [super setFrame:frame];
     [self contentScrollView];
     [self descriptionLabel];
+    if (RI_IS_RTL) {
+        [self flipAllSubviews];
+    }
 }
 
 @end
