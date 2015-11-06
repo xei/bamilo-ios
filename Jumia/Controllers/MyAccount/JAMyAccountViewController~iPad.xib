@@ -26,6 +26,7 @@
                 <outlet property="countrySubtitleLabel" destination="Xy1-Mh-LV3" id="cFB-yh-CMj"/>
                 <outlet property="countryTitleLabel" destination="0y1-yX-U2Z" id="l5T-nM-E65"/>
                 <outlet property="emailAndAddressesSeparator" destination="Rlk-TX-xfJ" id="ksP-AS-bSG"/>
+                <outlet property="emailArrow" destination="cNd-CZ-ac1" id="CbZ-vh-NJ8"/>
                 <outlet property="emailClickableView" destination="6MH-jk-qbA" id="QTw-eu-n4e"/>
                 <outlet property="emailSubtitleLabel" destination="pq8-hy-oZY" id="lym-dU-AJt"/>
                 <outlet property="emailTitleLabel" destination="cJ5-9h-sDe" id="ggj-vh-dae"/>

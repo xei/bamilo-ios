@@ -33,6 +33,7 @@
 @property (nonatomic, strong) UIImageView *searchIconImageView;
 @property (nonatomic, strong) JASearchResultsView *searchResultsView;
 @property (nonatomic, strong) JASearchView *searchView;
+@property (nonatomic, strong) UIButton *searchBarBackButton;
 
 @end
 
@@ -397,16 +398,38 @@
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar;
 {
+    UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
+    self.searchBarBackButton = [[UIButton alloc] initWithFrame:CGRectMake(window.bounds.origin.x + 15.0f,
+                                                                          window.bounds.origin.y + 20.0f,
+                                                                          80.0f,
+                                                                          44.0f)];
+    self.searchBarBackButton.backgroundColor = JANavBarBackgroundGrey;
+    [self.searchBarBackButton setImage:[UIImage imageNamed:@"btn_back"] forState:UIControlStateNormal];
+    [self.searchBarBackButton setImage:[UIImage imageNamed:@"btn_back_pressed"] forState:UIControlStateHighlighted];
+    [self.searchBarBackButton setImage:[UIImage imageNamed:@"btn_back_pressed"] forState:UIControlStateSelected];
+    self.searchBarBackButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [window addSubview:self.searchBarBackButton];
+    if (RI_IS_RTL) {
+        [self.searchBarBackButton flipViewPositionInsideSuperview];
+        [self.searchBarBackButton flipViewImage];
+        [self.searchBarBackButton flipViewAlignment];
+    }
+    
     self.searchResultsView = [[JASearchResultsView alloc] initWithFrame:CGRectMake([self viewBounds].origin.x,
                                                                                    [self viewBounds].origin.y,
                                                                                    [self viewBounds].size.width,
                                                                                    [self viewBounds].size.height + kTabBarHeight)];
     self.searchResultsView.delegate = self;
     [self.view addSubview:self.searchResultsView];
+    [self.searchResultsView setSearchText:@""];
+
+    [self.searchBarBackButton addTarget:self.searchResultsView action:@selector(popSearchResults) forControlEvents:UIControlEventTouchUpInside];
+    
     return YES;
 }
 
 - (void)searchResultsViewWillPop {
+    [self.searchBarBackButton removeFromSuperview];
     self.searchBar.text = @"";
     [self.searchBar resignFirstResponder];
     self.searchIconImageView.hidden = NO;

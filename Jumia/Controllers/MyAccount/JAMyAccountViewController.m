@@ -603,11 +603,6 @@ JAPickerDelegate
                                                  self.soundSubtitleLabel.frame.size.width,
                                                  self.soundSubtitleLabel.frame.size.height)];
     
-    [self.shareAppArrow setFrame:CGRectMake(self.accountView.frame.size.width - self.userDataArrow.frame.size.width - rightMargin,
-                                            self.shareAppArrow.frame.origin.y,
-                                            self.shareAppArrow.frame.size.width,
-                                            self.shareAppArrow.frame.size.height)];
-    
     [self.shareAppTitleLabel setFrame:CGRectMake(leftMargin,
                                                  self.shareAppTitleLabel.frame.origin.y,
                                                  self.shareAppTitleLabel.frame.size.width,

@@ -227,9 +227,12 @@
     
     [_productImageView setImageWithURL:[NSURL URLWithString:firstImage.url]
                       placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
-    
-    if (VALID_NOTEMPTY(variation.price, NSString)) {
-        [self.priceLine setTitle:[RICountryConfiguration formatPrice:[[NSNumberFormatter new] numberFromString:variation.price] country:[RICountryConfiguration getCurrentConfiguration]]];
+
+    if (VALID_NOTEMPTY(variation.specialPrice, NSNumber)) {
+        [self.priceLine setTitle:[RICountryConfiguration formatPrice:variation.specialPrice country:[RICountryConfiguration getCurrentConfiguration]]];
+        [self.priceLine setOldPrice:[RICountryConfiguration formatPrice:variation.price country:[RICountryConfiguration getCurrentConfiguration]]];
+    }else{
+        [self.priceLine setTitle:[RICountryConfiguration formatPrice:variation.price country:[RICountryConfiguration getCurrentConfiguration]]];
         [self.priceLine setOldPrice:nil];
     }
     
