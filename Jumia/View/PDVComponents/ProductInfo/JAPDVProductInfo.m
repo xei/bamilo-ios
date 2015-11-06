@@ -113,6 +113,7 @@
      *  SPECIFICATIONS
      */
     
+    CGFloat preSpecificationOffset = yOffset;
     if (VALID_NOTEMPTY(product.specifications, NSSet) && !product.fashion) {
         JAProductInfoHeaderLine *headerSpecifications = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoHeaderLineHeight)];
         [headerSpecifications setTitle:[STRING_SPECIFICATIONS uppercaseString]];
@@ -154,14 +155,20 @@
                 break;
         }
         yOffset += 16.f;
-        if (needMoreSpecifications) {
-            JAProductInfoSubLine *subSpecificationReadMore = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
-            [subSpecificationReadMore setTopSeparatorVisibility:YES];
+        
+        if (i == 0) {
+            [headerSpecifications removeFromSuperview];
+            yOffset = preSpecificationOffset;
+        }else{
+            if (needMoreSpecifications) {
+                JAProductInfoSubLine *subSpecificationReadMore = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
+                [subSpecificationReadMore setTopSeparatorVisibility:YES];
 #warning TODO String
-            [subSpecificationReadMore setTitle:@"Read more"];
-            [subSpecificationReadMore addTarget:self action:@selector(tapSpecificationsLine) forControlEvents:UIControlEventTouchUpInside];
-            [self addSubview:subSpecificationReadMore];
-            yOffset = CGRectGetMaxY(subSpecificationReadMore.frame);
+                [subSpecificationReadMore setTitle:@"Read more"];
+                [subSpecificationReadMore addTarget:self action:@selector(tapSpecificationsLine) forControlEvents:UIControlEventTouchUpInside];
+                [self addSubview:subSpecificationReadMore];
+                yOffset = CGRectGetMaxY(subSpecificationReadMore.frame);
+            }
         }
     }
     

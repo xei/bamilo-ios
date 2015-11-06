@@ -834,7 +834,6 @@
         
         loginVC.cart = self.cart;
         
-        [self popToRootViewControllerAnimated:NO];
         [self pushViewController:loginVC animated:NO];
     }
 }
@@ -892,7 +891,12 @@
             [addressesVC.navBarLayout setShowBackButton:YES];
             addressesVC.navBarLayout.showLogo = NO;
         }
-
+        
+        if ([topViewController isKindOfClass:[JALoginViewController class]])
+        {
+            [self popViewControllerAnimated:NO];
+        }
+        
         [self pushViewController:addressesVC animated:NO];
     }
     else

@@ -328,9 +328,9 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 {
     [self showLoading];
     
-    NSMutableArray* simpleSku = [[NSMutableArray alloc]init];
-    for (RIProductSimple* simplePDV in self.selectedItems) {
-        [simpleSku addObject:simplePDV.sku];
+    NSMutableArray* simpleSku = [NSMutableArray new];
+    for (RIProductSimple *simple in [self.selectedItems allValues]) {
+        [simpleSku addObject:simple.sku];
     }
     
     [RICart addBundleProductsWithSkus:[self.selectedItems allKeys] simpleSkus:simpleSku bundleId:self.bundle.bundleId withSuccessBlock:^(RICart *cart, NSArray *productsNotAdded) {
@@ -398,10 +398,8 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     for (RIProductSimple *simple in product.productSimples) {
         if ([simple.quantity integerValue] > 0)
         {
-            if (VALID_NOTEMPTY(simple.variation, NSString)) {
-                [sizes addObject:simple.variation];
-                [simples addObject:simple];
-            }
+            [sizes addObject:simple.variation];
+            [simples addObject:simple];
         }
     }
     _pickerDataSource = [simples copy];

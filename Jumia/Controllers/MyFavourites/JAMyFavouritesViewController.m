@@ -42,7 +42,7 @@
 // size picker view
 @property (strong, nonatomic) JAPicker *picker;
 @property (strong, nonatomic) NSMutableArray *pickerDataSource;
-@property (nonatomic, strong) NSMutableArray* chosenSimpleNames;
+@property (nonatomic, strong) NSMutableDictionary* chosenSimples;
 
 @property (strong, nonatomic) UIButton *backupButton; // for the retry connection, is necessary to store the button
 
@@ -405,10 +405,9 @@
 - (void)updateListsWith:(NSArray*)products replace:(NSInteger)replace_page
 {
     NSMutableArray* tempProducts = [[NSMutableArray alloc] init];
-    NSMutableArray* tempChosenSimpleNames = [[NSMutableArray alloc] init];
     
-    if (self.chosenSimpleNames == nil) {
-        self.chosenSimpleNames = [[NSMutableArray alloc] init];
+    if (self.chosenSimples == nil) {
+        self.chosenSimples = [NSMutableDictionary new];
     }
 
     if (replace_page) {
@@ -425,29 +424,20 @@
             
             if (VALID_NOTEMPTY(products, NSArray)) {
                 [tempProducts addObjectsFromArray:[self.productsArray subarrayWithRange:range]];
-                [tempChosenSimpleNames addObjectsFromArray:[self.chosenSimpleNames subarrayWithRange:range]];
             }
-            [self.chosenSimpleNames removeObject:[RIProduct class] inRange:range];
         } else { //we only need to remove the last page
             loc -= self.maxPerPage;
             length = [self.productsArray count]-loc;
             range = NSMakeRange(loc, length);
-            
-            [self.chosenSimpleNames removeObject:[RIProduct class] inRange:range];
         }
         
         range = NSMakeRange(0, self.maxPerPage*replace_page - self.maxPerPage);
         self.productsArray = [self.productsArray subarrayWithRange:range];
     }
     
-    for (int i = 0; i < products.count; i++) {
-        [self.chosenSimpleNames addObject:@""];
-    }
-    
     if (replace_page) {
         self.productsArray = [self.productsArray arrayByAddingObjectsFromArray:products];
         self.productsArray = [self.productsArray arrayByAddingObjectsFromArray:tempProducts];
-        [self.chosenSimpleNames addObjectsFromArray:tempChosenSimpleNames];
     } else {
         if (VALID_NOTEMPTY(self.productsArray, NSArray)) {
             self.productsArray = [self.productsArray arrayByAddingObjectsFromArray:products];
@@ -548,22 +538,19 @@
                           action:@selector(removeFromFavoritesPressed:)
                 forControlEvents:UIControlEventTouchUpInside];
     
-    NSString* chosenSimpleName = [self.chosenSimpleNames objectAtIndex:indexPath.row];
-    if ([chosenSimpleName isEqualToString:@""]) {
+    if (![self.chosenSimples objectForKey:product.sku]) {
         [cell.sizeButton setTitle:STRING_SIZE forState:UIControlStateNormal];
         
     } else {
-        [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, chosenSimpleName] forState:UIControlStateNormal];
+        RIProductSimple* chosenSimple = [self.chosenSimples objectForKey:product.sku];
+        [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, chosenSimple.variation] forState:UIControlStateNormal];
             
-            for (RIProductSimple* prds in product.productSimples) {
-                if ([prds.variation isEqual:chosenSimpleName]) {
-                    [cell.priceView loadWithPrice:prds.priceFormatted
-                                     specialPrice:prds.specialPriceFormatted
+
+                    [cell.priceView loadWithPrice:chosenSimple.priceFormatted
+                                     specialPrice:chosenSimple.specialPriceFormatted
                                          fontSize:10.0f
                             specialPriceOnTheLeft:YES];
-                    break;
-                }
-            }
+
 
     }
     cell.sizeButton.tag = indexPath.row;
@@ -606,25 +593,6 @@
 }
 
 #pragma mark - Button Actions
-
-- (void)addErrorToSizeButtons
-{
-    for (int i = 0; i < self.chosenSimpleNames.count; i++)
-    {
-        RIProduct* product = [self.productsArray objectAtIndex:i];
-        if (1 != product.productSimples.count)
-        {
-            //has more than one simple, lets check if there is a simple selected
-            NSString* string = [self.chosenSimpleNames objectAtIndex:i];
-            if ([string isEqualToString:@""])
-            {
-                JACatalogCell *cell = (JACatalogCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
-                
-                [cell.sizeButton setTitleColor:UIColorFromRGB(0xcc0000) forState:UIControlStateNormal];
-            }
-        }
-    }
-}
 
 - (BOOL)didProductFail:(RIProduct*)product failedSimples:(NSArray*)failedSimples
 {
@@ -712,32 +680,17 @@
     
     RIProductSimple* productSimple;
     
-    if (1 == product.productSimples.count) {
-        productSimple = [product.productSimples firstObject];
-    } else {
-        NSString* simpleName = [self.chosenSimpleNames objectAtIndex:button.tag];
-        if ([simpleName isEqualToString:@""]) {
-            
-            // Turn the title red
-            JACatalogCell *cell = (JACatalogCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:button.tag
-                                                                                                                   inSection:0]];
-            
-            [cell.sizeButton setTitleColor:UIColorFromRGB(0xcc0000) forState:UIControlStateNormal];
-            
-            self.selectedSizeAndAddToCart = YES;
-            
-            [self sizeButtonPressed:button];
-            
-            return;
+    if(VALID([self.chosenSimples objectForKey:product.sku], RIProductSimple))
+    {
+        productSimple = [self.chosenSimples objectForKey:product.sku];
+    } else
+        if (1 == product.productSimples.count) {
+            productSimple = [product.productSimples firstObject];
         } else {
-            for (RIProductSimple* simple in product.productSimples) {
-                if ([simple.variation isEqualToString:simpleName]) {
-                    //found it
-                    productSimple = simple;
-                }
-            }
+            self.selectedSizeAndAddToCart = YES;
+            [self sizeButtonPressed:button];
+            return;
         }
-    }
     
     [self showLoading];
     [RICart addProductWithQuantity:@"1"
@@ -893,7 +846,7 @@
     self.backupButton = button;
     
     RIProduct* product = [self.productsArray objectAtIndex:button.tag];
-    NSString* simpleName = [self.chosenSimpleNames objectAtIndex:button.tag];
+    RIProductSimple* chosenSimple = [self.chosenSimples objectForKey:product.sku];
     
     if(VALID(self.picker, JAPicker))
     {
@@ -908,16 +861,15 @@
     NSMutableArray *dataSource = [[NSMutableArray alloc] init];
     
     NSString *simpleSize = @"";
-    for (int i = 0; i < product.productSimples.count; i++)
+    if (VALID(chosenSimple, RIProductSimple)) {
+        simpleSize = chosenSimple.variation;
+    }
+    
+    for (RIProductSimple* simple in product.productSimples)
     {
-        RIProductSimple* simple = [product.productSimples objectAtIndex:i];
         if (simple.quantity.intValue > 0) {
             [self.pickerDataSource addObject:simple];
             [dataSource addObject:simple.variation];
-            if ([simple.variation isEqualToString:simpleName]) {
-                //found it
-                simpleSize = simple.variation;
-            }
         }
     }
     
@@ -950,32 +902,32 @@
 -(void)selectedRow:(NSInteger)selectedRow
 {
     RIProduct* product = [self.productsArray objectAtIndex:self.picker.tag];
+    RIProductSimple* chosenSimple;
     
-    RIProductSimple* selectedSimple = [product.productSimples objectAtIndex:selectedRow];
-    NSString* simpleName = @"";
-    if (VALID_NOTEMPTY(selectedSimple.variation, NSString)) {
-        simpleName = selectedSimple.variation;
+    
+    for( RIProductSimple* selectedSimple in product.productSimples) {
+        if ([selectedSimple quantity] > 0) {
+            if (selectedRow--  == 0) {
+                chosenSimple = selectedSimple;
+                break;
+            }
+        }
     }
-    
-    [self.chosenSimpleNames replaceObjectAtIndex:self.picker.tag withObject:simpleName];
+    [self.chosenSimples setObject:chosenSimple forKey:product.sku];
     
     JACatalogCell *cell = (JACatalogCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:self.picker.tag
                                                                                                            inSection:0]];
-    [cell.priceView loadWithPrice:selectedSimple.priceFormatted
-                     specialPrice:selectedSimple.specialPriceFormatted
+    [cell.priceView loadWithPrice:chosenSimple.priceFormatted
+                     specialPrice:chosenSimple.specialPriceFormatted
                          fontSize:10.0f
             specialPriceOnTheLeft:YES];
-    [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, simpleName] forState:UIControlStateNormal];
+    [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, chosenSimple.variation] forState:UIControlStateNormal];
     
     [self closePicker];
     
     if (self.selectedSizeAndAddToCart)
     {
-        [cell.sizeButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
-        [cell.sizeButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
-        
         self.selectedSizeAndAddToCart = NO;
-        
         [self addToCartPressed:self.backupButton];
     }
 }

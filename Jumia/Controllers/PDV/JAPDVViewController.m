@@ -95,7 +95,7 @@ JAActivityViewControllerDelegate
 {
     if (!VALID_NOTEMPTY(_productImageSection, JAPDVImageSection)) {
         
-        _productImageSection = [JAPDVImageSection getNewPDVImageSection:self.product.fashion];
+        _productImageSection = [[JAPDVImageSection alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 500)];
         _productImageSection.delegate = self;
         [_productImageSection.wishListButton addTarget:self
                                                     action:@selector(addToFavoritesPressed:)
@@ -611,11 +611,11 @@ JAActivityViewControllerDelegate
 
 - (void)fillTheViews
 {
-    [self productLoaded];
-    
     if (self.product == nil) {
         return;
     }
+    
+    [self productLoaded];
     
     CGFloat scrollViewY = .0f;
     CGFloat landscapeScrollViewY = 0.0f;
@@ -641,7 +641,9 @@ JAActivityViewControllerDelegate
     
     CGRect imageSectionFrame = self.mainScrollView.bounds;
     [self.productImageSection setupWithFrame:imageSectionFrame product:self.product preSelectedSize:self.preSelectedSize];
-    [self.productImageSection addGlobalButtonTarget:self action:@selector(showSeller)];
+    if (VALID_NOTEMPTY(self.product.seller, RISeller) && [self.product.seller isGlobal]) {
+        [self.productImageSection addGlobalButtonTarget:self action:@selector(showSeller)];
+    }
     
     if(isiPadInLandscape)
     {
@@ -1090,7 +1092,7 @@ JAActivityViewControllerDelegate
 
 - (void)addToCart
 {
-    if(VALID_NOTEMPTY(self.product.productSimples, NSOrderedSet) && self.product.productSimples.count > 1 && !VALID_NOTEMPTY(self.preSelectedSize, NSString))
+    if(VALID_NOTEMPTY(self.product.productSimples, NSOrderedSet) && self.product.productSimples.count > 1 && !VALID_NOTEMPTY(self.currentSimple, RIProductSimple))
     {
         self.openPickerFromCart = YES;
         [self showSizePicker];
@@ -1169,10 +1171,8 @@ JAActivityViewControllerDelegate
         {
             if ([simple.quantity integerValue] > 0)
             {
-                if (VALID_NOTEMPTY(simple.variation, NSString)) {
-                    [self.pickerDataSource addObject:simple];
-                    [options addObject:simple.variation];
-                }
+                [self.pickerDataSource addObject:simple];
+                [options addObject:simple.variation];
             }
         }
     }
