@@ -140,8 +140,8 @@
         _warrantyIcon = [UIImageView new];
         [_warrantyIcon setImage:[UIImage imageNamed:@"warranty"]];
         [_warrantyIcon sizeToFit];
-        [_warrantyIcon setX:self.sellerNameLabel.x];
-        [_warrantyIcon setY:CGRectGetMaxY(self.sellerNameLabel.frame)+16.f];
+        [_warrantyIcon setX:self.sellerDeliveryLabel.x];
+        [_warrantyIcon setY:CGRectGetMaxY(self.sellerDeliveryLabel.frame)+10.f];
         if (RI_IS_RTL) {
             [_warrantyIcon flipViewImage];
         }
@@ -197,6 +197,9 @@
         [self.linkGlobalButton.titleLabel sizeToFit];
         [self.linkGlobalButton setY:CGRectGetMaxY(self.shippingGlobalLabel.frame)+8.f];
         [self.linkGlobalButton sizeToFit];
+        
+        [self.warrantyIcon setX:CGRectGetMinX(self.shippingIcon.frame)];
+        [self.warrantyIcon setY:CGRectGetMaxY(self.linkGlobalButton.frame) + 5.f];
     }
     
     if (!seller.isGlobal) {
@@ -210,9 +213,9 @@
         [self.sellerWarrantyLabel setFont:JACaption2Font];
         [self.sellerWarrantyLabel setTextColor:JABlackColor];
         [self.sellerWarrantyLabel sizeToFit];
-        [self.sellerWarrantyLabel setX:CGRectGetMaxX(self.warrantyIcon.frame) + 16.f];
+        [self.sellerWarrantyLabel setX:CGRectGetMaxX(self.warrantyIcon.frame) + 12.f];
+        [self.sellerWarrantyLabel setY:CGRectGetMidY(self.warrantyIcon.frame) - 7.f];
         [self.warrantyIcon setHidden:NO];
-        [self.warrantyIcon setY:self.sellerWarrantyLabel.y];
         [self setHeight:CGRectGetMaxY(self.sellerWarrantyLabel.frame) + 16.f];
     }
     

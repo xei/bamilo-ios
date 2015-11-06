@@ -1047,15 +1047,16 @@ typedef void (^ProcessActionBlock)(void);
                                                       userInfo:userInfo];
 }
 
-#pragma mark - JAMainFiltersViewControllerDelegate
+#pragma mark - JAFiltersViewControllerDelegate
 
-- (void)updatedFilters;
+- (void)updatedFilters:updatedFiltersArray;
 {
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     
     BOOL filtersSelected = NO;
-    if(VALID_NOTEMPTY(self.filtersArray, NSArray))
+    if(VALID_NOTEMPTY(updatedFiltersArray, NSArray))
     {
+        self.filtersArray = updatedFiltersArray;
         for(RIFilter *filter in self.filtersArray)
         {
             if (VALID_NOTEMPTY(filter.uid, NSString) && VALID_NOTEMPTY(filter.options, NSArray) && 0 < filter.options.count)
@@ -1185,11 +1186,7 @@ typedef void (^ProcessActionBlock)(void);
     
     if(VALID(self.filtersArray, NSArray))
     {
-        [userInfo setObject:self.filtersArray forKey:@"filtersArray"];
-    }
-    if(VALID(self.filterCategory, RICategory))
-    {
-        [userInfo setObject:self.filterCategory forKey:@"selectedCategory"];
+        [userInfo setObject:[RIFilter copyFiltersArray:self.filtersArray] forKey:@"filtersArray"];
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowFiltersScreenNotification

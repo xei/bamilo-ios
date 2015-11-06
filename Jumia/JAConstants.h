@@ -77,8 +77,6 @@
 
 // Filters
 #define kShowFiltersScreenNotification @"NOTIFICATION_SHOW_FILTERS_SCREEN"
-#define kShowPriceFiltersScreenNotification @"NOTIFICATION_SHOW_PRICE_FILTERS_SCREEN"
-#define kShowGenericFiltersScreenNotification @"NOTIFICATION_SHOW_GENERIC_FILTERS_SCREEN"
 
 // Product
 #define kShowProductSpecificationScreenNotification @"NOTIFICATION_SHOW_PRODUCT_SPECIFICATION_SCREEN"
