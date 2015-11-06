@@ -49,6 +49,8 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.navBarLayout.showBackButton = YES;
     
+    self.navBarLayout.title = STRING_OTHER_SELLERS;
+    
     self.flowLayout = [JAProductListFlowLayout new];
     self.flowLayout.manualCellSpacing = 6.0f;
     self.flowLayout.minimumLineSpacing = 0;
