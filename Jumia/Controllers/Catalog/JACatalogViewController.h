@@ -9,7 +9,6 @@
 #import "JABaseViewController.h"
 #import "JACatalogTopView.h"
 #import "RICategory.h"
-#import "JAMainFiltersViewController.h"
 #import "JAPDVViewController.h"
 #import "JAUndefinedSearchView.h"
 #import "JASortingView.h"
@@ -21,7 +20,6 @@
     JACatalogTopViewDelegate,
     UICollectionViewDataSource,
     UICollectionViewDelegate,
-    JAMainFiltersViewControllerDelegate,
     JAFiltersViewControllerDelegate,
     JAUndefinedSearchViewDelegate
 >

@@ -44,8 +44,6 @@
 #import "JAUserDataViewController.h"
 #import "JAEmailNotificationsViewController.h"
 #import "JACampaignsViewController.h"
-#import "JAPriceFilterViewController.h"
-#import "JAGenericFilterViewController.h"
 #import "JAProductDetailsViewController.h"
 #import "JATabNavigationViewController.h"
 #import "JARatingsViewController.h"
@@ -291,16 +289,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showFiltersScreen:)
                                                  name:kShowFiltersScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showPriceFiltersScreen:)
-                                                 name:kShowPriceFiltersScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showGenericFiltersScreen:)
-                                                 name:kShowGenericFiltersScreenNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -1173,42 +1161,6 @@
         }
         
         [self pushViewController:filtersViewController animated:YES];
-    }
-}
-
-- (void)showPriceFiltersScreen:(NSNotification*)notification
-{
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAPriceFilterViewController class]])
-    {
-        JAPriceFilterViewController* priceFilterViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"priceFilterViewController"];
-        
-        if ([notification.userInfo objectForKey:@"priceFilterOption"]) {
-            priceFilterViewController.priceFilterOption = [notification.userInfo objectForKey:@"priceFilterOption"];
-        }
-        if ([notification.userInfo objectForKey:@"delegate"]) {
-            priceFilterViewController.delegate = [notification.userInfo objectForKey:@"delegate"];
-        }
-        
-        [self pushViewController:priceFilterViewController animated:YES];
-    }
-}
-
-- (void)showGenericFiltersScreen:(NSNotification*)notification
-{
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAGenericFilterViewController class]])
-    {
-        JAGenericFilterViewController* genericFilterViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"genericFilterViewController"];
-        
-        if ([notification.userInfo objectForKey:@"filter"]) {
-            genericFilterViewController.filter = [notification.userInfo objectForKey:@"filter"];
-        }
-        if ([notification.userInfo objectForKey:@"delegate"]) {
-            genericFilterViewController.delegate = [notification.userInfo objectForKey:@"delegate"];
-        }
-        
-        [self pushViewController:genericFilterViewController animated:YES];
     }
 }
 
