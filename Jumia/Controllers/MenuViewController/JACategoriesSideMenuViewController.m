@@ -9,6 +9,7 @@
 #import "JACategoriesSideMenuViewController.h"
 #import "RICategory.h"
 #import "JAClickableView.h"
+#import "JAAppDelegate.h"
 
 @interface JACategoriesSideMenuViewController ()
 
@@ -16,18 +17,84 @@
 @property (nonatomic, strong)UITableView* tableView;
 @property (nonatomic, strong)NSMutableArray* tableViewCategoriesArray;
 
+@property (strong, nonatomic) UIView *loadingView;
+@property (nonatomic, strong) UIImageView *loadingAnimation;
+
 @end
 
 @implementation JACategoriesSideMenuViewController
+
+# pragma mark Loading View
+//THIS IS NOT A BASE VIEW CONTROLLER SO IT NEEDS ITS OWN LOADING VIEW
+
+- (void)initLoading
+{
+    self.loadingView = [[UIImageView alloc] initWithFrame:((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame];
+    self.loadingView.backgroundColor = [UIColor blackColor];
+    self.loadingView.alpha = 0.0f;
+    self.loadingView.userInteractionEnabled = YES;
+    
+    UIImage *image = [UIImage imageNamed:@"loadingAnimationFrame1"];
+    
+    int lastFrame = 24;
+    if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"] || [[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"]) {
+        lastFrame = 6;
+    }else if([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
+    {
+        lastFrame = 8;
+    }
+    self.loadingAnimation = [[UIImageView alloc] initWithFrame:CGRectMake(0,
+                                                                          0,
+                                                                          image.size.width,
+                                                                          image.size.height)];
+    self.loadingAnimation.animationDuration = 1.0f;
+    NSMutableArray *animationFrames = [NSMutableArray new];
+    for (int i = 1; i <= lastFrame; i++) {
+        NSString *frameName = [NSString stringWithFormat:@"loadingAnimationFrame%d", i];
+        UIImage *frame = [UIImage imageNamed:frameName];
+        [animationFrames addObject:frame];
+    }
+    self.loadingAnimation.animationImages = [animationFrames copy];
+    self.loadingAnimation.center = self.loadingView.center;
+    
+    self.loadingView.alpha = 0.0f;
+}
+
+- (void)showLoading {
+    
+    if (NO == VALID_NOTEMPTY(self.loadingView, UIView)) {
+        [self initLoading];
+    }
+    
+    [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view addSubview:self.loadingView];
+    [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view addSubview:self.loadingAnimation];
+    
+    [self.loadingAnimation startAnimating];
+    
+    [UIView animateWithDuration:0.4f
+                     animations: ^{
+                         self.loadingView.alpha = 0.5f;
+                         self.loadingAnimation.alpha = 0.5f;
+                     }];
+}
+
+- (void)hideLoading {
+    
+    [UIView animateWithDuration:0.4f
+                     animations: ^{
+                         self.loadingView.alpha = 0.0f;
+                         self.loadingAnimation.alpha = 0.0f;
+                     } completion: ^(BOOL finished) {
+                         [self.loadingView removeFromSuperview];
+                         [self.loadingAnimation removeFromSuperview];
+                     }];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     self.A4SViewControllerAlias = @"SUBCATEGORY";
-    
-    self.tabBarIsVisible = YES;
-    
-    self.searchViewAlwaysHidden = YES;
 
     self.view.backgroundColor = JANavBarBackgroundGrey;
     
@@ -35,6 +102,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popToRoot) name:kSideMenuShouldReload object:nil];
 
+    [self showLoading];
     [RICategory getCategoriesWithSuccessBlock:^(id categories) {
         
         self.categoriesArray = [NSArray arrayWithArray:(NSArray *)categories];
@@ -45,8 +113,6 @@
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
         
         [self hideLoading];
-        
-        [self showMessage:STRING_ERROR success:NO];
     }];
     
     self.tableView = [UITableView new];
@@ -89,7 +155,10 @@
     [super viewWillAppear:animated];
     
     //manually add the status bar height into the calculations
-    CGFloat statusBarHeight = 20.0f;
+    CGFloat statusBarHeight = 0.0f;
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0")) {
+        statusBarHeight = 20.0f;
+    }
     [self.tableView setFrame:CGRectMake(self.view.bounds.origin.x,
                                         self.view.bounds.origin.y + statusBarHeight,
                                         self.view.bounds.size.width,
@@ -99,7 +168,10 @@
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     //manually add the status bar height into the calculations
-    CGFloat statusBarHeight = 20.0f;
+    CGFloat statusBarHeight = 0.0f;
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0")) {
+        statusBarHeight = 20.0f;
+    }
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     [self.tableView setFrame:CGRectMake(self.view.bounds.origin.x,
                                         self.view.bounds.origin.y + statusBarHeight,
