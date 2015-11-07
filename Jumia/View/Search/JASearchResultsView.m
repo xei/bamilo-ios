@@ -75,18 +75,17 @@
             self.backView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
         }];
         
-        self.resultsTableView = [[UITableView alloc] initWithFrame:self.bounds
-                                                             style:UITableViewStyleGrouped];
+        self.resultsTableView = [[UITableView alloc] init];
         
         self.resultsTableView.backgroundColor = UIColorFromRGB(0xffffff);
         self.resultsTableView.delegate = self;
         self.resultsTableView.dataSource = self;
-        self.resultsTableView.contentInset = UIEdgeInsetsMake(-35.0f, 0.f, 0.f, 0.f);
         [self.resultsTableView registerClass:[UITableViewCell class]
                       forCellReuseIdentifier:@"cell"];
         self.resultsTableView.separatorColor = [UIColor clearColor];
 
-        self.resultsTableOriginalFrame = self.resultsTableView.frame;
+        self.resultsTableOriginalFrame = self.bounds;
+        self.resultsTableView.frame = self.resultsTableOriginalFrame;
         
         [self addSubview:self.resultsTableView];
         
