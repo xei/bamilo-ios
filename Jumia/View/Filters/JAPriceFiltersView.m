@@ -42,7 +42,7 @@
     self.priceRangeSlider.upperValue = self.priceFilterOption.upperValue;
     self.priceRangeSlider.lowerValue = self.priceFilterOption.lowerValue;
     
-    [self sliderMoved:nil];
+    self.priceRangeLabel.text = [NSString stringWithFormat:@"%d - %d", (int)self.priceRangeSlider.lowerValue, (int)self.priceRangeSlider.upperValue];
     
     self.discountLabel.translatesAutoresizingMaskIntoConstraints = YES;
     self.discountLabel.text = STRING_WITH_DISCOUNT_ONLY;
