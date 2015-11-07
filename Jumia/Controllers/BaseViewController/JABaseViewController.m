@@ -399,10 +399,14 @@
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar;
 {
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
-    self.searchBarBackButton = [[UIButton alloc] initWithFrame:CGRectMake(window.bounds.origin.x + 15.0f,
+    self.searchBarBackButton = [[UIButton alloc] initWithFrame:CGRectMake(window.bounds.origin.x,
                                                                           window.bounds.origin.y + 20.0f,
                                                                           80.0f,
                                                                           44.0f)];
+    [self.searchBarBackButton setImageEdgeInsets:UIEdgeInsetsMake(0.0f,
+                                                                  10.0f,
+                                                                  0.0f,
+                                                                  0.0f)];
     self.searchBarBackButton.backgroundColor = JANavBarBackgroundGrey;
     [self.searchBarBackButton setImage:[UIImage imageNamed:@"btn_back"] forState:UIControlStateNormal];
     [self.searchBarBackButton setImage:[UIImage imageNamed:@"btn_back_pressed"] forState:UIControlStateHighlighted];
