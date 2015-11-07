@@ -187,8 +187,7 @@
 {
     _ratingSum = ratingSum;
     if (ratingSum.integerValue == 0) {
-#warning TODO String
-        [self.ratingSumLabel setText:@"Be the first to rate"];
+        [self.ratingSumLabel setText:STRING_BE_THE_FIRST_TO_RATE];
     }else
         [self.ratingSumLabel setText:[NSString stringWithFormat:@"(%@)", ratingSum]];
     [_ratingSumLabel sizeToFit];

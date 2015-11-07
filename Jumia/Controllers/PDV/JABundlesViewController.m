@@ -241,7 +241,6 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
         RIProductSimple* pds = [self.selectedItems objectForKey:bundleProduct.sku];
         [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, pds.variation]
                          forState:UIControlStateNormal];
-        [cell.sizeButton sizeToFit];
         
         if (VALID_NOTEMPTY(pds.specialPriceFormatted, NSString)) {
             [cell setSimplePrice:pds.specialPriceFormatted andOldPrice:pds.priceFormatted];

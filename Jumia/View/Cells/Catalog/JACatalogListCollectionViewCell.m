@@ -170,9 +170,10 @@
         [self setForRTL:self.discountLabel];
     }
     
-    CGRect sizeButtonRect = CGRectMake(distXAfterImage, CGRectGetMaxY(priceLineRect), self.sizeButton.width, 15);
+    CGRect sizeButtonRect = CGRectMake(distXAfterImage, CGRectGetMaxY(priceLineRect), self.width - 2*distXAfterImage, 15);
     if (!CGRectEqualToRect(sizeButtonRect, self.sizeButton.frame)) {
         [self.sizeButton setFrame:sizeButtonRect];
+        self.sizeButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         [self setForRTL:self.sizeButton];
     }
     
@@ -198,6 +199,9 @@
         [view flipAllSubviews];
         if ([view isKindOfClass:[UILabel class]] && [(UILabel *)view textAlignment] != NSTextAlignmentCenter) {
             [(UILabel *)view setTextAlignment:NSTextAlignmentRight];
+        } else if ([view isKindOfClass:[UIButton class]] && [(UIButton*)view contentHorizontalAlignment] != UIControlContentHorizontalAlignmentCenter)
+        {
+            ((UIButton*)view).contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         }
     }
 }

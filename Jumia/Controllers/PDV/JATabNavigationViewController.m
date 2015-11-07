@@ -85,8 +85,7 @@
     CGRect frame = CGRectMake(0, 0, self.view.width/3, kTabsHeight);
     if (!VALID_NOTEMPTY(_descriptionTabButton, JATabButton)) {
         _descriptionTabButton = [[JATabButton alloc] initWithFrame:frame];
-#warning TODO String
-        [_descriptionTabButton.titleButton setTitle:@"Description" forState:UIControlStateNormal];
+        [_descriptionTabButton.titleButton setTitle:STRING_DESCRIPTION forState:UIControlStateNormal];
         [_descriptionTabButton.titleButton addTarget:self action:@selector(goToDescription) forControlEvents:UIControlEventTouchUpInside];
     }else{
         if (!CGRectEqualToRect(frame, _descriptionTabButton.frame)) {
@@ -101,8 +100,7 @@
     CGRect frame = CGRectMake(self.view.width/3, 0, self.view.width/3, kTabsHeight);
     if (!VALID_NOTEMPTY(_spectificationTabButton, JATabButton)) {
         _spectificationTabButton = [[JATabButton alloc] initWithFrame:frame];
-#warning TODO String
-        [_spectificationTabButton.titleButton setTitle:@"Specifications" forState:UIControlStateNormal];
+        [_spectificationTabButton.titleButton setTitle:STRING_SPECIFICATIONS forState:UIControlStateNormal];
         [_spectificationTabButton.titleButton addTarget:self action:@selector(goToSpecifications) forControlEvents:UIControlEventTouchUpInside];
     }else{
         if (!CGRectEqualToRect(frame, _spectificationTabButton.frame)) {
@@ -117,8 +115,7 @@
     CGRect frame = CGRectMake(2*self.view.width/3, 0, self.view.width/3, kTabsHeight);
     if (!VALID_NOTEMPTY(_reviewsTabButton, JATabButton)) {
         _reviewsTabButton = [[JATabButton alloc] initWithFrame:frame];
-#warning TODO String
-        [_reviewsTabButton.titleButton setTitle:@"Ratings / Reviews" forState:UIControlStateNormal];
+        [_reviewsTabButton.titleButton setTitle:STRING_REVIEWS_RATINGS forState:UIControlStateNormal];
         [_reviewsTabButton.titleButton addTarget:self action:@selector(goToReviews) forControlEvents:UIControlEventTouchUpInside];
     }else{
         if (!CGRectEqualToRect(frame, _reviewsTabButton.frame)) {

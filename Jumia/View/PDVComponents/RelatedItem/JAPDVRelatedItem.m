@@ -56,8 +56,7 @@
 {
     if (!VALID_NOTEMPTY(_topLabel, JAProductInfoHeaderLine)) {
         _topLabel = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, 0, self.width, kProductInfoHeaderLineHeight)];
-#warning TODO String
-        [_topLabel setTitle:[@"You may also like" uppercaseString]];
+        [_topLabel setTitle:[STRING_YOU_MAY_ALSO_LIKE uppercaseString]];
         [self addSubview:_topLabel];
     }
     return _topLabel;

@@ -53,8 +53,7 @@
 {
     if (!VALID(_headerLine, JAProductInfoHeaderLine)) {
         _headerLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, 0, self.width, kProductInfoHeaderLineHeight)];
-#warning TODO String
-        [_headerLine setTitle:[@"Buy the look" uppercaseString]];
+        [_headerLine setTitle:[STRING_BUY_THE_LOOK uppercaseString]];
         [self addSubview:_headerLine];
     }
     return _headerLine;

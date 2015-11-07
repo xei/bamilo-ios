@@ -16,6 +16,7 @@
 @dynamic brand;
 @dynamic name;
 @dynamic price;
+@dynamic specialPrice;
 @dynamic sku;
 @dynamic image;
 @dynamic product;
@@ -30,9 +31,17 @@
     if ([variation objectForKey:@"name"]) {
         newVariation.name = [variation objectForKey:@"name"];
     }
-    if ([variation objectForKey:@"price"]) {
-        newVariation.price = [variation objectForKey:@"price"];
+    if ([variation objectForKey:@"special_price"]) {
+        float f = [[variation objectForKey:@"special_price"] floatValue];
+        newVariation.specialPrice = [NSNumber numberWithFloat:f];
     }
+    else newVariation.specialPrice = nil;
+    
+    if (VALID_NOTEMPTY([variation objectForKey:@"price"], NSString)) {
+        float f = [[variation objectForKey:@"price"] floatValue];
+        newVariation.price = [NSNumber numberWithFloat:f];
+    }
+    
     if ([variation objectForKey:@"sku"]) {
         newVariation.sku = [variation objectForKey:@"sku"];
     }
