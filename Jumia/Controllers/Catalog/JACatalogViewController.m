@@ -1084,7 +1084,7 @@ typedef void (^ProcessActionBlock)(void);
                 {
                     for (RIFilterOption* filterOption in filter.options)
                     {
-                        if (filterOption.selected)
+                        if (filterOption.selected && VALID_NOTEMPTY(filterOption.name, NSString))
                         {
                             [self trackingEventIndividualFilter:filter.name];
                             
