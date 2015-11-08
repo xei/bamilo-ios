@@ -380,7 +380,7 @@
     [self requestReviews];
     
     CGFloat yOffset = 0.f;
-    [self.ratingsHeaderLine setTitle:[NSString stringWithFormat:@"RATINGS (%d)", _product.sum.intValue]];
+    [self.ratingsHeaderLine setTitle:[NSString stringWithFormat:@"%@ (%d)", [STRING_RATINGS uppercaseString], _product.sum.intValue]];
     [self.ratingsHeaderLine setY:yOffset];
     [self.topView addSubview:self.ratingsHeaderLine];
     yOffset = CGRectGetMaxY(self.ratingsHeaderLine.frame);
@@ -388,7 +388,7 @@
     [self.topView addSubview:self.ratingsView];
     yOffset = CGRectGetMaxY(self.ratingsView.frame);
     
-    [self.reviewsHeaderLine setTitle:[NSString stringWithFormat:@"USER REVIEWS (%d)", _product.reviewsTotal.intValue]];
+    [self.reviewsHeaderLine setTitle:[NSString stringWithFormat:@"%@ (%d)", [STRING_USER_REVIEWS uppercaseString],_product.reviewsTotal.intValue]];
     [self.reviewsHeaderLine setY:yOffset];
     [self.topView addSubview:self.reviewsHeaderLine];
     yOffset = CGRectGetMaxY(self.reviewsHeaderLine.frame);
