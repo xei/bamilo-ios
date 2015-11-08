@@ -357,4 +357,6 @@
 #define STRING_BE_THE_FIRST_TO_RATE RILocalizedString(@"be_the_first_to_rate", nil)
 #define STRING_BY_SOMEONE RILocalizedString(@"by_someone", nil)
 
+#define STRING_USER_REVIEWS RILocalizedString(@"user_reviews", nil)
+
 #endif
