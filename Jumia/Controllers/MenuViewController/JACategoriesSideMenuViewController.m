@@ -101,7 +101,20 @@
     // notify the InAppNotification SDK that this the active view controller
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popToRoot) name:kSideMenuShouldReload object:nil];
+    
+    self.tableView = [UITableView new];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [self.view addSubview:self.tableView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCategories) name:kSideMenuShouldReload object:nil];
+    
+    [self reloadCategories];
+}
 
+- (void)reloadCategories
+{
     [self showLoading];
     [RICategory getCategoriesWithSuccessBlock:^(id categories) {
         
@@ -114,12 +127,6 @@
         
         [self hideLoading];
     }];
-    
-    self.tableView = [UITableView new];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    [self.view addSubview:self.tableView];
 }
 
 - (void)categoriesLoaded

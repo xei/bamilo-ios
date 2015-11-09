@@ -210,6 +210,11 @@ typedef void (^ProcessActionBlock)(void);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(navBarClicked)
                                                  name:kDidPressNavBar
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getCategories) name:kSideMenuShouldReload object:nil];
+    
+    if (VALID_NOTEMPTY(self.category, RICategory)) {
+        self.categoryUrlKey = self.category.urlKey;
+    }
     
     self.apiResponse = RIApiResponseSuccess;
     
@@ -403,19 +408,9 @@ typedef void (^ProcessActionBlock)(void);
          [self removeErrorView];
          
          for (RICategory *category in categories)
-         {
-             if(VALID_NOTEMPTY(self.categoryId, NSString))
-             {
-                 if ([self.categoryId isEqualToString:category.label])
-                 {
-                     self.category = category;
-                     break;
-                 }
-             }
-             else if(VALID_NOTEMPTY(self.categoryName, NSString))
-             {
-                 if ([self.categoryName isEqualToString:category.urlKey])
-                 {
+         {             
+             if (VALID_NOTEMPTY(self.categoryUrlKey, NSString)) {
+                 if ([self.categoryUrlKey isEqualToString:category.urlKey]) {
                      self.category = category;
                      break;
                  }
@@ -426,13 +421,12 @@ typedef void (^ProcessActionBlock)(void);
          {
              self.navBarLayout.title = self.category.label;
              
+             self.productsArray = nil;
              [self loadMoreProducts];
          }
          else
          {
-             self.navBarLayout.title = self.categoryName;
-             
-             [self loadMoreProducts];
+             //do nothing
          }
          
          [self hideLoading];
