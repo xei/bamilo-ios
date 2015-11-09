@@ -824,15 +824,17 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
             else if ([key isEqualToString:@"d"] && VALID_NOTEMPTY(arguments, NSString))
             {
                 // PDV - jumia://ng/d/BL683ELACCDPNGAMZ?size=1
-                NSString *parameter = [argumentsComponents objectAtIndex:1];
-                if(VALID_NOTEMPTY(parameter, NSString))
-                {
-                    NSArray *parameterComponents = [parameter componentsSeparatedByString:@"="];
-                    if(VALID_NOTEMPTY(parameterComponents, NSArray) && 1 < [parameterComponents count])
+                if (1 < argumentsComponents.count) {
+                    NSString *parameter = [argumentsComponents objectAtIndex:1];
+                    if(VALID_NOTEMPTY(parameter, NSString))
                     {
-                        parameterKey = [parameterComponents objectAtIndex:0];
-                        parameterValue = [parameterComponents objectAtIndex:1];
-                    }
+                        NSArray *parameterComponents = [parameter componentsSeparatedByString:@"="];
+                        if(VALID_NOTEMPTY(parameterComponents, NSArray) && 1 < [parameterComponents count])
+                        {
+                            parameterKey = [parameterComponents objectAtIndex:0];
+                            parameterValue = [parameterComponents objectAtIndex:1];
+                        }
+                    }    
                 }
                 // Check if there is field size
                 NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
