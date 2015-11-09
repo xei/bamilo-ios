@@ -181,10 +181,10 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 
 - (BOOL)isLandscape
 {
-    if(UIDeviceOrientationPortrait == ([UIDevice currentDevice].orientation) || UIDeviceOrientationPortraitUpsideDown == ([UIDevice currentDevice].orientation)) {
-        return NO;
-    }else{
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)){
         return YES;
+    }else{
+        return NO;
     }
 }
 
