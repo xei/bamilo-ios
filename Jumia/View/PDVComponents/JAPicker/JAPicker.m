@@ -163,7 +163,7 @@ UIPickerViewDelegate
         self.titleLabel = [[UILabel alloc] init];
         [self.titleLabel setText:pickerTitle];
         [self.titleLabel setTextAlignment:NSTextAlignmentCenter];
-        [self.titleLabel setFrame:CGRectMake(0, 0, self.width, 44.0f)];
+        [self.titleLabel setFrame:CGRectMake(0, 0, self.width - self.doneButton.frame.size.width, 44.0f)];
         [self.buttonBackgroundView addSubview:self.titleLabel];
         
         UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, 44.0f, self.width, 1)];
