@@ -276,14 +276,20 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-
+    CGFloat heightLabel = 44.0f;
     //remove the clickable view
     for (UIView* view in cell.subviews) {
-        if ([view isKindOfClass:[JAClickableView class]]) {
+        if ([view isKindOfClass:[JAClickableView class]]) { //remove the clickable view
             [view removeFromSuperview];
+        } else {
+            for (UIView* subview in view.subviews) {
+                if ([subview isKindOfClass:[JAClickableView class]]) { //remove the clickable view
+                    [subview removeFromSuperview];
+                }
+            }
         }
     }
-
+    
     //add the new clickable view
     CGFloat cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
     [cell setFrame:CGRectMake(cell.frame.origin.x,
@@ -297,6 +303,10 @@
                                                                                    cellHeight)];
     clickView.tag = indexPath.row;
     [cell addSubview:clickView];
+    
+    UILabel *customTextLabel = [UILabel new];
+    customTextLabel.textAlignment = NSTextAlignmentLeft;
+    [clickView addSubview:customTextLabel];
     
     RISearchSuggestion *sugestion = [self.resultsArray objectAtIndex:indexPath.row];
     
@@ -330,16 +340,40 @@
                        value:subStringTextFont
                        range:range];
     
-    cell.textLabel.attributedText = stringText;
+    customTextLabel.attributedText = stringText;
+    
+    UIImage *recentSearchImage;
+    UIImageView *recentSearchImageView = [UIImageView new];
+    
     
     if (1 == sugestion.isRecentSearch)
     {
-        cell.imageView.image = [UIImage imageNamed:@"ico_recentsearchsuggestion"];
+        recentSearchImage = [UIImage imageNamed:@"ico_recentsearchsuggestion"];
     }
     else
     {
-        cell.imageView.image = [UIImage imageNamed:@"ico_searchsuggestion"];
+        recentSearchImage = [UIImage imageNamed:@"ico_searchsuggestion"];
     }
+    
+    [recentSearchImageView setImage:recentSearchImage];
+    [clickView addSubview:recentSearchImageView];
+    
+    CGFloat customImageX = recentSearchImage.size.width;
+    CGFloat customTextX = (recentSearchImage.size.width*2) + 18.0f;
+    CGFloat separatorX = 45.0f;
+    CGFloat separatorWidth = cell.frame.size.width-20;
+    CGFloat customTextLabelWidth = clickView.frame.size.width - separatorX - 6.0f;
+    
+    [recentSearchImageView setFrame:CGRectMake(customImageX,
+                                               (heightLabel - recentSearchImage.size.height)/2,
+                                               recentSearchImage.size.width,
+                                               recentSearchImage.size.height)];
+    
+    
+    [customTextLabel setFrame:CGRectMake(customTextX,
+                                         0.0f,
+                                         customTextLabelWidth,
+                                         heightLabel)];
     
     //remove the clickable view
     for (UIView* view in cell.subviews) {
@@ -347,19 +381,29 @@
             [view removeFromSuperview];
         }
     }
+    UIImageView *line;
     if (0 == indexPath.row)
     {
-        UIImageView *line = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, 1)];
+        line = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, 1)];
         line.backgroundColor = UIColorFromRGB(0xcccccc);
         line.tag = 99;
-        [cell.viewForBaselineLayout addSubview:line];
+        [clickView addSubview:line];
     }
     
-    UIImageView *line2 = [[UIImageView alloc] initWithFrame:CGRectMake(45, cell.frame.size.height-1, cell.frame.size.width-20, 1)];
+    UIImageView *line2 = [[UIImageView alloc] initWithFrame:CGRectMake(separatorX, cell.frame.size.height-1, separatorWidth, 1)];
     line2.backgroundColor = UIColorFromRGB(0xcccccc);
     line2.tag = 98;
-    [cell.viewForBaselineLayout addSubview:line2];
+    [clickView addSubview:line2];
     
+    if(RI_IS_RTL){
+        
+        [cell flipSubviewPositions];
+        [line flipViewPositionInsideSuperview];
+        [line2 flipViewPositionInsideSuperview];
+        [recentSearchImageView flipViewPositionInsideSuperview];
+        [customTextLabel flipViewPositionInsideSuperview];
+        [customTextLabel setTextAlignment:NSTextAlignmentRight];
+    }
     [clickView addTarget:self action:@selector(resultCellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
