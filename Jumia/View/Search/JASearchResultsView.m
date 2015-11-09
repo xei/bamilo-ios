@@ -135,12 +135,15 @@
     if (self.resultsTableView.hidden) {
         self.resultsTableView.hidden = NO;
         
-        CGRect finalFrame = self.resultsTableView.frame;
+        CGRect finalFrame = CGRectMake(self.resultsTableOriginalFrame.origin.x,
+                                       self.resultsTableOriginalFrame.origin.y,
+                                       self.resultsTableOriginalFrame.size.width,
+                                       self.resultsTableOriginalFrame.size.height - self.currentKeyboardHeight);
         
-        self.resultsTableView.frame = CGRectMake(self.resultsTableView.frame.origin.x,
-                                                 self.resultsTableView.frame.size.height,
-                                                 self.resultsTableView.frame.size.width,
-                                                 self.resultsTableView.frame.size.height);
+        [self.resultsTableView setFrame:CGRectMake(self.resultsTableOriginalFrame.origin.x,
+                                                   self.resultsTableOriginalFrame.size.height,
+                                                   self.resultsTableOriginalFrame.size.width,
+                                                   self.resultsTableOriginalFrame.size.height - self.currentKeyboardHeight)];
         
         [UIView animateWithDuration:0.3f animations:^{
             self.resultsTableView.frame = finalFrame;
@@ -150,19 +153,24 @@
 
 - (void)removeResultsTableViewFromView
 {
-    CGRect startFrame = self.resultsTableView.frame;
-    
-    CGRect finalFrame = CGRectMake(self.resultsTableView.frame.origin.x,
-                                   self.resultsTableView.frame.size.height,
-                                   self.resultsTableView.frame.size.width,
-                                   self.resultsTableView.frame.size.height);
-    
-    [UIView animateWithDuration:0.3f animations:^{
-        self.resultsTableView.frame = finalFrame;
-    } completion:^(BOOL finished) {
-        self.resultsTableView.hidden = YES;
-        self.resultsTableView.frame = startFrame;
-    }];
+    if (NO == self.resultsTableView.hidden) {
+        CGRect startFrame = CGRectMake(self.resultsTableOriginalFrame.origin.x,
+                                       self.resultsTableOriginalFrame.origin.y,
+                                       self.resultsTableOriginalFrame.size.width,
+                                       self.resultsTableOriginalFrame.size.height - self.currentKeyboardHeight);
+        
+        CGRect finalFrame = CGRectMake(self.resultsTableOriginalFrame.origin.x,
+                                       self.resultsTableOriginalFrame.size.height,
+                                       self.resultsTableOriginalFrame.size.width,
+                                       self.resultsTableOriginalFrame.size.height - self.currentKeyboardHeight);
+        
+        [UIView animateWithDuration:0.3f animations:^{
+            self.resultsTableView.frame = finalFrame;
+        } completion:^(BOOL finished) {
+            self.resultsTableView.hidden = YES;
+            self.resultsTableView.frame = startFrame;
+        }];
+    }
 }
 
 #pragma mark - Tableview datasource and delegate

@@ -16,6 +16,7 @@
 @property (nonatomic, strong)UISearchBar* searchBar;
 @property (nonatomic, strong)UITableView* resultsTableView;
 @property (nonatomic, assign)CGRect resultsTableOriginalFrame;
+@property (nonatomic, assign)CGFloat keyboardHeight;
 @property (nonatomic, strong)NSMutableArray* resultsArray;
 
 @end
@@ -225,15 +226,15 @@
     if (self.resultsTableView.hidden) {
         self.resultsTableView.hidden = NO;
         
-        CGRect finalFrame = CGRectMake(self.resultsTableView.frame.origin.x,
+        CGRect finalFrame = CGRectMake(self.resultsTableOriginalFrame.origin.x,
                                        CGRectGetMaxY(self.searchBar.frame),
-                                       self.resultsTableView.frame.size.width,
-                                       self.resultsTableView.frame.size.height);
+                                       self.resultsTableOriginalFrame.size.width,
+                                       self.resultsTableOriginalFrame.size.height - self.keyboardHeight);
         
-        self.resultsTableView.frame = CGRectMake(self.resultsTableView.frame.origin.x,
-                                                 self.resultsTableView.frame.size.height,
-                                                 self.resultsTableView.frame.size.width,
-                                                 self.resultsTableView.frame.size.height);
+        self.resultsTableView.frame = CGRectMake(self.resultsTableOriginalFrame.origin.x,
+                                                 self.resultsTableOriginalFrame.size.height,
+                                                 self.resultsTableOriginalFrame.size.width,
+                                                 self.resultsTableOriginalFrame.size.height - self.keyboardHeight);
         
         [UIView animateWithDuration:0.3f animations:^{
             self.resultsTableView.frame = finalFrame;
@@ -243,22 +244,24 @@
 
 - (void)removeResultsTableViewFromView
 {
-    CGRect startFrame = CGRectMake(self.resultsTableView.frame.origin.x,
-                                   CGRectGetMaxY(self.searchBar.frame),
-                                   self.resultsTableView.frame.size.width,
-                                   self.resultsTableView.frame.size.height);
-    
-    CGRect finalFrame = CGRectMake(self.resultsTableView.frame.origin.x,
-                                   self.resultsTableView.frame.size.height,
-                                   self.resultsTableView.frame.size.width,
-                                   self.resultsTableView.frame.size.height);
-    
-    [UIView animateWithDuration:0.3f animations:^{
-        self.resultsTableView.frame = finalFrame;
-    } completion:^(BOOL finished) {
-        self.resultsTableView.hidden = YES;
-        self.resultsTableView.frame = startFrame;
-    }];
+    if (NO == self.resultsTableView.hidden) {
+        CGRect startFrame = CGRectMake(self.resultsTableOriginalFrame.origin.x,
+                                       CGRectGetMaxY(self.searchBar.frame),
+                                       self.resultsTableOriginalFrame.size.width,
+                                       self.resultsTableOriginalFrame.size.height - self.keyboardHeight);
+        
+        CGRect finalFrame = CGRectMake(self.resultsTableOriginalFrame.origin.x,
+                                       self.resultsTableOriginalFrame.size.height,
+                                       self.resultsTableOriginalFrame.size.width,
+                                       self.resultsTableOriginalFrame.size.height - self.keyboardHeight);
+        
+        [UIView animateWithDuration:0.3f animations:^{
+            self.resultsTableView.frame = finalFrame;
+        } completion:^(BOOL finished) {
+            self.resultsTableView.hidden = YES;
+            self.resultsTableView.frame = startFrame;
+        }];
+    }
 }
 
 #pragma mark - Tableview datasource and delegate
@@ -436,12 +439,13 @@
     {
         height = kbSize.width;
     }
+    self.keyboardHeight = height;
     
     [UIView animateWithDuration:0.3 animations:^{
         [self.resultsTableView setFrame:CGRectMake(self.resultsTableOriginalFrame.origin.x,
                                                    self.resultsTableOriginalFrame.origin.y,
                                                    self.resultsTableOriginalFrame.size.width,
-                                                   self.resultsTableOriginalFrame.size.height - height)];
+                                                   self.resultsTableOriginalFrame.size.height - self.keyboardHeight)];
     }];
 }
 
