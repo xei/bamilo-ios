@@ -185,8 +185,6 @@ typedef void (^ProcessActionBlock)(void);
  */
 -(void)pressedEditFiltersButton:(JAFilteredNoResultsView *)view
 {
-    [self.filteredNoResultsView removeFromSuperview];
-    
     [self.collectionView setHidden:NO];
     
     [self.bannerImage setHidden:NO];
@@ -497,6 +495,8 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)loadMoreProducts
 {
+    [self.filteredNoResultsView removeFromSuperview];
+    
     if(!self.isLoadingMoreProducts)
     {
         self.loadedEverything = NO;
