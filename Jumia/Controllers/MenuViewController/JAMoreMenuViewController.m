@@ -88,7 +88,7 @@
     }
     
     NSString* text = [kCellTextArray objectAtIndex:indexPath.row];
-    JAGenericMenuCellStyle style;
+    JAGenericMenuCellStyle style = JAGenericMenuCellStyleDefault;
     BOOL hasSeparator = YES;
     if (0 == indexPath.row) {
         style = JAGenericMenuCellStyleHeader;
