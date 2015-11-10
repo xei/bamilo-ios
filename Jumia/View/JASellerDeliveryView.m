@@ -35,6 +35,7 @@
     NSInteger currenty = 26;
     
     self.title = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, 0.0f, width, 26.0f)];
+    self.title.textAlignment = NSTextAlignmentLeft;
     [self.title setText:[NSString stringWithFormat:STRING_SHIPMENT_OF,(long)index,(long)max]];
     [self.title setFont:[UIFont fontWithName:@"HelveticaNeue" size:12.0f]];
     [self.title setTextColor:UIColorFromRGB(0x808080)];
@@ -78,6 +79,7 @@
     
     //name
     self.name = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, currenty, width, 12.0f)];
+    self.name.textAlignment = NSTextAlignmentLeft;
     [self.name setText:[NSString stringWithFormat:@"%@ %@ ",STRING_FULFILLED,sellerDelivery.name]];
     [self.name setFont:[UIFont fontWithName:@"HelveticaNeue" size:12.0f]];
     [self.name setTextColor:UIColorFromRGB(0x666666)];
@@ -87,6 +89,7 @@
     
     //shipping local
     self.delivery = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, currenty, width, 12.0f)];
+    self.delivery.textAlignment = NSTextAlignmentLeft;
     [self.delivery setText:[NSString stringWithFormat:@"%@ ",sellerDelivery.deliveryTime]];
     [self.delivery setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
     [self.delivery setTextColor:UIColorFromRGB(0x666666)];
@@ -101,6 +104,7 @@
 
         //shipping global
         self.shipping = [[UILabel alloc] initWithFrame:CGRectMake(24.0f, currenty, width, 42.0f)];
+        self.shipping.textAlignment = NSTextAlignmentLeft;
         [self.shipping setText:[NSString stringWithFormat:@"%@ ",sellerDelivery.shippingGlobal]];
         [self.shipping setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
         [self.shipping setTextColor:UIColorFromRGB(0xf68b1e)];
