@@ -92,17 +92,17 @@
 
 "products_sort_bestrated" = "အေကာင္းဆံုး သံုးသပ္မွဳ";
 
-"products_sort_popularity" = "ေရပန္းစားမွဳ";
+"products_sort_popularity" = "လူၾကိဳက္မ်ားမွဳ";
 
-"products_sort_newin" = "အသစ္";
+"products_sort_newin" = "ေနာက္ဆံုးေရာက္ပစၥည္းသစ္";
 
 "products_sort_priceup" = "အမ်ားဆံုးေစ်းႏွဳန္း";
 
 "products_sort_pricedown" = "အနည္းဆံုးေစ်း";
 
-"products_sort_name" = "အမည္";
+"products_sort_name" = "ကုန္ပစၥည္းအမည္";
 
-"products_sort_brand" = "တံဆိပ္";
+"products_sort_brand" = "အမွတ္တံဆိပ္";
 
 "all_label" = "အားလံုး";
 
@@ -130,11 +130,11 @@
 
 "product_features_title" = "ကုန္ပစၥည္း၏ ထူးျခားခ်က္မ်ား";
 
-"description" = "ေဖာ္ျပခ်က္";
+"description" = "ကုန္ပစၥည္းအေၾကာင္း";
 
 "key_features" = "ေယဘုယ် အခ်က္အလက္မ်ား";
 
-"product_desc_summary_title" = "အႏွစ္ခ်ဳပ္";
+"product_desc_summary_title" = "ကုန္ပစၥည္းအေၾကာင္း";
 
 "product_description_title" = "ကုန္ပစၥည္း၏ အခ်က္အလက္မ်ား";
 
@@ -152,7 +152,7 @@
 
 "string_posted_by" = "%@, %@ မွ ေရးသားသည္";
 
-"string_posted_by_anonymous" = "%@ အမည္မသိ သံုးသူမွ ေရးသားသည္";
+"string_posted_by_anonymous" = "%@ မွ ေရးသားသည္";
 
 "string_price" = "ေစ်းႏွဳန္း";
 
@@ -302,15 +302,15 @@
 
 "string_user_data" = "သံုးသူ၏ အခ်က္အလက္";
 
-"string_user_email_notifications" = "အီးေမးလ္ျဖင့္ အေၾကာင္းၾကားျခင္း";
+"string_user_email_notifications" = "အီးေမးလ္သို႕အေၾကာင္းၾကားစာမ်ား ပို႕ေပးျခင္း";
 
 "section_title_account" = "အေကာင့္ ဆက္တင္မ်ား";
 
 "option2_description" = "Password ေျပာင္းရန္, အီးေမးလ္အား စီမံရန္";
 
-"myaccount_email_notifications" = "အီးေမးလ္ျဖင့္ အေၾကာင္းၾကားျခင္း";
+"myaccount_email_notifications" = "အီးေမးလ္သို႕အေၾကာင္းၾကားစာမ်ား ပို႕ေပးျခင္း";
 
-"option3_description" = "စာရင္းသြင္းရန္ (သို႕) မသြင္းရန္";
+"option3_description" = "ရယူလိုသည္ (သို႕) မရယူလိုပါ";
 
 "section_title_notification" = "အေၾကာင္းၾကားျခင္း ဆက္တင္မ်ား";
 
@@ -524,7 +524,7 @@
 
 "product_sold_by" = ":ျဖင့္ စီသည္";
 
-"sort_by" = "ျဖင့္ စီသည္";
+"sort_by" = "ၾကည္႕လုိသည္ကို ေရြးပါ";
 
 "fee_include" = "(%@ ပါျပီး)";
 
@@ -540,7 +540,7 @@
 
 "string_addresses_saved_as_default" = "ပံုေသ လိပ္စာအျဖစ္ သိမ္းဆည္းျပီးပါျပီ";
 
-"review_this_seller" = "ဤ ေရာင္းခ်သူကို ထင္ျမင္ခ်က္ေပးရန္!";
+"review_this_seller" = "ဤေရာင္းခ်သူအား မွတ္ခ်က္ေပးရန္!";
 
 "string_wizard_back_top" = "အေပၚသို႕ ျပန္သြားရန္ status bar ကို ႏွိပ္ပါ";
 
