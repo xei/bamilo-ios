@@ -97,6 +97,12 @@
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     [self.collectionView setCollectionViewLayout:self.flowLayout];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
     [self showLoading];
     [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
         
@@ -156,11 +162,7 @@
         
         [self hideLoading];
     }];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
+    
     [self didRotateFromInterfaceOrientation:0];
 }
 
@@ -183,6 +185,11 @@
                                                56.0f,
                                                self.emptyListImageView.frame.size.width,
                                                self.emptyListImageView.frame.size.height);
+    
+    self.emptyListLabel.frame = CGRectMake(12.0f,
+                                           183.0f,
+                                           self.emptyListView.frame.size.width - 12*2,
+                                           self.emptyListLabel.frame.size.height);
     
 }
 
