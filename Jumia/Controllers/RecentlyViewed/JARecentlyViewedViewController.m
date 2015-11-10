@@ -97,6 +97,12 @@
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     [self.collectionView setCollectionViewLayout:self.flowLayout];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
     [self showLoading];
     [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
         
@@ -156,11 +162,7 @@
         
         [self hideLoading];
     }];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
+    
     [self didRotateFromInterfaceOrientation:0];
 }
 
