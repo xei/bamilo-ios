@@ -1,9 +1,9 @@
-/*
- RIStrings.strings
- Jumia
- 
- Created by Pedro Lopes on 13/09/14.
- Copyright (c) 2014 Rocket Internet. All rights reserved. */
+/* 
+   RIStrings.strings
+   Jumia
+   
+   Created by Pedro Lopes on 13/09/14.
+   Copyright (c) 2014 Rocket Internet. All rights reserved. */
 "string_update_necessary_title" = "التحديث الضروري";
 
 "string_update_necessary_message_ios" = "لقد وجدنا ما يحتاج للإصلاح من أجل تحسين تجربة التسوق على %@! ستحتاج إلى تحديث التطبيق قبل الاستمرار في استخدامه.";
@@ -50,6 +50,8 @@
 
 "string_filters" = "الاختيارات";
 
+"string_remove_filter" = "حذف";
+
 "categories_toplevel_title" = "كل الفئات";
 
 "string_apply" = "تطبيق";
@@ -82,11 +84,13 @@
 
 "string_rating" = "تقييم 1";
 
-"string_ratings" = "تقييمات %d";
+"string_ratings" = "تقييمات ‪%d‪";
+
+"string_nratings" = "(‎%d‎)";
 
 "string_review" = "تعليق 1";
 
-"string_reviews" = "تعليقات %d";
+"string_reviews" = "تعليقات ‪%d‪";
 
 "string_quantity" = "الكمية:%@";
 
@@ -178,15 +182,19 @@
 
 "string_article" = "مقال 1";
 
-"string_articles" = "مقالات %d";
+"string_articles" = "مقالات ‪%d‪";
 
 "string_item_cart" = "منتج 1";
 
-"string_items_cart" = "منتجات %d";
+"string_items_cart" = "منتجات ‪%d‪";
 
 "error_add_to_shopping_cart_quantity" = "عفوًا لا يمكن القيام بالمزيد من الطلبات.";
 
 "shipping" = "الشحن";
+
+"shipment_of" = "شحن %ld لـ%ld";
+
+"fulfilled_by" = "تم التوصيل بواسطة";
 
 "free_label" = "مجانًا";
 
@@ -207,6 +215,8 @@
 "facebook_signup_button_text" = "التسجيل من خلال الفيسبوك!";
 
 "facebook_login_button_text" = "تسجيل الدخول من خلال فيسبوك";
+
+"login_incomplete" = "البريد الإلكتروني و تاريخ الميلاد ضروريان للدخول";
 
 "or_text" = "أو";
 
@@ -502,6 +512,8 @@
 
 "like_us_on_facebook" = "تابعنا على الفايسبوك";
 
+"seller_info_warranty" = "الضمان";
+
 "bundle_title" = "يتم شرائهما معًا";
 
 "bundle_total_price" = "السعر الكلي:";
@@ -518,7 +530,7 @@
 
 "product_delivery_days" = "يوم";
 
-"number_offers_from_ios" = "%d عروض من";
+"number_offers_from_ios" = "‪%d‪ عروض من";
 
 "write_full_review" = "اكتب تعليق كامل";
 
@@ -561,3 +573,34 @@
 "shipping_fee_info" = "تتم إضافة الرسوم على إجمالي المبلغ المدفوع";
 
 "birthday" = "تاريخ الميلاد";
+
+"country" = "دولة";
+
+"language" = "اللغة";
+
+"combos" = "يتم شرائهما معًا";
+
+"clear_all" = "حدف الكل";
+
+"buy_the_look" = "احصل على هذا المظهر";
+
+"read_more" = "إقرأ المزيد";
+
+"see_other_colors" = "شاهد الألوان الأخرى";
+
+"see_other_variations" = "عرض المقاسات الأخري";
+
+"seller_information" = "معلومات عن البائع";
+
+"other_sellers_starting_from" = "عند باقي البائعين إبتداءا من: %@";
+
+"you_may_also_like" = "قد يعجبك أيضًا";
+
+"reviews/ratings" = "تعليقات / التقييمات";
+
+"from_n_customers" = "من ‎%d‎ زبون";
+
+"average_rating" = "معدل التقدير";
+
+"be_the_first_to_rate" = "كن أول من يقيم هذا المنتج";
+
