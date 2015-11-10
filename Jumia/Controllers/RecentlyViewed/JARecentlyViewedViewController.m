@@ -186,6 +186,11 @@
                                                self.emptyListImageView.frame.size.width,
                                                self.emptyListImageView.frame.size.height);
     
+    self.emptyListLabel.frame = CGRectMake(12.0f,
+                                           183.0f,
+                                           self.emptyListView.frame.size.width - 12*2,
+                                           self.emptyListLabel.frame.size.height);
+    
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
