@@ -39,6 +39,7 @@
         groupingTitleLabel.font = [UIFont fontWithName:kFontMediumName size:14.0f];
         groupingTitleLabel.textColor = [UIColor blackColor];
         groupingTitleLabel.text = title;
+        groupingTitleLabel.textAlignment = NSTextAlignmentLeft;
         [groupingTitleLabel sizeToFit];
         [groupingTitleLabel setFrame:CGRectMake(groupingTitleLabelMargin,
                                                 self.bounds.origin.y,
