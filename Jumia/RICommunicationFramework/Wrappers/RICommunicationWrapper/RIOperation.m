@@ -136,14 +136,16 @@
                 NSArray* errorMessages = [messages objectForKey:@"error"];
                 if (VALID_NOTEMPTY(errorMessages, NSArray)) {
                     for (NSString* errorMessage in errorMessages) {
-                        if ([errorMessage isEqualToString:@"CUSTOMER_NOT_LOGGED_IN"]) {
-                            if ([RICustomer checkIfUserIsLogged]) {
-                                [RICustomer autoLogin:^(BOOL success, NSDictionary *entities, NSString *loginMethod) {
-                                    [self startRequest];
-                                }];
-                                return;
+                        if (VALID_NOTEMPTY(errorMessage, NSString)) {
+                            if ([errorMessage isEqualToString:@"CUSTOMER_NOT_LOGGED_IN"]) {
+                                if ([RICustomer checkIfUserIsLogged]) {
+                                    [RICustomer autoLogin:^(BOOL success, NSDictionary *entities, NSString *loginMethod) {
+                                        [self startRequest];
+                                    }];
+                                    return;
+                                }
+                                break;
                             }
-                            break;
                         }
                     }
                 }
