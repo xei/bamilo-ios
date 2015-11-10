@@ -69,7 +69,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
-    JAGenericMenuCellStyle style;
+    JAGenericMenuCellStyle style = JAGenericMenuCellStyleDefault;
     if (0 == indexPath.row) {
         style = JAGenericMenuCellStyleHeader;
     }
