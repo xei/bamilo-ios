@@ -473,10 +473,13 @@ JADatePickerDelegate
     
     userInfo = [[NSMutableDictionary alloc] init];
     [userInfo setObject:[NSNumber numberWithBool:self.fromSideMenu] forKey:@"from_side_menu"];
+    [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
     if(VALID_NOTEMPTY(self.nextNotification, NSNotification))
     {
         [userInfo setObject:self.nextNotification forKey:@"notification"];
     }
+    
+    [self.navigationController popViewControllerAnimated:NO];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification
                                                         object:nil
