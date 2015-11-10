@@ -124,6 +124,7 @@
     [self.mainLabel setText:text];
     [self.mainLabel setFont:font];
     [self.mainLabel setTextColor:textColor];
+    [self.mainLabel setTextAlignment:NSTextAlignmentLeft];
     
     [self.accessoryImageView setFrame:CGRectMake(self.backgroundClickableView.bounds.size.width - accessoryImageWidth - rightMargin,
                                                  (height - accessoryImageWidth)/2,//image is square so width=height
