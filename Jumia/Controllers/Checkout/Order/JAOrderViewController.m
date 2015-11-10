@@ -253,6 +253,7 @@
     [itemCell addSubview:imageView];
     
     UILabel* nameLabel = [UILabel new];
+    nameLabel.textAlignment = NSTextAlignmentLeft;
     nameLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     nameLabel.textColor = UIColorFromRGB(0x666666);
     nameLabel.text = cartItem.name;
@@ -264,6 +265,7 @@
     [itemCell addSubview:nameLabel];
     
     UILabel* quantityLabel = [UILabel new];
+    quantityLabel.textAlignment = NSTextAlignmentLeft;
     quantityLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     quantityLabel.textColor = UIColorFromRGB(0x666666);
     quantityLabel.text = [NSString stringWithFormat:STRING_QUANTITY, cartItem.quantity];
@@ -275,6 +277,7 @@
     [itemCell addSubview:quantityLabel];
     
     UILabel* priceLabel = [UILabel new];
+    priceLabel.textAlignment = NSTextAlignmentLeft;
     priceLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     priceLabel.textColor = UIColorFromRGB(0x666666);
     priceLabel.text = cartItem.priceFormatted;
@@ -289,6 +292,7 @@
     [itemCell addSubview:priceLabel];
     
     UILabel* sizeLabel = [UILabel new];
+    sizeLabel.textAlignment = NSTextAlignmentLeft;
     sizeLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     sizeLabel.textColor = UIColorFromRGB(0x666666);
     sizeLabel.text = cartItem.variation;
@@ -321,6 +325,7 @@
     UIView* subtotalContentView = [self placeContentViewWithTitle:STRING_SUBTOTAL atYPosition:yPosition scrollView:scrollView];
     
     UILabel* articlesLabel = [UILabel new];
+    articlesLabel.textAlignment = NSTextAlignmentLeft;
     articlesLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     articlesLabel.textColor = UIColorFromRGB(0x666666);
     articlesLabel.text = [NSString stringWithFormat:STRING_ITEMS_CART, [self.cart.cartCount integerValue]];
@@ -372,6 +377,7 @@
     }
     
     UILabel* vatLabel = [UILabel new];
+    vatLabel.textAlignment = NSTextAlignmentLeft;
     vatLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     vatLabel.textColor = UIColorFromRGB(0x666666);
     [vatLabel setText:self.cart.vatLabel];
@@ -382,6 +388,7 @@
                                 vatLabel.frame.size.height);
     
     UILabel *cartVatValue = [[UILabel alloc] initWithFrame:CGRectZero];
+    cartVatValue.textAlignment = NSTextAlignmentLeft;
     [cartVatValue setFont:[UIFont fontWithName:kFontLightName size:13.0f]];
     [cartVatValue setTextColor:UIColorFromRGB(0x666666)];
     if ([[self.cart vatLabelEnabled] boolValue]) {
@@ -403,6 +410,7 @@
     if(VALID_NOTEMPTY(priceRuleKeysString, NSString) && VALID_NOTEMPTY(priceRuleValuesString, NSString))
     {
         UILabel *priceRulesLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        priceRulesLabel.textAlignment = NSTextAlignmentLeft;
         [priceRulesLabel setFont:[UIFont fontWithName:kFontLightName size:13.0f]];
         [priceRulesLabel setTextColor:UIColorFromRGB(0x666666)];
         [priceRulesLabel setText:priceRuleKeysString];
@@ -418,6 +426,7 @@
         
         
         UILabel *priceRulesValue = [[UILabel alloc] initWithFrame:CGRectZero];
+        priceRulesLabel.textAlignment = NSTextAlignmentLeft;
         [priceRulesValue setTextAlignment:NSTextAlignmentRight];
         [priceRulesValue setFont:[UIFont fontWithName:kFontLightName size:13.0f]];
         [priceRulesValue setTextColor:UIColorFromRGB(0x666666)];
@@ -438,6 +447,7 @@
     
     if (self.cart.shippingValue.floatValue != 0) {
         UILabel* shippingLabel = [UILabel new];
+        shippingLabel.textAlignment = NSTextAlignmentLeft;
         shippingLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         shippingLabel.textColor = UIColorFromRGB(0x666666);
         shippingLabel.text = STRING_SHIPPING;
@@ -467,6 +477,7 @@
     
     if (self.cart.extraCosts.floatValue != 0) {
         UILabel* extraCostsLabel = [UILabel new];
+        extraCostsLabel.textAlignment = NSTextAlignmentLeft;
         extraCostsLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         extraCostsLabel.textColor = UIColorFromRGB(0x666666);
         extraCostsLabel.text = STRING_EXTRA_COSTS;
@@ -493,6 +504,7 @@
     
     if (self.cart.couponMoneyValue != nil) {
         UILabel *couponLabel = [UILabel new];
+        couponLabel.textAlignment = NSTextAlignmentLeft;
         [couponLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
         [couponLabel setTextColor:UIColorFromRGB(0x3aaa35)];
         [couponLabel setText:STRING_VOUCHER];
@@ -502,6 +514,7 @@
         [subtotalContentView addSubview:couponLabel];
         
         UILabel *couponValueLabel = [UILabel new];
+        couponValueLabel.textAlignment = NSTextAlignmentLeft;
         [couponValueLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
         [couponValueLabel setTextColor:UIColorFromRGB(0x3aaa35)];
         [couponValueLabel setText:[NSString stringWithFormat:@"- %@", self.cart.couponMoneyValueFormatted]];
@@ -519,6 +532,7 @@
                                            nextYPos + 10.0f);
     
     UILabel* finalTotalLabel = [UILabel new];
+    finalTotalLabel.textAlignment = NSTextAlignmentLeft;
     finalTotalLabel.font = [UIFont fontWithName:kFontBoldName size:13.0f];
     finalTotalLabel.textColor = UIColorFromRGB(0x666666);
     finalTotalLabel.text = STRING_TOTAL;
@@ -576,6 +590,7 @@
     [self addEditButtonToContentView:addressContentView withSelector:selector];
     
     UILabel* addressLabel = [UILabel new];
+    addressLabel.textAlignment = NSTextAlignmentLeft;
     addressLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     addressLabel.textColor = UIColorFromRGB(0x666666);
     addressLabel.text = address;
@@ -682,6 +697,7 @@
     [self addEditButtonToContentView:shippingContentView withSelector:@selector(editButtonForShippingMethod)];
     
     UILabel* shippingMethodLabel = [UILabel new];
+    shippingMethodLabel.textAlignment = NSTextAlignmentLeft;
     shippingMethodLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
     shippingMethodLabel.textColor = UIColorFromRGB(0x666666);
     shippingMethodLabel.text = self.cart.shippingMethod;
@@ -708,6 +724,7 @@
     [self addEditButtonToContentView:paymentContentView withSelector:@selector(editButtonForPaymentMethod)];
     
     UILabel* paymentTitleLabel = [UILabel new];
+    paymentTitleLabel.textAlignment = NSTextAlignmentLeft;
     paymentTitleLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
     paymentTitleLabel.textColor = UIColorFromRGB(0x666666);
     paymentTitleLabel.text = self.cart.paymentMethod;
@@ -727,6 +744,7 @@
     if (VALID_NOTEMPTY(self.cart.couponCode, NSString)) {
         
         UILabel* couponTitleLabel = [UILabel new];
+        couponTitleLabel.textAlignment = NSTextAlignmentLeft;
         couponTitleLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
         couponTitleLabel.textColor = UIColorFromRGB(0x666666);
         couponTitleLabel.text = STRING_COUPON;
@@ -739,6 +757,7 @@
         [paymentContentView addSubview:couponTitleLabel];
         
         UILabel* couponCodeLabel = [UILabel new];
+        couponCodeLabel.textAlignment = NSTextAlignmentLeft;
         couponCodeLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         couponCodeLabel.textColor = UIColorFromRGB(0x666666);
         couponCodeLabel.text = self.cart.couponCode;
@@ -820,6 +839,7 @@
                                                                     currentContentY,
                                                                     contentView.bounds.size.width - 2*6.0f,
                                                                     26.0f)];
+    titleLabel.textAlignment = NSTextAlignmentLeft;
     titleLabel.text = title;
     titleLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
     titleLabel.textColor = UIColorFromRGB(0x4e4e4e);
