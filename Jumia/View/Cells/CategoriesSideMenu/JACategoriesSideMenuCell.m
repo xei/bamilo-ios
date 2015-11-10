@@ -21,7 +21,7 @@
     NSString* cellText = category.label;
     NSString* iconImageURL = category.imageUrl;
 
-    JAGenericMenuCellStyle style;
+    JAGenericMenuCellStyle style = JAGenericMenuCellStyleDefault;
     NSString* accessoryImageName;
     if (VALID_NOTEMPTY(category.level, NSNumber) && 1 == [category.level integerValue]) {
         

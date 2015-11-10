@@ -86,7 +86,7 @@
 
 "string_ratings" = "%d ratings";
 
-"string_nratings" = "(%d)";
+"string_nratings" = "RATINGS (%d)";
 
 "string_review" = "1 review";
 

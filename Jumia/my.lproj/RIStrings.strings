@@ -188,6 +188,8 @@
 
 "shipping" = "ပို႕ေဆာင္မွဳ";
 
+"fulfilled_by" = "Fulfilled by";
+
 "free_label" = "အခမဲ့";
 
 "extra_costs_label" = "အျခား စရိတ္မ်ား";
@@ -562,3 +564,6 @@
 
 "birthday" = "ေမြးေန႔";
 
+"by_someone" = "%@ မွ ေရးသားသည္";
+
+"user_reviews" = "သံုးသပ္ခ်က္မ်ား";
