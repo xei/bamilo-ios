@@ -608,6 +608,10 @@
         [self popToRootViewControllerAnimated:NO];
         animated = NO;
     }
+    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"animated"], NSNumber)) {
+        NSNumber* animatedNumber = [notification.userInfo objectForKey:@"animated"];
+        animated = [animatedNumber boolValue];
+    }
     
     [self pushViewController:signInVC animated:animated];
 }
@@ -621,7 +625,7 @@
         JASignupViewController *signUpVC = [[JASignupViewController alloc] init];
         
         if(VALID_NOTEMPTY(notification, NSNotification)) {
-            signUpVC.navBarLayout.showBackButton = ![[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
+            signUpVC.navBarLayout.showBackButton = YES;
             signUpVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
             if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSNotification))
             {

@@ -823,6 +823,7 @@ JAPickerDelegate>
     {
         if(self.fromCheckout)
         {
+            [self.navigationController popViewControllerAnimated:NO];
             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:@"cart"];
             [JAUtils goToNextStep:self.cart.nextStep
                          userInfo:userInfo];
