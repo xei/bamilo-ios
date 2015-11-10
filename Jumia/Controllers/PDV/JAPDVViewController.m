@@ -1028,18 +1028,8 @@ JAActivityViewControllerDelegate
 
 - (void)shareProduct
 {
-    NSString *url = self.product.url;
+    NSString *url = self.product.shareUrl;
     
-    if(NSNotFound != [url rangeOfString:RI_MOBAPI_PREFIX].location)
-    {
-        url = [url stringByReplacingOccurrencesOfString:RI_MOBAPI_PREFIX withString:@""];
-    }
-    
-    if(NSNotFound != [url rangeOfString:RI_API_VERSION].location)
-    {
-        url = [url stringByReplacingOccurrencesOfString:RI_API_VERSION withString:@""];
-    }
-        
     // Share with Facebook Messenger and WhatsApp
     
     UIActivity *fbmActivity = [[AQSFacebookMessengerActivity alloc] init];
