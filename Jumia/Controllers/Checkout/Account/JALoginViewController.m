@@ -1145,6 +1145,8 @@
         NSDictionary *responseDictionary = (NSDictionary *)object;
         NSString* nextStep = [responseDictionary objectForKey:@"next_step"];
         
+        [self.navigationController popViewControllerAnimated:NO];
+        
         [JAUtils goToNextStep:nextStep
                      userInfo:nil];
         
