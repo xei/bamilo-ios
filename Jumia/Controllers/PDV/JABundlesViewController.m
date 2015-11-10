@@ -123,6 +123,11 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
             [_bottomBar setFrame:frame];
         }
     }
+    
+    if( RI_IS_RTL && [self isLandscape])
+    {
+        [_bottomBar flipViewPositionInsideSuperview];
+    }
     return _bottomBar;
 }
 
@@ -131,7 +136,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     CGRect frame = CGRectMake(0, CGRectGetMaxY(_collectionView.frame), self.view.width, kProductInfoSubLineHeight);
     if ([self isLandscape]) {
         frame.origin.y = self.view.height - frame.size.height;
-        frame.size.width = self.view.width;
+        frame.size.width = self.view.width/2;
     }
     if (!VALID_NOTEMPTY(_totalSubLine, JAProductInfoSubLine)) {
         _totalSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_collectionView.frame) - kProductInfoSubLineHeight, self.view.width, kProductInfoSubLineHeight)];
@@ -142,6 +147,11 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
         if (!CGRectEqualToRect(frame, _totalSubLine.frame)) {
             [_totalSubLine setFrame:frame];
         }
+    }
+    
+    if( RI_IS_RTL && [self isLandscape])
+    {
+        [_totalSubLine flipViewPositionInsideSuperview];
     }
     return _totalSubLine;
 }
