@@ -627,7 +627,7 @@
             {
                 signUpVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
             }
-//            [self popViewControllerAnimated:NO];
+            [self popViewControllerAnimated:NO];
         }
         else
         {
