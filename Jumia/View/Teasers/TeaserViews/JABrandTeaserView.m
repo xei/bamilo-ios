@@ -38,6 +38,7 @@
     groupingTitleLabel.font = [UIFont fontWithName:kFontMediumName size:14.0f];
     groupingTitleLabel.textColor = [UIColor blackColor];
     groupingTitleLabel.text = STRING_SHOPS_OF_THE_WEEK;
+    groupingTitleLabel.textAlignment = NSTextAlignmentLeft;
     [groupingTitleLabel sizeToFit];
     [groupingTitleLabel setFrame:CGRectMake(groupingTitleLabelMargin,
                                             0.0f,
