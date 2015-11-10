@@ -163,8 +163,7 @@
             if (needMoreSpecifications) {
                 JAProductInfoSubLine *subSpecificationReadMore = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
                 [subSpecificationReadMore setTopSeparatorVisibility:YES];
-#warning TODO String
-                [subSpecificationReadMore setTitle:@"Read more"];
+                [subSpecificationReadMore setTitle:STRING_READ_MORE];
                 [subSpecificationReadMore addTarget:self action:@selector(tapSpecificationsLine) forControlEvents:UIControlEventTouchUpInside];
                 [self addSubview:subSpecificationReadMore];
                 yOffset = CGRectGetMaxY(subSpecificationReadMore.frame);
@@ -205,11 +204,9 @@
         JAProductInfoSingleLine *singleVariations = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
         [singleVariations setTopSeparatorVisibility:YES];
         if (product.fashion) {
-#warning TODO String
-            [singleVariations setTitle:@"See other colors"];
+            [singleVariations setTitle:STRING_SEE_OTHER_COLORS];
         }else{
-#warning TODO String
-            [singleVariations setTitle:@"See other variations"];
+            [singleVariations setTitle:STRING_SEE_OTHER_VARIATIONS];
         }
         [singleVariations addTarget:self action:@selector(tapVariationsLine) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:singleVariations];
@@ -223,8 +220,7 @@
     if (VALID_NOTEMPTY(product.seller, RISeller)) {
         _sellerYPosition = yOffset;
         JAProductInfoHeaderLine *headerSeller = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoHeaderLineHeight)];
-#warning TODO String translation
-        [headerSeller setTitle:[@"Seller Information" uppercaseString]];
+        [headerSeller setTitle:[STRING_SELLER_INFORMATION uppercaseString]];
         [self addSubview:headerSeller];
         yOffset = CGRectGetMaxY(headerSeller.frame);
         
@@ -244,8 +240,7 @@
     if (VALID_NOTEMPTY(product.offersTotal, NSNumber) && product.offersTotal.integerValue > 0) {
         JAProductInfoSubLine *otherOffers = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSubLineHeight)];
         [otherOffers setTopSeparatorVisibility:YES];
-#warning TODO String
-        [otherOffers setTitle:[NSString stringWithFormat:@"Other sellers starting from: %@", product.offersMinPriceFormatted]];
+        [otherOffers setTitle:[NSString stringWithFormat:STRING_OTHER_SELLERS_STARTING_FROM, product.offersMinPriceFormatted]];
         [otherOffers.label setYCenterAligned];
         [otherOffers addTarget:self action:@selector(tapOffersLine) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:otherOffers];
@@ -274,8 +269,7 @@
         
         JAProductInfoSubLine *singleDescriptionReadMore = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
         [singleDescriptionReadMore setTopSeparatorVisibility:YES];
-#warning TODO String
-        [singleDescriptionReadMore setTitle:@"Read more"];
+        [singleDescriptionReadMore setTitle:STRING_READ_MORE];
         [singleDescriptionReadMore addTarget:self action:@selector(tapDescriptionLine) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:singleDescriptionReadMore];
         yOffset = CGRectGetMaxY(singleDescriptionReadMore.frame);

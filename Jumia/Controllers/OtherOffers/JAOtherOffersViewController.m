@@ -49,6 +49,8 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.navBarLayout.showBackButton = YES;
     
+    self.navBarLayout.title = STRING_OTHER_SELLERS;
+    
     self.flowLayout = [JAProductListFlowLayout new];
     self.flowLayout.manualCellSpacing = 6.0f;
     self.flowLayout.minimumLineSpacing = 0;
@@ -73,6 +75,11 @@
     
     [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0.0f];
     [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self loadTopView];
 }
 
 - (void)loadTopView
@@ -144,7 +151,7 @@
     [self.collectionView setFrame:CGRectMake(6.0f,
                                              CGRectGetMaxY(self.topView.frame),
                                              self.view.frame.size.width - 12.0f,
-                                             self.view.frame.size.height - CGRectGetMaxY(self.topView.frame))];
+                                             [self viewBounds].size.height  - CGRectGetMaxY(self.topView.frame))];
     
     if (RI_IS_RTL) {
         [self.topView flipAllSubviews];

@@ -344,4 +344,19 @@
 #define STRING_COMBOS RILocalizedString(@"combos", nil)
 #define STRING_CLEAR_ALL RILocalizedString(@"clear_all", nil)
 
+#define STRING_BUY_THE_LOOK RILocalizedString(@"buy_the_look", nil)
+#define STRING_READ_MORE RILocalizedString(@"read_more", nil)
+#define STRING_SEE_OTHER_COLORS RILocalizedString(@"see_other_colors", nil)
+#define STRING_SEE_OTHER_VARIATIONS RILocalizedString(@"see_other_variations", nil)
+#define STRING_SELLER_INFORMATION RILocalizedString(@"seller_information", nil)
+#define STRING_OTHER_SELLERS_STARTING_FROM RILocalizedString(@"other_sellers_starting_from", nil)
+#define STRING_YOU_MAY_ALSO_LIKE RILocalizedString(@"you_may_also_like", nil)
+#define STRING_REVIEWS_RATINGS RILocalizedString(@"reviews/ratings", nil)
+#define STRING_FROM_N_CUSTOMERS RILocalizedString(@"from_n_customers", nil)
+#define STRING_AVERAGE_RATING RILocalizedString(@"average_rating", nil)
+#define STRING_BE_THE_FIRST_TO_RATE RILocalizedString(@"be_the_first_to_rate", nil)
+#define STRING_BY_SOMEONE RILocalizedString(@"by_someone", nil)
+
+#define STRING_USER_REVIEWS RILocalizedString(@"user_reviews", nil)
+
 #endif

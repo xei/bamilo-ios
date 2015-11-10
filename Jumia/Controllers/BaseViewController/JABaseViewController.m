@@ -168,6 +168,10 @@
     if (VALID_NOTEMPTY(self.kickoutView, JAKickoutView)) {
         [self.kickoutView setupKickoutView:CGRectMake(0.0f, 0.0f, window.frame.size.height, window.frame.size.width) orientation:toInterfaceOrientation];
     }
+    
+    if (VALID_NOTEMPTY(self.searchView, JASearchView)) {
+        [self.searchView removeFromSuperview];
+    }
 }
 
 - (void)changeLoadingFrame:(CGRect)frame orientation:(UIInterfaceOrientation)orientation {
@@ -220,9 +224,6 @@
     }
     if (VALID_NOTEMPTY(self.kickoutView, JAKickoutView)) {
         [self.kickoutView setupKickoutView:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height) orientation:self.interfaceOrientation];
-    }
-    if (VALID_NOTEMPTY(self.searchView, JASearchView)) {
-        [self.searchView resetFrame:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height) orientation:self.interfaceOrientation];
     }
     if (self.searchBarIsVisible) {
         [self reloadSearchBar];
@@ -399,10 +400,14 @@
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar;
 {
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
-    self.searchBarBackButton = [[UIButton alloc] initWithFrame:CGRectMake(window.bounds.origin.x + 15.0f,
+    self.searchBarBackButton = [[UIButton alloc] initWithFrame:CGRectMake(window.bounds.origin.x,
                                                                           window.bounds.origin.y + 20.0f,
                                                                           80.0f,
                                                                           44.0f)];
+    [self.searchBarBackButton setImageEdgeInsets:UIEdgeInsetsMake(0.0f,
+                                                                  10.0f,
+                                                                  0.0f,
+                                                                  0.0f)];
     self.searchBarBackButton.backgroundColor = JANavBarBackgroundGrey;
     [self.searchBarBackButton setImage:[UIImage imageNamed:@"btn_back"] forState:UIControlStateNormal];
     [self.searchBarBackButton setImage:[UIImage imageNamed:@"btn_back_pressed"] forState:UIControlStateHighlighted];

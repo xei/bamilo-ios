@@ -77,14 +77,17 @@
 - (UILabel *)productNameLabel
 {
     CGRect frame = CGRectMake(16.f, 32.f, self.width - 16.f*2, 20);
+    if (self.product.seller.isGlobal) {
+        frame.size.width = self.globalButton.x - frame.origin.x;
+    }
     if (!_productNameLabel) {
         _productNameLabel = [[UILabel alloc] initWithFrame:frame];
         _productNameLabel.font = JAListFont;
         _productNameLabel.textColor = JABlackColor;
         [_productNameLabel setTextAlignment:NSTextAlignmentLeft];
         [self addSubview:_productNameLabel];
-    }else if (_productNameLabel.width != self.width - 16.f*2) {
-        [_productNameLabel setWidth:self.width - 16.f*2];
+    }else if (_productNameLabel.width != frame.size.width) {
+        [_productNameLabel setWidth:frame.size.width];
     }
     
     return _productNameLabel;
@@ -93,6 +96,9 @@
 - (UILabel *)productDescriptionLabel
 {
     CGRect frame = CGRectMake(16.f, CGRectGetMaxY(self.productNameLabel.frame), self.width - 16.f*2, 60);
+    if (self.product.seller.isGlobal) {
+        frame.size.width = self.globalButton.x - frame.origin.x;
+    }
     if (!_productDescriptionLabel) {
         _productDescriptionLabel = [[UILabel alloc] initWithFrame:frame];
         _productDescriptionLabel.font = JACaptionFont;
@@ -100,8 +106,8 @@
         _productDescriptionLabel.numberOfLines = 2;
         [_productDescriptionLabel setLineBreakMode:NSLineBreakByTruncatingTail];
         [self addSubview:_productDescriptionLabel];
-    }else if (_productDescriptionLabel.width != self.width - 16.f*2) {
-        [_productDescriptionLabel setWidth:self.width - 16.f*2];
+    }else if (_productDescriptionLabel.width != frame.size.width) {
+        [_productDescriptionLabel setWidth:frame.size.width];
         [_productDescriptionLabel setHeight:60];
         [_productDescriptionLabel sizeToFit];
     }

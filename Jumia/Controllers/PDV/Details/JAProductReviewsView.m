@@ -74,6 +74,9 @@
         [self ratingsView];
         [self reviewsHeaderLine];
         [self writeReviewView];
+//        if (RI_IS_RTL) {
+//            [_topView flipAllSubviews];
+//        }
     }else if (!CGRectEqualToRect(_topView.frame, frame))
     {
         [_topView setFrame:frame];
@@ -81,6 +84,9 @@
         [self ratingsView];
         [self reviewsHeaderLine];
         [self writeReviewView];
+        if (RI_IS_RTL) {
+            [_topView flipAllSubviews];
+        }
     }
     return _topView;
 }
@@ -143,8 +149,7 @@
         [_averageTitleLabel setFont:JABody2Font];
         [_averageTitleLabel setTextColor:JABlackColor];
         [_averageTitleLabel setTextAlignment:NSTextAlignmentCenter];
-#warning TODO String
-        [_averageTitleLabel setText:@"Average Rating"];
+        [_averageTitleLabel setText:STRING_AVERAGE_RATING];
     }else if (!CGRectEqualToRect(frame, _averageTitleLabel.frame)) {
         [_averageTitleLabel setFrame:frame];
     }
@@ -174,8 +179,7 @@
         [_totalUsersLabel setFont:JACaptionFont];
         [_totalUsersLabel setTextColor:JABlack800Color];
         [_totalUsersLabel setTextAlignment:NSTextAlignmentCenter];
-    #warning TODO String
-        [_totalUsersLabel setText:[NSString stringWithFormat:@"from %d customers", self.product.sum.intValue]];
+        [_totalUsersLabel setText:[NSString stringWithFormat:STRING_FROM_N_CUSTOMERS, self.product.sum.intValue]];
     }else if (!CGRectEqualToRect(frame, _totalUsersLabel.frame)) {
         [_totalUsersLabel setFrame:frame];
     }
@@ -259,8 +263,7 @@
         [_writeReviewLabel setTextColor:JABlack800Color];
         [_writeReviewLabel setTextAlignment:NSTextAlignmentCenter];
         [_writeReviewLabel setNumberOfLines:2];
-#warning TODO String
-        [_writeReviewLabel setText:@"Have you tried this product? Rate it now"];
+        [_writeReviewLabel setText:STRING_RATE_NOW];
     }else if (!CGRectEqualToRect(frame, _writeReviewView.frame)) {
         [_writeReviewLabel setFrame:frame];
     }
@@ -275,8 +278,7 @@
         [_writeReviewButton setTitleColor:JAOrange1Color forState:UIControlStateNormal];
         [_writeReviewButton setTitleColor:JABlack800Color forState:UIControlStateHighlighted];
         [_writeReviewButton setFrame:frame];
-#warning TODO String
-        [_writeReviewButton setTitle:@"Write a Review" forState:UIControlStateNormal];
+        [_writeReviewButton setTitle:STRING_WRITE_REVIEW forState:UIControlStateNormal];
         [_writeReviewButton addTarget:self action:@selector(goToNewReview:) forControlEvents:UIControlEventTouchUpInside];
     }else if (!CGRectEqualToRect(frame, _writeReviewButton.frame)) {
         [_writeReviewButton setFrame:frame];
@@ -378,7 +380,7 @@
     [self requestReviews];
     
     CGFloat yOffset = 0.f;
-    [self.ratingsHeaderLine setTitle:[NSString stringWithFormat:@"RATINGS (%d)", _product.sum.intValue]];
+    [self.ratingsHeaderLine setTitle:[NSString stringWithFormat:@"%@ (%d)", [STRING_RATINGS uppercaseString], _product.sum.intValue]];
     [self.ratingsHeaderLine setY:yOffset];
     [self.topView addSubview:self.ratingsHeaderLine];
     yOffset = CGRectGetMaxY(self.ratingsHeaderLine.frame);
@@ -386,7 +388,7 @@
     [self.topView addSubview:self.ratingsView];
     yOffset = CGRectGetMaxY(self.ratingsView.frame);
     
-    [self.reviewsHeaderLine setTitle:[NSString stringWithFormat:@"USER REVIEWS (%d)", _product.reviewsTotal.intValue]];
+    [self.reviewsHeaderLine setTitle:[NSString stringWithFormat:@"%@ (%d)", [STRING_USER_REVIEWS uppercaseString],_product.reviewsTotal.intValue]];
     [self.reviewsHeaderLine setY:yOffset];
     [self.topView addSubview:self.reviewsHeaderLine];
     yOffset = CGRectGetMaxY(self.reviewsHeaderLine.frame);
@@ -512,6 +514,10 @@
 {
     [super setFrame:frame];
     [self collectionView];
+    if (RI_IS_RTL)
+    {
+        [self.collectionView flipAllSubviews];
+    }
 }
 
 #pragma mark - Action
@@ -541,6 +547,9 @@
         UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"topView" forIndexPath:indexPath];
         if (cell.tag == 0) {
             [cell addSubview:self.topView];
+            if (RI_IS_RTL) {
+                [self.topView flipAllSubviews];
+            }
         }
         cell.tag = 1;
         return cell;
@@ -557,6 +566,11 @@
     JAReviewCollectionCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"JAReviewCollectionCell" forIndexPath:indexPath];
     [cell setUserInteractionEnabled:YES];
     [cell setupWithReview:productReview width:[self getCellWidth] showSeparator:YES];
+    
+    if (RI_IS_RTL) {
+        [cell flipAllSubviews];
+    }
+    
     return cell;
 }
 

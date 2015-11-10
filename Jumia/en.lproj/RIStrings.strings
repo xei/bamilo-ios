@@ -128,7 +128,7 @@
 
 "string_variations" = "Variations";
 
-"string_rate_now" = "Rate Now";
+"string_rate_now" = "Have you tried this product? Rate it now";
 
 "related_items" = "Related Items";
 
@@ -154,7 +154,7 @@
 
 "write_comment" = "Write a Review";
 
-"string_posted_by" = "posted by %@, %@";
+"string_posted_by" = "by %@, %@";
 
 "string_posted_by_anonymous" = "posted by Anonymous User, %@";
 
@@ -581,3 +581,29 @@
 "combos" = "Combos";
 
 "clear_all" = "Clear All";
+
+"buy_the_look" = "Buy the look";
+
+"read_more" = "Read more";
+
+"see_other_colors" = "See other colors";
+
+"see_other_variations" = "See other variations";
+
+"seller_information" = "Seller Information";
+
+"other_sellers_starting_from" = "Other sellers starting from: %@";
+
+"you_may_also_like" = "You may also like";
+
+"reviews/ratings" = "Reviews / Ratings";
+
+"from_n_customers" = "from %d customers";
+
+"average_rating" = "Average Rating";
+
+"be_the_first_to_rate" = "Be the first to rate";
+
+"by_someone" = "by %@";
+
+"user_reviews" = "User Reviews";

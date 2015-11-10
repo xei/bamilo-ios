@@ -123,6 +123,11 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
             [_bottomBar setFrame:frame];
         }
     }
+    
+    if( RI_IS_RTL && [self isLandscape])
+    {
+        [_bottomBar flipViewPositionInsideSuperview];
+    }
     return _bottomBar;
 }
 
@@ -131,7 +136,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     CGRect frame = CGRectMake(0, CGRectGetMaxY(_collectionView.frame), self.view.width, kProductInfoSubLineHeight);
     if ([self isLandscape]) {
         frame.origin.y = self.view.height - frame.size.height;
-        frame.size.width = self.view.width;
+        frame.size.width = self.view.width/2;
     }
     if (!VALID_NOTEMPTY(_totalSubLine, JAProductInfoSubLine)) {
         _totalSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_collectionView.frame) - kProductInfoSubLineHeight, self.view.width, kProductInfoSubLineHeight)];
@@ -142,6 +147,11 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
         if (!CGRectEqualToRect(frame, _totalSubLine.frame)) {
             [_totalSubLine setFrame:frame];
         }
+    }
+    
+    if( RI_IS_RTL && [self isLandscape])
+    {
+        [_totalSubLine flipViewPositionInsideSuperview];
     }
     return _totalSubLine;
 }
@@ -181,10 +191,10 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 
 - (BOOL)isLandscape
 {
-    if(UIDeviceOrientationPortrait == ([UIDevice currentDevice].orientation) || UIDeviceOrientationPortraitUpsideDown == ([UIDevice currentDevice].orientation)) {
-        return NO;
-    }else{
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)){
         return YES;
+    }else{
+        return NO;
     }
 }
 
@@ -241,7 +251,6 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
         RIProductSimple* pds = [self.selectedItems objectForKey:bundleProduct.sku];
         [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, pds.variation]
                          forState:UIControlStateNormal];
-        [cell.sizeButton sizeToFit];
         
         if (VALID_NOTEMPTY(pds.specialPriceFormatted, NSString)) {
             [cell setSimplePrice:pds.specialPriceFormatted andOldPrice:pds.priceFormatted];

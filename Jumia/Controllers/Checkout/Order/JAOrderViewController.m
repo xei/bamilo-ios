@@ -27,6 +27,8 @@
 // Bottom view
 @property (strong, nonatomic) JAButtonWithBlur *bottomView;
 
+@property (nonatomic, assign) BOOL alreadyLoadedConfirmButton;
+
 @end
 
 @implementation JAOrderViewController
@@ -773,9 +775,10 @@
     
     
     CGFloat offset = 0.0;
-    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0") && UIUserInterfaceIdiomPhone == UI_USER_INTERFACE_IDIOM()){
+    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0") && NO == self.alreadyLoadedConfirmButton){
         //For some reason on iphone ios9 the view controller's view doesn't take the nav bar into account
         offset = 64.0f;
+        self.alreadyLoadedConfirmButton = YES;
     }
     
     [self.bottomView reloadFrame:CGRectMake((self.view.frame.size.width - newWidth) / 2,

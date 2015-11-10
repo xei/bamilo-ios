@@ -75,18 +75,17 @@
             self.backView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
         }];
         
-        self.resultsTableView = [[UITableView alloc] initWithFrame:self.bounds
-                                                             style:UITableViewStyleGrouped];
+        self.resultsTableView = [[UITableView alloc] init];
         
         self.resultsTableView.backgroundColor = UIColorFromRGB(0xffffff);
         self.resultsTableView.delegate = self;
         self.resultsTableView.dataSource = self;
-        self.resultsTableView.contentInset = UIEdgeInsetsMake(-35.0f, 0.f, 0.f, 0.f);
         [self.resultsTableView registerClass:[UITableViewCell class]
                       forCellReuseIdentifier:@"cell"];
         self.resultsTableView.separatorColor = [UIColor clearColor];
 
-        self.resultsTableOriginalFrame = self.resultsTableView.frame;
+        self.resultsTableOriginalFrame = self.bounds;
+        self.resultsTableView.frame = self.resultsTableOriginalFrame;
         
         [self addSubview:self.resultsTableView];
         
@@ -136,12 +135,15 @@
     if (self.resultsTableView.hidden) {
         self.resultsTableView.hidden = NO;
         
-        CGRect finalFrame = self.resultsTableView.frame;
+        CGRect finalFrame = CGRectMake(self.resultsTableOriginalFrame.origin.x,
+                                       self.resultsTableOriginalFrame.origin.y,
+                                       self.resultsTableOriginalFrame.size.width,
+                                       self.resultsTableOriginalFrame.size.height - self.currentKeyboardHeight);
         
-        self.resultsTableView.frame = CGRectMake(self.resultsTableView.frame.origin.x,
-                                                 self.resultsTableView.frame.size.height,
-                                                 self.resultsTableView.frame.size.width,
-                                                 self.resultsTableView.frame.size.height);
+        [self.resultsTableView setFrame:CGRectMake(self.resultsTableOriginalFrame.origin.x,
+                                                   self.resultsTableOriginalFrame.size.height,
+                                                   self.resultsTableOriginalFrame.size.width,
+                                                   self.resultsTableOriginalFrame.size.height - self.currentKeyboardHeight)];
         
         [UIView animateWithDuration:0.3f animations:^{
             self.resultsTableView.frame = finalFrame;
@@ -151,19 +153,24 @@
 
 - (void)removeResultsTableViewFromView
 {
-    CGRect startFrame = self.resultsTableView.frame;
-    
-    CGRect finalFrame = CGRectMake(self.resultsTableView.frame.origin.x,
-                                   self.resultsTableView.frame.size.height,
-                                   self.resultsTableView.frame.size.width,
-                                   self.resultsTableView.frame.size.height);
-    
-    [UIView animateWithDuration:0.3f animations:^{
-        self.resultsTableView.frame = finalFrame;
-    } completion:^(BOOL finished) {
-        self.resultsTableView.hidden = YES;
-        self.resultsTableView.frame = startFrame;
-    }];
+    if (NO == self.resultsTableView.hidden) {
+        CGRect startFrame = CGRectMake(self.resultsTableOriginalFrame.origin.x,
+                                       self.resultsTableOriginalFrame.origin.y,
+                                       self.resultsTableOriginalFrame.size.width,
+                                       self.resultsTableOriginalFrame.size.height - self.currentKeyboardHeight);
+        
+        CGRect finalFrame = CGRectMake(self.resultsTableOriginalFrame.origin.x,
+                                       self.resultsTableOriginalFrame.size.height,
+                                       self.resultsTableOriginalFrame.size.width,
+                                       self.resultsTableOriginalFrame.size.height - self.currentKeyboardHeight);
+        
+        [UIView animateWithDuration:0.3f animations:^{
+            self.resultsTableView.frame = finalFrame;
+        } completion:^(BOOL finished) {
+            self.resultsTableView.hidden = YES;
+            self.resultsTableView.frame = startFrame;
+        }];
+    }
 }
 
 #pragma mark - Tableview datasource and delegate

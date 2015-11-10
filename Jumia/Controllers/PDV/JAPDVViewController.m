@@ -771,11 +771,10 @@ JAActivityViewControllerDelegate
         
         self.bundleLayout = [[JAPDVBundles alloc] initWithFrame:CGRectMake(0, scrollViewY, self.mainScrollView.width, 300) withSize:NO];
         
-#warning TODO String
         if (self.product.fashion) {
-            [self.bundleLayout setHeaderText:[@"Buy the look" uppercaseString]];
+            [self.bundleLayout setHeaderText:[STRING_BUY_THE_LOOK uppercaseString]];
         }else{
-            [self.bundleLayout setHeaderText:[@"Combos" uppercaseString]];
+            [self.bundleLayout setHeaderText:[STRING_COMBOS uppercaseString]];
         }
         
         for (JAPDVBundleSingleItem* singleItem in self.bundleSingleItemsArray) {
@@ -816,9 +815,8 @@ JAActivityViewControllerDelegate
                 [view removeFromSuperview];
             }
         }
-        
-#warning TODO String
-        [self.relatedItemsView setHeaderText:[@"You may also like" uppercaseString]];
+
+        [self.relatedItemsView setHeaderText:[STRING_YOU_MAY_ALSO_LIKE uppercaseString]];
         CGFloat relatedItemX = .0f;
         CGFloat relatedItemY = 0;
         

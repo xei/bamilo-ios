@@ -11,12 +11,14 @@
 #import "RIProductSimple.h"
 #import "JARatingsView.h"
 #import "JAClickableView.h"
+#import "JAProductInfoPriceLine.h"
 
 @interface JAOfferCollectionViewCell()
 @property (weak, nonatomic) IBOutlet JAClickableView *clickableView;
 
 @property (weak, nonatomic) IBOutlet UIView *backgroundContentView;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+@property (nonatomic, strong) JAProductInfoPriceLine *priceLine;
 @property (weak, nonatomic) IBOutlet UILabel *sellerLabel;
 @property (weak, nonatomic) IBOutlet UILabel *deliveryLabel;
 @property (nonatomic, strong) RIProductOffer *productOfferSeller;
@@ -29,6 +31,18 @@
 - (void)loadWithProductOffer:(RIProductOffer*)productOffer withProductSimple:(RIProductSimple* )productSimple
 {
     self.backgroundColor = [UIColor clearColor];
+    
+    if (VALID_NOTEMPTY(self.priceLine, JAProductInfoPriceLine)) {
+        [self.priceLine removeFromSuperview];
+    }
+    
+    
+    self.priceLine = [[JAProductInfoPriceLine alloc]initWithFrame:CGRectMake(10.f, 10.f, self.width-10.f, 15.f)];
+    [self.priceLine setLineContentXOffset:0.f];
+    self.priceLine.priceSize = kPriceSizeSmall;
+    [self.priceLine sizeToFit];
+    [self addSubview:self.priceLine];
+    
     self.productOfferSeller = productOffer;
     [self setProductSimple:productSimple];
     
@@ -48,6 +62,7 @@
     [self.priceLabel setX:10.f];
     self.priceLabel.font = JABody3Font;
     self.priceLabel.textColor = JABlackColor;
+    [self.priceLabel setHidden:YES];
     
     [self.sellerLabel setX:10.f];
     [self.sellerLabel setWidth:self.addToCartButton.x - 20];
@@ -83,14 +98,20 @@
     
     if (RI_IS_RTL) {
         [self.backgroundContentView flipAllSubviews];
+        [self.priceLine flipViewPositionInsideSuperview];
+        [self.priceLine flipAllSubviews];
     }
 }
 
 -(void)setProductSimple:(RIProductSimple*)productSimple {
     if (VALID_NOTEMPTY(productSimple.specialPriceFormatted, NSString)) {
         self.priceLabel.text = productSimple.specialPriceFormatted;
+        [self.priceLine setTitle:productSimple.specialPriceFormatted];
+        [self.priceLine setOldPrice:productSimple.priceFormatted];
     } else {
         self.priceLabel.text = productSimple.priceFormatted;
+        [self.priceLine setTitle:productSimple.priceFormatted];
+        [self.priceLine setOldPrice:@""];
     }
     [self.priceLabel sizeToFit];
     
@@ -112,15 +133,13 @@
     
     if(VALID_NOTEMPTY(self.productOfferSeller.seller, RISeller))
     {
+        if (VALID_NOTEMPTY(self.productOfferSeller.seller.url, NSString)) {
         [userInfo setObject:self.productOfferSeller.seller.name forKey:@"name"];
-    }
-    
-    if(VALID_NOTEMPTY(self.productOfferSeller.seller, RISeller))
-    {
         [userInfo setObject:self.productOfferSeller.seller.url forKey:@"url"];
-    }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:self.productOfferSeller.seller userInfo:userInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:self.productOfferSeller.seller userInfo:userInfo];
+        }
+    }
 }
 
 

@@ -177,9 +177,10 @@
 
         [self.sellerDeliveryTimeLabel setText:seller.cmsInfo];
         [self.sellerDeliveryTimeLabel setTextColor:JABlackColor];
-        [self.sellerDeliveryTimeLabel sizeToFit];
         [self.sellerDeliveryTimeLabel setX:self.shippingGlobalLabel.x];
+        [self.sellerDeliveryTimeLabel setWidth:self.width - self.sellerDeliveryTimeLabel.frame.origin.x - 18.f];
         [self.sellerDeliveryTimeLabel setY:CGRectGetMaxY(self.sellerDeliveryLabel.frame)+.4f];
+        [self.sellerDeliveryTimeLabel sizeToFit];
 
         [self.shippingGlobalLabel setHidden:NO];
         [self.shippingGlobalLabel setText:[seller.shippingGlobal stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"\r"]]];

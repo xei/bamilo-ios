@@ -156,9 +156,6 @@
         ratingLine.imageRatingSize = kImageRatingSizeSmall;
         ratingLine.bottomSeparatorVisibility = YES;
         [cell addSubview:ratingLine];
-        if (RI_IS_RTL) {
-            [ratingLine flipAllSubviews];
-        }
         
         if (filterOption.selected) {
             CGFloat margin = 12.0f;
@@ -168,10 +165,11 @@
                                                    (ratingLine.frame.size.height - customAccessoryIcon.size.height) / 2,
                                                    customAccessoryIcon.size.width,
                                                    customAccessoryIcon.size.height);
-            [cell addSubview:customAccessoryView];
-            if (RI_IS_RTL) {
-                [customAccessoryView flipViewPositionInsideSuperview];
-            }
+            [ratingLine addSubview:customAccessoryView];
+        }
+        
+        if (RI_IS_RTL) {
+            [ratingLine flipAllSubviews];
         }
     } else {
         
