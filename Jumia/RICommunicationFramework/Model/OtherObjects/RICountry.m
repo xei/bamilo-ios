@@ -259,6 +259,9 @@
     RICountry* uniqueCountry = [[RICountry alloc] init];
     if([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
     {
+        NSDictionary* languageJSON = @{@"code":@"my_MM",@"default":@1,@"name":@"ျမန္မာ"};
+        RILanguage* language = [RILanguage parseLanguage:languageJSON];
+        uniqueCountry.selectedLanguage = language;
         uniqueCountry.name = RI_UNIQUE_COUNTRY_NAME_SHOP;
         uniqueCountry.countryIso = RI_UNIQUE_COUNTRY_ISO_SHOP;
         uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_SHOP;
@@ -270,7 +273,7 @@
 #endif
         return uniqueCountry;
     } else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
-        NSDictionary* languageJSON = @{@"code":@"fa",@"default":@1,@"name":@"Persian"};
+        NSDictionary* languageJSON = @{@"code":@"fa_IR",@"default":@1,@"name":@"فارسی"};
         RILanguage* language = [RILanguage parseLanguage:languageJSON];
         uniqueCountry.selectedLanguage = language;
         uniqueCountry.name = RI_UNIQUE_COUNTRY_NAME_BAMILO;

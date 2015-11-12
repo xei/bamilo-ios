@@ -220,22 +220,18 @@ UIPickerViewDelegate
     return self.dataSource.count;
 }
 
-- (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
 {
-    NSString *object = [self.dataSource objectAtIndex:row];
-    UIColor *color = UIColorFromRGB(0x4e4e4e);
-    
-    NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:object
-                                                                                  attributes:@{NSForegroundColorAttributeName:color}];
-    
-    UIFont *font = [UIFont fontWithName:kFontLightName
-                                   size:22.0];
-    
-    [attString addAttribute:NSFontAttributeName
-                      value:font
-                      range:NSMakeRange(0, object.length)];
-    
-    return attString;
+    UILabel* tView = (UILabel*)view;
+    if (!tView)
+    {
+        tView = [[UILabel alloc] init];
+        [tView setFont:[UIFont fontWithName:kFontLightName size:22.0f]];
+        [tView setTextAlignment:NSTextAlignmentCenter];
+    }
+    // Fill the label text here
+    tView.text=[self.dataSource objectAtIndex:row];
+    return tView;
 }
 
 @end
