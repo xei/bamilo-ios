@@ -28,7 +28,7 @@
     NSDictionary *componentsFromLocale =  [NSLocale componentsFromLocaleIdentifier:locale];
     NSString *languageCode = [componentsFromLocale objectForKey:NSLocaleLanguageCode];
     
-    if ([languageCode isEqualToString:@"ar"] || [languageCode isEqualToString:@"fa"]) {
+    if ([languageCode isEqualToString:@"ar"] || [languageCode isEqualToString:@"fa"] || [languageCode isEqualToString:@"ur"]) {
         return YES;
     } else {
         return NO;
