@@ -439,7 +439,19 @@ JAPickerDelegate
                                                     self.shareAppClickableView.frame.size.height)];
     
     CGFloat scrollViewHeight = CGRectGetMaxY(self.appSharingView.frame) + 6.0f;
-    if (ISEMPTY([RICountry getUniqueCountry])) {
+    
+    BOOL shouldHideCountry = NO;
+    if (VALID_NOTEMPTY([RICountry getUniqueCountry], RICountry)) {
+        shouldHideCountry = YES;
+    }
+    BOOL shouldHideBoth = NO;
+    if (shouldHideCountry && 1 >= [RICountryConfiguration getCurrentConfiguration].languages.count) {
+        shouldHideBoth = YES;
+    }
+    
+    if (shouldHideBoth) {
+        self.countrySettingsView.hidden = YES;
+    } else {
         self.countrySettingsView.hidden = NO;
         
         [self.countrySettingsView setFrame:CGRectMake(self.countrySettingsView.frame.origin.x,
@@ -447,19 +459,54 @@ JAPickerDelegate
                                                       width - (self.notificationView.frame.origin.x * 2),
                                                       self.countrySettingsView.frame.size.height)];
         
-        [self.chooseCountryClickableView setFrame:CGRectMake(self.chooseCountryClickableView.frame.origin.x,
-                                                             self.chooseCountryClickableView.frame.origin.y,
-                                                             self.countrySettingsView.frame.size.width,
-                                                             self.chooseCountryClickableView.frame.size.height)];
+        [self.countrySettingsTitleLabel setFrame:CGRectMake(self.countrySettingsTitleLabel.frame.origin.x,
+                                                            self.countrySettingsTitleLabel.frame.origin.y,
+                                                            self.countrySettingsView.frame.size.width,
+                                                            self.countrySettingsTitleLabel.frame.size.height)];
+        
+        CGFloat languageClickableViewY = CGRectGetMaxY(self.languageSeparator.frame);
+        if (shouldHideCountry) {
+            self.chooseCountryClickableView.hidden = YES;
+            self.countryTitleLabel.hidden = YES;
+            self.countrySubtitleLabel.hidden = YES;
+            languageClickableViewY = CGRectGetMaxY(self.countrySeparator.frame);
+        } else {
+            [self.chooseCountryClickableView setFrame:CGRectMake(self.chooseCountryClickableView.frame.origin.x,
+                                                                 self.chooseCountryClickableView.frame.origin.y,
+                                                                 self.countrySettingsView.frame.size.width,
+                                                                 self.chooseCountryClickableView.frame.size.height)];
+            [self.countryTitleLabel setFrame:CGRectMake(self.countryTitleLabel.frame.origin.x,
+                                                        self.chooseCountryClickableView.frame.origin.y + 6.0f,
+                                                        self.countryTitleLabel.frame.size.width,
+                                                        self.countryTitleLabel.frame.size.height)];
+            [self.countrySubtitleLabel setFrame:CGRectMake(self.countrySubtitleLabel.frame.origin.x,
+                                                           self.chooseCountryClickableView.frame.origin.y + 25.0f,
+                                                           self.countrySubtitleLabel.frame.size.width,
+                                                           self.countrySubtitleLabel.frame.size.height)];
+        }
         
         [self.languageClickableView setFrame:CGRectMake(self.languageClickableView.frame.origin.x,
-                                                        self.languageClickableView.frame.origin.y,
+                                                        languageClickableViewY,
                                                         self.countrySettingsView.frame.size.width,
                                                         self.languageClickableView.frame.size.height)];
         
+        [self.languageTitleLabel setFrame:CGRectMake(self.languageTitleLabel.frame.origin.x,
+                                                     languageClickableViewY + 6.0f,
+                                                     self.languageTitleLabel.frame.size.width,
+                                                     self.languageTitleLabel.frame.size.height)];
+        [self.languageSubtitleLabel setFrame:CGRectMake(self.languageTitleLabel.frame.origin.x,
+                                                        languageClickableViewY + 25.0f,
+                                                        self.languageTitleLabel.frame.size.width,
+                                                        self.languageTitleLabel.frame.size.height)];
+        
+        CGFloat countrySettingsViewHeight = CGRectGetMaxY(self.languageClickableView.frame);
+        
+        self.countrySettingsView.frame = CGRectMake(self.countrySettingsView.frame.origin.x,
+                                                    self.countrySettingsView.frame.origin.y,
+                                                    self.countrySettingsView.frame.size.width,
+                                                    countrySettingsViewHeight);
+        
         scrollViewHeight = CGRectGetMaxY(self.countrySettingsView.frame) + 6.0f;
-    } else {
-        self.countrySettingsView.hidden = YES;
     }
 
     
@@ -920,6 +967,24 @@ JAPickerDelegate
             }
             [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+            
+            RICountry* uniqueCountry = [RICountry getUniqueCountry];
+            if (VALID_NOTEMPTY(uniqueCountry, RICountry)) {
+                if ([uniqueCountry.name isEqualToString:self.countrySubtitleLabel.text]) {
+                    //found it
+                    NSArray* languages = [[RICountryConfiguration getCurrentConfiguration].languages array];
+                    //find language
+                    for (RILanguage* language in languages) {
+                        if ([language.langCode isEqualToString:selectedLanguage.langCode]) {
+                            //found it
+                            uniqueCountry.selectedLanguage = language;
+                            [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification object:uniqueCountry];
+                            break;
+                        }
+                    }
+                }
+            }
+            
             [self hideLoading];
         }];
     }
