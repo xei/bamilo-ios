@@ -92,7 +92,7 @@
 
 "string_reviews" = "‎%d‎ جائزے";
 
-"string_quantity" = "تعداد: ٪@";
+"string_quantity" = "تعداد: %@";
 
 "products_sort_bestrated" = "بہترین درجہ بندی";
 
@@ -120,7 +120,7 @@
 
 "error_add_to_cart_failed" = "ٹوکری میں شمولیت ناکام";
 
-"string_size_with_value" = "ناپ: ٪@";
+"string_size_with_value" = "ناپ: %@";
 
 "string_choose_size_for_all_products" = "براہِ کرم تمام اشیاء کے لیے ناپ منتخب کریں";
 
