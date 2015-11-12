@@ -968,24 +968,28 @@ JAPickerDelegate
             [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
             
-            RICountry* uniqueCountry = [RICountry getUniqueCountry];
-            if (VALID_NOTEMPTY(uniqueCountry, RICountry)) {
-                if ([uniqueCountry.name isEqualToString:self.countrySubtitleLabel.text]) {
-                    //found it
-                    NSArray* languages = [[RICountryConfiguration getCurrentConfiguration].languages array];
-                    //find language
-                    for (RILanguage* language in languages) {
-                        if ([language.langCode isEqualToString:selectedLanguage.langCode]) {
-                            //found it
-                            uniqueCountry.selectedLanguage = language;
-                            [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification object:uniqueCountry];
-                            break;
+            [self hideLoading];
+            
+            if (RIApiResponseNoInternetConnection == apiResponse && VALID_NOTEMPTY(errorMessages, NSArray)) {
+                [self showMessage:[errorMessages firstObject] success:NO];
+            } else {
+                RICountry* uniqueCountry = [RICountry getUniqueCountry];
+                if (VALID_NOTEMPTY(uniqueCountry, RICountry)) {
+                    if ([uniqueCountry.name isEqualToString:self.countrySubtitleLabel.text]) {
+                        //found it
+                        NSArray* languages = [[RICountryConfiguration getCurrentConfiguration].languages array];
+                        //find language
+                        for (RILanguage* language in languages) {
+                            if ([language.langCode isEqualToString:selectedLanguage.langCode]) {
+                                //found it
+                                uniqueCountry.selectedLanguage = language;
+                                [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification object:uniqueCountry];
+                                break;
+                            }
                         }
                     }
                 }
             }
-            
-            [self hideLoading];
         }];
     }
 }
