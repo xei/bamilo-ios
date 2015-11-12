@@ -1,0 +1,609 @@
+/*
+ RIStrings.strings
+ Jumia
+ 
+ Created by Pedro Lopes on 13/09/14.
+ Copyright (c) 2014 Rocket Internet. All rights reserved. */
+"string_update_necessary_title" = "تازہ کرنا ضروری ہے";
+
+"string_update_necessary_message_ios" = "ہمیں کچھ ایسا ملا ہے جس کو درست کرنا، دراز پر آپ کی خریداری کے تجربے کو بہترین بنانےکے لیے نہایت ضروری ہے۔ اس ایپلیکیشن کو مزید استعمال کرنے سے پہلے اسے ازسرِنو تازہ کرنا پڑے گا۔";
+
+"string_update_available_title" = "تازہ کرنے کی سہولت دستیاب ہے";
+
+"string_update_available_message_ios" = "ہمیں کچھ ایسا ملا ہے جس کو بہتر کرنا آپ کے دراز پر خریداری کے تجربے کو مزید بہتر بنا دے گا۔ براہِ مہربانی اپنی ایپ کو تازہ کریں۔";
+
+"string_update" = "تازہ کریں!";
+
+"string_ok_update" = "ٹھیک، تازہ کریں!";
+
+"string_no_thanks" = "نہیں، شکریہ!";
+
+"ok_label" = "ٹھیک";
+
+"done_label" = "ہو گیا";
+
+"back_label" = "پیچھے";
+
+"submit_label" = "بھیجیں";
+
+"string_error" = "غلطی";
+
+"login_label" = "لاگ ان";
+
+"action_label_logout" = "باہر نکلیں";
+
+"home" = "مرکزی صفحہ";
+
+"categories" = "زمرہ جات";
+
+"favourites" = "میرے پسندیدہ";
+
+"recent_searches" = "ابھی ڈھونڈا";
+
+"recently_viewed" = "ابھی دیکھا";
+
+"my_account" = "میرا کھاتا";
+
+"nav_track_order" = "اپنے آرڈر کا پیچھا کریں";
+
+"nav_country" = "ملک چنیں";
+
+"string_filters" = "چھلنیاں";
+
+"string_remove_filter" = "ہٹائیں";
+
+"categories_toplevel_title" = "تمام زمرہ جات";
+
+"string_apply" = "لاگو کریں";
+
+"search_label" = "تلاش";
+
+"shopping_cart" = "ٹوکریِ خرید";
+
+"navigation_cart_empty" = "آپ کی ٹوکری خالی ہے";
+
+"string_vat_shipping_included" = "بہ شمول زرِ ترسیل اور VAT";
+
+"catalog_no_results" = "آپ کے معیارِ چھلنی کے مماثل کوئی نتیجہ نہیں ملا۔\nآپ کم تفصیلات والی چھلنی کے ساتھ دوبارہ کوشش کر سکتے ہیں۔";
+
+"catalog_edit_filters" = "چھلنی میں ترامیم کریں";
+
+"teaser_campaign_button_first_line" = "گرما گرم";
+
+"teaser_campaign_button_second_line" = "پیشکشیں";
+
+"string_top_brands" = "بہترین برانڈز";
+
+"string_top_categories" = "اعلیٰ زمرہ جات";
+
+"string_top_sellers" = "اعلیٰ فروخت کنندگان";
+
+"string_new" = "نیا";
+
+"string_size" = "ناپ";
+
+"string_rating" = "1 درجہ بندی";
+
+"string_ratings" = "‎%d‎ درجہ بندیاں";
+
+"string_nratings" = "‎%d‎";
+
+"string_review" = "1 تبصرہ";
+
+"string_reviews" = "‎%d‎ جائزے";
+
+"string_quantity" = "تعداد: ٪@";
+
+"products_sort_bestrated" = "بہترین درجہ بندی";
+
+"products_sort_popularity" = "مقبولیت";
+
+"products_sort_newin" = "نئی آمد";
+
+"products_sort_priceup" = "زیادہ قیمت";
+
+"products_sort_pricedown" = "کم قیمت";
+
+"products_sort_name" = "نام";
+
+"products_sort_brand" = "برانڈ";
+
+"all_label" = "تمام";
+
+"string_with_discount_only" = "صرف رعایت کے ساتھ";
+
+"favourite_no_favourites" = "فی الوقت کسی شے پرآپ کی پسند کا نشان نہیں ہے۔";
+
+"favourite_addalltocart" = "تمام اشیاء کو ٹوکری میں شامل کریں";
+
+"added_to_shop_cart_dialog_text" = "چیز ٹوکری میں شامل کر دی گئی تھی۔";
+
+"error_add_to_cart_failed" = "ٹوکری میں شمولیت ناکام";
+
+"string_size_with_value" = "ناپ: ٪@";
+
+"string_choose_size_for_all_products" = "براہِ کرم تمام اشیاء کے لیے ناپ منتخب کریں";
+
+"add_to_shopping_cart" = "ٹوکری میں شامل کریں";
+
+"string_variations" = "مختلف اقسام";
+
+"string_rate_now" = "ابھی درجہ بندی کریں";
+
+"related_items" = "ملتی جلتی اشیاء";
+
+"product_features_title" = "شے کی خصوصیات";
+
+"description" = "تفصیل";
+
+"key_features" = "کلیدی خصوصیات";
+
+"product_desc_summary_title" = "خلاصہ";
+
+"product_description_title" = "شے کی تفصیل";
+
+"share_subject_ios" = "%@ شریک کریں";
+
+"share_checkout_this_product" = "یہ چیز دیکھیں، جو مجھے ملی:";
+
+"rating_question" = "کیا آپ نے یہ شے استعمال کی ہے؟ ابھی اس کی درجہ بندی کریں";
+
+"writereview_send" = "تبصرہ بھیجیں";
+
+"submit_title" = "تبصرہ بھیج دیا";
+
+"write_comment" = "تبصرہ لکھیں";
+
+"string_posted_by" = "ازطرف %,%@";
+
+"string_posted_by_anonymous" = "ازطرف گمنام صارف، %@";
+
+"string_price" = "قیمت";
+
+"string_appearance" = "ظاہر";
+
+"rating_quality" = "معیار";
+
+"cart_label" = "ٹوکری";
+
+"wishlist_notiems" = "آپ کی ٹوکری میں کوئی شے نہیں ہے";
+
+"continue_shopping" = "خریداری جاری رکھیں";
+
+"my_order_coupon_label" = "کوپن";
+
+"voucher_use" = "استعمال";
+
+"voucher_remove" = "ہٹائیں";
+
+"voucher_message_hint" = "اپنا کوپن کوڈ یہاں درج کریں";
+
+"call_to_order" = "آرڈر دینے کے لیے فون کریں";
+
+"string_article" = "1 چیز";
+
+"string_articles" = "‎%d‎ چیزیں";
+
+"string_item_cart" = "1 چیز";
+
+"string_items_cart" = "‎%d‎ اشیاء";
+
+"error_add_to_shopping_cart_quantity" = "معذرت! آپ مقررہ حد سے زیادہ تعداد میں آرڈر نہیں کر سکتے۔";
+
+"shipping" = "ترسیل";
+
+"shipment_of" = "کھیپ کی l % شناخت";
+
+"fulfilled_by" = "تکمیل کیا";
+
+"free_label" = "مفت";
+
+"extra_costs_label" = "اضافی قیمت";
+
+"my_order_voucher_label" = "رعایتی پرچی";
+
+"my_order_total_label" = "میزان";
+
+"checkout_button_text" = "تکمیلِ خرید کریں";
+
+"sub_total_title" = "ذیلی میزانیہ";
+
+"vat_string" = "VAT";
+
+"signup_label" = "اندراج کروائیں";
+
+"facebook_signup_button_text" = "بذریعہ فیس بک اندراج کروائیں";
+
+"facebook_login_button_text" = "بذریعہ فیس بک داخل ہوں";
+
+"login_incomplete" = "تاریخ پیدائش اور ای میل لاگ ان کے لئے ذروری ھے";
+
+"or_text" = "یا";
+
+"fgt_pass" = "کیا پاسورڈ بھول گئے؟";
+
+"forgotten_password" = "براہِ کرم اپنے ای میل کا اندراج کریں";
+
+"forgotten_password_sub_text" = "ہم آپ کو پاسورڈ تبدیل کرنے کے لیے لنک بھیجیں گے۔";
+
+"forgotten_password_successtext" = "ای میل بھیج دی گئی ہے۔";
+
+"checkout_label" = "تکمیلِ خرید";
+
+"checkout_header_step_1" = "1۔ آپ کے بارے میں";
+
+"next_button" = "اگلا";
+
+"login_sectiontitle" = "اسناد";
+
+"register_title" = "کھاتا کھولیں";
+
+"register_sectiontitle" = "کھاتے کی معلومات";
+
+"registration_text" = "انراج کروائیں";
+
+"checkout_header_step_2" = "پتا";
+
+"action_label_add_address" = "نیا پتا شامل کریں";
+
+"billing_same_label" = "بلنگ اسی پتے پر کریں";
+
+"billing_shipping_label" = "ترسیلی پتا";
+
+"billing_billing_label" = "بلنگ پتا";
+
+"billing_def_shipping_label" = "پہلے سے طے شدہ ترسیلی پتا";
+
+"billing_others_label" = "دوسرے پتے";
+
+"setting_address_error" = "بلنگ/ترسیلی پتے طے کرنے میں مسئلہ";
+
+"cancel_label" = "منسوخ";
+
+"save_changes_label" = "تبدیلیاں محفوظ کریں";
+
+"edit_address" = "پتے میں ترمیم کریں";
+
+"validation_errortext" = "بھیجی گئیں معلومات میں غلطیاں تھیں، براہِ کرم تمام معلوماتی شعبوں کو دوبارہ جانچیں۔";
+
+"checkout_header_step_3" = "3. ترسیل";
+
+"string_city" = "شہر: ";
+
+"string_address" = "پتا: ";
+
+"string_opening_hours" = "کھلنے کے اوقاتِ: ";
+
+"string_please_select" = "براہِ کرم چُنیں";
+
+"order_summary_shipping_fee_label" = "زرِ ترسیل:";
+
+"checkout_header_step_4" = "4. ادائیگی";
+
+"payment" = "ادائیگی";
+
+"creation_date" = "تاریخِ تخلیق:";
+
+"payment_method" = "طریقہِ ادائیگی";
+
+"order_track_products" = "اشیاء:";
+
+"string_error_no_results_for_tracking_id" = "درج کیے گئے آرڈر نمبر سے مماثل کوئی نتیجہ نہیں ملا۔ \nبراہِ کرم آرڈر کا شناختی نمبرجانچیں اور دوبارہ کوشش کریں۔";
+
+"track_your_order" = "اپنے آرڈر کا پیچھا کریں";
+
+"track_order" = "آرڈر کا پیچھا کریں";
+
+"track_order_hint" = "آرڈر نمبر";
+
+"string_order_status" = "آرڈر کی صورتِ حال";
+
+"string_loosing_order_title" = "انتباہ";
+
+"string_loosing_order_message" = "اگر آپ خریدِ تکمیل کو ادھورا چھوڑ دیں گے تو آپ کا آرڈر منسوخ کر دیا جائے گا۔";
+
+"recentsearch_no_searches" = "کوئی حالیہ تلاش نہیں";
+
+"recentsearch_clear_searches" = "حالیہ تلاش صاف کریں";
+
+"recentlyview_no_searches" = "یہاں کوئی حالیہ دیکھے جانے والی اشیاء نہیں ہیں۔";
+
+"recentlyview_clear_viewed" = "حالیہ دیکھے جانے والی اشیاء صاف کریں";
+
+"string_user_data" = "معلوماتِ صارف";
+
+"string_user_email_notifications" = "ای میل اطلاعات";
+
+"section_title_account" = "کھاتے کی ترتیب";
+
+"option2_description" = "پاسورڈ، ای میل وغیرہ تبدیل کریں";
+
+"myaccount_email_notifications" = "ای میل اطلاعات";
+
+"option3_description" = "اجراء اور منسوخیِ اجرا";
+
+"section_title_notification" = "تنظیمِ اطلاعات";
+
+"notifications" = "اطلاعات";
+
+"notifications_summary" = "خصوصی پیشکشیں اور تازہ معلومات حاصل کریں۔";
+
+"sound" = "آواز";
+
+"sound_summary" = "آمدِ اطلاعات کا اعلان بآوازکریں۔";
+
+"personal_data_label" = "آپ کی ذاتی معلومات";
+
+"new_password_label" = "نیا پاسورڈ";
+
+"password_changed_success" = "پاسورڈ کامیابی سے تبدیل کر دیا گیا";
+
+"preferences_updated" = "ترجیحات ازسرِنو تازہ کردی گئیں";
+
+"thank_you_order_title" = "شکریہ!";
+
+"order_success" = "اس نمبر کے ساتھ آپ کے آرڈر کا اندراج کامیابی کےساتھ ہو گیا ہے:";
+
+"order_track_success" = "اس ایپ میں آپ آرڈر کی صورتِ حال والے حصے میں جا کر اپنے آرڈر کاپیچھا کر سکتے ہیں۔";
+
+"order_track_link" = "آرڈر کی صورتِ حال";
+
+"my_order_label" = "میرا آرڈر";
+
+"my_order_payment" = "طریقہِ ادائیگی";
+
+"enter_order_id" = "براہِ کرم آرڈر نمبر درج کریں";
+
+"products_added_favourite" = "میری پسند میں شے کی شمولیت";
+
+"error_adding_to_wishlist" = "میری پسند میں شمولیت میں مسئلہ";
+
+"products_removed_favourite" = "میری پسند سے چیز ہٹا دی گئی";
+
+"error_removing_from_wishlist" = "میری پسند سے چیز ہٹانے میں مسئلہ";
+
+"error_add_to_cart_failed_for_x_products" = "ٹوکری میں ‎%d‎ چیزیں شامل کرنے میں مسئلہ";
+
+"error_add_to_cart_failed_for_1_product" = "ٹوکری میں 1 چیز شامل کرنے میں ناکامی";
+
+"save_label" = "محفوظ کریں";
+
+"string_campaign_ramaining_stock" = "بقیہ ذخیرہ: ‎%d‎%%";
+
+"campaign_save" = "آپ کی بچت";
+
+"campaing_offer_ended" = "پیشکش ختم ہوئی!";
+
+"campaing_timer_end" = "وقتِ اختتام:";
+
+"string_format_off_label" = "‎%d‎ % رعایت";
+
+"campaigns_label" = "مہمات";
+
+"product_specifications" = "تفصیلات";
+
+"go_shop_text" = "ابھی خریدیں";
+
+"promotion_tip_tap_text" = "کوڈ کی نقل محفوظ کرنے کے لیے اوپر خانے میں تھپکی دیں، تاکہ تکمیلِ ادائیگی کے وقت کام آئے۔";
+
+"string_try_again" = "دوبارہ کوشش کریں";
+
+"error_no_connection" = "رابطہ منقطع";
+
+"string_no_newtork" = "کوئی نیٹ ورک نہیں ہے";
+
+"internet_no_connection_details_label" = "انٹرنیٹ کا مسئلہ درپیش ہے، براہِ کرم دوبارہ کوشش کریں";
+
+"string_oops" = "اُف!";
+
+"string_something_broken" = "کوئی مسئلہ درپیش ہے۔ براہِ مہربانی تھوڑی دیر بعد دوبارہ کوشش کریں۔";
+
+"form_data_not_transferred" = "بھیجی گئیں معلومات میں غلطیاں تھیں، براہِ کرم تمام معلوماتی شعبوں کو دوبارہ جانچیں۔";
+
+"my_order_confirm_button" = "آرڈر کی تصدیق کریں";
+
+"string_error_setting_payment_method" = "طریقہِ ادائیگی طے کرنے میں مسئلہ";
+
+"string_error_setting_shipping_method" = "طریقہِ ترسیل طے کرنے میں مسئلہ";
+
+"fallback_maintenance" = "دیکھ بھال";
+
+"fallback_maintenance_text" = "فی الوقت مرمت جاری ہے";
+
+"fallback_maintenance_text_bottom" = "ہم اس وقفہء مرمت کو مختصر رکھنے کی کوشش کریں گے، آپ کچھ دیر بعد دوبارہ کوشش کریں۔";
+
+"fallback_best" = "آن لائن خریداری کا بہترین تجربہ";
+
+"fallback_choice" = "وسیع ترین انتخابات";
+
+"fallback_doorstep" = "آپ کی دہلیز پر";
+
+"got_it" = "مل گیا";
+
+"home_tip_text" = "زمرہ تبدیل کرنے کے لیے دائیں یا بائیں پھیریں۔";
+
+"products_tip_swipe_text" = "ترتیب کی قسم تبدیل کرنے کے لیے دائیں یا بائیں پھیریں";
+
+"tip_favourite_text" = "اس شے کو اپنی پسند میں شامل کرنے کے لیے کلک کریں اور مکمل فہرست اپنے کھاتے میں ملاحظہ کریں۔";
+
+"tip_share_text" = "اس شے کو دوسروں کے ساتھ شریک کرنے کے لیے کلک کریں۔";
+
+"tip_swipe_text" = "مختلف تصاویر دیکھنے کے لیے دائیں یا بائیں پھیریں";
+
+"tip_tap_text" = "اشیاء کی فہرست کھولنے کے لیے تھپکیں۔";
+
+"pinch_to_zoom_label" = "چُٹکی رکھ کربڑا کریں۔";
+
+"fallback_audio_ios" = "آواز اور ویڈیو";
+
+"fallback_books" = "کتابیں";
+
+"fallback_bottom_text" = "کہیں سے بھی، کسی بھی وقت";
+
+"fallback_bottom_text2" = "آپ کی خریداری اور معائنے کے لیے اور بہت کچھ";
+
+"fallback_fashion" = "رواج";
+
+"fallback_health_ios" = "صحت و خوبصورتی";
+
+"fallback_home_office_ios" = "گھر اور دفتر";
+
+"fallback_mobile" = "موبائل فونز";
+
+"fallback_welcome" = "میں خوش آمدید";
+
+"reviews" = "جائزے";
+
+"more" = "مزید";
+
+"reviews_empty" = "اس شے کے لیے ابھی تک کوئی تبصرہ نہیں کیا گیا";
+
+"reviews_empty_seller" = "اس تاجر کے بارے میں ابھی تک کوئی تبصرہ نہیں کیا گیا۔";
+
+"order_summary_label" = "خلاصہِ آرڈر";
+
+"string_edit" = "ترمیم";
+
+"track_your_order_tip" = "اپنے آرڈر نمبر کو تلاش کریں اور اس کی تمام متعلقہ تفصیلات یہاں دکھائی دیں گی۔";
+
+"size_guide_label" = "شرحِ ناپ";
+
+"my_addresses" = "میرے پتے";
+
+"create_edit_address" = "اپنے پتوں میں ترمیم کریں یا نئے تخلیق کریں";
+
+"app_sharing" = "ایپ پھیلائیں";
+
+"share_the_app" = "ایپ کو پھیلائیں";
+
+"can_share_app_with_friends" = "اب آپ اس ایپ کواپنے دوستوں میں پھیلا سکتے ہیں";
+
+"install_app_ios" = "iOS ایپ ایک لمحے میں نصب کریں";
+
+"share_app_ios" = "ایپ کو پھیلائیں";
+
+"delivery_time" = "مدتِ ترسیل:";
+
+"product_outof_stock" = "شے ذخیرے میں موجود نہیں";
+
+"products_outof_stock" = "اشیاء ذخیرے میں موجود نہیں";
+
+"login_remember_user_email" = "میری ای میل یاد رکھیں";
+
+"my_orders_label" = "میرے آرڈرز";
+
+"my_order_history_label" = "میری تاریخِ آرڈرز";
+
+"my_order_tracking_label" = "آرڈر کا پیچھا";
+
+"my_order_details_label" = "آرڈر کی تفصیلات";
+
+"my_order_number_label" = ".NR";
+
+"my_order_date_label" = "تاریخ:";
+
+"my_order_payment_reference_label" = "حوالہ #:";
+
+"my_order_payment_status_label" = "صورتِ حال:";
+
+"my_order_quantity_label" = "تعداد";
+
+"my_order_no_orders_label" = "آپ نے کوئی آرڈر نہیں کیا";
+
+"like_us_on_facebook" = "ہمیں فیس بک پر پسند کریں";
+
+"seller_info_warranty" = "وارنٹی";
+
+"bundle_title" = "اکثر ساتھ خریدی گئیں";
+
+"bundle_total_price" = "کُل قیمت:";
+
+"buy_now" = "ابھی خریدیں";
+
+"other_sellers" = "دوسرے فروخت کنندگان";
+
+"same_product_from_other_sellers" = "کسی دوسرے فروخت کنندہ کے پاس موجود یہی شے";
+
+"from" = "منجانب";
+
+"product_delivery_time" = "مدتِ ترسیل:";
+
+"product_delivery_days" = "ایام";
+
+"number_offers_from_ios" = "‎%d‎ پیشکشیں منجانب";
+
+"write_full_review" = "ایک مکمل تجزیہ لکھیں";
+
+"product_sold_by" = "فروخت کنندگان";
+
+"sort_by" = "ترتیب برائے";
+
+"fee_include" = "(بہ شمول %@)";
+
+"login_to_review" = "براہِ کرم تبصرے کے لیے داخل ہوں";
+
+"login_to_rate" = "براہِ کرم درجہ بندی کے لیے داخل ہوں";
+
+"my_order_item_label" = "شے";
+
+"my_order_items_label" = "اشیاء";
+
+"string_more_choices" = "مزید انتخابات";
+
+"string_addresses_saved_as_default" = "پتے بہ حیثیت \"پہلے سے طے شدہ\" محفوظ کر دیئے گئے";
+
+"review_this_seller" = "اس تاجر کے بارے میں ابھی تبصرہ کریں۔";
+
+"string_wizard_back_top" = "فہرستِ مصنوعات کو واپس اوپر لے جانے کے لیے خانہِ صورتِ حال کو تھپکیں۔";
+
+"shops_of_the_week" = "ہفتے کی بہترین دکانیں";
+
+"featured_stores" = "خصوصی دکانیں";
+
+"see_more_offers" = "مزید پیشکشیں ملاحظہ فرمائیں";
+
+"kickout_message_1" = "ہماری مہم ایک بہت بڑی کامیابی ہے";
+
+"kickout_message_2" = "اس حد تک کہ ہماری دکان اس وقت گاہکوں سے بھری ہوئی ہے اور ہم نئے گاہکوں کو خوش آمدید نہیں کہہ سکتے۔";
+
+"kickout_message_3" = "ہم آپ کو خریداری کا ایک بہترین تجربہ فراہم کرنا چاہتے ہیں، اس لیے ہماری گزارش ہے کہ آپ کچھ دیر بعد دوبارہ کوشش کریں۔";
+
+"search_placeholder" = "اشیاء، برانڈز اور مزید تلاش کریں";
+
+"shipping_fee_info" = "قابلِ ادائیگی قیمت میں فیس کی شمولیت";
+
+"birthday" = "تاریخِ پیدائش";
+
+"country" = "ملک";
+
+"language" = "زبان";
+
+"combos" = "کومبوز";
+
+"clear_all" = "سب صاف کریں";
+
+"buy_the_look" = "مکمل لک خریدیں";
+
+"read_more" = "مزید پڑھیں";
+
+"see_other_colors" = "مزید رنگ دیکھیے";
+
+"see_other_variations" = "مختلف اقسام دیکھیے";
+
+"seller_information" = "بیچنے والے کی تفصیلات";
+
+"other_sellers_starting_from" = "اور بیچنے والے شروءاتی قیمت %@";
+
+"you_may_also_like" = "آپکو یہ بھی پسند آسکتا ہے";
+
+"reviews/ratings" = "درجہ بندی اور تجزیے";
+
+"from_n_customers" = "خریدار‎%d‎";
+
+"average_rating" = "اوسط درجہ بندی";
+
+"be_the_first_to_rate" = "درجہ بندی کرنے والے پھلے بنئے";
+
+"by_someone" = "ازطرف %@";
+
+"user_reviews" = "صارفین کی آراء";

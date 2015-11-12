@@ -3482,6 +3482,7 @@
 		CE88F7B51A1F88FB00A3A586 /* JAGrayButtonCell_ipad_portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAGrayButtonCell_ipad_portrait.xib; sourceTree = "<group>"; };
 		CE88F7BB1A23886100A3A586 /* JAOrderSummaryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAOrderSummaryView.h; path = OrderSummaryView/JAOrderSummaryView.h; sourceTree = "<group>"; };
 		CE88F7BC1A23886100A3A586 /* JAOrderSummaryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAOrderSummaryView.m; path = OrderSummaryView/JAOrderSummaryView.m; sourceTree = "<group>"; };
+		CE8BF04D1BF4DD28001F20D1 /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/RIStrings.strings; sourceTree = "<group>"; };
 		CE8C928C1B8615F500C77706 /* RISpecification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RISpecification.h; sourceTree = "<group>"; };
 		CE8C928D1B8615F500C77706 /* RISpecification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RISpecification.m; sourceTree = "<group>"; };
 		CE8C92931B86164000C77706 /* RISpecificationAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RISpecificationAttribute.h; sourceTree = "<group>"; };
@@ -6268,6 +6269,7 @@
 				my,
 				fa,
 				ar,
+				ur,
 			);
 			mainGroup = B5A3019F19811D0700F71726;
 			productRefGroup = B5A301A919811D0700F71726 /* Products */;
@@ -9001,6 +9003,7 @@
 				CE9AE1211AB823C100D56481 /* my */,
 				CE3F81411AC5743000EB3916 /* fa */,
 				CEF0C4891BE8C391005B5B12 /* ar */,
+				CE8BF04D1BF4DD28001F20D1 /* ur */,
 			);
 			name = RIStrings.strings;
 			sourceTree = "<group>";
