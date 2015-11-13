@@ -556,6 +556,10 @@ JADynamicFormDelegate
         [userInfo setObject:self.nextNotification forKey:@"notification"];
     }
     
+    if (NO == self.tabBarIsVisible) {
+        [self.navigationController popViewControllerAnimated:NO];
+    }
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignUpScreenNotification
                                                         object:nil
                                                       userInfo:userInfo];
