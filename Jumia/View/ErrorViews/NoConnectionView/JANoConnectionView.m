@@ -132,6 +132,8 @@ void(^retryBock)(BOOL dismiss);
     
     self.noConnectionDetailsLabel.font = [UIFont fontWithName:kFontRegularName size:self.noConnectionDetailsLabel.font.pointSize];
     self.noConnectionDetailsLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    [self.noConnectionDetailsLabel setWidth:self.width-2*6.f];
+    [self.noConnectionDetailsLabel sizeToFit];
     [self.noConnectionDetailsLabel setXCenterAligned];
     self.genericErrorLabel.font = [UIFont fontWithName:kFontRegularName size:self.genericErrorLabel.font.pointSize];
     self.genericErrorLabel.textColor = UIColorFromRGB(0x4e4e4e);
