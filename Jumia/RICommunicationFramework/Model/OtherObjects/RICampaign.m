@@ -251,20 +251,9 @@
             }
         }
         
-        if ([campaignProductJSON objectForKey:@"images"]) {
-            
-            NSMutableArray* imagesArray = [NSMutableArray new];
-            
-            NSArray* imagesJSON = [campaignProductJSON objectForKey:@"images"];
-            if (VALID_NOTEMPTY(imagesJSON, NSArray)) {
-                for (NSString* imageUrl in imagesJSON) {
-                    if (VALID_NOTEMPTY(imageUrl, NSString)) {
-                        [imagesArray addObject:imageUrl];
-                    }
-                }
-            }
-            
-            campaignProduct.imagesUrls = [imagesArray copy];
+        if ([campaignProductJSON objectForKey:@"image"]) {
+            if (![[campaignProductJSON objectForKey:@"image"] isKindOfClass:[NSNull class]])
+                campaignProduct.imagesUrl = [campaignProductJSON objectForKey:@"image"];
         }
         
         NSArray* sizesArray = [campaignProductJSON objectForKey:@"sizes"];

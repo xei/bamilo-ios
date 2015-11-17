@@ -41,7 +41,6 @@
     self.label.font = [UIFont fontWithName:kFontRegularName size:self.label.font.pointSize];
     [self.label setText:[NSString stringWithFormat:STRING_REVIEWS, [NSString stringWithFormat:@"%ld",(long)numberOfReviews]]];
     [self.label setTextColor:UIColorFromRGB(0xcccccc)];
-    [self.label sizeToFit];
     [self.label setFrame:CGRectMake(self.label.frame.origin.x,
                                     (self.frame.size.height - self.label.frame.size.height) / 2,
                                     self.label.frame.size.width,

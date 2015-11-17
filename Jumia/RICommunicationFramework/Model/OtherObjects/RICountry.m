@@ -239,6 +239,18 @@
         country.userAgentInjection = [jsonObject objectForKey:@"user_agent"];
     }
     
+    if ([jsonObject objectForKey:@"languages"]) {
+        NSArray* languagesArrayJSON = [jsonObject objectForKey:@"languages"];
+        if (VALID_NOTEMPTY(languagesArrayJSON, NSArray)) {
+            NSMutableArray* languagesArray = [NSMutableArray new];
+            for (NSDictionary* languageJSON in languagesArrayJSON) {
+                RILanguage* newLanguage = [RILanguage parseLanguage:languageJSON];
+                [languagesArray addObject:newLanguage];
+            }
+            country.languages = [languagesArray copy];
+        }
+    }
+    
     return country;
 }
 
@@ -247,6 +259,9 @@
     RICountry* uniqueCountry = [[RICountry alloc] init];
     if([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
     {
+        NSDictionary* languageJSON = @{@"code":@"my_MM",@"default":@1,@"name":@"ျမန္မာ"};
+        RILanguage* language = [RILanguage parseLanguage:languageJSON];
+        uniqueCountry.selectedLanguage = language;
         uniqueCountry.name = RI_UNIQUE_COUNTRY_NAME_SHOP;
         uniqueCountry.countryIso = RI_UNIQUE_COUNTRY_ISO_SHOP;
         uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_SHOP;
@@ -258,12 +273,15 @@
 #endif
         return uniqueCountry;
     } else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
+        NSDictionary* languageJSON = @{@"code":@"fa_IR",@"default":@1,@"name":@"فارسی"};
+        RILanguage* language = [RILanguage parseLanguage:languageJSON];
+        uniqueCountry.selectedLanguage = language;
         uniqueCountry.name = RI_UNIQUE_COUNTRY_NAME_BAMILO;
         uniqueCountry.countryIso = RI_UNIQUE_COUNTRY_ISO_BAMILO;
         uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO;
         uniqueCountry.isLive = YES;
 #if defined(STAGING) && STAGING
-        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO_INTEGRATION_MOBILE;
+        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO_STAGING;
         uniqueCountry.isLive = NO;
         uniqueCountry.userAgentInjection = RI_UNIQUE_COUNTRY_USER_AGENT_INJECTION_BAMILO_INTEGRATION_MOBILE;
 #endif

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import "RIBanner.h"
+#import "RICatalog.h"
 
 
 @class RIImage, RIProductSimple, RIVariation, RIBundle, RISeller;
@@ -65,9 +66,8 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSOrderedSet *productSimples;
 @property (nonatomic, retain) NSOrderedSet *variations;
 @property (nonatomic, retain) NSString* sizeGuideUrl;
-@property (nonatomic, retain) NSNumber * ratingAverage;
-@property (nonatomic, retain) NSNumber * ratingsTotal;
 @property (nonatomic, retain) NSNumber * reviewsTotal;
+
 @property (nonatomic, retain) NSNumber * offersMinPrice;
 @property (nonatomic, retain) NSNumber * offersMinPriceEuroConverted;
 @property (nonatomic, retain) NSNumber * offersTotal;
@@ -77,12 +77,15 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSString *summary;
 @property (nonatomic, retain) NSNumber *numberOfTimesSeen;
 
-
 //Not a coredata relationship
 @property (nonatomic, retain) NSOrderedSet *categoryIds;
 @property (nonatomic, retain) NSSet *relatedProducts;
 @property (nonatomic, retain) NSSet *specifications;
 @property (nonatomic, retain) RISeller *seller;
+@property (nonatomic, retain) NSString *shareUrl;
+@property (nonatomic, retain) NSString *priceRange;
+@property (nonatomic, retain) NSString *vertical;
+@property (nonatomic) BOOL fashion;
 
 /**
  *  Method to load a product and all its details given his sku. This method uses getCompleteProductWithUrl:successBlock:andFailureBlock:
@@ -131,9 +134,8 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
                                    page:(NSInteger)page
                                maxItems:(NSInteger)maxItems
                                 filters:(NSArray*)filters
-                             filterType:(NSString*)filterType
-                            filterValue:(NSString*)filterValue
-                           successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories, RIBanner* banner))successBlock
+                             filterPush:(NSString*)filterPush
+                           successBlock:(void (^)(RICatalog *catalog))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
@@ -146,7 +148,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *  @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)getProductsWithFullUrl:(NSString*)url
-                        successBlock:(void (^)(NSArray *products, NSString* productCount, NSArray *filters, NSString *cateogryId, NSArray* categories, RIBanner* banner))successBlock
+                        successBlock:(void (^)(RICatalog *catalog))successBlock
                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
@@ -204,7 +206,12 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *
  */
 + (void)getFavoriteProductsWithSuccessBlock:(void (^)(NSArray *favoriteProducts))successBlock
-                            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+                               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+
++ (void)getFavoriteProductsForPage:(NSInteger)page
+                          maxItems:(NSInteger)maxItems
+                      SuccessBlock:(void (^)(NSArray *favoriteProducts))successBlock
+                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
  *  Method to add a product to favorites list (and save it in coredata)
@@ -244,7 +251,6 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 + (NSString*)urlComponentForSortingMethod:(RICatalogSorting)sortingMethod;
 
 + (NSString*)sortingName:(RICatalogSorting)sortingMethod;
-
 
 + (NSString *)getBundleWithSku:(NSString *)sku
                   successBlock:(void (^)(RIBundle* bundle))successBlock

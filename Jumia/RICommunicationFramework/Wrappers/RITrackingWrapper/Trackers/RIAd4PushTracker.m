@@ -69,6 +69,7 @@
 #define kAd4PushProfileLastCartProductNameKey               @"lastCartProductName"
 #define kAd4PushProfileLastCartProductSKUKey                @"lastCartProductSKU"
 #define kAd4PushProfileLastCategoryAddedToCartKey           @"lastCategoryAddedToCart"
+#define kAd4PushProfileAttributeSetIDCartKey                @"attributeSetID"
 
 #define kAd4PushProfilelastPushNotificationOpenedKey        @"lastPNOpened"
 
@@ -108,6 +109,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         [events addObject:[NSNumber numberWithInt:RIEventAddToWishlist]];
         [events addObject:[NSNumber numberWithInt:RIEventRemoveFromWishlist]];
         [events addObject:[NSNumber numberWithInt:RIEventCheckoutStart]];
+        [events addObject:[NSNumber numberWithInt:RIEventCheckoutEnd]];
         [events addObject:[NSNumber numberWithInt:RIEventSearch]];
         [events addObject:[NSNumber numberWithInt:RIEventChangeCountry]];
         [events addObject:[NSNumber numberWithInt:RIEventFilter]];
@@ -427,6 +429,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 break;
             }
             case RIEventCheckoutStart:
+            {
                 [deviceInfo setObject:kAd4PushProfileStatusStarted forKey:kAd4PushProfileOrderStatusKey];
                 if (VALID_NOTEMPTY([data objectForKey:kRIEventQuantityKey], NSNumber)) {
                     [deviceInfo setObject:[data objectForKey:kRIEventQuantityKey] forKey:kAd4PushProfileCartStatusKey];
@@ -434,9 +437,22 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 if (VALID_NOTEMPTY([data objectForKey:kRIEventTotalCartKey], NSNumber)) {
                     [deviceInfo setObject:[data objectForKey:kRIEventTotalCartKey] forKey:kAd4PushProfileCartValueKey];
                 }
+                if (VALID_NOTEMPTY([data objectForKey:kRIEventAttributeSetIDCartKey], NSArray)) {
+                    [deviceInfo setObject:[data objectForKey:kRIEventAttributeSetIDCartKey] forKey:kAd4PushProfileAttributeSetIDCartKey];
+                }
                 
                 [BMA4STracker updateDeviceInfo:deviceInfo];
                 break;
+            }
+            case RIEventCheckoutEnd:
+            {
+                if (VALID_NOTEMPTY([data objectForKey:kRIEventAttributeSetIDCartKey], NSArray)) {
+                    [deviceInfo setObject:[data objectForKey:kRIEventAttributeSetIDCartKey] forKey:kAd4PushProfileAttributeSetIDCartKey];
+                }
+                
+                [BMA4STracker updateDeviceInfo:deviceInfo];
+                break;
+            }
             case RIEventSearch:
                 [deviceInfo setObject:currentDate forKey:kAd4PushProfileLastSearchDateKey];
                 [deviceInfo setObject:[data objectForKey:kRIEventKeywordsKey] forKey:kAd4PushProfileLastSearchKey];
@@ -661,28 +677,25 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
             
             NSString *key = @"";
             NSString *arguments = @"";
+            NSString *filter = @"";
             NSString *parameterKey = @"";
             NSString *parameterValue = @"";
+            NSArray *argumentsComponents = [NSArray new];
+            
             if(VALID_NOTEMPTY(urlComponents, NSArray) && 1 < [urlComponents count])
             {
                 key = [urlComponents objectAtIndex:1];
                 if(2 < [urlComponents count] && VALID_NOTEMPTY([urlComponents objectAtIndex:2], NSString))
                 {
                     arguments = [urlComponents objectAtIndex:2];
-                    NSArray *argumentsComponents = [arguments componentsSeparatedByString:@"?"];
+                    NSRange and = [arguments rangeOfString:@"&"];
+                    if( and.location != NSNotFound) {
+                        filter = [arguments substringFromIndex:and.location];
+                    }
+                    argumentsComponents = [arguments componentsSeparatedByString:@"&"];
                     if(VALID_NOTEMPTY(argumentsComponents, NSArray) && 1 < [argumentsComponents count])
                     {
                         arguments = [argumentsComponents objectAtIndex:0];
-                        NSString *parameter = [argumentsComponents objectAtIndex:1];
-                        if(VALID_NOTEMPTY(parameter, NSString))
-                        {
-                            NSArray *parameterComponents = [parameter componentsSeparatedByString:@"="];
-                            if(VALID_NOTEMPTY(parameterComponents, NSArray) && 1 < [parameterComponents count])
-                            {
-                                parameterKey = [parameterComponents objectAtIndex:0];
-                                parameterValue = [parameterComponents objectAtIndex:1];
-                            }
-                        }
                     }
                 }
             }
@@ -697,10 +710,9 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 // Catalog view - category name
                 NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
                 
-                if(VALID_NOTEMPTY(parameterKey, NSString) && VALID_NOTEMPTY(parameterValue, NSString))
+                if(VALID_NOTEMPTY(filter, NSString))
                 {
-                    [userInfo setObject:parameterKey forKey:@"filter_type"];
-                    [userInfo setObject:parameterValue forKey:@"filter_value"];
+                    [userInfo setObject:filter forKey:@"filter"];
                 }
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
@@ -711,10 +723,9 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
                 [userInfo setObject:[NSNumber numberWithInteger:0] forKey:@"sorting"];
                 
-                if(VALID_NOTEMPTY(parameterKey, NSString) && VALID_NOTEMPTY(parameterValue, NSString))
+                if(VALID_NOTEMPTY(filter, NSString))
                 {
-                    [userInfo setObject:parameterKey forKey:@"filter_type"];
-                    [userInfo setObject:parameterValue forKey:@"filter_value"];
+                    [userInfo setObject:filter forKey:@"filter"];
                 }
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
@@ -725,10 +736,9 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
                 [userInfo setObject:[NSNumber numberWithInteger:1] forKey:@"sorting"];
                 
-                if(VALID_NOTEMPTY(parameterKey, NSString) && VALID_NOTEMPTY(parameterValue, NSString))
+                if(VALID_NOTEMPTY(filter, NSString))
                 {
-                    [userInfo setObject:parameterKey forKey:@"filter_type"];
-                    [userInfo setObject:parameterValue forKey:@"filter_value"];
+                    [userInfo setObject:filter forKey:@"filter"];
                 }
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
@@ -739,10 +749,9 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
                 [userInfo setObject:[NSNumber numberWithInteger:2] forKey:@"sorting"];
                 
-                if(VALID_NOTEMPTY(parameterKey, NSString) && VALID_NOTEMPTY(parameterValue, NSString))
+                if(VALID_NOTEMPTY(filter, NSString))
                 {
-                    [userInfo setObject:parameterKey forKey:@"filter_type"];
-                    [userInfo setObject:parameterValue forKey:@"filter_value"];
+                    [userInfo setObject:filter forKey:@"filter"];
                 }
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
@@ -753,10 +762,9 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
                 [userInfo setObject:[NSNumber numberWithInteger:3] forKey:@"sorting"];
                 
-                if(VALID_NOTEMPTY(parameterKey, NSString) && VALID_NOTEMPTY(parameterValue, NSString))
+                if(VALID_NOTEMPTY(filter, NSString))
                 {
-                    [userInfo setObject:parameterKey forKey:@"filter_type"];
-                    [userInfo setObject:parameterValue forKey:@"filter_value"];
+                    [userInfo setObject:filter forKey:@"filter"];
                 }
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
@@ -767,10 +775,9 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
                 [userInfo setObject:[NSNumber numberWithInteger:4] forKey:@"sorting"];
                 
-                if(VALID_NOTEMPTY(parameterKey, NSString) && VALID_NOTEMPTY(parameterValue, NSString))
+                if(VALID_NOTEMPTY(filter, NSString))
                 {
-                    [userInfo setObject:parameterKey forKey:@"filter_type"];
-                    [userInfo setObject:parameterValue forKey:@"filter_value"];
+                    [userInfo setObject:filter forKey:@"filter"];
                 }
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
@@ -781,10 +788,9 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
                 [userInfo setObject:[NSNumber numberWithInteger:6] forKey:@"sorting"];
                 
-                if(VALID_NOTEMPTY(parameterKey, NSString) && VALID_NOTEMPTY(parameterValue, NSString))
+                if(VALID_NOTEMPTY(filter, NSString))
                 {
-                    [userInfo setObject:parameterKey forKey:@"filter_type"];
-                    [userInfo setObject:parameterValue forKey:@"filter_value"];
+                    [userInfo setObject:filter forKey:@"filter"];
                 }
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
@@ -795,10 +801,9 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
                 [userInfo setObject:[NSNumber numberWithInteger:5] forKey:@"sorting"];
                 
-                if(VALID_NOTEMPTY(parameterKey, NSString) && VALID_NOTEMPTY(parameterValue, NSString))
+                if(VALID_NOTEMPTY(filter, NSString))
                 {
-                    [userInfo setObject:parameterKey forKey:@"filter_type"];
-                    [userInfo setObject:parameterValue forKey:@"filter_value"];
+                    [userInfo setObject:filter forKey:@"filter"];
                 }
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
@@ -819,7 +824,18 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
             else if ([key isEqualToString:@"d"] && VALID_NOTEMPTY(arguments, NSString))
             {
                 // PDV - jumia://ng/d/BL683ELACCDPNGAMZ?size=1
-                
+                if (1 < argumentsComponents.count) {
+                    NSString *parameter = [argumentsComponents objectAtIndex:1];
+                    if(VALID_NOTEMPTY(parameter, NSString))
+                    {
+                        NSArray *parameterComponents = [parameter componentsSeparatedByString:@"="];
+                        if(VALID_NOTEMPTY(parameterComponents, NSArray) && 1 < [parameterComponents count])
+                        {
+                            parameterKey = [parameterComponents objectAtIndex:0];
+                            parameterValue = [parameterComponents objectAtIndex:1];
+                        }
+                    }    
+                }
                 // Check if there is field size
                 NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
                 [userInfo setObject:arguments forKey:@"sku"];

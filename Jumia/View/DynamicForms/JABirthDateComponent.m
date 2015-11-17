@@ -10,12 +10,9 @@
 
 @interface JABirthDateComponent ()
 
-@property (strong, nonatomic) RIField *dayField;
-@property (strong, nonatomic) RIField *monthField;
-@property (strong, nonatomic) RIField *yearField;
-@property (assign, nonatomic) NSInteger storedDay;
-@property (assign, nonatomic) NSInteger storedMonth;
-@property (assign, nonatomic) NSInteger storedYear;
+@property (nonatomic, strong)RIField* field;
+@property (nonatomic, strong)NSDate* storedDate;
+@property (nonatomic, strong)NSString* storedValue;
 
 @end
 
@@ -40,88 +37,69 @@
     return nil;
 }
 
--(void)setupWithLabel:(NSString*)label day:(RIField*)day month:(RIField*)month year:(RIField*)year
+-(void)setupWithField:(RIField*)field
 {
+    _field = field;
     self.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.hasError = NO;
     
-    self.dayField = day;
-    self.monthField = month;
-    self.yearField = year;
-    
-    self.storedDay = -1;
-    self.storedMonth = -1;
-    self.storedYear = -1;
-    
-    [self.textField setPlaceholder:label];
+    if(VALID_NOTEMPTY(field.label, NSString))
+    {
+        [self.textField setPlaceholder:field.label];
+    }
     
     self.textField.font = [UIFont fontWithName:kFontRegularName size:self.textField.font.pointSize];
     [self.textField setTextColor:UIColorFromRGB(0x666666)];
     [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
-
-    if([day.required boolValue])
-    {        
+    
+    if([field.required boolValue])
+    {
         [self.requiredSymbol setHidden:NO];
         [self.requiredSymbol setTextColor:UIColorFromRGB(0xfaa41a)];
     }
     
-    if(-1 != self.storedDay && -1 != self.storedMonth && -1 != self.storedYear)
+    if(VALID_NOTEMPTY(field.value, NSString))
     {
-        [self.textField setText:[NSString stringWithFormat:@"%ld-%ld-%ld", (long)self.storedDay, (long)self.storedMonth, (long)self.storedYear]];
+        _storedValue = field.value;
+        [self.textField setText:field.value];
     }
 }
 
 -(BOOL)isComponentWithKey:(NSString*)key
 {
-    return ([key isEqualToString:self.dayField.key] || [key isEqualToString:self.monthField.key] || [key isEqualToString:self.yearField.key]);
+    return [key isEqualToString:_field.key];
 }
 
 -(void)setValue:(NSDate*)date
 {
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *components = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:date];
+    self.storedDate = date;
     
-    self.storedDay = [components day];
-    self.storedMonth = [components month];
-    self.storedYear = [components year];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:self.field.dateFormat];
     
-    [self.textField setText:[NSString stringWithFormat:@"%ld-%ld-%ld", (long)self.storedDay, (long)self.storedMonth, (long)self.storedYear]];
+    NSString *stringFromDate = [formatter stringFromDate:date];
+    
+    [self.textField setText:stringFromDate];
 }
 
 -(NSDate*)getDate
 {
-    NSDate *value = nil;
-    if(-1 != self.storedDay && -1 != self.storedMonth && -1 != self.storedYear)
-    {
-        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        NSDateComponents *components = [[NSDateComponents alloc] init];
-        [components setDay:self.storedDay];
-        [components setMonth:self.storedMonth];
-        [components setYear:self.storedYear];
-        value = [calendar dateFromComponents:components];
-    }
-    return value;
+    return self.storedDate;
 }
 
 -(NSMutableDictionary*)getValues
 {
-    NSMutableDictionary *values = [[NSMutableDictionary alloc] init];
-    
-    if(self.storedDay > -1)
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    if([_field.required boolValue] || VALID_NOTEMPTY(self.textField.text, NSString))
     {
-        [values setObject:[NSString stringWithFormat:@"%ld", (long)self.storedDay] forKey:self.dayField.name];
+        if(!self.hasError)
+        {
+            _storedValue = _textField.text;
+        }
+        [parameters setValue:_storedValue forKey:_field.name];
     }
-    if(self.storedMonth > -1)
-    {
-        [values setObject:[NSString stringWithFormat:@"%ld", (long)self.storedMonth] forKey:self.monthField.name];
-    }
-    if(self.storedYear > -1)
-    {
-        [values setObject:[NSString stringWithFormat:@"%ld", (long)self.storedYear] forKey:self.yearField.name];
-    }
-    
-    return values;
+    return parameters;
 }
 
 -(void)setError:(NSString*)error
@@ -153,14 +131,16 @@
 -(BOOL)isValid
 {
     self.textField.font = [UIFont fontWithName:kFontRegularName size:self.textField.font.pointSize];
-    if (([self.dayField.required boolValue]) && (self.textField.text.length == 0))
+    if (([_field.required boolValue]) && (self.textField.text.length == 0))
     {
         [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
         [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];
+        self.currentErrorMessage = _field.requiredMessage;
         
         return NO;
     }
     
+    self.currentErrorMessage = nil;
     [self.textField setTextColor:UIColorFromRGB(0x666666)];
     [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
     
@@ -171,9 +151,7 @@
 {
     [self cleanError];
     
-    self.storedDay = -1;
-    self.storedMonth = -1;
-    self.storedYear = -1;
+    self.storedDate = nil;
     
     [self.textField setText:@""];
 }

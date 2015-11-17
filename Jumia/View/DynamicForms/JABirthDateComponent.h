@@ -15,10 +15,11 @@
 @property (assign, nonatomic) BOOL hasError;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UILabel *requiredSymbol;
+@property (nonatomic, strong) NSString* currentErrorMessage;
 
 +(JABirthDateComponent *)getNewJABirthDateComponent;
 
--(void)setupWithLabel:(NSString*)label day:(RIField*)day month:(RIField*)month year:(RIField*)year;
+-(void)setupWithField:(RIField*)field;
 
 -(BOOL)isComponentWithKey:(NSString*)key;
 

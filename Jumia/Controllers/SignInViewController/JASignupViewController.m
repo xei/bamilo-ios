@@ -350,7 +350,7 @@ JADatePickerDelegate
     
     [RIForm sendForm:[self.dynamicForm form] parameters:[self.dynamicForm getValues]  successBlock:^(id object) {
         
-        RICustomer *customerObject = ((RICustomer *)object);
+        RICustomer *customerObject = [(NSDictionary*)object objectForKey:@"customer"];
         
         NSString* emailKeyForCountry = [NSString stringWithFormat:@"%@_%@", kRememberedEmail, [RIApi getCountryIsoInUse]];
         
@@ -364,14 +364,14 @@ JADatePickerDelegate
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-        [trackingDictionary setValue:((RICustomer *)object).idCustomer forKey:kRIEventLabelKey];
+        [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventLabelKey];
         [trackingDictionary setValue:@"CreateSuccess" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-        [trackingDictionary setValue:((RICustomer *)object).idCustomer forKey:kRIEventUserIdKey];
-        [trackingDictionary setValue:((RICustomer *)object).firstName forKey:kRIEventUserFirstNameKey];
-        [trackingDictionary setValue:((RICustomer *)object).lastName forKey:kRIEventUserLastNameKey];
-        [trackingDictionary setValue:((RICustomer *)object).gender forKey:kRIEventGenderKey];
-        [trackingDictionary setValue:((RICustomer *)object).birthday forKey:kRIEventBirthDayKey];
+        [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventUserIdKey];
+        [trackingDictionary setValue:customerObject.firstName forKey:kRIEventUserFirstNameKey];
+        [trackingDictionary setValue:customerObject.lastName forKey:kRIEventUserLastNameKey];
+        [trackingDictionary setValue:customerObject.gender forKey:kRIEventGenderKey];
+        [trackingDictionary setValue:customerObject.birthday forKey:kRIEventBirthDayKey];
         [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
         [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
@@ -473,10 +473,13 @@ JADatePickerDelegate
     
     userInfo = [[NSMutableDictionary alloc] init];
     [userInfo setObject:[NSNumber numberWithBool:self.fromSideMenu] forKey:@"from_side_menu"];
+    [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"animated"];
     if(VALID_NOTEMPTY(self.nextNotification, NSNotification))
     {
         [userInfo setObject:self.nextNotification forKey:@"notification"];
     }
+    
+    [self.navigationController popViewControllerAnimated:NO];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification
                                                         object:nil
@@ -569,9 +572,9 @@ JADatePickerDelegate
         [self.picker setDelegate:self];
         
         NSMutableArray *dataSource = [[NSMutableArray alloc] init];
-        if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY([self.radioComponent dataset], NSArray))
+        if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY([self.radioComponent options], NSArray))
         {
-            dataSource = [[self.radioComponent dataset] copy];
+            dataSource = [[self.radioComponent options] copy];
         }
         
         NSString *selectedValue = [radioComponent getSelectedValue];
@@ -600,15 +603,19 @@ JADatePickerDelegate
     }
 }
 
+- (IBAction)doneClicked:(id)sender
+{
+    [self.view endEditing:YES];
+}
 
 #pragma mark JAPickerDelegate
 -(void)selectedRow:(NSInteger)selectedRow
 {
     if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent))
     {
-        if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY([self.radioComponent dataset], NSArray) && selectedRow < [[self.radioComponent dataset] count])
+        if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY([self.radioComponent options], NSArray) && selectedRow < [[self.radioComponent options] count])
         {
-            [self.radioComponent setValue:[[self.radioComponent dataset] objectAtIndex:selectedRow]];
+            [self.radioComponent setValue:[[self.radioComponent options] objectAtIndex:selectedRow]];
         }
     }
     

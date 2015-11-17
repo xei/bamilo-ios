@@ -113,7 +113,7 @@
                          maxItems:(NSString *)maxItems
                     sortingMethod:(RICatalogSorting)sortingMethod
                           filters:(NSArray*)filters
-                     successBlock:(void (^)(NSArray *results, NSArray *filters, NSNumber *productCount, RIBanner *banner))successBlock
+                     successBlock:(void (^)(RICatalog *catalog))successBlock
                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock;
 
 /**

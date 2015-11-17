@@ -67,7 +67,7 @@ JADynamicFormDelegate
     
     self.navBarLayout.title = STRING_LOGIN;
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:[self viewBounds]];
     self.scrollView.clipsToBounds = YES;
     [self.view addSubview:self.scrollView];
     
@@ -146,7 +146,7 @@ JADynamicFormDelegate
     
     if(self.requestDone)
     {
-        [self setupViews:self.view.frame.size.width height:self.view.frame.size.height toInterfaceOrientation:self.interfaceOrientation];
+        [self setupViews:[self viewBounds].size.width height:[self viewBounds].size.height toInterfaceOrientation:self.interfaceOrientation];
         
         [self hideLoading];
     }
@@ -177,7 +177,7 @@ JADynamicFormDelegate
              [self.loginView addSubview:view];
          }
          
-         [self setupViews:self.view.frame.size.width height:self.view.frame.size.height toInterfaceOrientation:self.interfaceOrientation];
+         [self setupViews:[self viewBounds].size.width height:[self viewBounds].size.height toInterfaceOrientation:self.interfaceOrientation];
          
          [self.scrollView setHidden:NO];
          self.requestDone = YES;
@@ -218,8 +218,8 @@ JADynamicFormDelegate
     CGFloat horizontalMargin = 6.0f;
     CGFloat verticalMargin = 6.0f;
     
-    [self.scrollView setFrame:CGRectMake(0.0f,
-                                         0.0f,
+    [self.scrollView setFrame:CGRectMake([self viewBounds].origin.x,
+                                         [self viewBounds].origin.y,
                                          width,
                                          height)];
     
@@ -362,8 +362,8 @@ JADynamicFormDelegate
 {
     [self showLoading];
     
-    CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
-    CGFloat newHeight = self.view.frame.size.width + self.view.frame.origin.x;
+    CGFloat newWidth = [self viewBounds].size.height + [self viewBounds].origin.y;
+    CGFloat newHeight = [self viewBounds].size.width + [self viewBounds].origin.x;
     
     [self setupViews:newWidth height:newHeight toInterfaceOrientation:toInterfaceOrientation];
     
@@ -372,7 +372,7 @@ JADynamicFormDelegate
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [self setupViews:self.view.frame.size.width height:self.view.frame.size.height toInterfaceOrientation:self.interfaceOrientation];
+    [self setupViews:[self viewBounds].size.width height:[self viewBounds].size.height toInterfaceOrientation:self.interfaceOrientation];
     
     [self hideLoading];
     
@@ -385,7 +385,7 @@ JADynamicFormDelegate
 - (void)facebookLoginButtonPressed:(id)sender
 {
     FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
-    [login logInWithReadPermissions:@[@"public_profile", @"email", @"user_birthday"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+    [login logInWithReadPermissions:@[@"public_profile", @"email", @"user_birthday"] fromViewController:nil handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
         if (error) {
             NSLog(@"ERROR: %@", error);
             return;
@@ -400,9 +400,12 @@ JADynamicFormDelegate
         [connection addRequest:requestMe
              completionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
                  //TODO: process me information@
-                 
                  if (error) {
                      NSLog(@"%@", error);
+                     return;
+                 }
+                 if([result objectForKey:@"email"] == NULL || [result objectForKey:@"birthday"] == NULL){
+                     [self showMessage:STRING_LOGIN_INCOMPLETE success:NO];
                      return;
                  }
                  if (![RICustomer checkIfUserIsLogged])
@@ -447,7 +450,9 @@ JADynamicFormDelegate
                      }
                      
                      [RICustomer loginCustomerByFacebookWithParameters:parameters
-                                                          successBlock:^(RICustomer* customer, NSString* nextStep) {
+                                                          successBlock:^(NSDictionary* entities, NSString* nextStep) {
+                                                              
+                                                              RICustomer* customer = [entities objectForKey:@"customer"];
                                                               
                                                               NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                                                               [trackingDictionary setValue:customer.idCustomer forKey:kRIEventLabelKey];
@@ -491,7 +496,7 @@ JADynamicFormDelegate
                                                                                                                   object:nil];
                                                               
                                                               [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                                                                                  object:nil];
+                                                                                                                  object:customer.wishlistProducts];
                                                               if (self.fromSideMenu) {
                                                                   [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
                                                               }else
@@ -549,6 +554,10 @@ JADynamicFormDelegate
     if(VALID_NOTEMPTY(self.nextNotification, NSNotification))
     {
         [userInfo setObject:self.nextNotification forKey:@"notification"];
+    }
+    
+    if (NO == self.tabBarIsVisible) {
+        [self.navigationController popViewControllerAnimated:NO];
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignUpScreenNotification
@@ -625,12 +634,14 @@ JADynamicFormDelegate
              [trackingDictionary setValue:customerObject.gender forKey:kRIEventGenderKey];
              [trackingDictionary setValue:customerObject.createdAt forKey:kRIEventAccountDateKey];
              
-             NSDate* now = [NSDate date];
-             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-             [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-             NSDate *dateOfBirth = [dateFormatter dateFromString:customerObject.birthday];
-             NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
-             [trackingDictionary setValue:[NSNumber numberWithInteger:[ageComponents year]] forKey:kRIEventAgeKey];
+             if (customerObject.birthday) {
+                 NSDate* now = [NSDate date];
+                 NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                 [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+                 NSDate *dateOfBirth = [dateFormatter dateFromString:customerObject.birthday];
+                 NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
+                 [trackingDictionary setValue:[NSNumber numberWithInteger:[ageComponents year]] forKey:kRIEventAgeKey];
+             }
              
              NSNumber *numberOfPurchases = [[NSUserDefaults standardUserDefaults] objectForKey:kRIEventAmountTransactions];
              [trackingDictionary setValue:numberOfPurchases forKey:kRIEventAmountTransactions];
@@ -639,7 +650,7 @@ JADynamicFormDelegate
                                                        data:[trackingDictionary copy]];
              
              [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                                 object:nil];
+                                                                 object:customerObject.wishlistProducts];
              
              if (self.fromSideMenu) {
                  [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];

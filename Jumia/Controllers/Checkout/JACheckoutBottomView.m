@@ -65,6 +65,7 @@
     [_submitButton setFrame:CGRectMake(self.width/2 + 5, 5, self.width/2 - 10, self.height-10)];
     [_submitButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
     [_submitButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [_submitButton setTitleColor:JABlack800Color forState:UIControlStateDisabled];
     [_submitButton setTitle:@"Next" forState:UIControlStateNormal];
     [_submitButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithRed:.957 green:.67451 blue:.2392 alpha:1]] forState:UIControlStateNormal];
     [_submitButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithRed:.907 green:.60451 blue:.2092 alpha:1]] forState:UIControlStateHighlighted];
@@ -138,6 +139,10 @@
 {
     [super setFrame:frame];
     [self reloadViews];
+}
+
+- (void)disableButton{
+    [_submitButton setEnabled:NO];
 }
 
 @end

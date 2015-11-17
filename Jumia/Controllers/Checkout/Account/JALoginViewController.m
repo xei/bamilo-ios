@@ -95,7 +95,7 @@
     self.screenName = @"CheckoutStart";
     
     self.navBarLayout.title = STRING_CHECKOUT;
-    
+    self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showCartButton = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -252,7 +252,7 @@
            self.numberOfFormsToLoad--;
        }];
     
-    [RIForm getForm:@"registersignup"
+    [RIForm getForm:@"register_signup"
        successBlock:^(RIForm *form) {
            
            self.signupDynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:7.0f];
@@ -427,7 +427,6 @@
     UIImage *facebookHighlightImage = [UIImage imageNamed:[NSString stringWithFormat:facebookImageNameFormatter, @"highlighted"]];
     
     CGFloat centerWidth = 54.0f;
-    CGFloat halfSeparatorWidth = (buttonWidth - centerWidth) / 2;
     if ([[RICountryConfiguration getCurrentConfiguration].facebookAvailable boolValue]){
         [self.facebookLoginSeparator setFrame:CGRectMake(6.0f, self.loginFormHeight, buttonWidth, self.facebookLoginSeparatorLabel.frame.size.height)];
         CGFloat separatorWidth = self.facebookLoginSeparator.width/2 - self.facebookLoginSeparatorLabel.width/2 - 15;
@@ -872,7 +871,7 @@
 - (void)facebookLoginButtonPressed:(id)sender
 {
     FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
-    [login logInWithReadPermissions:@[@"public_profile", @"email", @"user_birthday"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+    [login logInWithReadPermissions:@[@"public_profile", @"email", @"user_birthday"] fromViewController:nil handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
         if (!error) {
             
             NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
@@ -882,7 +881,14 @@
             [connection addRequest:requestMe
                  completionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
                      //TODO: process me information@
-                     
+                     if (error) {
+                         NSLog(@"%@", error);
+                         return;
+                     }
+                     if([result objectForKey:@"email"] == NULL || [result objectForKey:@"birthday"] == NULL){
+                         [self showMessage:STRING_LOGIN_INCOMPLETE success:NO];
+                         return;
+                     }
                      if (!error)
                      {
                          if (![RICustomer checkIfUserIsLogged])
@@ -928,9 +934,9 @@
                              
                              
                              [RICustomer loginCustomerByFacebookWithParameters:parameters
-                                                                  successBlock:^(RICustomer* customer, NSString* nextStep) {
+                                                                  successBlock:^(NSDictionary* entities, NSString* nextStep) {
                                                                       
-                                                                      RICustomer *customerObject = ((RICustomer *)customer);
+                                                                      RICustomer *customerObject = [entities objectForKey:@"customer"];
                                                                       
                                                                       NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                                                                       [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventLabelKey];
@@ -970,9 +976,10 @@
                                                                       [self hideLoading];
                                                                       
                                                                       [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                                                                                          object:nil];
+                                                                                                                          object:customerObject.wishlistProducts];
                                                                       
-                                                                      [JAUtils goToNextStep:nextStep];
+                                                                      [JAUtils goToNextStep:nextStep
+                                                                                   userInfo:nil];
                                                                       
                                                                   } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
                                                                       [self hideLoading];
@@ -1068,10 +1075,8 @@
             
             [self.loginDynamicForm resetValues];
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
-                                                                object:nil];
-            
-            [JAUtils goToNextStep:nextStep];
+            [JAUtils goToNextStep:nextStep
+                         userInfo:nil];
         }
         
         [self hideLoading];
@@ -1140,7 +1145,10 @@
         NSDictionary *responseDictionary = (NSDictionary *)object;
         NSString* nextStep = [responseDictionary objectForKey:@"next_step"];
         
-        [JAUtils goToNextStep:nextStep];
+        [self.navigationController popViewControllerAnimated:NO];
+        
+        [JAUtils goToNextStep:nextStep
+                     userInfo:nil];
         
     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];

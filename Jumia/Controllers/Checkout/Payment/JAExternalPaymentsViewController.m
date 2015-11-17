@@ -7,8 +7,8 @@
 //
 
 #import "JAExternalPaymentsViewController.h"
+#import "RICart.h"
 #import "RIPaymentInformation.h"
-#import "RICheckout.h"
 
 @interface JAExternalPaymentsViewController ()
 <UIWebViewDelegate>
@@ -26,7 +26,7 @@
     self.screenName = @"ExternalPayment";
     
     self.navBarLayout.showCartButton = NO;
-    
+    self.navBarLayout.showBackButton = YES;
     self.navBarLayout.title = STRING_CHECKOUT;
     
     self.webView.translatesAutoresizingMaskIntoConstraints = YES;
@@ -65,31 +65,31 @@
 
 -(void)loadPaymentMethodRequest
 {
-    if(VALID_NOTEMPTY(self.paymentInformation, RIPaymentInformation))
+    if(VALID_NOTEMPTY(self.cart.paymentInformation, RIPaymentInformation))
     {
-        if(RIPaymentInformationCheckoutShowWebviewWithUrl == self.paymentInformation.type && VALID_NOTEMPTY(self.paymentInformation.url, NSString))
+        if(RIPaymentInformationCheckoutShowWebviewWithUrl == self.cart.paymentInformation.type && VALID_NOTEMPTY(self.cart.paymentInformation.url, NSString))
         {
-            NSLog(@"RIPaymentInformationCheckoutShowWebviewWithUrl %@", self.paymentInformation.url);
-            [self.webView loadRequest:[self createRequestWithUrl:self.paymentInformation.url]];
+            NSLog(@"RIPaymentInformationCheckoutShowWebviewWithUrl %@", self.cart.paymentInformation.url);
+            [self.webView loadRequest:[self createRequestWithUrl:self.cart.paymentInformation.url]];
         }
-        else if(RIPaymentInformationCheckoutShowWebviewWithForm == self.paymentInformation.type && VALID_NOTEMPTY(self.paymentInformation.form, RIForm) && VALID_NOTEMPTY(self.paymentInformation.form.action, NSString))
+        else if(RIPaymentInformationCheckoutShowWebviewWithForm == self.cart.paymentInformation.type && VALID_NOTEMPTY(self.cart.paymentInformation.form, RIForm) && VALID_NOTEMPTY(self.cart.paymentInformation.form.action, NSString))
         {
-            NSLog(@"RIPaymentInformationCheckoutShowWebviewWithForm %@", self.paymentInformation.form.action);
+            NSLog(@"RIPaymentInformationCheckoutShowWebviewWithForm %@", self.cart.paymentInformation.form.action);
             
-            NSMutableURLRequest *request = [self createRequestWithUrl:self.paymentInformation.form.action];
+            NSMutableURLRequest *request = [self createRequestWithUrl:self.cart.paymentInformation.form.action];
             
             BOOL isPOST = NO;
-            if(VALID_NOTEMPTY(self.paymentInformation.form.method, NSString) && [@"post" isEqualToString:[self.paymentInformation.method lowercaseString]])
+            if(VALID_NOTEMPTY(self.cart.paymentInformation.form.method, NSString) && [@"post" isEqualToString:[self.cart.paymentInformation.method lowercaseString]])
             {
                 isPOST = YES;
             }
             
-            NSDictionary *parameters = [RIForm getParametersForForm:self.paymentInformation.form];
+            NSDictionary *parameters = [RIForm getParametersForForm:self.cart.paymentInformation.form];
             if(VALID_NOTEMPTY(parameters, NSDictionary))
             {
                 if (!isPOST)
                 {
-                    NSString *urlWithParameters = [NSString stringWithFormat:@"%@?%@", self.paymentInformation.form.action, [self getParametersString:parameters]];
+                    NSString *urlWithParameters = [NSString stringWithFormat:@"%@?%@", self.cart.paymentInformation.form.action, [self getParametersString:parameters]];
                     [request setURL:[NSURL URLWithString:urlWithParameters]];
                 }
                 else
@@ -114,7 +114,7 @@
 {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     
-    if(VALID_NOTEMPTY(self.paymentInformation.form.method, NSString) && [@"post" isEqualToString:[self.paymentInformation.method lowercaseString]])
+    if(VALID_NOTEMPTY(self.cart.paymentInformation.form.method, NSString) && [@"post" isEqualToString:[self.cart.paymentInformation.method lowercaseString]])
     {
         [request setHTTPMethod:RI_HTTP_METHOD_POST];
     }
@@ -181,7 +181,7 @@
         
         if(VALID_NOTEMPTY(orderNumber, NSString))
         {
-            NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[orderNumber, self.checkout] forKeys:@[@"order_number", @"checkout"]];
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[orderNumber, self.cart] forKeys:@[@"order_number", @"cart"]];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutThanksScreenNotification
                                                                 object:nil

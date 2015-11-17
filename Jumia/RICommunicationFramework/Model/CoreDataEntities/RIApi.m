@@ -16,13 +16,15 @@
 #import "RICountry.h"
 #import "RICountryConfiguration.h"
 #import "RIStaticBlockIndex.h"
+#import "RICustomer.h"
+#import "RILanguage.h"
 
 @implementation RIApi
 
 @dynamic countryUrl;
-@dynamic actionName;
 @dynamic countryIso;
 @dynamic countryName;
+@dynamic countryFlag;
 @dynamic countryUserAgentInjection;
 @dynamic curVersion;
 @dynamic minVersion;
@@ -36,6 +38,7 @@
     NSString *url;
     NSString *countryIso;
     NSString *name;
+    NSString *flag;
     NSString *countryUserAgentInjection;
     
     if (ISEMPTY(country))
@@ -47,15 +50,28 @@
             url = api.countryUrl;
             countryIso = api.countryIso;
             name = api.countryName;
+            flag = api.countryFlag;
             countryUserAgentInjection = api.countryUserAgentInjection;
         }
     }
     else
     {
+        //save customer information so the app will remember him if he returns to the current
+        //country
+        [RICustomer getCustomerWithSuccessBlock:^(id customer){
+        
+            [[NSUserDefaults standardUserDefaults] setObject:[RICustomer toJSON:customer]
+                                forKey:[NSString stringWithFormat:@"customer_%@",[RIApi getCountryIsoInUse]]];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages){
+        }];
+        
         [[RIDataBaseWrapper sharedInstance] resetApplicationModel];
         url = country.url;
         countryIso = country.countryIso;
         name = country.name;
+        flag = country.flag;
         countryUserAgentInjection = country.userAgentInjection;
     }
     
@@ -76,6 +92,7 @@
                                                                   RIApi* newApi = [RIApi parseApi:metadata
                                                                                        countryIso:countryIso
                                                                                       countryName:name
+                                                                                      countryFlag:flag
                                                                         countryUserAgentInjection:countryUserAgentInjection];
                                                                   
                                                                   BOOL hasUpdate = NO;
@@ -146,6 +163,15 @@
                                                                       //save new api in coredata
                                                                       [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RIApi class])];
                                                                       [RIApi saveApi:newApi andContext:YES];
+                                                                      
+                                                                      NSString* customer = [NSString stringWithFormat:@"customer_%@",newApi.countryIso];
+                                                                      NSDictionary* dict = [[NSUserDefaults standardUserDefaults] objectForKey:customer];
+                                                                      if (VALID_NOTEMPTY(dict,NSDictionary)) {
+                                                                          [RICustomer parseCustomerWithJson:dict
+                                                                                              plainPassword:[dict objectForKeyedSubscript:@"plain_password"]
+                                                                                              loginMethod:[dict objectForKeyedSubscript:@"login_method"]];
+                                                                      }
+                                                                      
                                                                   }
                                                                   
                                                                   successBlock(newApi, hasUpdate, isUpdateMandatory);
@@ -226,6 +252,18 @@
     }
 }
 
++ (NSString *)getCountryFlagInUse;
+{
+    NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
+    
+    if (0 == apiArray.count) {
+        return @"";
+    } else {
+        RIApi *api = [apiArray firstObject];
+        return api.countryFlag;
+    }
+}
+
 + (NSString *)getCountryUserAgentInjection;
 {
     NSArray *apiArray = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIApi class])];
@@ -255,14 +293,10 @@
 + (RIApi *)parseApi:(NSDictionary*)api
          countryIso:(NSString *)countryIso
         countryName:(NSString *)countryName
+        countryFlag:(NSString *)countryFlag
 countryUserAgentInjection:(NSString*)countryUserAgentInjection
 {
     RIApi* newApi = (RIApi*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIApi class])];
-    
-    if ([api objectForKey:@"action_name"])
-    {
-        newApi.actionName = [api objectForKey:@"action_name"];
-    }
     
     if (VALID_NOTEMPTY(countryIso, NSString))
     {
@@ -272,6 +306,11 @@ countryUserAgentInjection:(NSString*)countryUserAgentInjection
     if (VALID_NOTEMPTY(countryName, NSString))
     {
         newApi.countryName = countryName;
+    }
+    
+    if (VALID_NOTEMPTY(countryFlag, NSString))
+    {
+        newApi.countryFlag = countryFlag;
     }
 
     if (VALID_NOTEMPTY(countryUserAgentInjection, NSString))

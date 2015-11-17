@@ -10,6 +10,7 @@
 #import "RIImage.h"
 #import "UIImageView+WebCache.h"
 #import "RILanguage.h"
+#import "JAStrings.h"
 
 @interface JACatalogCollectionViewCell () {
     CGFloat _lastWidth;
@@ -19,7 +20,6 @@
     CGRect _productImageViewRect;
     CGRect _recentProductImageViewRect;
     CGRect _favoriteButtonRect;
-    CGRect _discountImageViewRect;
     CGRect _discountLabelRect;
     CGRect _sizeButtonRect;
     CGRect _sizeLabelRect;
@@ -30,182 +30,141 @@
 
 @implementation JACatalogCollectionViewCell
 
-@synthesize productImageView = _productImageView, brandLabel = _brandLabel, nameLabel = _nameLabel, recentProductImageView = _recentProductImageView, favoriteButton = _favoriteButton, discountImageView = _discountImageView, discountLabel = _discountLabel, sizeButton = _sizeButton, priceView = _priceView, feedbackView = _feedbackView, grid = _grid;
+- (JAClickableView *)feedbackView
+{
+    if (!VALID_NOTEMPTY(_feedbackView, JAClickableView)) {
+        _feedbackView = [[JAClickableView alloc] initWithFrame:self.bounds];
+    }
+    return _feedbackView;
+}
+
+- (UIImageView *)productImageView
+{
+    if (!VALID_NOTEMPTY(_productImageView, UIImageView)) {
+        _productImageView = [[UIImageView alloc] init];
+    }
+    return _productImageView;
+}
+
+- (UILabel *)brandLabel
+{
+    if (!VALID_NOTEMPTY(_brandLabel, UILabel)) {
+        _brandLabel = [[UILabel alloc] init];
+        [_brandLabel setFont:JACaptionFont];
+        [_brandLabel setText:@"BrandLabel"];
+        _brandLabel.textColor = UIColorFromRGB(0x808080);
+    }
+    return _brandLabel;
+}
+
+- (UILabel *)nameLabel
+{
+    if (!VALID_NOTEMPTY(_nameLabel, UILabel)) {
+        _nameLabel = [[UILabel alloc] init];
+        [_nameLabel setFont:JABody3Font];
+        [_nameLabel setText:@"NameLabel"];
+        _nameLabel.textColor = UIColorFromRGB(0x000000);
+    }
+    return _nameLabel;
+}
+
+- (UILabel *)discountLabel
+{
+    if (!VALID_NOTEMPTY(_discountLabel, UILabel)) {
+        _discountLabel = [[UILabel alloc] init];
+        [_discountLabel setFont:JACaptionFont];
+        [_discountLabel setText:@"DiscountLabel"];
+        [_discountLabel setTextColor:JAOrange1Color];
+        [_discountLabel setTextAlignment:NSTextAlignmentCenter];
+        _discountLabel.layer.borderColor = [JAOrange1Color CGColor];
+        _discountLabel.layer.borderWidth = 1.0f;
+    }
+    return _discountLabel;
+}
+
+- (UIButton *)favoriteButton
+{
+    if (!VALID_NOTEMPTY(_favoriteButton, UIButton)) {
+        _favoriteButtonRect = CGRectMake(0, 10, 18, 18);
+        _favoriteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_favoriteButton setHitTestEdgeInsets:UIEdgeInsetsMake(-10, -10, -10, -10)];
+        [_favoriteButton setFrame:_favoriteButtonRect];
+        [_favoriteButton setImage:[UIImage imageNamed:@"FavButton"] forState:UIControlStateNormal];
+        [_favoriteButton setImage:[UIImage imageNamed:@"FavButtonPressed"] forState:UIControlStateSelected];
+    }
+    return _favoriteButton;
+}
+
+- (UIImageView *)recentProductImageView
+{
+    if (!VALID_NOTEMPTY(_recentProductImageView, UIImageView)) {
+        NSString *langCode = [[NSUserDefaults standardUserDefaults] stringForKey:kLanguageCodeKey];
+        NSString* imageName = @"ProductBadgeNew_";
+        if (NSNotFound != [langCode rangeOfString:@"fr"].location) {
+            imageName = [imageName stringByAppendingString:@"fr"];
+        } else if (NSNotFound != [langCode rangeOfString:@"fa"].location) {
+            imageName = [imageName stringByAppendingString:@"fa"];
+        } else if (NSNotFound != [langCode rangeOfString:@"pt"].location) {
+            imageName = [imageName stringByAppendingString:@"pt"];
+        } else {
+            imageName = [imageName stringByAppendingString:@"en"];
+        }
+        
+        _recentProductImageViewRect = CGRectMake(0, 0, 48, 48);
+        _recentProductImageView = [[UIImageView alloc] initWithFrame:_recentProductImageViewRect];
+        UIImage* recentProductImage = [UIImage imageNamed:imageName];
+        [_recentProductImageView setImage:recentProductImage];
+    }
+    return _recentProductImageView;
+}
+
+- (JAProductInfoPriceLine *)priceLine
+{
+    if (!VALID_NOTEMPTY(_priceLine, JAProductInfoPriceLine)) {
+        _priceLine = [[JAProductInfoPriceLine alloc] initWithFrame:CGRectMake(0, 0, self.width, 15)];
+        [_priceLine setPriceSize:kPriceSizeSmall];
+        [_priceLine setLineContentXOffset:0.f];
+    }
+    return _priceLine;
+}
+
+- (UIButton *)sizeButton
+{
+    if (!VALID_NOTEMPTY(_sizeButton, UIButton)) {
+        
+        CGRect frame = CGRectMake(self.priceLine.frame.origin.x, self.priceLine.frame.origin.y+20.0f,
+                                  self.width, self.priceLine.frame.size.height);
+        
+        _sizeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [_sizeButton setFrame:(frame)];
+        _sizeButton.titleLabel.font = JACaptionFont;
+    }
+    return _sizeButton;
+}
 
 - (void)initViews
 {
-    _feedbackView = [[JAClickableView alloc] initWithFrame:self.bounds];
-    [self addSubview:_feedbackView];
-    
-    _brandLabel = [[UILabel alloc] init];
-    [_brandLabel setFont:[UIFont fontWithName:kFontRegularName size:13]];
-    [_brandLabel setText:@"BrandLabel"];
-    _brandLabel.textColor = UIColorFromRGB(0x666666);
-    [self addSubview:_brandLabel];
-    
-    _nameLabel = [[UILabel alloc] init];
-    [_nameLabel setFont:[UIFont fontWithName:kFontRegularName size:12]];
-    [_nameLabel setText:@"NameLabel"];
-    _nameLabel.textColor = UIColorFromRGB(0x666666);
-    [self addSubview:_nameLabel];
-    
-    _productImageView = [[UIImageView alloc] init];
-    [self addSubview:_productImageView];
-    
-    _discountImageView = [[UIImageView alloc] init];
-    [_discountImageView setImage:[UIImage imageNamed:@"img_badge_discount"]];
-    [self addSubview:_discountImageView];
-    
-    _discountLabel = [[UILabel alloc] init];
-    [_discountLabel setFont:[UIFont fontWithName:kFontBoldName size:8]];
-    [_discountLabel setText:@"DiscountLabel"];
-    [_discountLabel setTextColor:[UIColor whiteColor]];
-    [_discountLabel setTextAlignment:NSTextAlignmentCenter];
-    [self addSubview:_discountLabel];
-    
-    _favoriteButtonRect = CGRectMake(0, 10, 24, 24);
-    _favoriteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_favoriteButton setHitTestEdgeInsets:UIEdgeInsetsMake(-10, -10, -10, -10)];
-    [_favoriteButton setFrame:_favoriteButtonRect];
-    [_favoriteButton setImage:[UIImage imageNamed:@"FavButton"] forState:UIControlStateNormal];
-    [_favoriteButton setImage:[UIImage imageNamed:@"FavButtonPressed"] forState:UIControlStateSelected];
-    [self addSubview:_favoriteButton];
-    [_favoriteButton setXRightAligned:6.f];
-    _favoriteButtonRect = _favoriteButton.frame;
-    
-    NSString *langCode = [[NSUserDefaults standardUserDefaults] stringForKey:kLanguageCodeKey];
-    NSString* imageName = @"ProductBadgeNew_";
-    if (NSNotFound != [langCode rangeOfString:@"fr"].location) {
-        imageName = [imageName stringByAppendingString:@"fr"];
-    } else if (NSNotFound != [langCode rangeOfString:@"fa"].location) {
-        imageName = [imageName stringByAppendingString:@"fa"];
-    } else if (NSNotFound != [langCode rangeOfString:@"pt"].location) {
-        imageName = [imageName stringByAppendingString:@"pt"];
-    } else {
-        imageName = [imageName stringByAppendingString:@"en"];
-    }
-    
-    _recentProductImageViewRect = CGRectMake(0, 0, 48, 48);
-    _recentProductImageView = [[UIImageView alloc] initWithFrame:_recentProductImageViewRect];
-    UIImage* recentProductImage = [UIImage imageNamed:imageName];
-    [_recentProductImageView setImage:recentProductImage];
-    
-    [self addSubview:_recentProductImageView];
-    
-    _priceView = [[JAPriceView alloc] init];
-    [self addSubview:_priceView];
-    
-    if (_grid) {
-        [self initGridViews];
-    }else{
-        [self initListViews];
-    }
-    
+    [self addSubview:self.feedbackView];
+    [self addSubview:self.productImageView];
+    [self addSubview:self.brandLabel];
+    [self addSubview:self.nameLabel];
+    [self addSubview:self.favoriteButton];
+    [self addSubview:self.recentProductImageView];
+    [self addSubview:self.priceLine];
+    [self addSubview:self.sizeButton];
+    [self addSubview:self.discountLabel];
     [self setBackgroundColor:[UIColor whiteColor]];
     [self setClipsToBounds:YES];
-    [self.layer setCornerRadius:3.f];
-}
-
-- (void)initListViews
-{
-    _textWidth = self.width - 80 - 30;
-    
-    _brandLabelRect = CGRectMake(80, 9, _textWidth, 15);
-    [_brandLabel setFrame:_brandLabelRect];
-    
-    _nameLabelRect = CGRectMake(80, 26, _textWidth, 15);
-    [_nameLabel setFrame:_nameLabelRect];
-    
-    _productImageViewRect = CGRectMake(6, 8, 68, 85);
-    [_productImageView setFrame:_productImageViewRect];
-    
-    _discountImageViewRect = CGRectMake(0, 71, 26, 14);
-    [_discountImageView setFrame:_discountImageViewRect];
-    [_discountImageView setXRightAligned:6.f];
-    _discountImageViewRect = _discountImageView.frame;
-    
-    _discountLabelRect = CGRectMake(0, 71, 26, 14);
-    [_discountLabel setFrame:_discountLabelRect];
-    [_discountLabel setXRightAligned:6.f];
-    _discountLabelRect = _discountLabel.frame;
-}
-
-- (void)initGridViews
-{
-    _textWidth = self.width - 6 - 6;
-    _brandLabelRect = CGRectMake(6, 148, _textWidth, 15);
-    [_brandLabel setFrame:_brandLabelRect];
-    
-    _nameLabelRect = CGRectMake(6, 162, _textWidth, 15);
-    [_nameLabel setFrame:_nameLabelRect];
-    
-    _productImageViewRect = CGRectMake(self.width/2 - 112/2, 8, 112, 140);
-    [_productImageView setFrame:_productImageViewRect];
-    
-    _discountImageViewRect = CGRectMake(0, CGRectGetMaxY(_productImageViewRect) - 14, 26, 14);
-    [_discountImageView setFrame:_discountImageViewRect];
-    [_discountImageView setXRightAligned:6.f];
-    _discountImageViewRect = _discountImageView.frame;
-    
-    _discountLabelRect = CGRectMake(0, CGRectGetMaxY(_productImageViewRect) - 14, 26, 14);
-    [_discountLabel setFrame:_discountLabelRect];
-    [_discountLabel setXRightAligned:6.f];
-    _discountLabelRect = _discountLabel.frame;
 }
 
 - (void)reloadViews
 {
-    if (_grid) {
-        [self initGridViews];
-    }else{
-        [self initListViews];
-    }
-    
-    [_brandLabel setFrame:CGRectMake(_brandLabelRect.origin.x,
-                                     _brandLabelRect.origin.y,
-                                     _textWidth,
-                                     _brandLabelRect.size.height)];
-    
-    [_nameLabel setFrame:CGRectMake(_nameLabelRect.origin.x,
-                                    _nameLabelRect.origin.y,
-                                    _textWidth,
-                                    _nameLabelRect.size.height)];
-    
-    [_priceView setY:CGRectGetMaxY(self.nameLabel.frame) + JACatalogCellPriceLabelOffsetY + 6.f];
-    
-    [_productImageView setFrame:_productImageViewRect];
-    [_recentProductImageView setFrame:_recentProductImageViewRect];
-    [_favoriteButton setXRightAligned:6];
-    [_discountImageView setFrame:_discountImageViewRect];
-    [_discountImageView setXRightAligned:6];
-    [_discountLabel setFrame:_discountLabelRect];
-    [_discountLabel setXRightAligned:6];
-    
-    if (_grid) {
-        [self reloadGridViews];
-    }
-    
-    if (RI_IS_RTL) {
-        [_productImageView flipViewPositionInsideSuperview];
-        [_recentProductImageView flipViewPositionInsideSuperview];
-        [_favoriteButton flipViewPositionInsideSuperview];
-        [_discountLabel flipViewPositionInsideSuperview];
-        [_discountImageView flipViewPositionInsideSuperview];
-        [_brandLabel flipViewPositionInsideSuperview];
-        [_nameLabel flipViewPositionInsideSuperview];
-        [_brandLabel setTextAlignment:NSTextAlignmentRight];
-        [_nameLabel setTextAlignment:NSTextAlignmentRight];
-    }else{
-        [_brandLabel setTextAlignment:NSTextAlignmentLeft];
-        [_nameLabel setTextAlignment:NSTextAlignmentLeft];
-    }
-    
+    self.feedbackView.frame = self.bounds;
     _lastWidth = self.width;
 }
 
 - (void)reloadGridViews
 {
-    [_productImageView setX:self.width/2 - _productImageView.width/2];
 }
 
 - (void)prepareForReuse
@@ -213,8 +172,16 @@
     //    NSLog(@"prepareForReuse");
 }
 
+- (void)setTag:(NSInteger)tag
+{
+    [super setTag:tag];
+    [self.feedbackView setTag:tag];
+    [self.sizeButton setTag:tag];
+}
+
 - (void)loadWithProduct:(RIProduct*)product
 {
+    _product = product;
     [_brandLabel setText:product.brand];
     [_nameLabel setText:product.name];
     
@@ -223,20 +190,17 @@
     [_productImageView setImageWithURL:[NSURL URLWithString:firstImage.url]
                       placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
     
-    [_priceView loadWithPrice:product.priceFormatted
-                 specialPrice:product.specialPriceFormatted
-                     fontSize:10.0f
-        specialPriceOnTheLeft:YES];
-    
-    if (_grid) {
-        [_priceView setX:6];
+    if (VALID_NOTEMPTY(product.priceRange, NSString)) {
+        [self.priceLine setTitle:product.priceRange];
+        [self.priceLine setOldPrice:nil];
+    } else if (VALID_NOTEMPTY(product.specialPriceFormatted, NSString)) {
+        [self.priceLine setTitle:product.specialPriceFormatted];
+        [self.priceLine setOldPrice:product.priceFormatted];
     }else{
-        [_priceView setX:80];
+        [self.priceLine setTitle:product.priceFormatted];
+        [self.priceLine setOldPrice:nil];
     }
     
-    if (RI_IS_RTL) {
-        [_priceView flipViewPositionInsideSuperview];
-    }
     
     _favoriteButton.selected = VALID_NOTEMPTY(product.favoriteAddDate, NSDate);
     
@@ -247,9 +211,47 @@
         priceXOffset = JACatalogCellPriceLabelOffsetX_ipad;
     }
     
-    _discountLabel.text = [NSString stringWithFormat:@"-%@%%",product.maxSavingPercentage];
+    _discountLabel.text = [NSString stringWithFormat:STRING_FORMAT_OFF,[product.maxSavingPercentage integerValue]];
     _discountLabel.hidden = !product.maxSavingPercentage;
-    _discountImageView.hidden = !product.maxSavingPercentage;
+    _discountLabel.font = JACaptionFont;
+}
+
+- (void)loadWithVariation:(RIVariation *)variation
+{
+    _variation = variation;
+    [_brandLabel setText:variation.brand];
+    [_nameLabel setText:variation.name];
+    
+    
+    RIImage* firstImage = variation.image;
+    
+    [_productImageView setImageWithURL:[NSURL URLWithString:firstImage.url]
+                      placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
+
+    if (VALID_NOTEMPTY(variation.specialPrice, NSNumber)) {
+        [self.priceLine setTitle:[RICountryConfiguration formatPrice:variation.specialPrice country:[RICountryConfiguration getCurrentConfiguration]]];
+        [self.priceLine setOldPrice:[RICountryConfiguration formatPrice:variation.price country:[RICountryConfiguration getCurrentConfiguration]]];
+    }else{
+        [self.priceLine setTitle:[RICountryConfiguration formatPrice:variation.price country:[RICountryConfiguration getCurrentConfiguration]]];
+        [self.priceLine setOldPrice:nil];
+    }
+    
+    self.recentProductImageView.hidden = YES;
+    self.discountLabel.hidden = YES;
+    self.favoriteButton.hidden = YES;
+}
+
+
+- (void)setSimplePrice:(NSString *)price andOldPrice:(NSString *)oldPrice
+{
+    if (!oldPrice) {
+        [self.product setPriceFormatted:price];
+        [self.product setSpecialPriceFormatted:nil];
+    }else{
+        [self.product setPriceFormatted:oldPrice];
+        [self.product setSpecialPriceFormatted:price];
+    }
+    [self loadWithProduct:self.product];
 }
 
 @end

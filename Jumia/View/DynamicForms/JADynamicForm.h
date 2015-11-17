@@ -14,8 +14,7 @@
 #import "JACheckBoxWithOptionsComponent.h"
 
 @class RIForm;
-@class RIRegion;
-@class RICity;
+@class RILocale;
 
 @protocol JADynamicFormDelegate <NSObject>
 
@@ -44,7 +43,12 @@
 /**
  * Method that tells if we need to download regions and cities
  */
-- (void)downloadRegions:(JARadioComponent *)regionComponent cities:(JARadioComponent*) citiesComponent;
+- (void)downloadLocalesForComponents:(NSDictionary*)componentDictionary;
+
+/**
+ * Method used when a done button is added to a numPad keyboard
+ */
+- (IBAction)doneClicked:(id)sender;
 
 @end
 
@@ -54,6 +58,7 @@
 @property (strong, nonatomic) NSMutableArray *formViews;
 @property (strong, nonatomic) id<JADynamicFormDelegate> delegate;
 @property (assign, nonatomic) BOOL hasFieldNavigation;
+@property (nonatomic, strong) NSString* firstErrorInFields;
 
 -(id)initWithForm:(RIForm*)form startingPosition:(CGFloat)startingY;
 
@@ -69,9 +74,11 @@
 
 -(void)resetValues;
 
--(void)setRegionValue:(RIRegion*)region;
+-(void)setRegionValue:(RILocale*)region;
 
--(void)setCityValue:(RICity*)city;
+-(void)setCityValue:(RILocale*)city;
+
+-(void)setPostcodeValue:(RILocale*)postcode;
 
 -(void)resignResponder;
 

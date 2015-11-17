@@ -10,8 +10,7 @@
 #import "RIField.h"
 #import "JADynamicField.h"
 
-@class RIRegion;
-@class RICity;
+@class RILocale;
 
 @interface JARadioComponent : JADynamicField
 
@@ -19,7 +18,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UILabel *requiredSymbol;
 @property (strong, nonatomic) NSArray *dataset;
+@property (strong, nonatomic) NSArray *options;
 @property (strong, nonatomic) NSString *apiCall;
+@property (nonatomic, strong) NSString* currentErrorMessage;
 
 +(JARadioComponent *)getNewJARadioComponent;
 
@@ -29,9 +30,7 @@
 
 -(void)setValue:(NSString*)value;
 
--(void)setRegionValue:(RIRegion*)value;
-
--(void)setCityValue:(RICity*)value;
+-(void)setLocaleValue:(RILocale*)locale;
 
 -(NSDictionary*)getValues;
 

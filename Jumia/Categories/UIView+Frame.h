@@ -22,5 +22,6 @@
 - (void)setYTopOf:(UIView *)view at:(CGFloat)distance;
 - (void)setYBottomOf:(UIView *)view at:(CGFloat)distance;
 - (void)setXCenterAligned;
+- (void)setYCenterAligned;
 
 @end

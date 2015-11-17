@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
+#define RI_IS_RTL [RILocalizationWrapper localizationIsRTL]
+
 // Notifications
 
 //************ app action notifications
@@ -53,6 +55,7 @@
 #define kShowSignUpScreenNotification @"NOTIFICATION_SHOW_SIGN_UP_SCREEN"
 #define kShowForgotPasswordScreenNotification @"NOTIFICATION_SHOW_FORGOT_PASSWORD_SCREEN"
 #define kShowFavoritesScreenNotification @"NOTIFICATION_SHOW_FAVORITES_SCREEN"
+#define kShowMoreMenuScreenNotification @"NOTIFICATION_MORE_MENU_SCREEN"
 #define kShowRecentSearchesScreenNotification @"NOTIFICATION_SHOW_RECENT_SEARCHES_SCREEN"
 #define kShowRecentlyViewedScreenNotification @"NOTIFICATION_SHOW_RECENTLY_VIEWED_SCREEN"
 #define kShowMyAccountScreenNotification @"NOTIFICATION_SHOW_MY_ACCOUNT_SCREEN"
@@ -74,8 +77,6 @@
 
 // Filters
 #define kShowFiltersScreenNotification @"NOTIFICATION_SHOW_FILTERS_SCREEN"
-#define kShowPriceFiltersScreenNotification @"NOTIFICATION_SHOW_PRICE_FILTERS_SCREEN"
-#define kShowGenericFiltersScreenNotification @"NOTIFICATION_SHOW_GENERIC_FILTERS_SCREEN"
 
 // Product
 #define kShowProductSpecificationScreenNotification @"NOTIFICATION_SHOW_PRODUCT_SPECIFICATION_SCREEN"
@@ -84,16 +85,18 @@
 #define kShowSizeGuideNotification @"NOTIFICATION_SHOW_SIZE_GUIDE"
 #define kProductChangedNotification @"NOTIFICATION_PRODUCT_CHANGED"
 #define kOpenSpecificationsScreen @"NOTIFICATION_SHOW_SPECIFICATIONS_SCREEN"
+#define kOpenProductBundlesScreen @"NOTIFICATION_SHOW_BUNDLES_SCREEN"
+#define kOpenProductVariationsScreen @"NOTIFICATION_SHOW_VARIATIONS_SCREEN"
 
 //teasers
 #define kDidSelectTeaserWithCatalogUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_CATALOG_URL"
 #define kDidSelectTeaserWithPDVUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_PDV_URL"
 #define kDidSelectTeaserWithShopUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_SHOP_URL"
 #define kDidSelectCampaignNofication @"NOTIFICATION_DID_SELECT_CAMPAING"
-#define kDidSelectTeaserWithAllCategoriesNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_ALL_CATEGORIES"
 #define kDidSelectCategoryFromCenterPanelNotification @"NOTIFICATION_SELECTED_CATEGORY_FROM_CENTER_PANEL"
 
 //navbar notification
+#define kChangeTabBarVisibility @"NOTIFICATION_CHANGE_TAB_BAR_VISIBILITY"
 #define kChangeNavigationBarNotification @"NOTIFICATION_CHANGE_NAVIGATION_BAR"
 #define kEditShouldChangeStateNotification @"EDIT_SHOULD_CHANGE_NOTIFICATION"
 #define kDoneShouldChangeStateNotification @"DONE_SHOULD_CHANGE_NOTIFICATION"
@@ -101,7 +104,7 @@
 #define kDidPressDoneNotification @"DID_PRESS_DONE_NOTIFICATION"
 #define kDidPressEditNotification @"DID_PRESS_EDIT_NOTIFICATION"
 #define kDidPressNavBar @"DID_PRESS_NAV_BAR"
-
+#define kDidPressSearchButtonNotification @"DID_PRESS_SEARCH_BUTTON_NOTIFICATION"
 
 // Ad4Push Notifications
 #define A4S_INAPP_NOTIF_VIEW_DID_APPEAR @"A4S_INAPP_NOTIF_VIEW_DID_APPEAR"
@@ -151,3 +154,28 @@
 
 // Colors - Text
 #define JALabelGrey UIColorFromRGB(0xcccccc)
+
+
+#define JABlackColor UIColorFromRGB(0x000000)
+#define JABlack900Color UIColorFromRGB(0x202020)
+#define JABlack800Color UIColorFromRGB(0x808080)
+#define JABlack700Color UIColorFromRGB(0xC5C5C5)
+#define JABlack400Color UIColorFromRGB(0xE2E2E2)
+#define JABlack300Color UIColorFromRGB(0xF0F0F0)
+#define JABlack200Color UIColorFromRGB(0xF5F5F5)
+#define JAOrange1Color UIColorFromRGB(0xf68b1e)
+#define JAGreen1Color UIColorFromRGB(0xa3cf62)
+#define JABlue1Color UIColorFromRGB(0x416998)
+#define JASysBlueColor UIColorFromRGB(0x007aff)
+
+#define JADisplay1Font [UIFont fontWithName:@"HelveticaNeue" size:23]
+#define JADisplay2Font [UIFont fontWithName:@"HelveticaNeue" size:19]
+#define JAListFont [UIFont fontWithName:@"HelveticaNeue-Bold" size:16]
+#define JAList1Font [UIFont fontWithName:@"HelveticaNeue-Medium" size:16]
+#define JAList2Font [UIFont fontWithName:@"HelveticaNeue" size:16]
+#define JABody1Font [UIFont fontWithName:@"HelveticaNeue-Bold" size:13]
+#define JABody2Font [UIFont fontWithName:@"HelveticaNeue-Medium" size:13]
+#define JABody3Font [UIFont fontWithName:@"HelveticaNeue" size:13]
+#define JACaptionFont [UIFont fontWithName:@"HelveticaNeue" size:11]
+#define JACaption2Font [UIFont fontWithName:@"HelveticaNeue-Bold" size:11]
+

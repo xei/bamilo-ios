@@ -28,7 +28,6 @@
     UILabel *_shippingFeeValueLabel;
 }
 
-@property (nonatomic, strong) NSString *voucherCode;
 @property (nonatomic, assign) CGRect keyboardFrame;
 @property (nonatomic, strong) JAPicker *picker;
 @property (nonatomic, assign) BOOL requestDone;
@@ -60,6 +59,9 @@
     self.A4SViewControllerAlias = @"CART";
     
     self.navBarLayout.title = STRING_CART;
+    self.navBarLayout.showCartButton = NO;
+    self.tabBarIsVisible = YES;
+    self.searchBarIsVisible = YES;
     
     self.view.backgroundColor = JABackgroundGrey;
     
@@ -81,8 +83,8 @@
     self.flowLayout.minimumLineSpacing = 0;
     self.flowLayout.minimumInteritemSpacing = 0;
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    self.flowLayout.itemSize = CGSizeMake(self.view.frame.size.width, 90.0f);
-    [self.flowLayout setHeaderReferenceSize:CGSizeMake(self.view.frame.size.width - 12.0f, 26.0f)];
+    self.flowLayout.itemSize = CGSizeMake([self viewBounds].size.width, 90.0f);
+    [self.flowLayout setHeaderReferenceSize:CGSizeMake([self viewBounds].size.width - 12.0f, 26.0f)];
     
     self.productCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.flowLayout];
     [self.productCollectionView setBackgroundColor:JABackgroundGrey];
@@ -241,7 +243,7 @@
             [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
             [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
             [trackingDictionary setValue:cartItem.variation forKey:kRIEventSizeKey];
-            [trackingDictionary setValue:[cartData.cartValue stringValue] forKey:kRIEventTotalCartKey];
+            [trackingDictionary setValue:cartData.cartValueEuroConverted forKey:kRIEventTotalCartKey];
 
             
             if ([RICustomer checkIfUserIsLogged]) {
@@ -289,7 +291,7 @@
         }
         
         [trackingDictionary setValue:[NSNumber numberWithInteger:[[cartData cartItems] count]] forKey:kRIEventQuantityKey];
-        [trackingDictionary setValue:[cartData cartValue] forKey:kRIEventTotalCartKey];
+        [trackingDictionary setValue:cartData.cartValueEuroConverted forKey:kRIEventTotalCartKey];
         
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventViewCart]
                                                   data:[trackingDictionary copy]];
@@ -385,7 +387,9 @@
     [self.continueShoppingButton addTarget:self action:@selector(goToHomeScreen) forControlEvents:UIControlEventTouchUpInside];
     
     [self.emptyCartView setWidth:self.view.width-12.f];
+    [self.emptyCartView setY:[self viewBounds].origin.y+6.0f];
     [self.continueShoppingButton setWidth:self.view.width-12.f];
+    [self.continueShoppingButton setY:CGRectGetMaxY(self.emptyCartView.frame)+6.0f];
     [self.emptyCartLabel setX:self.view.width/2-self.emptyCartLabel.width/2];
     [self.emptyCartImageView setX:self.view.width/2-self.emptyCartImageView.width/2];
     
@@ -401,7 +405,7 @@
     
     self.screenName = @"CartWithItems";
     
-    CGFloat viewsWidth = self.view.frame.size.width - (2 * horizontalMargin);
+    CGFloat viewsWidth = [self viewBounds].size.width - (2 * horizontalMargin);
     CGFloat originY = 6.0f;
     
     [self.productCollectionView removeFromSuperview];
@@ -409,21 +413,21 @@
     
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
     {
-        viewsWidth = (self.view.frame.size.width - (3 * horizontalMargin)) / 2;
+        viewsWidth = ([self viewBounds].size.width - (3 * horizontalMargin)) / 2;
         
         self.flowLayout.itemSize = CGSizeMake(viewsWidth, itemSize);
         [self.flowLayout setHeaderReferenceSize:CGSizeMake(viewsWidth, headerSize)];
         
         [self.productsScrollView setFrame:CGRectMake(horizontalMargin,
-                                                     0.0f,
+                                                     [self viewBounds].origin.y,
                                                      viewsWidth,
-                                                     self.view.frame.size.height)];
+                                                     [self viewBounds].size.height)];
         [self.view addSubview:self.productsScrollView];
         
         [self.cartScrollView setFrame:CGRectMake(CGRectGetMaxX(self.productsScrollView.frame) + 6.0f,
-                                                 0.0f,
+                                                 [self viewBounds].origin.y,
                                                  viewsWidth,
-                                                 self.view.frame.size.height)];
+                                                 [self viewBounds].size.height)];
         
         [self.productsScrollView addSubview:self.productCollectionView];
         [self.productCollectionView setFrame:CGRectMake(0.0f,
@@ -441,9 +445,9 @@
         [self.flowLayout setHeaderReferenceSize:CGSizeMake(viewsWidth, headerSize)];
         
         [self.cartScrollView setFrame:CGRectMake(6.0f,
-                                                 0.0f,
+                                                 [self viewBounds].origin.y,
                                                  viewsWidth,
-                                                 self.view.frame.size.height)];
+                                                 [self viewBounds].size.height)];
         
         [self.cartScrollView addSubview:self.productCollectionView];
         [self.productCollectionView setFrame:CGRectMake(0.0f,
@@ -516,14 +520,12 @@
     
     [self.cartScrollView addSubview:self.couponView];
     
-    if(VALID_NOTEMPTY([[self cart] couponMoneyValue], NSNumber) && 0.0f < [[[self cart] couponMoneyValue] floatValue])
+    if(VALID([[self cart] couponMoneyValue], NSNumber))
     {
         [self.useCouponButton setTitle:STRING_REMOVE forState:UIControlStateNormal];
         
-        NSString* voucherCode = [[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultsVoucherCode];
-        
-        if (VALID_NOTEMPTY(voucherCode, NSString)) {
-            [self.couponTextField setText:voucherCode];
+        if (VALID_NOTEMPTY(self.cart.couponCode, NSString)) {
+            [self.couponTextField setText:self.cart.couponCode];
             [self.couponTextField setEnabled:NO];
         }
     }
@@ -532,9 +534,9 @@
         [self.useCouponButton setTitle:STRING_USE forState:UIControlStateNormal];
     }
     
-    if(VALID_NOTEMPTY(self.voucherCode, NSString))
+    if(VALID_NOTEMPTY(self.cart.couponCode, NSString))
     {
-        [self.couponTextField setText:self.voucherCode];
+        [self.couponTextField setText:self.cart.couponCode];
         [self.couponTextField setEnabled:NO];
     }
     else if(!VALID_NOTEMPTY([self.couponTextField text], NSString))
@@ -594,7 +596,7 @@
     [self.articlesCount sizeToFit];
     [self.articlesCount setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.subtotalTitleSeparator.frame) + 10.0f, self.articlesCount.width, self.articlesCount.frame.size.height)];
     
-    CGRect articleNumberWidth = [self.articlesCount.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)
+    CGRect articleNumberWidth = [self.articlesCount.text boundingRectWithSize:CGSizeMake([self viewBounds].size.width, [self viewBounds].size.height)
                                                                        options:NSStringDrawingUsesLineFragmentOrigin
                                                                     attributes:@{NSFontAttributeName:self.articlesCount.font} context:nil];
     
@@ -805,7 +807,7 @@
         nextElementPosY = CGRectGetMaxY(self.extraCostsLabel.frame) + 4.f;
     }
     
-    if(VALID_NOTEMPTY([[self cart] couponMoneyValue], NSNumber) && 0.0f < [[[self cart] couponMoneyValue] floatValue])
+    if(VALID([[self cart] couponMoneyValue], NSNumber))
     {
         if (!self.couponLabel) {
             self.couponLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -1009,7 +1011,7 @@
                              
                              [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
                              [trackingDictionary setValue:[product.quantity stringValue] forKey:kRIEventQuantityKey];
-                             [trackingDictionary setValue:cartValue forKey:kRIEventTotalCartKey];
+                             [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
                              
                              [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromCart]
                                                                        data:[trackingDictionary copy]];
@@ -1028,6 +1030,7 @@
                              [self hideLoading];
                          } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                              [self hideLoading];
+                             [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
                          }];
     }
 }
@@ -1049,7 +1052,7 @@
         [self.picker removeFromSuperview];
     }
     
-    self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
+    self.picker = [[JAPicker alloc] initWithFrame:[self viewBounds]];
     [self.picker setDelegate:self];
     
     NSMutableArray *dataSource = [NSMutableArray new];
@@ -1057,9 +1060,9 @@
     if(VALID_NOTEMPTY([self.currentItem maxQuantity], NSNumber) && 0 < [[self.currentItem maxQuantity] integerValue])
     {
         NSInteger maxQuantity = [[self.currentItem maxQuantity] integerValue];
-        if(VALID_NOTEMPTY([self.currentItem stock], NSNumber) && [[self.currentItem stock] integerValue] < [[self.currentItem maxQuantity] integerValue])
+        if(VALID_NOTEMPTY([self.currentItem maxQuantity], NSNumber))
         {
-            maxQuantity = [[self.currentItem stock] integerValue];
+            maxQuantity = [[self.currentItem maxQuantity] integerValue];
         }
         
         for (int i = 0; i < maxQuantity; i++)
@@ -1074,8 +1077,8 @@
                        previousText:selectedItem
                     leftButtonTitle:nil];
     
-    CGFloat pickerViewHeight = self.view.frame.size.height;
-    CGFloat pickerViewWidth = self.view.frame.size.width;
+    CGFloat pickerViewHeight = [self viewBounds].size.height;
+    CGFloat pickerViewWidth = [self viewBounds].size.width;
     [self.picker setFrame:CGRectMake(0.0f,
                                      pickerViewHeight,
                                      pickerViewWidth,
@@ -1085,7 +1088,7 @@
     [UIView animateWithDuration:0.4f
                      animations:^{
                          [self.picker setFrame:CGRectMake(0.0f,
-                                                          0.0f,
+                                                          [self viewBounds].origin.y,
                                                           pickerViewWidth,
                                                           pickerViewHeight)];
                      }];
@@ -1101,7 +1104,7 @@
     [self showLoading];
     NSString *voucherCode = [self.couponTextField text];
     
-    if(VALID_NOTEMPTY([[self cart] couponMoneyValue], NSNumber) && 0.0f < [[[self cart] couponMoneyValue] floatValue])
+    if(VALID([[self cart] couponMoneyValue], NSNumber))
     {
         [RICart removeVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;
@@ -1114,25 +1117,19 @@
             [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
                                                       data:[trackingDictionary copy]];
-            self.voucherCode = voucherCode;
-            
-            [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kUserDefaultsVoucherCode];
-            
             [self setupCart];
             [self.couponTextField setEnabled:YES];
              [self.couponTextField setText:@""];
             [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
-            
-            [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
+            [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
         }];
     }
     else
     {
         [RICart addVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;
-            self.voucherCode = voucherCode;
             
             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
             [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
@@ -1142,15 +1139,18 @@
             [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
                                                       data:[trackingDictionary copy]];
-
-            [[NSUserDefaults standardUserDefaults] setObject:voucherCode forKey:kUserDefaultsVoucherCode];
-            
             [self setupCart];
             [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
-            
-            [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
+            Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+            NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+            if (networkStatus == NotReachable) {
+                [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
+            }
+            else{
+                [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
+            }
         }];
     }
 }
@@ -1169,6 +1169,12 @@
             
             [trackingDictionary setValue:[NSNumber numberWithInteger:[[self.cart cartItems] count]] forKey:kRIEventQuantityKey];
             [trackingDictionary setValue:[self.cart cartValueEuroConverted] forKey:kRIEventTotalCartKey];
+            
+            NSMutableString* attributeSetID = [NSMutableString new];
+            for( RICartItem* pd in [self.cart cartItems]) {
+                [attributeSetID appendFormat:@"%@;",[pd attributeSetID]];
+            }
+            [trackingDictionary setValue:[attributeSetID copy] forKey:kRIEventAttributeSetIDCartKey];
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutStart]
                                                       data:[trackingDictionary copy]];
@@ -1203,7 +1209,8 @@
                                                       data:[trackingDictionary copy]];
             
             [self hideLoading];
-            
+        
+            #warning TODO String
             [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
         }];
     }
@@ -1402,7 +1409,7 @@
         }
         [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
         [trackingDictionary setValue:@"Cart" forKey:kRIEventLocationKey];
-        [trackingDictionary setValue:self.cart.cartValue  forKey:kRIEventTotalCartKey];
+        [trackingDictionary setValue:self.cart.cartValueEuroConverted  forKey:kRIEventTotalCartKey];
         
         NSInteger quantity = 0;
         if(newQuantity > [[self.currentItem quantity] integerValue])
@@ -1447,8 +1454,14 @@
                         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                             [self closePicker];
                             [self hideLoading];
-                            
-                            [self showMessage:STRING_ERROR_CHANGING_QUANTITY success:NO];
+                            Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+                            NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+                            if (networkStatus == NotReachable) {
+                                [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
+                            }
+                            else {
+                                [self showMessage:STRING_ERROR_CHANGING_QUANTITY success:NO];
+                            }
                         }];
     }
     else
@@ -1457,7 +1470,7 @@
     }
     
     CGRect frame = self.picker.frame;
-    frame.origin.y = self.view.frame.size.height;
+    frame.origin.y = [self viewBounds].size.height;
     
     [UIView animateWithDuration:0.4f
                      animations:^{
@@ -1471,7 +1484,7 @@
 - (void)closePicker
 {
     CGRect frame = self.picker.frame;
-    frame.origin.y = self.view.frame.size.height;
+    frame.origin.y = [self viewBounds].size.height;
     
     [UIView animateWithDuration:0.4f
                      animations:^{
@@ -1515,10 +1528,12 @@
     CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
     CGFloat height = kbSize.height;
-    if(self.view.frame.size.width == kbSize.height)
+    if([self viewBounds].size.width == kbSize.height)
     {
         height = kbSize.width;
     }
+    
+    height -= kTabBarHeight;//compensate for tab bar because keyboard is shown on top
     
     [UIView animateWithDuration:0.3 animations:^{
         [self.cartScrollView setHeight:self.cartScrollViewInitialFrame.size.height - height];

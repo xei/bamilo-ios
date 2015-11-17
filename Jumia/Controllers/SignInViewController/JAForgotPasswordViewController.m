@@ -62,6 +62,7 @@
     [self.firstLabel setTextColor:UIColorFromRGB(0x666666)];
     [self.firstLabel setText:STRING_TYPE_YOUR_EMAIL];
     [self.firstLabel setBackgroundColor:[UIColor clearColor]];
+    [self.firstLabel setTextAlignment:NSTextAlignmentLeft];
     [self.contentView addSubview:self.firstLabel];
     
     self.secondLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -70,6 +71,7 @@
     [self.secondLabel setText:STRING_WE_WILL_SEND_PASSWORD];
     [self.secondLabel setBackgroundColor:[UIColor clearColor]];
     [self.secondLabel setNumberOfLines:2];
+    [self.secondLabel setTextAlignment:NSTextAlignmentLeft];
     [self.contentView addSubview:self.secondLabel];
     
     if (RI_IS_RTL) {
@@ -116,7 +118,7 @@
     
     [self.scrollView addSubview:self.contentView];
  
-    [RIForm getForm:@"forgotpassword"
+    [RIForm getForm:@"forgot_password"
        successBlock:^(RIForm *form)
      {
          self.dynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:0.0f];
@@ -286,6 +288,12 @@
     [self.dynamicForm resignResponder];
     
     [self showLoading];
+    
+    if ([self.dynamicForm checkErrors]) {
+        [self showMessage:self.dynamicForm.firstErrorInFields success:NO];
+        [self hideLoading];
+        return;
+    }
     
     [RIForm sendForm:[self.dynamicForm form]
           parameters:[self.dynamicForm getValues]

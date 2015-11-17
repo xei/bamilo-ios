@@ -39,6 +39,12 @@
         if ([filterOptionJSON objectForKey:@"image_url"]) {
             newFilterOption.colorImageUrl = [filterOptionJSON objectForKey:@"image_url"];
         }
+        if (VALID_NOTEMPTY([filterOptionJSON objectForKey:@"average"], NSNumber)) {
+            newFilterOption.average = [filterOptionJSON objectForKey:@"average"];
+        }
+        if (VALID_NOTEMPTY([filterOptionJSON objectForKey:@"total_products"], NSNumber)) {
+            newFilterOption.totalProducts = [filterOptionJSON objectForKey:@"total_products"];
+        }
     }
     
     //initial state
@@ -47,6 +53,26 @@
     newFilterOption.upperValue = newFilterOption.max;
     newFilterOption.discountOnly = NO;
     
+    return newFilterOption;
+}
+
+- (RIFilterOption*)copy
+{
+    RIFilterOption* newFilterOption = [[RIFilterOption alloc] init];
+    newFilterOption.name = [self.name copy];
+    newFilterOption.val = [self.val copy];
+    newFilterOption.max = self.max;
+    newFilterOption.min = self.min;
+    newFilterOption.interval = self.interval;
+    newFilterOption.colorHexValue = [self.colorHexValue copy];
+    newFilterOption.colorImageUrl = [self.colorImageUrl copy];
+    newFilterOption.average = [self.average copy];
+    newFilterOption.totalProducts = [self.totalProducts copy];
+    newFilterOption.selected = self.selected;
+    newFilterOption.lowerValue = self.lowerValue;
+    newFilterOption.upperValue = self.upperValue;
+    newFilterOption.discountOnly = self.discountOnly;
+
     return newFilterOption;
 }
 
@@ -100,18 +126,11 @@
                     filterOption.val = [filterOption.val stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
                     filterOption.val = [filterOption.val stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
                     
-                    if ([filter.uid isEqualToString:@"brand"]) {
-                        if (!VALID_NOTEMPTY(brands, NSString)) {
-                            brands = [NSString stringWithFormat:@"&q=%@", filterOption.val];
-                        }else{
-                            brands = [NSString stringWithFormat:@"%@--%@", brands, filterOption.val];
-                        }
-                    }
                     if (ISEMPTY(urlString)) {
                         NSString* filterUidString = filter.uid;
                         urlString = [NSString stringWithFormat:@"%@=%@", filterUidString, filterOption.val];
                     } else {
-                        urlString = [NSString stringWithFormat:@"%@--%@", urlString, filterOption.val];
+                        urlString = [NSString stringWithFormat:@"%@%@%@", urlString, filter.filterSeparator, filterOption.val];
                     }
                 }
             }
@@ -137,7 +156,9 @@
             if (VALID_NOTEMPTY(filterJSON, NSDictionary)) {
                 RIFilter* newFilter = [RIFilter parseFilter:filterJSON];
                 
-                [newFiltersArray addObject:newFilter];
+                if (VALID_NOTEMPTY(newFilter, RIFilter)) {
+                    [newFiltersArray addObject:newFilter];
+                }
             }
         }
     }
@@ -157,6 +178,13 @@
         if ([filterJSON objectForKey:@"name"]) {
             newFilter.name = [filterJSON objectForKey:@"name"];
         }
+        if ([filterJSON objectForKey:@"filter_separator"]) {
+            newFilter.filterSeparator = [filterJSON objectForKey:@"filter_separator"];
+        }
+        if ([[newFilter.name uppercaseString] isEqualToString:[@"category" uppercaseString]]) {
+            return nil;
+        }
+        
         if ([filterJSON objectForKey:@"multi"]) {
             NSNumber* multi = [filterJSON objectForKey:@"multi"];
             newFilter.multi = [multi boolValue];
@@ -182,6 +210,33 @@
             newFilter.options = [newFilterOptionsArray copy];
         }
     }
+    
+    return newFilter;
+}
+
++ (NSArray*)copyFiltersArray:(NSArray*)filtersArray;
+{
+    NSMutableArray* newFiltersArray = [NSMutableArray new];
+    for (RIFilter* filter in filtersArray) {
+        [newFiltersArray addObject:[filter copy]];
+    }
+    return [newFiltersArray copy];
+}
+
+- (RIFilter*)copy
+{
+    RIFilter* newFilter = [[RIFilter alloc] init];
+    
+    newFilter.uid = [self.uid copy];
+    newFilter.name = [self.name copy];
+    newFilter.multi = self.multi;
+    newFilter.filterSeparator = [self.filterSeparator copy];
+    NSMutableArray* newOptions = [NSMutableArray new];
+    for (RIFilterOption* option in self.options) {
+        RIFilterOption* newOption = [option copy];
+        [newOptions addObject:newOption];
+    }
+    newFilter.options = [newOptions copy];
     
     return newFilter;
 }

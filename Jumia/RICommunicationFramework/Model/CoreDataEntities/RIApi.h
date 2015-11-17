@@ -21,9 +21,9 @@
 @interface RIApi : NSManagedObject
 
 @property (nonatomic, retain) NSString * countryUrl;
-@property (nonatomic, retain) NSString * actionName;
 @property (nonatomic, retain) NSString * countryIso;
 @property (nonatomic, retain) NSString * countryName;
+@property (nonatomic, retain) NSString * countryFlag;
 @property (nonatomic, retain) NSString * countryUserAgentInjection;
 @property (nonatomic, retain) NSNumber * curVersion;
 @property (nonatomic, retain) NSNumber * minVersion;
@@ -58,6 +58,7 @@
 + (RIApi *)parseApi:(NSDictionary *)api
          countryIso:(NSString *)countryIso
         countryName:(NSString *)countryName
+        countryFlag:(NSString *)countryFlag
 countryUserAgentInjection:(NSString*)countryUserAgentInjection;
 
 /**
@@ -94,6 +95,13 @@ countryUserAgentInjection:(NSString*)countryUserAgentInjection;
  *  @return the country name
  */
 + (NSString *)getCountryNameInUse;
+
+/**
+ *  get the current country flag url
+ *
+ *  @return the country flag url
+ */
++ (NSString *)getCountryFlagInUse;
 
 /**
  *  get the current country user agent injection

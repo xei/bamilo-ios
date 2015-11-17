@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+@class RIShippingMethodForm, RIPaymentMethodForm, RIPaymentInformation,
+    RIAddress, RIForm, RISellerDelivery;
+
 @interface RICart : NSObject
 
 @property (strong, nonatomic) NSArray *cartItems;
@@ -17,9 +20,7 @@
 @property (strong, nonatomic) NSNumber *cartValueEuroConverted;
 @property (strong, nonatomic) NSNumber *cartUnreducedValue;
 @property (strong, nonatomic) NSString *cartUnreducedValueFormatted;
-@property (strong, nonatomic) NSNumber *cartCleanValue;
-@property (strong, nonatomic) NSString *cartCleanValueFormatted;
-@property (strong, nonatomic) NSNumber *cartCleanValueEuroConverted;
+@property (strong, nonatomic) NSString *couponCode;
 @property (strong, nonatomic) NSNumber *couponMoneyValue;
 @property (strong, nonatomic) NSString *couponMoneyValueFormatted;
 @property (strong, nonatomic) NSNumber *couponMoneyValueEuroConverted;
@@ -41,6 +42,33 @@
 @property (strong, nonatomic) NSDictionary *priceRules;
 @property (strong, nonatomic) NSNumber *subTotal;
 @property (strong, nonatomic) NSString *subTotalFormatted;
+
+@property (nonatomic, strong) NSString *nextStep;
+@property (nonatomic, strong) RIForm *addressForm;
+@property (nonatomic, strong) RIShippingMethodForm *shippingMethodForm;
+@property (nonatomic, strong) NSString *shippingMethod;
+@property (nonatomic, strong) RIPaymentMethodForm *paymentMethodForm;
+@property (nonatomic, strong) NSString *paymentMethod;
+@property (nonatomic, strong) RIAddress *shippingAddress;
+@property (nonatomic, strong) RIAddress *billingAddress;
+@property (strong, nonatomic) NSArray* sellerDelivery;
+
+//CHECKOUT FINISH
+@property (nonatomic, strong) NSString *orderNr;
+@property (nonatomic, strong) NSString *customerFirstMame;
+@property (nonatomic, strong) NSString *customerLastName;
+@property (nonatomic, strong) RIPaymentInformation *paymentInformation;
+
+/**
+ * new params (NOT USED)
+ */
+@property (strong, nonatomic) NSNumber *deliveryDiscountAmount;
+@property (strong, nonatomic) NSNumber *deliveryDiscountAmountConverted;
+@property (strong, nonatomic) NSNumber *deliveryDiscountCartRuleDiscount;
+@property (strong, nonatomic) NSNumber *deliveryDiscountCartRuleDiscountConverted;
+@property (strong, nonatomic) NSNumber *deliveryDiscountCouponMoneyValue;
+@property (strong, nonatomic) NSNumber *deliveryDiscountCouponMoneyValueConverted;
+
 
 /**
  *  Method to add a product to the cart
@@ -163,5 +191,95 @@
  * @param the operationID
  */
 + (void)cancelRequest:(NSString *)operationID;
+
+
+
+//$$$ FROM CHECKOUT
+
+/**
+ * Method to get the address forms needed for checkout process
+ *
+ * @param the block where the success response can be processed
+ * @param the block where the failure response can be processed
+ * @return a string with the operationID that can be used to cancel the operation
+ */
++ (NSString*)getCheckoutAddressFormsWithSuccessBlock:(void (^)(RICart *cart))successBlock
+                                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
+
+/**
+ * Method to set the addresses needed for checkout process
+ *
+ * @param the address form
+ * @param the parameters to send along with the form
+ * @param the block where the success response can be processed
+ * @param the block where the failure response can be processed
+ * @return a string with the operationID that can be used to cancel the operation
+ */
++ (NSString*)setCheckoutAddresses:(RIForm*)form
+                       parameters:(NSDictionary*)parameters
+                     successBlock:(void (^)(RICart *cart))successBlock
+                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
+
+
+/**
+ * Method to get the shipping method form needed for checkout process
+ *
+ * @param the block where the success response can be processed
+ * @param the block where the failure response can be processed
+ * @return a string with the operationID that can be used to cancel the operation
+ */
++ (NSString*)getShippingMethodFormWithSuccessBlock:(void (^)(RICart *cart))successBlock
+                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
+
+/**
+ * Method to set the shipping method needed for checkout process
+ *
+ * @param the shipping method form
+ * @param the parameters to send along with the form
+ * @param the block where the success response can be processed
+ * @param the block where the failure response can be processed
+ * @return a string with the operationID that can be used to cancel the operation
+ */
++ (NSString*)setShippingMethod:(RIShippingMethodForm*)form
+                    parameters:(NSDictionary*)parameters
+                  successBlock:(void (^)(RICart *cart))successBlock
+               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
+
+/**
+ * Method to get the payment method form needed for checkout process
+ *
+ * @param the block where the success response can be processed
+ * @param the block where the failure response can be processed
+ * @return a string with the operationID that can be used to cancel the operation
+ */
++ (NSString*)getPaymentMethodFormWithSuccessBlock:(void (^)(RICart *cart))successBlock
+                                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
+
+/**
+ * Method to set the payment method needed for checkout process
+ *
+ * @param the payment method form
+ * @param the parameters to send along with the form
+ * @param the block where the success response can be processed
+ * @param the block where the failure response can be processed
+ * @return a string with the operationID that can be used to cancel the operation
+ */
++ (NSString*)setPaymentMethod:(RIPaymentMethodForm *)form
+                   parameters:(NSDictionary*)parameters
+                 successBlock:(void (^)(RICart *cart))successBlock
+              andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
+
+/**
+ * Method to end the checkout proccess
+ *
+ * @param the cart that is finishing the checkout
+ * @param the block where the success response can be processed
+ * @param the block where the failure response can be processed
+ * @return a string with the operationID that can be used to cancel the operation
+ */
++ (NSString*)finishCheckoutForCart:(RICart*)cart
+                  withSuccessBlock:(void (^)(RICart *cart))successBlock
+                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
+
 
 @end

@@ -14,13 +14,17 @@
 
 @interface RIForm : NSManagedObject
 
-@property (nonatomic, retain) NSString * uid;
+@property (nonatomic, retain) NSString * type;
 @property (nonatomic, retain) NSString * method;
 @property (nonatomic, retain) NSString * action;
 @property (nonatomic, retain) NSOrderedSet *fields;
 @property (nonatomic, retain) RIFormIndex *formIndex;
 
 //Class Methods
+
++ (NSString *)getFormWithUrl:(NSString *)urlString
+                successBlock:(void (^)(RIForm *))successBlock
+                failureBlock:(void (^)(RIApiResponse, NSArray *))failureBlock;
 
 /**
  * Method to get a form
@@ -30,7 +34,7 @@
  * @param the block where the failure response can be processed
  * @return a string with the operationID that can be used to cancel the operation
  */
-+ (NSString*)getForm:(NSString*)formIndexID
++ (NSString*)getForm:(NSString*)formIndexType
         successBlock:(void (^)(id form))successBlock
         failureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 
@@ -43,7 +47,7 @@
  * @param the block where the failure response can be processed
  * @return a string with the operationID that can be used to cancel the operation
  */
-+ (NSString*)getForm:(NSString*)formIndexID
++ (NSString*)getForm:(NSString*)formIndexType
         forceRequest:(BOOL)forceRequest
         successBlock:(void (^)(id form))successBlock
         failureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;

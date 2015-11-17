@@ -17,12 +17,16 @@
 @property (nonatomic, assign)NSInteger interval;
 @property (nonatomic, strong)NSString* colorHexValue;
 @property (nonatomic, strong)NSString* colorImageUrl;
+@property (nonatomic, strong) NSNumber *average;
+@property (nonatomic, strong) NSNumber *totalProducts;
 
 //current state
 @property (nonatomic, assign)BOOL selected;
 @property (nonatomic, assign)NSInteger lowerValue;
 @property (nonatomic, assign)NSInteger upperValue;
 @property (nonatomic, assign)BOOL discountOnly;
+
+- (RIFilterOption*)copy;
 
 /**
  *  Method to parse an RIFilterOption given a JSON object
@@ -39,6 +43,11 @@
 @property (nonatomic, strong)NSString* name;
 @property (nonatomic, assign)BOOL multi;
 @property (nonatomic, strong)NSArray* options;
+@property (nonatomic, strong) NSString *filterSeparator;
+
++ (NSArray*)copyFiltersArray:(NSArray*)filtersArray;
+
+- (RIFilter*)copy;
 
 /**
  *  Method that returns the url component to add to the product request based on an array of RIFilters

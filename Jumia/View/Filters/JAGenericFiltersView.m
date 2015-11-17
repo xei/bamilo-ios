@@ -9,6 +9,7 @@
 #import "JAGenericFiltersView.h"
 #import "JAColorFilterCell.h"
 #import "JAClickableView.h"
+#import "JAProductInfoRatingLine.h"
 
 @interface JAGenericFiltersView()
 
@@ -61,6 +62,11 @@
 
 #pragma mark - UITableView
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [JAColorFilterCell height];
+}
+
 - (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
     return [UIView new];
@@ -86,21 +92,13 @@
                                                                 frame:CGRectMake(0.0f,
                                                                                  0.0f,
                                                                                  tableView.frame.size.width,
-                                                                                 44.0f)];
-            CGFloat separatorX = 50.0f;
-            if (self.isLandscape) {
-                separatorX += 20.0f;
-            }
-            UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(separatorX, 43.0f, self.tableView.frame.size.width - 50.0f, 1.0f)];
-            separator.backgroundColor = UIColorFromRGB(0xcccccc);
-            [cell addSubview:separator];
-            if (RI_IS_RTL) {
-                [cell flipAllSubviews];
-            }
+                                                                                 1.0f)];//set inside the cell
+        } else {
+            [(JAColorFilterCell*)cell setupIsLandscape:self.isLandscape];
         }
         
         RIFilterOption* filterOption = [self.filter.options objectAtIndex:indexPath.row];
-        [(JAColorFilterCell*)cell colorTitleLabel].text = filterOption.name;
+        [(JAColorFilterCell*)cell colorTitleLabel].text = [NSString stringWithFormat:@"%@ (%ld)",filterOption.name, [filterOption.totalProducts longValue]];
         
         if (filterOption.colorHexValue) {
             [[(JAColorFilterCell*)cell colorView] setColorWithHexString:filterOption.colorHexValue];
@@ -121,11 +119,58 @@
             }
         }
         //add the new clickable view
-        JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.frame.size.width, 44.0f)];
+        JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.frame.size.width, [JAColorFilterCell height])];
         clickView.tag = indexPath.row;
         [clickView addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:clickView];
         
+    } else if ([@"rating" isEqualToString:self.filter.uid]) {
+        cellIdentifier = @"ratingCell";
+        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
+        if (ISEMPTY(cell)) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+        }
+        
+        for (UIView* view in cell.subviews) {
+            if ([view isKindOfClass:[JAProductInfoRatingLine class]] || [view isKindOfClass:[UIImageView class]]) { //remove the previous views
+                [view removeFromSuperview];
+            } else {
+                for (UIView* subview in view.subviews) {
+                    if ([subview isKindOfClass:[JAProductInfoRatingLine class]] || [view isKindOfClass:[UIImageView class]]) { //remove the previous view
+                        [subview removeFromSuperview];
+                    }
+                }
+            }
+        }
+        
+        JAProductInfoRatingLine* ratingLine = [[JAProductInfoRatingLine alloc] initWithFrame:CGRectMake(0.0f,
+                                                                                                        0.0f,
+                                                                                                        self.tableView.frame.size.width,
+                                                                                                        [JAColorFilterCell height])];
+        RIFilterOption* filterOption = [self.filter.options objectAtIndex:indexPath.row];
+        ratingLine.ratingAverage = filterOption.average;
+        ratingLine.ratingSum = filterOption.totalProducts;
+        ratingLine.imageRatingSize = kImageRatingSizeSmall;
+        ratingLine.bottomSeparatorVisibility = YES;
+        [cell addSubview:ratingLine];
+        
+        if (filterOption.selected) {
+            CGFloat margin = 12.0f;
+            UIImage* customAccessoryIcon = [UIImage imageNamed:@"selectionCheckmark"];
+            UIImageView* customAccessoryView = [[UIImageView alloc] initWithImage:customAccessoryIcon];
+            customAccessoryView.frame = CGRectMake(ratingLine.frame.size.width - margin - customAccessoryIcon.size.width,
+                                                   (ratingLine.frame.size.height - customAccessoryIcon.size.height) / 2,
+                                                   customAccessoryIcon.size.width,
+                                                   customAccessoryIcon.size.height);
+            [ratingLine addSubview:customAccessoryView];
+        }
+        
+        if (RI_IS_RTL) {
+            [ratingLine flipAllSubviews];
+        }
     } else {
         
         if (ISEMPTY(cell)) {
@@ -146,7 +191,10 @@
             }
         }
         //add the new clickable view
-        JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, tableView.frame.size.width, 44.0f)];
+        JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                                       0.0f,
+                                                                                       tableView.frame.size.width,
+                                                                                       [JAColorFilterCell height])];
         clickView.tag = indexPath.row;
         [clickView addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:clickView];
@@ -161,7 +209,7 @@
                                                                      clickView.frame.size.height - 1,
                                                                      tableView.frame.size.width,
                                                                      1.0f)];
-        separator.backgroundColor = UIColorFromRGB(0xcccccc);
+        separator.backgroundColor = JABlack400Color;
         [clickView addSubview:separator];
         
         UIImage* customAccessoryIcon = [UIImage imageNamed:@"selectionCheckmark"];
@@ -175,16 +223,21 @@
         
         CGFloat remainingWidth = tableView.frame.size.width - customAccessoryView.frame.size.width - margin*2;
         UILabel* customTextLabel = [UILabel new];
-        customTextLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
+        customTextLabel.font = [UIFont fontWithName:kFontRegularName size:16.0f];
         customTextLabel.textColor = UIColorFromRGB(0x4e4e4e);
         customTextLabel.frame = CGRectMake(startingX,
                                            0.0f,
                                            remainingWidth,
                                            clickView.frame.size.height);
+        customTextLabel.textAlignment = NSTextAlignmentLeft;
         [clickView addSubview:customTextLabel];
         
         RIFilterOption* filterOption = [self.filter.options objectAtIndex:indexPath.row];
-        customTextLabel.text = filterOption.name;
+        customTextLabel.text = [NSString stringWithFormat:@"%@ (%ld)",filterOption.name, [filterOption.totalProducts longValue]];
+        
+        if ([@"rating" isEqualToString:self.filter.uid]) {
+            customTextLabel.text = [NSString stringWithFormat:@"%@", filterOption.average];
+        }
         
         if (RI_IS_RTL) {
             [clickView flipSubviewAlignments];
@@ -224,13 +277,15 @@
     } else {
         NSNumber* newSelection = [NSNumber numberWithBool:![selected boolValue]];
         [self.selectedIndexes replaceObjectAtIndex:indexPath.row withObject:newSelection];
-        
     }
     
     [tableView reloadData];
-    if (YES == self.shouldAutosave) {
-        [self saveOptions];
-    }
+    [self saveOptions];
+}
+
+- (void)reload
+{
+    [self.tableView reloadData];
 }
 
 

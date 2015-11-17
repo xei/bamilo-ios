@@ -53,6 +53,7 @@
     // Do any additional setup after loading the view.
     self.screenName = @"SplashScreen";
     
+    self.navBarLayout.showCartButton = NO;
     
     self.coverView = [[UIView alloc] initWithFrame:self.view.bounds];
     self.coverView.backgroundColor = [UIColor blackColor];
@@ -210,11 +211,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incrementRequestCount) name:RISectionRequestStartedNotificationName object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decrementRequestCount) name:RISectionRequestEndedNotificationName object:nil];
-    
-    if(VALID_NOTEMPTY(self.selectedCountry, RICountry))
-    {
-        [RICommunicationWrapper deleteSessionCookie];
-    }
+
     self.apiRequestId = [RIApi startApiWithCountry:self.selectedCountry
                                          reloadAPI:YES
                                       successBlock:^(RIApi *api, BOOL hasUpdate, BOOL isUpdateMandatory)
@@ -315,9 +312,9 @@
                                   }];
         }
         
-        self.customerRequestId = [RICustomer autoLogin:^(BOOL success, RICustomer *customer, NSString *loginMethod)
+        self.customerRequestId = [RICustomer autoLogin:^(BOOL success, NSDictionary *entities, NSString *loginMethod)
                                   {
-                                      self.customer = customer;
+                                      self.customer = [entities objectForKey:@"customer"];
                                       self.loginMethod = loginMethod;
                                       [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration)
                                        {

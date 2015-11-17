@@ -20,7 +20,7 @@
 
 "ok_label" = "تایید";
 
-"done_label" = "انجام شد";
+"done_label" = "اعمال";
 
 "back_label" = "بازگشت";
 
@@ -36,7 +36,7 @@
 
 "categories" = "مجموعه ها";
 
-"favourites" = "لیست علاقه مندی ها";
+"favourites" = "علاقه‌مندی‌ها";
 
 "recent_searches" = "جستجوهای اخیر";
 
@@ -49,6 +49,8 @@
 "nav_country" = "انتخاب کشور";
 
 "string_filters" = "فیلترها";
+
+"string_remove_filter" = "حذف";
 
 "categories_toplevel_title" = "تمام مجموعه ها";
 
@@ -84,6 +86,8 @@
 
 "string_ratings" = "%d امتیاز";
 
+"string_nratings" = "(‎%d‎)";
+
 "string_review" = "1 نظر";
 
 "string_reviews" = "%d نظر";
@@ -108,7 +112,7 @@
 
 "string_with_discount_only" = "تنها با تخفیف";
 
-"favourite_no_favourites" = "شما هیچ کالای مورد علاقه ای در لیست ندارد";
+"favourite_no_favourites" = "شما هیچ کالایی در فهرست علاقه‌مندی‌های خود ذخیره نکرده‌اید.";
 
 "favourite_addalltocart" = "اضافه کردن تمام کالاها به سبد خرید";
 
@@ -124,7 +128,7 @@
 
 "string_variations" = "تنوع کالا";
 
-"string_rate_now" = "امتیاز دهید";
+"string_rate_now" = "آیا این کالا را دارید؟ به آن امتیاز بدهید.";
 
 "related_items" = "کالاهای مرتبط";
 
@@ -188,6 +192,10 @@
 
 "shipping" = "ارسال کالا";
 
+"shipment_of" = "روش ارسال %ld از %ld";
+
+"fulfilled_by" = "تأمین کننده:";
+
 "free_label" = "رایگان";
 
 "extra_costs_label" = "هزینه های اضافی";
@@ -207,6 +215,8 @@
 "facebook_signup_button_text" = "ثبت نام با فیس بوک";
 
 "facebook_login_button_text" = "ورود با فیس بوک";
+
+"login_incomplete" = "وارد کردن آدرس ایمیل و تاریخ تولد برای ورود به حساب کاربری الزامی است.";
 
 "or_text" = "یا";
 
@@ -274,17 +284,17 @@
 
 "creation_date" = "تاریخ ایجاد:";
 
-"payment_method" = "روش پرداخت:";
+"payment_method" = "روش پرداخت";
 
 "order_track_products" = "کالاها:";
 
-"string_error_no_results_for_tracking_id" = "هیچ نتیجه ای برای کد سفارش جستجو شده یافت نشد. \n لطفا کد سفارش را چک کرده و دوباره امتحان کنید.";
+"string_error_no_results_for_tracking_id" = "هیچ نتیجه ای برای شماره سفارش جستجو شده یافت نشد. \n لطفا شماره سفارش را چک کرده و دوباره امتحان کنید.";
 
 "track_your_order" = "رهگیری سفارش شما";
 
 "track_order" = "رهگیری سفارش";
 
-"track_order_hint" = "کد سفارش";
+"track_order_hint" = "شماره سفارش";
 
 "string_order_status" = "وضعیت سفارش";
 
@@ -306,7 +316,7 @@
 
 "section_title_account" = "تنظیمات حساب کاربری";
 
-"option2_description" = "تغییر رمز عبور، مدیریت پست الکترونیکی";
+"option2_description" = "تغییر رمز عبور، ایمیل و ...";
 
 "myaccount_email_notifications" = "اطلاع از طریق پست الکترونیکی";
 
@@ -342,15 +352,15 @@
 
 "my_order_payment" = "روش های پرداخت";
 
-"enter_order_id" = "لطفا کد سفارش را وارد کنید.";
+"enter_order_id" = "لطفا شماره سفارش را وارد کنید";
 
 "products_added_favourite" = "کالا به لیست علاقه مندی ها اضافه شد.";
 
-"error_adding_to_wishlist" = "خطا در اضافه کردن کالا به لیست علاقه مندی ها";
+"error_adding_to_wishlist" = "خطا در اضافه کردن کالا به فهرست علاقه مندی ها";
 
-"products_removed_favourite" = "کالا از لیست علاقه مندی ها حذف شد.";
+"products_removed_favourite" = "کالا از فهرست علاقه‌مندی ها حذف شد.";
 
-"error_removing_from_wishlist" = "خطا در حذف کالا از لیست علاقه مندی ها";
+"error_removing_from_wishlist" = "خطا در حذف کالا از فهرست علاقه مندی ها";
 
 "error_add_to_cart_failed_for_x_products" = "اضافه کردن به سبد خرید برای %d کالا دچار خطا شده است.";
 
@@ -366,7 +376,7 @@
 
 "campaing_timer_end" = "پایان";
 
-"string_format_off_label" = "تخفیف %d%% ";
+"string_format_off_label" = "- ‎%d‎ درصد تخفیف";
 
 "campaigns_label" = "کمپین ها";
 
@@ -430,7 +440,7 @@
 
 "fallback_bottom_text" = "از همه جا در هر زمان";
 
-"fallback_bottom_text2" = "گزینه ها و کالاهای بیشتر برای جستجو و خرید";
+"fallback_bottom_text2" = "گزینه‌ها و کالاهای بیشتر برای جستجو و خرید";
 
 "fallback_fashion" = "مد و لباس";
 
@@ -454,7 +464,7 @@
 
 "string_edit" = "ویرایش";
 
-"track_your_order_tip" = "جستجو برای کد سفارش و تمامی جزییات مربوط به آن در این بخش به نمایش در خواهد آمد.";
+"track_your_order_tip" = "جستجو برای شماره سفارش شما و تمامی جزییات مربوط به آن در این بخش به نمایش در خواهد آمد.";
 
 "size_guide_label" = "راهنمای انتخاب سایز";
 
@@ -478,7 +488,7 @@
 
 "products_outof_stock" = "کالاها در حال حاضر موجود نمی باشند";
 
-"login_remember_user_email" = "پست الکترونیکی من را به خاطر بسپار";
+"login_remember_user_email" = "ایمیل مرا به خاطر بسپار";
 
 "my_orders_label" = "سفارشات من";
 
@@ -501,6 +511,8 @@
 "my_order_no_orders_label" = "شما هیچ سفارشی ثبت نکرده اید.";
 
 "like_us_on_facebook" = "ما را در فیسبوک لایک کنید";
+
+"seller_info_warranty" = "گارانتی";
 
 "bundle_title" = "معمولا با هم خریداری شده";
 
@@ -561,4 +573,38 @@
 "shipping_fee_info" = "هزینه به مبلغ قابل پرداخت اضافه شد";
 
 "birthday" = "تاریخ تولد";
+
+"country" = "کشور";
+
+"language" = "زبان";
+
+"combos" = "بسته‌های ترکیبی";
+
+"clear_all" = "پاک کردن همه";
+
+"buy_the_look" = "مجموعه پیشنهادی";
+
+"read_more" = "اطلاعات بیشتر";
+
+"see_other_colors" = "مشاهده سایر رنگ‌ها";
+
+"see_other_variations" = "مشاهده تنوع محصول";
+
+"seller_information" = "مشخصات فروشنده";
+
+"other_sellers_starting_from" = "قیمت دیگر فروشندگان از: %@";
+
+"you_may_also_like" = "شاید این موارد را هم دوست داشته باشید.";
+
+"reviews/ratings" = "نظرات / امتیازها";
+
+"from_n_customers" = "از ‎%d‎ مشتری";
+
+"average_rating" = "امتیاز متوسط";
+
+"be_the_first_to_rate" = "اولین نفری باشید که به این کالا امتیاز می دهید.";
+
+"by_someone" = "پست شده توسط %@";
+
+"user_reviews" = "نظرات و پیشنهادهای کاربر";
 

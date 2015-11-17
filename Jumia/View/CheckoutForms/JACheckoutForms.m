@@ -90,6 +90,35 @@
                 [self.paymentMethodFormViews setValue:paymentMethodView forKey:paymentMethod.uid];
             }
         }
+    } else {
+        
+        UIView *paymentMethodView = [[UIView alloc] init];
+        CGFloat totalHeight = 0.0f;
+        
+
+            UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(27.0f,
+                                                                                  totalHeight,
+                                                                                  width - (27.0f * 2),
+                                                                                  1000.0f)];
+        [descriptionLabel setFont:[UIFont fontWithName:kFontLightName size:descriptionLabel.font.pointSize]];
+        [descriptionLabel setNumberOfLines:0];
+        [descriptionLabel setLineBreakMode:NSLineBreakByWordWrapping];
+        [descriptionLabel setTextColor:UIColorFromRGB(0x666666)];
+        [descriptionLabel setText:((RIPaymentMethodFormField*)[paymentMethodForm.fields firstObject]).value];
+        [descriptionLabel setTextAlignment:NSTextAlignmentCenter];
+        [descriptionLabel sizeToFit];
+        [descriptionLabel setWidth:width - (27.0f * 2)];
+        [paymentMethodView addSubview:descriptionLabel];
+        totalHeight += descriptionLabel.frame.size.height + 23.0f;
+        
+        [paymentMethodView setFrame:CGRectMake(0.0f,
+                                               0.0f,
+                                               width,
+                                               totalHeight)];
+        if (RI_IS_RTL) {
+            [paymentMethodView flipAllSubviews];
+        }
+        [self.paymentMethodFormViews setValue:paymentMethodView forKey:@"0"];
     }
 }
 
@@ -97,10 +126,17 @@
 {
     UIView *paymentMethodView = [[UIView alloc] init];
     
-    if(VALID_NOTEMPTY(self.paymentMethodFormViews, NSMutableDictionary))
-    {
-        paymentMethodView = [self.paymentMethodFormViews objectForKey:paymentMethod.uid];
+    if (VALID_NOTEMPTY(paymentMethod, RIPaymentMethodFormOption)) {
+        if(VALID_NOTEMPTY(self.paymentMethodFormViews, NSMutableDictionary))
+        {
+            paymentMethodView = [self.paymentMethodFormViews objectForKey:paymentMethod.uid];
+        }
+    } else {
+        if (VALID_NOTEMPTY(self.paymentMethodFormViews, NSMutableDictionary)) {
+            paymentMethodView = [self.paymentMethodFormViews objectForKey:@"0"];
+        }
     }
+    
     return paymentMethodView;
 }
 
@@ -110,7 +146,13 @@
     
     if(VALID_NOTEMPTY(self.paymentMethodFormViews, NSMutableDictionary))
     {
-        UIView *paymentMethodView = [self.paymentMethodFormViews objectForKey:paymentMethod.uid];
+        
+        UIView *paymentMethodView;
+        if (VALID_NOTEMPTY(paymentMethod, RIPaymentMethodFormOption)) {
+            paymentMethodView = [self.paymentMethodFormViews objectForKey:paymentMethod.uid];
+        } else {
+            paymentMethodView = [self.paymentMethodFormViews objectForKey:@"0"];
+        }
         paymentMethodViewHeight = paymentMethodView.frame.size.height;
     }
     

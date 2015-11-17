@@ -20,11 +20,13 @@
 @property (weak, nonatomic) IBOutlet JAClickableView *sizeClickableView;
 @property (strong, nonatomic) RIProduct *product;
 @property (strong, nonatomic) NSString *productUrl;
+@property (strong, nonatomic) RIProductSimple *productSimple;
 
 @property (nonatomic, assign)BOOL alwaysSelected;
 @property (nonatomic, assign)BOOL selected;
 
 + (JAPDVBundleSingleItem *)getNewPDVBundleSingleItem;
-+ (JAPDVBundleSingleItem *)getNewPDVBundleSingleItemWithSize;
+
+- (void)addSelectTarget:(id)target action:(SEL)selector;
 
 @end

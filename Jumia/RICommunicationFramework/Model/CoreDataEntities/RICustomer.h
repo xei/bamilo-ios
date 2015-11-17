@@ -25,7 +25,9 @@
 @property (nonatomic, retain) NSString * loginMethod;
 @property (nonatomic, retain) NSOrderedSet *addresses;
 
-+ (NSString*)autoLogin:(void (^)(BOOL success, RICustomer *customer, NSString *loginMethod))returnBlock;
+@property (nonatomic, retain) NSArray *wishlistProducts;
+
++ (NSString*)autoLogin:(void (^)(BOOL success, NSDictionary *entities, NSString *loginMethod))returnBlock;
 
 /**
  * Method to login user via facebook
@@ -36,7 +38,7 @@
  * @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)loginCustomerByFacebookWithParameters:(NSDictionary *)parameters
-                                       successBlock:(void (^)(RICustomer* customer, NSString* nextStep))successBlock
+                                       successBlock:(void (^)(NSDictionary *entities, NSString* nextStep))successBlock
                                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
 
 /**
@@ -89,6 +91,14 @@
 + (RICustomer *)parseCustomerWithJson:(NSDictionary *)json;
 
 + (RICustomer *)parseCustomerWithJson:(NSDictionary *)json plainPassword:(NSString*)plainPassword loginMethod:(NSString*)loginMethod;
+
+/**
+ *  Method to create a parse-able dictionary representing a customer
+ *
+ *
+ *  @return Dictionary representing customer
+ */
++ (NSDictionary *)toJSON:(RICustomer*)customer;
 
 /** Method to cancel the request
  *

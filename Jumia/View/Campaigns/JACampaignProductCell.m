@@ -63,6 +63,8 @@
     self.campaignProduct = campaignProduct;
     self.chosenSize = chosenSize;
     
+    self.onSelected = nil;
+    
     self.backgroundColor = [UIColor clearColor];
     
     self.backgroundContentView.translatesAutoresizingMaskIntoConstraints = YES;
@@ -108,7 +110,7 @@
                                 action:@selector(backViewPressed)
                       forControlEvents:UIControlEventTouchUpInside];
     
-    [self.imageView setImageWithURL:[NSURL URLWithString:[campaignProduct.imagesUrls firstObject]]
+    [self.imageView setImageWithURL:[NSURL URLWithString:campaignProduct.imagesUrl]
                    placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
     
     //OFFER ENDED
@@ -217,6 +219,7 @@
                                       self.bottomContentView.bounds.origin.y + self.coverupView.frame.size.height + 3.0f,
                                       self.remainingStockLabel.frame.size.width,
                                       self.remainingStockLabel.frame.size.height);
+
     if (VALID_NOTEMPTY(self.campaignProduct.specialPrice, NSNumber) && 0 != [self.campaignProduct.specialPrice integerValue]) {
         [self.priceView loadWithPrice:campaignProduct.priceFormatted
                          specialPrice:campaignProduct.specialPriceFormatted
@@ -226,12 +229,13 @@
                          specialPrice:nil
                              fontSize:11.0f specialPriceOnTheLeft:NO];
     }
+
     [_savingLabel setX:_priceView.x];
     self.savingLabel.font = [UIFont fontWithName:kFontRegularName size:11.0f];
     self.savingLabel.textColor = UIColorFromRGB(0x666666);
     self.savingLabel.text = STRING_CAMPAIGN_SAVE;
     [self.savingLabel sizeToFit];
-    
+
     if (ISEMPTY(self.savingMoneyLabel)) {
         self.savingMoneyLabel = [[UILabel alloc] init];
         self.savingMoneyLabel.font = self.savingLabel.font;
@@ -239,11 +243,8 @@
     }
     self.savingMoneyLabel.text = campaignProduct.savePriceFormatted;
     [self.savingMoneyLabel sizeToFit];
-    self.savingMoneyLabel.frame = CGRectMake(CGRectGetMaxX(self.savingLabel.frame) + 4.0f,
-                                             self.savingLabel.frame.origin.y + 4.0f,
-                                             self.savingMoneyLabel.frame.size.width,
-                                             self.savingMoneyLabel.frame.size.height);
     [self.bottomContentView addSubview:self.savingMoneyLabel];
+    
     
     if (ISEMPTY(self.percentageBarView)) {
         self.percentageBarView = [[JAPercentageBarView alloc] init];
@@ -262,11 +263,13 @@
                                               3.0f);
     [self.percentageBarView loadWithPercentage:[campaignProduct.stockPercentage integerValue]];
     
-    
     if (VALID_NOTEMPTY(campaignProduct.savePrice, NSNumber) && 0.0f < [campaignProduct.savePrice floatValue]) {
         [self.savingLabel setHidden:NO];
         [self.savingMoneyLabel setHidden:NO];
-        [self.percentageBarView setYBottomOf:_savingLabel at:7.f];
+        [_savingLabel setYBottomOf:self.priceView at:4.f];
+        [self.savingMoneyLabel setXRightOf:self.savingLabel at:4.f];
+        [self.savingMoneyLabel setY:self.savingLabel.y];
+        [self.percentageBarView setYBottomOf:_savingLabel at:4.f];
     } else {
         [self.savingLabel setHidden:YES];
         [self.savingMoneyLabel setHidden:YES];
@@ -392,6 +395,14 @@
                 RICampaignProductSimple* simple = [self.campaignProduct.productSimples firstObject];
                 simpleSku = simple.sku;
             } else {
+                if ([self.chosenSize isEqualToString:@""]) {
+                    [self sizeButtonPressed];
+                    __weak typeof(self) weakSelf = self;
+                    self.onSelected = ^{
+                        [weakSelf buyButtonPressed];
+                    };
+                    return;
+                }
                 for (RICampaignProductSimple* simple in self.campaignProduct.productSimples) {
                     if ([self.chosenSize isEqualToString:simple.size]) {
                         //found it

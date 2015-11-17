@@ -11,12 +11,6 @@
 BOOL const RI_REQUEST_LOGGER = NO;
 BOOL const RI_RESPONSE_LOGGER = NO;
 
-#if defined(FORCE_RTL) && FORCE_RTL
-BOOL const RI_IS_RTL = YES;
-#else
-BOOL const RI_IS_RTL = NO;
-#endif
-
 NSString *const RI_USERNAME = @"rocket";
 NSString *const RI_PASSWORD = @"z7euN7qfRD769BP";
 //NSString *const RI_PASSWORD = @"rock4me";
@@ -44,6 +38,8 @@ NSString *const RI_HTTP_USER_AGENT_HEADER_NAME = @"User-Agent";
 NSString *const RI_HTTP_USER_AGENT_HEADER_IPHONE_VALUE = @"iPhone: Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_0 like Mac OS X; en-us) AppleWebKit/532.9 (KHTML, like Gecko) Version/4.0.5 Mobile/8A293 Safari/6531.22.7";
 NSString *const RI_HTTP_USER_AGENT_HEADER_IPAD_VALUE = @"iPad: Mozilla/5.0(iPad; U; CPU iPhone OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B314 Safari/531.21.10";
 
+NSString *const RI_HTTP_USER_LANGUAGE_HEADER_NAME = @"User-Language";
+
 NSString *const RI_COUNTRIES_URL_JUMIA = @"http://www.jumia.com/mobapi/availablecountries";
 NSString *const RI_COUNTRIES_URL_JUMIA_STAGING = @"http://shareptcmobile.eu.pn/jtmobapi/";
 NSString *const RI_COUNTRIES_URL_DARAZ = @"http://www.daraz.com/mobapi/availablecountries";
@@ -64,8 +60,9 @@ NSString *const RI_UNIQUE_COUNTRY_NAME_BAMILO = @"Iran";
 NSString *const RI_UNIQUE_COUNTRY_ISO_BAMILO = @"IR";
 
 NSString *const RI_MOBAPI_PREFIX = @"mobapi/";
-NSString *const RI_API_VERSION = @"v1.7/";
+NSString *const RI_API_VERSION = @"v1.8/";
 NSString *const RI_CATALOG_CATEGORIES = @"catalog/categories/";
+NSString *const RI_API_CATALOG = @"search/find/?category=";
 NSString *const RI_FORMS_INDEX = @"forms/index/";
 NSString *const RI_API_INFO = @"main/md5/";
 NSString *const RI_API_IMAGE_RESOLUTIONS = @"main/imageresolutions/";
@@ -87,11 +84,9 @@ NSString *const RI_API_GET_CART_CHANGE = @"order/cartchange/";
 NSString *const RI_API_REMOVE_FROM_CART = @"order/remove?setDevice=mobileApi";
 NSString *const RI_API_ADD_VOUCHER_TO_CART = @"/order/addvoucher/";
 NSString *const RI_API_REMOVE_VOUCHER_FROM_CART = @"/order/removevoucher/";
-NSString *const RI_API_GET_CUSTOMER_ADDRESS_LIST = @"/customer/address/list/";
-NSString *const RI_API_GET_CUSTOMER_SELECT_DEFAULT_SHIPPING_ADDRESS = @"/customer/address/makedefaultshipping";
-NSString *const RI_API_GET_CUSTOMER_SELECT_DEFAULT_BILLING_ADDRESS = @"/customer/address/makedefaultbilling/";
-NSString *const RI_API_GET_BILLING_ADDRESS_FORM = @"multistep/billing/";
-NSString *const RI_API_GET_SHIPPING_ADDRESS_FORM = @"multistep/shipping/";
+NSString *const RI_API_GET_CUSTOMER_ADDRESS_LIST = @"customer/getaddresslist/";
+NSString *const RI_API_GET_CUSTOMER_SELECT_DEFAULT = @"/customer/makedefaultaddress";
+NSString *const RI_API_GET_MULTISTEP_ADDRESSES = @"multistep/addresses/";
 NSString *const RI_API_GET_SHIPPING_METHODS_FORM = @"multistep/shippingmethod/";
 NSString *const RI_API_GET_PAYMENT_METHODS_FORM = @"multistep/paymentmethod/";
 NSString *const RI_API_FINISH_CHECKOUT = @"multistep/finish/";
@@ -100,7 +95,10 @@ NSString *const RI_RATE_CONVERSION = @"http://rate-exchange.appspot.com/currency
 NSString *const RI_GET_CAMPAIGN = @"campaign/get/?campaign_slug=%@";
 NSString *const RI_API_BUNDLE = @"catalog/bundle/sku/";
 NSString *const RI_API_ADD_BUNDLE = @"order/addbundle/";
-NSString *const RI_API_PRODUCT_OFFERS = @"?all_offers=1";
+NSString *const RI_API_GET_WISHLIST = @"wishlist/getproducts/";
+NSString *const RI_API_ADD_TO_WISHLIST = @"wishlist/addproduct/";
+NSString *const RI_API_REMOVE_FOM_WISHLIST = @"wishlist/removeproduct/";
+NSString *const RI_API_PRODUCT_OFFERS = @"&all_offers=1";
 NSString *const RI_API_SELLER_RATING = @"?seller_rating=1&per_page=%d&page=%d";
-NSString *const RI_API_PROD_RATING = @"?rating=%d&page=%d";
+NSString *const RI_API_PROD_RATING = @"&rating=%d&page=%d";
 NSString *const RI_API_PROD_VALIDATE = @"catalog/validate/";

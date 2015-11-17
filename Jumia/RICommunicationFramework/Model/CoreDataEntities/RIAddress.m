@@ -24,6 +24,7 @@
 @dynamic countryId;
 @dynamic customerAddressRegionId;
 @dynamic customerAddressCityId;
+@dynamic customerAddressPostcodeId;
 @dynamic isDefaultBilling;
 @dynamic isDefaultShipping;
 @dynamic hidden;
@@ -41,12 +42,10 @@
                   successBlock:(void (^)(void))successBlock
                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 {
-    NSDictionary *parameters = @{@"id": address.uid};
+    NSString* type = isBilling?@"billing":@"shipping";
+    NSDictionary *parameters = @{@"id": address.uid, @"type" : type};
     
-    NSString* urlPart = RI_API_GET_CUSTOMER_SELECT_DEFAULT_SHIPPING_ADDRESS;
-    if (isBilling) {
-        urlPart = RI_API_GET_CUSTOMER_SELECT_DEFAULT_BILLING_ADDRESS;
-    }
+    NSString* urlPart = RI_API_GET_CUSTOMER_SELECT_DEFAULT;
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, urlPart]]
                                                             parameters:parameters httpMethodPost:YES
@@ -112,13 +111,13 @@
     
     NSMutableArray* otherAddressesArray = [NSMutableArray new];
     
-    NSDictionary* otherAddressJSONArray = [addressListJSON objectForKey:@"other"];
-    if (VALID_NOTEMPTY(otherAddressJSONArray, NSDictionary)) {
-        [otherAddressJSONArray enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-            if (VALID_NOTEMPTY(obj, NSDictionary)) {
-                [otherAddressesArray addObject:[RIAddress parseAddress:obj]];
+    NSArray* otherAddressJSONArray = [addressListJSON objectForKey:@"other"];
+    if (VALID_NOTEMPTY(otherAddressJSONArray, NSArray)) {
+        for (NSDictionary* otherAddressJSON in otherAddressJSONArray) {
+            if (VALID_NOTEMPTY(otherAddressJSON, NSDictionary)) {
+                [otherAddressesArray addObject:[RIAddress parseAddress:otherAddressJSON]];
             }
-        }];
+        }
     }
     
     if (VALID_NOTEMPTY(otherAddressesArray, NSMutableArray)) {
@@ -130,10 +129,16 @@
 
 + (RIAddress*)parseAddress:(NSDictionary*)addressJSON
 {
+    //$$$ REVIEW THIS SHIT
     RIAddress* newAddress = (RIAddress *)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIAddress class])];
     
-    if ([addressJSON objectForKey:@"id_customer_address"]) {
-        newAddress.uid = [addressJSON objectForKey:@"id_customer_address"];
+    if ([addressJSON objectForKey:@"id"]) {
+        id addressID = [addressJSON objectForKey:@"id"];
+        if ([addressID isKindOfClass:[NSString class]]) {
+            newAddress.uid = addressID;
+        } else if ([addressID isKindOfClass:[NSNumber class]]) {
+            newAddress.uid = [(NSNumber*)addressID stringValue];
+        }
     }
     else if ([addressJSON objectForKey:@"customer_address_id"]) {
         newAddress.uid = [addressJSON objectForKey:@"customer_address_id"];
@@ -165,17 +170,20 @@
     if ([addressJSON objectForKey:@"fk_country"]) {
         newAddress.countryId = [addressJSON objectForKey:@"fk_country"];
     }
-    if ([addressJSON objectForKey:@"fk_customer_address_region"]) {
-        newAddress.customerAddressRegionId = [addressJSON objectForKey:@"fk_customer_address_region"];
+    if ([addressJSON objectForKey:@"region"]) {
+        newAddress.customerAddressRegionId = [addressJSON objectForKey:@"region"];
     }
-    if ([addressJSON objectForKey:@"fk_customer_address_city"]) {
-        newAddress.customerAddressCityId = [addressJSON objectForKey:@"fk_customer_address_city"];
+    if ([addressJSON objectForKey:@"city"]) {
+        newAddress.customerAddressCityId = [addressJSON objectForKey:@"city"];
+    }
+    if ([addressJSON objectForKey:@"postcode"]) {
+        newAddress.customerAddressPostcodeId = [addressJSON objectForKey:@"postcode"];
     }
     if ([addressJSON objectForKey:@"is_default_billing"]) {
-        newAddress.isDefaultBilling = [addressJSON objectForKey:@"is_default_billing"];
+        newAddress.isDefaultBilling = [NSString stringWithFormat:@"%@", [addressJSON objectForKey:@"is_default_billing"]];
     }
     if ([addressJSON objectForKey:@"is_default_shipping"]) {
-        newAddress.isDefaultShipping = [addressJSON objectForKey:@"is_default_shipping"];
+        newAddress.isDefaultShipping = [NSString stringWithFormat:@"%@", [addressJSON objectForKey:@"is_default_shipping"]];
     }
     if ([addressJSON objectForKey:@"hidden"]) {
         newAddress.hidden = [addressJSON objectForKey:@"hidden"];
@@ -206,6 +214,54 @@
     newAddress.uid = uid;
     
     return newAddress;
+}
+
++ (NSDictionary*)toJSON:(RIAddress*)address{
+    NSMutableDictionary * addressJSON = [[NSMutableDictionary alloc] init];
+    
+    [addressJSON setValue:address.uid forKey:@"id_customer_address"];
+    
+    [addressJSON setValue:address.uid forKey:@"customer_address_id"];
+    
+    [addressJSON setValue:address.firstName forKey:@"first_name"];
+    
+    [addressJSON setValue:address.lastName forKey:@"last_name"];
+    
+    [addressJSON setValue:address.address forKey:@"address1"];
+    
+    [addressJSON setValue:address.address2 forKey:@"address2"];
+    
+    [addressJSON setValue:address.city forKey:@"city"];
+    
+    [addressJSON setValue:address.postcode forKey:@"postcode"];
+    
+    [addressJSON setValue:address.phone forKey:@"phone"];
+    
+    [addressJSON setValue:address.customerId forKey:@"fk_customer"];
+    
+    [addressJSON setValue:address.countryId forKey:@"fk_country"];
+    
+    [addressJSON setValue:address.customerAddressRegionId forKey:@"fk_customer_address_region"];
+    
+    [addressJSON setValue:address.customerAddressCityId forKey:@"fk_customer_address_city"];
+    
+    [addressJSON setValue:address.isDefaultBilling forKey:@"is_default_billing"];
+    
+    [addressJSON setValue:address.isDefaultShipping forKey:@"is_default_shipping"];
+    
+    [addressJSON setValue:address.hidden forKey:@"hidden"];
+    
+    [addressJSON setValue:address.createdAt forKey:@"created_at"];
+    
+    [addressJSON setValue:address.updatedAt forKey:@"updated_at"];
+    
+    [addressJSON setValue:address.createdBy forKey:@"created_by"];
+    
+    [addressJSON setValue:address.customerAddressRegion forKey:@"customer_address_region"];
+    
+    [addressJSON setValue:address.locale forKey:@"_locale"];
+    
+    return addressJSON;
 }
 
 + (void)saveAddress:(RIAddress *)address andContext:(BOOL)save

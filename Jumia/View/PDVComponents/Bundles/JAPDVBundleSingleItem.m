@@ -7,6 +7,13 @@
 //
 
 #import "JAPDVBundleSingleItem.h"
+#import "RIImage.h"
+#import "UIImageView+WebCache.h"
+#import "JAProductInfoSingleLine.h"
+
+@interface JAPDVBundleSingleItem ()
+
+@end
 
 @implementation JAPDVBundleSingleItem
 
@@ -55,10 +62,22 @@
     
     for (NSObject *obj in xib) {
         if ([obj isKindOfClass:[JAPDVBundleSingleItem class]]) {
+            
             JAPDVBundleSingleItem* real = (JAPDVBundleSingleItem* )obj;
-            real.productNameLabel.font = [UIFont fontWithName:kFontRegularName size:real.productNameLabel.font.pointSize];
-            real.productTypeLabel.font = [UIFont fontWithName:kFontLightName size:real.productTypeLabel.font.pointSize];
-            real.productPriceLabel.font = [UIFont fontWithName:kFontLightName size:real.productPriceLabel.font.pointSize];
+            
+//            real.productTypeLabel.font = JACaptionFont;
+            [real.productTypeLabel setTextColor:JABlack800Color];
+            
+//            real.productNameLabel.font = JABody3Font;
+            [real.productNameLabel setTextColor:JABlackColor];
+            
+//            real.productPriceLabel.font = JACaptionFont;
+            [real.productPriceLabel setTextColor:JABlack800Color];
+            
+            
+//            real.totalPriceLabel.font = JACaptionFont;
+//            [real.totalPriceLabel setTextColor:JAOrange1Color];
+            
             return real;
         }
     }
@@ -66,23 +85,14 @@
     return nil;
 }
 
-+ (JAPDVBundleSingleItem *)getNewPDVBundleSingleItemWithSize
+- (void)setProduct:(RIProduct *)product
 {
-    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:@"JAPDVBundleSingleItemWithSize"
-                                                 owner:nil
-                                               options:nil];
-    
-    for (NSObject *obj in xib) {
-        if ([obj isKindOfClass:[JAPDVBundleSingleItem class]]) {
-            JAPDVBundleSingleItem* real = (JAPDVBundleSingleItem* )obj;
-            real.productNameLabel.font = [UIFont fontWithName:kFontRegularName size:real.productNameLabel.font.pointSize];
-            real.productTypeLabel.font = [UIFont fontWithName:kFontLightName size:real.productTypeLabel.font.pointSize];
-            real.productPriceLabel.font = [UIFont fontWithName:kFontLightName size:real.productPriceLabel.font.pointSize];
-            return real;
-        }
-    }
-    
-    return nil;
+    _product = product;
+}
+
+- (void)addSelectTarget:(id)target action:(SEL)selector
+{
+    [self.selectedProduct addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
 }
 
 @end

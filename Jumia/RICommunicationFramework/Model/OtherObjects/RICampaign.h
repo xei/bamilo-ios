@@ -46,7 +46,7 @@
 @property (nonatomic, strong) NSString* sku;
 @property (nonatomic, strong) NSString* brand;
 @property (nonatomic, strong) NSString* name;
-@property (nonatomic, strong) NSArray* imagesUrls;
+@property (nonatomic, strong) NSString* imagesUrl;
 @property (nonatomic, strong) NSArray* productSimples;
 @property (nonatomic, strong) NSNumber* remainingTime;
 

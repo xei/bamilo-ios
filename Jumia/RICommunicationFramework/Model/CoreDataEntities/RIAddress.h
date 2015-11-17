@@ -25,6 +25,7 @@
 @property (nonatomic, retain) NSString * countryId;
 @property (nonatomic, retain) NSString * customerAddressRegionId;
 @property (nonatomic, retain) NSString * customerAddressCityId;
+@property (nonatomic, retain) NSString * customerAddressPostcodeId;
 @property (nonatomic, retain) NSString * isDefaultBilling;
 @property (nonatomic, retain) NSString * isDefaultShipping;
 @property (nonatomic, retain) NSString * hidden;
@@ -50,6 +51,8 @@
 + (RIAddress*)parseAddress:(NSDictionary*)addressJSON;
 
 + (RIAddress*)parseAddressFromCustomer:(NSString*)uid jsonObject:(NSDictionary*)addressJSON;
+
++ (NSDictionary*)toJSON:(RIAddress*)address;
 
 + (void)saveAddress:(RIAddress *)address andContext:(BOOL)save;
 

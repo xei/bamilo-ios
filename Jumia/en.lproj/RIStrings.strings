@@ -36,7 +36,7 @@
 
 "categories" = "Categories";
 
-"favourites" = "My Favourites";
+"favourites" = "Saved";
 
 "recent_searches" = "Recent Searches";
 
@@ -49,6 +49,8 @@
 "nav_country" = "Choose Country";
 
 "string_filters" = "Filters";
+
+"string_remove_filter" = "Remove";
 
 "categories_toplevel_title" = "All Categories";
 
@@ -84,6 +86,8 @@
 
 "string_ratings" = "%d ratings";
 
+"string_nratings" = "RATINGS (%d)";
+
 "string_review" = "1 review";
 
 "string_reviews" = "%d reviews";
@@ -108,7 +112,7 @@
 
 "string_with_discount_only" = "With discount only";
 
-"favourite_no_favourites" = "You have no favourite items at the moment";
+"favourite_no_favourites" = "You do not have any product saved yet!";
 
 "favourite_addalltocart" = "Add All Items to Cart";
 
@@ -124,7 +128,7 @@
 
 "string_variations" = "Variations";
 
-"string_rate_now" = "Rate Now";
+"string_rate_now" = "Have you tried this product? Rate it now";
 
 "related_items" = "Related Items";
 
@@ -150,7 +154,7 @@
 
 "write_comment" = "Write a Review";
 
-"string_posted_by" = "posted by %@, %@";
+"string_posted_by" = "by %@, %@";
 
 "string_posted_by_anonymous" = "posted by Anonymous User, %@";
 
@@ -188,6 +192,10 @@
 
 "shipping" = "Shipping";
 
+"shipment_of" = "Shipment %ld of %ld";
+
+"fulfilled_by" = "Fulfillment by";
+
 "free_label" = "Free";
 
 "extra_costs_label" = "Extra Costs";
@@ -207,6 +215,8 @@
 "facebook_signup_button_text" = "Sign up with Facebook";
 
 "facebook_login_button_text" = "Login with Facebook";
+
+"login_incomplete" = "Both email and birthday are required to login";
 
 "or_text" = "OR";
 
@@ -344,13 +354,13 @@
 
 "enter_order_id" = "Please enter the order number";
 
-"products_added_favourite" = "Item added to My Favourites";
+"products_added_favourite" = "Item saved";
 
-"error_adding_to_wishlist" = "Error adding to favourites";
+"error_adding_to_wishlist" = "Error saving item";
 
-"products_removed_favourite" = "Item removed from My Favourites";
+"products_removed_favourite" = "Item removed from saved";
 
-"error_removing_from_wishlist" = "Error removing from favourites";
+"error_removing_from_wishlist" = "Error removing from saved";
 
 "error_add_to_cart_failed_for_x_products" = "Adding to cart failed for %d products";
 
@@ -366,7 +376,7 @@
 
 "campaing_timer_end" = "Ends in:";
 
-"string_format_off_label" = "%d%% OFF";
+"string_format_off_label" = "-%d%% OFF";
 
 "campaigns_label" = "Campaigns";
 
@@ -414,7 +424,7 @@
 
 "products_tip_swipe_text" = "Swipe left or right to change the sort type";
 
-"tip_favourite_text" = "Click to favourite this product and view the full list in My Profile";
+"tip_favourite_text" = "Click to save this product and view the full list in My Profile";
 
 "tip_share_text" = "Click to share this product";
 
@@ -502,6 +512,8 @@
 
 "like_us_on_facebook" = "Like us on Facebook";
 
+"seller_info_warranty" = "Warranty";
+
 "bundle_title" = "Frequently Bought Together";
 
 "bundle_total_price" = "Total Price:";
@@ -561,3 +573,37 @@
 "shipping_fee_info" = "Fee added to Total Amount Payable";
 
 "birthday" = "Birthday";
+
+"country" = "Country";
+
+"language" = "Language";
+
+"combos" = "Combos";
+
+"clear_all" = "Clear All";
+
+"buy_the_look" = "Buy the look";
+
+"read_more" = "Read more";
+
+"see_other_colors" = "See other colors";
+
+"see_other_variations" = "See other variations";
+
+"seller_information" = "Seller Information";
+
+"other_sellers_starting_from" = "Other sellers starting from: %@";
+
+"you_may_also_like" = "You may also like";
+
+"reviews/ratings" = "Reviews / Ratings";
+
+"from_n_customers" = "from %d customers";
+
+"average_rating" = "Average Rating";
+
+"be_the_first_to_rate" = "Be the first to rate";
+
+"by_someone" = "by %@";
+
+"user_reviews" = "User Reviews";

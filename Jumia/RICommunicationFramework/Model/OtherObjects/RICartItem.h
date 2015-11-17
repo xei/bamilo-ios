@@ -12,13 +12,13 @@
 
 @property (nonatomic, strong) NSString *simpleSku;
 @property (nonatomic, strong) NSString *sku;
+@property (nonatomic, strong) NSNumber *attributeSetID;
 @property (nonatomic, strong) NSString *productUrl;
 @property (nonatomic, strong) NSString *imageUrl;
 @property (nonatomic, strong) NSNumber *quantity;
 @property (nonatomic, strong) NSNumber *maxQuantity;
 @property (nonatomic, strong) NSString *configId;
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSNumber *stock;
 @property (nonatomic, strong) NSString *variation;
 @property (nonatomic, strong) NSNumber *price;
 @property (nonatomic, strong) NSString *priceFormatted;
@@ -26,11 +26,9 @@
 @property (nonatomic, strong) NSNumber *specialPrice;
 @property (nonatomic, strong) NSString *specialPriceFormatted;
 @property (nonatomic, strong) NSNumber *specialPriceEuroConverted;
-@property (nonatomic, strong) NSNumber *taxAmount;
 @property (nonatomic, strong) NSNumber *savingPercentage;
 
-+ (RICartItem*)parseCartItemWithSimpleSku:(NSString*)simpleSku
-                                     info:(NSDictionary*)info
-                                  country:(RICountryConfiguration*)country;
++ (RICartItem*)parseCartItem:(NSDictionary*)info
+                     country:(RICountryConfiguration *)country;
 
 @end

@@ -7,17 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RIProduct.h"
+#import "JAPDVBundleSingleItem.h"
 
 @interface JAPDVBundles : UIView
-@property (weak, nonatomic) IBOutlet UILabel *bundleTitle;
 
-@property (weak, nonatomic) IBOutlet UIScrollView *bundleScrollView;
-@property (weak, nonatomic) IBOutlet UILabel *totalLabel;
-@property (weak, nonatomic) IBOutlet UIButton *buynowButton;
+@property (nonatomic) NSString *headerText;
+@property (nonatomic) RIProduct *product;
 
-+ (JAPDVBundles *)getNewPDVBundle;
-+ (JAPDVBundles *)getNewPDVBundleWithSize;
+- (instancetype)initWithFrame:(CGRect)frame withSize:(BOOL)withSize;
+- (void)addBundleItemView:(JAPDVBundleSingleItem *)itemView;
 
-- (void)setupWithFrame:(CGRect)frame;
+- (void)addBuyingBundleTarget:(id)target action:(SEL)action;
 
 @end

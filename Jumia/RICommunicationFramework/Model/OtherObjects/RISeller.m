@@ -27,7 +27,33 @@
         newSeller.minDeliveryTime = [sellerJSON objectForKey:@"min_delivery_time"];
     }
     if ([sellerJSON objectForKey:@"max_delivery_time"]) {
-        newSeller.minDeliveryTime = [sellerJSON objectForKey:@"max_delivery_time"];
+        newSeller.maxDeliveryTime = [sellerJSON objectForKey:@"max_delivery_time"];
+    }
+    if ([sellerJSON objectForKey:@"delivery_time"]) {
+        newSeller.deliveryTime = [sellerJSON objectForKey:@"delivery_time"];
+    }
+    if (VALID_NOTEMPTY([sellerJSON objectForKey:@"warranty"], NSString)) {
+        newSeller.warranty = [sellerJSON objectForKey:@"warranty"];
+    }
+    if ([sellerJSON objectForKey:@"is_global"]) {
+        newSeller.isGlobal = ((NSNumber *)[sellerJSON objectForKey:@"is_global"]).boolValue;
+        
+        if ([sellerJSON objectForKey:@"global"]) {
+            NSDictionary* global = [sellerJSON objectForKey:@"global"];
+            if ([global objectForKey:@"shipping"]) {
+                newSeller.shippingGlobal = [global objectForKey:@"shipping"];
+            }
+            
+            if ([global objectForKey:@"link"]) {
+                NSDictionary* link = [global objectForKey:@"link"];
+                newSeller.linkTextGlobal = [link objectForKey:@"text"];
+                newSeller.linkUrlGlobal = [link objectForKey:@"url"];
+            }
+            
+            if ([global objectForKey:@"cms_info"]) {
+                newSeller.cmsInfo = [global objectForKey:@"cms_info"];
+            }
+        }
     }
     
     if ([sellerJSON objectForKey:@"reviews"]) {

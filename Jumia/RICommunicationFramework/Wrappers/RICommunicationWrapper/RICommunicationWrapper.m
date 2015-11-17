@@ -290,12 +290,13 @@
         [operation.request setValue:RI_MOBAPI_VERSION_HEADER_TOKEN_VALUE forHTTPHeaderField:RI_MOBAPI_VERSION_HEADER_TOKEN_NAME];
     }
     
+    NSString* phpSessIDCookie = [NSString stringWithFormat:@"%@%@",kPHPSESSIDCookie,[RIApi getCountryIsoInUse]];
     // Set the PHPSESSID cookie in user defaults so we can re-use it when installing the application.
     for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
     {
         if([[cookie name] rangeOfString:@"PHPSESSID"].location != NSNotFound)
         {
-            [[NSUserDefaults standardUserDefaults] setObject:[cookie properties] forKey:kPHPSESSIDCookie];
+            [[NSUserDefaults standardUserDefaults] setObject:[cookie properties] forKey:phpSessIDCookie];
             [[NSUserDefaults standardUserDefaults] synchronize];
             break;
         }
@@ -313,7 +314,13 @@
     if (VALID_NOTEMPTY(userAgentInjection, NSString)) {
         userAgent = [NSString stringWithFormat:@"%@ %@", userAgent, userAgentInjection];
     }
+    
     [operation.request addValue:userAgent forHTTPHeaderField:RI_HTTP_USER_AGENT_HEADER_NAME];
+    
+    NSString* locale = [RILocalizationWrapper getLocalization];
+    if (VALID_NOTEMPTY(locale, NSString)) {
+        [operation.request addValue:locale forHTTPHeaderField:RI_HTTP_USER_LANGUAGE_HEADER_NAME];
+    }
     
     return operation.request;
 }
@@ -367,14 +374,18 @@
         }
     }
     
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kPHPSESSIDCookie];
+    NSString* phpSessIDCookie = [NSString stringWithFormat:@"%@%@",kPHPSESSIDCookie,[RIApi getCountryIsoInUse]];
+    NSString* customer = [NSString stringWithFormat:@"customer_%@",[RIApi getCountryIsoInUse]];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:phpSessIDCookie];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:customer];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 + (BOOL)setSessionCookie
 {
     BOOL sessionCookieSetted = NO;
-    NSDictionary *cookieProperties = [[NSUserDefaults standardUserDefaults] objectForKey:kPHPSESSIDCookie];
+    NSString* phpSessIDCookie = [NSString stringWithFormat:@"%@%@",kPHPSESSIDCookie,[RIApi getCountryIsoInUse]];
+    NSDictionary *cookieProperties = [[NSUserDefaults standardUserDefaults] objectForKey:phpSessIDCookie];
     if(VALID_NOTEMPTY(cookieProperties, NSDictionary))
     {
         NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];

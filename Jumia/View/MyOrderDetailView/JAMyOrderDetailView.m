@@ -29,6 +29,7 @@
     NSDictionary* highlightAttributes = [NSDictionary dictionaryWithObjectsAndKeys:kHighlightedFont,NSFontAttributeName, nil];
     
     UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    [dateLabel setTextAlignment:NSTextAlignmentLeft];
     [dateLabel setNumberOfLines:0];
     [dateLabel setBackgroundColor:[UIColor clearColor]];
     [dateLabel setFont:kNormalFont];
@@ -51,6 +52,7 @@
     currentY += ceilf(dateLabelRect.size.height);
     
     UILabel *paymentMethodLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    [paymentMethodLabel setTextAlignment:NSTextAlignmentLeft];
     [paymentMethodLabel setNumberOfLines:0];
     [paymentMethodLabel setBackgroundColor:[UIColor clearColor]];
     [paymentMethodLabel setFont:kNormalFont];
@@ -75,6 +77,7 @@
     if(VALID_NOTEMPTY(order.paymentReference, NSString))
     {
         UILabel *paymentReferenceLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        [paymentReferenceLabel setTextAlignment:NSTextAlignmentLeft];
         [paymentReferenceLabel setNumberOfLines:0];
         [paymentReferenceLabel setBackgroundColor:[UIColor clearColor]];
         [paymentReferenceLabel setFont:kNormalFont];
@@ -100,6 +103,7 @@
     if(VALID_NOTEMPTY(order.paymentDescription, NSString))
     {
         UILabel *paymentStatusLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        [paymentStatusLabel setTextAlignment:NSTextAlignmentLeft];
         [paymentStatusLabel setNumberOfLines:0];
         [paymentStatusLabel setBackgroundColor:[UIColor clearColor]];
         [paymentStatusLabel setFont:kNormalFont];
@@ -127,6 +131,7 @@
     if(VALID_NOTEMPTY(order.itemCollection, NSArray))
     {
         UILabel *productsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        [productsLabel setTextAlignment:NSTextAlignmentLeft];
         [productsLabel setNumberOfLines:0];
         [productsLabel setBackgroundColor:[UIColor clearColor]];
         [productsLabel setFont:kHighlightedFont];
@@ -150,6 +155,7 @@
             RIItemCollection *product = [order.itemCollection objectAtIndex:i];
             
             UILabel *productNameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+            [productNameLabel setTextAlignment:NSTextAlignmentLeft];
             [productNameLabel setNumberOfLines:0];
             [productNameLabel setBackgroundColor:[UIColor clearColor]];
             [productNameLabel setFont:kNormalFont];
@@ -167,6 +173,7 @@
             currentY += ceilf(productNameLabelRect.size.height);
             
             UILabel *productQuantityLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+            [productQuantityLabel setTextAlignment:NSTextAlignmentLeft];
             [productQuantityLabel setNumberOfLines:0];
             [productQuantityLabel setBackgroundColor:[UIColor clearColor]];
             [productQuantityLabel setFont:kHighlightedFont];
@@ -186,6 +193,7 @@
             currentY += ceilf(productQuantityLabelRect.size.height);
             
             UILabel *productPriceLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+            [productPriceLabel setTextAlignment:NSTextAlignmentLeft];
             [productPriceLabel setNumberOfLines:0];
             [productPriceLabel setBackgroundColor:[UIColor clearColor]];
             [productPriceLabel setFont:kNormalFont];

@@ -13,7 +13,7 @@
 
 @interface RIFormIndex : NSManagedObject
 
-@property (nonatomic, retain) NSString * uid;
+@property (nonatomic, retain) NSString * type;
 @property (nonatomic, retain) NSString * url;
 @property (nonatomic, retain) RIForm *form;
 
@@ -22,9 +22,9 @@
                                   deleteOldIndexes:(BOOL)deleteOldIndexes
                                   withSuccessBlock:(void (^)(id formIndexes))successBlock
                                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
-+ (NSString*)getFormWithIndexId:(NSString*)formIndexID
-                   successBlock:(void (^)(RIFormIndex *formIndex))successBlock
-                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
++ (NSString*)getFormWithType:(NSString*)formIndexType
+                successBlock:(void (^)(RIFormIndex *formIndex))successBlock
+             andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 + (NSArray*)parseFormIndexes:(NSDictionary*)formIndexesJSON;
 + (RIFormIndex*)parseFormIndex:(NSDictionary*)formIndexJSON;
 + (void)saveFormIndex:(RIFormIndex*)formIndex andContext:(BOOL)save;

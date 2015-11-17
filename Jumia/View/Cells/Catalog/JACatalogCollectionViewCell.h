@@ -11,6 +11,8 @@
 #import "JAPriceView.h"
 #import "JAClickableView.h"
 #import "UIButton+Extensions.h"
+#import "RIVariation.h"
+#import "JAProductInfoPriceLine.h"
 
 #define JACatalogCellContentCornerRadius 3.0f
 #define JACatalogCellNormalFont [UIFont fontWithName:kFontRegularName size:10.0f]
@@ -23,6 +25,12 @@
 #define JACatalogCellRatingsViewOffsetY 0.0f
 #define JACatalogCellRatingsViewOffsetX 7.0f
 
+typedef NS_ENUM(NSUInteger, JACatalogCollectionViewCellType) {
+    JACatalogCollectionViewListCell = 0,
+    JACatalogCollectionViewGridCell = 1,
+    JACatalogCollectionViewPictureCell = 2
+};
+
 @interface JACatalogCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic) UIImageView *productImageView;
@@ -30,16 +38,19 @@
 @property (nonatomic) UILabel *nameLabel;
 @property (nonatomic) UIImageView *recentProductImageView;
 @property (nonatomic) UIButton *favoriteButton;
-@property (nonatomic) UIImageView *discountImageView;
 @property (nonatomic) UILabel *discountLabel;
 @property (nonatomic) UIButton *sizeButton;
-//@property (nonatomic) UILabel *sizeLabel;
 @property (nonatomic) JAClickableView *feedbackView;
-@property (strong, nonatomic) JAPriceView *priceView;
-@property (nonatomic) BOOL grid;
+@property (nonatomic) JAProductInfoPriceLine *priceLine;
+
+@property (nonatomic) RIProduct *product;
+@property (nonatomic) RIVariation *variation;
 
 - (void)initViews;
 - (void)reloadViews;
 - (void)loadWithProduct:(RIProduct*)product;
+- (void)loadWithVariation:(RIVariation*)variation;
+
+- (void)setSimplePrice:(NSString *)price andOldPrice:(NSString *)oldPrice;
 
 @end

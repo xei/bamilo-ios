@@ -14,6 +14,7 @@
 
 @property (nonatomic, strong)UIControl* backView;
 @property (nonatomic, strong)UITableView* resultsTableView;
+@property (nonatomic, assign)CGRect resultsTableOriginalFrame;
 @property (nonatomic, strong)NSMutableArray* resultsArray;
 
 @property (nonatomic, assign)CGFloat currentKeyboardHeight;
@@ -31,14 +32,18 @@
         [RISearchSuggestion getSuggestionsForQuery:searchText
                                       successBlock:^(NSArray *suggestions) {
                                           dispatch_async(dispatch_get_main_queue(), ^{
-                                              [self.resultsArray removeAllObjects];
                                               self.resultsArray = [suggestions mutableCopy];
                                               [self addResultsTableViewToView];
                                           });
                                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                       }];
     } else {
-        [self removeResultsTableViewFromView];
+        self.resultsArray = [[RISearchSuggestion getRecentSearches] mutableCopy];
+        if (VALID_NOTEMPTY(self.resultsArray, NSMutableArray)) {
+            [self addResultsTableViewToView];
+        } else {
+            [self removeResultsTableViewFromView];
+        }
     }
 }
 
@@ -46,6 +51,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.currentKeyboardHeight = 0.0f;
+        
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillShow:)
                                                      name:UIKeyboardWillShowNotification
@@ -68,16 +75,17 @@
             self.backView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
         }];
         
-        self.resultsTableView = [[UITableView alloc] initWithFrame:self.bounds
-                                                             style:UITableViewStyleGrouped];
+        self.resultsTableView = [[UITableView alloc] init];
         
         self.resultsTableView.backgroundColor = UIColorFromRGB(0xffffff);
         self.resultsTableView.delegate = self;
         self.resultsTableView.dataSource = self;
-        self.resultsTableView.contentInset = UIEdgeInsetsMake(-35.0f, 0.f, 0.f, 0.f);
         [self.resultsTableView registerClass:[UITableViewCell class]
                       forCellReuseIdentifier:@"cell"];
         self.resultsTableView.separatorColor = [UIColor clearColor];
+
+        self.resultsTableOriginalFrame = self.bounds;
+        self.resultsTableView.frame = self.resultsTableOriginalFrame;
         
         [self addSubview:self.resultsTableView];
         
@@ -90,10 +98,10 @@
 {
     self.frame = frame;
     self.backView.frame = self.bounds;
-    self.resultsTableView.frame = CGRectMake(self.bounds.origin.x,
-                                             self.bounds.origin.y,
-                                             self.bounds.size.width,
-                                             self.bounds.size.height - self.currentKeyboardHeight);
+    self.resultsTableView.frame = CGRectMake(self.resultsTableOriginalFrame.origin.x,
+                                             self.resultsTableOriginalFrame.origin.y,
+                                             self.resultsTableOriginalFrame.size.width,
+                                             self.resultsTableOriginalFrame.size.height - self.currentKeyboardHeight);
     [self.resultsTableView reloadData];
 }
 
@@ -127,12 +135,15 @@
     if (self.resultsTableView.hidden) {
         self.resultsTableView.hidden = NO;
         
-        CGRect finalFrame = self.resultsTableView.frame;
+        CGRect finalFrame = CGRectMake(self.resultsTableOriginalFrame.origin.x,
+                                       self.resultsTableOriginalFrame.origin.y,
+                                       self.resultsTableOriginalFrame.size.width,
+                                       self.resultsTableOriginalFrame.size.height - self.currentKeyboardHeight);
         
-        self.resultsTableView.frame = CGRectMake(self.resultsTableView.frame.origin.x,
-                                                 self.resultsTableView.frame.size.height,
-                                                 self.resultsTableView.frame.size.width,
-                                                 self.resultsTableView.frame.size.height);
+        [self.resultsTableView setFrame:CGRectMake(self.resultsTableOriginalFrame.origin.x,
+                                                   self.resultsTableOriginalFrame.size.height,
+                                                   self.resultsTableOriginalFrame.size.width,
+                                                   self.resultsTableOriginalFrame.size.height - self.currentKeyboardHeight)];
         
         [UIView animateWithDuration:0.3f animations:^{
             self.resultsTableView.frame = finalFrame;
@@ -142,19 +153,24 @@
 
 - (void)removeResultsTableViewFromView
 {
-    CGRect startFrame = self.resultsTableView.frame;
-    
-    CGRect finalFrame = CGRectMake(self.resultsTableView.frame.origin.x,
-                                   self.resultsTableView.frame.size.height,
-                                   self.resultsTableView.frame.size.width,
-                                   self.resultsTableView.frame.size.height);
-    
-    [UIView animateWithDuration:0.3f animations:^{
-        self.resultsTableView.frame = finalFrame;
-    } completion:^(BOOL finished) {
-        self.resultsTableView.hidden = YES;
-        self.resultsTableView.frame = startFrame;
-    }];
+    if (NO == self.resultsTableView.hidden) {
+        CGRect startFrame = CGRectMake(self.resultsTableOriginalFrame.origin.x,
+                                       self.resultsTableOriginalFrame.origin.y,
+                                       self.resultsTableOriginalFrame.size.width,
+                                       self.resultsTableOriginalFrame.size.height - self.currentKeyboardHeight);
+        
+        CGRect finalFrame = CGRectMake(self.resultsTableOriginalFrame.origin.x,
+                                       self.resultsTableOriginalFrame.size.height,
+                                       self.resultsTableOriginalFrame.size.width,
+                                       self.resultsTableOriginalFrame.size.height - self.currentKeyboardHeight);
+        
+        [UIView animateWithDuration:0.3f animations:^{
+            self.resultsTableView.frame = finalFrame;
+        } completion:^(BOOL finished) {
+            self.resultsTableView.hidden = YES;
+            self.resultsTableView.frame = startFrame;
+        }];
+    }
 }
 
 #pragma mark - Tableview datasource and delegate
@@ -335,10 +351,10 @@
     self.currentKeyboardHeight = height;
     
     [UIView animateWithDuration:0.3 animations:^{
-        [self.resultsTableView setFrame:CGRectMake(self.resultsTableView.frame.origin.x,
-                                                   self.resultsTableView.frame.origin.y,
-                                                   self.resultsTableView.frame.size.width,
-                                                   self.resultsTableView.frame.size.height - height)];
+        [self.resultsTableView setFrame:CGRectMake(self.resultsTableOriginalFrame.origin.x,
+                                                   self.resultsTableOriginalFrame.origin.y,
+                                                   self.resultsTableOriginalFrame.size.width,
+                                                   self.resultsTableOriginalFrame.size.height - self.currentKeyboardHeight)];
     }];
 }
 

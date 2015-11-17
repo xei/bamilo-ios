@@ -33,7 +33,7 @@
 // size picker view
 @property (strong, nonatomic) JAPicker *picker;
 @property (strong, nonatomic) NSMutableArray *pickerDataSource;
-@property (nonatomic, strong) NSMutableArray* chosenSimpleNames;
+@property (nonatomic, strong) NSMutableDictionary* chosenSimples;
 
 @property (strong, nonatomic) UIButton *backupButton; // for the retry connection, is necessary to store the button
 
@@ -65,6 +65,7 @@
     
     self.selectedSizeAndAddToCart = NO;
     self.navBarLayout.title = STRING_RECENTLY_VIEWED;
+    self.navBarLayout.showBackButton = YES;
     
     self.collectionView.backgroundColor = UIColorFromRGB(0xc8c8c8);
     
@@ -96,6 +97,12 @@
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     [self.collectionView setCollectionViewLayout:self.flowLayout];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
     [self showLoading];
     [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
         
@@ -109,10 +116,7 @@
                 
                 [self hideLoading];
                 self.productsArray = products;
-                self.chosenSimpleNames = [NSMutableArray new];
-                for (int i = 0; i < self.productsArray.count; i++) {
-                    [self.chosenSimpleNames addObject:@""];
-                }
+                self.chosenSimples = [NSMutableDictionary new];
                 
                 [self.collectionView reloadData];
                 
@@ -158,11 +162,6 @@
         
         [self hideLoading];
     }];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
     
     [self didRotateFromInterfaceOrientation:0];
 }
@@ -170,8 +169,28 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
     [[RITrackingWrapper sharedInstance]trackScreenWithName:@"RecentlyViewed"];
+    
+    self.collectionView.frame = CGRectMake(6.0f,
+                                           self.collectionView.frame.origin.y,
+                                           self.view.frame.size.width - 6.0f*2,
+                                           self.view.frame.size.height);
+    
+    self.emptyListView.frame = CGRectMake(self.emptyListView.frame.origin.x,
+                                          self.emptyListView.frame.origin.y,
+                                          self.view.frame.size.width - self.emptyListView.frame.origin.x * 2,
+                                          300.0f);
+    
+    self.emptyListImageView.frame = CGRectMake((self.emptyListView.frame.size.width - self.emptyListImageView.frame.size.width)/2,
+                                               56.0f,
+                                               self.emptyListImageView.frame.size.width,
+                                               self.emptyListImageView.frame.size.height);
+    
+    self.emptyListLabel.frame = CGRectMake(12.0f,
+                                           183.0f,
+                                           self.emptyListView.frame.size.width - 12*2,
+                                           self.emptyListLabel.frame.size.height);
+    
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -309,17 +328,21 @@
                                  action:@selector(addToCartPressed:)
                        forControlEvents:UIControlEventTouchUpInside];
         
-        NSString* chosenSimpleName = [self.chosenSimpleNames objectAtIndex:indexPath.row];
-        if ([chosenSimpleName isEqualToString:@""]) {
+        RIProductSimple* chosenSimple = [self.chosenSimples objectForKey:product.sku];
+        if (!VALID_NOTEMPTY(chosenSimple, RIProductSimple)) {
             [cell.sizeButton setTitle:STRING_SIZE forState:UIControlStateNormal];
         } else {
-            [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, chosenSimpleName] forState:UIControlStateNormal];
+            [cell.priceView loadWithPrice:chosenSimple.priceFormatted
+                             specialPrice:chosenSimple.specialPriceFormatted
+                                 fontSize:10.f specialPriceOnTheLeft:YES];
+            [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, chosenSimple.variation] forState:UIControlStateNormal];
         }
         
         cell.sizeButton.tag = indexPath.row;
         [cell.sizeButton addTarget:self
                             action:@selector(sizeButtonPressed:)
                   forControlEvents:UIControlEventTouchUpInside];
+        
         cell.feedbackView.tag = indexPath.row;
         [cell.feedbackView addTarget:self
                               action:@selector(clickableViewPressedInCell:)
@@ -367,8 +390,8 @@
     if (1 == product.productSimples.count) {
         productSimple = [product.productSimples firstObject];
     } else {
-        NSString* simpleName = [self.chosenSimpleNames objectAtIndex:button.tag];
-        if ([simpleName isEqualToString:@""]) {
+        RIProductSimple* simple = [self.chosenSimples objectForKey:product.sku];
+        if (!VALID_NOTEMPTY(simple, RIProductSimple)) {
             //NOTHING SELECTED
             
             self.selectedSizeAndAddToCart = YES;
@@ -376,12 +399,8 @@
             
             return;
         } else {
-            for (RIProductSimple* simple in product.productSimples) {
-                if ([simple.variation isEqualToString:simpleName]) {
-                    //found it
-                    productSimple = simple;
-                }
-            }
+            productSimple = simple;
+                
         }
     }
     
@@ -475,10 +494,7 @@
                       [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
                           
                           self.productsArray = recentlyViewedProducts;
-                          self.chosenSimpleNames = [NSMutableArray new];
-                          for (int i = 0; i < self.productsArray.count; i++) {
-                              [self.chosenSimpleNames addObject:@""];
-                          }
+                          self.chosenSimples = [NSMutableDictionary new];
                           [self.collectionView reloadData];
                           
                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
@@ -528,7 +544,7 @@
     self.backupButton = button;
     
     RIProduct* product = [self.productsArray objectAtIndex:button.tag];
-    NSString* simpleName = [self.chosenSimpleNames objectAtIndex:button.tag];
+    RIProductSimple* prevSimple = [self.chosenSimples objectForKey:product.sku];
     
     if(VALID(self.picker, JAPicker))
     {
@@ -543,14 +559,14 @@
     NSMutableArray *dataSource = [[NSMutableArray alloc] init];
     
     NSString *simpleSize = @"";
-    for (int i = 0; i < product.productSimples.count; i++)
-    {
-        RIProductSimple* simple = [product.productSimples objectAtIndex:i];
-        [self.pickerDataSource addObject:simple];
-        [dataSource addObject:simple.variation];
-        if ([simple.variation isEqualToString:simpleName]) {
-            //found it
-            simpleSize = simple.variation;
+    if (VALID_NOTEMPTY(prevSimple, RIProductSimple)) {
+        simpleSize = prevSimple.variation;
+    }
+    
+    for (RIProductSimple* simple in product.productSimples) {
+        if (simple.quantity.intValue > 0) {
+            [self.pickerDataSource addObject:simple];
+            [dataSource addObject:simple.variation];
         }
     }
 
@@ -584,13 +600,9 @@
 {
     RIProduct* product = [self.productsArray objectAtIndex:self.picker.tag];
     
-    RIProductSimple* selectedSimple = [product.productSimples objectAtIndex:selectedRow];
-    NSString* simpleName = @"";
-    if (VALID_NOTEMPTY(selectedSimple.variation, NSString)) {
-        simpleName = selectedSimple.variation;
-    }
+    RIProductSimple* selectedSimple = [self.pickerDataSource objectAtIndex:selectedRow];
     
-    [self.chosenSimpleNames replaceObjectAtIndex:self.picker.tag withObject:simpleName];
+    [self.chosenSimples setObject:selectedSimple forKey:product.sku];
     
     [self closePicker];
     [self.collectionView reloadData];

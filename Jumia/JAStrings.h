@@ -33,7 +33,10 @@
 #define STRING_MY_ACCOUNT RILocalizedString(@"my_account", nil)
 #define STRING_TRACK_MY_ORDER RILocalizedString(@"nav_track_order", nil)
 #define STRING_CHOOSE_COUNTRY RILocalizedString(@"nav_country", nil)
+#define STRING_COUNTRY RILocalizedString(@"country", nil)
+#define STRING_LANGUAGE RILocalizedString(@"language", nil)
 #define STRING_FILTERS RILocalizedString(@"string_filters", nil)
+#define STRING_REMOVE_FILTER RILocalizedString(@"string_remove_filter", nil)
 #define STRING_ALL_CATEGORIES RILocalizedString(@"categories_toplevel_title", nil)
 #define STRING_APPLY RILocalizedString(@"string_apply", nil)
 #define STRING_SEARCH RILocalizedString(@"search_label", nil)
@@ -53,6 +56,7 @@
 #define STRING_SIZE RILocalizedString(@"string_size", nil)
 #define STRING_RATING RILocalizedString(@"string_rating", nil)
 #define STRING_RATINGS RILocalizedString(@"string_ratings", nil)
+#define STRING_NRATINGS RILocalizedString(@"string_nratings", nil)
 #define STRING_REVIEW RILocalizedString(@"string_review", nil)
 #define STRING_REVIEWS RILocalizedString(@"string_reviews", nil)
 #define STRING_QUANTITY RILocalizedString(@"string_quantity", nil)
@@ -109,6 +113,8 @@
 
 #define STRING_ERROR_CHANGING_QUANTITY RILocalizedString(@"error_add_to_shopping_cart_quantity", nil)
 #define STRING_SHIPPING RILocalizedString(@"shipping", nil)
+#define STRING_SHIPMENT_OF RILocalizedString(@"shipment_of", nil)
+#define STRING_FULFILLED RILocalizedString(@"fulfilled_by", nil)
 #define STRING_FREE RILocalizedString(@"free_label", nil)
 #define STRING_EXTRA_COSTS RILocalizedString(@"extra_costs_label", nil)
 #define STRING_VOUCHER RILocalizedString(@"my_order_voucher_label", nil)
@@ -119,6 +125,7 @@
 
 #define STRING_SIGNUP RILocalizedString(@"signup_label", nil)
 #define STRING_LOGIN_WITH_FACEBOOK RILocalizedString(@"facebook_login_button_text", nil)
+#define STRING_LOGIN_INCOMPLETE RILocalizedString(@"login_incomplete", nil)
 #define STRING_OR RILocalizedString(@"or_text", nil)
 #define STRING_SIGNUP_WITH_FACEBOOK RILocalizedString(@"facebook_signup_button_text", nil)
 #define STRING_FORGOT_PASSWORD RILocalizedString(@"fgt_pass", nil)
@@ -300,6 +307,8 @@
 #define STRING_ORDER_QUANTITY RILocalizedString(@"my_order_quantity_label", nil)
 #define STRING_NO_ORDERS RILocalizedString(@"my_order_no_orders_label", nil)
 
+#define STRING_SELLER_INFO_WARRANTY RILocalizedString(@"seller_info_warranty", nil)
+
 #define STRING_LIKE_US RILocalizedString(@"like_us_on_facebook", nil)
 #define STRING_BUNDLE_TITLE RILocalizedString(@"bundle_title", nil)
 #define STRING_BUNDLE_TOTAL_PRICE RILocalizedString(@"bundle_total_price", nil)
@@ -331,5 +340,23 @@
 #define STRING_KICKOUT_MESSAGE_2 RILocalizedString(@"kickout_message_2", nil)
 #define STRING_KICKOUT_MESSAGE_3 RILocalizedString(@"kickout_message_3", nil)
 #define STRING_SEARCH_PLACEHOLDER RILocalizedString(@"search_placeholder", nil)
+
+#define STRING_COMBOS RILocalizedString(@"combos", nil)
+#define STRING_CLEAR_ALL RILocalizedString(@"clear_all", nil)
+
+#define STRING_BUY_THE_LOOK RILocalizedString(@"buy_the_look", nil)
+#define STRING_READ_MORE RILocalizedString(@"read_more", nil)
+#define STRING_SEE_OTHER_COLORS RILocalizedString(@"see_other_colors", nil)
+#define STRING_SEE_OTHER_VARIATIONS RILocalizedString(@"see_other_variations", nil)
+#define STRING_SELLER_INFORMATION RILocalizedString(@"seller_information", nil)
+#define STRING_OTHER_SELLERS_STARTING_FROM RILocalizedString(@"other_sellers_starting_from", nil)
+#define STRING_YOU_MAY_ALSO_LIKE RILocalizedString(@"you_may_also_like", nil)
+#define STRING_REVIEWS_RATINGS RILocalizedString(@"reviews/ratings", nil)
+#define STRING_FROM_N_CUSTOMERS RILocalizedString(@"from_n_customers", nil)
+#define STRING_AVERAGE_RATING RILocalizedString(@"average_rating", nil)
+#define STRING_BE_THE_FIRST_TO_RATE RILocalizedString(@"be_the_first_to_rate", nil)
+#define STRING_BY_SOMEONE RILocalizedString(@"by_someone", nil)
+
+#define STRING_USER_REVIEWS RILocalizedString(@"user_reviews", nil)
 
 #endif

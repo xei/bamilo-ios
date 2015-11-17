@@ -38,6 +38,7 @@
     groupingTitleLabel.font = [UIFont fontWithName:kFontMediumName size:14.0f];
     groupingTitleLabel.textColor = [UIColor blackColor];
     groupingTitleLabel.text = STRING_SHOPS_OF_THE_WEEK;
+    groupingTitleLabel.textAlignment = NSTextAlignmentLeft;
     [groupingTitleLabel sizeToFit];
     [groupingTitleLabel setFrame:CGRectMake(groupingTitleLabelMargin,
                                             0.0f,
@@ -58,6 +59,10 @@
         componentWidth = 94.0f; //value by design
     }
     CGFloat currentX = 6.0f;
+    
+    if (self.frame.size.width-currentX > componentWidth*self.teaserGrouping.teaserComponents.count) {
+        componentWidth = (self.frame.size.width-currentX*2) / self.teaserGrouping.teaserComponents.count;
+    }
     
     for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
         RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];

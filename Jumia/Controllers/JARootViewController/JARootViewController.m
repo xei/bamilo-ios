@@ -8,7 +8,7 @@
 
 #import "JARootViewController.h"
 #import "JACenterNavigationController.h"
-#import "JAMenuViewController.h"
+#import "JACategoriesSideMenuViewController.h"
 #import "RICustomer.h"
 
 @interface JARootViewController ()

@@ -10,16 +10,21 @@
 
 @implementation RICartItem
 
-+ (RICartItem*)parseCartItemWithSimpleSku:(NSString*)simpleSku
-                                     info:(NSDictionary*)info
++ (RICartItem*)parseCartItem:(NSDictionary*)info
                                   country:(RICountryConfiguration *)country
 {
     RICartItem *cartItem = [[RICartItem alloc] init];
     
-    cartItem.simpleSku = simpleSku;
+    if (VALID_NOTEMPTY([info objectForKey:@"simple_sku"], NSString)) {
+        cartItem.simpleSku = [info objectForKey:@"simple_sku"];
+    }
     
-    if (VALID_NOTEMPTY([info objectForKey:@"configSku"], NSString)) {
-        cartItem.sku = [info objectForKey:@"configSku"];
+    if (VALID_NOTEMPTY([info objectForKey:@"sku"], NSString)) {
+        cartItem.sku = [info objectForKey:@"sku"];
+    }
+    
+    if (VALID_NOTEMPTY([info objectForKey:@"attribute_set_id"], NSNumber)) {
+        cartItem.attributeSetID = [info objectForKey:@"attribute_set_id"];
     }
     
     if (VALID_NOTEMPTY([info objectForKey:@"url"], NSString)) {
@@ -38,16 +43,8 @@
         cartItem.maxQuantity = [info objectForKey:@"max_quantity"];
     }
     
-    if (VALID_NOTEMPTY([info objectForKey:@"configId"], NSString)) {
-        cartItem.configId = [info objectForKey:@"configId"];
-    }
-    
     if (VALID_NOTEMPTY([info objectForKey:@"name"], NSString)) {
         cartItem.name = [info objectForKey:@"name"];
-    }
-    
-    if (VALID_NOTEMPTY([info objectForKey:@"stock"], NSString)) {
-        cartItem.stock = [NSNumber numberWithLongLong:[[info objectForKey:@"stock"] longLongValue]];
     }
     
     if (VALID_NOTEMPTY([info objectForKey:@"variation"], NSString)) {
@@ -63,20 +60,16 @@
         cartItem.priceEuroConverted = [info objectForKey:@"unit_price_converted"];
     }
     
-    if (VALID_NOTEMPTY([info objectForKey:@"specialPrice"], NSNumber)) {
-        cartItem.specialPrice = [info objectForKey:@"specialPrice"];
+    if (VALID_NOTEMPTY([info objectForKey:@"special_price"], NSNumber)) {
+        cartItem.specialPrice = [info objectForKey:@"special_price"];
         cartItem.specialPriceFormatted = [RICountryConfiguration formatPrice:cartItem.specialPrice country:country];
         
         // If there is special price, we have a saving percentage
         cartItem.savingPercentage = [NSNumber numberWithDouble:(100 - ([cartItem.specialPrice doubleValue] / [cartItem.price doubleValue]) * 100)];
     }
     
-    if (VALID_NOTEMPTY([info objectForKey:@"specialPrice_converted"], NSNumber)) {
-        cartItem.specialPriceEuroConverted = [info objectForKey:@"specialPrice_converted"];
-    }
-    
-    if (VALID_NOTEMPTY([info objectForKey:@"tax_amount"], NSNumber)) {
-        cartItem.taxAmount = [info objectForKey:@"tax_amount"];
+    if (VALID_NOTEMPTY([info objectForKey:@"special_price_converted"], NSNumber)) {
+        cartItem.specialPriceEuroConverted = [info objectForKey:@"special_price_converted"];
     }
     
     return cartItem;

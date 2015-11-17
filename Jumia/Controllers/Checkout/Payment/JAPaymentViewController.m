@@ -13,14 +13,12 @@
 #import "JACheckoutForms.h"
 #import "JAUtils.h"
 #import "JAOrderSummaryView.h"
-#import "RICheckout.h"
 #import "RICustomer.h"
 #import "RICart.h"
 #import "UIView+Mirror.h"
 #import "UIImage+Mirror.h"
 #import "JACheckoutBottomView.h"
-
-#define kUserDefaultsVoucherCode @"userDefaultsVoucherCode"
+#import "RIPaymentMethodForm.h"
 
 @interface JAPaymentViewController ()
 <UICollectionViewDataSource,
@@ -52,7 +50,6 @@ UITextFieldDelegate>
 // Order Summary
 @property (strong, nonatomic) JAOrderSummaryView *orderSummary;
 
-@property (strong, nonatomic) RICheckout *checkout;
 @property (strong, nonatomic) RICart *cart;
 @property (strong, nonatomic) RIPaymentMethodForm *paymentMethodForm;
 @property (strong, nonatomic) JACheckoutForms *checkoutFormForPaymentMethod;
@@ -96,7 +93,7 @@ UITextFieldDelegate>
     self.apiResponse = RIApiResponseSuccess;
     
     self.navBarLayout.title = STRING_CHECKOUT;
-    
+    self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showCartButton = NO;
     
     self.stepBackground.translatesAutoresizingMaskIntoConstraints = YES;
@@ -158,17 +155,16 @@ UITextFieldDelegate>
         [self showLoading];
     }
     
-    [RICheckout getPaymentMethodFormWithSuccessBlock:^(RICheckout *checkout)
+    [RICart getPaymentMethodFormWithSuccessBlock:^(RICart *cart)
      {
-         self.checkout = checkout;
-         self.cart = checkout.cart;
+         self.cart = cart;
          
-         self.paymentMethodForm = checkout.paymentMethodForm;
+         self.paymentMethodForm = cart.paymentMethodForm;
          
          // LIST OF AVAILABLE PAYMENT METHODS
-         self.paymentMethods = [RIPaymentMethodForm getPaymentMethodsInForm:checkout.paymentMethodForm];
+         self.paymentMethods = [RIPaymentMethodForm getPaymentMethodsInForm:cart.paymentMethodForm];
          
-         self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:checkout.paymentMethodForm width:(self.view.frame.size.width - 12.0f)];
+         self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:cart.paymentMethodForm width:(self.view.frame.size.width - 12.0f)];
          [self removeErrorView];
          [self finishedLoadingPaymentMethods];
      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
@@ -378,7 +374,7 @@ UITextFieldDelegate>
                                                                                  self.stepBackground.frame.size.height,
                                                                                  self.view.frame.size.width - width - orderSummaryRightMargin,
                                                                                  self.view.frame.size.height - self.stepBackground.frame.size.height)];
-        [self.orderSummary loadWithCheckout:self.checkout shippingMethod:YES];
+        [self.orderSummary loadWithCart:self.cart shippingMethod:YES];
         [self.view addSubview:self.orderSummary];
         self.orderSummaryOriginalHeight = self.orderSummary.frame.size.height;
     }
@@ -401,7 +397,7 @@ UITextFieldDelegate>
         }
     }
     
-    self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:self.checkout.paymentMethodForm width:self.collectionView.frame.size.width];
+    self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:self.cart.paymentMethodForm width:self.collectionView.frame.size.width];
     
     [self.couponView setFrame:CGRectMake(self.couponView.frame.origin.x,
                                          CGRectGetMaxY(self.collectionView.frame) + 6.0f,
@@ -444,12 +440,22 @@ UITextFieldDelegate>
                                               self.useCouponButton.frame.size.width,
                                               self.useCouponButton.frame.size.height)];
     
+    if (VALID(self.cart.couponMoneyValue, NSNumber)) {
+        self.couponTextField.text = self.cart.couponCode;
+        [self.useCouponButton setTitle:STRING_REMOVE forState:UIControlStateNormal];
+        [self.couponTextField setEnabled:NO];
+        [self.useCouponButton setEnabled:YES];
+    }
+    
     [_bottomView setFrame:CGRectMake(0.0f,
                                             self.view.frame.size.height - 56,
                                             width,
                                      56)];
-    [_bottomView setTotalValue:self.checkout.cart.cartValueFormatted];
+    [_bottomView setTotalValue:self.cart.cartValueFormatted];
     [_bottomView setButtonText:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
+    if (! VALID_NOTEMPTY(self.paymentMethods,NSArray)) {
+        [_bottomView disableButton];
+    }
     
     [self reloadCollectionView];
     
@@ -460,9 +466,9 @@ UITextFieldDelegate>
 
 -(void)finishedLoadingPaymentMethods
 {
-    if(VALID_NOTEMPTY([[[self checkout] orderSummary] discountCouponCode], NSString))
+    if(VALID_NOTEMPTY(self.cart.couponCode, NSString))
     {
-        [self.couponTextField setText:[[[self checkout] orderSummary] discountCouponCode]];
+        [self.couponTextField setText:self.cart.couponCode];
         [self.couponTextField setEnabled:NO];
         [self.useCouponButton setTitle:STRING_REMOVE forState:UIControlStateNormal];
     }
@@ -499,23 +505,33 @@ UITextFieldDelegate>
 
 -(void)reloadCollectionView
 {
-    if(VALID_NOTEMPTY(self.paymentMethods, NSArray))
-    {
-        CGFloat collectionViewHeight = 27.0f + ([self.paymentMethods count] * 44.0f);
+    if (VALID_NOTEMPTY(self.checkoutFormForPaymentMethod.paymentMethodFormViews, NSMutableDictionary) || VALID_NOTEMPTY(self.paymentMethods, NSArray)) {
+        CGFloat collectionViewHeight = 27.0f;
         
-        if(VALID_NOTEMPTY(self.collectionViewIndexSelected, NSIndexPath))
+        if(VALID_NOTEMPTY(self.paymentMethods, NSArray))
         {
-            RIPaymentMethodFormOption *paymentMethod = [self.paymentMethods objectAtIndex:self.collectionViewIndexSelected.row];
-            collectionViewHeight += [self.checkoutFormForPaymentMethod getPaymentMethodViewHeight:paymentMethod];
+            collectionViewHeight += ([self.paymentMethods count] * 44.0f);
+            
+            if(VALID_NOTEMPTY(self.collectionViewIndexSelected, NSIndexPath))
+            {
+                RIPaymentMethodFormOption *paymentMethod = [self.paymentMethods objectAtIndex:self.collectionViewIndexSelected.row];
+                collectionViewHeight += [self.checkoutFormForPaymentMethod getPaymentMethodViewHeight:paymentMethod];
+            }
+            
+        } else {
+            if ([self.checkoutFormForPaymentMethod getPaymentMethodViewHeight:nil]) {
+                collectionViewHeight += [self.checkoutFormForPaymentMethod getPaymentMethodViewHeight:nil];
+            } else
+                collectionViewHeight += 44.0f;
         }
-        
+            
         [UIView animateWithDuration:0.5f
                          animations:^{
                              [self.collectionView setFrame:CGRectMake(self.collectionView.frame.origin.x,
                                                                       self.collectionView.frame.origin.y,
                                                                       self.collectionView.frame.size.width,
                                                                       collectionViewHeight)];
-
+                             
                              [self.couponView setFrame:CGRectMake(self.couponView.frame.origin.x,
                                                                   CGRectGetMaxY(self.collectionView.frame) + 6.0f,
                                                                   self.scrollView.frame.size.width - 12.0f,
@@ -524,10 +540,7 @@ UITextFieldDelegate>
         
         [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
                                                    self.collectionView.frame.origin.y + collectionViewHeight + 92.0f + _bottomView.frame.size.height + 6.0f)];
-        
     }
-    
-    
     
     [self.collectionView reloadData];
 }
@@ -541,11 +554,10 @@ UITextFieldDelegate>
     [self showLoading];
     NSString *voucherCode = [self.couponTextField text];
     
-    if(VALID_NOTEMPTY([[self cart] couponMoneyValue], NSNumber) && 0.0f < [[[self cart] couponMoneyValue] floatValue])
+    if(VALID([[self cart] couponMoneyValue], NSNumber))
     {
         [RICart removeVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;
-            [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kUserDefaultsVoucherCode];
             NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
             [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
             [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
@@ -555,6 +567,8 @@ UITextFieldDelegate>
             [self.useCouponButton setTitle:STRING_USE forState:UIControlStateNormal];
             [self.couponTextField setEnabled: YES];
             [self.couponTextField setText:@""];
+            
+            [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
             [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
@@ -566,7 +580,6 @@ UITextFieldDelegate>
     {
         [RICart addVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;
-            [[NSUserDefaults standardUserDefaults] setObject:voucherCode forKey:kUserDefaultsVoucherCode];
             NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
             [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
             [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
@@ -575,8 +588,9 @@ UITextFieldDelegate>
             
             [self.useCouponButton setTitle:STRING_REMOVE forState:UIControlStateNormal];
             [self.couponTextField setEnabled:NO];
-            [self hideLoading];
             
+            [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+            [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
             
@@ -598,38 +612,39 @@ UITextFieldDelegate>
     
     [parameters addEntriesFromDictionary:[self.checkoutFormForPaymentMethod getValuesForPaymentMethod:self.selectedPaymentMethod]];
     
-    [RICheckout setPaymentMethod:self.paymentMethodForm
-                      parameters:parameters
-                    successBlock:^(RICheckout *checkout) {
-                        
-                        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                        [trackingDictionary setValue:self.selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
-                        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentSuccess]
-                                                                  data:[trackingDictionary copy]];
-                        
-                        
-                        [JAUtils goToCheckout:checkout];
-                        
-                        [self hideLoading];
-                    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-                        
-                        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                        [trackingDictionary setValue:self.selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
-                        [trackingDictionary setValue:[[self.checkout orderSummary] grandTotal] forKey:kRIEventTotalTransactionKey];
-                        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentFail]
-                                                                  data:[trackingDictionary copy]];
-                        
-                        if (RIApiResponseNoInternetConnection == apiResponse)
-                        {
-                            [self showMessage:STRING_NO_CONNECTION success:NO];
-                        }
-                        else
-                        {
-                            [self showMessage:STRING_ERROR_SETTING_PAYMENT_METHOD success:NO];
-                        }
-                        
-                        [self hideLoading];
-                    }];
+    [RICart setPaymentMethod:self.paymentMethodForm
+                  parameters:parameters
+                successBlock:^(RICart *cart) {
+                    
+                    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                    [trackingDictionary setValue:self.selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
+                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentSuccess]
+                                                              data:[trackingDictionary copy]];
+                    
+                    NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:@"cart"];
+                    [JAUtils goToNextStep:cart.nextStep
+                                 userInfo:userInfo];
+                    
+                    [self hideLoading];
+                } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                    
+                    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                    [trackingDictionary setValue:self.selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
+                    [trackingDictionary setValue:self.cart.cartValueEuroConverted forKey:kRIEventTotalTransactionKey];
+                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentFail]
+                                                              data:[trackingDictionary copy]];
+                    
+                    if (RIApiResponseNoInternetConnection == apiResponse)
+                    {
+                        [self showMessage:STRING_NO_CONNECTION success:NO];
+                    }
+                    else
+                    {
+                        [self showMessage:STRING_ERROR_SETTING_PAYMENT_METHOD success:NO];
+                    }
+                    
+                    [self hideLoading];
+                }];
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout
@@ -644,7 +659,8 @@ UITextFieldDelegate>
         if(indexPath.row == self.collectionViewIndexSelected.row)
         {
             RIPaymentMethodFormOption *paymentMethod = [self.paymentMethods objectAtIndex:indexPath.row];
-            sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, 44.0f +[self.checkoutFormForPaymentMethod getPaymentMethodViewHeight:paymentMethod]);
+            sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width,
+                                                44.0f +[self.checkoutFormForPaymentMethod getPaymentMethodViewHeight:paymentMethod]);
         }
         else
         {
@@ -676,9 +692,15 @@ UITextFieldDelegate>
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     NSInteger numberOfItemsInSection = 0;
-    if(collectionView == self.collectionView && VALID_NOTEMPTY(self.paymentMethods, NSArray))
-    {
-        numberOfItemsInSection = [self.paymentMethods count];
+    if(collectionView == self.collectionView){
+        if(VALID_NOTEMPTY(self.paymentMethods, NSArray))
+        {
+            numberOfItemsInSection = [self.paymentMethods count];
+        } else {
+            if (VALID_NOTEMPTY(self.checkoutFormForPaymentMethod.paymentMethodFormViews, NSMutableDictionary)) {
+                numberOfItemsInSection = 1;
+            }
+        }
     }
     return numberOfItemsInSection;
 }
@@ -687,36 +709,54 @@ UITextFieldDelegate>
 {
     UICollectionViewCell *cell = nil;
     
-    if(collectionView == self.collectionView && VALID_NOTEMPTY(self.paymentMethods, NSArray))
-    {
-        // Payment method title cell
-        
-        RIPaymentMethodFormOption *paymentMethod = [self.paymentMethods objectAtIndex:indexPath.row];
-        if(VALID_NOTEMPTY(paymentMethod, RIPaymentMethodFormOption))
-        {
-            NSString *cellIdentifier = @"paymentListCell";
+    if(collectionView == self.collectionView){
+        if(VALID_NOTEMPTY(self.paymentMethods, NSArray)) {
+            // Payment method title cell
             
-            JAPaymentCell *paymentListCell = (JAPaymentCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+            RIPaymentMethodFormOption *paymentMethod = [self.paymentMethods objectAtIndex:indexPath.row];
+            if(VALID_NOTEMPTY(paymentMethod, RIPaymentMethodFormOption))
+            {
+                NSString *cellIdentifier = @"paymentListCell";
+                
+                JAPaymentCell *paymentListCell = (JAPaymentCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+                
+                BOOL isSelected = NO;
+                if(VALID_NOTEMPTY(self.collectionViewIndexSelected, NSIndexPath) && indexPath.row == self.collectionViewIndexSelected.row)
+                {
+                    isSelected = YES;
+                }
+                
+                [paymentListCell loadWithPaymentMethod:paymentMethod
+                                     paymentMethodView:[self.checkoutFormForPaymentMethod getPaymentMethodView:paymentMethod]
+                                            isSelected:isSelected];
+                
+                paymentListCell.clickableView.tag = indexPath.row;
+                [paymentListCell.clickableView addTarget:self action:@selector(clickViewSelected:) forControlEvents:UIControlEventTouchUpInside];
+                
+                if(indexPath.row == ([self.paymentMethods count] - 1))
+                {
+                    [paymentListCell.separator setHidden:YES];
+                }
+                
+                cell = paymentListCell;
+            }
+        } else {
+            if (indexPath.row == 0 && VALID_NOTEMPTY(self.checkoutFormForPaymentMethod.paymentMethodFormViews, NSMutableDictionary)) {
+                
+                NSString *cellIdentifier = @"paymentListCell";
+                
+                JAPaymentCell *paymentListCell = (JAPaymentCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+                
+                RIPaymentMethodFormOption *paymentMethod = [self.paymentMethods objectAtIndex:indexPath.row];
+                
+                NSString * methodName = [(RIPaymentMethodFormField*)[self.paymentMethodForm.fields firstObject] value];
+                
+                [paymentListCell loadNoPaymentMethod:methodName paymentMethodView:[self.checkoutFormForPaymentMethod getPaymentMethodView:paymentMethod]];
 
-            BOOL isSelected = NO;
-            if(VALID_NOTEMPTY(self.collectionViewIndexSelected, NSIndexPath) && indexPath.row == self.collectionViewIndexSelected.row)
-            {
-                isSelected = YES;
-            }
-            
-            [paymentListCell loadWithPaymentMethod:paymentMethod
-                                 paymentMethodView:[self.checkoutFormForPaymentMethod getPaymentMethodView:paymentMethod]
-                                        isSelected:isSelected];
-            
-            paymentListCell.clickableView.tag = indexPath.row;
-            [paymentListCell.clickableView addTarget:self action:@selector(clickViewSelected:) forControlEvents:UIControlEventTouchUpInside];
-            
-            if(indexPath.row == ([self.paymentMethods count] - 1))
-            {
                 [paymentListCell.separator setHidden:YES];
+
+                cell = paymentListCell;
             }
-            
-            cell = paymentListCell;
         }
     }
     

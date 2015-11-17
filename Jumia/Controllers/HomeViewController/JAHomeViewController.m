@@ -15,6 +15,7 @@
 #import "JAPromotionPopUp.h"
 #import "JAAppDelegate.h"
 #import "JAFallbackView.h"
+#import "RIAddress.h"
 
 @interface JAHomeViewController ()
 
@@ -33,8 +34,10 @@
 
 - (void)viewDidLoad
 {
+    self.navBarLayout.showCartButton = NO;
     //has to be done before calling super
     self.searchBarIsVisible = YES;
+    self.tabBarIsVisible = YES;
     
     [super viewDidLoad];
     
