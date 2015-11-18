@@ -178,19 +178,27 @@
     [self.productDescriptionLabel setX:16.f];
     [self imagesPagedView];
     [self separatorImageView];
-    [self.wishListButton setX:16.f];
+    [self.wishListButton setXRightAligned:16.f];
     [self.productNameLabel setTextAlignment:NSTextAlignmentLeft];
     [self.productDescriptionLabel setTextAlignment:NSTextAlignmentLeft];
     
     if (self.product.fashion) {
-        [_imagesPagedView setY:16.f];
+        if ([self.product.seller isGlobal]) {
+            [_imagesPagedView setYBottomOf:self.globalButton at:16.f];
+        } else {
+            [_imagesPagedView setY:16.f];
+        }
         [_productNameLabel setYBottomOf:_imagesPagedView at:16.f];
         [_productDescriptionLabel setYBottomOf:_productNameLabel at:0.f];
         [self setHeight:CGRectGetMaxY(_productDescriptionLabel.frame) + 16.f];
     }else{
         [_productNameLabel setY:14.f];
         [_productDescriptionLabel setYBottomOf:_productNameLabel at:0.f];
-        [_imagesPagedView setYBottomOf:_productDescriptionLabel at:16.f];
+        if ([self.product.seller isGlobal]) {
+            [_imagesPagedView setYBottomOf:self.globalButton at:16.f];
+        } else {
+            [_imagesPagedView setYBottomOf:_productDescriptionLabel at:16.f];
+        }
         [self setHeight:CGRectGetMaxY(_imagesPagedView.frame)];
     }
     
