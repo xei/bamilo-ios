@@ -55,7 +55,6 @@
 
 @implementation RIProduct
 
-@dynamic activatedAt;
 @dynamic attributeCareLabel;
 @dynamic attributeColor;
 @dynamic attributeDescription;
@@ -65,7 +64,6 @@
 @dynamic avr;
 @dynamic brand;
 @dynamic descriptionString;
-@dynamic idCatalogConfig;
 @dynamic maxPrice;
 @dynamic maxPriceFormatted;
 @dynamic maxPriceEuroConverted;
@@ -139,19 +137,13 @@
                                                                   NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                                   if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                                   {
-                                                                      NSDictionary* data = [metadata objectForKey:@"data"];
-                                                                      if (VALID_NOTEMPTY(data, NSDictionary)) {
-                                                                          RIProduct* newProduct = [RIProduct parseProduct:data country:configuration];
-                                                                          if (VALID_NOTEMPTY(newProduct, RIProduct) && VALID_NOTEMPTY(newProduct.sku, NSString)) {
-                                                                              successBlock(newProduct);
-                                                                          } else {
-                                                                              failureBlock(apiResponse, nil);
-                                                                          }
-                                                                      }else {
+                                                                      RIProduct* newProduct = [RIProduct parseProduct:metadata country:configuration];
+                                                                      if (VALID_NOTEMPTY(newProduct, RIProduct) && VALID_NOTEMPTY(newProduct.sku, NSString)) {
+                                                                          successBlock(newProduct);
+                                                                      } else {
                                                                           failureBlock(apiResponse, nil);
                                                                       }
-                                                                  } else
-                                                                  {
+                                                                  } else {
                                                                       failureBlock(apiResponse, nil);
                                                                   }
                                                               } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
@@ -474,13 +466,7 @@
                 }
             }
         }
-        
-        if ([dataDic objectForKey:@"id_catalog_config"]) {
-            newProduct.idCatalogConfig = [dataDic objectForKey:@"id_catalog_config"];
-        }
-        if ([dataDic objectForKey:@"activated_at"]) {
-            newProduct.activatedAt = [dataDic objectForKey:@"activated_at"];
-        }
+
         if ([dataDic objectForKey:@"attributes"]) {
             NSDictionary* attributes = [dataDic objectForKey:@"attributes"];
             if (VALID_NOTEMPTY(attributes, NSDictionary)) {
@@ -505,7 +491,7 @@
             newProduct.attributeSetId = [dataDic objectForKey:@"attribute_set_id"];
         }
         if ([dataDic objectForKey:@"categories"]) {
-            newProduct.categoryIds = [NSOrderedSet orderedSetWithArray:[[dataDic objectForKey:@"categories"] componentsSeparatedByString:@","]];
+            newProduct.categoryIds = [NSOrderedSet orderedSetWithArray:[[dataDic objectForKey:@"categories"] componentsSeparatedByString:@"|"]];
         }
         
         if ([dataDic objectForKey:@"size_guide"]) {
