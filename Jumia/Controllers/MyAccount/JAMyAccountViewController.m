@@ -119,7 +119,7 @@ JAPickerDelegate
     
     self.userDataTitleLabel.font = [UIFont fontWithName:kFontLightName size:self.userDataTitleLabel.font.pointSize];
     self.userDataTitleLabel.textColor = UIColorFromRGB(0x666666);
-    self.userDataTitleLabel.text = STRING_USER_DATA;
+    self.userDataTitleLabel.text = STRING_PROFILE;
     self.userDataTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.userDataSubtitleLabel.font = [UIFont fontWithName:kFontLightName size:self.userDataSubtitleLabel.font.pointSize];

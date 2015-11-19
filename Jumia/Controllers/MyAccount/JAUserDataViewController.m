@@ -59,7 +59,7 @@ JADynamicFormDelegate
     
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showLogo = NO;
-    self.navBarLayout.title = STRING_USER_DATA;
+    self.navBarLayout.title = STRING_PROFILE;
     
     self.personalDataView.layer.cornerRadius = 5.0f;
     self.personalDataView.hidden = YES;
