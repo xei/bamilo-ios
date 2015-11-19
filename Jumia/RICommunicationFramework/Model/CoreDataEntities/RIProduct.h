@@ -91,12 +91,14 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *  Method to load a product and all its details given his sku. This method uses getCompleteProductWithUrl:successBlock:andFailureBlock:
  *
  *  @param the product sku
+ *  @param the parameter dictionary to be sent in the request
  *  @param the success block containing the obtained product
  *  @param the failure block containing the error message
  *
  *  @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)getCompleteProductWithSku:(NSString*)sku
+                          withParameter:(NSDictionary*)parameter
                            successBlock:(void (^)(id product))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
@@ -104,12 +106,14 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *  Method to load a product and all its details given his url
  *
  *  @param the product url
+ *  @param the parameter dictionary to be sent in the request
  *  @param the success block containing the obtained product
  *  @param the failure block containing the error message
  *
  *  @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)getCompleteProductWithUrl:(NSString*)url
+                          withParameter:(NSDictionary*)parameter
                            successBlock:(void (^)(id product))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 

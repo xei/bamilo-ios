@@ -19,7 +19,7 @@
 
 @interface JAHomeViewController ()
 
-@property (nonatomic, strong) NSArray* teaserGroupings;
+@property (nonatomic, strong) NSDictionary* teaserGroupings;
 @property (strong, nonatomic) JATeaserPageView* teaserPageView;
 
 @property (nonatomic, assign) BOOL isLoaded;
@@ -179,7 +179,7 @@
         return;
     }
     
-    [RITeaserGrouping getTeaserGroupingsWithSuccessBlock:^(NSArray *teaserGroupings) {
+    [RITeaserGrouping getTeaserGroupingsWithSuccessBlock:^(NSDictionary *teaserGroupings, BOOL richTeasers) {
         self.isLoaded = YES;
         
         [self removeErrorView];
@@ -201,32 +201,42 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
 
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
-        if(self.firstLoading)
-        {
-            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-            self.firstLoading = NO;
-        }
-        
-        if(RIApiResponseMaintenancePage == apiResponse)
-        {
-            [self showMaintenancePage:@selector(requestTeasers) objects:nil];
-        }
-        else if(RIApiResponseKickoutView == apiResponse)
-        {
-            [self showKickoutView:@selector(requestTeasers) objects:nil];
-        }
-        else
-        {
-            if (RIApiResponseNoInternetConnection == apiResponse)
+        //if this is the failure came from richBlock, fail gracefully
+        if (!self.isLoaded) {
+            if(self.firstLoading)
             {
-                [self showErrorView:YES startingY:0.0f selector:@selector(requestTeasers) objects:nil];
-            } else {
-                self.fallbackView = [JAFallbackView getNewJAFallbackView];
-                [self.fallbackView setupFallbackView:[self viewBounds] orientation:self.interfaceOrientation];
-                [self.view addSubview:self.fallbackView];
+                NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                self.firstLoading = NO;
+            }
+            
+            if(RIApiResponseMaintenancePage == apiResponse)
+            {
+                [self showMaintenancePage:@selector(requestTeasers) objects:nil];
+            }
+            else if(RIApiResponseKickoutView == apiResponse)
+            {
+                [self showKickoutView:@selector(requestTeasers) objects:nil];
+            }
+            else
+            {
+                if (RIApiResponseNoInternetConnection == apiResponse)
+                {
+                    [self showErrorView:YES startingY:0.0f selector:@selector(requestTeasers) objects:nil];
+                } else {
+                    self.fallbackView = [JAFallbackView getNewJAFallbackView];
+                    [self.fallbackView setupFallbackView:[self viewBounds] orientation:self.interfaceOrientation];
+                    [self.view addSubview:self.fallbackView];
+                }
             }
         }
+    } andRichBlock:^(RITeaserGrouping *richTeaserGroupings) {
+        NSMutableDictionary *tempTeaserGroupings = [NSMutableDictionary dictionaryWithDictionary:self.teaserGroupings];
+        [tempTeaserGroupings setObject:richTeaserGroupings forKey:richTeaserGroupings.type];
+        self.teaserGroupings = [tempTeaserGroupings copy];
+        
+        self.teaserPageView.teaserGroupings = self.teaserGroupings;
+        [self.teaserPageView addTeaserGrouping:richTeaserGroupings.type];
     }];
 }
 

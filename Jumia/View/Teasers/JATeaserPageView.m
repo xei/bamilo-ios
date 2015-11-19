@@ -39,7 +39,7 @@
     
     [self.mainScrollView removeFromSuperview];
     
-    if (VALID_NOTEMPTY(self.teaserGroupings, NSArray)) {
+    if (VALID_NOTEMPTY(self.teaserGroupings, NSDictionary)) {
         
         self.mainScrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
         [self addSubview:self.mainScrollView];
@@ -69,54 +69,67 @@
     }
 }
 
+- (void)addTeaserGrouping:(NSString*)type {
+    
+    CGFloat mainScrollY = self.mainScrollView.contentSize.height - 6.f;
+    CGFloat centerScrollX = self.mainScrollView.frame.origin.x;
+    CGFloat centerScrollWidth = self.mainScrollView.frame.size.width;
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        centerScrollWidth = 640.0f; //value by design
+        centerScrollX = (self.mainScrollView.frame.size.width - centerScrollWidth) / 2;
+    }
+    
+    if ([type isEqualToString:@"top_sellers"]) {
+        mainScrollY = [self loadTopSellersTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
+        mainScrollY += 6.0f;
+        
+        [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.frame.size.width,
+                                                       mainScrollY)];
+    }
+}
+
 - (CGFloat)loadMainTeasersInScrollView:(UIScrollView*)scrollView
                              yPosition:(CGFloat)yPosition
 {
-    for (RITeaserGrouping* teaserGrouping in self.teaserGroupings) {
-        if ([teaserGrouping.type isEqualToString:@"main_teasers"]) {
-            //found it
-            
-            if (!self.mainTeaserView)
-            {
-                self.mainTeaserLastIndex = RI_IS_RTL?teaserGrouping.teaserComponents.count-1:0;
-            }
-            
-            self.mainTeaserView = [[JAMainTeaserView alloc] initWithFrame:CGRectMake(scrollView.bounds.origin.x,
-                                                                                                  yPosition,
-                                                                                                  scrollView.bounds.size.width,
-                                                                                                  1)]; //height is set by the view itself
-            [scrollView addSubview:self.mainTeaserView];
-            self.mainTeaserView.teaserGrouping = teaserGrouping;
-            [self.mainTeaserView load];
-            [self.mainTeaserView scrollToIndex:self.mainTeaserLastIndex];
-            
-            yPosition += self.mainTeaserView.frame.size.height;
-            
-            break;
+    if ([self.teaserGroupings objectForKey:@"main_teasers"]) {
+        RITeaserGrouping* teaserGrouping = [self.teaserGroupings objectForKey:@"main_teasers"];
+        
+        if (!self.mainTeaserView)
+        {
+            self.mainTeaserLastIndex = RI_IS_RTL?teaserGrouping.teaserComponents.count-1:0;
         }
+        
+        self.mainTeaserView = [[JAMainTeaserView alloc] initWithFrame:CGRectMake(scrollView.bounds.origin.x,
+                                                                                 yPosition,
+                                                                                 scrollView.bounds.size.width,
+                                                                                 1)]; //height is set by the view itself
+        [scrollView addSubview:self.mainTeaserView];
+        self.mainTeaserView.teaserGrouping = teaserGrouping;
+        [self.mainTeaserView load];
+        [self.mainTeaserView scrollToIndex:self.mainTeaserLastIndex];
+        
+        yPosition += self.mainTeaserView.frame.size.height;
     }
+    
     return yPosition;
 }
 
 - (CGFloat)loadSmallTeasersInScrollView:(UIScrollView*)scrollView
                               yPosition:(CGFloat)yPosition
 {
-    for (RITeaserGrouping* teaserGrouping in self.teaserGroupings) {
-        if ([teaserGrouping.type isEqualToString:@"small_teasers"]) {
-            //found it
-            
-            JASmallTeaserView* smallTeaserView = [[JASmallTeaserView alloc] initWithFrame:CGRectMake(scrollView.bounds.origin.x,
-                                                                                                     yPosition,
-                                                                                                     scrollView.bounds.size.width,
-                                                                                                     1)]; //height is set by the view itself
-            [scrollView addSubview:smallTeaserView];
-            smallTeaserView.teaserGrouping = teaserGrouping;
-            [smallTeaserView load];
-            
-            yPosition += smallTeaserView.frame.size.height;
-            
-            break;
-        }
+    if ([self.teaserGroupings objectForKey:@"small_teasers"]) {
+        RITeaserGrouping* teaserGrouping = [self.teaserGroupings objectForKey:@"small_teasers"];
+        
+        JASmallTeaserView* smallTeaserView = [[JASmallTeaserView alloc] initWithFrame:CGRectMake(scrollView.bounds.origin.x,
+                                                                                                 yPosition,
+                                                                                                 scrollView.bounds.size.width,
+                                                                                                 1)]; //height is set by the view itself
+        [scrollView addSubview:smallTeaserView];
+        smallTeaserView.teaserGrouping = teaserGrouping;
+        [smallTeaserView load];
+        
+        yPosition += smallTeaserView.frame.size.height;
+        
     }
     return yPosition;
 }
@@ -126,22 +139,19 @@
                                  yPosition:(CGFloat)yPosition
                                      width:(CGFloat)width
 {
-    for (RITeaserGrouping* teaserGrouping in self.teaserGroupings) {
-        if ([teaserGrouping.type isEqualToString:@"campaigns"]) {
-            //found it
-            
-            JACampaignsTeaserView* campaignsTeaserView = [[JACampaignsTeaserView alloc] initWithFrame:CGRectMake(xPosition,
-                                                                                                                 yPosition,
-                                                                                                                 width,
-                                                                                                                 1)]; //height is set by the view itself
-            [scrollView addSubview:campaignsTeaserView];
-            campaignsTeaserView.teaserGrouping = teaserGrouping;
-            [campaignsTeaserView load];
-            
-            yPosition += campaignsTeaserView.frame.size.height;
-            
-            break;
-        }
+    if ([self.teaserGroupings objectForKey:@"campaigns"]) {
+        RITeaserGrouping* teaserGrouping = [self.teaserGroupings objectForKey:@"campaigns"];
+        
+        JACampaignsTeaserView* campaignsTeaserView = [[JACampaignsTeaserView alloc] initWithFrame:CGRectMake(xPosition,
+                                                                                                             yPosition,
+                                                                                                             width,
+                                                                                                             1)]; //height is set by the view itself
+        [scrollView addSubview:campaignsTeaserView];
+        campaignsTeaserView.teaserGrouping = teaserGrouping;
+        [campaignsTeaserView load];
+        
+        yPosition += campaignsTeaserView.frame.size.height;
+        
     }
     return yPosition;
 }
@@ -151,22 +161,19 @@
                              yPosition:(CGFloat)yPosition
                                  width:(CGFloat)width
 {
-    for (RITeaserGrouping* teaserGrouping in self.teaserGroupings) {
-        if ([teaserGrouping.type isEqualToString:@"shop_teasers"]) {
-            //found it
-            
-            JAShopTeaserView* shopTeaserView = [[JAShopTeaserView alloc] initWithFrame:CGRectMake(xPosition,
-                                                                                                  yPosition,
-                                                                                                  width,
-                                                                                                  1)]; //height is set by the view itself
-            [scrollView addSubview:shopTeaserView];
-            shopTeaserView.teaserGrouping = teaserGrouping;
-            [shopTeaserView load];
-            
-            yPosition += shopTeaserView.frame.size.height;
-            
-            break;
-        }
+    if ([self.teaserGroupings objectForKey:@"shop_teasers"]) {
+        RITeaserGrouping* teaserGrouping = [self.teaserGroupings objectForKey:@"shop_teasers"];
+        
+        JAShopTeaserView* shopTeaserView = [[JAShopTeaserView alloc] initWithFrame:CGRectMake(xPosition,
+                                                                                              yPosition,
+                                                                                              width,
+                                                                                              1)]; //height is set by the view itself
+        [scrollView addSubview:shopTeaserView];
+        shopTeaserView.teaserGrouping = teaserGrouping;
+        [shopTeaserView load];
+        
+        yPosition += shopTeaserView.frame.size.height;
+        
     }
     return yPosition;
 }
@@ -176,22 +183,19 @@
                               yPosition:(CGFloat)yPosition
                                   width:(CGFloat)width
 {
-    for (RITeaserGrouping* teaserGrouping in self.teaserGroupings) {
-        if ([teaserGrouping.type isEqualToString:@"brand_teasers"]) {
-            //found it
-            
-            JABrandTeaserView* brandTeaserView = [[JABrandTeaserView alloc] initWithFrame:CGRectMake(xPosition,
-                                                                                                     yPosition,
-                                                                                                     width,
-                                                                                                     1)]; //height is set by the view itself
-            [scrollView addSubview:brandTeaserView];
-            brandTeaserView.teaserGrouping = teaserGrouping;
-            [brandTeaserView load];
-            
-            yPosition += brandTeaserView.frame.size.height;
-            
-            break;
-        }
+    if ([self.teaserGroupings objectForKey:@"brand_teasers"]) {
+        RITeaserGrouping* teaserGrouping = [self.teaserGroupings objectForKey:@"brand_teasers"];
+        
+        JABrandTeaserView* brandTeaserView = [[JABrandTeaserView alloc] initWithFrame:CGRectMake(xPosition,
+                                                                                                 yPosition,
+                                                                                                 width,
+                                                                                                 1)]; //height is set by the view itself
+        [scrollView addSubview:brandTeaserView];
+        brandTeaserView.teaserGrouping = teaserGrouping;
+        [brandTeaserView load];
+        
+        yPosition += brandTeaserView.frame.size.height;
+        
     }
     return yPosition;
 }
@@ -201,22 +205,19 @@
                                   yPosition:(CGFloat)yPosition
                                       width:(CGFloat)width
 {
-    for (RITeaserGrouping* teaserGrouping in self.teaserGroupings) {
-        if ([teaserGrouping.type isEqualToString:@"shop_of_week"]) {
-            //found it
-            
-            JAShopsWeekTeaserView* shopsWeekTeaserView = [[JAShopsWeekTeaserView alloc] initWithFrame:CGRectMake(xPosition,
-                                                                                                                 yPosition,
-                                                                                                                 width,
-                                                                                                                 1)]; //height is set by the view itself
-            [scrollView addSubview:shopsWeekTeaserView];
-            shopsWeekTeaserView.teaserGrouping = teaserGrouping;
-            [shopsWeekTeaserView load];
-            
-            yPosition += shopsWeekTeaserView.frame.size.height;
-            
-            break;
-        }
+    if ([self.teaserGroupings objectForKey:@"shop_of_week"]) {
+        RITeaserGrouping* teaserGrouping = [self.teaserGroupings objectForKey:@"shop_of_week"];
+        
+        JAShopsWeekTeaserView* shopsWeekTeaserView = [[JAShopsWeekTeaserView alloc] initWithFrame:CGRectMake(xPosition,
+                                                                                                             yPosition,
+                                                                                                             width,
+                                                                                                             1)]; //height is set by the view itself
+        [scrollView addSubview:shopsWeekTeaserView];
+        shopsWeekTeaserView.teaserGrouping = teaserGrouping;
+        [shopsWeekTeaserView load];
+        
+        yPosition += shopsWeekTeaserView.frame.size.height;
+        
     }
     return yPosition;
 }
@@ -226,22 +227,19 @@
                                       yPosition:(CGFloat)yPosition
                                           width:(CGFloat)width
 {
-    for (RITeaserGrouping* teaserGrouping in self.teaserGroupings) {
-        if ([teaserGrouping.type isEqualToString:@"featured_stores"]) {
-            //found it
-            
-            JAFeatureStoresTeaserView* featureStoresTeaserView = [[JAFeatureStoresTeaserView alloc] initWithFrame:CGRectMake(xPosition,
-                                                                                                                             yPosition,
-                                                                                                                             width,
-                                                                                                                             1)]; //height is set by the view itself
-            [scrollView addSubview:featureStoresTeaserView];
-            featureStoresTeaserView.teaserGrouping = teaserGrouping;
-            [featureStoresTeaserView load];
-            
-            yPosition += featureStoresTeaserView.frame.size.height;
-            
-            break;
-        }
+    if ([self.teaserGroupings objectForKey:@"featured_stores"]) {
+        RITeaserGrouping* teaserGrouping = [self.teaserGroupings objectForKey:@"featured_stores"];
+        
+        JAFeatureStoresTeaserView* featureStoresTeaserView = [[JAFeatureStoresTeaserView alloc] initWithFrame:CGRectMake(xPosition,
+                                                                                                                         yPosition,
+                                                                                                                         width,
+                                                                                                                         1)]; //height is set by the view itself
+        [scrollView addSubview:featureStoresTeaserView];
+        featureStoresTeaserView.teaserGrouping = teaserGrouping;
+        [featureStoresTeaserView load];
+        
+        yPosition += featureStoresTeaserView.frame.size.height;
+        
     }
     return yPosition;
 }
@@ -251,22 +249,19 @@
                                    yPosition:(CGFloat)yPosition
                                        width:(CGFloat)width
 {
-    for (RITeaserGrouping* teaserGrouping in self.teaserGroupings) {
-        if ([teaserGrouping.type isEqualToString:@"top_sellers"]) {
-            //found it
-            
-            JATopSellersTeaserView* topSellersTeaserView = [[JATopSellersTeaserView alloc] initWithFrame:CGRectMake(xPosition,
-                                                                                                                    yPosition,
-                                                                                                                    width,
-                                                                                                                    1)]; //height is set by the view itself
-            [scrollView addSubview:topSellersTeaserView];
-            topSellersTeaserView.teaserGrouping = teaserGrouping;
-            [topSellersTeaserView load];
-            
-            yPosition += topSellersTeaserView.frame.size.height;
-            
-            break;
-        }
+    if ([self.teaserGroupings objectForKey:@"top_sellers"]) {
+        RITeaserGrouping* teaserGrouping = [self.teaserGroupings objectForKey:@"top_sellers"];
+        
+        JATopSellersTeaserView* topSellersTeaserView = [[JATopSellersTeaserView alloc] initWithFrame:CGRectMake(xPosition,
+                                                                                                                yPosition,
+                                                                                                                width,
+                                                                                                                1)]; //height is set by the view itself
+        [scrollView addSubview:topSellersTeaserView];
+        topSellersTeaserView.teaserGrouping = teaserGrouping;
+        [topSellersTeaserView load];
+        
+        yPosition += topSellersTeaserView.frame.size.height;
+        
     }
     return yPosition;
 }

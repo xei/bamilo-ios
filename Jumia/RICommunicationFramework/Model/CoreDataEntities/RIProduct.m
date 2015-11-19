@@ -110,11 +110,13 @@
 @synthesize fashion;
 
 + (NSString *)getCompleteProductWithSku:(NSString*)sku
+                          withParameter:(NSDictionary*)parameter
                            successBlock:(void (^)(id product))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
     NSString *finalUrl = [NSString stringWithFormat:@"%@%@catalog/detail?sku=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, sku];
     return [RIProduct getCompleteProductWithUrl:finalUrl
+                                  withParameter:parameter
                                    successBlock:^(id product) {
                                        successBlock(product);
                                    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
@@ -123,12 +125,13 @@
 }
 
 + (NSString *)getCompleteProductWithUrl:(NSString*)url
+                          withParameter:(NSDictionary*)parameter
                            successBlock:(void (^)(id product))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
     url = [url  stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
-                                                            parameters:nil
+                                                            parameters:parameter
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime

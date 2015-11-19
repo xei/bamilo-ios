@@ -20,6 +20,10 @@
 @dynamic targetType;
 @dynamic title;
 @dynamic url;
+@dynamic brand;
+@dynamic clickUrl;
+@dynamic maxSavingPercentage;
+@dynamic sku;
 @dynamic price;
 @dynamic priceEuroConverted;
 @dynamic priceFormatted;
@@ -79,6 +83,26 @@
         
         if ([teaserComponentJSON objectForKey:@"url"]) {
             newTeaserComponent.url = [teaserComponentJSON objectForKey:@"url"];
+        }
+        
+        if ([teaserComponentJSON objectForKey:@"target"]) {
+            newTeaserComponent.url = [teaserComponentJSON objectForKey:@"target"];
+        }
+        
+        if ([teaserComponentJSON objectForKey:@"brand"]) {
+            newTeaserComponent.brand = [teaserComponentJSON objectForKey:@"brand"];
+        }
+        
+        if ([teaserComponentJSON objectForKey:@"click_url"]) {
+            newTeaserComponent.clickUrl = [teaserComponentJSON objectForKey:@"click_url"];
+        }
+        
+        if ([teaserComponentJSON objectForKey:@"max_saving_percentage"]) {
+            newTeaserComponent.maxSavingPercentage = [teaserComponentJSON objectForKey:@"max_saving_percentage"];
+        }
+        
+        if ([teaserComponentJSON objectForKey:@"sku"]) {
+            newTeaserComponent.sku = [teaserComponentJSON objectForKey:@"sku"];
         }
         
         if ([teaserComponentJSON objectForKey:@"max_price"]) {
