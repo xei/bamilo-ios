@@ -189,7 +189,9 @@
                                                                    RITeaserGrouping* teaserGrouping = [RITeaserGrouping parseTeaserGrouping:metadata
                                                                                                                                       country:configuration];
                                                                    if (VALID_NOTEMPTY(teaserGrouping, RITeaserGrouping)) {
-                                                                       richBlock(teaserGrouping);
+                                                                       if (richBlock) {
+                                                                           richBlock(teaserGrouping);
+                                                                       }
                                                                    } else {
                                                                        failureBlock(apiResponse, nil);
                                                                    }

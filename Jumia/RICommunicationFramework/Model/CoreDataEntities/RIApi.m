@@ -403,6 +403,14 @@ countryUserAgentInjection:(NSString*)countryUserAgentInjection
                                               withSuccessBlock:^(NSDictionary *teaserGroupings, BOOL richTeaserGrouping) {
                                                   [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
                                                   [[NSNotificationCenter defaultCenter] postNotificationName:kHomeShouldReload object:nil];
+                                                  
+                                                  if ([teaserGroupings objectForKey:@"richTeaserGroupings"]) {
+                                                      [RITeaserGrouping getTeaserRichRelevance:[teaserGroupings objectForKey:@"richTeaserGroupings"]
+                                                                                  successBlock:^(RITeaserGrouping *richTeaserGrouping) {
+                                                                                      [[NSNotificationCenter defaultCenter] postNotificationName:kHomeShouldReload object:nil];
+                                                                                  }
+                                                                               andFailureBlock:failureBlock];
+                                                  }
                                                   successBlock();
                                               } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
                                                   [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
