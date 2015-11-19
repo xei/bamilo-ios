@@ -7,7 +7,6 @@
 //
 
 #import "JACenterNavigationController.h"
-#import "JANavigationBarView.h"
 
 #import "JAChooseCountryViewController.h"
 #import "JAHomeViewController.h"
@@ -1660,7 +1659,7 @@
     [self.navigationItem setHidesBackButton:YES
                                    animated:NO];
     
-    self.navigationBarView = [JANavigationBarView getNewNavBarView];
+    self.navigationBarView = [[JACustomNavigationBarView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     [self.navigationBarView initialSetup];
 
     
