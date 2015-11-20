@@ -177,8 +177,8 @@
         if (VALID_NOTEMPTY(teaserComponent.url, NSString)) {
             [userInfo setObject:teaserComponent.url forKey:@"url"];
             
-            if (VALID_NOTEMPTY(teaserComponent.clickUrl, NSString)) {
-                [userInfo setObject:teaserComponent.clickUrl forKey:@"richRelevance"];
+            if (VALID_NOTEMPTY(teaserComponent.richRelevance, NSString)) {
+                [userInfo setObject:teaserComponent.richRelevance forKey:@"rich_relevance"];
             }
             
             [[NSNotificationCenter defaultCenter] postNotificationName:notificationName

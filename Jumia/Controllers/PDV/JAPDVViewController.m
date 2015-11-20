@@ -390,7 +390,7 @@ JAActivityViewControllerDelegate
     
     NSDictionary *richParameter;
     if (VALID_NOTEMPTY(self.richRelevanceParameter, NSString)) {
-        richParameter = [NSDictionary dictionaryWithObject:self.richRelevanceParameter forKey:@"click_url"];
+        richParameter = [NSDictionary dictionaryWithObject:self.richRelevanceParameter forKey:@"rich_parameter"];
     } else
         richParameter = nil;
     
