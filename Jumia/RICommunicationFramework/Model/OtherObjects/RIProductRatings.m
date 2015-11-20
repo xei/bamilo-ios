@@ -219,15 +219,12 @@
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                               {
-                                                                  NSDictionary* data = [metadata objectForKey:@"data"];
-                                                                  if (VALID_NOTEMPTY(data, NSDictionary)) {
-                                                                      NSDictionary* ratings = [data objectForKey:@"ratings"];
-                                                                      if (VALID_NOTEMPTY(ratings, NSDictionary)) {
-                                                                          NSDictionary* stars = [ratings objectForKey:@"by_stars"];
-                                                                          if (VALID_NOTEMPTY(stars, NSDictionary)) {
-                                                                              successBlock(stars);
-                                                                              return;
-                                                                          }
+                                                                  NSDictionary* ratings = [metadata objectForKey:@"ratings"];
+                                                                  if (VALID_NOTEMPTY(ratings, NSDictionary)) {
+                                                                      NSDictionary* stars = [ratings objectForKey:@"by_stars"];
+                                                                      if (VALID_NOTEMPTY(stars, NSDictionary)) {
+                                                                          successBlock(stars);
+                                                                          return;
                                                                       }
                                                                   }
                                                               }
