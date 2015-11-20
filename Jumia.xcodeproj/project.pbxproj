@@ -10194,7 +10194,7 @@
 				CE73D4FF19E5866D0074F7F3 /* Model_1.1.xcdatamodel */,
 				B5A3029019811E9200F71726 /* Model.xcdatamodel */,
 			);
-			currentVersion = CE35147F1BB1AE370076EF1F /* Model_1.9.xcdatamodel */;
+			currentVersion = 9D39EA2D1BFFA32D00C3F6E9 /* Model_1.10.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
