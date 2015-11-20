@@ -21,7 +21,7 @@
 @dynamic title;
 @dynamic url;
 @dynamic brand;
-@dynamic clickUrl;
+@dynamic richRelevance;
 @dynamic maxSavingPercentage;
 @dynamic sku;
 @dynamic price;
@@ -93,8 +93,8 @@
             newTeaserComponent.brand = [teaserComponentJSON objectForKey:@"brand"];
         }
         
-        if ([teaserComponentJSON objectForKey:@"click_url"]) {
-            newTeaserComponent.clickUrl = [teaserComponentJSON objectForKey:@"click_url"];
+        if ([teaserComponentJSON objectForKey:@"rich_relevance"]) {
+            newTeaserComponent.richRelevance = [teaserComponentJSON objectForKey:@"rich_relevance"];
         }
         
         if ([teaserComponentJSON objectForKey:@"max_saving_percentage"]) {

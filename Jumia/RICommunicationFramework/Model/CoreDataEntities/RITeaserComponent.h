@@ -22,7 +22,7 @@
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * url;
 @property (nonatomic, retain) NSString * brand;
-@property (nonatomic, retain) NSString * clickUrl;
+@property (nonatomic, retain) NSString * richRelevance;
 @property (nonatomic, retain) NSNumber * maxSavingPercentage;
 @property (nonatomic, retain) NSString * sku;
 @property (nonatomic, retain) NSNumber * price;

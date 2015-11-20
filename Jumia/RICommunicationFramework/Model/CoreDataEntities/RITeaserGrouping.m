@@ -115,56 +115,6 @@
     return operationID;
 }
 
-
-+ (NSDictionary*)parseTeaserGroupings:(NSArray*)teaserGroupingsJSONArray
-                         country:(RICountryConfiguration*)country
-{
-    NSMutableDictionary* newTeaserGroupings = [NSMutableDictionary new];
-    NSMutableDictionary* newRichTeaserGroupings = [NSMutableDictionary new];
-    NSMutableDictionary* newFormTeaser = [NSMutableDictionary new];
-    
-    if (VALID_NOTEMPTY(teaserGroupingsJSONArray, NSArray)) {
-        
-        for (NSDictionary* teaserGroupingJSON in teaserGroupingsJSONArray) {
-            
-            if (VALID_NOTEMPTY(teaserGroupingJSON, NSDictionary)) {
-                
-                if ([teaserGroupingJSON objectForKey:@"has_data"]) {
-                    NSNumber* hasData = [teaserGroupingJSON objectForKey:@"has_data"];
-                    if ( [hasData boolValue]) {
-                        RITeaserGrouping* newTeaserGrouping = [RITeaserGrouping parseTeaserGrouping:teaserGroupingJSON
-                                                                                            country:country];
-                        [newTeaserGroupings setObject:newTeaserGrouping forKey:[teaserGroupingJSON objectForKey:@"type"]];
-                    } else {
-                        
-                        if ([[teaserGroupingJSON objectForKey:@"type"] isEqualToString:@"top_sellers"]) {
-                            [newRichTeaserGroupings setObject:teaserGroupingJSON forKey:[teaserGroupingJSON objectForKey:@"type"]];
-                            
-                        } else
-                            if ([[teaserGroupingJSON objectForKey:@"type"] isEqualToString:@"form_newsletter"]) {
-                                
-#warning TODO parse newsletter form
-                                RIForm* form_newsletter = [RIForm parseForm:[teaserGroupingJSON objectForKey:@"data"]];
-                                [newFormTeaser setObject:form_newsletter forKey:@"form_newsletter"];
-                            }
-                    }
-                }
-            }
-        }
-    }
-
-    if (VALID_NOTEMPTY(newRichTeaserGroupings, NSMutableDictionary)) {
-        [newTeaserGroupings setObject:newRichTeaserGroupings forKey:@"richTeaserGroupings"];
-        
-    }
-    if (VALID_NOTEMPTY(newFormTeaser, NSMutableDictionary)) {
-        [newTeaserGroupings setObject:newFormTeaser forKey:@"formTeaser"];
-        
-    }
-    
-    return [newTeaserGroupings copy];
-}
-
 + (void)getTeaserRichRelevance:(NSDictionary*) richTeasers
                   successBlock:(void(^)(RITeaserGrouping * richTeaserGrouping))richBlock
                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
@@ -172,11 +122,11 @@
     NSDictionary * topSellerJson = [richTeasers objectForKey:@"top_sellers"];
     NSURL* url = [NSURL URLWithString:[topSellerJson objectForKey:@"url"]];
     [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
-                                                            parameters:nil
-                                                        httpMethodPost:YES
-                                                             cacheType:RIURLCacheNoCache
-                                                             cacheTime:RIURLCacheDefaultTime
-                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                     parameters:nil
+                                                 httpMethodPost:YES
+                                                      cacheType:RIURLCacheNoCache
+                                                      cacheTime:RIURLCacheDefaultTime
+                                             userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                    successBlock:^(RIApiResponse apiResponse, NSDictionary* jsonObject){
                                                        [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
                                                            NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
@@ -187,7 +137,7 @@
                                                                if(VALID_NOTEMPTY(data, NSArray))
                                                                {
                                                                    RITeaserGrouping* teaserGrouping = [RITeaserGrouping parseTeaserGrouping:metadata
-                                                                                                                                      country:configuration];
+                                                                                                                                    country:configuration];
                                                                    if (VALID_NOTEMPTY(teaserGrouping, RITeaserGrouping)) {
                                                                        if (richBlock) {
                                                                            richBlock(teaserGrouping);
@@ -222,6 +172,56 @@
     
     
 }
+
++ (NSDictionary*)parseTeaserGroupings:(NSArray*)teaserGroupingsJSONArray
+                         country:(RICountryConfiguration*)country
+{
+    NSMutableDictionary* newTeaserGroupings = [NSMutableDictionary new];
+    NSMutableDictionary* newRichTeaserGroupings = [NSMutableDictionary new];
+    NSMutableDictionary* newFormTeaser = [NSMutableDictionary new];
+    
+    if (VALID_NOTEMPTY(teaserGroupingsJSONArray, NSArray)) {
+        
+        for (NSDictionary* teaserGroupingJSON in teaserGroupingsJSONArray) {
+            
+            if (VALID_NOTEMPTY(teaserGroupingJSON, NSDictionary)) {
+                
+                if ([teaserGroupingJSON objectForKey:@"has_data"]) {
+                    NSNumber* hasData = [teaserGroupingJSON objectForKey:@"has_data"];
+                    if ( [hasData boolValue]) {
+                        
+                        if ([[teaserGroupingJSON objectForKey:@"type"] isEqualToString:@"form_newsletter"]) {
+                            RIForm* form_newsletter = [RIForm parseForm:[teaserGroupingJSON objectForKey:@"data"]];
+                            [newFormTeaser setObject:form_newsletter forKey:@"form_newsletter"];
+                        } else {
+                            
+                            RITeaserGrouping* newTeaserGrouping = [RITeaserGrouping parseTeaserGrouping:teaserGroupingJSON
+                                                                                                country:country];
+                            [newTeaserGroupings setObject:newTeaserGrouping forKey:[teaserGroupingJSON objectForKey:@"type"]];
+                        }
+                    } else {
+                        if ([[teaserGroupingJSON objectForKey:@"type"] isEqualToString:@"top_sellers"]) {
+                            [newRichTeaserGroupings setObject:teaserGroupingJSON forKey:[teaserGroupingJSON objectForKey:@"type"]];
+                            
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (VALID_NOTEMPTY(newRichTeaserGroupings, NSMutableDictionary)) {
+        [newTeaserGroupings setObject:newRichTeaserGroupings forKey:@"richTeaserGroupings"];
+        
+    }
+    if (VALID_NOTEMPTY(newFormTeaser, NSMutableDictionary)) {
+        [newTeaserGroupings setObject:newFormTeaser forKey:@"formTeaser"];
+        
+    }
+    
+    return [newTeaserGroupings copy];
+}
+
 
 + (RITeaserGrouping*)parseTeaserGrouping:(NSDictionary*)teaserGroupingJSON
                                  country:(RICountryConfiguration*)country

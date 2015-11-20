@@ -243,7 +243,6 @@
     </entity>
     <entity name="RITeaserComponent" representedClassName="RITeaserComponent" syncable="YES">
         <attribute name="brand" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="clickUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="endingDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="imageLandscapeUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="imagePortraitUrl" optional="YES" attributeType="String" syncable="YES"/>
@@ -255,6 +254,7 @@
         <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="priceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="priceFormatted" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="richRelevance" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sku" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="specialPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="specialPriceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
