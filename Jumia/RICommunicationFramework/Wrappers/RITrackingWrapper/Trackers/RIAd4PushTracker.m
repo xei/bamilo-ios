@@ -715,7 +715,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     [userInfo setObject:filter forKey:@"filter"];
                 }
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_url_key":arguments} userInfo:userInfo];
             }
             else if ([key isEqualToString:@"cbr"] && VALID_NOTEMPTY(arguments, NSString))
             {
@@ -728,7 +728,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     [userInfo setObject:filter forKey:@"filter"];
                 }
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_url_key":arguments} userInfo:userInfo];
             }
             else if ([key isEqualToString:@"cp"] && VALID_NOTEMPTY(arguments, NSString))
             {
@@ -741,7 +741,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     [userInfo setObject:filter forKey:@"filter"];
                 }
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_url_key":arguments} userInfo:userInfo];
             }
             else if ([key isEqualToString:@"cin"] && VALID_NOTEMPTY(arguments, NSString))
             {
@@ -754,7 +754,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     [userInfo setObject:filter forKey:@"filter"];
                 }
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_url_key":arguments} userInfo:userInfo];
             }
             else if ([key isEqualToString:@"cpu"] && VALID_NOTEMPTY(arguments, NSString))
             {
@@ -767,7 +767,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     [userInfo setObject:filter forKey:@"filter"];
                 }
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_url_key":arguments} userInfo:userInfo];
             }
             else if ([key isEqualToString:@"cpd"] && VALID_NOTEMPTY(arguments, NSString))
             {
@@ -780,7 +780,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     [userInfo setObject:filter forKey:@"filter"];
                 }
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_url_key":arguments} userInfo:userInfo];
             }
             else if ([key isEqualToString:@"cb"] && VALID_NOTEMPTY(arguments, NSString))
             {
@@ -793,7 +793,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     [userInfo setObject:filter forKey:@"filter"];
                 }
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_url_key":arguments} userInfo:userInfo];
             }
             else if ([key isEqualToString:@"cn"] && VALID_NOTEMPTY(arguments, NSString))
             {
@@ -806,7 +806,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     [userInfo setObject:filter forKey:@"filter"];
                 }
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_name":arguments} userInfo:userInfo];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_url_key":arguments} userInfo:userInfo];
             }
             else if ([key isEqualToString:@"n"] && VALID_NOTEMPTY(arguments, NSString))
             {
