@@ -359,4 +359,6 @@
 
 #define STRING_USER_REVIEWS RILocalizedString(@"user_reviews", nil)
 
+#define STRING_PROFILE RILocalizedString(@"profile", nil)
+
 #endif
