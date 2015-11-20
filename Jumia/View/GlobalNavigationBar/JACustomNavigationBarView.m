@@ -78,7 +78,7 @@
         _cartCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(288, 6, 25, 15)];
         [_cartCountLabel setTextAlignment:NSTextAlignmentCenter];
         [_cartCountLabel setTextColor:JAOrange1Color];
-        [_cartCountLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:9]];
+        [_cartCountLabel setFont:[UIFont fontWithName:kFontRegularName size:9]];
     }
     return _cartCountLabel;
 }
