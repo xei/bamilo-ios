@@ -31,7 +31,6 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 
 @interface RIProduct : NSManagedObject
 
-@property (nonatomic, retain) NSString * activatedAt;
 @property (nonatomic, retain) NSString * attributeCareLabel;
 @property (nonatomic, retain) NSString * attributeColor;
 @property (nonatomic, retain) NSString * attributeDescription;
@@ -41,7 +40,6 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSNumber * avr;
 @property (nonatomic, retain) NSString * brand;
 @property (nonatomic, retain) NSString * descriptionString;
-@property (nonatomic, retain) NSString * idCatalogConfig;
 @property (nonatomic, retain) NSNumber * maxPrice;
 @property (nonatomic, retain) NSString * maxPriceFormatted;
 @property (nonatomic, retain) NSNumber * maxPriceEuroConverted;

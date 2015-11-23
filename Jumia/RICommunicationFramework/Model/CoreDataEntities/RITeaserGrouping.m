@@ -120,7 +120,7 @@
                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
 {
     NSDictionary * topSellerJson = [richTeasers objectForKey:@"top_sellers"];
-    NSURL* url = [NSURL URLWithString:[topSellerJson objectForKey:@"url"]];
+    NSURL* url = [NSURL URLWithString:[topSellerJson objectForKey:@"target"]];
     [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
                                                      parameters:nil
                                                  httpMethodPost:YES

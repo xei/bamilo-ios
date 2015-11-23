@@ -62,7 +62,7 @@
         <attribute name="ratingRequiresLogin" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="reviewIsEnabled" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="reviewRequiresLogin" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="richRelevanceEnabled" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="richRelevanceEnabled" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="thousandsSep" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="languages" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RILanguage" inverseName="countryConfig" inverseEntity="RILanguage" syncable="YES"/>
     </entity>
@@ -161,7 +161,6 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="RIProduct" representedClassName="RIProduct" syncable="YES">
-        <attribute name="activatedAt" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="attributeCareLabel" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="attributeColor" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="attributeDescription" optional="YES" attributeType="String" syncable="YES"/>
@@ -173,7 +172,6 @@
         <attribute name="bucketActive" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="descriptionString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="favoriteAddDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="idCatalogConfig" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isNew" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="maxPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="maxPriceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -300,7 +298,7 @@
         <element name="RIImageResolution" positionX="-270" positionY="560" width="128" height="103"/>
         <element name="RILanguage" positionX="-270" positionY="-207" width="128" height="103"/>
         <element name="RINewsletterCategory" positionX="-684" positionY="287" width="128" height="73"/>
-        <element name="RIProduct" positionX="-99" positionY="0" width="128" height="733"/>
+        <element name="RIProduct" positionX="-99" positionY="0" width="128" height="705"/>
         <element name="RIProductSimple" positionX="162" positionY="14" width="128" height="255"/>
         <element name="RISearchSuggestion" positionX="-828" positionY="183" width="128" height="105"/>
         <element name="RISection" positionX="-261" positionY="428" width="128" height="103"/>
