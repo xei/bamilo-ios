@@ -2520,24 +2520,24 @@
 		CECD05A71ADFF2DC00EC51E3 /* RITeaserGrouping.m in Sources */ = {isa = PBXBuildFile; fileRef = CECD05A21ADFF2DC00EC51E3 /* RITeaserGrouping.m */; };
 		CED30C27199CBF0E00C67F4B /* JAColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C26199CBF0E00C67F4B /* JAColorView.m */; };
 		CED30C2A199CC8F200C67F4B /* JAColorFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C29199CC8F200C67F4B /* JAColorFilterCell.m */; };
-		CED6204E1BEA5EE700FA8403 /* JACollectionSeparator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D471BE3F45400DD60DD /* JACollectionSeparator.m */; settings = {ASSET_TAGS = (); }; };
-		CED6204F1BEA5EE700FA8403 /* JACollectionSeparator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D471BE3F45400DD60DD /* JACollectionSeparator.m */; settings = {ASSET_TAGS = (); }; };
-		CED620501BEA5EE800FA8403 /* JACollectionSeparator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D471BE3F45400DD60DD /* JACollectionSeparator.m */; settings = {ASSET_TAGS = (); }; };
-		CED620511BEA5EE800FA8403 /* JACollectionSeparator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D471BE3F45400DD60DD /* JACollectionSeparator.m */; settings = {ASSET_TAGS = (); }; };
-		CED620521BEA5EFB00FA8403 /* JAProductCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D4A1BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.m */; settings = {ASSET_TAGS = (); }; };
-		CED620531BEA5EFC00FA8403 /* JAProductCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D4A1BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.m */; settings = {ASSET_TAGS = (); }; };
-		CED620541BEA5EFC00FA8403 /* JAProductCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D4A1BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.m */; settings = {ASSET_TAGS = (); }; };
-		CED620551BEA5EFC00FA8403 /* JAProductCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D4A1BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.m */; settings = {ASSET_TAGS = (); }; };
-		CED620581BEB526B00FA8403 /* JAFiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED620571BEB526B00FA8403 /* JAFiltersViewController.m */; settings = {ASSET_TAGS = (); }; };
-		CED620591BEB526B00FA8403 /* JAFiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED620571BEB526B00FA8403 /* JAFiltersViewController.m */; settings = {ASSET_TAGS = (); }; };
-		CED6205A1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED620571BEB526B00FA8403 /* JAFiltersViewController.m */; settings = {ASSET_TAGS = (); }; };
-		CED6205B1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED620571BEB526B00FA8403 /* JAFiltersViewController.m */; settings = {ASSET_TAGS = (); }; };
-		CED6205C1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED620571BEB526B00FA8403 /* JAFiltersViewController.m */; settings = {ASSET_TAGS = (); }; };
-		CED6205F1BEB59A900FA8403 /* JAFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED6205E1BEB59A900FA8403 /* JAFilterCell.m */; settings = {ASSET_TAGS = (); }; };
-		CED620601BEB59A900FA8403 /* JAFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED6205E1BEB59A900FA8403 /* JAFilterCell.m */; settings = {ASSET_TAGS = (); }; };
-		CED620611BEB59A900FA8403 /* JAFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED6205E1BEB59A900FA8403 /* JAFilterCell.m */; settings = {ASSET_TAGS = (); }; };
-		CED620621BEB59A900FA8403 /* JAFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED6205E1BEB59A900FA8403 /* JAFilterCell.m */; settings = {ASSET_TAGS = (); }; };
-		CED620631BEB59A900FA8403 /* JAFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED6205E1BEB59A900FA8403 /* JAFilterCell.m */; settings = {ASSET_TAGS = (); }; };
+		CED6204E1BEA5EE700FA8403 /* JACollectionSeparator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D471BE3F45400DD60DD /* JACollectionSeparator.m */; };
+		CED6204F1BEA5EE700FA8403 /* JACollectionSeparator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D471BE3F45400DD60DD /* JACollectionSeparator.m */; };
+		CED620501BEA5EE800FA8403 /* JACollectionSeparator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D471BE3F45400DD60DD /* JACollectionSeparator.m */; };
+		CED620511BEA5EE800FA8403 /* JACollectionSeparator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D471BE3F45400DD60DD /* JACollectionSeparator.m */; };
+		CED620521BEA5EFB00FA8403 /* JAProductCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D4A1BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.m */; };
+		CED620531BEA5EFC00FA8403 /* JAProductCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D4A1BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.m */; };
+		CED620541BEA5EFC00FA8403 /* JAProductCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D4A1BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.m */; };
+		CED620551BEA5EFC00FA8403 /* JAProductCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D4A1BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.m */; };
+		CED620581BEB526B00FA8403 /* JAFiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED620571BEB526B00FA8403 /* JAFiltersViewController.m */; };
+		CED620591BEB526B00FA8403 /* JAFiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED620571BEB526B00FA8403 /* JAFiltersViewController.m */; };
+		CED6205A1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED620571BEB526B00FA8403 /* JAFiltersViewController.m */; };
+		CED6205B1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED620571BEB526B00FA8403 /* JAFiltersViewController.m */; };
+		CED6205C1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED620571BEB526B00FA8403 /* JAFiltersViewController.m */; };
+		CED6205F1BEB59A900FA8403 /* JAFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED6205E1BEB59A900FA8403 /* JAFilterCell.m */; };
+		CED620601BEB59A900FA8403 /* JAFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED6205E1BEB59A900FA8403 /* JAFilterCell.m */; };
+		CED620611BEB59A900FA8403 /* JAFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED6205E1BEB59A900FA8403 /* JAFilterCell.m */; };
+		CED620621BEB59A900FA8403 /* JAFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED6205E1BEB59A900FA8403 /* JAFilterCell.m */; };
+		CED620631BEB59A900FA8403 /* JAFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED6205E1BEB59A900FA8403 /* JAFilterCell.m */; };
 		CED7C51F1B78E0560070C855 /* GoogleAppIndexing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED7C51C1B78E0560070C855 /* GoogleAppIndexing.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CED7C5201B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED7C51C1B78E0560070C855 /* GoogleAppIndexing.framework */; };
 		CED7C5211B78E0570070C855 /* GoogleAppIndexing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED7C51C1B78E0560070C855 /* GoogleAppIndexing.framework */; };
@@ -3078,6 +3078,7 @@
 		9AF49A441B1DE1B80028105D /* JAUserDataViewController~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JAUserDataViewController~iPad.xib"; sourceTree = "<group>"; };
 		9AF49A471B1DE1FF0028105D /* JANoConnectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JANoConnectionView.xib; sourceTree = "<group>"; };
 		9AF49A481B1DE1FF0028105D /* JANoConnectionView~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANoConnectionView~iPad.xib"; sourceTree = "<group>"; };
+		9D39EA2D1BFFA32D00C3F6E9 /* Model_1.10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.10.xcdatamodel; sourceTree = "<group>"; };
 		B5007ABE19A4E8EC0024035A /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		B5007AC019A4E8EC0024035A /* HockeySDK.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = HockeySDK.xcconfig; sourceTree = "<group>"; };
 		B5007AC119A4E8EC0024035A /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
@@ -10181,6 +10182,7 @@
 		B5A3028F19811E9200F71726 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				9D39EA2D1BFFA32D00C3F6E9 /* Model_1.10.xcdatamodel */,
 				CE35147F1BB1AE370076EF1F /* Model_1.9.xcdatamodel */,
 				CED7C52B1B7A3A990070C855 /* Model_1.8.xcdatamodel */,
 				CECD058B1ADFBA4E00EC51E3 /* Model_1.7.xcdatamodel */,
@@ -10192,7 +10194,7 @@
 				CE73D4FF19E5866D0074F7F3 /* Model_1.1.xcdatamodel */,
 				B5A3029019811E9200F71726 /* Model.xcdatamodel */,
 			);
-			currentVersion = CE35147F1BB1AE370076EF1F /* Model_1.9.xcdatamodel */;
+			currentVersion = 9D39EA2D1BFFA32D00C3F6E9 /* Model_1.10.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
