@@ -30,6 +30,9 @@ UIAlertViewDelegate
     BOOL _didAppeared;
     BOOL _didSubViews;
     BOOL _didPressSendReviewOrKeyboard;
+    
+    NSMutableArray *_dynamicRatingsViewsFrames;
+    NSMutableArray *_dynamicReviewsViewsFrames;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *topView;
@@ -40,6 +43,7 @@ UIAlertViewDelegate
 @property (assign, nonatomic) CGRect scrollViewInitialRect;
 @property (strong, nonatomic) UIView *centerView;
 @property (strong, nonatomic) UILabel *fixedLabel;
+@property (strong, nonatomic) UILabel *writeReviewLabel;
 @property (strong, nonatomic) UIButton *sendReviewButton;
 @property (nonatomic, strong) UISwitch *modeSwitch;
 @property (nonatomic, assign) BOOL isShowingRating;
@@ -338,7 +342,7 @@ UIAlertViewDelegate
     CGFloat dynamicFormHorizontalMargin = 6.0f;
     if(isiPad)
     {
-        dynamicFormHorizontalMargin = 250.0f;
+        dynamicFormHorizontalMargin = 200.0f;
     }
     
     if(!VALID_NOTEMPTY(self.fixedLabel, UILabel))
@@ -357,16 +361,17 @@ UIAlertViewDelegate
                                             centerViewWidth - (2 * dynamicFormHorizontalMargin),
                                             16.0f)];
     }
+    [self.fixedLabel setTextAlignment:NSTextAlignmentLeft];
 
     CGFloat currentY = CGRectGetMaxY(self.fixedLabel.frame) + 12.0f;
     CGFloat spaceBetweenFormFields = 6.0f;
     
     if (self.ratingsForm) {
-            NSInteger count = 0;
-            CGFloat initialContentY = 0;
+        NSInteger count = 0;
+        CGFloat initialContentY = 0;
         
-        BOOL isNew = NO;
         if (!self.ratingsContentView) {
+            
             self.ratingsDynamicForm = [[JADynamicForm alloc] initWithForm:self.ratingsForm
                                                          startingPosition:initialContentY
                                                                 widthSize:centerViewWidth
@@ -374,30 +379,32 @@ UIAlertViewDelegate
             
             self.ratingsContentView = [UIView new];
             [self.centerView addSubview:self.ratingsContentView];
-            isNew = YES;
+            
+            _dynamicRatingsViewsFrames = [NSMutableArray new];
         }
-        
         for (UIView *view in self.ratingsDynamicForm.formViews)
         {
             view.tag = count;
+            
             CGRect frame = view.frame;
             if(isiPad)
             {
                 frame.origin.x = dynamicFormHorizontalMargin;
-                if (![view isKindOfClass:[JAAddRatingView class]]) {
-                    frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
-                }
             }
-            else
-            {
-                frame.size.width = centerViewWidth;
-            }
-            
             view.frame = frame;
             
-            if (isNew)
+            if (!view.superview) {
                 [self.ratingsContentView addSubview:view];
+            }
             initialContentY += view.frame.size.height + spaceBetweenFormFields;
+            
+            if ([_dynamicRatingsViewsFrames count] > count) {
+                [view flipAllSubviews];
+            }else{
+                [_dynamicRatingsViewsFrames addObject:[NSValue valueWithCGRect:frame]];
+            }
+            
+            
             count++;
         }
         
@@ -419,40 +426,46 @@ UIAlertViewDelegate
                                                                 widthSize:centerViewWidth
                                                        hasFieldNavigation:YES];
             self.reviewsContentView = [UIView new];
+            [self.reviewsContentView setHidden:YES];
             [self.centerView addSubview:self.reviewsContentView];
             isNew = YES;
+            _dynamicReviewsViewsFrames = [NSMutableArray new];
         }
         
         for (int i = 0; i < self.reviewsDynamicForm.formViews.count; i++)
         {
             UIView* view = [self.reviewsDynamicForm.formViews objectAtIndex:i];
+            
+            if ([_dynamicReviewsViewsFrames count] > i) {
+                if ([view isKindOfClass:[JAAddRatingView class]]) {
+                    [view flipAllSubviews];
+                }
+            }else{
+                [_dynamicReviewsViewsFrames addObject:@1];
+            }
+            
             view.tag = i;
             CGRect frame = view.frame;
             if(isiPad)
             {
                 frame.origin.x = dynamicFormHorizontalMargin;
-                if (NO == [view isKindOfClass:[JAAddRatingView class]]) {
-                    frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
-                }else
-                    frame.size.width = centerViewWidth;
+                frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
             }
             else
             {
                 frame.size.width = centerViewWidth;
             }
+            
             if (NO == [view isKindOfClass:[JAAddRatingView class]]) {
-                if (VALID_NOTEMPTY(self.ratingsForm, RIForm) && VALID_NOTEMPTY(self.reviewsForm, RIForm)) {
                     if (isNew) {
                         //has switch
                         frame.origin.y = frame.origin.y + kDistanceBetweenStarsAndText;
                     }
-                    frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
-                }
             }
-            
+            frame.size.width = centerViewWidth - (2 * dynamicFormHorizontalMargin);
             view.frame = frame;
             
-            if (isNew) {
+            if (!view.superview) {
                 [self.reviewsContentView addSubview:view];
             }
 
@@ -471,53 +484,52 @@ UIAlertViewDelegate
 
     CGFloat modeSwitchY = currentY + self.ratingsContentView.frame.size.height;
     
-    if (self.isShowingRating && VALID_NOTEMPTY(self.ratingsContentView, UIView)) {
-        self.reviewsContentView.hidden = YES;
-        currentY += self.ratingsContentView.frame.size.height;
-    } else if (NO == self.isShowingRating && VALID_NOTEMPTY(self.reviewsContentView, UIView)){
-        self.ratingsContentView.hidden = NO;
-        currentY += self.reviewsContentView.frame.size.height;
-    }
-    
     if (VALID_NOTEMPTY(self.ratingsForm, RIForm) && VALID_NOTEMPTY(self.reviewsForm, RIForm)) {
         
-        BOOL isNew = NO;
         if (!self.modeSwitch) {
             //show the switch
             self.modeSwitch = [UISwitch new];
             [self.modeSwitch addTarget:self action:@selector(switchBetweenModes) forControlEvents:UIControlEventTouchUpInside];
             [self.modeSwitch setY:modeSwitchY];
             [self.centerView addSubview:self.modeSwitch];
-            isNew = YES;
-            
-            CGFloat modeSwitchX = 10.0f;
-            if (isiPad) {
-                modeSwitchX = 260.0f;
-            }
-            [self.modeSwitch setX:modeSwitchX];
-            
-            CGFloat writeReviewLabelX = CGRectGetMaxX(self.modeSwitch.frame) + 15.0f;
-            CGFloat maxWriteReviewWidth = centerViewWidth - writeReviewLabelX;
-            UILabel* writeReviewLabel = [UILabel new];
-            writeReviewLabel.textColor = UIColorFromRGB(0x666666);
-            writeReviewLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
-            writeReviewLabel.numberOfLines = 2;
-            writeReviewLabel.text = STRING_WRITE_FULL_REVIEW;
-            [writeReviewLabel sizeToFit];
-            CGFloat finalWidth = writeReviewLabel.frame.size.width;
-            CGFloat finalHeight = writeReviewLabel.frame.size.height;
-            CGFloat yOffset = 5.0f;
-            if (maxWriteReviewWidth < writeReviewLabel.frame.size.width) {
-                finalWidth = maxWriteReviewWidth;
-                finalHeight *= 2;
-                yOffset = 0.0f;
-            }
-            [writeReviewLabel setFrame:CGRectMake(writeReviewLabelX,
-                                                  self.modeSwitch.frame.origin.y + yOffset,
-                                                  finalWidth,
-                                                  finalHeight)];
-            [self.centerView addSubview:writeReviewLabel];
         }
+        
+        if (!VALID_NOTEMPTY(self.writeReviewLabel, UILabel)) {
+            self.writeReviewLabel = [UILabel new];
+            self.writeReviewLabel.textColor = UIColorFromRGB(0x666666);
+            self.writeReviewLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
+            self.writeReviewLabel.numberOfLines = 2;
+            self.writeReviewLabel.text = STRING_WRITE_FULL_REVIEW;
+            [self.writeReviewLabel sizeToFit];
+            [self.centerView addSubview:self.writeReviewLabel];
+        }
+        
+        CGFloat modeSwitchX = 10.0f;
+        if (isiPad) {
+            modeSwitchX = 260.0f;
+        }
+        [self.modeSwitch setX:modeSwitchX];
+        
+        CGFloat writeReviewLabelX = CGRectGetMaxX(self.modeSwitch.frame) + 15.0f;
+        CGFloat maxWriteReviewWidth = centerViewWidth - writeReviewLabelX;
+        
+        CGFloat finalWidth = self.writeReviewLabel.frame.size.width;
+        CGFloat finalHeight = self.writeReviewLabel.frame.size.height;
+        CGFloat yOffset = 5.0f;
+        if (maxWriteReviewWidth < self.writeReviewLabel.frame.size.width) {
+            finalWidth = maxWriteReviewWidth;
+            finalHeight *= 2;
+            yOffset = 0.0f;
+        }
+        
+        [self.writeReviewLabel setFrame:CGRectMake(writeReviewLabelX,
+                                                   self.modeSwitch.frame.origin.y + yOffset,
+                                                   finalWidth,
+                                                   finalHeight)];
+        
+        
+        
+        
         //CHECK
         if (_didPressSendReviewOrKeyboard) {
             currentY -= 70.0f;
@@ -526,6 +538,12 @@ UIAlertViewDelegate
     } else {
         // Add space between last form field and send review button
         currentY += 38.0f;
+    }
+    
+    if (self.isShowingRating) {
+        currentY = CGRectGetMaxY(self.modeSwitch.frame) + 20.f;
+    } else {
+        currentY = CGRectGetMaxY(self.reviewsContentView.frame) + 20.f;
     }
     
     if (!self.sendReviewButton) {
