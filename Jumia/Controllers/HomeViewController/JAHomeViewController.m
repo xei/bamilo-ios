@@ -119,8 +119,6 @@
                                                         object:nil];
     
     [self hideLoading];
-    
-    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -151,8 +149,10 @@
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+- (void)viewWillLayoutSubviews
 {
+    [super viewWillLayoutSubviews];
+    
     if (self.isLoaded) {
         [self.teaserPageView loadTeasersForFrame:[self viewBounds]];
     }
@@ -163,8 +163,6 @@
     {
         [self.fallbackView setupFallbackView:[self viewBounds] orientation:self.interfaceOrientation];
     }
-    
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 - (void)reload

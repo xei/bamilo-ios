@@ -18,7 +18,6 @@
 #import "JAFilteredNoResultsView.h"
 #import "JAAppDelegate.h"
 #import <FBSDKCoreKit/FBSDKAppEvents.h>
-#import "JANavigationBarView.h"
 #import "UIImageView+JA.h"
 #import "UIImageView+WebCache.h"
 #import "JACampaignBannerCell.h"
