@@ -145,13 +145,38 @@
 
 - (void)setSearchTypeProduct:(RISearchTypeProduct *)product
 {
-    if (VALID_NOTEMPTY(product.imagesArray, NSOrderedSet))
+    if (VALID_NOTEMPTY(product.imagesArray, NSArray))
     {
-        RIImage *imageTemp = [product.imagesArray firstObject];
-        
-        [self.imageViewItem setImageWithURL:[NSURL URLWithString:imageTemp.url]
+        NSString *imageTemp = [product.imagesArray firstObject];
+        [self.imageViewItem setImageWithURL:[NSURL URLWithString:imageTemp]
                            placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
+        [self.imageViewItem setX:30.f];
+        [self.imageViewItem setY:6.f];
+        
+        CGFloat ratio = self.imageViewItem.image.size.height/self.imageViewItem.image.size.width;
+        self.imageViewItem.width = self.width - 60;
+        self.imageViewItem.height = self.imageViewItem.width*ratio;
     }
+    [self.labelPrice setX:6];
+    [self.labelPrice setY:self.height - 13];
+    [self.labelPrice setTextAlignment:NSTextAlignmentCenter];
+    [self.labelPrice setTextColor:[UIColor redColor]];
+    [self.labelPrice setHeight:10];
+    [self.labelPrice setWidth:self.width - 12];
+    
+    [self.labelName setX:6];
+    [self.labelName setYTopOf:self.labelPrice at:13];
+    [self.labelName setTextAlignment:NSTextAlignmentCenter];
+    [self.labelName setFont:JACaptionFont];
+    [self.labelName setTextColor:JABlack800Color];
+    [self.labelName setHeight:10];
+    [self.labelName setWidth:self.width - 12];
+    
+    [self.labelBrand setX:6];
+    [self.labelBrand setYTopOf:self.labelName at:13];
+    [self.labelBrand setTextAlignment:NSTextAlignmentCenter];
+    [self.labelBrand setHeight:10];
+    [self.labelBrand setWidth:self.width - 12];
     
     self.labelBrand.text = product.brand;
     self.labelName.text = product.name;
