@@ -24,8 +24,8 @@
 @property (nonatomic, strong) NSNumber* maxDeliveryTime;
 @property (nonatomic, strong) RISeller* seller;
 
-+ (NSString*)getProductOffersForProductUrl:(NSString*)productUrl
-                              successBlock:(void (^)(NSArray *productOffers))successBlock
-                           andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
++ (NSString*)getProductOffersForProductTargetString:(NSString*)productTargetString
+                                       successBlock:(void (^)(NSArray *productOffers))successBlock
+                                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 @end

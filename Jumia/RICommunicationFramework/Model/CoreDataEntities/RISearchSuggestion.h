@@ -28,7 +28,7 @@
 @property (strong, nonatomic) NSString *priceEuroConverted;
 @property (strong, nonatomic) NSNumber *maxPercentageSaving;
 @property (strong, nonatomic) NSString *brand;
-@property (strong, nonatomic) NSString *url;
+@property (strong, nonatomic) NSString *targetString;
 @property (strong, nonatomic) NSArray *imagesArray;
 
 @end

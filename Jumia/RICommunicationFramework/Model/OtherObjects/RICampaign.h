@@ -14,9 +14,9 @@
 @property (nonatomic, strong)NSString* name;
 @property (nonatomic, strong)NSArray* campaignProducts;
 
-+ (NSString *)getCampaignWithUrl:(NSString*)url
-                    successBlock:(void (^)(RICampaign* campaign))successBlock
-                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
++ (NSString *)getCampaignWithTargetString:(NSString*)targetString
+                             successBlock:(void (^)(RICampaign* campaign))successBlock
+                          andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 + (NSString *)getCampaignWithId:(NSString*)campaignId
                    successBlock:(void (^)(RICampaign* campaign))successBlock

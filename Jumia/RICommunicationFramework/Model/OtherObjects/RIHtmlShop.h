@@ -13,9 +13,9 @@
 @property (nonatomic, strong) NSString* html;
 @property (nonatomic, strong) NSArray* featuredBoxesArray;
 
-+ (NSString*)getHtmlShopForUrlString:(NSString*)urlString
-                        successBlock:(void (^)(RIHtmlShop *htmlShop))sucessBlock
-                        failureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
++ (NSString*)getHtmlShopForTargetString:(NSString*)targetString
+                           successBlock:(void (^)(RIHtmlShop *htmlShop))sucessBlock
+                           failureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 + (RIHtmlShop*)parseHtmlShop:(NSDictionary*)json
                      country:(RICountryConfiguration*)country;

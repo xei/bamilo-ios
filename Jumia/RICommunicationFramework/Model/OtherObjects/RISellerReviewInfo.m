@@ -7,6 +7,7 @@
 //
 
 #import "RISellerReviewInfo.h"
+#import "RITarget.h"
 
 @implementation RISellerReview
 
@@ -38,13 +39,15 @@
 
 @implementation RISellerReviewInfo
 
-+ (NSString *)getSellerReviewForProductWithUrl:(NSString *)url
-                                      pageSize:(NSInteger)pageSize
-                                    pageNumber:(NSInteger)pageNumber
-                                  successBlock:(void (^)(RISellerReviewInfo *sellerReviewInfo))successBlock
-                               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
++ (NSString *)getSellerReviewForProductWithTargetString:(NSString *)targetString
+                                               pageSize:(NSInteger)pageSize
+                                             pageNumber:(NSInteger)pageNumber
+                                           successBlock:(void (^)(RISellerReviewInfo *sellerReviewInfo))successBlock
+                                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 {
     NSString *operationID = nil;
+    
+    NSString* url = [RITarget getURLStringforTargetString:targetString];
     
     if (VALID_NOTEMPTY(url, NSString))
     {

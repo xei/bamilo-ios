@@ -168,7 +168,7 @@ UITableViewDataSource
         currentPage = [self.sellerReviewInfo.currentPage integerValue] + 1;
     }
     [self showLoading];
-    [RISellerReviewInfo getSellerReviewForProductWithUrl:self.product.url pageSize:self.maxReviews pageNumber:currentPage successBlock:^(RISellerReviewInfo *sellerReviewInfo) {
+    [RISellerReviewInfo getSellerReviewForProductWithTargetString:self.product.targetString pageSize:self.maxReviews pageNumber:currentPage successBlock:^(RISellerReviewInfo *sellerReviewInfo) {
         self.sellerReviewInfo = sellerReviewInfo;
         
         [self removeErrorView];

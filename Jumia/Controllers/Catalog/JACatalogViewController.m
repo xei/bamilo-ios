@@ -30,6 +30,7 @@
 #import "RIAddress.h"
 #import "JACatalogPictureCollectionViewCell.h"
 #import "JACollectionSeparator.h"
+#import "RITarget.h"
 
 #define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
@@ -247,7 +248,7 @@ typedef void (^ProcessActionBlock)(void);
     
     [self setupViews];
     
-    if (VALID_NOTEMPTY(self.searchString, NSString) || VALID_NOTEMPTY(self.category, RICategory) || VALID_NOTEMPTY(self.catalogUrl, NSString))
+    if (VALID_NOTEMPTY(self.searchString, NSString) || VALID_NOTEMPTY(self.category, RICategory) || VALID_NOTEMPTY(self.catalogTargetString, NSString))
     {
         [self loadMoreProducts];
     }
@@ -540,7 +541,7 @@ typedef void (^ProcessActionBlock)(void);
                 
                 self.isLoadingMoreProducts =YES;
                 
-                NSString* urlToUse = self.catalogUrl;
+                NSString* urlToUse = [RITarget getURLStringforTargetString:self.catalogTargetString];
                 if (VALID_NOTEMPTY(self.categoryName, NSString)) {
                     urlToUse = [NSString stringWithFormat:@"%@%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_CATALOG, self.categoryName];
                 }
@@ -960,26 +961,28 @@ typedef void (^ProcessActionBlock)(void);
         
         NSString* notificationName;
         
-        if ([self.banner.targetType isEqualToString:@"catalog"]) {
+        RITarget* target = [RITarget parseTarget:self.banner.targetString];
+        
+        if ([target.type isEqualToString:@"catalog"]) {
             
             notificationName = kDidSelectTeaserWithCatalogUrlNofication;
             
-        } else if ([self.banner.targetType isEqualToString:@"product_detail"]) {
+        } else if ([target.type isEqualToString:@"product_detail"]) {
             
             notificationName = kDidSelectTeaserWithPDVUrlNofication;
             
-        } else if ([self.banner.targetType isEqualToString:@"static_page"]) {
+        } else if ([target.type isEqualToString:@"static_page"]) {
             
             notificationName = kDidSelectTeaserWithShopUrlNofication;
             
-        } else if ([self.banner.targetType isEqualToString:@"campaign"]) {
+        } else if ([target.type isEqualToString:@"campaign"]) {
             
             notificationName = kDidSelectCampaignNofication;
 
         }
         
-        if (VALID_NOTEMPTY(self.banner.url, NSString)) {
-            [userInfo setObject:self.banner.url forKey:@"url"];
+        if (VALID_NOTEMPTY(self.banner.targetString, NSString)) {
+            [userInfo setObject:self.banner.targetString forKey:@"targetString"];
             [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
                                                                 object:nil
                                                               userInfo:userInfo];
@@ -1018,7 +1021,7 @@ typedef void (^ProcessActionBlock)(void);
     NSString *temp = self.category.label;
     
     NSMutableDictionary* userInfo = [NSMutableDictionary new];
-    [userInfo setObject:product.url forKey:@"url"];
+    [userInfo setObject:product.targetString forKey:@"targetString"];
     [userInfo setObject:@"YES" forKey:@"fromCatalog"];
     [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"show_back_button"];
     
@@ -1382,15 +1385,15 @@ typedef void (^ProcessActionBlock)(void);
 
 #pragma mark - Undefined view delegate
 
-- (void)didSelectProduct:(NSString *)productUrl
+- (void)didSelectProduct:(NSString *)productTargetString
 {
     NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
     [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"show_back_button"];
     [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"fromCatalog"];
     [userInfo setObject:self forKey:@"delegate"];
-    if(VALID_NOTEMPTY(productUrl, NSString))
+    if(VALID_NOTEMPTY(productTargetString, NSString))
     {
-        [userInfo setObject:productUrl forKey:@"url"];
+        [userInfo setObject:productTargetString forKey:@"targetString"];
     }
     if(VALID_NOTEMPTY(self.category, RICategory))
     {
@@ -1414,13 +1417,13 @@ typedef void (^ProcessActionBlock)(void);
                                                       userInfo:userInfo];
 }
 
-- (void)didSelectBrand:(NSString *)brandUrl
-             brandName:(NSString *)brandName
+- (void)didSelectBrandTargetString:(NSString *)brandTargetString
+                         brandName:(NSString *)brandName
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
                                                         object:@{@"index": @(98),
                                                                  @"name": brandName,
-                                                                 @"url": brandUrl }];
+                                                                 @"targetString": brandTargetString }];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -1509,7 +1512,8 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)trackingEventFilter:(NSMutableDictionary *)trackingDictionary
 {
-    [trackingDictionary setValue:self.catalogUrl forKey:kRIEventLabelKey];
+    NSString* url = [RITarget getURLStringforTargetString:self.catalogTargetString];
+    [trackingDictionary setValue:url forKey:kRIEventLabelKey];
     [trackingDictionary setValue:STRING_FILTERS forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
     

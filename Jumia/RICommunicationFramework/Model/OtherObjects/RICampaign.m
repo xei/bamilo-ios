@@ -7,14 +7,16 @@
 //
 
 #import "RICampaign.h"
+#import "RITarget.h"
 
 @implementation RICampaign
 
-+ (NSString *)getCampaignWithUrl:(NSString*)url
-                    successBlock:(void (^)(RICampaign* campaign))successBlock
-                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
++ (NSString *)getCampaignWithTargetString:(NSString*)targetString
+                             successBlock:(void (^)(RICampaign* campaign))successBlock
+                          andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
+    NSString* url = [RITarget getURLStringforTargetString:targetString];
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]    
                                                             parameters:nil
                                                         httpMethodPost:NO
                                                              cacheType:RIURLCacheDBCache

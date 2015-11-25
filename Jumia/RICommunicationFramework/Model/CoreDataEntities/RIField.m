@@ -29,7 +29,7 @@
 @dynamic options;
 @dynamic ratingStars;
 @dynamic linkText;
-@dynamic linkUrl;
+@dynamic linkTargetString;
 @dynamic pattern;
 @dynamic patternMessage;
 @dynamic relatedFields;
@@ -70,11 +70,13 @@
     if(VALID_NOTEMPTY([fieldJSON objectForKey:@"api_call"], NSString)) {
         newField.apiCall = [fieldJSON objectForKey:@"api_call"];
     }
-    if ([fieldJSON objectForKey:@"link_text"]) {
-        newField.linkText = [fieldJSON objectForKey:@"link_text"];
+    
+    //$$$ LINK IS NOW AN OBJECT, CHECK LATER
+    if ([fieldJSON objectForKey:@"label"]) {
+        newField.linkText = [fieldJSON objectForKey:@"label"];
     }
-    if ([fieldJSON objectForKey:@"link_url"]) {
-        newField.linkUrl = [fieldJSON objectForKey:@"link_url"];
+    if ([fieldJSON objectForKey:@"target"]) {
+        newField.linkTargetString = [fieldJSON objectForKey:@"target"];
     }
     
     

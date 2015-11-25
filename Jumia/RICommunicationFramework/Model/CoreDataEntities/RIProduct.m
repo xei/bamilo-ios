@@ -15,6 +15,7 @@
 #import "RISeller.h"
 #import "RIBanner.h"
 #import "RISpecification.h"
+#import "RITarget.h"
 
 @implementation RIBundle
 
@@ -80,7 +81,7 @@
 @dynamic specialPriceFormatted;
 @dynamic specialPriceEuroConverted;
 @dynamic sum;
-@dynamic url;
+@dynamic targetString;
 @dynamic isNew;
 @dynamic favoriteAddDate;
 @dynamic recentlyViewedDate;
@@ -111,19 +112,20 @@
                            successBlock:(void (^)(id product))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
-    NSString *finalUrl = [NSString stringWithFormat:@"%@%@catalog/detail?sku=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, sku];
-    return [RIProduct getCompleteProductWithUrl:finalUrl
-                                   successBlock:^(id product) {
-                                       successBlock(product);
-                                   } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-                                       failureBlock(apiResponse, error);
-                                   }];
+    NSString *finalTargetString = [NSString stringWithFormat:@"product_detail::%@",sku];
+    return [RIProduct getCompleteProductWithTargetString:finalTargetString
+                                            successBlock:^(id product) {
+                                                successBlock(product);
+                                            } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+                                                failureBlock(apiResponse, error);
+                                            }];
 }
 
-+ (NSString *)getCompleteProductWithUrl:(NSString*)url
-                           successBlock:(void (^)(id product))successBlock
-                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
++ (NSString *)getCompleteProductWithTargetString:(NSString*)targetString
+                                    successBlock:(void (^)(id product))successBlock
+                                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
+    NSString* url = [RITarget getURLStringforTargetString:targetString];
     url = [url  stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
                                                             parameters:nil
@@ -371,8 +373,8 @@
         if ([dataDic objectForKey:@"name"]) {
             newProduct.name = [dataDic objectForKey:@"name"];
         }
-        if ([dataDic objectForKey:@"url"]) {
-            newProduct.url = [dataDic objectForKey:@"url"];
+        if ([dataDic objectForKey:@"target"]) {
+            newProduct.targetString = [dataDic objectForKey:@"target"];
         }
         if ([dataDic objectForKey:@"description"]) {
             newProduct.descriptionString = [dataDic objectForKey:@"description"];
