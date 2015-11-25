@@ -177,7 +177,7 @@
     [self parameters:parameters setString:deviceInfo.fbAttributionId   forKey:@"fb_id"];
     [self parameters:parameters setInt:deviceInfo.trackingEnabled      forKey:@"tracking_enabled"];
     [self parameters:parameters setString:deviceInfo.pushToken         forKey:@"push_token"];
-    [self parameters:parameters setString:deviceInfo.bundeIdentifier   forKey:@"bundle_id"];
+    [self parameters:parameters setString:deviceInfo.bundeIdentifier   forKey:@"id"];
     [self parameters:parameters setString:deviceInfo.bundleVersion     forKey:@"app_version"];
     [self parameters:parameters setString:deviceInfo.deviceType        forKey:@"device_type"];
     [self parameters:parameters setString:deviceInfo.deviceName        forKey:@"device_name"];

@@ -7,7 +7,6 @@
 //
 
 #import "JACenterNavigationController.h"
-#import "JANavigationBarView.h"
 
 #import "JAChooseCountryViewController.h"
 #import "JAHomeViewController.h"
@@ -1117,7 +1116,7 @@
     NSDictionary *selectedItem = [notification object];
     RICategory* category = [selectedItem objectForKey:@"category"];
     NSString* categoryId = [selectedItem objectForKey:@"category_id"];
-    NSString* categoryName = [selectedItem objectForKey:@"category_name"];
+    NSString* categoryUrlKey = [selectedItem objectForKey:@"category_url_key"];
     NSString* filterPush = [notification.userInfo objectForKey:@"filter"];
     NSNumber* sorting = [notification.userInfo objectForKey:@"sorting"];
     
@@ -1141,11 +1140,11 @@
         
         [self pushViewController:catalog animated:YES];
     }
-    else if (VALID_NOTEMPTY(categoryName, NSString))
+    else if (VALID_NOTEMPTY(categoryUrlKey, NSString))
     {
         JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         
-        catalog.categoryName = categoryName;
+        catalog.categoryUrlKey = categoryUrlKey;
         catalog.filterPush = filterPush;
         catalog.sortingMethodFromPush = sorting;
         
@@ -1664,7 +1663,7 @@
     [self.navigationItem setHidesBackButton:YES
                                    animated:NO];
     
-    self.navigationBarView = [JANavigationBarView getNewNavBarView];
+    self.navigationBarView = [[JACustomNavigationBarView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     [self.navigationBarView initialSetup];
 
     
