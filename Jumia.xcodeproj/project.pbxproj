@@ -125,10 +125,6 @@
 		4f946a6031dc658465b500d8 /* slider-default7-trackCrossedOver.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9A2199BA8FA0022BAB5 /* slider-default7-trackCrossedOver.png */; };
 		507ba71a40fd000b7faa7bcc /* JACartListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */; };
 		51686b7e16269d6e716c8f70 /* RIOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302A119811E9200F71726 /* RIOperation.m */; };
-		520A37C11A4444860046C8B1 /* JAFilteredNoResultsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 520A37C01A4444860046C8B1 /* JAFilteredNoResultsView.xib */; };
-		520A37C21A4444860046C8B1 /* JAFilteredNoResultsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 520A37C01A4444860046C8B1 /* JAFilteredNoResultsView.xib */; };
-		520A37C41A4444A30046C8B1 /* JAFilteredNoResultsView~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 520A37C31A4444A30046C8B1 /* JAFilteredNoResultsView~iPad.xib */; };
-		520A37C51A4444A30046C8B1 /* JAFilteredNoResultsView~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 520A37C31A4444A30046C8B1 /* JAFilteredNoResultsView~iPad.xib */; };
 		520A37C81A4444CC0046C8B1 /* JAFilteredNoResultsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 520A37C71A4444CC0046C8B1 /* JAFilteredNoResultsView.m */; };
 		520A37C91A4444CC0046C8B1 /* JAFilteredNoResultsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 520A37C71A4444CC0046C8B1 /* JAFilteredNoResultsView.m */; };
 		520A37CD1A48904B0046C8B1 /* JAMyOrdersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 520A37CC1A48904B0046C8B1 /* JAMyOrdersViewController.m */; };
@@ -1672,7 +1668,6 @@
 		CE9ADC8A1AB34C4600D56481 /* slider-metal-trackBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9AB199BA8FA0022BAB5 /* slider-metal-trackBackground.png */; };
 		CE9ADC8D1AB34C4600D56481 /* JAGrayButtonCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE88F7B41A1F88FB00A3A586 /* JAGrayButtonCell_ipad_landscape.xib */; };
 		CE9ADC901AB34C4600D56481 /* multi_step.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A019DC56BF003F0CA7 /* multi_step.rb */; };
-		CE9ADC921AB34C4600D56481 /* JAFilteredNoResultsView~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 520A37C31A4444A30046C8B1 /* JAFilteredNoResultsView~iPad.xib */; };
 		CE9ADC931AB34C4600D56481 /* 02_logout.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459619DC56BF003F0CA7 /* 02_logout.feature */; };
 		CE9ADC941AB34C4600D56481 /* slider-metal-trackBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9AC199BA8FA0022BAB5 /* slider-metal-trackBackground@2x.png */; };
 		CE9ADC951AB34C4600D56481 /* 21_native_checkout.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB7F57519E532FA00E898E3 /* 21_native_checkout.feature */; };
@@ -1705,7 +1700,6 @@
 		CE9ADCBE1AB34C4600D56481 /* slider-default-track@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB996199BA8FA0022BAB5 /* slider-default-track@2x.png */; };
 		CE9ADCBF1AB34C4600D56481 /* slider-metal-track.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9A9199BA8FA0022BAB5 /* slider-metal-track.png */; };
 		CE9ADCC11AB34C4600D56481 /* JACheckBoxComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B510B00719AE466B00A9754A /* JACheckBoxComponent.xib */; };
-		CE9ADCC21AB34C4600D56481 /* JAFilteredNoResultsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 520A37C01A4444860046C8B1 /* JAFilteredNoResultsView.xib */; };
 		CE9ADCC31AB34C4600D56481 /* slider-default7-trackCrossedOver.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9A2199BA8FA0022BAB5 /* slider-default7-trackCrossedOver.png */; };
 		CE9ADCC41AB34C4600D56481 /* JAPDVVariations~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB541A07A57400994BFA /* JAPDVVariations~iPad.xib */; };
 		CE9ADCC51AB34C4600D56481 /* JACampaignProductCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA86DFB1A49D247000032AD /* JACampaignProductCell.xib */; };
@@ -2011,7 +2005,6 @@
 		CE9ADE841AB6D6E900D56481 /* slider-metal-trackBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9AB199BA8FA0022BAB5 /* slider-metal-trackBackground.png */; };
 		CE9ADE871AB6D6E900D56481 /* JAGrayButtonCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE88F7B41A1F88FB00A3A586 /* JAGrayButtonCell_ipad_landscape.xib */; };
 		CE9ADE8A1AB6D6E900D56481 /* multi_step.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A019DC56BF003F0CA7 /* multi_step.rb */; };
-		CE9ADE8C1AB6D6E900D56481 /* JAFilteredNoResultsView~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 520A37C31A4444A30046C8B1 /* JAFilteredNoResultsView~iPad.xib */; };
 		CE9ADE8D1AB6D6E900D56481 /* 02_logout.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459619DC56BF003F0CA7 /* 02_logout.feature */; };
 		CE9ADE8E1AB6D6E900D56481 /* slider-metal-trackBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9AC199BA8FA0022BAB5 /* slider-metal-trackBackground@2x.png */; };
 		CE9ADE8F1AB6D6E900D56481 /* 21_native_checkout.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB7F57519E532FA00E898E3 /* 21_native_checkout.feature */; };
@@ -2044,7 +2037,6 @@
 		CE9ADEB81AB6D6E900D56481 /* slider-default-track@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB996199BA8FA0022BAB5 /* slider-default-track@2x.png */; };
 		CE9ADEB91AB6D6E900D56481 /* slider-metal-track.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9A9199BA8FA0022BAB5 /* slider-metal-track.png */; };
 		CE9ADEBB1AB6D6E900D56481 /* JACheckBoxComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B510B00719AE466B00A9754A /* JACheckBoxComponent.xib */; };
-		CE9ADEBC1AB6D6E900D56481 /* JAFilteredNoResultsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 520A37C01A4444860046C8B1 /* JAFilteredNoResultsView.xib */; };
 		CE9ADEBD1AB6D6E900D56481 /* slider-default7-trackCrossedOver.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9A2199BA8FA0022BAB5 /* slider-default7-trackCrossedOver.png */; };
 		CE9ADEBE1AB6D6E900D56481 /* JAPDVVariations~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB541A07A57400994BFA /* JAPDVVariations~iPad.xib */; };
 		CE9ADEBF1AB6D6E900D56481 /* JACampaignProductCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA86DFB1A49D247000032AD /* JACampaignProductCell.xib */; };
@@ -2350,7 +2342,6 @@
 		CE9AE07E1AB6D78200D56481 /* slider-metal-trackBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9AB199BA8FA0022BAB5 /* slider-metal-trackBackground.png */; };
 		CE9AE0811AB6D78200D56481 /* JAGrayButtonCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE88F7B41A1F88FB00A3A586 /* JAGrayButtonCell_ipad_landscape.xib */; };
 		CE9AE0841AB6D78200D56481 /* multi_step.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A019DC56BF003F0CA7 /* multi_step.rb */; };
-		CE9AE0861AB6D78200D56481 /* JAFilteredNoResultsView~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 520A37C31A4444A30046C8B1 /* JAFilteredNoResultsView~iPad.xib */; };
 		CE9AE0871AB6D78200D56481 /* 02_logout.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459619DC56BF003F0CA7 /* 02_logout.feature */; };
 		CE9AE0881AB6D78200D56481 /* slider-metal-trackBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9AC199BA8FA0022BAB5 /* slider-metal-trackBackground@2x.png */; };
 		CE9AE0891AB6D78200D56481 /* 21_native_checkout.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBB7F57519E532FA00E898E3 /* 21_native_checkout.feature */; };
@@ -2383,7 +2374,6 @@
 		CE9AE0B21AB6D78200D56481 /* slider-default-track@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB996199BA8FA0022BAB5 /* slider-default-track@2x.png */; };
 		CE9AE0B31AB6D78200D56481 /* slider-metal-track.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9A9199BA8FA0022BAB5 /* slider-metal-track.png */; };
 		CE9AE0B51AB6D78200D56481 /* JACheckBoxComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B510B00719AE466B00A9754A /* JACheckBoxComponent.xib */; };
-		CE9AE0B61AB6D78200D56481 /* JAFilteredNoResultsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 520A37C01A4444860046C8B1 /* JAFilteredNoResultsView.xib */; };
 		CE9AE0B71AB6D78200D56481 /* slider-default7-trackCrossedOver.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9A2199BA8FA0022BAB5 /* slider-default7-trackCrossedOver.png */; };
 		CE9AE0B81AB6D78200D56481 /* JAPDVVariations~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B3AB541A07A57400994BFA /* JAPDVVariations~iPad.xib */; };
 		CE9AE0B91AB6D78200D56481 /* JACampaignProductCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA86DFB1A49D247000032AD /* JACampaignProductCell.xib */; };
@@ -2815,8 +2805,6 @@
 		4AFC7F90199BC0BE007D67F4 /* JASignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASignInViewController.m; sourceTree = "<group>"; };
 		4AFC7F92199BC124007D67F4 /* JASignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASignupViewController.h; sourceTree = "<group>"; };
 		4AFC7F93199BC124007D67F4 /* JASignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASignupViewController.m; sourceTree = "<group>"; };
-		520A37C01A4444860046C8B1 /* JAFilteredNoResultsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAFilteredNoResultsView.xib; sourceTree = "<group>"; };
-		520A37C31A4444A30046C8B1 /* JAFilteredNoResultsView~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JAFilteredNoResultsView~iPad.xib"; sourceTree = "<group>"; };
 		520A37C61A4444CC0046C8B1 /* JAFilteredNoResultsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAFilteredNoResultsView.h; sourceTree = "<group>"; };
 		520A37C71A4444CC0046C8B1 /* JAFilteredNoResultsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAFilteredNoResultsView.m; sourceTree = "<group>"; };
 		520A37CB1A48904B0046C8B1 /* JAMyOrdersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMyOrdersViewController.h; sourceTree = "<group>"; };
@@ -4206,8 +4194,6 @@
 			children = (
 				520A37C61A4444CC0046C8B1 /* JAFilteredNoResultsView.h */,
 				520A37C71A4444CC0046C8B1 /* JAFilteredNoResultsView.m */,
-				520A37C01A4444860046C8B1 /* JAFilteredNoResultsView.xib */,
-				520A37C31A4444A30046C8B1 /* JAFilteredNoResultsView~iPad.xib */,
 			);
 			name = FilteredNoResultsView;
 			sourceTree = "<group>";
@@ -6335,7 +6321,6 @@
 				6CCE089E1B1EF8A0004311E2 /* JAAddressesViewController~iPad.xib in Resources */,
 				BB9546A319F5510D00AC7D05 /* multi_step.rb in Resources */,
 				9A9CD4221B72514A0061ACE0 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape-iPad.xib in Resources */,
-				520A37C51A4444A30046C8B1 /* JAFilteredNoResultsView~iPad.xib in Resources */,
 				CEA2A1B81B25D53900E5973F /* JANewRatingViewController.xib in Resources */,
 				3c0ad639becc3ca29c25bcd2 /* JARadioComponent.xib in Resources */,
 				CEDBF8761B0CEC570073971A /* JACheckBoxComponent_RTL.xib in Resources */,
@@ -6487,7 +6472,6 @@
 				9A9CD4361B72514A0061ACE0 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape.xib in Resources */,
 				B5B3AB571A07A57400994BFA /* JAPDVVariations~iPad.xib in Resources */,
 				CEED47381A7B9D29006D9CE7 /* JAPDVBundlesWithSize.xib in Resources */,
-				520A37C21A4444860046C8B1 /* JAFilteredNoResultsView.xib in Resources */,
 				e5c2612fb2a7b831d10cc411 /* JACartListCell.xib in Resources */,
 				BBB12A9D19DDA01E00656529 /* 09_home.feature in Resources */,
 				BB9546AC19F5513600AC7D05 /* init.rb in Resources */,
@@ -6606,7 +6590,6 @@
 				9AE488621B0CE2640033F169 /* JARatingsViewController~ipad.xib in Resources */,
 				6CCE089D1B1EF8A0004311E2 /* JAAddressesViewController~iPad.xib in Resources */,
 				BBA145B419DC56BF003F0CA7 /* multi_step.rb in Resources */,
-				520A37C41A4444A30046C8B1 /* JAFilteredNoResultsView~iPad.xib in Resources */,
 				9A9CD3181B72514A0061ACE0 /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib in Resources */,
 				9AF49A451B1DE1B80028105D /* JAUserDataViewController.xib in Resources */,
 				BBA145AB19DC56BF003F0CA7 /* 02_logout.feature in Resources */,
@@ -6662,7 +6645,6 @@
 				B510B01319AE466B00A9754A /* JACheckBoxComponent.xib in Resources */,
 				9A9CD30E1B72514A0061ACE0 /* A4S.bundle in Resources */,
 				9A9CD4F31B72514A0061ACE0 /* BMA4SiPhoneWebViewNotifView-nobuttons-iPad.xib in Resources */,
-				520A37C11A4444860046C8B1 /* JAFilteredNoResultsView.xib in Resources */,
 				CEDEB9BF199BA8FA0022BAB5 /* slider-default7-trackCrossedOver.png in Resources */,
 				9A9CD44E1B72514A0061ACE0 /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-iPad.xib in Resources */,
 				9AF49A461B1DE1B80028105D /* JAUserDataViewController~iPad.xib in Resources */,
@@ -6855,7 +6837,6 @@
 				CE9ADC8D1AB34C4600D56481 /* JAGrayButtonCell_ipad_landscape.xib in Resources */,
 				CE9ADC901AB34C4600D56481 /* multi_step.rb in Resources */,
 				9A9CD3B51B72514A0061ACE0 /* BMA4SRichPushWebView.xib in Resources */,
-				CE9ADC921AB34C4600D56481 /* JAFilteredNoResultsView~iPad.xib in Resources */,
 				CE9ADC931AB34C4600D56481 /* 02_logout.feature in Resources */,
 				CE9ADC941AB34C4600D56481 /* slider-metal-trackBackground@2x.png in Resources */,
 				CE9ADC951AB34C4600D56481 /* 21_native_checkout.feature in Resources */,
@@ -6916,7 +6897,6 @@
 				6CCE088D1B1CBA77004311E2 /* JAAddNewAddressViewController.xib in Resources */,
 				CEDBF8891B0DF4AD0073971A /* JARadioRelatedComponent_RTL.xib in Resources */,
 				CE9ADCC11AB34C4600D56481 /* JACheckBoxComponent.xib in Resources */,
-				CE9ADCC21AB34C4600D56481 /* JAFilteredNoResultsView.xib in Resources */,
 				CE9ADCC31AB34C4600D56481 /* slider-default7-trackCrossedOver.png in Resources */,
 				9A9CD4E11B72514A0061ACE0 /* BMA4SiPhoneTextNotifView-nobuttons-landscape.xib in Resources */,
 				CE9ADCC41AB34C4600D56481 /* JAPDVVariations~iPad.xib in Resources */,
@@ -7107,7 +7087,6 @@
 				9A9CD3CA1B72514A0061ACE0 /* BMA4SiPhoneTextNotifView-landscape-iPad.xib in Resources */,
 				CE9ADE8A1AB6D6E900D56481 /* multi_step.rb in Resources */,
 				6CCE08A01B1EF8A0004311E2 /* JAAddressesViewController~iPad.xib in Resources */,
-				CE9ADE8C1AB6D6E900D56481 /* JAFilteredNoResultsView~iPad.xib in Resources */,
 				9A0F9B731B5E58E900569DF2 /* FacebookSDKStrings.bundle in Resources */,
 				CE9ADE8D1AB6D6E900D56481 /* 02_logout.feature in Resources */,
 				9AEE88121B0B336A005BFBEB /* JARatingsViewController.xib in Resources */,
@@ -7156,7 +7135,6 @@
 				CE9ADEB91AB6D6E900D56481 /* slider-metal-track.png in Resources */,
 				CE9ADEBB1AB6D6E900D56481 /* JACheckBoxComponent.xib in Resources */,
 				CEDBF88A1B0DF4AD0073971A /* JARadioRelatedComponent_RTL.xib in Resources */,
-				CE9ADEBC1AB6D6E900D56481 /* JAFilteredNoResultsView.xib in Resources */,
 				CE9ADEBD1AB6D6E900D56481 /* slider-default7-trackCrossedOver.png in Resources */,
 				CE9ADEBE1AB6D6E900D56481 /* JAPDVVariations~iPad.xib in Resources */,
 				9A0F9B961B5E58E900569DF2 /* LICENSE in Resources */,
@@ -7340,7 +7318,6 @@
 				CE9AE0811AB6D78200D56481 /* JAGrayButtonCell_ipad_landscape.xib in Resources */,
 				6CCE08D11B1F3960004311E2 /* JAPaymentViewController~iPad.xib in Resources */,
 				CE9AE0841AB6D78200D56481 /* multi_step.rb in Resources */,
-				CE9AE0861AB6D78200D56481 /* JAFilteredNoResultsView~iPad.xib in Resources */,
 				9A9CD3B71B72514A0061ACE0 /* BMA4SRichPushWebView.xib in Resources */,
 				CE9AE0871AB6D78200D56481 /* 02_logout.feature in Resources */,
 				CE9AE0881AB6D78200D56481 /* slider-metal-trackBackground@2x.png in Resources */,
@@ -7404,7 +7381,6 @@
 				6C18BD741AB87E0A00905FD2 /* Images.xcassets in Resources */,
 				CEDBF88B1B0DF4AD0073971A /* JARadioRelatedComponent_RTL.xib in Resources */,
 				CE9AE0B51AB6D78200D56481 /* JACheckBoxComponent.xib in Resources */,
-				CE9AE0B61AB6D78200D56481 /* JAFilteredNoResultsView.xib in Resources */,
 				9A9CD4E31B72514A0061ACE0 /* BMA4SiPhoneTextNotifView-nobuttons-landscape.xib in Resources */,
 				CE9AE0B71AB6D78200D56481 /* slider-default7-trackCrossedOver.png in Resources */,
 				CE9AE0B81AB6D78200D56481 /* JAPDVVariations~iPad.xib in Resources */,

@@ -133,7 +133,7 @@ typedef void (^ProcessActionBlock)(void);
     
     self.filteredNoResultsView.delegate = nil;
     [self.filteredNoResultsView removeFromSuperview];
-    self.filteredNoResultsView = [JAFilteredNoResultsView getFilteredNoResultsView];
+    self.filteredNoResultsView = [[JAFilteredNoResultsView alloc] initWithFrame:self.bounds];
     
     self.filteredNoResultsView.tag = 1001;
     
@@ -298,6 +298,9 @@ typedef void (^ProcessActionBlock)(void);
     [self.collectionView setWidth:self.view.width];
     [self.collectionView setHeight:self.view.height - CGRectGetMaxY(self.catalogTopView.frame)];
     [self.catalogTopView repositionForWidth:self.view.frame.size.width];
+    if (self.filteredNoResultsView.superview) {
+        [self.filteredNoResultsView setupView:self.view.bounds];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -338,6 +341,9 @@ typedef void (^ProcessActionBlock)(void);
         if (_processActionBlock) {
             _processActionBlock();
         }
+    }
+    if (self.filteredNoResultsView.superview) {
+        self.catalogTopView.hidden = YES;
     }
 }
  
