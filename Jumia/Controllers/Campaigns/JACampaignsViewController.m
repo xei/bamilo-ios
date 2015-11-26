@@ -435,19 +435,20 @@ withCampaignTargetString:(NSString*)campaignTargetString
 
 - (void)finishAddToCart
 {
+    //TODO backupCampaignProduct.sku was removed on RICampaign, will be replaced by deep linkin
     [self showLoading];
     [RICart addProductWithQuantity:@"1"
-                               sku:self.backupCampaignProduct.sku
+                               sku:nil
                             simple:self.backupSimpleSku
                   withSuccessBlock:^(RICart *cart) {
                       
                       if (VALID_NOTEMPTY(self.teaserTrackingInfo, NSString)) {
                           NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
                           
-                          NSString* obj = [skusFromTeaserInCart objectForKey:self.backupCampaignProduct.sku];
+                          NSString* obj = [skusFromTeaserInCart objectForKey:self.backupSimpleSku];
                           
                           if (ISEMPTY(obj)) {
-                              [skusFromTeaserInCart setValue:self.teaserTrackingInfo forKey:self.backupCampaignProduct.sku];
+                              [skusFromTeaserInCart setValue:self.teaserTrackingInfo forKey:self.backupSimpleSku];
                               [[NSUserDefaults standardUserDefaults] setObject:[skusFromTeaserInCart copy] forKey:kSkusFromTeaserInCartKey];
                           }
                       }
@@ -459,7 +460,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
                       }
                       
                       NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                      [trackingDictionary setValue:self.backupCampaignProduct.sku forKey:kRIEventLabelKey];
+                      [trackingDictionary setValue:self.backupSimpleSku forKey:kRIEventLabelKey];
                       [trackingDictionary setValue:@"AddToCart" forKey:kRIEventActionKey];
                       [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
                       [trackingDictionary setValue:price forKey:kRIEventValueKey];
@@ -477,7 +478,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
                       [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
                       
                       [trackingDictionary setValue:@"Campaings" forKey:kRIEventLocationKey];
-                      [trackingDictionary setValue:self.backupCampaignProduct.sku forKey:kRIEventSkuKey];
+                      [trackingDictionary setValue:self.backupSimpleSku forKey:kRIEventSkuKey];
                       [trackingDictionary setValue:self.backupCampaignProduct.brand forKey:kRIEventBrandKey];
                       [trackingDictionary setValue:self.backupCampaignProduct.name forKey:kRIEventProductNameKey];
                       
@@ -494,7 +495,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
                       
                       NSMutableDictionary *tracking = [NSMutableDictionary new];
                       [tracking setValue:self.backupCampaignProduct.name forKey:kRIEventProductNameKey];
-                      [tracking setValue:self.backupCampaignProduct.sku forKey:kRIEventSkuKey];
+                      [tracking setValue:self.backupSimpleSku forKey:kRIEventSkuKey];
                       [tracking setValue:nil forKey:kRIEventLastCategoryAddedToCartKey];
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
                       
@@ -509,7 +510,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
                                     valueToSum:value
                                  parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
                                                FBSDKAppEventParameterNameContentType : self.backupCampaignProduct.name,
-                                               FBSDKAppEventParameterNameContentID   : self.backupCampaignProduct.sku}];
+                                               FBSDKAppEventParameterNameContentID   : self.backupSimpleSku}];
 
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
