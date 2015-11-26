@@ -9,6 +9,7 @@
 #import "RITeaserGrouping.h"
 #import "RITeaserComponent.h"
 #import "RIForm.h"
+#import "RITarget.h"
 
 @implementation RITeaserGrouping
 
@@ -120,10 +121,8 @@
                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
 {
     NSDictionary *topSellerJson = [richTeasers objectForKey:@"top_sellers"];
-    
-    
-    NSString *target = [[[topSellerJson objectForKey:@"target"] componentsSeparatedByString:@"::"] objectAtIndex:1];
-    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@richrelevance/request/req/%@/", [RIApi getCountryUrlInUse], RI_API_VERSION, target]];
+    NSString *target = [RITarget getURLStringforTargetString:[topSellerJson objectForKey:@"target"]];
+    NSURL* url = [NSURL URLWithString:target];
     
     [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
                                                      parameters:nil

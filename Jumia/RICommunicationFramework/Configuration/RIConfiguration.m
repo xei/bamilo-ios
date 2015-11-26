@@ -122,3 +122,6 @@ NSString *const RI_API_STATIC_PAGE = @"main/getstatic/key/";
 NSString *const RI_API_FORMS_GET = @"forms/";
 NSString *const RI_API_FORMS_ADDRESS_EDIT = @"addressedit/id/";
 
+NSString *const RI_API_RICH_RELEVANCE = @"richrelevance/request/req/";
+NSString *const RI_API_RICH_RELEVANCE_CLICK = @"request/req/";
+

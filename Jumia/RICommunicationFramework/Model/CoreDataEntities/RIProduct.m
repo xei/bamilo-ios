@@ -127,21 +127,16 @@
                                     successBlock:(void (^)(id product))successBlock
                                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
-    
-    
-    NSMutableString *richParam = [NSMutableString new];
+    NSString *richParam = [NSMutableString new];
     if (VALID_NOTEMPTY(parameter, NSDictionary)) {
         if ([parameter objectForKey:@"rich_parameter"]) {
-            if ([[[parameter objectForKey:@"rich_parameter"] componentsSeparatedByString:@"::"] count] > 1) {
-                [richParam appendFormat:@"request/req/%@/",[[[parameter objectForKey:@"rich_parameter"] componentsSeparatedByString:@"::"] objectAtIndex:1]];
-            }
+            richParam = [RITarget getURLStringforTargetString:[parameter objectForKey:@"rich_parameter"]];
         }
     }
-    
     NSString * url =  [RITarget getURLStringforTargetString:targetString];
     url = [NSString stringWithFormat:@"%@/%@",url,richParam];
-
     url = [url  stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
                                                             parameters:nil
                                                         httpMethodPost:YES

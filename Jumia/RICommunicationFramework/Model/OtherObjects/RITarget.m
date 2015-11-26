@@ -76,6 +76,10 @@
             //append nothing here
         } else if ([type isEqualToString:@"form_get"]) {
             urlString = [urlString stringByAppendingString:RI_API_FORMS_GET];
+        } else if ([type isEqualToString:@"rr_recommendation"]){
+            urlString = [urlString stringByAppendingString:RI_API_RICH_RELEVANCE];
+        } else if ([type isEqualToString:@"rr_click"]) {
+            urlString = RI_API_RICH_RELEVANCE_CLICK;
         }
         urlString = [urlString stringByAppendingString:node];
     }
