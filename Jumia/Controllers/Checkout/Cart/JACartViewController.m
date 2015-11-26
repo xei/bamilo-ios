@@ -21,6 +21,13 @@
 #import "RIAddress.h"
 #import <FBSDKCoreKit/FBSDKAppEvents.h>
 
+#define kLateralMargin 16
+#define kTopMargin 48
+#define kImageTopMargin 28
+#define kImageBottomMargin 28
+#define kButtonTopMargin 48
+#define kButtonWidth 288
+
 @interface JACartViewController () {
     BOOL _emptyImageFlipOnce;
     BOOL _firstLoading;
@@ -38,6 +45,51 @@
 @end
 
 @implementation JACartViewController
+
+- (UIView *)emptyCartView
+{
+    if (!VALID_NOTEMPTY(_emptyCartView, UIView)) {
+        _emptyCartView = [[UIView alloc] initWithFrame:self.viewBounds];
+        [_emptyCartView setBackgroundColor:[UIColor whiteColor]];
+        [self.view addSubview:_emptyCartView];
+    }
+    return _emptyCartView;
+}
+
+- (UILabel *)emptyCartLabel
+{
+    if (!VALID_NOTEMPTY(_emptyCartLabel, UILabel)) {
+        _emptyCartLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, kTopMargin, self.view.width - 2*kLateralMargin, 17)];
+        [_emptyCartLabel setFont:JADisplay2Font];
+        [_emptyCartLabel setTextColor:JABlackColor];
+        [_emptyCartLabel setTextAlignment:NSTextAlignmentCenter];
+        [_emptyCartLabel setNumberOfLines:2];
+        [_emptyCartLabel setText:STRING_NO_ITEMS_IN_CART];
+        [self.emptyCartView addSubview:_emptyCartLabel];
+    }
+    return _emptyCartLabel;
+}
+
+- (UIImageView *)emptyCartImageView
+{
+    if (!VALID_NOTEMPTY(_emptyCartImageView, UIImageView)) {
+        UIImage *image = [UIImage imageNamed:@"img_emptyCart"];
+        _emptyCartImageView = [[UIImageView alloc] initWithImage:image];
+        [_emptyCartImageView setFrame:CGRectMake((self.view.width - image.size.width)/2, CGRectGetMaxY(self.emptyCartLabel.frame) + kImageTopMargin, image.size.width, image.size.height)];
+        [self.emptyCartView addSubview:_emptyCartImageView];
+    }
+    return _emptyCartImageView;
+}
+
+- (JABottomBar *)continueShoppingButton
+{
+    if (!VALID_NOTEMPTY(_continueShoppingButton, JABottomBar)) {
+        _continueShoppingButton = [[JABottomBar alloc] initWithFrame:CGRectMake((self.view.width - kButtonWidth)/2, CGRectGetMaxY(self.emptyCartImageView.frame) + kImageBottomMargin, kButtonWidth, kBottomDefaultHeight)];
+        [_continueShoppingButton addButton:[STRING_CONTINUE_SHOPPING uppercaseString] target:self action:@selector(goToHomeScreen)];
+        [self.emptyCartView addSubview:_continueShoppingButton];
+    }
+    return _continueShoppingButton;
+}
 
 - (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray *)objects
 {
@@ -106,9 +158,9 @@
 {
     [super viewWillAppear:animated];
     
-    [self.emptyCartView setWidth:self.view.width-12.f];
-    [self.continueShoppingButton setWidth:self.view.width-12.f];
-    [self.emptyCartLabel setX:self.view.width/2-self.emptyCartLabel.width/2];
+    [self.emptyCartView setFrame:self.viewBounds];
+    [self.continueShoppingButton setX:(self.view.width - self.continueShoppingButton.width)/2];
+    [self.emptyCartLabel setWidth:self.view.width - 2*kLateralMargin];
     [self.emptyCartImageView setX:self.view.width/2-self.emptyCartImageView.width/2];
     
     if (!_emptyImageFlipOnce && RI_IS_RTL)
@@ -140,6 +192,14 @@
 {
     [self setEmptyCartViewHidden:YES];
     [self setCartViewHidden:YES];
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [self.emptyCartView setFrame:self.viewBounds];
+    [self.continueShoppingButton setX:(self.view.width - self.continueShoppingButton.width)/2];
+    [self.emptyCartLabel setWidth:self.view.width - 2*kLateralMargin];
+    [self.emptyCartImageView setX:self.view.width/2-self.emptyCartImageView.width/2];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -371,26 +431,10 @@
     
     self.screenName = @"CartEmpty";
     
-    self.emptyCartView.layer.cornerRadius = 5.0f;
-    self.emptyCartLabel.font = [UIFont fontWithName:kFontRegularName size:self.emptyCartLabel.font.pointSize];
-    [self.emptyCartLabel setText:STRING_NO_ITEMS_IN_CART];
-    [self.emptyCartLabel setTextColor:JALabelGrey];
-    [self.emptyCartLabel setNumberOfLines:1];
-    [self.emptyCartLabel sizeToFit];
-
-    self.continueShoppingButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.continueShoppingButton.titleLabel.font.pointSize];
-    [self.continueShoppingButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
-    [self.continueShoppingButton setTitle:STRING_CONTINUE_SHOPPING forState:UIControlStateNormal];
+    [self.emptyCartView setFrame:self.viewBounds];
+    [self.continueShoppingButton setX:(self.view.width - self.continueShoppingButton.width)/2];
     
-    self.continueShoppingButton.layer.cornerRadius = 5.0f;
-    
-    [self.continueShoppingButton addTarget:self action:@selector(goToHomeScreen) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.emptyCartView setWidth:self.view.width-12.f];
-    [self.emptyCartView setY:[self viewBounds].origin.y+6.0f];
-    [self.continueShoppingButton setWidth:self.view.width-12.f];
-    [self.continueShoppingButton setY:CGRectGetMaxY(self.emptyCartView.frame)+6.0f];
-    [self.emptyCartLabel setX:self.view.width/2-self.emptyCartLabel.width/2];
+    [self.emptyCartLabel setWidth:self.view.width - 2*kLateralMargin];
     [self.emptyCartImageView setX:self.view.width/2-self.emptyCartImageView.width/2];
     
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CartEmpty"];

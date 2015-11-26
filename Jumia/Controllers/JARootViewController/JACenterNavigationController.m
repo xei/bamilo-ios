@@ -1805,7 +1805,7 @@
     
     if (![[self topViewController] isKindOfClass:[JACartViewController class]])
     {
-        JACartViewController *cartViewController = [[JACartViewController alloc] initWithNibName:@"JACartViewController" bundle:nil];
+        JACartViewController *cartViewController = [[JACartViewController alloc] init];
         [cartViewController setCart:self.cart];
         
         [self popToRootViewControllerAnimated:NO];
