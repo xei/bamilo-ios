@@ -8,6 +8,7 @@
 
 #import "JABaseViewController.h"
 #import "JAPicker.h"
+#import "JABottomBar.h"
 
 @class JAPriceView;
 @class RICart;
@@ -25,10 +26,10 @@ JAPickerDelegate
 @property (strong, nonatomic) RICartItem *currentItem;
 
 // Empty cart views
-@property (weak, nonatomic) IBOutlet UIView *emptyCartView;
-@property (weak, nonatomic) IBOutlet UILabel *emptyCartLabel;
-@property (weak, nonatomic) IBOutlet UIButton *continueShoppingButton;
-@property (weak, nonatomic) IBOutlet UIImageView *emptyCartImageView;
+@property (strong, nonatomic) UIView *emptyCartView;
+@property (strong, nonatomic) UILabel *emptyCartLabel;
+@property (strong, nonatomic) JABottomBar *continueShoppingButton;
+@property (strong, nonatomic) UIImageView *emptyCartImageView;
 
 // Cart views
 @property (strong, nonatomic) UIScrollView *cartScrollView;
