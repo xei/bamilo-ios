@@ -33,7 +33,8 @@
 - (UILabel *)topMessageLabel
 {
     if (!_topMessageLabel) {
-        _topMessageLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, kTopMargin, self.width - 2*kLateralMargin, 50)];
+        _topMessageLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, kTopMargin, self.width - 2*kLateralMargin, 100)];
+        [_topMessageLabel setNumberOfLines:2];
         [_topMessageLabel setTextAlignment:NSTextAlignmentCenter];
         [_topMessageLabel setFont:JADisplay2Font];
         [_topMessageLabel setTextColor:JABlackColor];
@@ -50,6 +51,9 @@
         _image = [UIImage imageNamed:@"emptyFilter"];
         _filterImageView = [[UIImageView alloc] initWithImage:_image highlightedImage:_image];
         [_filterImageView setFrame:CGRectMake((self.width - _image.size.width)/2, CGRectGetMaxY(self.topMessageLabel.frame) + kImageTopMargin, _image.size.width, _image.size.height)];
+        if (RI_IS_RTL) {
+            [_filterImageView flipViewImage];
+        }
     }
     return _filterImageView;
 }
@@ -57,7 +61,8 @@
 - (UILabel *)messageLabel
 {
     if (!_messageLabel) {
-        _messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.filterImageView.frame) + kImageBottomMargin, self.width - 2*kLateralMargin, 50)];
+        _messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.filterImageView.frame) + kImageBottomMargin, self.width - 2*kLateralMargin, 100)];
+        [_messageLabel setNumberOfLines:2];
         [_messageLabel setTextAlignment:NSTextAlignmentCenter];
         [_messageLabel setFont:JABody2Font];
         [_messageLabel setTextColor:JABlack800Color];
@@ -82,6 +87,7 @@
     if (!self.topMessageLabel.superview) {
         [self addSubview:self.topMessageLabel];
     }else{
+        [self.topMessageLabel sizeToFit];
         [self.topMessageLabel setFrame:CGRectMake(kLateralMargin, kTopMargin, frame.size.width - 2*kLateralMargin, self.topMessageLabel.height)];
     }
     
@@ -94,6 +100,7 @@
     if (!self.messageLabel.superview) {
         [self addSubview:self.messageLabel];
     }else{
+        [self.messageLabel sizeToFit];
         [self.messageLabel setFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.filterImageView.frame) + kImageBottomMargin, frame.size.width - 2*kLateralMargin, self.messageLabel.height)];
     }
     
