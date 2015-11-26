@@ -44,6 +44,7 @@
 #define STRING_YOUR_CART_IS_EMPTY RILocalizedString(@"navigation_cart_empty", nil)
 #define STRING_VAT_SHIPPING_INCLUDED RILocalizedString(@"string_vat_shipping_included", nil)
 #define STRING_FILTER_NO_RESULTS RILocalizedString(@"catalog_no_results", nil)
+#define STRING_FILTER_NO_RESULTS_TIP RILocalizedString(@"catalog_no_results_tip", nil)
 #define STRING_CATALOG_EDIT_FILTERS RILocalizedString(@"catalog_edit_filters", nil)
 
 #define STRING_HOT RILocalizedString(@"teaser_campaign_button_first_line", nil)
