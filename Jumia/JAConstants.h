@@ -167,15 +167,3 @@
 #define JAGreen1Color UIColorFromRGB(0xa3cf62)
 #define JABlue1Color UIColorFromRGB(0x416998)
 #define JASysBlueColor UIColorFromRGB(0x007aff)
-
-#define JADisplay1Font [UIFont fontWithName:@"HelveticaNeue" size:23]
-#define JADisplay2Font [UIFont fontWithName:@"HelveticaNeue" size:19]
-#define JAListFont [UIFont fontWithName:@"HelveticaNeue-Bold" size:16]
-#define JAList1Font [UIFont fontWithName:@"HelveticaNeue-Medium" size:16]
-#define JAList2Font [UIFont fontWithName:@"HelveticaNeue" size:16]
-#define JABody1Font [UIFont fontWithName:@"HelveticaNeue-Bold" size:13]
-#define JABody2Font [UIFont fontWithName:@"HelveticaNeue-Medium" size:13]
-#define JABody3Font [UIFont fontWithName:@"HelveticaNeue" size:13]
-#define JACaptionFont [UIFont fontWithName:@"HelveticaNeue" size:11]
-#define JACaption2Font [UIFont fontWithName:@"HelveticaNeue-Bold" size:11]
-

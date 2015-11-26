@@ -94,7 +94,7 @@
     [self.label setText:title];
     [self.label sizeToFit];
     [self.label setFrame:CGRectMake(self.clickableView.bounds.origin.x,
-                                    self.clickableView.bounds.size.height - 6.0f - self.label.frame.size.height,
+                                    CGRectGetMaxY(self.imageView.frame)-3.f,
                                     self.clickableView.bounds.size.width,
                                     self.label.frame.size.height)];
     

@@ -157,7 +157,11 @@
                 RIFilter* newFilter = [RIFilter parseFilter:filterJSON];
                 
                 if (VALID_NOTEMPTY(newFilter, RIFilter)) {
-                    [newFiltersArray addObject:newFilter];
+                    if ([newFilter.uid isEqualToString:@"category"]) {
+                        //do nothing
+                    } else {
+                        [newFiltersArray addObject:newFilter];    
+                    }
                 }
             }
         }

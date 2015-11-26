@@ -24,18 +24,18 @@
 {
     RIBundle *newBundle = [[RIBundle alloc] init];
     
-    NSDictionary *dataDic = [bundleJSON objectForKey:@"data"];
+    NSDictionary *dataDic = [bundleJSON objectForKey:@"bundle_entity"];
     
     if (VALID_NOTEMPTY(dataDic, NSDictionary)) {
         
-        if([dataDic objectForKey:@"bundle_id"])
+        if([dataDic objectForKey:@"id"])
         {
-            newBundle.bundleId = [dataDic objectForKey:@"bundle_id"];
+            newBundle.bundleId = [dataDic objectForKey:@"id"];
         }
         
-        if([dataDic objectForKey:@"bundle_products"])
+        if([dataDic objectForKey:@"products"])
         {
-            NSArray* bundleProductsArray = [dataDic objectForKey:@"bundle_products"];
+            NSArray* bundleProductsArray = [dataDic objectForKey:@"products"];
             if (VALID_NOTEMPTY(bundleProductsArray, NSArray)) {
                 NSMutableArray* newBundleProducts = [NSMutableArray new];
                 for (NSDictionary* productJSON in bundleProductsArray) {

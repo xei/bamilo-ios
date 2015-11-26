@@ -263,6 +263,8 @@
     
     [RIProduct getFavoriteProductsForPage:(self.currentPage+1) maxItems:self.maxPerPage SuccessBlock:^(NSArray *favoriteProducts) {
         
+        [self removeErrorView];
+        
         self.currentPage++;
         self.numberProducts += favoriteProducts.count;
         if (favoriteProducts.count < self.maxPerPage) {
