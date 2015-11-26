@@ -10,6 +10,7 @@
 #import "RIFieldOption.h"
 #import "RIFieldDataSetComponent.h"
 #import "RILocale.h"
+#import "RITarget.h"
 
 @interface JARadioComponent ()
 
@@ -83,9 +84,12 @@
         }
         self.options = [contentArray copy];
     }
-    else if(VALID_NOTEMPTY(field.apiCall, NSString))
+    else if(VALID_NOTEMPTY(field.apiCallEndpoint, NSString))
     {
-        self.apiCall = field.apiCall;
+        self.apiCallEndpoint = field.apiCallEndpoint;
+        if (VALID_NOTEMPTY(field.apiCallParameters, NSDictionary)) {
+            self.apiCallParameters = field.apiCallParameters;
+        }
     }
 }
 
@@ -197,12 +201,18 @@
 {
     NSString *apiCallUrl = nil;
     
-    if(VALID_NOTEMPTY(self.field, RIField) && [@"list" isEqualToString:[self.field type]] && VALID_NOTEMPTY([self.field apiCall], NSString))
+    if(VALID_NOTEMPTY(self.field, RIField) && [@"list" isEqualToString:[self.field type]] && VALID_NOTEMPTY([self.field apiCallEndpoint], NSString))
     {
-        apiCallUrl = [self.field apiCall];
+        apiCallUrl = [RITarget getURLStringforTargetString:self.field.apiCallEndpoint];
     }
     
     return apiCallUrl;
 }
+
+- (NSDictionary*)getApiCallParameters
+{
+    return self.field.apiCallParameters;
+}
+
 
 @end

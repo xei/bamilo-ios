@@ -39,11 +39,11 @@
     NSString* node;
     if (VALID_NOTEMPTY(targetString, NSString)) {
         NSArray *components = [targetString componentsSeparatedByString:@"::"];
-        if (0 < components.count) {
+        if (1 == components.count) {
+            node = [components firstObject];
+        } else if (2 == components.count) {
             type = [components firstObject];
-            if (1 < components.count) {
-                node = [components objectAtIndex:1];
-            }
+            node = [components lastObject];
         }
     }
     return [RITarget getURLStringforType:type node:node];

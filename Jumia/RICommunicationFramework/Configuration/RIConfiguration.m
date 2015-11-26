@@ -77,23 +77,26 @@ NSString *const RI_CATALOG_CATEGORIES = @"catalog/categories/";
 NSString *const RI_API_CATALOG = @"search/find/category/";
 NSString *const RI_API_SEARCH_SUGGESTIONS = @"search/suggest/";
 
-NSString *const RI_API_GET_ORDERS = @"order/list/";
-NSString *const RI_API_TRACK_ORDER = @"order/trackingorder/ordernr/%@/";
-NSString *const RI_API_ADD_ORDER = @"order/add/";
-NSString *const RI_API_ADD_MULTIPLE_ORDER = @"order/addmultiple/";
-NSString *const RI_API_REMOVE_FROM_CART = @"order/remove/";
-NSString *const RI_API_GET_CART_DATA = @"order/cartdata/";
-NSString *const RI_API_GET_CART_CHANGE = @"order/cartchange/";
-NSString *const RI_API_ADD_VOUCHER_TO_CART = @"/order/addvoucher/";
-NSString *const RI_API_REMOVE_VOUCHER_FROM_CART = @"/order/removevoucher/";
+NSString *const RI_API_ADD_ORDER = @"cart/add/";
+//$$$ addbundle & addmultiple requests changed
+NSString *const RI_API_ADD_BUNDLE = @"cart/addbundle/";
+NSString *const RI_API_ADD_MULTIPLE_ORDER = @"cart/addmultiple/";
+NSString *const RI_API_REMOVE_FROM_CART = @"cart/remove/";
+NSString *const RI_API_GET_CART_DATA = @"cart/getdata/";
+//$$$ CHANGE TO UPDATE PRODUCT
+NSString *const RI_API_GET_CART_CHANGE = @"cart/cartchange/";
+NSString *const RI_API_ADD_VOUCHER_TO_CART = @"cart/addvoucher/";
+NSString *const RI_API_REMOVE_VOUCHER_FROM_CART = @"cart/removevoucher/";
 
+NSString *const RI_API_GET_ORDERS = @"customer/orderlist/";
+NSString *const RI_API_TRACK_ORDER = @"customer/trackingorder/ordernr/%@/";
 NSString *const RI_API_GET_CUSTOMER = @"customer/getdetails/";
 NSString *const RI_API_REGISTER_CUSTOMER = @"customer/create/";
 NSString *const RI_API_LOGIN_CUSTOMER = @"customer/login/";
 NSString *const RI_API_FACEBOOK_LOGIN_CUSTOMER = @"customer/facebooklogin/";
 NSString *const RI_API_LOGOUT_CUSTOMER = @"customer/logout/";
 NSString *const RI_API_GET_CUSTOMER_ADDRESS_LIST = @"customer/getaddresslist/";
-NSString *const RI_API_GET_CUSTOMER_SELECT_DEFAULT = @"/customer/makedefaultaddress/";
+NSString *const RI_API_GET_CUSTOMER_SELECT_DEFAULT = @"customer/makedefaultaddress/";
 
 NSString *const RI_API_GET_MULTISTEP_ADDRESSES = @"multistep/addresses/";
 NSString *const RI_API_GET_SHIPPING_METHODS_FORM = @"multistep/shippingmethod/";
@@ -102,7 +105,6 @@ NSString *const RI_API_FINISH_CHECKOUT = @"multistep/finish/";
 
 NSString *const RI_GET_CAMPAIGN = @"campaign/get/campaign_slug/%@/";
 NSString *const RI_API_BUNDLE = @"catalog/bundle/sku/";
-NSString *const RI_API_ADD_BUNDLE = @"order/addbundle/";
 
 NSString *const RI_API_GET_WISHLIST = @"wishlist/getproducts/";
 NSString *const RI_API_ADD_TO_WISHLIST = @"wishlist/addproduct/";
@@ -118,4 +120,5 @@ NSString *const RI_API_CATALOG_SELLER = @"search/find/seller/";
 NSString *const RI_API_CAMPAIGN_PAGE = @"campaign/get/slug/";
 NSString *const RI_API_STATIC_PAGE = @"main/getstatic/key/";
 NSString *const RI_API_FORMS_GET = @"forms/";
+NSString *const RI_API_FORMS_ADDRESS_EDIT = @"addressedit/id/";
 
