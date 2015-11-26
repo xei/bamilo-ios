@@ -7,53 +7,105 @@
 //
 
 #import "JAFilteredNoResultsView.h"
+#import "JABottomBar.h"
 
+#define kLateralMargin 16
+#define kTopMargin 48
+#define kImageTopMargin 28
+#define kImageBottomMargin 28
+#define kButtonTopMargin 48
+#define kButtonWidth 288
+
+@interface JAFilteredNoResultsView ()
+{
+    UIImage *_image;
+}
+
+@property (nonatomic) JABottomBar *ctaView;
+@property (nonatomic) UILabel *topMessageLabel;
+@property (nonatomic) UIImageView *filterImageView;
+@property (nonatomic) UILabel *messageLabel;
+
+@end
 
 @implementation JAFilteredNoResultsView
 
-@synthesize filtersLabel;
-
-+(JAFilteredNoResultsView *)getFilteredNoResultsView
+- (UILabel *)topMessageLabel
 {
-    NSArray *xibContents = nil;
+    if (!_topMessageLabel) {
+        _topMessageLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, kTopMargin, self.width - 2*kLateralMargin, 50)];
+        [_topMessageLabel setTextAlignment:NSTextAlignmentCenter];
+        [_topMessageLabel setFont:JADisplay2Font];
+        [_topMessageLabel setTextColor:JABlackColor];
+        [_topMessageLabel setText:STRING_FILTER_NO_RESULTS];
+        [_topMessageLabel sizeToFit];
+        [_topMessageLabel setWidth:self.width - 2*kLateralMargin];
+    }
+    return _topMessageLabel;
+}
+
+- (UIImageView *)filterImageView
+{
+    if (!_filterImageView) {
+        _image = [UIImage imageNamed:@"emptyFilter"];
+        _filterImageView = [[UIImageView alloc] initWithImage:_image highlightedImage:_image];
+        [_filterImageView setFrame:CGRectMake((self.width - _image.size.width)/2, CGRectGetMaxY(self.topMessageLabel.frame) + kImageTopMargin, _image.size.width, _image.size.height)];
+    }
+    return _filterImageView;
+}
+
+- (UILabel *)messageLabel
+{
+    if (!_messageLabel) {
+        _messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.filterImageView.frame) + kImageBottomMargin, self.width - 2*kLateralMargin, 50)];
+        [_messageLabel setTextAlignment:NSTextAlignmentCenter];
+        [_messageLabel setFont:JABody2Font];
+        [_messageLabel setTextColor:JABlack800Color];
+        [_messageLabel setText:STRING_FILTER_NO_RESULTS_TIP];
+        [_messageLabel sizeToFit];
+        [_messageLabel setWidth:self.width - 2*kLateralMargin];
+    }
+    return _messageLabel;
+}
+
+- (JABottomBar *)ctaView
+{
+    if (!_ctaView) {
+        _ctaView = [[JABottomBar alloc] initWithFrame:CGRectMake((self.width - kButtonWidth)/2, CGRectGetMaxY(self.messageLabel.frame) + kButtonTopMargin, kButtonWidth, kBottomDefaultHeight)];
+        [_ctaView addButton:[STRING_CATALOG_EDIT_FILTERS uppercaseString] target:self action:@selector(editFiltersButtonPressed)];
+    }
+    return _ctaView;
+}
+
+- (void)setupView:(CGRect)frame
+{
+    if (!self.topMessageLabel.superview) {
+        [self addSubview:self.topMessageLabel];
+    }else{
+        [self.topMessageLabel setFrame:CGRectMake(kLateralMargin, kTopMargin, frame.size.width - 2*kLateralMargin, self.topMessageLabel.height)];
+    }
     
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-    {
-        xibContents = [[NSBundle mainBundle] loadNibNamed:@"JAFilteredNoResultsView" owner:self options:nil];
-    }
-    else if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-        xibContents = [[NSBundle mainBundle] loadNibNamed:@"JAFilteredNoResultsView~iPad" owner:self options:nil];
+    if (!self.filterImageView.superview) {
+        [self addSubview:self.filterImageView];
+    }else{
+        [self.filterImageView setFrame:CGRectMake((frame.size.width - _image.size.width)/2, CGRectGetMaxY(self.topMessageLabel.frame) + kImageTopMargin, _image.size.width, _image.size.height)];
     }
     
-    for (NSObject *obj in xibContents)
-    {
-        if ([obj isKindOfClass:[JAFilteredNoResultsView class]])
-        {
-            return (JAFilteredNoResultsView *)obj;
-        }
+    if (!self.messageLabel.superview) {
+        [self addSubview:self.messageLabel];
+    }else{
+        [self.messageLabel setFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.filterImageView.frame) + kImageBottomMargin, frame.size.width - 2*kLateralMargin, self.messageLabel.height)];
     }
-    return nil;
+    
+    if (!self.ctaView.superview) {
+        [self addSubview:self.ctaView];
+    }else{
+        [self.ctaView setFrame:CGRectMake((frame.size.width - kButtonWidth)/2, CGRectGetMaxY(self.messageLabel.frame) + kButtonTopMargin, kButtonWidth, kBottomDefaultHeight)];
+    }
 }
 
 
--(void)setupView:(CGRect)frame
-{
-    self.viewForBaselineLayout.frame = frame;
-    
-    self.filtersLabel.font = [UIFont fontWithName:kFontRegularName size:self.filtersLabel.font.pointSize];
-    self.filtersLabel.textColor = UIColorFromRGB(0xcccccc);
-    self.filtersLabel.text = STRING_FILTER_NO_RESULTS;
-    
-    UIButton *button = (UIButton *)[self.viewForBaselineLayout viewWithTag:1000];
-    [button setTitle:STRING_CATALOG_EDIT_FILTERS forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont fontWithName:kFontRegularName size:16];
-    [button setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    button.layer.cornerRadius = 5.0f;
-}
-
-
--(IBAction)editFiltersButtonPressed
+- (void)editFiltersButtonPressed
 {
     [self.delegate pressedEditFiltersButton:self];
 }
