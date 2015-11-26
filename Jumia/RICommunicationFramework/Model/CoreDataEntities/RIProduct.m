@@ -108,13 +108,14 @@
 @synthesize fashion;
 
 + (NSString *)getCompleteProductWithSku:(NSString*)sku
-                          withParameter:(NSDictionary*)parameter
                            successBlock:(void (^)(id product))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
-    NSString *finalUrl = [NSString stringWithFormat:@"%@%@catalog/detail?sku=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, sku];
+
+    
+    NSString *finalUrl = [NSString stringWithFormat:@"%@%@catalog/detail/sku/%@/", [RIApi getCountryUrlInUse], RI_API_VERSION, sku];
     return [RIProduct getCompleteProductWithUrl:finalUrl
-                                  withParameter:parameter
+                              withRichParameter:nil
                                    successBlock:^(id product) {
                                        successBlock(product);
                                    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
@@ -123,13 +124,31 @@
 }
 
 + (NSString *)getCompleteProductWithUrl:(NSString*)url
-                          withParameter:(NSDictionary*)parameter
+                      withRichParameter:(NSDictionary*)parameter
                            successBlock:(void (^)(id product))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
-    url = [url  stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    
+    NSMutableString *richParam = [NSMutableString new];
+    if (VALID_NOTEMPTY(parameter, NSDictionary)) {
+        if ([parameter objectForKey:@"rich_parameter"]) {
+            if ([[[parameter objectForKey:@"rich_parameter"] componentsSeparatedByString:@"::"] count] > 1) {
+                [richParam appendFormat:@"request/req/%@/",[[[parameter objectForKey:@"rich_parameter"] componentsSeparatedByString:@"::"] objectAtIndex:1]];
+            }
+        }
+    }
+    
+    
+    
+    NSString * temp =  [url stringByReplacingOccurrencesOfString:@"product_detail::"
+                                                      withString:[NSString stringWithFormat:@"%@%@catalog/detail/sku/", [RIApi getCountryUrlInUse], RI_API_VERSION]];
+    
+    temp = [NSString stringWithFormat:@"%@/%@",temp,richParam];
+    
+    url = [temp  stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
-                                                            parameters:parameter
+                                                            parameters:nil
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime

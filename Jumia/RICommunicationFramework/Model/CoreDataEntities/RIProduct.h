@@ -96,7 +96,6 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *  @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)getCompleteProductWithSku:(NSString*)sku
-                          withParameter:(NSDictionary*)parameter
                            successBlock:(void (^)(id product))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
@@ -111,7 +110,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *  @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)getCompleteProductWithUrl:(NSString*)url
-                          withParameter:(NSDictionary*)parameter
+                      withRichParameter:(NSDictionary*)parameter
                            successBlock:(void (^)(id product))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 

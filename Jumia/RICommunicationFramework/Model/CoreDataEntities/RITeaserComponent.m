@@ -93,8 +93,8 @@
             newTeaserComponent.brand = [teaserComponentJSON objectForKey:@"brand"];
         }
         
-        if ([teaserComponentJSON objectForKey:@"rich_relevance"]) {
-            newTeaserComponent.richRelevance = [teaserComponentJSON objectForKey:@"rich_relevance"];
+        if ([teaserComponentJSON objectForKey:@"click_request"]) {
+            newTeaserComponent.richRelevance = [teaserComponentJSON objectForKey:@"click_request"];
         }
         
         if ([teaserComponentJSON objectForKey:@"max_saving_percentage"]) {

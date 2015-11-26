@@ -86,11 +86,11 @@
     NSArray *allTeaserGroupings = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RITeaserGrouping
                                                                                                           class])];
     
-    if (VALID_NOTEMPTY(allTeaserGroupings, NSArray)) {
-        NSDictionary* allTeaserGroupingsDict = [NSDictionary dictionaryWithObjects:allTeaserGroupings
-                                                         forKeys:[allTeaserGroupings valueForKey:@"type"]];
-        successBlock(allTeaserGroupingsDict,NO);
-    } else {
+//    if (VALID_NOTEMPTY(allTeaserGroupings, NSArray)) {
+//        NSDictionary* allTeaserGroupingsDict = [NSDictionary dictionaryWithObjects:allTeaserGroupings
+//                                                         forKeys:[allTeaserGroupings valueForKey:@"type"]];
+//        successBlock(allTeaserGroupingsDict,NO);
+//    } else {
         operationID = [RITeaserGrouping loadTeasersIntoDatabaseForCountryUrl:[RIApi getCountryUrlInUse]
                                                    countryUserAgentInjection:[RIApi getCountryUserAgentInjection]
                                                             withSuccessBlock:^(NSDictionary* teaserGroupings, BOOL richTeasers) {
@@ -110,7 +110,7 @@
                                                                     failureBlock(RIApiResponseUnknownError, nil);
                                                                 }
                                                             } andFailureBlock:failureBlock];
-    }
+//    }
 
     return operationID;
 }
@@ -119,8 +119,12 @@
                   successBlock:(void(^)(RITeaserGrouping * richTeaserGrouping))richBlock
                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
 {
-    NSDictionary * topSellerJson = [richTeasers objectForKey:@"top_sellers"];
-    NSURL* url = [NSURL URLWithString:[topSellerJson objectForKey:@"target"]];
+    NSDictionary *topSellerJson = [richTeasers objectForKey:@"top_sellers"];
+    
+    
+    NSString *target = [[[topSellerJson objectForKey:@"target"] componentsSeparatedByString:@"::"] objectAtIndex:1];
+    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@richrelevance/request/req/%@/", [RIApi getCountryUrlInUse], RI_API_VERSION, target]];
+    
     [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
                                                      parameters:nil
                                                  httpMethodPost:YES
@@ -138,6 +142,7 @@
                                                                {
                                                                    RITeaserGrouping* teaserGrouping = [RITeaserGrouping parseTeaserGrouping:metadata
                                                                                                                                     country:configuration];
+                                                                   [teaserGrouping setTeaserComponentTargetType:@"product_detail"];
                                                                    if (VALID_NOTEMPTY(teaserGrouping, RITeaserGrouping)) {
                                                                        if (richBlock) {
                                                                            richBlock(teaserGrouping);
@@ -272,6 +277,14 @@
     if (save) {
         [[RIDataBaseWrapper sharedInstance] saveContext];
     }
+}
+
+- (void)setTeaserComponentTargetType:(NSString*)target
+{
+    for (RITeaserComponent *teaserComponent in self.teaserComponents) {
+        teaserComponent.targetType = target;
+    }
+    [[RIDataBaseWrapper sharedInstance] saveContext];
 }
 
 @end

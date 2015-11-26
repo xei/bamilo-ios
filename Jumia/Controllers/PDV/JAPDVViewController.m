@@ -396,7 +396,7 @@ JAActivityViewControllerDelegate
     
     if (VALID_NOTEMPTY(self.productUrl, NSString)) {
         [RIProduct getCompleteProductWithUrl:self.productUrl
-                               withParameter:richParameter
+                           withRichParameter:richParameter
                                 successBlock:^(id product) {
             _needRefreshProduct = NO;
             self.apiResponse = RIApiResponseSuccess;
@@ -433,7 +433,6 @@ JAActivityViewControllerDelegate
         }];
     } else if (VALID_NOTEMPTY(self.productSku, NSString)) {
         [RIProduct getCompleteProductWithSku:self.productSku
-                               withParameter:richParameter
                                 successBlock:^(id product) {
             self.apiResponse = RIApiResponseSuccess;
             
