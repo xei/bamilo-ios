@@ -27,8 +27,8 @@
         cartItem.attributeSetID = [info objectForKey:@"attribute_set_id"];
     }
     
-    if (VALID_NOTEMPTY([info objectForKey:@"url"], NSString)) {
-        cartItem.productUrl = [info objectForKey:@"url"];
+    if (VALID_NOTEMPTY([info objectForKey:@"target"], NSString)) {
+        cartItem.targetString = [info objectForKey:@"target"];
     }
     
     if (VALID_NOTEMPTY([info objectForKey:@"image"], NSString)) {

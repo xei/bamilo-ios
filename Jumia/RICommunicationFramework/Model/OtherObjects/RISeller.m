@@ -47,7 +47,7 @@
             if ([global objectForKey:@"link"]) {
                 NSDictionary* link = [global objectForKey:@"link"];
                 newSeller.linkTextGlobal = [link objectForKey:@"text"];
-                newSeller.linkUrlGlobal = [link objectForKey:@"url"];
+                newSeller.linkTargetStringGlobal = [link objectForKey:@"target"];
             }
             
             if ([global objectForKey:@"cms_info"]) {

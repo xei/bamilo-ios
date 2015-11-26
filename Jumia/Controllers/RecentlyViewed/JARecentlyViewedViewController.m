@@ -364,7 +364,7 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                             object:nil
-                                                          userInfo:@{ @"url" : product.url,
+                                                          userInfo:@{ @"targetString" : product.targetString,
                                                                       @"previousCategory" : STRING_RECENTLY_VIEWED,
                                                                       @"show_back_button" : [NSNumber numberWithBool:NO],
                                                                       @"fromCatalog" : [NSNumber numberWithBool:YES]}];

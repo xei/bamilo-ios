@@ -506,8 +506,8 @@
                             product.brand = [productDic objectForKey:@"brand"];
                         }
                         
-                        if ([productDic objectForKey:@"url"]) {
-                            product.url = [productDic objectForKey:@"url"];
+                        if ([productDic objectForKey:@"target"]) {
+                            product.targetString = [productDic objectForKey:@"target"];
                         }
                         
                         if ([productDic objectForKey:@"image"]) {

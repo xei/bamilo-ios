@@ -27,19 +27,14 @@
                     newBanner.iPadImageUrl = [bannerJSON objectForKey:@"tablet_image"];
                 }
                 
-                if([bannerJSON objectForKey:@"target_type"])
+                if([bannerJSON objectForKey:@"target"])
                 {
-                    newBanner.targetType = [bannerJSON objectForKey:@"target_type"];
+                    newBanner.targetString = [bannerJSON objectForKey:@"target"];
                 }
                 
                 if([bannerJSON objectForKey:@"title"])
                 {
                     newBanner.title = [bannerJSON objectForKey:@"title"];
-                }
-                
-                if([bannerJSON objectForKey:@"url"])
-                {
-                    newBanner.url = [bannerJSON objectForKey:@"url"];
                 }
             }
     

@@ -17,9 +17,8 @@
 @dynamic name;
 @dynamic endingDate;
 @dynamic subTitle;
-@dynamic targetType;
+@dynamic targetString;
 @dynamic title;
-@dynamic url;
 @dynamic price;
 @dynamic priceEuroConverted;
 @dynamic priceFormatted;
@@ -73,12 +72,8 @@
             newTeaserComponent.subTitle = [teaserComponentJSON objectForKey:@"sub_title"];
         }
         
-        if ([teaserComponentJSON objectForKey:@"target_type"]) {
-            newTeaserComponent.targetType = [teaserComponentJSON objectForKey:@"target_type"];
-        }
-        
-        if ([teaserComponentJSON objectForKey:@"url"]) {
-            newTeaserComponent.url = [teaserComponentJSON objectForKey:@"url"];
+        if ([teaserComponentJSON objectForKey:@"target"]) {
+            newTeaserComponent.targetString = [teaserComponentJSON objectForKey:@"target"];
         }
         
         if ([teaserComponentJSON objectForKey:@"max_price"]) {

@@ -24,12 +24,13 @@
 @dynamic type;
 @dynamic value;
 @dynamic dataSet;
-@dynamic apiCall;
+@dynamic apiCallEndpoint;
+@dynamic apiCallParameters;
 @dynamic form;
 @dynamic options;
 @dynamic ratingStars;
 @dynamic linkText;
-@dynamic linkUrl;
+@dynamic linkTargetString;
 @dynamic pattern;
 @dynamic patternMessage;
 @dynamic relatedFields;
@@ -68,13 +69,32 @@
     }
     
     if(VALID_NOTEMPTY([fieldJSON objectForKey:@"api_call"], NSString)) {
-        newField.apiCall = [fieldJSON objectForKey:@"api_call"];
+        NSDictionary* apicall = [fieldJSON objectForKey:@"api_call"];
+        if (VALID_NOTEMPTY([apicall objectForKey:@"endpoint"], NSString)) {
+            newField.apiCallEndpoint = [apicall objectForKey:@"endpoint"];
+        }
+        if (VALID_NOTEMPTY([apicall objectForKey:@"params"], NSArray)) {
+            NSArray* params = [apicall objectForKey:@"params"];
+            NSMutableDictionary* newParams = [NSMutableDictionary new];
+            for (NSDictionary* parameter in params) {
+                if (VALID_NOTEMPTY(parameter, NSDictionary)) {
+                    NSString* key = [parameter objectForKey:@"key"];
+                    NSString* param = [parameter objectForKey:@"param"];
+                    if (VALID_NOTEMPTY(key, NSString) && VALID_NOTEMPTY(param, NSString)) {
+                        [newParams setObject:param forKey:key];
+                    }
+                }
+            }
+            newField.apiCallParameters = [newParams copy];
+        }
     }
-    if ([fieldJSON objectForKey:@"link_text"]) {
-        newField.linkText = [fieldJSON objectForKey:@"link_text"];
+    
+    //$$$ LINK IS NOW AN OBJECT, CHECK LATER
+    if ([fieldJSON objectForKey:@"label"]) {
+        newField.linkText = [fieldJSON objectForKey:@"label"];
     }
-    if ([fieldJSON objectForKey:@"link_url"]) {
-        newField.linkUrl = [fieldJSON objectForKey:@"link_url"];
+    if ([fieldJSON objectForKey:@"target"]) {
+        newField.linkTargetString = [fieldJSON objectForKey:@"target"];
     }
     
     

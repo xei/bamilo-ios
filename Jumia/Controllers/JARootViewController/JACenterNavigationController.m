@@ -467,7 +467,7 @@
             }
             else if ([index isEqual:@(98)])
             {
-                [self pushCatalogForUndefinedSearchWithBrandUrl:[selectedItem objectForKey:@"url"]
+                [self pushCatalogForUndefinedSearchWithBrandTargetString:[selectedItem objectForKey:@"targetString"]
                                                    andBrandName:[selectedItem objectForKey:@"name"]];
             }
             else
@@ -1099,11 +1099,11 @@
     [self pushViewController:catalog animated:YES];
 }
 
-- (void)pushCatalogForUndefinedSearchWithBrandUrl:(NSString *)brandUrl
-                                     andBrandName:(NSString *)brandName
+- (void)pushCatalogForUndefinedSearchWithBrandTargetString:(NSString *)brandTargetString
+                                              andBrandName:(NSString *)brandName
 {
     JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
-    catalog.catalogUrl = brandUrl;
+    catalog.catalogTargetString = brandTargetString;
     catalog.forceShowBackButton = YES;
     
     catalog.navBarLayout.title = brandName;
@@ -1387,13 +1387,13 @@
 
 -(void)showSellerCatalog: (NSNotification *)notification
 {
-    NSString* url = [notification.userInfo objectForKey:@"url"];
+    NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
     NSString* title = [notification.userInfo objectForKey:@"name"];
     
-    if(VALID_NOTEMPTY(url, NSString))
+    if(VALID_NOTEMPTY(targetString, NSString))
     {
         JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
-        catalog.catalogUrl = url;
+        catalog.catalogTargetString = targetString;
         catalog.navBarLayout.title = title;
         catalog.navBarLayout.showBackButton = YES;
         
@@ -1407,14 +1407,14 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
                                                         object:nil];
     
-    NSString* url = [notification.userInfo objectForKey:@"url"];
+    NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
     NSString* title = [notification.userInfo objectForKey:@"title"];
     
-    if (VALID_NOTEMPTY(url, NSString)) {
+    if (VALID_NOTEMPTY(targetString, NSString)) {
         
         JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         
-        catalog.catalogUrl = url;
+        catalog.catalogTargetString = targetString;
         catalog.navBarLayout.title = title;
         
         if ([notification.userInfo objectForKey:@"show_back_button_title"]) {
@@ -1441,7 +1441,7 @@
     RITeaserGrouping* teaserGrouping = [notification.userInfo objectForKey:@"teaserGrouping"];
 
     //this is used when the teaserGrouping is not campaigns, so we're only going to be showing one
-    NSString* campaignUrl = [notification.userInfo objectForKey:@"url"];
+    NSString* campaignTargetString = [notification.userInfo objectForKey:@"targetString"];
     
     //this is used in deeplinking
     NSString* campaignId = [notification.userInfo objectForKey:@"campaign_id"];
@@ -1469,10 +1469,10 @@
         campaignsVC.teaserTrackingInfo = cameFromTeasers;
         
         [self pushViewController:campaignsVC animated:YES];
-    } else if (VALID_NOTEMPTY(campaignUrl, NSString)) {
+    } else if (VALID_NOTEMPTY(campaignTargetString, NSString)) {
         JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
         
-        campaignsVC.campaignUrl = campaignUrl;
+        campaignsVC.campaignTargetString = campaignTargetString;
         campaignsVC.teaserTrackingInfo = cameFromTeasers;
         
         [self pushViewController:campaignsVC animated:YES];
@@ -1484,13 +1484,13 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
                                                         object:nil];
     
-    NSString* url = [notification.userInfo objectForKey:@"url"];
+    NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
     NSString* productSku = [notification.userInfo objectForKey:@"sku"];
     
-    if (VALID_NOTEMPTY(url, NSString) || VALID_NOTEMPTY(productSku, NSString))
+    if (VALID_NOTEMPTY(targetString, NSString) || VALID_NOTEMPTY(productSku, NSString))
     {
         JAPDVViewController *pdv = [JAPDVViewController new];
-        pdv.productUrl = url;
+        pdv.productTargetString = targetString;
         pdv.productSku = productSku;
         
         if ([notification.userInfo objectForKey:@"fromCatalog"])
@@ -1535,7 +1535,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
                                                         object:nil];
     
-    NSString* url = [notification.userInfo objectForKey:@"url"];
+    NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
     NSString* uid = [notification.userInfo objectForKey:@"shop_id"];
 
     JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
@@ -1554,16 +1554,18 @@
         viewController.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
     }
     
-    if (VALID_NOTEMPTY(url, NSString))
+    if (VALID_NOTEMPTY(targetString, NSString))
     {
-        viewController.url = url;
+        viewController.targetString = targetString;
         [self pushViewController:viewController animated:YES];
 
-    } else if (VALID_NOTEMPTY(uid, NSString))
-    {
-        viewController.url = [NSString stringWithFormat:@"%@%@main/getstatic/?key=%@",[RIApi getCountryUrlInUse], RI_API_VERSION, uid];
-        [self pushViewController:viewController animated:YES];
     }
+    //$$$ HOPEFULLY THIS IS NO LONGER NEEDED
+//    else if (VALID_NOTEMPTY(uid, NSString))
+//    {
+//        viewController.url = [NSString stringWithFormat:@"%@%@main/getstatic/?key=%@",[RIApi getCountryUrlInUse], RI_API_VERSION, uid];
+//        [self pushViewController:viewController animated:YES];
+//    }
 
 }
 

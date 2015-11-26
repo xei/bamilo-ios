@@ -117,31 +117,31 @@ JAPickerDelegate>
 
     self.apiResponse = RIApiResponseSuccess;
     
-    [RIForm getFormWithUrl:[NSString stringWithFormat:@"addressedit?id=%@", self.editAddress.uid]
-              successBlock:^(RIForm *form) {
-                  self.dynamicForm = [[JADynamicForm alloc] initWithForm:form values:[self getAddressValues] startingPosition:self.addressViewCurrentY hasFieldNavigation:NO];
-                  
-                  [self.dynamicForm setDelegate:self];
-                  
-                  for(UIView *view in self.dynamicForm.formViews)
-                  {
-                      [self.contentView addSubview:view];
-                  }
-                  
-                  [self removeErrorView];
-                  [self finishedFormLoading];
-              } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-                  self.apiResponse = apiResponse;
-                  
-                  BOOL noInternetConnection = NO;
-                  if (RIApiResponseNoInternetConnection == self.apiResponse)
-                  {
-                      noInternetConnection = YES;
-                  }
-                  
-                  [self showErrorView:noInternetConnection startingY:0.0f selector:@selector(getForm) objects:nil];
-                  [self hideLoading];
-              }];
+    [RIForm getForm:[NSString stringWithFormat:@"%@%@", RI_API_FORMS_ADDRESS_EDIT, self.editAddress.uid]
+       successBlock:^(RIForm *form) {
+           self.dynamicForm = [[JADynamicForm alloc] initWithForm:form values:[self getAddressValues] startingPosition:self.addressViewCurrentY hasFieldNavigation:NO];
+           
+           [self.dynamicForm setDelegate:self];
+           
+           for(UIView *view in self.dynamicForm.formViews)
+           {
+               [self.contentView addSubview:view];
+           }
+           
+           [self removeErrorView];
+           [self finishedFormLoading];
+       } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+           self.apiResponse = apiResponse;
+           
+           BOOL noInternetConnection = NO;
+           if (RIApiResponseNoInternetConnection == self.apiResponse)
+           {
+               noInternetConnection = YES;
+           }
+           
+           [self showErrorView:noInternetConnection startingY:0.0f selector:@selector(getForm) objects:nil];
+           [self hideLoading];
+       }];
 }
 
 - (void) hideKeyboard

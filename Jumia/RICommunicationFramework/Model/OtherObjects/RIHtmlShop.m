@@ -10,13 +10,15 @@
 #import "RIFeaturedBoxTeaserGrouping.h"
 #import "RICountry.h"
 #import "GTMNSString+HTML.h"
+#import "RITarget.h"
 
 @implementation RIHtmlShop
 
-+ (NSString*)getHtmlShopForUrlString:(NSString*)urlString
-                        successBlock:(void (^)(RIHtmlShop *htmlShop))sucessBlock
-                        failureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
++ (NSString*)getHtmlShopForTargetString:(NSString*)targetString
+                           successBlock:(void (^)(RIHtmlShop *htmlShop))sucessBlock
+                           failureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 {
+    NSString* urlString = [RITarget getURLStringforTargetString:targetString];
     NSURL* url = [NSURL URLWithString:urlString];
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url parameters:nil httpMethodPost:YES cacheType:RIURLCacheNoCache cacheTime:RIURLCacheDefaultTime userAgentInjection:[RIApi getCountryUserAgentInjection] successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
         

@@ -20,9 +20,10 @@
 @property (nonatomic, retain) NSString * label;
 @property (nonatomic, retain) NSString * value;
 @property (nonatomic, retain) NSNumber * checked;
-@property (nonatomic, retain) NSString * apiCall;
+@property (nonatomic, retain) NSString * apiCallEndpoint;
+@property (nonatomic, retain) NSDictionary * apiCallParameters;
 @property (nonatomic, retain) NSString * linkText;
-@property (nonatomic, retain) NSString * linkUrl;
+@property (nonatomic, retain) NSString * linkTargetString;
 @property (nonatomic, retain) NSOrderedSet * ratingStars;
 @property (nonatomic, retain) NSOrderedSet * options;
 @property (nonatomic, retain) NSOrderedSet * dataSet;

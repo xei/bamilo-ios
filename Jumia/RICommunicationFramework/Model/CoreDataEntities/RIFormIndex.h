@@ -14,7 +14,7 @@
 @interface RIFormIndex : NSManagedObject
 
 @property (nonatomic, retain) NSString * type;
-@property (nonatomic, retain) NSString * url;
+@property (nonatomic, retain) NSString * targetString;
 @property (nonatomic, retain) RIForm *form;
 
 + (NSString*)loadFormIndexesIntoDatabaseForCountry:(NSString*)countryUrl

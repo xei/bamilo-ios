@@ -398,7 +398,7 @@
     
     if (NOTEMPTY(self.delegate) && [self.delegate respondsToSelector:@selector(didSelectProduct:)])
     {
-        [self.delegate didSelectProduct:item.url];
+        [self.delegate didSelectProduct:item.targetString];
     }
 }
 - (void)brandSelected:(UIControl *)sender

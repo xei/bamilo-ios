@@ -21,7 +21,7 @@
 @property (nonatomic) BOOL isGlobal;
 @property (nonatomic, retain) NSString * shippingGlobal;
 @property (nonatomic, retain) NSString * linkTextGlobal;
-@property (nonatomic, retain) NSString * linkUrlGlobal;
+@property (nonatomic, retain) NSString * linkTargetStringGlobal;
 @property (nonatomic, retain) NSString * warranty;
 @property (nonatomic, retain) NSString * cmsInfo;
 

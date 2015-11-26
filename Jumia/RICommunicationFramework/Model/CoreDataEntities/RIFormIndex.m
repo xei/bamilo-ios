@@ -13,7 +13,7 @@
 @implementation RIFormIndex
 
 @dynamic type;
-@dynamic url;
+@dynamic targetString;
 @dynamic form;
 
 + (NSString*)loadFormIndexesIntoDatabaseForCountry:(NSString*)countryUrl
@@ -111,8 +111,8 @@
     if ([formIndexJSON objectForKey:@"type"]) {
         newFormIndex.type = [formIndexJSON objectForKey:@"type"];
     }
-    if ([formIndexJSON objectForKey:@"url"]) {
-        newFormIndex.url = [formIndexJSON objectForKey:@"url"];
+    if ([formIndexJSON objectForKey:@"target"]) {
+        newFormIndex.targetString = [formIndexJSON objectForKey:@"target"];
     }
     
     return newFormIndex;

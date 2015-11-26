@@ -227,7 +227,7 @@
         self.pickerNamesAlreadySet = YES;
         self.pickerScrollView.startingIndex = startingIndex;
     }
-    else if (VALID_NOTEMPTY(self.campaignUrl, NSString)) {
+    else if (VALID_NOTEMPTY(self.campaignTargetString, NSString)) {
         [self createCampaignPageAtX:currentX];
     }
     
@@ -263,25 +263,25 @@
                 
                 RITeaserComponent* component = [self.activeCampaignComponents objectAtIndex:index.intValue];
                 
-                if (VALID_NOTEMPTY(component, RITeaserComponent) && VALID_NOTEMPTY(component.url, NSString)) {
-                    [self loadPage:campaignPageView withCampaignUrl:component.url];
+                if (VALID_NOTEMPTY(component, RITeaserComponent) && VALID_NOTEMPTY(component.targetString, NSString)) {
+                    [self loadPage:campaignPageView withCampaignTargetString:component.targetString];
                 }
-            } else if (VALID_NOTEMPTY(self.campaignUrl, NSString)) {
-                [self loadPage:campaignPageView withCampaignUrl:self.campaignUrl];
+            } else if (VALID_NOTEMPTY(self.campaignTargetString, NSString)) {
+                [self loadPage:campaignPageView withCampaignTargetString:self.campaignTargetString];
             }
         }
     }
 }
 
 - (void)loadPage:(JACampaignPageView*)campaignPage
- withCampaignUrl:(NSString*)campaignUrl
+withCampaignTargetString:(NSString*)campaignTargetString
 {
     if (RIApiResponseNoInternetConnection != self.apiResponse)
     {
         [self showLoading];
     }
     self.apiResponse = RIApiResponseSuccess;
-    [RICampaign getCampaignWithUrl:campaignUrl successBlock:^(RICampaign *campaign) {
+    [RICampaign getCampaignWithTargetString:campaignTargetString successBlock:^(RICampaign *campaign) {
         if (VALID_NOTEMPTY(self.pickerScrollView, JAPickerScrollView) && 0 == self.pickerScrollView.optionLabels.count) {
             [self.pickerScrollView setOptions:[NSArray arrayWithObject:campaign.name]];
         }

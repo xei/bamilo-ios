@@ -53,7 +53,7 @@
     
     self.field = field;
     
-    if (VALID_NOTEMPTY(field.linkUrl, NSString)) {
+    if (VALID_NOTEMPTY(field.linkTargetString, NSString)) {
         [self.urlButton addTarget:self action:@selector(urlWasClicked) forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -100,8 +100,8 @@
     
     NSString* notificationName = kDidSelectTeaserWithShopUrlNofication;
     
-    if (VALID_NOTEMPTY(self.field.linkUrl, NSString)) {
-        [userInfo setObject:self.field.linkUrl forKey:@"url"];
+    if (VALID_NOTEMPTY(self.field.linkTargetString, NSString)) {
+        [userInfo setObject:self.field.linkTargetString forKey:@"targetString"];
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
                                                             object:nil
                                                           userInfo:userInfo];

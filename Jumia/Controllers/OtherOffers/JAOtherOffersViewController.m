@@ -182,7 +182,7 @@
 {
     [self showLoading];
     
-    [RIProductOffer getProductOffersForProductUrl:self.product.url successBlock:^(NSArray *productOffers) {
+    [RIProductOffer getProductOffersForProductTargetString:self.product.targetString successBlock:^(NSArray *productOffers) {
         
         [self hideLoading];
         
