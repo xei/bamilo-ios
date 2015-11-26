@@ -502,6 +502,8 @@
                 [graphic setWidth:full*sum.intValue/self.product.sum.intValue];
             }];
             [label setText:[NSString stringWithFormat:@"(%d)", sum.intValue]];
+            [label sizeToFit];
+
         }else{
             [graphic setWidth:0.f];
             [label setText:@"(0)"];
