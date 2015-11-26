@@ -31,10 +31,10 @@
 @property (nonatomic, strong) NSNumber *totalPages;
 
 
-+ (NSString *)getSellerReviewForProductWithUrl:(NSString *)url
-                                      pageSize:(NSInteger)pageSize
-                                    pageNumber:(NSInteger)pageNumber
-                                  successBlock:(void (^)(RISellerReviewInfo *sellerReviewInfo))successBlock
-                               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
++ (NSString *)getSellerReviewForProductWithTargetString:(NSString *)targetString
+                                               pageSize:(NSInteger)pageSize
+                                             pageNumber:(NSInteger)pageNumber
+                                           successBlock:(void (^)(RISellerReviewInfo *sellerReviewInfo))successBlock
+                                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 @end

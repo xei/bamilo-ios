@@ -10,6 +10,7 @@
 #import "RIHtmlShop.h"
 #import "RIFeaturedBoxTeaserGrouping.h"
 #import "JATopSellersTeaserView.h"
+#import "RITarget.h"
 
 @interface JAShopWebViewController ()
 
@@ -42,9 +43,7 @@
 {
     [super viewWillAppear:animated];
     
-    NSString *staticKey = [[[[self.url componentsSeparatedByString:@"main/getstatic/?key="] lastObject] componentsSeparatedByString:@"&"] firstObject];
-    
-    [[RITrackingWrapper sharedInstance] trackStaticPage:staticKey];
+    [[RITrackingWrapper sharedInstance] trackStaticPage:self.targetString];
     
     [self.scrollView setFrame:[self viewBounds]];
     [self.scrollView setBackgroundColor:[UIColor whiteColor]];
@@ -55,12 +54,12 @@
     
     if (NO == self.isLoaded) {
         
-        [RIHtmlShop getHtmlShopForUrlString:self.url successBlock:^(RIHtmlShop *htmlShop) {
+        [RIHtmlShop getHtmlShopForTargetString:self.targetString successBlock:^(RIHtmlShop *htmlShop) {
             self.htmlShop = htmlShop;
             self.isLoaded = YES;
             
             [self removeErrorView];
-            [self.webView loadHTMLString:self.htmlShop.html baseURL:[NSURL URLWithString:self.url]];
+            [self.webView loadHTMLString:self.htmlShop.html baseURL:[NSURL URLWithString:[RITarget getURLStringforTargetString:self.targetString]]];
             
         } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
             if (RIApiResponseNoInternetConnection == apiResponse) {
@@ -112,7 +111,7 @@
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    [self.webView loadHTMLString:self.htmlShop.html baseURL:[NSURL URLWithString:self.url]];
+    [self.webView loadHTMLString:self.htmlShop.html baseURL:[NSURL URLWithString:[RITarget getURLStringforTargetString:self.targetString]]];
 }
 
 - (BOOL)webView:(UIWebView *)webView

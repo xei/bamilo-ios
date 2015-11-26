@@ -15,7 +15,7 @@
 @interface JAPDVViewController : JABaseViewController <JAPDVImageSectionDelegate>
 
 @property (strong, nonatomic) RIProduct *product;
-@property (strong, nonatomic) NSString* productUrl;
+@property (strong, nonatomic) NSString* productTargetString;
 @property (strong, nonatomic) NSString* productSku;
 @property (strong, nonatomic) RICategory *category;
 @property (assign, nonatomic) BOOL fromCatalogue;

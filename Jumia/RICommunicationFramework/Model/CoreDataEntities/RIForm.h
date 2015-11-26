@@ -22,10 +22,6 @@
 
 //Class Methods
 
-+ (NSString *)getFormWithUrl:(NSString *)urlString
-                successBlock:(void (^)(RIForm *))successBlock
-                failureBlock:(void (^)(RIApiResponse, NSArray *))failureBlock;
-
 /**
  * Method to get a form
  *
@@ -34,10 +30,9 @@
  * @param the block where the failure response can be processed
  * @return a string with the operationID that can be used to cancel the operation
  */
-+ (NSString*)getForm:(NSString*)formIndexType
-        successBlock:(void (^)(id form))successBlock
-        failureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
-
++ (NSString *)getForm:(NSString *)formIndexType
+         successBlock:(void (^)(RIForm *))successBlock
+         failureBlock:(void (^)(RIApiResponse, NSArray *))failureBlock;
 /**
  * Method to get a form
  *
@@ -49,8 +44,8 @@
  */
 + (NSString*)getForm:(NSString*)formIndexType
         forceRequest:(BOOL)forceRequest
-        successBlock:(void (^)(id form))successBlock
-        failureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
+        successBlock:(void (^)(RIForm *))successBlock
+        failureBlock:(void (^)(RIApiResponse, NSArray *))failureBlock;
 
 /**
  * Method to send a request to a form action

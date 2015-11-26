@@ -166,7 +166,7 @@ JAActivityViewControllerDelegate
     }
     else
     {
-        if (VALID_NOTEMPTY(self.productUrl, NSString) || VALID_NOTEMPTY(self.productSku, NSString))
+        if (VALID_NOTEMPTY(self.productTargetString, NSString) || VALID_NOTEMPTY(self.productSku, NSString))
         {
             [self loadCompleteProduct];
         }
@@ -393,11 +393,11 @@ JAActivityViewControllerDelegate
         richParameter = [NSDictionary dictionaryWithObject:self.richRelevanceParameter forKey:@"rich_parameter"];
     } else
         richParameter = nil;
-    
-    if (VALID_NOTEMPTY(self.productUrl, NSString)) {
-        [RIProduct getCompleteProductWithUrl:self.productUrl
-                           withRichParameter:richParameter
-                                successBlock:^(id product) {
+
+    if (VALID_NOTEMPTY(self.productTargetString, NSString)) {
+        [RIProduct getCompleteProductWithTargetString:self.productTargetString
+                           			withRichParameter:richParameter
+                                		 successBlock:^(id product) {
             _needRefreshProduct = NO;
             self.apiResponse = RIApiResponseSuccess;
             
@@ -911,7 +911,7 @@ JAActivityViewControllerDelegate
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                         object:nil
-                                                      userInfo:@{ @"url" : tempProduct.url,
+                                                      userInfo:@{ @"targetString" : tempProduct.targetString,
                                                                   @"previousCategory" : @"",
                                                                   @"show_back_button" : [NSNumber numberWithBool:YES]}];
     [self trackingEventRelatedItemSelection:tempProduct];
@@ -953,7 +953,7 @@ JAActivityViewControllerDelegate
     {
         if ([self.product.seller isGlobal]) {
             [userInfo setObject:self.product.seller.linkTextGlobal forKey:@"title"];
-            [userInfo setObject:self.product.seller.linkUrlGlobal forKey:@"url"];
+            [userInfo setObject:self.product.seller.linkTargetStringGlobal forKey:@"targetString"];
             [userInfo setObject:STRING_BACK forKey:@"show_back_button_title"];
 
             [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithShopUrlNofication

@@ -20,7 +20,7 @@
 @protocol JAUndefinedSearchViewDelegate <NSObject>
 
 @optional
-- (void)didSelectProduct:(NSString *)productUrl;
+- (void)didSelectProduct:(NSString *)productTargetString;
 
 - (void)didSelectBrand:(NSString *)brandUrl
              brandName:(NSString *)brandName;

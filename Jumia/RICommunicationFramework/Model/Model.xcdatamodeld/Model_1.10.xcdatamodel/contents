@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="15B42" minimumToolsVersion="Xcode 4.3">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="14F27" minimumToolsVersion="Xcode 4.3">
     <entity name="RIAddress" representedClassName="RIAddress" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
@@ -72,7 +72,7 @@
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="gender" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="idCustomer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="idCustomer" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="loginMethod" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
@@ -80,13 +80,14 @@
         <relationship name="addresses" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIAddress" inverseName="customer" inverseEntity="RIAddress" syncable="YES"/>
     </entity>
     <entity name="RIField" representedClassName="RIField" syncable="YES">
-        <attribute name="apiCall" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="apiCallEndpoint" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="apiCallParameters" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="checked" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="dateFormat" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="label" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="linkTargetString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="linkText" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="linkUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="max" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="min" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -132,8 +133,8 @@
         <relationship name="formIndex" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIFormIndex" inverseName="form" inverseEntity="RIFormIndex" syncable="YES"/>
     </entity>
     <entity name="RIFormIndex" representedClassName="RIFormIndex" syncable="YES">
+        <attribute name="targetString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="form" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RIForm" inverseName="formIndex" inverseEntity="RIForm" syncable="YES"/>
     </entity>
     <entity name="RIImage" representedClassName="RIImage" syncable="YES">
@@ -201,7 +202,7 @@
         <attribute name="specialPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sum" optional="YES" attributeType="Integer 64" defaultValueString="0.0" syncable="YES"/>
         <attribute name="summary" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="targetString" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="images" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIImage" inverseName="product" inverseEntity="RIImage" syncable="YES"/>
         <relationship name="productSimples" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIProductSimple" inverseName="product" inverseEntity="RIProductSimple" syncable="YES"/>
         <relationship name="variations" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIVariation" inverseName="product" inverseEntity="RIVariation" syncable="YES"/>
@@ -258,9 +259,8 @@
         <attribute name="specialPriceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="specialPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subTitle" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="targetType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="targetString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="teaserGrouping" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RITeaserGrouping" inverseName="teaserComponents" inverseEntity="RITeaserGrouping" syncable="YES"/>
     </entity>
     <entity name="RITeaserGrouping" representedClassName="RITeaserGrouping" syncable="YES">
@@ -286,9 +286,9 @@
         <element name="RIAddress" positionX="90" positionY="666" width="128" height="390"/>
         <element name="RIApi" positionX="-308" positionY="227" width="128" height="180"/>
         <element name="RICategory" positionX="-261" positionY="27" width="128" height="180"/>
-        <element name="RICountryConfiguration" positionX="-459" positionY="-423" width="128" height="300"/>
-        <element name="RICustomer" positionX="279" positionY="650" width="128" height="208"/>
-        <element name="RIField" positionX="-299" positionY="681" width="128" height="375"/>
+        <element name="RICountryConfiguration" positionX="-459" positionY="-423" width="128" height="285"/>
+        <element name="RICustomer" positionX="279" positionY="650" width="128" height="210"/>
+        <element name="RIField" positionX="-299" positionY="681" width="128" height="390"/>
         <element name="RIFieldDataSetComponent" positionX="-63" positionY="837" width="128" height="118"/>
         <element name="RIFieldOption" positionX="-83" positionY="980" width="128" height="118"/>
         <element name="RIFieldRatingStars" positionX="-477" positionY="990" width="128" height="118"/>
@@ -303,7 +303,7 @@
         <element name="RISearchSuggestion" positionX="-828" positionY="183" width="128" height="105"/>
         <element name="RISection" positionX="-261" positionY="428" width="128" height="103"/>
         <element name="RIStaticBlockIndex" positionX="-90" positionY="-126" width="128" height="90"/>
-        <element name="RITeaserComponent" positionX="-731" positionY="-414" width="128" height="375"/>
+        <element name="RITeaserComponent" positionX="-731" positionY="-414" width="128" height="300"/>
         <element name="RITeaserGrouping" positionX="-873" positionY="-90" width="128" height="90"/>
         <element name="RIURLCache" positionX="-675" positionY="180" width="128" height="90"/>
         <element name="RIVariation" positionX="180" positionY="360" width="128" height="150"/>

@@ -224,13 +224,10 @@
             RISearchTypeProduct* product = [arrayToUse objectAtIndex:i];
             if (product.imagesArray.count > 0)
             {
-                JAPDVSingleRelatedItem *singleItem = [[JAPDVSingleRelatedItem alloc] initWithFrame:CGRectZero];
-                
-                CGRect tempFrame = singleItem.frame;
-                tempFrame.origin.x = currentX;
-                singleItem.frame = tempFrame;
+                JAPDVSingleRelatedItem *singleItem = [[JAPDVSingleRelatedItem alloc]
+                                                      initWithFrame:CGRectMake(currentX, 0, 110, productScrollView.height)];
                 [singleItem setSearchTypeProduct:product];
-                
+                                [singleItem setX:currentX];
                 singleItem.tag = i;
                 [singleItem addTarget:self
                                action:@selector(productSelected:)
@@ -241,10 +238,8 @@
                 currentX += 110.0f;
             }
         }
-        
         [productScrollView setContentSize:CGSizeMake(currentX,
                                                      productScrollView.frame.size.height)];
-        
         scrollViewY += self.topSellersView.frame.size.height + 6.0f;
     }
     
@@ -403,7 +398,7 @@
     
     if (NOTEMPTY(self.delegate) && [self.delegate respondsToSelector:@selector(didSelectProduct:)])
     {
-        [self.delegate didSelectProduct:item.url];
+        [self.delegate didSelectProduct:item.targetString];
     }
 }
 - (void)brandSelected:(UIControl *)sender

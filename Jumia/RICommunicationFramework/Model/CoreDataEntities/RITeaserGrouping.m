@@ -86,11 +86,11 @@
     NSArray *allTeaserGroupings = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RITeaserGrouping
                                                                                                           class])];
     
-//    if (VALID_NOTEMPTY(allTeaserGroupings, NSArray)) {
-//        NSDictionary* allTeaserGroupingsDict = [NSDictionary dictionaryWithObjects:allTeaserGroupings
-//                                                         forKeys:[allTeaserGroupings valueForKey:@"type"]];
-//        successBlock(allTeaserGroupingsDict,NO);
-//    } else {
+    if (VALID_NOTEMPTY(allTeaserGroupings, NSArray)) {
+        NSDictionary* allTeaserGroupingsDict = [NSDictionary dictionaryWithObjects:allTeaserGroupings
+                                                         forKeys:[allTeaserGroupings valueForKey:@"type"]];
+        successBlock(allTeaserGroupingsDict,NO);
+    } else {
         operationID = [RITeaserGrouping loadTeasersIntoDatabaseForCountryUrl:[RIApi getCountryUrlInUse]
                                                    countryUserAgentInjection:[RIApi getCountryUserAgentInjection]
                                                             withSuccessBlock:^(NSDictionary* teaserGroupings, BOOL richTeasers) {
@@ -110,7 +110,7 @@
                                                                     failureBlock(RIApiResponseUnknownError, nil);
                                                                 }
                                                             } andFailureBlock:failureBlock];
-//    }
+    }
 
     return operationID;
 }
@@ -142,7 +142,6 @@
                                                                {
                                                                    RITeaserGrouping* teaserGrouping = [RITeaserGrouping parseTeaserGrouping:metadata
                                                                                                                                     country:configuration];
-                                                                   [teaserGrouping setTeaserComponentTargetType:@"product_detail"];
                                                                    if (VALID_NOTEMPTY(teaserGrouping, RITeaserGrouping)) {
                                                                        if (richBlock) {
                                                                            richBlock(teaserGrouping);
@@ -277,14 +276,6 @@
     if (save) {
         [[RIDataBaseWrapper sharedInstance] saveContext];
     }
-}
-
-- (void)setTeaserComponentTargetType:(NSString*)target
-{
-    for (RITeaserComponent *teaserComponent in self.teaserComponents) {
-        teaserComponent.targetType = target;
-    }
-    [[RIDataBaseWrapper sharedInstance] saveContext];
 }
 
 @end

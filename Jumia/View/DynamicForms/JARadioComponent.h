@@ -19,7 +19,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *requiredSymbol;
 @property (strong, nonatomic) NSArray *dataset;
 @property (strong, nonatomic) NSArray *options;
-@property (strong, nonatomic) NSString *apiCall;
+@property (strong, nonatomic) NSString *apiCallEndpoint;
+@property (strong, nonatomic) NSDictionary *apiCallParameters;
 @property (nonatomic, strong) NSString* currentErrorMessage;
 
 +(JARadioComponent *)getNewJARadioComponent;

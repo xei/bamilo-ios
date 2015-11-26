@@ -7,6 +7,7 @@
 //
 
 #import "RIProductRatings.h"
+#import "RITarget.h"
 
 @implementation RIReview
 
@@ -153,12 +154,15 @@
 
 #pragma mark - Send request
 
-+ (NSString *)getRatingsForProductWithUrl:(NSString *)url
-                              allowRating:(NSInteger) allowRating
-                               pageNumber:(NSInteger) pageNumber
-                             successBlock:(void (^)(RIProductRatings *ratings))successBlock
-                          andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;{
++ (NSString *)getRatingsForProductWithTargetString:(NSString *)targetString
+                                       allowRating:(NSInteger) allowRating
+                                        pageNumber:(NSInteger) pageNumber
+                                      successBlock:(void (^)(RIProductRatings *ratings))successBlock
+                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
+{
     NSString *operationID = nil;
+    
+    NSString* url = [RITarget getURLStringforTargetString:targetString];
     
     if (VALID_NOTEMPTY(url, NSString))
     {

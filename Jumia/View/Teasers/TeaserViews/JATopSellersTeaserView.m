@@ -174,8 +174,8 @@
         
         NSString* notificationName = kDidSelectTeaserWithPDVUrlNofication;
         
-        if (VALID_NOTEMPTY(teaserComponent.url, NSString)) {
-            [userInfo setObject:teaserComponent.url forKey:@"url"];
+        if (VALID_NOTEMPTY(teaserComponent.targetString, NSString)) {
+            [userInfo setObject:teaserComponent.targetString forKey:@"targetString"];
             
             if (VALID_NOTEMPTY(teaserComponent.richRelevance, NSString)) {
                 [userInfo setObject:teaserComponent.richRelevance forKey:@"rich_relevance"];

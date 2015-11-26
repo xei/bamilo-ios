@@ -9,14 +9,17 @@
 #import "RIProductOffer.h"
 #import "RISeller.h"
 #import "RIProductSimple.h"
+#import "RITarget.h"
 
 @implementation RIProductOffer
 
-+ (NSString*)getProductOffersForProductUrl:(NSString*)productUrl
-                              successBlock:(void (^)(NSArray *productOffers))successBlock
-                           andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
++ (NSString*)getProductOffersForProductTargetString:(NSString*)productTargetString
+                                       successBlock:(void (^)(NSArray *productOffers))successBlock
+                                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
-    NSString* url = [NSString stringWithFormat:@"%@%@",productUrl,RI_API_PRODUCT_OFFERS];
+    
+    NSString* url = [RITarget getURLStringforTargetString:productTargetString];
+    url = [url stringByAppendingString:RI_API_PRODUCT_OFFERS];
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
                                                             parameters:nil

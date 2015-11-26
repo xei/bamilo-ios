@@ -616,47 +616,47 @@ UITableViewDataSource
     }
     
     [self showLoading];
-    [RIProductRatings getRatingsForProductWithUrl:self.product.url
-                                      allowRating:1
-                                       pageNumber:currentPage
-                                     successBlock:^(RIProductRatings *ratings) {
-                                         
-                                         self.productRatings = ratings;
-                                         
-                                         [self removeErrorView];
-                                         
-                                         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-                                         {
-                                             [self ratingsRequests];
-                                         }
-                                         else
-                                         {
-                                             self.numberOfRequests = 0;
-                                         }
-                                         
-                                         
-                                         [self addReviewsToTable:self.productRatings.reviews];
-                                         
-                                         [self hideLoading];
-                                         
-                                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-                                         
-                                         self.apiResponse = apiResponse;
-                                         if(RIApiResponseSuccess != apiResponse)
-                                         {
-                                             if (RIApiResponseNoInternetConnection == apiResponse)
-                                             {
-                                                 [self showErrorView:YES startingY:0.0f selector:@selector(requestReviews) objects:nil];
-                                             }
-                                             else
-                                             {
-                                                 [self showErrorView:NO startingY:0.0f selector:@selector(requestReviews) objects:nil];
-                                             }
-                                         }
-                                         self.numberOfRequests = 0;
-                                         
-                                         [self hideLoading];
-                                     }];
+    [RIProductRatings getRatingsForProductWithTargetString:self.product.targetString
+                                               allowRating:1
+                                                pageNumber:currentPage
+                                              successBlock:^(RIProductRatings *ratings) {
+                                                  
+                                                  self.productRatings = ratings;
+                                                  
+                                                  [self removeErrorView];
+                                                  
+                                                  if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+                                                  {
+                                                      [self ratingsRequests];
+                                                  }
+                                                  else
+                                                  {
+                                                      self.numberOfRequests = 0;
+                                                  }
+                                                  
+                                                  
+                                                  [self addReviewsToTable:self.productRatings.reviews];
+                                                  
+                                                  [self hideLoading];
+                                                  
+                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                                                  
+                                                  self.apiResponse = apiResponse;
+                                                  if(RIApiResponseSuccess != apiResponse)
+                                                  {
+                                                      if (RIApiResponseNoInternetConnection == apiResponse)
+                                                      {
+                                                          [self showErrorView:YES startingY:0.0f selector:@selector(requestReviews) objects:nil];
+                                                      }
+                                                      else
+                                                      {
+                                                          [self showErrorView:NO startingY:0.0f selector:@selector(requestReviews) objects:nil];
+                                                      }
+                                                  }
+                                                  self.numberOfRequests = 0;
+                                                  
+                                                  [self hideLoading];
+                                              }];
 
 }
 

@@ -46,11 +46,11 @@
  *
  *  @return a string with the operationID that can be used to cancel the operation
  */
-+ (NSString *)getRatingsForProductWithUrl:(NSString *)url
-                              allowRating:(NSInteger) allowRating
-                               pageNumber:(NSInteger) pageNumber
-                             successBlock:(void (^)(RIProductRatings *ratings))successBlock
-                          andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
++ (NSString *)getRatingsForProductWithTargetString:(NSString *)targetString
+                                       allowRating:(NSInteger) allowRating
+                                        pageNumber:(NSInteger) pageNumber
+                                      successBlock:(void (^)(RIProductRatings *ratings))successBlock
+                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 + (NSString *)getRatingsDetails:(NSString *)sku
                    successBlock:(void (^)(NSDictionary* ratingsDictionary))successBlock

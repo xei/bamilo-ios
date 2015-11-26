@@ -7,6 +7,7 @@
 //
 
 #import "JATeaserView.h"
+#import "RITarget.h"
 
 @implementation JATeaserView
 
@@ -33,6 +34,8 @@
         teaserComponent = [self.validTeaserComponents objectAtIndex:index];
     }
     
+    RITarget* teaserTarget = [RITarget parseTarget:teaserComponent.targetString];
+    
     NSMutableDictionary* userInfo = [NSMutableDictionary new];
     [userInfo setObject:STRING_HOME forKey:@"show_back_button_title"];
     if (VALID_NOTEMPTY(teaserComponent.name, NSString)) {
@@ -49,19 +52,19 @@
     
     NSString* notificationName;
     
-    if ([teaserComponent.targetType isEqualToString:@"catalog"]) {
+    if ([teaserTarget.type isEqualToString:@"catalog"]) {
         
         notificationName = kDidSelectTeaserWithCatalogUrlNofication;
         
-    } else if ([teaserComponent.targetType isEqualToString:@"product_detail"]) {
+    } else if ([teaserTarget.type isEqualToString:@"product_detail"]) {
         
         notificationName = kDidSelectTeaserWithPDVUrlNofication;
         
-    } else if ([teaserComponent.targetType isEqualToString:@"static_page"]) {
+    } else if ([teaserTarget.type isEqualToString:@"static_page"]) {
         
         notificationName = kDidSelectTeaserWithShopUrlNofication;
         
-    } else if ([teaserComponent.targetType isEqualToString:@"campaign"]) {
+    } else if ([teaserTarget.type isEqualToString:@"campaign"]) {
         
         notificationName = kDidSelectCampaignNofication;
         
@@ -71,8 +74,8 @@
         }
     }
     
-    if (VALID_NOTEMPTY(teaserComponent.url, NSString)) {
-        [userInfo setObject:teaserComponent.url forKey:@"url"];
+    if (VALID_NOTEMPTY(teaserComponent.targetString, NSString)) {
+        [userInfo setObject:teaserComponent.targetString forKey:@"targetString"];
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
                                                             object:nil
                                                           userInfo:userInfo];
@@ -81,7 +84,7 @@
         NSMutableDictionary* teaserTrackingDictionary = [NSMutableDictionary new];
         [teaserTrackingDictionary setValue:[self teaserTrackingInfoForIndex:index] forKey:kRIEventCategoryKey];
         [teaserTrackingDictionary setValue:@"BannerClick" forKey:kRIEventActionKey];
-        [teaserTrackingDictionary setValue:teaserComponent.url forKey:kRIEventLabelKey];
+        [teaserTrackingDictionary setValue:teaserTarget.node forKey:kRIEventLabelKey];
         
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventTeaserClick]
                                                   data:[teaserTrackingDictionary copy]];
