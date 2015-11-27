@@ -129,11 +129,11 @@
         }
     }
     
-    NSDictionary* campaignData = [campaignJSON objectForKey:@"campaign"];
+    NSDictionary* campaignData = [campaignJSON objectForKey:@"campaign_entity"];
     if (VALID_NOTEMPTY(campaignData, NSDictionary)) {
         newCampaign.name = [campaignData objectForKey:@"name"];
 
-        NSArray* campaignProductsData = [campaignData objectForKey:@"data"];
+        NSArray* campaignProductsData = [campaignData objectForKey:@"products"];
         NSMutableArray* campaignProducts = [NSMutableArray new];
         
         for (NSDictionary* singleCampaignProductJSON in campaignProductsData) {
@@ -182,17 +182,6 @@
                 campaignProduct.specialPriceEuroConverted = [campaignProductJSON objectForKey:@"special_price_converted"];
             }
         }
-        if ([campaignProductJSON objectForKey:@"max_special_price"]) {
-            if (![[campaignProductJSON objectForKey:@"max_special_price"] isKindOfClass:[NSNull class]]) {
-                campaignProduct.maxSpecialPrice = [campaignProductJSON objectForKey:@"max_special_price"];
-                campaignProduct.maxSpecialPriceFormatted = [RICountryConfiguration formatPrice:campaignProduct.maxSpecialPrice country:country];
-            }
-        }
-        if ([campaignProductJSON objectForKey:@"max_special_price_converted"]) {
-            if (![[campaignProductJSON objectForKey:@"max_special_price_converted"] isKindOfClass:[NSNull class]]) {
-                campaignProduct.maxSpecialPriceEuroConverted = [campaignProductJSON objectForKey:@"max_special_price_converted"];
-            }
-        }
         if ([campaignProductJSON objectForKey:@"price"]) {
             if (![[campaignProductJSON objectForKey:@"price"] isKindOfClass:[NSNull class]]) {
                 campaignProduct.price = [campaignProductJSON objectForKey:@"price"];
@@ -202,22 +191,6 @@
         if ([campaignProductJSON objectForKey:@"price_converted"]) {
             if (![[campaignProductJSON objectForKey:@"price_converted"] isKindOfClass:[NSNull class]]) {
                 campaignProduct.priceEuroConverted = [campaignProductJSON objectForKey:@"price_converted"];
-            }
-        }
-        if ([campaignProductJSON objectForKey:@"max_price"]) {
-            if (![[campaignProductJSON objectForKey:@"max_price"] isKindOfClass:[NSNull class]]) {
-                campaignProduct.maxPrice = [campaignProductJSON objectForKey:@"max_price"];
-                campaignProduct.maxPriceFormatted = [RICountryConfiguration formatPrice:campaignProduct.maxPrice country:country];
-            }
-        }
-        if ([campaignProductJSON objectForKey:@"max_price_converted"]) {
-            if (![[campaignProductJSON objectForKey:@"max_price_converted"] isKindOfClass:[NSNull class]]) {
-                campaignProduct.maxPriceEuroConverted = [campaignProductJSON objectForKey:@"max_price_converted"];
-            }
-        }
-        if ([campaignProductJSON objectForKey:@"sku"]) {
-            if (![[campaignProductJSON objectForKey:@"sku"] isKindOfClass:[NSNull class]]) {
-                campaignProduct.sku = [campaignProductJSON objectForKey:@"sku"];
             }
         }
         if ([campaignProductJSON objectForKey:@"brand"]) {

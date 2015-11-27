@@ -429,7 +429,8 @@
 {
     if (YES == self.offerEndedContent.hidden) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(pressedCampaignWithSku:)]) {
-            [self.delegate pressedCampaignWithSku:self.campaignProduct.sku];
+            //TODO campaignProduct.sku was removed on RICampaign and will use target from deep linkin
+            //[self.delegate pressedCampaignWithSku:self.campaignProduct.sku];
         }
     }
 }
