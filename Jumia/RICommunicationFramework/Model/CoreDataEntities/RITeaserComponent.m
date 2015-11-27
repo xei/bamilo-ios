@@ -19,7 +19,6 @@
 @dynamic subTitle;
 @dynamic targetString;
 @dynamic title;
-@dynamic url;
 @dynamic brand;
 @dynamic richRelevance;
 @dynamic maxSavingPercentage;
