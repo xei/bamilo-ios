@@ -116,6 +116,11 @@ typedef void (^ProcessActionBlock)(void);
     
 }
 
+@synthesize searchString = _searchString;
+- (void)setSearchString:(NSString *)searchString {
+    _searchString = searchString;
+    [self setSearchBarText:self.searchString];
+}
 
 - (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects;
 {
