@@ -93,6 +93,7 @@
 
 - (void)setupView:(CGRect)frame
 {
+    [self setBackgroundColor:[UIColor whiteColor]];
     if (!self.mainScrollView.superview) {
         [self addSubview:self.mainScrollView];
     }else{
