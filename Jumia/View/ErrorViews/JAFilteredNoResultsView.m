@@ -34,7 +34,7 @@
 {
     if (!_topMessageLabel) {
         _topMessageLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, kTopMargin, self.width - 2*kLateralMargin, 100)];
-        [_topMessageLabel setNumberOfLines:2];
+        [_topMessageLabel setNumberOfLines:0];
         [_topMessageLabel setTextAlignment:NSTextAlignmentCenter];
         [_topMessageLabel setFont:JADisplay2Font];
         [_topMessageLabel setTextColor:JABlackColor];
@@ -62,7 +62,7 @@
 {
     if (!_messageLabel) {
         _messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.filterImageView.frame) + kImageBottomMargin, self.width - 2*kLateralMargin, 100)];
-        [_messageLabel setNumberOfLines:2];
+        [_messageLabel setNumberOfLines:0];
         [_messageLabel setTextAlignment:NSTextAlignmentCenter];
         [_messageLabel setFont:JABody2Font];
         [_messageLabel setTextColor:JABlack800Color];
