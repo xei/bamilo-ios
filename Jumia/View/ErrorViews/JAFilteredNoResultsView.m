@@ -21,6 +21,7 @@
     UIImage *_image;
 }
 
+@property (nonatomic) UIScrollView *mainScrollView;
 @property (nonatomic) JABottomBar *ctaView;
 @property (nonatomic) UILabel *topMessageLabel;
 @property (nonatomic) UIImageView *filterImageView;
@@ -29,6 +30,14 @@
 @end
 
 @implementation JAFilteredNoResultsView
+
+- (UIScrollView *)mainScrollView
+{
+    if (!VALID_NOTEMPTY(_mainScrollView, UIScrollView)) {
+        _mainScrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
+    }
+    return _mainScrollView;
+}
 
 - (UILabel *)topMessageLabel
 {
@@ -84,31 +93,37 @@
 
 - (void)setupView:(CGRect)frame
 {
+    if (!self.mainScrollView.superview) {
+        [self addSubview:self.mainScrollView];
+    }else{
+        [self.mainScrollView setFrame:frame];
+    }
     if (!self.topMessageLabel.superview) {
-        [self addSubview:self.topMessageLabel];
+        [self.mainScrollView addSubview:self.topMessageLabel];
     }else{
         [self.topMessageLabel sizeToFit];
         [self.topMessageLabel setFrame:CGRectMake(kLateralMargin, kTopMargin, frame.size.width - 2*kLateralMargin, self.topMessageLabel.height)];
     }
     
     if (!self.filterImageView.superview) {
-        [self addSubview:self.filterImageView];
+        [self.mainScrollView addSubview:self.filterImageView];
     }else{
         [self.filterImageView setFrame:CGRectMake((frame.size.width - _image.size.width)/2, CGRectGetMaxY(self.topMessageLabel.frame) + kImageTopMargin, _image.size.width, _image.size.height)];
     }
     
     if (!self.messageLabel.superview) {
-        [self addSubview:self.messageLabel];
+        [self.mainScrollView addSubview:self.messageLabel];
     }else{
         [self.messageLabel sizeToFit];
         [self.messageLabel setFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.filterImageView.frame) + kImageBottomMargin, frame.size.width - 2*kLateralMargin, self.messageLabel.height)];
     }
     
     if (!self.ctaView.superview) {
-        [self addSubview:self.ctaView];
+        [self.mainScrollView addSubview:self.ctaView];
     }else{
         [self.ctaView setFrame:CGRectMake((frame.size.width - kButtonWidth)/2, CGRectGetMaxY(self.messageLabel.frame) + kButtonTopMargin, kButtonWidth, kBottomDefaultHeight)];
     }
+    [self.mainScrollView setContentSize:CGSizeMake(self.width, CGRectGetMaxY(self.ctaView.frame) + 6.f)];
 }
 
 
