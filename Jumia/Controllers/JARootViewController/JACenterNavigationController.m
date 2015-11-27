@@ -1493,6 +1493,10 @@
         pdv.productTargetString = targetString;
         pdv.productSku = productSku;
         
+        if ([notification.userInfo objectForKey:@"richRelevance"]) {
+            pdv.richRelevanceParameter = [notification.userInfo objectForKey:@"richRelevance"];
+        }
+        
         if ([notification.userInfo objectForKey:@"fromCatalog"])
         {
             pdv.fromCatalogue = YES;

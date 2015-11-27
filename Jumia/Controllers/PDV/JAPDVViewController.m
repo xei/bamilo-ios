@@ -388,8 +388,16 @@ JAActivityViewControllerDelegate
     
     self.hasLoaddedProduct = NO;
     
+    NSDictionary *richParameter;
+    if (VALID_NOTEMPTY(self.richRelevanceParameter, NSString)) {
+        richParameter = [NSDictionary dictionaryWithObject:self.richRelevanceParameter forKey:@"rich_parameter"];
+    } else
+        richParameter = nil;
+
     if (VALID_NOTEMPTY(self.productTargetString, NSString)) {
-        [RIProduct getCompleteProductWithTargetString:self.productTargetString successBlock:^(id product) {
+        [RIProduct getCompleteProductWithTargetString:self.productTargetString
+                           			withRichParameter:richParameter
+                                		 successBlock:^(id product) {
             _needRefreshProduct = NO;
             self.apiResponse = RIApiResponseSuccess;
             
@@ -424,7 +432,8 @@ JAActivityViewControllerDelegate
             [self hideLoading];
         }];
     } else if (VALID_NOTEMPTY(self.productSku, NSString)) {
-        [RIProduct getCompleteProductWithSku:self.productSku successBlock:^(id product) {
+        [RIProduct getCompleteProductWithSku:self.productSku
+                                successBlock:^(id product) {
             self.apiResponse = RIApiResponseSuccess;
             
             [self loadedProduct:product];

@@ -44,6 +44,10 @@
         [userInfo setObject:teaserComponent.title forKey:@"title"];
     }
     
+    if (VALID_NOTEMPTY(teaserComponent.richRelevance, NSString)) {
+        [userInfo setObject:teaserComponent.richRelevance forKey:@"richRelevance"];
+    }
+    
     [userInfo setObject:[self teaserTrackingInfoForIndex:index] forKey:@"teaserTrackingInfo"];
     
     NSString* notificationName;

@@ -176,6 +176,11 @@
         
         if (VALID_NOTEMPTY(teaserComponent.targetString, NSString)) {
             [userInfo setObject:teaserComponent.targetString forKey:@"targetString"];
+            
+            if (VALID_NOTEMPTY(teaserComponent.richRelevance, NSString)) {
+                [userInfo setObject:teaserComponent.richRelevance forKey:@"rich_relevance"];
+            }
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
                                                                 object:nil
                                                               userInfo:userInfo];

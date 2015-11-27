@@ -114,6 +114,7 @@
 {
     NSString *finalTargetString = [NSString stringWithFormat:@"product_detail::%@",sku];
     return [RIProduct getCompleteProductWithTargetString:finalTargetString
+                              		   withRichParameter:nil
                                             successBlock:^(id product) {
                                                 successBlock(product);
                                             } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
@@ -122,11 +123,20 @@
 }
 
 + (NSString *)getCompleteProductWithTargetString:(NSString*)targetString
+                      	       withRichParameter:(NSDictionary*)parameter
                                     successBlock:(void (^)(id product))successBlock
                                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
-    NSString* url = [RITarget getURLStringforTargetString:targetString];
+    NSString *richParam = [NSMutableString new];
+    if (VALID_NOTEMPTY(parameter, NSDictionary)) {
+        if ([parameter objectForKey:@"rich_parameter"]) {
+            richParam = [RITarget getURLStringforTargetString:[parameter objectForKey:@"rich_parameter"]];
+        }
+    }
+    NSString * url =  [RITarget getURLStringforTargetString:targetString];
+    url = [NSString stringWithFormat:@"%@/%@",url,richParam];
     url = [url  stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
                                                             parameters:nil
                                                         httpMethodPost:YES

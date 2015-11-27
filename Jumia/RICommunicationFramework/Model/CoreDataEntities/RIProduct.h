@@ -102,12 +102,14 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *  Method to load a product and all its details given his url
  *
  *  @param the product target
+ *  @param the parameter dictionary to be sent in the request
  *  @param the success block containing the obtained product
  *  @param the failure block containing the error message
  *
  *  @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)getCompleteProductWithTargetString:(NSString*)targetString
+                      		   withRichParameter:(NSDictionary*)parameter
                                     successBlock:(void (^)(id product))successBlock
                                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 

@@ -62,6 +62,7 @@
         <attribute name="ratingRequiresLogin" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="reviewIsEnabled" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="reviewRequiresLogin" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="richRelevanceEnabled" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="thousandsSep" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="languages" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RILanguage" inverseName="countryConfig" inverseEntity="RILanguage" syncable="YES"/>
     </entity>
@@ -240,16 +241,20 @@
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="RITeaserComponent" representedClassName="RITeaserComponent" syncable="YES">
+        <attribute name="brand" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="endingDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="imageLandscapeUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="imagePortraitUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="maxPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="maxPriceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="maxPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="maxSavingPercentage" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="priceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="priceFormatted" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="richRelevance" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sku" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="specialPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="specialPriceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="specialPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
