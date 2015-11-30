@@ -139,7 +139,7 @@ typedef void (^ProcessActionBlock)(void);
     
     self.filteredNoResultsView.delegate = nil;
     [self.filteredNoResultsView removeFromSuperview];
-    self.filteredNoResultsView = [[JAFilteredNoResultsView alloc] initWithFrame:self.bounds];
+    self.filteredNoResultsView = [[JAFilteredNoResultsView alloc] initWithFrame:[self viewBounds]];
     
     self.filteredNoResultsView.tag = 1001;
     
@@ -305,7 +305,7 @@ typedef void (^ProcessActionBlock)(void);
     [self.collectionView setHeight:self.view.height - CGRectGetMaxY(self.catalogTopView.frame)];
     [self.catalogTopView repositionForWidth:self.view.frame.size.width];
     if (self.filteredNoResultsView.superview) {
-        [self.filteredNoResultsView setupView:self.view.bounds];
+        [self.filteredNoResultsView setupView:[self viewBounds]];
     }
 }
 
