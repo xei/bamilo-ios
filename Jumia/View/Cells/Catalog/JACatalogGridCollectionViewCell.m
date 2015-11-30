@@ -8,6 +8,8 @@
 
 #import "JACatalogGridCollectionViewCell.h"
 
+#define xFavOffset 10.f
+
 @interface JACatalogGridCollectionViewCell () {
     CGFloat _lastWidth;
 }
@@ -95,7 +97,7 @@
     }
     [self setForRTL:self.priceLine];
     
-    CGFloat favX = self.favoriteButton.superview.width - self.favoriteButton.width - xOffset;
+    CGFloat favX = self.favoriteButton.superview.width - self.favoriteButton.width - xFavOffset;
     if (self.favoriteButton.x != favX) {
         [self.favoriteButton setX:favX];
         [self setForRTL:self.favoriteButton];

@@ -17,6 +17,11 @@
 #import "JARatingsView.h"
 #import "JAScrolledImageGalleryView.h"
 
+
+// as of https://jira.rocket-internet.de/browse/NAFAMZ-14582
+#define xFavOffset 16.f
+#define yFavOffset 20.f
+
 @interface JAPDVImageSection () {
     
 }
@@ -178,16 +183,17 @@
     [self.productDescriptionLabel setX:16.f];
     [self imagesPagedView];
     [self separatorImageView];
-    [self.wishListButton setXRightAligned:16.f];
+    [self.wishListButton setXRightAligned:xFavOffset];
     [self.productNameLabel setTextAlignment:NSTextAlignmentLeft];
     [self.productDescriptionLabel setTextAlignment:NSTextAlignmentLeft];
     
     if (self.product.fashion) {
         if ([self.product.seller isGlobal]) {
-            [_imagesPagedView setYBottomOf:self.globalButton at:16.f];
+            [_imagesPagedView setYBottomOf:self.globalButton at:yFavOffset];
         } else {
-            [_imagesPagedView setY:16.f];
+            [_imagesPagedView setY:yFavOffset];
         }
+        [self.wishListButton setY:self.imagesPagedView.y];
         [_productNameLabel setYBottomOf:_imagesPagedView at:16.f];
         [_productDescriptionLabel setYBottomOf:_productNameLabel at:0.f];
         [self setHeight:CGRectGetMaxY(_productDescriptionLabel.frame) + 16.f];
@@ -195,14 +201,14 @@
         [_productNameLabel setY:14.f];
         [_productDescriptionLabel setYBottomOf:_productNameLabel at:0.f];
         if ([self.product.seller isGlobal]) {
-            [_imagesPagedView setYBottomOf:self.globalButton at:16.f];
+            [_imagesPagedView setYBottomOf:self.globalButton at:yFavOffset];
+            [self.wishListButton setYBottomOf:self.globalButton at:yFavOffset];
         } else {
-            [_imagesPagedView setYBottomOf:_productDescriptionLabel at:16.f];
+            [_imagesPagedView setYBottomOf:_productDescriptionLabel at:yFavOffset];
+            [self.wishListButton setY:yFavOffset];
         }
         [self setHeight:CGRectGetMaxY(_imagesPagedView.frame)];
     }
-    
-    [_wishListButton setY:_imagesPagedView.y];
 }
 
 - (void)loadWithImages:(NSArray *)imagesArray
@@ -232,7 +238,7 @@
     [self.separatorImageView setY:CGRectGetMaxY(self.imagesPagedView.frame)];
     [self.separatorImageView setHidden:YES];
     [self.imagesPagedView setViews:items];
-    [self.wishListButton setY:self.imagesPagedView.y - 50];
+    [self.wishListButton setY:yFavOffset];
     
     if (self.product.images.count > 1)
     {
