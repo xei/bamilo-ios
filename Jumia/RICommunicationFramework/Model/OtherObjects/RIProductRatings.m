@@ -154,15 +154,15 @@
 
 #pragma mark - Send request
 
-+ (NSString *)getRatingsForProductWithTargetString:(NSString *)targetString
-                                       allowRating:(NSInteger) allowRating
-                                        pageNumber:(NSInteger) pageNumber
-                                      successBlock:(void (^)(RIProductRatings *ratings))successBlock
-                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
++ (NSString *)getRatingsForProductWithSku:(NSString *)sku
+                              allowRating:(NSInteger) allowRating
+                               pageNumber:(NSInteger) pageNumber
+                             successBlock:(void (^)(RIProductRatings *ratings))successBlock
+                          andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 {
     NSString *operationID = nil;
     
-    NSString* url = [RITarget getURLStringforTargetString:targetString];
+    NSString* url = [NSString stringWithFormat:@"%@%@%@%@/", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_PRODUCT_DETAIL, sku];
     
     if (VALID_NOTEMPTY(url, NSString))
     {
