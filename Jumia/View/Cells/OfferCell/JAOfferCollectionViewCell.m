@@ -133,9 +133,9 @@
     
     if(VALID_NOTEMPTY(self.productOfferSeller.seller, RISeller))
     {
-        if (VALID_NOTEMPTY(self.productOfferSeller.seller.url, NSString)) {
+        if (VALID_NOTEMPTY(self.productOfferSeller.seller.targetString, NSString)) {
         [userInfo setObject:self.productOfferSeller.seller.name forKey:@"name"];
-        [userInfo setObject:self.productOfferSeller.seller.url forKey:@"url"];
+        [userInfo setObject:self.productOfferSeller.seller.targetString forKey:@"targetString"];
     
         [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:self.productOfferSeller.seller userInfo:userInfo];
         }

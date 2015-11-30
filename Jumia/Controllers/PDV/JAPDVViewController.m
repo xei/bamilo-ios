@@ -937,7 +937,7 @@ JAActivityViewControllerDelegate
     {
         [userInfo setObject:self.product.seller.name forKey:@"name"];
 
-        [userInfo setObject:self.product.seller.url forKey:@"url"];
+        [userInfo setObject:self.product.seller.targetString forKey:@"targetString"];
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:self.product.seller userInfo:userInfo];
