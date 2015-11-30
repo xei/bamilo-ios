@@ -19,6 +19,7 @@
 
 @interface JABaseViewController () {
     CGRect _noConnectionViewFrame;
+    NSString* _searchBarText;
 }
 
 @property (assign, nonatomic) int requestNumber;
@@ -300,6 +301,9 @@
         self.searchView = [[JASearchView alloc] initWithFrame:window.bounds];
         [window addSubview:self.searchView];
     }
+    if (VALID_NOTEMPTY(_searchBarText, NSString)) {
+        [self.searchView setSearchBarText:_searchBarText];
+    }
 }
 
 - (void)showSearchBar {
@@ -320,6 +324,7 @@
     self.searchBar.barTintColor = JANavBarBackgroundGrey;
     self.searchBar.placeholder = STRING_SEARCH_PLACEHOLDER;
     self.searchBar.showsCancelButton = NO;
+
     
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTintColor:[UIColor orangeColor]];
     
@@ -333,8 +338,7 @@
     self.searchBar.layer.borderColor = [JANavBarBackgroundGrey CGColor];
     
     [self.searchBarBackground addSubview:self.searchBar];
-     UIImage *searchIcon = [UIImage imageNamed:@"searchIcon"];
-    
+    UIImage *searchIcon = [UIImage imageNamed:@"searchIcon"];
     
     self.searchIconImageView = [[UIImageView alloc] initWithImage:searchIcon];
     self.searchIconImageView.frame = CGRectMake(self.searchBar.frame.size.width - horizontalMargin - searchIcon.size.width,
@@ -345,6 +349,10 @@
     [self.searchBar addSubview:self.searchIconImageView];
     
     [self reloadSearchBar];
+}
+
+- (void)setSearchBarText:(NSString*)text {
+    _searchBarText = text;
 }
 
 - (void)reloadSearchBar {
