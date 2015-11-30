@@ -911,7 +911,7 @@ JAActivityViewControllerDelegate
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                         object:nil
-                                                      userInfo:@{ @"targetString" : tempProduct.targetString,
+                                                      userInfo:@{ @"sku" : tempProduct.sku,
                                                                   @"previousCategory" : @"",
                                                                   @"show_back_button" : [NSNumber numberWithBool:YES]}];
     [self trackingEventRelatedItemSelection:tempProduct];
