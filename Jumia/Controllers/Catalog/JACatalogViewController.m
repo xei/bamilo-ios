@@ -550,11 +550,11 @@ typedef void (^ProcessActionBlock)(void);
                 if (VALID_NOTEMPTY(self.categoryName, NSString)) {
                     urlToUse = [NSString stringWithFormat:@"%@%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_CATALOG, self.categoryName];
                 }
-                if (VALID_NOTEMPTY(self.category, RICategory) && VALID_NOTEMPTY(self.category.apiUrl, NSString)) {
-                    urlToUse = self.category.apiUrl;
+                if (VALID_NOTEMPTY(self.category, RICategory) && VALID_NOTEMPTY(self.category.targetString, NSString)) {
+                    urlToUse = [RITarget getURLStringforTargetString:self.category.targetString];
                 }
-                if (VALID_NOTEMPTY(self.filterCategory, RICategory) && VALID_NOTEMPTY(self.filterCategory.apiUrl, NSString)) {
-                    urlToUse = self.filterCategory.apiUrl;
+                if (VALID_NOTEMPTY(self.filterCategory, RICategory) && VALID_NOTEMPTY(self.filterCategory.targetString, NSString)) {
+                    urlToUse = [RITarget getURLStringforTargetString:self.filterCategory.targetString];
                 }
                 
                 self.getProductsOperationID = [RIProduct getProductsWithCatalogUrl:urlToUse

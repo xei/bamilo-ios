@@ -37,11 +37,11 @@
         <relationship name="sections" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RISection" inverseName="api" inverseEntity="RISection" syncable="YES"/>
     </entity>
     <entity name="RICategory" representedClassName="RICategory" syncable="YES">
-        <attribute name="apiUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="label" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="level" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="numberOfTimesSeen" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="targetString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="urlKey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="vertical" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="children" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RICategory" inverseName="parent" inverseEntity="RICategory" syncable="YES"/>
