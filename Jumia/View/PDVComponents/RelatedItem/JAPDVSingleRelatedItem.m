@@ -145,10 +145,9 @@
 
 - (void)setSearchTypeProduct:(RISearchTypeProduct *)product
 {
-    if (VALID_NOTEMPTY(product.imagesArray, NSArray))
+    if (VALID_NOTEMPTY(product.image, NSString))
     {
-        NSString *imageTemp = [product.imagesArray firstObject];
-        [self.imageViewItem setImageWithURL:[NSURL URLWithString:imageTemp]
+        [self.imageViewItem setImageWithURL:[NSURL URLWithString:product.image]
                            placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
         [self.imageViewItem setX:30.f];
         [self.imageViewItem setY:6.f];
