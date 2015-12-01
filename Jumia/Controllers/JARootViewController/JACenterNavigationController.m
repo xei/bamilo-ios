@@ -59,6 +59,8 @@
 #import "RICountry.h"
 #import "JAFiltersViewController.h"
 
+#import "JAAuthenticationViewController.h"
+
 @interface JACenterNavigationController ()
 
 @property (strong, nonatomic) RICart *cart;
@@ -133,6 +135,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showMyOrdersViewController:)
                                                  name:kShowMyOrdersScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showAuthenticationScreen:)
+                                                 name:kShowAuthenticationScreenNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -541,7 +548,7 @@
         [userInfo setObject:nextNotification forKey:@"notification"];
         [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"tabbar_is_visible"];
         [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"shows_back_button"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification object:nil userInfo:userInfo];
         return;
     }else{
         UIViewController *topViewController = [self topViewController];
@@ -581,6 +588,41 @@
 }
 
 #pragma mark Sign In Screen
+- (void)showAuthenticationScreen:(NSNotification *)notification
+{
+    JAAuthenticationViewController *authenticationViewController = [[JAAuthenticationViewController alloc] init];
+    
+    if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSNotification))
+    {
+        authenticationViewController.nextNotification = [notification.userInfo objectForKey:@"notification"];
+    }
+    
+    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"shows_back_button"], NSNumber)) {
+        NSNumber* showsBack = [notification.userInfo objectForKey:@"shows_back_button"];
+        authenticationViewController.navBarLayout.showBackButton = [showsBack boolValue];
+    } else {
+        authenticationViewController.navBarLayout.showBackButton = YES;
+    }
+    authenticationViewController.fromSideMenu = NO;
+    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"from_side_menu"], NSNumber)) {
+        NSNumber* fromSide = [notification.userInfo objectForKey:@"from_side_menu"];
+        authenticationViewController.fromSideMenu = [fromSide boolValue];
+    }
+    BOOL animated = YES;
+    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"tabbar_is_visible"], NSNumber)) {
+        NSNumber* tabbarIsVisible = [notification.userInfo objectForKey:@"tabbar_is_visible"];
+        authenticationViewController.tabBarIsVisible = [tabbarIsVisible boolValue];
+        [self popToRootViewControllerAnimated:NO];
+        animated = NO;
+    }
+    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"animated"], NSNumber)) {
+        NSNumber* animatedNumber = [notification.userInfo objectForKey:@"animated"];
+        animated = [animatedNumber boolValue];
+    }
+    
+    [self pushViewController:authenticationViewController animated:YES];
+}
+
 - (void)showSignInScreen:(NSNotification *)notification
 {
     JASignInViewController *signInVC = [[JASignInViewController alloc] init];

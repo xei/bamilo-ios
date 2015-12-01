@@ -481,7 +481,7 @@ JADatePickerDelegate
     
     [self.navigationController popViewControllerAnimated:NO];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification
                                                         object:nil
                                                       userInfo:userInfo];
 }
