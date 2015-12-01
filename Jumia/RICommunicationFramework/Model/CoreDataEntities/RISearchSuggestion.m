@@ -416,155 +416,162 @@
 
 + (RIUndefinedSearchTerm *)parseUndefinedSearchTerm:(NSDictionary *)json
 {
-    RIUndefinedSearchTerm *undefinedSearchTerm = [[RIUndefinedSearchTerm alloc] init];
-    
-    if ([json objectForKey:@"error_message"]) {
-        undefinedSearchTerm.errorMessage = [json objectForKey:@"error_message"];
-    }
-    
-    if ([json objectForKey:@"notice_message"]) {
-        undefinedSearchTerm.noticeMessage = [json objectForKey:@"notice_message"];
-    }
-    
-    if ([json objectForKey:@"search_tips"]) {
-        NSDictionary *searchTipsDic = [json objectForKey:@"search_tips"];
+    if (NOTEMPTY(json))
+    {
+        RIUndefinedSearchTerm *undefinedSearchTerm = [[RIUndefinedSearchTerm alloc] init];
         
-        RISearchType *searchType = [[RISearchType alloc] init];
-        
-        if ([searchTipsDic objectForKey:@"text"]) {
-            searchType.text = [searchTipsDic objectForKey:@"text"];
+        if ([json objectForKey:@"error_message"]) {
+            undefinedSearchTerm.errorMessage = [json objectForKey:@"error_message"];
         }
         
-        if ([searchTipsDic objectForKey:@"title"]) {
-            searchType.title = [searchTipsDic objectForKey:@"title"];
+        if ([json objectForKey:@"notice_message"]) {
+            undefinedSearchTerm.noticeMessage = [json objectForKey:@"notice_message"];
         }
         
-        undefinedSearchTerm.searchType = searchType;
-    }
-    
-    if ([json objectForKey:@"featured_box"]) {
-        if ([[json objectForKey:@"featured_box"] isKindOfClass:[NSArray class]]) {
-            NSArray *tempArray = [json objectForKey:@"featured_box"];
-            NSDictionary *featuredBoxDic = [tempArray firstObject];
+        if ([json objectForKey:@"search_tips"]) {
+            NSDictionary *searchTipsDic = [json objectForKey:@"search_tips"];
             
-            RIFeaturedBox *featuredBox = [[RIFeaturedBox alloc] init];
+            RISearchType *searchType = [[RISearchType alloc] init];
             
-            if ([featuredBoxDic objectForKey:@"title"]) {
-                featuredBox.title = [featuredBoxDic objectForKey:@"title"];
+            if ([searchTipsDic objectForKey:@"text"]) {
+                searchType.text = [searchTipsDic objectForKey:@"text"];
             }
             
-            if ([featuredBoxDic objectForKey:@"label"]) {
-                featuredBox.label = [featuredBoxDic objectForKey:@"label"];
+            if ([searchTipsDic objectForKey:@"title"]) {
+                searchType.title = [searchTipsDic objectForKey:@"title"];
             }
             
-            if ([featuredBoxDic objectForKey:@"url"]) {
-                featuredBox.url = [featuredBoxDic objectForKey:@"url"];
-            }
-            
-            if ([featuredBoxDic objectForKey:@"products"]) {
-                NSArray *productsArray = [featuredBoxDic objectForKey:@"products"];
-                NSMutableArray *tempArray = [NSMutableArray new];
+            undefinedSearchTerm.searchType = searchType;
+        }
+        
+        if ([json objectForKey:@"featured_box"]) {
+            if ([[json objectForKey:@"featured_box"] isKindOfClass:[NSArray class]]) {
+                NSArray *tempArray = [json objectForKey:@"featured_box"];
+                NSDictionary *featuredBoxDic = [tempArray firstObject];
                 
-                for (NSDictionary *productDic in productsArray) {
-                    RISearchTypeProduct *product = [[RISearchTypeProduct alloc] init];
-                    
-                    if ([productDic objectForKey:@"sku"]) {
-                        product.sku = [productDic objectForKey:@"sku"];
-                    }
-                    
-                    if ([productDic objectForKey:@"name"]) {
-                        product.name = [productDic objectForKey:@"name"];
-                    }
-                    
-                    if ([productDic objectForKey:@"max_price"]) {
-                        product.maxPrice = [productDic objectForKey:@"max_price"];
-                    }
-                    
-                    if ([productDic objectForKey:@"max_price_converted"]) {
-                        product.maxPriceEuroConverted = [productDic objectForKey:@"max_price_converted"];
-                    }
-                    
-                    if ([productDic objectForKey:@"max_savings_percentage"]) {
-                        product.maxPercentageSaving = [productDic objectForKey:@"max_savings_percentage"];
-                    }
-                    
-                    if ([productDic objectForKey:@"price"]) {
-                        product.price = [productDic objectForKey:@"price"];
-                        product.priceFormatted = [RICountryConfiguration formatPrice:[NSNumber numberWithFloat:[product.price floatValue]]
-                                                                             country:[RICountryConfiguration getCurrentConfiguration]];
-                    }
-                    
-                    if ([productDic objectForKey:@"price_converted"]) {
-                        product.priceEuroConverted = [productDic objectForKey:@"price_converted"];
-                    }
-                    
-                    if ([productDic objectForKey:@"brand"]) {
-                        product.brand = [productDic objectForKey:@"brand"];
-                    }
-                    
-                    if ([productDic objectForKey:@"target"]) {
-                        product.targetString = [productDic objectForKey:@"target"];
-                    }
-                    
-                    if ([productDic objectForKey:@"image"]) {
-                        product.image = [productDic objectForKey:@"image"];
-                    }
-                    
-                    [tempArray addObject:product];
+                RIFeaturedBox *featuredBox = [[RIFeaturedBox alloc] init];
+                
+                if ([featuredBoxDic objectForKey:@"title"]) {
+                    featuredBox.title = [featuredBoxDic objectForKey:@"title"];
                 }
                 
-                featuredBox.products = [tempArray copy];
-            }
-            
-            undefinedSearchTerm.featuredBox = featuredBox;
-        }
-    }
-    
-    if ([json objectForKey:@"featured_brandbox"]) {
-        if ([[json objectForKey:@"featured_brandbox"] isKindOfClass:[NSArray class]]) {
-            NSArray *tempArray = [json objectForKey:@"featured_brandbox"];
-            NSDictionary *featuredBrandBoxDic = [tempArray firstObject];
-            
-            RIFeaturedBrandBox *featuredBrandBox = [[RIFeaturedBrandBox alloc] init];
-            
-            if ([featuredBrandBoxDic objectForKey:@"title"]) {
-                featuredBrandBox.title = [featuredBrandBoxDic objectForKey:@"title"];
-            }
-            
-            if ([featuredBrandBoxDic objectForKey:@"brands"]) {
-                NSArray *brandsArray = [featuredBrandBoxDic objectForKey:@"brands"];
-                NSMutableArray *tempBrandsArray = [NSMutableArray new];
+                if ([featuredBoxDic objectForKey:@"label"]) {
+                    featuredBox.label = [featuredBoxDic objectForKey:@"label"];
+                }
                 
-                for (NSDictionary *dic in brandsArray) {
-                    RIBrand *brand = [[RIBrand alloc] init];
+                if ([featuredBoxDic objectForKey:@"url"]) {
+                    featuredBox.url = [featuredBoxDic objectForKey:@"url"];
+                }
+                
+                if ([featuredBoxDic objectForKey:@"products"]) {
+                    NSArray *productsArray = [featuredBoxDic objectForKey:@"products"];
+                    NSMutableArray *tempArray = [NSMutableArray new];
                     
-                    if ([dic objectForKey:@"name"]) {
-                        brand.name = [dic objectForKey:@"name"];
-                    }
-                    
-                    if ([dic objectForKey:@"image"]) {
-                        if (![[dic objectForKey:@"image"] isKindOfClass:[NSNull class]]) {
-                            brand.image = [dic objectForKey:@"image"];
+                    for (NSDictionary *productDic in productsArray) {
+                        RISearchTypeProduct *product = [[RISearchTypeProduct alloc] init];
+                        
+                        if ([productDic objectForKey:@"sku"]) {
+                            product.sku = [productDic objectForKey:@"sku"];
                         }
-                    } else {
-                        brand.image = @"";
+                        
+                        if ([productDic objectForKey:@"name"]) {
+                            product.name = [productDic objectForKey:@"name"];
+                        }
+                        
+                        if ([productDic objectForKey:@"max_price"]) {
+                            product.maxPrice = [productDic objectForKey:@"max_price"];
+                        }
+                        
+                        if ([productDic objectForKey:@"max_price_converted"]) {
+                            product.maxPriceEuroConverted = [productDic objectForKey:@"max_price_converted"];
+                        }
+                        
+                        if ([productDic objectForKey:@"max_savings_percentage"]) {
+                            product.maxPercentageSaving = [productDic objectForKey:@"max_savings_percentage"];
+                        }
+                        
+                        if ([productDic objectForKey:@"price"]) {
+                            product.price = [productDic objectForKey:@"price"];
+                            product.priceFormatted = [RICountryConfiguration formatPrice:[NSNumber numberWithFloat:[product.price floatValue]]
+                                                                                 country:[RICountryConfiguration getCurrentConfiguration]];
+                        }
+                                                
+                        if ([productDic objectForKey:@"price_converted"]) {
+                            product.priceEuroConverted = [productDic objectForKey:@"price_converted"];
+                        }
+                        
+                        if ([productDic objectForKey:@"brand"]) {
+                            product.brand = [productDic objectForKey:@"brand"];
+                        }
+                        
+                        if ([productDic objectForKey:@"target"]) {
+                            product.targetString = [productDic objectForKey:@"target"];
+                        }
+                        
+                        if ([productDic objectForKey:@"image"]) {
+                            product.image = [productDic objectForKey:@"image"];
+                        }
+                        
+                        [tempArray addObject:product];
                     }
                     
-                    if ([dic objectForKey:@"url"]) {
-                        brand.url = [dic objectForKey:@"url"];
-                    }
-                    
-                    [tempBrandsArray addObject:brand];
+                    featuredBox.products = [tempArray copy];
                 }
                 
-                featuredBrandBox.brands = [tempBrandsArray copy];
+                undefinedSearchTerm.featuredBox = featuredBox;
             }
-            
-            undefinedSearchTerm.featuredBrandBox = featuredBrandBox;
         }
+        
+        if ([json objectForKey:@"featured_brandbox"]) {
+            if ([[json objectForKey:@"featured_brandbox"] isKindOfClass:[NSArray class]]) {
+                NSArray *tempArray = [json objectForKey:@"featured_brandbox"];
+                NSDictionary *featuredBrandBoxDic = [tempArray firstObject];
+                
+                RIFeaturedBrandBox *featuredBrandBox = [[RIFeaturedBrandBox alloc] init];
+                
+                if ([featuredBrandBoxDic objectForKey:@"title"]) {
+                    featuredBrandBox.title = [featuredBrandBoxDic objectForKey:@"title"];
+                }
+                
+                if ([featuredBrandBoxDic objectForKey:@"brands"]) {
+                    NSArray *brandsArray = [featuredBrandBoxDic objectForKey:@"brands"];
+                    NSMutableArray *tempBrandsArray = [NSMutableArray new];
+                    
+                    for (NSDictionary *dic in brandsArray) {
+                        RIBrand *brand = [[RIBrand alloc] init];
+                        
+                        if ([dic objectForKey:@"name"]) {
+                            brand.name = [dic objectForKey:@"name"];
+                        }
+                        
+                        if ([dic objectForKey:@"image"]) {
+                            if (![[dic objectForKey:@"image"] isKindOfClass:[NSNull class]]) {
+                                brand.image = [dic objectForKey:@"image"];
+                            }
+                        } else {
+                            brand.image = @"";
+                        }
+                        
+                        if ([dic objectForKey:@"url"]) {
+                            brand.url = [dic objectForKey:@"url"];
+                        }
+                        
+                        [tempBrandsArray addObject:brand];
+                    }
+                    
+                    featuredBrandBox.brands = [tempBrandsArray copy];
+                }
+                
+                undefinedSearchTerm.featuredBrandBox = featuredBrandBox;
+            }
+        }
+        
+        return undefinedSearchTerm;
     }
-    
-    return undefinedSearchTerm;
+    else
+    {
+        return nil;
+    }
 }
 
 @end
