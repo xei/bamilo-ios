@@ -12,6 +12,8 @@
 #import "UIImageView+WebCache.h"
 #import "JAProductInfoRatingLine.h"
 
+#define xFavOffset 10.f
+
 @interface JACatalogListCollectionViewCell () {
     CGFloat _lastWidth;
     BOOL _ratingRefresh;
@@ -178,7 +180,7 @@
         [self setForRTL:self.sizeButton];
     }
     
-    CGFloat favX = self.favoriteButton.superview.width - self.favoriteButton.width - distXImage;
+    CGFloat favX =  self.favoriteButton.superview.width - self.favoriteButton.width - xFavOffset;
     if (self.favoriteButton.x != favX) {
         [self.favoriteButton setX:favX];
         [self setForRTL:self.favoriteButton];

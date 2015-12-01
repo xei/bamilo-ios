@@ -27,6 +27,10 @@
 
 @property (nonatomic, retain) NSArray *wishlistProducts;
 
++ (NSString *)checkEmailWithParameters:(NSDictionary *)parameters
+                          successBlock:(void (^)(BOOL knownEmail))successBlock
+                       andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
+
 + (NSString*)autoLogin:(void (^)(BOOL success, NSDictionary *entities, NSString *loginMethod))returnBlock;
 
 /**
