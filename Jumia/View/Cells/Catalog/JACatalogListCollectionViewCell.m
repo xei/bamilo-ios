@@ -116,6 +116,7 @@
     CGFloat distXAfterImage = imageSize.width + distXImage + 16.f;
     CGFloat brandTextWidth = self.width - distXAfterImage - 55;
     CGFloat textWidth = self.width - distXAfterImage - distXImage;
+    CGFloat distXRecent = 10.f;
     
     if ([UIDevice currentDevice].userInterfaceIdiom != UIUserInterfaceIdiomPad) {
         imageSize = CGSizeMake(68, 85);
@@ -187,6 +188,12 @@
     if (self.selectorButton.x != selX) {
         [self.selectorButton setX:selX];
         [self setForRTL:self.selectorButton];
+    }
+    
+    CGFloat recentX = distXRecent;
+    if (self.recentProductBadgeLabel.x != recentX) {
+        [self.recentProductBadgeLabel setX:recentX];
+        [self setForRTL:self.recentProductBadgeLabel];
     }
 
     _lastWidth = self.width;
