@@ -911,7 +911,7 @@ JAActivityViewControllerDelegate
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                         object:nil
-                                                      userInfo:@{ @"targetString" : tempProduct.targetString,
+                                                      userInfo:@{ @"sku" : tempProduct.sku,
                                                                   @"previousCategory" : @"",
                                                                   @"show_back_button" : [NSNumber numberWithBool:YES]}];
     [self trackingEventRelatedItemSelection:tempProduct];
@@ -937,7 +937,7 @@ JAActivityViewControllerDelegate
     {
         [userInfo setObject:self.product.seller.name forKey:@"name"];
 
-        [userInfo setObject:self.product.seller.url forKey:@"url"];
+        [userInfo setObject:self.product.seller.targetString forKey:@"targetString"];
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:self.product.seller userInfo:userInfo];

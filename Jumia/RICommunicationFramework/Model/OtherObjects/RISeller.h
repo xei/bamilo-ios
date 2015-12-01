@@ -17,7 +17,7 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * reviewAverage;
 @property (nonatomic, retain) NSNumber * reviewTotal;
-@property (nonatomic, retain) NSString * url;
+@property (nonatomic, retain) NSString * targetString;
 @property (nonatomic) BOOL isGlobal;
 @property (nonatomic, retain) NSString * shippingGlobal;
 @property (nonatomic, retain) NSString * linkTextGlobal;
