@@ -31,4 +31,6 @@
 #define JACaptionFont [UIFont fontWithName:kFontRegularName size:11]
 #define JACaption2Font [UIFont fontWithName:kFontBoldName size:11]
 
+#define JABadgeFont [UIFont fontWithName:kFontBoldName size:10]
+
 #endif
