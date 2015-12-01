@@ -9,6 +9,9 @@
 #import "JACatalogPictureCollectionViewCell.h"
 #import "JAProductInfoRatingLine.h"
 
+// as of https://jira.rocket-internet.de/browse/NAFAMZ-14582
+#define xFavOffset 20.f
+
 @interface JACatalogPictureCollectionViewCell () {
     CGFloat _lastWidth;
     CGRect _ratingLineRect;
@@ -110,7 +113,7 @@
     }
     [self setForRTL:self.priceLine];
     
-    CGFloat favX = self.favoriteButton.superview.width - self.favoriteButton.width - xOffset;
+    CGFloat favX = self.favoriteButton.superview.width - self.favoriteButton.width - xFavOffset;
     if (self.favoriteButton.x != favX) {
         [self.favoriteButton setX:favX];
         [self setForRTL:self.favoriteButton];
