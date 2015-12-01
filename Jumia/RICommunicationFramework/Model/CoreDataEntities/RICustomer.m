@@ -33,6 +33,48 @@
 @dynamic addresses;
 @synthesize costumerRequestID, wishlistProducts;
 
++ (NSString *)checkEmailWithParameters:(NSDictionary *)parameters
+                          successBlock:(void (^)(BOOL knownEmail))successBlock
+                       andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock
+{
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, @"customer/emailcheck/"]]
+                                                            parameters:parameters
+                                                        httpMethodPost:YES
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                              if (VALID_NOTEMPTY(metadata, NSDictionary))
+                                                              {
+                                                                  NSNumber* exists = [metadata objectForKey:@"exist"];
+                                                                  if (VALID_NOTEMPTY(exists, NSNumber))
+                                                                  {
+                                                                      successBlock([exists boolValue]);
+                                                                  } else
+                                                                  {
+                                                                      failureBlock(apiResponse, nil);
+                                                                  }
+                                                              } else
+                                                              {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }
+                                                              
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                              if(NOTEMPTY(errorJsonObject))
+                                                              {
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+                                                              } else if(NOTEMPTY(errorObject))
+                                                              {
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(apiResponse, errorArray);
+                                                              } else
+                                                              {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }
+                                                          }];
+}
+
 + (NSString*)autoLogin:(void (^)(BOOL success, NSDictionary *entities, NSString *loginMethod))returnBlock
 {
     NSString *operationID = nil;
