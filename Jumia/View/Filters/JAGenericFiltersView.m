@@ -144,6 +144,7 @@
         [(JATextFilterCell*)cell clickableView].tag = indexPath.row;
         [[(JATextFilterCell*)cell clickableView] addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
         [(JATextFilterCell*)cell setFilterOption:[self.filter.options objectAtIndex:indexPath.row]];
+        [(JATextFilterCell*)cell setupIsLandscape:self.isLandscape];
     }
     
     return cell;

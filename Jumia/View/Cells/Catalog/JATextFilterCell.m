@@ -56,6 +56,13 @@
 }
 
 -(UILabel *)quantityLabel {
+    if (!VALID(_quantityLabel, UILabel)) {
+        _quantityLabel = [UILabel new];
+        _quantityLabel.font = [UIFont fontWithName:kFontRegularName size:16.0f];
+        _quantityLabel.textColor = UIColorFromRGB(0x4e4e4e);
+        _quantityLabel.textAlignment = NSTextAlignmentRight;
+        [self.clickableView addSubview:_quantityLabel];
+    }
     return _quantityLabel;
 }
 
@@ -89,12 +96,21 @@
     
     [self.customAccessoryView setX:(self.clickableView.frame.size.width - margin - self.customAccessoryView.frame.size.width)];
     
-    CGFloat remainingWidth = self.width - self.customAccessoryView.frame.size.width - margin*2;
-    self.nameLabel.frame = CGRectMake(startingX,
-                                       0.0f,
-                                       remainingWidth,
-                                       self.clickableView.frame.size.height);
+    [self.nameLabel setX:startingX];
+    [self.nameLabel sizeToFit];
+    [self.nameLabel setHeight:self.clickableView.frame.size.height];
 
+    [self.quantityLabel sizeToFit];
+    [self.quantityLabel setTextAlignment:NSTextAlignmentRight];
+    self.quantityLabel.frame = CGRectMake(CGRectGetMaxX(self.nameLabel.frame), 0,
+                                          self.quantityLabel.width + 5.f,
+                                          self.clickableView.frame.size.height);
+    
+    if (CGRectGetMaxX(self.quantityLabel.frame) > self.customAccessoryView.frame.origin.x) {
+        [self.quantityLabel setX:(self.customAccessoryView.frame.origin.x - self.quantityLabel.width)];
+        [self.nameLabel setWidth:(self.quantityLabel.x - self.nameLabel.x)];
+    }
+    
     if (RI_IS_RTL) {
         [self.clickableView flipAllSubviews];
     }
@@ -102,9 +118,9 @@
 }
 
 -(void)setFilterOption:(RIFilterOption *)filterOption {
-    self.nameLabel.text = [NSString stringWithFormat:@"%@ (%ld)",filterOption.name, [filterOption.totalProducts longValue]];
+    self.nameLabel.text = filterOption.name;
+    self.quantityLabel.text = [NSString stringWithFormat:@"(%ld)",[filterOption.totalProducts longValue]];
     [self.customAccessoryView setHidden:!filterOption.selected];
-
 }
 
 @end
