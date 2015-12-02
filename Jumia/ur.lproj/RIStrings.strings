@@ -1,9 +1,9 @@
-/*
- RIStrings.strings
- Jumia
- 
- Created by Pedro Lopes on 13/09/14.
- Copyright (c) 2014 Rocket Internet. All rights reserved. */
+/* 
+   RIStrings.strings
+   Jumia
+   
+   Created by Pedro Lopes on 13/09/14.
+   Copyright (c) 2014 Rocket Internet. All rights reserved. */
 "string_update_necessary_title" = "تازہ کرنا ضروری ہے";
 
 "string_update_necessary_message_ios" = "ہمیں کچھ ایسا ملا ہے جس کو درست کرنا، دراز پر آپ کی خریداری کے تجربے کو بہترین بنانےکے لیے نہایت ضروری ہے۔ اس ایپلیکیشن کو مزید استعمال کرنے سے پہلے اسے ازسرِنو تازہ کرنا پڑے گا۔";
