@@ -147,7 +147,7 @@
     
     self.emptyFavoritesImageView.frame = CGRectMake(
                                                     (self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2,
-                                                    48.f, //CGRectGetMaxY((CGRect)[self.emptyFavouritesTitleLabel frame]) + 28.f,
+                                                    CGRectGetMaxY((CGRect)[self.emptyFavouritesTitleLabel frame]),
                                                     self.emptyFavoritesImageView.frame.size.width,
                                                     self.emptyFavoritesImageView.frame.size.height
                                                     );
@@ -196,7 +196,7 @@
     
     self.emptyFavoritesImageView.frame = CGRectMake(
                                                     (self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2,
-                                                    48.f, //CGRectGetMaxY((CGRect)[self.emptyFavouritesTitleLabel frame]) + 28.f,
+                                                    CGRectGetMaxY((CGRect)[self.emptyFavouritesTitleLabel frame]),
                                                     self.emptyFavoritesImageView.frame.size.width,
                                                     self.emptyFavoritesImageView.frame.size.height
                                                     );
@@ -226,7 +226,7 @@
         [self.emptyFavouritesTitleLabel setX:self.emptyFavoritesView.frame.size.width/2 - self.emptyFavouritesTitleLabel.width/2];
     
         self.emptyFavoritesImageView.frame = CGRectMake((self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2,
-                                                        56.f, //CGRectGetMaxY(self.emptyFavouritesTitleLabel.frame) + 28.f,
+                                                        CGRectGetMaxY(self.emptyFavouritesTitleLabel.frame),
                                                         self.emptyFavoritesImageView.frame.size.width,
                                                         self.emptyFavoritesImageView.frame.size.height);
     
