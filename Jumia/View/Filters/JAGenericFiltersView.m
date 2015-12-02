@@ -113,7 +113,7 @@
 
     } else if ([@"rating" isEqualToString:self.filter.uid]) {
         cellIdentifier = @"JARatingFilterCell";
-        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
         
         if (ISEMPTY(cell)) {
             cell = [[JARatingFilterCell alloc] initWithReuseIdentifier:cellIdentifier
@@ -127,6 +127,7 @@
         
         RIFilterOption* filterOption = [self.filter.options objectAtIndex:indexPath.row];
         [(JARatingFilterCell*)cell setFilterOption:filterOption];
+        [(JARatingFilterCell*)cell setupIsLandscape:self.isLandscape];
     } else {
         
         if (ISEMPTY(cell)) {

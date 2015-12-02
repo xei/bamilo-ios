@@ -21,4 +21,6 @@
 
 - (void)setFilterOption:(RIFilterOption*)option;
 
+- (void)setupIsLandscape:(BOOL)landscape;
+
 @end

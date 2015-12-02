@@ -95,13 +95,16 @@
                                        remainingWidth,
                                        self.clickableView.frame.size.height);
 
-    
+    if (RI_IS_RTL) {
+        [self.clickableView flipAllSubviews];
+    }
 
 }
 
 -(void)setFilterOption:(RIFilterOption *)filterOption {
     self.nameLabel.text = [NSString stringWithFormat:@"%@ (%ld)",filterOption.name, [filterOption.totalProducts longValue]];
-    
+    [self.customAccessoryView setHidden:!filterOption.selected];
+
 }
 
 @end

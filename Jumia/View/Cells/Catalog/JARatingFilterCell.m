@@ -20,6 +20,7 @@
                                                (self.ratingLine.frame.size.height - customAccessoryIcon.size.height) / 2,
                                                customAccessoryIcon.size.width,
                                                customAccessoryIcon.size.height);
+        [_customAccessoryView setHidden:YES];
         [self.ratingLine addSubview:_customAccessoryView];
     }
     return _customAccessoryView;
@@ -31,6 +32,7 @@
                                                                                0.0f,
                                                                                self.width,
                                                                                self.height)];
+        _ratingLine.imageRatingSize = kImageRatingSizeSmall;
 
         [self addSubview:_ratingLine];
     }
@@ -45,8 +47,19 @@
     if (self) {
         self.frame = frame;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        
     }
     return self;
+}
+
+- (void)setupIsLandscape:(BOOL)landscape {
+    CGFloat margin = 12.0f;
+    
+    [self.customAccessoryView setX:(self.ratingLine.frame.size.width - margin - self.customAccessoryView.width)];
+    
+    if (RI_IS_RTL) {
+        [self.ratingLine flipAllSubviews];
+    }
 }
 
 -(void)setFilterOption:(RIFilterOption *)filterOption {
@@ -55,7 +68,7 @@
     self.ratingLine.imageRatingSize = kImageRatingSizeSmall;
     self.ratingLine.bottomSeparatorVisibility = YES;
     
-    [self.customAccessoryView setHidden:filterOption.selected];
+    [self.customAccessoryView setHidden:!filterOption.selected];
     
 }
 @end

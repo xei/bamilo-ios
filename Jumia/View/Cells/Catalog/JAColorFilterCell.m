@@ -90,10 +90,7 @@
     
     
     UIImage* customAccessoryIcon = [UIImage imageNamed:@"selectionCheckmark"];
-    self.customAccessoryView.frame = CGRectMake(self.frame.size.width - 12.0f - customAccessoryIcon.size.width,
-                                                (height - customAccessoryIcon.size.height) / 2,
-                                                customAccessoryIcon.size.width,
-                                                customAccessoryIcon.size.height);
+    [self.customAccessoryView setX:(self.frame.size.width - 12.0f - self.customAccessoryView.width)];
     
     self.separator.frame = CGRectMake(0.0f,
                                  height - 1.0f,
