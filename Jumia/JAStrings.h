@@ -359,7 +359,8 @@
 #define STRING_BY_SOMEONE RILocalizedString(@"by_someone", nil)
 
 #define STRING_USER_REVIEWS RILocalizedString(@"user_reviews", nil)
-
 #define STRING_PROFILE RILocalizedString(@"profile", nil)
+#define STRING_FAVOURITES_NO_SAVED_ITEMS RILocalizedString(@"favourites_no_saved_items", nil)
+
 
 #endif
