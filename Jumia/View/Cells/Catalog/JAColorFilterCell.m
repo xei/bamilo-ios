@@ -7,8 +7,54 @@
 //
 
 #import "JAColorFilterCell.h"
+#import "RIFilter.h"
 
 @implementation JAColorFilterCell
+
+-(UILabel *)colorTitleLabel {
+    if(!VALID(_colorTitleLabel, UILabel)) {
+        _colorTitleLabel = [[UILabel alloc] init];
+        _colorTitleLabel.font = [UIFont fontWithName:kFontRegularName size:16.0f];
+        _colorTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
+        [self addSubview:_colorTitleLabel];
+    }
+    return _colorTitleLabel;
+}
+
+-(JAColorView *)colorView {
+    if (!VALID(_colorView, JAColorView)) {
+        _colorView = [[JAColorView alloc] init];
+        [self addSubview:_colorView];
+    }
+    return _colorView;
+}
+
+-(UIImageView *)customAccessoryView {
+    if (!VALID(_customAccessoryView, UIImageView)) {
+        UIImage* customAccessoryIcon = [UIImage imageNamed:@"selectionCheckmark"];
+        _customAccessoryView = [[UIImageView alloc] initWithImage:customAccessoryIcon];
+        _customAccessoryView.hidden = YES;
+        [self addSubview:_customAccessoryView];
+    }
+    return _customAccessoryView;
+}
+
+-(UIView *)separator {
+    if (!VALID(_separator, UIView)) {
+        _separator = [[UIView alloc] init];
+        _separator.backgroundColor = JABlack400Color;
+        [self addSubview:_separator];
+    }
+    return _separator;
+}
+
+-(JAClickableView *)clickableView {
+    if (!VALID(_clickableView, JAClickableView)) {
+        _clickableView = [[JAClickableView alloc]initWithFrame:CGRectMake(0, 0, self.width, [JAColorFilterCell height])];
+        [self addSubview:_clickableView];
+    }
+    return _clickableView;
+}
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier
                             isLandscape:(BOOL)isLandscape
@@ -18,23 +64,6 @@
     if (self) {
         self.frame = frame;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        self.colorView = [[JAColorView alloc] init];
-        [self addSubview:self.colorView];
-        
-        self.colorTitleLabel = [[UILabel alloc] init];
-        self.colorTitleLabel.font = [UIFont fontWithName:kFontRegularName size:16.0f];
-        self.colorTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
-        [self addSubview:self.colorTitleLabel];
-        
-        UIImage* customAccessoryIcon = [UIImage imageNamed:@"selectionCheckmark"];
-        self.customAccessoryView = [[UIImageView alloc] initWithImage:customAccessoryIcon];
-        self.customAccessoryView.hidden = YES;
-        [self addSubview:self.customAccessoryView];
-        
-        self.separator = [[UIView alloc] init];
-        self.separator.backgroundColor = JABlack400Color;
-        [self addSubview:self.separator];
         
         [self setupIsLandscape:isLandscape];
     }
@@ -71,8 +100,18 @@
                                  self.frame.size.width,
                                  1.0f);
     
+    [self.clickableView setFrame:CGRectMake(0, 0, self.width, [JAColorFilterCell height])];
+    
     if (RI_IS_RTL) {
         [self flipAllSubviews];
+    }
+}
+
+- (void)setFilterOption:(RIFilterOption*)filterOption {
+    self.colorTitleLabel.text = [NSString stringWithFormat:@"%@ (%ld)",filterOption.name, [filterOption.totalProducts longValue]];
+    
+    if (filterOption.colorHexValue) {
+        [self.colorView setColorWithHexString:filterOption.colorHexValue];
     }
 }
 
