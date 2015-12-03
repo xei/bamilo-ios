@@ -216,10 +216,10 @@
     }
 }
 
-- (void)pressedCampaignWithSku:(NSString*)sku;
+- (void)pressedCampaignProductWithTarget:(NSString*)targetString;
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(openCampaignWithSku:)]) {
-        [self.delegate openCampaignWithSku:sku];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(openCampaignProductWithTarget:)]) {
+        [self.delegate openCampaignProductWithTarget:targetString];
     }
 }
 

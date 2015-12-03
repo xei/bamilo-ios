@@ -380,11 +380,11 @@ withCampaignTargetString:(NSString*)campaignTargetString
     }
 }
 
-- (void)openCampaignWithSku:(NSString*)sku;
+- (void)openCampaignProductWithTarget:(NSString*)targetString;
 {
     
     NSMutableDictionary* userInfo = [NSMutableDictionary new];
-    [userInfo setObject:sku forKey:@"sku"];
+    [userInfo setObject:targetString forKey:@"targetString"];
     [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"show_back_button"];
     if (self.teaserTrackingInfo) {
         [userInfo setObject:self.teaserTrackingInfo forKey:@"teaserTrackingInfo"];
