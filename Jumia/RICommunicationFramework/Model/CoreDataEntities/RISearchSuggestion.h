@@ -29,7 +29,7 @@
 @property (strong, nonatomic) NSNumber *maxPercentageSaving;
 @property (strong, nonatomic) NSString *brand;
 @property (strong, nonatomic) NSString *targetString;
-@property (strong, nonatomic) NSArray *imagesArray;
+@property (strong, nonatomic) NSString *image;
 
 @end
 

@@ -182,7 +182,7 @@
 {
     [self showLoading];
     
-    [RIProductOffer getProductOffersForProductTargetString:self.product.targetString successBlock:^(NSArray *productOffers) {
+    [RIProductOffer getProductOffersForProductWithSku:self.product.sku successBlock:^(NSArray *productOffers) {
         
         [self hideLoading];
         

@@ -416,22 +416,20 @@
 
 + (RIUndefinedSearchTerm *)parseUndefinedSearchTerm:(NSDictionary *)json
 {
-    NSDictionary *data = [json objectForKey:@"data"];
-    
-    if (NOTEMPTY(data))
+    if (NOTEMPTY(json))
     {
         RIUndefinedSearchTerm *undefinedSearchTerm = [[RIUndefinedSearchTerm alloc] init];
         
-        if ([data objectForKey:@"error_message"]) {
-            undefinedSearchTerm.errorMessage = [data objectForKey:@"error_message"];
+        if ([json objectForKey:@"error_message"]) {
+            undefinedSearchTerm.errorMessage = [json objectForKey:@"error_message"];
         }
         
-        if ([data objectForKey:@"notice_message"]) {
-            undefinedSearchTerm.noticeMessage = [data objectForKey:@"notice_message"];
+        if ([json objectForKey:@"notice_message"]) {
+            undefinedSearchTerm.noticeMessage = [json objectForKey:@"notice_message"];
         }
         
-        if ([data objectForKey:@"search_tips"]) {
-            NSDictionary *searchTipsDic = [data objectForKey:@"search_tips"];
+        if ([json objectForKey:@"search_tips"]) {
+            NSDictionary *searchTipsDic = [json objectForKey:@"search_tips"];
             
             RISearchType *searchType = [[RISearchType alloc] init];
             
@@ -446,9 +444,9 @@
             undefinedSearchTerm.searchType = searchType;
         }
         
-        if ([data objectForKey:@"featured_box"]) {
-            if ([[data objectForKey:@"featured_box"] isKindOfClass:[NSArray class]]) {
-                NSArray *tempArray = [data objectForKey:@"featured_box"];
+        if ([json objectForKey:@"featured_box"]) {
+            if ([[json objectForKey:@"featured_box"] isKindOfClass:[NSArray class]]) {
+                NSArray *tempArray = [json objectForKey:@"featured_box"];
                 NSDictionary *featuredBoxDic = [tempArray firstObject];
                 
                 RIFeaturedBox *featuredBox = [[RIFeaturedBox alloc] init];
@@ -511,16 +509,7 @@
                         }
                         
                         if ([productDic objectForKey:@"image"]) {
-                            NSArray *productImages = [productDic objectForKey:@"image"];
-                            NSMutableArray *tempImagesArray = [NSMutableArray new];
-                            
-                            for (NSDictionary *dic in productImages) {
-                                if ([dic objectForKey:@"url"]) {
-                                    [tempImagesArray addObject:[dic objectForKey:@"url"]];
-                                }
-                            }
-                            
-                            product.imagesArray = [tempImagesArray copy];
+                            product.image = [productDic objectForKey:@"image"];
                         }
                         
                         [tempArray addObject:product];
@@ -533,9 +522,9 @@
             }
         }
         
-        if ([data objectForKey:@"featured_brandbox"]) {
-            if ([[data objectForKey:@"featured_brandbox"] isKindOfClass:[NSArray class]]) {
-                NSArray *tempArray = [data objectForKey:@"featured_brandbox"];
+        if ([json objectForKey:@"featured_brandbox"]) {
+            if ([[json objectForKey:@"featured_brandbox"] isKindOfClass:[NSArray class]]) {
+                NSArray *tempArray = [json objectForKey:@"featured_brandbox"];
                 NSDictionary *featuredBrandBoxDic = [tempArray firstObject];
                 
                 RIFeaturedBrandBox *featuredBrandBox = [[RIFeaturedBrandBox alloc] init];
