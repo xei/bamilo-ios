@@ -36,7 +36,7 @@ typedef NS_ENUM(NSUInteger, JACatalogCollectionViewCellType) {
 @property (nonatomic) UIImageView *productImageView;
 @property (nonatomic) UILabel *brandLabel;
 @property (nonatomic) UILabel *nameLabel;
-@property (nonatomic) UIImageView *recentProductImageView;
+@property (nonatomic) UILabel *recentProductBadgeLabel;
 @property (nonatomic) UIButton *favoriteButton;
 @property (nonatomic) UILabel *discountLabel;
 @property (nonatomic) UIButton *sizeButton;

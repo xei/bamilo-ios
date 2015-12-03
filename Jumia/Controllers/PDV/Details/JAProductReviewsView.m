@@ -466,7 +466,7 @@
 - (void)requestReviews
 {
     [self.viewControllerEvents showLoading];
-    [RIProductRatings getRatingsForProductWithTargetString:self.product.targetString allowRating:1 pageNumber:(VALID_NOTEMPTY(self.productRatings, RIProductRatings)?self.productRatings.currentPage.intValue+1:1) successBlock:^(RIProductRatings *ratings) {
+    [RIProductRatings getRatingsForProductWithSku:self.product.sku allowRating:1 pageNumber:(VALID_NOTEMPTY(self.productRatings, RIProductRatings)?self.productRatings.currentPage.intValue+1:1) successBlock:^(RIProductRatings *ratings) {
         self.productRatings = ratings;
         [self.reviewsArray addObjectsFromArray:[self.productRatings.reviews mutableCopy]];
         _currentPage = self.productRatings.currentPage.integerValue;
@@ -502,6 +502,8 @@
                 [graphic setWidth:full*sum.intValue/self.product.sum.intValue];
             }];
             [label setText:[NSString stringWithFormat:@"(%d)", sum.intValue]];
+            [label sizeToFit];
+
         }else{
             [graphic setWidth:0.f];
             [label setText:@"(0)"];

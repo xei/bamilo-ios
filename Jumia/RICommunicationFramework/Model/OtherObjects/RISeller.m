@@ -20,8 +20,8 @@
     if ([sellerJSON objectForKey:@"name"]) {
         newSeller.name = [sellerJSON objectForKey:@"name"];
     }
-    if ([sellerJSON objectForKey:@"url"]) {
-        newSeller.url = [sellerJSON objectForKey:@"url"];
+    if ([sellerJSON objectForKey:@"target"]) {
+        newSeller.targetString = [sellerJSON objectForKey:@"target"];
     }
     if ([sellerJSON objectForKey:@"min_delivery_time"]) {
         newSeller.minDeliveryTime = [sellerJSON objectForKey:@"min_delivery_time"];

@@ -388,8 +388,16 @@ JAActivityViewControllerDelegate
     
     self.hasLoaddedProduct = NO;
     
+    NSDictionary *richParameter;
+    if (VALID_NOTEMPTY(self.richRelevanceParameter, NSString)) {
+        richParameter = [NSDictionary dictionaryWithObject:self.richRelevanceParameter forKey:@"rich_parameter"];
+    } else
+        richParameter = nil;
+
     if (VALID_NOTEMPTY(self.productTargetString, NSString)) {
-        [RIProduct getCompleteProductWithTargetString:self.productTargetString successBlock:^(id product) {
+        [RIProduct getCompleteProductWithTargetString:self.productTargetString
+                           			withRichParameter:richParameter
+                                		 successBlock:^(id product) {
             _needRefreshProduct = NO;
             self.apiResponse = RIApiResponseSuccess;
             
@@ -424,7 +432,8 @@ JAActivityViewControllerDelegate
             [self hideLoading];
         }];
     } else if (VALID_NOTEMPTY(self.productSku, NSString)) {
-        [RIProduct getCompleteProductWithSku:self.productSku successBlock:^(id product) {
+        [RIProduct getCompleteProductWithSku:self.productSku
+                                successBlock:^(id product) {
             self.apiResponse = RIApiResponseSuccess;
             
             [self loadedProduct:product];
@@ -902,7 +911,7 @@ JAActivityViewControllerDelegate
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                         object:nil
-                                                      userInfo:@{ @"targetString" : tempProduct.targetString,
+                                                      userInfo:@{ @"sku" : tempProduct.sku,
                                                                   @"previousCategory" : @"",
                                                                   @"show_back_button" : [NSNumber numberWithBool:YES]}];
     [self trackingEventRelatedItemSelection:tempProduct];
@@ -928,7 +937,7 @@ JAActivityViewControllerDelegate
     {
         [userInfo setObject:self.product.seller.name forKey:@"name"];
 
-        [userInfo setObject:self.product.seller.url forKey:@"url"];
+        [userInfo setObject:self.product.seller.targetString forKey:@"targetString"];
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:self.product.seller userInfo:userInfo];
@@ -1377,7 +1386,7 @@ JAActivityViewControllerDelegate
         _needRefreshProduct = YES;
         NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
         [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfoLogin];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification object:nil userInfo:userInfoLogin];
         return NO;
     }
     return YES;

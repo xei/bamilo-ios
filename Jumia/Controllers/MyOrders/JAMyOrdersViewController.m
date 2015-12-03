@@ -376,7 +376,7 @@ JAPickerScrollViewDelegate
                 [userInfo setObject:nextNotification forKey:@"notification"];
                 [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification
                                                                     object:nil
                                                                   userInfo:userInfo];
             }

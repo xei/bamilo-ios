@@ -154,15 +154,15 @@
 
 #pragma mark - Send request
 
-+ (NSString *)getRatingsForProductWithTargetString:(NSString *)targetString
-                                       allowRating:(NSInteger) allowRating
-                                        pageNumber:(NSInteger) pageNumber
-                                      successBlock:(void (^)(RIProductRatings *ratings))successBlock
-                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
++ (NSString *)getRatingsForProductWithSku:(NSString *)sku
+                              allowRating:(NSInteger) allowRating
+                               pageNumber:(NSInteger) pageNumber
+                             successBlock:(void (^)(RIProductRatings *ratings))successBlock
+                          andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 {
     NSString *operationID = nil;
     
-    NSString* url = [RITarget getURLStringforTargetString:targetString];
+    NSString* url = [NSString stringWithFormat:@"%@%@%@%@/", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_PRODUCT_DETAIL, sku];
     
     if (VALID_NOTEMPTY(url, NSString))
     {
@@ -316,26 +316,25 @@
 + (RIProductRatings *)parseRatingWithDictionay:(NSDictionary *)dictionary
 {
     NSDictionary *metadata = [dictionary objectForKey:@"metadata"];
-    NSDictionary *dic = [metadata objectForKey:@"data"];
     
     RIProductRatings *newProductRatings = [[RIProductRatings alloc] init];
     
-    if ([dic objectForKey:@"product"]) {
+    if ([metadata objectForKey:@"product"]) {
         
-        NSDictionary* product = [dic objectForKey:@"product"];
+        NSDictionary* product = [metadata objectForKey:@"product"];
         if (VALID_NOTEMPTY(product, NSDictionary)) {
             if ([product objectForKey:@"sku"]) {
-                newProductRatings.productSku = [dic objectForKey:@"sku"];
+                newProductRatings.productSku = [metadata objectForKey:@"sku"];
             }
             if ([product objectForKey:@"name"]) {
-                newProductRatings.productName = [dic objectForKey:@"name"];
+                newProductRatings.productName = [metadata objectForKey:@"name"];
             }
         }
     }
     
-    if ([dic objectForKey:@"reviews"])
+    if ([metadata objectForKey:@"reviews"])
     {
-        NSDictionary *reviewsJSON = [dic objectForKey:@"reviews"];
+        NSDictionary *reviewsJSON = [metadata objectForKey:@"reviews"];
         if (VALID_NOTEMPTY(reviewsJSON, NSDictionary)) {
             if([reviewsJSON objectForKey:@"pagination"]){
                 
@@ -353,18 +352,18 @@
         }
     }
     
-    if ([dic objectForKey:@"ratings"]) {
+    if ([metadata objectForKey:@"ratings"]) {
         
-        NSDictionary* ratingInfoJSON = [dic objectForKey:@"ratings"];
+        NSDictionary* ratingInfoJSON = [metadata objectForKey:@"ratings"];
         if (VALID_NOTEMPTY(ratingInfoJSON, NSDictionary)) {
             
             newProductRatings.ratingInfo = [RIRatingInfo parseRatingInfo:ratingInfoJSON];
         }
     }
     
-    if ([dic objectForKey:@"reviews"]) {
+    if ([metadata objectForKey:@"reviews"]) {
         
-        NSDictionary* reviewsJSON = [dic objectForKey:@"reviews"];
+        NSDictionary* reviewsJSON = [metadata objectForKey:@"reviews"];
         if (VALID_NOTEMPTY(reviewsJSON, NSDictionary)) {
             
             newProductRatings.reviews = [RIReview parseReviews:reviewsJSON];

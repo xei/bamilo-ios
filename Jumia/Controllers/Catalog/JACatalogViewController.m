@@ -116,6 +116,11 @@ typedef void (^ProcessActionBlock)(void);
     
 }
 
+@synthesize searchString = _searchString;
+- (void)setSearchString:(NSString *)searchString {
+    _searchString = searchString;
+    [self setSearchBarText:self.searchString];
+}
 
 - (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects;
 {
@@ -134,7 +139,7 @@ typedef void (^ProcessActionBlock)(void);
     
     self.filteredNoResultsView.delegate = nil;
     [self.filteredNoResultsView removeFromSuperview];
-    self.filteredNoResultsView = [[JAFilteredNoResultsView alloc] initWithFrame:self.bounds];
+    self.filteredNoResultsView = [[JAFilteredNoResultsView alloc] initWithFrame:[self viewBounds]];
     
     self.filteredNoResultsView.tag = 1001;
     
@@ -300,7 +305,7 @@ typedef void (^ProcessActionBlock)(void);
     [self.collectionView setHeight:self.view.height - CGRectGetMaxY(self.catalogTopView.frame)];
     [self.catalogTopView repositionForWidth:self.view.frame.size.width];
     if (self.filteredNoResultsView.superview) {
-        [self.filteredNoResultsView setupView:self.view.bounds];
+        [self.filteredNoResultsView setupView:[self viewBounds]];
     }
 }
 
@@ -550,11 +555,11 @@ typedef void (^ProcessActionBlock)(void);
                 if (VALID_NOTEMPTY(self.categoryName, NSString)) {
                     urlToUse = [NSString stringWithFormat:@"%@%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_CATALOG, self.categoryName];
                 }
-                if (VALID_NOTEMPTY(self.category, RICategory) && VALID_NOTEMPTY(self.category.apiUrl, NSString)) {
-                    urlToUse = self.category.apiUrl;
+                if (VALID_NOTEMPTY(self.category, RICategory) && VALID_NOTEMPTY(self.category.targetString, NSString)) {
+                    urlToUse = [RITarget getURLStringforTargetString:self.category.targetString];
                 }
-                if (VALID_NOTEMPTY(self.filterCategory, RICategory) && VALID_NOTEMPTY(self.filterCategory.apiUrl, NSString)) {
-                    urlToUse = self.filterCategory.apiUrl;
+                if (VALID_NOTEMPTY(self.filterCategory, RICategory) && VALID_NOTEMPTY(self.filterCategory.targetString, NSString)) {
+                    urlToUse = [RITarget getURLStringforTargetString:self.filterCategory.targetString];
                 }
                 
                 self.getProductsOperationID = [RIProduct getProductsWithCatalogUrl:urlToUse
@@ -1245,7 +1250,7 @@ typedef void (^ProcessActionBlock)(void);
         _processActionBlock = block;
         NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
         [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfoLogin];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification object:nil userInfo:userInfoLogin];
         return NO;
     }
     return YES;

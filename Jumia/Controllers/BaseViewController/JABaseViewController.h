@@ -34,6 +34,11 @@
 - (void)reloadNavBar;
 
 /**
+ * Method to set SearchBar text
+ */
+- (void)setSearchBarText:(NSString*)text;
+
+/**
  * Method to show loading
  */
 - (void)showLoading;

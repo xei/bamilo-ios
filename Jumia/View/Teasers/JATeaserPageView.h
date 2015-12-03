@@ -12,8 +12,9 @@
 
 @interface JATeaserPageView : UIView
 
-@property (nonatomic, strong)NSArray* teaserGroupings;
+@property (nonatomic, strong)NSDictionary* teaserGroupings;
 
 - (void)loadTeasersForFrame:(CGRect)frame;
+- (void)addTeaserGrouping:(NSString*)type;
 
 @end

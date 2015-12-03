@@ -28,6 +28,7 @@
 @dynamic languages;
 @dynamic facebookAvailable;
 @dynamic gtmId;
+@dynamic richRelevanceEnabled;
 
 + (RICountryConfiguration *)parseCountryConfiguration:(NSDictionary *)json
 {
@@ -71,6 +72,10 @@
     
     if([json objectForKey:@"gtm_ios"]){
         newConfig.gtmId = [json objectForKey:@"gtm_ios"];
+    }
+    
+    if([json objectForKey:@"rich_relevance_enabled"]){
+        newConfig.richRelevanceEnabled = [json objectForKey:@"rich_relevance_enabled"];
     }
     
     if([json objectForKey:@"facebook_is_available"]){

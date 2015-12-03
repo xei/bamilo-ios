@@ -871,7 +871,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
             else if ([key isEqualToString:@"l"])
             {
                 // Login
-                [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification
                                                                     object:nil];
             }
             else if ([key isEqualToString:@"r"])

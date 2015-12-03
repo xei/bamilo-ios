@@ -13,13 +13,12 @@
 
 @implementation RIProductOffer
 
-+ (NSString*)getProductOffersForProductTargetString:(NSString*)productTargetString
-                                       successBlock:(void (^)(NSArray *productOffers))successBlock
-                                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
++ (NSString*)getProductOffersForProductWithSku:(NSString*)sku
+                                  successBlock:(void (^)(NSArray *productOffers))successBlock
+                               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
     
-    NSString* url = [RITarget getURLStringforTargetString:productTargetString];
-    url = [url stringByAppendingString:RI_API_PRODUCT_OFFERS];
+    NSString* url = [NSString stringWithFormat:@"%@%@%@%@/%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_PRODUCT_DETAIL, sku, RI_API_PRODUCT_OFFERS];
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
                                                             parameters:nil
@@ -34,11 +33,11 @@
                                                                   
                                                                   if (VALID_NOTEMPTY(metadata, NSDictionary)) {
                                                                       
-                                                                      NSDictionary* data = [metadata objectForKey:@"data"];
+                                                                      NSDictionary* offersJSON = [metadata objectForKey:@"offers"];
                                                                       
-                                                                      if (VALID_NOTEMPTY(data, NSDictionary)) {
+                                                                      if (VALID_NOTEMPTY(offersJSON, NSDictionary)) {
                                                                           
-                                                                          NSArray* offers = [RIProductOffer parseProductOffers:data country:configuration];
+                                                                          NSArray* offers = [RIProductOffer parseProductOffers:offersJSON country:configuration];
                                                                           successBlock(offers);
                                                                       }
                                                                   }

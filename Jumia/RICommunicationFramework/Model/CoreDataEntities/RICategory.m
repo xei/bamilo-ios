@@ -13,7 +13,7 @@
 @dynamic label;
 @dynamic vertical;
 @dynamic urlKey;
-@dynamic apiUrl;
+@dynamic targetString;
 @dynamic imageUrl;
 @dynamic level;
 @dynamic numberOfTimesSeen;
@@ -240,8 +240,8 @@
     if ([category objectForKey:@"url_key"]) {
         newCategory.urlKey = [category objectForKey:@"url_key"];
     }
-    if ([category objectForKey:@"api_url"]) {
-        newCategory.apiUrl = [category objectForKey:@"api_url"];
+    if ([category objectForKey:@"target"]) {
+        newCategory.targetString = [category objectForKey:@"target"];
     }
     if ([category objectForKey:@"image"]) {
         newCategory.imageUrl = [category objectForKey:@"image"];

@@ -256,7 +256,7 @@
         _needRefreshProduct = YES;
         NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
         [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfoLogin];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification object:nil userInfo:userInfoLogin];
         return;
     }
     _needRefreshProduct = NO;
@@ -587,7 +587,7 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                             object:nil
-                                                          userInfo:@{ @"targetString" : product.targetString,
+                                                          userInfo:@{ @"sku" : product.sku,
                                                                       @"previousCategory" : STRING_MY_FAVOURITES,
                                                                       @"show_back_button" : [NSNumber numberWithBool:NO],
                                                                       @"fromCatalog" : [NSNumber numberWithBool:YES]}];
