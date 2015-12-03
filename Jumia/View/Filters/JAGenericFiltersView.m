@@ -88,7 +88,7 @@
     
     NSNumber* selected = [self.selectedIndexes objectAtIndex:indexPath.row];
     
-    UITableViewCell* cell ;//= [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    UITableViewCell* cell ;
     if ([@"color_family" isEqualToString:self.filter.uid]) {
         cellIdentifier = @"JAColorFilterCell";
         
