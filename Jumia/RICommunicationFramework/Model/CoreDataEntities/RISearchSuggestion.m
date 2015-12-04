@@ -194,7 +194,7 @@
     NSString *sortingString = [RIProduct urlComponentForSortingMethod:sortingMethod];
     
     if (VALID_NOTEMPTY(sortingString, NSString)) {
-        sortingString = [NSString stringWithFormat:@"&%@", sortingString];
+        sortingString = [NSString stringWithFormat:@"/%@", sortingString];
     }
     
     NSString *filtersString = [RIFilter urlWithFiltersArray:filters];
@@ -202,18 +202,18 @@
     {
         if(NSNotFound == [@"q" rangeOfString:filtersString].location)
         {
-            tempUrl = [NSString stringWithFormat:@"%@/q/%@/page/%@/maxitems/%@%@/%@", tempUrl, query, page, maxItems,
+            tempUrl = [NSString stringWithFormat:@"%@q/%@/page/%@/maxitems/%@%@/%@/", tempUrl, query, page, maxItems,
                        sortingString, filtersString];
         }
         else
         {
-            tempUrl = [NSString stringWithFormat:@"%@/page/%@/maxitems/%@%@/%@", tempUrl, page, maxItems,
+            tempUrl = [NSString stringWithFormat:@"%@/page/%@/maxitems/%@%@/%@/", tempUrl, page, maxItems,
                           sortingString, filtersString];
         }
     }
     else
     {
-        tempUrl = [NSString stringWithFormat:@"%@/q/%@/page/%@/maxitems/%@%@", tempUrl, query, page, maxItems,
+        tempUrl = [NSString stringWithFormat:@"%@q/%@/page/%@/maxitems/%@%@/", tempUrl, query, page, maxItems,
                    sortingString];
     }
     
@@ -231,7 +231,7 @@
     }
     if (discountMode)
     {
-        tempUrl = [NSString stringWithFormat:@"%@&special_price=1", tempUrl];
+        tempUrl = [NSString stringWithFormat:@"%@/special_price/1", tempUrl];
     }
 
     tempUrl = [tempUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
