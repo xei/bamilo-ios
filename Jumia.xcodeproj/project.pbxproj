@@ -264,6 +264,14 @@
 		892EB9431BC679A800FBF094 /* libTagManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 892EB93F1BC679A800FBF094 /* libTagManager.a */; };
 		892EB9441BC679A800FBF094 /* libTagManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 892EB93F1BC679A800FBF094 /* libTagManager.a */; };
 		894B0D781BB2F80A00199251 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
+		8976FB291C0F323700483651 /* JARatingFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8976FB281C0F323700483651 /* JARatingFilterCell.m */; };
+		8976FB2A1C0F323700483651 /* JARatingFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8976FB281C0F323700483651 /* JARatingFilterCell.m */; };
+		8976FB2B1C0F323700483651 /* JARatingFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8976FB281C0F323700483651 /* JARatingFilterCell.m */; };
+		8976FB2C1C0F323700483651 /* JARatingFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8976FB281C0F323700483651 /* JARatingFilterCell.m */; };
+		8976FB2F1C0F3F4300483651 /* JATextFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8976FB2E1C0F3F4300483651 /* JATextFilterCell.m */; };
+		8976FB301C0F3F4300483651 /* JATextFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8976FB2E1C0F3F4300483651 /* JATextFilterCell.m */; };
+		8976FB311C0F3F4300483651 /* JATextFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8976FB2E1C0F3F4300483651 /* JATextFilterCell.m */; };
+		8976FB321C0F3F4300483651 /* JATextFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8976FB2E1C0F3F4300483651 /* JATextFilterCell.m */; };
 		898A24C01BCE9EAF00BBEE31 /* JASellerDeliveryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 898A24BF1BCE9EAF00BBEE31 /* JASellerDeliveryView.m */; };
 		898A24C11BCE9EAF00BBEE31 /* JASellerDeliveryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 898A24BF1BCE9EAF00BBEE31 /* JASellerDeliveryView.m */; };
 		898A24C21BCE9EAF00BBEE31 /* JASellerDeliveryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 898A24BF1BCE9EAF00BBEE31 /* JASellerDeliveryView.m */; };
@@ -2830,6 +2838,10 @@
 		892EB93C1BC679A800FBF094 /* TAGLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAGLogger.h; sourceTree = "<group>"; };
 		892EB93D1BC679A800FBF094 /* TAGManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAGManager.h; sourceTree = "<group>"; };
 		892EB93F1BC679A800FBF094 /* libTagManager.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTagManager.a; sourceTree = "<group>"; };
+		8976FB271C0F323700483651 /* JARatingFilterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARatingFilterCell.h; sourceTree = "<group>"; };
+		8976FB281C0F323700483651 /* JARatingFilterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARatingFilterCell.m; sourceTree = "<group>"; };
+		8976FB2D1C0F3F4300483651 /* JATextFilterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATextFilterCell.h; sourceTree = "<group>"; };
+		8976FB2E1C0F3F4300483651 /* JATextFilterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATextFilterCell.m; sourceTree = "<group>"; };
 		898A24BE1BCE9EAF00BBEE31 /* JASellerDeliveryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASellerDeliveryView.h; sourceTree = "<group>"; };
 		898A24BF1BCE9EAF00BBEE31 /* JASellerDeliveryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASellerDeliveryView.m; sourceTree = "<group>"; };
 		89AB5C2D1BC2B01B00BA38E5 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
@@ -5723,6 +5735,10 @@
 				CE2C6B701A03E480006133C0 /* JACatalogGridCell_ipad_portrait.xib */,
 				CED30C28199CC8F200C67F4B /* JAColorFilterCell.h */,
 				CED30C29199CC8F200C67F4B /* JAColorFilterCell.m */,
+				8976FB271C0F323700483651 /* JARatingFilterCell.h */,
+				8976FB281C0F323700483651 /* JARatingFilterCell.m */,
+				8976FB2D1C0F3F4300483651 /* JATextFilterCell.h */,
+				8976FB2E1C0F3F4300483651 /* JATextFilterCell.m */,
 				6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */,
 				6CF4AE831ADEABBB0024EC34 /* JACatalogBannerCell.h */,
 				6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */,
@@ -7882,6 +7898,7 @@
 				CE06FCB71A88C3A5002FCD25 /* JACatalogTopView.m in Sources */,
 				CEED472C1A7B973B006D9CE7 /* JAPDVBundles.m in Sources */,
 				B5A3025719811E8A00F71726 /* MKAnnotationView+WebCache.m in Sources */,
+				8976FB2F1C0F3F4300483651 /* JATextFilterCell.m in Sources */,
 				4AE730BE198F8ADF000CA1DD /* JAPDVRelatedItem.m in Sources */,
 				B50B03A3198A5441002046DF /* JAPaymentViewController.m in Sources */,
 				CE0F130D1AF277F700F99356 /* JAKickoutView.m in Sources */,
@@ -7955,6 +7972,7 @@
 				B5A302E519811E9200F71726 /* RIGoogleAnalyticsTracker.m in Sources */,
 				CE88F7BD1A23886100A3A586 /* JAOrderSummaryView.m in Sources */,
 				CE33CA0119AB36FA00333B1A /* JAPriceView.m in Sources */,
+				8976FB291C0F323700483651 /* JARatingFilterCell.m in Sources */,
 				9A17372F1B679740004905B4 /* UIImage+WithColor.m in Sources */,
 				9A55A68E1BC2E88D008EF4A6 /* JAPDVVariationsViewController.m in Sources */,
 				B5A302DE19811E9200F71726 /* RITrackingWrapper.m in Sources */,
@@ -8177,6 +8195,7 @@
 				CE9ADB9B1AB34C4600D56481 /* JAPDVBundles.m in Sources */,
 				CE9ADB9C1AB34C4600D56481 /* MKAnnotationView+WebCache.m in Sources */,
 				CE9ADB9D1AB34C4600D56481 /* JAPDVRelatedItem.m in Sources */,
+				8976FB301C0F3F4300483651 /* JATextFilterCell.m in Sources */,
 				CE9ADB9F1AB34C4600D56481 /* JAPaymentViewController.m in Sources */,
 				CE0F130F1AF277F700F99356 /* JAKickoutView.m in Sources */,
 				9A7EE9A01B5546A0004E2505 /* ADJTimerOnce.m in Sources */,
@@ -8250,6 +8269,7 @@
 				CE9ADBDC1AB34C4600D56481 /* RIGoogleAnalyticsTracker.m in Sources */,
 				9A189E7F1BB54C2C0039BC14 /* JAScrolledImageGalleryView.m in Sources */,
 				CE9ADBDD1AB34C4600D56481 /* JAOrderSummaryView.m in Sources */,
+				8976FB2A1C0F323700483651 /* JARatingFilterCell.m in Sources */,
 				CE9ADBDE1AB34C4600D56481 /* JAPriceView.m in Sources */,
 				9AB488871B727B2C00886A44 /* UIImage+WithColor.m in Sources */,
 				CE9ADBDF1AB34C4600D56481 /* RITrackingWrapper.m in Sources */,
@@ -8463,6 +8483,7 @@
 				CE9ADD951AB6D6E900D56481 /* JAPDVBundles.m in Sources */,
 				CE9ADD961AB6D6E900D56481 /* MKAnnotationView+WebCache.m in Sources */,
 				CE9ADD971AB6D6E900D56481 /* JAPDVRelatedItem.m in Sources */,
+				8976FB311C0F3F4300483651 /* JATextFilterCell.m in Sources */,
 				CE9ADD991AB6D6E900D56481 /* JAPaymentViewController.m in Sources */,
 				CE0F13101AF277F700F99356 /* JAKickoutView.m in Sources */,
 				9A7EE9A11B5546A0004E2505 /* ADJTimerOnce.m in Sources */,
@@ -8536,6 +8557,7 @@
 				CE9ADDD61AB6D6E900D56481 /* RIGoogleAnalyticsTracker.m in Sources */,
 				9A189E801BB54C2D0039BC14 /* JAScrolledImageGalleryView.m in Sources */,
 				CE9ADDD71AB6D6E900D56481 /* JAOrderSummaryView.m in Sources */,
+				8976FB2B1C0F323700483651 /* JARatingFilterCell.m in Sources */,
 				CE9ADDD81AB6D6E900D56481 /* JAPriceView.m in Sources */,
 				9AB488881B727B2D00886A44 /* UIImage+WithColor.m in Sources */,
 				CE9ADDD91AB6D6E900D56481 /* RITrackingWrapper.m in Sources */,
@@ -8749,6 +8771,7 @@
 				CE9ADF931AB6D78200D56481 /* JAPaymentViewController.m in Sources */,
 				CE0F13111AF277F700F99356 /* JAKickoutView.m in Sources */,
 				9A7EE9A21B5546A0004E2505 /* ADJTimerOnce.m in Sources */,
+				8976FB321C0F3F4300483651 /* JATextFilterCell.m in Sources */,
 				CEE558661AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */,
 				CE9ADF941AB6D78200D56481 /* JAPicker.m in Sources */,
 				CE9ADF971AB6D78200D56481 /* JAFallbackView.m in Sources */,
@@ -8822,6 +8845,7 @@
 				9A189E811BB54C2D0039BC14 /* JAScrolledImageGalleryView.m in Sources */,
 				CE9ADFCF1AB6D78200D56481 /* RINewRelicTracker.m in Sources */,
 				CE9ADFD01AB6D78200D56481 /* RIGoogleAnalyticsTracker.m in Sources */,
+				8976FB2C1C0F323700483651 /* JARatingFilterCell.m in Sources */,
 				9AB488891B727B2D00886A44 /* UIImage+WithColor.m in Sources */,
 				CE9ADFD11AB6D78200D56481 /* JAOrderSummaryView.m in Sources */,
 				CE9ADFD21AB6D78200D56481 /* JAPriceView.m in Sources */,

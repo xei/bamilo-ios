@@ -1,23 +1,22 @@
 //
-//  JAColorFilterCell.h
+//  JATextFilterCell.h
 //  Jumia
 //
-//  Created by Telmo Pinto on 14/08/14.
-//  Copyright (c) 2014 Rocket Internet. All rights reserved.
+//  Created by miguelseabra on 02/12/15.
+//  Copyright © 2015 Rocket Internet. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "JAColorView.h"
-#import "JAClickableView.h"
 #import "RIFilter.h"
+#import "JAClickableView.h"
 
-@interface JAColorFilterCell : UITableViewCell
+@interface JATextFilterCell : UITableViewCell
 
-@property (strong, nonatomic) JAColorView *colorView;
-@property (strong, nonatomic) UILabel *colorTitleLabel;
 @property (nonatomic, strong) UIImageView* customAccessoryView;
-@property (nonatomic, strong) UIView* separator;
 @property (nonatomic, strong) JAClickableView* clickableView;
+@property (nonatomic, strong) UIView* separatorView;
+@property (nonatomic, strong) UILabel* nameLabel;
+@property (nonatomic, strong) UILabel* quantityLabel;
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier
                             isLandscape:(BOOL)isLandscape
@@ -26,7 +25,5 @@
 - (void)setupIsLandscape:(BOOL)landscape;
 
 - (void)setFilterOption:(RIFilterOption*)option;
-
-+ (CGFloat)height;
 
 @end

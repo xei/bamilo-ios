@@ -81,6 +81,7 @@
     CGFloat xOffset = 32.f;
     CGFloat discountWidth = 60.f;
     CGFloat brandYOffset = 355;
+    CGFloat distXRecent = 16.f;
     
     if ([UIDevice currentDevice].userInterfaceIdiom != UIUserInterfaceIdiomPad) {
         xOffset = 6.f;
@@ -130,6 +131,12 @@
     if (!CGRectEqualToRect(discountLabelRect, self.discountLabel.frame)) {
         [self.discountLabel setFrame:discountLabelRect];
         [self setForRTL:self.discountLabel];
+    }
+    
+    CGFloat recentX = distXRecent;
+    if (self.recentProductBadgeLabel.x != recentX) {
+        [self.recentProductBadgeLabel setX:recentX];
+        [self setForRTL:self.recentProductBadgeLabel];
     }
     
     _lastWidth = self.width;

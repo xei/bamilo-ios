@@ -36,7 +36,7 @@
 
 "categories" = "အမ်ိဳးအစားမ်ား";
 
-"favourites" = "ႏွစ္သက္ေသာပစၥည္းမ်ား";
+"favourites" = "မွတ္သားထားေသာပစၥည္းမ်ား";
 
 "recent_searches" = "လတ္တေလာ ရွာေဖြမွဳမ်ား";
 
@@ -49,6 +49,8 @@
 "nav_country" = "ႏုိင္ငံ ေရြးခ်ယ္ရန္";
 
 "string_filters" = "ေရြးခ်ယ္ရန္";
+
+"string_remove_filter" = "ဖယ္ရွားရန္";
 
 "categories_toplevel_title" = "အမ်ိဳးအစား အားလံုး";
 
@@ -84,6 +86,8 @@
 
 "string_ratings" = "%d သံုးသပ္ခ်က္မ်ား";
 
+"string_nratings" = "အမွတ္မ်ား (%d)";
+
 "string_review" = "ထင္ျမင္ခ်က္ 1ခု";
 
 "string_reviews" = "%d ထင္ျမင္ခ်က္မ်ား";
@@ -108,7 +112,7 @@
 
 "string_with_discount_only" = "ေလွ်ာ့ေစ်းျဖင့္";
 
-"favourite_no_favourites" = "သင္ႏွစ္သက္ေသာ ပစၥည္းမ်ားထည္႕ထားျခင္း မရွိပါ";
+"favourite_no_favourites" = "သင္မွတ္ထားေသာပစၥည္းမ်ားမရွိေသးပါ";
 
 "favourite_addalltocart" = "ပစၥည္းအားလံုး တြန္းလွည္းထဲ ထည္႕မည္";
 
@@ -188,7 +192,9 @@
 
 "shipping" = "ပို႕ေဆာင္မွဳ";
 
-"fulfilled_by" = "Fulfilled by";
+"shipment_of" = "ေအာ္ဒါပို႕ေဆာင္မွဳ  %ld မွ %ld ခု";
+
+"fulfilled_by" = "ပို႕ေဆာင္ေပးသူ";
 
 "free_label" = "အခမဲ့";
 
@@ -209,6 +215,8 @@
 "facebook_signup_button_text" = "Facebook စာရင္းသြင္းရန္";
 
 "facebook_login_button_text" = "Facebook ျဖင့္ ၀င္မည္";
+
+"login_incomplete" = "Login ၀င္ရန္ အီးေမးလ္ႏွင့္ ေမြးရက္ လိုအပ္ပါသည္";
 
 "or_text" = "သို႕မဟုတ္";
 
@@ -346,13 +354,13 @@
 
 "enter_order_id" = "ေက်းဇူးျပဳ၍ ေအာ္ဒါနံပါတ္ကို ျဖည္႕ပါ";
 
-"products_added_favourite" = "ႏွစ္သက္ေသာ ပစၥည္းစာရင္းအတြင္း ထည္႕သြင္းျပီးပါျပီ";
+"products_added_favourite" = "မွတ္သားၿပီးပါျပီ";
 
-"error_adding_to_wishlist" = "ပစၥည္းစာရင္း ထည္႕သြင္း၍ မရပါ";
+"error_adding_to_wishlist" = "မွတ္သား၍ မရပါ";
 
-"products_removed_favourite" = "ႏွစ္သက္ေသာ ပစၥည္းစာရင္းမွ ဖယ္ရွားျပီးပါျပီ";
+"products_removed_favourite" = "မွတ္ထားေသာပစၥည္းစာရင္းမွဖယ္ရွားျပီးပါျပီ";
 
-"error_removing_from_wishlist" = "ႏွစ္သက္ေသာ ပစၥည္းစာရင္း ဖယ္ရွား၍ မရပါ";
+"error_removing_from_wishlist" = "မွတ္ထားေသာ ပစၥည္းအားဖယ္ရွားျခင္းမေအာင္ျမင္ပါ";
 
 "error_add_to_cart_failed_for_x_products" = "ကုန္ပစၥည္း %d ခုမွာ ေစ်း၀ယ္လွည္းအတြင္း ထည္႕သြင္း၍ မရပါ";
 
@@ -368,7 +376,7 @@
 
 "campaing_timer_end" = ": တြင္ ကုန္ဆံုးမည္";
 
-"string_format_off_label" = "%d%% ေလွ်ာ႕ေစ်း";
+"string_format_off_label" = "-%d%% ေလွ်ာ႕ေစ်း";
 
 "campaigns_label" = "အထူး အစီအစဥ္မ်ား";
 
@@ -416,7 +424,7 @@
 
 "products_tip_swipe_text" = "စီရီမွဳ ေျပာင္းလဲရန္ ဘယ္ (သို႕) ညာသို႕ ဆြဲပါ";
 
-"tip_favourite_text" = "ဤပစၥည္းကို အၾကိဳက္ဆံုးစာရင္းထဲ ထည္႕ျပီးပါက ပရိုဖိုင္တြင္ ျပန္လည္ ၾကည္႕ရွဳႏုိင္ပါသည္။";
+"tip_favourite_text" = "ဤပစၥည္းကိုမွတ္ထားၿပီးပါက ပရိုဖိုင္တြင္ ျပန္လည္ ၾကည္႕ရွဳႏုိင္ပါသည္။";
 
 "tip_share_text" = "ဤပစၥည္းအေၾကာင္းကို အမ်ားအား မွ်ေ၀ရန္ ကလစ္ႏွိပ္ပါ";
 
@@ -504,6 +512,8 @@
 
 "like_us_on_facebook" = "Facebook တြင္ Like ေပးရန္";
 
+"seller_info_warranty" = "အာမခံ";
+
 "bundle_title" = "တြဲဖက္၀ယ္ထားေသာ ပစၥည္းမ်ား";
 
 "bundle_total_price" = "စုစုေပါင္း ေစ်းႏွဳန္း:";
@@ -564,6 +574,37 @@
 
 "birthday" = "ေမြးေန႔";
 
+"country" = "ႏိုင္ငံ";
+
+"language" = "ဘာသာစကား";
+
+"combos" = "ပစၥည္းအစံုလိုက္မ်ား";
+
+"clear_all" = "အားလံုးပယ္ဖ်က္ရန္";
+
+"buy_the_look" = "အလန္းစားစတိုင္ကို ၀ယ္ယူဆင္ျမန္းလုိက္ပါ";
+
+"read_more" = "အကုန္ဖတ္ရန္";
+
+"see_other_colors" = "အျခားအေရာင္မ်ားၾကည္႕ရန္";
+
+"see_other_variations" = "အျခားအမ်ိဳးကြဲမ်ားကိုၾကည္႕ရန္";
+
+"seller_information" = "ေရာင္းခ်သူအခ်က္အလက္";
+
+"other_sellers_starting_from" = "အျခားေရာင္းသူမ်ားထံမွ: %@";
+
+"you_may_also_like" = "တြဲဖက္ပစၥည္းမ်ား";
+
+"reviews/ratings" = "မွတ္ခ်က္ႏွင့္အမွတ္ေပးခ်က္မ်ား";
+
+"from_n_customers" = "ေစ်း၀ယ္သူ %d ေယာက္ထံမွ";
+
+"average_rating" = "ပ်မ္းမွ်အမွတ္ေပးခ်က္";
+
+"be_the_first_to_rate" = "အမွတ္ေပးရန္";
+
 "by_someone" = "%@ မွ ေရးသားသည္";
 
-"user_reviews" = "သံုးသပ္ခ်က္မ်ား";
+"user_reviews" = "မွတ္ခ်က္မ်ား";
+
