@@ -16,7 +16,7 @@
 #import "RICustomer.h"
 #import "RINewsletterCategory.h"
 #import "JABottomBar.h"
-#import "JATextFieldComponentV2.h"
+#import "JATextFieldComponent.h"
 #import "RIPhonePrefix.h"
 
 #define kTopMargin 36.f
@@ -225,8 +225,8 @@ JADynamicFormDelegate
                 [self.mainScrollView addSubview:view.iconImageView];
             }
         }else{
-            if ([view isKindOfClass:[JATextFieldComponentV2 class]] && [view.field.key isEqualToString:@"last_name"]) {
-                JATextFieldComponentV2 *textFieldComponent = (JATextFieldComponentV2 *)view;
+            if ([view isKindOfClass:[JATextFieldComponent class]] && [view.field.key isEqualToString:@"last_name"]) {
+                JATextFieldComponent *textFieldComponent = (JATextFieldComponent *)view;
                 UIImage *iconImage = [UIImage imageNamed:[NSString stringWithFormat:@"ic_user_form"]];
                 CGFloat imageY = textFieldComponent.y + textFieldComponent.textField.y - iconImage.size.height;
                 if (!_userIconView) {

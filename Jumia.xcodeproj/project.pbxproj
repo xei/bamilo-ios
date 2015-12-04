@@ -930,11 +930,11 @@
 		9AD15D481BE3F45400DD60DD /* JACollectionSeparator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D471BE3F45400DD60DD /* JACollectionSeparator.m */; };
 		9AD15D4B1BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D4A1BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.m */; };
 		9AE03A8B1C076CE1003CBEF1 /* JAAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE03A8A1C076CE1003CBEF1 /* JAAuthenticationViewController.m */; };
-		9AE03A8F1C0C6ADA003CBEF1 /* JATextFieldComponentV2.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE03A8E1C0C6ADA003CBEF1 /* JATextFieldComponentV2.m */; };
-		9AE03A901C0C6ADA003CBEF1 /* JATextFieldComponentV2.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE03A8E1C0C6ADA003CBEF1 /* JATextFieldComponentV2.m */; };
-		9AE03A911C0C6ADA003CBEF1 /* JATextFieldComponentV2.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE03A8E1C0C6ADA003CBEF1 /* JATextFieldComponentV2.m */; };
-		9AE03A921C0C6ADA003CBEF1 /* JATextFieldComponentV2.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE03A8E1C0C6ADA003CBEF1 /* JATextFieldComponentV2.m */; };
-		9AE03A931C0C6ADA003CBEF1 /* JATextFieldComponentV2.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE03A8E1C0C6ADA003CBEF1 /* JATextFieldComponentV2.m */; };
+		9AE03A8F1C0C6ADA003CBEF1 /* JATextFieldComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE03A8E1C0C6ADA003CBEF1 /* JATextFieldComponent.m */; };
+		9AE03A901C0C6ADA003CBEF1 /* JATextFieldComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE03A8E1C0C6ADA003CBEF1 /* JATextFieldComponent.m */; };
+		9AE03A911C0C6ADA003CBEF1 /* JATextFieldComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE03A8E1C0C6ADA003CBEF1 /* JATextFieldComponent.m */; };
+		9AE03A921C0C6ADA003CBEF1 /* JATextFieldComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE03A8E1C0C6ADA003CBEF1 /* JATextFieldComponent.m */; };
+		9AE03A931C0C6ADA003CBEF1 /* JATextFieldComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE03A8E1C0C6ADA003CBEF1 /* JATextFieldComponent.m */; };
 		9AE03A941C0CB224003CBEF1 /* JAAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE03A8A1C076CE1003CBEF1 /* JAAuthenticationViewController.m */; };
 		9AE03A951C0CB224003CBEF1 /* JAAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE03A8A1C076CE1003CBEF1 /* JAAuthenticationViewController.m */; };
 		9AE03A961C0CB224003CBEF1 /* JAAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE03A8A1C076CE1003CBEF1 /* JAAuthenticationViewController.m */; };
@@ -3022,8 +3022,8 @@
 		9AD15D4A1BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAProductCollectionViewFlowLayout.m; path = CollectionViewLayouts/JAProductCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		9AE03A891C076CE1003CBEF1 /* JAAuthenticationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAAuthenticationViewController.h; path = Authentication/JAAuthenticationViewController.h; sourceTree = "<group>"; };
 		9AE03A8A1C076CE1003CBEF1 /* JAAuthenticationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAAuthenticationViewController.m; path = Authentication/JAAuthenticationViewController.m; sourceTree = "<group>"; };
-		9AE03A8D1C0C6ADA003CBEF1 /* JATextFieldComponentV2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JATextFieldComponentV2.h; path = ReDesign/JATextFieldComponentV2.h; sourceTree = "<group>"; };
-		9AE03A8E1C0C6ADA003CBEF1 /* JATextFieldComponentV2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JATextFieldComponentV2.m; path = ReDesign/JATextFieldComponentV2.m; sourceTree = "<group>"; };
+		9AE03A8D1C0C6ADA003CBEF1 /* JATextFieldComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JATextFieldComponent.h; path = ReDesign/JATextFieldComponent.h; sourceTree = "<group>"; };
+		9AE03A8E1C0C6ADA003CBEF1 /* JATextFieldComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JATextFieldComponent.m; path = ReDesign/JATextFieldComponent.m; sourceTree = "<group>"; };
 		9AE488611B0CE2640033F169 /* JARatingsViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JARatingsViewController~ipad.xib"; sourceTree = "<group>"; };
 		9AEA3B241B15D4AC00771EEA /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Frame.h"; path = "Categories/UIView+Frame.h"; sourceTree = "<group>"; };
 		9AEA3B251B15D4AC00771EEA /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Frame.m"; path = "Categories/UIView+Frame.m"; sourceTree = "<group>"; };
@@ -4661,8 +4661,8 @@
 		9AE03A8C1C0C6A9C003CBEF1 /* ReDesign */ = {
 			isa = PBXGroup;
 			children = (
-				9AE03A8D1C0C6ADA003CBEF1 /* JATextFieldComponentV2.h */,
-				9AE03A8E1C0C6ADA003CBEF1 /* JATextFieldComponentV2.m */,
+				9AE03A8D1C0C6ADA003CBEF1 /* JATextFieldComponent.h */,
+				9AE03A8E1C0C6ADA003CBEF1 /* JATextFieldComponent.m */,
 			);
 			name = ReDesign;
 			sourceTree = "<group>";
@@ -7706,7 +7706,7 @@
 				185e4d8d406a3ebd18ee19ec /* RIFormIndex.m in Sources */,
 				B5CBFF671A10B33D0050C553 /* JARatingsViewMedium.m in Sources */,
 				3c19ddaf1c0aad1ad6bfad03 /* JADynamicForm.m in Sources */,
-				9AE03A901C0C6ADA003CBEF1 /* JATextFieldComponentV2.m in Sources */,
+				9AE03A901C0C6ADA003CBEF1 /* JATextFieldComponent.m in Sources */,
 				CEE558631AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */,
 				7eb64a1c587a08b5852171a0 /* main.m in Sources */,
 				3193bc811c58a8831f67c283 /* UIButton+WebCache.m in Sources */,
@@ -7799,7 +7799,7 @@
 				CEA86E061A49D247000032AD /* JACampaignProductCell.m in Sources */,
 				9A3876521BCD0DBE0088B186 /* JAProductDescriptionView.m in Sources */,
 				CEDEB983199A51E30022BAB5 /* RIFilter.m in Sources */,
-				9AE03A8F1C0C6ADA003CBEF1 /* JATextFieldComponentV2.m in Sources */,
+				9AE03A8F1C0C6ADA003CBEF1 /* JATextFieldComponent.m in Sources */,
 				CE3FC5AE1990E25C003B4A27 /* JACatalogViewController.m in Sources */,
 				B5A302C519811E9200F71726 /* RIImage.m in Sources */,
 				898A24C01BCE9EAF00BBEE31 /* JASellerDeliveryView.m in Sources */,
@@ -8289,7 +8289,7 @@
 				CE9ADBFB1AB34C4600D56481 /* JAPickerScrollView.m in Sources */,
 				CE9ADBFD1AB34C4600D56481 /* JARecentSearchesViewController.m in Sources */,
 				CE9ADBFE1AB34C4600D56481 /* JACatalogGridCell.m in Sources */,
-				9AE03A911C0C6ADA003CBEF1 /* JATextFieldComponentV2.m in Sources */,
+				9AE03A911C0C6ADA003CBEF1 /* JATextFieldComponent.m in Sources */,
 				CE9ADBFF1AB34C4600D56481 /* JAMyFavouritesViewController.m in Sources */,
 				CE28A7991BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */,
 				9A38764C1BCD0CDC0088B186 /* JATabNavigationViewController.m in Sources */,
@@ -8575,7 +8575,7 @@
 				CE9ADDF51AB6D6E900D56481 /* JAPickerScrollView.m in Sources */,
 				CE9ADDF71AB6D6E900D56481 /* JARecentSearchesViewController.m in Sources */,
 				CE9ADDF81AB6D6E900D56481 /* JACatalogGridCell.m in Sources */,
-				9AE03A921C0C6ADA003CBEF1 /* JATextFieldComponentV2.m in Sources */,
+				9AE03A921C0C6ADA003CBEF1 /* JATextFieldComponent.m in Sources */,
 				CE9ADDF91AB6D6E900D56481 /* JAMyFavouritesViewController.m in Sources */,
 				CE28A79A1BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */,
 				9A38764D1BCD0CDC0088B186 /* JATabNavigationViewController.m in Sources */,
@@ -8861,7 +8861,7 @@
 				CE9ADFEF1AB6D78200D56481 /* JAPickerScrollView.m in Sources */,
 				CE9ADFF11AB6D78200D56481 /* JARecentSearchesViewController.m in Sources */,
 				CE9ADFF21AB6D78200D56481 /* JACatalogGridCell.m in Sources */,
-				9AE03A931C0C6ADA003CBEF1 /* JATextFieldComponentV2.m in Sources */,
+				9AE03A931C0C6ADA003CBEF1 /* JATextFieldComponent.m in Sources */,
 				CE28A79B1BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */,
 				9A38764E1BCD0CDC0088B186 /* JATabNavigationViewController.m in Sources */,
 				CE9ADFF31AB6D78200D56481 /* JAMyFavouritesViewController.m in Sources */,

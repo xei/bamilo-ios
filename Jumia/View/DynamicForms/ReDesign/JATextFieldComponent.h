@@ -9,7 +9,7 @@
 #import "JADynamicField.h"
 #import "JARadioComponent.h"
 
-@interface JATextFieldComponentV2 : JADynamicField
+@interface JATextFieldComponent : JADynamicField
 
 @property (assign, nonatomic) BOOL hasError;
 @property (strong, nonatomic) UITextField *textField;

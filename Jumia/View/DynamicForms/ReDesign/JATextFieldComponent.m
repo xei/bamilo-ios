@@ -6,9 +6,9 @@
 //  Copyright © 2015 Rocket Internet. All rights reserved.
 //
 
-#import "JATextFieldComponentV2.h"
+#import "JATextFieldComponent.h"
 
-@interface JATextFieldComponentV2 ()
+@interface JATextFieldComponent ()
 
 @property (strong, nonatomic) UILabel *titleLabel;
 @property (strong, nonatomic) NSString *storedValue;
@@ -16,7 +16,7 @@
 
 @end
 
-@implementation JATextFieldComponentV2
+@implementation JATextFieldComponent
 
 - (UILabel *)titleLabel
 {

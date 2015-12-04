@@ -8,7 +8,7 @@
 
 #import "JAMyOrdersViewController.h"
 #import "JAPickerScrollView.h"
-#import "JATextFieldComponentV2.h"
+#import "JATextFieldComponent.h"
 #import "JACartListHeaderView.h"
 #import "JAMyOrderCell.h"
 #import "JAMyOrderDetailCell.h"
@@ -55,7 +55,7 @@ JAPickerScrollViewDelegate
 @property (strong, nonatomic) UIView *trackOrderView;
 @property (strong, nonatomic) UILabel *trackOrderLabel;
 @property (strong, nonatomic) UIView *trackOrderSeparator;
-@property (strong, nonatomic) JATextFieldComponentV2 *trackOrderTextField;
+@property (strong, nonatomic) JATextFieldComponent *trackOrderTextField;
 @property (strong, nonatomic) UIButton *trackOrderButton;
 @property (strong, nonatomic) UIView *myOrderView;
 @property (strong, nonatomic) UILabel *myOrderViewLabel;
@@ -124,7 +124,7 @@ JAPickerScrollViewDelegate
     [self.trackOrderSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     [self.trackOrderView addSubview:self.trackOrderSeparator];
     
-    self.trackOrderTextField = [[JATextFieldComponentV2 alloc] init];
+    self.trackOrderTextField = [[JATextFieldComponent alloc] init];
     self.trackOrderTextField.frame = CGRectMake(-100.0f, -100.0f, self.trackOrderTextField.frame.size.width, self.trackOrderTextField.frame.size.height);
     [self.trackOrderTextField setupWithLabel:STRING_ORDER_ID value:self.startingTrackOrderNumber mandatory:YES];
     [self.trackOrderView addSubview:self.trackOrderTextField];

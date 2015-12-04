@@ -10,7 +10,7 @@
 #import "JABottomBar.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
-#import "JATextFieldComponentV2.h"
+#import "JATextFieldComponent.h"
 #import "RICustomer.h"
 #import "JAUtils.h"
 
@@ -36,7 +36,7 @@
 @property (nonatomic) UIView *orView;
 @property (nonatomic) UIButton *continueWithoutLoginButton;
 @property (nonatomic) JABottomBar *continueToLoginButton;
-@property (nonatomic) JATextFieldComponentV2 *emailTextField;
+@property (nonatomic) JATextFieldComponent *emailTextField;
 
 @property (strong, nonatomic) UIButton *facebookLoginButton;
 
@@ -125,14 +125,14 @@
     return _orView;
 }
 
-- (JATextFieldComponentV2 *)emailTextField
+- (JATextFieldComponent *)emailTextField
 {
-    if (!VALID_NOTEMPTY(_emailTextField, JATextFieldComponentV2)) {
+    if (!VALID_NOTEMPTY(_emailTextField, JATextFieldComponent)) {
         CGFloat yOffset = CGRectGetMaxY(self.topMessageLabel.frame) + kTopMess2FacebookButton;
         if ([[RICountryConfiguration getCurrentConfiguration].facebookAvailable boolValue]){
             yOffset = CGRectGetMaxY(self.orView.frame) + kOr2Email;
         }
-        _emailTextField = [[JATextFieldComponentV2 alloc] init];
+        _emailTextField = [[JATextFieldComponent alloc] init];
         [_emailTextField setFrame:CGRectMake((self.view.width - kWidth)/2, yOffset, kWidth, _emailTextField.height)];
         [_emailTextField.textField setReturnKeyType:UIReturnKeyNext];
         [_emailTextField.textField setKeyboardType:UIKeyboardTypeEmailAddress];
