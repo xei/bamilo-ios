@@ -13,5 +13,6 @@
 @property (nonatomic) BOOL checkout;
 @property (nonatomic, assign) BOOL fromSideMenu;
 @property (nonatomic, strong) NSNotification *nextNotification;
+@property (nonatomic) NSDictionary *userInfo;
 
 @end

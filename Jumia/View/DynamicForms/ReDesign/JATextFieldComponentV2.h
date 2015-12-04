@@ -7,6 +7,7 @@
 //
 
 #import "JADynamicField.h"
+#import "JARadioComponent.h"
 
 @interface JATextFieldComponentV2 : JADynamicField
 
@@ -14,8 +15,9 @@
 @property (strong, nonatomic) UITextField *textField;
 @property (strong, nonatomic) UILabel *requiredSymbol;
 @property (nonatomic, strong) NSString* currentErrorMessage;
+@property (nonatomic) CGFloat fixedX;
 
-@property (nonatomic, strong) JARadioRelatedComponent* relatedComponent;
+@property (nonatomic, strong) JARadioComponent* relatedComponent;
 
 -(BOOL)isValid;
 

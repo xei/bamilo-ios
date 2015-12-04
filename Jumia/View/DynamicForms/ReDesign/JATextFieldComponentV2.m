@@ -10,7 +10,6 @@
 
 @interface JATextFieldComponentV2 ()
 
-@property (strong, nonatomic) RIField *field;
 @property (strong, nonatomic) UILabel *titleLabel;
 @property (strong, nonatomic) NSString *storedValue;
 @property (strong, nonatomic) UIView *underLineView;
@@ -73,8 +72,41 @@
     return self;
 }
 
+- (void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    CGFloat xOffset = 0;
+    if (self.fixedX)
+    {
+        xOffset = self.fixedX;
+    }
+    [self.underLineView setFrame:CGRectMake(xOffset, self.height-5, self.width - xOffset, 1.f)];
+    [self.requiredSymbol setFrame:CGRectMake(self.width - 10, self.height - 28, 10, 20)];
+    [self.textField setFrame:CGRectMake(xOffset, self.height - 28, self.width - xOffset, 20)];
+    [self.titleLabel setFrame:CGRectMake(xOffset, 0, self.width - xOffset, 20)];
+    if (self.iconImageView) {
+        [self.iconImageView setY:self.y + self.textField.y + (self.textField.height - self.iconImageView.height)/2];
+    }
+    [self.titleLabel setTextAlignment:NSTextAlignmentLeft];
+    [self.textField setTextAlignment:NSTextAlignmentLeft];
+    
+    [self flipIfIsRTL];
+}
+
+- (void)flipIfIsRTL
+{
+    if (RI_IS_RTL) {
+        [self.titleLabel flipViewAlignment];
+        [self.underLineView flipViewPositionInsideSuperview];
+        [self.requiredSymbol flipViewPositionInsideSuperview];
+        [self.textField flipViewPositionInsideSuperview];
+        [self.textField flipViewAlignment];
+    }
+}
+
 - (void)setupWithField:(RIField*)field
 {
+    self.field = field;
     self.storedValue = @"";
     self.hasError = NO;
     self.field = field;
@@ -83,7 +115,6 @@
     if([field.required boolValue])
     {
         [self.requiredSymbol setHidden:NO];
-        [self.requiredSymbol setTextColor:UIColorFromRGB(0xfaa41a)];
     }
     
     if(VALID_NOTEMPTY(field.value, NSString))
@@ -93,6 +124,12 @@
     }
     [self.underLineView setHidden:NO];
     
+    UIImage *iconImage = [UIImage imageNamed:[NSString stringWithFormat:@"ic_%@_form", field.key]];
+    if (iconImage) {
+        self.iconImageView = [[UIImageView alloc] initWithImage:iconImage];
+        [self.iconImageView setFrame:CGRectMake(0, self.y + (self.height - self.iconImageView.height)/2, iconImage.size.width, iconImage.size.height)];
+    }
+    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                           action:@selector(assignFirstResponder)];
     [self addGestureRecognizer:tap];
@@ -101,14 +138,12 @@
 -(void)setupWithTitle:(NSString *)title label:(NSString*)label value:(NSString*)value mandatory:(BOOL)mandatory {
     [self addSubview:self.titleLabel];
     [self.titleLabel setText:title];
-    [self.titleLabel sizeToFit];
     [self setupWithLabel:label value:value mandatory:mandatory];
 }
 
 -(void)setupWithLabel:(NSString*)label value:(NSString*)value mandatory:(BOOL)mandatory
 {
     // this triggers the constraints error output
-    self.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.storedValue = @"";
     self.hasError = NO;
@@ -216,7 +251,7 @@
     {
         __block NSString* pattern;
         __block NSString* errorMessage;
-        if (VALID_NOTEMPTY(self.relatedComponent, JARadioRelatedComponent)) {
+        if (VALID_NOTEMPTY(self.relatedComponent, JARadioComponent)) {
             NSDictionary* dict = [self.relatedComponent getValues];
             [dict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
                 for (RIField* relatedField in self.field.relatedFields) {

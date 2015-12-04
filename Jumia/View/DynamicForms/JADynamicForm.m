@@ -21,6 +21,7 @@
 @property (nonatomic, strong) JARadioComponent *regionComponent;
 @property (nonatomic, strong) JARadioComponent *cityComponent;
 @property (nonatomic, strong) JARadioComponent *postcodeComponent;
+@property (nonatomic, strong) JARadioComponent *phonePrefixComponent;
 
 @end
 
@@ -77,6 +78,9 @@
         if (VALID_NOTEMPTY(self.postcodeComponent, JARadioComponent)) {
             [componentDictionary setObject:self.postcodeComponent forKey:@"postcodeComponent"];
         }
+        if (VALID_NOTEMPTY(self.phonePrefixComponent, JARadioComponent)) {
+            [componentDictionary setObject:self.phonePrefixComponent forKey:@"phonePrefixComponent"];
+        }
         [self.delegate performSelector:@selector(downloadLocalesForComponents:) withObject:componentDictionary];
     }
 }
@@ -111,7 +115,7 @@
         
         if ([@"string" isEqualToString:field.type] || [@"text" isEqualToString:field.type] || [@"email" isEqualToString:field.type])
         {
-            JATextFieldComponent *textField = [JATextFieldComponent getNewJATextFieldComponent];
+            JATextFieldComponentV2 *textField = [[JATextFieldComponentV2 alloc] init];
             [textField setupWithField:field];
             [textField.textField setDelegate:self];
             [textField.textField setReturnKeyType:returnKeyType];
@@ -141,7 +145,7 @@
         }
         else if ([@"password" isEqualToString:field.type] || [@"password2" isEqualToString:field.type])
         {
-            JATextFieldComponent *textField = [JATextFieldComponent getNewJATextFieldComponent];
+            JATextFieldComponentV2 *textField = [[JATextFieldComponentV2 alloc] init];
             [textField setupWithField:field];
             [textField.textField setDelegate:self];
             [textField.textField setReturnKeyType:returnKeyType];
@@ -160,7 +164,7 @@
         }
         else if ([field.type isEqualToString:@"integer"] || [field.type isEqualToString:@"number"])
         {
-            JATextFieldComponent *textField = [JATextFieldComponent getNewJATextFieldComponent];
+            JATextFieldComponentV2 *textField = [[JATextFieldComponentV2 alloc] init];
             [textField setupWithField:field];
             [textField.textField setDelegate:self];
             [textField.textField setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
@@ -185,7 +189,7 @@
         }
         else if ([field.type isEqualToString:@"date"])
         {
-            JABirthDateComponent *birthDateComponent = [JABirthDateComponent getNewJABirthDateComponent];
+            JABirthDateComponent *birthDateComponent = [[JABirthDateComponent alloc] init];
             [birthDateComponent setupWithField:field];
             [birthDateComponent.textField setDelegate:self];
             [birthDateComponent.textField setReturnKeyType:returnKeyType];
@@ -202,7 +206,7 @@
         }
         else if ([@"radio" isEqualToString:field.type] || [@"list" isEqualToString:field.type])
         {
-            JARadioComponent *radioComponent = [JARadioComponent getNewJARadioComponent];
+            JARadioComponent *radioComponent = [[JARadioComponent alloc] init];
             [radioComponent setupWithField:field];
             [radioComponent.textField setDelegate:self];
             [radioComponent.textField setReturnKeyType:returnKeyType];
@@ -235,17 +239,21 @@
         else if ([@"related_number" isEqualToString:field.type])
         {
             //we only accept two options, no more, no less
-            if (2 == field.relatedFields.count) {
+            if (1 == field.relatedFields.count) {
                 
-                JATextFieldComponent *textField = [JATextFieldComponent getNewJATextFieldComponent];
+                CGFloat phoneOffset = 80.f;
+                CGFloat prefixWidth = 70.f;
+                
+                
+                JATextFieldComponentV2 *textField = [[JATextFieldComponentV2 alloc] init];
                 [textField setupWithField:field];
                 [textField.textField setDelegate:self];
                 [textField.textField setReturnKeyType:returnKeyType];
+                [textField setFixedX:phoneOffset];
                 
                 CGRect frame = textField.frame;
                 frame.origin.y = startingY;
                 textField.frame = frame;
-                startingY += textField.frame.size.height;
                 
                 [textField.textField setTag:tag];
                 [textField setTag:tag];
@@ -258,9 +266,15 @@
                 
                 lastTextFieldIndex = [self.formViews count];
                 [self.formViews addObject:textField];
-                
-                JARadioRelatedComponent* radioRelated = [JARadioRelatedComponent getNewJARadioRelatedComponent];
-                [radioRelated setupWithField:field];
+                tag++;
+                JARadioComponent* radioRelated = [[JARadioComponent alloc] initWithFrame:CGRectMake(8.f, 0, prefixWidth, 48.f)];
+                [radioRelated.textField setDelegate:self];
+                [radioRelated setupWithField:[field.relatedFields firstObject]];
+                [radioRelated setFixedWidth:prefixWidth];
+                [radioRelated.textField setTag:tag];
+                [radioRelated setTag:tag];
+                [radioRelated.textField setPlaceholder:@"+"];
+                [radioRelated.textField setEnabled:NO];
                 
                 frame = radioRelated.frame;
                 frame.origin.y = startingY;
@@ -268,6 +282,8 @@
                 startingY += radioRelated.frame.size.height;
                 
                 [self.formViews addObject:radioRelated];
+                
+                self.phonePrefixComponent = radioRelated;
                 
                 textField.relatedComponent = radioRelated;
             }
@@ -348,9 +364,9 @@
     if(lastTextFieldIndex < [self.formViews count])
     {
         UIView *view = [self.formViews objectAtIndex:lastTextFieldIndex];
-        if([view isKindOfClass:[JATextFieldComponent class]])
+        if([view isKindOfClass:[JATextFieldComponentV2 class]])
         {
-            JATextFieldComponent *lastTextField = (JATextFieldComponent*) view;
+            JATextFieldComponentV2 *lastTextField = (JATextFieldComponentV2*) view;
             [lastTextField.textField setReturnKeyType:UIReturnKeyDone];
         }
         else if([view isKindOfClass:[JABirthDateComponent class]])
@@ -420,9 +436,9 @@
 {
     for (id view in self.formViews)
     {
-        if ([view isKindOfClass:[JATextFieldComponent class]])
+        if ([view isKindOfClass:[JATextFieldComponentV2 class]])
         {
-            JATextFieldComponent *textFieldView = (JATextFieldComponent*)view;
+            JATextFieldComponentV2 *textFieldView = (JATextFieldComponentV2*)view;
             if([textFieldView isComponentWithKey:key])
             {
                 [textFieldView setError:error];
@@ -459,7 +475,7 @@
     {
         for (id obj in self.formViews)
         {
-            if ([obj isKindOfClass:[JATextFieldComponent class]] || [obj isKindOfClass:[JABirthDateComponent class]] || [obj isKindOfClass:[JARadioComponent class]])
+            if ([obj isKindOfClass:[JATextFieldComponentV2 class]] || [obj isKindOfClass:[JABirthDateComponent class]] || [obj isKindOfClass:[JARadioComponent class]])
             {
                 //ignore gender as an error, can't evaluate it here because the billing address form has it but it isn't shown on screen.
                 if (NO == [[obj getFieldName] isEqualToString:genderFieldName]) {
@@ -535,9 +551,9 @@
                     [parameters addEntriesFromDictionary:checkBoxWithOptionsComponent.values];
                 }
             }
-            else if ([view isKindOfClass:[JATextFieldComponent class]])
+            else if ([view isKindOfClass:[JATextFieldComponentV2 class]])
             {
-                JATextFieldComponent *textFieldComponent = (JATextFieldComponent*) view;
+                JATextFieldComponentV2 *textFieldComponent = (JATextFieldComponentV2 *) view;
                 
                 if(VALID_NOTEMPTY([textFieldComponent getValues], NSDictionary))
                 {
@@ -599,9 +615,9 @@
 {
     for (id view in self.formViews)
     {
-        if ([view isKindOfClass:[JATextFieldComponent class]])
+        if ([view isKindOfClass:[JATextFieldComponentV2 class]])
         {
-            JATextFieldComponent *textFieldView = (JATextFieldComponent*)view;
+            JATextFieldComponentV2 *textFieldView = (JATextFieldComponentV2 *)view;
             if([textFieldView isComponentWithKey:key])
             {
                 [textFieldView setValue:value];
@@ -710,9 +726,9 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     UIView *nextView = [self viewWithTag:textField.tag + 1];
-    if(self.hasFieldNavigation && [nextView isKindOfClass:[JATextFieldComponent class]])
+    if(self.hasFieldNavigation && [nextView isKindOfClass:[JATextFieldComponentV2 class]])
     {
-        JATextFieldComponent *textField = (JATextFieldComponent *) nextView;
+        JATextFieldComponentV2 *textField = (JATextFieldComponentV2 *) nextView;
         [textField.textField becomeFirstResponder];
     }
     else
@@ -736,7 +752,7 @@
         [view performSelector:@selector(cleanError) withObject:nil];
     }
     
-    if([view isKindOfClass:[JATextFieldComponent class]])
+    if([view isKindOfClass:[JATextFieldComponentV2 class]])
     {
         if (self.delegate && [self.delegate respondsToSelector:@selector(changedFocus:)]) {
             [self.delegate performSelector:@selector(changedFocus:) withObject:[self viewWithTag:textField.tag]];

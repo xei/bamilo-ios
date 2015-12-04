@@ -196,8 +196,10 @@
                 [scrollview setContentSize:CGSizeMake(view.width, scrollview.contentSize.height)];
             }
         }
+        [view flipViewPositionInsideSuperview];
+        [view flipViewAlignment];
         if ([view isKindOfClass:[UITableView class]] || [view isKindOfClass:[UICollectionView class]] ) {
-            [view flipViewPositionInsideSuperview];
+//            [view flipViewPositionInsideSuperview];
             continue;
         } else if ([view isKindOfClass:[JADynamicField class]]) {
             continue;
@@ -210,8 +212,6 @@
         } else if ([view isKindOfClass:[UISearchBar class]]) {
             continue;
         } else {
-            [view flipViewPositionInsideSuperview];
-            [view flipViewAlignment];
 //            [view flipViewImage];
             if ([view isKindOfClass:[UISwitch class]]) {
                 continue;
