@@ -490,7 +490,11 @@
                             product.maxPercentageSaving = [productDic objectForKey:@"max_savings_percentage"];
                         }
                         
-                        if ([productDic objectForKey:@"price"]) {
+                        if ([productDic objectForKey:@"special_price"]) {
+                            product.price = [productDic objectForKey:@"special_price"];
+                            product.priceFormatted = [RICountryConfiguration formatPrice:[NSNumber numberWithFloat:[product.price floatValue]]
+                                                                                 country:[RICountryConfiguration getCurrentConfiguration]];
+                        } else if ([productDic objectForKey:@"price"]) {
                             product.price = [productDic objectForKey:@"price"];
                             product.priceFormatted = [RICountryConfiguration formatPrice:[NSNumber numberWithFloat:[product.price floatValue]]
                                                                                  country:[RICountryConfiguration getCurrentConfiguration]];
