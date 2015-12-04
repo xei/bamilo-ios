@@ -1,5 +1,5 @@
 //
-//  JANewSignInController.m
+//  JASignInViewController.m
 //  Jumia
 //
 //  Created by lucianoduarte on 01/12/15.
