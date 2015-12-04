@@ -118,6 +118,9 @@
             
             if([@"email" isEqualToString:field.type])
             {
+                if (VALID_NOTEMPTY([values objectForKey:@"email"], NSString)) {
+                    [textField.textField setText:[values objectForKey:@"email"]];
+                }
                 [textField.textField setKeyboardType:UIKeyboardTypeEmailAddress];
             }else{
                 textField.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
