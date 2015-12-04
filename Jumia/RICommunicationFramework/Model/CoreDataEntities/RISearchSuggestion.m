@@ -202,18 +202,18 @@
     {
         if(NSNotFound == [@"q" rangeOfString:filtersString].location)
         {
-            tempUrl = [NSString stringWithFormat:@"%@?setDevice=mobileApi&q=%@&page=%@&maxitems=%@%@&%@", tempUrl, query, page, maxItems,
+            tempUrl = [NSString stringWithFormat:@"%@/q/%@/page/%@/maxitems/%@%@/%@", tempUrl, query, page, maxItems,
                        sortingString, filtersString];
         }
         else
         {
-            tempUrl = [NSString stringWithFormat:@"%@?setDevice=mobileApi&page=%@&maxitems=%@%@&%@", tempUrl, page, maxItems,
+            tempUrl = [NSString stringWithFormat:@"%@/page/%@/maxitems/%@%@/%@", tempUrl, page, maxItems,
                           sortingString, filtersString];
         }
     }
     else
     {
-        tempUrl = [NSString stringWithFormat:@"%@?setDevice=mobileApi&q=%@&page=%@&maxitems=%@%@", tempUrl, query, page, maxItems,
+        tempUrl = [NSString stringWithFormat:@"%@/q/%@/page/%@/maxitems/%@%@", tempUrl, query, page, maxItems,
                    sortingString];
     }
     
