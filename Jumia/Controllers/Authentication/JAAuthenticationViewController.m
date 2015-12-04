@@ -450,8 +450,9 @@
     [self showLoading];
     [RICustomer checkEmailWithParameters:[NSDictionary dictionaryWithObject:self.emailTextField.textField.text forKey:@"email"] successBlock:^(BOOL knownEmail) {
         if (knownEmail) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutLoginScreenNotification object:nil userInfo:nil];
-//            [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification
+                                                                object:nil
+                                                              userInfo:@{@"email" : self.emailTextField.textField.text}];
         }else{
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignUpScreenNotification object:nil userInfo:nil];
         }

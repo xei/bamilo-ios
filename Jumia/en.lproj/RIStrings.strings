@@ -613,3 +613,9 @@
 "profile" = "Profile";
 
 "favourites_no_saved_items" = "No Saved Items";
+
+"login_enter_your_password_to_continue" = "Enter your password to continue.";
+
+"login_welcome_back" = "Welcome Back";
+
+"fgt_your_pass" = "Forgot your password?";
