@@ -16,7 +16,7 @@
 - (void)pressedAddToCartForProduct:(RICampaignProduct*)campaignProduct
                  withProductSimple:(NSString*)simpleSku;
 - (void)pressedSizeOnView:(JACampaignProductCell*)campaignProductCell;
-- (void)pressedCampaignWithSku:(NSString*)sku;
+- (void)pressedCampaignProductWithTarget:(NSString*)targetString;
 
 @end
 

@@ -42,6 +42,7 @@
 @property (nonatomic, strong) NSString* imagesUrl;
 @property (nonatomic, strong) NSArray* productSimples;
 @property (nonatomic, strong) NSNumber* remainingTime;
+@property (nonatomic, strong) NSString* targetString;
 
 + (RICampaignProduct*)parseCampaignProduct:(NSDictionary*)campaignProductJSON
                                    country:(RICountryConfiguration*)country;

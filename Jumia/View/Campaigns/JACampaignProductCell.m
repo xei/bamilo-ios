@@ -428,9 +428,8 @@
 - (void)backViewPressed
 {
     if (YES == self.offerEndedContent.hidden) {
-        if (self.delegate && [self.delegate respondsToSelector:@selector(pressedCampaignWithSku:)]) {
-            //TODO campaignProduct.sku was removed on RICampaign and will use target from deep linkin
-            //[self.delegate pressedCampaignWithSku:self.campaignProduct.sku];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(pressedCampaignProductWithTarget:)]) {
+            [self.delegate pressedCampaignProductWithTarget:self.campaignProduct.targetString];
         }
     }
 }
