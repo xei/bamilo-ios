@@ -491,11 +491,15 @@ JAPickerDelegate>
          
          if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
-             [self.dynamicForm validateFields:errorObject];
+             [self.dynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
+                 [self showMessage:message success:NO];
+             }];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
-             [self.dynamicForm checkErrors];
+             [self.dynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
+                 [self showMessage:message success:NO];
+             }];
          }
          
          if (RIApiResponseNoInternetConnection == apiResponse)

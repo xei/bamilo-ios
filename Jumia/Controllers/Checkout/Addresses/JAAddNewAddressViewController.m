@@ -767,11 +767,15 @@ JAPickerDelegate>
              
              if(VALID_NOTEMPTY(errorObject, NSDictionary))
              {
-                 [self.billingDynamicForm validateFields:errorObject];
+                 [self.billingDynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
+                     [self showMessage:message success:NO];
+                 }];
              }
              else if(VALID_NOTEMPTY(errorObject, NSArray))
              {
-                 [self.billingDynamicForm checkErrors];
+                 [self.billingDynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
+                     [self showMessage:message success:NO];
+                 }];
              }
          }];
     }
@@ -796,11 +800,15 @@ JAPickerDelegate>
          }
          else if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
-             [self.shippingDynamicForm validateFields:errorObject];
+             [self.shippingDynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
+                 [self showMessage:message success:NO];
+             }];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
-             [self.shippingDynamicForm checkErrors];
+             [self.shippingDynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
+                 [self showMessage:message success:NO];
+             }];
          }
          else
          {
