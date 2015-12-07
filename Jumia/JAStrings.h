@@ -359,7 +359,12 @@
 #define STRING_BY_SOMEONE RILocalizedString(@"by_someone", nil)
 
 #define STRING_USER_REVIEWS RILocalizedString(@"user_reviews", nil)
-
 #define STRING_PROFILE RILocalizedString(@"profile", nil)
+#define STRING_FAVOURITES_NO_SAVED_ITEMS RILocalizedString(@"favourites_no_saved_items", nil)
+
+#define STRING_LOGIN_ENTER_PASSWORD_TO_CONTINUE RILocalizedString(@"login_enter_your_password_to_continue", nil)
+#define STRING_LOGIN_WELCOME_BACK RILocalizedString(@"login_welcome_back", nil)
+#define STRING_FORGOT_YOUR_PASSWORD RILocalizedString(@"fgt_your_pass", nil)
+
 
 #endif

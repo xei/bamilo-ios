@@ -231,6 +231,10 @@
                 campaignProduct.imagesUrl = [campaignProductJSON objectForKey:@"image"];
         }
         
+        if ([campaignProductJSON objectForKey:@"target"] && VALID_NOTEMPTY([campaignProductJSON objectForKey:@"target"], NSString)) {
+            campaignProduct.targetString = [campaignProductJSON objectForKey:@"target"];
+        }
+        
         NSArray* sizesArray = [campaignProductJSON objectForKey:@"sizes"];
         if (VALID_NOTEMPTY(sizesArray, NSArray)) {
             

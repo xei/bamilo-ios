@@ -209,13 +209,13 @@
                     JACampaignPageView* campaignPageView = [self createCampaignPageAtX:currentX];
                     currentX += campaignPageView.frame.size.width;
                     
-                    if (VALID_NOTEMPTY(component.name, NSString)) {
-                        [optionList addObject:component.name];
+                    if (VALID_NOTEMPTY(component.title, NSString)) {
+                        [optionList addObject:component.title];
                         [self.activeCampaignComponents addObject:component];
                         [[RITrackingWrapper sharedInstance]trackScreenWithName:@"Campaign"];
-                        [[RITrackingWrapper sharedInstance]trackScreenWithName:component.name];
+                        [[RITrackingWrapper sharedInstance]trackScreenWithName:component.title];
                         
-                        if ([component.name isEqualToString:self.startingTitle]) {
+                        if ([component.title isEqualToString:self.startingTitle]) {
                             startingIndex = i;
                         }
                     }
@@ -380,11 +380,11 @@ withCampaignTargetString:(NSString*)campaignTargetString
     }
 }
 
-- (void)openCampaignWithSku:(NSString*)sku;
+- (void)openCampaignProductWithTarget:(NSString*)targetString;
 {
     
     NSMutableDictionary* userInfo = [NSMutableDictionary new];
-    [userInfo setObject:sku forKey:@"sku"];
+    [userInfo setObject:targetString forKey:@"targetString"];
     [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"show_back_button"];
     if (self.teaserTrackingInfo) {
         [userInfo setObject:self.teaserTrackingInfo forKey:@"teaserTrackingInfo"];

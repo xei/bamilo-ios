@@ -15,7 +15,7 @@
 
 - (void)addToCartForProduct:(RICampaignProduct*)campaignProduct
           withProductSimple:(NSString*)simpleSku;
-- (void)openCampaignWithSku:(NSString*)sku;
+- (void)openCampaignProductWithTarget:(NSString*)targetString;
 - (void)openPickerForCampaignPage:(JACampaignPageView*)campaignPage
                        dataSource:(NSArray*)dataSource
                      previousText:(NSString*)previousText;
