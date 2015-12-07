@@ -59,7 +59,7 @@
                                                                 _elementsWidth,
                                                                 60)];
         [_titleLabel setTextAlignment:NSTextAlignmentCenter];
-        [_titleLabel setNumberOfLines:1];
+        [_titleLabel setNumberOfLines:0];
         [_titleLabel setFont:JADisplay1Font];
         [_titleLabel setTextColor:JABlackColor];
         [_titleLabel setText:STRING_LOGIN_WELCOME_BACK];
@@ -78,14 +78,13 @@
                                                                    _elementsWidth,
                                                                    60)];
         [_subTitleLabel setTextAlignment:NSTextAlignmentCenter];
-        [_subTitleLabel setNumberOfLines:1];
+        [_subTitleLabel setNumberOfLines:0];
         [_subTitleLabel setFont:JACaptionFont];
         [_subTitleLabel setTextColor:JABlack800Color];
         [_subTitleLabel setText:STRING_LOGIN_ENTER_PASSWORD_TO_CONTINUE];
         [_subTitleLabel sizeToFit];
         [_subTitleLabel setWidth:_elementsWidth];
     }
-    NSLog(@"_subTitleLabel.frame: %@", NSStringFromCGRect(_subTitleLabel.frame));
     return _subTitleLabel;
 }
 
@@ -174,12 +173,26 @@
 
 - (void)viewWillLayoutSubviews
 {
+    [super viewWillLayoutSubviews];
     [self.mainScrollView setXCenterAligned];
 }
 
-- (void) hideKeyboard
+- (void)viewWillAppear:(BOOL)animated
 {
-    [self.dynamicForm resignResponder];
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"CustomerSignUp"];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    // notify the InAppNotification SDK that this view controller in no more active
+    [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
 }
 
 - (void)dealloc
@@ -310,19 +323,6 @@
     if (RI_IS_RTL) {
         [self.view flipAllSubviews];
     }
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"CustomerSignUp"];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    // notify the InAppNotification SDK that this view controller in no more active
-    [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
 }
 
 - (void)forgotPasswordButtonPressed:(id)sender
@@ -456,6 +456,11 @@
 }
 
 #pragma mark - Keyboard observers
+
+- (void) hideKeyboard
+{
+    [self.dynamicForm resignResponder];
+}
 
 - (void) keyboardWillShow:(NSNotification *)notification
 {
