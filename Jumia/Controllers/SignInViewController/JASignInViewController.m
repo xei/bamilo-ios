@@ -478,6 +478,9 @@
 
 - (void) keyboardWillHide:(NSNotification *)notification
 {
+    if (self.contentScrollOriginalHeight == 0) {
+        return;
+    }
     [UIView animateWithDuration:0.3 animations:^{
         [self.mainScrollView setFrame:CGRectMake(self.mainScrollView.frame.origin.x,
                                                  self.mainScrollView.frame.origin.y,
