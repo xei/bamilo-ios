@@ -63,27 +63,4 @@
  */
 + (void)cancelRequest:(NSString *)operationID;
 
-/**
- *  Method to send a rating for one product
- *
- *  @param the product SKU
- *  @param the number of stars that the user give to the product
- *  @param user id, it's 0 case the user it's not logged in
- *  @param the rating author's name
- *  @param the rating title
- *  @param the comment
- *  @param the success block containing sucess or not
- *  @param the failure block containing the error message
- *
- *  @return a string with the operationID that can be used to cancel the operation
- */
-+ (NSString *)sendRatingWithSku:(NSString *)sku
-                          stars:(NSString *)stars
-                         userId:(NSString *)userId
-                           name:(NSString *)name
-                          title:(NSString *)title
-                        comment:(NSString *)comment
-                   successBlock:(void (^)(BOOL success))successBlock
-                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
-
 @end
