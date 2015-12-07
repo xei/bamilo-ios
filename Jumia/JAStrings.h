@@ -366,5 +366,6 @@
 #define STRING_LOGIN_WELCOME_BACK RILocalizedString(@"login_welcome_back", nil)
 #define STRING_FORGOT_YOUR_PASSWORD RILocalizedString(@"fgt_your_pass", nil)
 
+#define STRING_PASSWORD_RECOVERY RILocalizedString(@"password_recovery", nil)
 
 #endif
