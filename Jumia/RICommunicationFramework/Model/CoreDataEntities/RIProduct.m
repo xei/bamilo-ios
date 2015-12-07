@@ -663,22 +663,22 @@
     
     switch (sortingMethod) {
         case RICatalogSortingRating:
-            urlComponent = @"sort=rating&dir=desc";
+            urlComponent = @"sort/rating/dir/desc";
             break;
         case RICatalogSortingNewest:
-            urlComponent = @"sort=newest&dir=desc";
+            urlComponent = @"sort/newest/dir/desc";
             break;
         case RICatalogSortingPriceUp:
-            urlComponent = @"sort=price&dir=asc";
+            urlComponent = @"sort/price/dir/asc";
             break;
         case RICatalogSortingPriceDown:
-            urlComponent = @"sort=price&dir=desc";
+            urlComponent = @"sort/price/dir/desc";
             break;
         case RICatalogSortingName:
-            urlComponent = @"sort=name&dir=asc";
+            urlComponent = @"sort/name/dir/asc";
             break;
         case RICatalogSortingBrand:
-            urlComponent = @"sort=brand&dir=asc";
+            urlComponent = @"sort/brand/dir/asc";
             break;
         default: //RICatalogSortingPopularity
             break;
