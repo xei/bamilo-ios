@@ -441,20 +441,6 @@
      }];
 }
 
-#pragma mark JADynamicFormDelegate
-
-- (void)changedFocus:(UIView *)view
-{
-    [UIView animateWithDuration:0.5f animations:^{
-    }];
-}
-
-- (void) lostFocus
-{
-    [UIView animateWithDuration:0.5f animations:^{
-    }];
-}
-
 #pragma mark - Keyboard observers
 
 - (void) hideKeyboard
