@@ -10,7 +10,7 @@
 #import "JABottomBar.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
-#import "JATextFieldComponentV2.h"
+#import "JATextFieldComponent.h"
 #import "RICustomer.h"
 #import "JAUtils.h"
 
@@ -36,7 +36,7 @@
 @property (nonatomic) UIView *orView;
 @property (nonatomic) UIButton *continueWithoutLoginButton;
 @property (nonatomic) JABottomBar *continueToLoginButton;
-@property (nonatomic) JATextFieldComponentV2 *emailTextField;
+@property (nonatomic) JATextFieldComponent *emailTextField;
 
 @property (strong, nonatomic) UIButton *facebookLoginButton;
 
@@ -125,18 +125,18 @@
     return _orView;
 }
 
-- (JATextFieldComponentV2 *)emailTextField
+- (JATextFieldComponent *)emailTextField
 {
-    if (!VALID_NOTEMPTY(_emailTextField, JATextFieldComponentV2)) {
+    if (!VALID_NOTEMPTY(_emailTextField, JATextFieldComponent)) {
         CGFloat yOffset = CGRectGetMaxY(self.topMessageLabel.frame) + kTopMess2FacebookButton;
         if ([[RICountryConfiguration getCurrentConfiguration].facebookAvailable boolValue]){
             yOffset = CGRectGetMaxY(self.orView.frame) + kOr2Email;
         }
-        _emailTextField = [[JATextFieldComponentV2 alloc] init];
+        _emailTextField = [[JATextFieldComponent alloc] init];
         [_emailTextField setFrame:CGRectMake((self.view.width - kWidth)/2, yOffset, kWidth, _emailTextField.height)];
         [_emailTextField.textField setReturnKeyType:UIReturnKeyNext];
         [_emailTextField.textField setKeyboardType:UIKeyboardTypeEmailAddress];
-        [_emailTextField setupWithTitle:@"Email Address" label:@"email@domain.com" value:@"" mandatory:NO];
+        [_emailTextField setupWithTitle:@"Email Address" label:@"email@domain.com" value:[self getEmail] mandatory:NO];
     }
     return _emailTextField;
 }
@@ -449,12 +449,15 @@
 {
     [self showLoading];
     [RICustomer checkEmailWithParameters:[NSDictionary dictionaryWithObject:self.emailTextField.textField.text forKey:@"email"] successBlock:^(BOOL knownEmail) {
+        NSMutableDictionary *userInfo;
+        if (VALID_NOTEMPTY(self.userInfo, NSDictionary)) {
+            userInfo = [self.userInfo mutableCopy];
+            [userInfo setObject:self.emailTextField.textField.text forKey:@"email"];
+        }
         if (knownEmail) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification
-                                                                object:nil
-                                                              userInfo:@{@"email" : self.emailTextField.textField.text}];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfo];
         }else{
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignUpScreenNotification object:nil userInfo:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignUpScreenNotification object:nil userInfo:userInfo];
         }
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorObject) {
@@ -462,16 +465,22 @@
         if (apiResponse == RIApiResponseNoInternetConnection) {
             [self showErrorView:YES startingY:0 selector:@selector(checkEmail) objects:nil];
         }else{
-            [self showErrorView:NO startingY:0 selector:@selector(checkEmail) objects:nil];
+            [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
         }
         [self hideLoading];
-        NSLog(@"NO");
     }];
 }
 
-- (void)continueToLogin
+-(NSString *)getEmail
 {
-    
+    NSString* emailKeyForCountry = [NSString stringWithFormat:@"%@_%@", kRememberedEmail, [RIApi getCountryIsoInUse]];
+    NSMutableDictionary *values = [[NSMutableDictionary alloc] init];
+    NSString *email = [[NSUserDefaults standardUserDefaults] stringForKey:emailKeyForCountry];
+    if(VALID_NOTEMPTY(email, NSString))
+    {
+        return email;
+    }
+    return @"";
 }
 
 @end

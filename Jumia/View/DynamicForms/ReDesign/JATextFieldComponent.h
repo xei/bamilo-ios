@@ -1,30 +1,29 @@
 //
-//  JATextFieldComponent.h
+//  JATextField.h
 //  Jumia
 //
-//  Created by Pedro Lopes on 25/08/14.
-//  Copyright (c) 2014 Rocket Internet. All rights reserved.
+//  Created by Jose Mota on 30/11/15.
+//  Copyright © 2015 Rocket Internet. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "RIField.h"
 #import "JADynamicField.h"
-#import "JARadioRelatedComponent.h"
+#import "JARadioComponent.h"
 
 @interface JATextFieldComponent : JADynamicField
 
 @property (assign, nonatomic) BOOL hasError;
-@property (weak, nonatomic) IBOutlet UITextField *textField;
-@property (weak, nonatomic) IBOutlet UILabel *requiredSymbol;
+@property (strong, nonatomic) UITextField *textField;
+@property (strong, nonatomic) UILabel *requiredSymbol;
 @property (nonatomic, strong) NSString* currentErrorMessage;
+@property (nonatomic) CGFloat fixedX;
 
-@property (nonatomic, strong)JARadioRelatedComponent* relatedComponent;
+@property (nonatomic, strong) JARadioComponent* relatedComponent;
 
 -(BOOL)isValid;
 
-+(JATextFieldComponent *)getNewJATextFieldComponent;
-
 -(void)setupWithField:(RIField*)field;
+
+-(void)setupWithTitle:(NSString *)title label:(NSString*)label value:(NSString*)value mandatory:(BOOL)mandatory;
 
 -(void)setupWithLabel:(NSString*)label value:(NSString*)value mandatory:(BOOL)mandatory;
 

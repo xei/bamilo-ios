@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RIField.h"
 
 @interface JADynamicField : UIView
+
+@property (strong, nonatomic) RIField *field;
+@property (strong, nonatomic) UIImageView *iconImageView;
 
 @end

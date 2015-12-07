@@ -124,7 +124,7 @@ JAPickerScrollViewDelegate
     [self.trackOrderSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
     [self.trackOrderView addSubview:self.trackOrderSeparator];
     
-    self.trackOrderTextField = [JATextFieldComponent getNewJATextFieldComponent];
+    self.trackOrderTextField = [[JATextFieldComponent alloc] init];
     self.trackOrderTextField.frame = CGRectMake(-100.0f, -100.0f, self.trackOrderTextField.frame.size.width, self.trackOrderTextField.frame.size.height);
     [self.trackOrderTextField setupWithLabel:STRING_ORDER_ID value:self.startingTrackOrderNumber mandatory:YES];
     [self.trackOrderView addSubview:self.trackOrderTextField];
