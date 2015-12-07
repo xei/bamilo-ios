@@ -19,6 +19,7 @@
 #import "JAEmailNotificationsViewController.h"
 #import "JAMyOrdersViewController.h"
 #import "JASignInViewController.h"
+#import "JARegisterViewController.h"
 #import "JASignupViewController.h"
 #import "JAForgotPasswordViewController.h"
 #import "JALoginViewController.h"
@@ -620,6 +621,10 @@
         animated = [animatedNumber boolValue];
     }
     
+    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.userInfo, NSDictionary)) {
+        [authenticationViewController setUserInfo:notification.userInfo];
+    }
+    
     [self pushViewController:authenticationViewController animated:YES];
 }
 
@@ -665,9 +670,9 @@
 - (void)showSignUpScreen:(NSNotification *)notification
 {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JASignupViewController class]] && ![RICustomer checkIfUserIsLogged])
+    if (![topViewController isKindOfClass:[JARegisterViewController class]] && ![RICustomer checkIfUserIsLogged])
     {
-        JASignupViewController *signUpVC = [[JASignupViewController alloc] init];
+        JARegisterViewController *signUpVC = [[JARegisterViewController alloc] init];
         
         if(VALID_NOTEMPTY(notification, NSNotification)) {
             signUpVC.navBarLayout.showBackButton = YES;
@@ -677,6 +682,10 @@
                 signUpVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
             }
 //            [self popViewControllerAnimated:NO];
+            
+            if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"email"], NSString)) {
+                signUpVC.authenticationEmail = [notification.userInfo objectForKey:@"email"];
+            }
         }
         else
         {

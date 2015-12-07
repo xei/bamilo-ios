@@ -138,13 +138,13 @@
                                                                   
                                                                   // Update user newsletter preferences
                                                                   RIForm* newForm = [RIForm parseFormEntity:formEntity formIndex:nil formIndexType:nil];
-                                                                  dispatch_async(dispatch_get_main_queue(), ^{
+//                                                                  dispatch_async(dispatch_get_main_queue(), ^{
                                                                       successBlock(newForm);
-                                                                  });
+//                                                                  });
                                                               } else {
-                                                                  dispatch_async(dispatch_get_main_queue(), ^{
+//                                                                  dispatch_async(dispatch_get_main_queue(), ^{
                                                                       failureBlock(apiResponse, nil);
-                                                                  });
+//                                                                  });
                                                               }
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
