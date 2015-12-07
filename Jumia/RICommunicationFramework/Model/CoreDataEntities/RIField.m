@@ -24,7 +24,7 @@
 @dynamic type;
 @dynamic value;
 @dynamic dataSet;
-@dynamic apiCallEndpoint;
+@dynamic apiCallTarget;
 @dynamic apiCallParameters;
 @dynamic form;
 @dynamic options;
@@ -68,10 +68,10 @@
         newField.dateFormat = [fieldJSON objectForKey:@"format"];
     }
     
-    if(VALID_NOTEMPTY([fieldJSON objectForKey:@"api_call"], NSString)) {
+    if(VALID_NOTEMPTY([fieldJSON objectForKey:@"api_call"], NSDictionary)) {
         NSDictionary* apicall = [fieldJSON objectForKey:@"api_call"];
-        if (VALID_NOTEMPTY([apicall objectForKey:@"endpoint"], NSString)) {
-            newField.apiCallEndpoint = [apicall objectForKey:@"endpoint"];
+        if (VALID_NOTEMPTY([apicall objectForKey:@"target"], NSString)) {
+            newField.apiCallTarget = [apicall objectForKey:@"target"];
         }
         if (VALID_NOTEMPTY([apicall objectForKey:@"params"], NSArray)) {
             NSArray* params = [apicall objectForKey:@"params"];

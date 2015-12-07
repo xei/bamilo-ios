@@ -19,9 +19,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *requiredSymbol;
 @property (strong, nonatomic) NSArray *dataset;
 @property (strong, nonatomic) NSArray *options;
-@property (strong, nonatomic) NSString *apiCallEndpoint;
+@property (strong, nonatomic) NSString *apiCallTarget;
 @property (strong, nonatomic) NSDictionary *apiCallParameters;
 @property (nonatomic, strong) NSString* currentErrorMessage;
+@property (strong, nonatomic) RIField *field;
 
 +(JARadioComponent *)getNewJARadioComponent;
 
@@ -44,6 +45,8 @@
 -(void)resetValue;
 
 -(NSString*)getApiCallUrl;
+
+- (NSDictionary*)getApiCallParameters;
 
 -(NSString*)getFieldName;
 
