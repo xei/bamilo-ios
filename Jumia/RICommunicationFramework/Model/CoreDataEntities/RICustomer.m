@@ -157,7 +157,7 @@
     {
         RICustomer *customer = (RICustomer *)customers[0];
                                 
-        return customer.idCustomer;
+        return [customer.idCustomer stringValue];
     }
     else
     {
