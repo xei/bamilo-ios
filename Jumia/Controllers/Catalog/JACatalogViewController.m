@@ -590,6 +590,9 @@ typedef void (^ProcessActionBlock)(void);
     self.catalogTopView.sortingButton.enabled = YES;
     
     self.banner = catalog.banner;
+    if (VALID_NOTEMPTY(self.banner, RIBanner)) {
+        self.flowLayout.hasBanner = YES;
+    }
     
     if (NOTEMPTY(catalog.categories)) {
         self.categoriesArray = catalog.categories;

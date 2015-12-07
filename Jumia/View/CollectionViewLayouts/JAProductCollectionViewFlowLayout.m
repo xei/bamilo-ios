@@ -34,13 +34,17 @@
     }
     
     NSMutableArray* decorationAttributes = [NSMutableArray new];
-    
     for (int i = (int)init; i <= (int)last; i++) {
-        if (last == i || (i+1 % numberOfItemsPerLine != 0)) {
+        int j = i;
+        if (self.hasBanner && i != 0 && i < (last - numberOfItemsPerLine) ) {
+            j--;
+        }
+        
+        if (last == j || (j+1 % numberOfItemsPerLine != 0)) {
             UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForDecorationViewOfKind:@"verticalSeparator" atIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
             [decorationAttributes addObject:attributes];
         }
-        if (((i+1) % numberOfItemsPerLine == 0 || i+1 == countOfItems) && i != countOfItems) {
+        if (((j+1) % numberOfItemsPerLine == 0 || j+1 == countOfItems) && j != countOfItems) {
             UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForDecorationViewOfKind:@"horizontalSeparator" atIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
             [decorationAttributes addObject:attributes];
         }

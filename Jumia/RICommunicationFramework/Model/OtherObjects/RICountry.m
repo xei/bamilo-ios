@@ -7,6 +7,7 @@
 //
 
 #import "RICountry.h"
+#import "RIPhonePrefix.h"
 
 @implementation RICountry
 
@@ -289,6 +290,45 @@
     } else {
         return nil;
     }
+}
+
++ (NSString *)getCountryPhonePrefixesWithSuccessBlock:(void (^)(NSArray *prefixes))successBlock
+                                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
+{
+    return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, @"/main/getphoneprefixes/"]]
+                                                             parameters:nil
+                                                         httpMethodPost:YES
+                                                              cacheType:RIURLCacheNoCache
+                                                              cacheTime:RIURLCacheNoTime
+                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                               
+                                                               NSMutableArray *prefixes = [NSMutableArray new];
+                                                               if ([jsonObject objectForKey:@"metadata"]) {
+                                                                   NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
+                                                                   if (VALID_NOTEMPTY([metadata objectForKey:@"data"], NSArray)) {
+                                                                       for (NSDictionary *prefix in [metadata objectForKey:@"data"]) {
+                                                                           [prefixes addObject:[RIPhonePrefix parse:prefix]];
+                                                                       }
+                                                                   }
+                                                                   
+                                                                   successBlock([prefixes copy]);
+                                                               } else {
+                                                                   
+                                                                   failureBlock(apiResponse, nil);
+                                                               }
+                                                               
+                                                           } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                               
+                                                               if(NOTEMPTY(errorJsonObject)) {
+                                                                   failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+                                                               } else if(NOTEMPTY(errorObject)) {
+                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                   failureBlock(apiResponse, errorArray);
+                                                               } else {
+                                                                   failureBlock(apiResponse, nil);
+                                                               }
+                                                           }];
 }
 
 @end

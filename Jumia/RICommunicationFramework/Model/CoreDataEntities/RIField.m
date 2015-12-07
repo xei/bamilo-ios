@@ -188,6 +188,18 @@
         NSString* typeForRelatedFields = [relatedJSON objectForKey:@"type"];
         NSString* nameForRelatedFields = [relatedJSON objectForKey:@"name"];
         
+        
+        if ([typeForRelatedFields isEqualToString:@"choice"]) {
+            
+            if (VALID_NOTEMPTY(relatedJSON, NSDictionary)) {
+                RIField* relatedField = [RIField parseField:relatedJSON];
+                relatedField.parentField = newField;
+                relatedField.type = typeForRelatedFields;
+                relatedField.name = nameForRelatedFields;
+                [newField addRelatedFieldsObject:relatedField];
+            }
+        }
+        
         NSArray* relatedFieldsArrayJSON = [relatedJSON objectForKey:@"fields"];
         for (NSDictionary* relatedFieldJSON in relatedFieldsArrayJSON) {
             if (VALID_NOTEMPTY(relatedFieldJSON, NSDictionary)) {

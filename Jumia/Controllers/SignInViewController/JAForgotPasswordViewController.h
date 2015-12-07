@@ -10,4 +10,6 @@
 
 @interface JAForgotPasswordViewController : JABaseViewController
 
+@property (strong, nonatomic) NSString *loginEmail;
+
 @end
