@@ -157,10 +157,6 @@
         <attribute name="langName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="countryConfig" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RICountryConfiguration" inverseName="languages" inverseEntity="RICountryConfiguration" syncable="YES"/>
     </entity>
-    <entity name="RINewsletterCategory" representedClassName="RINewsletterCategory" syncable="YES">
-        <attribute name="idNewsletterCategory" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
     <entity name="RIProduct" representedClassName="RIProduct" syncable="YES">
         <attribute name="attributeCareLabel" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="attributeColor" optional="YES" attributeType="String" syncable="YES"/>
@@ -297,7 +293,6 @@
         <element name="RIImage" positionX="70" positionY="486" width="128" height="135"/>
         <element name="RIImageResolution" positionX="-270" positionY="560" width="128" height="103"/>
         <element name="RILanguage" positionX="-270" positionY="-207" width="128" height="103"/>
-        <element name="RINewsletterCategory" positionX="-684" positionY="287" width="128" height="73"/>
         <element name="RIProduct" positionX="-99" positionY="0" width="128" height="705"/>
         <element name="RIProductSimple" positionX="162" positionY="14" width="128" height="255"/>
         <element name="RISearchSuggestion" positionX="-828" positionY="183" width="128" height="105"/>

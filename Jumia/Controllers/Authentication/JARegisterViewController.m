@@ -14,7 +14,6 @@
 #import "RIField.h"
 #import "RIFieldDataSetComponent.h"
 #import "RICustomer.h"
-#import "RINewsletterCategory.h"
 #import "JABottomBar.h"
 #import "JATextFieldComponent.h"
 #import "RIPhonePrefix.h"
@@ -423,20 +422,6 @@ JADynamicFormDelegate
         
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRegisterSuccess]
                                                   data:[trackingDictionary copy]];
-        
-        NSArray *newsletterOption = [RINewsletterCategory getNewsletter];
-        if(VALID_NOTEMPTY(newsletterOption, NSArray))
-        {
-            trackingDictionary = [[NSMutableDictionary alloc] init];
-            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-            [trackingDictionary setValue:@"SubscribeNewsletter" forKey:kRIEventActionKey];
-            [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-            [trackingDictionary setValue:@"Register" forKey:kRIEventLocationKey];
-            
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventNewsletter]
-                                                      data:[trackingDictionary copy]];
-        }
         
         [self.dynamicForm resetValues];
         
