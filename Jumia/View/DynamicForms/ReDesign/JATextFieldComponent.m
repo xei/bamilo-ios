@@ -170,7 +170,6 @@
 
 -(BOOL)isComponentWithKey:(NSString*)key
 {
-    NSLog(@"key: %@", self.field.key);
     return ([key isEqualToString:self.field.key]);
 }
 

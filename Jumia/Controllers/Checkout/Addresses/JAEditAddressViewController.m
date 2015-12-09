@@ -63,12 +63,6 @@ JAPickerDelegate>
 
 @implementation JAEditAddressViewController
 
-@synthesize editAddress=_editAddress;
-- (void)setEditAddress:(RIAddress *)editAddress
-{
-    _editAddress=editAddress;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
