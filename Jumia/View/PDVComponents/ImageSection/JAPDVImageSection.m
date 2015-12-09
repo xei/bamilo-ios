@@ -52,7 +52,7 @@
 
 - (UIButton *)wishListButton
 {
-    CGRect frame = CGRectMake(16.f, self.imagesPagedView.y, 25, 25);
+    CGRect frame = CGRectMake(16.f, 0, 25, 25);
     if (!_wishListButton) {
         _wishListButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_wishListButton setFrame:frame];
@@ -100,23 +100,22 @@
 
 - (UILabel *)productDescriptionLabel
 {
-    CGFloat width = self.width - 16.f*2 - 30.f;
-    
+    CGFloat width = self.width - xFavOffset * 2 - self.wishListButton.width;
     if (self.product.seller.isGlobal) {
-        width = self.width - (16.f * 2) - self.globalButton.width - 16.f;
+        width = self.width - (xFavOffset * 2) - self.globalButton.width - xFavOffset;
     }
-    
-    CGRect frame = CGRectMake(16.f, CGRectGetMaxY(self.productNameLabel.frame), width, 60);
-    
+
     if (!_productDescriptionLabel) {
+        CGRect frame = CGRectMake(xFavOffset, CGRectGetMaxY(self.productNameLabel.frame), width, 60);
+        
         _productDescriptionLabel = [[UILabel alloc] initWithFrame:frame];
         _productDescriptionLabel.font = JACaptionFont;
         [_productDescriptionLabel setTextColor:JABlack800Color];
         _productDescriptionLabel.numberOfLines = 2;
         [_productDescriptionLabel setLineBreakMode:NSLineBreakByTruncatingTail];
         [self addSubview:_productDescriptionLabel];
-    }else if (_productDescriptionLabel.width != frame.size.width) {
-        [_productDescriptionLabel setWidth:frame.size.width];
+    } else if (_productDescriptionLabel.width != width) {
+        [_productDescriptionLabel setWidth:width];
         [_productDescriptionLabel setHeight:60];
         [_productDescriptionLabel sizeToFit];
     }
