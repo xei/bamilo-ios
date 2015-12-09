@@ -13,6 +13,7 @@
 #import "JAProductInfoRatingLine.h"
 
 #define xFavOffset 10.f
+#define kRecentProductBadgeLabelTopMargin 10.f
 
 @interface JACatalogListCollectionViewCell () {
     CGFloat _lastWidth;
@@ -192,9 +193,9 @@
         [self setForRTL:self.selectorButton];
     }
     
-    CGFloat recentX = distXRecent;
-    if (self.recentProductBadgeLabel.x != recentX) {
-        [self.recentProductBadgeLabel setX:recentX];
+    if (self.recentProductBadgeLabel.x != distXAfterImage) {
+        [self.recentProductBadgeLabel setX:distXAfterImage];
+        [self.recentProductBadgeLabel setY:CGRectGetMaxY(self.ratingLine.frame) + kRecentProductBadgeLabelTopMargin];
         [self setForRTL:self.recentProductBadgeLabel];
     }
 
