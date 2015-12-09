@@ -17,6 +17,7 @@
 #import "JABottomBar.h"
 #import "JATextFieldComponent.h"
 #import "RIPhonePrefix.h"
+#import "JAAuthenticationViewController.h"
 
 #define kTopMargin 36.f
 #define kLateralMargin 16.f
@@ -110,7 +111,8 @@ JADynamicFormDelegate
 #warning TODO FONT
         _checkBoxComponent.labelText.font = [UIFont fontWithName:kFontRegularName size:_checkBoxComponent.labelText.font.pointSize];
         [_checkBoxComponent.labelText setText:STRING_REMEMBER_EMAIL];
-        [_checkBoxComponent.switchComponent setOn:YES];
+        [_checkBoxComponent setHidden:YES];
+        [_checkBoxComponent.switchComponent setOn:NO];
     }
     return _checkBoxComponent;
 }
@@ -282,7 +284,10 @@ JADynamicFormDelegate
 }
 
 #pragma mark - Keyboard events
-
+/*
+ alternative keyboard scroll
+    in case we think that the old one should be replaced
+ */
 - (void)keyboardChanged:(NSNotification *)notification
 {
 //    // get the size of the keyboard
@@ -439,7 +444,19 @@ JADynamicFormDelegate
                                                                 object:self.nextNotification.object
                                                               userInfo:self.nextNotification.userInfo];
         }else{
-            [self.navigationController popViewControllerAnimated:NO];
+            NSInteger count = [self.navigationController.viewControllers count];
+            if (count > 2)
+            {
+                UIViewController *viewController = [self.navigationController.viewControllers objectAtIndex:count-2];
+                UIViewController *viewControllerToPop = [self.navigationController.viewControllers objectAtIndex:count-3];
+                if ([viewController isKindOfClass:[JAAuthenticationViewController class]]) {
+                    [self.navigationController popToViewController:viewControllerToPop animated:YES];
+                }else{
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+            }else{
+                [self.navigationController popViewControllerAnimated:YES];
+            }
         }
         
     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
@@ -575,7 +592,6 @@ JADynamicFormDelegate
         
         
         [self.radioComponent setValue:[prefix value]];
-//        [self.radioComponent setValue:[[prefix value] stringValue]];
         [self.radioComponent.textField setText:[prefix label]];
     }
     [self closePickers];
