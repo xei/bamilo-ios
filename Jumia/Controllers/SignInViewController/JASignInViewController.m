@@ -438,7 +438,7 @@
          [self hideLoading];
          
          if (RIApiResponseNoInternetConnection == apiResponse) {
-             [self showMessage:STRING_NO_CONNECTION success:NO];
+             [self showErrorView:YES startingY:0 selector:@selector(continueLogin) objects:nil];
          } else if(VALID_NOTEMPTY(errorObject, NSDictionary)) {
              [self.dynamicForm validateFields:errorObject];
              
