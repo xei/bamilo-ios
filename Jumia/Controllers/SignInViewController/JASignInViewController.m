@@ -12,6 +12,7 @@
 #import "RICustomer.h"
 #import "JAUtils.h"
 #import "JABottomBar.h"
+#import "JAAuthenticationViewController.h"
 
 #define kSideMargin 16
 #define kTopMargin 36
@@ -402,7 +403,19 @@
                                                                      object:self.nextNotification.object
                                                                    userInfo:self.nextNotification.userInfo];
              } else {
-                 [self.navigationController popViewControllerAnimated:NO];
+                 NSInteger count = [self.navigationController.viewControllers count];
+                 if (count > 2)
+                 {
+                     UIViewController *viewController = [self.navigationController.viewControllers objectAtIndex:count-2];
+                     UIViewController *viewControllerToPop = [self.navigationController.viewControllers objectAtIndex:count-3];
+                     if ([viewController isKindOfClass:[JAAuthenticationViewController class]]) {
+                         [self.navigationController popToViewController:viewControllerToPop animated:YES];
+                     }else{
+                         [self.navigationController popViewControllerAnimated:YES];
+                     }
+                 }else{
+                     [self.navigationController popViewControllerAnimated:YES];
+                 }
              }
          }
          
