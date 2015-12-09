@@ -308,7 +308,9 @@
 
 "recentsearch_clear_searches" = "Clear Recent Searches";
 
-"recentlyview_no_searches" = "No Recently Viewed Products Here";
+"recentlyview_no_searches_title" = "No Recently Viewed Items";
+
+"recentlyview_no_searches" = "You don't have any recently viewed items.";
 
 "recentlyview_clear_viewed" = "Clear Recently Viewed";
 
