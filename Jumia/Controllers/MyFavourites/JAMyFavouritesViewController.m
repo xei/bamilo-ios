@@ -60,7 +60,8 @@
 -(UILabel *)emptyFavouritesTitleLabel
 {
     if (!VALID_NOTEMPTY(_emptyFavouritesTitleLabel, UILabel)) {
-        _emptyFavouritesTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 48, 0, 0)];
+        _emptyFavouritesTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.viewBounds.origin.x,
+                                                                               self.viewBounds.origin.y + 48, 0, 0)];
         [_emptyFavouritesTitleLabel setText:STRING_FAVOURITES_NO_SAVED_ITEMS];
         [_emptyFavouritesTitleLabel setFont:JADisplay2Font];
         [_emptyFavouritesTitleLabel setTextColor:JABlackColor];
@@ -231,7 +232,7 @@
                                                         self.emptyFavoritesImageView.frame.size.height);
     
         self.emptyFavoritesLabel.frame = CGRectMake(12.0f,
-                                                    183.0f,
+                                                    CGRectGetMaxY(self.emptyFavoritesImageView.frame) + 32.f,
                                                     self.emptyFavoritesView.frame.size.width - 12*2,
                                                     self.emptyFavoritesLabel.frame.size.height);
 //    }
