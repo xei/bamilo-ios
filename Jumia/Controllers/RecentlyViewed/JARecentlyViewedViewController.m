@@ -20,9 +20,10 @@
 
 @interface JARecentlyViewedViewController ()
 
-@property (weak, nonatomic) IBOutlet UIView *emptyListView;
-@property (weak, nonatomic) IBOutlet UILabel *emptyListLabel;
-@property (weak, nonatomic) IBOutlet UIImageView* emptyListImageView;
+@property (strong, nonatomic) UIView *emptyListView;
+@property (strong, nonatomic) UILabel *emptyListLabel;
+@property (strong, nonatomic) UIImageView* emptyListImageView;
+@property (strong, nonatomic) UILabel *emptyTitleLabel;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong)JAProductListFlowLayout* flowLayout;
 @property (nonatomic, strong)NSString* cellIdentifier;
@@ -41,7 +42,6 @@
 
 @implementation JARecentlyViewedViewController
 
-@synthesize productsArray=_productsArray;
 - (void)setProductsArray:(NSArray *)productsArray
 {
     _productsArray = productsArray;
@@ -53,6 +53,62 @@
         self.emptyListView.hidden = YES;
         self.collectionView.hidden = NO;
     }
+}
+
+
+-(UIView *)emptyListView {
+    if (!VALID_NOTEMPTY(_emptyListView, UIView)) {
+        _emptyListView = [[UIView alloc]initWithFrame:CGRectMake(self.viewBounds.origin.x,
+                                                                self.viewBounds.origin.y,
+                                                                self.viewBounds.size.width,
+                                                                 self.viewBounds.size.height)];
+        [_emptyListView setBackgroundColor:[UIColor whiteColor]];
+        [self.view addSubview:_emptyListView];
+    }
+    return _emptyListView;
+}
+
+-(UILabel *)emptyTitleLabel {
+    if(!VALID_NOTEMPTY(_emptyTitleLabel, UILabel)) {
+        _emptyTitleLabel = [UILabel new];
+        [_emptyTitleLabel setFont:JADisplay2Font];
+        [_emptyTitleLabel setTextColor:JABlackColor];
+        [_emptyTitleLabel setText:STRING_NO_RECENTLY_VIEWED_PRODUCTS_TITLE];
+        [_emptyTitleLabel sizeToFit];
+        [_emptyTitleLabel setFrame:CGRectMake((self.viewBounds.size.width - _emptyTitleLabel.width)/2,
+                                              48.f,
+                                              _emptyTitleLabel.width, _emptyTitleLabel.height)];
+        [self.emptyListView addSubview:_emptyTitleLabel];
+    }
+    return _emptyTitleLabel;
+}
+
+-(UIImageView *)emptyListImageView {
+    if (!VALID_NOTEMPTY(_emptyListImageView, UIImageView)) {
+        _emptyListImageView = [UIImageView new];
+        UIImage * img = [UIImage imageNamed:@"emptyRecentlyViewedIcon"];
+        [_emptyListImageView setImage:img];
+        [_emptyListImageView setFrame:CGRectMake((self.viewBounds.size.width - img.size.width)/2,
+                                                 CGRectGetMaxY(self.emptyTitleLabel.frame) + 28.f,
+                                                 img.size.width, img.size.height)];
+        [self.emptyListView addSubview:_emptyListImageView];
+    }
+    return _emptyListImageView;
+}
+
+-(UILabel *)emptyListLabel {
+    if (!VALID_NOTEMPTY(_emptyListLabel, UILabel)) {
+        _emptyListLabel = [UILabel new];
+        _emptyListLabel.font = JABody3Font;
+        _emptyListLabel.textColor = JABlack800Color;
+        _emptyListLabel.text = STRING_NO_RECENTLY_VIEWED_PRODUCTS;
+        [_emptyListLabel sizeToFit];
+        [_emptyListLabel setFrame:CGRectMake((self.viewBounds.size.width - _emptyListLabel.width)/2,
+                                             CGRectGetMaxY(self.emptyListImageView.frame) + 28,
+                                             _emptyListLabel.width, _emptyListLabel.height)];
+        [self.emptyListView addSubview:_emptyListLabel];
+    }
+    return _emptyListLabel;
 }
 
 #pragma mark - View Lifecycle
@@ -67,21 +123,12 @@
     self.navBarLayout.title = STRING_RECENTLY_VIEWED;
     self.navBarLayout.showBackButton = YES;
     
-    self.collectionView.backgroundColor = UIColorFromRGB(0xc8c8c8);
-    
-    self.emptyListView.layer.cornerRadius = 3.0f;
-    
-    self.emptyListLabel.font = [UIFont fontWithName:kFontRegularName size:self.emptyListLabel.font.pointSize];
-    self.emptyListLabel.textColor = UIColorFromRGB(0xcccccc);
-    self.emptyListLabel.text = STRING_NO_RECENTLY_VIEWED_PRODUCTS;
+    self.collectionView.backgroundColor = JABackgroundGrey;
     
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     
     self.collectionView.translatesAutoresizingMaskIntoConstraints = YES;
-    self.emptyListView.translatesAutoresizingMaskIntoConstraints = YES;
-    self.emptyListLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    self.emptyListImageView.translatesAutoresizingMaskIntoConstraints = YES;
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"JARecentlyViewedListCell" bundle:nil] forCellWithReuseIdentifier:@"recentlyViewedListCell"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"JARecentlyViewedListCell_ipad_portrait" bundle:nil] forCellWithReuseIdentifier:@"recentlyViewedListCell_ipad_portrait"];
@@ -163,34 +210,17 @@
         [self hideLoading];
     }];
     
-    [self didRotateFromInterfaceOrientation:0];
+    [self changeViewToInterfaceOrientation:self.interfaceOrientation];
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     [[RITrackingWrapper sharedInstance]trackScreenWithName:@"RecentlyViewed"];
-    
-    self.collectionView.frame = CGRectMake(6.0f,
-                                           self.collectionView.frame.origin.y,
-                                           self.view.frame.size.width - 6.0f*2,
-                                           self.view.frame.size.height);
-    
-    self.emptyListView.frame = CGRectMake(self.emptyListView.frame.origin.x,
-                                          self.emptyListView.frame.origin.y,
-                                          self.view.frame.size.width - self.emptyListView.frame.origin.x * 2,
-                                          300.0f);
-    
-    self.emptyListImageView.frame = CGRectMake((self.emptyListView.frame.size.width - self.emptyListImageView.frame.size.width)/2,
-                                               56.0f,
-                                               self.emptyListImageView.frame.size.width,
-                                               self.emptyListImageView.frame.size.height);
-    
-    self.emptyListLabel.frame = CGRectMake(12.0f,
-                                           183.0f,
-                                           self.emptyListView.frame.size.width - 12*2,
-                                           self.emptyListLabel.frame.size.height);
-    
+}
+
+-(void)viewWillLayoutSubviews {
+    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -200,25 +230,26 @@
     [self.picker removeFromSuperview];
     
     self.collectionView.frame = CGRectMake(6.0f,
-                                           self.collectionView.frame.origin.y,
-                                           self.view.frame.size.width - 6.0f*2,
-                                           self.view.frame.size.height);
-    [self.collectionView reloadData];
+                                           self.viewBounds.origin.y,
+                                           self.viewBounds.size.width - 6.0f*2,
+                                           self.viewBounds.size.height);
     
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
-        self.emptyListView.frame = CGRectMake(self.emptyListView.frame.origin.x,
-                                              self.emptyListView.frame.origin.y,
-                                              self.view.frame.size.width - self.emptyListView.frame.origin.x * 2,
-                                              300.0f);
-        self.emptyListImageView.frame = CGRectMake((self.emptyListView.frame.size.width - self.emptyListImageView.frame.size.width)/2,
-                                                   56.0f,
-                                                   self.emptyListImageView.frame.size.width,
-                                                   self.emptyListImageView.frame.size.height);
-        self.emptyListLabel.frame = CGRectMake(12.0f,
-                                               183.0f,
-                                               self.emptyListView.frame.size.width - 12*2,
-                                               self.emptyListLabel.frame.size.height);
-    }
+    [self.emptyListView setFrame:CGRectMake(self.viewBounds.origin.x,
+                                            self.viewBounds.origin.y,
+                                            self.viewBounds.size.width,
+                                            self.viewBounds.size.height)];
+    
+    [self.emptyTitleLabel setFrame:CGRectMake((self.viewBounds.size.width - self.emptyTitleLabel.width)/2,
+                                          48.f,
+                                          self.emptyTitleLabel.width, self.emptyTitleLabel.height)];
+    
+    [self.emptyListImageView setFrame:CGRectMake((self.viewBounds.size.width - self.emptyListImageView.frame.size.width)/2,
+                                             CGRectGetMaxY(self.emptyTitleLabel.frame) + 28.f,
+                                             self.emptyListImageView.frame.size.width, self.emptyListImageView.frame.size.height)];
+    
+    [self.emptyListLabel setFrame:CGRectMake((self.viewBounds.size.width - self.emptyListLabel.width)/2,
+                                         CGRectGetMaxY(self.emptyListImageView.frame) + 28,
+                                         self.emptyListLabel.width, self.emptyListLabel.height)];
     
     [self changeViewToInterfaceOrientation:self.interfaceOrientation];
 }

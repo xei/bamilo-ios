@@ -180,7 +180,9 @@
 #define STRING_NO_RECENT_SEARCHES RILocalizedString(@"recentsearch_no_searches", nil)
 #define STRING_CLEAR_RECENT_SEARCHES RILocalizedString(@"recentsearch_clear_searches", nil)
 
+#define STRING_NO_RECENTLY_VIEWED_PRODUCTS_TITLE RILocalizedString(@"recentlyview_no_searches_title", nil)
 #define STRING_NO_RECENTLY_VIEWED_PRODUCTS RILocalizedString(@"recentlyview_no_searches", nil)
+
 #define STRING_CLEAR_RECENTLY_VIEWED RILocalizedString(@"recentlyview_clear_viewed", nil)
 
 #define STRING_USER_DATA RILocalizedString(@"string_user_data", nil)
