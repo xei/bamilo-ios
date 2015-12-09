@@ -100,10 +100,14 @@
 
 - (UILabel *)productDescriptionLabel
 {
-    CGRect frame = CGRectMake(16.f, CGRectGetMaxY(self.productNameLabel.frame), self.width - 16.f*2, 60);
+    CGFloat width = self.width - 16.f*2 - 30.f;
+    
     if (self.product.seller.isGlobal) {
-        frame.size.width = self.globalButton.x - frame.origin.x;
+        width = self.width - (16.f * 2) - self.globalButton.width - 16.f;
     }
+    
+    CGRect frame = CGRectMake(16.f, CGRectGetMaxY(self.productNameLabel.frame), width, 60);
+    
     if (!_productDescriptionLabel) {
         _productDescriptionLabel = [[UILabel alloc] initWithFrame:frame];
         _productDescriptionLabel.font = JACaptionFont;
