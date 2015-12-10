@@ -144,14 +144,20 @@
                                                [self viewBounds].size.width,
                                                [self viewBounds].size.height);
     
-    [self.emptyFavouritesTitleLabel setX:self.emptyFavoritesView.frame.size.width/2 - self.emptyFavouritesTitleLabel.width/2];
-    [self.emptyFavouritesTitleLabel setY:48.f];
+    [self.emptyFavouritesTitleLabel setFrame:CGRectMake(self.emptyFavoritesView.frame.size.width/2 - self.emptyFavouritesTitleLabel.width/2,
+                                                        48.f,
+                                                        self.emptyFavouritesTitleLabel.width,
+                                                        self.emptyFavouritesTitleLabel.height)];
     
-    [self.emptyFavoritesImageView setX:(self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2];
-    [self.emptyFavoritesImageView setY:CGRectGetMaxY([self.emptyFavouritesTitleLabel frame]) + 28.f];
+    [self.emptyFavoritesImageView setFrame:CGRectMake((self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2,
+                                                      CGRectGetMaxY([self.emptyFavouritesTitleLabel frame]) + 28.f,
+                                                      self.emptyFavoritesImageView.width,
+                                                      self.emptyFavoritesImageView.height)];
     
-    [self.emptyFavoritesLabel setY:CGRectGetMaxY(self.emptyFavoritesImageView.frame) + 28.f];
-    [self.emptyFavoritesLabel setX:self.emptyFavoritesView.frame.size.width/2 - self.emptyFavoritesLabel.width/2];
+    [self.emptyFavoritesLabel setFrame:CGRectMake(self.emptyFavoritesView.frame.size.width/2 - self.emptyFavoritesLabel.width/2,
+                                                  CGRectGetMaxY(self.emptyFavoritesImageView.frame) + 28.f,
+                                                  self.emptyFavoritesLabel.width,
+                                                  self.emptyFavoritesLabel.height)];
     
     self.lastPage = NO;
     self.currentPage = 0;
@@ -190,14 +196,20 @@
                                                [self viewBounds].size.width,
                                                [self viewBounds].size.height);
     
-    [self.emptyFavouritesTitleLabel setX:self.emptyFavoritesView.frame.size.width/2 - self.emptyFavouritesTitleLabel.width/2];
-    [self.emptyFavouritesTitleLabel setY:48.f];
+    [self.emptyFavouritesTitleLabel setFrame:CGRectMake(self.emptyFavoritesView.frame.size.width/2 - self.emptyFavouritesTitleLabel.width/2,
+                                                        48.f,
+                                                        self.emptyFavouritesTitleLabel.width,
+                                                        self.emptyFavouritesTitleLabel.height)];
     
-    [self.emptyFavoritesImageView setX:(self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2];
-    [self.emptyFavoritesImageView setY:CGRectGetMaxY([self.emptyFavouritesTitleLabel frame]) + 28.f];
+    [self.emptyFavoritesImageView setFrame:CGRectMake((self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2,
+                                                      CGRectGetMaxY([self.emptyFavouritesTitleLabel frame]) + 28.f,
+                                                      self.emptyFavoritesImageView.width,
+                                                      self.emptyFavoritesImageView.height)];
     
-    [self.emptyFavoritesLabel setY:CGRectGetMaxY(self.emptyFavoritesImageView.frame) + 28.f];
-    [self.emptyFavoritesLabel setX:self.emptyFavoritesView.frame.size.width/2 - self.emptyFavoritesLabel.width/2];
+    [self.emptyFavoritesLabel setFrame:CGRectMake(self.emptyFavoritesView.frame.size.width/2 - self.emptyFavoritesLabel.width/2,
+                                                  CGRectGetMaxY(self.emptyFavoritesImageView.frame) + 28.f,
+                                                  self.emptyFavoritesLabel.width,
+                                                  self.emptyFavoritesLabel.height)];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -217,14 +229,20 @@
                                                [self viewBounds].size.width,
                                                [self viewBounds].size.height);
     
-    [self.emptyFavouritesTitleLabel setX:self.emptyFavoritesView.frame.size.width/2 - self.emptyFavouritesTitleLabel.width/2];
-    [self.emptyFavouritesTitleLabel setY:48.f];
+    [self.emptyFavouritesTitleLabel setFrame:CGRectMake(self.emptyFavoritesView.frame.size.width/2 - self.emptyFavouritesTitleLabel.width/2,
+                                                        48.f,
+                                                        self.emptyFavouritesTitleLabel.width,
+                                                        self.emptyFavouritesTitleLabel.height)];
     
-    [self.emptyFavoritesImageView setX:(self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2];
-    [self.emptyFavoritesImageView setY:CGRectGetMaxY([self.emptyFavouritesTitleLabel frame]) + 28.f];
+    [self.emptyFavoritesImageView setFrame:CGRectMake((self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2,
+                                                      CGRectGetMaxY([self.emptyFavouritesTitleLabel frame]) + 28.f,
+                                                      self.emptyFavoritesImageView.width,
+                                                      self.emptyFavoritesImageView.height)];
     
-    [self.emptyFavoritesLabel setY:CGRectGetMaxY(self.emptyFavoritesImageView.frame) + 28.f];
-    [self.emptyFavoritesLabel setX:self.emptyFavoritesView.frame.size.width/2 - self.emptyFavoritesLabel.width/2];
+    [self.emptyFavoritesLabel setFrame:CGRectMake(self.emptyFavoritesView.frame.size.width/2 - self.emptyFavoritesLabel.width/2,
+                                                  CGRectGetMaxY(self.emptyFavoritesImageView.frame) + 28.f,
+                                                  self.emptyFavoritesLabel.width,
+                                                  self.emptyFavoritesLabel.height)];
     
     [self changeViewToInterfaceOrientation:self.interfaceOrientation];
 }
