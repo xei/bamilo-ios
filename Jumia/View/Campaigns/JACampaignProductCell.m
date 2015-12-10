@@ -162,6 +162,7 @@
         [_offerEndedLabel.layer setBorderWidth:1.f];
         [_offerEndedLabel.layer setBorderColor:JABlack800Color.CGColor];
         [_offerEndedLabel setXCenterAligned];
+        [_offerEndedLabel setHidden:YES];
         [self addSubview:_offerEndedLabel];
     }
     return _offerEndedLabel;
