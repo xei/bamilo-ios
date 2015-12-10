@@ -12,7 +12,7 @@
 
 @interface JABottomBar : UIView
 
-- (void)addSmallButton:(UIImage *)image target:(id)target action:(SEL)action;
-- (void)addButton:(NSString*)name target:(id)target action:(SEL)action;
+- (UIButton *)addSmallButton:(UIImage *)image target:(id)target action:(SEL)action;
+- (UIButton *)addButton:(NSString*)name target:(id)target action:(SEL)action;
 
 @end

@@ -192,4 +192,12 @@
     return _bottomSeparator;
 }
 
+/*
+ * to avoid confusions with label
+ */
+- (UILabel *)titleLabel
+{
+    return self.label;
+}
+
 @end
