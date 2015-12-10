@@ -147,9 +147,9 @@
         }
         self.options = [contentArray copy];
     }
-    else if(VALID_NOTEMPTY(field.apiCallEndpoint, NSString))
+    else if(VALID_NOTEMPTY(field.apiCallTarget, NSString))
     {
-        self.apiCallEndpoint = field.apiCallEndpoint;
+        self.apiCallTarget = field.apiCallTarget;
         if (VALID_NOTEMPTY(field.apiCallParameters, NSDictionary)) {
             self.apiCallParameters = field.apiCallParameters;
         }
@@ -269,9 +269,9 @@
 {
     NSString *apiCallUrl = nil;
     
-    if(VALID_NOTEMPTY(self.field, RIField) && [@"list" isEqualToString:[self.field type]] && VALID_NOTEMPTY([self.field apiCallEndpoint], NSString))
+    if(VALID_NOTEMPTY(self.field, RIField) && [@"list" isEqualToString:[self.field type]] && VALID_NOTEMPTY([self.field apiCallTarget], NSString))
     {
-        apiCallUrl = [RITarget getURLStringforTargetString:self.field.apiCallEndpoint];
+        apiCallUrl = [RITarget getURLStringforTargetString:self.field.apiCallTarget];
     }
     
     return apiCallUrl;

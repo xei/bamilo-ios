@@ -13,18 +13,9 @@
 @property (nonatomic, retain) NSString * value;
 @property (nonatomic, retain) NSString * label;
 
-+ (NSString *)getPostcodesForUrl:(NSString*)url
-                            city:(NSString*)cityId
-                    successBlock:(void (^)(NSArray *postcodes))successBlock
-                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
-
-+ (NSString *)getCitiesForUrl:(NSString*)url
-                       region:(NSString*)regionId
-                 successBlock:(void (^)(NSArray *cities))successBlock
-              andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
-
-+ (NSString *)getRegionsForUrl:(NSString*)url
-                  successBlock:(void (^)(NSArray *regions))successBlock
++ (NSString *)getLocalesForUrl:(NSString*)url
+                    parameters:(NSDictionary*)parameters
+                  successBlock:(void (^)(NSArray *locales))successBlock
                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 @end

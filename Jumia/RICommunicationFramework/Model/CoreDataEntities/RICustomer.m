@@ -9,7 +9,6 @@
 #import "RICustomer.h"
 #import "RIAddress.h"
 #import "RIForm.h"
-#import "RINewsletterCategory.h"
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 @interface RICustomer ()
@@ -157,7 +156,7 @@
     {
         RICustomer *customer = (RICustomer *)customers[0];
                                 
-        return customer.idCustomer;
+        return [customer.idCustomer stringValue];
     }
     else
     {
@@ -478,8 +477,6 @@
         customer.plainPassword = plainPassword;
     }
     
-    [self updateCustomerNewsletterWithJson:json];
-    
     [RICustomer saveCustomer:customer andContext:YES];
     
     return customer;
@@ -530,38 +527,6 @@
     [json setValue:addresses forKey:@"address_list"];
     
     return json;
-}
-
-#pragma mark - Save newsletter preferences
-
-+ (void)updateCustomerNewsletterWithJson:(NSDictionary *)json
-{
-    if ([json objectForKey:@"subscribed_categories"])
-    {
-        [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RINewsletterCategory class])];
-        [[RIDataBaseWrapper sharedInstance] saveContext];
-        
-        NSArray *newsletterArray = [json objectForKey:@"subscribed_categories"];
-        
-        for (NSDictionary *dic in newsletterArray)
-        {
-            RINewsletterCategory *newsletter = [RINewsletterCategory parseNewsletterCategory:dic];
-            [RINewsletterCategory saveNewsLetterCategory:newsletter andContext:YES];
-        }
-    }
-    else if ([json objectForKey:@"newsletter_subscription"])
-    {
-        [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RINewsletterCategory class])];
-        [[RIDataBaseWrapper sharedInstance] saveContext];
-        
-        NSArray *newsletterArray = [json objectForKey:@"newsletter_subscription"];
-        
-        for (NSDictionary *dic in newsletterArray)
-        {
-            RINewsletterCategory *newsletter = [RINewsletterCategory parseNewsletterCategory:dic];
-            [RINewsletterCategory saveNewsLetterCategory:newsletter andContext:YES];
-        }
-    }
 }
 
 @end

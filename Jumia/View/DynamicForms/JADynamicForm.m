@@ -399,72 +399,77 @@
     return view;
 }
 
--(void)validateFields:(NSDictionary*)errors
+-(void)validateFieldsWithErrorArray:(NSArray*)errorsArray
+                        finishBlock:(void (^)(NSString*))finishBlock;
 {
-    NSArray *errorKeys = [errors allKeys];
-    for (NSString *errorKey in errorKeys)
-    {
-        if(VALID_NOTEMPTY([errors objectForKey:errorKey], NSArray))
-        {
-            NSArray *errorArray = [errors objectForKey:errorKey];
-            [self setError:[errorArray componentsJoinedByString:@","] inFieldKey:errorKey];
-        }
-        else if(VALID_NOTEMPTY([errors objectForKey:errorKey], NSDictionary))
-        {
-            NSDictionary *errorDictionary = [errors objectForKey:errorKey];
-            NSArray *errorDictionaryKeys = [errorDictionary allKeys];
-            NSString *errorString = nil;
-            for(NSString *errorDictionaryKey in errorDictionaryKeys)
-            {
-                if(VALID_NOTEMPTY(errorString, NSString))
-                {
-                    errorString = [NSString stringWithFormat:@"%@, %@", errorString, [errorDictionary objectForKey:errorDictionaryKey]];
-                }
-                else
-                {
-                    errorString =  [errorDictionary objectForKey:errorDictionaryKey];
+    NSString* firstMessage = @""; //starts empty
+    for (NSDictionary* error in errorsArray) {
+        if (VALID_NOTEMPTY(error, NSDictionary)) {
+            //do not pass the finish block. we take care of that at the end of this method
+            [self validateFieldWithErrorDictionary:error finishBlock:nil];
+            if (VALID_NOTEMPTY(firstMessage, NSString)) {
+                //do nothing, we already have an error message
+            } else {
+                //we don't have an error message yet, so this is the one we should show
+                if ([error objectForKey:@"message"]) {
+                    firstMessage = [error objectForKey:@"message"];
                 }
             }
-            
-            [self setError:[errors objectForKey:errorKey] inFieldKey:errorKey];
         }
-        else if(VALID_NOTEMPTY([errors objectForKey:errorKey], NSString))
-        {
-            [self setError:[errors objectForKey:errorKey] inFieldKey:errorKey];
-        }
+    }
+    if (VALID_NOTEMPTY(firstMessage, NSString)) {
+        //we have a message, do nothing else
+    } else {
+        //we don't have a message, we have to use the generic one
+        firstMessage = STRING_ERROR_INVALID_FIELDS;
+    }
+    if (finishBlock) {
+        finishBlock(firstMessage);
     }
 }
 
--(void)setError:(NSString*)error inFieldKey:(NSString*)key
+-(void)validateFieldWithErrorDictionary:(NSDictionary*)errorDictionary
+                            finishBlock:(void (^)(NSString*))finishBlock;
 {
-    for (id view in self.formViews)
-    {
-        if ([view isKindOfClass:[JATextFieldComponent class]])
+    NSString* field = [errorDictionary objectForKey:@"field"];
+    NSString* message = [errorDictionary objectForKey:@"message"];
+    
+    if (VALID_NOTEMPTY(field, NSString)) {
+        for (id view in self.formViews)
         {
-            JATextFieldComponent *textFieldView = (JATextFieldComponent*)view;
-            if([textFieldView isComponentWithKey:key])
+            if ([view isKindOfClass:[JATextFieldComponent class]])
             {
-                [textFieldView setError:error];
-                break;
+                JATextFieldComponent *textFieldView = (JATextFieldComponent*)view;
+                if([textFieldView isComponentWithKey:field])
+                {
+                    [textFieldView setError:message];
+                    break;
+                }
+            }
+            else if ([view isKindOfClass:[JABirthDateComponent class]])
+            {
+                JABirthDateComponent *birthDateComponent = (JABirthDateComponent*)view;
+                if([birthDateComponent isComponentWithKey:field])
+                {
+                    [birthDateComponent setError:message];
+                    break;
+                }
+            }
+            else if ([view isKindOfClass:[JARadioComponent class]])
+            {
+                JARadioComponent *radioComponent = (JARadioComponent*)view;
+                if([radioComponent isComponentWithKey:field])
+                {
+                    [radioComponent setError:message];
+                    break;
+                }
             }
         }
-        else if ([view isKindOfClass:[JABirthDateComponent class]])
-        {
-            JABirthDateComponent *birthDateComponent = (JABirthDateComponent*)view;
-            if([birthDateComponent isComponentWithKey:key])
-            {
-                [birthDateComponent setError:error];
-                break;
-            }
-        }
-        else if ([view isKindOfClass:[JARadioComponent class]])
-        {
-            JARadioComponent *radioComponent = (JARadioComponent*)view;
-            if([radioComponent isComponentWithKey:key])
-            {
-                [radioComponent setError:error];
-                break;
-            }
+    }
+    
+    if (VALID_NOTEMPTY(message, NSString)) {
+        if (finishBlock) {
+            finishBlock(message);
         }
     }
 }
