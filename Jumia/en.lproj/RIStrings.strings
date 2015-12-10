@@ -376,6 +376,8 @@
 
 "string_campaign_ramaining_stock" = "Remaining Stock: %d%%";
 
+"string_campaign_ramaining_stock_without_value" = "Remaining Stock";
+
 "campaign_save" = "You Save";
 
 "campaing_offer_ended" = "Offer Ended!";
@@ -529,6 +531,8 @@
 "bundle_total_price" = "Total Price:";
 
 "buy_now" = "Buy Now";
+
+"buy" = "Buy";
 
 "other_sellers" = "Other Sellers";
 

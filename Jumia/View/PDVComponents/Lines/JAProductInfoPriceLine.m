@@ -160,4 +160,26 @@
     }
 }
 
+- (void)sizeToFit
+{
+    [super sizeToFit];
+    if (self.priceOff > 0) {
+        [self setWidth:CGRectGetMaxX(self.priceOffLabel.frame)];
+    }else if (self.oldPrice){
+        [self setWidth:CGRectGetMaxX(self.oldPriceLabel.frame)];
+    }else{
+        [self setWidth:CGRectGetMaxX(self.label.frame)];
+    }
+    
+    [self setHeight:self.label.height];
+    [self.label setYCenterAligned];
+    if (self.oldPrice) {
+        [self.oldPriceLabel setYCenterAligned];
+        [self.oldPriceLine setYCenterAligned];
+    }
+    if (self.priceOff > 0) {
+        [self.priceOffLabel setYCenterAligned];
+    }
+}
+
 @end

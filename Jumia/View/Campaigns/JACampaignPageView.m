@@ -13,18 +13,18 @@
 #import "JAUtils.h"
 #import "JAProductListFlowLayout.h"
 #import "JACampaignBannerCell.h"
+#import "JAProductCollectionViewFlowLayout.h"
 
 @interface JACampaignPageView()
 
-@property (nonatomic, strong)RICampaign* campaign;
-@property (nonatomic, strong)UICollectionView* collectionView;
-@property (nonatomic, strong)JAProductListFlowLayout* flowLayout;
-@property (nonatomic, strong)NSString* cellIdentifier;
-@property (nonatomic, strong)UIImageView* bannerImage;
-@property (nonatomic, assign)NSInteger elapsedTimeInSeconds;
-
-@property (nonatomic, strong)NSMutableArray* chosenSimpleNames;
-@property (nonatomic, strong)JACampaignProductCell* lastPressedCampaignProductCell;
+@property (nonatomic, strong) RICampaign* campaign;
+@property (nonatomic, strong) UICollectionView* collectionView;
+@property (nonatomic, strong) JAProductCollectionViewFlowLayout* flowLayout;
+@property (nonatomic, strong) NSString* cellIdentifier;
+@property (nonatomic, strong) UIImageView* bannerImage;
+@property (nonatomic, assign) NSInteger elapsedTimeInSeconds;
+@property (nonatomic, strong) NSMutableArray* chosenSimpleNames;
+@property (nonatomic, strong) JACampaignProductCell* lastPressedCampaignProductCell;
 
 @end
 
@@ -67,6 +67,7 @@
 
 - (void)loadWithCampaign:(RICampaign*)campaign
 {
+    [self setBackgroundColor:[UIColor whiteColor]];
     if (NO == self.isLoaded) {
         self.isLoaded = YES;
         
@@ -91,11 +92,19 @@
                                        userInfo:nil
                                         repeats:YES];
         
-        self.flowLayout = [[JAProductListFlowLayout alloc] init];
-        self.flowLayout.manualCellSpacing = 0.0f;
-        self.flowLayout.minimumLineSpacing = 0;
-        self.flowLayout.minimumInteritemSpacing = 0;
+        self.flowLayout = [[JAProductCollectionViewFlowLayout alloc] init];
+        self.flowLayout.minimumLineSpacing = 1.0f;
+        self.flowLayout.minimumInteritemSpacing = 0.f;
+        [self.flowLayout registerClass:[JACollectionSeparator class] forDecorationViewOfKind:@"horizontalSeparator"];
+        [self.flowLayout registerClass:[JACollectionSeparator class] forDecorationViewOfKind:@"verticalSeparator"];
+        
+        //                                              top, left, bottom, right
+        [self.flowLayout setSectionInset:UIEdgeInsetsMake(0.f, 0.0, 0.0, 0.0)];
         self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+        
+        if (VALID_NOTEMPTY(campaign.bannerImageURL, NSString)) {
+            [self.flowLayout setHasBanner:YES];
+        }
         
         self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:self.flowLayout];
         self.collectionView.backgroundColor = [UIColor clearColor];
@@ -103,10 +112,8 @@
         self.collectionView.dataSource = self;
         [self addSubview:self.collectionView];
         
-        [self.collectionView registerNib:[UINib nibWithNibName:@"JACampaignProductCell" bundle:nil] forCellWithReuseIdentifier:@"campaignProductCell"];
-        [self.collectionView registerNib:[UINib nibWithNibName:@"JACampaignProductCell_ipad_portrait" bundle:nil] forCellWithReuseIdentifier:@"campaignProductCell_ipad_portrait"];
-        [self.collectionView registerNib:[UINib nibWithNibName:@"JACampaignProductCell_ipad_landscape" bundle:nil] forCellWithReuseIdentifier:@"campaignProductCell_ipad_landscape"];
-        [self.collectionView registerNib:[UINib nibWithNibName:@"JACampaignBannerCell" bundle:nil] forCellWithReuseIdentifier:@"campaignBannerCell"];
+        [self.collectionView registerClass:[JACampaignProductCell class] forCellWithReuseIdentifier:@"campaignProductCell"];
+        [self.collectionView registerClass:[JACampaignBannerCell class] forCellWithReuseIdentifier:@"campaignBannerCell"];
         
         
         [self reloadViewToInterfaceOrientation:self.interfaceOrientation];
@@ -116,15 +123,8 @@
 - (void)reloadViewToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     self.bannerImage = nil;
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        if (UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
-            self.cellIdentifier = @"campaignProductCell_ipad_landscape";
-        } else {
-            self.cellIdentifier = @"campaignProductCell_ipad_portrait";
-        }
-    } else {
-        self.cellIdentifier = @"campaignProductCell";
-    }
+    
+    self.cellIdentifier = @"campaignProductCell";
     
     [self.collectionView setFrame:self.bounds];
     [self.collectionView reloadData];
@@ -143,24 +143,25 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGSize size = [self getCellLayoutForInterfaceOrientation:self.interfaceOrientation];
     if (VALID_NOTEMPTY(self.campaign.bannerImageURL, NSString) && 0 == indexPath.row) {
-        size = self.bannerImage.frame.size;
+        return self.bannerImage.frame.size;
     }
+    CGSize size = [self getCellLayoutForInterfaceOrientation:self.interfaceOrientation];
+    self.flowLayout.itemSize = CGSizeMake(size.width, size.height);
     return size;
 }
 
 - (CGSize)getCellLayoutForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     CGFloat width = 0.0f;
-    CGFloat height = 340.0f;
+    CGFloat height = 482.f;
     
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         
         if(UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
-            width = 381.0f;
+            width = 384.0f;
         } else {
-            width = 339.0f;
+            width = 341.0f;
         }
     } else {
         width = 320;
@@ -183,6 +184,7 @@
         realIndex--;
     }
     JACampaignProductCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:self.cellIdentifier forIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
+    
     cell.delegate = self;
     cell.tag = realIndex;
     
@@ -196,7 +198,6 @@
                  capaignHasBanner:campaignHasBanner];
     
     return cell;
-
 }
 
 #pragma mark - Timer

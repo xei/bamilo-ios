@@ -222,7 +222,7 @@
 #define STRING_SAVE_LABEL RILocalizedString(@"save_label", nil)
 #define STRING_SPECIFICATIONS RILocalizedString(@"product_specifications", nil)
 
-#define STRING_CAMPAIGN_REMAINING_STOCK RILocalizedString(@"string_campaign_ramaining_stock", nil)
+#define STRING_CAMPAIGN_REMAINING_STOCK RILocalizedString(@"string_campaign_ramaining_stock_without_value", nil)
 #define STRING_CAMPAIGN_SAVE RILocalizedString(@"campaign_save", nil)
 #define STRING_CAMPAIGN_OFFER_ENDED RILocalizedString(@"campaing_offer_ended", nil)
 #define STRING_CAMPAIGN_TIMER_END RILocalizedString(@"campaing_timer_end", nil)
@@ -320,6 +320,7 @@
 #define STRING_BUNDLE_TITLE RILocalizedString(@"bundle_title", nil)
 #define STRING_BUNDLE_TOTAL_PRICE RILocalizedString(@"bundle_total_price", nil)
 #define STRING_BUY_NOW RILocalizedString(@"buy_now", nil)
+#define STRING_BUY RILocalizedString(@"buy", nil)
 
 #define STRING_OTHER_SELLERS RILocalizedString(@"other_sellers", nil)
 #define STRING_SAME_PRODUCT_FROM_OTHER_SELLERS RILocalizedString(@"same_product_from_other_sellers", nil)
