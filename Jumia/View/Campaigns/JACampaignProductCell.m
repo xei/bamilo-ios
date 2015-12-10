@@ -245,7 +245,6 @@
 {
     if (!VALID_NOTEMPTY(_bottonBar, JABottomBar)) {
         _bottonBar = [[JABottomBar alloc] initWithFrame:CGRectMake(self.bottomContentView.width/2, 0, self.bottomContentView.width/2, self.bottomContentView.height)];
-#warning TODO String
         self.buyButton = [_bottonBar addButton:[STRING_BUY uppercaseString] target:self action:@selector(buyButtonPressed)];
         [self.buyButton setBackgroundImage:[UIImage imageWithColor:[UIColor grayColor]] forState:UIControlStateDisabled];
         [self.buyButton setBackgroundImage:[UIImage imageWithColor:JAOrange1Color] forState:UIControlStateNormal];
