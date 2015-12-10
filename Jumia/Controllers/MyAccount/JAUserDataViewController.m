@@ -361,15 +361,15 @@ JADynamicFormDelegate
          }
          else if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
-             [self.changePasswordForm validateFields:errorObject];
-             
-             [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
+             [self.changePasswordForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
+                 [self showMessage:message success:NO];
+             }];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
-             [self.changePasswordForm checkErrors];
-             
-             [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
+             [self.changePasswordForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
+                 [self showMessage:message success:NO];
+             }];
          }
          else
          {

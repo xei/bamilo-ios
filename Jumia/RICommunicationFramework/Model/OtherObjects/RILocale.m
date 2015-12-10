@@ -10,46 +10,13 @@
 
 @implementation RILocale
 
-+ (NSString *)getPostcodesForUrl:(NSString*)url
-                            city:(NSString*)cityId
-                    successBlock:(void (^)(NSArray *postcodes))successBlock
-                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
-{
-    if(VALID_NOTEMPTY(cityId, NSString))
-    {
-        url = [url stringByReplacingOccurrencesOfString:@"--city_id--" withString:cityId];
-    }
-    
-    return [self getLocalesForUrl:url successBlock:successBlock andFailureBlock:failureBlock];
-}
-
-
-+ (NSString *)getCitiesForUrl:(NSString*)url
-                       region:(NSString*)regionId
-                 successBlock:(void (^)(NSArray *cities))successBlock
-              andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
-{
-    if(VALID_NOTEMPTY(regionId, NSString))
-    {
-        url = [url stringByReplacingOccurrencesOfString:@"--region_id--" withString:regionId];
-    }
-    
-    return [self getLocalesForUrl:url successBlock:successBlock andFailureBlock:failureBlock];
-}
-
-+ (NSString *)getRegionsForUrl:(NSString*)url
-                  successBlock:(void (^)(NSArray *regions))successBlock
-               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
-{
-    return [self getLocalesForUrl:url successBlock:successBlock andFailureBlock:failureBlock];
-}
-
 + (NSString *)getLocalesForUrl:(NSString*)url
+                    parameters:(NSDictionary *)parameters
                   successBlock:(void (^)(NSArray *regions))successBlock
                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
-                                                            parameters:nil
+                                                            parameters:parameters
                                                         httpMethodPost:YES
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime

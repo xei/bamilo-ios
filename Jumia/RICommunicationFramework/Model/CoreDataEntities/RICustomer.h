@@ -136,8 +136,6 @@
 + (NSString *)requestPasswordReset:(void (^)())successBlock
                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
 
-+ (void)updateCustomerNewsletterWithJson:(NSDictionary *)json;
-
 @end
 
 @interface RICustomer (CoreDataGeneratedAccessors)
