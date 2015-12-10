@@ -42,7 +42,7 @@
 
 - (UIView *)ratingsView
 {
-    CGRect frame = CGRectMake(0, 18, self.width - self.dateLabel.width, 70);
+    CGRect frame = CGRectMake(0, 18, self.width - self.dateLabel.width, self.dateLabel.height);
     if (!VALID_NOTEMPTY(_ratingsView, UIView)) {
         _ratingsView = [[UIView alloc] initWithFrame:frame];
         [self.clickableArea addSubview:_ratingsView];

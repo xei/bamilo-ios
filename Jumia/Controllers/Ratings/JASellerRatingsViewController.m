@@ -798,15 +798,15 @@ UITableViewDataSource
             }
             else if(VALID_NOTEMPTY(errorObject, NSDictionary))
             {
-                [currentDynamicForm validateFields:errorObject];
-                
-                [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
+                [currentDynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
+                    [self showMessage:message success:NO];
+                }];
             }
             else if(VALID_NOTEMPTY(errorObject, NSArray))
             {
-                [currentDynamicForm checkErrors];
-                
-                [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
+                [currentDynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
+                    [self showMessage:message success:NO];
+                }];
             }
             else
             {
