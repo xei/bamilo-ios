@@ -141,6 +141,7 @@
 #define STRING_CREATE_ACCOUNT RILocalizedString(@"register_title", nil)
 #define STRING_ACCOUNT_DATA RILocalizedString(@"register_sectiontitle", nil)
 #define STRING_REGISTER RILocalizedString(@"registration_text", nil)
+#define STRING_CONTINUE RILocalizedString(@"continue", nil)
 
 #define STRING_CHECKOUT_ADDRESS RILocalizedString(@"checkout_header_step_2", nil)
 #define STRING_ADD_NEW_ADDRESS RILocalizedString(@"action_label_add_address", nil)
@@ -271,6 +272,9 @@
 #define STRING_FALLBACK_HOME_OFFICE RILocalizedString(@"fallback_home_office_ios", nil)
 #define STRING_FALLBACK_MOBILE RILocalizedString(@"fallback_mobile", nil)
 #define STRING_FALLBACK_WELCOME RILocalizedString(@"fallback_welcome", nil)
+
+#define STRING_WELCOME RILocalizedString(@"welcome", nil)
+#define STRING_NEW_TO_JUMIA RILocalizedString(@"new_to_jumia", nil)
 
 #define STRING_REVIEWS_LABEL RILocalizedString(@"reviews", nil)
 #define STRING_MORE RILocalizedString(@"more", nil)
