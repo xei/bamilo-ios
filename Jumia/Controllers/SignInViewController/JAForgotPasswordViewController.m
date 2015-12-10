@@ -247,9 +247,10 @@
      } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
      {
          [self hideLoading];
+         [self removeErrorView];
          
          if (RIApiResponseNoInternetConnection == apiResponse) {
-             [self showMessage:STRING_NO_CONNECTION success:NO];
+             [self showErrorView:YES startingY:0 selector:@selector(continueForgotPassword) objects:nil];
          }
          else if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
