@@ -172,6 +172,8 @@
 
 "continue_shopping" = "Continue Shopping";
 
+"continue" = "Continue";
+
 "my_order_coupon_label" = "Coupon";
 
 "voucher_use" = "Use";
@@ -453,6 +455,10 @@
 "fallback_mobile" = "Mobile Phones";
 
 "fallback_welcome" = "WELCOME TO";
+
+"welcome" = "Welcome";
+
+"new_to_jumia" = "Looks like you're new to Jumia.\n We need just a bit more details to create your account.";
 
 "reviews" = "Reviews";
 

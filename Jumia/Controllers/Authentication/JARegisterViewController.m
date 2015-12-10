@@ -80,8 +80,7 @@ JADynamicFormDelegate
         [_headerLabel setTextAlignment:NSTextAlignmentCenter];
         [_headerLabel setFont:JADisplay1Font];
         [_headerLabel setTextColor:JABlackColor];
-#warning TODO String
-        [_headerLabel setText:@"Welcome"];
+        [_headerLabel setText:STRING_WELCOME];
         [_headerLabel sizeToFit];
         [_headerLabel setWidth:self.view.width - 2*kLateralMargin];
     }
@@ -96,8 +95,7 @@ JADynamicFormDelegate
         [_topMessageLabel setTextAlignment:NSTextAlignmentCenter];
         [_topMessageLabel setFont:JACaptionFont];
         [_topMessageLabel setTextColor:JABlack800Color];
-#warning TODO String
-        [_topMessageLabel setText:@"Looks like you're new to Jumia.\n We need just a bit more details to create your account."];
+        [_topMessageLabel setText:STRING_NEW_TO_JUMIA];
         [_topMessageLabel sizeToFit];
         [_topMessageLabel setWidth:self.view.width - 2*kLateralMargin];
     }
@@ -120,7 +118,7 @@ JADynamicFormDelegate
 {
     if (!VALID_NOTEMPTY(_registerButton, JABottomBar)) {
         _registerButton = [[JABottomBar alloc] initWithFrame:CGRectMake(6.f, self.view.height, self.view.width - 2*6.f, kBottomDefaultHeight)];
-        [_registerButton addButton:[STRING_REGISTER uppercaseString] target:self action:@selector(registerButtonPressed:)];
+        [_registerButton addButton:[STRING_CONTINUE uppercaseString] target:self action:@selector(registerButtonPressed:)];
     }
     return _registerButton;
 }
@@ -590,7 +588,6 @@ JADynamicFormDelegate
         
         
         [self.radioComponent setValue:[prefix value]];
-//        [self.radioComponent setValue:[[prefix value] stringValue]];
         [self.radioComponent.textField setText:[prefix label]];
     }
     [self closePickers];
