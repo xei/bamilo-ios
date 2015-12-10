@@ -888,6 +888,7 @@ JAPickerDelegate>
                         //found the component, so look for value and add it to the request parameters
                         // using the object from the parameter map as the key
                         [requestParameters setValue:[relatedComponent getSelectedValue] forKey:obj];
+                        break;
                     }
                 }
             }
