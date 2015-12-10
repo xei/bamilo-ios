@@ -2,6 +2,174 @@
 //  JAMyOrdersViewController.m
 //  Jumia
 //
+//  Created by Miguel Rossi Seabra on 09/12/2015.
+//  Copyright (c) 2014 Rocket Internet. All rights reserved.
+//
+
+#import "JAMyOrdersViewController.h"
+#import "JAMyOrderDetailView.h"
+#import "RIOrder.h"
+#import "RICustomer.h"
+
+#define kMyOrderViewTag 999
+#define kOrdersPerPage 25
+
+//typedef NS_ENUM(NSUInteger, RITrackOrderRequestState) {
+//    RITrackOrderRequestNotDone = 0,
+//    RITrackOrderRequestDone = 1
+//};
+
+@interface JAMyOrdersViewController ()
+<
+UITextFieldDelegate,
+UICollectionViewDataSource,
+UICollectionViewDelegate,
+UICollectionViewDelegateFlowLayout>
+
+
+@property (strong, nonatomic) NSMutableArray *orders;
+@property (assign, nonatomic) NSInteger currentOrdersPage;
+@property (assign, nonatomic) NSInteger ordersTotal;
+@property (assign, nonatomic) BOOL isLoadingOrders;
+
+// Empty order history
+@property (strong, nonatomic) UIView *emptyOrderHistoryView;
+@property (strong, nonatomic) UIImageView *emptyOrderHistoryImageView;
+@property (strong, nonatomic) UILabel *emptyOrderHistoryLabel;
+@property (strong, nonatomic) UILabel *emptyOrderHistoryTitleLabel;
+
+
+// Order history
+@property (strong, nonatomic) UICollectionView *ordersCollectionView;
+@property (strong, nonatomic) UIScrollView *orderDetailsScrollView;
+@property (strong, nonatomic) UIView *orderDetailsContainer;
+@property (strong, nonatomic) UILabel *orderDetailsLabel;
+@property (strong, nonatomic) UIView *orderDetailsSeparator;
+@property (strong, nonatomic) JAMyOrderDetailView *orderDetailsView;
+@property (strong, nonatomic) NSIndexPath *selectedOrderIndexPath;
+
+@property (assign, nonatomic) RIApiResponse apiResponse;
+
+@end
+
+@implementation JAMyOrdersViewController
+
+-(UIView *)emptyOrderHistoryView {
+    if (!VALID_NOTEMPTY(_emptyOrderHistoryView, UIView)) {
+        _emptyOrderHistoryView = [[UIView alloc]initWithFrame:CGRectMake(self.viewBounds.origin.x,
+                                                                        self.viewBounds.origin.y,
+                                                                        self.viewBounds.size.width,
+                                                                        self.viewBounds.size.height)];
+        [_emptyOrderHistoryView setBackgroundColor:[UIColor whiteColor]];
+        [_emptyOrderHistoryView setHidden:NO];
+        [self.view addSubview:_emptyOrderHistoryView];
+    }
+    return _emptyOrderHistoryView;
+}
+
+-(UILabel *)emptyOrderHistoryTitleLabel {
+    if (!VALID_NOTEMPTY(_emptyOrderHistoryTitleLabel, UILabel)) {
+        _emptyOrderHistoryTitleLabel = [UILabel new];
+        [_emptyOrderHistoryTitleLabel setFont:JADisplay2Font];
+        [_emptyOrderHistoryTitleLabel setTextColor:JABlackColor];
+        [_emptyOrderHistoryTitleLabel setText:STRING_NO_ORDERS_TITLE];
+        [_emptyOrderHistoryTitleLabel sizeToFit];
+        [self.emptyOrderHistoryView addSubview:_emptyOrderHistoryTitleLabel];
+    }
+    return _emptyOrderHistoryTitleLabel;
+}
+
+-(UILabel *)emptyOrderHistoryLabel {
+    if (!VALID_NOTEMPTY(_emptyOrderHistoryLabel, UILabel)) {
+        _emptyOrderHistoryLabel = [UILabel new];
+        [_emptyOrderHistoryLabel setFont:JABody3Font];
+        [_emptyOrderHistoryLabel setTextColor:JABlack800Color];
+        [_emptyOrderHistoryLabel setText:STRING_NO_ORDERS];
+        [_emptyOrderHistoryLabel sizeToFit];
+        [self.emptyOrderHistoryView addSubview:_emptyOrderHistoryLabel];
+    }
+    return _emptyOrderHistoryLabel;
+}
+
+-(UIImageView *)emptyOrderHistoryImageView {
+    if (!VALID_NOTEMPTY(_emptyOrderHistoryImageView, UIImageView)) {
+        _emptyOrderHistoryImageView = [UIImageView new];
+        UIImage *img = [UIImage imageNamed:@"noOrdersImage"];
+        [_emptyOrderHistoryImageView setImage:img];
+        [_emptyOrderHistoryImageView setWidth:img.size.width];
+        [_emptyOrderHistoryImageView setHeight:img.size.height];
+        [self.emptyOrderHistoryView addSubview:_emptyOrderHistoryImageView];
+    }
+    return _emptyOrderHistoryImageView;
+}
+
+-(void)viewDidLoad {
+    
+    [super viewDidLoad];
+    self.apiResponse = RIApiResponseSuccess;
+    self.currentOrdersPage = 0;
+    self.orders = [[NSMutableArray alloc] init];
+    self.ordersTotal = 0;
+    
+    self.navBarLayout.showLogo = NO;
+    self.navBarLayout.title = STRING_MY_ORDERS;
+    self.navBarLayout.showBackButton = YES;
+    
+    //        UICollectionViewFlowLayout* ordersCollectionViewFlowLayout = [[UICollectionViewFlowLayout alloc] init];
+    //        [ordersCollectionViewFlowLayout setMinimumLineSpacing:0.0f];
+    //        [ordersCollectionViewFlowLayout setMinimumInteritemSpacing:0.0f];
+    //        [ordersCollectionViewFlowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
+    //        [ordersCollectionViewFlowLayout setItemSize:CGSizeZero];
+    //        [ordersCollectionViewFlowLayout setHeaderReferenceSize:CGSizeZero];
+    //
+    //        self.ordersCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:ordersCollectionViewFlowLayout];
+    //        [self.ordersCollectionView setBackgroundColor:UIColorFromRGB(0xffffff)];
+    //        self.ordersCollectionView.layer.cornerRadius = 5.0f;
+    
+    //        [self.ordersCollectionView registerNib:myOrderHeaderNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cartListHeader"];
+    //        [self.ordersCollectionView registerNib:myOrderListCellNib forCellWithReuseIdentifier:@"myOrderListCell"];;
+    //        [self.ordersCollectionView registerNib:myOrderDetailListCellNib forCellWithReuseIdentifier:@"myOrderDetailListCell"];;
+    //        [self.ordersCollectionView setDataSource:self];
+    //        [self.ordersCollectionView setDelegate:self];
+    //        [self.ordersCollectionView setHidden:YES];
+    
+    //        [self.contentScrollView addSubview:self.ordersCollectionView];
+}
+
+-(void)viewWillLayoutSubviews {
+    [self setupEmptyViews];
+}
+
+-(void) setupEmptyViews {
+    
+    [self.emptyOrderHistoryView setFrame:CGRectMake(self.viewBounds.origin.x,
+                                                    self.viewBounds.origin.y,
+                                                    self.viewBounds.size.width,
+                                                    self.viewBounds.size.height)];
+    
+    [self.emptyOrderHistoryTitleLabel setX:(self.viewBounds.size.width - self.emptyOrderHistoryTitleLabel.width)/2];
+    [self.emptyOrderHistoryTitleLabel setY:self.viewBounds.origin.x + 48];
+    
+    [self.emptyOrderHistoryImageView setYBottomOf:self.emptyOrderHistoryTitleLabel at:28.f];
+    [self.emptyOrderHistoryImageView setX:(self.viewBounds.size.width - self.emptyOrderHistoryImageView.width)/2];
+    
+    [self.emptyOrderHistoryLabel setYBottomOf:self.emptyOrderHistoryImageView at:28.f];
+    [self.emptyOrderHistoryLabel setX:(self.viewBounds.size.width - self.emptyOrderHistoryLabel.width)/2];
+
+    
+}
+
+@end
+
+/* for referance, especially about tracking 
+ 
+ 
+ 
+ 
+//
+//  JAMyOrdersViewController.m
+//  Jumia
+//
 //  Created by Miguel Chaves on 30/Jul/14.
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
@@ -196,14 +364,6 @@ JAPickerScrollViewDelegate
                                              selector:@selector(hideKeyboard)
                                                  name:kOpenMenuNotification
                                                object:nil];
-    
-    [self.firstScrollView setFrame:self.contentScrollView.frame];
-    
-    self.myOrdersPickerScrollView.delegate = self;
-    self.myOrdersPickerScrollView.startingIndex = self.selectedIndex;
-    
-    //this will trigger load methods
-    [self.myOrdersPickerScrollView setOptions:self.sortList];
     
     if([RICustomer checkIfUserIsLogged])
     {
@@ -1242,3 +1402,4 @@ JAPickerScrollViewDelegate
 }
 
 @end
+*/

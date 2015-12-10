@@ -750,31 +750,31 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAMyOrdersViewController class]])
     {
-        JAMyOrdersViewController *myOrderVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"jAMyOrdersViewController"];
+        JAMyOrdersViewController *myOrderVC = [JAMyOrdersViewController new];//[self.mainStoryboard instantiateViewControllerWithIdentifier:@"jAMyOrdersViewController"];
         
-        NSString* orderNumber = notification.object;
-        if (VALID_NOTEMPTY(orderNumber, NSString))
-        {
-            myOrderVC.selectedIndex = 0;
-            myOrderVC.startingTrackOrderNumber = orderNumber;
-        }
-
-        NSDictionary *userInfo = notification.userInfo;
-        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"selected_index"], NSNumber))
-        {
-            myOrderVC.selectedIndex = [[userInfo objectForKey:@"selected_index"] intValue];
-        }        
+//        NSString* orderNumber = notification.object;
+//        if (VALID_NOTEMPTY(orderNumber, NSString))
+//        {
+//            myOrderVC.selectedIndex = 0;
+//            myOrderVC.startingTrackOrderNumber = orderNumber;
+//        }
+//
+//        NSDictionary *userInfo = notification.userInfo;
+//        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"selected_index"], NSNumber))
+//        {
+//            myOrderVC.selectedIndex = [[userInfo objectForKey:@"selected_index"] intValue];
+//        }        
         
         [self pushViewController:myOrderVC animated:YES];
     }
     else
     {
-        JAMyOrdersViewController *myOrderVC = (JAMyOrdersViewController*) topViewController;
-        NSDictionary *userInfo = notification.userInfo;
-        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"selected_index"], NSNumber))
-        {
-            myOrderVC.selectedIndex = [[userInfo objectForKey:@"selected_index"] intValue];
-        }
+//        JAMyOrdersViewController *myOrderVC = (JAMyOrdersViewController*) topViewController;
+//        NSDictionary *userInfo = notification.userInfo;
+//        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"selected_index"], NSNumber))
+//        {
+//            myOrderVC.selectedIndex = [[userInfo objectForKey:@"selected_index"] intValue];
+//        }
     }
 }
 

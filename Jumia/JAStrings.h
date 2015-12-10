@@ -309,6 +309,7 @@
 #define STRING_ORDER_PAYMENT_STATUS RILocalizedString(@"my_order_payment_status_label", nil)
 #define STRING_ORDER_QUANTITY RILocalizedString(@"my_order_quantity_label", nil)
 #define STRING_NO_ORDERS RILocalizedString(@"my_order_no_orders_label", nil)
+#define STRING_NO_ORDERS_TITLE RILocalizedString(@"my_order_no_orders_title_label", nil)
 
 #define STRING_SELLER_INFO_WARRANTY RILocalizedString(@"seller_info_warranty", nil)
 
