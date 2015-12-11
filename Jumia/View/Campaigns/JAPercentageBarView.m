@@ -31,11 +31,11 @@
                                                                  widthFromPercentage,
                                                                   self.bounds.size.height)];
     if (percentage > 64) {
-        self.percentageBar.backgroundColor = UIColorFromRGB(0x0a9f2a);
+        self.percentageBar.backgroundColor = [UIColor greenColor];
     } else if (percentage > 34) {
-        self.percentageBar.backgroundColor = UIColorFromRGB(0xffc64a);
+        self.percentageBar.backgroundColor = [UIColor yellowColor];
     } else {
-        self.percentageBar.backgroundColor = UIColorFromRGB(0xee7822);
+        self.percentageBar.backgroundColor = [UIColor redColor];
     }
     
     [self addSubview:self.percentageBar];
