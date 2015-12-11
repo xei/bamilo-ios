@@ -226,7 +226,7 @@
 
 "fgt_pass" = "Forgot Password?";
 
-"forgotten_password" = "Please type in your email.";
+"forgotten_password" = "Please type in your email";
 
 "forgotten_password_sub_text" = "We will send you a link to change the password.";
 
@@ -636,5 +636,5 @@
 
 "fgt_your_pass" = "Forgot your password?";
 
-"password_recovery" = "Password recovery";
+"password_recovery" = "Password Recovery";
 
