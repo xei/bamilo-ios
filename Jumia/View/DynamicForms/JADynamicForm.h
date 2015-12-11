@@ -66,7 +66,10 @@
 
 -(id)initWithForm:(RIForm*)form values:(NSDictionary*)values startingPosition:(CGFloat)startingY hasFieldNavigation:(BOOL)hasFieldNavigation;
 
--(void)validateFields:(NSDictionary*)errors;
+-(void)validateFieldsWithErrorArray:(NSArray*)errorsArray
+                        finishBlock:(void (^)(NSString*))finishBlock;
+-(void)validateFieldWithErrorDictionary:(NSDictionary*)errorDictionary
+                            finishBlock:(void (^)(NSString*))finishBlock;
 
 -(BOOL)checkErrors;
 

@@ -113,6 +113,7 @@ NSString *const RI_API_REMOVE_FOM_WISHLIST = @"wishlist/removeproduct/";
 NSString *const RI_API_PRODUCT_OFFERS = @"all_offers/1/";
 NSString *const RI_API_SELLER_RATING = @"seller_rating/1/per_page/%d/page/%d/";
 NSString *const RI_API_PROD_RATING = @"rating/%d/page/%d/";
+NSString *const RI_API_PROD_RATING_DETAILS = @"rating/1/";
 
 NSString *const RI_API_CATALOG_HASH = @"search/find/hash/";
 NSString *const RI_API_CATALOG_BRAND = @"search/find/brand/";

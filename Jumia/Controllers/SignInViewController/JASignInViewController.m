@@ -12,6 +12,7 @@
 #import "RICustomer.h"
 #import "JAUtils.h"
 #import "JABottomBar.h"
+#import "JAAuthenticationViewController.h"
 
 #define kSideMargin 16
 #define kTopMargin 36
@@ -59,7 +60,7 @@
                                                                 _elementsWidth,
                                                                 60)];
         [_titleLabel setTextAlignment:NSTextAlignmentCenter];
-        [_titleLabel setNumberOfLines:1];
+        [_titleLabel setNumberOfLines:0];
         [_titleLabel setFont:JADisplay1Font];
         [_titleLabel setTextColor:JABlackColor];
         [_titleLabel setText:STRING_LOGIN_WELCOME_BACK];
@@ -78,14 +79,13 @@
                                                                    _elementsWidth,
                                                                    60)];
         [_subTitleLabel setTextAlignment:NSTextAlignmentCenter];
-        [_subTitleLabel setNumberOfLines:1];
+        [_subTitleLabel setNumberOfLines:0];
         [_subTitleLabel setFont:JACaptionFont];
         [_subTitleLabel setTextColor:JABlack800Color];
         [_subTitleLabel setText:STRING_LOGIN_ENTER_PASSWORD_TO_CONTINUE];
         [_subTitleLabel sizeToFit];
         [_subTitleLabel setWidth:_elementsWidth];
     }
-    NSLog(@"_subTitleLabel.frame: %@", NSStringFromCGRect(_subTitleLabel.frame));
     return _subTitleLabel;
 }
 
@@ -174,12 +174,26 @@
 
 - (void)viewWillLayoutSubviews
 {
+    [super viewWillLayoutSubviews];
     [self.mainScrollView setXCenterAligned];
 }
 
-- (void) hideKeyboard
+- (void)viewWillAppear:(BOOL)animated
 {
-    [self.dynamicForm resignResponder];
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"CustomerSignUp"];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    // notify the InAppNotification SDK that this view controller in no more active
+    [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
 }
 
 - (void)dealloc
@@ -312,19 +326,6 @@
     }
 }
 
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"CustomerSignUp"];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    // notify the InAppNotification SDK that this view controller in no more active
-    [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
-}
-
 - (void)forgotPasswordButtonPressed:(id)sender
 {
     [self hideKeyboard];
@@ -402,7 +403,19 @@
                                                                      object:self.nextNotification.object
                                                                    userInfo:self.nextNotification.userInfo];
              } else {
-                 [self.navigationController popViewControllerAnimated:NO];
+                 NSInteger count = [self.navigationController.viewControllers count];
+                 if (count > 2)
+                 {
+                     UIViewController *viewController = [self.navigationController.viewControllers objectAtIndex:count-2];
+                     UIViewController *viewControllerToPop = [self.navigationController.viewControllers objectAtIndex:count-3];
+                     if ([viewController isKindOfClass:[JAAuthenticationViewController class]]) {
+                         [self.navigationController popToViewController:viewControllerToPop animated:YES];
+                     }else{
+                         [self.navigationController popViewControllerAnimated:YES];
+                     }
+                 }else{
+                     [self.navigationController popViewControllerAnimated:YES];
+                 }
              }
          }
          
@@ -423,17 +436,22 @@
                                                    data:[trackingDictionary copy]];
          
          [self hideLoading];
+         [self removeErrorView];
          
          if (RIApiResponseNoInternetConnection == apiResponse) {
-             [self showMessage:STRING_NO_CONNECTION success:NO];
-         } else if(VALID_NOTEMPTY(errorObject, NSDictionary)) {
-             [self.dynamicForm validateFields:errorObject];
-             
-             [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
-         } else if(VALID_NOTEMPTY(errorObject, NSArray)) {
-             [self.dynamicForm checkErrors];
-             
-             [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
+             [self showErrorView:YES startingY:0 selector:@selector(continueLogin) objects:nil];
+         }
+         else if(VALID_NOTEMPTY(errorObject, NSDictionary))
+         {
+             [self.dynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
+                 [self showMessage:message success:NO];
+             }];
+         }
+         else if(VALID_NOTEMPTY(errorObject, NSArray))
+         {
+             [self.dynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
+                 [self showMessage:message success:NO];
+             }];
          } else {
              [self.dynamicForm checkErrors];
              [self showMessage:STRING_ERROR success:NO];
@@ -441,21 +459,12 @@
      }];
 }
 
-#pragma mark JADynamicFormDelegate
-
-- (void)changedFocus:(UIView *)view
-{
-    [UIView animateWithDuration:0.5f animations:^{
-    }];
-}
-
-- (void) lostFocus
-{
-    [UIView animateWithDuration:0.5f animations:^{
-    }];
-}
-
 #pragma mark - Keyboard observers
+
+- (void) hideKeyboard
+{
+    [self.dynamicForm resignResponder];
+}
 
 - (void) keyboardWillShow:(NSNotification *)notification
 {

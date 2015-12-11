@@ -14,10 +14,10 @@
 #import "RIField.h"
 #import "RIFieldDataSetComponent.h"
 #import "RICustomer.h"
-#import "RINewsletterCategory.h"
 #import "JABottomBar.h"
 #import "JATextFieldComponent.h"
 #import "RIPhonePrefix.h"
+#import "JAAuthenticationViewController.h"
 
 #define kTopMargin 36.f
 #define kLateralMargin 16.f
@@ -80,8 +80,7 @@ JADynamicFormDelegate
         [_headerLabel setTextAlignment:NSTextAlignmentCenter];
         [_headerLabel setFont:JADisplay1Font];
         [_headerLabel setTextColor:JABlackColor];
-#warning TODO String
-        [_headerLabel setText:@"Welcome"];
+        [_headerLabel setText:STRING_WELCOME];
         [_headerLabel sizeToFit];
         [_headerLabel setWidth:self.view.width - 2*kLateralMargin];
     }
@@ -96,8 +95,7 @@ JADynamicFormDelegate
         [_topMessageLabel setTextAlignment:NSTextAlignmentCenter];
         [_topMessageLabel setFont:JACaptionFont];
         [_topMessageLabel setTextColor:JABlack800Color];
-#warning TODO String
-        [_topMessageLabel setText:@"Looks like you're new to Jumia.\n We need just a bit more details to create your account."];
+        [_topMessageLabel setText:STRING_NEW_TO_JUMIA];
         [_topMessageLabel sizeToFit];
         [_topMessageLabel setWidth:self.view.width - 2*kLateralMargin];
     }
@@ -111,7 +109,8 @@ JADynamicFormDelegate
 #warning TODO FONT
         _checkBoxComponent.labelText.font = [UIFont fontWithName:kFontRegularName size:_checkBoxComponent.labelText.font.pointSize];
         [_checkBoxComponent.labelText setText:STRING_REMEMBER_EMAIL];
-        [_checkBoxComponent.switchComponent setOn:YES];
+        [_checkBoxComponent setHidden:YES];
+        [_checkBoxComponent.switchComponent setOn:NO];
     }
     return _checkBoxComponent;
 }
@@ -120,7 +119,7 @@ JADynamicFormDelegate
 {
     if (!VALID_NOTEMPTY(_registerButton, JABottomBar)) {
         _registerButton = [[JABottomBar alloc] initWithFrame:CGRectMake(6.f, self.view.height, self.view.width - 2*6.f, kBottomDefaultHeight)];
-        [_registerButton addButton:[STRING_REGISTER uppercaseString] target:self action:@selector(registerButtonPressed:)];
+        [_registerButton addButton:[STRING_CONTINUE uppercaseString] target:self action:@selector(registerButtonPressed:)];
     }
     return _registerButton;
 }
@@ -283,7 +282,10 @@ JADynamicFormDelegate
 }
 
 #pragma mark - Keyboard events
-
+/*
+ alternative keyboard scroll
+    in case we think that the old one should be replaced
+ */
 - (void)keyboardChanged:(NSNotification *)notification
 {
 //    // get the size of the keyboard
@@ -424,20 +426,6 @@ JADynamicFormDelegate
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRegisterSuccess]
                                                   data:[trackingDictionary copy]];
         
-        NSArray *newsletterOption = [RINewsletterCategory getNewsletter];
-        if(VALID_NOTEMPTY(newsletterOption, NSArray))
-        {
-            trackingDictionary = [[NSMutableDictionary alloc] init];
-            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-            [trackingDictionary setValue:@"SubscribeNewsletter" forKey:kRIEventActionKey];
-            [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-            [trackingDictionary setValue:@"Register" forKey:kRIEventLocationKey];
-            
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventNewsletter]
-                                                      data:[trackingDictionary copy]];
-        }
-        
         [self.dynamicForm resetValues];
         
         [self hideLoading];
@@ -454,7 +442,19 @@ JADynamicFormDelegate
                                                                 object:self.nextNotification.object
                                                               userInfo:self.nextNotification.userInfo];
         }else{
-            [self.navigationController popViewControllerAnimated:NO];
+            NSInteger count = [self.navigationController.viewControllers count];
+            if (count > 2)
+            {
+                UIViewController *viewController = [self.navigationController.viewControllers objectAtIndex:count-2];
+                UIViewController *viewControllerToPop = [self.navigationController.viewControllers objectAtIndex:count-3];
+                if ([viewController isKindOfClass:[JAAuthenticationViewController class]]) {
+                    [self.navigationController popToViewController:viewControllerToPop animated:YES];
+                }else{
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+            }else{
+                [self.navigationController popViewControllerAnimated:YES];
+            }
         }
         
     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
@@ -480,17 +480,17 @@ JADynamicFormDelegate
         {
             [self showMessage:STRING_NO_CONNECTION success:NO];
         }
-        else if(VALID_NOTEMPTY(errorObject, NSDictionary))
+        else if (VALID_NOTEMPTY(errorObject, NSDictionary))
         {
-            [self.dynamicForm validateFields:errorObject];
-            
-            [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
+            [self.dynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
+                [self showMessage:message success:NO];
+            }];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
-            [self.dynamicForm checkErrors];
-            
-            [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
+            [self.dynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
+                [self showMessage:message success:NO];
+            }];
         }
         else
         {
@@ -590,7 +590,6 @@ JADynamicFormDelegate
         
         
         [self.radioComponent setValue:[prefix value]];
-//        [self.radioComponent setValue:[[prefix value] stringValue]];
         [self.radioComponent.textField setText:[prefix label]];
     }
     [self closePickers];

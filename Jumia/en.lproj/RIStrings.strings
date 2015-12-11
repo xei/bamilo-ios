@@ -114,7 +114,7 @@
 
 "string_with_discount_only" = "With discount only";
 
-"favourite_no_favourites" = "You do not have any product saved yet!";
+"favourite_no_favourites" = "You don't have any saved items.";
 
 "favourite_addalltocart" = "Add All Items to Cart";
 
@@ -171,6 +171,8 @@
 "wishlist_notiems" = "You have no items in the cart";
 
 "continue_shopping" = "Continue Shopping";
+
+"continue" = "Continue";
 
 "my_order_coupon_label" = "Coupon";
 
@@ -308,7 +310,9 @@
 
 "recentsearch_clear_searches" = "Clear Recent Searches";
 
-"recentlyview_no_searches" = "No Recently Viewed Products Here";
+"recentlyview_no_searches_title" = "No Recently Viewed Items";
+
+"recentlyview_no_searches" = "You don't have any recently viewed items.";
 
 "recentlyview_clear_viewed" = "Clear Recently Viewed";
 
@@ -455,6 +459,10 @@
 "fallback_mobile" = "Mobile Phones";
 
 "fallback_welcome" = "WELCOME TO";
+
+"welcome" = "Welcome";
+
+"new_to_jumia" = "Looks like you're new to Jumia.\n We need just a bit more details to create your account.";
 
 "reviews" = "Reviews";
 
@@ -623,3 +631,6 @@
 "login_welcome_back" = "Welcome Back";
 
 "fgt_your_pass" = "Forgot your password?";
+
+"password_recovery" = "Password recovery";
+
