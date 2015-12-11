@@ -230,6 +230,7 @@
 #define STRING_CAMPAIGNS RILocalizedString(@"campaigns_label", nil)
 #define STRING_CAMPAIGN_IS_OVER RILocalizedString(@"campaign_is_over", nil)
 #define STRING_CAMPAIGN_IS_OVER_RESUME RILocalizedString(@"campaign_is_over_resume", nil)
+#define STRING_NOT_AVAILABLE RILocalizedString(@"not_available", nil)
 
 #define STRING_GO_SHOP RILocalizedString(@"go_shop_text", nil)
 #define STRING_PROMOTION_TIP_TAP RILocalizedString(@"promotion_tip_tap_text", nil)

@@ -14,6 +14,12 @@
 #import "JAProductListFlowLayout.h"
 #import "JACampaignBannerCell.h"
 #import "JAProductCollectionViewFlowLayout.h"
+#import "JABottomBar.h"
+
+#define kLateralMargin 16
+#define kTopMargin 48
+#define kBetweenMargin 28
+#define kButtonWidth 288
 
 @interface JACampaignPageView()
 
@@ -26,9 +32,80 @@
 @property (nonatomic, strong) NSMutableArray* chosenSimpleNames;
 @property (nonatomic, strong) JACampaignProductCell* lastPressedCampaignProductCell;
 
+// This campaign is finished
+@property (nonatomic, strong) UIView *noCampaignView;
+@property (nonatomic, strong) UILabel *topMessageLabel;
+@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UILabel *bottomMessageLabel;
+@property (nonatomic, strong) JABottomBar *bottomBar;
+
 @end
 
 @implementation JACampaignPageView
+
+- (UIView *)noCampaignView
+{
+    if (!VALID_NOTEMPTY(_noCampaignView, UIView)) {
+        _noCampaignView = [[UIView alloc] initWithFrame:self.bounds];
+        [_noCampaignView setBackgroundColor:[UIColor whiteColor]];
+        [_noCampaignView setHidden:YES];
+        [_noCampaignView addSubview:self.topMessageLabel];
+        [_noCampaignView addSubview:self.imageView];
+        [_noCampaignView addSubview:self.bottomMessageLabel];
+        [_noCampaignView addSubview:self.bottomBar];
+        [self addSubview:_noCampaignView];
+    }
+    return _noCampaignView;
+}
+
+- (UILabel *)topMessageLabel
+{
+    if (!VALID_NOTEMPTY(_topMessageLabel, UILabel)) {
+        _topMessageLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, kTopMargin, kButtonWidth, 200)];
+        [_topMessageLabel setFont:JADisplay2Font];
+        [_topMessageLabel setTextColor:JABlackColor];
+        [_topMessageLabel setTextAlignment:NSTextAlignmentCenter];
+        [_topMessageLabel setNumberOfLines:0];
+        [_topMessageLabel setText:STRING_CAMPAIGN_IS_OVER];
+        [_topMessageLabel sizeToFit];
+        [_topMessageLabel setWidth:kButtonWidth];
+    }
+    return _topMessageLabel;
+}
+
+- (UIImageView *)imageView
+{
+    if (!VALID_NOTEMPTY(_imageView, UIImageView)) {
+        UIImage *image = [UIImage imageNamed:@"ic_campaign_timer"];
+        _imageView = [[UIImageView alloc] initWithImage:image];
+        [_imageView setFrame:CGRectMake((self.width - image.size.width)/2, CGRectGetMaxY(self.topMessageLabel.frame) + kBetweenMargin, image.size.width, image.size.height)];
+    }
+    return _imageView;
+}
+
+- (UILabel *)bottomMessageLabel
+{
+    if (!VALID_NOTEMPTY(_bottomMessageLabel, UILabel)) {
+        _bottomMessageLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.imageView.frame) + kBetweenMargin, kButtonWidth, 200)];
+        [_bottomMessageLabel setFont:JABody3Font];
+        [_bottomMessageLabel setTextColor:JABlack800Color];
+        [_bottomMessageLabel setTextAlignment:NSTextAlignmentCenter];
+        [_bottomMessageLabel setNumberOfLines:0];
+        [_bottomMessageLabel setText:STRING_CAMPAIGN_IS_OVER_RESUME];
+        [_bottomMessageLabel sizeToFit];
+        [_bottomMessageLabel setWidth:kButtonWidth];
+    }
+    return _bottomMessageLabel;
+}
+
+- (JABottomBar *)bottomBar
+{
+    if (!VALID_NOTEMPTY(_bottomBar, JABottomBar)) {
+        _bottomBar = [[JABottomBar alloc] initWithFrame:CGRectMake((self.width - kButtonWidth)/2, CGRectGetMaxY(self.bottomMessageLabel.frame) + kBetweenMargin, kButtonWidth, kBottomDefaultHeight)];
+        [_bottomBar addButton:[STRING_CONTINUE_SHOPPING uppercaseString] target:self action:@selector(goToHomeScreen)];
+    }
+    return _bottomBar;
+}
 
 @synthesize interfaceOrientation=_interfaceOrientation;
 -(void)setInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -68,6 +145,16 @@
 - (void)loadWithCampaign:(RICampaign*)campaign
 {
     [self setBackgroundColor:[UIColor whiteColor]];
+    if (VALID(campaign, RICampaign)) {
+        [self.noCampaignView setHidden:YES];
+    }else{
+        [self.noCampaignView setHidden:NO];
+        [self.noCampaignView setFrame:self.bounds];
+        for (UIView *subView in self.noCampaignView.subviews) {
+            [subView setXCenterAligned];
+        }
+        return;
+    }
     if (NO == self.isLoaded) {
         self.isLoaded = YES;
         
@@ -128,6 +215,16 @@
     
     [self.collectionView setFrame:self.bounds];
     [self.collectionView reloadData];
+}
+
+- (void)setNoCampaigns:(BOOL)visible
+{
+    [self.noCampaignView setHidden:!visible];
+}
+
+- (void)goToHomeScreen
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
 }
 
 #pragma mark - UICollectionView
