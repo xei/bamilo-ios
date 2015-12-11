@@ -216,6 +216,10 @@
         _sizeLine = [UIButton buttonWithType:UIButtonTypeSystem];
         [_sizeLine setFrame:CGRectMake(kLateralMargin, self.savingView.y, self.width - 2*kLateralMargin, 20)];
         [_sizeLine.titleLabel setFont:JACaptionFont];
+        [_sizeLine.titleLabel setTextColor:JABlackColor];
+        [_sizeLine setTitleColor:JABlackColor forState:UIControlStateNormal];
+        [_sizeLine setTitleColor:JABlackColor forState:UIControlStateDisabled];
+        [_sizeLine setEnabled:NO];
         [_sizeLine addTarget:self action:@selector(sizeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     }
     return _sizeLine;
@@ -224,10 +228,6 @@
 - (void)setChosenSize:(NSString *)chosenSize
 {
     _chosenSize = chosenSize;
-    [self.sizeLine setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, chosenSize] forState:UIControlStateNormal];
-    [self.sizeLine setWidth:self.width - 2*kLateralMargin];
-    [self.sizeLine setYBottomOf:self.savingView at:10.f];
-    [self.sizeLine setXCenterAligned];
 }
 
 - (UIView *)bottomContentView
@@ -357,14 +357,9 @@
         [self.priceLine setTitle:campaignProduct.priceFormatted];
         [self.savingView setHidden:YES];
     }
-    
     if (campaignProduct.productSimples.count > 1) {
         [self.sizeLine setHidden:NO];
-        if (VALID_NOTEMPTY(chosenSize, NSString)) {
-            [self.sizeLine setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, chosenSize] forState:UIControlStateNormal];
-        }else{
-            [self.sizeLine setTitle:STRING_SIZE forState:UIControlStateNormal];
-        }
+        [self.sizeLine setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, [[campaignProduct.productSimples valueForKey:@"size"] componentsJoinedByString:@"; "]] forState:UIControlStateNormal];
     }else{
         [self.sizeLine setHidden:YES];
     }
@@ -381,23 +376,17 @@
 {
     [self.imageClickableView setWidth:self.width];
     
-    CGFloat titleBrandLabelWidth = self.width - 2*kLateralMargin;
-    if (titleBrandLabelWidth != self.titleBrandLabel.width || self.titleBrandLabel.textAlignment != NSTextAlignmentLeft) {
-        if (self.titleBrandLabel.textAlignment != NSTextAlignmentLeft)
-            [self.titleBrandLabel setTextAlignment:NSTextAlignmentLeft];
-        if (titleBrandLabelWidth != self.titleBrandLabel.width)
-            [self.titleBrandLabel setWidth:titleBrandLabelWidth];
-        [self setForRTL:self.titleBrandLabel];
-    }
+    if (self.titleBrandLabel.textAlignment != NSTextAlignmentLeft)
+        [self.titleBrandLabel setTextAlignment:NSTextAlignmentLeft];
     
-    CGFloat titleLabelWidth = self.width - 2*kLateralMargin;
-    if (titleLabelWidth != self.titleLabel.width || self.titleLabel.textAlignment != NSTextAlignmentLeft) {
-        if (self.titleLabel.textAlignment != NSTextAlignmentLeft)
-            [self.titleLabel setTextAlignment:NSTextAlignmentLeft];
-        if (titleBrandLabelWidth != self.titleLabel.width)
-            [self.titleLabel setWidth:titleLabelWidth];
-        [self setForRTL:self.titleLabel];
-    }
+    [self.titleBrandLabel setWidth:self.width - 2*kLateralMargin];
+    [self setForRTL:self.titleBrandLabel];
+    
+    
+    if (self.titleLabel.textAlignment != NSTextAlignmentLeft)
+        [self.titleLabel setTextAlignment:NSTextAlignmentLeft];
+    [self.titleLabel setWidth:self.width - 2*kLateralMargin];
+    [self setForRTL:self.titleLabel];
     
     CGRect discountLabelRect = CGRectMake(self.discountLabel.superview.width - 60 - kLateralMargin, kTopMargin, 60, 19);
     if (!CGRectEqualToRect(discountLabelRect, self.discountLabel.frame)) {
