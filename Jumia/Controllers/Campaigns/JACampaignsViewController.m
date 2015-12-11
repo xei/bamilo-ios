@@ -13,6 +13,12 @@
 #import "JAUtils.h"
 #import <FBSDKCoreKit/FBSDKAppEvents.h>
 #import "RITeaserComponent.h"
+#import "JABottomBar.h"
+
+#define kLateralMargin 16
+#define kTopMargin 48
+#define kBetweenMargin 28
+#define kButtonWidth 288
 
 @interface JACampaignsViewController ()
 
@@ -43,9 +49,80 @@
 
 @property (nonatomic, strong)NSMutableArray* activeCampaignComponents;
 
+// This campaign is finished
+@property (nonatomic, strong) UIView *noCampaignView;
+@property (nonatomic, strong) UILabel *topMessageLabel;
+@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UILabel *bottomMessageLabel;
+@property (nonatomic, strong) JABottomBar *bottomBar;
+
 @end
 
 @implementation JACampaignsViewController
+
+- (UIView *)noCampaignView
+{
+    if (!VALID_NOTEMPTY(_noCampaignView, UIView)) {
+        _noCampaignView = [[UIView alloc] initWithFrame:self.viewBounds];
+        [_noCampaignView setBackgroundColor:[UIColor whiteColor]];
+        [_noCampaignView setHidden:YES];
+        [_noCampaignView addSubview:self.topMessageLabel];
+        [_noCampaignView addSubview:self.imageView];
+        [_noCampaignView addSubview:self.bottomMessageLabel];
+        [_noCampaignView addSubview:self.bottomBar];
+        [self.view addSubview:_noCampaignView];
+    }
+    return _noCampaignView;
+}
+
+- (UILabel *)topMessageLabel
+{
+    if (!VALID_NOTEMPTY(_topMessageLabel, UILabel)) {
+        _topMessageLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, kTopMargin, kButtonWidth, 200)];
+        [_topMessageLabel setFont:JADisplay2Font];
+        [_topMessageLabel setTextColor:JABlackColor];
+        [_topMessageLabel setTextAlignment:NSTextAlignmentCenter];
+        [_topMessageLabel setNumberOfLines:0];
+        [_topMessageLabel setText:STRING_CAMPAIGN_IS_OVER];
+        [_topMessageLabel sizeToFit];
+        [_topMessageLabel setWidth:kButtonWidth];
+    }
+    return _topMessageLabel;
+}
+
+- (UIImageView *)imageView
+{
+    if (!VALID_NOTEMPTY(_imageView, UIImageView)) {
+        UIImage *image = [UIImage imageNamed:@"ic_campaign_timer"];
+        _imageView = [[UIImageView alloc] initWithImage:image];
+        [_imageView setFrame:CGRectMake((self.view.width - image.size.width)/2, CGRectGetMaxY(self.topMessageLabel.frame) + kBetweenMargin, image.size.width, image.size.height)];
+    }
+    return _imageView;
+}
+
+- (UILabel *)bottomMessageLabel
+{
+    if (!VALID_NOTEMPTY(_bottomMessageLabel, UILabel)) {
+        _bottomMessageLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.imageView.frame) + kBetweenMargin, kButtonWidth, 200)];
+        [_bottomMessageLabel setFont:JABody3Font];
+        [_bottomMessageLabel setTextColor:JABlack800Color];
+        [_bottomMessageLabel setTextAlignment:NSTextAlignmentCenter];
+        [_bottomMessageLabel setNumberOfLines:0];
+        [_bottomMessageLabel setText:STRING_CAMPAIGN_IS_OVER_RESUME];
+        [_bottomMessageLabel sizeToFit];
+        [_bottomMessageLabel setWidth:kButtonWidth];
+    }
+    return _bottomMessageLabel;
+}
+
+- (JABottomBar *)bottomBar
+{
+    if (!VALID_NOTEMPTY(_bottomBar, JABottomBar)) {
+        _bottomBar = [[JABottomBar alloc] initWithFrame:CGRectMake((self.view.width - kButtonWidth)/2, CGRectGetMaxY(self.bottomMessageLabel.frame) + kBetweenMargin, kButtonWidth, kBottomDefaultHeight)];
+        [_bottomBar addButton:[STRING_CONTINUE_SHOPPING uppercaseString] target:self action:@selector(goToHomeScreen)];
+    }
+    return _bottomBar;
+}
 
 - (void)viewDidLoad
 {
@@ -108,6 +185,11 @@
         [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
     } else {
         [self loadCampaigns];
+    }
+    
+    [self.noCampaignView setFrame:self.viewBounds];
+    for (UIView *subView in self.noCampaignView.subviews) {
+        [subView setXCenterAligned];
     }
 }
 
@@ -282,13 +364,25 @@ withCampaignTargetString:(NSString*)campaignTargetString
     }
     self.apiResponse = RIApiResponseSuccess;
     [RICampaign getCampaignWithTargetString:campaignTargetString successBlock:^(RICampaign *campaign) {
+        [self setNoCampaigns:NO];
         if (VALID_NOTEMPTY(self.pickerScrollView, JAPickerScrollView) && 0 == self.pickerScrollView.optionLabels.count) {
             [self.pickerScrollView setOptions:[NSArray arrayWithObject:campaign.name]];
         }
         [self removeErrorView];
         [campaignPage loadWithCampaign:campaign];
         [self hideLoading];
-    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errors) {
+        
+        if (apiResponse == RIApiResponseAPIError) {
+            for (NSDictionary *error in errors) {
+                if (VALID([error objectForKey:@"reason"], NSString)) {
+                    if ([[error objectForKey:@"reason"] isEqualToString:@"CAMPAIGN_NOT_EXIST"]) {
+                        [self setNoCampaigns:YES];
+                        return;
+                    }
+                }
+            }
+        }
         [self loadCampaignFailedWithResponse:apiResponse];
     }];
 }
@@ -298,13 +392,38 @@ withCampaignTargetString:(NSString*)campaignTargetString
 {
     [self showLoading];
     [RICampaign getCampaignWithId:campaignId successBlock:^(RICampaign *campaign) {
+        [self setNoCampaigns:NO];
         [self removeErrorView];
         [campaignPage loadWithCampaign:campaign];
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
         
+        if (apiResponse == RIApiResponseAPIError) {
+            for (NSDictionary *error in error) {
+                if (VALID([error objectForKey:@"reason"], NSString)) {
+                    if ([[error objectForKey:@"reason"] isEqualToString:@"CAMPAIGN_NOT_EXIST"]) {
+                        [self setNoCampaigns:YES];
+                        return;
+                    }
+                }
+            }
+        }
         [self loadCampaignFailedWithResponse:apiResponse];
     }];
+}
+
+- (void)setNoCampaigns:(BOOL)visible
+{
+    if (visible) {
+        self.apiResponse = RIApiResponseAPIError;
+    }
+    [self hideLoading];
+    [self.noCampaignView setHidden:!visible];
+}
+
+- (void)goToHomeScreen
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
 }
 
 #pragma mark - JACampaignPageViewDelegate

@@ -72,6 +72,19 @@
     return  errorDictionary;
 }
 
++ (NSArray *)getErrorCodes:(NSDictionary *)jsonObject
+{
+    
+    NSArray *errors = nil;
+    
+    RIError *error = [RIError parseErrorMessages:jsonObject];
+    if(NOTEMPTY(error.errorCodes))
+    {
+        return error.errorCodes;
+    }
+    return errors;
+}
+
 #pragma mark - private methods
 
 /**

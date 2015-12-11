@@ -384,6 +384,10 @@
 
 "campaing_timer_end" = "Ends in:";
 
+"campaign_is_over" = "This campaign is finished";
+
+"campaign_is_over_resume" = "Even so, we have plenty of other great offers waiting for you.";
+
 "string_format_off_label" = "-%d%% OFF";
 
 "campaigns_label" = "Campaigns";
