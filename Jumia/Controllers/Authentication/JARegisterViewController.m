@@ -78,7 +78,7 @@ JADynamicFormDelegate
         _headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, kTopMargin, self.mainScrollView.width, 200)];
         [_headerLabel setNumberOfLines:0];
         [_headerLabel setTextAlignment:NSTextAlignmentCenter];
-        [_headerLabel setFont:JADisplay1Font];
+        [_headerLabel setFont:JADisplay2Font];
         [_headerLabel setTextColor:JABlackColor];
         [_headerLabel setText:STRING_WELCOME];
         [_headerLabel sizeToFit];

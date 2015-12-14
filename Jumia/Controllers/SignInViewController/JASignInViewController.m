@@ -61,7 +61,7 @@
                                                                 60)];
         [_titleLabel setTextAlignment:NSTextAlignmentCenter];
         [_titleLabel setNumberOfLines:0];
-        [_titleLabel setFont:JADisplay1Font];
+        [_titleLabel setFont:JADisplay2Font];
         [_titleLabel setTextColor:JABlackColor];
         [_titleLabel setText:STRING_LOGIN_WELCOME_BACK];
         [_titleLabel sizeToFit];
