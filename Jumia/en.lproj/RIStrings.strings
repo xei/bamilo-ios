@@ -382,6 +382,8 @@
 
 "campaing_offer_ended" = "Offer Ended!";
 
+"not_available" = "Not Available!";
+
 "campaing_timer_end" = "Ends in:";
 
 "campaign_is_over" = "This campaign is finished";
