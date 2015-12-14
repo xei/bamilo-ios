@@ -141,6 +141,7 @@
 #define STRING_CREATE_ACCOUNT RILocalizedString(@"register_title", nil)
 #define STRING_ACCOUNT_DATA RILocalizedString(@"register_sectiontitle", nil)
 #define STRING_REGISTER RILocalizedString(@"registration_text", nil)
+#define STRING_CONTINUE RILocalizedString(@"continue", nil)
 
 #define STRING_CHECKOUT_ADDRESS RILocalizedString(@"checkout_header_step_2", nil)
 #define STRING_ADD_NEW_ADDRESS RILocalizedString(@"action_label_add_address", nil)
@@ -221,12 +222,15 @@
 #define STRING_SAVE_LABEL RILocalizedString(@"save_label", nil)
 #define STRING_SPECIFICATIONS RILocalizedString(@"product_specifications", nil)
 
-#define STRING_CAMPAIGN_REMAINING_STOCK RILocalizedString(@"string_campaign_ramaining_stock", nil)
+#define STRING_CAMPAIGN_REMAINING_STOCK RILocalizedString(@"string_campaign_ramaining_stock_without_value", nil)
 #define STRING_CAMPAIGN_SAVE RILocalizedString(@"campaign_save", nil)
 #define STRING_CAMPAIGN_OFFER_ENDED RILocalizedString(@"campaing_offer_ended", nil)
 #define STRING_CAMPAIGN_TIMER_END RILocalizedString(@"campaing_timer_end", nil)
 #define STRING_FORMAT_OFF RILocalizedString(@"string_format_off_label", nil)
 #define STRING_CAMPAIGNS RILocalizedString(@"campaigns_label", nil)
+#define STRING_CAMPAIGN_IS_OVER RILocalizedString(@"campaign_is_over", nil)
+#define STRING_CAMPAIGN_IS_OVER_RESUME RILocalizedString(@"campaign_is_over_resume", nil)
+#define STRING_NOT_AVAILABLE RILocalizedString(@"not_available", nil)
 
 #define STRING_GO_SHOP RILocalizedString(@"go_shop_text", nil)
 #define STRING_PROMOTION_TIP_TAP RILocalizedString(@"promotion_tip_tap_text", nil)
@@ -271,6 +275,9 @@
 #define STRING_FALLBACK_HOME_OFFICE RILocalizedString(@"fallback_home_office_ios", nil)
 #define STRING_FALLBACK_MOBILE RILocalizedString(@"fallback_mobile", nil)
 #define STRING_FALLBACK_WELCOME RILocalizedString(@"fallback_welcome", nil)
+
+#define STRING_WELCOME RILocalizedString(@"welcome", nil)
+#define STRING_NEW_TO_JUMIA RILocalizedString(@"new_to_jumia", nil)
 
 #define STRING_REVIEWS_LABEL RILocalizedString(@"reviews", nil)
 #define STRING_MORE RILocalizedString(@"more", nil)
@@ -317,6 +324,7 @@
 #define STRING_BUNDLE_TITLE RILocalizedString(@"bundle_title", nil)
 #define STRING_BUNDLE_TOTAL_PRICE RILocalizedString(@"bundle_total_price", nil)
 #define STRING_BUY_NOW RILocalizedString(@"buy_now", nil)
+#define STRING_BUY RILocalizedString(@"buy", nil)
 
 #define STRING_OTHER_SELLERS RILocalizedString(@"other_sellers", nil)
 #define STRING_SAME_PRODUCT_FROM_OTHER_SELLERS RILocalizedString(@"same_product_from_other_sellers", nil)

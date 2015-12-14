@@ -13,6 +13,7 @@
 
 #define kSideMargin 16
 #define kTopMargin 36
+#define kSubTitleMargin 6
 #define kEmailMargin 32
 #define kIPadWidth 289
 
@@ -53,7 +54,7 @@
                                                                 60)];
         [_titleLabel setTextAlignment:NSTextAlignmentCenter];
         [_titleLabel setNumberOfLines:0];
-        [_titleLabel setFont:JADisplay1Font];
+        [_titleLabel setFont:JADisplay2Font];
         [_titleLabel setTextColor:JABlackColor];
         [_titleLabel setText:STRING_TYPE_YOUR_EMAIL];
         [_titleLabel sizeToFit];
@@ -67,7 +68,7 @@
     if (!VALID_NOTEMPTY(_subTitleLabel, UILabel)) {
         _subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(
                                                                    kSideMargin,
-                                                                   CGRectGetMaxY(self.titleLabel.frame),
+                                                                   CGRectGetMaxY(self.titleLabel.frame) + kSubTitleMargin,
                                                                    _elementsWidth,
                                                                    60)];
         [_subTitleLabel setTextAlignment:NSTextAlignmentCenter];
@@ -89,7 +90,7 @@
                                                                               self.view.height, //CGRectGetMaxY(self.viewBounds) - kBottomDefaultHeight,
                                                                               self.view.width,
                                                                               kBottomDefaultHeight)];
-        [_forgotPasswordButton addButton:[@"Continue" uppercaseString] target:self action:@selector(forgotPasswordButtonPressed:)];
+        [_forgotPasswordButton addButton:[STRING_SUBMIT uppercaseString] target:self action:@selector(forgotPasswordButtonPressed:)];
     }
     return _forgotPasswordButton;
 }
@@ -247,9 +248,10 @@
      } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
      {
          [self hideLoading];
+         [self removeErrorView];
          
          if (RIApiResponseNoInternetConnection == apiResponse) {
-             [self showMessage:STRING_NO_CONNECTION success:NO];
+             [self showErrorView:YES startingY:0 selector:@selector(continueForgotPassword) objects:nil];
          }
          else if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {

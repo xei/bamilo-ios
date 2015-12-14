@@ -172,6 +172,8 @@
 
 "continue_shopping" = "Continue Shopping";
 
+"continue" = "Continue";
+
 "my_order_coupon_label" = "Coupon";
 
 "voucher_use" = "Use";
@@ -224,7 +226,7 @@
 
 "fgt_pass" = "Forgot Password?";
 
-"forgotten_password" = "Please type in your email.";
+"forgotten_password" = "Please type in your email";
 
 "forgotten_password_sub_text" = "We will send you a link to change the password.";
 
@@ -374,11 +376,19 @@
 
 "string_campaign_ramaining_stock" = "Remaining Stock: %d%%";
 
+"string_campaign_ramaining_stock_without_value" = "Remaining Stock";
+
 "campaign_save" = "You Save";
 
 "campaing_offer_ended" = "Offer Ended!";
 
+"not_available" = "Not Available!";
+
 "campaing_timer_end" = "Ends in:";
+
+"campaign_is_over" = "This campaign is finished";
+
+"campaign_is_over_resume" = "Even so, we have plenty of other great offers waiting for you.";
 
 "string_format_off_label" = "-%d%% OFF";
 
@@ -456,6 +466,10 @@
 
 "fallback_welcome" = "WELCOME TO";
 
+"welcome" = "Welcome";
+
+"new_to_jumia" = "Looks like you're new to Jumia.\n We need just a bit more details to create your account.";
+
 "reviews" = "Reviews";
 
 "more" = "More";
@@ -525,6 +539,8 @@
 "bundle_total_price" = "Total Price:";
 
 "buy_now" = "Buy Now";
+
+"buy" = "Buy";
 
 "other_sellers" = "Other Sellers";
 
@@ -624,5 +640,5 @@
 
 "fgt_your_pass" = "Forgot your password?";
 
-"password_recovery" = "Password recovery";
+"password_recovery" = "Password Recovery";
 

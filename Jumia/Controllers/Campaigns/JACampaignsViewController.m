@@ -288,7 +288,23 @@ withCampaignTargetString:(NSString*)campaignTargetString
         [self removeErrorView];
         [campaignPage loadWithCampaign:campaign];
         [self hideLoading];
-    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errors) {
+        
+        if (apiResponse == RIApiResponseAPIError) {
+            for (NSDictionary *error in errors) {
+                if (VALID([error objectForKey:@"reason"], NSString)) {
+                    if ([[error objectForKey:@"reason"] isEqualToString:@"CAMPAIGN_NOT_EXIST"]) {
+                        if (VALID_NOTEMPTY(self.pickerScrollView, JAPickerScrollView) && 0 == self.pickerScrollView.optionLabels.count) {
+                            [self.pickerScrollView setOptions:[NSArray arrayWithObject:STRING_NOT_AVAILABLE]];
+                        }
+                        [self removeErrorView];
+                        [campaignPage loadWithCampaign:nil];
+                        [self hideLoading];
+                        return;
+                    }
+                }
+            }
+        }
         [self loadCampaignFailedWithResponse:apiResponse];
     }];
 }
@@ -303,6 +319,21 @@ withCampaignTargetString:(NSString*)campaignTargetString
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
         
+        if (apiResponse == RIApiResponseAPIError) {
+            for (NSDictionary *error in error) {
+                if (VALID([error objectForKey:@"reason"], NSString)) {
+                    if ([[error objectForKey:@"reason"] isEqualToString:@"CAMPAIGN_NOT_EXIST"]) {
+                        if (VALID_NOTEMPTY(self.pickerScrollView, JAPickerScrollView) && 0 == self.pickerScrollView.optionLabels.count) {
+                            [self.pickerScrollView setOptions:[NSArray arrayWithObject:STRING_NOT_AVAILABLE]];
+                        }
+                        [self removeErrorView];
+                        [campaignPage loadWithCampaign:nil];
+                        [self hideLoading];
+                        return;
+                    }
+                }
+            }
+        }
         [self loadCampaignFailedWithResponse:apiResponse];
     }];
 }

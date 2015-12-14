@@ -61,7 +61,7 @@
                                                                 60)];
         [_titleLabel setTextAlignment:NSTextAlignmentCenter];
         [_titleLabel setNumberOfLines:0];
-        [_titleLabel setFont:JADisplay1Font];
+        [_titleLabel setFont:JADisplay2Font];
         [_titleLabel setTextColor:JABlackColor];
         [_titleLabel setText:STRING_LOGIN_WELCOME_BACK];
         [_titleLabel sizeToFit];
@@ -436,9 +436,10 @@
                                                    data:[trackingDictionary copy]];
          
          [self hideLoading];
+         [self removeErrorView];
          
          if (RIApiResponseNoInternetConnection == apiResponse) {
-             [self showMessage:STRING_NO_CONNECTION success:NO];
+             [self showErrorView:YES startingY:0 selector:@selector(continueLogin) objects:nil];
          }
          else if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {

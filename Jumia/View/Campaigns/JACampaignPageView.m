@@ -13,22 +13,99 @@
 #import "JAUtils.h"
 #import "JAProductListFlowLayout.h"
 #import "JACampaignBannerCell.h"
+#import "JAProductCollectionViewFlowLayout.h"
+#import "JABottomBar.h"
+
+#define kLateralMargin 16
+#define kTopMargin 48
+#define kBetweenMargin 28
+#define kButtonWidth 288
 
 @interface JACampaignPageView()
 
-@property (nonatomic, strong)RICampaign* campaign;
-@property (nonatomic, strong)UICollectionView* collectionView;
-@property (nonatomic, strong)JAProductListFlowLayout* flowLayout;
-@property (nonatomic, strong)NSString* cellIdentifier;
-@property (nonatomic, strong)UIImageView* bannerImage;
-@property (nonatomic, assign)NSInteger elapsedTimeInSeconds;
+@property (nonatomic, strong) RICampaign* campaign;
+@property (nonatomic, strong) UICollectionView* collectionView;
+@property (nonatomic, strong) JAProductCollectionViewFlowLayout* flowLayout;
+@property (nonatomic, strong) NSString* cellIdentifier;
+@property (nonatomic, strong) UIImageView* bannerImage;
+@property (nonatomic, assign) NSInteger elapsedTimeInSeconds;
+@property (nonatomic, strong) NSMutableArray* chosenSimpleNames;
+@property (nonatomic, strong) JACampaignProductCell* lastPressedCampaignProductCell;
 
-@property (nonatomic, strong)NSMutableArray* chosenSimpleNames;
-@property (nonatomic, strong)JACampaignProductCell* lastPressedCampaignProductCell;
+// This campaign is finished
+@property (nonatomic, strong) UIView *noCampaignView;
+@property (nonatomic, strong) UILabel *topMessageLabel;
+@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UILabel *bottomMessageLabel;
+@property (nonatomic, strong) JABottomBar *bottomBar;
 
 @end
 
 @implementation JACampaignPageView
+
+- (UIView *)noCampaignView
+{
+    if (!VALID_NOTEMPTY(_noCampaignView, UIView)) {
+        _noCampaignView = [[UIView alloc] initWithFrame:self.bounds];
+        [_noCampaignView setBackgroundColor:[UIColor whiteColor]];
+        [_noCampaignView setHidden:YES];
+        [_noCampaignView addSubview:self.topMessageLabel];
+        [_noCampaignView addSubview:self.imageView];
+        [_noCampaignView addSubview:self.bottomMessageLabel];
+        [_noCampaignView addSubview:self.bottomBar];
+        [self addSubview:_noCampaignView];
+    }
+    return _noCampaignView;
+}
+
+- (UILabel *)topMessageLabel
+{
+    if (!VALID_NOTEMPTY(_topMessageLabel, UILabel)) {
+        _topMessageLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, kTopMargin, kButtonWidth, 200)];
+        [_topMessageLabel setFont:JADisplay2Font];
+        [_topMessageLabel setTextColor:JABlackColor];
+        [_topMessageLabel setTextAlignment:NSTextAlignmentCenter];
+        [_topMessageLabel setNumberOfLines:0];
+        [_topMessageLabel setText:STRING_CAMPAIGN_IS_OVER];
+        [_topMessageLabel sizeToFit];
+        [_topMessageLabel setWidth:kButtonWidth];
+    }
+    return _topMessageLabel;
+}
+
+- (UIImageView *)imageView
+{
+    if (!VALID_NOTEMPTY(_imageView, UIImageView)) {
+        UIImage *image = [UIImage imageNamed:@"ic_campaign_timer"];
+        _imageView = [[UIImageView alloc] initWithImage:image];
+        [_imageView setFrame:CGRectMake((self.width - image.size.width)/2, CGRectGetMaxY(self.topMessageLabel.frame) + kBetweenMargin, image.size.width, image.size.height)];
+    }
+    return _imageView;
+}
+
+- (UILabel *)bottomMessageLabel
+{
+    if (!VALID_NOTEMPTY(_bottomMessageLabel, UILabel)) {
+        _bottomMessageLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.imageView.frame) + kBetweenMargin, kButtonWidth, 200)];
+        [_bottomMessageLabel setFont:JABody3Font];
+        [_bottomMessageLabel setTextColor:JABlack800Color];
+        [_bottomMessageLabel setTextAlignment:NSTextAlignmentCenter];
+        [_bottomMessageLabel setNumberOfLines:0];
+        [_bottomMessageLabel setText:STRING_CAMPAIGN_IS_OVER_RESUME];
+        [_bottomMessageLabel sizeToFit];
+        [_bottomMessageLabel setWidth:kButtonWidth];
+    }
+    return _bottomMessageLabel;
+}
+
+- (JABottomBar *)bottomBar
+{
+    if (!VALID_NOTEMPTY(_bottomBar, JABottomBar)) {
+        _bottomBar = [[JABottomBar alloc] initWithFrame:CGRectMake((self.width - kButtonWidth)/2, CGRectGetMaxY(self.bottomMessageLabel.frame) + kBetweenMargin, kButtonWidth, kBottomDefaultHeight)];
+        [_bottomBar addButton:[STRING_CONTINUE_SHOPPING uppercaseString] target:self action:@selector(goToHomeScreen)];
+    }
+    return _bottomBar;
+}
 
 @synthesize interfaceOrientation=_interfaceOrientation;
 -(void)setInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -67,6 +144,17 @@
 
 - (void)loadWithCampaign:(RICampaign*)campaign
 {
+    [self setBackgroundColor:[UIColor whiteColor]];
+    if (VALID(campaign, RICampaign)) {
+        [self.noCampaignView setHidden:YES];
+    }else{
+        [self.noCampaignView setHidden:NO];
+        [self.noCampaignView setFrame:self.bounds];
+        for (UIView *subView in self.noCampaignView.subviews) {
+            [subView setXCenterAligned];
+        }
+        return;
+    }
     if (NO == self.isLoaded) {
         self.isLoaded = YES;
         
@@ -91,11 +179,19 @@
                                        userInfo:nil
                                         repeats:YES];
         
-        self.flowLayout = [[JAProductListFlowLayout alloc] init];
-        self.flowLayout.manualCellSpacing = 0.0f;
-        self.flowLayout.minimumLineSpacing = 0;
-        self.flowLayout.minimumInteritemSpacing = 0;
+        self.flowLayout = [[JAProductCollectionViewFlowLayout alloc] init];
+        self.flowLayout.minimumLineSpacing = 1.0f;
+        self.flowLayout.minimumInteritemSpacing = 0.f;
+        [self.flowLayout registerClass:[JACollectionSeparator class] forDecorationViewOfKind:@"horizontalSeparator"];
+        [self.flowLayout registerClass:[JACollectionSeparator class] forDecorationViewOfKind:@"verticalSeparator"];
+        
+        //                                              top, left, bottom, right
+        [self.flowLayout setSectionInset:UIEdgeInsetsMake(0.f, 0.0, 0.0, 0.0)];
         self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+        
+        if (VALID_NOTEMPTY(campaign.bannerImageURL, NSString)) {
+            [self.flowLayout setHasBanner:YES];
+        }
         
         self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:self.flowLayout];
         self.collectionView.backgroundColor = [UIColor clearColor];
@@ -103,10 +199,8 @@
         self.collectionView.dataSource = self;
         [self addSubview:self.collectionView];
         
-        [self.collectionView registerNib:[UINib nibWithNibName:@"JACampaignProductCell" bundle:nil] forCellWithReuseIdentifier:@"campaignProductCell"];
-        [self.collectionView registerNib:[UINib nibWithNibName:@"JACampaignProductCell_ipad_portrait" bundle:nil] forCellWithReuseIdentifier:@"campaignProductCell_ipad_portrait"];
-        [self.collectionView registerNib:[UINib nibWithNibName:@"JACampaignProductCell_ipad_landscape" bundle:nil] forCellWithReuseIdentifier:@"campaignProductCell_ipad_landscape"];
-        [self.collectionView registerNib:[UINib nibWithNibName:@"JACampaignBannerCell" bundle:nil] forCellWithReuseIdentifier:@"campaignBannerCell"];
+        [self.collectionView registerClass:[JACampaignProductCell class] forCellWithReuseIdentifier:@"campaignProductCell"];
+        [self.collectionView registerClass:[JACampaignBannerCell class] forCellWithReuseIdentifier:@"campaignBannerCell"];
         
         
         [self reloadViewToInterfaceOrientation:self.interfaceOrientation];
@@ -116,18 +210,21 @@
 - (void)reloadViewToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     self.bannerImage = nil;
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        if (UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
-            self.cellIdentifier = @"campaignProductCell_ipad_landscape";
-        } else {
-            self.cellIdentifier = @"campaignProductCell_ipad_portrait";
-        }
-    } else {
-        self.cellIdentifier = @"campaignProductCell";
-    }
+    
+    self.cellIdentifier = @"campaignProductCell";
     
     [self.collectionView setFrame:self.bounds];
     [self.collectionView reloadData];
+}
+
+- (void)setNoCampaigns:(BOOL)visible
+{
+    [self.noCampaignView setHidden:!visible];
+}
+
+- (void)goToHomeScreen
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
 }
 
 #pragma mark - UICollectionView
@@ -143,24 +240,25 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGSize size = [self getCellLayoutForInterfaceOrientation:self.interfaceOrientation];
     if (VALID_NOTEMPTY(self.campaign.bannerImageURL, NSString) && 0 == indexPath.row) {
-        size = self.bannerImage.frame.size;
+        return self.bannerImage.frame.size;
     }
+    CGSize size = [self getCellLayoutForInterfaceOrientation:self.interfaceOrientation];
+    self.flowLayout.itemSize = CGSizeMake(size.width, size.height);
     return size;
 }
 
 - (CGSize)getCellLayoutForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     CGFloat width = 0.0f;
-    CGFloat height = 340.0f;
+    CGFloat height = 482.f;
     
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         
         if(UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
-            width = 381.0f;
+            width = 384.0f;
         } else {
-            width = 339.0f;
+            width = 341.0f;
         }
     } else {
         width = 320;
@@ -183,6 +281,7 @@
         realIndex--;
     }
     JACampaignProductCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:self.cellIdentifier forIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
+    
     cell.delegate = self;
     cell.tag = realIndex;
     
@@ -196,7 +295,6 @@
                  capaignHasBanner:campaignHasBanner];
     
     return cell;
-
 }
 
 #pragma mark - Timer

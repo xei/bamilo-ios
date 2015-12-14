@@ -355,11 +355,6 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showSpecificationsScreen:)
-                                                 name:kOpenSpecificationsScreen
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showMoreMenu)
                                                  name:kShowMoreMenuScreenNotification
                                                object:nil];
@@ -791,41 +786,6 @@
         }
     }
 }
-
-- (void)showSpecificationsScreen:(NSNotification*)notification
-{
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAProductDetailsViewController class]])
-    {
-        JAProductDetailsViewController *productDetails = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"JAProductDetailsViewController"];
-        
-        NSString* orderNumber = notification.object;
-        if (VALID_NOTEMPTY(orderNumber, NSString))
-        {
-            productDetails.selectedIndex = 0;
-            productDetails.startingTrackOrderNumber = orderNumber;
-        }
-        
-        NSDictionary *userInfo = notification.userInfo;
-        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"selected_index"], NSNumber))
-        {
-            productDetails.selectedIndex = [[userInfo objectForKey:@"selected_index"] intValue];
-        }
-        
-        [self popToRootViewControllerAnimated:NO];
-        [self pushViewController:productDetails animated:NO];
-    }
-    else
-    {
-        JAProductDetailsViewController *productDetails = (JAProductDetailsViewController*) topViewController;
-        NSDictionary *userInfo = notification.userInfo;
-        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"selected_index"], NSNumber))
-        {
-            productDetails.selectedIndex = [[userInfo objectForKey:@"selected_index"] intValue];
-        }
-    }
-}
-
 
 #pragma mark User Data Screen
 - (void)showUserData:(NSNotification*)notification

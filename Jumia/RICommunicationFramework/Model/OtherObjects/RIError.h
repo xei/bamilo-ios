@@ -28,4 +28,6 @@
  */
 + (NSDictionary *)getErrorDictionary:(NSDictionary *)errorJsonObject;
 
++ (NSArray *)getErrorCodes:(NSDictionary *)jsonObject;
+
 @end

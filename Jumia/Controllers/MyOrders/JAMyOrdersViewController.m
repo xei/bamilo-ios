@@ -18,6 +18,7 @@
 #define KEmptyImageViewDist 28.f
 #define KEmptyLabelDist 28.f
 #define kCollectionViewHeaderHeight 58.f
+#define kTopSeparatorHight 1.f
 
 //typedef NS_ENUM(NSUInteger, RITrackOrderRequestState) {
 //    RITrackOrderRequestNotDone = 0,
@@ -64,9 +65,9 @@ UICollectionViewDelegateFlowLayout>
 -(UIView *)emptyOrderHistoryView {
     if (!VALID_NOTEMPTY(_emptyOrderHistoryView, UIView)) {
         _emptyOrderHistoryView = [[UIView alloc]initWithFrame:CGRectMake(self.viewBounds.origin.x,
-                                                                        self.viewBounds.origin.y+1.f,
+                                                                        self.viewBounds.origin.y+kTopSeparatorHight,
                                                                         self.viewBounds.size.width,
-                                                                        self.viewBounds.size.height)];
+                                                                        self.viewBounds.size.height-kTopSeparatorHight)];
         [_emptyOrderHistoryView setBackgroundColor:[UIColor whiteColor]];
         [_emptyOrderHistoryView setHidden:NO];
         [self.view addSubview:_emptyOrderHistoryView];
@@ -120,9 +121,9 @@ UICollectionViewDelegateFlowLayout>
         [ordersCollectionViewFlowLayout setHeaderReferenceSize:CGSizeMake(self.viewBounds.size.width, kCollectionViewHeaderHeight)];
         
         _ordersCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(self.viewBounds.origin.x,
-                                                                                   self.viewBounds.origin.y + 1.f,
+                                                                                   self.viewBounds.origin.y + kTopSeparatorHight,
                                                                                    self.viewBounds.size.width,
-                                                                                   self.viewBounds.size.height)
+                                                                                   self.viewBounds.size.height - kTopSeparatorHight)
                                                    collectionViewLayout: ordersCollectionViewFlowLayout];
         [_ordersCollectionView setBackgroundColor:UIColorFromRGB(0xffffff)];
         
@@ -237,7 +238,7 @@ UICollectionViewDelegateFlowLayout>
                    {
                        noConnection = YES;
                    }
-                   [self showErrorView:noConnection startingY:self.viewBounds.origin.y+1.f selector:@selector(loadOrders) objects:nil];
+                   [self showErrorView:noConnection startingY:self.viewBounds.origin.y+kTopSeparatorHight selector:@selector(loadOrders) objects:nil];
                }
            }];
 }
@@ -324,9 +325,9 @@ UICollectionViewDelegateFlowLayout>
 -(void) setupEmptyViews {
     
     [self.emptyOrderHistoryView setFrame:CGRectMake(self.viewBounds.origin.x,
-                                                    self.viewBounds.origin.y+1.f,
+                                                    self.viewBounds.origin.y+kTopSeparatorHight,
                                                     self.viewBounds.size.width,
-                                                    self.viewBounds.size.height)];
+                                                    self.viewBounds.size.height-kTopSeparatorHight)];
     
     [self.emptyOrderHistoryTitleLabel setFrame:CGRectMake((self.viewBounds.size.width - self.emptyOrderHistoryTitleLabel.width)/2,
                                                           KEmptyTitleLabelDist,
@@ -353,9 +354,9 @@ UICollectionViewDelegateFlowLayout>
         width = width/2 - 1.f;
     }
     [self.ordersCollectionView setFrame:CGRectMake(self.viewBounds.origin.x,
-                                                   self.viewBounds.origin.y+1.f,
+                                                   self.viewBounds.origin.y+kTopSeparatorHight,
                                                    width, 
-                                                   self.viewBounds.size.height)];
+                                                   self.viewBounds.size.height-kTopSeparatorHight)];
     [self.ordersCollectionView reloadData];
 }
 
@@ -366,8 +367,8 @@ UICollectionViewDelegateFlowLayout>
         if (VALID_NOTEMPTY(self.selectedOrderIndexPath,NSIndexPath)) {
             
             [self.orderDetailsScrollView setHidden: NO];
-            [self.orderDetailsScrollView setFrame:CGRectMake(self.viewBounds.size.width/2, self.viewBounds.origin.y+1.f,
-                                                            self.viewBounds.size.width/2, self.viewBounds.size.height)];
+            [self.orderDetailsScrollView setFrame:CGRectMake(self.viewBounds.size.width/2, self.viewBounds.origin.y+kTopSeparatorHight,
+                                                            self.viewBounds.size.width/2, self.viewBounds.size.height-kTopSeparatorHight)];
             if (VALID_NOTEMPTY(self.trackingOrder,RITrackOrder)) {
                 
                 [self.orderDetailsView setupWithOrder:self.trackingOrder maxWidth:self.viewBounds.size.width/2 allowsFlip:NO];
