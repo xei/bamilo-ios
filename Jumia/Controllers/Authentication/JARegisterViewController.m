@@ -162,6 +162,7 @@ JADynamicFormDelegate
 
 - (void)onOrientationChanged
 {
+    [super onOrientationChanged];
     [self closePickers];
     [self setupViews];
 }
