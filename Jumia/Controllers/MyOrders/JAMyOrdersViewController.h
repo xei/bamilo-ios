@@ -10,7 +10,4 @@
 
 @interface JAMyOrdersViewController : JABaseViewController
 
-@property (nonatomic, assign)NSInteger selectedIndex;
-@property (nonatomic, strong)NSString* startingTrackOrderNumber;
-
 @end
