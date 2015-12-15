@@ -226,10 +226,9 @@
         
         JAPDVProductInfoSellerInfo *sellerInfoView = [[JAPDVProductInfoSellerInfo alloc] initWithFrame:CGRectMake(0, yOffset, self.width, 50)];
         [sellerInfoView setSeller:product.seller];
-        [sellerInfoView addTarget:self action:@selector(tapSellerCatalogLine)];
-        [sellerInfoView addLinkTarget:self action:@selector(tapSellerLink)];
+        [self addTargetToSellerInfoView:sellerInfoView isGlobal:product.seller.isGlobal];
+
         [self addSubview:sellerInfoView];
-        
         yOffset = CGRectGetMaxY(sellerInfoView.frame);
     }
     
@@ -277,6 +276,15 @@
     
     [self setHeight:yOffset];
 }
+
+- (void)addTargetToSellerInfoView:(JAPDVProductInfoSellerInfo *)sellerInfoView isGlobal:(BOOL)isGlobal
+{
+    if (isGlobal) {
+        [sellerInfoView addTarget:self action:@selector(tapSellerCatalogLine)];
+        [sellerInfoView addLinkTarget:self action:@selector(tapSellerLink)];
+    }
+}
+
 
 - (void)setSizesText:(NSString *)sizesText
 {
