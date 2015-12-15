@@ -98,5 +98,7 @@
  */
 - (void)appDidEnterBackground;
 
+- (void)onOrientationChanged;
+
 @end
 

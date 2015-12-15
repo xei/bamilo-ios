@@ -20,6 +20,7 @@
 @interface JABaseViewController () {
     CGRect _noConnectionViewFrame;
     NSString* _searchBarText;
+    BOOL rotation;
 }
 
 @property (assign, nonatomic) int requestNumber;
@@ -159,6 +160,7 @@
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    rotation = YES;
     [self changeLoadingFrame:[[UIScreen mainScreen] bounds] orientation:toInterfaceOrientation];
     
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
@@ -173,6 +175,20 @@
     if (VALID_NOTEMPTY(self.searchView, JASearchView)) {
         [self.searchView removeFromSuperview];
     }
+}
+
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    if (rotation) {
+        [self onOrientationChanged];
+    }
+    rotation = NO;
+}
+
+- (void)onOrientationChanged
+{
+    
 }
 
 - (void)changeLoadingFrame:(CGRect)frame orientation:(UIInterfaceOrientation)orientation {

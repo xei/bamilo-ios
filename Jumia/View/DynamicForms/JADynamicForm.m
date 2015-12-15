@@ -126,6 +126,7 @@
                     [textField.textField setText:[values objectForKey:@"email"]];
                 }
                 [textField.textField setKeyboardType:UIKeyboardTypeEmailAddress];
+                textField.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
             }else{
                 textField.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
             }

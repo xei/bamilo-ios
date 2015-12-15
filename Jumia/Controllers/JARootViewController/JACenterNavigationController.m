@@ -794,9 +794,9 @@
     }
     else
     {
-        if (![topViewController isKindOfClass:[JASignInViewController class]])
+        if (![topViewController isKindOfClass:[JAAuthenticationViewController class]])
         {
-            JASignInViewController *signInViewController = [[JASignInViewController alloc] init];
+            JAAuthenticationViewController *signInViewController = [[JAAuthenticationViewController alloc] init];
             
             signInViewController.navBarLayout.showBackButton = YES;
             signInViewController.fromSideMenu = NO;
@@ -828,9 +828,9 @@
     }
     else
     {
-        if (![topViewController isKindOfClass:[JASignInViewController class]])
+        if (![topViewController isKindOfClass:[JAAuthenticationViewController class]])
         {
-            JASignInViewController *signInViewController = [[JASignInViewController alloc] init];
+            JAAuthenticationViewController *signInViewController = [[JAAuthenticationViewController alloc] init];
             
             signInViewController.navBarLayout.showBackButton = YES;
             signInViewController.fromSideMenu = NO;
@@ -923,9 +923,9 @@
     }
     else
     {
-        if (!fromCheckout && ![topViewController isKindOfClass:[JASignInViewController class]])
+        if (!fromCheckout && ![topViewController isKindOfClass:[JAAuthenticationViewController class]])
         {
-            JASignInViewController *signInViewController = [[JASignInViewController alloc] init];
+            JAAuthenticationViewController *signInViewController = [[JAAuthenticationViewController alloc] init];
             
             signInViewController.navBarLayout.showBackButton = YES;
             signInViewController.fromSideMenu = NO;

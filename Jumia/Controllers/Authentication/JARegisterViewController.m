@@ -161,8 +161,10 @@ JADynamicFormDelegate
     [self getRegisterForm];
 }
 
-- (void)viewWillLayoutSubviews
+- (void)onOrientationChanged
 {
+    [super onOrientationChanged];
+    [self closePickers];
     [self setupViews];
 }
 
@@ -598,7 +600,13 @@ JADynamicFormDelegate
 - (void)openPicker:(JARadioComponent *)radioComponent
 {
     if (VALID_NOTEMPTY(self.phonePrefixes, NSArray)) {
+        if (VALID(self.picker, JAPicker)) {
+            [self.picker removeFromSuperview];
+        }
+        
+        
         self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
+        [self.view addSubview:self.picker];
         [self.picker setDelegate:self];
         
         NSMutableArray *dataSource = [[NSMutableArray alloc] init];
@@ -622,7 +630,6 @@ JADynamicFormDelegate
                                          pickerViewHeight,
                                          pickerViewWidth,
                                          pickerViewHeight)];
-        [self.view addSubview:self.picker];
         
         [UIView animateWithDuration:0.4f
                          animations:^{

@@ -136,6 +136,7 @@
         [_emailTextField setFrame:CGRectMake((self.view.width - kWidth)/2, yOffset, kWidth, _emailTextField.height)];
         [_emailTextField.textField setReturnKeyType:UIReturnKeyNext];
         [_emailTextField.textField setKeyboardType:UIKeyboardTypeEmailAddress];
+        [_emailTextField.textField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
         [_emailTextField setupWithTitle:@"Email Address" label:@"email@domain.com" value:[self getEmail] mandatory:NO];
     }
     return _emailTextField;
@@ -450,10 +451,14 @@
     [self showLoading];
     [RICustomer checkEmailWithParameters:[NSDictionary dictionaryWithObject:self.emailTextField.textField.text forKey:@"email"] successBlock:^(BOOL knownEmail) {
         NSMutableDictionary *userInfo;
-        if (VALID_NOTEMPTY(self.userInfo, NSDictionary)) {
+        if (!VALID_NOTEMPTY(self.userInfo, NSDictionary)) {
+            userInfo = [NSMutableDictionary new];
+        }else{
             userInfo = [self.userInfo mutableCopy];
-            [userInfo setObject:self.emailTextField.textField.text forKey:@"email"];
         }
+        
+        [userInfo setObject:self.emailTextField.textField.text forKey:@"email"];
+        
         if (knownEmail) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfo];
         }else{
