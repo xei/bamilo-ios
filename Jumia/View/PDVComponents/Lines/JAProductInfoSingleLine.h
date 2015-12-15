@@ -13,4 +13,8 @@
 
 @interface JAProductInfoSingleLine : JAProductInfoBaseLine
 
+@property (strong,nonatomic) UILabel *lineLabel;
+
+-(void) setText:(NSString*)txt;
+
 @end
