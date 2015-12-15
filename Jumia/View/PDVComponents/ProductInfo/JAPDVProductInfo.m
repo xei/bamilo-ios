@@ -189,8 +189,8 @@
         }
         JAProductInfoSingleLine *singleSizes = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
         [singleSizes setTopSeparatorVisibility:YES];
-        [singleSizes setTitle:sizesText];
-        _sizesLabel = singleSizes.label;
+        [singleSizes setText:sizesText];
+        _sizesLabel = singleSizes.lineLabel;
         [singleSizes addTarget:self action:@selector(tapSizeLine) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:singleSizes];
         yOffset = CGRectGetMaxY(singleSizes.frame);
@@ -291,7 +291,6 @@
     _sizesText = sizesText;
     if (VALID_NOTEMPTY(_sizesLabel, UILabel)) {
         [_sizesLabel setText:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, sizesText]];
-        [_sizesLabel sizeToFit];
     }
 }
 
