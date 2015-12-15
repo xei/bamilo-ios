@@ -101,7 +101,14 @@
             nameLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
             nameLabel.textColor = [UIColor blackColor];
             nameLabel.textAlignment = NSTextAlignmentCenter;
-            nameLabel.text = component.name;
+            
+            if (VALID_NOTEMPTY(component.name, NSString)) {
+                nameLabel.text = component.name;
+            } else
+                if (VALID_NOTEMPTY(component.title, NSString)) {
+                    nameLabel.text = component.title;
+                }
+            
             [nameLabel sizeToFit];
             [nameLabel setFrame:CGRectMake(textMarginX,
                                            CGRectGetMaxY(imageView.frame) + textMarginY,
