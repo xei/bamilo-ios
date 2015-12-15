@@ -14,7 +14,6 @@
 #import "RIField.h"
 #import "RIFieldDataSetComponent.h"
 #import "RICustomer.h"
-#import "RINewsletterCategory.h"
 
 @interface JASignupViewController ()
 <
@@ -388,20 +387,6 @@ JADatePickerDelegate
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRegisterSuccess]
                                                   data:[trackingDictionary copy]];
         
-        NSArray *newsletterOption = [RINewsletterCategory getNewsletter];
-        if(VALID_NOTEMPTY(newsletterOption, NSArray))
-        {
-            trackingDictionary = [[NSMutableDictionary alloc] init];
-            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-            [trackingDictionary setValue:@"SubscribeNewsletter" forKey:kRIEventActionKey];
-            [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-            [trackingDictionary setValue:@"Register" forKey:kRIEventLocationKey];
-            
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventNewsletter]
-                                                      data:[trackingDictionary copy]];
-        }
-        
         [self.dynamicForm resetValues];
         
         [self hideLoading];
@@ -446,15 +431,15 @@ JADatePickerDelegate
         }
         else if(VALID_NOTEMPTY(errorObject, NSDictionary))
         {
-            [self.dynamicForm validateFields:errorObject];
-            
-            [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
+            [self.dynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
+                [self showMessage:message success:NO];
+            }];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
-            [self.dynamicForm checkErrors];
-            
-            [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
+            [self.dynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
+                [self showMessage:message success:NO];
+            }];
         }
         else
         {
@@ -481,7 +466,7 @@ JADatePickerDelegate
     
     [self.navigationController popViewControllerAnimated:NO];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification
                                                         object:nil
                                                       userInfo:userInfo];
 }

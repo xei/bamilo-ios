@@ -11,338 +11,452 @@
 #import "JAPriceView.h"
 #import "JAPercentageBarView.h"
 #import "UIImageView+WebCache.h"
+#import "JAProductInfoPriceLine.h"
+#import "JAProductInfoSubLine.h"
+#import "JABottomBar.h"
+#import "UIImage+WithColor.h"
+
+#define kTopMargin 16.f
+#define kLateralMargin 16.f
 
 @interface JACampaignProductCell()
 
-@property (nonatomic, assign)NSInteger elapsedTimeInSeconds;
+@property (nonatomic, assign) NSInteger elapsedTimeInSeconds;
 
-@property (nonatomic, strong)RICampaignProduct* campaignProduct;
+@property (nonatomic, strong) RICampaignProduct *campaignProduct;
 
-@property (weak, nonatomic) IBOutlet UIView *backgroundContentView;
+@property (nonatomic, strong) UILabel *discountLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *discountLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *discountBadge;
+@property (nonatomic, strong) UILabel *titleBrandLabel;
+@property (nonatomic, strong) UILabel *titleLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (nonatomic, strong) UIView *timerView;
+@property (nonatomic, strong) UILabel *endLabel;
+@property (nonatomic, strong) UILabel *timerLabel;
 
-@property (nonatomic, strong)UIImageView* clockImageView;
-@property (nonatomic, strong)UILabel* endLabel;
-@property (nonatomic, strong)UILabel* timeLabel;
+@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, strong) UILabel *offerEndedLabel;
 
-@property (weak, nonatomic) IBOutlet JAClickableView *imageClickableView;
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (nonatomic, strong) JAClickableView *imageClickableView;
+@property (nonatomic, strong) UIImageView *imageView;
 
-@property (weak, nonatomic) IBOutlet UIView *bottomContentView;
-@property (nonatomic, strong)UIView* coverupView;
-@property (nonatomic, strong)JAPriceView* priceView;
-@property (weak, nonatomic) IBOutlet UILabel *savingLabel;
-@property (nonatomic, strong)UILabel* savingMoneyLabel;
-@property (nonatomic, strong)JAPercentageBarView* percentageBarView;
-@property (weak, nonatomic) IBOutlet UILabel *remainingStockLabel;
-@property (weak, nonatomic) IBOutlet UIButton *buyButton;
+@property (nonatomic, strong) UIView *bottomContentView;
 
-@property (nonatomic, strong)UIView* offerEndedContent;
-@property (nonatomic, strong)UILabel* offerEndedLabel;
+@property (nonatomic, strong) UIView *savingView;
+@property (nonatomic, strong) UILabel *savingLabel;
+@property (nonatomic, strong) UILabel *savingMoneyLabel;
 
-@property (nonatomic, strong)JAClickableView* sizeClickableView;
-@property (nonatomic, strong)UILabel* sizeLabel;
-@property (nonatomic, strong)UIView* sizeClickableViewSeparator;
+@property (nonatomic, strong) JAPercentageBarView* percentageBarView;
+@property (nonatomic, strong) JABottomBar *bottonBar;
+@property (nonatomic, strong) UIButton *buyButton;
 
-@property (nonatomic, strong)NSTimer* timer;
+@property (nonatomic, strong) UIView *remainingStockView;
+@property (nonatomic, strong) UILabel *remainingStockLabel;
+@property (nonatomic, strong) UILabel *remainingStockValueLabel;
+
+
+@property (nonatomic, strong) UIButton* sizeLine;
+
+
+@property (nonatomic, strong) JAProductInfoPriceLine *priceLine;
 
 @end
 
 @implementation JACampaignProductCell
+
+- (JAClickableView *)imageClickableView
+{
+    if (!VALID_NOTEMPTY(_imageClickableView, JAClickableView)) {
+        _imageClickableView = [[JAClickableView alloc] initWithFrame:self.bounds];
+        [_imageClickableView setBackgroundColor:[UIColor clearColor]];
+        [_imageClickableView addTarget:self action:@selector(backViewPressed) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _imageClickableView;
+}
+
+- (UILabel *)titleBrandLabel
+{
+    if (!VALID_NOTEMPTY(_titleBrandLabel, UILabel)) {
+        _titleBrandLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, kTopMargin, self.width - 2*kLateralMargin, 15)];
+        _titleBrandLabel.font = JACaptionFont;
+        _titleBrandLabel.textColor = JABlack800Color;
+    }
+    return _titleBrandLabel;
+}
+
+- (UILabel *)titleLabel
+{
+    if (!VALID_NOTEMPTY(_titleLabel, UILabel)) {
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.titleBrandLabel.frame) + 10, self.width - 2*16, 15)];
+        _titleLabel.font = JABody1Font;
+        _titleLabel.textColor = JABlackColor;
+    }
+    return _titleLabel;
+}
+
+- (UILabel *)discountLabel
+{
+    if (!VALID_NOTEMPTY(_discountLabel, UILabel)) {
+        _discountLabel = [[UILabel alloc] init];
+        [_discountLabel setFont:JACaptionFont];
+        [_discountLabel setTextColor:JAOrange1Color];
+        [_discountLabel setTextAlignment:NSTextAlignmentCenter];
+        _discountLabel.layer.borderColor = [JAOrange1Color CGColor];
+        _discountLabel.layer.borderWidth = 1.0f;
+    }
+    return _discountLabel;
+}
+
+- (UIView *)timerView
+{
+    if (!VALID_NOTEMPTY(_timerView, UIView)) {
+        _timerView = [[UIView alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.titleLabel.frame) + 16.f, self.width - 2*kLateralMargin, 15)];
+        [_timerView addSubview:self.endLabel];
+        [_timerView addSubview:self.timerLabel];
+    }
+    return _timerView;
+}
+
+- (UILabel *)endLabel
+{
+    if (!VALID_NOTEMPTY(_endLabel, UILabel)) {
+        _endLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.timerView.width, 15)];
+        [_endLabel setFont:JABody2Font];
+        [_endLabel setText:[STRING_CAMPAIGN_TIMER_END uppercaseString]];
+        [_endLabel sizeToFit];
+    }
+    return _endLabel;
+}
+
+- (UILabel *)timerLabel
+{
+    if (!VALID_NOTEMPTY(_timerLabel, UILabel)) {
+        _timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.endLabel.frame) + 2.f, 0, self.timerView.width, 15)];
+        [_timerLabel setFont:JABody2Font];
+        [_timerLabel setTextColor:[UIColor redColor]];
+    }
+    return _timerLabel;
+}
+
+- (UIImageView *)imageView
+{
+    if (!VALID_NOTEMPTY(_imageView, UIImageView)) {
+        CGFloat width = 176.f;
+        CGFloat height = 220.f;
+        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake((self.width - width)/2, CGRectGetMaxY(self.timerView.frame) + 16.f, width, height)];
+    }
+    return _imageView;
+}
+
+- (UILabel *)offerEndedLabel
+{
+    if (!VALID_NOTEMPTY(_offerEndedLabel, UILabel)) {
+        _offerEndedLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, self.imageView.y + self.imageView.height/2 - 20, self.width - 2*kLateralMargin, 20)];
+        [_offerEndedLabel setBackgroundColor:[UIColor whiteColor]];
+        [_offerEndedLabel setFont:JABody2Font];
+        [_offerEndedLabel setText:[STRING_CAMPAIGN_OFFER_ENDED uppercaseString]];
+        [_offerEndedLabel sizeToFit];
+        _offerEndedLabel.width += 2*8.f;
+        _offerEndedLabel.height += 2*8.f;
+        [_offerEndedLabel setTextAlignment:NSTextAlignmentCenter];
+        [_offerEndedLabel.layer setBorderWidth:1.f];
+        [_offerEndedLabel.layer setBorderColor:JABlack800Color.CGColor];
+        [_offerEndedLabel setXCenterAligned];
+        [_offerEndedLabel setHidden:YES];
+        [self addSubview:_offerEndedLabel];
+    }
+    return _offerEndedLabel;
+}
+
+- (JAProductInfoPriceLine *)priceLine
+{
+    if (!VALID_NOTEMPTY(_priceLine, JAProductInfoPriceLine)) {
+        _priceLine = [[JAProductInfoPriceLine alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.imageView.frame) + 10.f, self.width - 2*kLateralMargin, 20.f)];
+        [_priceLine setPriceSize:kPriceSizeSmall];
+        [_priceLine setLineContentXOffset:0.f];
+        [_priceLine.titleLabel setTextColor:[UIColor redColor]];
+    }
+    return _priceLine;
+}
+
+- (UIView *)savingView
+{
+    if (!VALID_NOTEMPTY(_savingView, UIView)) {
+        _savingView = [[UIView alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.priceLine.frame) + 10.f, self.width - 2*kLateralMargin, kProductInfoSingleLineHeight)];
+        [_savingView addSubview:self.savingLabel];
+        [_savingView addSubview:self.savingMoneyLabel];
+    }
+    return _savingView;
+}
+
+- (UILabel *)savingLabel
+{
+    if (!VALID_NOTEMPTY(_savingLabel, UILabel)) {
+        _savingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.savingView.width, kProductInfoSingleLineHeight)];
+        [_savingLabel setFont:JACaptionFont];
+        [_savingLabel setText:STRING_CAMPAIGN_SAVE];
+        [_savingLabel sizeToFit];
+    }
+    return _savingLabel;
+}
+
+- (UILabel *)savingMoneyLabel
+{
+    if (!VALID_NOTEMPTY(_savingMoneyLabel, UILabel)) {
+        _savingMoneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.savingLabel.frame) + 6.f, self.savingLabel.y, self.savingView.width, kProductInfoSingleLineHeight)];
+        [_savingMoneyLabel setFont:JABody2Font];
+        [_savingMoneyLabel setTextColor:[UIColor greenColor]];
+    }
+    return _savingMoneyLabel;
+}
+
+- (UIButton *)sizeLine
+{
+    if (!VALID_NOTEMPTY(_sizeLine, UIButton)) {
+        _sizeLine = [UIButton buttonWithType:UIButtonTypeSystem];
+        [_sizeLine setFrame:CGRectMake(kLateralMargin, self.savingView.y, self.width - 2*kLateralMargin, 20)];
+        [_sizeLine.titleLabel setFont:JACaptionFont];
+        [_sizeLine.titleLabel setTextColor:JABlackColor];
+        [_sizeLine setTitleColor:JABlackColor forState:UIControlStateNormal];
+        [_sizeLine setTitleColor:JABlackColor forState:UIControlStateDisabled];
+        [_sizeLine setEnabled:NO];
+        [_sizeLine addTarget:self action:@selector(sizeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _sizeLine;
+}
+
+- (void)setChosenSize:(NSString *)chosenSize
+{
+    _chosenSize = chosenSize;
+}
+
+- (UIView *)bottomContentView
+{
+    if (!VALID_NOTEMPTY(_bottomContentView, UIView)) {
+        _bottomContentView = [[UIView alloc] initWithFrame:CGRectMake(kLateralMargin, self.height - kTopMargin - 48, (self.width - 2*kLateralMargin), kBottomDefaultHeight)];
+        [_bottomContentView setBackgroundColor:JABlack300Color];
+        [_bottomContentView addSubview:self.bottonBar];
+        [_bottomContentView addSubview:self.percentageBarView];
+        [_bottomContentView addSubview:self.remainingStockView];
+    }
+    return _bottomContentView;
+}
+
+- (JABottomBar *)bottonBar
+{
+    if (!VALID_NOTEMPTY(_bottonBar, JABottomBar)) {
+        _bottonBar = [[JABottomBar alloc] initWithFrame:CGRectMake(self.bottomContentView.width/2, 0, self.bottomContentView.width/2, self.bottomContentView.height)];
+        self.buyButton = [_bottonBar addButton:[STRING_BUY uppercaseString] target:self action:@selector(buyButtonPressed)];
+        [self.buyButton setBackgroundImage:[UIImage imageWithColor:[UIColor grayColor]] forState:UIControlStateDisabled];
+        [self.buyButton setBackgroundImage:[UIImage imageWithColor:JAOrange1Color] forState:UIControlStateNormal];
+    }
+    return _bottonBar;
+}
+
+- (JAPercentageBarView *)percentageBarView
+{
+    if (!VALID_NOTEMPTY(_percentageBarView, JAPercentageBarView)) {
+        _percentageBarView = [[JAPercentageBarView alloc] initWithFrame:CGRectMake(10.f, 10.f, self.bottomContentView.width/2 - 2*10.f, 6.f)];
+    }
+    return _percentageBarView;
+}
+
+- (UIView *)remainingStockView
+{
+    if (!VALID_NOTEMPTY(_remainingStockView, UIView)) {
+        _remainingStockView = [[UIView alloc] initWithFrame:CGRectMake(10.f, CGRectGetMaxY(self.percentageBarView.frame) + 8.f, self.percentageBarView.width, 21)];
+        [_remainingStockView addSubview:self.remainingStockLabel];
+        [_remainingStockView addSubview:self.remainingStockValueLabel];
+    }
+    return _remainingStockView;
+}
+
+- (UILabel *)remainingStockLabel
+{
+    if (!VALID_NOTEMPTY(_remainingStockLabel, UILabel)) {
+        _remainingStockLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.remainingStockView.width, 21)];
+        [_remainingStockLabel setFont:JACaptionFont];
+        [_remainingStockLabel setTextColor:JABlackColor];
+        [_remainingStockLabel setText:STRING_CAMPAIGN_REMAINING_STOCK];
+        [_remainingStockLabel sizeToFit];
+    }
+    return _remainingStockLabel;
+}
+
+- (UILabel *)remainingStockValueLabel
+{
+    if (!VALID_NOTEMPTY(_remainingStockValueLabel, UILabel)) {
+        _remainingStockValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.remainingStockView.width, 21)];
+        [_remainingStockValueLabel setFont:JACaptionFont];
+        [_remainingStockValueLabel setTextColor:JABlackColor];
+    }
+    return _remainingStockValueLabel;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self setBackgroundColor:[UIColor whiteColor]];
+        [self addSubview:self.imageClickableView];
+        [self addSubview:self.titleBrandLabel];
+        [self addSubview:self.titleLabel];
+        [self addSubview:self.discountLabel];
+        [self addSubview:self.timerView];
+        [self addSubview:self.imageView];
+        [self addSubview:self.priceLine];
+        [self addSubview:self.savingView];
+        [self addSubview:self.sizeLine];
+        [self addSubview:self.bottomContentView];
+    }
+    return self;
+}
 
 - (void)loadWithCampaignProduct:(RICampaignProduct*)campaignProduct
            elapsedTimeInSeconds:(NSInteger)elapsedTimeInSeconds
                      chosenSize:(NSString*)chosenSize
                capaignHasBanner:(BOOL)hasBanner
 {
-    self.discountLabel.translatesAutoresizingMaskIntoConstraints = YES;
     self.campaignProduct = campaignProduct;
     self.chosenSize = chosenSize;
-    
     self.onSelected = nil;
     
-    self.backgroundColor = [UIColor clearColor];
+    [self.titleBrandLabel setText:campaignProduct.brand];
+    [self.titleLabel setText:campaignProduct.name];
     
-    self.backgroundContentView.translatesAutoresizingMaskIntoConstraints = YES;
-    [self.backgroundContentView setX:6.f];
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        [self.backgroundContentView setWidth:self.width - 6.0f];
-    } else {
-        [self.backgroundContentView setWidth:self.width - 12.f];
+    self.discountLabel.text = [NSString stringWithFormat:STRING_FORMAT_OFF,[campaignProduct.maxSavingPercentage integerValue]];
+    self.discountLabel.hidden = ![campaignProduct.maxSavingPercentage boolValue];
+    
+    if (VALID_NOTEMPTY(self.campaignProduct.remainingTime, NSNumber)) {
+        if (ISEMPTY(self.timer)) {
+            self.elapsedTimeInSeconds = elapsedTimeInSeconds--;
+            [self updateTimeLabelText];
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                          target:self
+                                                        selector:@selector(updateTimeLabelText)
+                                                        userInfo:nil
+                                                         repeats:YES];
+        }
+    }else{
+        [self.timer invalidate];
+        self.timer = nil;
+        [self.timerView setHidden:YES];
     }
-
-    self.backgroundContentView.layer.cornerRadius = 5.0f;
-    
-    //TOP STUFF
-    [_discountBadge setX:15.f];
-    [_discountLabel setX:15.f];
-    self.discountLabel.font = [UIFont fontWithName:kFontBoldName size:13.0f];
-    self.discountLabel.textColor = [UIColor whiteColor];
-    if (VALID_NOTEMPTY(campaignProduct.maxSavingPercentage, NSNumber) && 0 < [campaignProduct.maxSavingPercentage integerValue]){
-        self.discountBadge.hidden = NO;
-        self.discountLabel.hidden = NO;
-        self.discountLabel.text = [NSString stringWithFormat:STRING_FORMAT_OFF, [campaignProduct.maxSavingPercentage integerValue]];
-        [self.titleLabel setFrame:CGRectMake(self.discountBadge.frame.origin.x + self.discountBadge.frame.size.width + 4.0f,
-                                            self.titleLabel.frame.origin.y,
-                                            self.titleLabel.frame.size.width,
-                                            self.titleLabel.frame.size.height)];
-    } else {
-        self.discountBadge.hidden = YES;
-        self.discountLabel.hidden = YES;
-        [self.titleLabel setFrame:CGRectMake((self.backgroundContentView.frame.size.width-self.titleLabel.frame.size.width)/2,
-                                                self.discountLabel.frame.origin.y,
-                                                self.titleLabel.frame.size.width,
-                                                self.titleLabel.frame.size.height)];
-    }
-    
-    self.titleLabel.font = [UIFont fontWithName:kFontLightName size:17.0f];
-    self.titleLabel.textColor = UIColorFromRGB(0x666666);
-    self.titleLabel.text = campaignProduct.name;
-    
-    //IMAGE AREA
-    [self.imageClickableView setX:0];
-    [self.imageClickableView setWidth:self.backgroundContentView.width];
-    [self.imageClickableView addTarget:self
-                                action:@selector(backViewPressed)
-                      forControlEvents:UIControlEventTouchUpInside];
     
     [self.imageView setImageWithURL:[NSURL URLWithString:campaignProduct.imagesUrl]
-                   placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
+                   placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]
+     ];
     
-    //OFFER ENDED
-    if (ISEMPTY(self.offerEndedLabel)) {
-        self.offerEndedLabel = [UILabel new];
-        self.offerEndedLabel.textAlignment = NSTextAlignmentCenter;
-        self.offerEndedLabel.numberOfLines = -1;
-        self.offerEndedLabel.font = [UIFont fontWithName:kFontBoldName size:16.0f];
-        self.offerEndedLabel.textColor = UIColorFromRGB(0x4e4e4e);
-        self.offerEndedLabel.text = STRING_CAMPAIGN_OFFER_ENDED;
-        [self.offerEndedLabel sizeToFit];
+    if (VALID_NOTEMPTY(campaignProduct.specialPrice, NSNumber)) {
+        [self.priceLine setTitle:campaignProduct.specialPriceFormatted];
+        [self.priceLine setOldPrice:campaignProduct.priceFormatted];
+        [self.savingMoneyLabel setText:campaignProduct.savePriceFormatted];
+        [self.savingView setHidden:NO];
+        
+    }else{
+        [self.priceLine setTitle:campaignProduct.priceFormatted];
+        [self.savingView setHidden:YES];
+    }
+    if (campaignProduct.productSimples.count > 1) {
+        [self.sizeLine setHidden:NO];
+        [self.sizeLine setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, [[campaignProduct.productSimples valueForKey:@"size"] componentsJoinedByString:@"; "]] forState:UIControlStateNormal];
+    }else{
+        [self.sizeLine setHidden:YES];
     }
     
-    CGFloat width = self.offerEndedLabel.frame.size.width;
-    if (180.0f > width) {
-        width = 180.0f;
-    } else if (200.0f < width) {
-        width = 200.0f;
-    }
-    CGFloat height = self.offerEndedLabel.frame.size.height;
-    if (32.0f > height) {
-        height = 32.0f;
-    } else if (64.0f < height) {
-        height = 64.0f;
-    }
+    [self.remainingStockValueLabel setText:[NSString stringWithFormat:@"%ld%%", (long)[campaignProduct.stockPercentage integerValue]]];
     
-    if (ISEMPTY(self.offerEndedContent)) {
-        self.offerEndedContent = [[UIView alloc] init];
-        self.offerEndedContent.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.8f];
-        self.offerEndedContent.layer.cornerRadius = 5.0f;
-        self.offerEndedContent.layer.borderColor = [[UIColor blackColor] CGColor];
-        self.offerEndedContent.layer.borderWidth = 1.0f;
-        [self.backgroundContentView addSubview:self.offerEndedContent];
-    }
-    self.offerEndedContent.frame = CGRectMake((self.backgroundContentView.bounds.size.width - width) / 2,
-                                              (self.backgroundContentView.bounds.size.width - height) / 2,
-                                              width,
-                                              height);
+    [self reloadView];
     
-    [self.offerEndedLabel setFrame:self.offerEndedContent.bounds];
-    [self.offerEndedContent addSubview:self.offerEndedLabel];
-    
-    self.offerEndedContent.hidden = YES;
-    
-    //TIME COUNTER
-    UIImage* clockImage = [UIImage imageNamed:@"ico_recentsearches_results"];
-    if (ISEMPTY(self.clockImageView)) {
-        self.clockImageView = [[UIImageView alloc] initWithImage:clockImage];
-        [self.backgroundContentView addSubview:self.clockImageView];
-    }
-
-    if (ISEMPTY(self.endLabel)) {
-        self.endLabel = [[UILabel alloc] init];
-        self.endLabel.text = STRING_CAMPAIGN_TIMER_END;
-        self.endLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-        self.endLabel.textColor = UIColorFromRGB(0x666666);
-        [self.endLabel sizeToFit];
-        [self.backgroundContentView addSubview:self.endLabel];
-    }
-    
-    CGFloat totalTimeWidth = clockImage.size.width + 5.0f + self.endLabel.frame.size.width;
-    CGFloat xPosition = (self.backgroundContentView.frame.size.width - totalTimeWidth) / 2;
-    
-    [self.clockImageView setFrame:CGRectMake(xPosition,
-                                             CGRectGetMaxY(self.titleLabel.frame) + 10.0f,
-                                             clockImage.size.width,
-                                             clockImage.size.height)];
-
-    
-    [self.endLabel setFrame:CGRectMake(CGRectGetMaxX(self.clockImageView.frame) + 10.0f,
-                                       self.clockImageView.frame.origin.y,
-                                       self.endLabel.frame.size.width,
-                                       self.endLabel.frame.size.height)];
-    
-    if (ISEMPTY(self.timeLabel)) {
-        self.timeLabel = [[UILabel alloc] init];
-        self.timeLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-        self.timeLabel.textColor = UIColorFromRGB(0xcc0000);
-        [self.timeLabel sizeToFit];
-        [self.backgroundContentView addSubview:self.timeLabel];
-    }
-    [self.timeLabel setFrame:CGRectMake(CGRectGetMaxX(self.endLabel.frame) + 5.0f,
-                                        self.endLabel.frame.origin.y,
-                                        self.timeLabel.frame.size.width,
-                                        self.timeLabel.frame.size.height)];
-    
-    //BOTTOM CONTENT
-    [self.bottomContentView setWidth:self.backgroundContentView.width];
-    [self.bottomContentView setX:0.f];
-    if (ISEMPTY(self.coverupView)) {
-        self.coverupView = [[UIView alloc] init];
-        self.coverupView.backgroundColor = self.backgroundContentView.backgroundColor;
-        [self.bottomContentView addSubview:self.coverupView];
-    }
-    self.coverupView.frame = CGRectMake(self.bottomContentView.bounds.origin.x,
-                                        self.bottomContentView.bounds.origin.y,
-                                        self.bottomContentView.bounds.size.width,
-                                        10.0f);
-    self.bottomContentView.layer.cornerRadius = self.backgroundContentView.layer.cornerRadius;
-    self.bottomContentView.backgroundColor = UIColorFromRGB(0xfff7e6);
-    
-    [self.priceView removeFromSuperview]; //force reload;
-    self.priceView = [[JAPriceView alloc] init];
-    [self.bottomContentView addSubview:self.priceView];
-    self.priceView.frame = CGRectMake(8.f,
-                                      self.bottomContentView.bounds.origin.y + self.coverupView.frame.size.height + 3.0f,
-                                      self.remainingStockLabel.frame.size.width,
-                                      self.remainingStockLabel.frame.size.height);
-
-    if (VALID_NOTEMPTY(self.campaignProduct.specialPrice, NSNumber) && 0 != [self.campaignProduct.specialPrice integerValue]) {
-        [self.priceView loadWithPrice:campaignProduct.priceFormatted
-                         specialPrice:campaignProduct.specialPriceFormatted
-                             fontSize:11.0f specialPriceOnTheLeft:YES];
-    } else {
-        [self.priceView loadWithPrice:campaignProduct.priceFormatted
-                         specialPrice:nil
-                             fontSize:11.0f specialPriceOnTheLeft:NO];
-    }
-
-    [_savingLabel setX:_priceView.x];
-    self.savingLabel.font = [UIFont fontWithName:kFontRegularName size:11.0f];
-    self.savingLabel.textColor = UIColorFromRGB(0x666666);
-    self.savingLabel.text = STRING_CAMPAIGN_SAVE;
-    [self.savingLabel sizeToFit];
-
-    if (ISEMPTY(self.savingMoneyLabel)) {
-        self.savingMoneyLabel = [[UILabel alloc] init];
-        self.savingMoneyLabel.font = self.savingLabel.font;
-        self.savingMoneyLabel.textColor = UIColorFromRGB(0x0a9f2a);
-    }
-    self.savingMoneyLabel.text = campaignProduct.savePriceFormatted;
-    [self.savingMoneyLabel sizeToFit];
-    [self.bottomContentView addSubview:self.savingMoneyLabel];
-    
-    
-    if (ISEMPTY(self.percentageBarView)) {
-        self.percentageBarView = [[JAPercentageBarView alloc] init];
-        [self.bottomContentView addSubview:self.percentageBarView];
-    }
-    
-    [self.remainingStockLabel setX:8.f];
-    self.remainingStockLabel.font = [UIFont fontWithName:kFontRegularName size:11.0f];
-    self.remainingStockLabel.textColor = UIColorFromRGB(0x666666);
-    self.remainingStockLabel.text = [NSString stringWithFormat:STRING_CAMPAIGN_REMAINING_STOCK, [campaignProduct.stockPercentage integerValue]];
-    [self.remainingStockLabel sizeToFit];
-    
-    self.percentageBarView.frame = CGRectMake(self.remainingStockLabel.frame.origin.x,
-                                              self.remainingStockLabel.frame.origin.y-6.f,
-                                              150.0f,
-                                              3.0f);
     [self.percentageBarView loadWithPercentage:[campaignProduct.stockPercentage integerValue]];
     
-    if (VALID_NOTEMPTY(campaignProduct.savePrice, NSNumber) && 0.0f < [campaignProduct.savePrice floatValue]) {
-        [self.savingLabel setHidden:NO];
-        [self.savingMoneyLabel setHidden:NO];
-        [_savingLabel setYBottomOf:self.priceView at:4.f];
-        [self.savingMoneyLabel setXRightOf:self.savingLabel at:4.f];
-        [self.savingMoneyLabel setY:self.savingLabel.y];
-        [self.percentageBarView setYBottomOf:_savingLabel at:4.f];
-    } else {
-        [self.savingLabel setHidden:YES];
-        [self.savingMoneyLabel setHidden:YES];
-        [self.percentageBarView setYBottomOf:_priceView at:7.f];
-    }
-    [self.remainingStockLabel setYBottomOf:_percentageBarView at:3.f];
-    
-    [self.buyButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
-    [self.buyButton setTitle:STRING_ADD_TO_SHOPPING_CART forState:UIControlStateNormal];
-    [self.buyButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    [self.buyButton setXRightAligned:8.f];
-    [self.buyButton addTarget:self action:@selector(buyButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    
-    if (campaignProduct.productSimples.count > 1) {
+}
 
-        if (VALID_NOTEMPTY(self.sizeClickableViewSeparator, UIView)) {
-            [self.sizeClickableViewSeparator removeFromSuperview];
-        }
-        if (VALID_NOTEMPTY(self.sizeLabel, UILabel)) {
-            [self.sizeLabel removeFromSuperview];
-        }
-        if (VALID_NOTEMPTY(self.sizeClickableView, JAClickableView)) {
-            [self.sizeClickableView removeFromSuperview];
-        }
-        
-        self.sizeClickableView = [[JAClickableView alloc] init];
-        [self.sizeClickableView addTarget:self
-                                   action:@selector(sizeButtonPressed)
-                         forControlEvents:UIControlEventTouchUpInside];
-        self.sizeClickableView.backgroundColor = [UIColor whiteColor];
-        [self.backgroundContentView addSubview:self.sizeClickableView];
-        self.sizeClickableView.frame = CGRectMake(self.backgroundContentView.bounds.origin.x,
-                                                  self.bottomContentView.frame.origin.y + 10.0f - 44.0f,
-                                                  self.backgroundContentView.bounds.size.width,
-                                                  44.0f);
-        
-        self.sizeClickableViewSeparator = [[UIView alloc] init];
-        self.sizeClickableViewSeparator.backgroundColor = JABackgroundGrey;
-        [self.sizeClickableView addSubview:self.sizeClickableViewSeparator];
-        self.sizeClickableViewSeparator.frame = CGRectMake(self.sizeClickableView.bounds.origin.x,
-                                                           self.sizeClickableView.bounds.origin.y,
-                                                           self.sizeClickableView.bounds.size.width,
-                                                           1.0f);
-        self.sizeLabel = [[UILabel alloc] init];
-        self.sizeLabel.textColor = UIColorFromRGB(0x55a1ff);
-        self.sizeLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
-        [self.sizeClickableView addSubview:self.sizeLabel];
-        [self.sizeLabel setFrame:CGRectMake(self.sizeClickableView.bounds.origin.x + 10.0f,
-                                            self.sizeClickableView.bounds.origin.y,
-                                            self.sizeClickableView.bounds.size.width - 10.0f * 2,
-                                            self.sizeClickableView.bounds.size.height)];
-        if (VALID_NOTEMPTY(self.chosenSize, NSString)) {
-            self.sizeLabel.text = [NSString stringWithFormat:STRING_SIZE_WITH_VALUE, self.chosenSize];
-        } else {
-            self.sizeLabel.text = STRING_SIZE;
-        }
-    } else {
-        [self.sizeClickableView removeFromSuperview];
-        self.sizeClickableView = nil;
+- (void)reloadView
+{
+    [self.imageClickableView setWidth:self.width];
+    
+    if (self.titleBrandLabel.textAlignment != NSTextAlignmentLeft)
+        [self.titleBrandLabel setTextAlignment:NSTextAlignmentLeft];
+    
+    [self.titleBrandLabel setWidth:self.width - 2*kLateralMargin];
+    [self setForRTL:self.titleBrandLabel];
+    
+    
+    if (self.titleLabel.textAlignment != NSTextAlignmentLeft)
+        [self.titleLabel setTextAlignment:NSTextAlignmentLeft];
+    [self.titleLabel setWidth:self.width - 2*kLateralMargin];
+    [self setForRTL:self.titleLabel];
+    
+    CGRect discountLabelRect = CGRectMake(self.discountLabel.superview.width - 60 - kLateralMargin, kTopMargin, 60, 19);
+    if (!CGRectEqualToRect(discountLabelRect, self.discountLabel.frame)) {
+        [self.discountLabel setFrame:discountLabelRect];
+        [self setForRTL:self.discountLabel];
     }
     
-    self.elapsedTimeInSeconds = elapsedTimeInSeconds--;
-    [self updateTimeLabelText];
-    if (ISEMPTY(self.timer)) {
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0
-                                                      target:self
-                                                    selector:@selector(updateTimeLabelText)
-                                                    userInfo:nil
-                                                     repeats:YES];
+    [self.timerView setYBottomOf:self.titleLabel at:16.f];
+    
+    [self.imageView setXCenterAligned];
+    [self.imageView setYBottomOf:self.timerView at:16.f];
+    
+    [self.priceLine sizeToFit];
+    [self.priceLine setYBottomOf:self.imageView at:10.f];
+    [self.priceLine setXCenterAligned];
+    [self setForRTL:self.priceLine];
+    
+    [self.savingMoneyLabel sizeToFit];
+    [self.savingMoneyLabel setY:0.f];
+    [self.savingLabel setX:0.f];
+    [self.savingMoneyLabel setXRightOf:self.savingLabel at:6.f];
+    [self.savingView setWidth:CGRectGetMaxX(self.savingMoneyLabel.frame)];
+    [self.savingView setHeight:CGRectGetMaxY(self.savingMoneyLabel.frame)];
+    [self.savingLabel setYCenterAligned];
+    [self.savingView setXCenterAligned];
+    [self.savingView setYBottomOf:self.priceLine at:10.f];
+    [self setForRTL:self.savingView];
+    
+    [self.sizeLine setWidth:self.width - 2*kLateralMargin];
+    [self.sizeLine setYBottomOf:self.savingView at:10.f];
+    [self.sizeLine setXCenterAligned];
+    
+    CGFloat bottomContentViewWidth = self.width - 2*kLateralMargin;
+    if (bottomContentViewWidth != self.bottomContentView.width) {
+        [self.bottomContentView setWidth:bottomContentViewWidth];
+        [self.bottonBar setWidth:self.bottomContentView.width/2];
+        [self.bottonBar setX:self.bottomContentView.width/2];
     }
     
+    [self.percentageBarView setX:10.f];
+    [self.percentageBarView setWidth:self.bottomContentView.width/2 - 2*10.f];
+    
+    [self.remainingStockView setFrame:CGRectMake(10.f, CGRectGetMaxY(self.percentageBarView.frame) + 10.f, self.percentageBarView.width, CGRectGetMaxY(self.remainingStockValueLabel.frame))];
+    
+    [self.remainingStockValueLabel sizeToFit];
+    [self.remainingStockValueLabel setY:0.f];
+    [self.remainingStockValueLabel setXRightAligned:0.f];
+    
+    [self.remainingStockLabel setX:0.f];
+    [self.remainingStockLabel setY:0.f];
+
+    
+    [self.bottonBar setXRightAligned:0.f];
+    
+    [self.bottomContentView setXCenterAligned];
+    [self.bottomContentView setYBottomOf:self.sizeLine at:16.f];
+    [self setForRTL:self.bottomContentView];
+}
+
+- (void)setForRTL:(UIView *)view
+{
     if (RI_IS_RTL) {
-        [self flipAllSubviews];
+        [view flipViewPositionInsideSuperview];
+        [view flipAllSubviews];
+        if ([view isKindOfClass:[UILabel class]] && [(UILabel *)view textAlignment] != NSTextAlignmentCenter) {
+            [(UILabel *)view setTextAlignment:NSTextAlignmentRight];
+        } else if ([view isKindOfClass:[UIButton class]] && [(UIButton*)view contentHorizontalAlignment] != UIControlContentHorizontalAlignmentCenter)
+        {
+            ((UIButton*)view).contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+        }
     }
 }
 
@@ -351,20 +465,23 @@
     self.elapsedTimeInSeconds++;
     
     if (ISEMPTY(self.campaignProduct.remainingTime)) {
-        self.clockImageView.hidden = YES;
-        self.endLabel.hidden = YES;
-        self.timeLabel.hidden = YES;
+        self.timerView.hidden = YES;
+        [self.offerEndedLabel setHidden:YES];
     } else {
+        self.timerView.hidden = NO;
         NSInteger remainingSeconds = [self.campaignProduct.remainingTime integerValue];
         remainingSeconds -= self.elapsedTimeInSeconds;
         
         if (0 > remainingSeconds) {
             remainingSeconds = 0;
             
-            self.offerEndedContent.hidden = NO;
             self.imageClickableView.enabled = NO;
-            self.buyButton.enabled = NO;
+            [self.buyButton setUserInteractionEnabled:NO];
             self.imageView.alpha = 0.6f;
+            [self.offerEndedLabel setXCenterAligned];
+            [self.offerEndedLabel setHidden:NO];
+        }else{
+            [self.offerEndedLabel setHidden:YES];
         }
         
         NSInteger days = remainingSeconds / (24 * 3600);
@@ -374,20 +491,26 @@
         NSInteger minutes = remainingSeconds / 60;
         remainingSeconds = remainingSeconds % 60; //keep the remainder
         
-        NSString* timeString = [NSString stringWithFormat:@"%02ld:%02ld:%02ld",(long)hours,(long)minutes,(long)remainingSeconds];
+        NSString* timeString = [NSString stringWithFormat:@"%02ldH %02ldM %02ldS",(long)hours,(long)minutes,(long)remainingSeconds];
         
         if (days > 0) {
             timeString = [NSString stringWithFormat:@"%02ld:%@",(long)days,timeString];
         }
         
-        self.timeLabel.text = timeString;
-        [self.timeLabel sizeToFit];
+        [self.endLabel sizeToFit];
+        [self.endLabel setX:0.f];
+        self.timerLabel.text = [timeString uppercaseString];
+        [self.timerLabel sizeToFit];
+        [self.timerLabel setX:CGRectGetMaxX(self.endLabel.frame) + 2.f];
+        [self.timerView setWidth:CGRectGetMaxX(self.timerLabel.frame)];
+        [self.timerView setXCenterAligned];
+        [self setForRTL:self.timerView];
     }
 }
 
 - (void)buyButtonPressed
 {
-    if (YES == self.offerEndedContent.hidden) {
+    if (YES == self.offerEndedLabel.hidden) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(pressedAddToCartForProduct:withProductSimple:)]) {
             
             NSString* simpleSku;
@@ -418,7 +541,7 @@
 
 - (void)sizeButtonPressed
 {
-    if (YES == self.offerEndedContent.hidden) {
+    if (YES == self.offerEndedLabel.hidden) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(pressedSizeOnView:)]) {
             [self.delegate pressedSizeOnView:self];
         }
@@ -427,9 +550,9 @@
 
 - (void)backViewPressed
 {
-    if (YES == self.offerEndedContent.hidden) {
-        if (self.delegate && [self.delegate respondsToSelector:@selector(pressedCampaignWithSku:)]) {
-            [self.delegate pressedCampaignWithSku:self.campaignProduct.sku];
+    if (YES == self.offerEndedLabel.hidden) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(pressedCampaignProductWithTarget:)]) {
+            [self.delegate pressedCampaignProductWithTarget:self.campaignProduct.targetString];
         }
     }
 }

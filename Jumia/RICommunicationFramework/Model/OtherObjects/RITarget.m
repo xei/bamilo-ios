@@ -59,7 +59,7 @@
                             node:(NSString*)node;
 {
     NSString* urlString = [NSString stringWithFormat:@"%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION];
-    if (VALID_NOTEMPTY(type, NSString) && VALID_NOTEMPTY(node, NSString)) {        
+    if (VALID_NOTEMPTY(type, NSString)) {
         if ([type isEqualToString:@"product_detail"]) {
             urlString = [urlString stringByAppendingString:RI_API_PRODUCT_DETAIL];
         } else if ([type isEqualToString:@"catalog"]) {
@@ -76,7 +76,13 @@
             //append nothing here
         } else if ([type isEqualToString:@"form_get"]) {
             urlString = [urlString stringByAppendingString:RI_API_FORMS_GET];
+        } else if ([type isEqualToString:@"rr_recommendation"]){
+            urlString = [urlString stringByAppendingString:RI_API_RICH_RELEVANCE];
+        } else if ([type isEqualToString:@"rr_click"]) {
+            urlString = RI_API_RICH_RELEVANCE_CLICK;
         }
+    }
+    if (VALID_NOTEMPTY(node, NSString)) {
         urlString = [urlString stringByAppendingString:node];
     }
     return urlString;

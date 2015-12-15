@@ -217,6 +217,12 @@
     }
 }
 
+- (void)setSearchBarText:(NSString*)text {
+    if (VALID_NOTEMPTY(self.searchBar, UISearchBar)) {
+        [self.searchBar setText:text];
+    }
+}
+
 #pragma mark - resultsTableView
 
 - (void)addResultsTableViewToView

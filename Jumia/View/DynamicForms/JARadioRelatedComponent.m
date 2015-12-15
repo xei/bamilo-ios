@@ -18,23 +18,17 @@
 
 @implementation JARadioRelatedComponent
 
-+ (JARadioRelatedComponent *)getNewJARadioRelatedComponent
+- (UILabel *)labelText
 {
-    NSString* xibName = @"JARadioRelatedComponent";
-    if (RI_IS_RTL) {
-        xibName = [xibName stringByAppendingString:@"_RTL"];
+    if (!VALID_NOTEMPTY(_labelText, UILabel)) {
+        
     }
-    NSArray *xib = [[NSBundle mainBundle] loadNibNamed:xibName
-                                                 owner:nil
-                                               options:nil];
-    
-    for (NSObject *obj in xib) {
-        if ([obj isKindOfClass:[JARadioRelatedComponent class]]) {
-            return (JARadioRelatedComponent *)obj;
-        }
-    }
-    
-    return nil;
+    return _labelText;
+}
+
+- (UISwitch *)switchComponent
+{
+    return _switchComponent;
 }
 
 -(void)setup

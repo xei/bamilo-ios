@@ -219,10 +219,9 @@
             arrayToUse = convertedProd;
         }
 
-#warning TODO THIS
         for (int i = 0; i < featuredBox.products.count; i++) {
             RISearchTypeProduct* product = [arrayToUse objectAtIndex:i];
-            if (product.imagesArray.count > 0)
+            if (VALID_NOTEMPTY(product.image, NSString))
             {
                 JAPDVSingleRelatedItem *singleItem = [[JAPDVSingleRelatedItem alloc]
                                                       initWithFrame:CGRectMake(currentX, 0, 110, productScrollView.height)];

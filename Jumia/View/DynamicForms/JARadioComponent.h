@@ -15,21 +15,21 @@
 @interface JARadioComponent : JADynamicField
 
 @property (assign, nonatomic) BOOL hasError;
-@property (weak, nonatomic) IBOutlet UITextField *textField;
-@property (weak, nonatomic) IBOutlet UILabel *requiredSymbol;
+@property (strong, nonatomic) UITextField *textField;
+@property (strong, nonatomic) UILabel *requiredSymbol;
 @property (strong, nonatomic) NSArray *dataset;
 @property (strong, nonatomic) NSArray *options;
-@property (strong, nonatomic) NSString *apiCallEndpoint;
+@property (strong, nonatomic) NSString *apiCallTarget;
 @property (strong, nonatomic) NSDictionary *apiCallParameters;
 @property (nonatomic, strong) NSString* currentErrorMessage;
 
-+(JARadioComponent *)getNewJARadioComponent;
+@property (nonatomic) CGFloat fixedWidth;
 
 -(void)setupWithField:(RIField*)field;
 
 -(BOOL)isComponentWithKey:(NSString*)key;
 
--(void)setValue:(NSString*)value;
+-(void)setValue:(id)value;
 
 -(void)setLocaleValue:(RILocale*)locale;
 
@@ -44,6 +44,8 @@
 -(void)resetValue;
 
 -(NSString*)getApiCallUrl;
+
+- (NSDictionary*)getApiCallParameters;
 
 -(NSString*)getFieldName;
 

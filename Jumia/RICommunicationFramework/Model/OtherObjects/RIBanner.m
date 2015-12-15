@@ -16,31 +16,27 @@
     
     if(VALID_NOTEMPTY(bannerJSON, NSDictionary)){
         
-    
-                if([bannerJSON objectForKey:@"phone_image"])
-                {
-                    newBanner.iPhoneImageUrl = [bannerJSON objectForKey:@"phone_image"];
-                }
-                
-                if([bannerJSON objectForKey:@"tablet_image"])
-                {
-                    newBanner.iPadImageUrl = [bannerJSON objectForKey:@"tablet_image"];
-                }
-                
-                if([bannerJSON objectForKey:@"target"])
-                {
-                    newBanner.targetString = [bannerJSON objectForKey:@"target"];
-                }
-                
-                if([bannerJSON objectForKey:@"title"])
-                {
-                    newBanner.title = [bannerJSON objectForKey:@"title"];
-                }
-            }
-    
-    
+        if([bannerJSON objectForKey:@"phone_image"])
+        {
+            newBanner.iPhoneImageUrl = [bannerJSON objectForKey:@"phone_image"];
+        }
+        
+        if([bannerJSON objectForKey:@"tablet_image"])
+        {
+            newBanner.iPadImageUrl = [bannerJSON objectForKey:@"tablet_image"];
+        }
+        
+        if([bannerJSON objectForKey:@"target"])
+        {
+            newBanner.targetString = [bannerJSON objectForKey:@"target"];
+        }
+        
+        if([bannerJSON objectForKey:@"title"])
+        {
+            newBanner.title = [bannerJSON objectForKey:@"title"];
+        }
+    }
     return newBanner;
-    
 }
 
 @end

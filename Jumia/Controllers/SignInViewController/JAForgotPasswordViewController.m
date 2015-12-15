@@ -2,81 +2,110 @@
 //  JAForgotPasswordViewController.m
 //  Jumia
 //
-//  Created by Miguel Chaves on 14/Aug/14.
-//  Copyright (c) 2014 Rocket Internet. All rights reserved.
+//  Created by lucianoduarte on 01/12/15.
+//  Copyright © 2015 Rocket Internet. All rights reserved.
 //
 
 #import "JAForgotPasswordViewController.h"
 #import "RIForm.h"
 #import "RICustomer.h"
+#import "JABottomBar.h"
 
-@interface JAForgotPasswordViewController ()
+#define kSideMargin 16
+#define kTopMargin 36
+#define kSubTitleMargin 6
+#define kEmailMargin 32
+#define kIPadWidth 289
 
+@interface JAForgotPasswordViewController () <JADynamicFormDelegate>
+{
+    CGFloat _elementsWidth;
+}
+
+@property (strong, nonatomic) UIScrollView *mainScrollView;
+@property (strong, nonatomic) UILabel *titleLabel;
+@property (strong, nonatomic) UILabel *subTitleLabel;
+@property (strong, nonatomic) JABottomBar *forgotPasswordButton;
 @property (strong, nonatomic) JADynamicForm *dynamicForm;
-
-@property (strong, nonatomic) UIScrollView *scrollView;
-@property (strong, nonatomic) UIView *contentView;
-@property (strong, nonatomic) UILabel *firstLabel;
-@property (strong, nonatomic) UILabel *secondLabel;
-@property (strong, nonatomic) UIButton *forgotPasswordButton;
-@property (assign, nonatomic) CGFloat forgotPasswordViewCurrentY;
 @property (assign, nonatomic) RIApiResponse apiResponse;
+@property (assign, nonatomic) CGFloat contentScrollOriginalHeight;
 
 @end
 
 @implementation JAForgotPasswordViewController
 
+
+- (UIScrollView *)mainScrollView
+{
+    if (!VALID_NOTEMPTY(_mainScrollView, UIScrollView)) {
+        _mainScrollView = [[UIScrollView alloc] initWithFrame:self.viewBounds];
+        [_mainScrollView setBackgroundColor:[UIColor whiteColor]];
+    }
+    return _mainScrollView;
+}
+
+- (UILabel *)titleLabel
+{
+    if (!VALID_NOTEMPTY(_titleLabel, UILabel)) {
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(
+                                                                kSideMargin,
+                                                                kTopMargin,
+                                                                _elementsWidth,
+                                                                60)];
+        [_titleLabel setTextAlignment:NSTextAlignmentCenter];
+        [_titleLabel setNumberOfLines:0];
+        [_titleLabel setFont:JADisplay2Font];
+        [_titleLabel setTextColor:JABlackColor];
+        [_titleLabel setText:STRING_TYPE_YOUR_EMAIL];
+        [_titleLabel sizeToFit];
+        [_titleLabel setWidth:_elementsWidth];
+    }
+    return _titleLabel;
+}
+
+- (UILabel *)subTitleLabel
+{
+    if (!VALID_NOTEMPTY(_subTitleLabel, UILabel)) {
+        _subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(
+                                                                   kSideMargin,
+                                                                   CGRectGetMaxY(self.titleLabel.frame) + kSubTitleMargin,
+                                                                   _elementsWidth,
+                                                                   60)];
+        [_subTitleLabel setTextAlignment:NSTextAlignmentCenter];
+        [_subTitleLabel setNumberOfLines:0];
+        [_subTitleLabel setFont:JACaptionFont];
+        [_subTitleLabel setTextColor:JABlack800Color];
+        [_subTitleLabel setText:STRING_WE_WILL_SEND_PASSWORD];
+        [_subTitleLabel sizeToFit];
+        [_subTitleLabel setWidth:_elementsWidth];
+    }
+    return _subTitleLabel;
+}
+
+- (JABottomBar *)forgotPasswordButton
+{
+    if (!VALID_NOTEMPTY(_forgotPasswordButton, JABottomBar)) {
+        _forgotPasswordButton = [[JABottomBar alloc] initWithFrame:CGRectMake(
+                                                                              0,
+                                                                              self.view.height, //CGRectGetMaxY(self.viewBounds) - kBottomDefaultHeight,
+                                                                              self.view.width,
+                                                                              kBottomDefaultHeight)];
+        [_forgotPasswordButton addButton:[STRING_SUBMIT uppercaseString] target:self action:@selector(forgotPasswordButtonPressed:)];
+    }
+    return _forgotPasswordButton;
+}
+
 #pragma mark - View lifecycle
 
 - (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects;
 {
-    [self.contentView removeFromSuperview];
-    
+    [self.mainScrollView removeFromSuperview];
     [super showErrorView:isNoInternetConnection startingY:startingY selector:selector objects:objects];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.apiResponse = RIApiResponseSuccess;
-    
-    self.screenName = @"ForgotPassword";
-    
-    self.navBarLayout.showLogo = NO;
-    
-    self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:self.scrollView];
-    
-    self.contentView = [[UIView alloc] initWithFrame:CGRectMake(6.0f,
-                                                                6.0f,
-                                                                self.scrollView.frame.size.width - 12.0f,
-                                                                self.scrollView.frame.size.height - 12.0f)];
-    self.contentView.layer.cornerRadius = 5.0f;
-    [self.contentView setBackgroundColor:UIColorFromRGB(0xffffff)];
-    [self.contentView setHidden:YES];
-    [self.scrollView addSubview:self.contentView];
-
-    self.firstLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.firstLabel setFont:[UIFont fontWithName:kFontBoldName size:13.0f]];
-    [self.firstLabel setTextColor:UIColorFromRGB(0x666666)];
-    [self.firstLabel setText:STRING_TYPE_YOUR_EMAIL];
-    [self.firstLabel setBackgroundColor:[UIColor clearColor]];
-    [self.firstLabel setTextAlignment:NSTextAlignmentLeft];
-    [self.contentView addSubview:self.firstLabel];
-    
-    self.secondLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [self.secondLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
-    [self.secondLabel setTextColor:UIColorFromRGB(0x666666)];
-    [self.secondLabel setText:STRING_WE_WILL_SEND_PASSWORD];
-    [self.secondLabel setBackgroundColor:[UIColor clearColor]];
-    [self.secondLabel setNumberOfLines:2];
-    [self.secondLabel setTextAlignment:NSTextAlignmentLeft];
-    [self.contentView addSubview:self.secondLabel];
-    
-    if (RI_IS_RTL) {
-        [self.view flipAllSubviews];
-    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -92,191 +121,104 @@
                                              selector:@selector(hideKeyboard)
                                                  name:kOpenMenuNotification
                                                object:nil];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
+    
+    self.apiResponse = RIApiResponseSuccess;
+    
+    self.screenName = @"ForgotPassword";
+    self.navBarLayout.showLogo = NO;
+    self.navBarLayout.title = STRING_PASSWORD_RECOVERY;
+    
+    _elementsWidth = self.viewBounds.size.width - (kSideMargin * 2);
+    
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    [self.view addSubview:self.mainScrollView];
+    [self.mainScrollView addSubview:self.titleLabel];
+    [self.mainScrollView addSubview:self.subTitleLabel];
+    [self.view addSubview:self.forgotPasswordButton];
+    
+    if (self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess) {
+        [self showLoading];
+    }
     
     [self getForgotPasswordForm];
+}
+
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    [self setupViewsVertically];
+    [self.mainScrollView setXCenterAligned];
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
     [[RITrackingWrapper sharedInstance]trackScreenWithName:@"ForgotPass"];
 }
-
-- (void) getForgotPasswordForm
-{
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
-    {
-        [self showLoading];
-    }
-    [self.scrollView setHidden:YES];
-    
-    [self.scrollView addSubview:self.contentView];
  
-    [RIForm getForm:@"forgot_password"
-       successBlock:^(RIForm *form)
-     {
-         self.dynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:0.0f];
-         
-         for(UIView *view in self.dynamicForm.formViews)
-         {
-             [self.contentView addSubview:view];
-         }
-         
-         [self setupViews:self.view.frame.size.width height:self.view.frame.size.height toInterfaceOrientation:self.interfaceOrientation];
-         [self removeErrorView];
-         [self hideLoading];
-     }
-       failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
-     {
-         self.apiResponse = apiResponse;
-         [self hideLoading];
-         
-         if (RIApiResponseNoInternetConnection == apiResponse)
-         {
-             if(VALID_NOTEMPTY(self.dynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.dynamicForm.formViews, NSMutableArray))
-             {
-                 [self showMessage:STRING_NO_CONNECTION success:NO];
-                 [self finishedFormLoading:self.interfaceOrientation];
-             }
-             else
-             {
-                 [self showErrorView:YES startingY:0.0f selector:@selector(getForgotPasswordForm) objects:nil];
-             }
-         }
-         else
-         {                 if(VALID_NOTEMPTY(self.dynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.dynamicForm.formViews, NSMutableArray))
-         {
-             [self showMessage:STRING_ERROR success:NO];
-             [self finishedFormLoading:self.interfaceOrientation];
-         }
-         else
-         {
-             [self showErrorView:NO startingY:0.0f selector:@selector(getForgotPasswordForm) objects:nil];
-         }
-         }
-     }];
-}
-
-- (void)dealloc
+ - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)setupViews:(CGFloat)width height:(CGFloat)height toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+#pragma mark - Action
+
+- (void) getForgotPasswordForm
 {
-    [self.scrollView setFrame:CGRectMake(0.0f,
-                                         0.0f,
-                                         width,
-                                         height)];
-    
-    [self.contentView setFrame:CGRectMake(6.0f,
-                                          6.0f,
-                                          self.scrollView.frame.size.width - 12.0f,
-                                          self.scrollView.frame.size.height - 12.0f)];
-    
-    CGFloat horizontalMargin = 6.0f;
-    
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+    [RIForm getForm:@"forgot_password"
+       successBlock:^(RIForm *form)
     {
-        horizontalMargin = 128.0f;
+        if (self.loginEmail== nil) {
+            [self showMessage:STRING_ERROR success:NO];
+            [self finishedFormLoading];
+        } else {
+            self.dynamicForm = [[JADynamicForm alloc] initWithForm:form values:@{@"email" : self.loginEmail} startingPosition:CGRectGetMaxY(self.subTitleLabel.frame) + kEmailMargin hasFieldNavigation:YES];
+            [self.dynamicForm setDelegate:self];
+            
+            for (UIView *formView in self.dynamicForm.formViews) {
+                [self.mainScrollView addSubview:formView];
+            }
+            
+            self.contentScrollOriginalHeight = self.mainScrollView.height;
+            
+            [self setupViewsVertically];
+            [self removeErrorView];
+        }
+        
+        [self hideLoading];
     }
-    
-    CGRect firstLabelRect = [self.firstLabel.text boundingRectWithSize:CGSizeMake(self.contentView.frame.size.width - (2*horizontalMargin), self.scrollView.frame.size.height)
-                                                               options:NSStringDrawingUsesLineFragmentOrigin
-                                                            attributes:@{NSFontAttributeName:self.firstLabel.font} context:nil];
-    [self.firstLabel setFrame:CGRectMake(horizontalMargin,
-                                         11.0f,
-                                         self.contentView.frame.size.width - (2 * horizontalMargin),
-                                         ceilf(firstLabelRect.size.height))];
-    
-    CGRect secondLabelRect = [self.secondLabel.text boundingRectWithSize:CGSizeMake(self.contentView.frame.size.width - (2*horizontalMargin), self.scrollView.frame.size.height)
-                                                                 options:NSStringDrawingUsesLineFragmentOrigin
-                                                              attributes:@{NSFontAttributeName:self.secondLabel.font} context:nil];
-    [self.secondLabel setFrame:CGRectMake(horizontalMargin,
-                                          CGRectGetMaxY(self.firstLabel.frame) + 1.0f,
-                                          self.contentView.frame.size.width - (2 * horizontalMargin),
-                                          ceilf(secondLabelRect.size.height))];
-    
-    self.forgotPasswordViewCurrentY = CGRectGetMaxY(self.secondLabel.frame) + 11.0f;
-    
-    for(UIView *view in self.dynamicForm.formViews)
+       failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
     {
-        [view setFrame:CGRectMake(horizontalMargin,
-                                  self.forgotPasswordViewCurrentY,
-                                  self.contentView.frame.size.width - (2 * horizontalMargin),
-                                  view.frame.size.height)];
-        self.forgotPasswordViewCurrentY += view.frame.size.height;
-    }
-    
-    [self finishedFormLoading:toInterfaceOrientation];
+         self.apiResponse = apiResponse;
+         
+         if (RIApiResponseNoInternetConnection == apiResponse) {
+             if (VALID_NOTEMPTY(self.dynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.dynamicForm.formViews, NSMutableArray)) {
+                 [self showMessage:STRING_NO_CONNECTION success:NO];
+                 [self finishedFormLoading];
+             } else {
+                 [self showErrorView:YES startingY:0.0f selector:@selector(getForgotPasswordForm) objects:nil];
+             }
+         } else {
+             if (VALID_NOTEMPTY(self.dynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.dynamicForm.formViews, NSMutableArray)) {
+                 [self showMessage:STRING_ERROR success:NO];
+                 [self finishedFormLoading];
+             } else {
+                 [self showErrorView:NO startingY:0.0f selector:@selector(getForgotPasswordForm) objects:nil];
+             }
+         }
+        
+         [self hideLoading];
+    }];
 }
 
--(void)finishedFormLoading:(UIInterfaceOrientation)toInterfaceOrientation
+- (void)finishedFormLoading
 {
-    CGFloat horizontalMargin = 6.0f;
-    NSString *orangeButtonName = @"orangeMedium_%@";
-    
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-    {
-        if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
-        {
-            horizontalMargin = 128.0f;
-            orangeButtonName = @"orangeFullPortrait_%@";
-        }
-        else
-        {
-            orangeButtonName = @"orangeMediumPortrait_%@";
-        }
-    }
-    
-    if(VALID_NOTEMPTY(self.forgotPasswordButton, UIButton))
-    {
-        [self.forgotPasswordButton removeFromSuperview];
-    }
-    
-    UIImage *forgotPasswordButtonImage = [UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"normal"]];
-    self.forgotPasswordButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.forgotPasswordButton setFrame:CGRectMake(horizontalMargin,
-                                                   self.forgotPasswordViewCurrentY + 30.0f,
-                                                   forgotPasswordButtonImage.size.width,
-                                                   forgotPasswordButtonImage.size.height)];
-    
-    
-    [self.forgotPasswordButton setBackgroundImage:forgotPasswordButtonImage forState:UIControlStateNormal];
-    [self.forgotPasswordButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]]forState:UIControlStateHighlighted];
-    [self.forgotPasswordButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]]forState:UIControlStateSelected];
-    [self.forgotPasswordButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"disabled"]]forState:UIControlStateDisabled];
-    [self.forgotPasswordButton setTitle:STRING_SUBMIT forState:UIControlStateNormal];
-    [self.forgotPasswordButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    [self.forgotPasswordButton addTarget:self action:@selector(forgotPasswordButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.forgotPasswordButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
-    [self.contentView addSubview:self.forgotPasswordButton];
-    
-    self.forgotPasswordViewCurrentY = CGRectGetMaxY(self.forgotPasswordButton.frame) + 6.0f;
-    
-    [self.contentView setFrame:CGRectMake(self.contentView.frame.origin.x,
-                                          self.contentView.frame.origin.y,
-                                          self.contentView.frame.size.width,
-                                          CGRectGetMaxY(self.forgotPasswordButton.frame) + 6.0f)];
-    
-    [self.contentView setHidden:NO];
-    [self.scrollView setHidden:NO];
-
-    if(self.firstLoading)
-    {
+    if (self.firstLoading) {
         NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
         [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
         self.firstLoading = NO;
     }
 }
-
-#pragma mark - Action
 
 - (void)forgotPasswordButtonPressed:(id)sender
 {
@@ -306,22 +248,22 @@
      } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
      {
          [self hideLoading];
+         [self removeErrorView];
          
-         if (RIApiResponseNoInternetConnection == apiResponse)
-         {
-             [self showMessage:STRING_NO_CONNECTION success:NO];
+         if (RIApiResponseNoInternetConnection == apiResponse) {
+             [self showErrorView:YES startingY:0 selector:@selector(continueForgotPassword) objects:nil];
          }
          else if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
-             [self.dynamicForm validateFields:errorObject];
-             
-             [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
+             [self.dynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
+                 [self showMessage:message success:NO];
+             }];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
-             [self.dynamicForm checkErrors];
-             
-             [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
+             [self.dynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
+                 [self showMessage:message success:NO];
+             }];
          }
          else
          {
@@ -332,35 +274,65 @@
      }];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)setupViewsVertically
 {
-    [self showLoading];
+    if (self.forgotPasswordButton.y != self.viewBounds.size.height - self.forgotPasswordButton.height) {
+        for (UIView *view in self.dynamicForm.formViews) {
+            [view setY:CGRectGetMaxY(self.subTitleLabel.frame) + kEmailMargin];
+        }
+        
+        [self.forgotPasswordButton setY:self.viewBounds.size.height - self.forgotPasswordButton.height];
+        
+        self.contentScrollOriginalHeight = self.mainScrollView.height;
+    }
     
-    CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
-    CGFloat newHeight = self.view.frame.size.width + self.view.frame.origin.x;
-    
-    [self setupViews:newWidth height:newHeight toInterfaceOrientation:toInterfaceOrientation];
-    
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [self setupViewsHorizontally];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+- (void)setupViewsHorizontally
 {
-    [self setupViews:self.view.frame.size.width height:self.view.frame.size.height toInterfaceOrientation:self.interfaceOrientation];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        CGFloat middleX = (self.mainScrollView.width / 2);
+        
+        [self.titleLabel setWidth:kIPadWidth];
+        [self.titleLabel setX:middleX - (self.titleLabel.width / 2)];
+        
+        [self.subTitleLabel setWidth:kIPadWidth];
+        [self.subTitleLabel setX:middleX - (self.subTitleLabel.width / 2)];
+        
+        for (UIView *view in self.dynamicForm.formViews) {
+            [view setWidth:kIPadWidth];
+            [view setX:middleX - (view.width / 2)];
+        }
+        
+    } else if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
+        [self.titleLabel setWidth:_elementsWidth];
+        [self.titleLabel setX:kSideMargin];
+        
+        [self.subTitleLabel setWidth:_elementsWidth];
+        [self.subTitleLabel setX:kSideMargin];
+        
+        for (UIView *view in self.dynamicForm.formViews) {
+            [view setWidth:_elementsWidth];
+            [view setX:kSideMargin];
+        }
+        
+    }
     
-    [self hideLoading];
+    [self.forgotPasswordButton setWidth:self.viewBounds.size.width];
+    [self.forgotPasswordButton setX:0];
     
-    [self hideKeyboard];
-    
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    if (RI_IS_RTL) {
+        [self.view flipAllSubviews];
+    }
 }
+
+#pragma mark - Keyboard notifications
 
 - (void) hideKeyboard
 {
     [self.dynamicForm resignResponder];
 }
-
-#pragma mark - Keyboard notifications
 
 - (void) keyboardWillShow:(NSNotification *)notification
 {
@@ -368,23 +340,29 @@
     CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     CGFloat height = kbSize.height;
     
-    if(self.view.frame.size.width == kbSize.height)
-    {
+    if(self.view.frame.size.width == kbSize.height) {
         height = kbSize.width;
     }
     
     [UIView animateWithDuration:0.3 animations:^{
-        [self.scrollView setFrame:CGRectMake(self.view.bounds.origin.x,
-                                             self.view.bounds.origin.y,
-                                             self.view.bounds.size.width,
-                                             self.view.bounds.size.height - height)];
+        [self.mainScrollView setFrame:CGRectMake(self.mainScrollView.frame.origin.x,
+                                                    self.mainScrollView.frame.origin.y,
+                                                    self.mainScrollView.frame.size.width,
+                                                    self.contentScrollOriginalHeight - height)];
     }];
 }
 
 - (void) keyboardWillHide:(NSNotification *)notification
 {
+    if (self.contentScrollOriginalHeight == 0) {
+        return;
+    }
+    
     [UIView animateWithDuration:0.3 animations:^{
-        [self.scrollView setFrame:self.view.bounds];
+        [self.mainScrollView setFrame:CGRectMake(self.mainScrollView.frame.origin.x,
+                                                    self.mainScrollView.frame.origin.y,
+                                                    self.mainScrollView.frame.size.width,
+                                                    self.contentScrollOriginalHeight)];
     }];
 }
 

@@ -19,6 +19,7 @@
 #import "JAEmailNotificationsViewController.h"
 #import "JAMyOrdersViewController.h"
 #import "JASignInViewController.h"
+#import "JARegisterViewController.h"
 #import "JASignupViewController.h"
 #import "JAForgotPasswordViewController.h"
 #import "JALoginViewController.h"
@@ -58,6 +59,8 @@
 #import "JAMoreMenuViewController.h"
 #import "RICountry.h"
 #import "JAFiltersViewController.h"
+
+#import "JAAuthenticationViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -136,6 +139,11 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showAuthenticationScreen:)
+                                                 name:kShowAuthenticationScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showSignInScreen:)
                                                  name:kShowSignInScreenNotification
                                                object:nil];
@@ -146,7 +154,7 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showForgotPasswordScreen)
+                                             selector:@selector(showForgotPasswordScreen:)
                                                  name:kShowForgotPasswordScreenNotification
                                                object:nil];
     
@@ -338,11 +346,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showSellerCatalog:)
                                                  name:kOpenSellerPage
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showSpecificationsScreen:)
-                                                 name:kOpenSpecificationsScreen
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -541,7 +544,7 @@
         [userInfo setObject:nextNotification forKey:@"notification"];
         [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"tabbar_is_visible"];
         [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"shows_back_button"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification object:nil userInfo:userInfo];
         return;
     }else{
         UIViewController *topViewController = [self topViewController];
@@ -581,6 +584,45 @@
 }
 
 #pragma mark Sign In Screen
+- (void)showAuthenticationScreen:(NSNotification *)notification
+{
+    JAAuthenticationViewController *authenticationViewController = [[JAAuthenticationViewController alloc] init];
+    
+    if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSNotification))
+    {
+        authenticationViewController.nextNotification = [notification.userInfo objectForKey:@"notification"];
+    }
+    
+    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"shows_back_button"], NSNumber)) {
+        NSNumber* showsBack = [notification.userInfo objectForKey:@"shows_back_button"];
+        authenticationViewController.navBarLayout.showBackButton = [showsBack boolValue];
+    } else {
+        authenticationViewController.navBarLayout.showBackButton = YES;
+    }
+    authenticationViewController.fromSideMenu = NO;
+    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"from_side_menu"], NSNumber)) {
+        NSNumber* fromSide = [notification.userInfo objectForKey:@"from_side_menu"];
+        authenticationViewController.fromSideMenu = [fromSide boolValue];
+    }
+    BOOL animated = YES;
+    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"tabbar_is_visible"], NSNumber)) {
+        NSNumber* tabbarIsVisible = [notification.userInfo objectForKey:@"tabbar_is_visible"];
+        authenticationViewController.tabBarIsVisible = [tabbarIsVisible boolValue];
+        [self popToRootViewControllerAnimated:NO];
+        animated = NO;
+    }
+    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"animated"], NSNumber)) {
+        NSNumber* animatedNumber = [notification.userInfo objectForKey:@"animated"];
+        animated = [animatedNumber boolValue];
+    }
+    
+    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.userInfo, NSDictionary)) {
+        [authenticationViewController setUserInfo:notification.userInfo];
+    }
+    
+    [self pushViewController:authenticationViewController animated:YES];
+}
+
 - (void)showSignInScreen:(NSNotification *)notification
 {
     JASignInViewController *signInVC = [[JASignInViewController alloc] init];
@@ -612,6 +654,10 @@
         animated = [animatedNumber boolValue];
     }
     
+    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"email"], NSString)) {
+        signInVC.authenticationEmail = [notification.userInfo objectForKey:@"email"];
+    }
+    
     [self pushViewController:signInVC animated:animated];
 }
 
@@ -619,9 +665,9 @@
 - (void)showSignUpScreen:(NSNotification *)notification
 {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JASignupViewController class]] && ![RICustomer checkIfUserIsLogged])
+    if (![topViewController isKindOfClass:[JARegisterViewController class]] && ![RICustomer checkIfUserIsLogged])
     {
-        JASignupViewController *signUpVC = [[JASignupViewController alloc] init];
+        JARegisterViewController *signUpVC = [[JARegisterViewController alloc] init];
         
         if(VALID_NOTEMPTY(notification, NSNotification)) {
             signUpVC.navBarLayout.showBackButton = YES;
@@ -631,6 +677,10 @@
                 signUpVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
             }
 //            [self popViewControllerAnimated:NO];
+            
+            if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"email"], NSString)) {
+                signUpVC.authenticationEmail = [notification.userInfo objectForKey:@"email"];
+            }
         }
         else
         {
@@ -644,12 +694,16 @@
 }
 
 #pragma mark Forgot Password Screen
-- (void)showForgotPasswordScreen
+- (void)showForgotPasswordScreen:(NSNotification *)notification
 {
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JASignupViewController class]] && ![RICustomer checkIfUserIsLogged])
     {
         JAForgotPasswordViewController *forgotVC = [[JAForgotPasswordViewController alloc] init];
+        
+        if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"email"], NSString)) {
+            forgotVC.loginEmail = [notification.userInfo objectForKey:@"email"];
+        }
         
         [forgotVC.navBarLayout setShowBackButton:YES];
         
@@ -719,41 +773,6 @@
     }
 }
 
-- (void)showSpecificationsScreen:(NSNotification*)notification
-{
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAProductDetailsViewController class]])
-    {
-        JAProductDetailsViewController *productDetails = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"JAProductDetailsViewController"];
-        
-        NSString* orderNumber = notification.object;
-        if (VALID_NOTEMPTY(orderNumber, NSString))
-        {
-            productDetails.selectedIndex = 0;
-            productDetails.startingTrackOrderNumber = orderNumber;
-        }
-        
-        NSDictionary *userInfo = notification.userInfo;
-        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"selected_index"], NSNumber))
-        {
-            productDetails.selectedIndex = [[userInfo objectForKey:@"selected_index"] intValue];
-        }
-        
-        [self popToRootViewControllerAnimated:NO];
-        [self pushViewController:productDetails animated:NO];
-    }
-    else
-    {
-        JAProductDetailsViewController *productDetails = (JAProductDetailsViewController*) topViewController;
-        NSDictionary *userInfo = notification.userInfo;
-        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"selected_index"], NSNumber))
-        {
-            productDetails.selectedIndex = [[userInfo objectForKey:@"selected_index"] intValue];
-        }
-    }
-}
-
-
 #pragma mark User Data Screen
 - (void)showUserData:(NSNotification*)notification
 {
@@ -775,9 +794,9 @@
     }
     else
     {
-        if (![topViewController isKindOfClass:[JASignInViewController class]])
+        if (![topViewController isKindOfClass:[JAAuthenticationViewController class]])
         {
-            JASignInViewController *signInViewController = [[JASignInViewController alloc] init];
+            JAAuthenticationViewController *signInViewController = [[JAAuthenticationViewController alloc] init];
             
             signInViewController.navBarLayout.showBackButton = YES;
             signInViewController.fromSideMenu = NO;
@@ -809,9 +828,9 @@
     }
     else
     {
-        if (![topViewController isKindOfClass:[JASignInViewController class]])
+        if (![topViewController isKindOfClass:[JAAuthenticationViewController class]])
         {
-            JASignInViewController *signInViewController = [[JASignInViewController alloc] init];
+            JAAuthenticationViewController *signInViewController = [[JAAuthenticationViewController alloc] init];
             
             signInViewController.navBarLayout.showBackButton = YES;
             signInViewController.fromSideMenu = NO;
@@ -904,9 +923,9 @@
     }
     else
     {
-        if (!fromCheckout && ![topViewController isKindOfClass:[JASignInViewController class]])
+        if (!fromCheckout && ![topViewController isKindOfClass:[JAAuthenticationViewController class]])
         {
-            JASignInViewController *signInViewController = [[JASignInViewController alloc] init];
+            JAAuthenticationViewController *signInViewController = [[JAAuthenticationViewController alloc] init];
             
             signInViewController.navBarLayout.showBackButton = YES;
             signInViewController.fromSideMenu = NO;
@@ -1493,6 +1512,10 @@
         pdv.productTargetString = targetString;
         pdv.productSku = productSku;
         
+        if ([notification.userInfo objectForKey:@"richRelevance"]) {
+            pdv.richRelevanceParameter = [notification.userInfo objectForKey:@"richRelevance"];
+        }
+        
         if ([notification.userInfo objectForKey:@"fromCatalog"])
         {
             pdv.fromCatalogue = YES;
@@ -1805,7 +1828,7 @@
     
     if (![[self topViewController] isKindOfClass:[JACartViewController class]])
     {
-        JACartViewController *cartViewController = [[JACartViewController alloc] initWithNibName:@"JACartViewController" bundle:nil];
+        JACartViewController *cartViewController = [[JACartViewController alloc] init];
         [cartViewController setCart:self.cart];
         
         [self popToRootViewControllerAnimated:NO];

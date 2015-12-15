@@ -13,4 +13,6 @@
 - (void)resetFrame:(CGRect)frame
        orientation:(UIInterfaceOrientation)orientation;
 
+- (void)setSearchBarText:(NSString*)text;
+
 @end

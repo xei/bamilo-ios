@@ -9,7 +9,6 @@
 #import "RICustomer.h"
 #import "RIAddress.h"
 #import "RIForm.h"
-#import "RINewsletterCategory.h"
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 @interface RICustomer ()
@@ -32,6 +31,48 @@
 @dynamic loginMethod;
 @dynamic addresses;
 @synthesize costumerRequestID, wishlistProducts;
+
++ (NSString *)checkEmailWithParameters:(NSDictionary *)parameters
+                          successBlock:(void (^)(BOOL knownEmail))successBlock
+                       andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock
+{
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, @"customer/emailcheck/"]]
+                                                            parameters:parameters
+                                                        httpMethodPost:YES
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                              if (VALID_NOTEMPTY(metadata, NSDictionary))
+                                                              {
+                                                                  NSNumber* exists = [metadata objectForKey:@"exist"];
+                                                                  if (VALID_NOTEMPTY(exists, NSNumber))
+                                                                  {
+                                                                      successBlock([exists boolValue]);
+                                                                  } else
+                                                                  {
+                                                                      failureBlock(apiResponse, nil);
+                                                                  }
+                                                              } else
+                                                              {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }
+                                                              
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                              if(NOTEMPTY(errorJsonObject))
+                                                              {
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+                                                              } else if(NOTEMPTY(errorObject))
+                                                              {
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(apiResponse, errorArray);
+                                                              } else
+                                                              {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }
+                                                          }];
+}
 
 + (NSString*)autoLogin:(void (^)(BOOL success, NSDictionary *entities, NSString *loginMethod))returnBlock
 {
@@ -115,7 +156,7 @@
     {
         RICustomer *customer = (RICustomer *)customers[0];
                                 
-        return customer.idCustomer;
+        return [customer.idCustomer stringValue];
     }
     else
     {
@@ -436,8 +477,6 @@
         customer.plainPassword = plainPassword;
     }
     
-    [self updateCustomerNewsletterWithJson:json];
-    
     [RICustomer saveCustomer:customer andContext:YES];
     
     return customer;
@@ -488,38 +527,6 @@
     [json setValue:addresses forKey:@"address_list"];
     
     return json;
-}
-
-#pragma mark - Save newsletter preferences
-
-+ (void)updateCustomerNewsletterWithJson:(NSDictionary *)json
-{
-    if ([json objectForKey:@"subscribed_categories"])
-    {
-        [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RINewsletterCategory class])];
-        [[RIDataBaseWrapper sharedInstance] saveContext];
-        
-        NSArray *newsletterArray = [json objectForKey:@"subscribed_categories"];
-        
-        for (NSDictionary *dic in newsletterArray)
-        {
-            RINewsletterCategory *newsletter = [RINewsletterCategory parseNewsletterCategory:dic];
-            [RINewsletterCategory saveNewsLetterCategory:newsletter andContext:YES];
-        }
-    }
-    else if ([json objectForKey:@"newsletter_subscription"])
-    {
-        [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RINewsletterCategory class])];
-        [[RIDataBaseWrapper sharedInstance] saveContext];
-        
-        NSArray *newsletterArray = [json objectForKey:@"newsletter_subscription"];
-        
-        for (NSDictionary *dic in newsletterArray)
-        {
-            RINewsletterCategory *newsletter = [RINewsletterCategory parseNewsletterCategory:dic];
-            [RINewsletterCategory saveNewsLetterCategory:newsletter andContext:YES];
-        }
-    }
 }
 
 @end

@@ -12,7 +12,6 @@
 #import "RICustomer.h"
 #import "RIFieldOption.h"
 #import "RICart.h"
-#import "RINewsletterCategory.h"
 #import "RITarget.h"
 
 @implementation RIForm
@@ -138,13 +137,13 @@
                                                                   
                                                                   // Update user newsletter preferences
                                                                   RIForm* newForm = [RIForm parseFormEntity:formEntity formIndex:nil formIndexType:nil];
-                                                                  dispatch_async(dispatch_get_main_queue(), ^{
+//                                                                  dispatch_async(dispatch_get_main_queue(), ^{
                                                                       successBlock(newForm);
-                                                                  });
+//                                                                  });
                                                               } else {
-                                                                  dispatch_async(dispatch_get_main_queue(), ^{
+//                                                                  dispatch_async(dispatch_get_main_queue(), ^{
                                                                       failureBlock(apiResponse, nil);
-                                                                  });
+//                                                                  });
                                                               }
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
@@ -172,41 +171,6 @@
                  formIndex:(RIFormIndex*)formIndex
              formIndexType:(NSString*)formIndexType
 {
-    // Update user newsletter preferences
-    if ([@"manage_newsletters" isEqualToString:formIndexType])
-    {
-        NSArray *fields = [formEntityJSON objectForKey:@"fields"];
-        
-        for (NSDictionary *field in fields)
-        {
-            NSArray *options = [field objectForKey:@"options"];
-            
-            [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RINewsletterCategory class])];
-            [[RIDataBaseWrapper sharedInstance] saveContext];
-            
-            for (NSDictionary *optionField in options)
-            {
-                NSInteger subs = [[optionField objectForKey:@"user_subscribed"] integerValue];
-                
-                if (1 == subs)
-                {
-                    NSMutableDictionary *temp = [NSMutableDictionary new];
-                    
-                    if ([optionField objectForKey:@"value"]) {
-                        [temp addEntriesFromDictionary:@{@"id_newsletter_category" : [optionField objectForKey:@"value"]} ];
-                    }
-                    
-                    if ([optionField objectForKey:@"label"]) {
-                        [temp addEntriesFromDictionary:@{@"name" : [optionField objectForKey:@"label"]} ];
-                    }
-                    
-                    RINewsletterCategory *tempNews = [RINewsletterCategory parseNewsletterCategory:[temp copy]];
-                    [RINewsletterCategory saveNewsLetterCategory:tempNews andContext:YES];
-                }
-            }
-        }
-    }
-
     RIForm* newForm = [RIForm parseForm:formEntityJSON];
     
     if (VALID_NOTEMPTY(formIndex, RIFormIndex)) {
@@ -306,37 +270,10 @@
                                                               BOOL responseProcessed = NO;
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                               {
-//                                                                  if([@"register_signup" isEqualToString:type])
-//                                                                  {
-//                                                                      NSDictionary *data = [metadata copy];
-//                                                                      if (VALID_NOTEMPTY([metadata objectForKey:@"data"], NSDictionary)) {
-//                                                                          data = [metadata objectForKey:@"data"];
-//                                                                      }
-//                                                                      if(VALID_NOTEMPTY(data, NSDictionary))
-//                                                                      {
-//                                                                          responseProcessed = YES;
-//                                                                          RICustomer *customer = [RICustomer parseCustomerWithJson:[data objectForKey:@"user"] plainPassword:password loginMethod:@"signup"];
-//                                                                          NSDictionary* nativeCheckoutDic = [data objectForKey:@"native_checkout"];
-//                                                                          NSMutableDictionary* successDic = [NSMutableDictionary dictionaryWithDictionary:nativeCheckoutDic];
-//                                                                          [successDic setValue:customer forKey:@"customer"];
-//                                                                          successBlock([successDic copy]);
-//                                                                      }
-//                                                                  }
-//                                                                  else
+                                                                  NSDictionary* entities = [RIForm parseEntities:metadata plainPassword:password];
                                                                   
-                                                                  if ([@"manage_newsletters" isEqualToString:type])
-                                                                  {
-                                                                      [RICustomer updateCustomerNewsletterWithJson:metadata];
-                                                                      successBlock(nil);
-                                                                      responseProcessed = YES;
-                                                                  }
-                                                                  else
-                                                                  {
-                                                                      NSDictionary* entities = [RIForm parseEntities:metadata plainPassword:password];
-
-                                                                      successBlock(entities);
-                                                                      responseProcessed = YES;
-                                                                  }
+                                                                  successBlock(entities);
+                                                                  responseProcessed = YES;
                                                               }
                                                               else
                                                               {

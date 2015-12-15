@@ -49,4 +49,11 @@
     return super.label;
 }
 
+- (void)sizeToFit
+{
+    [self setWidth:CGRectGetMaxX(self.label.frame)];
+    [self setHeight:self.label.height];
+    [self.label setYCenterAligned];
+}
+
 @end

@@ -154,15 +154,15 @@
 
 #pragma mark - Send request
 
-+ (NSString *)getRatingsForProductWithTargetString:(NSString *)targetString
-                                       allowRating:(NSInteger) allowRating
-                                        pageNumber:(NSInteger) pageNumber
-                                      successBlock:(void (^)(RIProductRatings *ratings))successBlock
-                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
++ (NSString *)getRatingsForProductWithSku:(NSString *)sku
+                              allowRating:(NSInteger) allowRating
+                               pageNumber:(NSInteger) pageNumber
+                             successBlock:(void (^)(RIProductRatings *ratings))successBlock
+                          andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 {
     NSString *operationID = nil;
     
-    NSString* url = [RITarget getURLStringforTargetString:targetString];
+    NSString* url = [NSString stringWithFormat:@"%@%@%@%@/", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_PRODUCT_DETAIL, sku];
     
     if (VALID_NOTEMPTY(url, NSString))
     {
@@ -211,7 +211,7 @@
 
 + (NSString *)getRatingsDetails:(NSString *)sku successBlock:(void (^)(NSDictionary *))successBlock andFailureBlock:(void (^)(RIApiResponse, NSArray *))failureBlock
 {
-    NSString *finalUrl = [NSString stringWithFormat:@"%@%@catalog/details?sku=%@&rating=1", [RIApi getCountryUrlInUse], RI_API_VERSION, sku];
+    NSString *finalUrl = [NSString stringWithFormat:@"%@%@%@%@/%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_PRODUCT_DETAIL, sku, RI_API_PROD_RATING_DETAILS];
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl]
                                                             parameters:nil
                                                         httpMethodPost:YES
@@ -247,59 +247,6 @@
                                                                   failureBlock(apiResponse, nil);
                                                               }
                                                           }];
-    
-}
-
-+ (NSString *)sendRatingWithSku:(NSString *)sku
-                          stars:(NSString *)stars
-                         userId:(NSString *)userId
-                           name:(NSString *)name
-                          title:(NSString *)title
-                        comment:(NSString *)comment
-                   successBlock:(void (^)(BOOL success))successBlock
-                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
-{
-    NSString *operationID = nil;
-    
-    if (VALID_NOTEMPTY(sku, NSString))
-    {
-        NSString *url = [NSString stringWithFormat:@"%@%@rating/add/?rating-costumer=%@&rating-option--1=%@&rating-catalog-sku=%@&RatingForm[comment]=%@&RatingForm[title]=%@&RatingForm[name]=%@", [RIApi getCountryUrlInUse], RI_API_VERSION, userId, stars, sku, comment, title, name];
-        operationID = [[RICommunicationWrapper sharedInstance]
-                       sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@", url]]
-                       parameters:nil
-                       httpMethodPost:YES
-                       cacheType:RIURLCacheDBCache
-                       cacheTime:RIURLCacheDefaultTime
-                       userAgentInjection:[RIApi getCountryUserAgentInjection]
-                       successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                           
-                           dispatch_async(dispatch_get_main_queue(), ^{
-                               successBlock(YES);
-                           });
-                           
-                       } failureBlock:^(RIApiResponse apiResponse,  NSDictionary *errorJsonObject, NSError *errorObject) {
-                           
-                           dispatch_async(dispatch_get_main_queue(), ^{
-                               if(NOTEMPTY(errorJsonObject))
-                               {
-                                   failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
-                               } else if(NOTEMPTY(errorObject))
-                               {
-                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                   failureBlock(apiResponse, errorArray);
-                               } else
-                               {
-                                   failureBlock(apiResponse, nil);
-                               }
-                           });
-                       }];
-    }
-    else
-    {
-        failureBlock(RIApiResponseUnknownError, nil);
-    }
-    
-    return operationID;
 }
 
 #pragma mark - Cancel requests
@@ -316,26 +263,25 @@
 + (RIProductRatings *)parseRatingWithDictionay:(NSDictionary *)dictionary
 {
     NSDictionary *metadata = [dictionary objectForKey:@"metadata"];
-    NSDictionary *dic = [metadata objectForKey:@"data"];
     
     RIProductRatings *newProductRatings = [[RIProductRatings alloc] init];
     
-    if ([dic objectForKey:@"product"]) {
+    if ([metadata objectForKey:@"product"]) {
         
-        NSDictionary* product = [dic objectForKey:@"product"];
+        NSDictionary* product = [metadata objectForKey:@"product"];
         if (VALID_NOTEMPTY(product, NSDictionary)) {
             if ([product objectForKey:@"sku"]) {
-                newProductRatings.productSku = [dic objectForKey:@"sku"];
+                newProductRatings.productSku = [metadata objectForKey:@"sku"];
             }
             if ([product objectForKey:@"name"]) {
-                newProductRatings.productName = [dic objectForKey:@"name"];
+                newProductRatings.productName = [metadata objectForKey:@"name"];
             }
         }
     }
     
-    if ([dic objectForKey:@"reviews"])
+    if ([metadata objectForKey:@"reviews"])
     {
-        NSDictionary *reviewsJSON = [dic objectForKey:@"reviews"];
+        NSDictionary *reviewsJSON = [metadata objectForKey:@"reviews"];
         if (VALID_NOTEMPTY(reviewsJSON, NSDictionary)) {
             if([reviewsJSON objectForKey:@"pagination"]){
                 
@@ -353,18 +299,18 @@
         }
     }
     
-    if ([dic objectForKey:@"ratings"]) {
+    if ([metadata objectForKey:@"ratings"]) {
         
-        NSDictionary* ratingInfoJSON = [dic objectForKey:@"ratings"];
+        NSDictionary* ratingInfoJSON = [metadata objectForKey:@"ratings"];
         if (VALID_NOTEMPTY(ratingInfoJSON, NSDictionary)) {
             
             newProductRatings.ratingInfo = [RIRatingInfo parseRatingInfo:ratingInfoJSON];
         }
     }
     
-    if ([dic objectForKey:@"reviews"]) {
+    if ([metadata objectForKey:@"reviews"]) {
         
-        NSDictionary* reviewsJSON = [dic objectForKey:@"reviews"];
+        NSDictionary* reviewsJSON = [metadata objectForKey:@"reviews"];
         if (VALID_NOTEMPTY(reviewsJSON, NSDictionary)) {
             
             newProductRatings.reviews = [RIReview parseReviews:reviewsJSON];

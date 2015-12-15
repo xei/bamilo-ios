@@ -9,6 +9,9 @@
 #import "JACatalogPictureCollectionViewCell.h"
 #import "JAProductInfoRatingLine.h"
 
+// as of https://jira.rocket-internet.de/browse/NAFAMZ-14582
+#define xFavOffset 20.f
+
 @interface JACatalogPictureCollectionViewCell () {
     CGFloat _lastWidth;
     CGRect _ratingLineRect;
@@ -78,6 +81,7 @@
     CGFloat xOffset = 32.f;
     CGFloat discountWidth = 60.f;
     CGFloat brandYOffset = 355;
+    CGFloat distXRecent = 16.f;
     
     if ([UIDevice currentDevice].userInterfaceIdiom != UIUserInterfaceIdiomPad) {
         xOffset = 6.f;
@@ -110,7 +114,7 @@
     }
     [self setForRTL:self.priceLine];
     
-    CGFloat favX = self.favoriteButton.superview.width - self.favoriteButton.width - xOffset;
+    CGFloat favX = self.favoriteButton.superview.width - self.favoriteButton.width - xFavOffset;
     if (self.favoriteButton.x != favX) {
         [self.favoriteButton setX:favX];
         [self setForRTL:self.favoriteButton];
@@ -127,6 +131,12 @@
     if (!CGRectEqualToRect(discountLabelRect, self.discountLabel.frame)) {
         [self.discountLabel setFrame:discountLabelRect];
         [self setForRTL:self.discountLabel];
+    }
+    
+    CGFloat recentX = distXRecent;
+    if (self.recentProductBadgeLabel.x != recentX) {
+        [self.recentProductBadgeLabel setX:recentX];
+        [self setForRTL:self.recentProductBadgeLabel];
     }
     
     _lastWidth = self.width;

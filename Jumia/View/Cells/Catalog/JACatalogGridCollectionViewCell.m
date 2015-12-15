@@ -8,6 +8,8 @@
 
 #import "JACatalogGridCollectionViewCell.h"
 
+#define xFavOffset 10.f
+
 @interface JACatalogGridCollectionViewCell () {
     CGFloat _lastWidth;
 }
@@ -59,6 +61,7 @@
     CGFloat xOffset = 16.f;
     CGFloat discountWidth = 60.f;
     CGFloat brandYOffset = 170;
+    CGFloat distXRecent = 10.f;
     
     if ([UIDevice currentDevice].userInterfaceIdiom != UIUserInterfaceIdiomPad) {
         xOffset = 6.f;
@@ -95,10 +98,16 @@
     }
     [self setForRTL:self.priceLine];
     
-    CGFloat favX = self.favoriteButton.superview.width - self.favoriteButton.width - xOffset;
+    CGFloat favX = self.favoriteButton.superview.width - self.favoriteButton.width - xFavOffset;
     if (self.favoriteButton.x != favX) {
         [self.favoriteButton setX:favX];
         [self setForRTL:self.favoriteButton];
+    }
+    
+    CGFloat recentX = distXRecent;
+    if (self.recentProductBadgeLabel.x != recentX) {
+        [self.recentProductBadgeLabel setX:recentX];
+        [self setForRTL:self.recentProductBadgeLabel];
     }
     
     _lastWidth = self.width;

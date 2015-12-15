@@ -1095,15 +1095,15 @@
         
         if(VALID_NOTEMPTY(errorObject, NSDictionary))
         {
-            [self.loginDynamicForm validateFields:errorObject];
-            
-            [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
+            [self.loginDynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
+                [self showMessage:message success:NO];
+            }];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
-            [self.loginDynamicForm checkErrors];
-            
-            [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
+            [self.loginDynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
+                [self showMessage:message success:NO];
+            }];
         }
         else
         {
@@ -1160,15 +1160,15 @@
         
         if(VALID_NOTEMPTY(errorObject, NSDictionary))
         {
-            [self.signupDynamicForm validateFields:errorObject];
-            
-            [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
+            [self.signupDynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
+                [self showMessage:message success:NO];
+            }];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
-            [self.signupDynamicForm checkErrors];
-            
-            [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
+            [self.signupDynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
+                [self showMessage:message success:NO];
+            }];
         }
         else
         {

@@ -29,6 +29,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *emptyFavoritesView;
 @property (weak, nonatomic) IBOutlet UILabel *emptyFavoritesLabel;
+@property (strong, nonatomic) UILabel *emptyFavouritesTitleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *emptyFavoritesImageView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) NSString* cellIdentifier;
@@ -56,6 +57,20 @@
 
 @implementation JAMyFavouritesViewController
 
+-(UILabel *)emptyFavouritesTitleLabel
+{
+    if (!VALID_NOTEMPTY(_emptyFavouritesTitleLabel, UILabel)) {
+        _emptyFavouritesTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.viewBounds.origin.x,
+                                                                               self.viewBounds.origin.y + 48, 0, 0)];
+        [_emptyFavouritesTitleLabel setText:STRING_FAVOURITES_NO_SAVED_ITEMS];
+        [_emptyFavouritesTitleLabel setFont:JADisplay2Font];
+        [_emptyFavouritesTitleLabel setTextColor:JABlackColor];
+        [_emptyFavouritesTitleLabel setTextAlignment:NSTextAlignmentCenter];
+        [_emptyFavouritesTitleLabel sizeToFit];
+        [self.emptyFavoritesView addSubview:_emptyFavouritesTitleLabel];
+    }
+    return _emptyFavouritesTitleLabel;
+}
 
 @synthesize productsArray=_productsArray;
 - (void)setProductsArray:(NSArray *)productsArray
@@ -64,9 +79,11 @@
     [self.collectionView reloadData];
     if (ISEMPTY(productsArray)) {
         self.emptyFavoritesView.hidden = NO;
+        self.emptyFavouritesTitleLabel.hidden = NO;
         self.collectionView.hidden = YES;
     } else {
         self.emptyFavoritesView.hidden = YES;
+        self.emptyFavouritesTitleLabel.hidden = YES;
         self.collectionView.hidden = NO;
     }
 }
@@ -123,16 +140,24 @@
                                            [self viewBounds].size.height);
     
     self.emptyFavoritesView.frame = CGRectMake(0,
-                                               [self viewBounds].origin.y + 1.0f,
+                                               [self viewBounds].origin.y,
                                                [self viewBounds].size.width,
                                                [self viewBounds].size.height);
-    self.emptyFavoritesImageView.frame = CGRectMake((self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2,
-                                                    48.0f,
-                                                    self.emptyFavoritesImageView.frame.size.width,
-                                                    self.emptyFavoritesImageView.frame.size.height);
     
-    [self.emptyFavoritesLabel setY:CGRectGetMaxY(self.emptyFavoritesImageView.frame) + 32.f];
-    [self.emptyFavoritesLabel setX:self.emptyFavoritesView.frame.size.width/2 - self.emptyFavoritesLabel.width/2];
+    [self.emptyFavouritesTitleLabel setFrame:CGRectMake(self.emptyFavoritesView.frame.size.width/2 - self.emptyFavouritesTitleLabel.width/2,
+                                                        48.f,
+                                                        self.emptyFavouritesTitleLabel.width,
+                                                        self.emptyFavouritesTitleLabel.height)];
+    
+    [self.emptyFavoritesImageView setFrame:CGRectMake((self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2,
+                                                      CGRectGetMaxY([self.emptyFavouritesTitleLabel frame]) + 28.f,
+                                                      self.emptyFavoritesImageView.width,
+                                                      self.emptyFavoritesImageView.height)];
+    
+    [self.emptyFavoritesLabel setFrame:CGRectMake(self.emptyFavoritesView.frame.size.width/2 - self.emptyFavoritesLabel.width/2,
+                                                  CGRectGetMaxY(self.emptyFavoritesImageView.frame) + 28.f,
+                                                  self.emptyFavoritesLabel.width,
+                                                  self.emptyFavoritesLabel.height)];
     
     self.lastPage = NO;
     self.currentPage = 0;
@@ -167,15 +192,24 @@
                                            [self viewBounds].size.height);
     
     self.emptyFavoritesView.frame = CGRectMake(0,
-                                               [self viewBounds].origin.y + 1.0f,
+                                               [self viewBounds].origin.y,
                                                [self viewBounds].size.width,
                                                [self viewBounds].size.height);
-    self.emptyFavoritesImageView.frame = CGRectMake((self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2,
-                                                    48.0f,
-                                                    self.emptyFavoritesImageView.frame.size.width,
-                                                    self.emptyFavoritesImageView.frame.size.height);
-    [self.emptyFavoritesLabel setY:CGRectGetMaxY(self.emptyFavoritesImageView.frame) + 32.f];
-    [self.emptyFavoritesLabel setX:self.emptyFavoritesView.frame.size.width/2 - self.emptyFavoritesLabel.width/2];
+    
+    [self.emptyFavouritesTitleLabel setFrame:CGRectMake(self.emptyFavoritesView.frame.size.width/2 - self.emptyFavouritesTitleLabel.width/2,
+                                                        48.f,
+                                                        self.emptyFavouritesTitleLabel.width,
+                                                        self.emptyFavouritesTitleLabel.height)];
+    
+    [self.emptyFavoritesImageView setFrame:CGRectMake((self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2,
+                                                      CGRectGetMaxY([self.emptyFavouritesTitleLabel frame]) + 28.f,
+                                                      self.emptyFavoritesImageView.width,
+                                                      self.emptyFavoritesImageView.height)];
+    
+    [self.emptyFavoritesLabel setFrame:CGRectMake(self.emptyFavoritesView.frame.size.width/2 - self.emptyFavoritesLabel.width/2,
+                                                  CGRectGetMaxY(self.emptyFavoritesImageView.frame) + 28.f,
+                                                  self.emptyFavoritesLabel.width,
+                                                  self.emptyFavoritesLabel.height)];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -190,20 +224,25 @@
                                            [self viewBounds].size.height);
     [self.collectionView reloadData];
     
-//    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
-        self.emptyFavoritesView.frame = CGRectMake(self.emptyFavoritesView.frame.origin.x,
-                                                   self.emptyFavoritesView.frame.origin.y,
-                                                   [self viewBounds].size.width - self.emptyFavoritesView.frame.origin.x * 2,
-                                                   [self viewBounds].size.height);
-        self.emptyFavoritesImageView.frame = CGRectMake((self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2,
-                                                        56.0f,
-                                                        self.emptyFavoritesImageView.frame.size.width,
-                                                        self.emptyFavoritesImageView.frame.size.height);
-        self.emptyFavoritesLabel.frame = CGRectMake(12.0f,
-                                                    183.0f,
-                                                    self.emptyFavoritesView.frame.size.width - 12*2,
-                                                    self.emptyFavoritesLabel.frame.size.height);
-//    }
+    self.emptyFavoritesView.frame = CGRectMake(0,
+                                               [self viewBounds].origin.y,
+                                               [self viewBounds].size.width,
+                                               [self viewBounds].size.height);
+    
+    [self.emptyFavouritesTitleLabel setFrame:CGRectMake(self.emptyFavoritesView.frame.size.width/2 - self.emptyFavouritesTitleLabel.width/2,
+                                                        48.f,
+                                                        self.emptyFavouritesTitleLabel.width,
+                                                        self.emptyFavouritesTitleLabel.height)];
+    
+    [self.emptyFavoritesImageView setFrame:CGRectMake((self.emptyFavoritesView.frame.size.width - self.emptyFavoritesImageView.frame.size.width)/2,
+                                                      CGRectGetMaxY([self.emptyFavouritesTitleLabel frame]) + 28.f,
+                                                      self.emptyFavoritesImageView.width,
+                                                      self.emptyFavoritesImageView.height)];
+    
+    [self.emptyFavoritesLabel setFrame:CGRectMake(self.emptyFavoritesView.frame.size.width/2 - self.emptyFavoritesLabel.width/2,
+                                                  CGRectGetMaxY(self.emptyFavoritesImageView.frame) + 28.f,
+                                                  self.emptyFavoritesLabel.width,
+                                                  self.emptyFavoritesLabel.height)];
     
     [self changeViewToInterfaceOrientation:self.interfaceOrientation];
 }
@@ -256,7 +295,7 @@
         _needRefreshProduct = YES;
         NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
         [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfoLogin];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification object:nil userInfo:userInfoLogin];
         return;
     }
     _needRefreshProduct = NO;
@@ -587,7 +626,7 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                             object:nil
-                                                          userInfo:@{ @"targetString" : product.targetString,
+                                                          userInfo:@{ @"sku" : product.sku,
                                                                       @"previousCategory" : STRING_MY_FAVOURITES,
                                                                       @"show_back_button" : [NSNumber numberWithBool:NO],
                                                                       @"fromCatalog" : [NSNumber numberWithBool:YES]}];

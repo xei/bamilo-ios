@@ -616,48 +616,48 @@ UITableViewDataSource
     }
     
     [self showLoading];
-    [RIProductRatings getRatingsForProductWithTargetString:self.product.targetString
-                                               allowRating:1
-                                                pageNumber:currentPage
-                                              successBlock:^(RIProductRatings *ratings) {
-                                                  
-                                                  self.productRatings = ratings;
-                                                  
-                                                  [self removeErrorView];
-                                                  
-                                                  if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-                                                  {
-                                                      [self ratingsRequests];
-                                                  }
-                                                  else
-                                                  {
-                                                      self.numberOfRequests = 0;
-                                                  }
-                                                  
-                                                  
-                                                  [self addReviewsToTable:self.productRatings.reviews];
-                                                  
-                                                  [self hideLoading];
-                                                  
-                                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-                                                  
-                                                  self.apiResponse = apiResponse;
-                                                  if(RIApiResponseSuccess != apiResponse)
-                                                  {
-                                                      if (RIApiResponseNoInternetConnection == apiResponse)
-                                                      {
-                                                          [self showErrorView:YES startingY:0.0f selector:@selector(requestReviews) objects:nil];
-                                                      }
-                                                      else
-                                                      {
-                                                          [self showErrorView:NO startingY:0.0f selector:@selector(requestReviews) objects:nil];
-                                                      }
-                                                  }
-                                                  self.numberOfRequests = 0;
-                                                  
-                                                  [self hideLoading];
-                                              }];
-
+    [RIProductRatings getRatingsForProductWithSku:self.product.sku
+                                      allowRating:1
+                                       pageNumber:currentPage
+                                     successBlock:^(RIProductRatings *ratings) {
+                                         
+                                         self.productRatings = ratings;
+                                         
+                                         [self removeErrorView];
+                                         
+                                         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+                                         {
+                                             [self ratingsRequests];
+                                         }
+                                         else
+                                         {
+                                             self.numberOfRequests = 0;
+                                         }
+                                         
+                                         
+                                         [self addReviewsToTable:self.productRatings.reviews];
+                                         
+                                         [self hideLoading];
+                                         
+                                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                                         
+                                         self.apiResponse = apiResponse;
+                                         if(RIApiResponseSuccess != apiResponse)
+                                         {
+                                             if (RIApiResponseNoInternetConnection == apiResponse)
+                                             {
+                                                 [self showErrorView:YES startingY:0.0f selector:@selector(requestReviews) objects:nil];
+                                             }
+                                             else
+                                             {
+                                                 [self showErrorView:NO startingY:0.0f selector:@selector(requestReviews) objects:nil];
+                                             }
+                                         }
+                                         self.numberOfRequests = 0;
+                                         
+                                         [self hideLoading];
+                                     }];
+    
 }
 
 - (void)setupResumeView
@@ -1032,7 +1032,7 @@ UITableViewDataSource
             [self hideLoading];
             NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
             [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfoLogin];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification object:nil userInfo:userInfoLogin];
             return;
         }
     } else {
@@ -1042,7 +1042,7 @@ UITableViewDataSource
             [self hideLoading];
             NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
             [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfoLogin];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification object:nil userInfo:userInfoLogin];
             return;
         }
     }
@@ -1139,15 +1139,15 @@ UITableViewDataSource
             }
             else if(VALID_NOTEMPTY(errorObject, NSDictionary))
             {
-                [currentDynamicForm validateFields:errorObject];
-                
-                [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
+                [currentDynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
+                    [self showMessage:message success:NO];
+                }];
             }
             else if(VALID_NOTEMPTY(errorObject, NSArray))
             {
-                [currentDynamicForm checkErrors];
-                
-                [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
+                [currentDynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
+                    [self showMessage:message success:NO];
+                }];
             }
             else
             {
