@@ -336,8 +336,8 @@ UICollectionViewDelegateFlowLayout>
     
     [self.emptyOrderHistoryImageView setFrame:CGRectMake((self.viewBounds.size.width - self.emptyOrderHistoryImageView.width)/2,
                                                          CGRectGetMaxY(self.emptyOrderHistoryTitleLabel.frame) + KEmptyImageViewDist,
-                                                         self.emptyOrderHistoryTitleLabel.width,
-                                                         self.emptyOrderHistoryTitleLabel.height)];
+                                                         self.emptyOrderHistoryImageView.width,
+                                                         self.emptyOrderHistoryImageView.height)];
     
     [self.emptyOrderHistoryLabel setFrame:CGRectMake((self.viewBounds.size.width - self.emptyOrderHistoryLabel.width)/2,
                                                      CGRectGetMaxY(self.emptyOrderHistoryImageView.frame) + KEmptyLabelDist,
