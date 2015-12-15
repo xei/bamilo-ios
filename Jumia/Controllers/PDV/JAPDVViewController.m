@@ -1099,8 +1099,7 @@ JAActivityViewControllerDelegate
         [self showLoading];
         
         [RICart addProductWithQuantity:@"1"
-                                   sku:self.product.sku
-                                simple:self.currentSimple.sku
+                             simpleSku:self.currentSimple.sku
                       withSuccessBlock:^(RICart *cart) {
                           
                           if (VALID_NOTEMPTY(self.teaserTrackingInfo, NSString)) {
