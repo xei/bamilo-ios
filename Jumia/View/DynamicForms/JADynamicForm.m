@@ -158,6 +158,26 @@
             CGRect frame = textField.frame;
             frame.origin.y = startingY;
             textField.frame = frame;
+            
+            UITapGestureRecognizer *tapTheEye = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showPassword:)];
+            tapTheEye.numberOfTapsRequired = 1;
+            
+            UIImageView *eyeView;
+            UIImage *eye = [UIImage imageNamed:@"btn_eye_closed"];
+            eyeView = [[UIImageView alloc] initWithImage:eye];
+            [eyeView setFrame:CGRectMake(0, 0, eye.size.width, eye.size.height)];
+            
+            [eyeView setUserInteractionEnabled:YES];
+            [eyeView addGestureRecognizer:tapTheEye];
+            
+            if (RI_IS_RTL) {
+                textField.textField.leftViewMode = UITextFieldViewModeAlways;
+                textField.textField.leftView = eyeView;
+            } else {
+                textField.textField.rightViewMode = UITextFieldViewModeAlways;
+                textField.textField.rightView = eyeView;
+            }
+            
             startingY += textField.frame.size.height;
             
             [textField.textField setTag:tag];
@@ -728,6 +748,33 @@
     }
     
     self.currentTextField = nil;
+}
+
+/*
+ showPassword()
+ Toggles password's eye image
+ Show/Hide password characters
+ recieves UITapGestureRecognizer gestureRecognizer
+ */
+- (void)showPassword:(UITapGestureRecognizer *)gestureRecognizer
+{
+    UIImageView *imageViewClicked = (UIImageView*)gestureRecognizer.view;
+    
+    id superView = imageViewClicked.superview;
+    if ([superView isKindOfClass:[UITextField class]]) {
+        UITextField *passwordTextField = (UITextField *)superView;
+        BOOL passwordHidden = passwordTextField.secureTextEntry;
+        UIImage *image;
+        
+        if (passwordHidden) {
+            image = [UIImage imageNamed:@"btn_eye"];
+        } else {
+            image = [UIImage imageNamed:@"btn_eye_closed"];
+        }
+        
+        [imageViewClicked setImage:image];
+        [passwordTextField setSecureTextEntry:!passwordHidden];
+    }
 }
 
 #pragma mark UITextFieldDelegate
