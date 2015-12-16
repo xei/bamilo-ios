@@ -469,8 +469,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
     //TODO backupCampaignProduct.sku was removed on RICampaign, will be replaced by deep linkin
     [self showLoading];
     [RICart addProductWithQuantity:@"1"
-                               sku:nil
-                            simple:self.backupSimpleSku
+                         simpleSku:self.backupSimpleSku
                   withSuccessBlock:^(RICart *cart) {
                       
                       if (VALID_NOTEMPTY(self.teaserTrackingInfo, NSString)) {

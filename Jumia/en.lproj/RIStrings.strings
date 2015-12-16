@@ -526,7 +526,9 @@
 
 "my_order_quantity_label" = "Qty.";
 
-"my_order_no_orders_label" = "You have placed no orders.";
+"my_order_no_orders_label" = "You don't have yet any Orders.";
+
+"my_order_no_orders_title_label" = "No Orders";
 
 "like_us_on_facebook" = "Like us on Facebook";
 

@@ -344,7 +344,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
         [simpleSku addObject:simple.sku];
     }
     
-    [RICart addBundleProductsWithSkus:[self.selectedItems allKeys] simpleSkus:simpleSku bundleId:self.bundle.bundleId withSuccessBlock:^(RICart *cart, NSArray *productsNotAdded) {
+    [RICart addBundleProductsWithSimpleSkus:simpleSku bundleId:self.bundle.bundleId withSuccessBlock:^(RICart *cart, NSArray *productsNotAdded) {
         
         [self hideLoading];
         
