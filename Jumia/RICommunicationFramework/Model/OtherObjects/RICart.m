@@ -105,8 +105,7 @@
 #pragma mark - Add product to cart
 
 + (NSString *)addProductWithQuantity:(NSString *)quantity
-                                 sku:(NSString *)sku
-                              simple:(NSString *)simple
+                           simpleSku:(NSString *)simpleSku
                     withSuccessBlock:(void (^)(RICart *cart))sucessBlock
                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
@@ -115,13 +114,9 @@
     {
         [parameters setValue:quantity forKey:@"quantity"];
     }
-    if(VALID_NOTEMPTY(sku, NSString))
+    if(VALID_NOTEMPTY(simpleSku, NSString))
     {
-        [parameters setValue:sku forKey:@"p"];
-    }
-    if(VALID_NOTEMPTY(simple, NSString))
-    {
-        [parameters setValue:simple forKey:@"sku"];
+        [parameters setValue:simpleSku forKey:@"sku"];
     }
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_ADD_ORDER]]
@@ -214,35 +209,19 @@
 
 #pragma mark - Add multiple products to cart
 
-+ (NSString *)addProductsWithQuantity:(NSArray *)productsToAdd
-                     withSuccessBlock:(void (^)(RICart *cart, NSArray *productsNotAdded))sucessBlock
-                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock))failureBlock
++ (NSString *)addMultipleProducts:(NSArray *)productsToAdd
+                 withSuccessBlock:(void (^)(RICart *cart, NSArray *productsNotAdded))sucessBlock
+                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock))failureBlock
 {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     if(VALID_NOTEMPTY(productsToAdd, NSArray))
     {
         for (int i = 0; i < [productsToAdd count]; i++)
         {
-            NSDictionary *productToAdd = [productsToAdd objectAtIndex:i];
-            if(VALID_NOTEMPTY(productToAdd, NSDictionary))
+            NSString *simpleSku = [productsToAdd objectAtIndex:i];
+            if(VALID_NOTEMPTY(simpleSku, NSString))
             {
-                NSString *quantity = [productToAdd objectForKey:@"quantity"];
-                if(VALID_NOTEMPTY(quantity, NSString))
-                {
-                    [parameters setValue:quantity forKey:[NSString stringWithFormat:@"productList[%d][quantity]", i]];
-                }
-                
-                NSString *sku = [productToAdd objectForKey:@"sku"];
-                if(VALID_NOTEMPTY(sku, NSString))
-                {
-                    [parameters setValue:sku forKey:[NSString stringWithFormat:@"productList[%d][p]", i]];
-                }
-                
-                NSString *simple = [productToAdd objectForKey:@"simple"];
-                if(VALID_NOTEMPTY(simple, NSString))
-                {
-                    [parameters setValue:simple forKey:[NSString stringWithFormat:@"productList[%d][sku]", i]];
-                }
+                [parameters setValue:simpleSku forKey:[NSString stringWithFormat:@"productList[%d]", i]];
             }
         }
     }
@@ -334,22 +313,18 @@
 
 #pragma mark - Add Bundles
 
-+ (NSString *)addBundleProductsWithSkus:(NSArray *)productSkus
-                             simpleSkus:(NSArray *)simpleSkus
-                               bundleId:(NSString *)bundleId
-                     withSuccessBlock:(void (^)(RICart *cart, NSArray *productsNotAdded))sucessBlock
-                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock))failureBlock
++ (NSString *)addBundleProductsWithSimpleSkus:(NSArray *)simpleSkus
+                                     bundleId:(NSString *)bundleId
+                             withSuccessBlock:(void (^)(RICart *cart, NSArray *productsNotAdded))sucessBlock
+                              andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock))failureBlock
 {
     NSMutableDictionary* parameters = [NSMutableDictionary new];
     
     [parameters setObject:bundleId forKey:@"bundleId"];
     
-    for (int i = 0; i < productSkus.count; i++) {
-        NSString* productSku = [productSkus objectAtIndex:i];
-        [parameters setObject:productSku forKey:[NSString stringWithFormat:@"product-item-selector[%d]",i]];
-
+    for (int i = 0; i < simpleSkus.count; i++) {
         NSString* productSimpleSku = [simpleSkus objectAtIndex:i];
-        [parameters setObject:productSimpleSku forKey:[NSString stringWithFormat:@"product-simple-selector[%d]",i]];
+        [parameters setObject:productSimpleSku forKey:[NSString stringWithFormat:@"product-_list[%d]",i]];
     }
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_ADD_BUNDLE]]

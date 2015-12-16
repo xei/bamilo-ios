@@ -6,116 +6,130 @@
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
-#define kJAMyOrderCellHeight 44.0f
 
 #import "JAMyOrderCell.h"
 
-@interface JAMyOrderCell ()
+#define kMyOrderHeight 58.0f
+#define KPadding 16.f
+#define KIPADPadding 24.f
+#define KPricePadding 20.f
+#define KSeperatorHeight 1.f
 
-@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *orderNumberLabel;
-@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *landscapeArrowImageView;
-@property (weak, nonatomic) IBOutlet UIView *separator;
+@interface JAMyOrderCell ()
+{
+    CGFloat padding;
+}
+
+@property (strong, nonatomic) UILabel *dateLabel;
+@property (strong, nonatomic) UILabel *orderNumberLabel;
+@property (strong, nonatomic) UILabel *priceLabel;
+@property (strong, nonatomic) UIView *seperator;
+@property (strong, nonatomic) UIImageView *arrow;
 
 @end
 
 @implementation JAMyOrderCell
 
-- (void)awakeFromNib
-{
-    // Initialization code
-    self.portraitArrowImageView.translatesAutoresizingMaskIntoConstraints=YES;
-    self.clickableView.translatesAutoresizingMaskIntoConstraints = YES;
-    self.dateLabel.translatesAutoresizingMaskIntoConstraints=YES;
-    self.orderNumberLabel.translatesAutoresizingMaskIntoConstraints=YES;
-    self.priceLabel.translatesAutoresizingMaskIntoConstraints=YES;
-    self.landscapeArrowImageView.translatesAutoresizingMaskIntoConstraints=YES;
-    self.separator.translatesAutoresizingMaskIntoConstraints=YES;
+- (void)setupWithOrder:(RITrackOrder*)order {
     
-    [self.dateLabel setTextColor:UIColorFromRGB(0x666666)];
-    [self.orderNumberLabel setTextColor:UIColorFromRGB(0x666666)];
-    [self.priceLabel setTextColor:UIColorFromRGB(0x666666)];
+    if ((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)) {
+        padding = KIPADPadding;
+    } else
+        padding = KPadding;
     
-    [self.separator setBackgroundColor:UIColorFromRGB(0xcccccc)];
-}
-
-- (void)setupWithOrder:(RITrackOrder*)order isInLandscape:(BOOL)isInLandscape
-{
-    [self.clickableView setFrame:CGRectMake(0.0f,
-                                            0.0f,
-                                            self.frame.size.width,
-                                            kJAMyOrderCellHeight)];
-    
-    self.separator.frame = CGRectMake(0.0f,
-                                      self.clickableView.frame.size.height - 1.0f,
-                                      self.clickableView.frame.size.width,
-                                      1.0f);
-    
-    self.portraitArrowImageView.frame = CGRectMake(self.clickableView.frame.size.width - self.portraitArrowImageView.frame.size.width - 17.0f,
-                                                   18.0f,
-                                                   self.portraitArrowImageView.frame.size.width,
-                                                   self.portraitArrowImageView.frame.size.height);
-    
-    [self.landscapeArrowImageView setImage:[UIImage imageNamed:@"arrow_gotoarea"]];
-    self.landscapeArrowImageView.frame = CGRectMake(self.clickableView.frame.size.width - self.landscapeArrowImageView.frame.size.width - 17.0f,
-                                                    15.0f,
-                                                    self.landscapeArrowImageView.frame.size.width,
-                                                    self.landscapeArrowImageView.frame.size.height);
-    
-    if(isInLandscape)
-    {
-        [self.portraitArrowImageView setHidden:YES];
-        [self.landscapeArrowImageView setHidden:NO];
-    }
-    else
-    {
-        [self.landscapeArrowImageView setHidden:YES];
-        [self.portraitArrowImageView setHidden:NO];
-    }
-    
-    self.priceLabel.textAlignment = NSTextAlignmentRight;
     [self.priceLabel setText:order.totalFormatted];
-    self.priceLabel.frame = CGRectMake(self.clickableView.frame.size.width - self.priceLabel.frame.size.width - 51.0f,
-                                       14.0f,
-                                       self.priceLabel.frame.size.width,
-                                       self.priceLabel.frame.size.height);
+    [self.priceLabel sizeToFit];
     
-    NSDictionary* baseAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         [UIFont fontWithName:kFontLightName size:13], NSFontAttributeName,
-                                         UIColorFromRGB(0x666666), NSForegroundColorAttributeName, nil];    NSString* orderNumberString = [NSString stringWithFormat:@"%@ %@", STRING_ORDER_NUMBER, order.orderId];
-    NSRange orderNumberLabelRange = [orderNumberString rangeOfString:STRING_ORDER_NUMBER];
-    NSDictionary* highlightAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         [UIFont fontWithName:kFontRegularName size:13], NSFontAttributeName,
-                                         UIColorFromRGB(0x666666), NSForegroundColorAttributeName, nil];
-    
-    NSMutableAttributedString* finalString = [[NSMutableAttributedString alloc] initWithString:orderNumberString attributes:baseAttributes];
-    [finalString setAttributes:highlightAttributes range:orderNumberLabelRange];
-    
-    self.orderNumberLabel.textAlignment = NSTextAlignmentLeft;
-    [self.orderNumberLabel setAttributedText:finalString];
+    [self.orderNumberLabel setText:[NSString stringWithFormat:@"%@ %@",STRING_ORDER_NUMBER,order.orderId]];
     [self.orderNumberLabel sizeToFit];
-    self.orderNumberLabel.frame = CGRectMake(25.0f,
-                                             21.0f,
-                                             self.orderNumberLabel.frame.size.width,
-                                             self.orderNumberLabel.frame.size.height);
     
-    self.dateLabel.textAlignment = NSTextAlignmentLeft;
     [self.dateLabel setText:order.creationDate];
-    self.dateLabel.frame = CGRectMake(25.0f,
-                                      8.0f,
-                                      self.dateLabel.frame.size.width,
-                                      self.dateLabel.frame.size.height);
+    [self.dateLabel sizeToFit];
+    
+    [self orderNumberLabel];
+    [self dateLabel];
+    [self priceLabel];
+    [self seperator];
     
     if (RI_IS_RTL) {
+        [self.arrow flipViewImage];
         [self.clickableView flipAllSubviews];
-        [self.landscapeArrowImageView flipViewImage];
     }
+    
+}
+
+-(JAClickableView *)clickableView {
+    if (!VALID_NOTEMPTY(_clickableView, JAClickableView)) {
+        _clickableView = [JAClickableView new];
+        [self addSubview:_clickableView];
+    }
+    [_clickableView setFrame:CGRectMake(0, 0, self.width, self.height)];
+    return _clickableView;
+}
+
+- (UILabel *)orderNumberLabel {
+    if (!VALID_NOTEMPTY(_orderNumberLabel, UILabel)) {
+        _orderNumberLabel = [UILabel new];
+        [_orderNumberLabel setFont:JACaption2Font];
+        [_orderNumberLabel setTextColor:JABlackColor];
+        [self.clickableView addSubview:_orderNumberLabel];
+    }
+    [_orderNumberLabel setFrame:CGRectMake(padding, KPadding, _orderNumberLabel.width, _orderNumberLabel.height)];
+    return _orderNumberLabel;
+}
+
+-(UILabel *)dateLabel {
+    if (!VALID_NOTEMPTY(_dateLabel, UILabel)) {
+        _dateLabel = [UILabel new];
+        [_dateLabel setFont:JACaptionFont];
+        [_dateLabel setTextColor:JABlackColor];
+        [self.clickableView addSubview:_dateLabel];
+    }
+    [_dateLabel setFrame:CGRectMake(padding, kMyOrderHeight - _dateLabel.height - KPadding,
+                                    _dateLabel.width, _dateLabel.height)];
+    return _dateLabel;
+}
+
+-(UILabel *)priceLabel {
+    if (!VALID_NOTEMPTY(_priceLabel, UILabel)) {
+        _priceLabel = [UILabel new];
+        [_priceLabel setFont:JACaptionFont];
+        [_priceLabel setTextColor:JABlackColor];
+        [self.clickableView addSubview:_priceLabel];
+    }
+    [_priceLabel setFrame:CGRectMake(self.arrow.frame.origin.x - _priceLabel.width - KPricePadding, 0,
+                                     _priceLabel.width, kMyOrderHeight)];
+    return _priceLabel;
+}
+
+-(UIView *)seperator {
+    if (!VALID_NOTEMPTY(_seperator, UIView)) {
+        _seperator = [UIView new];
+        [_seperator setBackgroundColor:JABlack300Color];
+        [self.clickableView addSubview:_seperator];
+    }
+    [_seperator setFrame:CGRectMake(0, self.height - KSeperatorHeight,
+                                    self.width, KSeperatorHeight)];
+    return _seperator;
+}
+
+-(UIImageView *)arrow {
+    if (!VALID_NOTEMPTY(_arrow, UIImageView)) {
+        _arrow = [UIImageView new];
+        UIImage *img = [UIImage imageNamed:@"arrow_moreinfo"];
+        [_arrow setImage:img];
+        [_arrow setFrame:CGRectMake(_arrow.x, _arrow.y,
+                                    img.size.width, img.size.height)];
+        [self.clickableView addSubview:_arrow];
+    }
+    [_arrow setFrame:CGRectMake(self.width - _arrow.width - padding, (self.height - _arrow.height) / 2,
+                                _arrow.width, _arrow.height)];
+    return _arrow;
 }
 
 + (CGFloat)getCellHeight
 {
-    return kJAMyOrderCellHeight;
+    return kMyOrderHeight;
 }
 
 @end

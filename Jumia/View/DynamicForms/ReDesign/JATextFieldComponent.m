@@ -112,11 +112,6 @@
     self.field = field;
     [self.textField setPlaceholder:field.label];
     
-    if([field.required boolValue])
-    {
-        [self.requiredSymbol setHidden:NO];
-    }
-    
     if(VALID_NOTEMPTY(field.value, NSString))
     {
         self.storedValue = field.value;
