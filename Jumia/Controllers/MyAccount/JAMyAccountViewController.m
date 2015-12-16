@@ -193,7 +193,6 @@
         [_appVersionSubLine setRightTitle:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
 //        build
 //        [_appVersionSubLine setRightTitle:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
-#warning TODO STRING
         [_appVersionSubLine setTitle:STRING_APP_VERSION];
     }
     return _appVersionSubLine;
@@ -203,7 +202,6 @@
 {
     if (!VALID(_helpCenterSubLine, JAProductInfoSubLine)) {
         _helpCenterSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.appVersionSubLine.frame), self.mainScrollView.width, kProductInfoSubLineHeight)];
-#warning TODO STRING
         [_helpCenterSubLine setTitle:STRING_HELP_CENTER];
         [_helpCenterSubLine addTarget:self action:@selector(helpCenterSelection) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -214,7 +212,6 @@
 {
     if (!VALID(_termsSubLine, JAProductInfoSubLine)) {
         _termsSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.helpCenterSubLine.frame), self.mainScrollView.width, kProductInfoSubLineHeight)];
-#warning TODO STRING
         [_termsSubLine setTitle:STRING_TERMS_AND_CONDITIONS];
         [_termsSubLine addTarget:self action:@selector(termsSelection) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -225,7 +222,6 @@
 {
     if (!VALID(_appSocialHeaderLine, JAProductInfoHeaderLine)) {
         _appSocialHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.termsSubLine.frame), self.mainScrollView.width, kProductInfoHeaderLineHeight)];
-#warning TODO STRING
         [_appSocialHeaderLine setTitle:[STRING_APP_SOCIAL uppercaseString]];
     }
     return _appSocialHeaderLine;
@@ -246,7 +242,6 @@
 {
     if (!VALID(_rateTheAppSubLine, JAProductInfoSubLine)) {
         _rateTheAppSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.shareTheAppSubLine.frame), self.mainScrollView.width, kProductInfoSubLineHeight)];
-#warning TODO STRING
         [_rateTheAppSubLine setTitle:STRING_RATE_THE_APP];
         [_rateTheAppSubLine addTarget:self action:@selector(rateTheAppSelection) forControlEvents:UIControlEventTouchUpInside];
     }
