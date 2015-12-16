@@ -292,8 +292,7 @@
     
     [self showLoading];
     [RICart addProductWithQuantity:@"1"
-                               sku:offer.productSku
-                            simple:simpleSku
+                         simpleSku:simpleSku
                   withSuccessBlock:^(RICart *cart) {
                       
                       NSNumber *price = offer.priceEuroConverted;

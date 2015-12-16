@@ -736,8 +736,7 @@
     
     [self showLoading];
     [RICart addProductWithQuantity:@"1"
-                               sku:product.sku
-                            simple:productSimple.sku
+                         simpleSku:productSimple.sku
                   withSuccessBlock:^(RICart *cart) {
                       
                       NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted floatValue] > 0.0f) ? product.specialPriceEuroConverted :product.priceEuroConverted;
