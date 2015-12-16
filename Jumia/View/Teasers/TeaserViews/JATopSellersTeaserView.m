@@ -104,8 +104,7 @@
             
             if (VALID_NOTEMPTY(component.name, NSString)) {
                 nameLabel.text = component.name;
-            } else
-                if (VALID_NOTEMPTY(component.title, NSString)) {
+            } else if (VALID_NOTEMPTY(component.title, NSString)) {
                     nameLabel.text = component.title;
                 }
             
