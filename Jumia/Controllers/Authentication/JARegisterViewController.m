@@ -589,7 +589,7 @@ JADynamicFormDelegate
         RIPhonePrefix *prefix = (RIPhonePrefix *)[self.phonePrefixes objectAtIndex:selectedRow];
         
         
-        [self.radioComponent setValue:[prefix value]];
+        [self.radioComponent setValue:[prefix.value stringValue]];
         [self.radioComponent.textField setText:[prefix label]];
     }
     [self closePickers];
