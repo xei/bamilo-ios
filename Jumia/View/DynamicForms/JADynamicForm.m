@@ -273,7 +273,9 @@
                 tag++;
                 JARadioComponent* radioRelated = [[JARadioComponent alloc] initWithFrame:CGRectMake(8.f, 0, prefixWidth, 48.f)];
                 [radioRelated.textField setDelegate:self];
-                [radioRelated setupWithField:[field.relatedFields firstObject]];
+                RIField *relatedField = [field.relatedFields firstObject];
+                relatedField.value = nil;
+                [radioRelated setupWithField:relatedField];
                 [radioRelated setFixedWidth:prefixWidth];
                 [radioRelated.textField setTag:tag];
                 [radioRelated setTag:tag];
