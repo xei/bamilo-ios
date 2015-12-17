@@ -433,13 +433,7 @@
         }
         
         if ([dataDic objectForKey:@"price_range"]) {
-            
-            NSArray * separatedNumbers = [[NSString stringWithString:[dataDic objectForKey:@"price_range"]]
-                                          componentsSeparatedByString:@"-"];
-            
-            newProduct.priceRange =[NSString stringWithFormat:@"%@ - %@",
-                                    [RICountryConfiguration formatPrice:[separatedNumbers firstObject] country:country],
-                                    [RICountryConfiguration formatPrice:[separatedNumbers lastObject] country:country]];
+            newProduct.priceRange = [dataDic objectForKey:@"price_range"];
         }
 
         if ([dataDic objectForKey:@"special_price"]) {
