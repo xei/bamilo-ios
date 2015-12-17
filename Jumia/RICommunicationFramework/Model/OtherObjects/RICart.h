@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class RIShippingMethodForm, RIPaymentMethodForm, RIPaymentInformation,
-    RIAddress, RIForm, RISellerDelivery;
+    RIAddress, RIForm, RISellerDelivery, RICustomer;
 
 @interface RICart : NSObject
 
@@ -277,5 +277,32 @@
                   withSuccessBlock:(void (^)(RICart *cart))successBlock
                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
+
++(NSString*)getMultistepAddressWithSuccessBlock:(void (^)(RICart *cart, RICustomer *customer))successBlock
+                                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
++(NSString*)setMultistepAddressForShipping:(NSString*)shippingAddressId
+                                   billing:(NSString*)billingAddressId
+                              successBlock:(void (^)(NSString* nextStep))successBlock
+                           andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
+
++(NSString*)getMultistepShippingWithSuccessBlock:(void (^)(RICart *cart, RIShippingMethodForm *shippingForm))successBlock
+                                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
++(NSString*)setMultistepShippingForShippingMethod:(NSString*)shippingMethod
+                                    pickupStation:(NSString*)pickupStation
+                                           region:(NSString*)region
+                                     successBlock:(void (^)(NSString* nextStep))successBlock
+                                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
+
++(NSString*)getMultistepPaymentWithSuccessBlock:(void (^)(RICart *cart, RIPaymentMethodForm *paymentForm))successBlock
+                                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
++(NSString*)setMultistepPayment:(NSDictionary*)parameters
+                   successBlock:(void (^)(NSString* nextStep))successBlock
+                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
+
+
++(NSString*)getMultistepFinishWithSuccessBlock:(void (^)(RICart *cart))successBlock
+                               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
++(NSString*)setMultistepFinishWithSuccessBlock:(void (^)(NSString* nextStep))successBlock
+                               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 @end

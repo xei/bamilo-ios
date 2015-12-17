@@ -29,7 +29,7 @@
                                                             object:@{@"animated":[NSNumber numberWithBool:YES]}
                                                           userInfo:@{@"from_checkout":[NSNumber numberWithBool:YES]}];
     }
-    else if([@"shippingMethod" isEqualToString:nextStep])
+    else if([@"shipping" isEqualToString:nextStep])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutShippingScreenNotification
                                                             object:nil
