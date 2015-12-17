@@ -1029,9 +1029,13 @@
             if (VALID_NOTEMPTY([errorJsonObject objectForKey:@"messages"], NSDictionary)) {
                 NSDictionary *messages = [errorJsonObject objectForKey:@"messages"];
                 if (VALID_NOTEMPTY([messages objectForKey:@"error"], NSArray)) {
-                    NSArray *errors = [messages objectForKey:@"error"];
-                    failureBlock(apiResponse, errors);
-                    return;
+                    NSArray *error = [messages objectForKey:@"error"];
+                    if (VALID_NOTEMPTY([error valueForKey:@"message"], NSArray)) {
+                        NSArray *errorMessage = [error valueForKey:@"message"];
+                        failureBlock(apiResponse, errorMessage);
+                        return;
+                    }
+
                 }
             }
             failureBlock(apiResponse, nil);
@@ -1073,6 +1077,18 @@
         if (errorObject) {
             failureBlock(apiResponse, [NSArray arrayWithObject:[errorObject localizedDescription]]);
         }else{
+            if (VALID_NOTEMPTY([errorJsonObject objectForKey:@"messages"], NSDictionary)) {
+                NSDictionary *messages = [errorJsonObject objectForKey:@"messages"];
+                if (VALID_NOTEMPTY([messages objectForKey:@"error"], NSArray)) {
+                    NSArray *error = [messages objectForKey:@"error"];
+                    if (VALID_NOTEMPTY([error valueForKey:@"message"], NSArray)) {
+                        NSArray *errorMessage = [error valueForKey:@"message"];
+                        failureBlock(apiResponse, errorMessage);
+                        return;
+                    }
+                    
+                }
+            }
             failureBlock(apiResponse, nil);
         }
     }];

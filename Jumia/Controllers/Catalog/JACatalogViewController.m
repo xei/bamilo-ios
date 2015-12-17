@@ -1305,12 +1305,16 @@ typedef void (^ProcessActionBlock)(void);
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             
             [self hideLoading];
-            NSString *errorMessage = STRING_ERROR_ADDING_TO_WISHLIST;
             if (RIApiResponseNoInternetConnection == apiResponse)
             {
-                errorMessage = STRING_NO_CONNECTION;
+                NSString *errorMessage = STRING_NO_CONNECTION;
+                [self showMessage:errorMessage success:NO];
+
             }
-            [self showMessage:errorMessage success:NO];
+            else{
+                [self showMessage:[error componentsJoinedByString:@","] success:NO];
+            }
+        
         }];
     }else{
         [self hideLoading];
@@ -1362,12 +1366,16 @@ typedef void (^ProcessActionBlock)(void);
             
             [self hideLoading];
             
-            NSString *errorMessage = STRING_ERROR_REMOVING_FROM_WISHLIST;
             if (RIApiResponseNoInternetConnection == apiResponse)
             {
-                errorMessage = STRING_NO_CONNECTION;
+                NSString *errorMessage = STRING_NO_CONNECTION;
+                [self showMessage:errorMessage success:NO];
+
             }
-            [self showMessage:errorMessage success:NO];
+            else{
+                [self showMessage:[error componentsJoinedByString:@","] success:NO];
+            }
+
         }];
     }else{
         [self hideLoading];

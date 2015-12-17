@@ -362,20 +362,20 @@ JADynamicFormDelegate
          else if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
              [self.changePasswordForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                 [self showMessage:message success:NO];
+                 [self showMessage:[errorObject componentsJoinedByString:@"," ] success:NO];
              }];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
              [self.changePasswordForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                 [self showMessage:message success:NO];
+                 [self showMessage:[errorObject componentsJoinedByString:@"," ] success:NO];
              }];
          }
          else
          {
              [self.changePasswordForm checkErrors];
-             
-             [self showMessage:STRING_ERROR success:NO];
+             [self showMessage:[errorObject componentsJoinedByString:@"," ] success:NO];
+             //[self showMessage:STRING_ERROR success:NO];
          }
      }];
 }
