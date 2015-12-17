@@ -33,7 +33,7 @@
 @dynamic addresses;
 @synthesize costumerRequestID, wishlistProducts;
 
-+ (NSString *)createSignUpAccount:(NSString *)email
++ (NSString *)signUpAccount:(NSString *)email
                successBlock:(void (^)(id object))successBlock
             andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock
 {

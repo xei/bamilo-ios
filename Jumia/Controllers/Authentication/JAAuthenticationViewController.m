@@ -493,7 +493,7 @@
         return;
     }
     [self showLoading];
-    [RICustomer createSignUpAccount:self.emailTextField.textField.text successBlock:^(id object){
+    [RICustomer signUpAccount:self.emailTextField.textField.text successBlock:^(id object){
         
         [self.emailTextField cleanError];
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
