@@ -735,12 +735,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAMyAccountViewController class]])
     {
-        JAMyAccountViewController *myAccountViewController = [[JAMyAccountViewController alloc]initWithNibName:@"JAMyAccountViewController" bundle:nil];
-        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()){
-            
-            myAccountViewController = [[JAMyAccountViewController alloc] initWithNibName:@"JAMyAccountViewController~iPad" bundle:nil];
-        
-        }
+        JAMyAccountViewController *myAccountViewController = [[JAMyAccountViewController alloc] init];
         [self pushViewController:myAccountViewController animated:NO];
     }
 }
