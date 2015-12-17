@@ -127,6 +127,8 @@
 #define STRING_SIGNUP RILocalizedString(@"signup_label", nil)
 #define STRING_LOGIN_WITH_FACEBOOK RILocalizedString(@"facebook_login_button_text", nil)
 #define STRING_LOGIN_INCOMPLETE RILocalizedString(@"login_incomplete", nil)
+#define STRING_LOGIN_LONG_MESSAGE RILocalizedString(@"login_long_message", nil)
+
 #define STRING_OR RILocalizedString(@"or_text", nil)
 #define STRING_SIGNUP_WITH_FACEBOOK RILocalizedString(@"facebook_signup_button_text", nil)
 #define STRING_FORGOT_PASSWORD RILocalizedString(@"fgt_pass", nil)
@@ -142,6 +144,10 @@
 #define STRING_ACCOUNT_DATA RILocalizedString(@"register_sectiontitle", nil)
 #define STRING_REGISTER RILocalizedString(@"registration_text", nil)
 #define STRING_CONTINUE RILocalizedString(@"continue", nil)
+#define STRING_CONTINUE_WITHOUT_LOGIN RILocalizedString(@"continue_without_login", nil)
+
+#define STRING_EMAIL_ADDRESS RILocalizedString(@"email_address", nil)
+#define STRING_EMAIL_EXAMPLE RILocalizedString(@"email_example", nil)
 
 #define STRING_CHECKOUT_ADDRESS RILocalizedString(@"checkout_header_step_2", nil)
 #define STRING_ADD_NEW_ADDRESS RILocalizedString(@"action_label_add_address", nil)

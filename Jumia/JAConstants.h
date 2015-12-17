@@ -65,7 +65,6 @@
 
 // Checkout
 #define kShowCheckoutForgotPasswordScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_FORGOT_PASSWORD_SCREEN"
-#define kShowCheckoutLoginScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_LOGIN_SCREEN"
 #define kShowCheckoutAddressesScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_ADDRESSES_SCREEN"
 #define kShowCheckoutAddAddressScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_ADD_ADDRESS_SCREEN"
 #define kShowCheckoutEditAddressScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_EDIT_ADDRESS_SCREEN"
