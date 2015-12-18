@@ -336,6 +336,20 @@
 
 "notifications" = "Notifications";
 
+"push_notifications" = "Push Notifications";
+
+"update_now" = "Update Now";
+
+"app_version" = "App Version";
+
+"help_center" = "Help Center";
+
+"terms_and_conditions" = "Terms and Conditions";
+
+"app_social" = "App Social";
+
+"rate_the_app" = "Rate the App";
+
 "notifications_summary" = "Receive exclusive offers and updates";
 
 "sound" = "Sound";

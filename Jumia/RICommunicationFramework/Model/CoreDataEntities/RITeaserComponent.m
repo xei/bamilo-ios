@@ -41,7 +41,7 @@
     
     if (VALID_NOTEMPTY(teaserComponentJSON, NSDictionary)) {
 
-        if ([teaserComponentJSON objectForKey:@"image"]) {
+        if (VALID([teaserComponentJSON objectForKey:@"image"], NSString)) {
             NSString* url = [teaserComponentJSON objectForKey:@"image"];
             NSString* realURL = [url stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
             newTeaserComponent.imagePortraitUrl = realURL;
