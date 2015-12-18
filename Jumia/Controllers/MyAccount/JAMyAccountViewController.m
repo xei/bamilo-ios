@@ -188,6 +188,7 @@
             [_appVersionSubLine setHeight:kProductInfoSubLineHeight];
         }else{
             [_appVersionSubLine setRightSubTitle:STRING_UPDATE_NOW];
+            [_appVersionSubLine addTarget:self action:@selector(openAppStore) forControlEvents:UIControlEventTouchUpInside];
         }
 //        version
         [_appVersionSubLine setRightTitle:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
@@ -323,6 +324,7 @@
         [self.appSocialHeaderLine setYBottomOf:[self.moreSettingsLines lastObject] at:0.f];
         [self.shareTheAppSubLine setYBottomOf:self.appSocialHeaderLine at:0.f];
         [self.rateTheAppSubLine setYBottomOf:self.shareTheAppSubLine at:0.f];
+        [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, CGRectGetMaxY(self.rateTheAppSubLine.frame))];
     }];
 }
 
@@ -333,6 +335,7 @@
     [self showLoading];
     [RICountry getCountryFaqAndTermsWithSuccessBlock:^(NSArray *faqAndTerms) {
         [self hideLoading];
+        [self removeErrorView];
         self.moreFaqAndTermsItems = [faqAndTerms copy];
         int i = 0;
         for (id object in faqAndTerms) {
@@ -413,18 +416,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowChooseCountryScreenNotification object:@{@"show_back_button":[NSNumber numberWithBool:YES]}];
 }
 
-#warning TODO
-- (void)helpCenterSelection
-{
-    
-}
-
-#warning TODO
-- (void)termsSelection
-{
-    
-}
-
 - (void)shareTheAppSelection
 {
     NSArray *appActivities = @[];
@@ -493,6 +484,11 @@
 }
 
 - (void)rateTheAppSelection
+{
+    [self openAppStore];
+}
+
+- (void)openAppStore
 {
     static NSString *const iOS7AppStoreURLFormat = @"itms-apps://itunes.apple.com/app/apple-store/id%@";
     static NSString *const iOSAppStoreURLFormat = @"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@";
