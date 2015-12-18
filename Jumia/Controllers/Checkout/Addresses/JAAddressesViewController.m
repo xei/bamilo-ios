@@ -979,6 +979,7 @@ UICollectionViewDelegateFlowLayout>
         [RICart setMultistepAddressForShipping:self.shippingAddress.uid
                                        billing:self.billingAddress.uid
                                   successBlock:^(NSString *nextStep) {
+                                      [self hideLoading];
                                       [JAUtils goToNextStep:nextStep
                                                    userInfo:nil];
                                   } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
