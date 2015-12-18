@@ -35,7 +35,7 @@
                                                             object:nil
                                                           userInfo:nil]; //this screen loads the cart itself
     }
-    else if([@"paymentMethod" isEqualToString:nextStep])
+    else if([@"payment" isEqualToString:nextStep])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutPaymentScreenNotification
                                                             object:nil

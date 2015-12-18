@@ -921,7 +921,7 @@
 {
     BOOL isPostRequest = [@"post" isEqualToString:[form.method lowercaseString]];
     
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:form.action]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:form.targetString]
                                                             parameters:parameters
                                                         httpMethodPost:isPostRequest
                                                              cacheType:RIURLCacheNoCache
@@ -1175,7 +1175,7 @@
                                                           }];
 }
 
-+(NSString*)getMultistepShippingWithSuccessBlock:(void (^)(RICart *cart, RIShippingMethodForm *shippingForm))successBlock
++(NSString*)getMultistepShippingWithSuccessBlock:(void (^)(RICart *cart))successBlock
                                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_MULTISTEP_GET_SHIPPING]]
@@ -1185,7 +1185,32 @@
                                                              cacheTime:RIURLCacheNoTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              
+                                                              NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                              if (VALID_NOTEMPTY(metadata, NSDictionary)) {
+                                                                  
+                                                                  [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                                                                      
+                                                                      RICart* cart;
+                                                                      if (VALID_NOTEMPTY([metadata objectForKey:@"cart_entity"], NSDictionary)) {
+                                                                          cart = [RICart parseCart:metadata country:configuration];
+                                                                          
+                                                                          if (VALID_NOTEMPTY(cart, RICart)) {
+                                                                              if (VALID_NOTEMPTY([metadata objectForKey:@"form_entity"], NSDictionary)) {
+                                                                                  RIShippingMethodForm* shippingMethodForm = [RIShippingMethodForm parseForm:[metadata objectForKey:@"form_entity"]];
+                                                                                  cart.shippingMethodForm = shippingMethodForm;
+                                                                                  
+                                                                                  successBlock(cart);
+                                                                                  return;
+                                                                              }
+                                                                          }
+                                                                      }
+                                                                      failureBlock(0, nil); 
+                                                                      
+                                                                  } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+                                                                      
+                                                                  }];
+                                                              }
+
                                                               
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
                                                               [RICart parseErrorForApiResponse:apiResponse errorJSON:errorJsonObject error:errorObject failureBlock:failureBlock];
@@ -1201,9 +1226,11 @@
     NSMutableDictionary* parameters = [NSMutableDictionary new];
     if (VALID_NOTEMPTY(shippingMethod, NSString)) {
         [parameters setObject:shippingMethod forKey:@"shipping_method[shipping_method]"];
-    } else if (VALID_NOTEMPTY(pickupStation, NSString)) {
+    }
+    if (VALID_NOTEMPTY(pickupStation, NSString)) {
         [parameters setObject:pickupStation forKey:@"shipping_method[pickup_station]"];
-    } else if (VALID_NOTEMPTY(region, NSString)) {
+    }
+    if (VALID_NOTEMPTY(region, NSString)) {
         [parameters setObject:region forKey:@"shipping_method[pickup_station_customer_address_region]"];
     }
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_MULTISTEP_SUBMIT_SHIPPING]]

@@ -162,39 +162,37 @@ UICollectionViewDelegateFlowLayout
         [self showLoading];
     }
     
-    [RICart getShippingMethodFormWithSuccessBlock:^(RICart *cart)
-     {
-         self.cart = cart;
-         self.shippingMethodForm = cart.shippingMethodForm;
-         
-         // LIST OF AVAILABLE SHIPPING METHODS
-         self.shippingMethods = [RIShippingMethodForm getShippingMethods:cart.shippingMethodForm];
-         
-         [self finishedLoadingShippingMethods];
-         [self removeErrorView];
-     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
-     {
-         [self hideLoading];
-         self.apiResponse = apiResponse;
-         if(RIApiResponseMaintenancePage == apiResponse)
-         {
-             [self showMaintenancePage:@selector(continueLoading) objects:nil];
-         }
-         else if(RIApiResponseKickoutView == apiResponse)
-         {
-             [self showKickoutView:@selector(continueLoading) objects:nil];
-         }
-         else
-         {
-             BOOL noConnection = NO;
-             if (RIApiResponseNoInternetConnection == apiResponse)
-             {
-                 noConnection = YES;
-             }
-             
-             [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
-         }
-     }];
+    [RICart getMultistepShippingWithSuccessBlock:^(RICart *cart) {
+        self.cart = cart;
+        self.shippingMethodForm = cart.shippingMethodForm;
+        
+        // LIST OF AVAILABLE SHIPPING METHODS
+        self.shippingMethods = [RIShippingMethodForm getShippingMethods:cart.shippingMethodForm];
+        
+        [self finishedLoadingShippingMethods];
+        [self removeErrorView];
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+        [self hideLoading];
+        self.apiResponse = apiResponse;
+        if(RIApiResponseMaintenancePage == apiResponse)
+        {
+            [self showMaintenancePage:@selector(continueLoading) objects:nil];
+        }
+        else if(RIApiResponseKickoutView == apiResponse)
+        {
+            [self showKickoutView:@selector(continueLoading) objects:nil];
+        }
+        else
+        {
+            BOOL noConnection = NO;
+            if (RIApiResponseNoInternetConnection == apiResponse)
+            {
+                noConnection = YES;
+            }
+            
+            [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
+        }
+    }];
 }
 
 - (void) initViews
@@ -539,6 +537,8 @@ UICollectionViewDelegateFlowLayout
         NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
         [parameters setObject:self.selectedShippingMethod forKey:@"shippingMethodForm[shipping_method]"];
         
+        NSString* pickupStationID;
+        
         if([kPickupStationKey isEqualToString:[self.selectedShippingMethod lowercaseString]])
         {
             if(VALID_NOTEMPTY(self.selectedRegionId, NSString) && VALID_NOTEMPTY(self.pickupStationsForRegion, NSMutableArray))
@@ -548,6 +548,7 @@ UICollectionViewDelegateFlowLayout
                 NSInteger pickupStationIndex = self.selectedPickupStationIndexPath.row - self.collectionViewIndexSelected.row - 2;
                 RIShippingMethodPickupStationOption *pickupStation = [self.pickupStationsForRegion objectAtIndex:pickupStationIndex];
                 [parameters setObject:pickupStation.uid forKey:@"shippingMethodForm[pickup_station]"];
+                pickupStationID = pickupStation.uid;
             }
             else
             {
@@ -557,30 +558,26 @@ UICollectionViewDelegateFlowLayout
         if(!hasError)
         {
             [self showLoading];
-            [RICart setShippingMethod:self.shippingMethodForm
-                           parameters:[parameters copy]
-                         successBlock:^(RICart *cart) {
-                             
-                                 [self hideLoading];
-                                 
-                                 self.cart=cart;
-                             
-                             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:@"cart"];
-                             [JAUtils goToNextStep:cart.nextStep
-                                          userInfo:userInfo];
-                                 
-                             } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-                                 [self hideLoading];
-                                 
-                                 if (RIApiResponseNoInternetConnection == apiResponse)
-                                 {
-                                     [self showMessage:STRING_NO_CONNECTION success:NO];
-                                 }
-                                 else
-                                 {
-                                     [self showMessage:STRING_ERROR_SETTING_SHIPPING_METHOD success:NO];
-                                 }
-                             }];
+            
+            [RICart setMultistepShippingForShippingMethod:self.selectedShippingMethod
+                                            pickupStation:pickupStationID
+                                                   region:self.selectedRegionId
+                                             successBlock:^(NSString *nextStep) {
+                                                 [self hideLoading];
+                                                 [JAUtils goToNextStep:nextStep
+                                                              userInfo:nil];
+                                             } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+                                                 [self hideLoading];
+                                                 
+                                                 if (RIApiResponseNoInternetConnection == apiResponse)
+                                                 {
+                                                     [self showMessage:STRING_NO_CONNECTION success:NO];
+                                                 }
+                                                 else
+                                                 {
+                                                     [self showMessage:STRING_ERROR_SETTING_SHIPPING_METHOD success:NO];
+                                                 }
+                                             }];
         }
         else
         {

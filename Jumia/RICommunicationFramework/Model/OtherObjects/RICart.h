@@ -285,7 +285,7 @@
                               successBlock:(void (^)(NSString* nextStep))successBlock
                            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
-+(NSString*)getMultistepShippingWithSuccessBlock:(void (^)(RICart *cart, RIShippingMethodForm *shippingForm))successBlock
++(NSString*)getMultistepShippingWithSuccessBlock:(void (^)(RICart *cart))successBlock
                                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 +(NSString*)setMultistepShippingForShippingMethod:(NSString*)shippingMethod
                                     pickupStation:(NSString*)pickupStation
