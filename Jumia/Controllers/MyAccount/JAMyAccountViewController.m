@@ -17,6 +17,7 @@
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 #import "AQSFacebookMessengerActivity.h"
 #import "JBWhatsAppActivity.h"
+#import "RITarget.h"
 
 @interface JAMyAccountViewController () <JAPickerDelegate>
 
@@ -36,8 +37,8 @@
 
 @property (strong, nonatomic) JAProductInfoHeaderLine *moreSettingsHeaderLine;
 @property (strong, nonatomic) JAProductInfoRightSubtitleLine *appVersionSubLine;
-@property (strong, nonatomic) JAProductInfoSubLine *helpCenterSubLine;
-@property (strong, nonatomic) JAProductInfoSubLine *termsSubLine;
+@property (strong, nonatomic) NSMutableArray *moreSettingsLines;
+@property (strong, nonatomic) NSArray *moreFaqAndTermsItems;
 
 @property (strong, nonatomic) JAProductInfoHeaderLine *appSocialHeaderLine;
 @property (strong, nonatomic) JAProductInfoSubLine *shareTheAppSubLine;
@@ -67,8 +68,7 @@
         [_mainScrollView addSubview:self.languageSubtitleLine];
         [_mainScrollView addSubview:self.moreSettingsHeaderLine];
         [_mainScrollView addSubview:self.appVersionSubLine];
-        [_mainScrollView addSubview:self.helpCenterSubLine];
-        [_mainScrollView addSubview:self.termsSubLine];
+        [self getFaqAndTerms];
         [_mainScrollView addSubview:self.appSocialHeaderLine];
         [_mainScrollView addSubview:self.shareTheAppSubLine];
         [_mainScrollView addSubview:self.rateTheAppSubLine];
@@ -190,38 +190,19 @@
             [_appVersionSubLine setRightSubTitle:STRING_UPDATE_NOW];
         }
 //        version
-        [_appVersionSubLine setRightTitle:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+        [_appVersionSubLine setRightTitle:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
 //        build
 //        [_appVersionSubLine setRightTitle:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
         [_appVersionSubLine setTitle:STRING_APP_VERSION];
+        self.moreSettingsLines = [[NSMutableArray alloc] initWithObjects:_appVersionSubLine, nil];
     }
     return _appVersionSubLine;
-}
-
-- (JAProductInfoSubLine *)helpCenterSubLine
-{
-    if (!VALID(_helpCenterSubLine, JAProductInfoSubLine)) {
-        _helpCenterSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.appVersionSubLine.frame), self.mainScrollView.width, kProductInfoSubLineHeight)];
-        [_helpCenterSubLine setTitle:STRING_HELP_CENTER];
-        [_helpCenterSubLine addTarget:self action:@selector(helpCenterSelection) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _helpCenterSubLine;
-}
-
-- (JAProductInfoSubLine *)termsSubLine
-{
-    if (!VALID(_termsSubLine, JAProductInfoSubLine)) {
-        _termsSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.helpCenterSubLine.frame), self.mainScrollView.width, kProductInfoSubLineHeight)];
-        [_termsSubLine setTitle:STRING_TERMS_AND_CONDITIONS];
-        [_termsSubLine addTarget:self action:@selector(termsSelection) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _termsSubLine;
 }
 
 - (JAProductInfoHeaderLine *)appSocialHeaderLine
 {
     if (!VALID(_appSocialHeaderLine, JAProductInfoHeaderLine)) {
-        _appSocialHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.termsSubLine.frame), self.mainScrollView.width, kProductInfoHeaderLineHeight)];
+        _appSocialHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY([(JAProductInfoBaseLine *)[self.moreSettingsLines lastObject] frame]), self.mainScrollView.width, kProductInfoHeaderLineHeight)];
         [_appSocialHeaderLine setTitle:[STRING_APP_SOCIAL uppercaseString]];
     }
     return _appSocialHeaderLine;
@@ -323,9 +304,9 @@
     [self.countrySubtitleLine setWidth:self.mainScrollView.width];
     [self.languageSubtitleLine setWidth:self.mainScrollView.width];
     [self.moreSettingsHeaderLine setWidth:self.mainScrollView.width];
-    [self.appVersionSubLine setWidth:self.mainScrollView.width];
-    [self.helpCenterSubLine setWidth:self.mainScrollView.width];
-    [self.termsSubLine setWidth:self.mainScrollView.width];
+    for (UIView *view in self.moreSettingsLines) {
+        [view setWidth:self.mainScrollView.width];
+    }
     [self.appSocialHeaderLine setWidth:self.mainScrollView.width];
     [self.shareTheAppSubLine setWidth:self.mainScrollView.width];
     [self.rateTheAppSubLine setWidth:self.mainScrollView.width];
@@ -336,13 +317,78 @@
     }
 }
 
+- (void)adjustViews
+{
+    [UIView animateWithDuration:.3 animations:^{
+        [self.appSocialHeaderLine setYBottomOf:[self.moreSettingsLines lastObject] at:0.f];
+        [self.shareTheAppSubLine setYBottomOf:self.appSocialHeaderLine at:0.f];
+        [self.rateTheAppSubLine setYBottomOf:self.shareTheAppSubLine at:0.f];
+    }];
+}
+
+#pragma mark - Data
+
+- (void)getFaqAndTerms
+{
+    [self showLoading];
+    [RICountry getCountryFaqAndTermsWithSuccessBlock:^(NSArray *faqAndTerms) {
+        [self hideLoading];
+        self.moreFaqAndTermsItems = [faqAndTerms copy];
+        int i = 0;
+        for (id object in faqAndTerms) {
+            NSString *label = [object objectForKey:@"label"];
+            if (VALID_NOTEMPTY([object objectForKey:@"label"], NSString)) {
+                JAProductInfoSubLine *moreItemLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY([(JAProductInfoBaseLine *)[self.moreSettingsLines lastObject] frame]), self.mainScrollView.width, kProductInfoSubLineHeight)];
+                [moreItemLine setTitle:label];
+                [moreItemLine addTarget:self action:@selector(moreSelection:) forControlEvents:UIControlEventTouchUpInside];
+                [moreItemLine setTag:i];
+                [self.moreSettingsLines addObject:moreItemLine];
+                [self.mainScrollView addSubview:moreItemLine];
+            }
+            i++;
+        }
+        [self adjustViews];
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+        [self hideLoading];
+        if (apiResponse == RIApiResponseNoInternetConnection) {
+            [self showErrorView:YES startingY:0 selector:@selector(getFaqAndTerms) objects:nil];
+        }
+    }];
+}
+
 - (BOOL)isLastVersion
 {
-#warning TODO there's a ticket for it
-    return YES;
+    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+    f.numberStyle = NSNumberFormatterDecimalStyle;
+    NSNumber *myNumber = [f numberFromString:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+    if ([myNumber compare:[RIApi getApiInformation].curVersion] == NSOrderedAscending) {
+        return NO;
+    }else{
+        return YES;
+    }
 }
 
 #pragma mark - Actions
+
+- (void)moreSelection:(UIButton *)sender
+{
+    if (VALID_NOTEMPTY([self.moreFaqAndTermsItems objectAtIndex:sender.tag], NSDictionary)) {
+        NSString *targetString = [[self.moreFaqAndTermsItems objectAtIndex:sender.tag] objectForKey:@"target"];
+        NSString *label = [[self.moreFaqAndTermsItems objectAtIndex:sender.tag] objectForKey:@"label"];
+        if (VALID_NOTEMPTY(targetString, NSString)) {
+            
+            NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
+            
+            [userInfo setObject:label forKey:@"title"];
+            [userInfo setObject:targetString forKey:@"targetString"];
+            [userInfo setObject:@YES forKey:@"show_back_button"];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithShopUrlNofication
+                                                                object:nil
+                                                              userInfo:userInfo];
+        }
+    }
+}
 
 - (void)profileSelection
 {
