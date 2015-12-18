@@ -194,6 +194,14 @@
 #define STRING_SUBSCRIVE_UNSUBSCRIVE RILocalizedString(@"option3_description", nil)
 #define STRING_NOTIFICATIONS_SETTINGS RILocalizedString(@"section_title_notification", nil)
 #define STRING_NOTIFICATIONS RILocalizedString(@"notifications", nil)
+#define STRING_PUSH_NOTIFICATIONS RILocalizedString(@"push_notifications", nil)
+#define STRING_UPDATE_NOW RILocalizedString(@"update_now", nil)
+#define STRING_APP_VERSION RILocalizedString(@"app_version", nil)
+#define STRING_HELP_CENTER RILocalizedString(@"help_center", nil)
+#define STRING_TERMS_AND_CONDITIONS RILocalizedString(@"terms_and_conditions", nil)
+#define STRING_APP_SOCIAL RILocalizedString(@"app_social", nil)
+#define STRING_RATE_THE_APP RILocalizedString(@"rate_the_app", nil)
+#define STRING_SHOP_SETTINGS RILocalizedString(@"shop_settings", nil)
 #define STRING_RECEIVE_EXCLUSIVE_OFFERS RILocalizedString(@"notifications_summary", nil)
 #define STRING_SOUND RILocalizedString(@"sound", nil)
 #define STRING_PLAY_SOUND RILocalizedString(@"sound_summary", nil)
@@ -316,6 +324,7 @@
 #define STRING_ORDER_PAYMENT_STATUS RILocalizedString(@"my_order_payment_status_label", nil)
 #define STRING_ORDER_QUANTITY RILocalizedString(@"my_order_quantity_label", nil)
 #define STRING_NO_ORDERS RILocalizedString(@"my_order_no_orders_label", nil)
+#define STRING_NO_ORDERS_TITLE RILocalizedString(@"my_order_no_orders_title_label", nil)
 
 #define STRING_SELLER_INFO_WARRANTY RILocalizedString(@"seller_info_warranty", nil)
 

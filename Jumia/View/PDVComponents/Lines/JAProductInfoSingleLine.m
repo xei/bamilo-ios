@@ -14,6 +14,19 @@
 
 @implementation JAProductInfoSingleLine
 
+-(UILabel *)lineLabel {
+    if(!VALID_NOTEMPTY(_lineLabel, UILabel)) {
+        _lineLabel = [UILabel new];
+        [_lineLabel setFont:JAList2Font];
+        [_lineLabel setTextColor:JABlackColor];
+        [_lineLabel setFrame:CGRectMake(self.lineContentXOffset, 0.f,
+                                        self.width - self.lineContentXOffset, self.height)];
+        [_lineLabel setTextAlignment:NSTextAlignmentLeft];
+        [self addSubview:_lineLabel];
+    }
+    return _lineLabel;
+}
+
 - (instancetype)init
 {
     self = [super init];
@@ -43,17 +56,15 @@
     [super setFrame:frame];
 }
 
-- (UILabel *)label
-{
-    [super.label setFont:JAList2Font];
-    return super.label;
-}
-
 - (void)sizeToFit
 {
     [self setWidth:CGRectGetMaxX(self.label.frame)];
     [self setHeight:self.label.height];
-    [self.label setYCenterAligned];
+    [self.lineLabel setYCenterAligned];
+}
+
+-(void)setText:(NSString *)txt {
+    [self.lineLabel setText:txt];
 }
 
 @end

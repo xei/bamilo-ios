@@ -332,6 +332,20 @@
 
 "notifications" = "Notifications";
 
+"push_notifications" = "Push Notifications";
+
+"update_now" = "Update Now";
+
+"app_version" = "App Version";
+
+"help_center" = "Help Center";
+
+"terms_and_conditions" = "Terms and Conditions";
+
+"app_social" = "App Social";
+
+"rate_the_app" = "Rate the App";
+
 "notifications_summary" = "Receive exclusive offers and updates";
 
 "sound" = "Sound";
@@ -526,7 +540,9 @@
 
 "my_order_quantity_label" = "Qty.";
 
-"my_order_no_orders_label" = "You have placed no orders.";
+"my_order_no_orders_label" = "You don't have yet any Orders.";
+
+"my_order_no_orders_title_label" = "No Orders";
 
 "like_us_on_facebook" = "Like us on Facebook";
 

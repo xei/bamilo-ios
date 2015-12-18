@@ -75,35 +75,32 @@
  *
  *  @param the quantity that will be added
  *  @param the simple product sku (format: SH660AAAC1MWNGAMZ-177254)
- *  @param the product sku
  *  @param the success block
  *  @param the error block that contains the error case the operation fails
  *
  *  @return the string with the code to cancel the request
  */
 + (NSString *)addProductWithQuantity:(NSString *)quantity
-                                 sku:(NSString *)sku
-                              simple:(NSString *)simple
+                           simpleSku:(NSString *)simpleSku
                     withSuccessBlock:(void (^)(RICart *cart))sucessBlock
                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  *  Method to add multiple products to the cart
  *
- *  @param an array of products to add (format: each element of this array should contain a dictionary with three keys quantity, p and simple)
+ *  @param an array of products to add (format: each element of this array should be a string representing the simple sku to add)
  *  @param the success block
  *  @param the error block that contains the error case the operation fails
  *
  *  @return the string with the code to cancel the request
  */
-+ (NSString *)addProductsWithQuantity:(NSArray *)productsToAdd
-                     withSuccessBlock:(void (^)(RICart *cart, NSArray *productsNotAdded))sucessBlock
-                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock))failureBlock;
++ (NSString *)addMultipleProducts:(NSArray *)productsToAdd
+                 withSuccessBlock:(void (^)(RICart *cart, NSArray *productsNotAdded))sucessBlock
+                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock))failureBlock;
 
 /**
  *  Method to add multiple products from a bundle to the cart
  *
- *  @param an array of products skus to add
  *  @param an array of products simple skus to add
  *  @param the id of the bundle
  *  @param the success block
@@ -111,11 +108,10 @@
  *
  *  @return the string with the code to cancel the request
  */
-+ (NSString *)addBundleProductsWithSkus:(NSArray *)productSkus
-                             simpleSkus:(NSArray *)simpleSkus
-                               bundleId:(NSString *)bundleId
-                       withSuccessBlock:(void (^)(RICart *cart, NSArray *productsNotAdded))sucessBlock
-                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock))failureBlock;
++ (NSString *)addBundleProductsWithSimpleSkus:(NSArray *)simpleSkus
+                                     bundleId:(NSString *)bundleId
+                             withSuccessBlock:(void (^)(RICart *cart, NSArray *productsNotAdded))sucessBlock
+                              andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock))failureBlock;
 
 
 /**

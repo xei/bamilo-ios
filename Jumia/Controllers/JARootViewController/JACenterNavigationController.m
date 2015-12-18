@@ -18,6 +18,7 @@
 #import "JAUserDataViewController.h"
 #import "JAEmailNotificationsViewController.h"
 #import "JAMyOrdersViewController.h"
+#import "JAMyOrderDetailViewController.h"
 #import "JASignInViewController.h"
 #import "JARegisterViewController.h"
 #import "JASignupViewController.h"
@@ -136,6 +137,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showMyOrdersViewController:)
                                                  name:kShowMyOrdersScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showMyOrderDetailViewController:)
+                                                 name:kShowMyOrderDetailScreenNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -729,12 +735,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAMyAccountViewController class]])
     {
-        JAMyAccountViewController *myAccountViewController = [[JAMyAccountViewController alloc]initWithNibName:@"JAMyAccountViewController" bundle:nil];
-        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()){
-            
-            myAccountViewController = [[JAMyAccountViewController alloc] initWithNibName:@"JAMyAccountViewController~iPad" bundle:nil];
-        
-        }
+        JAMyAccountViewController *myAccountViewController = [[JAMyAccountViewController alloc] init];
         [self pushViewController:myAccountViewController animated:NO];
     }
 }
@@ -743,32 +744,40 @@
 - (void)showMyOrdersViewController:(NSNotification*)notification
 {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAMyOrdersViewController class]])
+    if([RICustomer checkIfUserIsLogged])
     {
-        JAMyOrdersViewController *myOrderVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"jAMyOrdersViewController"];
-        
-        NSString* orderNumber = notification.object;
-        if (VALID_NOTEMPTY(orderNumber, NSString))
+        if (![topViewController isKindOfClass:[JAMyOrdersViewController class]])
         {
-            myOrderVC.selectedIndex = 0;
-            myOrderVC.startingTrackOrderNumber = orderNumber;
+            JAMyOrdersViewController *myOrderVC = [JAMyOrdersViewController new];
+            [self pushViewController:myOrderVC animated:YES];
         }
-
-        NSDictionary *userInfo = notification.userInfo;
-        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"selected_index"], NSNumber))
+    } else {
+        if (![topViewController isKindOfClass:[JAAuthenticationViewController class]])
         {
-            myOrderVC.selectedIndex = [[userInfo objectForKey:@"selected_index"] intValue];
-        }        
-        
-        [self pushViewController:myOrderVC animated:YES];
+            JAAuthenticationViewController *auth = [[JAAuthenticationViewController alloc] init];
+            
+            auth.navBarLayout.showBackButton = YES;
+            auth.fromSideMenu = NO;
+            auth.nextNotification = notification;
+            
+            [self pushViewController:auth animated:YES];
+        }
     }
-    else
-    {
-        JAMyOrdersViewController *myOrderVC = (JAMyOrdersViewController*) topViewController;
+}
+
+#pragma mark Track Order Detail Screen
+- (void)showMyOrderDetailViewController:(NSNotification*)notification
+{
+    UIViewController *topViewController = [self topViewController];
+    if ([topViewController isKindOfClass:[JAMyOrdersViewController class]]) {
+        
         NSDictionary *userInfo = notification.userInfo;
-        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"selected_index"], NSNumber))
+        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"order"], RITrackOrder))
         {
-            myOrderVC.selectedIndex = [[userInfo objectForKey:@"selected_index"] intValue];
+            JAMyOrderDetailViewController *myOrderVC = [JAMyOrderDetailViewController new];
+            myOrderVC.trackingOrder = [userInfo objectForKey:@"order"];
+            
+            [self pushViewController:myOrderVC animated:YES];
         }
     }
 }
