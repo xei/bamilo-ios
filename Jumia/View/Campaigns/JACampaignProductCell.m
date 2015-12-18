@@ -336,11 +336,19 @@
                                                         selector:@selector(updateTimeLabelText)
                                                         userInfo:nil
                                                          repeats:YES];
+            
+            [[NSRunLoop mainRunLoop]addTimer:self.timer forMode:NSRunLoopCommonModes];
         }
     }else{
         [self.timer invalidate];
         self.timer = nil;
         [self.timerView setHidden:YES];
+        [self.offerEndedLabel setHidden:YES];
+        self.imageClickableView.enabled = YES;
+        [self.buyButton setUserInteractionEnabled:YES];
+        self.imageView.alpha = 1.0f;
+        [self.offerEndedLabel setHidden:YES];
+
     }
     
     [self.imageView setImageWithURL:[NSURL URLWithString:campaignProduct.imagesUrl]
@@ -471,7 +479,7 @@
         self.timerView.hidden = NO;
         NSInteger remainingSeconds = [self.campaignProduct.remainingTime integerValue];
         remainingSeconds -= self.elapsedTimeInSeconds;
-        
+
         if (0 > remainingSeconds) {
             remainingSeconds = 0;
             
