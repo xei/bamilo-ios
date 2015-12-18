@@ -79,7 +79,7 @@
 
 - (void)setFrame:(CGRect)frame
 {
-    CGFloat width = self.width;
+    CGFloat width = frame.size.width;
     if (self.fixedWidth) {
         width = self.fixedWidth;
     }
