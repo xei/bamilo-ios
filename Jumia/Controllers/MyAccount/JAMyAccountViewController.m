@@ -334,6 +334,7 @@
     [self showLoading];
     [RICountry getCountryFaqAndTermsWithSuccessBlock:^(NSArray *faqAndTerms) {
         [self hideLoading];
+        [self removeErrorView];
         self.moreFaqAndTermsItems = [faqAndTerms copy];
         int i = 0;
         for (id object in faqAndTerms) {
