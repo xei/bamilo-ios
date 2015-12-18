@@ -446,11 +446,6 @@
     }
 }
 
--(void)showUserDataSavedMessage
-{
-    [self showMessage:STRING_CHANGED_PASSWORD_SUCCESS success:YES];
-}
-
 - (void)rateTheAppSelection
 {
     static NSString *const iOS7AppStoreURLFormat = @"itms-apps://itunes.apple.com/app/apple-store/id%@";
