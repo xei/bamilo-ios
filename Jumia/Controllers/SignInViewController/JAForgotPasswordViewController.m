@@ -70,12 +70,12 @@
                                                                    kSideMargin,
                                                                    CGRectGetMaxY(self.titleLabel.frame) + kSubTitleMargin,
                                                                    _elementsWidth,
-                                                                   60)];
+                                                                   _subTitleLabel.height)];
         [_subTitleLabel setTextAlignment:NSTextAlignmentCenter];
-        [_subTitleLabel setNumberOfLines:0];
         [_subTitleLabel setFont:JACaptionFont];
         [_subTitleLabel setTextColor:JABlack800Color];
         [_subTitleLabel setText:STRING_WE_WILL_SEND_PASSWORD];
+        [_subTitleLabel setNumberOfLines:0];
         [_subTitleLabel sizeToFit];
         [_subTitleLabel setWidth:_elementsWidth];
     }
@@ -99,7 +99,6 @@
 
 - (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects;
 {
-    [self.mainScrollView removeFromSuperview];
     [super showErrorView:isNoInternetConnection startingY:startingY selector:selector objects:objects];
 }
 
@@ -167,47 +166,46 @@
 {
     [RIForm getForm:@"forgot_password"
        successBlock:^(RIForm *form)
-    {
-        if (self.loginEmail== nil) {
-            [self showMessage:STRING_ERROR success:NO];
-            [self finishedFormLoading];
-        } else {
-            self.dynamicForm = [[JADynamicForm alloc] initWithForm:form values:@{@"email" : self.loginEmail} startingPosition:CGRectGetMaxY(self.subTitleLabel.frame) + kEmailMargin hasFieldNavigation:YES];
-            [self.dynamicForm setDelegate:self];
-            
-            for (UIView *formView in self.dynamicForm.formViews) {
-                [self.mainScrollView addSubview:formView];
-            }
-            
-            self.contentScrollOriginalHeight = self.mainScrollView.height;
-            
-            [self setupViewsVertically];
-            [self removeErrorView];
-        }
-        
-        [self hideLoading];
+     {
+         [self removeErrorView];
+         if (self.loginEmail== nil) {
+             [self showMessage:STRING_ERROR success:NO];
+             [self finishedFormLoading];
+         } else {
+             self.dynamicForm = [[JADynamicForm alloc] initWithForm:form values:@{@"email" : self.loginEmail} startingPosition:CGRectGetMaxY(self.subTitleLabel.frame) + kEmailMargin hasFieldNavigation:YES];
+             [self.dynamicForm setDelegate:self];
+
+             for (UIView *formView in self.dynamicForm.formViews) {
+                 [self.mainScrollView addSubview:formView];
+             }
+
+             self.contentScrollOriginalHeight = self.mainScrollView.height;
+
+             [self setupViewsVertically];
+         }
+         [self hideLoading];
     }
        failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
     {
-         self.apiResponse = apiResponse;
+        self.apiResponse = apiResponse;
+        [self removeErrorView];
          
-         if (RIApiResponseNoInternetConnection == apiResponse) {
-             if (VALID_NOTEMPTY(self.dynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.dynamicForm.formViews, NSMutableArray)) {
-                 [self showMessage:STRING_NO_CONNECTION success:NO];
-                 [self finishedFormLoading];
-             } else {
-                 [self showErrorView:YES startingY:0.0f selector:@selector(getForgotPasswordForm) objects:nil];
-             }
-         } else {
-             if (VALID_NOTEMPTY(self.dynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.dynamicForm.formViews, NSMutableArray)) {
-                 [self showMessage:STRING_ERROR success:NO];
-                 [self finishedFormLoading];
-             } else {
-                 [self showErrorView:NO startingY:0.0f selector:@selector(getForgotPasswordForm) objects:nil];
-             }
-         }
-        
-         [self hideLoading];
+        if (RIApiResponseNoInternetConnection == apiResponse) {
+            if (VALID_NOTEMPTY(self.dynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.dynamicForm.formViews, NSMutableArray)) {
+                [self showErrorView:YES startingY:0 selector:@selector(getForgotPasswordForm) objects:nil];
+                [self finishedFormLoading];
+            } else {
+                [self showErrorView:YES startingY:0.0f selector:@selector(getForgotPasswordForm) objects:nil];
+            }
+        } else {
+            if (VALID_NOTEMPTY(self.dynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.dynamicForm.formViews, NSMutableArray)) {
+                [self showMessage:STRING_ERROR success:NO];
+                [self finishedFormLoading];
+            } else {
+                [self showErrorView:NO startingY:0.0f selector:@selector(getForgotPasswordForm) objects:nil];
+            }
+        }
+        [self hideLoading];
     }];
 }
 
@@ -234,6 +232,7 @@
     if ([self.dynamicForm checkErrors]) {
         [self showMessage:self.dynamicForm.firstErrorInFields success:NO];
         [self hideLoading];
+        [self removeErrorView];
         return;
     }
     
@@ -241,8 +240,8 @@
           parameters:[self.dynamicForm getValues]
         successBlock:^(id object)
      {
-         [self.dynamicForm resetValues];
          [self hideLoading];
+         [self removeErrorView];
          
          [self showMessage:STRING_EMAIL_SENT success:YES];
      } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
@@ -252,21 +251,15 @@
          
          if (RIApiResponseNoInternetConnection == apiResponse) {
              [self showErrorView:YES startingY:0 selector:@selector(continueForgotPassword) objects:nil];
-         }
-         else if(VALID_NOTEMPTY(errorObject, NSDictionary))
-         {
+         } else if(VALID_NOTEMPTY(errorObject, NSDictionary)) {
              [self.dynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
                  [self showMessage:message success:NO];
              }];
-         }
-         else if(VALID_NOTEMPTY(errorObject, NSArray))
-         {
+         } else if(VALID_NOTEMPTY(errorObject, NSArray)) {
              [self.dynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
                  [self showMessage:message success:NO];
              }];
-         }
-         else
-         {
+         } else {
              [self.dynamicForm checkErrors];
              
              [self showMessage:STRING_ERROR success:NO];
@@ -291,6 +284,9 @@
 
 - (void)setupViewsHorizontally
 {
+    [self.titleLabel sizeToFit];
+    [self.subTitleLabel sizeToFit];
+    
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         CGFloat middleX = (self.mainScrollView.width / 2);
         
