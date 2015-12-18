@@ -323,6 +323,7 @@
         [self.appSocialHeaderLine setYBottomOf:[self.moreSettingsLines lastObject] at:0.f];
         [self.shareTheAppSubLine setYBottomOf:self.appSocialHeaderLine at:0.f];
         [self.rateTheAppSubLine setYBottomOf:self.shareTheAppSubLine at:0.f];
+        [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, CGRectGetMaxY(self.rateTheAppSubLine.frame))];
     }];
 }
 
