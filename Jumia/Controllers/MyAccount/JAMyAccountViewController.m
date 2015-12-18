@@ -2,347 +2,273 @@
 //  JAMyAccountViewController.m
 //  Jumia
 //
-//  Created by Miguel Chaves on 30/Jul/14.
-//  Copyright (c) 2014 Rocket Internet. All rights reserved.
+//  Created by Jose Mota on 15/12/15.
+//  Copyright © 2015 Rocket Internet. All rights reserved.
 //
 
 #import "JAMyAccountViewController.h"
-#import "JAClickableView.h"
+#import "JAProductInfoHeaderLine.h"
+#import "JAProductInfoSubLine.h"
+#import "JAProductInfoSubtitleLine.h"
+#import "JAProductInfoSwitchLine.h"
+#import "JAProductInfoRightSubtitleLine.h"
+#import "JAPicker.h"
 #import "JAActivityViewController.h"
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 #import "AQSFacebookMessengerActivity.h"
 #import "JBWhatsAppActivity.h"
-#import "RIApi.h"
-#import "UIImageView+WebCache.h"
-#import "JAPicker.h"
-#import "RICountry.h"
+#import "RITarget.h"
 
-@interface JAMyAccountViewController ()
-<
-JAPickerDelegate
->
+@interface JAMyAccountViewController () <JAPickerDelegate>
 
-@property (weak, nonatomic) IBOutlet UIScrollView* scrollView;
-@property (weak, nonatomic) IBOutlet UIView *accountView;
-@property (weak, nonatomic) IBOutlet UILabel *accountSettingsTitleLabel;
-@property (weak, nonatomic) IBOutlet UIView *accountViewTopSeparator;
-@property (weak, nonatomic) IBOutlet JAClickableView *userDataClickableView;
-@property (weak, nonatomic) IBOutlet UILabel *userDataTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *userDataSubtitleLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *userDataArrow;
-@property (weak, nonatomic) IBOutlet UIView *accountAndEmailSeparator;
-@property (weak, nonatomic) IBOutlet JAClickableView *emailClickableView;
-@property (weak, nonatomic) IBOutlet UILabel *emailTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *emailSubtitleLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *emailArrow;
-@property (weak, nonatomic) IBOutlet UIView *emailAndAddressesSeparator;
-@property (weak, nonatomic) IBOutlet JAClickableView *addressesClickableView;
-@property (weak, nonatomic) IBOutlet UILabel *addressesTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *addressesSubtitleLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *addressesArrow;
-@property (weak, nonatomic) IBOutlet UIView *notificationView;
-@property (weak, nonatomic) IBOutlet UILabel *notificationSettingsTitleLabel;
-@property (weak, nonatomic) IBOutlet UIView *notificationViewTopSeparator;
-@property (weak, nonatomic) IBOutlet UILabel *notificationTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *notificationSubtitleLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *notificationSwitch;
-@property (weak, nonatomic) IBOutlet UIView *notificationAndSoundSeparator;
-@property (weak, nonatomic) IBOutlet UILabel *soundTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *soundSubtitleLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *soundSwitch;
-@property (weak, nonatomic) IBOutlet UIView *appSharingView;
-@property (weak, nonatomic) IBOutlet UILabel *appSharingTitleLabel;
-@property (weak, nonatomic) IBOutlet UIView *appSharingSeparator;
-@property (weak, nonatomic) IBOutlet JAClickableView *shareAppClickableView;
-@property (weak, nonatomic) IBOutlet UILabel *shareAppTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *shareAppSubtitleLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *shareAppArrow;
+@property (strong, nonatomic) UIScrollView* mainScrollView;
+
+@property (strong, nonatomic) JAProductInfoHeaderLine *accountSettingsHeaderLine;
+@property (strong, nonatomic) JAProductInfoSubLine *profileSubLine;
+@property (strong, nonatomic) JAProductInfoSubLine *myAddressesSubLine;
+
+@property (strong, nonatomic) JAProductInfoHeaderLine *notificationSettingsHeaderLine;
+@property (strong, nonatomic) JAProductInfoSwitchLine *pushNotificationsSwitchLine;
+@property (strong, nonatomic) JAProductInfoSubLine *emailNotificationsSubLine;
+
+@property (strong, nonatomic) JAProductInfoHeaderLine *shopSettingsHeaderLine;
+@property (strong, nonatomic) JAProductInfoSubtitleLine *countrySubtitleLine;
+@property (strong, nonatomic) JAProductInfoSubtitleLine *languageSubtitleLine;
+
+@property (strong, nonatomic) JAProductInfoHeaderLine *moreSettingsHeaderLine;
+@property (strong, nonatomic) JAProductInfoRightSubtitleLine *appVersionSubLine;
+@property (strong, nonatomic) NSMutableArray *moreSettingsLines;
+@property (strong, nonatomic) NSArray *moreFaqAndTermsItems;
+
+@property (strong, nonatomic) JAProductInfoHeaderLine *appSocialHeaderLine;
+@property (strong, nonatomic) JAProductInfoSubLine *shareTheAppSubLine;
+@property (strong, nonatomic) JAProductInfoSubLine *rateTheAppSubLine;
+
 @property (strong, nonatomic) UIPopoverController *currentPopoverController;
-@property (assign, nonatomic) BOOL stillRTL;
 
-@property (weak, nonatomic) IBOutlet UIView *countrySettingsView;
-@property (weak, nonatomic) IBOutlet UILabel *countrySettingsTitleLabel;
-@property (weak, nonatomic) IBOutlet UIView *countrySeparator;
-@property (weak, nonatomic) IBOutlet JAClickableView *chooseCountryClickableView;
-@property (weak, nonatomic) IBOutlet UILabel *countryTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *countrySubtitleLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *countryFlag;
-@property (weak, nonatomic) IBOutlet UIView *languageSeparator;
-@property (weak, nonatomic) IBOutlet JAClickableView *languageClickableView;
-@property (weak, nonatomic) IBOutlet UILabel *languageTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *languageSubtitleLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *languageArrow;
-
-
-@property (nonatomic, strong) JAPicker* languagePicker;
-@property (nonatomic, strong) NSIndexPath* pickerIndexPath;
+@property (strong, nonatomic) JAPicker *languagePicker;
 
 @end
 
 @implementation JAMyAccountViewController
 
-#pragma mark - View Lifecycle
-
-- (void)viewDidLoad
+- (UIScrollView *)mainScrollView
 {
+    if (!VALID(_mainScrollView, UIScrollView)) {
+        _mainScrollView = [[UIScrollView alloc] initWithFrame:self.viewBounds];
+        [self.view addSubview:_mainScrollView];
+        [_mainScrollView addSubview:self.accountSettingsHeaderLine];
+        [_mainScrollView addSubview:self.profileSubLine];
+        [_mainScrollView addSubview:self.myAddressesSubLine];
+        [_mainScrollView addSubview:self.notificationSettingsHeaderLine];
+        [_mainScrollView addSubview:self.pushNotificationsSwitchLine];
+        [_mainScrollView addSubview:self.emailNotificationsSubLine];
+        [_mainScrollView addSubview:self.shopSettingsHeaderLine];
+        [_mainScrollView addSubview:self.countrySubtitleLine];
+        [_mainScrollView addSubview:self.languageSubtitleLine];
+        [_mainScrollView addSubview:self.moreSettingsHeaderLine];
+        [_mainScrollView addSubview:self.appVersionSubLine];
+        [self getFaqAndTerms];
+        [_mainScrollView addSubview:self.appSocialHeaderLine];
+        [_mainScrollView addSubview:self.shareTheAppSubLine];
+        [_mainScrollView addSubview:self.rateTheAppSubLine];
+    }
+    return _mainScrollView;
+}
+
+- (JAProductInfoHeaderLine *)accountSettingsHeaderLine
+{
+    if (!VALID(_accountSettingsHeaderLine, JAProductInfoHeaderLine)) {
+        _accountSettingsHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, 0, self.mainScrollView.width, kProductInfoHeaderLineHeight)];
+        [_accountSettingsHeaderLine setTitle:[STRING_ACCOUNT_SETTINGS uppercaseString]];
+    }
+    return _accountSettingsHeaderLine;
+}
+
+- (JAProductInfoSubLine *)profileSubLine
+{
+    if (!VALID(_profileSubLine, JAProductInfoSubLine)) {
+        _profileSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.accountSettingsHeaderLine.frame), self.mainScrollView.width, kProductInfoSubLineHeight)];
+        [_profileSubLine setTopSeparatorVisibility:NO];
+        [_profileSubLine setTitle:STRING_PROFILE];
+        [_profileSubLine addTarget:self action:@selector(profileSelection) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _profileSubLine;
+}
+
+- (JAProductInfoSubLine *)myAddressesSubLine
+{
+    if (!VALID(_myAddressesSubLine, JAProductInfoSubLine)) {
+        _myAddressesSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.profileSubLine.frame), self.mainScrollView.width, kProductInfoSubLineHeight)];
+        [_myAddressesSubLine setTitle:STRING_MY_ADDRESSES];
+        [_myAddressesSubLine addTarget:self action:@selector(myAddressesSelection) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _myAddressesSubLine;
+}
+
+- (JAProductInfoHeaderLine *)notificationSettingsHeaderLine
+{
+    if (!VALID(_notificationSettingsHeaderLine, JAProductInfoHeaderLine)) {
+        _notificationSettingsHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.myAddressesSubLine.frame), self.mainScrollView.width, kProductInfoHeaderLineHeight)];
+        [_notificationSettingsHeaderLine setTitle:[STRING_NOTIFICATIONS_SETTINGS uppercaseString]];
+    }
+    return _notificationSettingsHeaderLine;
+}
+
+- (JAProductInfoSwitchLine *)pushNotificationsSwitchLine
+{
+    if (!VALID(_pushNotificationsSwitchLine, JAProductInfoSwitchLine)) {
+        _pushNotificationsSwitchLine = [[JAProductInfoSwitchLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.notificationSettingsHeaderLine.frame), self.mainScrollView.width, kProductInfoSubLineHeight)];
+        [_pushNotificationsSwitchLine setTopSeparatorVisibility:NO];
+        [_pushNotificationsSwitchLine setTitle:STRING_PUSH_NOTIFICATIONS];
+        [_pushNotificationsSwitchLine.lineSwitch setAccessibilityLabel:STRING_NOTIFICATIONS];
+        [_pushNotificationsSwitchLine.lineSwitch addTarget:self action:@selector(changeNotification) forControlEvents:UIControlEventValueChanged];
+    }
+    return _pushNotificationsSwitchLine;
+}
+
+- (JAProductInfoSubLine *)emailNotificationsSubLine
+{
+    if (!VALID(_emailNotificationsSubLine, JAProductInfoSubLine)) {
+        _emailNotificationsSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.pushNotificationsSwitchLine.frame), self.mainScrollView.width, kProductInfoSubLineHeight)];
+        [_emailNotificationsSubLine setTitle:STRING_EMAIL_NOTIFICATIONS];
+        [_emailNotificationsSubLine addTarget:self action:@selector(emailNotificationSelection) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _emailNotificationsSubLine;
+}
+
+- (JAProductInfoHeaderLine *)shopSettingsHeaderLine
+{
+    if (!VALID(_shopSettingsHeaderLine, JAProductInfoHeaderLine)) {
+        _shopSettingsHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.emailNotificationsSubLine.frame), self.mainScrollView.width, kProductInfoHeaderLineHeight)];
+        [_shopSettingsHeaderLine setTitle:[STRING_SHOP_SETTINGS uppercaseString]];
+    }
+    return _shopSettingsHeaderLine;
+}
+
+- (JAProductInfoSubtitleLine *)countrySubtitleLine
+{
+    if (!VALID(_countrySubtitleLine, JAProductInfoSubtitleLine)) {
+        _countrySubtitleLine = [[JAProductInfoSubtitleLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.shopSettingsHeaderLine.frame), self.mainScrollView.width, kProductInfoSubtitleLineHeight)];
+        [_countrySubtitleLine setTopSeparatorVisibility:NO];
+        [_countrySubtitleLine setTitle:STRING_COUNTRY];
+        [_countrySubtitleLine setSubTitle:@""];
+        [_countrySubtitleLine addTarget:self action:@selector(countrySelection) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _countrySubtitleLine;
+}
+
+- (JAProductInfoSubtitleLine *)languageSubtitleLine
+{
+    if (!VALID(_languageSubtitleLine, JAProductInfoSubtitleLine)) {
+        _languageSubtitleLine = [[JAProductInfoSubtitleLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.countrySubtitleLine.frame), self.mainScrollView.width, kProductInfoSubtitleLineHeight)];
+        [_languageSubtitleLine setTitle:STRING_LANGUAGE];
+        [_languageSubtitleLine setSubTitle:@""];
+        [_languageSubtitleLine addTarget:self action:@selector(openLanguagePicker) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _languageSubtitleLine;
+}
+
+- (JAProductInfoHeaderLine *)moreSettingsHeaderLine
+{
+    if (!VALID(_moreSettingsHeaderLine, JAProductInfoHeaderLine)) {
+        _moreSettingsHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.languageSubtitleLine.frame), self.mainScrollView.width, kProductInfoHeaderLineHeight)];
+        [_moreSettingsHeaderLine setTitle:[STRING_MORE uppercaseString]];
+    }
+    return _moreSettingsHeaderLine;
+}
+
+- (JAProductInfoRightSubtitleLine *)appVersionSubLine
+{
+    if (!VALID(_appVersionSubLine, JAProductInfoRightSubtitleLine)) {
+        _appVersionSubLine = [[JAProductInfoRightSubtitleLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.moreSettingsHeaderLine.frame), self.mainScrollView.width, kProductInfoRightSubtitleLineHeight)];
+        [_appVersionSubLine setTopSeparatorVisibility:NO];
+        if([self isLastVersion])
+        {
+            [_appVersionSubLine setHeight:kProductInfoSubLineHeight];
+        }else{
+            [_appVersionSubLine setRightSubTitle:STRING_UPDATE_NOW];
+            [_appVersionSubLine addTarget:self action:@selector(openAppStore) forControlEvents:UIControlEventTouchUpInside];
+        }
+//        version
+        [_appVersionSubLine setRightTitle:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
+//        build
+//        [_appVersionSubLine setRightTitle:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
+        [_appVersionSubLine setTitle:STRING_APP_VERSION];
+        self.moreSettingsLines = [[NSMutableArray alloc] initWithObjects:_appVersionSubLine, nil];
+    }
+    return _appVersionSubLine;
+}
+
+- (JAProductInfoHeaderLine *)appSocialHeaderLine
+{
+    if (!VALID(_appSocialHeaderLine, JAProductInfoHeaderLine)) {
+        _appSocialHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY([(JAProductInfoBaseLine *)[self.moreSettingsLines lastObject] frame]), self.mainScrollView.width, kProductInfoHeaderLineHeight)];
+        [_appSocialHeaderLine setTitle:[STRING_APP_SOCIAL uppercaseString]];
+    }
+    return _appSocialHeaderLine;
+}
+
+- (JAProductInfoSubLine *)shareTheAppSubLine
+{
+    if (!VALID(_shareTheAppSubLine, JAProductInfoSubLine)) {
+        _shareTheAppSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.appSocialHeaderLine.frame), self.mainScrollView.width, kProductInfoSubLineHeight)];
+        [_shareTheAppSubLine setTopSeparatorVisibility:NO];
+        [_shareTheAppSubLine setTitle:STRING_SHARE_THE_APP];
+        [_shareTheAppSubLine addTarget:self action:@selector(shareTheAppSelection) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _shareTheAppSubLine;
+}
+
+- (JAProductInfoSubLine *)rateTheAppSubLine
+{
+    if (!VALID(_rateTheAppSubLine, JAProductInfoSubLine)) {
+        _rateTheAppSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.shareTheAppSubLine.frame), self.mainScrollView.width, kProductInfoSubLineHeight)];
+        [_rateTheAppSubLine setTitle:STRING_RATE_THE_APP];
+        [_rateTheAppSubLine addTarget:self action:@selector(rateTheAppSelection) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _rateTheAppSubLine;
+}
+
+#pragma mark - View life cycle
+
+- (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
-    self.stillRTL = YES;
     
     self.screenName = @"CustomerAccount";
     
     self.navBarLayout.title = STRING_MY_ACCOUNT;
     self.navBarLayout.showCartButton = NO;
     self.tabBarIsVisible = YES;
-    self.searchBarIsVisible = YES;
+    [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showUserDataSavedMessage)
-                                                 name:kDidSaveUserDataNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showEmailNotificationsSavedMessage)
-                                                 name:kDidSaveEmailNotificationsNotification
-                                               object:nil];
+    [self mainScrollView];
     
-    self.accountView.layer.cornerRadius = 5.0f;
-    self.accountView.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.accountSettingsTitleLabel.font = [UIFont fontWithName:kFontRegularName size:self.accountSettingsTitleLabel.font.pointSize];
-    self.accountSettingsTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    self.accountSettingsTitleLabel.text = STRING_ACCOUNT_SETTINGS;
-    
-    self.accountViewTopSeparator.backgroundColor = UIColorFromRGB(0xfaa41a);
-    self.accountAndEmailSeparator.backgroundColor = UIColorFromRGB(0xcccccc);
-    self.emailAndAddressesSeparator.backgroundColor = UIColorFromRGB(0xcccccc);
-    
-    self.userDataTitleLabel.font = [UIFont fontWithName:kFontLightName size:self.userDataTitleLabel.font.pointSize];
-    self.userDataTitleLabel.textColor = UIColorFromRGB(0x666666);
-    self.userDataTitleLabel.text = STRING_PROFILE;
-    self.userDataTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.userDataSubtitleLabel.font = [UIFont fontWithName:kFontLightName size:self.userDataSubtitleLabel.font.pointSize];
-    self.userDataSubtitleLabel.textColor = UIColorFromRGB(0x666666);
-    self.userDataSubtitleLabel.text = STRING_CHANGE_PASS_MANAGE_EMAIL;
-    self.userDataSubtitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.userDataArrow.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.emailTitleLabel.font = [UIFont fontWithName:kFontLightName size:self.emailTitleLabel.font.pointSize];
-    self.emailTitleLabel.textColor = UIColorFromRGB(0x666666);
-    self.emailTitleLabel.text = STRING_EMAIL_NOTIFICATIONS;
-    self.emailTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.emailSubtitleLabel.font = [UIFont fontWithName:kFontLightName size:self.emailSubtitleLabel.font.pointSize];
-    self.emailSubtitleLabel.textColor = UIColorFromRGB(0x666666);
-    self.emailSubtitleLabel.text = STRING_SUBSCRIVE_UNSUBSCRIVE;
-    self.emailSubtitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.emailArrow.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.addressesTitleLabel.font = [UIFont fontWithName:kFontLightName size:self.addressesTitleLabel.font.pointSize];
-    self.addressesTitleLabel.textColor = UIColorFromRGB(0x666666);
-    self.addressesTitleLabel.text = STRING_MY_ADDRESSES;
-    self.addressesTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.addressesSubtitleLabel.font = [UIFont fontWithName:kFontLightName size:self.addressesSubtitleLabel.font.pointSize];
-    self.addressesSubtitleLabel.textColor = UIColorFromRGB(0x666666);
-    self.addressesSubtitleLabel.text = STRING_CREATE_EDIT_ADDRESS;
-    self.addressesSubtitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.addressesArrow.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.notificationView.layer.cornerRadius = 5.0f;
-    self.notificationView.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.notificationSettingsTitleLabel.font = [UIFont fontWithName:kFontRegularName size:self.notificationSettingsTitleLabel.font.pointSize];
-    self.notificationSettingsTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    self.notificationSettingsTitleLabel.text = STRING_NOTIFICATIONS_SETTINGS;
-    self.notificationViewTopSeparator.backgroundColor = UIColorFromRGB(0xfaa41a);
-    self.notificationAndSoundSeparator.backgroundColor = UIColorFromRGB(0xcccccc);
-    
-    self.notificationTitleLabel.font = [UIFont fontWithName:kFontLightName size:self.notificationTitleLabel.font.pointSize];
-    self.notificationTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    self.notificationTitleLabel.textColor = UIColorFromRGB(0x666666);
-    self.notificationTitleLabel.text = STRING_NOTIFICATIONS;
-    self.notificationTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.notificationTitleLabel.font = [UIFont fontWithName:kFontLightName size:self.notificationTitleLabel.font.pointSize];
-    self.notificationTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    self.notificationSubtitleLabel.font = [UIFont fontWithName:kFontLightName size:self.notificationSubtitleLabel.font.pointSize];
-    self.notificationSubtitleLabel.textColor = UIColorFromRGB(0x666666);
-    self.notificationSubtitleLabel.text = STRING_RECEIVE_EXCLUSIVE_OFFERS;
-    self.notificationSubtitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.notificationSwitch.translatesAutoresizingMaskIntoConstraints = YES;
-    [self.notificationSwitch setAccessibilityLabel:STRING_NOTIFICATIONS];
-    
-    self.soundTitleLabel.font = [UIFont fontWithName:kFontLightName size:self.soundTitleLabel.font.pointSize];
-    self.soundTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    self.soundTitleLabel.textColor = UIColorFromRGB(0x666666);
-    self.soundTitleLabel.text = STRING_SOUND;
-    
-    self.soundSubtitleLabel.font = [UIFont fontWithName:kFontLightName size:self.soundSubtitleLabel.font.pointSize];
-    self.soundSubtitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    self.soundSubtitleLabel.textColor = UIColorFromRGB(0x666666);
-    self.soundSubtitleLabel.text = STRING_PLAY_SOUND;
-    
-    self.soundSwitch.translatesAutoresizingMaskIntoConstraints = YES;
-    [self.soundSwitch setAccessibilityLabel:STRING_SOUND];
-    
-    self.appSharingView.layer.cornerRadius = 5.0f;
-    self.appSharingView.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.appSharingTitleLabel.font = [UIFont fontWithName:kFontRegularName size:self.appSharingTitleLabel.font.pointSize];
-    self.appSharingTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    self.appSharingTitleLabel.text = STRING_APP_SHARING;
-    
-    self.appSharingSeparator.backgroundColor = UIColorFromRGB(0xfaa41a);
-    
-    self.shareAppTitleLabel.font = [UIFont fontWithName:kFontLightName size:self.shareAppTitleLabel.font.pointSize];
-    self.shareAppTitleLabel.textColor = UIColorFromRGB(0x666666);
-    self.shareAppTitleLabel.text = STRING_SHARE_THE_APP;
-    self.shareAppTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.shareAppSubtitleLabel.font = [UIFont fontWithName:kFontLightName size:self.shareAppSubtitleLabel.font.pointSize];
-    self.shareAppSubtitleLabel.textColor = UIColorFromRGB(0x666666);
-    self.shareAppSubtitleLabel.text = STRING_CAN_SHARE_APP_WITH_FRIENDS;
-    self.shareAppSubtitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.shareAppArrow.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    
-    self.countrySettingsView.layer.cornerRadius = 5.0f;
-    self.countrySettingsView.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.countrySettingsTitleLabel.font = [UIFont fontWithName:kFontRegularName size:self.countrySettingsTitleLabel.font.pointSize];
-    self.countrySettingsTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    self.countrySettingsTitleLabel.text = STRING_CHOOSE_COUNTRY;
-    
-    self.countrySeparator.backgroundColor = UIColorFromRGB(0xfaa41a);
-    
-    self.countryTitleLabel.font = [UIFont fontWithName:kFontLightName size:self.countryTitleLabel.font.pointSize];
-    self.countryTitleLabel.textColor = UIColorFromRGB(0x666666);
-    self.countryTitleLabel.text = STRING_COUNTRY;
-    self.countryTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.countrySubtitleLabel.font = [UIFont fontWithName:kFontLightName size:self.countrySubtitleLabel.font.pointSize];
-    self.countrySubtitleLabel.textColor = UIColorFromRGB(0x666666);
-    self.countrySubtitleLabel.text = [RIApi getCountryNameInUse];
-    self.countrySubtitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.countryFlag.translatesAutoresizingMaskIntoConstraints = YES;
-    NSURL* flagURL = [NSURL URLWithString:[RIApi getCountryFlagInUse]];
-    [self.countryFlag setImageWithURL:flagURL];
-//    self.countryFlag.layer.cornerRadius = self.countryFlag.frame.size.height /2;
-//    self.countryFlag.layer.masksToBounds = YES;
-//    self.countryFlag.layer.borderWidth = 0;
-    
-    self.languageSeparator.backgroundColor = UIColorFromRGB(0xcccccc);
-    
-    BOOL hasMoreThanOneLanguage = [RICountryConfiguration getCurrentConfiguration].languages.count>1?YES:NO;
-    
-    self.languageTitleLabel.font = [UIFont fontWithName:kFontLightName size:self.languageTitleLabel.font.pointSize];
-    if (hasMoreThanOneLanguage) {
-        self.languageTitleLabel.textColor = UIColorFromRGB(0x666666);
-    } else {
-        self.languageTitleLabel.textColor = UIColorFromRGB(0xcccccc);
-    }
-    self.languageTitleLabel.text = STRING_LANGUAGE;
-    self.languageTitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.languageSubtitleLabel.font = [UIFont fontWithName:kFontLightName size:self.languageSubtitleLabel.font.pointSize];
-    if (hasMoreThanOneLanguage) {
-        self.languageSubtitleLabel.textColor = UIColorFromRGB(0x666666);
-    } else {
-        self.languageSubtitleLabel.textColor = UIColorFromRGB(0xcccccc);
-    }
-    self.languageSubtitleLabel.translatesAutoresizingMaskIntoConstraints = YES;
+    BOOL isNotiActive = [[NSUserDefaults standardUserDefaults] boolForKey: kChangeNotificationsOptions];
+    self.pushNotificationsSwitchLine.lineSwitch.on = isNotiActive;
     
     NSString *locale = [[NSUserDefaults standardUserDefaults] stringForKey:kLanguageCodeKey];
     for (RILanguage* language in [RICountryConfiguration getCurrentConfiguration].languages) {
         if ([language.langCode isEqualToString:locale]) {
             //found it
-            self.languageSubtitleLabel.text = language.langName;
+            self.languageSubtitleLine.subTitle = language.langName;
         }
     }
-
-    self.languageArrow.translatesAutoresizingMaskIntoConstraints = YES;
     
+    [self.countrySubtitleLine setSubTitle:[RIApi getCountryNameInUse]];
     
-    self.userDataClickableView.translatesAutoresizingMaskIntoConstraints = YES;
-    [self.userDataClickableView addTarget:self
-                                   action:@selector(pushUserData:)
-                         forControlEvents:UIControlEventTouchUpInside];
-    
-    self.emailClickableView.translatesAutoresizingMaskIntoConstraints = YES;
-    [self.emailClickableView addTarget:self
-                                action:@selector(pushEmailNotifications:)
-                      forControlEvents:UIControlEventTouchUpInside];
-    
-    self.addressesClickableView.translatesAutoresizingMaskIntoConstraints = YES;
-    [self.addressesClickableView addTarget:self
-                                    action:@selector(pushAddresses:)
-                          forControlEvents:UIControlEventTouchUpInside];
-    
-    self.shareAppClickableView.translatesAutoresizingMaskIntoConstraints = YES;
-    [self.shareAppClickableView addTarget:self
-                                   action:@selector(shareApp:)
-                         forControlEvents:UIControlEventTouchUpInside];
-    
-    self.chooseCountryClickableView.translatesAutoresizingMaskIntoConstraints = YES;
-    [self.chooseCountryClickableView addTarget:self
-                                        action:@selector(chooseCountry)
-                              forControlEvents:UIControlEventTouchUpInside];
-    
-    self.languageClickableView.translatesAutoresizingMaskIntoConstraints = YES;
-    [self.languageClickableView addTarget:self
-                                   action:@selector(openLanguagePicker)
-                         forControlEvents:UIControlEventTouchUpInside];
-    self.languageClickableView.enabled = hasMoreThanOneLanguage;
-    
-    BOOL isNotiActive = [[NSUserDefaults standardUserDefaults] boolForKey: kChangeNotificationsOptions];
-    BOOL isSoundActive = [[NSUserDefaults standardUserDefaults] boolForKey: kChangeSoundOptions];
-    
-    self.notificationSwitch.on = isNotiActive;
-    self.soundSwitch.on = isSoundActive;
-    
-    if(!isNotiActive)
-    {
-        self.notificationAndSoundSeparator.hidden = YES;
-        self.soundTitleLabel.hidden = YES;
-        self.soundSubtitleLabel.hidden = YES;
-        self.soundSwitch.hidden = YES;
-        
-        [self.notificationView setFrame:CGRectMake(self.notificationView.frame.origin.x,
-                                                   self.notificationView.frame.origin.y,
-                                                   self.notificationView.frame.size.width,
-                                                   70.0f)];
-        
-        [self.appSharingView setFrame:CGRectMake(self.appSharingView.frame.origin.x,
-                                                 CGRectGetMaxY(self.notificationView.frame) + 6.0f,
-                                                 self.appSharingView.frame.size.width,
-                                                 self.appSharingView.frame.size.height)];
-    }
-    
-    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-    
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector( applicationDidEnterBackgroundNotification:)
-                                                 name: UIApplicationDidEnterBackgroundNotification
-                                               object: nil];
+    [self.countrySubtitleLine setImageWithURL:[RIApi getCountryFlagInUse]];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewWillLayoutSubviews
 {
-    [super viewWillAppear:animated];
-    
-    [self setupViews:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
+    [super viewWillLayoutSubviews];
+    if (!CGRectEqualToRect(self.mainScrollView.frame, self.viewBounds)) {
+        [self reloadViews];
+    }
 }
 
-- (void)applicationDidEnterBackgroundNotification:(NSNotification*)notification
+- (void)appWillEnterForeground
 {
     if(VALID_NOTEMPTY(self.currentPopoverController, UIPopoverController))
     {
@@ -355,458 +281,142 @@ JAPickerDelegate
     }
 }
 
-- (void)didReceiveMemoryWarning
+- (void)onOrientationChanged
 {
-    [super didReceiveMemoryWarning];
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    if(VALID(self.languagePicker, JAPicker))
-    {
-        [self.languagePicker removeFromSuperview];
-    }
-    
+    [super onOrientationChanged];
     if(VALID_NOTEMPTY(self.currentPopoverController, UIPopoverController))
     {
         [self.currentPopoverController dismissPopoverAnimated:NO];
     }
-    
-    [self showLoading];
-    
-    CGFloat newWidth = self.view.frame.size.height + self.view.frame.origin.y;
-    
-    [self setupViews:newWidth toInterfaceOrientation:toInterfaceOrientation];
-    
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+- (void)reloadViews
 {
-    [self setupViews:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
+    [self.mainScrollView setFrame:self.viewBounds];
+    [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, CGRectGetMaxY(self.rateTheAppSubLine.frame))];
     
-    [self hideLoading];
-    
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-}
-
-- (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
-    [self.scrollView setFrame:[self viewBounds]];
-    
-    CGFloat startingY = [self viewBounds].origin.y;
-    if (VALID_NOTEMPTY(self.scrollView, UIScrollView)) {
-        startingY = 0.0f;
+    [self.accountSettingsHeaderLine setWidth:self.mainScrollView.width];
+    [self.profileSubLine setWidth:self.mainScrollView.width];
+    [self.myAddressesSubLine setWidth:self.mainScrollView.width];
+    [self.notificationSettingsHeaderLine setWidth:self.mainScrollView.width];
+    [self.pushNotificationsSwitchLine setWidth:self.mainScrollView.width];
+    [self.emailNotificationsSubLine setWidth:self.mainScrollView.width];
+    [self.shopSettingsHeaderLine setWidth:self.mainScrollView.width];
+    [self.countrySubtitleLine setWidth:self.mainScrollView.width];
+    [self.languageSubtitleLine setWidth:self.mainScrollView.width];
+    [self.moreSettingsHeaderLine setWidth:self.mainScrollView.width];
+    for (UIView *view in self.moreSettingsLines) {
+        [view setWidth:self.mainScrollView.width];
     }
+    [self.appSocialHeaderLine setWidth:self.mainScrollView.width];
+    [self.shareTheAppSubLine setWidth:self.mainScrollView.width];
+    [self.rateTheAppSubLine setWidth:self.mainScrollView.width];
     
-    [self.accountView setFrame:CGRectMake(self.accountView.frame.origin.x,
-                                          startingY + 6.0f,
-                                          width - (self.accountView.frame.origin.x * 2),
-                                          self.accountView.frame.size.height)];
-    
-    [self.userDataClickableView setFrame:CGRectMake(self.userDataClickableView.frame.origin.x,
-                                                    self.userDataClickableView.frame.origin.y,
-                                                    self.accountView.frame.size.width,
-                                                    self.userDataClickableView.frame.size.height)];
-    
-    [self.emailClickableView setFrame:CGRectMake(self.emailClickableView.frame.origin.x,
-                                                 self.emailClickableView.frame.origin.y,
-                                                 self.accountView.frame.size.width,
-                                                 self.emailClickableView.frame.size.height)];
-    
-    [self.addressesClickableView setFrame:CGRectMake(self.addressesClickableView.frame.origin.x,
-                                                     self.addressesClickableView.frame.origin.y,
-                                                     self.accountView.frame.size.width,
-                                                     self.addressesClickableView.frame.size.height)];
-    
-    [self.notificationView setFrame:CGRectMake(self.notificationView.frame.origin.x,
-                                               CGRectGetMaxY(self.accountView.frame) + 6.0f,
-                                               width - (self.notificationView.frame.origin.x * 2),
-                                               self.notificationView.frame.size.height)];
-    
-    [self.appSharingView setFrame:CGRectMake(self.appSharingView.frame.origin.x,
-                                             CGRectGetMaxY(self.notificationView.frame) + 6.0f,
-                                             width - (self.notificationView.frame.origin.x * 2),
-                                             self.appSharingView.frame.size.height)];
-    
-    [self.shareAppClickableView setFrame:CGRectMake(self.shareAppClickableView.frame.origin.x,
-                                                    self.shareAppClickableView.frame.origin.y,
-                                                    self.appSharingView.frame.size.width,
-                                                    self.shareAppClickableView.frame.size.height)];
-    
-    CGFloat scrollViewHeight = CGRectGetMaxY(self.appSharingView.frame) + 6.0f;
-    
-    BOOL shouldHideCountry = NO;
-    if (VALID_NOTEMPTY([RICountry getUniqueCountry], RICountry)) {
-        shouldHideCountry = YES;
-    }
-    BOOL shouldHideBoth = NO;
-    if (shouldHideCountry && 1 >= [RICountryConfiguration getCurrentConfiguration].languages.count) {
-        shouldHideBoth = YES;
-    }
-    
-    if (shouldHideBoth) {
-        self.countrySettingsView.hidden = YES;
-    } else {
-        self.countrySettingsView.hidden = NO;
-        
-        [self.countrySettingsView setFrame:CGRectMake(self.countrySettingsView.frame.origin.x,
-                                                      CGRectGetMaxY(self.appSharingView.frame) + 6.0f,
-                                                      width - (self.notificationView.frame.origin.x * 2),
-                                                      self.countrySettingsView.frame.size.height)];
-        
-        [self.countrySettingsTitleLabel setFrame:CGRectMake(self.countrySettingsTitleLabel.frame.origin.x,
-                                                            self.countrySettingsTitleLabel.frame.origin.y,
-                                                            self.countrySettingsView.frame.size.width,
-                                                            self.countrySettingsTitleLabel.frame.size.height)];
-        
-        CGFloat languageClickableViewY = CGRectGetMaxY(self.languageSeparator.frame);
-        if (shouldHideCountry) {
-            self.chooseCountryClickableView.hidden = YES;
-            self.countryTitleLabel.hidden = YES;
-            self.countrySubtitleLabel.hidden = YES;
-            languageClickableViewY = CGRectGetMaxY(self.countrySeparator.frame);
-        } else {
-            [self.chooseCountryClickableView setFrame:CGRectMake(self.chooseCountryClickableView.frame.origin.x,
-                                                                 self.chooseCountryClickableView.frame.origin.y,
-                                                                 self.countrySettingsView.frame.size.width,
-                                                                 self.chooseCountryClickableView.frame.size.height)];
-            [self.countryTitleLabel setFrame:CGRectMake(self.countryTitleLabel.frame.origin.x,
-                                                        self.chooseCountryClickableView.frame.origin.y + 6.0f,
-                                                        self.countryTitleLabel.frame.size.width,
-                                                        self.countryTitleLabel.frame.size.height)];
-            [self.countrySubtitleLabel setFrame:CGRectMake(self.countrySubtitleLabel.frame.origin.x,
-                                                           self.chooseCountryClickableView.frame.origin.y + 25.0f,
-                                                           self.countrySubtitleLabel.frame.size.width,
-                                                           self.countrySubtitleLabel.frame.size.height)];
-        }
-        
-        [self.languageClickableView setFrame:CGRectMake(self.languageClickableView.frame.origin.x,
-                                                        languageClickableViewY,
-                                                        self.countrySettingsView.frame.size.width,
-                                                        self.languageClickableView.frame.size.height)];
-        
-        [self.languageTitleLabel setFrame:CGRectMake(self.languageTitleLabel.frame.origin.x,
-                                                     languageClickableViewY + 6.0f,
-                                                     self.languageTitleLabel.frame.size.width,
-                                                     self.languageTitleLabel.frame.size.height)];
-        [self.languageSubtitleLabel setFrame:CGRectMake(self.languageTitleLabel.frame.origin.x,
-                                                        languageClickableViewY + 25.0f,
-                                                        self.languageTitleLabel.frame.size.width,
-                                                        self.languageTitleLabel.frame.size.height)];
-        
-        CGFloat countrySettingsViewHeight = CGRectGetMaxY(self.languageClickableView.frame);
-        
-        self.countrySettingsView.frame = CGRectMake(self.countrySettingsView.frame.origin.x,
-                                                    self.countrySettingsView.frame.origin.y,
-                                                    self.countrySettingsView.frame.size.width,
-                                                    countrySettingsViewHeight);
-        
-        scrollViewHeight = CGRectGetMaxY(self.countrySettingsView.frame) + 6.0f;
-    }
-
-    
-    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, scrollViewHeight)];
-    
-    CGFloat leftMargin = 17.0f;
-    CGFloat rightMargin = 17.0f;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
+    if (RI_IS_RTL)
     {
-        leftMargin = 128.0f;
-        rightMargin = 128.0f;
+        [self.view flipAllSubviews];
     }
-    
-    [self.accountViewTopSeparator setFrame:CGRectMake(self.accountViewTopSeparator.frame.origin.x,
-                                                      self.accountViewTopSeparator.frame.origin.y,
-                                                      self.accountView.frame.size.width,
-                                                      self.accountViewTopSeparator.frame.size.height)];
-    
-    [self.accountAndEmailSeparator setFrame:CGRectMake(self.accountAndEmailSeparator.frame.origin.x,
-                                                       self.accountAndEmailSeparator.frame.origin.y,
-                                                       self.accountView.frame.size.width,
-                                                       self.accountAndEmailSeparator.frame.size.height)];
-    
-    [self.emailAndAddressesSeparator setFrame:CGRectMake(self.emailAndAddressesSeparator.frame.origin.x,
-                                                         self.emailAndAddressesSeparator.frame.origin.y,
-                                                         self.accountView.frame.size.width,
-                                                         self.emailAndAddressesSeparator.frame.size.height)];
-    
-    [self.notificationViewTopSeparator setFrame:CGRectMake(self.notificationViewTopSeparator.frame.origin.x,
-                                                           self.notificationViewTopSeparator.frame.origin.y,
-                                                           self.accountView.frame.size.width,
-                                                           self.notificationViewTopSeparator.frame.size.height)];
-    
-    [self.notificationAndSoundSeparator setFrame:CGRectMake(self.notificationAndSoundSeparator.frame.origin.x,
-                                                            self.notificationAndSoundSeparator.frame.origin.y,
-                                                            self.accountView.frame.size.width,
-                                                            self.notificationAndSoundSeparator.frame.size.height)];
-    
-    [self.appSharingSeparator setFrame:CGRectMake(self.appSharingSeparator.frame.origin.x,
-                                                  self.appSharingSeparator.frame.origin.y,
-                                                  self.accountView.frame.size.width,
-                                                  self.appSharingSeparator.frame.size.height)];
-    
-    [self.countrySeparator setFrame:CGRectMake(self.countrySeparator.frame.origin.x,
-                                               self.countrySeparator.frame.origin.y,
-                                               self.countrySettingsView.frame.size.width,
-                                               self.countrySeparator.frame.size.height)];
+}
 
-    [self.languageSeparator setFrame:CGRectMake(self.languageSeparator.frame.origin.x,
-                                                self.languageSeparator.frame.origin.y,
-                                                self.countrySettingsView.frame.size.width,
-                                                self.languageSeparator.frame.size.height)];
-    
-    [self.accountSettingsTitleLabel setFrame: CGRectMake(6.0f,
-                                                         self.accountSettingsTitleLabel.frame.origin.y,
-                                                         self.accountSettingsTitleLabel.frame.size.width,
-                                                         self.accountSettingsTitleLabel.frame.size.height)];
-    
-    [self.notificationSettingsTitleLabel setFrame: CGRectMake(6.0f,
-                                                              self.notificationSettingsTitleLabel.frame.origin.y,
-                                                              self.notificationSettingsTitleLabel.frame.size.width,
-                                                              self.notificationSettingsTitleLabel.frame.size.height)];
-    
-    [self.appSharingTitleLabel setFrame: CGRectMake(6.0f,
-                                                    self.appSharingTitleLabel.frame.origin.y,
-                                                    self.appSharingTitleLabel.frame.size.width,
-                                                    self.appSharingTitleLabel.frame.size.height)];
-    
-    [self.userDataArrow setFrame:CGRectMake(self.accountView.frame.size.width - self.userDataArrow.frame.size.width - rightMargin,
-                                            self.userDataArrow.frame.origin.y,
-                                            self.userDataArrow.frame.size.width,
-                                            self.userDataArrow.frame.size.height)];
-    
-    [self.userDataTitleLabel setFrame:CGRectMake(leftMargin,
-                                                 self.userDataTitleLabel.frame.origin.y,
-                                                 self.userDataTitleLabel.frame.size.width,
-                                                 self.userDataTitleLabel.frame.size.height)];
-    
-    [self.userDataSubtitleLabel setFrame:CGRectMake(leftMargin,
-                                                    self.userDataSubtitleLabel.frame.origin.y,
-                                                    self.userDataSubtitleLabel.frame.size.width,
-                                                    self.userDataSubtitleLabel.frame.size.height)];
-    
-    [self.emailArrow setFrame:CGRectMake(self.accountView.frame.size.width - self.emailArrow.frame.size.width - rightMargin,
-                                         self.emailArrow.frame.origin.y,
-                                         self.emailArrow.frame.size.width,
-                                         self.emailArrow.frame.size.height)];
-    
-    [self.emailTitleLabel setFrame:CGRectMake(leftMargin,
-                                              self.emailTitleLabel.frame.origin.y,
-                                              self.emailTitleLabel.frame.size.width,
-                                              self.emailTitleLabel.frame.size.height)];
-    
-    [self.emailSubtitleLabel setFrame:CGRectMake(leftMargin,
-                                                 self.emailSubtitleLabel.frame.origin.y,
-                                                 self.emailSubtitleLabel.frame.size.width,
-                                                 self.emailSubtitleLabel.frame.size.height)];
-    
-    [self.addressesArrow setFrame:CGRectMake(self.accountView.frame.size.width - self.addressesArrow.frame.size.width - rightMargin,
-                                             self.addressesArrow.frame.origin.y,
-                                             self.addressesArrow.frame.size.width,
-                                             self.addressesArrow.frame.size.height)];
-    
-    [self.addressesTitleLabel setFrame:CGRectMake(leftMargin,
-                                                  self.addressesTitleLabel.frame.origin.y,
-                                                  self.addressesTitleLabel.frame.size.width,
-                                                  self.addressesTitleLabel.frame.size.height)];
-    
-    [self.addressesSubtitleLabel setFrame:CGRectMake(leftMargin,
-                                                     self.addressesSubtitleLabel.frame.origin.y,
-                                                     self.addressesSubtitleLabel.frame.size.width,
-                                                     self.addressesSubtitleLabel.frame.size.height)];
-    
-    [self.notificationSwitch setFrame:CGRectMake(self.notificationView.frame.size.width - self.notificationSwitch.frame.size.width - rightMargin,
-                                                 self.notificationSwitch.frame.origin.y,
-                                                 self.notificationSwitch.frame.size.width,
-                                                 self.notificationSwitch.frame.size.height)];
-    
-    [self.notificationTitleLabel setFrame:CGRectMake(leftMargin,
-                                                     self.notificationTitleLabel.frame.origin.y,
-                                                     self.notificationTitleLabel.frame.size.width,
-                                                     self.notificationTitleLabel.frame.size.height)];
-    
-    [self.notificationSubtitleLabel setFrame:CGRectMake(leftMargin,
-                                                        self.notificationSubtitleLabel.frame.origin.y,
-                                                        self.notificationSubtitleLabel.frame.size.width,
-                                                        self.notificationSubtitleLabel.frame.size.height)];
-    
-    [self.soundSwitch setFrame:CGRectMake(self.notificationView.frame.size.width - self.soundSwitch.frame.size.width - rightMargin,
-                                          self.soundSwitch.frame.origin.y,
-                                          self.soundSwitch.frame.size.width,
-                                          self.soundSwitch.frame.size.height)];
-    
-    [self.soundTitleLabel setFrame:CGRectMake(leftMargin,
-                                              self.soundTitleLabel.frame.origin.y,
-                                              self.soundTitleLabel.frame.size.width,
-                                              self.soundTitleLabel.frame.size.height)];
-    
-    [self.soundSubtitleLabel setFrame:CGRectMake(leftMargin,
-                                                 self.soundSubtitleLabel.frame.origin.y,
-                                                 self.soundSubtitleLabel.frame.size.width,
-                                                 self.soundSubtitleLabel.frame.size.height)];
-    
-    [self.shareAppTitleLabel setFrame:CGRectMake(leftMargin,
-                                                 self.shareAppTitleLabel.frame.origin.y,
-                                                 self.shareAppTitleLabel.frame.size.width,
-                                                 self.shareAppTitleLabel.frame.size.height)];
-    
-    [self.shareAppSubtitleLabel setFrame:CGRectMake(leftMargin,
-                                                    self.shareAppSubtitleLabel.frame.origin.y,
-                                                    self.shareAppSubtitleLabel.frame.size.width,
-                                                    self.shareAppSubtitleLabel.frame.size.height)];
-    
-    [self.shareAppArrow setFrame:CGRectMake(self.appSharingView.frame.size.width - self.shareAppArrow.frame.size.width - rightMargin,
-                                            self.shareAppArrow.frame.origin.y,
-                                            self.shareAppArrow.frame.size.width,
-                                            self.shareAppArrow.frame.size.height)];
-    
-    [self.countryTitleLabel setFrame:CGRectMake(leftMargin,
-                                                self.countryTitleLabel.frame.origin.y,
-                                                self.countryTitleLabel.frame.size.width,
-                                                self.countryTitleLabel.frame.size.height)];
-    
-    [self.countrySubtitleLabel setFrame:CGRectMake(leftMargin,
-                                                   self.countrySubtitleLabel.frame.origin.y,
-                                                   self.countrySubtitleLabel.frame.size.width,
-                                                   self.countrySubtitleLabel.frame.size.height)];
-    
-    [self.countryFlag setFrame:CGRectMake(self.countrySettingsView.frame.size.width - self.countryFlag.frame.size.width - rightMargin,
-                                          self.countryFlag.frame.origin.y,
-                                          self.countryFlag.frame.size.width,
-                                          self.countryFlag.frame.size.height)];
-    
-    [self.languageTitleLabel setFrame:CGRectMake(leftMargin,
-                                                 self.languageTitleLabel.frame.origin.y,
-                                                 self.languageTitleLabel.frame.size.width,
-                                                 self.languageTitleLabel.frame.size.height)];
-    
-    [self.languageSubtitleLabel setFrame:CGRectMake(leftMargin,
-                                                    self.languageSubtitleLabel.frame.origin.y,
-                                                    self.languageSubtitleLabel.frame.size.width,
-                                                    self.languageSubtitleLabel.frame.size.height)];
-    
-    [self.languageArrow setFrame:CGRectMake(self.countrySettingsView.frame.size.width - self.languageArrow.frame.size.width - rightMargin,
-                                            self.languageArrow.frame.origin.y,
-                                            self.languageArrow.frame.size.width,
-                                            self.languageArrow.frame.size.height)];
-    
-    if(RI_IS_RTL){
-        
-        [self.accountView  flipSubviewPositions];
-        [self.accountView flipSubviewImages];
-        [self.notificationView flipSubviewPositions];
-        [self.appSharingView flipSubviewPositions];
-        [self.appSharingView flipSubviewImages];
-        [self.countrySettingsView flipSubviewPositions];
-        [self.countrySettingsView flipSubviewImages];
-        
-        if(self.stillRTL){
-            
-            [self.accountView flipSubviewAlignments];
-            [self.notificationView flipSubviewAlignments];
-            [self.appSharingView flipSubviewAlignments];
-            [self.countrySettingsView flipSubviewAlignments];
-            self.stillRTL= NO;
+- (void)adjustViews
+{
+    [UIView animateWithDuration:.3 animations:^{
+        [self.appSocialHeaderLine setYBottomOf:[self.moreSettingsLines lastObject] at:0.f];
+        [self.shareTheAppSubLine setYBottomOf:self.appSocialHeaderLine at:0.f];
+        [self.rateTheAppSubLine setYBottomOf:self.shareTheAppSubLine at:0.f];
+        [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, CGRectGetMaxY(self.rateTheAppSubLine.frame))];
+    }];
+}
+
+#pragma mark - Data
+
+- (void)getFaqAndTerms
+{
+    [self showLoading];
+    [RICountry getCountryFaqAndTermsWithSuccessBlock:^(NSArray *faqAndTerms) {
+        [self hideLoading];
+        [self removeErrorView];
+        self.moreFaqAndTermsItems = [faqAndTerms copy];
+        int i = 0;
+        for (id object in faqAndTerms) {
+            NSString *label = [object objectForKey:@"label"];
+            if (VALID_NOTEMPTY([object objectForKey:@"label"], NSString)) {
+                JAProductInfoSubLine *moreItemLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY([(JAProductInfoBaseLine *)[self.moreSettingsLines lastObject] frame]), self.mainScrollView.width, kProductInfoSubLineHeight)];
+                [moreItemLine setTitle:label];
+                [moreItemLine addTarget:self action:@selector(moreSelection:) forControlEvents:UIControlEventTouchUpInside];
+                [moreItemLine setTag:i];
+                [self.moreSettingsLines addObject:moreItemLine];
+                [self.mainScrollView addSubview:moreItemLine];
+            }
+            i++;
         }
-        
-        
+        [self adjustViews];
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+        [self hideLoading];
+        if (apiResponse == RIApiResponseNoInternetConnection) {
+            [self showErrorView:YES startingY:0 selector:@selector(getFaqAndTerms) objects:nil];
+        }
+    }];
+}
+
+- (BOOL)isLastVersion
+{
+    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+    f.numberStyle = NSNumberFormatterDecimalStyle;
+    NSNumber *myNumber = [f numberFromString:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+    if ([myNumber compare:[RIApi getApiInformation].curVersion] == NSOrderedAscending) {
+        return NO;
+    }else{
+        return YES;
     }
 }
 
 #pragma mark - Actions
 
-- (IBAction)changeNotification:(id)sender
+- (void)moreSelection:(UIButton *)sender
 {
-    if (self.notificationSwitch.on)
-    {
-        self.notificationAndSoundSeparator.hidden = NO;
-        self.soundTitleLabel.hidden = NO;
-        self.soundSubtitleLabel.hidden = NO;
-        self.soundSwitch.hidden = NO;
-        
-        [self changeSound:nil];
-        
-        [self.notificationView setFrame:CGRectMake(self.notificationView.frame.origin.x,
-                                                   self.notificationView.frame.origin.y,
-                                                   self.notificationView.frame.size.width,
-                                                   116.0f)];
-        
-        [self.appSharingView setFrame:CGRectMake(self.appSharingView.frame.origin.x,
-                                                 CGRectGetMaxY(self.notificationView.frame) + 6.0f,
-                                                 self.appSharingView.frame.size.width,
-                                                 self.appSharingView.frame.size.height)];
-        
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey: kChangeNotificationsOptions];
+    if (VALID_NOTEMPTY([self.moreFaqAndTermsItems objectAtIndex:sender.tag], NSDictionary)) {
+        NSString *targetString = [[self.moreFaqAndTermsItems objectAtIndex:sender.tag] objectForKey:@"target"];
+        NSString *label = [[self.moreFaqAndTermsItems objectAtIndex:sender.tag] objectForKey:@"label"];
+        if (VALID_NOTEMPTY(targetString, NSString)) {
+            
+            NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
+            
+            [userInfo setObject:label forKey:@"title"];
+            [userInfo setObject:targetString forKey:@"targetString"];
+            [userInfo setObject:@YES forKey:@"show_back_button"];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithShopUrlNofication
+                                                                object:nil
+                                                              userInfo:userInfo];
+        }
     }
-    else
-    {
-        self.notificationAndSoundSeparator.hidden = YES;
-        self.soundTitleLabel.hidden = YES;
-        self.soundSubtitleLabel.hidden = YES;
-        self.soundSwitch.hidden = YES;
-        
-        [self.notificationView setFrame:CGRectMake(self.notificationView.frame.origin.x,
-                                                   self.notificationView.frame.origin.y,
-                                                   self.notificationView.frame.size.width,
-                                                   70.0f)];
-        
-        [self.appSharingView setFrame:CGRectMake(self.appSharingView.frame.origin.x,
-                                                 CGRectGetMaxY(self.notificationView.frame) + 6.0f,
-                                                 self.appSharingView.frame.size.width,
-                                                 self.appSharingView.frame.size.height)];
-        
-        [[UIApplication sharedApplication] unregisterForRemoteNotifications];
-        
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey: kChangeNotificationsOptions];
-    }
-    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (IBAction)changeSound:(id)sender
-{
-    if (self.soundSwitch.on)
-    {
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
-                                                                                UIRemoteNotificationTypeSound |
-                                                                                UIRemoteNotificationTypeAlert )];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey: kChangeSoundOptions];
-        
-    }
-    else
-    {
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
-                                                                                UIRemoteNotificationTypeAlert )];
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey: kChangeSoundOptions];
-        
-    }
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (void)pushUserData:(id)sender
+- (void)profileSelection
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowUserDataScreenNotification
                                                         object:@{@"animated":[NSNumber numberWithBool:YES]}];
 }
+- (void)myAddressesSelection
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+                                                     object:@{@"animated":[NSNumber numberWithBool:YES]}
+                                                   userInfo:@{@"from_checkout":[NSNumber numberWithBool:NO]}];
+}
 
-- (void)pushEmailNotifications:(id)sender
+- (void)emailNotificationSelection
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowEmailNotificationsScreenNotification
                                                         object:@{@"animated":[NSNumber numberWithBool:YES]}];
 }
 
-- (void)pushAddresses:(id)sender
+- (void)countrySelection
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
-                                                        object:@{@"animated":[NSNumber numberWithBool:YES]}
-                                                      userInfo:@{@"from_checkout":[NSNumber numberWithBool:NO]}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowChooseCountryScreenNotification object:@{@"show_back_button":[NSNumber numberWithBool:YES]}];
 }
 
-- (void)shareApp:(id)sender
+- (void)shareTheAppSelection
 {
     NSArray *appActivities = @[];
     
@@ -856,14 +466,14 @@ JAPickerDelegate
     
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {
-        CGRect sharePopoverRect = CGRectMake(self.shareAppClickableView.frame.size.width / 2,
-                                             self.shareAppClickableView.frame.size.height - 6.0f,
+        CGRect sharePopoverRect = CGRectMake(self.shareTheAppSubLine.frame.size.width / 2,
+                                             self.shareTheAppSubLine.frame.size.height - 6.0f,
                                              0.0f,
                                              0.0f);
         
         UIPopoverController* popoverController =
         [[UIPopoverController alloc] initWithContentViewController:activityController];
-        [popoverController presentPopoverFromRect:sharePopoverRect inView:self.shareAppClickableView permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+        [popoverController presentPopoverFromRect:sharePopoverRect inView:self.shareTheAppSubLine permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
         popoverController.passthroughViews = nil;
         self.currentPopoverController = popoverController;
     }
@@ -873,23 +483,51 @@ JAPickerDelegate
     }
 }
 
-
--(void)showUserDataSavedMessage
+- (void)rateTheAppSelection
 {
-    [self showMessage:STRING_CHANGED_PASSWORD_SUCCESS success:YES];
+    [self openAppStore];
 }
 
-- (void)showEmailNotificationsSavedMessage
+- (void)openAppStore
 {
-    [self showMessage:STRING_PREFERENCES_UPDATED success:YES];
+    static NSString *const iOS7AppStoreURLFormat = @"itms-apps://itunes.apple.com/app/apple-store/id%@";
+    static NSString *const iOSAppStoreURLFormat = @"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@";
+    
+    NSString *appStoreId;
+    
+    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"]) {
+        appStoreId = kAppStoreId;
+    } else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"]) {
+        appStoreId = kAppStoreIdDaraz;
+    } else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"]) {
+        appStoreId = kAppStoreIdShop;
+    } else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
+        appStoreId = kAppStoreIdBamilo;
+    }
+    
+    NSURL *appStoreLink = [NSURL URLWithString:
+                           [NSString stringWithFormat:
+                            ([[UIDevice currentDevice].systemVersion floatValue] >= 7.0f) ? iOS7AppStoreURLFormat : iOSAppStoreURLFormat, appStoreId]];
+    
+    [[UIApplication sharedApplication] openURL:appStoreLink];
+
 }
 
-- (void)chooseCountry
+- (void)changeNotification
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowChooseCountryScreenNotification object:@{@"show_back_button":[NSNumber numberWithBool:YES]}];
+    if (self.pushNotificationsSwitchLine.lineSwitch.on)
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey: kChangeNotificationsOptions];
+    }
+    else
+    {
+        [[UIApplication sharedApplication] unregisterForRemoteNotifications];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey: kChangeNotificationsOptions];
+    }
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-#pragma mark - Picker
+#pragma mark - JAPicker
 
 -(void)removePickerView
 {
@@ -912,7 +550,7 @@ JAPickerDelegate
     for (RILanguage* language in [RICountryConfiguration getCurrentConfiguration].languages) {
         if (VALID_NOTEMPTY(language, RILanguage)) {
             [dataSource addObject:language.langName];
-            if ([language.langName isEqualToString:self.languageSubtitleLabel.text]) {
+            if ([language.langName isEqualToString:self.languageSubtitleLine.subTitle]) {
                 autoSelected = language.langName;
             }
         }
@@ -943,7 +581,7 @@ JAPickerDelegate
 {
     [self removePickerView];
     RILanguage* selectedLanguage = [[RICountryConfiguration getCurrentConfiguration].languages objectAtIndex:selectedRow];
-    if ([selectedLanguage.langName isEqualToString:self.languageSubtitleLabel.text]) {
+    if ([selectedLanguage.langName isEqualToString:self.languageSubtitleLine.subTitle]) {
         //do nothing
     } else {
         
@@ -951,7 +589,7 @@ JAPickerDelegate
         [RICountry getCountriesWithSuccessBlock:^(id countries) {
             //find country
             for (RICountry* country in countries) {
-                if ([country.name isEqualToString:self.countrySubtitleLabel.text]) {
+                if ([country.name isEqualToString:self.countrySubtitleLine.subTitle]) {
                     //found it
                     //find language
                     for (RILanguage* language in country.languages) {
@@ -975,7 +613,7 @@ JAPickerDelegate
             } else {
                 RICountry* uniqueCountry = [RICountry getUniqueCountry];
                 if (VALID_NOTEMPTY(uniqueCountry, RICountry)) {
-                    if ([uniqueCountry.name isEqualToString:self.countrySubtitleLabel.text]) {
+                    if ([uniqueCountry.name isEqualToString:self.languageSubtitleLine.subTitle]) {
                         //found it
                         NSArray* languages = [[RICountryConfiguration getCurrentConfiguration].languages array];
                         //find language
@@ -993,6 +631,5 @@ JAPickerDelegate
         }];
     }
 }
-
 
 @end

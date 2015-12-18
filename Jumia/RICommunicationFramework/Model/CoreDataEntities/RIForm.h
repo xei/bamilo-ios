@@ -95,6 +95,9 @@
 
 + (RIForm *)parseForm:(NSDictionary *)formJSON;
 
++ (NSDictionary*)parseEntities:(NSDictionary*)entitiesJSON
+                 plainPassword:(NSString*)plainPassword;
+
 /**
  * Method that returns a dictionary with all the key/values for the form fields
  *

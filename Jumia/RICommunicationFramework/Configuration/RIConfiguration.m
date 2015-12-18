@@ -127,3 +127,5 @@ NSString *const RI_API_FORMS_ADDRESS_EDIT = @"addressedit/id/";
 NSString *const RI_API_RICH_RELEVANCE = @"richrelevance/request/req/";
 NSString *const RI_API_RICH_RELEVANCE_CLICK = @"request/req/";
 
+NSString *const RI_API_GET_FAQ_AND_TERMS = @"/main/getfaqandterms/";
+NSString *const RI_API_GET_PHONE_PREFIXES = @"/main/getphoneprefixes/";

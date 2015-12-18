@@ -79,4 +79,7 @@
 + (NSString *)getCountryPhonePrefixesWithSuccessBlock:(void (^)(NSArray *prefixes))successBlock
                                       andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
++ (NSString *)getCountryFaqAndTermsWithSuccessBlock:(void (^)(NSArray *faqAndTerms))successBlock
+                                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
+
 @end
