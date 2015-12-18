@@ -20,7 +20,7 @@
 {
     NSString* urlString = [RITarget getURLStringforTargetString:targetString];
     NSURL* url = [NSURL URLWithString:urlString];
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url parameters:nil httpMethodPost:YES cacheType:RIURLCacheNoCache cacheTime:RIURLCacheDefaultTime userAgentInjection:[RIApi getCountryUserAgentInjection] successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url parameters:nil httpMethod:HttpResponsePost cacheType:RIURLCacheNoCache cacheTime:RIURLCacheDefaultTime userAgentInjection:[RIApi getCountryUserAgentInjection] successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
         
         [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
             NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];

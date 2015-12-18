@@ -38,7 +38,7 @@
 #endif
     return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:countryListURL]
                                                              parameters:nil
-                                                         httpMethodPost:NO
+                                                             httpMethod:HttpResponseGet
                                                               cacheType:RIURLCacheNoCache
                                                               cacheTime:RIURLCacheNoTime
                                                      userAgentInjection:nil
@@ -79,7 +79,7 @@
 {
     return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", countryUrl, RI_API_VERSION, RI_API_COUNTRY_CONFIGURATION]]
                                                              parameters:nil
-                                                         httpMethodPost:YES
+                                                             httpMethod:HttpResponsePost
                                                               cacheType:RIURLCacheNoCache
                                                               cacheTime:RIURLCacheNoTime
                                                      userAgentInjection:userAgentInjection
@@ -297,7 +297,7 @@
 {
     return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, @"/main/getphoneprefixes/"]]
                                                              parameters:nil
-                                                         httpMethodPost:YES
+                                                             httpMethod:HttpResponsePost
                                                               cacheType:RIURLCacheNoCache
                                                               cacheTime:RIURLCacheNoTime
                                                      userAgentInjection:[RIApi getCountryUserAgentInjection]
