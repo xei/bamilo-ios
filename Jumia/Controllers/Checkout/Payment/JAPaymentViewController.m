@@ -155,41 +155,39 @@ UITextFieldDelegate>
         [self showLoading];
     }
     
-    [RICart getPaymentMethodFormWithSuccessBlock:^(RICart *cart)
-     {
-         self.cart = cart;
-         
-         self.paymentMethodForm = cart.paymentMethodForm;
-         
-         // LIST OF AVAILABLE PAYMENT METHODS
-         self.paymentMethods = [RIPaymentMethodForm getPaymentMethodsInForm:cart.paymentMethodForm];
-         
-         self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:cart.paymentMethodForm width:(self.view.frame.size.width - 12.0f)];
-         [self removeErrorView];
-         [self finishedLoadingPaymentMethods];
-     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
-     {
-         self.apiResponse = apiResponse;
-         if(RIApiResponseMaintenancePage == apiResponse)
-         {
-             [self showMaintenancePage:@selector(continueLoading) objects:nil];
-         }
-         else if(RIApiResponseKickoutView == apiResponse)
-         {
-             [self showKickoutView:@selector(continueLoading) objects:nil];
-         }
-         else
-         {
-             BOOL noConnection = NO;
-             if (RIApiResponseNoInternetConnection == apiResponse)
-             {
-                 noConnection = YES;
-             }
-             
-             [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
-         }
-         [self hideLoading];
-     }];
+    [RICart getMultistepPaymentWithSuccessBlock:^(RICart *cart) {
+        self.cart = cart;
+        
+        self.paymentMethodForm = cart.paymentMethodForm;
+        
+        // LIST OF AVAILABLE PAYMENT METHODS
+        self.paymentMethods = [RIPaymentMethodForm getPaymentMethodsInForm:cart.paymentMethodForm];
+        
+        self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:cart.paymentMethodForm width:(self.view.frame.size.width - 12.0f)];
+        [self removeErrorView];
+        [self finishedLoadingPaymentMethods];
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+        self.apiResponse = apiResponse;
+        if(RIApiResponseMaintenancePage == apiResponse)
+        {
+            [self showMaintenancePage:@selector(continueLoading) objects:nil];
+        }
+        else if(RIApiResponseKickoutView == apiResponse)
+        {
+            [self showKickoutView:@selector(continueLoading) objects:nil];
+        }
+        else
+        {
+            BOOL noConnection = NO;
+            if (RIApiResponseNoInternetConnection == apiResponse)
+            {
+                noConnection = YES;
+            }
+            
+            [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
+        }
+        [self hideLoading];
+    }];
 }
 
 - (void) initViews
@@ -612,39 +610,38 @@ UITextFieldDelegate>
     
     [parameters addEntriesFromDictionary:[self.checkoutFormForPaymentMethod getValuesForPaymentMethod:self.selectedPaymentMethod]];
     
-    [RICart setPaymentMethod:self.paymentMethodForm
-                  parameters:parameters
-                successBlock:^(RICart *cart) {
-                    
-                    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                    [trackingDictionary setValue:self.selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
-                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentSuccess]
-                                                              data:[trackingDictionary copy]];
-                    
-                    NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:@"cart"];
-                    [JAUtils goToNextStep:cart.nextStep
-                                 userInfo:userInfo];
-                    
-                    [self hideLoading];
-                } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-                    
-                    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                    [trackingDictionary setValue:self.selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
-                    [trackingDictionary setValue:self.cart.cartValueEuroConverted forKey:kRIEventTotalTransactionKey];
-                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentFail]
-                                                              data:[trackingDictionary copy]];
-                    
-                    if (RIApiResponseNoInternetConnection == apiResponse)
-                    {
-                        [self showMessage:STRING_NO_CONNECTION success:NO];
-                    }
-                    else
-                    {
-                        [self showMessage:STRING_ERROR_SETTING_PAYMENT_METHOD success:NO];
-                    }
-                    
-                    [self hideLoading];
-                }];
+    
+    [RICart setMultistepPayment:parameters
+                   successBlock:^(NSString *nextStep) {
+                       
+                       NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                       [trackingDictionary setValue:self.selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
+                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentSuccess]
+                                                                 data:[trackingDictionary copy]];
+                       
+                       [JAUtils goToNextStep:nextStep
+                                    userInfo:nil];
+                       
+                       [self hideLoading];
+                   } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+                       
+                       NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+                       [trackingDictionary setValue:self.selectedPaymentMethod.label forKey:kRIEventPaymentMethodKey];
+                       [trackingDictionary setValue:self.cart.cartValueEuroConverted forKey:kRIEventTotalTransactionKey];
+                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentFail]
+                                                                 data:[trackingDictionary copy]];
+                       
+                       if (RIApiResponseNoInternetConnection == apiResponse)
+                       {
+                           [self showMessage:STRING_NO_CONNECTION success:NO];
+                       }
+                       else
+                       {
+                           [self showMessage:STRING_ERROR_SETTING_PAYMENT_METHOD success:NO];
+                       }
+                       
+                       [self hideLoading];
+                   }];
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout

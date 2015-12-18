@@ -998,7 +998,7 @@
 {
     BOOL isPostRequest = [@"post" isEqualToString:[form.method lowercaseString]];
     
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:form.action]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:form.targetString]
                                                             parameters:parameters
                                                         httpMethodPost:isPostRequest
                                                              cacheType:RIURLCacheNoCache
@@ -1185,6 +1185,7 @@
                                                              cacheTime:RIURLCacheNoTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary)) {
                                                                   
@@ -1210,7 +1211,6 @@
                                                                       
                                                                   }];
                                                               }
-
                                                               
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
                                                               [RICart parseErrorForApiResponse:apiResponse errorJSON:errorJsonObject error:errorObject failureBlock:failureBlock];
@@ -1246,7 +1246,7 @@
                                                           }];
 }
 
-+(NSString*)getMultistepPaymentWithSuccessBlock:(void (^)(RICart *cart, RIPaymentMethodForm *paymentForm))successBlock
++(NSString*)getMultistepPaymentWithSuccessBlock:(void (^)(RICart *cart))successBlock
                                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_MULTISTEP_GET_PAYMENT]]
@@ -1257,6 +1257,31 @@
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
+                                                              NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                              if (VALID_NOTEMPTY(metadata, NSDictionary)) {
+                                                                  
+                                                                  [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+                                                                      
+                                                                      RICart* cart;
+                                                                      if (VALID_NOTEMPTY([metadata objectForKey:@"cart_entity"], NSDictionary)) {
+                                                                          cart = [RICart parseCart:metadata country:configuration];
+                                                                          
+                                                                          if (VALID_NOTEMPTY(cart, RICart)) {
+                                                                              if (VALID_NOTEMPTY([metadata objectForKey:@"form_entity"], NSDictionary)) {
+                                                                                  RIPaymentMethodForm* paymentMethodForm = [RIPaymentMethodForm parseForm:[metadata objectForKey:@"form_entity"]];
+                                                                                  cart.paymentMethodForm = paymentMethodForm;
+                                                                                  
+                                                                                  successBlock(cart);
+                                                                                  return;
+                                                                              }
+                                                                          }
+                                                                      }
+                                                                      failureBlock(0, nil);
+                                                                      
+                                                                  } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+                                                                      
+                                                                  }];
+                                                              }
                                                               
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
                                                               [RICart parseErrorForApiResponse:apiResponse errorJSON:errorJsonObject error:errorObject failureBlock:failureBlock];

@@ -293,7 +293,7 @@
                                      successBlock:(void (^)(NSString* nextStep))successBlock
                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
-+(NSString*)getMultistepPaymentWithSuccessBlock:(void (^)(RICart *cart, RIPaymentMethodForm *paymentForm))successBlock
++(NSString*)getMultistepPaymentWithSuccessBlock:(void (^)(RICart *cart))successBlock
                                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 +(NSString*)setMultistepPayment:(NSDictionary*)parameters
                    successBlock:(void (^)(NSString* nextStep))successBlock
