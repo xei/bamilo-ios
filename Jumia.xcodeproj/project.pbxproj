@@ -112,7 +112,6 @@
 		4AE865BD19C9D7C400406159 /* JAUserDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE865BC19C9D7C400406159 /* JAUserDataViewController.m */; };
 		4AE865C019C9D7F100406159 /* JAEmailNotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE865BF19C9D7F100406159 /* JAEmailNotificationsViewController.m */; };
 		4AFC7F91199BC0BE007D67F4 /* JASignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC7F90199BC0BE007D67F4 /* JASignInViewController.m */; };
-		4AFC7F94199BC124007D67F4 /* JASignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC7F93199BC124007D67F4 /* JASignupViewController.m */; };
 		4b5ae89debacca2cb1f16964 /* RIForm.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3026E19811E9200F71726 /* RIForm.m */; };
 		4bc43fda46c675d38bdb8ad7 /* JARootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242DF1986569000E37C90 /* JARootViewController.m */; };
 		4c2fef288bf2196e345a6ca6 /* RIProductSimple.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3027A19811E9200F71726 /* RIProductSimple.m */; };
@@ -7718,7 +7717,6 @@
 				CEA86DA31A39F82C000032AD /* JAPageControl.m in Sources */,
 				9AB488801B72748500886A44 /* JAShopWebViewController.m in Sources */,
 				9A007C7C1C206920007D99FC /* JAProductInfoSwitchLine.m in Sources */,
-				4AFC7F94199BC124007D67F4 /* JASignupViewController.m in Sources */,
 				B5A301B119811D0700F71726 /* JAAppDelegate.m in Sources */,
 				89FB32551BCD41C5002A6FC2 /* RISellerDelivery.m in Sources */,
 				CEA86E061A49D247000032AD /* JACampaignProductCell.m in Sources */,
