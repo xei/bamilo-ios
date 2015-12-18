@@ -492,10 +492,29 @@
     }
 }
 
-#warning TODO
 - (void)rateTheAppSelection
 {
+    static NSString *const iOS7AppStoreURLFormat = @"itms-apps://itunes.apple.com/app/apple-store/id%@";
+    static NSString *const iOSAppStoreURLFormat = @"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@";
     
+    NSString *appStoreId;
+    
+    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"]) {
+        appStoreId = kAppStoreId;
+    } else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"]) {
+        appStoreId = kAppStoreIdDaraz;
+    } else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"]) {
+        appStoreId = kAppStoreIdShop;
+    } else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
+        appStoreId = kAppStoreIdBamilo;
+    }
+    
+    NSURL *appStoreLink = [NSURL URLWithString:
+                           [NSString stringWithFormat:
+                            ([[UIDevice currentDevice].systemVersion floatValue] >= 7.0f) ? iOS7AppStoreURLFormat : iOSAppStoreURLFormat, appStoreId]];
+    
+    [[UIApplication sharedApplication] openURL:appStoreLink];
+
 }
 
 - (void)changeNotification

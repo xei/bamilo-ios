@@ -134,6 +134,12 @@
 #define kAppStoreUrlShop @"https://itunes.apple.com/app/shop.com.mm-online-shopping/id979214282"
 #define kAppStoreUrlBamilo @"https://itunes.apple.com/app/bamylw/id979950698"
 
+// App Store Id
+#define kAppStoreId @"925015459"
+#define kAppStoreIdDaraz @"978058048"
+#define kAppStoreIdShop @"979214282"
+#define kAppStoreIdBamilo @"979950698"
+
 // Preferences
 #define kDidFirstBuyKey @"did_first_buy"
 #define kNumberOfSessions @"amount_sessions"
