@@ -26,7 +26,7 @@
                                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", country, RI_API_VERSION, RI_CATALOG_CATEGORIES]]
-                                                            parameters:nil httpMethodPost:YES
+                                                            parameters:nil httpMethod:HttpResponsePost
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:countryUserAgentInjection
