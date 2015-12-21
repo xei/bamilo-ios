@@ -223,7 +223,7 @@
         _label = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.starButton5.frame), 0,
                                                           self.width - KLineContentXOffset - CGRectGetMaxX(self.starButton5.frame),
                                                           self.height)];
-        _label.font = JACaptionFont;//[UIFont fontWithName:kFontRegularName size:self.label.font.pointSize];
+        _label.font = JACaptionFont;
         [_label setTextColor:UIColorFromRGB(0x666666)];
         [_label setTextAlignment:NSTextAlignmentRight];
         [self addSubview:_label];
