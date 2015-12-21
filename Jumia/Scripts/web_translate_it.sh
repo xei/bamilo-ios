@@ -5,7 +5,7 @@ cd Jumia/
 wti pull
 wti push
 
-cd ../..
+cd ..
 
 touch credentials.git
 auth="https://$GIT_USER:$GIT_PASS@github.com"

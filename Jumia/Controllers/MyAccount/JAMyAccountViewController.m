@@ -190,8 +190,8 @@
         {
             [_appVersionSubLine setHeight:kProductInfoSubLineHeight];
         }else{
-            [_appVersionSubLine setRightSubTitle:STRING_UPDATE_NOW];
             [_appVersionSubLine addTarget:self action:@selector(openAppStore) forControlEvents:UIControlEventTouchUpInside];
+            [_appVersionSubLine setRightSubTitle:STRING_UPDATE_NOW];
         }
 //        version
         [_appVersionSubLine setRightTitle:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
