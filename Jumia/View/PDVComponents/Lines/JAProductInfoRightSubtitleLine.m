@@ -72,8 +72,8 @@
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
-    [self.rightTitleLabel setXRightAligned:16.f];
-    [self.rightSubTitleLabel setXRightAligned:16.f];
+    [self.rightTitleLabel setXRightAligned:self.lineContentXOffset + (self.enabled?16.f:0.0f)];
+    [self.rightSubTitleLabel setXRightAligned:self.lineContentXOffset + (self.enabled?16.f:0.0f)];
 }
 
 @end
