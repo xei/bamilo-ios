@@ -606,8 +606,6 @@ UITextFieldDelegate>
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithDictionary:[RIPaymentMethodForm getParametersForForm:self.paymentMethodForm]];
     
-    [parameters setObject:self.selectedPaymentMethod.value forKey:@"paymentMethodForm[payment_method]"];
-    
     [parameters addEntriesFromDictionary:[self.checkoutFormForPaymentMethod getValuesForPaymentMethod:self.selectedPaymentMethod]];
     
     
@@ -794,6 +792,12 @@ UITextFieldDelegate>
         {
             // Payment method title cell
             self.selectedPaymentMethod = [self.paymentMethods objectAtIndex:indexPath.row];
+            
+            RIPaymentMethodFormField* field = [self.paymentMethodForm.fields firstObject];
+            if (VALID_NOTEMPTY(field, RIPaymentMethodFormField)) {
+                field.value = self.selectedPaymentMethod.value;
+                NSLog(@"value: %@", field.value);
+            }
             
             self.collectionViewIndexSelected = indexPath;
             
