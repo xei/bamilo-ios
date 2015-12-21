@@ -12,7 +12,7 @@
 
 @property (nonatomic, retain) NSString* A4SViewControllerAlias;
 @property (nonatomic, assign) BOOL fromSideMenu;
-@property (nonatomic, strong) NSNotification *nextNotification;
+@property (nonatomic, strong) void(^nextStepBlock)(void);
 @property (nonatomic, strong) NSString *authenticationEmail;
 
 @end

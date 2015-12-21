@@ -18,7 +18,7 @@
     NSString* url = [RITarget getURLStringforTargetString:targetString];
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]    
                                                             parameters:nil
-                                                        httpMethodPost:NO
+                                                            httpMethod:HttpResponseGet
                                                              cacheType:RIURLCacheDBCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
@@ -66,7 +66,7 @@
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
                                                             parameters:nil
-                                                        httpMethodPost:NO
+                                                            httpMethod:HttpResponseGet
                                                              cacheType:RIURLCacheDBCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]

@@ -42,7 +42,7 @@
 
 - (NSString*)sendRequestWithUrl:(NSURL *)url
                      parameters:(NSDictionary *)parameters
-                 httpMethodPost:(BOOL)post
+                     httpMethod:(HttpResponse)method
                         timeOut:(NSInteger)timeOut
                     shouldRetry:(BOOL)shouldRetry
                 numberOfRetries:(NSInteger)numberOfRetries
@@ -65,7 +65,7 @@
     [self RI_sendRequestForOperation:operation
                                  url:url
                           parameters:parameters
-                      httpMethodPost:post
+                          httpMethod:method
                              timeOut:timeOut
                            cacheType:cacheType
                            cacheTime:cacheTime
@@ -76,7 +76,7 @@
 
 - (NSString*)sendRequestWithUrl:(NSURL *)url
                      parameters:(NSDictionary *)parameters
-                 httpMethodPost:(BOOL)post
+                     httpMethod:(HttpResponse)method
                     shouldRetry:(BOOL)shouldRetry
                 numberOfRetries:(NSInteger)numberOfRetries
                       cacheType:(RIURLCacheType)cacheType
@@ -98,7 +98,7 @@
     [self RI_sendRequestForOperation:operation
                                  url:url
                           parameters:parameters
-                      httpMethodPost:post
+                          httpMethod:method
                              timeOut:RI_HTTP_REQUEST_TIMEOUT
                            cacheType:cacheType
                            cacheTime:cacheTime
@@ -109,7 +109,7 @@
 
 - (NSString*)sendRequestWithUrl:(NSURL *)url
                      parameters:(NSDictionary *)parameters
-                 httpMethodPost:(BOOL)post
+                     httpMethod:(HttpResponse)method
                         timeOut:(NSInteger)timeOut
                       cacheType:(RIURLCacheType)cacheType
                       cacheTime:(RIURLCacheTime)cacheTime
@@ -127,7 +127,7 @@
     [self RI_sendRequestForOperation:operation
                                  url:url
                           parameters:parameters
-                      httpMethodPost:post
+                          httpMethod:method
                              timeOut:timeOut
                            cacheType:cacheType
                            cacheTime:cacheTime
@@ -138,7 +138,7 @@
 
 - (NSString*)sendRequestWithUrl:(NSURL *)url
                      parameters:(NSDictionary *)parameters
-                 httpMethodPost:(BOOL)post
+                     httpMethod:(HttpResponse)method
                       cacheType:(RIURLCacheType)cacheType
                       cacheTime:(RIURLCacheTime)cacheTime
              userAgentInjection:(NSString*)userAgentInjection
@@ -155,7 +155,7 @@
     [self RI_sendRequestForOperation:operation
                                  url:url
                           parameters:parameters
-                      httpMethodPost:post
+                          httpMethod:method
                              timeOut:RI_HTTP_REQUEST_TIMEOUT
                            cacheType:cacheType
                            cacheTime:cacheTime
@@ -167,7 +167,7 @@
 - (void)RI_sendRequestForOperation:(RIOperation*)operation
                                url:(NSURL *)url
                         parameters:(NSDictionary *)parameters
-                    httpMethodPost:(BOOL)post
+                        httpMethod:(HttpResponse)method
                            timeOut:(NSInteger)timeOut
                          cacheType:(RIURLCacheType)cacheType
                          cacheTime:(RIURLCacheTime)cacheTime
@@ -177,7 +177,7 @@
     operation.cacheTime = cacheTime;
     
     operation.request = [self RI_getURLRequestForOperation:operation url:url
-                                            httpMethodPost:post
+                                                httpMethod:method
                                             withParameters:parameters
                          userAgentInjection:userAgentInjection];
     
@@ -225,7 +225,7 @@
 
 - (NSMutableURLRequest *)RI_getURLRequestForOperation:(RIOperation*)operation
                                                   url:(NSURL *)url
-                                       httpMethodPost:(BOOL)post
+                                           httpMethod:(HttpResponse)method
                                        withParameters:(NSDictionary *)parameters
                                    userAgentInjection:(NSString*)userAgentInjection
 {
@@ -236,10 +236,19 @@
         NSLog(@"///////////// END REQUEST");
     }
     
-    if (post) {
-        [operation.request setHTTPMethod:RI_HTTP_METHOD_POST];
-    } else {
-        [operation.request setHTTPMethod:RI_HTTP_METHOD_GET];
+    switch (method) {
+        case (HttpResponsePost):
+            [operation.request setHTTPMethod:RI_HTTP_METHOD_POST];
+            break;
+        case (HttpResponseGet):
+            [operation.request setHTTPMethod:RI_HTTP_METHOD_GET];
+            break;
+        case (HttpResponsePut):
+            [operation.request setHTTPMethod:RI_HTTP_METHOD_PUT];
+            break;
+        case (HttpResponseDelete):
+            [operation.request setHTTPMethod:RI_HTTP_METHOD_DELETE];
+            break;
     }
     
     if(operation.cacheType == RIURLCacheNoCache) {
@@ -252,7 +261,7 @@
     }
     
     if (NOTEMPTY(parameters)) {
-        if (!post) {
+        if (!method) {
             NSString *urlWithParameters = [NSString stringWithFormat:@"%@?%@", [url absoluteString], [self getParametersString:parameters]];
             [operation.request setURL:[NSURL URLWithString:urlWithParameters]];
         } else {

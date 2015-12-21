@@ -122,7 +122,7 @@
     return  [[RICommunicationWrapper sharedInstance]
              sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_ORDERS]]
              parameters:parameters
-             httpMethodPost:YES
+             httpMethod:HttpResponsePost
              cacheType:RIURLCacheNoCache
              cacheTime:RIURLCacheDefaultTime
              userAgentInjection:[RIApi getCountryUserAgentInjection]
@@ -181,7 +181,7 @@
         operationID = [[RICommunicationWrapper sharedInstance]
                        sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, [NSString stringWithFormat:RI_API_TRACK_ORDER, orderNumber]]]
                        parameters:nil
-                       httpMethodPost:YES
+                       httpMethod:HttpResponsePost
                        cacheType:RIURLCacheNoCache
                        cacheTime:RIURLCacheDefaultTime
                        userAgentInjection:[RIApi getCountryUserAgentInjection]

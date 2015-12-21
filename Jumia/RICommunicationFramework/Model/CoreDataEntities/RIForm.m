@@ -60,7 +60,7 @@
             
             [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
                                                              parameters:nil
-                                                         httpMethodPost:YES
+                                                             httpMethod:HttpResponsePost
                                                               cacheType:RIURLCacheNoCache
                                                               cacheTime:RIURLCacheDefaultTime
                                                      userAgentInjection:[RIApi getCountryUserAgentInjection]
@@ -124,7 +124,7 @@
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
                                                             parameters:nil
-                                                        httpMethodPost:YES
+                                                            httpMethod:HttpResponsePost
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
@@ -213,7 +213,10 @@
          successBlock:(void (^)(id object))successBlock
       andFailureBlock:(void (^)(RIApiResponse apiResponse, id errorObject))failureBlock
 {
-    BOOL isPostRequest = [@"post" isEqualToString:[form.method lowercaseString]];
+    //BOOL isPostRequest = [@"post" isEqualToString:[form.method lowercaseString]];
+    //TODO: DELELE
+    
+    HttpResponse response = [self getHttpResponseMethodFromForm:form];
     
     NSMutableDictionary *allParameters = [[NSMutableDictionary alloc] initWithDictionary:parameters];
     for(RIField *formField in form.fields)
@@ -241,7 +244,7 @@
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
                                                             parameters:allParameters
-                                                        httpMethodPost:isPostRequest
+                                                            httpMethod:response
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
@@ -424,6 +427,24 @@
 {
     if(VALID_NOTEMPTY(operationID, NSString))
         [[RICommunicationWrapper sharedInstance] cancelRequest:operationID];
+}
+
+#pragma mark - Auxiliar functions
+
++ (HttpResponse)getHttpResponseMethodFromForm:(RIForm *) form {
+    NSString* formMethod = [form.method lowercaseString];
+    if([@"post" isEqualToString:formMethod]){
+        return HttpResponsePost;
+    }
+    if([@"get" isEqualToString:formMethod]){
+        return HttpResponseGet;
+    }
+    if([@"put" isEqualToString:formMethod]){
+        return HttpResponsePut;
+    }
+    else{
+        return HttpResponseDelete;
+    }
 }
 
 @end
