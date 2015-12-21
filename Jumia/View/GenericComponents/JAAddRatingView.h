@@ -14,8 +14,6 @@
 @property (assign, nonatomic) NSInteger rating;
 @property (nonatomic, strong) RIFieldRatingStars* fieldRatingStars;
 
-//+ (JAAddRatingView *)getNewJAAddRatingView;
-
 - (void)setupWithFieldRatingStars:(RIFieldRatingStars*)fieldRatingStars;
 
 @end
