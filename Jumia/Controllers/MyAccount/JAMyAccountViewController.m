@@ -20,6 +20,9 @@
 #import "RITarget.h"
 
 @interface JAMyAccountViewController () <JAPickerDelegate>
+{
+    NSLock *_reloadLock;
+}
 
 @property (strong, nonatomic) UIScrollView* mainScrollView;
 
@@ -258,6 +261,8 @@
     [self.countrySubtitleLine setSubTitle:[RIApi getCountryNameInUse]];
     
     [self.countrySubtitleLine setImageWithURL:[RIApi getCountryFlagInUse]];
+    
+    _reloadLock = [NSLock new];
 }
 
 - (void)viewWillLayoutSubviews
@@ -292,6 +297,7 @@
 
 - (void)reloadViews
 {
+    [_reloadLock lock];
     [self.mainScrollView setFrame:self.viewBounds];
     [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, CGRectGetMaxY(self.rateTheAppSubLine.frame))];
     
@@ -316,16 +322,15 @@
     {
         [self.view flipAllSubviews];
     }
+    [_reloadLock unlock];
 }
 
 - (void)adjustViews
 {
-    [UIView animateWithDuration:.3 animations:^{
-        [self.appSocialHeaderLine setYBottomOf:[self.moreSettingsLines lastObject] at:0.f];
-        [self.shareTheAppSubLine setYBottomOf:self.appSocialHeaderLine at:0.f];
-        [self.rateTheAppSubLine setYBottomOf:self.shareTheAppSubLine at:0.f];
-        [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, CGRectGetMaxY(self.rateTheAppSubLine.frame))];
-    }];
+    [self.appSocialHeaderLine setYBottomOf:[self.moreSettingsLines lastObject] at:0.f];
+    [self.shareTheAppSubLine setYBottomOf:self.appSocialHeaderLine at:0.f];
+    [self.rateTheAppSubLine setYBottomOf:self.shareTheAppSubLine at:0.f];
+    [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, CGRectGetMaxY(self.rateTheAppSubLine.frame))];
 }
 
 #pragma mark - Data
@@ -351,6 +356,7 @@
             i++;
         }
         [self adjustViews];
+        [self reloadViews];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
         [self hideLoading];
         if (apiResponse == RIApiResponseNoInternetConnection) {
