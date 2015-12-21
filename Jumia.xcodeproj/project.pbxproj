@@ -1155,8 +1155,6 @@
 		B5CBFF691A10B33D0050C553 /* JARatingsViewMedium.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CBFF651A10B33D0050C553 /* JARatingsViewMedium.xib */; };
 		B5CDC7541A00E50C00DA8ADB /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5CDC7531A00E50C00DA8ADB /* Main_iPad.storyboard */; };
 		B5CFE99A1A0CE3BC004CE545 /* JAAddRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5CFE9991A0CE3BC004CE545 /* JAAddRatingView.m */; };
-		B5CFE99C1A0CE475004CE545 /* JAAddRatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CFE99B1A0CE475004CE545 /* JAAddRatingView.xib */; };
-		B5CFE99D1A0CF45C004CE545 /* JAAddRatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CFE99B1A0CE475004CE545 /* JAAddRatingView.xib */; };
 		B5CFE99E1A0CF45F004CE545 /* JAAddRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5CFE9991A0CE3BC004CE545 /* JAAddRatingView.m */; };
 		B5FBD58A19CAF26800BD9510 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FBD58919CAF26800BD9510 /* iAd.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		B5FBD58D19CAF2F400BD9510 /* RIAdjustTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FBD58C19CAF2F400BD9510 /* RIAdjustTracker.m */; };
@@ -1659,7 +1657,6 @@
 		CE9ADC781AB34C4600D56481 /* 02_pre_stop_hooks.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A819DC56BF003F0CA7 /* 02_pre_stop_hooks.rb */; };
 		CE9ADC791AB34C4600D56481 /* slider-default-trackBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB997199BA8FA0022BAB5 /* slider-default-trackBackground.png */; };
 		CE9ADC7B1AB34C4600D56481 /* JANewsletterComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5BDD98A19FFAAF000C2C2CC /* JANewsletterComponent.xib */; };
-		CE9ADC7D1AB34C4600D56481 /* JAAddRatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CFE99B1A0CE475004CE545 /* JAAddRatingView.xib */; };
 		CE9ADC7F1AB34C4600D56481 /* slider-default-handle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB994199BA8FA0022BAB5 /* slider-default-handle@2x.png */; };
 		CE9ADC801AB34C4600D56481 /* 20_cart.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CD719E45799004271B2 /* 20_cart.feature */; };
 		CE9ADC811AB34C4600D56481 /* JAFallbackView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE9193BE19F5040E00F89840 /* JAFallbackView.xib */; };
@@ -1983,7 +1980,6 @@
 		CE9ADE721AB6D6E900D56481 /* 02_pre_stop_hooks.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A819DC56BF003F0CA7 /* 02_pre_stop_hooks.rb */; };
 		CE9ADE731AB6D6E900D56481 /* slider-default-trackBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB997199BA8FA0022BAB5 /* slider-default-trackBackground.png */; };
 		CE9ADE751AB6D6E900D56481 /* JANewsletterComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5BDD98A19FFAAF000C2C2CC /* JANewsletterComponent.xib */; };
-		CE9ADE771AB6D6E900D56481 /* JAAddRatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CFE99B1A0CE475004CE545 /* JAAddRatingView.xib */; };
 		CE9ADE791AB6D6E900D56481 /* slider-default-handle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB994199BA8FA0022BAB5 /* slider-default-handle@2x.png */; };
 		CE9ADE7A1AB6D6E900D56481 /* 20_cart.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CD719E45799004271B2 /* 20_cart.feature */; };
 		CE9ADE7B1AB6D6E900D56481 /* JAFallbackView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE9193BE19F5040E00F89840 /* JAFallbackView.xib */; };
@@ -2307,7 +2303,6 @@
 		CE9AE06C1AB6D78200D56481 /* 02_pre_stop_hooks.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A819DC56BF003F0CA7 /* 02_pre_stop_hooks.rb */; };
 		CE9AE06D1AB6D78200D56481 /* slider-default-trackBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB997199BA8FA0022BAB5 /* slider-default-trackBackground.png */; };
 		CE9AE06F1AB6D78200D56481 /* JANewsletterComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5BDD98A19FFAAF000C2C2CC /* JANewsletterComponent.xib */; };
-		CE9AE0711AB6D78200D56481 /* JAAddRatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CFE99B1A0CE475004CE545 /* JAAddRatingView.xib */; };
 		CE9AE0731AB6D78200D56481 /* slider-default-handle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB994199BA8FA0022BAB5 /* slider-default-handle@2x.png */; };
 		CE9AE0741AB6D78200D56481 /* 20_cart.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CD719E45799004271B2 /* 20_cart.feature */; };
 		CE9AE0751AB6D78200D56481 /* JAFallbackView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE9193BE19F5040E00F89840 /* JAFallbackView.xib */; };
@@ -3261,7 +3256,6 @@
 		B5CDC7531A00E50C00DA8ADB /* Main_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main_iPad.storyboard; sourceTree = SOURCE_ROOT; };
 		B5CFE9981A0CE3BC004CE545 /* JAAddRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAAddRatingView.h; sourceTree = "<group>"; };
 		B5CFE9991A0CE3BC004CE545 /* JAAddRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAAddRatingView.m; sourceTree = "<group>"; };
-		B5CFE99B1A0CE475004CE545 /* JAAddRatingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAAddRatingView.xib; sourceTree = "<group>"; };
 		B5FBD58919CAF26800BD9510 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		B5FBD58B19CAF2F400BD9510 /* RIAdjustTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAdjustTracker.h; sourceTree = "<group>"; };
 		B5FBD58C19CAF2F400BD9510 /* RIAdjustTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIAdjustTracker.m; sourceTree = "<group>"; };
@@ -5756,7 +5750,6 @@
 				CEC376D219EBCA5800558B98 /* JAClickableView.m */,
 				B5CFE9981A0CE3BC004CE545 /* JAAddRatingView.h */,
 				B5CFE9991A0CE3BC004CE545 /* JAAddRatingView.m */,
-				B5CFE99B1A0CE475004CE545 /* JAAddRatingView.xib */,
 				9A189E4E1BB1A5780039BC14 /* JAScrolledImageGalleryView.h */,
 				9A189E4F1BB1A5780039BC14 /* JAScrolledImageGalleryView.m */,
 			);
@@ -6256,7 +6249,6 @@
 				f00ce9fe15cb6e122385dd86 /* JAPDVVariations.xib in Resources */,
 				BBBA4CCE19E4339F004271B2 /* 17_recently_viewed.feature in Resources */,
 				BBBA4CC619E41F83004271B2 /* 15_my_favourites.feature in Resources */,
-				B5CFE99D1A0CF45C004CE545 /* JAAddRatingView.xib in Resources */,
 				BBBA4CD219E43993004271B2 /* 18_track_order.feature in Resources */,
 				CE283E7B1A765AE600F3E92D /* JAOfferCollectionViewCell_ipad_landscape.xib in Resources */,
 				BB9546AA19F5512600AC7D05 /* touch.rb in Resources */,
@@ -6509,7 +6501,6 @@
 				9A9CD50C1B72514A0061ACE0 /* BMA4SiPhoneWebViewNotifView-nobuttons-landscape.xib in Resources */,
 				9A0F9B7A1B5E58E900569DF2 /* FBAudienceNetwork.README.txt in Resources */,
 				6CCE08B51B1F0F9F004311E2 /* JALoginViewController~iPad.xib in Resources */,
-				B5CFE99C1A0CE475004CE545 /* JAAddRatingView.xib in Resources */,
 				CEDEB9B2199BA8FA0022BAB5 /* slider-default-handle@2x.png in Resources */,
 				BBBA4CD819E45799004271B2 /* 20_cart.feature in Resources */,
 				9A9CD3C71B72514A0061ACE0 /* BMA4SiPhoneTextNotifView-landscape-iPad.xib in Resources */,
@@ -6745,7 +6736,6 @@
 				6CCE08AB1B1F029F004311E2 /* JAEditAddressesViewController~iPad.xib in Resources */,
 				CE9ADC7B1AB34C4600D56481 /* JANewsletterComponent.xib in Resources */,
 				9A9CD4821B72514A0061ACE0 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-iPad.xib in Resources */,
-				CE9ADC7D1AB34C4600D56481 /* JAAddRatingView.xib in Resources */,
 				CE9ADC7F1AB34C4600D56481 /* slider-default-handle@2x.png in Resources */,
 				CE9ADC801AB34C4600D56481 /* 20_cart.feature in Resources */,
 				CE9ADC811AB34C4600D56481 /* JAFallbackView.xib in Resources */,
@@ -6966,7 +6956,6 @@
 				9A9CD3B61B72514A0061ACE0 /* BMA4SRichPushWebView.xib in Resources */,
 				CE9ADE751AB6D6E900D56481 /* JANewsletterComponent.xib in Resources */,
 				6CCE08B81B1F0F9F004311E2 /* JALoginViewController~iPad.xib in Resources */,
-				CE9ADE771AB6D6E900D56481 /* JAAddRatingView.xib in Resources */,
 				9A9CD46A1B72514A0061ACE0 /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-landscape.xib in Resources */,
 				CE9ADE791AB6D6E900D56481 /* slider-default-handle@2x.png in Resources */,
 				9A9CD3521B72514A0061ACE0 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib in Resources */,
@@ -7190,7 +7179,6 @@
 				CE9AE06D1AB6D78200D56481 /* slider-default-trackBackground.png in Resources */,
 				CE9AE06F1AB6D78200D56481 /* JANewsletterComponent.xib in Resources */,
 				6CCE08AD1B1F029F004311E2 /* JAEditAddressesViewController~iPad.xib in Resources */,
-				CE9AE0711AB6D78200D56481 /* JAAddRatingView.xib in Resources */,
 				9A9CD4841B72514A0061ACE0 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-iPad.xib in Resources */,
 				CE9AE0731AB6D78200D56481 /* slider-default-handle@2x.png in Resources */,
 				CE9AE0741AB6D78200D56481 /* 20_cart.feature in Resources */,
@@ -8996,6 +8984,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9105,6 +9094,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9299,6 +9289,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9337,6 +9328,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

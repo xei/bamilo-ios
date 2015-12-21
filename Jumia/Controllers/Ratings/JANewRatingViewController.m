@@ -149,7 +149,7 @@ UIAlertViewDelegate
     }
 }
 
-- (void)viewDidLayoutSubviews
+- (void)viewWillLayoutSubviews
 {
     [super viewDidLayoutSubviews];
     _didSubViews = YES;
@@ -236,7 +236,6 @@ UIAlertViewDelegate
         } else {
             self.isShowingRating = NO;
         }
-        [self setupViews];
     }
 
     else if (RIApiResponseNoInternetConnection == self.apiResponse)
@@ -397,14 +396,6 @@ UIAlertViewDelegate
                 [self.ratingsContentView addSubview:view];
             }
             initialContentY += view.frame.size.height + spaceBetweenFormFields;
-            
-            if ([_dynamicRatingsViewsFrames count] > count) {
-                [view flipAllSubviews];
-            }else{
-                [_dynamicRatingsViewsFrames addObject:[NSValue valueWithCGRect:frame]];
-            }
-            
-            
             count++;
         }
         
@@ -412,8 +403,6 @@ UIAlertViewDelegate
                                                      currentY,
                                                      centerViewWidth,
                                                      initialContentY)];
-        
-        
     }
     
     if (self.reviewsForm) {
@@ -435,15 +424,7 @@ UIAlertViewDelegate
         for (int i = 0; i < self.reviewsDynamicForm.formViews.count; i++)
         {
             UIView* view = [self.reviewsDynamicForm.formViews objectAtIndex:i];
-            
-            if ([_dynamicReviewsViewsFrames count] > i) {
-                if ([view isKindOfClass:[JAAddRatingView class]]) {
-                    [view flipAllSubviews];
-                }
-            }else{
-                [_dynamicReviewsViewsFrames addObject:@1];
-            }
-            
+
             view.tag = i;
             CGRect frame = view.frame;
             if(isiPad)
