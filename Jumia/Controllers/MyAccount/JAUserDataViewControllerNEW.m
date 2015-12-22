@@ -128,7 +128,7 @@
                                                                     CGRectGetMaxY(self.passwordHeader.frame) + kButtonsMargin,
                                                                     self.viewBounds.size.width - (2 * kSideMargin),
                                                                     kBottomDefaultHeight)];
-        [_changePasswordButton addButton:[STRING_CHANGE_PASSWORD uppercaseString] target:self action:@selector(saveButtonPressed)];
+        [_changePasswordButton addButton:[STRING_CHANGE_PASSWORD uppercaseString] target:self action:@selector(changePasswordButtonPressed)];
     }
     return _changePasswordButton;
 }
@@ -137,6 +137,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (self.apiResponse == RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess) {
+        [self showLoading];
+    }
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
@@ -169,10 +173,8 @@
     [self.mainScrollView addSubview:self.passwordHeader];
     [self.mainScrollView addSubview:self.changePasswordButton];
     
-    if (self.apiResponse == RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess) {
-        [self showLoading];
-    }
-    
+    //requests user form and when it is finished
+    //requests change pass form
     [self requestUserEditForm];
     
     if (self.firstLoading) {
@@ -180,6 +182,8 @@
         [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
         self.firstLoading = NO;
     }
+    
+    [self hideLoading];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -254,8 +258,6 @@
                }
                [self showErrorView:noConnection startingY:0.0f selector:@selector(requestUserEditForm) objects:nil];
            }
-           
-           [self hideLoading];
        }];
 }
 
@@ -276,7 +278,6 @@
         [self setupChangePasswordFormViews];
         [self setupFixedElements];
         [self removeErrorView];
-        [self hideLoading];
     } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
     {
         self.apiResponse = apiResponse;
@@ -291,8 +292,6 @@
             }
             [self showErrorView:noConnection startingY:0.0f selector:@selector(requestUserEditForm) objects:nil];
         }
-        
-        [self hideLoading];
     }];
 }
 
@@ -301,17 +300,9 @@
     [self hideKeyboard];
     [self showLoading];
     
-    //[self.userForm form].method = @"post";
-    
     [RIForm sendForm:[self.userForm form] parameters:[self.userForm getValues] successBlock:^(id object) {
-        [self.userForm resetValues];
         [self hideLoading];
-        
-        NSInteger count = [self.navigationController.viewControllers count];
-        if (count > 0) {
-            UIViewController *viewControllerToPop = [self.navigationController.viewControllers objectAtIndex:count-1];
-            [self.navigationController popToViewController:viewControllerToPop animated:YES];
-        }
+        [self showMessage:STRING_USER_DATA_EDITED_SUCCESS success:YES];
     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
         if (RIApiResponseNoInternetConnection == apiResponse) {
             [self showMessage:STRING_NO_CONNECTION success:NO];
@@ -329,6 +320,40 @@
         }
         [self hideLoading];
     }];
+}
+
+- (void)changePasswordButtonPressed
+{
+    [self hideKeyboard];
+    [self showLoading];
+    
+    [RIForm sendForm:[self.changePasswordForm form]
+          parameters:[self.changePasswordForm getValues]
+        successBlock:^(id object)
+     {
+         [self hideLoading];
+         [self resetValues:self.changePasswordForm];
+         [self showMessage:STRING_CHANGED_PASSWORD_SUCCESS success:YES];
+     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
+     {
+         [self hideLoading];
+         
+         if (RIApiResponseNoInternetConnection == apiResponse) {
+             [self showMessage:STRING_NO_CONNECTION success:NO];
+         } else if (VALID_NOTEMPTY(errorObject, NSDictionary)) {
+             [self.changePasswordForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
+                 [self showMessage:message success:NO];
+             }];
+         } else if (VALID_NOTEMPTY(errorObject, NSArray))
+         {
+             [self.changePasswordForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
+                 [self showMessage:message success:NO];
+             }];
+         } else {
+             [self.changePasswordForm checkErrors];
+             [self showMessage:STRING_ERROR success:NO];
+         }
+     }];
 }
 
 #pragma mark geometryFunctions
@@ -655,6 +680,19 @@
 {
     [self.userForm resignResponder];
     [self.changePasswordForm resignResponder];
+}
+
+#pragma mark - Helper functions
+- (void)resetValues:(JADynamicForm *)form
+{
+    if (VALID_NOTEMPTY(form.formViews, NSMutableArray)) {
+        for (UIView *view in form.formViews) {
+            if ([view isKindOfClass:[JATextFieldComponent class]]) {
+                JATextFieldComponent *textFieldComponent = (JATextFieldComponent *)view;
+                [textFieldComponent.textField setText:@""];
+            }
+        }
+    }
 }
 
 @end
