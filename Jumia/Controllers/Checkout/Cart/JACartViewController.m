@@ -1466,12 +1466,8 @@
         
         
         NSMutableDictionary *quantitiesToChange = [[NSMutableDictionary alloc] init];
-        for (int i = 0; i < self.cart.cartItems.count; i++) {
-            RICartItem *cartItem = [[self.cart cartItems] objectAtIndex:i];
-            [quantitiesToChange setValue:[NSString stringWithFormat:@"%ld", [[cartItem quantity] longValue]] forKey:[NSString stringWithFormat:@"qty_%@", cartItem.simpleSku]];
-        }
-        
-        [quantitiesToChange setValue:[NSString stringWithFormat:@"%ld", (long)newQuantity] forKey:[NSString stringWithFormat:@"qty_%@", [self.currentItem simpleSku]]];
+        [quantitiesToChange setValue:[NSString stringWithFormat:@"%ld", (long)newQuantity] forKey:@"quantity"];
+        [quantitiesToChange setValue:[self.currentItem simpleSku] forKey:@"sku"];
         
         [RICart changeQuantityInProducts:quantitiesToChange
                         withSuccessBlock:^(RICart *cart) {

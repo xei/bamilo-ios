@@ -84,7 +84,7 @@ NSString *const RI_API_ADD_BUNDLE = @"cart/addbundle/";
 NSString *const RI_API_ADD_MULTIPLE_ORDER = @"cart/addmultiple/";
 NSString *const RI_API_REMOVE_PRODUCT_FROM_CART = @"cart/removeproduct/";
 NSString *const RI_API_GET_CART_DATA = @"cart/getdata/";
-NSString *const RI_API_GET_PRODUCT_UPDATE = @"cart/cartchange/";
+NSString *const RI_API_GET_PRODUCT_UPDATE = @"cart/updateproduct/";
 NSString *const RI_API_ADD_VOUCHER_TO_CART = @"cart/addvoucher/";
 NSString *const RI_API_REMOVE_VOUCHER_FROM_CART = @"cart/removevoucher/";
 
