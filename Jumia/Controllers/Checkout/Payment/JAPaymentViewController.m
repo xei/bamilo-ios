@@ -796,7 +796,6 @@ UITextFieldDelegate>
             RIPaymentMethodFormField* field = [self.paymentMethodForm.fields firstObject];
             if (VALID_NOTEMPTY(field, RIPaymentMethodFormField)) {
                 field.value = self.selectedPaymentMethod.value;
-                NSLog(@"value: %@", field.value);
             }
             
             self.collectionViewIndexSelected = indexPath;
