@@ -127,6 +127,8 @@
 #define STRING_SIGNUP RILocalizedString(@"signup_label", nil)
 #define STRING_LOGIN_WITH_FACEBOOK RILocalizedString(@"facebook_login_button_text", nil)
 #define STRING_LOGIN_INCOMPLETE RILocalizedString(@"login_incomplete", nil)
+#define STRING_LOGIN_LONG_MESSAGE RILocalizedString(@"login_long_message", nil)
+
 #define STRING_OR RILocalizedString(@"or_text", nil)
 #define STRING_SIGNUP_WITH_FACEBOOK RILocalizedString(@"facebook_signup_button_text", nil)
 #define STRING_FORGOT_PASSWORD RILocalizedString(@"fgt_pass", nil)
@@ -142,6 +144,10 @@
 #define STRING_ACCOUNT_DATA RILocalizedString(@"register_sectiontitle", nil)
 #define STRING_REGISTER RILocalizedString(@"registration_text", nil)
 #define STRING_CONTINUE RILocalizedString(@"continue", nil)
+#define STRING_CONTINUE_WITHOUT_LOGIN RILocalizedString(@"continue_without_login", nil)
+
+#define STRING_EMAIL_ADDRESS RILocalizedString(@"email_address", nil)
+#define STRING_EMAIL_EXAMPLE RILocalizedString(@"email_example", nil)
 
 #define STRING_CHECKOUT_ADDRESS RILocalizedString(@"checkout_header_step_2", nil)
 #define STRING_ADD_NEW_ADDRESS RILocalizedString(@"action_label_add_address", nil)
@@ -194,6 +200,14 @@
 #define STRING_SUBSCRIVE_UNSUBSCRIVE RILocalizedString(@"option3_description", nil)
 #define STRING_NOTIFICATIONS_SETTINGS RILocalizedString(@"section_title_notification", nil)
 #define STRING_NOTIFICATIONS RILocalizedString(@"notifications", nil)
+#define STRING_PUSH_NOTIFICATIONS RILocalizedString(@"push_notifications", nil)
+#define STRING_UPDATE_NOW RILocalizedString(@"update_now", nil)
+#define STRING_APP_VERSION RILocalizedString(@"app_version", nil)
+#define STRING_HELP_CENTER RILocalizedString(@"help_center", nil)
+#define STRING_TERMS_AND_CONDITIONS RILocalizedString(@"terms_and_conditions", nil)
+#define STRING_APP_SOCIAL RILocalizedString(@"app_social", nil)
+#define STRING_RATE_THE_APP RILocalizedString(@"rate_the_app", nil)
+#define STRING_SHOP_SETTINGS RILocalizedString(@"shop_settings", nil)
 #define STRING_RECEIVE_EXCLUSIVE_OFFERS RILocalizedString(@"notifications_summary", nil)
 #define STRING_SOUND RILocalizedString(@"sound", nil)
 #define STRING_PLAY_SOUND RILocalizedString(@"sound_summary", nil)
@@ -316,6 +330,7 @@
 #define STRING_ORDER_PAYMENT_STATUS RILocalizedString(@"my_order_payment_status_label", nil)
 #define STRING_ORDER_QUANTITY RILocalizedString(@"my_order_quantity_label", nil)
 #define STRING_NO_ORDERS RILocalizedString(@"my_order_no_orders_label", nil)
+#define STRING_NO_ORDERS_TITLE RILocalizedString(@"my_order_no_orders_title_label", nil)
 
 #define STRING_SELLER_INFO_WARRANTY RILocalizedString(@"seller_info_warranty", nil)
 

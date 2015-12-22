@@ -20,6 +20,7 @@
 #import "RICustomer.h"
 #import "RIAddress.h"
 #import <FBSDKCoreKit/FBSDKAppEvents.h>
+#import "JAAuthenticationViewController.h"
 
 #define kLateralMargin 16
 #define kTopMargin 48
@@ -1201,8 +1202,8 @@
 
 - (void)checkoutButtonPressed
 {
-    if([RICustomer checkIfUserIsLogged])
-    {
+    [JAAuthenticationViewController goToCheckoutWithBlock:^{
+        
         [self showLoading];
         [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
             
@@ -1253,17 +1254,11 @@
                                                       data:[trackingDictionary copy]];
             
             [self hideLoading];
-        
-            #warning TODO String
+            
+#warning TODO String
             [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
         }];
-    }
-    else
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutLoginScreenNotification
-                                                            object:nil
-                                                          userInfo:nil];
-    }
+    }];
 }
 
 - (void)callToOrderButtonPressed

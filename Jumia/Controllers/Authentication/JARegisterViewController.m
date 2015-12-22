@@ -434,16 +434,13 @@ JADynamicFormDelegate
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                             object:nil];
+        if(self.nextStepBlock) {
+            self.nextStepBlock();
+        }
+        
         if (self.fromSideMenu) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
-        }else if(VALID_NOTEMPTY(self.nextNotification, NSNotification))
-        {
-            [self.navigationController popViewControllerAnimated:NO];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:self.nextNotification.name
-                                                                object:self.nextNotification.object
-                                                              userInfo:self.nextNotification.userInfo];
-        }else{
+        } else {
             NSInteger count = [self.navigationController.viewControllers count];
             if (count > 2)
             {
@@ -591,7 +588,7 @@ JADynamicFormDelegate
         RIPhonePrefix *prefix = (RIPhonePrefix *)[self.phonePrefixes objectAtIndex:selectedRow];
         
         
-        [self.radioComponent setValue:[prefix value]];
+        [self.radioComponent setValue:[prefix.value stringValue]];
         [self.radioComponent.textField setText:[prefix label]];
     }
     [self closePickers];

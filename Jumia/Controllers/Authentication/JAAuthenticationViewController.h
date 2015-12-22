@@ -12,7 +12,10 @@
 
 @property (nonatomic) BOOL checkout;
 @property (nonatomic, assign) BOOL fromSideMenu;
-@property (nonatomic, strong) NSNotification *nextNotification;
+@property (nonatomic, strong) void(^nextStepBlock)(void);
 @property (nonatomic) NSDictionary *userInfo;
+
++ (void)goToCheckoutWithBlock:(void (^)(void))authenticatedBlock;
++ (void)authenticateAndExecuteBlock:(void (^)(void))authenticatedBlock showBackButtonForAuthentication:(BOOL)backButton;
 
 @end

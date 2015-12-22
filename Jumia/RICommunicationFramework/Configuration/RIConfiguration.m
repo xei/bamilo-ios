@@ -25,6 +25,8 @@ NSString *const RI_MOBAPI_VERSION_HEADER_TOKEN_VALUE = @"a4f04c9433334e4ccd327df
 
 NSString *const RI_HTTP_METHOD_POST = @"POST";
 NSString *const RI_HTTP_METHOD_GET = @"GET";
+NSString *const RI_HTTP_METHOD_PUT = @"PUT";
+NSString *const RI_HTTP_METHOD_DELETE = @"DELETE";
 NSString *const RI_HTTP_CONTENT_TYPE_HEADER_NAME = @"Content-Type";
 NSString *const RI_HTTP_CONTENT_TYPE_HEADER_FORM_DATA_VALUE = @"application/x-www-form-urlencoded; charset=utf-8";
 NSString *const RI_HTTP_CONTENT_TYPE_HEADER_JSON_VALUE = @"application/json; charset=utf-8";
@@ -80,7 +82,7 @@ NSString *const RI_API_SEARCH_SUGGESTIONS = @"search/suggest/";
 NSString *const RI_API_ADD_ORDER = @"cart/addproduct/";
 NSString *const RI_API_ADD_BUNDLE = @"cart/addbundle/";
 NSString *const RI_API_ADD_MULTIPLE_ORDER = @"cart/addmultiple/";
-NSString *const RI_API_REMOVE_FROM_CART = @"cart/remove/";
+NSString *const RI_API_REMOVE_PRODUCT_FROM_CART = @"cart/removeproduct/";
 NSString *const RI_API_GET_CART_DATA = @"cart/getdata/";
 NSString *const RI_API_GET_CART_CHANGE = @"cart/cartchange/";
 NSString *const RI_API_ADD_VOUCHER_TO_CART = @"cart/addvoucher/";
@@ -127,3 +129,5 @@ NSString *const RI_API_MULTISTEP_GET_PAYMENT = @"multistep/getsteppayment/";
 NSString *const RI_API_MULTISTEP_SUBMIT_PAYMENT = @"multistep/paymentmethod/";
 NSString *const RI_API_MULTISTEP_GET_FINISH = @"multistep/getstepfinish/";
 NSString *const RI_API_MULTISTEP_SUBMIT_FINISH = @"multistep/finish/";
+NSString *const RI_API_GET_FAQ_AND_TERMS = @"/main/getfaqandterms/";
+NSString *const RI_API_GET_PHONE_PREFIXES = @"/main/getphoneprefixes/";

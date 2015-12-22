@@ -293,7 +293,9 @@
                 tag++;
                 JARadioComponent* radioRelated = [[JARadioComponent alloc] initWithFrame:CGRectMake(8.f, 0, prefixWidth, 48.f)];
                 [radioRelated.textField setDelegate:self];
-                [radioRelated setupWithField:[field.relatedFields firstObject]];
+                RIField *relatedField = [field.relatedFields firstObject];
+                relatedField.value = nil;
+                [radioRelated setupWithField:relatedField];
                 [radioRelated setFixedWidth:prefixWidth];
                 [radioRelated.textField setTag:tag];
                 [radioRelated setTag:tag];
@@ -368,18 +370,14 @@
                 
                 for (RIFieldRatingStars *ratingStars in field.ratingStars)
                 {
-                    JAAddRatingView *stars = [JAAddRatingView getNewJAAddRatingView];
+                    JAAddRatingView *stars = [[JAAddRatingView alloc]initWithFrame:CGRectMake(0,
+                                                                                             startingY,
+                                                                                             widthComponent,
+                                                                                             0)];
                     [stars setupWithFieldRatingStars:ratingStars];
                     
-                    CGRect frame = stars.frame;
-                    frame.origin.y = startingY;
-                    frame.origin.x = 0.0;
-                    frame.size.width = widthComponent;
-                    [stars setFrame:frame];
-                    
                     [self.formViews addObject:stars];
-                    startingY += stars.frame.size.height;
-                    
+                    startingY += stars.frame.size.height;                    
                 }
             }
         }

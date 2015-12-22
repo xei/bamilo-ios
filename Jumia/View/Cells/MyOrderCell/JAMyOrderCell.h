@@ -11,10 +11,9 @@
 
 @interface JAMyOrderCell : UICollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *portraitArrowImageView;
-@property (weak, nonatomic) IBOutlet JAClickableView *clickableView;
+@property (strong, nonatomic) JAClickableView *clickableView;
 
-- (void)setupWithOrder:(RITrackOrder*)order isInLandscape:(BOOL)isInLandscape;
+- (void)setupWithOrder:(RITrackOrder*)order;
 
 + (CGFloat)getCellHeight;
 

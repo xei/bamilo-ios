@@ -82,6 +82,11 @@
     [_label setY:self.height/2-_label.height/2];
 }
 
+- (void)setTag:(NSInteger)tag
+{
+    [super setTag:tag];
+}
+
 - (void)addTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents
 {
     [self setEnabled:YES];

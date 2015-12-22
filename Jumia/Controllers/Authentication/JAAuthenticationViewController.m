@@ -70,8 +70,7 @@
         [_topMessageLabel setNumberOfLines:0];
         [_topMessageLabel setFont:JACaptionFont];
         [_topMessageLabel setTextColor:JABlack800Color];
-#warning TODO String
-        [_topMessageLabel setText:@"Log in to Jumia account to access your profile, saved favourites, order info and more."];
+        [_topMessageLabel setText:STRING_LOGIN_LONG_MESSAGE];
         CGFloat width = _topMessageLabel.width;
         [_topMessageLabel sizeToFit];
         [_topMessageLabel setWidth:width];
@@ -83,12 +82,9 @@
 {
     if (!VALID_NOTEMPTY(_facebookButton, UIButton)) {
         _facebookButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//        [_facebookButton setBackgroundColor:[UIColor blueColor]];
         [_facebookButton setFrame:CGRectMake((self.view.width - kWidth)/2, CGRectGetMaxY(self.topMessageLabel.frame) + kTopMess2FacebookButton, kWidth, 50)];
-        [_facebookButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:13]];
-//        [_facebookButton.titleLabel setFont:JABody2Font];
-//        [_facebookButton setTitle:[STRING_LOGIN_WITH_FACEBOOK uppercaseString] forState:UIControlStateNormal];
-        [_facebookButton setTitle:[@"Continue with Facebook" uppercaseString] forState:UIControlStateNormal];
+        [_facebookButton.titleLabel setFont:JABody2Font];
+        [_facebookButton setTitle:[STRING_LOGIN_WITH_FACEBOOK uppercaseString] forState:UIControlStateNormal];
         [_facebookButton addTarget:self action:@selector(facebookLoginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _facebookButton;
@@ -137,7 +133,7 @@
         [_emailTextField.textField setReturnKeyType:UIReturnKeyNext];
         [_emailTextField.textField setKeyboardType:UIKeyboardTypeEmailAddress];
         [_emailTextField.textField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
-        [_emailTextField setupWithTitle:@"Email Address" label:@"email@domain.com" value:[self getEmail] mandatory:NO];
+        [_emailTextField setupWithTitle:STRING_EMAIL_ADDRESS label:STRING_EMAIL_EXAMPLE value:[self getEmail] mandatory:NO];
     }
     return _emailTextField;
 }
@@ -148,8 +144,9 @@
         _continueWithoutLoginButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_continueWithoutLoginButton setFrame:CGRectMake((self.view.width - kWidth)/2, CGRectGetMaxY(self.emailTextField.frame) + kEmail2ContinueWithout, kWidth, 30)];
         [_continueWithoutLoginButton.titleLabel setFont:JACaptionFont];
-        [_continueWithoutLoginButton setTitle:@"Continue without log in" forState:UIControlStateNormal];
+        [_continueWithoutLoginButton setTitle:STRING_CONTINUE_WITHOUT_LOGIN forState:UIControlStateNormal];
         [_continueWithoutLoginButton setTitleColor:JABlack800Color forState:UIControlStateNormal];
+        [_continueWithoutLoginButton addTarget:self action:@selector(continueWithoutLogin) forControlEvents:UIControlEventTouchUpInside];
         if (self.checkout)
         {
             [_continueWithoutLoginButton setHidden:NO];
@@ -168,8 +165,7 @@
             yOffset = CGRectGetMaxY(self.emailTextField.frame) + kContinueWithout2ContinueLogin;
         }
         _continueToLoginButton = [[JABottomBar alloc] initWithFrame:CGRectMake((self.view.width - kWidth)/2, yOffset, kWidth, kBottomDefaultHeight)];
-#warning TODO String
-        [_continueToLoginButton addButton:[@"Continue" uppercaseString] target:self action:@selector(checkEmail)];
+        [_continueToLoginButton addButton:[STRING_CONTINUE uppercaseString] target:self action:@selector(checkEmail)];
     }
     return _continueToLoginButton;
 }
@@ -182,7 +178,6 @@
     self.screenName = @"Authentication";
     
     self.navBarLayout.title = STRING_LOGIN;
-    self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showCartButton = NO;
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
@@ -400,13 +395,11 @@
                                                               if (self.fromSideMenu) {
                                                                   [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
                                                               }else
-                                                                  if(VALID_NOTEMPTY(self.nextNotification, NSNotification))
+                                                                  if(self.nextStepBlock)
                                                                   {
                                                                       [self.navigationController popViewControllerAnimated:NO];
                                                                       
-                                                                      [[NSNotificationCenter defaultCenter] postNotificationName:self.nextNotification.name
-                                                                                                                          object:self.nextNotification.object
-                                                                                                                        userInfo:self.nextNotification.userInfo];
+                                                                      self.nextStepBlock();
                                                                   }else{
                                                                       [self.navigationController popViewControllerAnimated:NO];
                                                                   }
@@ -445,11 +438,11 @@
 
 #pragma mark - Continue Button Action
 
-#warning TODO Waiting the other viewcontrollers to be done
 - (void)checkEmail
 {
     [self showLoading];
     [RICustomer checkEmailWithParameters:[NSDictionary dictionaryWithObject:self.emailTextField.textField.text forKey:@"email"] successBlock:^(BOOL knownEmail) {
+        [self.emailTextField cleanError];
         NSMutableDictionary *userInfo;
         if (!VALID_NOTEMPTY(self.userInfo, NSDictionary)) {
             userInfo = [NSMutableDictionary new];
@@ -460,9 +453,9 @@
         [userInfo setObject:self.emailTextField.textField.text forKey:@"email"];
         
         if (knownEmail) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfo];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:self.nextStepBlock userInfo:userInfo];
         }else{
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignUpScreenNotification object:nil userInfo:userInfo];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignUpScreenNotification object:self.nextStepBlock userInfo:userInfo];
         }
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorObject) {
@@ -470,22 +463,95 @@
         if (apiResponse == RIApiResponseNoInternetConnection) {
             [self showErrorView:YES startingY:0 selector:@selector(checkEmail) objects:nil];
         }else{
-            [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
+            NSString *errorMessage = @"invalid email";
+            if (VALID_NOTEMPTY(errorObject, NSArray)) {
+                if (VALID_NOTEMPTY([[errorObject firstObject] objectForKey:@"message"], NSString)) {
+                    errorMessage = [[errorObject firstObject] objectForKey:@"message"];
+                }
+            }
+            [self.emailTextField setError:errorMessage];
+            [self showMessage:errorMessage success:NO];
         }
         [self hideLoading];
     }];
 }
 
--(NSString *)getEmail
+- (NSString *)getEmail
 {
     NSString* emailKeyForCountry = [NSString stringWithFormat:@"%@_%@", kRememberedEmail, [RIApi getCountryIsoInUse]];
-    NSMutableDictionary *values = [[NSMutableDictionary alloc] init];
     NSString *email = [[NSUserDefaults standardUserDefaults] stringForKey:emailKeyForCountry];
     if(VALID_NOTEMPTY(email, NSString))
     {
         return email;
     }
     return @"";
+}
+
+- (void)continueWithoutLogin
+{
+    if (!VALID_NOTEMPTY(self.emailTextField.textField.text, NSString)) {
+        return;
+    }
+    [self showLoading];
+    [RICustomer signUpAccount:self.emailTextField.textField.text successBlock:^(id object){
+        
+        [self.emailTextField cleanError];
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:@"Checkout" forKey:kRIEventLocationKey];
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSignupSuccess]
+                                                  data:trackingDictionary];
+        
+        [self hideLoading];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
+                                                            object:nil];
+        
+        NSDictionary *responseDictionary = (NSDictionary *)object;
+        NSString* nextStep = [responseDictionary objectForKey:@"next_step"];
+        
+        [self.navigationController popViewControllerAnimated:NO];
+        
+        [JAUtils goToNextStep:nextStep
+                     userInfo:nil];
+        
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorObject) {
+        if (apiResponse == RIApiResponseNoInternetConnection) {
+            [self showErrorView:YES startingY:0 selector:@selector(checkEmail) objects:nil];
+        }else{
+            NSString *errorMessage = @"invalid email";
+            if (VALID_NOTEMPTY(errorObject, NSArray)) {
+                if (VALID_NOTEMPTY([[errorObject firstObject] objectForKey:@"message"], NSString)) {
+                    errorMessage = [[errorObject firstObject] objectForKey:@"message"];
+                }
+            }
+            [self.emailTextField setError:errorMessage];
+            [self showMessage:errorMessage success:NO];
+        }
+        [self hideLoading];
+    }];
+}
+
++ (void)goToCheckoutWithBlock:(void (^)(void))authenticatedBlock
+{
+    [self authenticateAndExecuteBlock:authenticatedBlock showBackButtonForAuthentication:YES showContinueWithoutLogin:YES];
+}
+
++ (void)authenticateAndExecuteBlock:(void (^)(void))authenticatedBlock showBackButtonForAuthentication:(BOOL)backButton
+{
+    [self authenticateAndExecuteBlock:authenticatedBlock showBackButtonForAuthentication:backButton showContinueWithoutLogin:NO];
+}
+
++ (void)authenticateAndExecuteBlock:(void (^)(void))authenticatedBlock showBackButtonForAuthentication:(BOOL)backButton showContinueWithoutLogin:(BOOL)continueButton
+{
+    if([RICustomer checkIfUserIsLogged])
+    {
+        authenticatedBlock();
+    }else{
+        NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
+        [userInfo setObject:[NSNumber numberWithBool:continueButton] forKey:@"continue_button"];
+        [userInfo setObject:[NSNumber numberWithBool:backButton] forKey:@"shows_back_button"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification object:authenticatedBlock userInfo:userInfo];
+    }
 }
 
 @end

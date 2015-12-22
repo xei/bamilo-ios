@@ -394,14 +394,12 @@
              [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                                  object:customerObject.wishlistProducts];
              
+             if(self.nextStepBlock) {
+                 self.nextStepBlock();
+             }
+             
              if (self.fromSideMenu) {
                  [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
-             } else if(VALID_NOTEMPTY(self.nextNotification, NSNotification)) {
-                 [self.navigationController popViewControllerAnimated:NO];
-                 
-                 [[NSNotificationCenter defaultCenter] postNotificationName:self.nextNotification.name
-                                                                     object:self.nextNotification.object
-                                                                   userInfo:self.nextNotification.userInfo];
              } else {
                  NSInteger count = [self.navigationController.viewControllers count];
                  if (count > 2)
