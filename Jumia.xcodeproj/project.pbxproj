@@ -109,7 +109,6 @@
 		4AE730BB198F8AD6000CA1DD /* JAPDVVariations.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE730BA198F8AD6000CA1DD /* JAPDVVariations.m */; };
 		4AE730BE198F8ADF000CA1DD /* JAPDVRelatedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE730BD198F8ADF000CA1DD /* JAPDVRelatedItem.m */; };
 		4AE730C7198F8B05000CA1DD /* JAPDVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE730C6198F8B05000CA1DD /* JAPDVViewController.m */; };
-		4AE865BD19C9D7C400406159 /* JAUserDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE865BC19C9D7C400406159 /* JAUserDataViewController.m */; };
 		4AE865C019C9D7F100406159 /* JAEmailNotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE865BF19C9D7F100406159 /* JAEmailNotificationsViewController.m */; };
 		4AFC7F91199BC0BE007D67F4 /* JASignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC7F90199BC0BE007D67F4 /* JASignInViewController.m */; };
 		4b5ae89debacca2cb1f16964 /* RIForm.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3026E19811E9200F71726 /* RIForm.m */; };
@@ -230,7 +229,6 @@
 		726d7279ebb72574289c0727 /* slider-default-handle.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB993199BA8FA0022BAB5 /* slider-default-handle.png */; };
 		73a2376ce1e1395d429b0dff /* RIFieldOption.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C61BBF19B0BB7F00840E93 /* RIFieldOption.m */; };
 		73e27fe926d9b8bfdf5533aa /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B5007AC119A4E8EC0024035A /* HockeySDKResources.bundle */; };
-		74184dc81a4fcd636b69e8c2 /* JAUserDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE865BC19C9D7C400406159 /* JAUserDataViewController.m */; };
 		74acae0cc3cb94fc8c207de4 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A19C51319D019100070D194 /* Reachability.m */; };
 		74ae21885fff40a8bed5b863 /* RIShippingMethodForm.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F21986C41D0094C92C /* RIShippingMethodForm.m */; };
 		74c288d3007d11abbcd827d3 /* RIAd4PushTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302B319811E9200F71726 /* RIAd4PushTracker.m */; };
@@ -513,14 +511,10 @@
 		9A3876691BCD121A0088B186 /* JATabButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3876661BCD121A0088B186 /* JATabButton.m */; };
 		9A38766A1BCD121A0088B186 /* JATabButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3876661BCD121A0088B186 /* JATabButton.m */; };
 		9A38766B1BCD121A0088B186 /* JATabButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3876661BCD121A0088B186 /* JATabButton.m */; };
-		9A4F910A1B3C308F00E34C0B /* JAUserDataViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A441B1DE1B80028105D /* JAUserDataViewController~iPad.xib */; };
 		9A4F910B1B3C308F00E34C0B /* JAUserDataViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A441B1DE1B80028105D /* JAUserDataViewController~iPad.xib */; };
-		9A4F910C1B3C309000E34C0B /* JAUserDataViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A441B1DE1B80028105D /* JAUserDataViewController~iPad.xib */; };
 		9A4F910D1B3C309000E34C0B /* JAUserDataViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A441B1DE1B80028105D /* JAUserDataViewController~iPad.xib */; };
 		9A4F910E1B3C311B00E34C0B /* JAUserDataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A431B1DE1B80028105D /* JAUserDataViewController.xib */; };
-		9A4F910F1B3C311B00E34C0B /* JAUserDataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A431B1DE1B80028105D /* JAUserDataViewController.xib */; };
 		9A4F91101B3C311C00E34C0B /* JAUserDataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A431B1DE1B80028105D /* JAUserDataViewController.xib */; };
-		9A4F91111B3C311C00E34C0B /* JAUserDataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A431B1DE1B80028105D /* JAUserDataViewController.xib */; };
 		9A4F91141B3D5C3E00E34C0B /* JAPDVWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4F91131B3D5C3E00E34C0B /* JAPDVWizardView.m */; };
 		9A4F91151B3D5E7000E34C0B /* JAPDVWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4F91131B3D5C3E00E34C0B /* JAPDVWizardView.m */; };
 		9A4F91161B3D5E7100E34C0B /* JAPDVWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4F91131B3D5C3E00E34C0B /* JAPDVWizardView.m */; };
@@ -1006,11 +1000,9 @@
 		9AEE88131B0B336A005BFBEB /* JARatingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AEE880E1B0B3291005BFBEB /* JARatingsViewController.xib */; };
 		9AF49A391B1DB6C10028105D /* JACatalogListCell_ipad_landscape.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE38E0E41A07A8C600B1738B /* JACatalogListCell_ipad_landscape.xib */; };
 		9AF49A3A1B1DB6C50028105D /* JACatalogListCell_ipad_portrait.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE38E0E61A07AA1000B1738B /* JACatalogListCell_ipad_portrait.xib */; };
-		9AF49A451B1DE1B80028105D /* JAUserDataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A431B1DE1B80028105D /* JAUserDataViewController.xib */; };
-		9AF49A461B1DE1B80028105D /* JAUserDataViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A441B1DE1B80028105D /* JAUserDataViewController~iPad.xib */; };
 		9AF49A491B1DE1FF0028105D /* JANoConnectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A471B1DE1FF0028105D /* JANoConnectionView.xib */; };
 		9AF49A4A1B1DE1FF0028105D /* JANoConnectionView~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A481B1DE1FF0028105D /* JANoConnectionView~iPad.xib */; };
-		9D4431EA1C242BA8005A8B4A /* JAUserDataViewControllerNEW.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4431E91C242BA8005A8B4A /* JAUserDataViewControllerNEW.m */; };
+		9D4431EA1C242BA8005A8B4A /* JAUserDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4431E91C242BA8005A8B4A /* JAUserDataViewController.m */; };
 		9a39dc0f3a939d6e0ce2df01 /* RITrackingConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302B019811E9200F71726 /* RITrackingConfiguration.m */; };
 		9cbdf4e3cedc6bf19d69072d /* RICommunicationWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029F19811E9200F71726 /* RICommunicationWrapper.m */; };
 		9cd5e1568d3e8d595420bc7f /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B5007AC019A4E8EC0024035A /* HockeySDK.xcconfig */; };
@@ -1242,14 +1234,10 @@
 		BBBA4CD519E44CDC004271B2 /* 19_filters.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CD319E44CDC004271B2 /* 19_filters.feature */; };
 		BBBA4CD819E45799004271B2 /* 20_cart.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CD719E45799004271B2 /* 20_cart.feature */; };
 		BBBA4CD919E45799004271B2 /* 20_cart.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CD719E45799004271B2 /* 20_cart.feature */; };
-		CE0218A71B3D54A0005B2C75 /* JAUserDataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A431B1DE1B80028105D /* JAUserDataViewController.xib */; };
 		CE0218A81B3D54A0005B2C75 /* JAUserDataViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A441B1DE1B80028105D /* JAUserDataViewController~iPad.xib */; };
 		CE0218A91B3D54A0005B2C75 /* JAUserDataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A431B1DE1B80028105D /* JAUserDataViewController.xib */; };
-		CE0218AA1B3D54A0005B2C75 /* JAUserDataViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A441B1DE1B80028105D /* JAUserDataViewController~iPad.xib */; };
-		CE0218AB1B3D54A1005B2C75 /* JAUserDataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A431B1DE1B80028105D /* JAUserDataViewController.xib */; };
 		CE0218AC1B3D54A1005B2C75 /* JAUserDataViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A441B1DE1B80028105D /* JAUserDataViewController~iPad.xib */; };
 		CE0218AD1B3D54A1005B2C75 /* JAUserDataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A431B1DE1B80028105D /* JAUserDataViewController.xib */; };
-		CE0218AE1B3D54A1005B2C75 /* JAUserDataViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A441B1DE1B80028105D /* JAUserDataViewController~iPad.xib */; };
 		CE02C9B71B29D9CE00176E14 /* JAMyFavouritesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE02C9B61B29D9CE00176E14 /* JAMyFavouritesViewController.xib */; };
 		CE02C9B81B29D9CE00176E14 /* JAMyFavouritesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE02C9B61B29D9CE00176E14 /* JAMyFavouritesViewController.xib */; };
 		CE02C9B91B29D9CE00176E14 /* JAMyFavouritesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE02C9B61B29D9CE00176E14 /* JAMyFavouritesViewController.xib */; };
@@ -1507,7 +1495,6 @@
 		CE9ADBA91AB34C4600D56481 /* JARatingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A944FF7199290F200C02734 /* JARatingsViewController.m */; };
 		CE9ADBAA1AB34C4600D56481 /* JAOtherOffersView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E671A714D4900F3E92D /* JAOtherOffersView.m */; };
 		CE9ADBAB1AB34C4600D56481 /* JACampaignsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF8FF19DBF4FB00D8C51B /* JACampaignsViewController.m */; };
-		CE9ADBAC1AB34C4600D56481 /* JAUserDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE865BC19C9D7C400406159 /* JAUserDataViewController.m */; };
 		CE9ADBAD1AB34C4600D56481 /* JACatalogWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376E519F015C600558B98 /* JACatalogWizardView.m */; };
 		CE9ADBAF1AB34C4600D56481 /* JAExternalPaymentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59D196219C333CF004843C3 /* JAExternalPaymentsViewController.m */; };
 		CE9ADBB01AB34C4600D56481 /* RIShippingMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B79B3F1A3F4A2A00639F9E /* RIShippingMethod.m */; };
@@ -1830,7 +1817,6 @@
 		CE9ADDA31AB6D6E900D56481 /* JARatingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A944FF7199290F200C02734 /* JARatingsViewController.m */; };
 		CE9ADDA41AB6D6E900D56481 /* JAOtherOffersView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E671A714D4900F3E92D /* JAOtherOffersView.m */; };
 		CE9ADDA51AB6D6E900D56481 /* JACampaignsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF8FF19DBF4FB00D8C51B /* JACampaignsViewController.m */; };
-		CE9ADDA61AB6D6E900D56481 /* JAUserDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE865BC19C9D7C400406159 /* JAUserDataViewController.m */; };
 		CE9ADDA71AB6D6E900D56481 /* JACatalogWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376E519F015C600558B98 /* JACatalogWizardView.m */; };
 		CE9ADDA91AB6D6E900D56481 /* JAExternalPaymentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59D196219C333CF004843C3 /* JAExternalPaymentsViewController.m */; };
 		CE9ADDAA1AB6D6E900D56481 /* RIShippingMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B79B3F1A3F4A2A00639F9E /* RIShippingMethod.m */; };
@@ -2153,7 +2139,6 @@
 		CE9ADF9D1AB6D78200D56481 /* JARatingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A944FF7199290F200C02734 /* JARatingsViewController.m */; };
 		CE9ADF9E1AB6D78200D56481 /* JAOtherOffersView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E671A714D4900F3E92D /* JAOtherOffersView.m */; };
 		CE9ADF9F1AB6D78200D56481 /* JACampaignsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF8FF19DBF4FB00D8C51B /* JACampaignsViewController.m */; };
-		CE9ADFA01AB6D78200D56481 /* JAUserDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE865BC19C9D7C400406159 /* JAUserDataViewController.m */; };
 		CE9ADFA11AB6D78200D56481 /* JACatalogWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376E519F015C600558B98 /* JACatalogWizardView.m */; };
 		CE9ADFA31AB6D78200D56481 /* JAExternalPaymentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59D196219C333CF004843C3 /* JAExternalPaymentsViewController.m */; };
 		CE9ADFA41AB6D78200D56481 /* RIShippingMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B79B3F1A3F4A2A00639F9E /* RIShippingMethod.m */; };
@@ -2740,8 +2725,6 @@
 		4AE730BD198F8ADF000CA1DD /* JAPDVRelatedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVRelatedItem.m; sourceTree = "<group>"; };
 		4AE730C5198F8B05000CA1DD /* JAPDVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVViewController.h; sourceTree = "<group>"; };
 		4AE730C6198F8B05000CA1DD /* JAPDVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVViewController.m; sourceTree = "<group>"; };
-		4AE865BB19C9D7C400406159 /* JAUserDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAUserDataViewController.h; sourceTree = "<group>"; };
-		4AE865BC19C9D7C400406159 /* JAUserDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAUserDataViewController.m; sourceTree = "<group>"; };
 		4AE865BE19C9D7F100406159 /* JAEmailNotificationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAEmailNotificationsViewController.h; sourceTree = "<group>"; };
 		4AE865BF19C9D7F100406159 /* JAEmailNotificationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAEmailNotificationsViewController.m; sourceTree = "<group>"; };
 		4AFC7F8F199BC0BE007D67F4 /* JASignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASignInViewController.h; sourceTree = "<group>"; };
@@ -3017,13 +3000,13 @@
 		9AEADDCE1C10B1C40074034A /* RIPhonePrefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIPhonePrefix.h; sourceTree = "<group>"; };
 		9AEADDCF1C10B1C40074034A /* RIPhonePrefix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIPhonePrefix.m; sourceTree = "<group>"; };
 		9AEE880E1B0B3291005BFBEB /* JARatingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JARatingsViewController.xib; sourceTree = "<group>"; };
-		9AF49A431B1DE1B80028105D /* JAUserDataViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAUserDataViewController.xib; sourceTree = "<group>"; };
-		9AF49A441B1DE1B80028105D /* JAUserDataViewController~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JAUserDataViewController~iPad.xib"; sourceTree = "<group>"; };
+		9AF49A431B1DE1B80028105D /* JAUserDataViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAUserDataViewController.xib; path = /Users/lucianoduarte/Desktop/JUMIAIOS/Jumia/Controllers/MyAccount/JAUserDataViewController.xib; sourceTree = "<absolute>"; };
+		9AF49A441B1DE1B80028105D /* JAUserDataViewController~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "JAUserDataViewController~iPad.xib"; path = "/Users/lucianoduarte/Desktop/JUMIAIOS/Jumia/Controllers/MyAccount/JAUserDataViewController~iPad.xib"; sourceTree = "<absolute>"; };
 		9AF49A471B1DE1FF0028105D /* JANoConnectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JANoConnectionView.xib; sourceTree = "<group>"; };
 		9AF49A481B1DE1FF0028105D /* JANoConnectionView~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANoConnectionView~iPad.xib"; sourceTree = "<group>"; };
 		9D39EA2D1BFFA32D00C3F6E9 /* Model_1.10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.10.xcdatamodel; sourceTree = "<group>"; };
-		9D4431E81C242BA8005A8B4A /* JAUserDataViewControllerNEW.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAUserDataViewControllerNEW.h; sourceTree = "<group>"; };
-		9D4431E91C242BA8005A8B4A /* JAUserDataViewControllerNEW.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAUserDataViewControllerNEW.m; sourceTree = "<group>"; };
+		9D4431E81C242BA8005A8B4A /* JAUserDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAUserDataViewController.h; sourceTree = "<group>"; };
+		9D4431E91C242BA8005A8B4A /* JAUserDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAUserDataViewController.m; sourceTree = "<group>"; };
 		B5007ABE19A4E8EC0024035A /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		B5007AC019A4E8EC0024035A /* HockeySDK.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = HockeySDK.xcconfig; sourceTree = "<group>"; };
 		B5007AC119A4E8EC0024035A /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
@@ -3849,12 +3832,8 @@
 		4A39211B19891F1500B70A9C /* MyAccount */ = {
 			isa = PBXGroup;
 			children = (
-				4AE865BB19C9D7C400406159 /* JAUserDataViewController.h */,
-				4AE865BC19C9D7C400406159 /* JAUserDataViewController.m */,
-				9AF49A431B1DE1B80028105D /* JAUserDataViewController.xib */,
-				9AF49A441B1DE1B80028105D /* JAUserDataViewController~iPad.xib */,
-				9D4431E81C242BA8005A8B4A /* JAUserDataViewControllerNEW.h */,
-				9D4431E91C242BA8005A8B4A /* JAUserDataViewControllerNEW.m */,
+				9D4431E81C242BA8005A8B4A /* JAUserDataViewController.h */,
+				9D4431E91C242BA8005A8B4A /* JAUserDataViewController.m */,
 				4AE865BE19C9D7F100406159 /* JAEmailNotificationsViewController.h */,
 				4AE865BF19C9D7F100406159 /* JAEmailNotificationsViewController.m */,
 				9A007C731C203355007D99FC /* JAMyAccountViewController.h */,
@@ -6368,7 +6347,6 @@
 				6CCE08921B1DBC20004311E2 /* JAAddNewAddressViewController~iPad.xib in Resources */,
 				6CCE08B01B1F0E6E004311E2 /* JALoginViewController.xib in Resources */,
 				BBBA4CD519E44CDC004271B2 /* 19_filters.feature in Resources */,
-				9A4F910A1B3C308F00E34C0B /* JAUserDataViewController~iPad.xib in Resources */,
 				9A9CD50D1B72514A0061ACE0 /* BMA4SiPhoneWebViewNotifView-nobuttons-landscape.xib in Resources */,
 				9A9CD4541B72514A0061ACE0 /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-landscape-iPad.xib in Resources */,
 				CE4054B81B29EFB300E9CD1A /* JARecentlyViewedViewController.xib in Resources */,
@@ -6401,7 +6379,6 @@
 				9A9CD49A1B72514A0061ACE0 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape.xib in Resources */,
 				ba137566e9c10c0927dfa9e5 /* JAMessageView.xib in Resources */,
 				9A9CD4681B72514A0061ACE0 /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-landscape.xib in Resources */,
-				CE0218A71B3D54A0005B2C75 /* JAUserDataViewController.xib in Resources */,
 				BB9546B419F5522B00AC7D05 /* 02_logout.feature in Resources */,
 				9A0F9B941B5E58E900569DF2 /* LICENSE in Resources */,
 				CE88F7B11A1F87A300A3A586 /* JARecentlyViewedListCell_ipad_landscape.xib in Resources */,
@@ -6526,7 +6503,6 @@
 				6CCE089D1B1EF8A0004311E2 /* JAAddressesViewController~iPad.xib in Resources */,
 				BBA145B419DC56BF003F0CA7 /* multi_step.rb in Resources */,
 				9A9CD3181B72514A0061ACE0 /* BMA4SiPhoneIntersticialTextNotifView-iPad.xib in Resources */,
-				9AF49A451B1DE1B80028105D /* JAUserDataViewController.xib in Resources */,
 				BBA145AB19DC56BF003F0CA7 /* 02_logout.feature in Resources */,
 				9A9CD4DF1B72514A0061ACE0 /* BMA4SiPhoneTextNotifView-nobuttons-landscape.xib in Resources */,
 				9AEE880F1B0B3291005BFBEB /* JARatingsViewController.xib in Resources */,
@@ -6577,7 +6553,6 @@
 				9A9CD4F31B72514A0061ACE0 /* BMA4SiPhoneWebViewNotifView-nobuttons-iPad.xib in Resources */,
 				CEDEB9BF199BA8FA0022BAB5 /* slider-default7-trackCrossedOver.png in Resources */,
 				9A9CD44E1B72514A0061ACE0 /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-iPad.xib in Resources */,
-				9AF49A461B1DE1B80028105D /* JAUserDataViewController~iPad.xib in Resources */,
 				B5B3AB561A07A57400994BFA /* JAPDVVariations~iPad.xib in Resources */,
 				9A9CD3771B72514A0061ACE0 /* BMA4SiPhoneIntersticialWebViewNotifView.xib in Resources */,
 				9A9CD3B31B72514A0061ACE0 /* BMA4SRichPushWebView.xib in Resources */,
@@ -6880,13 +6855,11 @@
 				CE9ADD0F1AB34C4600D56481 /* JACatalogListCell_ipad_landscape.xib in Resources */,
 				CE9ADD101AB34C4600D56481 /* env.rb in Resources */,
 				CE9ADD111AB34C4600D56481 /* JARecentlyViewedListCell_ipad_portrait.xib in Resources */,
-				CE0218AA1B3D54A0005B2C75 /* JAUserDataViewController~iPad.xib in Resources */,
 				CE9ADD121AB34C4600D56481 /* slider-default-track.png in Resources */,
 				CE9ADD131AB34C4600D56481 /* JAGrayButtonCell_ipad_portrait.xib in Resources */,
 				CE9ADD141AB34C4600D56481 /* Main.storyboard in Resources */,
 				9A9CD3B01B72514A0061ACE0 /* BMA4SRichPushWebView-iPad.xib in Resources */,
 				CE9ADD151AB34C4600D56481 /* slider-default_trackBackground@2x.png in Resources */,
-				9A4F910F1B3C311B00E34C0B /* JAUserDataViewController.xib in Resources */,
 				CE9ADD1A1AB34C4600D56481 /* JAFavoriteListCell_ipad_portrait.xib in Resources */,
 				9A9CD4551B72514A0061ACE0 /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-landscape-iPad.xib in Resources */,
 				CE9ADD1B1AB34C4600D56481 /* JAPDVBundles.xib in Resources */,
@@ -7101,14 +7074,12 @@
 				CE9ADF0A1AB6D6E900D56481 /* env.rb in Resources */,
 				9A9CD4561B72514A0061ACE0 /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-landscape-iPad.xib in Resources */,
 				CE9ADF0B1AB6D6E900D56481 /* JARecentlyViewedListCell_ipad_portrait.xib in Resources */,
-				9A4F910C1B3C309000E34C0B /* JAUserDataViewController~iPad.xib in Resources */,
 				9A0F9B7D1B5E58E900569DF2 /* FBAudienceNetwork.README.txt in Resources */,
 				9A9CD3ED1B72514A0061ACE0 /* BMA4SiPhoneTextNotifView.xib in Resources */,
 				CE9ADF0C1AB6D6E900D56481 /* slider-default-track.png in Resources */,
 				CE9ADF0D1AB6D6E900D56481 /* JAGrayButtonCell_ipad_portrait.xib in Resources */,
 				CE9ADF0E1AB6D6E900D56481 /* Main.storyboard in Resources */,
 				CE9ADF0F1AB6D6E900D56481 /* slider-default_trackBackground@2x.png in Resources */,
-				CE0218AB1B3D54A1005B2C75 /* JAUserDataViewController.xib in Resources */,
 				CE02C9BA1B29D9CE00176E14 /* JAMyFavouritesViewController.xib in Resources */,
 				CE9ADF141AB6D6E900D56481 /* JAFavoriteListCell_ipad_portrait.xib in Resources */,
 				CE9ADF151AB6D6E900D56481 /* JAPDVBundles.xib in Resources */,
@@ -7325,13 +7296,11 @@
 				CE9AE1031AB6D78200D56481 /* JACatalogListCell_ipad_landscape.xib in Resources */,
 				CE9AE1041AB6D78200D56481 /* env.rb in Resources */,
 				CE9AE1051AB6D78200D56481 /* JARecentlyViewedListCell_ipad_portrait.xib in Resources */,
-				CE0218AE1B3D54A1005B2C75 /* JAUserDataViewController~iPad.xib in Resources */,
 				CE9AE1061AB6D78200D56481 /* slider-default-track.png in Resources */,
 				CE9AE1071AB6D78200D56481 /* JAGrayButtonCell_ipad_portrait.xib in Resources */,
 				CE9AE1081AB6D78200D56481 /* Main.storyboard in Resources */,
 				9A9CD3B21B72514A0061ACE0 /* BMA4SRichPushWebView-iPad.xib in Resources */,
 				CE9AE1091AB6D78200D56481 /* slider-default_trackBackground@2x.png in Resources */,
-				9A4F91111B3C311C00E34C0B /* JAUserDataViewController.xib in Resources */,
 				CE9AE10E1AB6D78200D56481 /* JAFavoriteListCell_ipad_portrait.xib in Resources */,
 				9A9CD4571B72514A0061ACE0 /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-landscape-iPad.xib in Resources */,
 				CE9AE10F1AB6D78200D56481 /* JAPDVBundles.xib in Resources */,
@@ -7534,7 +7503,6 @@
 				265d6ed8bd7c10f9dbd3b757 /* JAAddNewAddressViewController.m in Sources */,
 				9A7EE99F1B5546A0004E2505 /* ADJTimerOnce.m in Sources */,
 				cbc7f868a623c8ae3344bf82 /* JARatingsViewController.m in Sources */,
-				74184dc81a4fcd636b69e8c2 /* JAUserDataViewController.m in Sources */,
 				CEA86D9F1A3894C0000032AD /* JASizeGuideViewController.m in Sources */,
 				CEED472D1A7B973B006D9CE7 /* JAPDVBundles.m in Sources */,
 				CE28EE5B1A9397C6000A264C /* JBWhatsAppActivity.m in Sources */,
@@ -7817,7 +7785,6 @@
 				CE283E681A714D4900F3E92D /* JAOtherOffersView.m in Sources */,
 				6C40A88D1AD7E647001BFA16 /* RIBanner.m in Sources */,
 				CE3AF90019DBF4FB00D8C51B /* JACampaignsViewController.m in Sources */,
-				4AE865BD19C9D7C400406159 /* JAUserDataViewController.m in Sources */,
 				CEC376E619F015C600558B98 /* JACatalogWizardView.m in Sources */,
 				B59D196319C333CF004843C3 /* JAExternalPaymentsViewController.m in Sources */,
 				B5B79B401A3F4A2A00639F9E /* RIShippingMethod.m in Sources */,
@@ -7867,7 +7834,7 @@
 				B5A302CA19811E9200F71726 /* RISearchSuggestion.m in Sources */,
 				9AC4D6A31B4A903100036F1C /* JACatalogGridCollectionViewCell.m in Sources */,
 				B5225E1D1989308300C18F1E /* RIPaymentMethodForm.m in Sources */,
-				9D4431EA1C242BA8005A8B4A /* JAUserDataViewControllerNEW.m in Sources */,
+				9D4431EA1C242BA8005A8B4A /* JAUserDataViewController.m in Sources */,
 				9A7EE93B1B554696004E2505 /* ADJActivityPackage.m in Sources */,
 				B5FE9FBC19A204F1006F7D63 /* RINewRelicTracker.m in Sources */,
 				B5A302E519811E9200F71726 /* RIGoogleAnalyticsTracker.m in Sources */,
@@ -8117,7 +8084,6 @@
 				CE9ADBAA1AB34C4600D56481 /* JAOtherOffersView.m in Sources */,
 				6C40A88E1AD7E647001BFA16 /* RIBanner.m in Sources */,
 				CE9ADBAB1AB34C4600D56481 /* JACampaignsViewController.m in Sources */,
-				CE9ADBAC1AB34C4600D56481 /* JAUserDataViewController.m in Sources */,
 				CE9ADBAD1AB34C4600D56481 /* JACatalogWizardView.m in Sources */,
 				CE9ADBAF1AB34C4600D56481 /* JAExternalPaymentsViewController.m in Sources */,
 				CE9ADBB01AB34C4600D56481 /* RIShippingMethod.m in Sources */,
@@ -8409,7 +8375,6 @@
 				CE9ADDA41AB6D6E900D56481 /* JAOtherOffersView.m in Sources */,
 				6C40A88F1AD7E647001BFA16 /* RIBanner.m in Sources */,
 				CE9ADDA51AB6D6E900D56481 /* JACampaignsViewController.m in Sources */,
-				CE9ADDA61AB6D6E900D56481 /* JAUserDataViewController.m in Sources */,
 				CE9ADDA71AB6D6E900D56481 /* JACatalogWizardView.m in Sources */,
 				CE9ADDA91AB6D6E900D56481 /* JAExternalPaymentsViewController.m in Sources */,
 				CE9ADDAA1AB6D6E900D56481 /* RIShippingMethod.m in Sources */,
@@ -8698,7 +8663,6 @@
 				CE9ADF9E1AB6D78200D56481 /* JAOtherOffersView.m in Sources */,
 				6C40A8901AD7E647001BFA16 /* RIBanner.m in Sources */,
 				CE9ADF9F1AB6D78200D56481 /* JACampaignsViewController.m in Sources */,
-				CE9ADFA01AB6D78200D56481 /* JAUserDataViewController.m in Sources */,
 				CEF0C48F1BE8EE5F005B5B12 /* RISellerDelivery.m in Sources */,
 				CE9ADFA11AB6D78200D56481 /* JACatalogWizardView.m in Sources */,
 				CE9ADFA31AB6D78200D56481 /* JAExternalPaymentsViewController.m in Sources */,

@@ -15,7 +15,7 @@
 #import "JARecentSearchesViewController.h"
 #import "JARecentlyViewedViewController.h"
 #import "JAMyAccountViewController.h"
-#import "JAUserDataViewControllerNEW.h"
+#import "JAUserDataViewController.h"
 #import "JAEmailNotificationsViewController.h"
 #import "JAMyOrdersViewController.h"
 #import "JAMyOrderDetailViewController.h"
@@ -776,13 +776,13 @@
 {
     UIViewController *topViewController = [self topViewController];
     if([RICustomer checkIfUserIsLogged]) {
-        if (![topViewController isKindOfClass:[JAUserDataViewControllerNEW class]]) {
+        if (![topViewController isKindOfClass:[JAUserDataViewController class]]) {
             BOOL animated = NO;
             if(VALID_NOTEMPTY(notification.object, NSDictionary) && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber)) {
                 animated = [[notification.object objectForKey:@"animated"] boolValue];
             }
             
-            JAUserDataViewControllerNEW *userData = [[JAUserDataViewControllerNEW alloc] init];
+            JAUserDataViewController *userData = [[JAUserDataViewController alloc] init];
             
             [self pushViewController:userData animated:animated];
         }
