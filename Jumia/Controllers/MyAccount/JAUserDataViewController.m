@@ -77,6 +77,8 @@
         [_mainScrollView setShowsHorizontalScrollIndicator:NO];
         [_mainScrollView setShowsVerticalScrollIndicator:NO];
         [_mainScrollView setContentSize:_mainScrollView.bounds.size];
+        
+        [self.mainScrollView addSubview:self.personalDataHeader];
     }
     return _mainScrollView;
 }
@@ -168,10 +170,6 @@
     self.isOpeningPicker = NO;
     
     [self.view addSubview:self.mainScrollView];
-    [self.mainScrollView addSubview:self.personalDataHeader];
-    [self.mainScrollView addSubview:self.saveButton];
-    [self.mainScrollView addSubview:self.passwordHeader];
-    [self.mainScrollView addSubview:self.changePasswordButton];
     
     //requests user form and when it is finished
     //requests change pass form
@@ -243,6 +241,9 @@
                [self.mainScrollView addSubview:view];
            }
            
+           [self.mainScrollView addSubview:self.saveButton];
+           [self.mainScrollView addSubview:self.passwordHeader];
+           
            [self setupUserEditFormViews];
            [self requestChangePasswordForm];
        } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
@@ -274,6 +275,8 @@
         for (UIView *view in self.changePasswordForm.formViews) {
             [self.mainScrollView addSubview:view];
         }
+        
+        [self.mainScrollView addSubview:self.changePasswordButton];
         
         [self setupChangePasswordFormViews];
         [self setupFixedElements];
