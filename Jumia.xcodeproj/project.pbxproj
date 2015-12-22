@@ -9753,7 +9753,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "8e4fd4c4-91ba-452f-b5f9-f1fec2cece45";
+				PROVISIONING_PROFILE = "404539b2-0e32-43cc-afa4-82bd5c2d442e";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9793,7 +9793,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "8e4fd4c4-91ba-452f-b5f9-f1fec2cece45";
+				PROVISIONING_PROFILE = "404539b2-0e32-43cc-afa4-82bd5c2d442e";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9833,7 +9833,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "8e4fd4c4-91ba-452f-b5f9-f1fec2cece45";
+				PROVISIONING_PROFILE = "404539b2-0e32-43cc-afa4-82bd5c2d442e";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9873,7 +9873,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "8e4fd4c4-91ba-452f-b5f9-f1fec2cece45";
+				PROVISIONING_PROFILE = "404539b2-0e32-43cc-afa4-82bd5c2d442e";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
