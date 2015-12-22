@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "JACatalogCollectionViewCell.h"
+#import "JAProductInfoRatingLine.h"
 
 #define JACatalogViewControllerListCellHeight_ipad 97.0f + 25.f + 10.f // +25 = new label size / +10 = new label top margin - as of NAFAMZ-15160: https://jira.rocket-internet.de/browse/NAFAMZ-15160
 #define JACatalogViewControllerListCellHeight 97.0f + 25.f + 10.f // +25 = new label size / +10 = new label top margin - as of NAFAMZ-15160: https://jira.rocket-internet.de/browse/NAFAMZ-15160
@@ -21,5 +22,6 @@
 @property (nonatomic) BOOL hideRating;
 @property (nonatomic) BOOL showSelector;
 @property (nonatomic) UIButton *selectorButton;
+@property (nonatomic, readonly) JAProductInfoRatingLine *ratingLine;
 
 @end

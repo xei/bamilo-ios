@@ -64,6 +64,7 @@
         _dropdownImageView = [[UIImageView alloc] initWithImage:image];
         [_dropdownImageView setXLeftOf:self.requiredSymbol at:0];
         [_dropdownImageView setY:self.textField.y];
+        [self addSubview:_dropdownImageView];
     }
     return _dropdownImageView;
 }
@@ -154,7 +155,6 @@
             self.apiCallParameters = field.apiCallParameters;
         }
     }
-    [self addSubview:self.dropdownImageView];
 }
 
 -(BOOL)isComponentWithKey:(NSString*)key
