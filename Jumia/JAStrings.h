@@ -392,5 +392,6 @@
 #define STRING_FORGOT_YOUR_PASSWORD RILocalizedString(@"fgt_your_pass", nil)
 
 #define STRING_PASSWORD_RECOVERY RILocalizedString(@"password_recovery", nil)
+#define STRING_PRE_ORDER RILocalizedString(@"pre_order", nil)
 
 #endif
