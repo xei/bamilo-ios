@@ -53,7 +53,7 @@
                                       1.0f)];
     
     if (NO == self.isLoaded) {
-        
+        [self showLoading];
         [RIHtmlShop getHtmlShopForTargetString:self.targetString successBlock:^(RIHtmlShop *htmlShop) {
             self.htmlShop = htmlShop;
             self.isLoaded = YES;
@@ -62,6 +62,7 @@
             [self.webView loadHTMLString:self.htmlShop.html baseURL:[NSURL URLWithString:[RITarget getURLStringforTargetString:self.targetString]]];
             
         } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+            [self hideLoading];
             if (RIApiResponseNoInternetConnection == apiResponse) {
                 [self showErrorView:YES startingY:0.0f selector:@selector(viewWillAppear:) objects:nil];
             } else {
@@ -164,12 +165,19 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+    [self hideLoading];
     [self.scrollView setFrame:[self viewBounds]];
     [self.webView setFrame:CGRectMake(self.scrollView.bounds.origin.x,
                                       self.scrollView.bounds.origin.y,
                                       self.scrollView.bounds.size.width,
                                       1.0f)];
     [self loadViews];
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    [self hideLoading];
+    [self showErrorView:NO startingY:0.0f selector:@selector(viewWillAppear:) objects:nil];
 }
 
 @end

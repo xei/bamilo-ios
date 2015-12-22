@@ -48,7 +48,7 @@
     [self.rightTitleLabel setText:rightTitle];
     [self.rightTitleLabel sizeToFit];
     [self.rightTitleLabel setHeight:16.f];
-    [self.rightTitleLabel setXRightAligned:16.f];
+    [self.rightTitleLabel setXRightAligned:self.lineContentXOffset + (self.enabled?16.f:0.0f)];
     if (self.rightSubTitle) {
         [self.rightTitleLabel setY:kTopMargin];
     }else{
@@ -63,7 +63,7 @@
     [self.rightSubTitleLabel setText:rightSubTitle];
     [self.rightSubTitleLabel sizeToFit];
     [self.rightSubTitleLabel setHeight:16.f];
-    [self.rightSubTitleLabel setXRightAligned:16.f];
+    [self.rightSubTitleLabel setXRightAligned:self.lineContentXOffset + (self.enabled?16.f:0.0f)];
     
     [self.rightTitleLabel setY:kTopMargin];
 
