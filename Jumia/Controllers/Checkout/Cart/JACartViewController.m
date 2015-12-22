@@ -1031,8 +1031,7 @@
         RICartItem *product = [self.cart.cartItems objectAtIndex:button.tag];
         NSNumber *cartValue = self.cart.cartValue;
         [self showLoading];
-        [RICart removeProductWithQuantity:[product.quantity stringValue]
-                                      sku:product.simpleSku
+        [RICart removeProductWithSku:product.simpleSku
                          withSuccessBlock:^(RICart *cart) {
                              
                              NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
