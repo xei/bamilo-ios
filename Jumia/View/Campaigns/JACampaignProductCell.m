@@ -367,7 +367,7 @@
     }
     if (campaignProduct.productSimples.count > 1) {
         [self.sizeLine setHidden:NO];
-        [self.sizeLine setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, [[campaignProduct.productSimples valueForKey:@"size"] componentsJoinedByString:@"; "]] forState:UIControlStateNormal];
+        [self.sizeLine setTitle:[NSString stringWithFormat:@"%@: %@",campaignProduct.variationName, campaignProduct.variationAvailableList] forState:UIControlStateNormal];
     }else{
         [self.sizeLine setHidden:YES];
     }
@@ -535,7 +535,7 @@
                     return;
                 }
                 for (RICampaignProductSimple* simple in self.campaignProduct.productSimples) {
-                    if ([self.chosenSize isEqualToString:simple.size]) {
+                    if ([self.chosenSize isEqualToString:simple.variation]) {
                         //found it
                         simpleSku = simple.sku;
                     }

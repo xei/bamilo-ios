@@ -333,11 +333,11 @@
         for (int i = 0; i < campaignProductCell.campaignProduct.productSimples.count; i++)
         {
             RICampaignProductSimple* simple = [campaignProductCell.campaignProduct.productSimples objectAtIndex:i];
-            [dataSource addObject:simple.size];
-            if ([simple.size isEqualToString:campaignProductCell.chosenSize])
+            [dataSource addObject:simple.variation];
+            if ([simple.variation isEqualToString:campaignProductCell.chosenSize])
             {
                 //found it
-                simpleSize = simple.size;
+                simpleSize = simple.variation;
             }
         }
     }
@@ -351,10 +351,10 @@
 - (void)selectedSizeIndex:(NSInteger)index;
 {
     RICampaignProductSimple* selectedSimple = [self.lastPressedCampaignProductCell.campaignProduct.productSimples objectAtIndex:index];
-    [self.chosenSimpleNames replaceObjectAtIndex:self.lastPressedCampaignProductCell.tag withObject:selectedSimple.size];
+    [self.chosenSimpleNames replaceObjectAtIndex:self.lastPressedCampaignProductCell.tag withObject:selectedSimple.variation];
     
     if (NOT_NIL(self.lastPressedCampaignProductCell.onSelected)) {
-        self.lastPressedCampaignProductCell.chosenSize = selectedSimple.size;
+        self.lastPressedCampaignProductCell.chosenSize = selectedSimple.variation;
         self.lastPressedCampaignProductCell.onSelected();
     }
     [self.collectionView reloadData];
