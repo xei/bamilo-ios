@@ -1499,7 +1499,7 @@
                                 [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
                             }
                             else {
-                                [self showMessage:STRING_ERROR_CHANGING_QUANTITY success:NO];
+                                [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
                             }
                         }];
     }

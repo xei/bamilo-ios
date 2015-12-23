@@ -984,7 +984,7 @@
 }
 
 + (void)addToFavorites:(RIProduct*)product
-          successBlock:(void (^)(void))successBlock
+          successBlock:(void (^)(RIApiResponse apiResponse, NSArray *success))successBlock
        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
     
@@ -1015,7 +1015,20 @@
             product.favoriteAddDate = [NSDate date];
             [RIProduct saveProduct:product andContext:YES];
         }
-        successBlock();
+        if (VALID_NOTEMPTY([jsonObject objectForKey:@"messages"], NSDictionary)) {
+            NSDictionary *messages = [jsonObject objectForKey:@"messages"];
+            if (VALID_NOTEMPTY([messages objectForKey:@"success"], NSArray)) {
+                NSArray *success = [messages objectForKey:@"success"];
+                if (VALID_NOTEMPTY([success valueForKey:@"message"], NSArray)) {
+                    NSArray *successMessage = [success valueForKey:@"message"];
+                    successBlock(apiResponse, successMessage);
+                    return;
+                }
+                
+            }
+        }
+        successBlock(apiResponse, nil);
+        
     } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
         if (errorObject) {
             failureBlock(apiResponse, [NSArray arrayWithObject:[errorObject localizedDescription]]);
@@ -1038,7 +1051,7 @@
 }
 
 + (void)removeFromFavorites:(RIProduct*)product
-               successBlock:(void (^)(void))successBlock
+               successBlock:(void (^)(RIApiResponse apiResponse, NSArray *success))successBlock
             andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
     NSString *finalUrl = [NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_REMOVE_FOM_WISHLIST];
@@ -1061,7 +1074,19 @@
                     [[RIDataBaseWrapper sharedInstance] saveContext];
                 }
             }
-            successBlock();
+            if (VALID_NOTEMPTY([jsonObject objectForKey:@"messages"], NSDictionary)) {
+                NSDictionary *messages = [jsonObject objectForKey:@"messages"];
+                if (VALID_NOTEMPTY([messages objectForKey:@"success"], NSArray)) {
+                    NSArray *success = [messages objectForKey:@"success"];
+                    if (VALID_NOTEMPTY([success valueForKey:@"message"], NSArray)) {
+                        NSArray *successMessage = [success valueForKey:@"message"];
+                        successBlock(apiResponse, successMessage);
+                        return;
+                    }
+                    
+                }
+            }
+            successBlock(apiResponse, nil);
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             if (failureBlock) {
                 failureBlock(apiResponse, error);

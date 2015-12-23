@@ -1100,7 +1100,7 @@ JAActivityViewControllerDelegate
         
         [RICart addProductWithQuantity:@"1"
                              simpleSku:self.currentSimple.sku
-                      withSuccessBlock:^(RICart *cart) {
+                      withSuccessBlock:^(RICart *cart, RIApiResponse apiResponse,  NSArray *successMessage) {
                           
                           if (VALID_NOTEMPTY(self.teaserTrackingInfo, NSString)) {
                               NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
@@ -1118,26 +1118,21 @@ JAActivityViewControllerDelegate
                           NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                           [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                           
-                          [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
+                          [self showMessage:[successMessage componentsJoinedByString:@","] success:YES];
                           
                           [self hideLoading];
                           
                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                           
                           [self hideLoading];
-                          
-                          NSString *addToCartError = STRING_ERROR_ADDING_TO_CART;
-                          NSString *results = [[errorMessages valueForKey:@"description"] componentsJoinedByString:@""];
-                          if([results  isEqualToString: @"order_product_sold_out"]){
-                              
-                              addToCartError = STRING_PRODCUTS_OUT_OF_STOCK;
-                          }
+
                           if (RIApiResponseNoInternetConnection == apiResponse)
                           {
-                              addToCartError = STRING_NO_CONNECTION;
+                              NSString *addToCartError = STRING_NO_CONNECTION;
+                              [self showMessage:addToCartError success:NO];
                           }
                           
-                          [self showMessage:addToCartError success:NO];
+                          [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
                       }];
     }
 }
@@ -1413,7 +1408,7 @@ JAActivityViewControllerDelegate
     if (!button.selected && !VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate))
     {
         //add to favorites
-        [RIProduct addToFavorites:self.product successBlock:^{
+        [RIProduct addToFavorites:self.product successBlock:^(RIApiResponse apiResponse,  NSArray *success){
             [self hideLoading];
             button.selected = YES;
             
@@ -1429,17 +1424,17 @@ JAActivityViewControllerDelegate
                                                                 object:self.product.sku
                                                               userInfo:userInfo];
             
-            [self showMessage:STRING_ADDED_TO_WISHLIST success:YES];
+            [self showMessage:[success componentsJoinedByString:@","] success:YES];
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             [self hideLoading];
             
-            NSString *errorMessage = STRING_ERROR_ADDING_TO_WISHLIST;
             if (RIApiResponseNoInternetConnection == apiResponse)
             {
-                errorMessage = STRING_NO_CONNECTION;
+                NSString *errorMessage = STRING_NO_CONNECTION;
+                [self showMessage:errorMessage success:NO];
             }
-            [self showMessage:errorMessage success:NO];
+            [self showMessage:[error componentsJoinedByString:@","] success:NO];
         }];
     }else{
         [self hideLoading];
@@ -1466,7 +1461,7 @@ JAActivityViewControllerDelegate
     }
     if (self.productImageSection.wishListButton.selected && VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate))
     {
-        [RIProduct removeFromFavorites:self.product successBlock:^(void) {
+        [RIProduct removeFromFavorites:self.product successBlock:^(RIApiResponse apiResponse, NSArray *success) {
             //update favoriteProducts
             [self hideLoading];
             button.selected = NO;
@@ -1475,7 +1470,7 @@ JAActivityViewControllerDelegate
             
             [self trackingEventRemoveFromWishlist];
             
-            [self showMessage:STRING_REMOVED_FROM_WISHLIST success:YES];
+            [self showMessage:[success componentsJoinedByString:@","] success:YES];
             NSDictionary *userInfo = nil;
             if (self.product.favoriteAddDate) {
                 userInfo = [NSDictionary dictionaryWithObject:self.product.favoriteAddDate forKey:@"favoriteAddDate"];
@@ -1487,12 +1482,12 @@ JAActivityViewControllerDelegate
             
             [self hideLoading];
             
-            NSString *errorMessage = STRING_ERROR_REMOVING_FROM_WISHLIST;
             if (RIApiResponseNoInternetConnection == apiResponse)
             {
-                errorMessage = STRING_NO_CONNECTION;
+                NSString *errorMessage = STRING_NO_CONNECTION;
+                [self showMessage:errorMessage success:NO];
             }
-            [self showMessage:errorMessage success:NO];
+            [self showMessage:[error componentsJoinedByString:@","] success:NO];
         }];
     }
 }

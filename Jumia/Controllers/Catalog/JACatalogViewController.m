@@ -1281,7 +1281,7 @@ typedef void (^ProcessActionBlock)(void);
     RIProduct* product = [self.productsArray objectAtIndex:button.tag];
     if (!button.selected && !VALID_NOTEMPTY(product.favoriteAddDate, NSDate))
     {
-        [RIProduct addToFavorites:product successBlock:^{
+        [RIProduct addToFavorites:product successBlock:^(RIApiResponse apiResponse,  NSArray *success){
             button.selected = YES;
             product.favoriteAddDate = [NSDate date];
             
@@ -1291,7 +1291,7 @@ typedef void (^ProcessActionBlock)(void);
             
             [self hideLoading];
             
-            [self showMessage:STRING_ADDED_TO_WISHLIST success:YES];
+            [self showMessage:[success componentsJoinedByString:@","] success:YES];
             NSDictionary *userInfo = nil;
             if (product.favoriteAddDate) {
                 userInfo = [NSDictionary dictionaryWithObject:product.favoriteAddDate forKey:@"favoriteAddDate"];
@@ -1342,7 +1342,7 @@ typedef void (^ProcessActionBlock)(void);
     RIProduct* product = [self.productsArray objectAtIndex:button.tag];
     if (button.selected && VALID_NOTEMPTY(product.favoriteAddDate, NSDate))
     {
-        [RIProduct removeFromFavorites:product successBlock:^(void) {
+        [RIProduct removeFromFavorites:product successBlock:^(RIApiResponse apiResponse, NSArray *success) {
             button.selected = NO;
             product.favoriteAddDate = nil;
             [self removeErrorView];
@@ -1352,7 +1352,7 @@ typedef void (^ProcessActionBlock)(void);
             //update favoriteProducts
             [self hideLoading];
             
-            [self showMessage:STRING_REMOVED_FROM_WISHLIST success:YES];
+            [self showMessage:[success componentsJoinedByString:@","] success:YES];
             
             NSDictionary *userInfo = nil;
             if (product.favoriteAddDate) {

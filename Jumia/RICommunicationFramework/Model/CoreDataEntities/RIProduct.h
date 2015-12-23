@@ -220,7 +220,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *
  */
 + (void)addToFavorites:(RIProduct*)product
-          successBlock:(void (^)(void))successBlock
+          successBlock:(void (^)(RIApiResponse apiResponse, NSArray *success))successBlock
        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
@@ -231,7 +231,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *
  */
 + (void)removeFromFavorites:(RIProduct*)product
-               successBlock:(void (^)(void))successBlock
+               successBlock:(void (^)(RIApiResponse apiResponse, NSArray *success))successBlock
             andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**

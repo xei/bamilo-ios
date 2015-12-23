@@ -82,7 +82,7 @@
  */
 + (NSString *)addProductWithQuantity:(NSString *)quantity
                            simpleSku:(NSString *)simpleSku
-                    withSuccessBlock:(void (^)(RICart *cart))sucessBlock
+                    withSuccessBlock:(void (^)(RICart *cart, RIApiResponse apiResponse, NSArray *successMessage))sucessBlock
                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
