@@ -262,12 +262,10 @@
         }
         else if ([@"related_number" isEqualToString:field.type])
         {
-            //we only accept two options, no more, no less
             if (1 == field.relatedFields.count) {
                 
                 CGFloat phoneOffset = 80.f;
                 CGFloat prefixWidth = 70.f;
-                
                 
                 JATextFieldComponent *textField = [[JATextFieldComponent alloc] init];
                 [textField setupWithField:field];
@@ -540,8 +538,10 @@
             else if ([view isKindOfClass:[JARadioComponent class]])
             {
                 JARadioComponent *radioComponent = (JARadioComponent*) view;
-                if(([@"register" isEqualToString:[self.form type]] || [@"address" isEqualToString:[self.form type]]) && [radioComponent isComponentWithKey:@"gender"])
-                {
+                if(([@"register" isEqualToString:[self.form type]]
+                    || [@"address" isEqualToString:[self.form type]]
+                    || [@"edit" isEqualToString:[self.form type]])
+                   && [radioComponent isComponentWithKey:@"gender"]) {
                     genderComponent = radioComponent;
                 }
                 

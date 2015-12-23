@@ -41,7 +41,6 @@
 #import "RISeller.h"
 #import "JANavigationBarLayout.h"
 #import "RICustomer.h"
-#import "JAUserDataViewController.h"
 #import "JAEmailNotificationsViewController.h"
 #import "JACampaignsViewController.h"
 #import "JAProductDetailsViewController.h"
@@ -776,17 +775,14 @@
 - (void)showUserData:(NSNotification*)notification
 {
     UIViewController *topViewController = [self topViewController];
-    if([RICustomer checkIfUserIsLogged])
-    {
-        if (![topViewController isKindOfClass:[JAUserDataViewController class]])
-        {
+    if([RICustomer checkIfUserIsLogged]) {
+        if (![topViewController isKindOfClass:[JAUserDataViewController class]]) {
             BOOL animated = NO;
-            if(VALID_NOTEMPTY(notification.object, NSDictionary) && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber))
-            {
+            if(VALID_NOTEMPTY(notification.object, NSDictionary) && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber)) {
                 animated = [[notification.object objectForKey:@"animated"] boolValue];
             }
             
-            JAUserDataViewController *userData = [[JAUserDataViewController alloc] initWithNibName:@"JAUserDataViewController" bundle:nil];
+            JAUserDataViewController *userData = [[JAUserDataViewController alloc] init];
             
             [self pushViewController:userData animated:animated];
         }
