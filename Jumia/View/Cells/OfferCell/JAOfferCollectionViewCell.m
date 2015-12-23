@@ -40,7 +40,6 @@
     self.priceLine = [[JAProductInfoPriceLine alloc]initWithFrame:CGRectMake(10.f, 10.f, self.width-10.f, 15.f)];
     [self.priceLine setLineContentXOffset:0.f];
     self.priceLine.priceSize = kPriceSizeSmall;
-    [self.priceLine sizeToFit];
     [self addSubview:self.priceLine];
     
     self.productOfferSeller = productOffer;
@@ -106,11 +105,11 @@
 -(void)setProductSimple:(RIProductSimple*)productSimple {
     if (VALID_NOTEMPTY(productSimple.specialPriceFormatted, NSString)) {
         self.priceLabel.text = productSimple.specialPriceFormatted;
-        [self.priceLine setTitle:productSimple.specialPriceFormatted];
+        [self.priceLine setPrice:productSimple.specialPriceFormatted];
         [self.priceLine setOldPrice:productSimple.priceFormatted];
     } else {
         self.priceLabel.text = productSimple.priceFormatted;
-        [self.priceLine setTitle:productSimple.priceFormatted];
+        [self.priceLine setPrice:productSimple.priceFormatted];
         [self.priceLine setOldPrice:@""];
     }
     [self.priceLabel sizeToFit];

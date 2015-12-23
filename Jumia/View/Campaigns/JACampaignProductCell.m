@@ -355,16 +355,21 @@
                    placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]
      ];
     
-    if (VALID_NOTEMPTY(campaignProduct.specialPrice, NSNumber)) {
-        [self.priceLine setTitle:campaignProduct.specialPriceFormatted];
-        [self.priceLine setOldPrice:campaignProduct.priceFormatted];
-        [self.savingMoneyLabel setText:campaignProduct.savePriceFormatted];
-        [self.savingView setHidden:NO];
-        
-    }else{
-        [self.priceLine setTitle:campaignProduct.priceFormatted];
+    if (VALID_NOTEMPTY(campaignProduct.priceRange, NSString)) {
+        [self.priceLine setPrice:campaignProduct.priceRange];
         [self.savingView setHidden:YES];
-    }
+    } else
+        if (VALID_NOTEMPTY(campaignProduct.specialPrice, NSNumber)) {
+            [self.priceLine setPrice:campaignProduct.specialPriceFormatted];
+            [self.priceLine setOldPrice:campaignProduct.priceFormatted];
+            [self.savingMoneyLabel setText:campaignProduct.savePriceFormatted];
+            [self.savingView setHidden:NO];
+            
+        }else{
+            [self.priceLine setPrice:campaignProduct.priceFormatted];
+            [self.savingView setHidden:YES];
+        }
+    
     if (campaignProduct.productSimples.count > 1) {
         [self.sizeLine setHidden:NO];
         [self.sizeLine setTitle:[NSString stringWithFormat:@"%@: %@",campaignProduct.variationName, campaignProduct.variationAvailableList] forState:UIControlStateNormal];

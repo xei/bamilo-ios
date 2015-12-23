@@ -104,6 +104,9 @@
                                                clickableView.bounds.size.width - textMarginX*2 - imageSide - imageMargin,
                                                subTitleLabel.frame.size.height)];
             [clickableView addSubview:subTitleLabel];
+            
+            titleLabel.textAlignment = NSTextAlignmentLeft;
+            subTitleLabel.textAlignment = NSTextAlignmentLeft;
         }
         
         
