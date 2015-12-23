@@ -448,8 +448,13 @@
     [self.changePasswordButton setWidth:self.mainScrollView.width - (kSideMargin * 2)];
 }
 
-#pragma mark - DynamicForms delegate
+#pragma mark - Done button
+- (IBAction)doneClicked:(id)sender
+{
+    [self.view endEditing:YES];
+}
 
+#pragma mark - DynamicForms delegate
 - (void)changedFocus:(UIView *)view
 {
     _firstResponder = view;
