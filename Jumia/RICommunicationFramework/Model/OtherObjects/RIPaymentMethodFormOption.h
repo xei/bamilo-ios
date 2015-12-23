@@ -11,7 +11,6 @@
 
 @interface RIPaymentMethodFormOption : NSObject
 
-@property (nonatomic, strong) NSString *uid;
 @property (nonatomic, strong) NSString *text;
 @property (nonatomic, strong) NSArray *images;
 @property (nonatomic, strong) NSString *tooltipText;
@@ -26,6 +25,6 @@
  * @param the json object with the payment method form option
  * @return a initialized payment method form option
  */
-+ (RIPaymentMethodFormOption *)parseField:(NSDictionary *)fieldJSON forId:(NSString*)uid;
++ (RIPaymentMethodFormOption *)parseField:(NSDictionary *)fieldJSON;
 
 @end

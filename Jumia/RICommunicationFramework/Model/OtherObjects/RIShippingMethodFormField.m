@@ -47,26 +47,8 @@
         }
     }
     
-    if (VALID_NOTEMPTY([fieldJSON objectForKey:@"options"], NSDictionary) && VALID_NOTEMPTY(newField.key, NSString)) {
-        NSDictionary* optionsObject = [fieldJSON objectForKey:@"options"];
-        NSMutableArray *optionsArray = [[NSMutableArray alloc] init];
-        
-        NSArray *optionsKeys = [optionsObject allKeys];
-        for(NSString *optionKey in optionsKeys)
-        {
-            NSDictionary *optionDictionaryObject = [optionsObject objectForKey:optionKey];
-            RIShippingMethod *shippingMethod = [RIShippingMethod parseShippingMethod:optionDictionaryObject];
-            if(VALID_NOTEMPTY(shippingMethod, RIShippingMethod))
-            {
-                NSDictionary *optionDictionary = [NSDictionary dictionaryWithObject:shippingMethod forKey:optionKey];
-                [optionsArray addObject:optionDictionary];
-            }
-        }
-        
-        newField.options = [NSDictionary dictionaryWithObject:[optionsArray copy] forKey:[newField.key lowercaseString]];
-    }
-    else if (VALID_NOTEMPTY([fieldJSON objectForKey:@"options"], NSArray) && VALID_NOTEMPTY(newField.scenario, NSString)) {
-        {
+    if (VALID_NOTEMPTY([fieldJSON objectForKey:@"options"], NSArray)) {
+        if (VALID_NOTEMPTY(newField.scenario, NSString)) {
             NSArray* optionsObject = [fieldJSON objectForKey:@"options"];
             NSMutableArray *optionsArray = [[NSMutableArray alloc] init];
             
@@ -78,11 +60,40 @@
                     {
                         RIShippingMethodPickupStationOption *option = [RIShippingMethodPickupStationOption parsePickupStation:optionObject];
                         [optionsArray addObject:option];
+                    } else {
+                        NSArray *optionsKeys = [optionObject allKeys];
+                        for(NSString *optionKey in optionsKeys)
+                        {
+                            NSDictionary *optionDictionaryObject = [optionObject objectForKey:optionKey];
+                            RIShippingMethod *shippingMethod = [RIShippingMethod parseShippingMethod:optionDictionaryObject];
+                            if(VALID_NOTEMPTY(shippingMethod, RIShippingMethod))
+                            {
+                                NSDictionary *optionDictionary = [NSDictionary dictionaryWithObject:shippingMethod forKey:optionKey];
+                                [optionsArray addObject:optionDictionary];
+                            }
+                        }
                     }
                 }
             }
             
             newField.options = [NSDictionary dictionaryWithObject:[optionsArray copy] forKey:newField.scenario];
+        } else if (VALID_NOTEMPTY(newField.key, NSString)) {
+            NSArray* optionJSONsArray = [fieldJSON objectForKey:@"options"];
+            NSMutableArray* optionsFinalArray = [NSMutableArray new];
+            
+            if (VALID_NOTEMPTY(optionJSONsArray, NSArray)) {
+                for(NSDictionary *optionJSON in optionJSONsArray)
+                {
+                    RIShippingMethod *shippingMethod = [RIShippingMethod parseShippingMethod:optionJSON];
+                    if(VALID_NOTEMPTY(shippingMethod, RIShippingMethod))
+                    {
+                        NSDictionary *optionDictionary = [NSDictionary dictionaryWithObject:shippingMethod forKey:shippingMethod.value];
+                        [optionsFinalArray addObject:optionDictionary];
+                    }
+                }
+                
+                newField.options = [NSDictionary dictionaryWithObject:[optionsFinalArray copy] forKey:[newField.key lowercaseString]];
+            }
         }
     }
     

@@ -19,7 +19,6 @@
 
 @implementation RIBundle
 
-
 + (RIBundle *)parseRIBundle:(NSDictionary *)bundleJSON country:(RICountryConfiguration*)country
 {
     RIBundle *newBundle = [[RIBundle alloc] init];
@@ -107,6 +106,7 @@
 @synthesize priceRange;
 @synthesize vertical;
 @synthesize fashion;
+@synthesize preOrder;
 
 + (NSString *)getCompleteProductWithSku:(NSString*)sku
                            successBlock:(void (^)(id product))successBlock
@@ -644,9 +644,11 @@
                 newProduct.relatedProducts = [newRelatedProducts copy];
             }
         }
+        
+        if ([dataDic objectForKey:@"pre_order"]) {
+            newProduct.preOrder = YES;
+        }
     }
-    
-    
     
     return newProduct;
 }

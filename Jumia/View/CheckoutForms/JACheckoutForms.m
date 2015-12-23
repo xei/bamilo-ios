@@ -48,7 +48,7 @@
                 {
                     JADynamicForm *dynamicForm = [[JADynamicForm alloc] initWithForm:paymentMethod.form startingPosition:0.0f widthSize:width hasFieldNavigation:YES];
                     
-                    [self.dynamicForms setObject:dynamicForm forKey:paymentMethod.uid];
+                    [self.dynamicForms setObject:dynamicForm forKey:paymentMethod.value];
                     
                     for (UIView *dynamicFormView in dynamicForm.formViews)
                     {
@@ -87,7 +87,7 @@
                 if (RI_IS_RTL) {
                     [paymentMethodView flipAllSubviews];
                 }
-                [self.paymentMethodFormViews setValue:paymentMethodView forKey:paymentMethod.uid];
+                [self.paymentMethodFormViews setValue:paymentMethodView forKey:paymentMethod.value];
             }
         }
     } else {
@@ -129,7 +129,7 @@
     if (VALID_NOTEMPTY(paymentMethod, RIPaymentMethodFormOption)) {
         if(VALID_NOTEMPTY(self.paymentMethodFormViews, NSMutableDictionary))
         {
-            paymentMethodView = [self.paymentMethodFormViews objectForKey:paymentMethod.uid];
+            paymentMethodView = [self.paymentMethodFormViews objectForKey:paymentMethod.value];
         }
     } else {
         if (VALID_NOTEMPTY(self.paymentMethodFormViews, NSMutableDictionary)) {
@@ -149,7 +149,7 @@
         
         UIView *paymentMethodView;
         if (VALID_NOTEMPTY(paymentMethod, RIPaymentMethodFormOption)) {
-            paymentMethodView = [self.paymentMethodFormViews objectForKey:paymentMethod.uid];
+            paymentMethodView = [self.paymentMethodFormViews objectForKey:paymentMethod.value];
         } else {
             paymentMethodView = [self.paymentMethodFormViews objectForKey:@"0"];
         }
@@ -163,7 +163,7 @@
 {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     
-    JADynamicForm *dynamicForm = [self.dynamicForms objectForKey:paymentMethod.uid];
+    JADynamicForm *dynamicForm = [self.dynamicForms objectForKey:paymentMethod.value];
     [parameters addEntriesFromDictionary:[dynamicForm getValues]];
     
     return [parameters copy];

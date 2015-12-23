@@ -64,6 +64,7 @@
         _dropdownImageView = [[UIImageView alloc] initWithImage:image];
         [_dropdownImageView setXLeftOf:self.requiredSymbol at:0];
         [_dropdownImageView setY:self.textField.y];
+        [self addSubview:_dropdownImageView];
     }
     return _dropdownImageView;
 }
@@ -160,8 +161,6 @@
         self.iconImageView = [[UIImageView alloc] initWithImage:iconImage];
         [self.iconImageView setFrame:CGRectMake(0, self.y + (self.height - self.iconImageView.height)/2, iconImage.size.width, iconImage.size.height)];
     }
-    
-    [self addSubview:self.dropdownImageView];
 }
 
 -(BOOL)isComponentWithKey:(NSString*)key
