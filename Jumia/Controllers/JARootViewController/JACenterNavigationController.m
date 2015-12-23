@@ -1063,8 +1063,6 @@
     {
         JAOrderViewController *orderVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"orderViewController"];
         
-        orderVC.cart = [notification.userInfo objectForKey:@"cart"];
-        
         [self pushViewController:orderVC animated:YES];
     }
 }

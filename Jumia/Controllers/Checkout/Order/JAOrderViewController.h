@@ -11,6 +11,4 @@
 
 @interface JAOrderViewController : JABaseViewController
 
-@property (nonatomic, strong)RICart* cart;
-
 @end

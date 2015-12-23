@@ -13,10 +13,13 @@
 #import "UIImageView+WebCache.h"
 #import "RIAddress.h"
 #import "RIPaymentInformation.h"
+#import "JAUtils.h"
 
 #define kScrollViewTag 9999
 
 @interface JAOrderViewController ()
+
+@property (nonatomic, strong)RICart* cart;
 
 @property (nonatomic, assign) NSInteger scrollViewCurrentY;
 @property (nonatomic, strong) UIScrollView* scrollView;
@@ -67,11 +70,7 @@
     [self.bottomView setHidden:YES];
     [self.view addSubview:self.bottomView];
     
-    self.apiResponse = RIApiResponseSuccess;
-    
-    [self showLoading];
-    
-    [self setupViews];
+    [self loadStep];
     
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
@@ -86,6 +85,26 @@
         [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
         self.firstLoading = NO;
     }
+}
+
+- (void)loadStep
+{
+    self.apiResponse = RIApiResponseSuccess;
+    
+    [self showLoading];
+    
+    [RICart getMultistepFinishWithSuccessBlock:^(RICart *cart) {
+        self.cart = cart;
+        [self setupViews];
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+        
+        BOOL internetConnectionFailed = NO;
+        if (RIApiResponseNoInternetConnection == apiResponse) {
+            internetConnectionFailed = YES;
+        }
+        
+        [self showErrorView:internetConnectionFailed startingY:[self viewBounds].origin.y selector:@selector(loadStep) objects:nil];
+    }];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -901,8 +920,9 @@
     {
         [self showLoading];
     }
+
     
-    [RICart finishCheckoutForCart:self.cart withSuccessBlock:^(RICart *cart) {
+    [RICart setMultistepFinishForCart:self.cart withSuccessBlock:^(RICart *cart) {
         NSLog(@"SUCCESS Finishing checkout");
         
         if(VALID_NOTEMPTY(cart.paymentInformation, RIPaymentInformation))
