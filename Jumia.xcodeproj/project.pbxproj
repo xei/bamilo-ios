@@ -514,6 +514,11 @@
 		9A3C76151C285D9300EB0B11 /* JARecentlyViewedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3C76121C285D9300EB0B11 /* JARecentlyViewedCell.m */; };
 		9A3C76161C285D9300EB0B11 /* JARecentlyViewedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3C76121C285D9300EB0B11 /* JARecentlyViewedCell.m */; };
 		9A3C76171C285D9300EB0B11 /* JARecentlyViewedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3C76121C285D9300EB0B11 /* JARecentlyViewedCell.m */; };
+		9A4ADF681C2AF1010019F439 /* JADropdownControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ADF671C2AF1010019F439 /* JADropdownControl.m */; };
+		9A4ADF691C2AF1010019F439 /* JADropdownControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ADF671C2AF1010019F439 /* JADropdownControl.m */; };
+		9A4ADF6A1C2AF1010019F439 /* JADropdownControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ADF671C2AF1010019F439 /* JADropdownControl.m */; };
+		9A4ADF6B1C2AF1010019F439 /* JADropdownControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ADF671C2AF1010019F439 /* JADropdownControl.m */; };
+		9A4ADF6C1C2AF1010019F439 /* JADropdownControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ADF671C2AF1010019F439 /* JADropdownControl.m */; };
 		9A4F910B1B3C308F00E34C0B /* JAUserDataViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A441B1DE1B80028105D /* JAUserDataViewController~iPad.xib */; };
 		9A4F910D1B3C309000E34C0B /* JAUserDataViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A441B1DE1B80028105D /* JAUserDataViewController~iPad.xib */; };
 		9A4F910E1B3C311B00E34C0B /* JAUserDataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A431B1DE1B80028105D /* JAUserDataViewController.xib */; };
@@ -2837,6 +2842,8 @@
 		9A3876661BCD121A0088B186 /* JATabButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JATabButton.m; path = Details/JATabButton.m; sourceTree = "<group>"; };
 		9A3C76111C285D9300EB0B11 /* JARecentlyViewedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARecentlyViewedCell.h; sourceTree = "<group>"; };
 		9A3C76121C285D9300EB0B11 /* JARecentlyViewedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARecentlyViewedCell.m; sourceTree = "<group>"; };
+		9A4ADF661C2AF1010019F439 /* JADropdownControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JADropdownControl.h; sourceTree = "<group>"; };
+		9A4ADF671C2AF1010019F439 /* JADropdownControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JADropdownControl.m; sourceTree = "<group>"; };
 		9A4F91121B3D5C3E00E34C0B /* JAPDVWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAPDVWizardView.h; path = Wizard/JAPDVWizardView.h; sourceTree = "<group>"; };
 		9A4F91131B3D5C3E00E34C0B /* JAPDVWizardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAPDVWizardView.m; path = Wizard/JAPDVWizardView.m; sourceTree = "<group>"; };
 		9A55A6851BBE9E06008EF4A6 /* JABottomBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JABottomBar.h; sourceTree = "<group>"; };
@@ -3924,6 +3931,7 @@
 		4AE242DB198655D900E37C90 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				9A4ADF651C2AF0BD0019F439 /* CustomControls */,
 				CE06FCB41A88C374002FCD25 /* Catalog */,
 				CEA86DF31A49D247000032AD /* Campaigns */,
 				B5240E451A496E59006264E9 /* MyOrderDetailView */,
@@ -4351,6 +4359,15 @@
 				9A3876661BCD121A0088B186 /* JATabButton.m */,
 			);
 			name = "Details DescSpecReviews";
+			sourceTree = "<group>";
+		};
+		9A4ADF651C2AF0BD0019F439 /* CustomControls */ = {
+			isa = PBXGroup;
+			children = (
+				9A4ADF661C2AF1010019F439 /* JADropdownControl.h */,
+				9A4ADF671C2AF1010019F439 /* JADropdownControl.m */,
+			);
+			name = CustomControls;
 			sourceTree = "<group>";
 		};
 		9A7EE9AD1B5546FE004E2505 /* ADJAdditions */ = {
@@ -7385,6 +7402,7 @@
 				f30fa9e7d7b939469d4b3c6b /* JAForgotPasswordViewController.m in Sources */,
 				CEABEEC81A126652000D0CF8 /* JAGenericFiltersView.m in Sources */,
 				894B0D781BB2F80A00199251 /* RICatalog.m in Sources */,
+				9A4ADF691C2AF1010019F439 /* JADropdownControl.m in Sources */,
 				9A189E471BB190030039BC14 /* RICatalog.m in Sources */,
 				51686b7e16269d6e716c8f70 /* RIOperation.m in Sources */,
 				CEED47311A7B973B006D9CE7 /* JAPDVBundleSingleItem.m in Sources */,
@@ -7798,6 +7816,7 @@
 				9A17372F1B679740004905B4 /* UIImage+WithColor.m in Sources */,
 				9A55A68E1BC2E88D008EF4A6 /* JAPDVVariationsViewController.m in Sources */,
 				B5A302DE19811E9200F71726 /* RITrackingWrapper.m in Sources */,
+				9A4ADF681C2AF1010019F439 /* JADropdownControl.m in Sources */,
 				B5A302D319811E9200F71726 /* RIVariation.m in Sources */,
 				9AD15D4B1BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.m in Sources */,
 				520A37C81A4444CC0046C8B1 /* JAFilteredNoResultsView.m in Sources */,
@@ -7932,6 +7951,7 @@
 				9ABCAEF81B0F8FEE00A69271 /* UIView+Mirror.m in Sources */,
 				CE9ADB451AB34C4600D56481 /* SDWebImageManager.m in Sources */,
 				CE9ADB461AB34C4600D56481 /* JAButtonCell.m in Sources */,
+				9A4ADF6A1C2AF1010019F439 /* JADropdownControl.m in Sources */,
 				9AB488821B72748500886A44 /* JAShopWebViewController.m in Sources */,
 				CE9ADB471AB34C4600D56481 /* RIForm.m in Sources */,
 				89FB32571BCD41C5002A6FC2 /* RISellerDelivery.m in Sources */,
@@ -8223,6 +8243,7 @@
 				9ABCAEF91B0F8FEE00A69271 /* UIView+Mirror.m in Sources */,
 				CE9ADD3F1AB6D6E900D56481 /* SDWebImageManager.m in Sources */,
 				CE9ADD401AB6D6E900D56481 /* JAButtonCell.m in Sources */,
+				9A4ADF6B1C2AF1010019F439 /* JADropdownControl.m in Sources */,
 				9AB488831B72748500886A44 /* JAShopWebViewController.m in Sources */,
 				CE9ADD411AB6D6E900D56481 /* RIForm.m in Sources */,
 				89FB32581BCD41C5002A6FC2 /* RISellerDelivery.m in Sources */,
@@ -8514,6 +8535,7 @@
 				CE9ADF391AB6D78200D56481 /* SDWebImageManager.m in Sources */,
 				9A1737331B68EBB0004905B4 /* JACheckoutBottomView.m in Sources */,
 				CE9ADF3A1AB6D78200D56481 /* JAButtonCell.m in Sources */,
+				9A4ADF6C1C2AF1010019F439 /* JADropdownControl.m in Sources */,
 				CE9ADF3B1AB6D78200D56481 /* RIForm.m in Sources */,
 				CE9ADF3C1AB6D78200D56481 /* JAPageControl.m in Sources */,
 				9A3876561BCD0DBE0088B186 /* JAProductDescriptionView.m in Sources */,

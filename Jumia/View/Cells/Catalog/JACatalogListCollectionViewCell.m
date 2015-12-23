@@ -173,11 +173,13 @@
         [self setForRTL:self.discountLabel];
     }
     
-    CGRect sizeButtonRect = CGRectMake(distXAfterImage, CGRectGetMaxY(priceLineRect), self.width - 2*distXAfterImage, 15);
+    CGRect sizeButtonRect = CGRectMake(distXAfterImage, CGRectGetMaxY(priceLineRect), self.sizeButton.width, 20);
     if (!CGRectEqualToRect(sizeButtonRect, self.sizeButton.frame)) {
         [self.sizeButton setFrame:sizeButtonRect];
         self.sizeButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        [self setForRTL:self.sizeButton];
+        if (RI_IS_RTL) {
+            [self.sizeButton flipViewPositionInsideSuperview];
+        }
     }
     
     CGFloat favX =  self.favoriteButton.superview.width - self.favoriteButton.width - xFavOffset;

@@ -28,21 +28,10 @@
     return _addToCartBar;
 }
 
-- (JARadioComponent *)sizeComponent
-{
-    if (!VALID(_sizeComponent, JARadioComponent)) {
-        _sizeComponent = [[JARadioComponent alloc] initWithFrame:CGRectMake(self.nameLabel.x, self.addToCartBar.y, 100.f, kBottomDefaultHeight)];
-        [_sizeComponent.textField setPlaceholder:STRING_SIZE];
-        [_sizeComponent.textField setEnabled:NO];
-    }
-    return _sizeComponent;
-}
-
 - (void)initViews
 {
     [super initViews];
     [self addSubview:self.addToCartBar];
-//    [self addSubview:self.sizeComponent];
 }
 
 - (void)setTag:(NSInteger)tag
@@ -56,21 +45,16 @@
 - (void)reloadViews
 {
     [super reloadViews];
-    CGFloat distXImage = 32.f;
-    
-    if ([UIDevice currentDevice].userInterfaceIdiom != UIUserInterfaceIdiomPad) {
-        distXImage = 6.f;
-    }
     
     [self.recentProductBadgeLabel setYBottomOf:self.ratingLine.hidden?self.priceLine:self.ratingLine at:6.f];
     
     [self.addToCartBar setYBottomAligned:10.f];
-    [self.addToCartBar setXRightAligned:distXImage];
+    [self.addToCartBar setXRightAligned:10.f];
     [self setForRTL:self.addToCartBar];
     
     [self.discountLabel setY:self.priceLine.y];
-    [self.sizeButton setHeight:self.addToCartBar.height];
-    [self.sizeButton setY:self.addToCartBar.y];
+    [self.sizeButton setWidth:100.f];
+    [self.sizeButton setY:self.addToCartBar.y+self.addToCartBar.height/2 - self.sizeButton.height/2];
 }
 
 - (void)setForRTL:(UIView *)view
