@@ -17,11 +17,11 @@
     
     if (VALID_NOTEMPTY(formJSON, NSDictionary)) {
         
-        if ([formJSON objectForKey:@"id"]) {
-            newForm.uid = [formJSON objectForKey:@"id"];
+        if ([formJSON objectForKey:@"type"]) {
+            newForm.type = [formJSON objectForKey:@"type"];
         }
         if ([formJSON objectForKey:@"action"]) {
-            newForm.action = [formJSON objectForKey:@"action"];
+            newForm.targetString = [formJSON objectForKey:@"action"];
         }
         if ([formJSON objectForKey:@"method"]) {
             newForm.method = [formJSON objectForKey:@"method"];
@@ -64,7 +64,7 @@
     
     for (RIPaymentMethodFormField *field in [form fields])
     {
-        if([@"paymentMethodForm[payment_method]" isEqualToString:[field name]])
+        if([@"payment_method[payment_method]" isEqualToString:[field name]])
         {
             paymentMethods = [field.options copy];
             break;
@@ -80,7 +80,7 @@
     
     for (RIPaymentMethodFormField *field in [form fields])
     {
-        if([@"paymentMethodForm[payment_method]" isEqualToString:[field name]])
+        if([@"payment_method[payment_method]" isEqualToString:[field name]])
         {
             if(VALID_NOTEMPTY([field value], NSString))
             {
@@ -108,7 +108,7 @@
     NSArray *extraFields = nil;
     for (RIPaymentMethodFormField *field in [form fields])
     {
-        if([@"paymentMethodForm[payment_method]" isEqualToString:[field name]])
+        if([@"payment_method[payment_method]" isEqualToString:[field name]])
         {
             for (RIPaymentMethodFormOption *formOption in [field options])
             {

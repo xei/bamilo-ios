@@ -584,7 +584,11 @@ JAActivityViewControllerDelegate
         [self.ctaView addSmallButton:[UIImage imageNamed:@"ic_calltoorder"] target:self action:@selector(callToOrder)];
     }
     
-    [self.ctaView addButton:STRING_BUY_NOW target:self action:@selector(addToCart)];
+    NSString *buttonText = STRING_BUY_NOW;
+    if (self.product.preOrder) {
+        buttonText = STRING_PRE_ORDER;
+    }
+    [self.ctaView addButton:buttonText target:self action:@selector(addToCart)];
     
     //make sure wizard and picker are in front
     //$WIZ$

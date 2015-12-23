@@ -84,7 +84,6 @@ NSString *const RI_API_ADD_BUNDLE = @"cart/addbundle/";
 NSString *const RI_API_ADD_MULTIPLE_ORDER = @"cart/addmultiple/";
 NSString *const RI_API_REMOVE_PRODUCT_FROM_CART = @"cart/removeproduct/";
 NSString *const RI_API_GET_CART_DATA = @"cart/getdata/";
-//$$$ CHANGE TO UPDATE PRODUCT
 NSString *const RI_API_GET_PRODUCT_UPDATE = @"cart/updateproduct/";
 NSString *const RI_API_ADD_VOUCHER_TO_CART = @"cart/addvoucher/";
 NSString *const RI_API_REMOVE_VOUCHER_FROM_CART = @"cart/removevoucher/";
@@ -98,11 +97,6 @@ NSString *const RI_API_FACEBOOK_LOGIN_CUSTOMER = @"customer/facebooklogin/";
 NSString *const RI_API_LOGOUT_CUSTOMER = @"customer/logout/";
 NSString *const RI_API_GET_CUSTOMER_ADDRESS_LIST = @"customer/getaddresslist/";
 NSString *const RI_API_GET_CUSTOMER_SELECT_DEFAULT = @"customer/makedefaultaddress/";
-
-NSString *const RI_API_GET_MULTISTEP_ADDRESSES = @"multistep/addresses/";
-NSString *const RI_API_GET_SHIPPING_METHODS_FORM = @"multistep/shippingmethod/";
-NSString *const RI_API_GET_PAYMENT_METHODS_FORM = @"multistep/paymentmethod/";
-NSString *const RI_API_FINISH_CHECKOUT = @"multistep/finish/";
 
 NSString *const RI_GET_CAMPAIGN = @"campaign/get/campaign_slug/%@/";
 NSString *const RI_API_BUNDLE = @"catalog/bundle/sku/";
@@ -127,5 +121,13 @@ NSString *const RI_API_FORMS_ADDRESS_EDIT = @"addressedit/id/";
 NSString *const RI_API_RICH_RELEVANCE = @"richrelevance/request/req/";
 NSString *const RI_API_RICH_RELEVANCE_CLICK = @"request/req/";
 
+NSString *const RI_API_MULTISTEP_GET_ADDRESSES = @"multistep/getstepaddresses/";
+NSString *const RI_API_MULTISTEP_SUBMIT_ADDRESSES = @"multistep/addresses/";
+NSString *const RI_API_MULTISTEP_GET_SHIPPING = @"multistep/getstepshipping/";
+NSString *const RI_API_MULTISTEP_SUBMIT_SHIPPING = @"multistep/shippingmethod/";
+NSString *const RI_API_MULTISTEP_GET_PAYMENT = @"multistep/getsteppayment/";
+NSString *const RI_API_MULTISTEP_SUBMIT_PAYMENT = @"multistep/paymentmethod/";
+NSString *const RI_API_MULTISTEP_GET_FINISH = @"multistep/getstepfinish/";
+NSString *const RI_API_MULTISTEP_SUBMIT_FINISH = @"multistep/finish/";
 NSString *const RI_API_GET_FAQ_AND_TERMS = @"/main/getfaqandterms/";
 NSString *const RI_API_GET_PHONE_PREFIXES = @"/main/getphoneprefixes/";
