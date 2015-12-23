@@ -528,6 +528,7 @@
 - (void)openPicker:(JARadioComponent *)radioComponent
 {
     self.radioComponent = radioComponent;
+    
     if (VALID_NOTEMPTY(self.datePicker, JADatePicker)) {
         [self.datePicker removeFromSuperview];
         self.datePicker = nil;
@@ -592,7 +593,7 @@
             [self.radioComponent.textField setText:selectedValue];
         } else {
             RIPhonePrefix *prefix = (RIPhonePrefix *)[self.phonePrefixes objectAtIndex:selectedRow];
-            [self.radioComponent setValue:[prefix value]];
+            [self.radioComponent setValue:[prefix.value stringValue]];
             [self.radioComponent.textField setText:[prefix label]];
         }
     }
