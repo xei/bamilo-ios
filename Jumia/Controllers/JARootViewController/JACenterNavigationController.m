@@ -31,7 +31,6 @@
 #import "JAOrderViewController.h"
 #import "JACatalogViewController.h"
 #import "JAPDVViewController.h"
-#import "JARecentlyViewedViewController.h"
 #import "JACartViewController.h"
 #import "JAForgotPasswordViewController.h"
 #import "JALoginViewController.h"
@@ -712,7 +711,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JARecentlyViewedViewController class]])
     {
-        JARecentlyViewedViewController *recentlyViewedViewController = [[JARecentlyViewedViewController alloc]initWithNibName:@"JARecentlyViewedViewController" bundle:nil];
+        JARecentlyViewedViewController *recentlyViewedViewController = [[JARecentlyViewedViewController alloc]init];
         
         [self pushViewController:recentlyViewedViewController animated:YES];
     }

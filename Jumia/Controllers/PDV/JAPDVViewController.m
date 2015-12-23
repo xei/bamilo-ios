@@ -496,6 +496,14 @@ JAActivityViewControllerDelegate
         [self requestBundles];
     } andFailureBlock:nil];
     
+    NSDictionary *userInfo = nil;
+    if (self.product.favoriteAddDate) {
+        userInfo = [NSDictionary dictionaryWithObject:self.product.favoriteAddDate forKey:@"favoriteAddDate"];
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
+                                                        object:self.product.sku
+                                                      userInfo:userInfo];
+    
     [self trackingEventMostViewedBrand];
 }
 

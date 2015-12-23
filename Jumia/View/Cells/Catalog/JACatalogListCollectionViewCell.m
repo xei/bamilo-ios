@@ -10,7 +10,6 @@
 #import "RIProduct.h"
 #import "RIImage.h"
 #import "UIImageView+WebCache.h"
-#import "JAProductInfoRatingLine.h"
 
 #define xFavOffset 10.f
 #define kRecentProductBadgeLabelTopMargin 10.f
@@ -20,11 +19,11 @@
     BOOL _ratingRefresh;
 }
 
-@property (nonatomic) JAProductInfoRatingLine *ratingLine;
-
 @end
 
 @implementation JACatalogListCollectionViewCell
+
+@synthesize ratingLine = _ratingLine;
 
 - (JAProductInfoRatingLine *)ratingLine
 {
@@ -193,9 +192,9 @@
         [self setForRTL:self.selectorButton];
     }
     
+    [self.recentProductBadgeLabel setY:CGRectGetMaxY(self.ratingLine.frame) + kRecentProductBadgeLabelTopMargin];
     if (self.recentProductBadgeLabel.x != distXAfterImage) {
         [self.recentProductBadgeLabel setX:distXAfterImage];
-        [self.recentProductBadgeLabel setY:CGRectGetMaxY(self.ratingLine.frame) + kRecentProductBadgeLabelTopMargin];
         [self setForRTL:self.recentProductBadgeLabel];
     }
 
