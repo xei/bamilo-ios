@@ -31,7 +31,6 @@
 #import "JAOrderViewController.h"
 #import "JACatalogViewController.h"
 #import "JAPDVViewController.h"
-#import "JARecentlyViewedViewController.h"
 #import "JACartViewController.h"
 #import "JAForgotPasswordViewController.h"
 #import "JALoginViewController.h"
@@ -41,7 +40,6 @@
 #import "RISeller.h"
 #import "JANavigationBarLayout.h"
 #import "RICustomer.h"
-#import "JAUserDataViewController.h"
 #import "JAEmailNotificationsViewController.h"
 #import "JACampaignsViewController.h"
 #import "JAProductDetailsViewController.h"
@@ -713,7 +711,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JARecentlyViewedViewController class]])
     {
-        JARecentlyViewedViewController *recentlyViewedViewController = [[JARecentlyViewedViewController alloc]initWithNibName:@"JARecentlyViewedViewController" bundle:nil];
+        JARecentlyViewedViewController *recentlyViewedViewController = [[JARecentlyViewedViewController alloc]init];
         
         [self pushViewController:recentlyViewedViewController animated:YES];
     }
@@ -776,17 +774,14 @@
 - (void)showUserData:(NSNotification*)notification
 {
     UIViewController *topViewController = [self topViewController];
-    if([RICustomer checkIfUserIsLogged])
-    {
-        if (![topViewController isKindOfClass:[JAUserDataViewController class]])
-        {
+    if([RICustomer checkIfUserIsLogged]) {
+        if (![topViewController isKindOfClass:[JAUserDataViewController class]]) {
             BOOL animated = NO;
-            if(VALID_NOTEMPTY(notification.object, NSDictionary) && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber))
-            {
+            if(VALID_NOTEMPTY(notification.object, NSDictionary) && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber)) {
                 animated = [[notification.object objectForKey:@"animated"] boolValue];
             }
             
-            JAUserDataViewController *userData = [[JAUserDataViewController alloc] initWithNibName:@"JAUserDataViewController" bundle:nil];
+            JAUserDataViewController *userData = [[JAUserDataViewController alloc] init];
             
             [self pushViewController:userData animated:animated];
         }
@@ -1062,8 +1057,6 @@
     if (![topViewController isKindOfClass:[JAOrderViewController class]] && [RICustomer checkIfUserIsLogged])
     {
         JAOrderViewController *orderVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"orderViewController"];
-        
-        orderVC.cart = [notification.userInfo objectForKey:@"cart"];
         
         [self pushViewController:orderVC animated:YES];
     }

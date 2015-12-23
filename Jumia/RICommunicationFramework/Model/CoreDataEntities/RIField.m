@@ -189,7 +189,7 @@
         NSString* nameForRelatedFields = [relatedJSON objectForKey:@"name"];
         
         
-        if ([typeForRelatedFields isEqualToString:@"choice"]) {
+        if ([typeForRelatedFields isEqualToString:@"list"]) {
             
             if (VALID_NOTEMPTY(relatedJSON, NSDictionary)) {
                 RIField* relatedField = [RIField parseField:relatedJSON];

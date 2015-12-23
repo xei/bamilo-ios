@@ -665,3 +665,11 @@
 "email_address" = "Email Address";
 
 "email_example" = "email@domain.com";
+
+"password" = "Password";
+
+"change_password" = "Change Password";
+
+"user_data_edited_with_success" = "User data edited with success";
+
+"pre_order" = "PRE-ORDER";

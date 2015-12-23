@@ -64,6 +64,7 @@
         _dropdownImageView = [[UIImageView alloc] initWithImage:image];
         [_dropdownImageView setXLeftOf:self.requiredSymbol at:0];
         [_dropdownImageView setY:self.textField.y];
+        [self addSubview:_dropdownImageView];
     }
     return _dropdownImageView;
 }
@@ -91,9 +92,9 @@
     [self.dropdownImageView setXLeftOf:self.requiredSymbol at:0];
     [self.dropdownImageView setY:self.textField.y + (self.textField.height - self.dropdownImageView.height)/2];
 //    [self.titleLabel setFrame:CGRectMake(0, 0, self.width, 20)];
-//    if (self.iconImageView) {
-//        [self.iconImageView setY:self.y + self.textField.y + (self.textField.height - self.iconImageView.height)/2];
-    //    }
+    if (self.iconImageView) {
+        [self.iconImageView setY:self.y + self.textField.y + (self.textField.height - self.iconImageView.height)/2];
+    }
     [self.textField setTextAlignment:NSTextAlignmentLeft];
     
     [self flipIfIsRTL];
@@ -154,7 +155,12 @@
             self.apiCallParameters = field.apiCallParameters;
         }
     }
-    [self addSubview:self.dropdownImageView];
+    
+    UIImage *iconImage = [UIImage imageNamed:[NSString stringWithFormat:@"ic_%@_form", field.key]];
+    if (iconImage) {
+        self.iconImageView = [[UIImageView alloc] initWithImage:iconImage];
+        [self.iconImageView setFrame:CGRectMake(0, self.y + (self.height - self.iconImageView.height)/2, iconImage.size.width, iconImage.size.height)];
+    }
 }
 
 -(BOOL)isComponentWithKey:(NSString*)key

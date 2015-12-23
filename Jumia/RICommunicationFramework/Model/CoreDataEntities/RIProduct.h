@@ -74,6 +74,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSString *shortSummary;
 @property (nonatomic, retain) NSString *summary;
 @property (nonatomic, retain) NSNumber *numberOfTimesSeen;
+@property (nonatomic) BOOL preOrder;
 
 //Not a coredata relationship
 @property (nonatomic, retain) NSOrderedSet *categoryIds;

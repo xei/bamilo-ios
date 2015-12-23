@@ -390,7 +390,10 @@
 #define STRING_LOGIN_ENTER_PASSWORD_TO_CONTINUE RILocalizedString(@"login_enter_your_password_to_continue", nil)
 #define STRING_LOGIN_WELCOME_BACK RILocalizedString(@"login_welcome_back", nil)
 #define STRING_FORGOT_YOUR_PASSWORD RILocalizedString(@"fgt_your_pass", nil)
-
 #define STRING_PASSWORD_RECOVERY RILocalizedString(@"password_recovery", nil)
+#define STRING_PASSWORD RILocalizedString(@"password", nil)
+#define STRING_CHANGE_PASSWORD RILocalizedString(@"change_password", nil)
+#define STRING_USER_DATA_EDITED_SUCCESS RILocalizedString(@"user_data_edited_with_success", nil)
+#define STRING_PRE_ORDER RILocalizedString(@"pre_order", nil)
 
 #endif

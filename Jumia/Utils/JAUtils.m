@@ -29,13 +29,13 @@
                                                             object:@{@"animated":[NSNumber numberWithBool:YES]}
                                                           userInfo:@{@"from_checkout":[NSNumber numberWithBool:YES]}];
     }
-    else if([@"shippingMethod" isEqualToString:nextStep])
+    else if([@"shipping" isEqualToString:nextStep])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutShippingScreenNotification
                                                             object:nil
                                                           userInfo:nil]; //this screen loads the cart itself
     }
-    else if([@"paymentMethod" isEqualToString:nextStep])
+    else if([@"payment" isEqualToString:nextStep])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutPaymentScreenNotification
                                                             object:nil

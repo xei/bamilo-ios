@@ -193,6 +193,11 @@
                 campaignProduct.priceEuroConverted = [campaignProductJSON objectForKey:@"price_converted"];
             }
         }
+        if ([campaignProductJSON objectForKey:@"price_range"]) {
+            if (![[campaignProductJSON objectForKey:@"price_range"] isKindOfClass:[NSNull class]]) {
+                campaignProduct.priceRange = [campaignProductJSON objectForKey:@"price_range"];
+            }
+        }
         if ([campaignProductJSON objectForKey:@"brand"]) {
             if (![[campaignProductJSON objectForKey:@"brand"] isKindOfClass:[NSNull class]]) {
                 campaignProduct.brand = [campaignProductJSON objectForKey:@"brand"];
@@ -235,7 +240,15 @@
             campaignProduct.targetString = [campaignProductJSON objectForKey:@"target"];
         }
         
-        NSArray* sizesArray = [campaignProductJSON objectForKey:@"sizes"];
+        if ([campaignProductJSON objectForKey:@"variation_name"] && VALID_NOTEMPTY([campaignProductJSON objectForKey:@"variation_name"], NSString)) {
+            campaignProduct.variationName = [campaignProductJSON objectForKey:@"variation_name"];
+        }
+        
+        if ([campaignProductJSON objectForKey:@"variations_available_list"] && VALID_NOTEMPTY([campaignProductJSON objectForKey:@"variations_available_list"], NSString)) {
+            campaignProduct.variationAvailableList = [campaignProductJSON objectForKey:@"variations_available_list"];
+        }
+        
+        NSArray* sizesArray = [campaignProductJSON objectForKey:@"simples"];
         if (VALID_NOTEMPTY(sizesArray, NSArray)) {
             
             NSMutableArray* productSimples = [NSMutableArray new];
@@ -283,9 +296,9 @@
             campaignProductSimple.sku = [campaignProductSimpleJSON objectForKey:@"sku"];
         }
     }
-    if ([campaignProductSimpleJSON objectForKey:@"size"]) {
-        if (![[campaignProductSimpleJSON objectForKey:@"size"] isKindOfClass:[NSNull class]]) {
-            campaignProductSimple.size = [campaignProductSimpleJSON objectForKey:@"size"];
+    if ([campaignProductSimpleJSON objectForKey:@"variation_value"]) {
+        if (![[campaignProductSimpleJSON objectForKey:@"variation_value"] isKindOfClass:[NSNull class]]) {
+            campaignProductSimple.variation = [campaignProductSimpleJSON objectForKey:@"variation_value"];
         }
     }
     
