@@ -39,6 +39,10 @@
     }
     
     [self addSubview:self.percentageBar];
+    
+    if (RI_IS_RTL) {
+        [self flipAllSubviews];
+    }
 }
 
 @end

@@ -72,6 +72,8 @@
             [clickableView addSubview:subTitleLabel];
             
             CGFloat imageBottomMargin = 0.0f; //value by design
+            titleLabel.textAlignment = NSTextAlignmentLeft;
+            subTitleLabel.textAlignment = NSTextAlignmentLeft;
             if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
                 titleLabel.textAlignment = NSTextAlignmentCenter;
                 subTitleLabel.textAlignment = NSTextAlignmentCenter;
