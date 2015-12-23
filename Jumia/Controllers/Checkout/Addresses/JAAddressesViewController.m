@@ -1023,7 +1023,7 @@ UICollectionViewDelegateFlowLayout>
                 
                 [self hideLoading];
                 
-                [self showMessage:STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS success:NO];
+                [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
             }];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             
@@ -1037,7 +1037,7 @@ UICollectionViewDelegateFlowLayout>
             
             [self hideLoading];
             
-            [self showMessage:STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS success:NO];
+            [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
         }];
 
     } else {
@@ -1050,10 +1050,10 @@ UICollectionViewDelegateFlowLayout>
     [self showLoading];
     [RIAddress setDefaultAddress:shippingAddress
                        isBilling:NO
-                    successBlock:^(void) {
+                    successBlock:^(RIApiResponse apiResponse, NSArray *successMessage) {
                         [self setDefaultBillingAddress:self.billingAddress];
                     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-                        [self showMessage:STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS success:NO];
+                        [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
                         [self setDefaultBillingAddress:self.billingAddress];
                     }];
 }
@@ -1062,13 +1062,13 @@ UICollectionViewDelegateFlowLayout>
 {
     [RIAddress setDefaultAddress:billingAddress
                        isBilling:YES
-                    successBlock:^(void) {
-                        [self showMessage:STRING_ADDRESSES_SAVED_AS_DEFAULT success:YES];
+                    successBlock:^(RIApiResponse apiResponse, NSArray *successMessage) {
+                        [self showMessage:[successMessage componentsJoinedByString:@","] success:YES];
                         [self finishedLoadingAddresses];
                         [self hideLoading];
                     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
                         [self hideLoading];
-                        [self showMessage:STRING_ERROR_SETTING_BILLING_SHIPPING_ADDRESS success:NO];
+                        [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
                     }];
 }
 

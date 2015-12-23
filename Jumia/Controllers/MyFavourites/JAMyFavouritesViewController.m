@@ -693,7 +693,7 @@
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
                                                   data:[trackingDictionary copy]];
         
-        [self showMessage:STRING_REMOVED_FROM_WISHLIST success:YES];
+        [self showMessage:[success componentsJoinedByString:@","] success:YES];
         
         [self updateFavorites:button.tag];
         
