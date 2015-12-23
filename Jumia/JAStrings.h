@@ -394,5 +394,6 @@
 #define STRING_PASSWORD RILocalizedString(@"password", nil)
 #define STRING_CHANGE_PASSWORD RILocalizedString(@"change_password", nil)
 #define STRING_USER_DATA_EDITED_SUCCESS RILocalizedString(@"user_data_edited_with_success", nil)
+#define STRING_PRE_ORDER RILocalizedString(@"pre_order", nil)
 
 #endif
