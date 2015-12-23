@@ -185,13 +185,12 @@
                       placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
     
     if (VALID_NOTEMPTY(product.priceRange, NSString)) {
-        [self.priceLine setTitle:product.priceRange];
-        [self.priceLine setOldPrice:nil];
+        [self.priceLine setPrice:product.priceRange];
     } else if (VALID_NOTEMPTY(product.specialPriceFormatted, NSString)) {
-        [self.priceLine setTitle:product.specialPriceFormatted];
+        [self.priceLine setPrice:product.specialPriceFormatted];
         [self.priceLine setOldPrice:product.priceFormatted];
     }else{
-        [self.priceLine setTitle:product.priceFormatted];
+        [self.priceLine setPrice:product.priceFormatted];
         [self.priceLine setOldPrice:nil];
     }
     
@@ -223,10 +222,10 @@
                       placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
 
     if (VALID_NOTEMPTY(variation.specialPrice, NSNumber)) {
-        [self.priceLine setTitle:[RICountryConfiguration formatPrice:variation.specialPrice country:[RICountryConfiguration getCurrentConfiguration]]];
+        [self.priceLine setPrice:[RICountryConfiguration formatPrice:variation.specialPrice country:[RICountryConfiguration getCurrentConfiguration]]];
         [self.priceLine setOldPrice:[RICountryConfiguration formatPrice:variation.price country:[RICountryConfiguration getCurrentConfiguration]]];
     }else{
-        [self.priceLine setTitle:[RICountryConfiguration formatPrice:variation.price country:[RICountryConfiguration getCurrentConfiguration]]];
+        [self.priceLine setPrice:[RICountryConfiguration formatPrice:variation.price country:[RICountryConfiguration getCurrentConfiguration]]];
         [self.priceLine setOldPrice:nil];
     }
     

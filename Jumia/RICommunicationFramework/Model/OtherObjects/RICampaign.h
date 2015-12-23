@@ -35,6 +35,7 @@
 @property (nonatomic, strong) NSNumber* price;
 @property (nonatomic, strong) NSString* priceFormatted;
 @property (nonatomic, strong) NSNumber* priceEuroConverted;
+@property (nonatomic, strong) NSString* priceRange;
 @property (nonatomic, strong) NSNumber* stockPercentage;
 @property (nonatomic, strong) NSNumber* maxSavingPercentage;
 @property (nonatomic, strong) NSString* brand;

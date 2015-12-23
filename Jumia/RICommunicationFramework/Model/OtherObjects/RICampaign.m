@@ -193,6 +193,11 @@
                 campaignProduct.priceEuroConverted = [campaignProductJSON objectForKey:@"price_converted"];
             }
         }
+        if ([campaignProductJSON objectForKey:@"price_range"]) {
+            if (![[campaignProductJSON objectForKey:@"price_range"] isKindOfClass:[NSNull class]]) {
+                campaignProduct.priceRange = [campaignProductJSON objectForKey:@"price_range"];
+            }
+        }
         if ([campaignProductJSON objectForKey:@"brand"]) {
             if (![[campaignProductJSON objectForKey:@"brand"] isKindOfClass:[NSNull class]]) {
                 campaignProduct.brand = [campaignProductJSON objectForKey:@"brand"];

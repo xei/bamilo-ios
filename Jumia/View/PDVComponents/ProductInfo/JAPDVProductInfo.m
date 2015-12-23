@@ -81,7 +81,7 @@
     [_priceLine setFashion:product.fashion];
     
     if (VALID_NOTEMPTY(product.priceRange, NSString)) {
-        [_priceLine setTitle:product.priceRange];
+        [_priceLine setPrice:product.priceRange];
     } else {
         [self setSpecialPrice:product.specialPriceFormatted andPrice:product.priceFormatted];
     }
@@ -296,11 +296,11 @@
 
 - (void)setSpecialPrice:(NSString*)special andPrice:(NSString*)price
 {
-    [_priceLine setTitle:price];
+    [_priceLine setPrice:price];
     
     if (VALID_NOTEMPTY(special, NSString)) {
         [_priceLine setOldPrice:price];
-        [_priceLine setTitle:special];
+        [_priceLine setPrice:special];
     } else {
         [_priceLine setOldPrice:@""];
     }
