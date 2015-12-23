@@ -106,11 +106,11 @@
 -(void)setProductSimple:(RIProductSimple*)productSimple {
     if (VALID_NOTEMPTY(productSimple.specialPriceFormatted, NSString)) {
         self.priceLabel.text = productSimple.specialPriceFormatted;
-        [self.priceLine setTitle:productSimple.specialPriceFormatted];
+        [self.priceLine setPrice:productSimple.specialPriceFormatted];
         [self.priceLine setOldPrice:productSimple.priceFormatted];
     } else {
         self.priceLabel.text = productSimple.priceFormatted;
-        [self.priceLine setTitle:productSimple.priceFormatted];
+        [self.priceLine setPrice:productSimple.priceFormatted];
         [self.priceLine setOldPrice:@""];
     }
     [self.priceLabel sizeToFit];
