@@ -425,7 +425,7 @@
 
 - (UIView *)getGraphic
 {
-    UIView *graphic = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX([self getNumbersLabel].frame) + 6.f, 0, kBarWidth, 6.f)];
+    UIView *graphic = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX([self getNumbersLabel].frame) + 6.f, 0, RI_IS_RTL ? 0 : kBarWidth, 6.f)];
     [graphic setBackgroundColor:JAOrange1Color];
     [graphic setHidden:YES];
     return graphic;
@@ -495,11 +495,15 @@
         UILabel *label = [self.starsTotalLabelDictionary objectForKey:starNumber];
         if ([_ratingsDictionary objectForKey:[NSString stringWithFormat:@"%d", starNumber.intValue]]) {
             NSNumber *sum = [_ratingsDictionary objectForKey:[NSString stringWithFormat:@"%d", starNumber.intValue]];
-            CGFloat full = graphic.width;
+            CGFloat barWidth = kBarWidth*sum.intValue/self.product.sum.intValue;
+            if (RI_IS_RTL)
+            {
+                barWidth = barWidth*-1;
+            }
             [graphic setWidth:0];
             [graphic setHidden:NO];
-            [UIView animateWithDuration:.3 animations:^{
-                [graphic setWidth:full*sum.intValue/self.product.sum.intValue];
+            [UIView animateWithDuration:0.3 animations:^{
+                [graphic setWidth:barWidth];
             }];
             [label setText:[NSString stringWithFormat:@"(%d)", sum.intValue]];
             [label sizeToFit];
