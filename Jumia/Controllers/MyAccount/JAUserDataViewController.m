@@ -336,10 +336,11 @@
           parameters:[self.changePasswordForm getValues]
         successBlock:^(id object)
      {
+         [self removeErrorView];
          [self hideLoading];
          [self resetValues:self.changePasswordForm];
          [self showMessage:STRING_CHANGED_PASSWORD_SUCCESS success:YES];
-     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
+     } andFailureBlock:^(RIApiResponse apiResponse, id errorObject)
      {
          if (RIApiResponseNoInternetConnection == apiResponse) {
              [self showErrorView:YES startingY:0 selector:@selector(changePasswordButtonPressed) objects:nil];
