@@ -122,16 +122,14 @@
     return _priceLine;
 }
 
-- (UIButton *)sizeButton
+- (JADropdownControl *)sizeButton
 {
     if (!VALID_NOTEMPTY(_sizeButton, UIButton)) {
         
         CGRect frame = CGRectMake(self.priceLine.frame.origin.x, self.priceLine.frame.origin.y+20.0f,
-                                  self.width, self.priceLine.frame.size.height);
-        
-        _sizeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [_sizeButton setFrame:(frame)];
-        _sizeButton.titleLabel.font = JACaptionFont;
+                                  100, 20.f);
+        _sizeButton = [JADropdownControl buttonWithType:UIButtonTypeSystem];
+        [_sizeButton setFrame:frame];
     }
     return _sizeButton;
 }
