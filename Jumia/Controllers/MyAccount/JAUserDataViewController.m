@@ -180,8 +180,6 @@
         [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
         self.firstLoading = NO;
     }
-    
-    [self hideLoading];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -655,6 +653,8 @@
                 }
             }
             self.phonePrefixes = prefixes;
+            
+            [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
             
         }];
