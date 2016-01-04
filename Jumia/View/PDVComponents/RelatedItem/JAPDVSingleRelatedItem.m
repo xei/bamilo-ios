@@ -38,6 +38,7 @@
         _labelBrand = [[UILabel alloc] initWithFrame:CGRectZero];
         [_labelBrand setTextColor:JABlack800Color];
         [_labelBrand setFont:JACaptionFont];
+        [_labelBrand setTextAlignment:NSTextAlignmentLeft];
         [self addSubview:_labelBrand];
     }
     return _labelBrand;
@@ -49,6 +50,7 @@
         _labelName = [[UILabel alloc] initWithFrame:CGRectZero];
         [_labelName setFont:JABody3Font];
         [_labelName setTextColor:JABlackColor];
+        [_labelBrand setTextAlignment:NSTextAlignmentLeft];
         [self addSubview:_labelName];
     }
     return _labelName;
@@ -60,6 +62,7 @@
         _labelPrice = [[UILabel alloc] initWithFrame:CGRectZero];
         [_labelPrice setFont:JACaptionFont];
         [_labelPrice setTextColor:JABlackColor];
+        [_labelBrand setTextAlignment:NSTextAlignmentRight];
         [self addSubview:_labelPrice];
     }
     return _labelPrice;

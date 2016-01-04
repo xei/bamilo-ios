@@ -42,6 +42,7 @@
         _descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, 16, self.contentScrollView.width - 32, 10)];
         [_descriptionLabel setFont:JACaptionFont];
         [_descriptionLabel setNumberOfLines:0];
+        [_descriptionLabel setTextAlignment:NSTextAlignmentLeft];
         [self.contentScrollView addSubview:_descriptionLabel];
     }else{
         if (width != _descriptionLabel.width) {

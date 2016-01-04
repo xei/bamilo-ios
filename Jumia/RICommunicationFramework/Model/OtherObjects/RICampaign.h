@@ -35,6 +35,7 @@
 @property (nonatomic, strong) NSNumber* price;
 @property (nonatomic, strong) NSString* priceFormatted;
 @property (nonatomic, strong) NSNumber* priceEuroConverted;
+@property (nonatomic, strong) NSString* priceRange;
 @property (nonatomic, strong) NSNumber* stockPercentage;
 @property (nonatomic, strong) NSNumber* maxSavingPercentage;
 @property (nonatomic, strong) NSString* brand;
@@ -42,6 +43,8 @@
 @property (nonatomic, strong) NSString* imagesUrl;
 @property (nonatomic, strong) NSArray* productSimples;
 @property (nonatomic, strong) NSNumber* remainingTime;
+@property (nonatomic, strong) NSString* variationName;
+@property (nonatomic, strong) NSString* variationAvailableList;
 @property (nonatomic, strong) NSString* targetString;
 
 + (RICampaignProduct*)parseCampaignProduct:(NSDictionary*)campaignProductJSON
@@ -55,7 +58,7 @@
 @property (nonatomic, strong)NSString* priceFormatted;
 @property (nonatomic, strong)NSNumber* savePrice;
 @property (nonatomic, strong)NSString* savePriceFormatted;
-@property (nonatomic, strong)NSString* size;
+@property (nonatomic, strong)NSString* variation;
 
 + (RICampaignProductSimple*)parseCampaignProductSimple:(NSDictionary*)campaignProductSimpleJSON
                                                country:(RICountryConfiguration*)country;

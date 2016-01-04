@@ -300,24 +300,28 @@
 
 - (void)saveButtonPressed
 {
-    [self hideKeyboard];
     [self showLoading];
+    [self hideKeyboard];
     
     [RIForm sendForm:[self.userForm form] parameters:[self.userForm getValues] successBlock:^(id object) {
+        [self removeErrorView];
         [self hideLoading];
         [self showMessage:STRING_USER_DATA_EDITED_SUCCESS success:YES];
     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
         if (RIApiResponseNoInternetConnection == apiResponse) {
-            [self showMessage:STRING_NO_CONNECTION success:NO];
+            [self showErrorView:YES startingY:0 selector:@selector(saveButtonPressed) objects:nil];
         } else if (VALID_NOTEMPTY(errorObject, NSDictionary)) {
+            [self removeErrorView];
             [self.userForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
                 [self showMessage:message success:NO];
             }];
         } else if(VALID_NOTEMPTY(errorObject, NSArray)) {
+            [self removeErrorView];
             [self.userForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
                 [self showMessage:message success:NO];
             }];
         } else {
+            [self removeErrorView];
             [self.userForm checkErrors];
             [self showMessage:STRING_ERROR success:NO];
         }
@@ -327,8 +331,8 @@
 
 - (void)changePasswordButtonPressed
 {
-    [self hideKeyboard];
     [self showLoading];
+    [self hideKeyboard];
     
     [RIForm sendForm:[self.changePasswordForm form]
           parameters:[self.changePasswordForm getValues]
@@ -339,23 +343,24 @@
          [self showMessage:STRING_CHANGED_PASSWORD_SUCCESS success:YES];
      } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
      {
-         [self hideLoading];
-         
          if (RIApiResponseNoInternetConnection == apiResponse) {
-             [self showMessage:STRING_NO_CONNECTION success:NO];
+             [self showErrorView:YES startingY:0 selector:@selector(changePasswordButtonPressed) objects:nil];
          } else if (VALID_NOTEMPTY(errorObject, NSDictionary)) {
+             [self removeErrorView];
              [self.changePasswordForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
                  [self showMessage:message success:NO];
              }];
-         } else if (VALID_NOTEMPTY(errorObject, NSArray))
-         {
+         } else if(VALID_NOTEMPTY(errorObject, NSArray)) {
+             [self removeErrorView];
              [self.changePasswordForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
                  [self showMessage:message success:NO];
              }];
          } else {
+             [self removeErrorView];
              [self.changePasswordForm checkErrors];
              [self showMessage:STRING_ERROR success:NO];
          }
+         [self hideLoading];
      }];
 }
 
@@ -533,18 +538,9 @@
     
     NSMutableArray *dataSource = [[NSMutableArray alloc] init];
     
-    if ([radioComponent isComponentWithKey:@"region"]
-        && VALID_NOTEMPTY(self.radioComponent, JARadioComponent)
-        && VALID_NOTEMPTY(self.phonePrefixes, NSArray)) {
-        
-        for (id currentObject in self.phonePrefixes) {
-            if (VALID_NOTEMPTY(currentObject, RIPhonePrefix)) {
-                [dataSource addObject:((RIPhonePrefix*) currentObject).label];
-            }
-        }
-    } else if ([radioComponent isComponentWithKey:@"gender"]
-               && VALID_NOTEMPTY(radioComponent, JARadioComponent)
-               && VALID_NOTEMPTY([radioComponent options], NSArray)) {
+    if ([radioComponent isComponentWithKey:@"gender"]
+        && VALID_NOTEMPTY(radioComponent, JARadioComponent)
+        && VALID_NOTEMPTY([radioComponent options], NSArray)) {
         
         for (id currentObject in [radioComponent options]) {
             if (VALID_NOTEMPTY(currentObject, NSString)) {
@@ -552,6 +548,14 @@
             }
         }
         self.genders = dataSource;
+    } else if (VALID_NOTEMPTY(self.radioComponent, JARadioComponent)
+               && VALID_NOTEMPTY(self.phonePrefixes, NSArray)) {
+        
+        for (id currentObject in self.phonePrefixes) {
+            if (VALID_NOTEMPTY(currentObject, RIPhonePrefix)) {
+                [dataSource addObject:((RIPhonePrefix*) currentObject).label];
+            }
+        }
     }
     
     [self.picker setDataSourceArray:[dataSource copy]
