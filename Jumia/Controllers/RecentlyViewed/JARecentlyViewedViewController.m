@@ -420,7 +420,7 @@
     [self showLoading];
     [RICart addProductWithQuantity:@"1"
                          simpleSku:productSimple.sku
-                  withSuccessBlock:^(RICart *cart) {
+                  withSuccessBlock:^(RICart *cart, RIApiResponse apiResponse, NSArray *successMessage){
                       
                       NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted floatValue] > 0.0f) ? product.specialPriceEuroConverted : product.priceEuroConverted;
                       
@@ -510,25 +510,20 @@
                       
                       [self hideLoading];
                       
-                      [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
+                      [self showMessage:[successMessage componentsJoinedByString:@","] success:YES];
                       
                   } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                       
                       [self hideLoading];
                       
                       NSString *errorAddToCart = STRING_ERROR_ADDING_TO_CART;
-                      NSString *results = [[errorMessages valueForKey:@"description"] componentsJoinedByString:@""];
-                      if([results  isEqualToString: @"order_product_sold_out"]){
-                          
-                          errorAddToCart = STRING_PRODCUTS_OUT_OF_STOCK;
-                      }
-                      
                       if (RIApiResponseNoInternetConnection == apiResponse)
                       {
-                          errorAddToCart = STRING_NO_CONNECTION;
+                          NSString *addToCartError = STRING_NO_CONNECTION;
+                          [self showMessage:addToCartError success:NO];
                       }
                       
-                      [self showMessage:errorAddToCart success:NO];
+                      [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
                   }];
 }
 

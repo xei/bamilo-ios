@@ -106,7 +106,7 @@
 
 + (NSString *)addProductWithQuantity:(NSString *)quantity
                            simpleSku:(NSString *)simpleSku
-                    withSuccessBlock:(void (^)(RICart *cart))sucessBlock
+                    withSuccessBlock:(void (^)(RICart *cart, RIApiResponse apiResponse, NSArray *successMessage))sucessBlock
                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
@@ -132,7 +132,18 @@
                                                                   if (VALID_NOTEMPTY(metadata, NSDictionary) && VALID_NOTEMPTY([metadata objectForKey:@"cart_entity"], NSDictionary))
                                                                   {
                                                                       NSDictionary *cartEntity = metadata;
-                                                                      sucessBlock([RICart parseCart:cartEntity country:configuration]);
+                                                                      if (VALID_NOTEMPTY([jsonObject objectForKey:@"messages"], NSDictionary)) {
+                                                                          NSDictionary *messages = [jsonObject objectForKey:@"messages"];
+                                                                          if (VALID_NOTEMPTY([messages objectForKey:@"success"], NSArray)) {
+                                                                              NSArray *success = [messages objectForKey:@"success"];
+                                                                              if (VALID_NOTEMPTY([success valueForKey:@"message"], NSArray)) {
+                                                                                  NSArray *successMessage = [success valueForKey:@"message"];
+                                                                                  sucessBlock([RICart parseCart:cartEntity country:configuration], apiResponse, successMessage);
+                                                                                  return;
+                                                                              }
+                                                                          }
+                                                                      }
+                                                                      sucessBlock([RICart parseCart:cartEntity country:configuration], apiResponse, nil);
                                                                   } else
                                                                   {
                                                                       failureBlock(apiResponse, nil);

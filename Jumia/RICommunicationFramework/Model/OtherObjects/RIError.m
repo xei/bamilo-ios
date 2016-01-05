@@ -127,8 +127,11 @@
             else if (VALID_NOTEMPTY(errorMessagesObject, NSArray))
             {
                 NSMutableArray *errorMessagesArray = [[NSMutableArray alloc] init];
-                for (NSString *errorMessageString in errorMessagesObject) {
-                    [errorMessagesArray addObject:errorMessageString];
+                if (VALID_NOTEMPTY([errorMessagesObject valueForKey:@"message"], NSArray)) {
+                    NSArray *errorMessage = [errorMessagesObject valueForKey:@"message"];
+                    for (NSString *errorMessageString in errorMessage) {
+                        [errorMessagesArray addObject:errorMessageString];
+                    }
                 }
                 error.errorMessagesArray = [errorMessagesArray copy];
             }
