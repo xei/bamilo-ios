@@ -394,9 +394,7 @@
              [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                                  object:customerObject.wishlistProducts];
              
-             if(self.nextStepBlock) {
-                 self.nextStepBlock();
-             }
+             
              
              if (self.fromSideMenu) {
                  [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
@@ -413,6 +411,9 @@
                      }
                  }else{
                      [self.navigationController popViewControllerAnimated:YES];
+                 }
+                 if(self.nextStepBlock) {
+                     self.nextStepBlock();
                  }
              }
          }
