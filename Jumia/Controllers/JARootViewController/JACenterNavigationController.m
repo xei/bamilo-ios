@@ -11,7 +11,7 @@
 #import "JAChooseCountryViewController.h"
 #import "JAHomeViewController.h"
 #import "JALoadCountryViewController.h"
-#import "JAMyFavouritesViewController.h"
+#import "JASavedListViewController.h"
 #import "JARecentSearchesViewController.h"
 #import "JARecentlyViewedViewController.h"
 #import "JAMyAccountViewController.h"
@@ -102,8 +102,8 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showFavoritesViewController:)
-                                                 name:kShowFavoritesScreenNotification
+                                             selector:@selector(showSavedListViewController:)
+                                                 name:kShowSavedListScreenNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -488,7 +488,7 @@
     }
     else if ([newScreenName isEqualToString:STRING_MY_FAVOURITES])
     {
-        [self showFavoritesViewController:nil];
+        [self showSavedListViewController:nil];
     }
     else if ([newScreenName isEqualToString:STRING_CHOOSE_COUNTRY])
     {
@@ -533,15 +533,15 @@
 }
 
 #pragma mark Favorites Screen
-- (void)showFavoritesViewController:(NSNotification*)notification
+- (void)showSavedListViewController:(NSNotification*)notification
 {
     [JAAuthenticationViewController authenticateAndExecuteBlock:^{
         UIViewController *topViewController = [self topViewController];
-        if (![topViewController isKindOfClass:[JAMyFavouritesViewController class]])
+        if (![topViewController isKindOfClass:[JASavedListViewController class]])
         {
-            JAMyFavouritesViewController *myFavouritesViewController = [[JAMyFavouritesViewController alloc]initWithNibName:@"JAMyFavouritesViewController" bundle:nil];
+            JASavedListViewController *savedListViewController = [JASavedListViewController new];
             
-            [self pushViewController:myFavouritesViewController animated:NO];
+            [self pushViewController:savedListViewController animated:NO];
         }
     } showBackButtonForAuthentication:NO];
 }
