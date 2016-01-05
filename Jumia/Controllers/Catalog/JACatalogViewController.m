@@ -437,7 +437,8 @@ typedef void (^ProcessActionBlock)(void);
          }
          else
          {
-             //do nothing
+             self.categoryName = self.categoryUrlKey;
+             [self loadMoreProducts];
          }
          
          [self hideLoading];
