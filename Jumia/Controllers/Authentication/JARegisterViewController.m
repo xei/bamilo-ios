@@ -434,9 +434,7 @@ JADynamicFormDelegate
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                             object:nil];
-        if(self.nextStepBlock) {
-            self.nextStepBlock();
-        }
+
         
         if (self.fromSideMenu) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
@@ -453,6 +451,9 @@ JADynamicFormDelegate
                 }
             }else{
                 [self.navigationController popViewControllerAnimated:YES];
+            }
+            if(self.nextStepBlock) {
+                self.nextStepBlock();
             }
         }
         

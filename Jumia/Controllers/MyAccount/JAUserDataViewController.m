@@ -180,8 +180,6 @@
         [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
         self.firstLoading = NO;
     }
-    
-    [self hideLoading];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -338,10 +336,11 @@
           parameters:[self.changePasswordForm getValues]
         successBlock:^(id object)
      {
+         [self removeErrorView];
          [self hideLoading];
          [self resetValues:self.changePasswordForm];
          [self showMessage:STRING_CHANGED_PASSWORD_SUCCESS success:YES];
-     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
+     } andFailureBlock:^(RIApiResponse apiResponse, id errorObject)
      {
          if (RIApiResponseNoInternetConnection == apiResponse) {
              [self showErrorView:YES startingY:0 selector:@selector(changePasswordButtonPressed) objects:nil];
@@ -448,8 +447,13 @@
     [self.changePasswordButton setWidth:self.mainScrollView.width - (kSideMargin * 2)];
 }
 
-#pragma mark - DynamicForms delegate
+#pragma mark - Done button
+- (IBAction)doneClicked:(id)sender
+{
+    [self.view endEditing:YES];
+}
 
+#pragma mark - DynamicForms delegate
 - (void)changedFocus:(UIView *)view
 {
     _firstResponder = view;
@@ -523,6 +527,7 @@
 - (void)openPicker:(JARadioComponent *)radioComponent
 {
     self.radioComponent = radioComponent;
+    
     if (VALID_NOTEMPTY(self.datePicker, JADatePicker)) {
         [self.datePicker removeFromSuperview];
         self.datePicker = nil;
@@ -587,7 +592,7 @@
             [self.radioComponent.textField setText:selectedValue];
         } else {
             RIPhonePrefix *prefix = (RIPhonePrefix *)[self.phonePrefixes objectAtIndex:selectedRow];
-            [self.radioComponent setValue:[prefix value]];
+            [self.radioComponent setValue:[prefix.value stringValue]];
             [self.radioComponent.textField setText:[prefix label]];
         }
     }
@@ -649,6 +654,8 @@
                 }
             }
             self.phonePrefixes = prefixes;
+            
+            [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
             
         }];

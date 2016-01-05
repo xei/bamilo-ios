@@ -440,9 +440,13 @@
 
 - (void)checkEmail
 {
+    if (![self isFirstCheckChecked]) {
+        return;
+    }
     [self showLoading];
     [RICustomer checkEmailWithParameters:[NSDictionary dictionaryWithObject:self.emailTextField.textField.text forKey:@"email"] successBlock:^(BOOL knownEmail) {
         [self.emailTextField cleanError];
+        [self removeErrorView];
         NSMutableDictionary *userInfo;
         if (!VALID_NOTEMPTY(self.userInfo, NSDictionary)) {
             userInfo = [NSMutableDictionary new];
@@ -489,13 +493,14 @@
 
 - (void)continueWithoutLogin
 {
-    if (!VALID_NOTEMPTY(self.emailTextField.textField.text, NSString)) {
+    if (![self isFirstCheckChecked]) {
         return;
     }
     [self showLoading];
     [RICustomer signUpAccount:self.emailTextField.textField.text successBlock:^(id object){
         
         [self.emailTextField cleanError];
+        [self removeErrorView];
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:@"Checkout" forKey:kRIEventLocationKey];
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSignupSuccess]
@@ -516,7 +521,7 @@
         
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorObject) {
         if (apiResponse == RIApiResponseNoInternetConnection) {
-            [self showErrorView:YES startingY:0 selector:@selector(checkEmail) objects:nil];
+            [self showErrorView:YES startingY:0 selector:@selector(continueWithoutLogin) objects:nil];
         }else{
             NSString *errorMessage = @"invalid email";
             if (VALID_NOTEMPTY(errorObject, NSArray)) {
@@ -529,6 +534,18 @@
         }
         [self hideLoading];
     }];
+}
+
+- (BOOL)isFirstCheckChecked
+{
+    if (!VALID_NOTEMPTY(self.emailTextField.textField.text, NSString)) {
+        [self.emailTextField.textField setDelegate:self];
+        NSString *errorMessage = @"invalid email";
+        [self.emailTextField setError:@""];
+        [self showMessage:errorMessage success:NO];
+        return NO;
+    }
+    return YES;
 }
 
 + (void)goToCheckoutWithBlock:(void (^)(void))authenticatedBlock
@@ -552,6 +569,14 @@
         [userInfo setObject:[NSNumber numberWithBool:backButton] forKey:@"shows_back_button"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification object:authenticatedBlock userInfo:userInfo];
     }
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if (self.emailTextField.hasError) {
+        [self.emailTextField cleanError];
+    }
+    return YES;
 }
 
 @end

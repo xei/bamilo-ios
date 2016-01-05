@@ -36,6 +36,9 @@
 
 @property (strong, nonatomic) UIButton *backupButton; // for the retry connection, is necessary to store the button
 
+@property (strong, nonatomic) UIView *bottomView;
+@property (strong, nonatomic) UIButton *clearAllButton;
+
 @end
 
 @implementation JARecentlyViewedViewController
@@ -47,9 +50,13 @@
     if (ISEMPTY(productsDictionary)) {
         self.emptyListView.hidden = NO;
         self.collectionView.hidden = YES;
+        [self.bottomView setHidden:YES];
+        [self.clearAllButton setHidden:YES];
     } else {
         self.emptyListView.hidden = YES;
         self.collectionView.hidden = NO;
+        [self.bottomView setHidden:NO];
+        [self.clearAllButton setHidden:NO];
     }
 }
 
@@ -128,7 +135,7 @@
 
 - (UICollectionView *)collectionView
 {
-    CGRect frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+    CGRect frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.viewBounds.size.height - self.bottomView.height-self.clearAllButton.height);
     if (!VALID_NOTEMPTY(_collectionView, UICollectionView)) {
         _collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:self.flowLayout];
         _collectionView.delegate = self;
@@ -142,6 +149,29 @@
         }
     }
     return _collectionView;
+}
+
+- (UIView *)bottomView
+{
+    if (!VALID(_bottomView, UIView)) {
+        _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.viewBounds.size.height - 49.f, self.viewBounds.size.width, 1.f)];
+        [_bottomView setBackgroundColor:JABlack700Color];
+        [self.view addSubview:_bottomView];
+    }
+    return _bottomView;
+}
+
+- (UIButton *)clearAllButton
+{
+    if (!VALID(_clearAllButton, UIButton)) {
+        _clearAllButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [_clearAllButton setFrame:CGRectMake(0, self.viewBounds.size.height - 48.f, self.viewBounds.size.width, 48.f)];
+        [_clearAllButton setBackgroundColor:[UIColor whiteColor]];
+        [_clearAllButton setTitle:STRING_CLEAR_ALL forState:UIControlStateNormal];
+        [_clearAllButton addTarget:self action:@selector(clearAllButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:_clearAllButton];
+    }
+    return _clearAllButton;
 }
 
 - (void)viewDidLoad {
@@ -166,6 +196,11 @@
     [self.emptyTitleLabel setXCenterAligned];
     [self.emptyListImageView setXCenterAligned];
     [self.emptyListLabel setXCenterAligned];
+    
+    [self.bottomView setWidth:self.viewBounds.size.width];
+    [self.bottomView setYBottomAligned:48.f];
+    [self.clearAllButton setWidth:self.viewBounds.size.width];
+    [self.clearAllButton setYBottomAligned:0.f];
 }
 
 - (void)onOrientationChanged
@@ -329,14 +364,7 @@
 {
     CGSize size = CGSizeZero;
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        
-        if(UIDeviceOrientationPortrait == ([UIDevice currentDevice].orientation) || UIDeviceOrientationPortraitUpsideDown == ([UIDevice currentDevice].orientation)) {
-            
-            size = CGSizeMake(self.bounds.size.width, 154.5f);
-            
-        } else {
-            size = CGSizeMake((self.bounds.size.width/2)-1, 154.5f);
-        }
+        size = CGSizeMake((self.bounds.size.width/2)-1, 154.5f);
     } else {
         size = CGSizeMake(self.view.frame.size.width, 154.5f);
     }
@@ -503,10 +531,16 @@
 {
     [self showLoading];
     [RIProduct removeAllRecentlyViewedWithSuccessBlock:^{
+        [self removeErrorView];
         [self hideLoading];
         self.productsDictionary = nil;
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         [self hideLoading];
+        if (RIApiResponseNoInternetConnection == apiResponse) {
+            [self showErrorView:YES startingY:0 selector:@selector(clearAllButtonPressed) objects:nil];
+            return;
+        }
+        [self showMessage:STRING_ERROR success:NO];
     }];
 }
 
