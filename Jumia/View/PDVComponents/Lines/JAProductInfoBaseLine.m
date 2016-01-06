@@ -82,6 +82,11 @@
     [_label setY:self.height/2-_label.height/2];
 }
 
+- (void)setMultilineTitle:(BOOL)multiline
+{
+    [self.label setNumberOfLines:2];
+}
+
 - (void)setTag:(NSInteger)tag
 {
     [super setTag:tag];

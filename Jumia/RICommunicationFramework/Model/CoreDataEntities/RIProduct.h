@@ -63,8 +63,10 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSOrderedSet *images;
 @property (nonatomic, retain) NSOrderedSet *productSimples;
 @property (nonatomic, retain) NSOrderedSet *variations;
-@property (nonatomic, retain) NSString* sizeGuideUrl;
+@property (nonatomic, retain) NSString * sizeGuideUrl;
 @property (nonatomic, retain) NSNumber * reviewsTotal;
+@property (nonatomic, retain) NSString * richRelevance;
+@property (nonatomic, retain) NSString * richRelevanceTitle;
 
 @property (nonatomic, retain) NSNumber * offersMinPrice;
 @property (nonatomic, retain) NSNumber * offersMinPriceEuroConverted;
