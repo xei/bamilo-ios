@@ -44,6 +44,12 @@
 
 - (void)reloadViews
 {
+    CGFloat sizeButtonWidth = (self.frame.size.width - CGRectGetWidth(self.addToCartButton.frame) - 20) - CGRectGetMinX(self.sizeButton.frame);
+    if (sizeButtonWidth > 80) {
+        sizeButtonWidth = 80;
+    }
+    [self.sizeButton setWidth:sizeButtonWidth];
+    
     [super reloadViews];
     
     [self.recentProductBadgeLabel setYBottomOf:self.ratingLine.hidden?self.priceLine:self.ratingLine at:6.f];
@@ -53,7 +59,7 @@
     [self setForRTL:self.addToCartBar];
     
     [self.discountLabel setY:self.priceLine.y];
-    [self.sizeButton setWidth:100.f];
+    
     [self.sizeButton setY:self.addToCartBar.y+self.addToCartBar.height/2 - self.sizeButton.height/2];
 }
 

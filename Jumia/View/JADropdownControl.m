@@ -77,6 +77,7 @@
     if (RI_IS_RTL) {
         [self setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
         [self.dropdownImageView setX:0.f];
+        [self.underLineView setX:0.f];
     }
 }
 
