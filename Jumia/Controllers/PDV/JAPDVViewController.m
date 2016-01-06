@@ -836,8 +836,12 @@ JAActivityViewControllerDelegate
                 [view removeFromSuperview];
             }
         }
-
-        [self.relatedItemsView setHeaderText:[STRING_YOU_MAY_ALSO_LIKE uppercaseString]];
+        
+        if (VALID_NOTEMPTY(self.product.richRelevanceTitle, NSString)) {
+            [self.relatedItemsView setHeaderText:self.product.richRelevanceTitle];
+        } else
+            [self.relatedItemsView setHeaderText:[STRING_YOU_MAY_ALSO_LIKE uppercaseString]];
+        
         CGFloat relatedItemX = .0f;
         CGFloat relatedItemY = 0;
         
@@ -921,11 +925,23 @@ JAActivityViewControllerDelegate
     NSArray* relatedProducts = [self.product.relatedProducts allObjects];
     RIProduct *tempProduct = [relatedProducts objectAtIndex:sender.tag];
     
+    NSMutableDictionary* userInfo = [NSMutableDictionary new];
+    [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"show_back_button"];
+    
+    if (VALID_NOTEMPTY(tempProduct.targetString, NSString)) {
+        [userInfo setObject:tempProduct.targetString forKey:@"targetString"];
+        
+        if (VALID_NOTEMPTY(tempProduct.richRelevanceParameter, NSString)) {
+            [userInfo setObject:tempProduct.richRelevanceParameter forKey:@"richRelevance"];
+        }
+    } else if (VALID_NOTEMPTY(tempProduct.sku, NSString)) {
+        [userInfo setObject:tempProduct.sku forKey:@"sku"];
+    }
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                         object:nil
-                                                      userInfo:@{ @"sku" : tempProduct.sku,
-                                                                  @"previousCategory" : @"",
-                                                                  @"show_back_button" : [NSNumber numberWithBool:YES]}];
+                                                      userInfo:userInfo];
+
     [self trackingEventRelatedItemSelection:tempProduct];
     [self trackingEventScreenName:[NSString stringWithFormat:@"related_item_%@",tempProduct.name]];
 }
