@@ -39,7 +39,7 @@
 
 + (NSString*)setDefaultAddress:(RIAddress*)address
                      isBilling:(BOOL)isBilling
-                  successBlock:(void (^)(void))successBlock
+                  successBlock:(void (^)(RIApiResponse apiResponse, NSArray *successMessage))successBlock
                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 {
     NSString* type = isBilling?@"billing":@"shipping";
@@ -53,7 +53,18 @@
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              successBlock();
+                                                              if (VALID_NOTEMPTY([jsonObject objectForKey:@"messages"], NSDictionary)) {
+                                                                  NSDictionary *messages = [jsonObject objectForKey:@"messages"];
+                                                                  if (VALID_NOTEMPTY([messages objectForKey:@"success"], NSArray)) {
+                                                                      NSArray *success = [messages objectForKey:@"success"];
+                                                                      if (VALID_NOTEMPTY([success valueForKey:@"message"], NSArray)) {
+                                                                          NSArray *successMessage = [success valueForKey:@"message"];
+                                                                          successBlock(apiResponse, successMessage);
+                                                                          return;
+                                                                      }
+                                                                  }
+                                                              }
+                                                              successBlock(apiResponse, nil);
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {

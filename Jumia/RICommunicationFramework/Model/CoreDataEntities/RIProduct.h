@@ -63,8 +63,10 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSOrderedSet *images;
 @property (nonatomic, retain) NSOrderedSet *productSimples;
 @property (nonatomic, retain) NSOrderedSet *variations;
-@property (nonatomic, retain) NSString* sizeGuideUrl;
+@property (nonatomic, retain) NSString * sizeGuideUrl;
 @property (nonatomic, retain) NSNumber * reviewsTotal;
+@property (nonatomic, retain) NSString * richRelevanceParameter;
+@property (nonatomic, retain) NSString * richRelevanceTitle;
 
 @property (nonatomic, retain) NSNumber * offersMinPrice;
 @property (nonatomic, retain) NSNumber * offersMinPriceEuroConverted;
@@ -206,12 +208,12 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *  @param the failure block containing the error message
  *
  */
-+ (void)getFavoriteProductsWithSuccessBlock:(void (^)(NSArray *favoriteProducts))successBlock
++ (void)getFavoriteProductsWithSuccessBlock:(void (^)(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages))successBlock
                                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 + (void)getFavoriteProductsForPage:(NSInteger)page
                           maxItems:(NSInteger)maxItems
-                      SuccessBlock:(void (^)(NSArray *favoriteProducts))successBlock
+                      SuccessBlock:(void (^)(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages))successBlock
                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
@@ -221,7 +223,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *
  */
 + (void)addToFavorites:(RIProduct*)product
-          successBlock:(void (^)(void))successBlock
+          successBlock:(void (^)(RIApiResponse apiResponse, NSArray *success))successBlock
        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
@@ -232,7 +234,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *
  */
 + (void)removeFromFavorites:(RIProduct*)product
-               successBlock:(void (^)(void))successBlock
+               successBlock:(void (^)(RIApiResponse apiResponse, NSArray *success))successBlock
             andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**

@@ -1282,7 +1282,7 @@ typedef void (^ProcessActionBlock)(void);
     RIProduct* product = [self.productsArray objectAtIndex:button.tag];
     if (!button.selected && !VALID_NOTEMPTY(product.favoriteAddDate, NSDate))
     {
-        [RIProduct addToFavorites:product successBlock:^{
+        [RIProduct addToFavorites:product successBlock:^(RIApiResponse apiResponse,  NSArray *success){
             button.selected = YES;
             product.favoriteAddDate = [NSDate date];
             
@@ -1292,7 +1292,7 @@ typedef void (^ProcessActionBlock)(void);
             
             [self hideLoading];
             
-            [self showMessage:STRING_ADDED_TO_WISHLIST success:YES];
+            [self showMessage:[success componentsJoinedByString:@","] success:YES];
             NSDictionary *userInfo = nil;
             if (product.favoriteAddDate) {
                 userInfo = [NSDictionary dictionaryWithObject:product.favoriteAddDate forKey:@"favoriteAddDate"];
@@ -1306,12 +1306,16 @@ typedef void (^ProcessActionBlock)(void);
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             
             [self hideLoading];
-            NSString *errorMessage = STRING_ERROR_ADDING_TO_WISHLIST;
             if (RIApiResponseNoInternetConnection == apiResponse)
             {
-                errorMessage = STRING_NO_CONNECTION;
+                NSString *errorMessage = STRING_NO_CONNECTION;
+                [self showMessage:errorMessage success:NO];
+
             }
-            [self showMessage:errorMessage success:NO];
+            else{
+                [self showMessage:[error componentsJoinedByString:@","] success:NO];
+            }
+        
         }];
     }else{
         [self hideLoading];
@@ -1339,7 +1343,7 @@ typedef void (^ProcessActionBlock)(void);
     RIProduct* product = [self.productsArray objectAtIndex:button.tag];
     if (button.selected && VALID_NOTEMPTY(product.favoriteAddDate, NSDate))
     {
-        [RIProduct removeFromFavorites:product successBlock:^(void) {
+        [RIProduct removeFromFavorites:product successBlock:^(RIApiResponse apiResponse, NSArray *success) {
             button.selected = NO;
             product.favoriteAddDate = nil;
             [self removeErrorView];
@@ -1349,7 +1353,7 @@ typedef void (^ProcessActionBlock)(void);
             //update favoriteProducts
             [self hideLoading];
             
-            [self showMessage:STRING_REMOVED_FROM_WISHLIST success:YES];
+            [self showMessage:[success componentsJoinedByString:@","] success:YES];
             
             NSDictionary *userInfo = nil;
             if (product.favoriteAddDate) {
@@ -1363,12 +1367,16 @@ typedef void (^ProcessActionBlock)(void);
             
             [self hideLoading];
             
-            NSString *errorMessage = STRING_ERROR_REMOVING_FROM_WISHLIST;
             if (RIApiResponseNoInternetConnection == apiResponse)
             {
-                errorMessage = STRING_NO_CONNECTION;
+                NSString *errorMessage = STRING_NO_CONNECTION;
+                [self showMessage:errorMessage success:NO];
+
             }
-            [self showMessage:errorMessage success:NO];
+            else{
+                [self showMessage:[error componentsJoinedByString:@","] success:NO];
+            }
+
         }];
     }else{
         [self hideLoading];

@@ -402,7 +402,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 break;
             case RIEventAddToWishlist:
             {
-                [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
+                [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
                     [deviceInfo setObject:[NSNumber numberWithLong:favoriteProducts.count] forKey:kAd4PushProfileWishlistStatusKey];
                     if (VALID_NOTEMPTY([data objectForKey:kRIEventLabelKey], NSString)) {
                         [deviceInfo setObject:[data objectForKey:kRIEventLabelKey] forKey:kAd4PushProfileLastFavouritesProductKey];
@@ -417,7 +417,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
             }
             case RIEventRemoveFromWishlist:
             {
-                [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
+                [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
                     [deviceInfo setObject:[NSNumber numberWithLong:favoriteProducts.count] forKey:kAd4PushProfileWishlistStatusKey];
                     if (VALID_NOTEMPTY([data objectForKey:kRIEventLabelKey], NSString)) {
                         [deviceInfo setObject:[data objectForKey:kRIEventLabelKey] forKey:kAd4PushProfileLastFavouritesProductKey];
@@ -810,7 +810,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
             else if ([key isEqualToString:@"w"])
             {
                 // Wishlist
-                [[NSNotificationCenter defaultCenter] postNotificationName:kShowFavoritesScreenNotification
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowSavedListScreenNotification
                                                                     object:nil];
             }
             else if ([key isEqualToString:@"o"])

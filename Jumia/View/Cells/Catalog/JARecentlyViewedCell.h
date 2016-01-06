@@ -12,6 +12,5 @@
 @interface JARecentlyViewedCell : JACatalogListCollectionViewCell
 
 @property (nonatomic) UIButton *addToCartButton;
-@property (nonatomic) JARadioComponent *sizeComponent;
 
 @end

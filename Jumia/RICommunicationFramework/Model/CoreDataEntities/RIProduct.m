@@ -97,6 +97,8 @@
 @dynamic shortSummary;
 @dynamic summary;
 @dynamic numberOfTimesSeen;
+@dynamic richRelevanceParameter;
+@dynamic richRelevanceTitle;
 
 @synthesize categoryIds;
 @synthesize relatedProducts;
@@ -376,11 +378,17 @@
         if ([dataDic objectForKey:@"sku"]) {
             newProduct.sku = [dataDic objectForKey:@"sku"];
         }
-        if ([dataDic objectForKey:@"name"]) {
+        
+        if ([dataDic objectForKey:@"title"]) {
+            newProduct.name = [dataDic objectForKey:@"title"];
+        } else if ([dataDic objectForKey:@"name"]) {
             newProduct.name = [dataDic objectForKey:@"name"];
         }
         if ([dataDic objectForKey:@"target"]) {
             newProduct.targetString = [dataDic objectForKey:@"target"];
+        }
+        if ([dataDic objectForKey:@"click_request"]) {
+            newProduct.richRelevanceParameter = [dataDic objectForKey:@"click_request"];
         }
         if ([dataDic objectForKey:@"description"]) {
             newProduct.descriptionString = [dataDic objectForKey:@"description"];
@@ -583,8 +591,6 @@
             [newProduct addImagesObject:image];
         }
         
-        newProduct.favoriteAddDate = [RIProduct productIsFavoriteInDatabase:newProduct];
-        
         if ([dataDic objectForKey:@"seller_entity"]) {
             NSDictionary* sellerJSON = [dataDic objectForKey:@"seller_entity"];
             if (VALID_NOTEMPTY(sellerJSON, NSDictionary)) {
@@ -594,12 +600,10 @@
             }
         }
         
-        if (VALID_NOTEMPTY([dataDic objectForKey:@"is_wishlist"], NSNumber)) {
-            if ([[dataDic objectForKey:@"is_wishlist"] integerValue] ==1) {
-                newProduct.favoriteAddDate = [NSDate new];
-            }else{
-                newProduct.favoriteAddDate = nil;
-            }
+        if (VALID_NOTEMPTY([dataDic objectForKey:@"is_wishlist"], NSNumber) && [[dataDic objectForKey:@"is_wishlist"] integerValue] ==1) {
+            newProduct.favoriteAddDate = [NSDate new];
+        }else{
+            newProduct.favoriteAddDate = nil;
         }
         
         if ([dataDic objectForKey:@"offers"]) {
@@ -626,8 +630,22 @@
             newProduct.vertical = vertical;
         }
         
-        if ([dataDic objectForKey:@"related_products"]) {
-            NSArray* relatedProductsArray = [dataDic objectForKey:@"related_products"];
+        if ([dataDic objectForKey:@"recommended_products"] || [dataDic objectForKey:@"related_products"]) {
+            
+            NSArray* relatedProductsArray = Nil;
+            
+            if ([dataDic objectForKey:@"recommended_products"]) {
+                NSDictionary* recommended = [dataDic objectForKey:@"recommended_products"];
+                if ([recommended objectForKey:@"has_data"]) {
+                    if ([recommended objectForKey:@"title"]) {
+                        newProduct.richRelevanceTitle = [recommended objectForKey:@"title"];
+                    }
+                    relatedProductsArray = [recommended objectForKey:@"data"];
+                }
+            } else if ([dataDic objectForKey:@"related_products"]) {
+                relatedProductsArray = [dataDic objectForKey:@"related_products"];
+            }
+            
             if (VALID_NOTEMPTY(relatedProductsArray, NSArray)) {
                 
                 NSMutableSet *newRelatedProducts = [NSMutableSet new];
@@ -920,7 +938,7 @@
 
 #pragma mark - Favorites
 
-+ (void)getFavoriteProductsWithSuccessBlock:(void (^)(NSArray *favoriteProducts))successBlock
++ (void)getFavoriteProductsWithSuccessBlock:(void (^)(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages))successBlock
                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
     [RIProduct getFavoriteProductsForPage:-1 maxItems:-1 SuccessBlock:successBlock andFailureBlock:failureBlock];
@@ -928,7 +946,7 @@
 
 + (void)getFavoriteProductsForPage:(NSInteger)page
                           maxItems:(NSInteger)maxItems
-                      SuccessBlock:(void (^)(NSArray *favoriteProducts))successBlock
+                      SuccessBlock:(void (^)(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages))successBlock
                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
     NSString *finalUrl = [NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_WISHLIST];
@@ -942,6 +960,17 @@
     [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl] parameters:parameters httpMethod:HttpResponsePost cacheType:RIURLCacheNoCache cacheTime:RIURLCacheDefaultTime userAgentInjection:[RIApi getCountryUserAgentInjection] successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
         if (VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary)) {
             NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
+            NSInteger currentPage = 1;
+            NSInteger totalPages = 1;
+            if (VALID_NOTEMPTY([metadata objectForKey:@"pagination"], NSDictionary)) {
+                
+                if (VALID_NOTEMPTY([[metadata objectForKey:@"pagination"] objectForKey:@"current_page"], NSNumber)) {
+                    currentPage = [(NSNumber *)[[metadata objectForKey:@"pagination"] objectForKey:@"current_page"] integerValue];
+                }
+                if (VALID_NOTEMPTY([[metadata objectForKey:@"pagination"] objectForKey:@"total_pages"], NSNumber)) {
+                    totalPages = [(NSNumber *)[[metadata objectForKey:@"pagination"] objectForKey:@"total_pages"] integerValue];
+                }
+            }
             if (VALID_NOTEMPTY([metadata objectForKey:@"products"], NSArray)) {
                 NSArray *productsArray = [metadata objectForKey:@"products"];
                 NSMutableArray *favoriteProducts = [NSMutableArray new];
@@ -958,12 +987,12 @@
                 if (VALID(favoriteProducts, NSArray) && successBlock) {
                     NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"favoriteAddDate" ascending:NO];
                     NSArray *sorted = [favoriteProducts sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateDescriptor]];
-                    successBlock(sorted);
+                    successBlock(sorted, currentPage, totalPages);
                     return;
                 }
             } else {
                 if (successBlock) {
-                    successBlock([[NSArray alloc] init]);
+                    successBlock([[NSArray alloc] init], 1, 0);
                     return;
                 }
             }
@@ -982,7 +1011,7 @@
 }
 
 + (void)addToFavorites:(RIProduct*)product
-          successBlock:(void (^)(void))successBlock
+          successBlock:(void (^)(RIApiResponse apiResponse, NSArray *success))successBlock
        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
     
@@ -1013,7 +1042,20 @@
             product.favoriteAddDate = [NSDate date];
             [RIProduct saveProduct:product andContext:YES];
         }
-        successBlock();
+        if (VALID_NOTEMPTY([jsonObject objectForKey:@"messages"], NSDictionary)) {
+            NSDictionary *messages = [jsonObject objectForKey:@"messages"];
+            if (VALID_NOTEMPTY([messages objectForKey:@"success"], NSArray)) {
+                NSArray *success = [messages objectForKey:@"success"];
+                if (VALID_NOTEMPTY([success valueForKey:@"message"], NSArray)) {
+                    NSArray *successMessage = [success valueForKey:@"message"];
+                    successBlock(apiResponse, successMessage);
+                    return;
+                }
+                
+            }
+        }
+        successBlock(apiResponse, nil);
+        
     } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
         if (errorObject) {
             failureBlock(apiResponse, [NSArray arrayWithObject:[errorObject localizedDescription]]);
@@ -1021,9 +1063,13 @@
             if (VALID_NOTEMPTY([errorJsonObject objectForKey:@"messages"], NSDictionary)) {
                 NSDictionary *messages = [errorJsonObject objectForKey:@"messages"];
                 if (VALID_NOTEMPTY([messages objectForKey:@"error"], NSArray)) {
-                    NSArray *errors = [messages objectForKey:@"error"];
-                    failureBlock(apiResponse, errors);
-                    return;
+                    NSArray *error = [messages objectForKey:@"error"];
+                    if (VALID_NOTEMPTY([error valueForKey:@"message"], NSArray)) {
+                        NSArray *errorMessage = [error valueForKey:@"message"];
+                        failureBlock(apiResponse, errorMessage);
+                        return;
+                    }
+
                 }
             }
             failureBlock(apiResponse, nil);
@@ -1032,14 +1078,14 @@
 }
 
 + (void)removeFromFavorites:(RIProduct*)product
-               successBlock:(void (^)(void))successBlock
+               successBlock:(void (^)(RIApiResponse apiResponse, NSArray *success))successBlock
             andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
     NSString *finalUrl = [NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_REMOVE_FOM_WISHLIST];
     NSDictionary *parameters = [NSDictionary dictionaryWithObject:product.sku forKey:@"sku"];
     [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl] parameters:parameters httpMethod:HttpResponseDelete cacheType:RIURLCacheNoCache cacheTime:RIURLCacheDefaultTime userAgentInjection:[RIApi getCountryUserAgentInjection] successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
         
-        [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
+        [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
             BOOL found = NO;
             for (RIProduct* currentProduct in favoriteProducts) {
                 if ([currentProduct.sku isEqualToString:product.sku]) {
@@ -1055,7 +1101,19 @@
                     [[RIDataBaseWrapper sharedInstance] saveContext];
                 }
             }
-            successBlock();
+            if (VALID_NOTEMPTY([jsonObject objectForKey:@"messages"], NSDictionary)) {
+                NSDictionary *messages = [jsonObject objectForKey:@"messages"];
+                if (VALID_NOTEMPTY([messages objectForKey:@"success"], NSArray)) {
+                    NSArray *success = [messages objectForKey:@"success"];
+                    if (VALID_NOTEMPTY([success valueForKey:@"message"], NSArray)) {
+                        NSArray *successMessage = [success valueForKey:@"message"];
+                        successBlock(apiResponse, successMessage);
+                        return;
+                    }
+                    
+                }
+            }
+            successBlock(apiResponse, nil);
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             if (failureBlock) {
                 failureBlock(apiResponse, error);
@@ -1065,6 +1123,18 @@
         if (errorObject) {
             failureBlock(apiResponse, [NSArray arrayWithObject:[errorObject localizedDescription]]);
         }else{
+            if (VALID_NOTEMPTY([errorJsonObject objectForKey:@"messages"], NSDictionary)) {
+                NSDictionary *messages = [errorJsonObject objectForKey:@"messages"];
+                if (VALID_NOTEMPTY([messages objectForKey:@"error"], NSArray)) {
+                    NSArray *error = [messages objectForKey:@"error"];
+                    if (VALID_NOTEMPTY([error valueForKey:@"message"], NSArray)) {
+                        NSArray *errorMessage = [error valueForKey:@"message"];
+                        failureBlock(apiResponse, errorMessage);
+                        return;
+                    }
+                    
+                }
+            }
             failureBlock(apiResponse, nil);
         }
     }];
