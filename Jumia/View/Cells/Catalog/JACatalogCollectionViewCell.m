@@ -167,6 +167,7 @@
 - (void)setTag:(NSInteger)tag
 {
     [super setTag:tag];
+    [self.favoriteButton setTag:tag];
     [self.feedbackView setTag:tag];
     [self.sizeButton setTag:tag];
 }

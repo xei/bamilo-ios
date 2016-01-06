@@ -206,12 +206,12 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *  @param the failure block containing the error message
  *
  */
-+ (void)getFavoriteProductsWithSuccessBlock:(void (^)(NSArray *favoriteProducts))successBlock
++ (void)getFavoriteProductsWithSuccessBlock:(void (^)(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages))successBlock
                                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 + (void)getFavoriteProductsForPage:(NSInteger)page
                           maxItems:(NSInteger)maxItems
-                      SuccessBlock:(void (^)(NSArray *favoriteProducts))successBlock
+                      SuccessBlock:(void (^)(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages))successBlock
                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
