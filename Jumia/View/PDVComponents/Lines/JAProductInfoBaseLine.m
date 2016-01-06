@@ -84,8 +84,12 @@
 
 - (void)setMultilineTitle:(BOOL)multiline
 {
-    [self.label setTextAlignment:NSTextAlignmentLeft];
-    [self.label setNumberOfLines:2];
+    if (multiline) {
+        [self.label setTextAlignment:NSTextAlignmentLeft];
+        [self.label setNumberOfLines:2];
+    } else {
+        [self.label setNumberOfLines:1];
+    }
 }
 
 - (void)setTag:(NSInteger)tag

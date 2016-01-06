@@ -97,7 +97,7 @@
 @dynamic shortSummary;
 @dynamic summary;
 @dynamic numberOfTimesSeen;
-@dynamic richRelevance;
+@dynamic richRelevanceParameter;
 @dynamic richRelevanceTitle;
 
 @synthesize categoryIds;
@@ -392,7 +392,7 @@
             newProduct.targetString = [dataDic objectForKey:@"target"];
         }
         if ([dataDic objectForKey:@"click_request"]) {
-            newProduct.richRelevance = [dataDic objectForKey:@"click_request"];
+            newProduct.richRelevanceParameter = [dataDic objectForKey:@"click_request"];
         }
         if ([dataDic objectForKey:@"description"]) {
             newProduct.descriptionString = [dataDic objectForKey:@"description"];

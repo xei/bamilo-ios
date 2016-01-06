@@ -931,8 +931,8 @@ JAActivityViewControllerDelegate
     if (VALID_NOTEMPTY(tempProduct.targetString, NSString)) {
         [userInfo setObject:tempProduct.targetString forKey:@"targetString"];
         
-        if (VALID_NOTEMPTY(tempProduct.richRelevance, NSString)) {
-            [userInfo setObject:tempProduct.richRelevance forKey:@"richRelevance"];
+        if (VALID_NOTEMPTY(tempProduct.richRelevanceParameter, NSString)) {
+            [userInfo setObject:tempProduct.richRelevanceParameter forKey:@"richRelevance"];
         }
     } else if (VALID_NOTEMPTY(tempProduct.sku, NSString)) {
         [userInfo setObject:tempProduct.sku forKey:@"sku"];

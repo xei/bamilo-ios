@@ -190,7 +190,7 @@
         <attribute name="ratingsTotal" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="recentlyViewedDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="reviewsTotal" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="richRelevance" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="richRelevanceParameter" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="richRelevanceTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shortSummary" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sizeGuideUrl" optional="YES" attributeType="String" syncable="YES"/>
