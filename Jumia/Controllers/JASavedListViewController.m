@@ -231,11 +231,12 @@
     [self showLoading];
     [RIProduct getFavoriteProductsForPage:self.currentPage.integerValue+1 maxItems:self.maxPerPage.integerValue SuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
         
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         if (favoriteProducts.count > 0) {
             
             [RIProduct getUpdatedProductsWithSkus:[favoriteProducts valueForKey:@"sku"] successBlock:^(NSArray *products) {
                 
-                [self removeErrorView];
+                [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                 
                 if (currentPage == totalPages) {
                     self.lastPage = YES;
@@ -267,6 +268,8 @@
                 
             } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
                 
+                [self onErrorResponse:apiResponse messages:error showAsMessage:NO selector:@selector(loadProducts) objects:nil];
+                
                 if(self.firstLoading)
                 {
                     NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
@@ -275,20 +278,6 @@
                 }
                 
                 [self hideLoading];
-                
-                if (RIApiResponseMaintenancePage == apiResponse) {
-                    [self showMaintenancePage:@selector(loadProducts) objects:nil];
-                }
-                else if(RIApiResponseKickoutView == apiResponse)
-                {
-                    [self showKickoutView:@selector(loadProducts) objects:nil];
-                }else if (RIApiResponseNoInternetConnection == apiResponse)
-                {
-                    [self showErrorView:YES startingY:self.viewBounds.origin.y selector:@selector(loadProducts) objects:nil];
-                }else
-                {
-                    [self showErrorView:NO startingY:self.viewBounds.origin.y selector:@selector(loadProducts) objects:nil];
-                }
             }];
         } else {
             self.productsDictionary = nil;
@@ -296,6 +285,9 @@
             [self hideLoading];
         }
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
+        
+        [self onErrorResponse:apiResponse messages:error showAsMessage:NO selector:@selector(loadProducts) objects:nil];
+        
         if(self.firstLoading)
         {
             NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
@@ -339,6 +331,7 @@
     [self showLoading];
     __block NSString *sku = notification.object;
     [RIProduct getCompleteProductWithSku:sku successBlock:^(RIProduct *product) {
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         if (VALID_NOTEMPTY([product favoriteAddDate], NSDate)) {
             if (![self.productsArray containsObject:product.sku]) {
                 [self.productsArray addObject:product.sku];
@@ -352,15 +345,8 @@
         [self reloadData];
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
-        
+        [self onErrorResponse:apiResponse messages:error showAsMessage:NO selector:@selector(updatedProduct:) objects:@[notification]];
         [self hideLoading];
-        if (RIApiResponseMaintenancePage == apiResponse) {
-            [self showMaintenancePage:@selector(updatedProduct:) objects:@[notification]];
-        }
-        else if(RIApiResponseKickoutView == apiResponse)
-        {
-            [self showKickoutView:@selector(updatedProduct:) objects:@[notification]];
-        }
     }];
 }
 
@@ -534,7 +520,7 @@
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       
-                      [self showMessage:[successMessage componentsJoinedByString:@","] success:YES];
+                      [self onSuccessResponse:RIApiResponseSuccess messages:successMessage showMessage:YES];
                       
                       NSMutableDictionary *tracking = [NSMutableDictionary new];
                       [tracking setValue:product.name forKey:kRIEventProductNameKey];
@@ -555,8 +541,7 @@
                       
                   } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                       
-                      [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
-                      
+                      [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
                       [self hideLoading];
                   }];
 }
@@ -628,6 +613,8 @@
     [self showLoading];
     [RIProduct removeFromFavorites:product successBlock:^(RIApiResponse apiResponse, NSArray *success) {
         
+        [self onSuccessResponse:RIApiResponseSuccess messages:@[STRING_REMOVED_FROM_WISHLIST] showMessage:YES];
+        
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
         [trackingDictionary setValue:@"RemoveFromWishlist" forKey:kRIEventActionKey];
@@ -668,12 +655,8 @@
         [self hideLoading];
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-        NSString *removingFromSavedListError = [error componentsJoinedByString:@","];
-        if (RIApiResponseNoInternetConnection == apiResponse)
-        {
-            removingFromSavedListError = STRING_NO_CONNECTION;
-        }
-        [self showMessage:removingFromSavedListError success:NO];
+        
+        [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:nil objects:nil];
         
         [self hideLoading];
     }];

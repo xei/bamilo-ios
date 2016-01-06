@@ -445,19 +445,13 @@
     [RIProductRatings getRatingsDetails:_product.sku successBlock:^(NSDictionary *ratingsDictionary) {
         _ratingsDictionary = ratingsDictionary;
         [self fillGraphics];
+        [self.viewControllerEvents onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         [self.viewControllerEvents hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
         
         if(RIApiResponseSuccess != apiResponse)
         {
-            if (RIApiResponseNoInternetConnection == apiResponse)
-            {
-                [self.viewControllerEvents showErrorView:YES startingY:0.0f selector:@selector(requestRatings) objects:nil];
-            }
-            else
-            {
-                [self.viewControllerEvents showErrorView:NO startingY:0.0f selector:@selector(requestRatings) objects:nil];
-            }
+            [self.viewControllerEvents onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(requestRatings) objects:nil];
         }
         [self.viewControllerEvents hideLoading];
     }];
@@ -471,18 +465,12 @@
         [self.reviewsArray addObjectsFromArray:[self.productRatings.reviews mutableCopy]];
         _currentPage = self.productRatings.currentPage.integerValue;
         [self.collectionView reloadData];
+        [self.viewControllerEvents onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         [self.viewControllerEvents hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
         if(RIApiResponseSuccess != apiResponse)
         {
-            if (RIApiResponseNoInternetConnection == apiResponse)
-            {
-                [self.viewControllerEvents showErrorView:YES startingY:0.0f selector:@selector(requestReviews) objects:nil];
-            }
-            else
-            {
-                [self.viewControllerEvents showErrorView:NO startingY:0.0f selector:@selector(requestReviews) objects:nil];
-            }
+            [self.viewControllerEvents onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(requestReviews) objects:nil];
         }
         [self.viewControllerEvents hideLoading];
     }];

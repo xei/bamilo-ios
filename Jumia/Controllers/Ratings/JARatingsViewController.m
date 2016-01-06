@@ -255,16 +255,9 @@ UITableViewDataSource
     
     if(RIApiResponseSuccess != self.apiResponse)
     {
-        if (RIApiResponseNoInternetConnection == self.apiResponse)
-        {
-            [self showErrorView:YES startingY:0.0f selector:@selector(ratingsRequests) objects:nil];
-        }
-        else
-        {
-            [self showErrorView:NO startingY:0.0f selector:@selector(ratingsRequests) objects:nil];
-        }
+            [self onErrorResponse:self.apiResponse messages:nil showAsMessage:NO selector:@selector(ratingsRequests) objects:nil];
     }else{
-        [self removeErrorView];
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
     }
     
     self.requestsDone = YES;
@@ -579,7 +572,7 @@ UITableViewDataSource
 -(void)addReviewsToTable:(NSArray *)reviews
 {
     self.apiResponse = RIApiResponseSuccess;
-    [self removeErrorView];
+    [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
     
     BOOL isEmpty = NO;
     if(ISEMPTY(self.reviewsArray))
@@ -623,7 +616,7 @@ UITableViewDataSource
                                          
                                          self.productRatings = ratings;
                                          
-                                         [self removeErrorView];
+                                         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                                          
                                          if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
                                          {
@@ -644,14 +637,7 @@ UITableViewDataSource
                                          self.apiResponse = apiResponse;
                                          if(RIApiResponseSuccess != apiResponse)
                                          {
-                                             if (RIApiResponseNoInternetConnection == apiResponse)
-                                             {
-                                                 [self showErrorView:YES startingY:0.0f selector:@selector(requestReviews) objects:nil];
-                                             }
-                                             else
-                                             {
-                                                 [self showErrorView:NO startingY:0.0f selector:@selector(requestReviews) objects:nil];
-                                             }
+                                             [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(requestReviews) objects:nil];
                                          }
                                          self.numberOfRequests = 0;
                                          
@@ -1123,8 +1109,7 @@ UITableViewDataSource
                                                       data:[globalRateDictionary copy]];
             
             [self hideLoading];
-            
-            [self showMessage:STRING_REVIEW_SENT success:YES];
+            [self onSuccessResponse:RIApiResponseSuccess messages:@[STRING_REVIEW_SENT] showMessage:YES];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
                                                                 object:nil
@@ -1133,27 +1118,22 @@ UITableViewDataSource
             
             [self hideLoading];
             
-            if (RIApiResponseNoInternetConnection == apiResponse)
-            {
-                [self showMessage:STRING_NO_CONNECTION success:NO];
-            }
-            else if(VALID_NOTEMPTY(errorObject, NSDictionary))
+            if(VALID_NOTEMPTY(errorObject, NSDictionary))
             {
                 [currentDynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                    [self showMessage:message success:NO];
+                    [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
                 }];
             }
             else if(VALID_NOTEMPTY(errorObject, NSArray))
             {
                 [currentDynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                    [self showMessage:message success:NO];
+                    [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
                 }];
             }
             else
             {
                 [currentDynamicForm checkErrors];
-                
-                [self showMessage:STRING_ERROR success:NO];
+                [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
             }
         }];
 }

@@ -128,18 +128,11 @@ JAPickerDelegate>
                [self.contentView addSubview:view];
            }
            
-           [self removeErrorView];
+           [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
            [self finishedFormLoading];
        } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
            self.apiResponse = apiResponse;
-           
-           BOOL noInternetConnection = NO;
-           if (RIApiResponseNoInternetConnection == self.apiResponse)
-           {
-               noInternetConnection = YES;
-           }
-           
-           [self showErrorView:noInternetConnection startingY:0.0f selector:@selector(getForm) objects:nil];
+           [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(getForm) objects:nil];
            [self hideLoading];
        }];
 }
@@ -447,7 +440,7 @@ JAPickerDelegate>
 {
     [self showLoading];
     if ([self.dynamicForm checkErrors]) {
-        [self showMessage:self.dynamicForm.firstErrorInFields success:NO];
+        [self onErrorResponse:RIApiResponseSuccess messages:@[self.dynamicForm.firstErrorInFields] showAsMessage:YES selector:nil objects:nil];
         [self hideLoading];
         return;
     }
@@ -462,6 +455,7 @@ JAPickerDelegate>
           parameters:parameters
         successBlock:^(id object)
      {
+         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
          NSDictionary* entitiesDictionary = (NSDictionary*)object;
          self.cart = [entitiesDictionary objectForKey:@"cart"];
          [self.dynamicForm resetValues];
@@ -486,21 +480,16 @@ JAPickerDelegate>
          if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
              [self.dynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                 [self showMessage:message success:NO];
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
              }];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
              [self.dynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                 [self showMessage:message success:NO];
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
              }];
-         }
-         
-         if (RIApiResponseNoInternetConnection == apiResponse)
-         {
-             [self showMessage:STRING_NO_CONNECTION success:NO];
-         } else {
-             [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
+         }else{
+             [self onErrorResponse:apiResponse messages:@[STRING_ERROR_INVALID_FIELDS] showAsMessage:YES selector:nil objects:nil];
          }
          
          self.hasErrors = NO;

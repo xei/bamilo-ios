@@ -57,17 +57,12 @@
         [RIHtmlShop getHtmlShopForTargetString:self.targetString successBlock:^(RIHtmlShop *htmlShop) {
             self.htmlShop = htmlShop;
             self.isLoaded = YES;
-            
-            [self removeErrorView];
+            [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
             [self.webView loadHTMLString:self.htmlShop.html baseURL:[NSURL URLWithString:[RITarget getURLStringforTargetString:self.targetString]]];
             
         } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+            [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(viewWillAppear:) objects:nil];
             [self hideLoading];
-            if (RIApiResponseNoInternetConnection == apiResponse) {
-                [self showErrorView:YES startingY:0.0f selector:@selector(viewWillAppear:) objects:nil];
-            } else {
-                [self showErrorView:NO startingY:0.0f selector:@selector(viewWillAppear:) objects:nil];
-            }
         }];
     } else {
         [self loadViews];
@@ -177,7 +172,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     [self hideLoading];
-    [self showErrorView:NO startingY:0.0f selector:@selector(viewWillAppear:) objects:nil];
+    [self onErrorResponse:RIApiResponseUnknownError messages:nil showAsMessage:NO selector:@selector(viewWillAppear:) objects:nil];
 }
 
 @end

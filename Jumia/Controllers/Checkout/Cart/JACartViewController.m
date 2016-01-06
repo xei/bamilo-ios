@@ -92,14 +92,13 @@
     return _continueShoppingButton;
 }
 
-- (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray *)objects
-{
-    [self setEmptyCartViewHidden:YES];
-    [self setCartViewHidden:YES];
-    self.requestDone = NO;
-    
-    [super showErrorView:isNoInternetConnection startingY:startingY selector:selector objects:objects];
-}
+//- (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray *)objects
+//{
+//    [self setEmptyCartViewHidden:YES];
+//    [self setCartViewHidden:YES];
+//    self.requestDone = NO;
+//    [super showErrorView:isNoInternetConnection startingY:startingY selector:selector objects:objects];
+//}
 
 - (void)viewDidLoad
 {
@@ -245,7 +244,7 @@
         NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
         NSMutableDictionary *trackingDictionary = nil;
         NSMutableArray *viewCartTrackingProducts = [[NSMutableArray alloc] init];
-        [self removeErrorView];
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
 
         //reset teaserTrackingInfo for items that have been removed somehow (i.e. logout)
         NSDictionary* teaserTrackingInfoDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey];
@@ -372,7 +371,6 @@
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         self.apiResponse = apiResponse;
-        self.requestDone = YES;
         
         if(_firstLoading)
         {
@@ -381,24 +379,10 @@
             _firstLoading = NO;
         }
         
-        if(RIApiResponseMaintenancePage == apiResponse)
-        {
-            [self showMaintenancePage:@selector(continueLoading) objects:nil];
-        }
-        else if(RIApiResponseKickoutView == apiResponse)
-        {
-            [self showKickoutView:@selector(continueLoading) objects:nil];
-        }
-        else
-        {
-            BOOL noConnection = NO;
-            if (RIApiResponseNoInternetConnection == apiResponse)
-            {
-                noConnection = YES;
-            }
-            [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
-        }
-        
+        [self setEmptyCartViewHidden:YES];
+        [self setCartViewHidden:YES];
+        self.requestDone = NO;
+        [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(continueLoading) objects:nil];
         [self hideLoading];
     }];
 }
@@ -1070,11 +1054,11 @@
                              [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                              
                              [self loadCartInfo];
-                             
+                             [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                              [self hideLoading];
                          } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                             [self onErrorResponse:apiResponse messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:nil objects:nil];
                              [self hideLoading];
-                             [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
                          }];
     }
 }
@@ -1164,10 +1148,11 @@
             [self setupCart];
             [self.couponTextField setEnabled:YES];
              [self.couponTextField setText:@""];
+            [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
             [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+            [self onErrorResponse:apiResponse messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:nil objects:NO];
             [self hideLoading];
-            [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
         }];
     }
     else
@@ -1190,7 +1175,7 @@
             Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
             NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
             if (networkStatus == NotReachable) {
-                [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
+                [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:nil objects:nil];
             }
             else{
                 [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
@@ -1223,6 +1208,7 @@
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutStart]
                                                       data:[trackingDictionary copy]];
             
+            [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
             [self hideLoading];
             
             if(VALID_NOTEMPTY(adressList, NSDictionary))
@@ -1254,7 +1240,7 @@
             
             [self hideLoading];
             
-            [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
+            [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
         }];
     }];
 }
@@ -1490,10 +1476,10 @@
                             Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
                             NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
                             if (networkStatus == NotReachable) {
-                                [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
+                                [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:nil objects:nil];
                             }
                             else {
-                                [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
+                                [self onErrorResponse:RIApiResponseUnknownError messages:errorMessages showAsMessage:YES selector:nil objects:nil];
                             }
                         }];
     }
