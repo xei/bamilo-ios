@@ -293,7 +293,7 @@
     [self showLoading];
     [RICart addProductWithQuantity:@"1"
                          simpleSku:simpleSku
-                  withSuccessBlock:^(RICart *cart) {
+                  withSuccessBlock:^(RICart *cart, RIApiResponse apiResponse,  NSArray *successMessage) {
                       
                       NSNumber *price = offer.priceEuroConverted;
                       
@@ -345,19 +345,19 @@
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       
-                      [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
+                      [self showMessage:[successMessage componentsJoinedByString:@","] success:YES];
                       [self hideLoading];
                       
-                  } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-                      NSString *addToCartError = STRING_ERROR_ADDING_TO_CART;
-                      if(RIApiResponseNoInternetConnection == apiResponse)
-                      {
-                          addToCartError = STRING_NO_CONNECTION;
-                      }
-                      
-                      [self showMessage:addToCartError success:NO];
-                      [self hideLoading];
-                  }];
+                  }andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+                       if(RIApiResponseNoInternetConnection == apiResponse)
+                       {
+                           NSString *addToCartError = STRING_NO_CONNECTION;
+                           [self showMessage:addToCartError success:NO];
+                       }
+                       
+                       [self showMessage:[error componentsJoinedByString:@","] success:NO];
+                       [self hideLoading];
+                   }];
 }
 
 - (void)sizeButtonPressed:(UIButton*)button {

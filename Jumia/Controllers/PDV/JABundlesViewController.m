@@ -357,14 +357,14 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock) {
         
         [self hideLoading];
-        
-        NSString *addToCartError = STRING_ERROR_ADDING_TO_CART;
+
         if (RIApiResponseNoInternetConnection == apiResponse)
         {
-            addToCartError = STRING_NO_CONNECTION;
+            NSString *addToCartError = STRING_NO_CONNECTION;
+            [self showMessage:addToCartError success:NO];
         }
         
-        [self showMessage:addToCartError success:NO];
+        [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
     }];
 }
 

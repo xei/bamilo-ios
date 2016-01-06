@@ -40,7 +40,7 @@
 
 + (NSString*)setDefaultAddress:(RIAddress*)address
                      isBilling:(BOOL)isBilling
-                  successBlock:(void (^)(void))successBlock
+                  successBlock:(void (^)(RIApiResponse apiResponse, NSArray *successMessage))successBlock
                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 + (NSString*)getCustomerAddressListWithSuccessBlock:(void (^)(id adressList))successBlock
