@@ -466,7 +466,7 @@
     [self showLoading];
     [RICart addProductWithQuantity:@"1"
                          simpleSku:productSimple.sku
-                  withSuccessBlock:^(RICart *cart) {
+                  withSuccessBlock:^(RICart *cart, RIApiResponse apiResponse, NSArray *successMessage) {
                       
                       NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted floatValue] > 0.0f) ? product.specialPriceEuroConverted :product.priceEuroConverted;
                       
@@ -534,7 +534,7 @@
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       
-                      [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
+                      [self showMessage:[successMessage componentsJoinedByString:@","] success:YES];
                       
                       NSMutableDictionary *tracking = [NSMutableDictionary new];
                       [tracking setValue:product.name forKey:kRIEventProductNameKey];
@@ -555,17 +555,7 @@
                       
                   } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                       
-                      NSString *addToCartError = STRING_ERROR_ADDING_TO_CART;
-                      NSString *results = [[errorMessages valueForKey:@"description"] componentsJoinedByString:@""];
-                      if([results  isEqualToString: @"order_product_sold_out"]){
-                          
-                          addToCartError = STRING_PRODCUTS_OUT_OF_STOCK;
-                      }
-                      if (RIApiResponseNoInternetConnection == apiResponse)
-                      {
-                          addToCartError = STRING_NO_CONNECTION;
-                      }
-                      [self showMessage:addToCartError success:NO];
+                      [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
                       
                       [self hideLoading];
                   }];
@@ -636,7 +626,7 @@
 {
     NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted floatValue] > 0.0f) ? product.specialPriceEuroConverted :product.priceEuroConverted;
     [self showLoading];
-    [RIProduct removeFromFavorites:product successBlock:^(void) {
+    [RIProduct removeFromFavorites:product successBlock:^(RIApiResponse apiResponse, NSArray *success) {
         
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
@@ -678,7 +668,7 @@
         [self hideLoading];
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-        NSString *removingFromSavedListError = STRING_ERROR_REMOVING_FROM_WISHLIST;
+        NSString *removingFromSavedListError = [error componentsJoinedByString:@","];
         if (RIApiResponseNoInternetConnection == apiResponse)
         {
             removingFromSavedListError = STRING_NO_CONNECTION;
