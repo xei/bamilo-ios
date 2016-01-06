@@ -122,16 +122,6 @@ typedef void (^ProcessActionBlock)(void);
     [self setSearchBarText:self.searchString];
 }
 
-//- (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects;
-//{
-//    //$WIZ$
-////    if (VALID_NOTEMPTY(self.wizardView, JACatalogWizardView)) {
-////        [self.wizardView removeFromSuperview];
-////    }
-//
-//    [super showErrorView:isNoInternetConnection startingY:startingY selector:selector objects:objects];
-//}
-
 -(void)showNoResultsView:(CGFloat)withVerticalPadding undefinedSearchTerm:(RIUndefinedSearchTerm*)undefinedSearchTerm
 {
     //$WIZ$
@@ -676,6 +666,12 @@ typedef void (^ProcessActionBlock)(void);
     }
     else
     {
+//$WIZ$
+//        if (VALID_NOTEMPTY(self.wizardView, JACatalogWizardView))
+//        {
+//            [self.wizardView removeFromSuperview];
+//        }
+        
         if(RIApiResponseAPIError == apiResponse)
         {
             [self showNoResultsView:CGRectGetMaxY(self.catalogTopView.frame) undefinedSearchTerm:undefSearchTerm];
