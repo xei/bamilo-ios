@@ -353,18 +353,10 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
         NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
         [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
         
-        [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
+        [self onSuccessResponse:RIApiResponseSuccess messages:@[STRING_ITEM_WAS_ADDED_TO_CART] showMessage:YES];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock) {
-        
+        [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
         [self hideLoading];
-
-        if (RIApiResponseNoInternetConnection == apiResponse)
-        {
-            NSString *addToCartError = STRING_NO_CONNECTION;
-            [self showMessage:addToCartError success:NO];
-        }
-        
-        [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
     }];
 }
 

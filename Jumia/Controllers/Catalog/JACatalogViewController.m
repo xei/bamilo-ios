@@ -122,16 +122,6 @@ typedef void (^ProcessActionBlock)(void);
     [self setSearchBarText:self.searchString];
 }
 
-- (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects;
-{
-    //$WIZ$
-//    if (VALID_NOTEMPTY(self.wizardView, JACatalogWizardView)) {
-//        [self.wizardView removeFromSuperview];
-//    }
-
-    [super showErrorView:isNoInternetConnection startingY:startingY selector:selector objects:objects];
-}
-
 -(void)showNoResultsView:(CGFloat)withVerticalPadding undefinedSearchTerm:(RIUndefinedSearchTerm*)undefinedSearchTerm
 {
     //$WIZ$
@@ -158,7 +148,7 @@ typedef void (^ProcessActionBlock)(void);
         }
         else
         {
-            [self showErrorView:NO startingY:withVerticalPadding selector:@selector(loadMoreProducts) objects:nil];
+            [self onErrorResponse:RIApiResponseUnknownError messages:nil showAsMessage:NO selector:@selector(loadMoreProducts) objects:nil];
         }
     }
     else
@@ -416,7 +406,7 @@ typedef void (^ProcessActionBlock)(void);
     [RICategory getAllCategoriesWithSuccessBlock:^(id categories)
      {
          self.apiResponse = RIApiResponseSuccess;
-         [self removeErrorView];
+         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
          
          for (RICategory *category in categories)
          {             
@@ -445,25 +435,7 @@ typedef void (^ProcessActionBlock)(void);
          
      } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
          self.apiResponse = apiResponse;
-         
-         if(RIApiResponseMaintenancePage == apiResponse)
-         {
-             [self showMaintenancePage:@selector(getCategories) objects:nil];
-         }
-         else if(RIApiResponseKickoutView == apiResponse)
-         {
-             [self showKickoutView:@selector(getCategories) objects:nil];
-         }
-         else
-         {
-             BOOL noConnection = NO;
-             if (RIApiResponseNoInternetConnection == apiResponse)
-             {
-                 noConnection = YES;
-             }
-             [self showErrorView:noConnection startingY:CGRectGetMaxY(self.catalogTopView.frame) selector:@selector(getCategories) objects:nil];
-         }
-         
+         [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(getCategories) objects:nil];
          [self hideLoading];
      }];
 }
@@ -478,7 +450,7 @@ typedef void (^ProcessActionBlock)(void);
 - (void)addProductsToTable:(NSArray*)products
 {
     self.apiResponse = RIApiResponseSuccess;
-    [self removeErrorView];
+    [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
     
     BOOL isEmpty = NO;
     if(ISEMPTY(self.productsArray))
@@ -578,7 +550,7 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)processCatalog:(RICatalog *)catalog
 {
-    [self removeErrorView];
+    [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
     
     self.searchSuggestionOperationID = nil;
     self.getProductsOperationID = nil;
@@ -691,35 +663,21 @@ typedef void (^ProcessActionBlock)(void);
     
     if(VALID_NOTEMPTY(self.productsArray, NSArray))
     {
-        NSString *erroMessasge = STRING_ERROR;
-        if (RIApiResponseNoInternetConnection == apiResponse)
-        {
-            erroMessasge = STRING_NO_CONNECTION;
-        }
-        
-        [self showMessage:erroMessasge success:NO];
+        [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
     }
     else
     {
-        if(RIApiResponseMaintenancePage == apiResponse)
+//$WIZ$
+//        if (VALID_NOTEMPTY(self.wizardView, JACatalogWizardView))
+//        {
+//            [self.wizardView removeFromSuperview];
+//        }
+        
+        if(RIApiResponseAPIError == apiResponse)
         {
-            [self showMaintenancePage:@selector(loadMoreProducts) objects:nil];
-        }
-        else if(RIApiResponseKickoutView == apiResponse)
-        {
-            [self showKickoutView:@selector(loadMoreProducts) objects:nil];
-        }
-        else
-        {
-            if (RIApiResponseNoInternetConnection == apiResponse)
-            {
-                [self showErrorView:YES startingY:CGRectGetMaxY(self.catalogTopView.frame) selector:@selector(loadMoreProducts) objects:nil];
-                
-            }
-            else if(RIApiResponseAPIError == apiResponse)
-            {
-                [self showNoResultsView:CGRectGetMaxY(self.catalogTopView.frame) undefinedSearchTerm:undefSearchTerm];
-            }
+            [self showNoResultsView:CGRectGetMaxY(self.catalogTopView.frame) undefinedSearchTerm:undefSearchTerm];
+        }else{
+            [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadMoreProducts) objects:nil];
         }
     }
     
@@ -1286,13 +1244,11 @@ typedef void (^ProcessActionBlock)(void);
             button.selected = YES;
             product.favoriteAddDate = [NSDate date];
             
-            [self removeErrorView];
-            
             [self trackingEventAddToWishList:product];
             
+            [self onSuccessResponse:RIApiResponseSuccess messages:success showMessage:YES];
             [self hideLoading];
             
-            [self showMessage:[success componentsJoinedByString:@","] success:YES];
             NSDictionary *userInfo = nil;
             if (product.favoriteAddDate) {
                 userInfo = [NSDictionary dictionaryWithObject:product.favoriteAddDate forKey:@"favoriteAddDate"];
@@ -1304,18 +1260,8 @@ typedef void (^ProcessActionBlock)(void);
             [self.collectionView reloadData];
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-            
+            [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:nil objects:nil];
             [self hideLoading];
-            if (RIApiResponseNoInternetConnection == apiResponse)
-            {
-                NSString *errorMessage = STRING_NO_CONNECTION;
-                [self showMessage:errorMessage success:NO];
-
-            }
-            else{
-                [self showMessage:[error componentsJoinedByString:@","] success:NO];
-            }
-        
         }];
     }else{
         [self hideLoading];
@@ -1346,14 +1292,12 @@ typedef void (^ProcessActionBlock)(void);
         [RIProduct removeFromFavorites:product successBlock:^(RIApiResponse apiResponse, NSArray *success) {
             button.selected = NO;
             product.favoriteAddDate = nil;
-            [self removeErrorView];
             
             [self trackingEventRemoveFromWishlist:product];
             
+            [self onSuccessResponse:RIApiResponseSuccess messages:success showMessage:YES];
             //update favoriteProducts
             [self hideLoading];
-            
-            [self showMessage:[success componentsJoinedByString:@","] success:YES];
             
             NSDictionary *userInfo = nil;
             if (product.favoriteAddDate) {
@@ -1365,18 +1309,8 @@ typedef void (^ProcessActionBlock)(void);
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             
+            [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:nil objects:nil];
             [self hideLoading];
-            
-            if (RIApiResponseNoInternetConnection == apiResponse)
-            {
-                NSString *errorMessage = STRING_NO_CONNECTION;
-                [self showMessage:errorMessage success:NO];
-
-            }
-            else{
-                [self showMessage:[error componentsJoinedByString:@","] success:NO];
-            }
-
         }];
     }else{
         [self hideLoading];
@@ -1511,7 +1445,7 @@ typedef void (^ProcessActionBlock)(void);
         [self.catalogTopView setSorting:self.sortingMethod];
         
         self.apiResponse = RIApiResponseSuccess;
-        [self removeErrorView];
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         
         [self resetCatalog];
         [self loadMoreProducts];

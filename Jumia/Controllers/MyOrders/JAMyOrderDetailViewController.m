@@ -78,7 +78,7 @@
                               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
                               self.firstLoading = NO;
                           }
-                          [self removeErrorView];
+                          [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                           [self hideLoading];
                           
                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
@@ -92,20 +92,7 @@
                               self.firstLoading = NO;
                           }
                           
-                          if(RIApiResponseMaintenancePage == apiResponse)
-                          {
-                              [self showMaintenancePage:@selector(loadOrderDetails) objects:nil];
-                          }
-                          else if(RIApiResponseKickoutView == apiResponse)
-                          {
-                              [self showKickoutView:@selector(loadOrderDetails) objects:nil];
-                          }
-                          else if (RIApiResponseNoInternetConnection == apiResponse)
-                          {
-                              
-                              [self showErrorView:YES startingY:0.0f selector:@selector(loadOrderDetails) objects:nil];
-                              
-                          }
+                          [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadOrderDetails) objects:nil];
                           [self hideLoading];
                       }];
 }

@@ -133,7 +133,7 @@ UITableViewDataSource
 - (void)addReviewsToTable:(NSArray*)reviews
 {
     self.apiResponse = RIApiResponseSuccess;
-    [self removeErrorView];
+    [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
     
     BOOL isEmpty = NO;
     if(ISEMPTY(self.reviewsArray))
@@ -171,7 +171,7 @@ UITableViewDataSource
     [RISellerReviewInfo getSellerReviewForProductWithTargetString:self.product.targetString pageSize:self.maxReviews pageNumber:currentPage successBlock:^(RISellerReviewInfo *sellerReviewInfo) {
         self.sellerReviewInfo = sellerReviewInfo;
         
-        [self removeErrorView];
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         
         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
         {
@@ -191,14 +191,7 @@ UITableViewDataSource
         
         if(RIApiResponseSuccess != self.apiResponse)
         {
-            if (RIApiResponseNoInternetConnection == self.apiResponse)
-            {
-                [self showErrorView:YES startingY:0.0f selector:@selector(sellerReviewsRequest) objects:nil];
-            }
-            else
-            {
-                [self showErrorView:NO startingY:0.0f selector:@selector(sellerReviewsRequest) objects:nil];
-            }
+            [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(sellerReviewsRequest) objects:nil];
         }
         self.numberOfRequests = 0;
         [self hideLoading];
@@ -273,18 +266,12 @@ UITableViewDataSource
     
     [self hideLoading];
     
-    [self removeErrorView];
     
     if(RIApiResponseSuccess != self.apiResponse)
     {
-        if (RIApiResponseNoInternetConnection == self.apiResponse)
-        {
-            [self showErrorView:YES startingY:0.0f selector:@selector(formRequest) objects:nil];
-        }
-        else
-        {
-            [self showErrorView:NO startingY:0.0f selector:@selector(formRequest) objects:nil];
-        }
+        [self onErrorResponse:self.apiResponse messages:nil showAsMessage:NO selector:@selector(formRequest) objects:nil];
+    }else{
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
     }
     
     self.requestsDone = YES;
@@ -783,7 +770,7 @@ UITableViewDataSource
             
             [self hideLoading];
             
-            [self showMessage:STRING_REVIEW_SENT success:YES];
+            [self onSuccessResponse:RIApiResponseSuccess messages:@[STRING_REVIEW_SENT] showMessage:YES];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
                                                                 object:nil
@@ -792,27 +779,22 @@ UITableViewDataSource
             
             [self hideLoading];
             
-            if (RIApiResponseNoInternetConnection == apiResponse)
-            {
-                [self showMessage:STRING_NO_CONNECTION success:NO];
-            }
-            else if(VALID_NOTEMPTY(errorObject, NSDictionary))
+            if(VALID_NOTEMPTY(errorObject, NSDictionary))
             {
                 [currentDynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                    [self showMessage:message success:NO];
+                    [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
                 }];
             }
             else if(VALID_NOTEMPTY(errorObject, NSArray))
             {
                 [currentDynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                    [self showMessage:message success:NO];
+                    [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
                 }];
             }
             else
             {
                 [currentDynamicForm checkErrors];
-                
-                [self showMessage:STRING_ERROR success:NO];
+                [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
             }
         }];
 }

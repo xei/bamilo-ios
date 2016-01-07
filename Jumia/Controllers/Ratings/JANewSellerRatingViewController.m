@@ -234,33 +234,18 @@ UIAlertViewDelegate
 
 -(void)finishedRequests
 {
-    [self removeErrorView];
     if(RIApiResponseSuccess == self.apiResponse)
     {
+        [self onSuccessResponse:self.apiResponse messages:nil showMessage:NO];
         [self setupViews];
     }
-    
-    else if (RIApiResponseNoInternetConnection == self.apiResponse)
+    if(VALID_NOTEMPTY(self.reviewsDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.reviewsDynamicForm.formViews, NSMutableArray))
     {
-        if(VALID_NOTEMPTY(self.reviewsDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.reviewsDynamicForm.formViews, NSMutableArray))
-        {
-            [self showMessage:STRING_NO_CONNECTION success:NO];
-        }
-        else
-        {
-            [self showErrorView:YES startingY:0.0f selector:@selector(formRequest) objects:nil];
-        }
+        [self onErrorResponse:self.apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
     }
     else
     {
-        if(VALID_NOTEMPTY(self.reviewsDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.reviewsDynamicForm.formViews, NSMutableArray))
-        {
-            [self showMessage:STRING_ERROR success:NO];
-        }
-        else
-        {
-            [self showErrorView:NO startingY:0.0f selector:@selector(formRequest) objects:nil];
-        }
+        [self onErrorResponse:self.apiResponse messages:nil showAsMessage:NO selector:@selector(formRequest) objects:nil];
     }
     
     [self hideLoading];
@@ -476,7 +461,7 @@ UIAlertViewDelegate
             
             [self hideLoading];
             
-            [self showMessage:STRING_REVIEW_SENT success:YES];
+            [self onSuccessResponse:RIApiResponseSuccess messages:@[STRING_REVIEW_SENT] showMessage:YES];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kCloseTopTwoScreensNotification
                                                                 object:nil
@@ -485,27 +470,22 @@ UIAlertViewDelegate
             
             [self hideLoading];
             
-            if (RIApiResponseNoInternetConnection == apiResponse)
-            {
-                [self showMessage:STRING_NO_CONNECTION success:NO];
-            }
-            else if(VALID_NOTEMPTY(errorObject, NSDictionary))
+            if(VALID_NOTEMPTY(errorObject, NSDictionary))
             {
                 [currentDynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                    [self showMessage:message success:NO];
+                    [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
                 }];
             }
             else if(VALID_NOTEMPTY(errorObject, NSArray))
             {
                 [currentDynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                    [self showMessage:message success:NO];
+                    [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
                 }];
             }
             else
             {
                 [currentDynamicForm checkErrors];
-                
-                [self showMessage:STRING_ERROR success:NO];
+                [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
             }
         }];
 }

@@ -337,27 +337,21 @@
                       
                       float value = [price floatValue];
                       [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToCart
-                                 valueToSum:value
-                                 parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
-                                               FBSDKAppEventParameterNameContentType : self.product.name,
-                                               FBSDKAppEventParameterNameContentID   : self.product.sku}];
+                                    valueToSum:value
+                                    parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
+                                                  FBSDKAppEventParameterNameContentType : self.product.name,
+                                                  FBSDKAppEventParameterNameContentID   : self.product.sku}];
                       
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       
-                      [self showMessage:[successMessage componentsJoinedByString:@","] success:YES];
+                      [self onSuccessResponse:RIApiResponseSuccess messages:successMessage showMessage:YES];
                       [self hideLoading];
                       
                   }andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-                       if(RIApiResponseNoInternetConnection == apiResponse)
-                       {
-                           NSString *addToCartError = STRING_NO_CONNECTION;
-                           [self showMessage:addToCartError success:NO];
-                       }
-                       
-                       [self showMessage:[error componentsJoinedByString:@","] success:NO];
-                       [self hideLoading];
-                   }];
+                      [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:nil objects:nil];
+                      [self hideLoading];
+                  }];
 }
 
 - (void)sizeButtonPressed:(UIButton*)button {

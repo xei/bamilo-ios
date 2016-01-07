@@ -244,19 +244,10 @@
            
            [self setupUserEditFormViews];
            [self requestChangePasswordForm];
+           [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
        } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
            self.apiResponse = apiResponse;
-           if (RIApiResponseMaintenancePage == apiResponse) {
-               [self showMaintenancePage:@selector(requestUserEditForm) objects:nil];
-           } else if (RIApiResponseKickoutView == apiResponse) {
-               [self showKickoutView:@selector(requestUserEditForm) objects:nil];
-           } else {
-               BOOL noConnection = NO;
-               if (RIApiResponseNoInternetConnection == apiResponse) {
-                   noConnection = YES;
-               }
-               [self showErrorView:noConnection startingY:0.0f selector:@selector(requestUserEditForm) objects:nil];
-           }
+           [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(requestUserEditForm) objects:nil];
        }];
 }
 
@@ -278,21 +269,11 @@
         
         [self setupChangePasswordFormViews];
         [self setupFixedElements];
-        [self removeErrorView];
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
     } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
     {
         self.apiResponse = apiResponse;
-        if (RIApiResponseMaintenancePage == apiResponse) {
-            [self showMaintenancePage:@selector(requestUserEditForm) objects:nil];
-        } else if (RIApiResponseKickoutView == apiResponse) {
-            [self showKickoutView:@selector(requestUserEditForm) objects:nil];
-        } else {
-            BOOL noConnection = NO;
-            if (RIApiResponseNoInternetConnection == apiResponse) {
-                noConnection = YES;
-            }
-            [self showErrorView:noConnection startingY:0.0f selector:@selector(requestUserEditForm) objects:nil];
-        }
+        [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(requestUserEditForm) objects:nil];
     }];
 }
 
@@ -302,26 +283,20 @@
     [self hideKeyboard];
     
     [RIForm sendForm:[self.userForm form] parameters:[self.userForm getValues] successBlock:^(id object) {
-        [self removeErrorView];
+        [self onSuccessResponse:RIApiResponseSuccess messages:@[STRING_USER_DATA_EDITED_SUCCESS] showMessage:YES];
         [self hideLoading];
-        [self showMessage:STRING_USER_DATA_EDITED_SUCCESS success:YES];
     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
-        if (RIApiResponseNoInternetConnection == apiResponse) {
-            [self showErrorView:YES startingY:0 selector:@selector(saveButtonPressed) objects:nil];
-        } else if (VALID_NOTEMPTY(errorObject, NSDictionary)) {
-            [self removeErrorView];
+        if (VALID_NOTEMPTY(errorObject, NSDictionary)) {
             [self.userForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                [self showMessage:message success:NO];
+                [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
             }];
         } else if(VALID_NOTEMPTY(errorObject, NSArray)) {
-            [self removeErrorView];
             [self.userForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                [self showMessage:message success:NO];
+                [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
             }];
         } else {
-            [self removeErrorView];
             [self.userForm checkErrors];
-            [self showMessage:STRING_ERROR success:NO];
+            [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
         }
         [self hideLoading];
     }];
@@ -336,28 +311,22 @@
           parameters:[self.changePasswordForm getValues]
         successBlock:^(id object)
      {
-         [self removeErrorView];
+         [self onSuccessResponse:RIApiResponseSuccess messages:@[STRING_CHANGED_PASSWORD_SUCCESS] showMessage:YES];
          [self hideLoading];
          [self resetValues:self.changePasswordForm];
-         [self showMessage:STRING_CHANGED_PASSWORD_SUCCESS success:YES];
      } andFailureBlock:^(RIApiResponse apiResponse, id errorObject)
      {
-         if (RIApiResponseNoInternetConnection == apiResponse) {
-             [self showErrorView:YES startingY:0 selector:@selector(changePasswordButtonPressed) objects:nil];
-         } else if (VALID_NOTEMPTY(errorObject, NSDictionary)) {
-             [self removeErrorView];
+         if (VALID_NOTEMPTY(errorObject, NSDictionary)) {
              [self.changePasswordForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                 [self showMessage:message success:NO];
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
              }];
          } else if(VALID_NOTEMPTY(errorObject, NSArray)) {
-             [self removeErrorView];
              [self.changePasswordForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                 [self showMessage:message success:NO];
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
              }];
          } else {
-             [self removeErrorView];
              [self.changePasswordForm checkErrors];
-             [self showMessage:STRING_ERROR success:NO];
+             [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
          }
          [self hideLoading];
      }];

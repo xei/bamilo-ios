@@ -97,11 +97,6 @@
 
 #pragma mark - View lifecycle
 
-- (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects;
-{
-    [super showErrorView:isNoInternetConnection startingY:startingY selector:selector objects:objects];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -167,11 +162,12 @@
     [RIForm getForm:@"forgot_password"
        successBlock:^(RIForm *form)
      {
-         [self removeErrorView];
+         
          if (self.loginEmail== nil) {
-             [self showMessage:STRING_ERROR success:NO];
+             [self onErrorResponse:RIApiResponseSuccess messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
              [self finishedFormLoading];
          } else {
+             [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
              self.dynamicForm = [[JADynamicForm alloc] initWithForm:form values:@{@"email" : self.loginEmail} startingPosition:CGRectGetMaxY(self.subTitleLabel.frame) + kEmailMargin hasFieldNavigation:YES];
              [self.dynamicForm setDelegate:self];
 
@@ -188,22 +184,9 @@
        failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
     {
         self.apiResponse = apiResponse;
-        [self removeErrorView];
-         
-        if (RIApiResponseNoInternetConnection == apiResponse) {
-            if (VALID_NOTEMPTY(self.dynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.dynamicForm.formViews, NSMutableArray)) {
-                [self showErrorView:YES startingY:0 selector:@selector(getForgotPasswordForm) objects:nil];
-                [self finishedFormLoading];
-            } else {
-                [self showErrorView:YES startingY:0.0f selector:@selector(getForgotPasswordForm) objects:nil];
-            }
-        } else {
-            if (VALID_NOTEMPTY(self.dynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.dynamicForm.formViews, NSMutableArray)) {
-                [self showMessage:STRING_ERROR success:NO];
-                [self finishedFormLoading];
-            } else {
-                [self showErrorView:NO startingY:0.0f selector:@selector(getForgotPasswordForm) objects:nil];
-            }
+        [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
+        if (VALID_NOTEMPTY(self.dynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.dynamicForm.formViews, NSMutableArray)) {
+            [self finishedFormLoading];
         }
         [self hideLoading];
     }];
@@ -230,9 +213,8 @@
     [self showLoading];
     
     if ([self.dynamicForm checkErrors]) {
-        [self showMessage:self.dynamicForm.firstErrorInFields success:NO];
+        [self onErrorResponse:RIApiResponseSuccess messages:@[self.dynamicForm.firstErrorInFields] showAsMessage:YES selector:nil objects:nil];
         [self hideLoading];
-        [self removeErrorView];
         return;
     }
     
@@ -240,30 +222,23 @@
           parameters:[self.dynamicForm getValues]
         successBlock:^(id object)
      {
+         [self onSuccessResponse:RIApiResponseSuccess messages:@[STRING_EMAIL_SENT] showMessage:YES];
          [self hideLoading];
-         [self removeErrorView];
-         
-         [self showMessage:STRING_EMAIL_SENT success:YES];
      } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
      {
-         [self hideLoading];
-         [self removeErrorView];
-         
-         if (RIApiResponseNoInternetConnection == apiResponse) {
-             [self showErrorView:YES startingY:0 selector:@selector(continueForgotPassword) objects:nil];
-         } else if(VALID_NOTEMPTY(errorObject, NSDictionary)) {
+         if(VALID_NOTEMPTY(errorObject, NSDictionary)) {
              [self.dynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                 [self showMessage:message success:NO];
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
              }];
          } else if(VALID_NOTEMPTY(errorObject, NSArray)) {
              [self.dynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                 [self showMessage:message success:NO];
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
              }];
-         } else {
+         }else{
              [self.dynamicForm checkErrors];
-             
-             [self showMessage:STRING_ERROR success:NO];
+             [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
          }
+         [self hideLoading];
      }];
 }
 

@@ -243,7 +243,7 @@
                                      [self getConfigurations];
                                  }
                              }
-                             [self removeErrorView];
+                             [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                              //show loading has to be added here, in case the no connection error view was shown
                              // and the loading was removed because of that
 //                             [self showLoading];
@@ -252,25 +252,7 @@
                          {
                              self.apiResponse = apiResponse;
                              self.isRequestDone=YES;
-                             if(RIApiResponseMaintenancePage == apiResponse)
-                             {
-                                 [self showMaintenancePage:@selector(continueProcessing) objects:nil];
-                             }
-                             else if(RIApiResponseKickoutView == apiResponse)
-                             {
-                                 [self showKickoutView:@selector(continueProcessing) objects:nil];
-                             }
-                             else
-                             {
-                                 BOOL noInternet = NO;
-                                 if(RIApiResponseNoInternetConnection == apiResponse)
-                                 {
-                                     noInternet = YES;
-                                 }
-                                 
-                                 [self showErrorView:noInternet startingY:0.0f selector:@selector(continueProcessing) objects:nil];
-                             }
-//                             [self hideLoading];
+                             [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(continueProcessing) objects:nil];
                          }];
 }
 

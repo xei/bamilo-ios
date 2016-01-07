@@ -551,6 +551,38 @@
 
 # pragma mark Error Views
 
+- (void)onSuccessResponse:(RIApiResponse)apiResponse messages:(NSArray *)successMessages showMessage:(BOOL)showMessage
+{
+    [self removeErrorView];
+    if (showMessage) {
+        [self showMessage:[successMessages componentsJoinedByString:@","] success:YES];
+    }
+}
+
+- (void)onErrorResponse:(RIApiResponse)apiResponse messages:(NSArray *)errorMessages showAsMessage:(BOOL)showAsMessage selector:(SEL)selector objects:(NSArray *)objects
+{
+    [self removeErrorView];
+    if (RIApiResponseMaintenancePage == apiResponse) {
+        [self showMaintenancePage:selector objects:objects];
+    }
+    else if(RIApiResponseKickoutView == apiResponse)
+    {
+        [self showKickoutView:selector objects:objects];
+    }
+    else if (RIApiResponseNoInternetConnection == apiResponse)
+    {
+        if (showAsMessage) {
+            [self showMessage:STRING_NO_CONNECTION success:NO];
+        }else{
+            [self showErrorView:YES startingY:self.viewBounds.origin.y selector:selector objects:objects];
+        }
+    }else if (showAsMessage) {
+        [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
+    }else{
+        [self showErrorView:NO startingY:self.viewBounds.origin.y selector:selector objects:objects];
+    }
+}
+
 - (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray *)objects {
     if (VALID_NOTEMPTY(self.noConnectionView, JANoConnectionView)) {
 //        [self.noConnectionView removeFromSuperview];
