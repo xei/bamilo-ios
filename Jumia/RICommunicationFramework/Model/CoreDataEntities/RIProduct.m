@@ -97,6 +97,8 @@
 @dynamic shortSummary;
 @dynamic summary;
 @dynamic numberOfTimesSeen;
+@dynamic richRelevanceParameter;
+@dynamic richRelevanceTitle;
 
 @synthesize categoryIds;
 @synthesize relatedProducts;
@@ -380,11 +382,17 @@
         if ([dataDic objectForKey:@"sku"]) {
             newProduct.sku = [dataDic objectForKey:@"sku"];
         }
-        if ([dataDic objectForKey:@"name"]) {
+        
+        if ([dataDic objectForKey:@"title"]) {
+            newProduct.name = [dataDic objectForKey:@"title"];
+        } else if ([dataDic objectForKey:@"name"]) {
             newProduct.name = [dataDic objectForKey:@"name"];
         }
         if ([dataDic objectForKey:@"target"]) {
             newProduct.targetString = [dataDic objectForKey:@"target"];
+        }
+        if ([dataDic objectForKey:@"click_request"]) {
+            newProduct.richRelevanceParameter = [dataDic objectForKey:@"click_request"];
         }
         if ([dataDic objectForKey:@"description"]) {
             newProduct.descriptionString = [dataDic objectForKey:@"description"];
@@ -626,8 +634,22 @@
             newProduct.vertical = vertical;
         }
         
-        if ([dataDic objectForKey:@"related_products"]) {
-            NSArray* relatedProductsArray = [dataDic objectForKey:@"related_products"];
+        if ([dataDic objectForKey:@"recommended_products"] || [dataDic objectForKey:@"related_products"]) {
+            
+            NSArray* relatedProductsArray = Nil;
+            
+            if ([dataDic objectForKey:@"recommended_products"]) {
+                NSDictionary* recommended = [dataDic objectForKey:@"recommended_products"];
+                if ([recommended objectForKey:@"has_data"]) {
+                    if ([recommended objectForKey:@"title"]) {
+                        newProduct.richRelevanceTitle = [recommended objectForKey:@"title"];
+                    }
+                    relatedProductsArray = [recommended objectForKey:@"data"];
+                }
+            } else if ([dataDic objectForKey:@"related_products"]) {
+                relatedProductsArray = [dataDic objectForKey:@"related_products"];
+            }
+            
             if (VALID_NOTEMPTY(relatedProductsArray, NSArray)) {
                 
                 NSMutableSet *newRelatedProducts = [NSMutableSet new];
