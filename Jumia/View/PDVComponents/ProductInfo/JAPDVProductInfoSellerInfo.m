@@ -257,7 +257,7 @@
 
 - (void)checkIsShopFirst
 {
-    if (self.isShopFirst) {
+    if ([self.isShopFirst boolValue]) {
         [self.sellerNameLabel setWidth:190.f];
         [self.shopFirstLogo setHidden:NO];
     }
