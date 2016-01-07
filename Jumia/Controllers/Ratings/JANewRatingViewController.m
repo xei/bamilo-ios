@@ -228,7 +228,6 @@ UIAlertViewDelegate
     NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
     [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
     
-    [self removeErrorView];
     if(RIApiResponseSuccess == self.apiResponse)
     {
         if (VALID_NOTEMPTY(self.ratingsForm, RIForm)) {
@@ -236,30 +235,18 @@ UIAlertViewDelegate
         } else {
             self.isShowingRating = NO;
         }
-    }
-
-    else if (RIApiResponseNoInternetConnection == self.apiResponse)
-    {
-        if(VALID_NOTEMPTY(self.ratingsDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.ratingsDynamicForm.formViews, NSMutableArray) &&
-           VALID_NOTEMPTY(self.reviewsDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.reviewsDynamicForm.formViews, NSMutableArray))
-        {
-            [self showMessage:STRING_NO_CONNECTION success:NO];
-        }
-        else
-        {
-            [self showErrorView:YES startingY:0.0f selector:@selector(ratingsRequests) objects:nil];
-        }
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
     }
     else
     {
         if(VALID_NOTEMPTY(self.ratingsDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.ratingsDynamicForm.formViews, NSMutableArray) &&
            VALID_NOTEMPTY(self.reviewsDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.reviewsDynamicForm.formViews, NSMutableArray))
         {
-            [self showMessage:STRING_ERROR success:NO];
+            [self onErrorResponse:self.apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
         }
         else
         {
-            [self showErrorView:NO startingY:0.0f selector:@selector(ratingsRequests) objects:nil];
+            [self onErrorResponse:self.apiResponse messages:nil showAsMessage:NO selector:@selector(ratingsRequests) objects:nil];
         }
     }
     
@@ -691,39 +678,34 @@ UIAlertViewDelegate
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRateProductGlobal]
                                                       data:[globalRateDictionary copy]];
             
-            [self hideLoading];
             
-            [self showMessage:STRING_REVIEW_SENT success:YES];
+            [self onSuccessResponse:RIApiResponseSuccess messages:@[STRING_REVIEW_SENT] showMessage:YES];
+            [self hideLoading];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kCloseTopTwoScreensNotification
                                                                 object:nil
                                                               userInfo:nil];
         } andFailureBlock:^(RIApiResponse apiResponse, id errorObject) {
             
-            [self hideLoading];
-            
-            if (RIApiResponseNoInternetConnection == apiResponse)
-            {
-                [self showMessage:STRING_NO_CONNECTION success:NO];
-            }
-            else if(VALID_NOTEMPTY(errorObject, NSDictionary))
+            if(VALID_NOTEMPTY(errorObject, NSDictionary))
             {
                 [currentDynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                    [self showMessage:message success:NO];
+                    [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
                 }];
             }
             else if(VALID_NOTEMPTY(errorObject, NSArray))
             {
                 [currentDynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                    [self showMessage:message success:NO];
+                    [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
                 }];
             }
             else
             {
                 [currentDynamicForm checkErrors];
-                
-                [self showMessage:STRING_ERROR success:NO];
+                [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
             }
+            
+            [self hideLoading];
         }];
 }
 

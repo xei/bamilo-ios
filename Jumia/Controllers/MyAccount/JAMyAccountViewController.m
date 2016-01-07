@@ -340,7 +340,7 @@
     [self showLoading];
     [RICountry getCountryFaqAndTermsWithSuccessBlock:^(NSArray *faqAndTerms) {
         [self hideLoading];
-        [self removeErrorView];
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         self.moreFaqAndTermsItems = [faqAndTerms copy];
         int i = 0;
         for (id object in faqAndTerms) {
@@ -360,7 +360,7 @@
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
         [self hideLoading];
         if (apiResponse == RIApiResponseNoInternetConnection) {
-            [self showErrorView:YES startingY:0 selector:@selector(getFaqAndTerms) objects:nil];
+            [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(getFaqAndTerms) objects:nil];
         }
     }];
 }
@@ -615,7 +615,8 @@
             [self hideLoading];
             
             if (RIApiResponseNoInternetConnection == apiResponse && VALID_NOTEMPTY(errorMessages, NSArray)) {
-                [self showMessage:[errorMessages firstObject] success:NO];
+                
+                [self onErrorResponse:apiResponse messages:@[[errorMessages firstObject]] showAsMessage:YES selector:nil objects:nil];
             } else {
                 RICountry* uniqueCountry = [RICountry getUniqueCountry];
                 if (VALID_NOTEMPTY(uniqueCountry, RICountry)) {

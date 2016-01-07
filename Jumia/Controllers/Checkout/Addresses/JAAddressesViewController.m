@@ -65,25 +65,6 @@ UICollectionViewDelegateFlowLayout>
 
 @implementation JAAddressesViewController
 
-- (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects
-{
-    [self.contentScrollView setHidden:YES];
-    [_bottomView setHidden:YES];
-    
-    if(self.fromCheckout)
-    {
-        [self.stepBackground setHidden:YES];
-        [self.stepView setHidden:YES];
-    }
-    
-    if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
-    {
-        [self.orderSummary setHidden:YES];
-    }
-    
-    [super showErrorView:isNoInternetConnection startingY:startingY selector:selector objects:objects];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -251,7 +232,7 @@ UICollectionViewDelegateFlowLayout>
                 [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification	 object:nil];
             }
         }
-        [self removeErrorView];
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         self.apiResponse = apiResponse;
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -262,7 +243,21 @@ UICollectionViewDelegateFlowLayout>
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutError]
                                                   data:[trackingDictionary copy]];
         
-        [self showErrorView:(RIApiResponseNoInternetConnection == apiResponse) startingY:0.0f selector:@selector(getAddressList) objects:nil];
+        
+        [self.contentScrollView setHidden:YES];
+        [_bottomView setHidden:YES];
+        
+        if(self.fromCheckout)
+        {
+            [self.stepBackground setHidden:YES];
+            [self.stepView setHidden:YES];
+        }
+        
+        if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
+        {
+            [self.orderSummary setHidden:YES];
+        }
+        [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(getAddressList) objects:nil];
         
         [self hideLoading];
     }];
@@ -991,11 +986,8 @@ UICollectionViewDelegateFlowLayout>
                                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutError]
                                                                                 data:[trackingDictionary copy]];
                                       
+                                      [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
                                       [self hideLoading];
-                                      
-                                      if (VALID_NOTEMPTY(errorMessages, NSArray)) {
-                                          [self showMessage:[errorMessages firstObject] success:NO];
-                                      }
                                   }];
     } else {
         [self setDefaultShippingAddress:self.shippingAddress];
@@ -1010,7 +1002,7 @@ UICollectionViewDelegateFlowLayout>
                     successBlock:^(RIApiResponse apiResponse, NSArray *successMessage) {
                         [self setDefaultBillingAddress:self.billingAddress];
                     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-                        [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
+                        [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
                         [self setDefaultBillingAddress:self.billingAddress];
                     }];
 }
@@ -1020,12 +1012,12 @@ UICollectionViewDelegateFlowLayout>
     [RIAddress setDefaultAddress:billingAddress
                        isBilling:YES
                     successBlock:^(RIApiResponse apiResponse, NSArray *successMessage) {
-                        [self showMessage:[successMessage componentsJoinedByString:@","] success:YES];
                         [self finishedLoadingAddresses];
+                        [self onSuccessResponse:apiResponse messages:successMessage showMessage:YES];
                         [self hideLoading];
                     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+                        [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
                         [self hideLoading];
-                        [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
                     }];
 }
 

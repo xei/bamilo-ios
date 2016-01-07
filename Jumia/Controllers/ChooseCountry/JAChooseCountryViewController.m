@@ -104,7 +104,7 @@ JAPickerDelegate
         
         self.countriesArray = [NSArray arrayWithArray:countries];
         
-        [self removeErrorView];
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         
         [self hideLoading];
         
@@ -155,25 +155,8 @@ JAPickerDelegate
                 self.firstLoading = NO;
             }
         }
-
-        if(RIApiResponseMaintenancePage == apiResponse)
-        {
-            [self showMaintenancePage:@selector(loadData) objects:nil];
-        }
-        else if(RIApiResponseKickoutView == apiResponse)
-        {
-            [self showKickoutView:@selector(loadData) objects:nil];
-        }
-        else
-        {
-            BOOL noConnection = NO;
-            if (RIApiResponseNoInternetConnection == apiResponse)
-            {
-                noConnection = YES;
-            }
-            [self showErrorView:noConnection startingY:0.0f selector:@selector(loadData) objects:nil];
-        }
         
+        [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadData) objects:nil];
         [self hideLoading];
         
     }];
