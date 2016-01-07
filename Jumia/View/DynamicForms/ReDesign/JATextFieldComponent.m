@@ -280,7 +280,11 @@
             {
                 [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
                 [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];
+                
                 self.currentErrorMessage = self.field.patternMessage;
+                if (!self.field.patternMessage && VALID_NOTEMPTY(self.field.requiredMessage, NSString)) {
+                    self.currentErrorMessage = self.field.requiredMessage;
+                }
                 
                 return NO;
             }
@@ -289,7 +293,11 @@
             {
                 [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
                 [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];
+                
                 self.currentErrorMessage = self.field.patternMessage;
+                if (!self.field.patternMessage && VALID_NOTEMPTY(self.field.requiredMessage, NSString)) {
+                    self.currentErrorMessage = self.field.requiredMessage;
+                }
                 
                 return NO;
             }
