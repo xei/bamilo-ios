@@ -12,6 +12,8 @@
 @interface JAPDVProductInfoSellerInfo : UIView
 
 @property (nonatomic) RISeller *seller;
+@property (nonatomic) UIImageView *shopFirstLogo;
+@property (assign, nonatomic) NSNumber *isShopFirst;
 
 - (void)addTarget:(id)target action:(SEL)action;
 - (void)addLinkTarget:(id)target action:(SEL)action;

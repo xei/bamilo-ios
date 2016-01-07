@@ -51,6 +51,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSNumber * price;
 @property (nonatomic, retain) NSString * priceFormatted;
 @property (nonatomic, retain) NSNumber * priceEuroConverted;
+@property (nonatomic, retain) NSNumber * shopFirst;
 @property (nonatomic, retain) NSString * sku;
 @property (nonatomic, retain) NSNumber * specialPrice;
 @property (nonatomic, retain) NSString * specialPriceFormatted;
