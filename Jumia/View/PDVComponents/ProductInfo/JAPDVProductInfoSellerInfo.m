@@ -161,11 +161,30 @@
     }
     return _sellerWarrantyLabel;
 }
+
+- (UIImageView *)shopFirstLogo
+{
+    if (!_shopFirstLogo) {
+        _shopFirstLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shop_first_logo"]];
+        [_shopFirstLogo sizeToFit];
+        [_shopFirstLogo setX:CGRectGetMaxX(self.sellerNameLabel.frame) + 8.f];
+        [_shopFirstLogo setY:self.sellerNameLabel.y];
+        if (RI_IS_RTL) {
+            [_shopFirstLogo flipViewImage];
+        }
+        [self.clickableView addSubview:_shopFirstLogo];
+        [_shopFirstLogo setHidden:YES];
+    }
+    return _shopFirstLogo;
+}
+
 - (void)setSeller:(RISeller *)seller
 {
     _seller = seller;
     [self.sellerNameLabel setText:seller.name];
     [self.sellerNameLabel sizeToFit];
+    
+    [self checkIsShopFirst];
     
     [self.sellerDeliveryLabel setText:seller.deliveryTime];
     [self.sellerDeliveryLabel setFont:JACaption2Font];
@@ -234,6 +253,14 @@
 - (void)addLinkTarget:(id)target action:(SEL)action
 {
     [self.linkGlobalButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)checkIsShopFirst
+{
+    if ([self.isShopFirst boolValue]) {
+        [self.sellerNameLabel setWidth:190.f];
+        [self.shopFirstLogo setHidden:NO];
+    }
 }
 
 @end
