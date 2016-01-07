@@ -37,6 +37,7 @@
 @dynamic parentField;
 @dynamic checked;
 @dynamic dateFormat;
+@dynamic disabled;
 
 + (RIField *)parseField:(NSDictionary *)fieldJSON;
 {
@@ -66,6 +67,9 @@
     }
     if ([fieldJSON objectForKey:@"format"]) {
         newField.dateFormat = [fieldJSON objectForKey:@"format"];
+    }
+    if ([fieldJSON objectForKey:@"disabled"]) {
+        newField.disabled = [fieldJSON objectForKey:@"disabled"];
     }
     
     if(VALID_NOTEMPTY([fieldJSON objectForKey:@"api_call"], NSDictionary)) {
@@ -188,7 +192,6 @@
         NSString* typeForRelatedFields = [relatedJSON objectForKey:@"type"];
         NSString* nameForRelatedFields = [relatedJSON objectForKey:@"name"];
         
-        
         if ([typeForRelatedFields isEqualToString:@"list"]) {
             
             if (VALID_NOTEMPTY(relatedJSON, NSDictionary)) {
@@ -203,12 +206,10 @@
         NSArray* relatedFieldsArrayJSON = [relatedJSON objectForKey:@"fields"];
         for (NSDictionary* relatedFieldJSON in relatedFieldsArrayJSON) {
             if (VALID_NOTEMPTY(relatedFieldJSON, NSDictionary)) {
-                
                 RIField* relatedField = [RIField parseField:relatedFieldJSON];
                 relatedField.parentField = newField;
                 relatedField.type = typeForRelatedFields;
                 relatedField.name = nameForRelatedFields;
-                
                 [newField addRelatedFieldsObject:relatedField];
             }
         }

@@ -84,6 +84,7 @@
         <attribute name="apiCallTarget" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="checked" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="dateFormat" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="disabled" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
         <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="label" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="linkTargetString" optional="YES" attributeType="String" syncable="YES"/>
@@ -286,7 +287,7 @@
         <element name="RICategory" positionX="-261" positionY="27" width="128" height="180"/>
         <element name="RICountryConfiguration" positionX="-459" positionY="-423" width="128" height="285"/>
         <element name="RICustomer" positionX="279" positionY="650" width="128" height="210"/>
-        <element name="RIField" positionX="-299" positionY="681" width="128" height="390"/>
+        <element name="RIField" positionX="-299" positionY="681" width="128" height="405"/>
         <element name="RIFieldDataSetComponent" positionX="-63" positionY="837" width="128" height="118"/>
         <element name="RIFieldOption" positionX="-83" positionY="980" width="128" height="118"/>
         <element name="RIFieldRatingStars" positionX="-477" positionY="990" width="128" height="118"/>
