@@ -81,6 +81,7 @@
 @dynamic specialPriceEuroConverted;
 @dynamic sum;
 @dynamic targetString;
+@dynamic shopFirst;
 @dynamic isNew;
 @dynamic favoriteAddDate;
 @dynamic recentlyViewedDate;
@@ -418,6 +419,11 @@
         if ([dataDic objectForKey:@"is_new"]) {
             newProduct.isNew = [NSNumber numberWithBool:[[dataDic objectForKey:@"is_new"] boolValue]];
         }
+        
+        if ([dataDic objectForKey:@"shop_first"]) {
+            newProduct.shopFirst = [NSNumber numberWithBool:[[dataDic objectForKey:@"shop_first"] boolValue]];
+        }
+        
         if ([dataDic objectForKey:@"max_price"]) {
             newProduct.maxPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_price"] floatValue]];
             newProduct.maxPriceFormatted = [RICountryConfiguration formatPrice:newProduct.maxPrice country:country];
