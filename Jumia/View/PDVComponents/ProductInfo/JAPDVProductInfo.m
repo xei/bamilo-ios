@@ -225,6 +225,7 @@
         yOffset = CGRectGetMaxY(headerSeller.frame);
         
         JAPDVProductInfoSellerInfo *sellerInfoView = [[JAPDVProductInfoSellerInfo alloc] initWithFrame:CGRectMake(0, yOffset, self.width, 50)];
+        [sellerInfoView setIsShopFirst:product.shopFirst];
         [sellerInfoView setSeller:product.seller];
         [self addTargetToSellerInfoView:sellerInfoView isGlobal:product.seller.isGlobal];
 

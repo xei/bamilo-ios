@@ -654,6 +654,8 @@
 
 "favourites_no_saved_items" = "No Saved Items";
 
+"favourites_no_saved_items_description" = "You don't have any Saved items.";
+
 "login_enter_your_password_to_continue" = "Enter your password to continue.";
 
 "login_welcome_back" = "Welcome Back";

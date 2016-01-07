@@ -299,8 +299,8 @@
                      NSLog(@"%@", error);
                      return;
                  }
-                 if([result objectForKey:@"email"] == NULL || [result objectForKey:@"birthday"] == NULL){
-                     [self showMessage:STRING_LOGIN_INCOMPLETE success:NO];
+                 if([result objectForKey:@"email"] == NULL || [result objectForKey:@"birthday"] == NULL) {
+                     [self onErrorResponse:RIApiResponseSuccess messages:@[STRING_LOGIN_INCOMPLETE] showAsMessage:YES selector:nil objects:nil];
                      return;
                  }
                  if (![RICustomer checkIfUserIsLogged])
@@ -386,6 +386,8 @@
                                                               
 //                                                              [self.dynamicForm resetValues];
                                                               
+                                                              [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+                                                              
                                                               [self hideLoading];
                                                               [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
                                                                                                                   object:nil];
@@ -421,14 +423,14 @@
                                                               [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookLoginFail]
                                                                                                         data:[trackingDictionary copy]];
                                                               
+                                                              [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
                                                               [self hideLoading];
                                                               
-                                                              [self showMessage:STRING_ERROR success:NO];
                                                           }];
                  }
                  else
                  {
-                     [self showMessage:[error description] success:NO];
+                     [self onErrorResponse:RIApiResponseSuccess messages:@[[error description]] showAsMessage:YES selector:nil objects:nil];
                  }
              }];
         [connection start];
@@ -445,8 +447,11 @@
     }
     [self showLoading];
     [RICustomer checkEmailWithParameters:[NSDictionary dictionaryWithObject:self.emailTextField.textField.text forKey:@"email"] successBlock:^(BOOL knownEmail) {
+        
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+        
         [self.emailTextField cleanError];
-        [self removeErrorView];
+        
         NSMutableDictionary *userInfo;
         if (!VALID_NOTEMPTY(self.userInfo, NSDictionary)) {
             userInfo = [NSMutableDictionary new];
@@ -464,18 +469,18 @@
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorObject) {
         
-        if (apiResponse == RIApiResponseNoInternetConnection) {
-            [self showErrorView:YES startingY:0 selector:@selector(checkEmail) objects:nil];
-        }else{
-            NSString *errorMessage = @"invalid email";
-            if (VALID_NOTEMPTY(errorObject, NSArray)) {
-                if (VALID_NOTEMPTY([[errorObject firstObject] objectForKey:@"message"], NSString)) {
-                    errorMessage = [[errorObject firstObject] objectForKey:@"message"];
-                }
+        NSString *errorMessage = @"invalid email";
+        if (VALID_NOTEMPTY(errorObject, NSArray)) {
+            if (VALID_NOTEMPTY([errorObject firstObject], NSString))
+            {
+                errorMessage = [errorObject firstObject];
+            }else if (VALID_NOTEMPTY([[errorObject firstObject] objectForKey:@"message"], NSString)) {
+                errorMessage = [[errorObject firstObject] objectForKey:@"message"];
             }
-            [self.emailTextField setError:errorMessage];
-            [self showMessage:errorMessage success:NO];
         }
+        
+        [self onErrorResponse:apiResponse messages:@[errorMessage] showAsMessage:YES selector:nil objects:nil];
+        
         [self hideLoading];
     }];
 }
@@ -499,8 +504,8 @@
     [self showLoading];
     [RICustomer signUpAccount:self.emailTextField.textField.text successBlock:^(id object){
         
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         [self.emailTextField cleanError];
-        [self removeErrorView];
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:@"Checkout" forKey:kRIEventLocationKey];
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSignupSuccess]
@@ -520,18 +525,18 @@
                      userInfo:nil];
         
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorObject) {
-        if (apiResponse == RIApiResponseNoInternetConnection) {
-            [self showErrorView:YES startingY:0 selector:@selector(continueWithoutLogin) objects:nil];
-        }else{
-            NSString *errorMessage = @"invalid email";
-            if (VALID_NOTEMPTY(errorObject, NSArray)) {
-                if (VALID_NOTEMPTY([[errorObject firstObject] objectForKey:@"message"], NSString)) {
-                    errorMessage = [[errorObject firstObject] objectForKey:@"message"];
-                }
-            }
-            [self.emailTextField setError:errorMessage];
-            [self showMessage:errorMessage success:NO];
+        
+        NSString *errorMessage = @"invalid email";
+        if (VALID_NOTEMPTY([errorObject firstObject], NSString))
+        {
+            errorMessage = [errorObject firstObject];
+        }else if (VALID_NOTEMPTY([[errorObject firstObject] objectForKey:@"message"], NSString)) {
+            errorMessage = [[errorObject firstObject] objectForKey:@"message"];
         }
+        [self.emailTextField setError:errorMessage];
+        
+        [self onErrorResponse:apiResponse messages:@[errorMessage] showAsMessage:YES selector:nil objects:nil];
+        
         [self hideLoading];
     }];
 }
@@ -542,7 +547,7 @@
         [self.emailTextField.textField setDelegate:self];
         NSString *errorMessage = @"invalid email";
         [self.emailTextField setError:@""];
-        [self showMessage:errorMessage success:NO];
+        [self onErrorResponse:RIApiResponseSuccess messages:@[errorMessage] showAsMessage:YES selector:nil objects:nil];
         return NO;
     }
     return YES;

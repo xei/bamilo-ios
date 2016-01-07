@@ -65,6 +65,7 @@
 - (void)setHeaderText:(NSString *)headerText
 {
     _headerText = headerText;
+    [self.topLabel setMultilineTitle:YES];
     [self.topLabel setTitle:_headerText];
 }
 

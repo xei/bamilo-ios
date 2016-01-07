@@ -180,7 +180,7 @@
     [RITeaserGrouping getTeaserGroupingsWithSuccessBlock:^(NSDictionary *teaserGroupings, BOOL richTeasers) {
         self.isLoaded = YES;
         
-        [self removeErrorView];
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         
         self.teaserGroupings = teaserGroupings;
         
@@ -208,24 +208,13 @@
                 self.firstLoading = NO;
             }
             
-            if(RIApiResponseMaintenancePage == apiResponse)
+            if(RIApiResponseMaintenancePage == apiResponse || RIApiResponseKickoutView == apiResponse || RIApiResponseNoInternetConnection == apiResponse)
             {
-                [self showMaintenancePage:@selector(requestTeasers) objects:nil];
-            }
-            else if(RIApiResponseKickoutView == apiResponse)
-            {
-                [self showKickoutView:@selector(requestTeasers) objects:nil];
-            }
-            else
-            {
-                if (RIApiResponseNoInternetConnection == apiResponse)
-                {
-                    [self showErrorView:YES startingY:0.0f selector:@selector(requestTeasers) objects:nil];
-                } else {
-                    self.fallbackView = [JAFallbackView getNewJAFallbackView];
-                    [self.fallbackView setupFallbackView:[self viewBounds] orientation:self.interfaceOrientation];
-                    [self.view addSubview:self.fallbackView];
-                }
+                [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(requestTeasers) objects:nil];
+            } else {
+                self.fallbackView = [JAFallbackView getNewJAFallbackView];
+                [self.fallbackView setupFallbackView:[self viewBounds] orientation:self.interfaceOrientation];
+                [self.view addSubview:self.fallbackView];
             }
         }
     } andRichBlock:^(RITeaserGrouping *richTeaserGroupings) {

@@ -23,7 +23,7 @@
 {
     if (!VALID(_addToCartBar, JABottomBar)) {
         _addToCartBar = [[JABottomBar alloc] initWithFrame:CGRectMake(self.width-kButtonWidth-16.f, CGRectGetMaxY(self.discountLabel.frame) + 10.f, kButtonWidth, kBottomDefaultHeight)];
-        self.addToCartButton = [_addToCartBar addButton:STRING_ADD_TO_SHOPPING_CART target:nil action:nil];
+        self.addToCartButton = [_addToCartBar addButton:STRING_BUY_NOW target:nil action:nil];
     }
     return _addToCartBar;
 }
@@ -32,18 +32,24 @@
 {
     [super initViews];
     [self addSubview:self.addToCartBar];
+    [self.favoriteButton setImage:[UIImage imageNamed:@"btn_delete_saved"] forState:UIControlStateNormal];
+    [self.favoriteButton setImage:[UIImage imageNamed:@"btn_delete_saved"] forState:UIControlStateSelected];
 }
 
 - (void)setTag:(NSInteger)tag
 {
     [super setTag:tag];
     [self.addToCartButton setTag:tag];
-    [self.sizeComponent.textField setTag:tag];
-    [self.sizeComponent setTag:tag];
 }
 
 - (void)reloadViews
 {
+    CGFloat sizeButtonWidth = (self.frame.size.width - CGRectGetWidth(self.addToCartButton.frame) - 20) - CGRectGetMinX(self.sizeButton.frame);
+    if (sizeButtonWidth > 80) {
+        sizeButtonWidth = 80;
+    }
+    [self.sizeButton setWidth:sizeButtonWidth];
+    
     [super reloadViews];
     
     [self.recentProductBadgeLabel setYBottomOf:self.ratingLine.hidden?self.priceLine:self.ratingLine at:6.f];
@@ -53,7 +59,7 @@
     [self setForRTL:self.addToCartBar];
     
     [self.discountLabel setY:self.priceLine.y];
-    [self.sizeButton setWidth:100.f];
+    
     [self.sizeButton setY:self.addToCartBar.y+self.addToCartBar.height/2 - self.sizeButton.height/2];
 }
 

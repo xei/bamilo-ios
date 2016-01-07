@@ -231,7 +231,7 @@
             
             [RIProduct getUpdatedProductsWithSkus:skus successBlock:^(NSArray *products) {
                 
-                [self removeErrorView];
+                [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                 [self hideLoading];
                 
                 self.productsArray = [NSMutableArray new];
@@ -262,21 +262,8 @@
                     self.firstLoading = NO;
                 }
                 
+                [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadProducts) objects:nil];
                 [self hideLoading];
-                
-                if (RIApiResponseMaintenancePage == apiResponse) {
-                    [self showMaintenancePage:@selector(loadProducts) objects:nil];
-                }
-                else if(RIApiResponseKickoutView == apiResponse)
-                {
-                    [self showKickoutView:@selector(loadProducts) objects:nil];
-                }else if (RIApiResponseNoInternetConnection == apiResponse)
-                {
-                    [self showErrorView:YES startingY:self.viewBounds.origin.y selector:@selector(loadProducts) objects:nil];
-                }else
-                {
-                    [self showErrorView:NO startingY:self.viewBounds.origin.y selector:@selector(loadProducts) objects:nil];
-                }
             }];
         } else {
             [self hideLoading];
@@ -291,6 +278,7 @@
             self.firstLoading = NO;
         }
         
+        [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadProducts) objects:nil];
         [self hideLoading];
     }];
 }
@@ -314,12 +302,9 @@
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
         
         [self hideLoading];
-        if (RIApiResponseMaintenancePage == apiResponse) {
-            [self showMaintenancePage:@selector(updatedProduct:) objects:@[notification]];
-        }
-        else if(RIApiResponseKickoutView == apiResponse)
+        if (RIApiResponseMaintenancePage == apiResponse || RIApiResponseKickoutView == apiResponse)
         {
-            [self showKickoutView:@selector(updatedProduct:) objects:@[notification]];
+            [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(updatedProduct:) objects:@[notification]];
         }
     }];
 }
@@ -513,22 +498,13 @@
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       
+                      [self onSuccessResponse:RIApiResponseSuccess messages:successMessage showMessage:YES];
                       [self hideLoading];
-                      
-                      [self showMessage:[successMessage componentsJoinedByString:@","] success:YES];
                       
                   } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                       
+                      [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
                       [self hideLoading];
-                      
-                      NSString *errorAddToCart = STRING_ERROR_ADDING_TO_CART;
-                      if (RIApiResponseNoInternetConnection == apiResponse)
-                      {
-                          NSString *addToCartError = STRING_NO_CONNECTION;
-                          [self showMessage:addToCartError success:NO];
-                      }
-                      
-                      [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
                   }];
 }
 
@@ -536,16 +512,12 @@
 {
     [self showLoading];
     [RIProduct removeAllRecentlyViewedWithSuccessBlock:^{
-        [self removeErrorView];
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         [self hideLoading];
         self.productsDictionary = nil;
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+        [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
         [self hideLoading];
-        if (RIApiResponseNoInternetConnection == apiResponse) {
-            [self showErrorView:YES startingY:0 selector:@selector(clearAllButtonPressed) objects:nil];
-            return;
-        }
-        [self showMessage:STRING_ERROR success:NO];
     }];
 }
 

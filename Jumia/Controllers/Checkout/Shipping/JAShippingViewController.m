@@ -163,6 +163,7 @@ UICollectionViewDelegateFlowLayout
     }
     
     [RICart getMultistepShippingWithSuccessBlock:^(RICart *cart) {
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         self.cart = cart;
         self.shippingMethodForm = cart.shippingMethodForm;
         
@@ -170,28 +171,10 @@ UICollectionViewDelegateFlowLayout
         self.shippingMethods = [RIShippingMethodForm getShippingMethods:cart.shippingMethodForm];
         
         [self finishedLoadingShippingMethods];
-        [self removeErrorView];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-        [self hideLoading];
         self.apiResponse = apiResponse;
-        if(RIApiResponseMaintenancePage == apiResponse)
-        {
-            [self showMaintenancePage:@selector(continueLoading) objects:nil];
-        }
-        else if(RIApiResponseKickoutView == apiResponse)
-        {
-            [self showKickoutView:@selector(continueLoading) objects:nil];
-        }
-        else
-        {
-            BOOL noConnection = NO;
-            if (RIApiResponseNoInternetConnection == apiResponse)
-            {
-                noConnection = YES;
-            }
-            
-            [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
-        }
+        [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(continueLoading) objects:nil];
+        [self hideLoading];
     }];
 }
 
@@ -563,25 +546,18 @@ UICollectionViewDelegateFlowLayout
                                             pickupStation:pickupStationID
                                                    region:self.selectedRegionId
                                              successBlock:^(NSString *nextStep) {
+                                                 [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                                                  [self hideLoading];
                                                  [JAUtils goToNextStep:nextStep
                                                               userInfo:nil];
                                              } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+                                                 [self onErrorResponse:apiResponse messages:@[STRING_ERROR_SETTING_SHIPPING_METHOD] showAsMessage:YES selector:nil objects:nil];
                                                  [self hideLoading];
-                                                 
-                                                 if (RIApiResponseNoInternetConnection == apiResponse)
-                                                 {
-                                                     [self showMessage:STRING_NO_CONNECTION success:NO];
-                                                 }
-                                                 else
-                                                 {
-                                                     [self showMessage:STRING_ERROR_SETTING_SHIPPING_METHOD success:NO];
-                                                 }
                                              }];
         }
         else
         {
-            [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
+            [self onErrorResponse:RIApiResponseSuccess messages:@[STRING_ERROR_INVALID_FIELDS] showAsMessage:YES selector:nil objects:nil];
         }
     }
 }

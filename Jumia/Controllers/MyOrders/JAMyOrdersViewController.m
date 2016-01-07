@@ -205,7 +205,8 @@ UICollectionViewDelegateFlowLayout>
               self.ordersTotal = ordersTotal;
               
               self.isLoadingOrders = NO;
-              [self removeErrorView];
+              
+              [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
               
               if (previousOrdersTotal <= 0) {
                   [self setupViews];
@@ -222,24 +223,8 @@ UICollectionViewDelegateFlowLayout>
            andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
                self.apiResponse = apiResponse;
                self.isLoadingOrders = NO;
+               [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadOrders) objects:nil];
                [self hideLoading];
-               if(RIApiResponseMaintenancePage == apiResponse)
-               {
-                   [self showMaintenancePage:@selector(loadOrders) objects:nil];
-               }
-               else if(RIApiResponseKickoutView == apiResponse)
-               {
-                   [self showKickoutView:@selector(loadOrders) objects:nil];
-               }
-               else
-               {
-                   BOOL noConnection = NO;
-                   if (RIApiResponseNoInternetConnection == apiResponse)
-                   {
-                       noConnection = YES;
-                   }
-                   [self showErrorView:noConnection startingY:self.viewBounds.origin.y+kTopSeparatorHight selector:@selector(loadOrders) objects:nil];
-               }
            }];
 }
 
@@ -267,7 +252,7 @@ UICollectionViewDelegateFlowLayout>
                               [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
                               self.firstLoading = NO;
                           }
-                          [self removeErrorView];
+                          [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                           [self hideLoading];
                           
                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
@@ -281,20 +266,7 @@ UICollectionViewDelegateFlowLayout>
                               self.firstLoading = NO;
                           }
                           
-                          if(RIApiResponseMaintenancePage == apiResponse)
-                          {
-                              [self showMaintenancePage:@selector(loadOrderDetails) objects:nil];
-                          }
-                          else if(RIApiResponseKickoutView == apiResponse)
-                          {
-                              [self showKickoutView:@selector(loadOrderDetails) objects:nil];
-                          }
-                          else if (RIApiResponseNoInternetConnection == apiResponse)
-                          {
-
-                                  [self showErrorView:YES startingY:0.0f selector:@selector(loadOrderDetails) objects:nil];
-                              
-                          }
+                          [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadOrderDetails) objects:nil];
                           [self hideLoading];
                       }];
 }

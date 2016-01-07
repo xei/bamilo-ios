@@ -55,7 +55,7 @@
 #define kShowSignInScreenNotification @"NOTIFICATION_SHOW_SIGN_IN_SCREEN"
 #define kShowSignUpScreenNotification @"NOTIFICATION_SHOW_SIGN_UP_SCREEN"
 #define kShowForgotPasswordScreenNotification @"NOTIFICATION_SHOW_FORGOT_PASSWORD_SCREEN"
-#define kShowFavoritesScreenNotification @"NOTIFICATION_SHOW_FAVORITES_SCREEN"
+#define kShowSavedListScreenNotification @"NOTIFICATION_SHOW_SAVEDLIST_SCREEN"
 #define kShowMoreMenuScreenNotification @"NOTIFICATION_MORE_MENU_SCREEN"
 #define kShowRecentSearchesScreenNotification @"NOTIFICATION_SHOW_RECENT_SEARCHES_SCREEN"
 #define kShowRecentlyViewedScreenNotification @"NOTIFICATION_SHOW_RECENTLY_VIEWED_SCREEN"

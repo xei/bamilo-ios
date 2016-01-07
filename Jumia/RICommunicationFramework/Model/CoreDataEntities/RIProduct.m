@@ -81,6 +81,7 @@
 @dynamic specialPriceEuroConverted;
 @dynamic sum;
 @dynamic targetString;
+@dynamic shopFirst;
 @dynamic isNew;
 @dynamic favoriteAddDate;
 @dynamic recentlyViewedDate;
@@ -97,6 +98,8 @@
 @dynamic shortSummary;
 @dynamic summary;
 @dynamic numberOfTimesSeen;
+@dynamic richRelevanceParameter;
+@dynamic richRelevanceTitle;
 
 @synthesize categoryIds;
 @synthesize relatedProducts;
@@ -215,22 +218,18 @@
     }
 
     //sometimes the url of the product already has ? in it. yeah...
-    NSString* particle = @"?";
-    if ([url rangeOfString:@"?"].location != NSNotFound) {
-        particle = @"&";
-    }
     NSString *sortingString = [RIProduct urlComponentForSortingMethod:sortingMethod];
     if (VALID_NOTEMPTY(sortingString, NSString)) {
-        sortingString = [NSString stringWithFormat:@"&%@", sortingString];
+        sortingString = [NSString stringWithFormat:@"/%@", sortingString];
     }
     
     if(VALID_NOTEMPTY(filtersString, NSString))
     {
-        fullUrl = [NSString stringWithFormat:@"%@%@page=%ld&maxitems=%ld%@%@", url, particle, (long)page, (long)maxItems, sortingString, [NSString stringWithFormat:@"&%@" ,filtersString]];
+        fullUrl = [NSString stringWithFormat:@"%@/page/%ld/maxitems/%ld%@%@", url, (long)page, (long)maxItems, sortingString, [NSString stringWithFormat:@"/%@" ,filtersString]];
     }
     else
     {
-        fullUrl = [NSString stringWithFormat:@"%@%@page=%ld&maxitems=%ld%@", url, particle, (long)page, (long)maxItems, sortingString];
+        fullUrl = [NSString stringWithFormat:@"%@/page/%ld/maxitems/%ld%@", url, (long)page, (long)maxItems, sortingString];
     }
     return [RIProduct getProductsWithFullUrl:fullUrl
                                 successBlock:successBlock
@@ -380,11 +379,17 @@
         if ([dataDic objectForKey:@"sku"]) {
             newProduct.sku = [dataDic objectForKey:@"sku"];
         }
-        if ([dataDic objectForKey:@"name"]) {
+        
+        if ([dataDic objectForKey:@"title"]) {
+            newProduct.name = [dataDic objectForKey:@"title"];
+        } else if ([dataDic objectForKey:@"name"]) {
             newProduct.name = [dataDic objectForKey:@"name"];
         }
         if ([dataDic objectForKey:@"target"]) {
             newProduct.targetString = [dataDic objectForKey:@"target"];
+        }
+        if ([dataDic objectForKey:@"click_request"]) {
+            newProduct.richRelevanceParameter = [dataDic objectForKey:@"click_request"];
         }
         if ([dataDic objectForKey:@"description"]) {
             newProduct.descriptionString = [dataDic objectForKey:@"description"];
@@ -414,6 +419,11 @@
         if ([dataDic objectForKey:@"is_new"]) {
             newProduct.isNew = [NSNumber numberWithBool:[[dataDic objectForKey:@"is_new"] boolValue]];
         }
+        
+        if ([dataDic objectForKey:@"shop_first"]) {
+            newProduct.shopFirst = [NSNumber numberWithBool:[[dataDic objectForKey:@"shop_first"] boolValue]];
+        }
+        
         if ([dataDic objectForKey:@"max_price"]) {
             newProduct.maxPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_price"] floatValue]];
             newProduct.maxPriceFormatted = [RICountryConfiguration formatPrice:newProduct.maxPrice country:country];
@@ -587,8 +597,6 @@
             [newProduct addImagesObject:image];
         }
         
-        newProduct.favoriteAddDate = [RIProduct productIsFavoriteInDatabase:newProduct];
-        
         if ([dataDic objectForKey:@"seller_entity"]) {
             NSDictionary* sellerJSON = [dataDic objectForKey:@"seller_entity"];
             if (VALID_NOTEMPTY(sellerJSON, NSDictionary)) {
@@ -598,12 +606,10 @@
             }
         }
         
-        if (VALID_NOTEMPTY([dataDic objectForKey:@"is_wishlist"], NSNumber)) {
-            if ([[dataDic objectForKey:@"is_wishlist"] integerValue] ==1) {
-                newProduct.favoriteAddDate = [NSDate new];
-            }else{
-                newProduct.favoriteAddDate = nil;
-            }
+        if (VALID_NOTEMPTY([dataDic objectForKey:@"is_wishlist"], NSNumber) && [[dataDic objectForKey:@"is_wishlist"] integerValue] ==1) {
+            newProduct.favoriteAddDate = [NSDate new];
+        }else{
+            newProduct.favoriteAddDate = nil;
         }
         
         if ([dataDic objectForKey:@"offers"]) {
@@ -630,8 +636,22 @@
             newProduct.vertical = vertical;
         }
         
-        if ([dataDic objectForKey:@"related_products"]) {
-            NSArray* relatedProductsArray = [dataDic objectForKey:@"related_products"];
+        if ([dataDic objectForKey:@"recommended_products"] || [dataDic objectForKey:@"related_products"]) {
+            
+            NSArray* relatedProductsArray = Nil;
+            
+            if ([dataDic objectForKey:@"recommended_products"]) {
+                NSDictionary* recommended = [dataDic objectForKey:@"recommended_products"];
+                if ([recommended objectForKey:@"has_data"]) {
+                    if ([recommended objectForKey:@"title"]) {
+                        newProduct.richRelevanceTitle = [recommended objectForKey:@"title"];
+                    }
+                    relatedProductsArray = [recommended objectForKey:@"data"];
+                }
+            } else if ([dataDic objectForKey:@"related_products"]) {
+                relatedProductsArray = [dataDic objectForKey:@"related_products"];
+            }
+            
             if (VALID_NOTEMPTY(relatedProductsArray, NSArray)) {
                 
                 NSMutableSet *newRelatedProducts = [NSMutableSet new];
@@ -924,7 +944,7 @@
 
 #pragma mark - Favorites
 
-+ (void)getFavoriteProductsWithSuccessBlock:(void (^)(NSArray *favoriteProducts))successBlock
++ (void)getFavoriteProductsWithSuccessBlock:(void (^)(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages))successBlock
                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
     [RIProduct getFavoriteProductsForPage:-1 maxItems:-1 SuccessBlock:successBlock andFailureBlock:failureBlock];
@@ -932,7 +952,7 @@
 
 + (void)getFavoriteProductsForPage:(NSInteger)page
                           maxItems:(NSInteger)maxItems
-                      SuccessBlock:(void (^)(NSArray *favoriteProducts))successBlock
+                      SuccessBlock:(void (^)(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages))successBlock
                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
     NSString *finalUrl = [NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_WISHLIST];
@@ -946,6 +966,17 @@
     [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl] parameters:parameters httpMethod:HttpResponsePost cacheType:RIURLCacheNoCache cacheTime:RIURLCacheDefaultTime userAgentInjection:[RIApi getCountryUserAgentInjection] successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
         if (VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary)) {
             NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
+            NSInteger currentPage = 1;
+            NSInteger totalPages = 1;
+            if (VALID_NOTEMPTY([metadata objectForKey:@"pagination"], NSDictionary)) {
+                
+                if (VALID_NOTEMPTY([[metadata objectForKey:@"pagination"] objectForKey:@"current_page"], NSNumber)) {
+                    currentPage = [(NSNumber *)[[metadata objectForKey:@"pagination"] objectForKey:@"current_page"] integerValue];
+                }
+                if (VALID_NOTEMPTY([[metadata objectForKey:@"pagination"] objectForKey:@"total_pages"], NSNumber)) {
+                    totalPages = [(NSNumber *)[[metadata objectForKey:@"pagination"] objectForKey:@"total_pages"] integerValue];
+                }
+            }
             if (VALID_NOTEMPTY([metadata objectForKey:@"products"], NSArray)) {
                 NSArray *productsArray = [metadata objectForKey:@"products"];
                 NSMutableArray *favoriteProducts = [NSMutableArray new];
@@ -962,12 +993,12 @@
                 if (VALID(favoriteProducts, NSArray) && successBlock) {
                     NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"favoriteAddDate" ascending:NO];
                     NSArray *sorted = [favoriteProducts sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateDescriptor]];
-                    successBlock(sorted);
+                    successBlock(sorted, currentPage, totalPages);
                     return;
                 }
             } else {
                 if (successBlock) {
-                    successBlock([[NSArray alloc] init]);
+                    successBlock([[NSArray alloc] init], 1, 0);
                     return;
                 }
             }
@@ -1060,7 +1091,7 @@
     NSDictionary *parameters = [NSDictionary dictionaryWithObject:product.sku forKey:@"sku"];
     [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl] parameters:parameters httpMethod:HttpResponseDelete cacheType:RIURLCacheNoCache cacheTime:RIURLCacheDefaultTime userAgentInjection:[RIApi getCountryUserAgentInjection] successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
         
-        [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
+        [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
             BOOL found = NO;
             for (RIProduct* currentProduct in favoriteProducts) {
                 if ([currentProduct.sku isEqualToString:product.sku]) {
