@@ -382,6 +382,8 @@ typedef void (^ProcessActionBlock)(void);
     [self.collectionView registerClass:[JACatalogGridCollectionViewCell class] forCellWithReuseIdentifier:@"JACatalogGridCollectionViewCell"];
     [self.collectionView registerClass:[JACatalogPictureCollectionViewCell class] forCellWithReuseIdentifier:@"JACatalogPictureCollectionViewCell"];
     
+    self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(0,0,0,self.collectionView.bounds.size.width-7);
+    
     self.flowLayout = [[JAProductCollectionViewFlowLayout alloc] init];
     self.flowLayout.minimumLineSpacing = 1.0f;
     self.flowLayout.minimumInteritemSpacing = 0.f;

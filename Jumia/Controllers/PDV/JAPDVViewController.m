@@ -883,6 +883,7 @@ JAActivityViewControllerDelegate
             }else{
                 relatedItemX += singleItem.frame.size.width + 5.0f + 5.f;
             }
+            
         }
         self.relatedItemsView.frame = CGRectMake(0.0f,
                                                  scrollViewY,

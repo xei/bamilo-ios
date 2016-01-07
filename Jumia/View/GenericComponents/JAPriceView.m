@@ -96,9 +96,6 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
             [self addSubview:_strike];
         }
         CGFloat strikePosition = self.frame.size.width - oldPriceLabel.frame.size.width;
-        if ((RI_IS_RTL && _specialPriceOnTheLeft) || (!RI_IS_RTL && !_specialPriceOnTheLeft)) {
-            strikePosition = 0.0f;
-        }
         
         _strike.frame = CGRectMake(strikePosition,
                                   _label.y + _label.height/2 - 1.f,

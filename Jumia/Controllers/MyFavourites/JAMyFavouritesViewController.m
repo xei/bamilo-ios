@@ -139,6 +139,7 @@
                                            [self viewBounds].size.width - 6.0f*2,
                                            [self viewBounds].size.height);
     
+    
     self.emptyFavoritesView.frame = CGRectMake(0,
                                                [self viewBounds].origin.y,
                                                [self viewBounds].size.width,
@@ -167,6 +168,10 @@
         self.maxPerPage = JAMyFavouritesViewControllerMaxProducts_ipad;
     } else {
         self.maxPerPage = JAMyFavouritesViewControllerMaxProducts;
+    }
+    
+    if(RI_IS_RTL){
+        self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(0,0,0,self.collectionView.bounds.size.width-7);
     }
 }
 
