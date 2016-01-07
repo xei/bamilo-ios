@@ -217,22 +217,18 @@
     }
 
     //sometimes the url of the product already has ? in it. yeah...
-    NSString* particle = @"?";
-    if ([url rangeOfString:@"?"].location != NSNotFound) {
-        particle = @"&";
-    }
     NSString *sortingString = [RIProduct urlComponentForSortingMethod:sortingMethod];
     if (VALID_NOTEMPTY(sortingString, NSString)) {
-        sortingString = [NSString stringWithFormat:@"&%@", sortingString];
+        sortingString = [NSString stringWithFormat:@"/%@", sortingString];
     }
     
     if(VALID_NOTEMPTY(filtersString, NSString))
     {
-        fullUrl = [NSString stringWithFormat:@"%@%@page=%ld&maxitems=%ld%@%@", url, particle, (long)page, (long)maxItems, sortingString, [NSString stringWithFormat:@"&%@" ,filtersString]];
+        fullUrl = [NSString stringWithFormat:@"%@/page/%ld/maxitems/%ld%@%@", url, (long)page, (long)maxItems, sortingString, [NSString stringWithFormat:@"/%@" ,filtersString]];
     }
     else
     {
-        fullUrl = [NSString stringWithFormat:@"%@%@page=%ld&maxitems=%ld%@", url, particle, (long)page, (long)maxItems, sortingString];
+        fullUrl = [NSString stringWithFormat:@"%@/page/%ld/maxitems/%ld%@", url, (long)page, (long)maxItems, sortingString];
     }
     return [RIProduct getProductsWithFullUrl:fullUrl
                                 successBlock:successBlock

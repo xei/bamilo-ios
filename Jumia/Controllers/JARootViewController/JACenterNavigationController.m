@@ -1128,8 +1128,8 @@
     RICategory* category = [selectedItem objectForKey:@"category"];
     NSString* categoryId = [selectedItem objectForKey:@"category_id"];
     NSString* categoryUrlKey = [selectedItem objectForKey:@"category_url_key"];
-    NSString* filterPush = [notification.userInfo objectForKey:@"filter"];
-    NSNumber* sorting = [notification.userInfo objectForKey:@"sorting"];
+    NSString* filterPush = [selectedItem objectForKey:@"filter"];
+    NSNumber* sorting = [selectedItem objectForKey:@"sorting"];
     
     if (VALID_NOTEMPTY(category, RICategory))
     {
