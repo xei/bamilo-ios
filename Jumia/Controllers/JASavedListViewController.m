@@ -317,7 +317,7 @@
 {
     [self showLoading];
     [self.collectionView reloadData];
-    if (ISEMPTY(self.productsDictionary)) {
+    if (ISEMPTY(self.productsArray)) {
         self.emptyListView.hidden = NO;
         self.collectionView.hidden = YES;
         [self.bottomView setHidden:YES];

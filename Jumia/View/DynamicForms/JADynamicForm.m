@@ -120,14 +120,19 @@
             [textField.textField setDelegate:self];
             [textField.textField setReturnKeyType:returnKeyType];
             
-            if([@"email" isEqualToString:field.type])
-            {
+            if ([@"email" isEqualToString:field.type]) {
                 if (VALID_NOTEMPTY([values objectForKey:@"email"], NSString)) {
                     [textField.textField setText:[values objectForKey:@"email"]];
                 }
+                
+                if (field.disabled) {
+                    textField.textField.enabled = NO;
+                    [textField.textField setTextColor:JABlack700Color];
+                }
+                
                 [textField.textField setKeyboardType:UIKeyboardTypeEmailAddress];
                 textField.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-            }else{
+            } else {
                 textField.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
             }
             
@@ -292,7 +297,6 @@
                 JARadioComponent* radioRelated = [[JARadioComponent alloc] initWithFrame:CGRectMake(8.f, 0, prefixWidth, 48.f)];
                 [radioRelated.textField setDelegate:self];
                 RIField *relatedField = [field.relatedFields firstObject];
-                relatedField.value = nil;
                 [radioRelated setupWithField:relatedField];
                 [radioRelated setFixedWidth:prefixWidth];
                 [radioRelated.textField setTag:tag];
