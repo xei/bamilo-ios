@@ -202,6 +202,11 @@
                                              selector:@selector(updatedProduct:)
                                                  name:kProductChangedNotification
                                                object:nil];
+    
+    if(RI_IS_RTL){
+        self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(0,0,0,self.collectionView.bounds.size.width-7);
+    }
+
 }
 
 - (void)viewWillLayoutSubviews {
@@ -312,7 +317,7 @@
 {
     [self showLoading];
     [self.collectionView reloadData];
-    if (ISEMPTY(self.productsDictionary)) {
+    if (ISEMPTY(self.productsArray)) {
         self.emptyListView.hidden = NO;
         self.collectionView.hidden = YES;
         [self.bottomView setHidden:YES];
