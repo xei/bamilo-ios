@@ -272,11 +272,18 @@ UIAlertViewDelegate
     }
     
     self.priceView = [[JAPriceView alloc] init];
+    if(RI_IS_RTL){
     [self.priceView loadWithPrice:self.product.priceFormatted
                      specialPrice:self.product.specialPriceFormatted
                          fontSize:14.0f
-            specialPriceOnTheLeft:YES];
-    
+            specialPriceOnTheLeft:NO];
+    }
+    else{
+        [self.priceView loadWithPrice:self.product.priceFormatted
+                         specialPrice:self.product.specialPriceFormatted
+                             fontSize:14.0f
+                specialPriceOnTheLeft:YES];
+    }
     self.priceView.frame = CGRectMake(12.0f,
                                       CGRectGetMaxY(self.nameLabel.frame) + 4.0f,
                                       self.priceView.frame.size.width,
