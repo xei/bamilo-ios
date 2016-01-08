@@ -169,9 +169,6 @@
         [_shopFirstLogo sizeToFit];
         [_shopFirstLogo setX:CGRectGetMaxX(self.sellerNameLabel.frame) + 8.f];
         [_shopFirstLogo setY:self.sellerNameLabel.y];
-        if (RI_IS_RTL) {
-            [_shopFirstLogo flipViewImage];
-        }
         [self.clickableView addSubview:_shopFirstLogo];
         [_shopFirstLogo setHidden:YES];
     }
@@ -258,7 +255,9 @@
 - (void)checkIsShopFirst
 {
     if ([self.isShopFirst boolValue]) {
-        [self.sellerNameLabel setWidth:190.f];
+        if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad && self.sellerNameLabel.width > 180.f) {
+            [self.sellerNameLabel setWidth:190.f];
+        }
         [self.shopFirstLogo setHidden:NO];
     }
 }
