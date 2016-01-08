@@ -243,20 +243,13 @@ JAPickerDelegate>
 {
     if(self.loadFailed)
     {
-        BOOL noInternetConnection = NO;
-        if (RIApiResponseNoInternetConnection == self.apiResponse)
-        {
-            noInternetConnection = YES;
-        }
-        
+        [self onErrorResponse:self.apiResponse messages:nil showAsMessage:NO selector:@selector(getForms) objects:nil];
         [self hideLoading];
-        
-        [self showErrorView:noInternetConnection startingY:0.0f selector:@selector(getForms) objects:nil];
     }
     else
     {
         [self finishedFormLoading];
-        [self removeErrorView];
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
 
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
@@ -671,7 +664,7 @@ JAPickerDelegate>
 {
     [self showLoading];
     if ([self.shippingDynamicForm checkErrors]) {
-        [self showMessage:self.shippingDynamicForm.firstErrorInFields success:NO];
+        [self onErrorResponse:RIApiResponseSuccess messages:@[self.shippingDynamicForm.firstErrorInFields] showAsMessage:YES selector:nil objects:nil];
         [self hideLoading];
         return;
     }
@@ -691,7 +684,7 @@ JAPickerDelegate>
 //        }
 //    }
     if (![self.billingContentView isHidden] && [self.billingDynamicForm checkErrors]) {
-        [self showMessage:self.billingDynamicForm.firstErrorInFields success:NO];
+        [self onErrorResponse:RIApiResponseSuccess messages:@[self.shippingDynamicForm.firstErrorInFields] showAsMessage:YES selector:nil objects:nil];
         [self hideLoading];
         return;
     }
@@ -768,13 +761,13 @@ JAPickerDelegate>
              if(VALID_NOTEMPTY(errorObject, NSDictionary))
              {
                  [self.billingDynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                     [self showMessage:message success:NO];
+                     [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
                  }];
              }
              else if(VALID_NOTEMPTY(errorObject, NSArray))
              {
                  [self.billingDynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                     [self showMessage:message success:NO];
+                     [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
                  }];
              }
          }];
@@ -794,25 +787,21 @@ JAPickerDelegate>
          self.hasErrors = YES;
          self.numberOfRequests--;
          
-         if (RIApiResponseNoInternetConnection == apiResponse)
-         {
-             [self showMessage:STRING_NO_CONNECTION success:NO];
-         }
-         else if(VALID_NOTEMPTY(errorObject, NSDictionary))
+         if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
              [self.shippingDynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                 [self showMessage:message success:NO];
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
              }];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
              [self.shippingDynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                 [self showMessage:message success:NO];
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
              }];
          }
          else
          {
-             [self showMessage:STRING_ERROR success:NO];
+             [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
          }
      }];
 }
@@ -823,7 +812,7 @@ JAPickerDelegate>
     
     if(self.hasErrors)
     {
-        [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
+        [self onErrorResponse:RIApiResponseSuccess messages:@[STRING_ERROR_INVALID_FIELDS] showAsMessage:YES selector:nil objects:nil];
         
         self.hasErrors = NO;
     }

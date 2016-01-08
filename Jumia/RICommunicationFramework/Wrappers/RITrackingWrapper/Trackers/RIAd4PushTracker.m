@@ -402,7 +402,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 break;
             case RIEventAddToWishlist:
             {
-                [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
+                [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
                     [deviceInfo setObject:[NSNumber numberWithLong:favoriteProducts.count] forKey:kAd4PushProfileWishlistStatusKey];
                     if (VALID_NOTEMPTY([data objectForKey:kRIEventLabelKey], NSString)) {
                         [deviceInfo setObject:[data objectForKey:kRIEventLabelKey] forKey:kAd4PushProfileLastFavouritesProductKey];
@@ -417,7 +417,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
             }
             case RIEventRemoveFromWishlist:
             {
-                [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts) {
+                [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
                     [deviceInfo setObject:[NSNumber numberWithLong:favoriteProducts.count] forKey:kAd4PushProfileWishlistStatusKey];
                     if (VALID_NOTEMPTY([data objectForKey:kRIEventLabelKey], NSString)) {
                         [deviceInfo setObject:[data objectForKey:kRIEventLabelKey] forKey:kAd4PushProfileLastFavouritesProductKey];
@@ -688,16 +688,22 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 if(2 < [urlComponents count] && VALID_NOTEMPTY([urlComponents objectAtIndex:2], NSString))
                 {
                     arguments = [urlComponents objectAtIndex:2];
-                    NSRange and = [arguments rangeOfString:@"&"];
-                    if( and.location != NSNotFound) {
-                        filter = [arguments substringFromIndex:and.location];
-                    }
                     argumentsComponents = [arguments componentsSeparatedByString:@"&"];
                     if(VALID_NOTEMPTY(argumentsComponents, NSArray) && 1 < [argumentsComponents count])
                     {
                         arguments = [argumentsComponents objectAtIndex:0];
+                        filter = [argumentsComponents objectAtIndex:1];
+                        filter = [filter stringByReplacingOccurrencesOfString:@"=" withString:@"/"];
                     }
                 }
+            }
+            
+            NSMutableDictionary* categoryDictionary = [NSMutableDictionary new];
+            if (VALID_NOTEMPTY(arguments, NSString)) {
+                [categoryDictionary setObject:arguments forKey:@"category_url_key"];
+            }
+            if (VALID_NOTEMPTY(filter, NSString)) {
+                [categoryDictionary setObject:filter forKey:@"filter"];
             }
             
             if ([key isEqualToString:@""])
@@ -707,106 +713,51 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
             }
             else if ([key isEqualToString:@"c"] && VALID_NOTEMPTY(arguments, NSString))
             {
-                // Catalog view - category name
-                NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+                // Catalog view - category url
                 
-                if(VALID_NOTEMPTY(filter, NSString))
-                {
-                    [userInfo setObject:filter forKey:@"filter"];
-                }
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_url_key":arguments} userInfo:userInfo];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:categoryDictionary];
             }
             else if ([key isEqualToString:@"cbr"] && VALID_NOTEMPTY(arguments, NSString))
             {
                 // Catalog view sorted by best rating - category name
-                NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
-                [userInfo setObject:[NSNumber numberWithInteger:0] forKey:@"sorting"];
-                
-                if(VALID_NOTEMPTY(filter, NSString))
-                {
-                    [userInfo setObject:filter forKey:@"filter"];
-                }
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_url_key":arguments} userInfo:userInfo];
+                [categoryDictionary setObject:[NSNumber numberWithInteger:0] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:categoryDictionary];
             }
             else if ([key isEqualToString:@"cp"] && VALID_NOTEMPTY(arguments, NSString))
             {
                 // Catalog view sorted by popularity - category name
-                NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
-                [userInfo setObject:[NSNumber numberWithInteger:1] forKey:@"sorting"];
-                
-                if(VALID_NOTEMPTY(filter, NSString))
-                {
-                    [userInfo setObject:filter forKey:@"filter"];
-                }
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_url_key":arguments} userInfo:userInfo];
+                [categoryDictionary setObject:[NSNumber numberWithInteger:1] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:categoryDictionary];
             }
             else if ([key isEqualToString:@"cin"] && VALID_NOTEMPTY(arguments, NSString))
             {
                 // Catalog view sorted by new in - category name
-                NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
-                [userInfo setObject:[NSNumber numberWithInteger:2] forKey:@"sorting"];
-                
-                if(VALID_NOTEMPTY(filter, NSString))
-                {
-                    [userInfo setObject:filter forKey:@"filter"];
-                }
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_url_key":arguments} userInfo:userInfo];
+                [categoryDictionary setObject:[NSNumber numberWithInteger:2] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:categoryDictionary];
             }
             else if ([key isEqualToString:@"cpu"] && VALID_NOTEMPTY(arguments, NSString))
             {
                 // Catalog view sorted by price up - category name
-                NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
-                [userInfo setObject:[NSNumber numberWithInteger:3] forKey:@"sorting"];
-                
-                if(VALID_NOTEMPTY(filter, NSString))
-                {
-                    [userInfo setObject:filter forKey:@"filter"];
-                }
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_url_key":arguments} userInfo:userInfo];
+                [categoryDictionary setObject:[NSNumber numberWithInteger:3] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:categoryDictionary];
             }
             else if ([key isEqualToString:@"cpd"] && VALID_NOTEMPTY(arguments, NSString))
             {
                 // Catalog view sorted by price down - category name
-                NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
-                [userInfo setObject:[NSNumber numberWithInteger:4] forKey:@"sorting"];
-                
-                if(VALID_NOTEMPTY(filter, NSString))
-                {
-                    [userInfo setObject:filter forKey:@"filter"];
-                }
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_url_key":arguments} userInfo:userInfo];
+                [categoryDictionary setObject:[NSNumber numberWithInteger:4] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:categoryDictionary];
             }
             else if ([key isEqualToString:@"cb"] && VALID_NOTEMPTY(arguments, NSString))
             {
                 // Catalog view sorted by brand - category name
-                NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
-                [userInfo setObject:[NSNumber numberWithInteger:6] forKey:@"sorting"];
-                
-                if(VALID_NOTEMPTY(filter, NSString))
-                {
-                    [userInfo setObject:filter forKey:@"filter"];
-                }
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_url_key":arguments} userInfo:userInfo];
+                [categoryDictionary setObject:[NSNumber numberWithInteger:6] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:categoryDictionary];
             }
             else if ([key isEqualToString:@"cn"] && VALID_NOTEMPTY(arguments, NSString))
             {
                 // Catalog view sorted by name - category name
-                NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
-                [userInfo setObject:[NSNumber numberWithInteger:5] forKey:@"sorting"];
-                
-                if(VALID_NOTEMPTY(filter, NSString))
-                {
-                    [userInfo setObject:filter forKey:@"filter"];
-                }
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_url_key":arguments} userInfo:userInfo];
+                [categoryDictionary setObject:[NSNumber numberWithInteger:5] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:categoryDictionary];
             }
             else if ([key isEqualToString:@"n"] && VALID_NOTEMPTY(arguments, NSString))
             {
@@ -859,7 +810,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
             else if ([key isEqualToString:@"w"])
             {
                 // Wishlist
-                [[NSNotificationCenter defaultCenter] postNotificationName:kShowFavoritesScreenNotification
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowSavedListScreenNotification
                                                                     object:nil];
             }
             else if ([key isEqualToString:@"o"])

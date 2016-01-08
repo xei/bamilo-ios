@@ -164,28 +164,11 @@ UITextFieldDelegate>
         self.paymentMethods = [RIPaymentMethodForm getPaymentMethodsInForm:cart.paymentMethodForm];
         
         self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:cart.paymentMethodForm width:(self.view.frame.size.width - 12.0f)];
-        [self removeErrorView];
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         [self finishedLoadingPaymentMethods];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
         self.apiResponse = apiResponse;
-        if(RIApiResponseMaintenancePage == apiResponse)
-        {
-            [self showMaintenancePage:@selector(continueLoading) objects:nil];
-        }
-        else if(RIApiResponseKickoutView == apiResponse)
-        {
-            [self showKickoutView:@selector(continueLoading) objects:nil];
-        }
-        else
-        {
-            BOOL noConnection = NO;
-            if (RIApiResponseNoInternetConnection == apiResponse)
-            {
-                noConnection = YES;
-            }
-            
-            [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
-        }
+        [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(continueLoading) objects:nil];
         [self hideLoading];
     }];
 }
@@ -629,15 +612,7 @@ UITextFieldDelegate>
                        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentFail]
                                                                  data:[trackingDictionary copy]];
                        
-                       if (RIApiResponseNoInternetConnection == apiResponse)
-                       {
-                           [self showMessage:STRING_NO_CONNECTION success:NO];
-                       }
-                       else
-                       {
-                           [self showMessage:STRING_ERROR_SETTING_PAYMENT_METHOD success:NO];
-                       }
-                       
+                       [self onErrorResponse:apiResponse messages:@[STRING_ERROR_SETTING_PAYMENT_METHOD] showAsMessage:YES selector:nil objects:nil];
                        [self hideLoading];
                    }];
 }

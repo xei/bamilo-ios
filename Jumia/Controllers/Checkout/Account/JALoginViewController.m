@@ -593,7 +593,7 @@
     
     if(!self.loadFailed)
     {
-        [self removeErrorView];
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         [self finishingSetupViews];
         [self setup];
         [self.checkBoxComponent setHidden:YES];
@@ -601,23 +601,7 @@
     }
     else
     {
-        if(RIApiResponseMaintenancePage == self.apiResponse)
-        {
-            [self showMaintenancePage:@selector(getForms) objects:nil];
-        }
-        else if(RIApiResponseKickoutView == self.apiResponse)
-        {
-            [self showKickoutView:@selector(getForms) objects:nil];
-        }
-        else
-        {
-            BOOL hasNoConnection = NO;
-            if(RIApiResponseNoInternetConnection == self.apiResponse)
-            {
-                hasNoConnection = YES;
-            }
-            [self showErrorView:hasNoConnection startingY:0.0f selector:@selector(getForms) objects:nil];
-        }
+        [self onErrorResponse:self.apiResponse messages:nil showAsMessage:NO selector:@selector(getForms) objects:nil];
     }
 }
 
@@ -886,7 +870,7 @@
                          return;
                      }
                      if([result objectForKey:@"email"] == NULL || [result objectForKey:@"birthday"] == NULL){
-                         [self showMessage:STRING_LOGIN_INCOMPLETE success:NO];
+                         [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_LOGIN_INCOMPLETE] showAsMessage:YES selector:nil objects:nil];
                          return;
                      }
                      if (!error)
@@ -992,21 +976,21 @@
                                                                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookLoginFail]
                                                                                                                 data:[trackingDictionary copy]];
                                                                       
-                                                                      [self showMessage:STRING_ERROR success:NO];
+                                                                      [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
                                                                   }];
                              
                          }
                      }
                      else
                      {
-                         [self showMessage:[error description] success:NO];
+                         [self onErrorResponse:RIApiResponseUnknownError messages:@[[error description]] showAsMessage:YES selector:nil objects:nil];
                      }
                  }];
             [connection start];
         }
         else
         {
-            [self showMessage:[error description] success:NO];
+            [self onErrorResponse:RIApiResponseUnknownError messages:@[[error description]] showAsMessage:YES selector:nil objects:nil];
         }
     }];
 }
@@ -1096,20 +1080,19 @@
         if(VALID_NOTEMPTY(errorObject, NSDictionary))
         {
             [self.loginDynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                [self showMessage:message success:NO];
+                [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
             }];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
             [self.loginDynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                [self showMessage:message success:NO];
+                [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
             }];
         }
         else
         {
             [self.loginDynamicForm checkErrors];
-            
-            [self showMessage:STRING_ERROR success:NO];
+            [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
         }
     }];
 }
@@ -1161,20 +1144,19 @@
         if(VALID_NOTEMPTY(errorObject, NSDictionary))
         {
             [self.signupDynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                [self showMessage:message success:NO];
+                [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
             }];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
             [self.signupDynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                [self showMessage:message success:NO];
+                [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
             }];
         }
         else
         {
             [self.signupDynamicForm checkErrors];
-            
-            [self showMessage:STRING_ERROR success:NO];
+            [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
         }
     }];
 }

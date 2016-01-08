@@ -167,6 +167,7 @@
 - (void)setTag:(NSInteger)tag
 {
     [super setTag:tag];
+    [self.favoriteButton setTag:tag];
     [self.feedbackView setTag:tag];
     [self.sizeButton setTag:tag];
 }
@@ -184,10 +185,13 @@
     
     if (VALID_NOTEMPTY(product.priceRange, NSString)) {
         [self.priceLine setPrice:product.priceRange];
+        if (VALID_NOTEMPTY(product.specialPriceFormatted, NSString)) {
+            [self.priceLine setOldPrice:product.priceFormatted];
+        }
     } else if (VALID_NOTEMPTY(product.specialPriceFormatted, NSString)) {
         [self.priceLine setPrice:product.specialPriceFormatted];
         [self.priceLine setOldPrice:product.priceFormatted];
-    }else{
+    } else {
         [self.priceLine setPrice:product.priceFormatted];
         [self.priceLine setOldPrice:nil];
     }

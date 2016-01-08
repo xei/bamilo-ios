@@ -82,6 +82,16 @@
     [_label setY:self.height/2-_label.height/2];
 }
 
+- (void)setMultilineTitle:(BOOL)multiline
+{
+    if (multiline) {
+        [self.label setTextAlignment:NSTextAlignmentLeft];
+        [self.label setNumberOfLines:2];
+    } else {
+        [self.label setNumberOfLines:1];
+    }
+}
+
 - (void)setTag:(NSInteger)tag
 {
     [super setTag:tag];
