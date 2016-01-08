@@ -111,6 +111,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCategories) name:kSideMenuShouldReload object:nil];
     
     [self reloadCategories];
+
 }
 
 - (void)reloadCategories
@@ -170,6 +171,10 @@
                                         self.view.bounds.origin.y + statusBarHeight,
                                         self.view.bounds.size.width,
                                         self.view.bounds.size.height - statusBarHeight)];
+    
+    if(RI_IS_RTL){
+        self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0,0,0,self.tableView.bounds.size.width-7);
+    }
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
