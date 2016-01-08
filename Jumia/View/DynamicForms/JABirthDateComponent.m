@@ -231,7 +231,7 @@
     }
     
     self.currentErrorMessage = nil;
-    [self.textField setTextColor:UIColorFromRGB(0x666666)];
+    [self.textField setTextColor:UIColorFromRGB(0x000000)];
     [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
     
     return YES;

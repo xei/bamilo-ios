@@ -32,7 +32,6 @@
 {
     UIView *_firstResponder;
     UIImageView *_userIconView;
-    UIImageView *_genderIconView;
 }
 
 //main view
@@ -194,10 +193,6 @@
     [super viewDidAppear:animated];
     
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"UserData"];
-    
-    if (RI_IS_RTL) {
-        [self.view flipAllSubviews];
-    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -248,6 +243,7 @@
        } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
            self.apiResponse = apiResponse;
            [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(requestUserEditForm) objects:nil];
+           [self hideLoading];
        }];
 }
 
@@ -270,10 +266,10 @@
         [self setupChangePasswordFormViews];
         [self setupFixedElements];
         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-    } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
-    {
+    } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
         self.apiResponse = apiResponse;
         [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(requestUserEditForm) objects:nil];
+        [self hideLoading];
     }];
 }
 
@@ -282,21 +278,28 @@
     [self showLoading];
     [self hideKeyboard];
     
-    [RIForm sendForm:[self.userForm form] parameters:[self.userForm getValues] successBlock:^(id object) {
+    if ([self.userForm checkErrors]) {
+        [self onErrorResponse:RIApiResponseSuccess messages:@[self.userForm.firstErrorInFields] showAsMessage:YES selector:nil objects:nil];
+        [self hideLoading];
+        return;
+    }
+    
+    [RIForm sendForm:[self.userForm form]
+          parameters:[self.userForm getValues]
+        successBlock:^(id object) {
         [self onSuccessResponse:RIApiResponseSuccess messages:@[STRING_USER_DATA_EDITED_SUCCESS] showMessage:YES];
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
         if (VALID_NOTEMPTY(errorObject, NSDictionary)) {
             [self.userForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                [self onErrorResponse:RIApiResponseUnknownError messages:@[message] showAsMessage:YES selector:nil objects:nil];
             }];
         } else if(VALID_NOTEMPTY(errorObject, NSArray)) {
             [self.userForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                [self onErrorResponse:RIApiResponseUnknownError messages:@[message] showAsMessage:YES selector:nil objects:nil];
             }];
         } else {
-            [self.userForm checkErrors];
-            [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
+            [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
         }
         [self hideLoading];
     }];
@@ -307,15 +310,19 @@
     [self showLoading];
     [self hideKeyboard];
     
+    if ([self.changePasswordForm checkErrors]) {
+        [self onErrorResponse:RIApiResponseSuccess messages:@[self.changePasswordForm.firstErrorInFields] showAsMessage:YES selector:nil objects:nil];
+        [self hideLoading];
+        return;
+    }
+    
     [RIForm sendForm:[self.changePasswordForm form]
           parameters:[self.changePasswordForm getValues]
-        successBlock:^(id object)
-     {
+        successBlock:^(id object) {
          [self onSuccessResponse:RIApiResponseSuccess messages:@[STRING_CHANGED_PASSWORD_SUCCESS] showMessage:YES];
          [self hideLoading];
          [self resetValues:self.changePasswordForm];
-     } andFailureBlock:^(RIApiResponse apiResponse, id errorObject)
-     {
+     } andFailureBlock:^(RIApiResponse apiResponse, id errorObject) {
          if (VALID_NOTEMPTY(errorObject, NSDictionary)) {
              [self.changePasswordForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
                  [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
@@ -325,7 +332,6 @@
                  [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
              }];
          } else {
-             [self.changePasswordForm checkErrors];
              [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
          }
          [self hideLoading];
@@ -414,6 +420,10 @@
     
     [self.saveButton setWidth:self.mainScrollView.width - (kSideMargin * 2)];
     [self.changePasswordButton setWidth:self.mainScrollView.width - (kSideMargin * 2)];
+    
+    if (RI_IS_RTL) {
+        [self.view flipAllSubviews];
+    }
 }
 
 #pragma mark - Done button
@@ -444,6 +454,7 @@
 #pragma mark JADatePickerDelegate
 - (void)openDatePicker:(JABirthDateComponent *)birthdayComponent
 {
+    [self hideKeyboard];
     if (!self.isOpeningPicker) {
         self.isOpeningPicker = YES;
         
@@ -495,6 +506,8 @@
 #pragma mark JAPickerDelegate
 - (void)openPicker:(JARadioComponent *)radioComponent
 {
+    [self hideKeyboard];
+    
     self.radioComponent = radioComponent;
     
     if (VALID_NOTEMPTY(self.datePicker, JADatePicker)) {
@@ -614,12 +627,14 @@
 {
     if (VALID_NOTEMPTY([componentDictionary objectForKey:@"phonePrefixComponent"], JARadioComponent)) {
         self.radioComponent = [componentDictionary objectForKey:@"phonePrefixComponent"];
+        
         [RICountry getCountryPhonePrefixesWithSuccessBlock:^(NSArray *prefixes) {
             for (RIPhonePrefix *phonePrefix in prefixes) {
-                if (phonePrefix.isDefault) {
+                if ([self.radioComponent.field.value isEqualToString:[phonePrefix.value stringValue]]) {
                     [self.radioComponent setValue:[phonePrefix.value stringValue]];
                     [self.radioComponent.textField setText:phonePrefix.label];
                     [self.radioComponent.textField setEnabled:YES];
+                    break;
                 }
             }
             self.phonePrefixes = prefixes;
