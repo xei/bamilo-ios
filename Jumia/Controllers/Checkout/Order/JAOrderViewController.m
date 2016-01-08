@@ -96,14 +96,9 @@
     [RICart getMultistepFinishWithSuccessBlock:^(RICart *cart) {
         self.cart = cart;
         [self setupViews];
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-        
-        BOOL internetConnectionFailed = NO;
-        if (RIApiResponseNoInternetConnection == apiResponse) {
-            internetConnectionFailed = YES;
-        }
-        
-        [self showErrorView:internetConnectionFailed startingY:[self viewBounds].origin.y selector:@selector(loadStep) objects:nil];
+        [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadStep) objects:nil];
     }];
 }
 
@@ -945,28 +940,12 @@
                                                                   userInfo:userInfo];
             }
         }
-        [self removeErrorView];
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         self.apiResponse = apiResponse;
         
-        if(RIApiResponseMaintenancePage == apiResponse)
-        {
-            [self showMaintenancePage:@selector(continueNextStep) objects:nil];
-        }
-        else if(RIApiResponseKickoutView == apiResponse)
-        {
-            [self showKickoutView:@selector(continueNextStep) objects:nil];
-        }
-        else
-        {
-            BOOL noConnection = NO;
-            if (RIApiResponseNoInternetConnection == apiResponse)
-            {
-                noConnection = YES;
-            }
-            [self showErrorView:noConnection startingY:0.0f selector:@selector(continueNextStep) objects:nil];
-        }
+        [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(continueNextStep) objects:nil];
         
         [self hideLoading];
     }];

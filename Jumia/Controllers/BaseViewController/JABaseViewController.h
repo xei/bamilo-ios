@@ -49,44 +49,14 @@
 - (void)hideLoading;
 
 /**
- * Method to show message view under navigation bar
+ * Method to show success message view under navigation bar and to remove error view
  */
-- (void)showMessage:(NSString*)message success:(BOOL)success;
+- (void)onSuccessResponse:(RIApiResponse)apiResponse messages:(NSArray *)successMessages showMessage:(BOOL)showMessage;
 
 /**
- * Method to remove message view under navigation bar
+ * Method to show error view or to show error message under navigation bar 
  */
-- (void)removeMessageView;
-
-/**
- * Method to show error view
- */
-- (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects;
-
-/**
- * Method to remove error view
- */
-- (void)removeErrorView;
-
-/**
- * Method to show maintenance page
- */
-- (void)showMaintenancePage:(SEL)selector objects:(NSArray*)objects;
-
-/**
- * Method to remove maintenance page
- */
-- (void)removeMaintenancePage;
-
-/**
- * Method to show kickout view
- */
-- (void)showKickoutView:(SEL)selector objects:(NSArray*)objects;
-
-/**
- * Method to remove kickout view
- */
-- (void)removeKickoutView;
+- (void)onErrorResponse:(RIApiResponse)apiResponse messages:(NSArray *)errorMessages showAsMessage:(BOOL)showAsMessage selector:(SEL)selector objects:(NSArray *)objects;
 
 /**
  * Method triggered when app will enter to foreground

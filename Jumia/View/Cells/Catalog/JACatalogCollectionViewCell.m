@@ -185,10 +185,13 @@
     
     if (VALID_NOTEMPTY(product.priceRange, NSString)) {
         [self.priceLine setPrice:product.priceRange];
+        if (VALID_NOTEMPTY(product.specialPriceFormatted, NSString)) {
+            [self.priceLine setOldPrice:product.priceFormatted];
+        }
     } else if (VALID_NOTEMPTY(product.specialPriceFormatted, NSString)) {
         [self.priceLine setPrice:product.specialPriceFormatted];
         [self.priceLine setOldPrice:product.priceFormatted];
-    }else{
+    } else {
         [self.priceLine setPrice:product.priceFormatted];
         [self.priceLine setOldPrice:nil];
     }

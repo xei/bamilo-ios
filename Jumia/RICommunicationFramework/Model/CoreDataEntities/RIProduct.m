@@ -81,6 +81,7 @@
 @dynamic specialPriceEuroConverted;
 @dynamic sum;
 @dynamic targetString;
+@dynamic shopFirst;
 @dynamic isNew;
 @dynamic favoriteAddDate;
 @dynamic recentlyViewedDate;
@@ -97,6 +98,8 @@
 @dynamic shortSummary;
 @dynamic summary;
 @dynamic numberOfTimesSeen;
+@dynamic richRelevanceParameter;
+@dynamic richRelevanceTitle;
 
 @synthesize categoryIds;
 @synthesize relatedProducts;
@@ -215,22 +218,18 @@
     }
 
     //sometimes the url of the product already has ? in it. yeah...
-    NSString* particle = @"?";
-    if ([url rangeOfString:@"?"].location != NSNotFound) {
-        particle = @"&";
-    }
     NSString *sortingString = [RIProduct urlComponentForSortingMethod:sortingMethod];
     if (VALID_NOTEMPTY(sortingString, NSString)) {
-        sortingString = [NSString stringWithFormat:@"&%@", sortingString];
+        sortingString = [NSString stringWithFormat:@"/%@", sortingString];
     }
     
     if(VALID_NOTEMPTY(filtersString, NSString))
     {
-        fullUrl = [NSString stringWithFormat:@"%@%@page=%ld&maxitems=%ld%@%@", url, particle, (long)page, (long)maxItems, sortingString, [NSString stringWithFormat:@"&%@" ,filtersString]];
+        fullUrl = [NSString stringWithFormat:@"%@/page/%ld/maxitems/%ld%@%@", url, (long)page, (long)maxItems, sortingString, [NSString stringWithFormat:@"/%@" ,filtersString]];
     }
     else
     {
-        fullUrl = [NSString stringWithFormat:@"%@%@page=%ld&maxitems=%ld%@", url, particle, (long)page, (long)maxItems, sortingString];
+        fullUrl = [NSString stringWithFormat:@"%@/page/%ld/maxitems/%ld%@", url, (long)page, (long)maxItems, sortingString];
     }
     return [RIProduct getProductsWithFullUrl:fullUrl
                                 successBlock:successBlock
@@ -380,11 +379,17 @@
         if ([dataDic objectForKey:@"sku"]) {
             newProduct.sku = [dataDic objectForKey:@"sku"];
         }
-        if ([dataDic objectForKey:@"name"]) {
+        
+        if ([dataDic objectForKey:@"title"]) {
+            newProduct.name = [dataDic objectForKey:@"title"];
+        } else if ([dataDic objectForKey:@"name"]) {
             newProduct.name = [dataDic objectForKey:@"name"];
         }
         if ([dataDic objectForKey:@"target"]) {
             newProduct.targetString = [dataDic objectForKey:@"target"];
+        }
+        if ([dataDic objectForKey:@"click_request"]) {
+            newProduct.richRelevanceParameter = [dataDic objectForKey:@"click_request"];
         }
         if ([dataDic objectForKey:@"description"]) {
             newProduct.descriptionString = [dataDic objectForKey:@"description"];
@@ -414,6 +419,11 @@
         if ([dataDic objectForKey:@"is_new"]) {
             newProduct.isNew = [NSNumber numberWithBool:[[dataDic objectForKey:@"is_new"] boolValue]];
         }
+        
+        if ([dataDic objectForKey:@"shop_first"]) {
+            newProduct.shopFirst = [NSNumber numberWithBool:[[dataDic objectForKey:@"shop_first"] boolValue]];
+        }
+        
         if ([dataDic objectForKey:@"max_price"]) {
             newProduct.maxPrice = [NSNumber numberWithFloat:[[dataDic objectForKey:@"max_price"] floatValue]];
             newProduct.maxPriceFormatted = [RICountryConfiguration formatPrice:newProduct.maxPrice country:country];
@@ -626,8 +636,22 @@
             newProduct.vertical = vertical;
         }
         
-        if ([dataDic objectForKey:@"related_products"]) {
-            NSArray* relatedProductsArray = [dataDic objectForKey:@"related_products"];
+        if ([dataDic objectForKey:@"recommended_products"] || [dataDic objectForKey:@"related_products"]) {
+            
+            NSArray* relatedProductsArray = Nil;
+            
+            if ([dataDic objectForKey:@"recommended_products"]) {
+                NSDictionary* recommended = [dataDic objectForKey:@"recommended_products"];
+                if ([recommended objectForKey:@"has_data"]) {
+                    if ([recommended objectForKey:@"title"]) {
+                        newProduct.richRelevanceTitle = [recommended objectForKey:@"title"];
+                    }
+                    relatedProductsArray = [recommended objectForKey:@"data"];
+                }
+            } else if ([dataDic objectForKey:@"related_products"]) {
+                relatedProductsArray = [dataDic objectForKey:@"related_products"];
+            }
+            
             if (VALID_NOTEMPTY(relatedProductsArray, NSArray)) {
                 
                 NSMutableSet *newRelatedProducts = [NSMutableSet new];

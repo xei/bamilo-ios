@@ -402,7 +402,7 @@ JAActivityViewControllerDelegate
             self.apiResponse = RIApiResponseSuccess;
             
             [self loadedProduct:product];
-            [self removeErrorView];
+                                             [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             self.apiResponse = apiResponse;
             if(self.firstLoading)
@@ -410,25 +410,7 @@ JAActivityViewControllerDelegate
                 [self trackingEventLoadingTime];
                 self.firstLoading = NO;
             }
-            
-            if(RIApiResponseMaintenancePage == apiResponse)
-            {
-                [self showMaintenancePage:@selector(loadCompleteProduct) objects:nil];
-            }
-            else if(RIApiResponseKickoutView == apiResponse)
-            {
-                [self showKickoutView:@selector(loadCompleteProduct) objects:nil];
-            }
-            else
-            {
-                BOOL noConnection = NO;
-                if (RIApiResponseNoInternetConnection == apiResponse)
-                {
-                    noConnection = YES;
-                }
-                [self showErrorView:noConnection startingY:0.0f selector:@selector(loadCompleteProduct) objects:nil];
-            }
-            
+            [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadCompleteProduct) objects:nil];
             [self hideLoading];
         }];
     } else if (VALID_NOTEMPTY(self.productSku, NSString)) {
@@ -436,8 +418,8 @@ JAActivityViewControllerDelegate
                                 successBlock:^(id product) {
             self.apiResponse = RIApiResponseSuccess;
             
-            [self loadedProduct:product];
-            [self removeErrorView];
+                                    [self loadedProduct:product];
+                                    [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             self.apiResponse = apiResponse;
             if(self.firstLoading)
@@ -446,23 +428,7 @@ JAActivityViewControllerDelegate
                 self.firstLoading = NO;
             }
             
-            if(RIApiResponseMaintenancePage == apiResponse)
-            {
-                [self showMaintenancePage:@selector(loadCompleteProduct) objects:nil];
-            }
-            else if(RIApiResponseKickoutView == apiResponse)
-            {
-                [self showKickoutView:@selector(loadCompleteProduct) objects:nil];
-            }
-            else
-            {
-                BOOL noConnection = NO;
-                if (RIApiResponseNoInternetConnection == apiResponse)
-                {
-                    noConnection = YES;
-                }
-                [self showErrorView:noConnection startingY:0.0f selector:@selector(loadCompleteProduct) objects:nil];
-            }
+            [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadCompleteProduct) objects:nil];
             
             [self hideLoading];
         }];
@@ -836,8 +802,12 @@ JAActivityViewControllerDelegate
                 [view removeFromSuperview];
             }
         }
-
-        [self.relatedItemsView setHeaderText:[STRING_YOU_MAY_ALSO_LIKE uppercaseString]];
+        
+        if (VALID_NOTEMPTY(self.product.richRelevanceTitle, NSString)) {
+            [self.relatedItemsView setHeaderText:self.product.richRelevanceTitle];
+        } else
+            [self.relatedItemsView setHeaderText:[STRING_YOU_MAY_ALSO_LIKE uppercaseString]];
+        
         CGFloat relatedItemX = .0f;
         CGFloat relatedItemY = 0;
         
@@ -921,11 +891,23 @@ JAActivityViewControllerDelegate
     NSArray* relatedProducts = [self.product.relatedProducts allObjects];
     RIProduct *tempProduct = [relatedProducts objectAtIndex:sender.tag];
     
+    NSMutableDictionary* userInfo = [NSMutableDictionary new];
+    [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"show_back_button"];
+    
+    if (VALID_NOTEMPTY(tempProduct.targetString, NSString)) {
+        [userInfo setObject:tempProduct.targetString forKey:@"targetString"];
+        
+        if (VALID_NOTEMPTY(tempProduct.richRelevanceParameter, NSString)) {
+            [userInfo setObject:tempProduct.richRelevanceParameter forKey:@"richRelevance"];
+        }
+    } else if (VALID_NOTEMPTY(tempProduct.sku, NSString)) {
+        [userInfo setObject:tempProduct.sku forKey:@"sku"];
+    }
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                         object:nil
-                                                      userInfo:@{ @"sku" : tempProduct.sku,
-                                                                  @"previousCategory" : @"",
-                                                                  @"show_back_button" : [NSNumber numberWithBool:YES]}];
+                                                      userInfo:userInfo];
+
     [self trackingEventRelatedItemSelection:tempProduct];
     [self trackingEventScreenName:[NSString stringWithFormat:@"related_item_%@",tempProduct.name]];
 }
@@ -1130,21 +1112,14 @@ JAActivityViewControllerDelegate
                           NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                           [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                           
-                          [self showMessage:[successMessage componentsJoinedByString:@","] success:YES];
                           
+                          [self onSuccessResponse:RIApiResponseSuccess messages:successMessage showMessage:YES];
                           [self hideLoading];
                           
                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                           
+                          [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
                           [self hideLoading];
-
-                          if (RIApiResponseNoInternetConnection == apiResponse)
-                          {
-                              NSString *addToCartError = STRING_NO_CONNECTION;
-                              [self showMessage:addToCartError success:NO];
-                          }
-                          
-                          [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
                       }];
     }
 }
@@ -1436,17 +1411,12 @@ JAActivityViewControllerDelegate
                                                                 object:self.product.sku
                                                               userInfo:userInfo];
             
-            [self showMessage:[success componentsJoinedByString:@","] success:YES];
+            [self onSuccessResponse:RIApiResponseSuccess messages:success showMessage:YES];
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-            [self hideLoading];
             
-            if (RIApiResponseNoInternetConnection == apiResponse)
-            {
-                NSString *errorMessage = STRING_NO_CONNECTION;
-                [self showMessage:errorMessage success:NO];
-            }
-            [self showMessage:[error componentsJoinedByString:@","] success:NO];
+            [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:nil objects:nil];
+            [self hideLoading];
         }];
     }else{
         [self hideLoading];
@@ -1482,7 +1452,7 @@ JAActivityViewControllerDelegate
             
             [self trackingEventRemoveFromWishlist];
             
-            [self showMessage:[success componentsJoinedByString:@","] success:YES];
+            [self onSuccessResponse:RIApiResponseSuccess messages:success showMessage:YES];
             NSDictionary *userInfo = nil;
             if (self.product.favoriteAddDate) {
                 userInfo = [NSDictionary dictionaryWithObject:self.product.favoriteAddDate forKey:@"favoriteAddDate"];
@@ -1493,13 +1463,7 @@ JAActivityViewControllerDelegate
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             
             [self hideLoading];
-            
-            if (RIApiResponseNoInternetConnection == apiResponse)
-            {
-                NSString *errorMessage = STRING_NO_CONNECTION;
-                [self showMessage:errorMessage success:NO];
-            }
-            [self showMessage:[error componentsJoinedByString:@","] success:NO];
+            [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:nil objects:nil];
         }];
     }
 }

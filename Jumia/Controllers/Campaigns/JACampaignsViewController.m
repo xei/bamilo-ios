@@ -285,7 +285,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
         if (VALID_NOTEMPTY(self.pickerScrollView, JAPickerScrollView) && 0 == self.pickerScrollView.optionLabels.count) {
             [self.pickerScrollView setOptions:[NSArray arrayWithObject:campaign.name]];
         }
-        [self removeErrorView];
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         [campaignPage loadWithCampaign:campaign];
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errors) {
@@ -297,7 +297,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
                         if (VALID_NOTEMPTY(self.pickerScrollView, JAPickerScrollView) && 0 == self.pickerScrollView.optionLabels.count) {
                             [self.pickerScrollView setOptions:[NSArray arrayWithObject:STRING_NOT_AVAILABLE]];
                         }
-                        [self removeErrorView];
+                        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                         [campaignPage loadWithCampaign:nil];
                         [self hideLoading];
                         return;
@@ -314,7 +314,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
 {
     [self showLoading];
     [RICampaign getCampaignWithId:campaignId successBlock:^(RICampaign *campaign) {
-        [self removeErrorView];
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         [campaignPage loadWithCampaign:campaign];
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
@@ -326,7 +326,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
                         if (VALID_NOTEMPTY(self.pickerScrollView, JAPickerScrollView) && 0 == self.pickerScrollView.optionLabels.count) {
                             [self.pickerScrollView setOptions:[NSArray arrayWithObject:STRING_NOT_AVAILABLE]];
                         }
-                        [self removeErrorView];
+                        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                         [campaignPage loadWithCampaign:nil];
                         [self hideLoading];
                         return;
@@ -352,23 +352,8 @@ withCampaignTargetString:(NSString*)campaignTargetString
 - (void)loadCampaignFailedWithResponse:(RIApiResponse)apiResponse
 {
     self.apiResponse = apiResponse;
-    BOOL noConnection = NO;
-    if(RIApiResponseMaintenancePage == apiResponse)
-    {
-        [self showMaintenancePage:@selector(loadCampaignPageAtIndex:) objects:[NSArray arrayWithObject:_clickedCampaignIndex]];
-    }
-    else if(RIApiResponseKickoutView == apiResponse)
-    {
-        [self showKickoutView:@selector(loadCampaignPageAtIndex:) objects:[NSArray arrayWithObject:_clickedCampaignIndex]];
-    }
-    else
-    {
-        if (RIApiResponseNoInternetConnection == apiResponse)
-        {
-            noConnection = YES;
-        }
-        [self showErrorView:noConnection startingY:0.0f selector:@selector(loadCampaignPageAtIndex:) objects:[NSArray arrayWithObject:_clickedCampaignIndex]];
-    }
+    
+    [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadCampaignPageAtIndex:) objects:[NSArray arrayWithObject:_clickedCampaignIndex]];
     [self hideLoading];
 }
 
@@ -545,18 +530,13 @@ withCampaignTargetString:(NSString*)campaignTargetString
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       
-                      [self showMessage:[successMessage componentsJoinedByString:@","] success:YES];
+            
+                      [self onSuccessResponse:RIApiResponseSuccess messages:successMessage showMessage:YES];
                       [self hideLoading];
                       
                   } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                       
-                      if(RIApiResponseNoInternetConnection == apiResponse)
-                      {
-                          NSString *addToCartError = STRING_NO_CONNECTION;
-                          [self showMessage:addToCartError success:NO];
-                      }
-                      
-                      [self showMessage:[error componentsJoinedByString:@","] success:NO];
+                      [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:nil objects:nil];
                       [self hideLoading];
                   }];
 }

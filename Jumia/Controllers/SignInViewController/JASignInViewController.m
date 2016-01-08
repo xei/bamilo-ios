@@ -221,30 +221,14 @@
          [self.mainScrollView setHidden:NO];
          self.requestDone = YES;
          
+         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
          [self hideLoading];
-         [self removeErrorView];
+         
      } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
      {
          self.apiResponse = apiResponse;
          self.requestDone = YES;
-         if(RIApiResponseMaintenancePage == apiResponse)
-         {
-             [self showMaintenancePage:@selector(getLoginForm) objects:nil];
-         }
-         else if(RIApiResponseKickoutView == apiResponse)
-         {
-             [self showKickoutView:@selector(getLoginForm) objects:nil];
-         }
-         else
-         {
-             BOOL noConnection = NO;
-             if (RIApiResponseNoInternetConnection == apiResponse)
-             {
-                 noConnection = YES;
-             }
-             [self.mainScrollView setHidden:YES];
-             [self showErrorView:noConnection startingY:0.0f selector:@selector(getLoginForm) objects:nil];
-         }
+         [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(getLoginForm) objects:nil];
          
          [self hideLoading];
      }];
@@ -418,6 +402,8 @@
              }
          }
          
+         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+         
          [self hideLoading];
          
      } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
@@ -434,27 +420,22 @@
          [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLoginFail]
                                                    data:[trackingDictionary copy]];
          
-         [self hideLoading];
-         [self removeErrorView];
-         
-         if (RIApiResponseNoInternetConnection == apiResponse) {
-             [self showErrorView:YES startingY:0 selector:@selector(continueLogin) objects:nil];
-         }
-         else if(VALID_NOTEMPTY(errorObject, NSDictionary))
+         if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
              [self.dynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                 [self showMessage:message success:NO];
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
              }];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
              [self.dynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                 [self showMessage:message success:NO];
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
              }];
          } else {
              [self.dynamicForm checkErrors];
-             [self showMessage:STRING_ERROR success:NO];
+             [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
          }
+         [self hideLoading];
      }];
 }
 

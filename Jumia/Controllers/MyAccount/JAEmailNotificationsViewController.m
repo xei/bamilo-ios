@@ -87,7 +87,7 @@ JADynamicFormDelegate
            }
            
            [self setupView];
-           [self removeErrorView];
+           [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
            [self hideLoading];
            
        } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
@@ -99,23 +99,7 @@ JADynamicFormDelegate
                self.firstLoading = NO;
            }
            
-           if(RIApiResponseMaintenancePage == apiResponse)
-           {
-               [self showMaintenancePage:@selector(getForm) objects:nil];
-           }
-           else if(RIApiResponseKickoutView == apiResponse)
-           {
-               [self showKickoutView:@selector(getForm) objects:nil];
-           }
-           else
-           {
-               BOOL noConnection = NO;
-               if (RIApiResponseNoInternetConnection == apiResponse)
-               {
-                   noConnection = YES;
-               }
-               [self showErrorView:noConnection startingY:0.0f selector:@selector(getForm) objects:nil];
-           }
+           [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(getForm) objects:nil];
            
            [self hideLoading];
        }];
@@ -178,6 +162,8 @@ JADynamicFormDelegate
          
          [self.dynamicForm resetValues];
          
+         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+         
          [self hideLoading];
          
          [[NSNotificationCenter defaultCenter] postNotificationName:kDidSaveEmailNotificationsNotification object:nil];
@@ -187,27 +173,22 @@ JADynamicFormDelegate
      {
          [self hideLoading];
          
-         if (RIApiResponseNoInternetConnection == apiResponse)
-         {
-             [self showMessage:STRING_NO_CONNECTION success:NO];
-         }
-         else if(VALID_NOTEMPTY(errorObject, NSDictionary))
+         if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
              [self.dynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                 [self showMessage:message success:NO];
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
              }];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
              [self.dynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                 [self showMessage:message success:NO];
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
              }];
          }
          else
          {
              [self.dynamicForm checkErrors];
-             
-             [self showMessage:STRING_ERROR success:NO];
+             [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
          }
      }];
 }
