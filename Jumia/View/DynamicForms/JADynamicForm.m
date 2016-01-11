@@ -424,7 +424,7 @@
                         finishBlock:(void (^)(NSString*))finishBlock;
 {
     NSString* firstMessage = @""; //starts empty
-    for (NSDictionary* error in errorsArray) {
+    for (id error in errorsArray) {
         if (VALID_NOTEMPTY(error, NSDictionary)) {
             //do not pass the finish block. we take care of that at the end of this method
             [self validateFieldWithErrorDictionary:error finishBlock:nil];
@@ -437,8 +437,9 @@
                 }
             }
         } else if (VALID_NOTEMPTY(error, NSString)) {
-            firstMessage = [NSString stringWithFormat:@"%@", error];
+            firstMessage = error;
         }
+
     }
     if (VALID_NOTEMPTY(firstMessage, NSString)) {
         //we have a message, do nothing else
