@@ -436,6 +436,8 @@
                     firstMessage = [error objectForKey:@"message"];
                 }
             }
+        } else if (VALID_NOTEMPTY(error, NSString)) {
+            firstMessage = [NSString stringWithFormat:@"%@", error];
         }
     }
     if (VALID_NOTEMPTY(firstMessage, NSString)) {
