@@ -23,6 +23,7 @@
 @property (nonatomic, strong) NSNumber *price;
 @property (nonatomic, strong) NSString *priceFormatted;
 @property (nonatomic, strong) NSNumber *priceEuroConverted;
+@property (nonatomic, strong) NSNumber *shopFirst;
 @property (nonatomic, strong) NSNumber *specialPrice;
 @property (nonatomic, strong) NSString *specialPriceFormatted;
 @property (nonatomic, strong) NSNumber *specialPriceEuroConverted;

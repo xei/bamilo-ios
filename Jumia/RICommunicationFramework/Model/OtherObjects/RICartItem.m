@@ -60,6 +60,10 @@
         cartItem.priceEuroConverted = [info objectForKey:@"unit_price_converted"];
     }
     
+    if ([info objectForKey:@"shop_first"]) {
+        cartItem.shopFirst = [NSNumber numberWithBool:[[info objectForKey:@"shop_first"] boolValue]];
+    }
+    
     if (VALID_NOTEMPTY([info objectForKey:@"special_price"], NSNumber)) {
         cartItem.specialPrice = [info objectForKey:@"special_price"];
         cartItem.specialPriceFormatted = [RICountryConfiguration formatPrice:cartItem.specialPrice country:country];
