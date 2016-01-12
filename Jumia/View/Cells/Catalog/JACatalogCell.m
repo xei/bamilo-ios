@@ -141,12 +141,6 @@
                                       self.priceView.frame.size.height);
     [self.backgroundContentView addSubview:self.priceView];
     
-    
-    
-    if ([cartItem.shopFirst boolValue])	{
-        [self.shopFirstLogo setHidden:NO];
-    }
-    
     [self.sizeLabel setX:96.f];
     self.sizeLabel.font = [UIFont fontWithName:kFontLightName size:self.sizeLabel.font.pointSize];
     
@@ -164,6 +158,13 @@
     [self.sizeLabel setNumberOfLines:1];
     [self.sizeLabel sizeToFit];
     
+    if (VALID_NOTEMPTY(cartItem.shopFirst, NSNumber) && [cartItem.shopFirst boolValue])	{
+        [self.shopFirstLogo setHidden:NO];
+        [self.shopFirstLogo setY:[self getShopFirstLogoPostion]];
+    } else {
+        [self.shopFirstLogo setHidden:YES];
+    }
+    
     self.discountLabel.font = [UIFont fontWithName:kFontBoldName size:self.discountLabel.font.pointSize];
     self.discountLabel.text = [NSString stringWithFormat:@"-%ld%%",[cartItem.savingPercentage longValue]];
     self.discountLabel.hidden = !cartItem.savingPercentage;
@@ -178,11 +179,18 @@
         _shopFirstLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shop_first_logo"]];
         [_shopFirstLogo sizeToFit];
         [_shopFirstLogo setX:96.0f];
-        [_shopFirstLogo setY:50.0f];
         [_shopFirstLogo setHidden:YES];
         [_backgroundContentView addSubview:_shopFirstLogo];
     }
     return _shopFirstLogo;
+}
+
+- (CGFloat)getShopFirstLogoPostion
+{
+    if ([self.sizeLabel.text isEqualToString:@""]) {
+        return 50.0f;
+    }
+    return 70.0f;
 }
 
 @end
