@@ -677,6 +677,7 @@ typedef void (^ProcessActionBlock)(void);
         
         if(RIApiResponseAPIError == apiResponse)
         {
+            [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
             [self showNoResultsView:CGRectGetMaxY(self.catalogTopView.frame) undefinedSearchTerm:undefSearchTerm];
         }else{
             [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadMoreProducts) objects:nil];

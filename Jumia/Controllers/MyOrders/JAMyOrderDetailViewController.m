@@ -83,7 +83,6 @@
                           
                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                           self.apiResponse = apiResponse;
-                          self.trackingOrder = nil;
                           
                           if(self.firstLoading)
                           {
