@@ -44,7 +44,15 @@
 
 - (void)reloadViews
 {
-    CGFloat sizeButtonWidth = (self.frame.size.width - CGRectGetWidth(self.addToCartButton.frame) - 20) - CGRectGetMinX(self.sizeButton.frame);
+    CGFloat distXImage = JACatalogListCellDistXImage_ipad;
+    CGFloat margin = JACatalogListCellDistXAfterImage_ipad;
+    if ([UIDevice currentDevice].userInterfaceIdiom != UIUserInterfaceIdiomPad) {
+        distXImage = JACatalogListCellDistXImage;
+        margin = JACatalogListCellDistXAfterImage;
+    }
+    CGFloat distXAfterImage = JACatalogListCellImageSize.width + distXImage + margin;
+    
+    CGFloat sizeButtonWidth = self.width - 10 - self.addToCartButton.width - distXAfterImage - 10;
     if (sizeButtonWidth > 80) {
         sizeButtonWidth = 80;
     }

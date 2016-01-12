@@ -76,6 +76,7 @@
         [_mainScrollView addSubview:self.shareTheAppSubLine];
         [_mainScrollView addSubview:self.rateTheAppSubLine];
     }
+
     return _mainScrollView;
 }
 
@@ -263,6 +264,10 @@
     [self.countrySubtitleLine setImageWithURL:[RIApi getCountryFlagInUse]];
     
     _reloadLock = [NSLock new];
+    
+    if(RI_IS_RTL){
+        self.mainScrollView.scrollIndicatorInsets = UIEdgeInsetsMake(0,0,0,self.mainScrollView.bounds.size.width-7);
+    }
 }
 
 - (void)viewWillLayoutSubviews

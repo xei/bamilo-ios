@@ -28,6 +28,7 @@
 @property (nonatomic, retain) NSOrderedSet * options;
 @property (nonatomic, retain) NSOrderedSet * dataSet;
 @property (nonatomic, retain) NSString * dateFormat;
+@property (nonatomic, assign) BOOL disabled;
 
 //related data
 @property (nonatomic, retain) RIField * parentField;

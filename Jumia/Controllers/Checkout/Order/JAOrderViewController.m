@@ -305,6 +305,15 @@
                                   priceLabel.frame.size.height);
     [itemCell addSubview:priceLabel];
     
+    if ([cartItem.shopFirst boolValue]){
+        UIImageView *shopFirstLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shop_first_logo"]];
+        [shopFirstLogo sizeToFit];
+        [shopFirstLogo setX:priceLabel.frame.origin.x];
+        [shopFirstLogo setY:CGRectGetMaxY(priceLabel.frame) + 2.0f];
+        [shopFirstLogo setHidden:NO];
+        [itemCell addSubview:shopFirstLogo];
+    }
+
     UILabel* sizeLabel = [UILabel new];
     sizeLabel.textAlignment = NSTextAlignmentLeft;
     sizeLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];

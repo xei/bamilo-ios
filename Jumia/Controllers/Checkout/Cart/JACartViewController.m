@@ -617,10 +617,6 @@
     [self.articlesCount sizeToFit];
     [self.articlesCount setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.subtotalTitleSeparator.frame) + 10.0f, self.articlesCount.width, self.articlesCount.frame.size.height)];
     
-    CGRect articleNumberWidth = [self.articlesCount.text boundingRectWithSize:CGSizeMake([self viewBounds].size.width, [self viewBounds].size.height)
-                                                                       options:NSStringDrawingUsesLineFragmentOrigin
-                                                                    attributes:@{NSFontAttributeName:self.articlesCount.font} context:nil];
-    
     if (!self.totalPriceView) {
         self.totalPriceView = [[JAPriceView alloc] init];
         [self.subtotalView addSubview:self.totalPriceView];
