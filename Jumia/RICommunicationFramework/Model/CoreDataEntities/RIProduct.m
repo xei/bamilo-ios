@@ -948,7 +948,7 @@
                                                                   withPropertyName:@"sku"
                                                                   andPropertyValue:sku];
     
-    if ([productLastEntry objectAtIndex:0] != [NSNull null]) {
+    if ([productLastEntry count] > 0) {
         [[RIDataBaseWrapper sharedInstance] deleteObject:[productLastEntry objectAtIndex:0]];
     }
     product.recentlyViewedDate = [NSDate new];
