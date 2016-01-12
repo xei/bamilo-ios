@@ -1277,6 +1277,7 @@ JAActivityViewControllerDelegate
     if (VALID_NOTEMPTY(self.product.sizeGuideUrl, NSString)) {
         NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:self.product.sizeGuideUrl, @"sizeGuideUrl", nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowSizeGuideNotification object:nil userInfo:dic];
+        [self closePicker];
     }
 }
 
