@@ -575,6 +575,16 @@
 		9A59E7F41C3A8D5100F37D3F /* JASavedListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A59E7F11C3A8D5100F37D3F /* JASavedListViewController.m */; };
 		9A59E7F51C3A8D5100F37D3F /* JASavedListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A59E7F11C3A8D5100F37D3F /* JASavedListViewController.m */; };
 		9A59E7F61C3A8D5100F37D3F /* JASavedListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A59E7F11C3A8D5100F37D3F /* JASavedListViewController.m */; };
+		9A6BC0781C40132100DD9492 /* JAOrderItemCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6BC0771C40132100DD9492 /* JAOrderItemCollectionViewCell.m */; };
+		9A6BC0791C40132100DD9492 /* JAOrderItemCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6BC0771C40132100DD9492 /* JAOrderItemCollectionViewCell.m */; };
+		9A6BC07A1C40132100DD9492 /* JAOrderItemCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6BC0771C40132100DD9492 /* JAOrderItemCollectionViewCell.m */; };
+		9A6BC07B1C40132100DD9492 /* JAOrderItemCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6BC0771C40132100DD9492 /* JAOrderItemCollectionViewCell.m */; };
+		9A6BC07C1C40132100DD9492 /* JAOrderItemCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6BC0771C40132100DD9492 /* JAOrderItemCollectionViewCell.m */; };
+		9A6BC07F1C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6BC07E1C43CBB900DD9492 /* JAMyOrderResumeView.m */; };
+		9A6BC0801C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6BC07E1C43CBB900DD9492 /* JAMyOrderResumeView.m */; };
+		9A6BC0811C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6BC07E1C43CBB900DD9492 /* JAMyOrderResumeView.m */; };
+		9A6BC0821C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6BC07E1C43CBB900DD9492 /* JAMyOrderResumeView.m */; };
+		9A6BC0831C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6BC07E1C43CBB900DD9492 /* JAMyOrderResumeView.m */; };
 		9A7A77251B2B4177002F530F /* JAPagedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A7A77241B2B4177002F530F /* JAPagedView.m */; };
 		9A7A77261B2B45F0002F530F /* JAPagedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A7A77241B2B4177002F530F /* JAPagedView.m */; };
 		9A7A77271B2B45F0002F530F /* JAPagedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A7A77241B2B4177002F530F /* JAPagedView.m */; };
@@ -1261,7 +1271,6 @@
 		CE0218A81B3D54A0005B2C75 /* JAUserDataViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A441B1DE1B80028105D /* JAUserDataViewController~iPad.xib */; };
 		CE0218A91B3D54A0005B2C75 /* JAUserDataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A431B1DE1B80028105D /* JAUserDataViewController.xib */; };
 		CE0218AC1B3D54A1005B2C75 /* JAUserDataViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A441B1DE1B80028105D /* JAUserDataViewController~iPad.xib */; };
-		CE0218AD1B3D54A1005B2C75 /* JAUserDataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A431B1DE1B80028105D /* JAUserDataViewController.xib */; };
 		CE06FCB71A88C3A5002FCD25 /* JACatalogTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE06FCB61A88C3A5002FCD25 /* JACatalogTopView.m */; };
 		CE06FCBB1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE06FCBA1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib */; };
 		CE06FCBC1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE06FCBA1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib */; };
@@ -2846,6 +2855,10 @@
 		9A564CBC1B38187100F23057 /* JANewSellerRatingViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANewSellerRatingViewController~ipad.xib"; sourceTree = "<group>"; };
 		9A59E7F01C3A8D5100F37D3F /* JASavedListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASavedListViewController.h; sourceTree = "<group>"; };
 		9A59E7F11C3A8D5100F37D3F /* JASavedListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASavedListViewController.m; sourceTree = "<group>"; };
+		9A6BC0761C40132100DD9492 /* JAOrderItemCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAOrderItemCollectionViewCell.h; sourceTree = "<group>"; };
+		9A6BC0771C40132100DD9492 /* JAOrderItemCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAOrderItemCollectionViewCell.m; sourceTree = "<group>"; };
+		9A6BC07D1C43CBB900DD9492 /* JAMyOrderResumeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMyOrderResumeView.h; sourceTree = "<group>"; };
+		9A6BC07E1C43CBB900DD9492 /* JAMyOrderResumeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMyOrderResumeView.m; sourceTree = "<group>"; };
 		9A7A77231B2B4177002F530F /* JAPagedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPagedView.h; sourceTree = "<group>"; };
 		9A7A77241B2B4177002F530F /* JAPagedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPagedView.m; sourceTree = "<group>"; };
 		9A7A772C1B2F0A9C002F530F /* JAPDVGallery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVGallery.h; sourceTree = "<group>"; };
@@ -4754,6 +4767,8 @@
 			children = (
 				B5240E461A496E59006264E9 /* JAMyOrderDetailView.h */,
 				B5240E471A496E59006264E9 /* JAMyOrderDetailView.m */,
+				9A6BC07D1C43CBB900DD9492 /* JAMyOrderResumeView.h */,
+				9A6BC07E1C43CBB900DD9492 /* JAMyOrderResumeView.m */,
 			);
 			path = MyOrderDetailView;
 			sourceTree = "<group>";
@@ -4763,6 +4778,8 @@
 			children = (
 				B5240E4B1A496E69006264E9 /* JAMyOrderCell.h */,
 				B5240E4C1A496E69006264E9 /* JAMyOrderCell.m */,
+				9A6BC0761C40132100DD9492 /* JAOrderItemCollectionViewCell.h */,
+				9A6BC0771C40132100DD9492 /* JAOrderItemCollectionViewCell.m */,
 			);
 			path = MyOrderCell;
 			sourceTree = "<group>";
@@ -7366,6 +7383,7 @@
 				CEABEEC81A126652000D0CF8 /* JAGenericFiltersView.m in Sources */,
 				894B0D781BB2F80A00199251 /* RICatalog.m in Sources */,
 				9A4ADF691C2AF1010019F439 /* JADropdownControl.m in Sources */,
+				9A6BC0791C40132100DD9492 /* JAOrderItemCollectionViewCell.m in Sources */,
 				9A189E471BB190030039BC14 /* RICatalog.m in Sources */,
 				51686b7e16269d6e716c8f70 /* RIOperation.m in Sources */,
 				CEED47311A7B973B006D9CE7 /* JAPDVBundleSingleItem.m in Sources */,
@@ -7462,6 +7480,7 @@
 				13aa921041b3d74e73c372da /* JAUndefinedSearchView.m in Sources */,
 				a8f78471bcd05366bede322a /* JAAddNewAddressCell.m in Sources */,
 				9A7EE9901B5546A0004E2505 /* ADJPackageHandler.m in Sources */,
+				9A6BC0801C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */,
 				B5C9C7051A1A6CB30065AFD4 /* JADatePicker.m in Sources */,
 				e50648146d628861d4e0bc0f /* JATeaserView.m in Sources */,
 				9A7EE9321B554696004E2505 /* ADJActivityHandler.m in Sources */,
@@ -7610,6 +7629,7 @@
 				B5C682FA1986C41D0094C92C /* RIShippingMethodForm.m in Sources */,
 				B5A3025B19811E8A00F71726 /* SDWebImageManager.m in Sources */,
 				CEC3F71C19A5FDDA00DE12F6 /* JAButtonCell.m in Sources */,
+				9A6BC0781C40132100DD9492 /* JAOrderItemCollectionViewCell.m in Sources */,
 				B5A302C319811E9200F71726 /* RIForm.m in Sources */,
 				CEA86DA31A39F82C000032AD /* JAPageControl.m in Sources */,
 				9AB488801B72748500886A44 /* JAShopWebViewController.m in Sources */,
@@ -7684,6 +7704,7 @@
 				CEED47301A7B973B006D9CE7 /* JAPDVBundleSingleItem.m in Sources */,
 				B5A302BF19811E9200F71726 /* RIApi.m in Sources */,
 				B5C61BC019B0BB7F00840E93 /* RIFieldOption.m in Sources */,
+				9A6BC07F1C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */,
 				B5C682F91986C41D0094C92C /* RIShippingMethodFormField.m in Sources */,
 				B5225E1B1989308300C18F1E /* RIPaymentMethodFormOption.m in Sources */,
 				CE8DB8631AF916F90061807E /* JASearchResultsView.m in Sources */,
@@ -7914,6 +7935,7 @@
 				9A7EE9691B5546A0004E2505 /* ADJAdjustFactory.m in Sources */,
 				CE9ADB441AB34C4600D56481 /* RIShippingMethodForm.m in Sources */,
 				9ABCAEF81B0F8FEE00A69271 /* UIView+Mirror.m in Sources */,
+				9A6BC07A1C40132100DD9492 /* JAOrderItemCollectionViewCell.m in Sources */,
 				CE9ADB451AB34C4600D56481 /* SDWebImageManager.m in Sources */,
 				CE9ADB461AB34C4600D56481 /* JAButtonCell.m in Sources */,
 				9A4ADF6A1C2AF1010019F439 /* JADropdownControl.m in Sources */,
@@ -7988,6 +8010,7 @@
 				CE9ADB811AB34C4600D56481 /* RIApi.m in Sources */,
 				CE9ADB821AB34C4600D56481 /* RIFieldOption.m in Sources */,
 				CE9ADB841AB34C4600D56481 /* RIShippingMethodFormField.m in Sources */,
+				9A6BC0811C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */,
 				CE9ADB851AB34C4600D56481 /* RIPaymentMethodFormOption.m in Sources */,
 				CE8DB8651AF916F90061807E /* JASearchResultsView.m in Sources */,
 				CE9ADB861AB34C4600D56481 /* JAPercentageBarView.m in Sources */,
@@ -8208,6 +8231,7 @@
 				9A7EE96A1B5546A0004E2505 /* ADJAdjustFactory.m in Sources */,
 				CE9ADD3E1AB6D6E900D56481 /* RIShippingMethodForm.m in Sources */,
 				9ABCAEF91B0F8FEE00A69271 /* UIView+Mirror.m in Sources */,
+				9A6BC07B1C40132100DD9492 /* JAOrderItemCollectionViewCell.m in Sources */,
 				CE9ADD3F1AB6D6E900D56481 /* SDWebImageManager.m in Sources */,
 				CE9ADD401AB6D6E900D56481 /* JAButtonCell.m in Sources */,
 				9A4ADF6B1C2AF1010019F439 /* JADropdownControl.m in Sources */,
@@ -8282,6 +8306,7 @@
 				CE9ADD7B1AB6D6E900D56481 /* RIApi.m in Sources */,
 				CE9ADD7C1AB6D6E900D56481 /* RIFieldOption.m in Sources */,
 				CE9ADD7E1AB6D6E900D56481 /* RIShippingMethodFormField.m in Sources */,
+				9A6BC0821C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */,
 				CE9ADD7F1AB6D6E900D56481 /* RIPaymentMethodFormOption.m in Sources */,
 				CE8DB8661AF916F90061807E /* JASearchResultsView.m in Sources */,
 				CE9ADD801AB6D6E900D56481 /* JAPercentageBarView.m in Sources */,
@@ -8502,6 +8527,7 @@
 				CE9ADF381AB6D78200D56481 /* RIShippingMethodForm.m in Sources */,
 				9ABCAEFA1B0F8FEF00A69271 /* UIView+Mirror.m in Sources */,
 				CE9ADF391AB6D78200D56481 /* SDWebImageManager.m in Sources */,
+				9A6BC07C1C40132100DD9492 /* JAOrderItemCollectionViewCell.m in Sources */,
 				9A1737331B68EBB0004905B4 /* JACheckoutBottomView.m in Sources */,
 				CE9ADF3A1AB6D78200D56481 /* JAButtonCell.m in Sources */,
 				9A4ADF6C1C2AF1010019F439 /* JADropdownControl.m in Sources */,
@@ -8576,6 +8602,7 @@
 				CE9ADF791AB6D78200D56481 /* RIPaymentMethodFormOption.m in Sources */,
 				CE8DB8671AF916F90061807E /* JASearchResultsView.m in Sources */,
 				CE9ADF7A1AB6D78200D56481 /* JAPercentageBarView.m in Sources */,
+				9A6BC0831C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */,
 				CE9ADF7D1AB6D78200D56481 /* JAPDVImageSection.m in Sources */,
 				CE9ADF7F1AB6D78200D56481 /* JACatalogCell.m in Sources */,
 				CE9ADF811AB6D78200D56481 /* JAChooseCountryViewController.m in Sources */,
