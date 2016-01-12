@@ -451,7 +451,7 @@
         
         if(RIApiResponseSuccess != apiResponse)
         {
-            [self.viewControllerEvents onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(requestRatings) objects:nil];
+            [self.viewControllerEvents onErrorResponse:apiResponse messages:nil showAsMessage:NO target:self selector:@selector(requestRatings) objects:nil];
         }
         [self.viewControllerEvents hideLoading];
     }];
@@ -470,7 +470,7 @@
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
         if(RIApiResponseSuccess != apiResponse)
         {
-            [self.viewControllerEvents onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(requestReviews) objects:nil];
+            [self.viewControllerEvents onErrorResponse:apiResponse messages:nil showAsMessage:NO target:self selector:@selector(requestReviews) objects:nil];
         }
         [self.viewControllerEvents hideLoading];
     }];
