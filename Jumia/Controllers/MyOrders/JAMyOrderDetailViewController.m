@@ -36,6 +36,7 @@
 -(JAMyOrderDetailView *)orderDetailsView {
     if (!VALID_NOTEMPTY(_orderDetailsView,JAMyOrderDetailView)) {
         _orderDetailsView = [JAMyOrderDetailView new];
+        [_orderDetailsView setParent:self];
         [_orderDetailsView setHidden:YES];
         [_orderDetailsView setFrame:CGRectMake(0.f, 0.f,
                                                _orderDetailsView.frame.size.width,
@@ -97,8 +98,15 @@
 }
 
 -(void)setupViews {
-    [self.orderDetailsView setupWithOrder:self.trackingOrder maxWidth:self.viewBounds.size.width allowsFlip:NO];
+    [self.orderDetailsView setupWithOrder:self.trackingOrder frame:self.viewBounds];
     [self.orderDetailsView setHidden:NO];
+}
+
+- (void)onOrientationChanged
+{
+    if ((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 @end
