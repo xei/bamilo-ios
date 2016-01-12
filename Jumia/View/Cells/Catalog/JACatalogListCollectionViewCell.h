@@ -16,6 +16,13 @@
 #define JACatalogViewControllerListCellNewLabelY 15.0f
 #define JACatalogViewControllerListCellNewLabelX_ipad -2.0f
 #define JACatalogViewControllerListCellNewLabelY_ipad 20.0f
+#define JACatalogListCellImageSize CGSizeMake(68, 85)
+#define JACatalogListCellDistXImage_ipad 32.f
+#define JACatalogListCellDistXImage 6.f
+#define JACatalogListCellDistXAfterImage_ipad 16.f
+#define JACatalogListCellDistXAfterImage 6.f
+#define JACatalogListCellBrandTextWidth_ipad 55.f
+#define JACatalogListCellBrandTextWidth 40.f
 
 @interface JACatalogListCollectionViewCell : JACatalogCollectionViewCell
 

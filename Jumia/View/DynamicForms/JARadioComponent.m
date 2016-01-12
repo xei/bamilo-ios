@@ -230,6 +230,9 @@
     self.textField.font = [UIFont fontWithName:kFontRegularName size:self.textField.font.pointSize];
     [self.textField setTextColor:UIColorFromRGB(0x000000)];
     [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
+    if (NO == self.textField.enabled) {
+        [self.textField setTextColor:JABlack700Color];
+    }
     
     if(self.hasError)
     {
@@ -251,7 +254,10 @@
     }
     
     self.currentErrorMessage = nil;
-    [self.textField setTextColor:UIColorFromRGB(0x666666)];
+    [self.textField setTextColor:UIColorFromRGB(0x000000)];
+    if (NO == self.textField.enabled) {
+        [self.textField setTextColor:JABlack700Color];
+    }
     [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
     
     return YES;
