@@ -185,6 +185,7 @@
     
     if (VALID_NOTEMPTY(product.priceRange, NSString)) {
         [self.priceLine setPrice:product.priceRange];
+        [self.priceLine setOldPrice:nil];
     } else if (VALID_NOTEMPTY(product.specialPriceFormatted, NSString)) {
         [self.priceLine setPrice:product.specialPriceFormatted];
         [self.priceLine setOldPrice:product.priceFormatted];

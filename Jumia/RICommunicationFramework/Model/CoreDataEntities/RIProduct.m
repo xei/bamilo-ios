@@ -942,6 +942,19 @@
     }];
 }
 
++ (void)updateRecentlyViewedProduct:(RIProduct *)product withSku:(NSString *)sku
+{
+    NSArray *productLastEntry = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIProduct class])
+                                                                  withPropertyName:@"sku"
+                                                                  andPropertyValue:sku];
+    
+    if ([productLastEntry objectAtIndex:0] != [NSNull null]) {
+        [[RIDataBaseWrapper sharedInstance] deleteObject:[productLastEntry objectAtIndex:0]];
+    }
+    product.recentlyViewedDate = [NSDate new];
+    [[RIDataBaseWrapper sharedInstance] insertManagedObject:product];
+}
+
 #pragma mark - Favorites
 
 + (void)getFavoriteProductsWithSuccessBlock:(void (^)(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages))successBlock
