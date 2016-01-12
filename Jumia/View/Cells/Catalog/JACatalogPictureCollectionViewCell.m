@@ -88,7 +88,7 @@
     }
     CGFloat textWidth = self.width - xOffset*2;
     
-    CGRect brandLabelRect = CGRectMake(xOffset, brandYOffset, textWidth, 15);
+    CGRect brandLabelRect = CGRectMake(xOffset, brandYOffset - self.shopFirstImageView.frame.size.height, textWidth, 15);
     if (!CGRectEqualToRect(brandLabelRect, self.brandLabel.frame)) {
         [self.brandLabel setFrame:brandLabelRect];
         [self setForRTL:self.brandLabel];
@@ -120,12 +120,22 @@
         [self setForRTL:self.favoriteButton];
     }
     
-    CGRect ratingLineRect = CGRectMake(xOffset, CGRectGetMaxY(self.priceLine.frame) + 14.f, textWidth, self.ratingLine.imageHeight);
-    if (!CGRectEqualToRect(ratingLineRect, self.ratingLine.frame)) {
-        [self.ratingLine setFrame:ratingLineRect];
+    
+    CGRect shopFirstRect = CGRectMake(xOffset, CGRectGetMaxY(self.priceLine.frame) + 3.f, self.shopFirstImageView.frame.size.width, self.shopFirstImageView.frame.size.height);
+    if (!CGRectEqualToRect(shopFirstRect, self.self.shopFirstImageView.frame)) {
+        [self.shopFirstImageView setFrame:shopFirstRect];
+        [self setForRTL:self.shopFirstImageView];
     }
-        [self setForRTL:self.ratingLine];
-    //    }
+    
+    CGRect ratingRect = CGRectMake(xOffset, CGRectGetMaxY(self.priceLine.frame) + 14.f, textWidth, self.ratingLine.imageHeight);
+    if (NO == self.shopFirstImageView.hidden) {
+        ratingRect = CGRectMake(ratingRect.origin.x, CGRectGetMaxY(shopFirstRect) + 3.f, ratingRect.size.width, ratingRect.size.height);
+    }
+    if (!CGRectEqualToRect(ratingRect, self.ratingLine.frame)) {
+        [self.ratingLine setFrame:ratingRect];
+    }
+    [self setForRTL:self.ratingLine];
+    
     
     CGRect discountLabelRect = CGRectMake(self.discountLabel.superview.width - discountWidth - xOffset, CGRectGetMaxY(nameLabelRect), discountWidth, 19);
     if (!CGRectEqualToRect(discountLabelRect, self.discountLabel.frame)) {
