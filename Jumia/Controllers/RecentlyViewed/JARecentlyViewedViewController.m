@@ -298,7 +298,14 @@
 {
     __block NSString *sku = notification.object;
     [RIProduct getCompleteProductWithSku:sku successBlock:^(id product) {
+        if (![self.productsArray containsObject:sku]) {
+            [self.productsArray addObject:sku];
+        }
         [self.productsDictionary setObject:product forKey:sku];
+        
+        [RIProduct updateRecentlyViewedProduct:product withSku:sku];
+        
+        [self.collectionView reloadData];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
         
         [self hideLoading];
