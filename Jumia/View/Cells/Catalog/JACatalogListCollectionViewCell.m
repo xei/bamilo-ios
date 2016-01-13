@@ -258,6 +258,7 @@
 - (void)loadWithVariation:(RIVariation *)variation
 {
     [super loadWithVariation:variation];
+    self.sizeButton.hidden = YES;
     [self reloadViews];
 }
 
