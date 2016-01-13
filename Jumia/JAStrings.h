@@ -332,6 +332,11 @@
 #define STRING_NO_ORDERS RILocalizedString(@"my_order_no_orders_label", nil)
 #define STRING_NO_ORDERS_TITLE RILocalizedString(@"my_order_no_orders_title_label", nil)
 
+#define STRING_REORDER RILocalizedString(@"reorder", nil)
+
+#define STRING_ORDER_ITEMS RILocalizedString(@"items_in_your_order", nil)
+#define STRING_ORDER_NO RILocalizedString(@"order_no", nil)
+
 #define STRING_SELLER_INFO_WARRANTY RILocalizedString(@"seller_info_warranty", nil)
 
 #define STRING_LIKE_US RILocalizedString(@"like_us_on_facebook", nil)

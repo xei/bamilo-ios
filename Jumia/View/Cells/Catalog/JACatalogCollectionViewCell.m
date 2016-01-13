@@ -134,6 +134,16 @@
     return _sizeButton;
 }
 
+- (UIImageView*)shopFirstImageView
+{
+    if (!VALID_NOTEMPTY(_shopFirstImageView, UIImageView)) {
+        
+        UIImage *shopFirstImage = [UIImage imageNamed:@"shop_first_logo"];
+        _shopFirstImageView = [[UIImageView alloc] initWithImage:shopFirstImage];
+    }
+    return _shopFirstImageView;
+}
+
 - (void)initViews
 {
     [self addSubview:self.feedbackView];
@@ -145,6 +155,7 @@
     [self addSubview:self.priceLine];
     [self addSubview:self.sizeButton];
     [self addSubview:self.discountLabel];
+    [self addSubview:self.shopFirstImageView];
     [self setBackgroundColor:[UIColor whiteColor]];
     [self setClipsToBounds:YES];
 }
@@ -185,6 +196,7 @@
     
     if (VALID_NOTEMPTY(product.priceRange, NSString)) {
         [self.priceLine setPrice:product.priceRange];
+        [self.priceLine setOldPrice:nil];
     } else if (VALID_NOTEMPTY(product.specialPriceFormatted, NSString)) {
         [self.priceLine setPrice:product.specialPriceFormatted];
         [self.priceLine setOldPrice:product.priceFormatted];
@@ -193,6 +205,11 @@
         [self.priceLine setOldPrice:nil];
     }
     
+    if (VALID_NOTEMPTY(product.shopFirst, NSNumber) && [product.shopFirst boolValue]) {
+        self.shopFirstImageView.hidden = NO;
+    } else {
+        self.shopFirstImageView.hidden = YES;
+    }
     
     _favoriteButton.selected = VALID_NOTEMPTY(product.favoriteAddDate, NSDate);
     

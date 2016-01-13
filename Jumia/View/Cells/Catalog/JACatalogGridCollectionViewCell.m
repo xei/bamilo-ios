@@ -68,7 +68,7 @@
     }
     CGFloat textWidth = self.width - xOffset*2;
     
-    CGRect brandLabelRect = CGRectMake(xOffset, brandYOffset, textWidth, 15);
+    CGRect brandLabelRect = CGRectMake(xOffset, brandYOffset - 5.0f - self.shopFirstImageView.frame.size.height, textWidth, 15);
     if (!CGRectEqualToRect(brandLabelRect, self.brandLabel.frame)) {
         [self.brandLabel setFrame:brandLabelRect];
         [self setForRTL:self.brandLabel];
@@ -97,6 +97,12 @@
         [self.priceLine setFrame:priceLineRect];
     }
     [self setForRTL:self.priceLine];
+    
+    CGRect shopFirstRect = CGRectMake(xOffset, CGRectGetMaxY(self.priceLine.frame) + 6.f, self.shopFirstImageView.frame.size.width, self.shopFirstImageView.frame.size.height);
+    if (!CGRectEqualToRect(shopFirstRect, self.self.shopFirstImageView.frame)) {
+        [self.shopFirstImageView setFrame:shopFirstRect];
+        [self setForRTL:self.shopFirstImageView];
+    }
     
     CGFloat favX = self.favoriteButton.superview.width - self.favoriteButton.width - xFavOffset;
     if (self.favoriteButton.x != favX) {

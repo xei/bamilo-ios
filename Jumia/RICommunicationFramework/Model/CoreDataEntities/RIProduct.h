@@ -197,6 +197,14 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 + (void)removeFromRecentlyViewed:(RIProduct *)product;
 
 /**
+ * Method to update product in local database
+ *
+ * @param the product to insert in database
+ * @param the product´s sku to remove, if it already exists in db
+ */
++ (void)updateRecentlyViewedProduct:(RIProduct *)product withSku:(NSString *)sku;
+
+/**
  *  Method to delete all recently viewed products from coredata
  */
 + (void)removeAllRecentlyViewedWithSuccessBlock:(void (^)(void))successBlock

@@ -43,6 +43,7 @@ typedef NS_ENUM(NSUInteger, JACatalogCollectionViewCellType) {
 @property (nonatomic) JADropdownControl *sizeButton;
 @property (nonatomic) JAClickableView *feedbackView;
 @property (nonatomic) JAProductInfoPriceLine *priceLine;
+@property (nonatomic) UIImageView *shopFirstImageView;
 
 @property (nonatomic) RIProduct *product;
 @property (nonatomic) RIVariation *variation;

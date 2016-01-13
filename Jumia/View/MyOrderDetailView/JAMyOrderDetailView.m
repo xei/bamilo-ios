@@ -7,329 +7,160 @@
 //
 
 #import "JAMyOrderDetailView.h"
+#import "JAProductInfoHeaderLine.h"
+#import "JAProductCollectionViewFlowLayout.h"
+#import "JAOrderItemCollectionViewCell.h"
+#import "JAMyOrderResumeView.h"
 
 #define kNormalFont [UIFont fontWithName:kFontLightName size:13]
 #define kHighlightedFont [UIFont fontWithName:kFontRegularName size:13]
 
+@interface JAMyOrderDetailView () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+
+@property (nonatomic) JAMyOrderResumeView *myOrderResumeView;
+
+@property (nonatomic) JAProductInfoHeaderLine *itemsHeader;
+@property (nonatomic) UICollectionView *collectionView;
+@property (nonatomic) JAProductCollectionViewFlowLayout *collectionViewFlowLayout;
+
+@property (nonatomic) RITrackOrder *order;
+
+@end
+
 @implementation JAMyOrderDetailView
 
-- (void)setupWithOrder:(RITrackOrder*)order maxWidth:(CGFloat)maxWidth allowsFlip:(BOOL)allowsFlip
+- (JAMyOrderResumeView *)myOrderResumeView
 {
-    for(UIView *view in self.subviews)
-    {
-        [view removeFromSuperview];
+    if (!VALID(_myOrderResumeView, UIView)) {
+        _myOrderResumeView = [[JAMyOrderResumeView alloc] initWithFrame:CGRectMake(0, 0, self.width, 260)];
     }
-    
-    // add top margin
-    CGFloat currentY = 10.0f;
-    CGFloat horizontalMargin = 6.0f;
-    CGFloat width = maxWidth - (horizontalMargin * 2);
-    
-    NSDictionary* baseAttributes = [NSDictionary dictionaryWithObjectsAndKeys:kNormalFont, NSFontAttributeName, nil];
-    NSDictionary* highlightAttributes = [NSDictionary dictionaryWithObjectsAndKeys:kHighlightedFont,NSFontAttributeName, nil];
-    
-    UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [dateLabel setTextAlignment:NSTextAlignmentLeft];
-    [dateLabel setNumberOfLines:0];
-    [dateLabel setBackgroundColor:[UIColor clearColor]];
-    [dateLabel setFont:kNormalFont];
-    [dateLabel setTextColor:UIColorFromRGB(0x666666)];
-    
-    NSString* orderDateString = [NSString stringWithFormat:@"%@ %@", STRING_ORDER_DATE, order.creationDate];
-    NSRange orderDateLabelRange = [orderDateString rangeOfString:STRING_ORDER_DATE];
-    NSMutableAttributedString* finalString = [[NSMutableAttributedString alloc] initWithString:orderDateString attributes:baseAttributes];
-    [finalString setAttributes:highlightAttributes range:orderDateLabelRange];
-    [dateLabel setAttributedText:finalString];
-    
-    CGRect dateLabelRect = [orderDateString boundingRectWithSize:CGSizeMake(width, 1000.0f)
-                                                         options:NSStringDrawingUsesLineFragmentOrigin
-                                                      attributes:@{NSFontAttributeName:kHighlightedFont} context:nil];
-    [dateLabel setFrame:CGRectMake(horizontalMargin,
-                                   currentY,
-                                   width,
-                                   ceilf(dateLabelRect.size.height))];
-    [self addSubview:dateLabel];
-    currentY += ceilf(dateLabelRect.size.height);
-    
-    UILabel *paymentMethodLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [paymentMethodLabel setTextAlignment:NSTextAlignmentLeft];
-    [paymentMethodLabel setNumberOfLines:0];
-    [paymentMethodLabel setBackgroundColor:[UIColor clearColor]];
-    [paymentMethodLabel setFont:kNormalFont];
-    [paymentMethodLabel setTextColor:UIColorFromRGB(0x666666)];
-    
-    NSString* paymentMethodString = [NSString stringWithFormat:@"%@ %@", STRING_PAYMENT_METHOD, order.paymentMethod];
-    NSRange paymentMethodLabelRange = [paymentMethodString rangeOfString:STRING_PAYMENT_METHOD];
-    NSMutableAttributedString* paymentMethodFinalString = [[NSMutableAttributedString alloc] initWithString:paymentMethodString attributes:baseAttributes];
-    [paymentMethodFinalString setAttributes:highlightAttributes range:paymentMethodLabelRange];
-    [paymentMethodLabel setAttributedText:paymentMethodFinalString];
-    
-    CGRect paymentLabelRect = [paymentMethodString boundingRectWithSize:CGSizeMake(width, 1000.0f)
-                                                                options:NSStringDrawingUsesLineFragmentOrigin
-                                                             attributes:@{NSFontAttributeName:kHighlightedFont} context:nil];
-    [paymentMethodLabel setFrame:CGRectMake(horizontalMargin,
-                                            currentY,
-                                            width,
-                                            ceilf(paymentLabelRect.size.height))];
-    [self addSubview:paymentMethodLabel];
-    currentY += ceilf(paymentLabelRect.size.height);
-    
-    if(VALID_NOTEMPTY(order.paymentReference, NSString))
-    {
-        UILabel *paymentReferenceLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [paymentReferenceLabel setTextAlignment:NSTextAlignmentLeft];
-        [paymentReferenceLabel setNumberOfLines:0];
-        [paymentReferenceLabel setBackgroundColor:[UIColor clearColor]];
-        [paymentReferenceLabel setFont:kNormalFont];
-        [paymentReferenceLabel setTextColor:UIColorFromRGB(0x666666)];
-        
-        NSString* paymentReferenceString = [NSString stringWithFormat:@"%@ %@", STRING_ORDER_PAYMENT_REFERENCE, order.paymentReference];
-        NSRange paymentReferenceLabelRange = [paymentReferenceString rangeOfString:STRING_ORDER_PAYMENT_REFERENCE];
-        NSMutableAttributedString* paymentReferenceFinalString = [[NSMutableAttributedString alloc] initWithString:paymentReferenceString attributes:baseAttributes];
-        [paymentReferenceFinalString setAttributes:highlightAttributes range:paymentReferenceLabelRange];
-        [paymentReferenceLabel setAttributedText:paymentReferenceFinalString];
-        
-        CGRect paymentReferenceLabelRect = [paymentReferenceString boundingRectWithSize:CGSizeMake(width, 1000.0f)
-                                                                                options:NSStringDrawingUsesLineFragmentOrigin
-                                                                             attributes:@{NSFontAttributeName:kHighlightedFont} context:nil];
-        [paymentReferenceLabel setFrame:CGRectMake(horizontalMargin,
-                                                   currentY,
-                                                   width,
-                                                   ceilf(paymentReferenceLabelRect.size.height))];
-        [self addSubview:paymentReferenceLabel];
-        currentY += ceilf(paymentReferenceLabelRect.size.height);
-    }
-    
-    if(VALID_NOTEMPTY(order.paymentDescription, NSString))
-    {
-        UILabel *paymentStatusLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [paymentStatusLabel setTextAlignment:NSTextAlignmentLeft];
-        [paymentStatusLabel setNumberOfLines:0];
-        [paymentStatusLabel setBackgroundColor:[UIColor clearColor]];
-        [paymentStatusLabel setFont:kNormalFont];
-        [paymentStatusLabel setTextColor:UIColorFromRGB(0x666666)];
-        
-        NSString* paymentStatusString = [NSString stringWithFormat:@"%@ %@", STRING_ORDER_PAYMENT_STATUS, order.paymentDescription];
-        NSRange paymentStatusLabelRange = [paymentStatusString rangeOfString:STRING_ORDER_PAYMENT_STATUS];
-        NSMutableAttributedString* paymentStatusFinalString = [[NSMutableAttributedString alloc] initWithString:paymentStatusString attributes:baseAttributes];
-        [paymentStatusFinalString setAttributes:highlightAttributes range:paymentStatusLabelRange];
-        [paymentStatusLabel setAttributedText:paymentStatusFinalString];
-        
-        CGRect paymentStatusLabelRect = [paymentStatusString boundingRectWithSize:CGSizeMake(width, 1000.0f)
-                                                                          options:NSStringDrawingUsesLineFragmentOrigin
-                                                                       attributes:@{NSFontAttributeName:kHighlightedFont} context:nil];
-        [paymentStatusLabel setFrame:CGRectMake(horizontalMargin,
-                                                currentY,
-                                                width,
-                                                ceilf(paymentStatusLabelRect.size.height))];
-        [self addSubview:paymentStatusLabel];
-        currentY += ceilf(paymentStatusLabelRect.size.height);
-    }
-    
-    currentY += 20.0f;
-    
-    if(VALID_NOTEMPTY(order.itemCollection, NSArray))
-    {
-        UILabel *productsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [productsLabel setTextAlignment:NSTextAlignmentLeft];
-        [productsLabel setNumberOfLines:0];
-        [productsLabel setBackgroundColor:[UIColor clearColor]];
-        [productsLabel setFont:kHighlightedFont];
-        [productsLabel setTextColor:UIColorFromRGB(0x666666)];
-        [productsLabel setText:STRING_PRODUCTS];
-        
-        CGRect productsLabelRect = [STRING_PRODUCTS boundingRectWithSize:CGSizeMake(width, 1000.0f)
-                                                                 options:NSStringDrawingUsesLineFragmentOrigin
-                                                              attributes:@{NSFontAttributeName:kHighlightedFont} context:nil];
-        [productsLabel setFrame:CGRectMake(horizontalMargin,
-                                           currentY,
-                                           width,
-                                           ceilf(productsLabelRect.size.height))];
-        [self addSubview:productsLabel];
-        currentY += ceilf(productsLabelRect.size.height);
-        
-        currentY += 20.0f;
-        
-        for(int i = 0; i < [order.itemCollection count]; i++)
-        {
-            RIItemCollection *product = [order.itemCollection objectAtIndex:i];
-            
-            UILabel *productNameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-            [productNameLabel setTextAlignment:NSTextAlignmentLeft];
-            [productNameLabel setNumberOfLines:0];
-            [productNameLabel setBackgroundColor:[UIColor clearColor]];
-            [productNameLabel setFont:kNormalFont];
-            [productNameLabel setTextColor:UIColorFromRGB(0x666666)];
-            [productNameLabel setText:product.name];
-            
-            CGRect productNameLabelRect = [product.name boundingRectWithSize:CGSizeMake(width, 1000.0f)
-                                                                     options:NSStringDrawingUsesLineFragmentOrigin
-                                                                  attributes:@{NSFontAttributeName:kNormalFont} context:nil];
-            [productNameLabel setFrame:CGRectMake(horizontalMargin,
-                                                  currentY,
-                                                  width,
-                                                  ceilf(productNameLabelRect.size.height))];
-            [self addSubview:productNameLabel];
-            currentY += ceilf(productNameLabelRect.size.height);
-            
-            UILabel *productQuantityLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-            [productQuantityLabel setTextAlignment:NSTextAlignmentLeft];
-            [productQuantityLabel setNumberOfLines:0];
-            [productQuantityLabel setBackgroundColor:[UIColor clearColor]];
-            [productQuantityLabel setFont:kHighlightedFont];
-            [productQuantityLabel setTextColor:UIColorFromRGB(0x666666)];
-            
-            NSString *quantityString = [NSString stringWithFormat:@"%@ %@", STRING_ORDER_QUANTITY, [product.quantity stringValue]];
-            [productQuantityLabel setText:quantityString];
-            
-            CGRect productQuantityLabelRect = [quantityString boundingRectWithSize:CGSizeMake(width, 1000.0f)
-                                                                           options:NSStringDrawingUsesLineFragmentOrigin
-                                                                        attributes:@{NSFontAttributeName:kHighlightedFont} context:nil];
-            [productQuantityLabel setFrame:CGRectMake(horizontalMargin,
-                                                      currentY,
-                                                      width,
-                                                      ceilf(productQuantityLabelRect.size.height))];
-            [self addSubview:productQuantityLabel];
-            currentY += ceilf(productQuantityLabelRect.size.height);
-            
-            UILabel *productPriceLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-            [productPriceLabel setTextAlignment:NSTextAlignmentLeft];
-            [productPriceLabel setNumberOfLines:0];
-            [productPriceLabel setBackgroundColor:[UIColor clearColor]];
-            [productPriceLabel setFont:kNormalFont];
-            [productPriceLabel setTextColor:UIColorFromRGB(0x666666)];
-            [productPriceLabel setText:product.totalFormatted];
-            
-            CGRect productPriceLabelRect = [product.totalFormatted boundingRectWithSize:CGSizeMake(width, 1000.0f)
-                                                                                options:NSStringDrawingUsesLineFragmentOrigin
-                                                                             attributes:@{NSFontAttributeName:kNormalFont} context:nil];
-            [productPriceLabel setFrame:CGRectMake(horizontalMargin,
-                                                   currentY,
-                                                   width,
-                                                   ceilf(productPriceLabelRect.size.height))];
-            [self addSubview:productPriceLabel];
-            currentY += ceilf(productPriceLabelRect.size.height);
-            
-            // If it is the last product than it shouldn't have separator
-            if(i < ([order.itemCollection count] - 1))
-            {
-                // Space betweeen separator and last product
-                currentY += 10.0f;
-                
-                // Separator
-                UIView *productSeparator = [[UIView alloc] initWithFrame:CGRectMake(horizontalMargin,
-                                                                                    currentY,
-                                                                                    width,
-                                                                                    1.0f)];
-                [productSeparator setBackgroundColor:UIColorFromRGB(0xcccccc)];
-                [self addSubview:productSeparator];
-                currentY += productSeparator.frame.size.height;
-                
-                // Space betweeen separator and next product
-                currentY += 10.0f;
-            }
-        }
-        
-        // Space betweeen list of products and cell separator
-        currentY += 10.0f;
-    }
-    
-    self.frame = CGRectMake(self.frame.origin.x,
-                            self.frame.origin.y,
-                            maxWidth,
-                            currentY);
-    
-    if (RI_IS_RTL && allowsFlip) {
-        [self flipAllSubviews];
-    }
+    return _myOrderResumeView;
 }
 
-+ (CGFloat)getOrderDetailViewHeight:(RITrackOrder*)order maxWidth:(CGFloat)maxWidth
+- (JAProductInfoHeaderLine *)itemsHeader
 {
-    // add top margin
-    CGFloat currentY = 10.0f;
-    CGFloat horizontalMargin = 6.0f;
-    
-    NSString* orderDateString = [NSString stringWithFormat:@"%@ %@", STRING_ORDER_DATE, order.creationDate];
-    CGRect dateLabelRect = [orderDateString boundingRectWithSize:CGSizeMake(maxWidth - horizontalMargin * 2, 1000.0f)
-                                                         options:NSStringDrawingUsesLineFragmentOrigin
-                                                      attributes:@{NSFontAttributeName:kHighlightedFont} context:nil];
-    
-    currentY += ceilf(dateLabelRect.size.height);
-    
-    NSString* paymentMethodString = [NSString stringWithFormat:@"%@ %@", STRING_PAYMENT_METHOD, order.paymentMethod];
-    CGRect paymentMethodLabelRect = [paymentMethodString boundingRectWithSize:CGSizeMake(maxWidth - horizontalMargin * 2, 1000.0f)
-                                                                      options:NSStringDrawingUsesLineFragmentOrigin
-                                                                   attributes:@{NSFontAttributeName:kHighlightedFont} context:nil];
-    currentY += ceilf(paymentMethodLabelRect.size.height);
-    
-    if(VALID_NOTEMPTY(order.paymentReference, NSString))
-    {
-        NSString* paymentReferenceString = [NSString stringWithFormat:@"%@ %@", STRING_ORDER_PAYMENT_REFERENCE, order.paymentReference];
-        CGRect paymentReferenceLabelRect = [paymentReferenceString boundingRectWithSize:CGSizeMake(maxWidth - horizontalMargin * 2, 1000.0f)
-                                                                                options:NSStringDrawingUsesLineFragmentOrigin
-                                                                             attributes:@{NSFontAttributeName:kHighlightedFont} context:nil];
-        currentY += ceilf(paymentReferenceLabelRect.size.height);
+    if (!VALID(_itemsHeader, JAProductInfoHeaderLine)) {
+        _itemsHeader = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.myOrderResumeView.frame), self.width, kProductInfoHeaderLineHeight)];
+        [_itemsHeader setTitle:[STRING_ORDER_ITEMS uppercaseString]];
     }
-    
-    if(VALID_NOTEMPTY(order.paymentDescription, NSString))
-    {
-        NSString* paymentStatusString = [NSString stringWithFormat:@"%@ %@", STRING_ORDER_PAYMENT_STATUS, order.paymentDescription];
-        CGRect paymentStatusLabelRect = [paymentStatusString boundingRectWithSize:CGSizeMake(maxWidth - horizontalMargin * 2, 1000.0f)
-                                                                          options:NSStringDrawingUsesLineFragmentOrigin
-                                                                       attributes:@{NSFontAttributeName:kHighlightedFont} context:nil];
-        currentY += ceilf(paymentStatusLabelRect.size.height);
-    }
-    
-    currentY += 20.0f;
-    
-    if(VALID_NOTEMPTY(order.itemCollection, NSArray))
-    {
-        CGRect productsLabelRect = [STRING_PRODUCTS boundingRectWithSize:CGSizeMake(maxWidth - horizontalMargin * 2, 1000.0f)
-                                                                 options:NSStringDrawingUsesLineFragmentOrigin
-                                                              attributes:@{NSFontAttributeName:kHighlightedFont} context:nil];
-        currentY += ceilf(productsLabelRect.size.height);
-        
-        currentY += 20.0f;
-        
-        for(int i = 0; i < [order.itemCollection count]; i++)
-        {
-            RIItemCollection *product = [order.itemCollection objectAtIndex:i];
-            
-            CGRect productNameLabelRect = [product.name boundingRectWithSize:CGSizeMake(maxWidth - horizontalMargin * 2, 1000.0f)
-                                                                     options:NSStringDrawingUsesLineFragmentOrigin
-                                                                  attributes:@{NSFontAttributeName:kNormalFont} context:nil];
-            currentY += ceilf(productNameLabelRect.size.height);
-            
-            NSString *quantityString = [NSString stringWithFormat:@"%@ %@", STRING_ORDER_QUANTITY, [product.quantity stringValue]];
-            CGRect productQuantityLabelRect = [quantityString boundingRectWithSize:CGSizeMake(maxWidth - horizontalMargin * 2, 1000.0f)
-                                                                           options:NSStringDrawingUsesLineFragmentOrigin
-                                                                        attributes:@{NSFontAttributeName:kHighlightedFont} context:nil];
-            currentY += ceilf(productQuantityLabelRect.size.height);
-            
-            CGRect productPriceLabelRect = [product.totalFormatted boundingRectWithSize:CGSizeMake(maxWidth - horizontalMargin * 2, 1000.0f)
-                                                                                options:NSStringDrawingUsesLineFragmentOrigin
-                                                                             attributes:@{NSFontAttributeName:kNormalFont} context:nil];
-            currentY += ceilf(productPriceLabelRect.size.height);
-            
-            if(i < ([order.itemCollection count] - 1))
-            {
-                // Space betweeen separator and last product
-                currentY += 10.0f;
+    return _itemsHeader;
+}
 
-                // Separator
-                currentY += 1.0f;
-                
-                // Space betweeen separator and next product
-                currentY += 10.0f;
-            }
-        }
+- (UICollectionView *)collectionView
+{
+    if (!VALID(_collectionView, UICollectionView)) {
         
-        // Space betweeen list of products and cell separator
-        currentY += 10.0f;
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.itemsHeader.frame), self.width, self.height - CGRectGetMaxY(self.itemsHeader.frame))
+                                             collectionViewLayout:self.collectionViewFlowLayout];
+        _collectionView.delegate = self;
+        _collectionView.dataSource = self;
+        [_collectionView setBackgroundColor:[UIColor whiteColor]];
+        [_collectionView registerClass:[JAOrderItemCollectionViewCell class] forCellWithReuseIdentifier:@"CellWithLines"];
+    }
+    return _collectionView;
+}
+
+- (JAProductCollectionViewFlowLayout *)collectionViewFlowLayout
+{
+    if (!VALID_NOTEMPTY(_collectionViewFlowLayout, JAProductCollectionViewFlowLayout)) {
+        
+        _collectionViewFlowLayout = [[JAProductCollectionViewFlowLayout alloc] init];
+        _collectionViewFlowLayout.minimumLineSpacing = 1.0f;
+        _collectionViewFlowLayout.minimumInteritemSpacing = 0.f;
+        [_collectionViewFlowLayout registerClass:[JACollectionSeparator class] forDecorationViewOfKind:@"horizontalSeparator"];
+        [_collectionViewFlowLayout registerClass:[JACollectionSeparator class] forDecorationViewOfKind:@"verticalSeparator"];
+        
+        //                                              top, left, bottom, right
+        [_collectionViewFlowLayout setSectionInset:UIEdgeInsetsMake(0.f, 0.0, 0.0, 0.0)];
+        _collectionViewFlowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+    }
+    return _collectionViewFlowLayout;
+}
+
+- (void)setupWithOrder:(RITrackOrder*)order frame:(CGRect)frame
+{
+    self.order = order;
+    [self setFrame:frame];
+    if (!VALID(self.myOrderResumeView.superview, JAMyOrderResumeView)) {
+        [self addSubview:self.myOrderResumeView];
+    }
+    if (!VALID(self.itemsHeader.superview, UIView)) {
+        [self addSubview:self.itemsHeader];
+    }
+    if (!VALID(self.collectionView.superview, UIView)) {
+        [self addSubview:self.collectionView];
+    }
+    [self.myOrderResumeView setOrder:order];
+    [self.collectionView reloadData];
+}
+
+#pragma mark - collectionView
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGSize size = CGSizeMake(self.width, 117.f);
+    
+    self.collectionViewFlowLayout.itemSize = size;
+    return size;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    JAOrderItemCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"CellWithLines" forIndexPath:indexPath];
+    RIItemCollection *item = [self.order.itemCollection objectAtIndex:indexPath.row];
+    [cell setTag:indexPath.row];
+    [cell.reorderButton addTarget:self action:@selector(addToCart:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.feedbackView addTarget:self action:@selector(itemClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [cell setItem:item];
+    return cell;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    if (VALID(self.order, RITrackOrder)) {
+        return self.order.itemCollection.count;
+    }
+    return 0;
+}
+
+- (void)itemClicked:(UIButton *)button
+{
+    RIItemCollection *item = [self.order.itemCollection objectAtIndex:button.tag];
+    
+    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+    [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"show_back_button"];
+    [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"fromCatalog"];
+    [userInfo setObject:self forKey:@"delegate"];
+    if(VALID_NOTEMPTY(item.sku, NSString))
+    {
+        NSString *sku = [[item.sku componentsSeparatedByString:@"-"] firstObject];
+        [userInfo setObject:sku forKey:@"sku"];
     }
     
-    return currentY;
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                        object:nil
+                                                      userInfo:userInfo];
+}
+
+- (void)addToCart:(UIButton *)button
+{
+    if (!self.parent) {
+        return;
+    }
+    RIItemCollection *item = [self.order.itemCollection objectAtIndex:button.tag];
+    [self.parent showLoading];
+    if(VALID_NOTEMPTY(item.sku, NSString))
+    [RICart addProductWithQuantity:@"1"
+                         simpleSku:item.sku
+                  withSuccessBlock:^(RICart *cart, RIApiResponse apiResponse, NSArray *successMessage) {
+                      NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
+                      [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
+                      [self.parent onSuccessResponse:RIApiResponseTimeOut messages:successMessage showMessage:YES];
+                      [self.parent hideLoading];
+                  } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+                      [self.parent onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
+                      [self.parent hideLoading];
+                  }];
 }
 
 @end

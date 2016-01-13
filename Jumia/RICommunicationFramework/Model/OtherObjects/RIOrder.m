@@ -11,13 +11,191 @@
 
 @implementation RIStatus
 
++ (RIStatus *)parseStatus:(NSDictionary *)json
+{
+    RIStatus *status = [[RIStatus alloc] init];
+    
+    if(VALID_NOTEMPTY(json, NSDictionary))
+    {
+        if ([json objectForKey:@"label"]) {
+            status.itemStatus = [json objectForKey:@"label"];
+        }
+        
+        if ([json objectForKey:@"updated_at"]) {
+            status.lastChangeStatus = [json objectForKey:@"updated_at"];
+        }
+    }
+    
+    return status;
+}
+
 @end
 
 @implementation RIItemCollection
 
++ (RIItemCollection *)parseItemCollection:(NSDictionary *)json country:(RICountryConfiguration*)country
+{
+    RIItemCollection *item = [[RIItemCollection alloc] init];
+    
+    if (VALID([json objectForKey:@"sku"], NSString)) {
+        item.sku = [json objectForKey:@"sku"];
+    }
+    
+    if (VALID([json objectForKey:@"brand"], NSString)) {
+        item.brand = [json objectForKey:@"brand"];
+    }
+    
+    if (VALID([json objectForKey:@"name"], NSString)) {
+        item.name = [json objectForKey:@"name"];
+    }
+    
+    if (VALID([json objectForKey:@"quantity"], NSNumber)) {
+        item.quantity = [json objectForKey:@"quantity"];
+    }
+    
+    if (VALID([json objectForKey:@"image"], NSString)) {
+        item.imageURL = [json objectForKey:@"image"];
+    }
+    
+    if (VALID([json objectForKey:@"delivery"], NSString)) {
+        item.delivery = [json objectForKey:@"delivery"];
+    }
+    
+    if (VALID([json objectForKey:@"status"], NSDictionary)) {
+        NSDictionary *tempDict = [json objectForKey:@"status"];
+        RIStatus *status = [RIStatus parseStatus:tempDict];
+        item.statusLabel = status.itemStatus;
+        item.statusDate = status.lastChangeStatus;
+    }
+    
+    if(VALID_NOTEMPTY([json objectForKey:@"price"], NSString))
+    {
+        NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+        f.numberStyle = NSNumberFormatterDecimalStyle;
+        item.total = [f numberFromString:[json objectForKey:@"price"]];
+        
+        item.totalFormatted = [RICountryConfiguration formatPrice:item.total country:country];
+    }
+    
+    return item;
+}
+
 @end
 
 @implementation RITrackOrder
+
+#pragma mark - Track order parsers
+
++ (RITrackOrder *)parseDetailedTrackOrder:(NSDictionary *)json country:(RICountryConfiguration*)country
+{
+    RITrackOrder *trackOrder = [[RITrackOrder alloc] init];
+    
+    if ([json objectForKey:@"order_number"]) {
+        trackOrder.orderId = [json objectForKey:@"order_number"];
+    }
+    
+    if ([json objectForKey:@"creation_date"]) {
+        trackOrder.creationDate = [json objectForKey:@"creation_date"];
+    }
+    
+    if(VALID_NOTEMPTY([json objectForKey:@"date"], NSString))
+    {
+        trackOrder.lastOrderUpdate = [json objectForKey:@"date"];
+    }
+    
+    if(VALID_NOTEMPTY([json objectForKey:@"payment"], NSDictionary))
+    {
+        NSDictionary *paymentObject = [json objectForKey:@"payment"];
+        if(VALID_NOTEMPTY([paymentObject objectForKey:@"title"], NSString))
+        {
+            trackOrder.paymentMethod = [paymentObject objectForKey:@"title"];
+        }
+        if(VALID_NOTEMPTY([paymentObject objectForKey:@"label"], NSString))
+        {
+            trackOrder.paymentMethod = [paymentObject objectForKey:@"label"];
+        }
+        
+        // WebPAY
+        if(VALID_NOTEMPTY([paymentObject objectForKey:@"transaction_description"], NSString))
+        {
+            trackOrder.paymentDescription = [paymentObject objectForKey:@"transaction_description"];
+        }
+        // GlobalPay
+        else if(VALID_NOTEMPTY([paymentObject objectForKey:@"status_description"], NSString))
+        {
+            trackOrder.paymentDescription = [paymentObject objectForKey:@"status_description"];
+        }
+        
+        // WebPAY
+        if(VALID_NOTEMPTY([paymentObject objectForKey:@"transaction_reference"], NSString))
+        {
+            trackOrder.paymentReference = [paymentObject objectForKey:@"transaction_reference"];
+        }
+        // GlobalPay
+        else if(VALID_NOTEMPTY([paymentObject objectForKey:@"txnref"], NSString))
+        {
+            trackOrder.paymentReference = [paymentObject objectForKey:@"txnref"];
+        }
+    }
+    
+    if (VALID_NOTEMPTY([json objectForKey:@"products"], NSArray)) {
+        NSArray *tempArray = [json objectForKey:@"products"];
+        
+        NSMutableArray *itemArray = [NSMutableArray new];
+        
+        for (NSDictionary *productJson in tempArray) {
+            [itemArray addObject:[RIItemCollection parseItemCollection:productJson country:country]];
+        }
+        
+        trackOrder.itemCollection = [itemArray copy];
+    }
+    
+    if(VALID_NOTEMPTY([json objectForKey:@"grand_total"], NSString))
+    {
+        trackOrder.total = [json objectForKey:@"grand_total"];
+        
+        NSNumber *totalNumber = [NSNumber numberWithFloat:[trackOrder.total floatValue]];
+        trackOrder.totalFormatted = [RICountryConfiguration formatPrice:totalNumber country:country];
+    }
+    
+    
+    if (VALID_NOTEMPTY([json objectForKey:@"billing_address"], NSDictionary))
+    {
+        trackOrder.billingAddress = [RIAddress parseAddress:[json objectForKey:@"billing_address"]];
+    }
+    
+    if (VALID_NOTEMPTY([json objectForKey:@"shipping_address"], NSDictionary))
+    {
+        trackOrder.shippingAddress = [RIAddress parseAddress:[json objectForKey:@"shipping_address"]];
+    }
+    
+    return trackOrder;
+}
+
++ (RITrackOrder *)parseTrackOrder:(NSDictionary *)json country:(RICountryConfiguration*)country
+{
+    RITrackOrder *trackOrder = [[RITrackOrder alloc] init];
+    
+    if(VALID_NOTEMPTY([json objectForKey:@"number"], NSString))
+    {
+        trackOrder.orderId = [json objectForKey:@"number"];
+    }
+    
+    if(VALID_NOTEMPTY([json objectForKey:@"date"], NSString))
+    {
+        trackOrder.creationDate = [json objectForKey:@"date"];
+    }
+    
+    if(VALID_NOTEMPTY([json objectForKey:@"total"], NSString))
+    {
+        trackOrder.total = [json objectForKey:@"total"];
+        
+        NSNumber *totalNumber = [NSNumber numberWithFloat:[trackOrder.total floatValue]];
+        trackOrder.totalFormatted = [RICountryConfiguration formatPrice:totalNumber country:country];
+    }
+    
+    return trackOrder;
+}
 
 @end
 
@@ -192,7 +370,7 @@
                                    
                                    NSDictionary *dic = [jsonObject objectForKey:@"metadata"];
                                    
-                                   successBlock([RIOrder parseTrackOrder:dic country:configuration]);
+                                   successBlock([RITrackOrder parseDetailedTrackOrder:dic country:configuration]);
                                } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                    failureBlock(RIApiResponseUnknownError, nil);
                                }];
@@ -227,170 +405,11 @@
     
     for(NSDictionary *orderObject in ordersListObject)
     {
-        RITrackOrder *trackOrder = [RIOrder parseTrackOrder:orderObject country:country];
+        RITrackOrder *trackOrder = [RITrackOrder parseTrackOrder:orderObject country:country];
         [ordersList addObject:trackOrder];
     }
     
     return [ordersList copy];
-}
-
-#pragma mark - Track order parsers
-
-+ (RITrackOrder *)parseTrackOrder:(NSDictionary *)json country:(RICountryConfiguration*)country
-{
-    RITrackOrder *trackOrder = [[RITrackOrder alloc] init];
-    
-    // Track order
-    if ([json objectForKey:@"order_id"]) {
-        trackOrder.orderId = [json objectForKey:@"order_id"];
-    }
-    // Order list
-    else if(VALID_NOTEMPTY([json objectForKey:@"number"], NSString))
-    {
-        trackOrder.orderId = [json objectForKey:@"number"];
-    }
-    
-    // Track order
-    if ([json objectForKey:@"creation_date"]) {
-        trackOrder.creationDate = [json objectForKey:@"creation_date"];
-    }
-    // Order list
-    else if(VALID_NOTEMPTY([json objectForKey:@"date"], NSString))
-    {
-        trackOrder.creationDate = [json objectForKey:@"date"];
-    }
-    
-    // Track order
-    if ([json objectForKey:@"last_order_update"]) {
-        trackOrder.lastOrderUpdate = [json objectForKey:@"last_order_update"];
-    }
-    
-    // Track order
-    if ([json objectForKey:@"payment_method"]) {
-        trackOrder.paymentMethod = [json objectForKey:@"payment_method"];
-    }
-    // Order list
-    else if(VALID_NOTEMPTY([json objectForKey:@"payment"], NSDictionary))
-    {
-        NSDictionary *paymentObject = [json objectForKey:@"payment"];
-        if(VALID_NOTEMPTY([paymentObject objectForKey:@"title"], NSString))
-        {
-            trackOrder.paymentMethod = [paymentObject objectForKey:@"title"];
-        }
-        
-        // WebPAY
-        if(VALID_NOTEMPTY([paymentObject objectForKey:@"transaction_description"], NSString))
-        {
-            trackOrder.paymentDescription = [paymentObject objectForKey:@"transaction_description"];
-        }
-        // GlobalPay
-        else if(VALID_NOTEMPTY([paymentObject objectForKey:@"status_description"], NSString))
-        {
-            trackOrder.paymentDescription = [paymentObject objectForKey:@"status_description"];
-        }
-        
-        // WebPAY
-        if(VALID_NOTEMPTY([paymentObject objectForKey:@"transaction_reference"], NSString))
-        {
-            trackOrder.paymentReference = [paymentObject objectForKey:@"transaction_reference"];
-        }
-        // GlobalPay
-        else if(VALID_NOTEMPTY([paymentObject objectForKey:@"txnref"], NSString))
-        {
-            trackOrder.paymentReference = [paymentObject objectForKey:@"txnref"];
-        }
-    }
-    
-    // Track order
-    if ([json objectForKey:@"item_collection"]) {
-        NSDictionary *tempDic = [json objectForKey:@"item_collection"];
-        
-        NSMutableArray *itemArray = [NSMutableArray new];
-        
-        for (NSString *string in tempDic) {
-            NSDictionary *temp = [tempDic objectForKey:string];
-            [itemArray addObject:[RIOrder parseItemCollection:temp country:country]];
-        }
-        
-        trackOrder.itemCollection = [itemArray copy];
-    }
-    // Order list
-    else if ([json objectForKey:@"products"]) {
-        NSArray *productsObject = [json objectForKey:@"products"];
-        
-        NSMutableArray *itemArray = [NSMutableArray new];
-        
-        for (NSDictionary *productObject in productsObject) {
-            [itemArray addObject:[RIOrder parseItemCollection:productObject country:country]];
-        }
-        
-        trackOrder.itemCollection = [itemArray copy];
-    }
-    
-    if(VALID_NOTEMPTY([json objectForKey:@"total"], NSString))
-    {
-        trackOrder.total = [json objectForKey:@"total"];
-        
-        NSNumber *totalNumber = [NSNumber numberWithFloat:[trackOrder.total floatValue]];
-        trackOrder.totalFormatted = [RICountryConfiguration formatPrice:totalNumber country:country];
-    }
-    
-    return trackOrder;
-}
-
-+ (RIItemCollection *)parseItemCollection:(NSDictionary *)json country:(RICountryConfiguration*)country
-{
-    RIItemCollection *item = [[RIItemCollection alloc] init];
-    
-    if ([json objectForKey:@"sku"]) {
-        item.sku = [json objectForKey:@"sku"];
-    }
-    
-    if ([json objectForKey:@"name"]) {
-        item.name = [json objectForKey:@"name"];
-    }
-    
-    if ([json objectForKey:@"quantity"]) {
-        item.quantity = [json objectForKey:@"quantity"];
-    }
-    
-    if ([json objectForKey:@"status"]) {
-        NSArray *tempArray = [json objectForKey:@"status"];
-        
-        NSMutableArray *statusArray = [NSMutableArray new];
-        
-        for (NSDictionary *dic in tempArray) {
-            [statusArray addObject:[RIOrder parseStatus:dic]];
-        }
-        
-        item.status = [statusArray copy];
-    }
-    
-    if(VALID_NOTEMPTY([json objectForKey:@"total"], NSNumber))
-    {
-        item.total = [json objectForKey:@"total"];
-        item.totalFormatted = [RICountryConfiguration formatPrice:item.total country:country];
-    }
-    
-    return item;
-}
-
-+ (RIStatus *)parseStatus:(NSDictionary *)json
-{
-    RIStatus *status = [[RIStatus alloc] init];
-    
-    if(VALID_NOTEMPTY(json, NSDictionary))
-    {
-        if ([json objectForKey:@"item_status"]) {
-            status.itemStatus = [json objectForKey:@"item_status"];
-        }
-        
-        if ([json objectForKey:@"last_status_change"]) {
-            status.lastChangeStatus = [json objectForKey:@"last_status_change"];
-        }
-    }
-    
-    return status;
 }
 
 @end
