@@ -56,6 +56,7 @@
 /**
  * Method to show error view or to show error message under navigation bar 
  */
+- (void)onErrorResponse:(RIApiResponse)apiResponse messages:(NSArray *)errorMessages showAsMessage:(BOOL)showAsMessage target:(id)target selector:(SEL)selector objects:(NSArray *)objects;
 - (void)onErrorResponse:(RIApiResponse)apiResponse messages:(NSArray *)errorMessages showAsMessage:(BOOL)showAsMessage selector:(SEL)selector objects:(NSArray *)objects;
 
 /**

@@ -9,7 +9,7 @@
 #import "JAMyOrdersViewController.h"
 #import "JAMyOrderDetailView.h"
 #import "JAMyOrderCell.h"
-#import "JACollectionHeaderView.h"
+#import "JAProductInfoHeaderLine.h"
 #import "RIOrder.h"
 #import "RICustomer.h"
 
@@ -31,6 +31,9 @@ UITextFieldDelegate,
 UICollectionViewDataSource,
 UICollectionViewDelegate,
 UICollectionViewDelegateFlowLayout>
+{
+    NSInteger _selectedCellIndex;
+}
 
 
 @property (strong, nonatomic) NSMutableArray *orders;
@@ -46,6 +49,7 @@ UICollectionViewDelegateFlowLayout>
 
 
 // Order history
+@property (nonatomic) JAProductInfoHeaderLine *ordersHistoryHeader;
 @property (strong, nonatomic) UICollectionView *ordersCollectionView;
 
 // Detail should only show on IPad landscape
@@ -61,6 +65,16 @@ UICollectionViewDelegateFlowLayout>
 @implementation JAMyOrdersViewController
 
 #pragma mark init
+
+- (JAProductInfoHeaderLine *)ordersHistoryHeader
+{
+    if (!VALID(_ordersHistoryHeader, JAProductInfoHeaderLine)) {
+        _ordersHistoryHeader = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, self.viewBounds.origin.y, self.view.width, kProductInfoHeaderLineHeight)];
+        [_ordersHistoryHeader setTitle:STRING_MY_ORDER_HISTORY];
+        [self.view addSubview:_ordersHistoryHeader];
+    }
+    return _ordersHistoryHeader;
+}
 
 -(UIView *)emptyOrderHistoryView {
     if (!VALID_NOTEMPTY(_emptyOrderHistoryView, UIView)) {
@@ -118,12 +132,11 @@ UICollectionViewDelegateFlowLayout>
         [ordersCollectionViewFlowLayout setMinimumInteritemSpacing:0.0f];
         [ordersCollectionViewFlowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
         [ordersCollectionViewFlowLayout setItemSize:CGSizeZero];
-        [ordersCollectionViewFlowLayout setHeaderReferenceSize:CGSizeMake(self.viewBounds.size.width, kCollectionViewHeaderHeight)];
         
         _ordersCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(self.viewBounds.origin.x,
-                                                                                   self.viewBounds.origin.y + kTopSeparatorHight,
+                                                                                   CGRectGetMaxY(self.ordersHistoryHeader.frame),
                                                                                    self.viewBounds.size.width,
-                                                                                   self.viewBounds.size.height - kTopSeparatorHight)
+                                                                                   self.viewBounds.size.height - CGRectGetMaxY(self.ordersHistoryHeader.frame))
                                                    collectionViewLayout: ordersCollectionViewFlowLayout];
         [_ordersCollectionView setBackgroundColor:UIColorFromRGB(0xffffff)];
         
@@ -150,6 +163,7 @@ UICollectionViewDelegateFlowLayout>
 -(JAMyOrderDetailView *)orderDetailsView {
     if (!VALID_NOTEMPTY(_orderDetailsView,JAMyOrderDetailView)) {
         _orderDetailsView = [JAMyOrderDetailView new];
+        [_orderDetailsView setParent:self];
         [_orderDetailsView setHidden:YES];
         [self.orderDetailsScrollView addSubview:_orderDetailsView];
     }
@@ -173,10 +187,6 @@ UICollectionViewDelegateFlowLayout>
     self.screenName = @"MyOrders";
     
     [[RITrackingWrapper sharedInstance] trackScreenWithName:self.screenName];
-    
-    [self.ordersCollectionView registerClass:[JACollectionHeaderView class]
-                 forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-                        withReuseIdentifier:@"orderHeader"];
     
     [self.ordersCollectionView registerClass:[JAMyOrderCell class] forCellWithReuseIdentifier:@"myOrderCell"];
     
@@ -290,7 +300,8 @@ UICollectionViewDelegateFlowLayout>
     }
     
     if (RI_IS_RTL) {
-        [self.view flipAllSubviews];
+        [self.ordersHistoryHeader setFrame:self.ordersHistoryHeader.frame];
+        [self.ordersHistoryHeader flipAllSubviews];
     }
 }
 
@@ -325,10 +336,11 @@ UICollectionViewDelegateFlowLayout>
     if ((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
         width = width/2 - 1.f;
     }
+    [self.ordersHistoryHeader setWidth:width];
     [self.ordersCollectionView setFrame:CGRectMake(self.viewBounds.origin.x,
-                                                   self.viewBounds.origin.y+kTopSeparatorHight,
+                                                   CGRectGetMaxY(self.ordersHistoryHeader.frame),
                                                    width, 
-                                                   self.viewBounds.size.height-kTopSeparatorHight)];
+                                                   self.viewBounds.size.height-CGRectGetMaxY(self.ordersHistoryHeader.frame))];
     [self.ordersCollectionView reloadData];
 }
 
@@ -339,11 +351,12 @@ UICollectionViewDelegateFlowLayout>
         if (VALID_NOTEMPTY(self.selectedOrderIndexPath,NSIndexPath)) {
             
             [self.orderDetailsScrollView setHidden: NO];
-            [self.orderDetailsScrollView setFrame:CGRectMake(self.viewBounds.size.width/2, self.viewBounds.origin.y+kTopSeparatorHight,
-                                                            self.viewBounds.size.width/2, self.viewBounds.size.height-kTopSeparatorHight)];
+            [self.orderDetailsScrollView setFrame:CGRectMake(self.viewBounds.size.width/2, self.viewBounds.origin.y,
+                                                            self.viewBounds.size.width/2, self.viewBounds.size.height)];
             if (VALID_NOTEMPTY(self.trackingOrder,RITrackOrder)) {
-                
-                [self.orderDetailsView setupWithOrder:self.trackingOrder maxWidth:self.viewBounds.size.width/2 allowsFlip:NO];
+                CGRect frame = self.viewBounds;
+                frame.size.width = self.viewBounds.size.width/2;
+                [self.orderDetailsView setupWithOrder:self.trackingOrder frame:frame];
                 [self.orderDetailsView setHidden:NO];
             }
         }
@@ -356,17 +369,6 @@ UICollectionViewDelegateFlowLayout>
 
 #pragma mark UICollectionViewDelegateFlowLayout
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
-{
-    CGSize referenceSizeForHeaderInSection = CGSizeZero;
-    if(collectionView == self.ordersCollectionView)
-    {
-        referenceSizeForHeaderInSection = CGSizeMake(self.ordersCollectionView.frame.size.width, kCollectionViewHeaderHeight);
-    }
-    
-    return referenceSizeForHeaderInSection;
-}
-
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CGSize sizeForItemAtIndexPath = CGSizeZero;
@@ -378,23 +380,6 @@ UICollectionViewDelegateFlowLayout>
 }
 
 #pragma mark UICollectionViewDataSource
-
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-{
-    UICollectionReusableView *reusableview = [[UICollectionReusableView alloc] init];
-    if (kind == UICollectionElementKindSectionHeader) {
-        JACollectionHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"orderHeader" forIndexPath:indexPath];
-        
-        if(collectionView == self.ordersCollectionView)
-        {
-            [headerView loadHeaderWithText:STRING_MY_ORDER_HISTORY width:self.ordersCollectionView.frame.size.width height:kCollectionViewHeaderHeight];
-        }
-        
-        reusableview = headerView;
-    }
-    
-    return reusableview;
-}
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
@@ -432,7 +417,11 @@ UICollectionViewDelegateFlowLayout>
             
             [myOrderCell.clickableView setTag:indexPath.row];
             [myOrderCell.clickableView addTarget:self action:@selector(selectedOrder:) forControlEvents:UIControlEventTouchUpInside];
-            
+            if (_selectedCellIndex == indexPath.row && (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+                [myOrderCell.clickableView setSelected:YES];
+            }else{
+                [myOrderCell.clickableView setSelected:NO];
+            }
             cell = myOrderCell;
         }
     }
@@ -441,28 +430,32 @@ UICollectionViewDelegateFlowLayout>
 
 #pragma mark Actions
 
-- (void)selectedOrder:(id)sender
+- (void)selectedOrder:(UIButton *)sender
 {
-    JAClickableView *clickableView = sender;
-    NSInteger tag = clickableView.tag;
-    self.selectedOrderIndexPath = [NSIndexPath indexPathForRow:tag inSection:0];
-
-    if ((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
-        
-        [self loadOrderDetails];
-        
-    } else {
-        
-        
-        NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
-
-        [userInfo setObject:[self.orders objectAtIndex:tag] forKey:@"order"];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowMyOrderDetailScreenNotification object:nil userInfo:userInfo];
+    if (sender.tag == _selectedCellIndex && (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+        return;
+    }
+    _selectedCellIndex = sender.tag;
+    if (self.selectedOrderIndexPath.row == [NSIndexPath indexPathForRow:_selectedCellIndex inSection:0].row) {
+        if (!UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+            [self gotoDetails:_selectedCellIndex];
+        }
+        return;
+    }
+    self.selectedOrderIndexPath = [NSIndexPath indexPathForRow:_selectedCellIndex inSection:0];
+    
+    [self loadOrderDetails];
+    if (!((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))) {
+        [self gotoDetails:_selectedCellIndex];
     }
 }
 
-
+- (void)gotoDetails:(NSInteger)tag
+{
+    NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
+    [userInfo setObject:[self.orders objectAtIndex:tag] forKey:@"order"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowMyOrderDetailScreenNotification object:nil userInfo:userInfo];
+}
 
 
 

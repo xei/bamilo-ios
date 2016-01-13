@@ -152,7 +152,17 @@
     }
     [self setForRTL:self.priceLine];
     
+    
+    CGRect shopFirstRect = CGRectMake(distXAfterImage, CGRectGetMaxY(self.priceLine.frame) + 6.f, self.shopFirstImageView.frame.size.width, self.shopFirstImageView.frame.size.height);
+    if (!CGRectEqualToRect(shopFirstRect, self.self.shopFirstImageView.frame)) {
+        [self.shopFirstImageView setFrame:shopFirstRect];
+        [self setForRTL:self.shopFirstImageView];
+    }
+    
     CGRect ratingRect = CGRectMake(distXAfterImage, CGRectGetMaxY(self.priceLine.frame) + 6.f, self.width - 2*distXAfterImage, self.ratingLine.imageHeight);
+    if (NO == self.shopFirstImageView.hidden) {
+        ratingRect = CGRectMake(ratingRect.origin.x, CGRectGetMaxY(shopFirstRect) + 6.f, ratingRect.size.width, ratingRect.size.height);
+    }
     if (!CGRectEqualToRect(ratingRect, self.ratingLine.frame)) {
         [self.ratingLine setFrame:ratingRect];
     }

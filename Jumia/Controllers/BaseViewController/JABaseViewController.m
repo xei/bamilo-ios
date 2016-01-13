@@ -340,7 +340,7 @@
     self.searchBar.barTintColor = JANavBarBackgroundGrey;
     self.searchBar.placeholder = STRING_SEARCH_PLACEHOLDER;
     self.searchBar.showsCancelButton = NO;
-
+    
     
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTintColor:[UIColor orangeColor]];
     
@@ -451,7 +451,7 @@
     self.searchResultsView.delegate = self;
     [self.view addSubview:self.searchResultsView];
     [self.searchResultsView setSearchText:@""];
-
+    
     [self.searchBarBackButton addTarget:self.searchResultsView action:@selector(popSearchResults) forControlEvents:UIControlEventTouchUpInside];
     
     return YES;
@@ -561,37 +561,47 @@
 
 - (void)onErrorResponse:(RIApiResponse)apiResponse messages:(NSArray *)errorMessages showAsMessage:(BOOL)showAsMessage selector:(SEL)selector objects:(NSArray *)objects
 {
+    [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:showAsMessage target:self selector:selector objects:objects];
+}
+
+- (void)onErrorResponse:(RIApiResponse)apiResponse messages:(NSArray *)errorMessages showAsMessage:(BOOL)showAsMessage target:(id)target selector:(SEL)selector objects:(NSArray *)objects
+{
     [self removeErrorView];
     if (RIApiResponseMaintenancePage == apiResponse) {
-        [self showMaintenancePage:selector objects:objects];
+        [self showMaintenancePage:target selector:selector objects:objects];
     }
     else if(RIApiResponseKickoutView == apiResponse)
     {
-        [self showKickoutView:selector objects:objects];
+        [self showKickoutView:target selector:selector objects:objects];
     }
     else if (RIApiResponseNoInternetConnection == apiResponse)
     {
         if (showAsMessage) {
             [self showMessage:STRING_NO_CONNECTION success:NO];
         }else{
-            [self showErrorView:YES startingY:self.viewBounds.origin.y selector:selector objects:objects];
+            [self showErrorView:YES startingY:self.viewBounds.origin.y target:target selector:selector objects:objects];
         }
     }else if (showAsMessage) {
         [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
     }else{
-        [self showErrorView:NO startingY:self.viewBounds.origin.y selector:selector objects:objects];
+        [self showErrorView:NO startingY:self.viewBounds.origin.y target:target selector:selector objects:objects];
     }
 }
 
 - (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray *)objects {
+    [self showErrorView:isNoInternetConnection startingY:startingY target:self selector:selector objects:objects];
+}
+
+- (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY target:(id)target selector:(SEL)selector objects:(NSArray *)objects {
+    
     if (VALID_NOTEMPTY(self.noConnectionView, JANoConnectionView)) {
-//        [self.noConnectionView removeFromSuperview];
+        //        [self.noConnectionView removeFromSuperview];
         
     }else{
         self.noConnectionView = [JANoConnectionView getNewJANoConnectionViewWithFrame:self.viewBounds];
         
         // This is to avoid a retain cycle
-        __block JABaseViewController *viewController = self;
+        __block id viewController = target;
         [self.noConnectionView setRetryBlock: ^(BOOL dismiss)
          {
              if ([viewController respondsToSelector:selector]) {
@@ -615,9 +625,9 @@
     [self.noConnectionView setupNoConnectionViewForNoInternetConnection:isNoInternetConnection];
     
     _noConnectionViewFrame = CGRectMake(0.0f,
-                                              0.0f,
-                                              [[UIScreen mainScreen] bounds].size.width,
-                                              [[UIScreen mainScreen] bounds].size.height);
+                                        0.0f,
+                                        [[UIScreen mainScreen] bounds].size.width,
+                                        [[UIScreen mainScreen] bounds].size.height);
     
     if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
         if (_noConnectionViewFrame.size.width > _noConnectionViewFrame.size.height) {
@@ -646,12 +656,12 @@
     self.noConnectionView = nil;
 }
 
-- (void)showMaintenancePage:(SEL)selector objects:(NSArray *)objects {
+- (void)showMaintenancePage:(id)target selector:(SEL)selector objects:(NSArray *)objects {
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
     
     self.maintenancePage = [JAMaintenancePage getNewJAMaintenancePage];
     [self.maintenancePage setupMaintenancePage:window.frame orientation:self.interfaceOrientation];
-    __block JABaseViewController *viewController = self;
+    __block id viewController = target;
     [self.maintenancePage setRetryBlock: ^(BOOL dismiss)
      {
          if ([viewController respondsToSelector:selector]) {
@@ -689,13 +699,13 @@
     }
 }
 
-- (void)showKickoutView:(SEL)selector objects:(NSArray *)objects {
+- (void)showKickoutView:(id)target selector:(SEL)selector objects:(NSArray *)objects {
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
     
     self.kickoutView = [[JAKickoutView alloc] init];
     [self.kickoutView setupKickoutView:window.frame orientation:self.interfaceOrientation];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
-    __block JABaseViewController *viewController = self;
+    __block id viewController = target;
     [self.kickoutView setRetryBlock: ^(BOOL dismiss)
      {
          if ([viewController respondsToSelector:selector]) {
