@@ -278,18 +278,6 @@
                                  nameLabel.frame.size.height);
     [itemCell addSubview:nameLabel];
     
-    UILabel* quantityLabel = [UILabel new];
-    quantityLabel.textAlignment = NSTextAlignmentLeft;
-    quantityLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-    quantityLabel.textColor = UIColorFromRGB(0x666666);
-    quantityLabel.text = [NSString stringWithFormat:STRING_QUANTITY, cartItem.quantity];
-    [quantityLabel sizeToFit];
-    quantityLabel.frame = CGRectMake(nameLabel.frame.origin.x,
-                                     CGRectGetMaxY(nameLabel.frame) + 5.0f,
-                                     nameLabel.frame.size.width,
-                                     quantityLabel.frame.size.height);
-    [itemCell addSubview:quantityLabel];
-    
     UILabel* priceLabel = [UILabel new];
     priceLabel.textAlignment = NSTextAlignmentLeft;
     priceLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
@@ -300,10 +288,11 @@
     }
     [priceLabel sizeToFit];
     priceLabel.frame = CGRectMake(nameLabel.frame.origin.x,
-                                  CGRectGetMaxY(quantityLabel.frame),
+                                  CGRectGetMaxY(nameLabel.frame),
                                   nameLabel.frame.size.width,
                                   priceLabel.frame.size.height);
     [itemCell addSubview:priceLabel];
+    CGFloat sizeLabelY = CGRectGetMaxY(priceLabel.frame);
     
     if ([cartItem.shopFirst boolValue]){
         UIImageView *shopFirstLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shop_first_logo"]];
@@ -312,6 +301,7 @@
         [shopFirstLogo setY:CGRectGetMaxY(priceLabel.frame) + 2.0f];
         [shopFirstLogo setHidden:NO];
         [itemCell addSubview:shopFirstLogo];
+        sizeLabelY = CGRectGetMaxY(shopFirstLogo.frame);
     }
 
     UILabel* sizeLabel = [UILabel new];
@@ -321,10 +311,20 @@
     sizeLabel.text = cartItem.variation;
     [sizeLabel sizeToFit];
     sizeLabel.frame = CGRectMake(nameLabel.frame.origin.x,
-                                 CGRectGetMaxY(priceLabel.frame),
+                                 sizeLabelY,
                                  nameLabel.frame.size.width,
                                  sizeLabel.frame.size.height);
     [itemCell addSubview:sizeLabel];
+    
+    UILabel* quantityLabel = [UILabel new];
+    quantityLabel.textAlignment = NSTextAlignmentLeft;
+    quantityLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
+    quantityLabel.textColor = UIColorFromRGB(0x666666);
+    quantityLabel.text = [NSString stringWithFormat:STRING_QUANTITY, cartItem.quantity];
+    [quantityLabel sizeToFit];
+    [quantityLabel setX:itemCell.bounds.size.width - quantityLabel.width - 8.0f];
+    [quantityLabel setY:CGRectGetMaxY(nameLabel.frame) + 45.0f];
+    [itemCell addSubview:quantityLabel];
 }
 
 - (void)placeGreySeparatorInContentView:(UIView*)contentView
