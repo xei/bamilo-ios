@@ -124,10 +124,10 @@
     
     [self.nameLabel setX:96.f];
     [self.nameLabel setWidth:self.width - 120.f];
+    [self.nameLabel setNumberOfLines:1];
     self.nameLabel.font = [UIFont fontWithName:kFontLightName size:self.nameLabel.font.pointSize];
     self.nameLabel.text = cartItem.name;
     self.nameLabel.textColor = UIColorFromRGB(0x666666);
-    [self.nameLabel sizeToFit];
     
     [self.priceView removeFromSuperview];
     self.priceView = [[JAPriceView alloc] init];
@@ -136,18 +136,20 @@
                          fontSize:10.0f
             specialPriceOnTheLeft:YES];
     self.priceView.frame = CGRectMake(96.0f,
-                                      34.0f,
+                                      28.0f,
                                       self.priceView.frame.size.width,
                                       self.priceView.frame.size.height);
     [self.backgroundContentView addSubview:self.priceView];
     
-    
-    
-    if ([cartItem.shopFirst boolValue])	{
+    if (VALID_NOTEMPTY(cartItem.shopFirst, NSNumber) && [cartItem.shopFirst boolValue])	{
         [self.shopFirstLogo setHidden:NO];
+        
+    } else {
+        [self.shopFirstLogo setHidden:YES];
     }
     
     [self.sizeLabel setX:96.f];
+    [self.sizeLabel setY:[self getSizeLabelPostion]];
     self.sizeLabel.font = [UIFont fontWithName:kFontLightName size:self.sizeLabel.font.pointSize];
     
     NSString *variationString = [cartItem.variation lowercaseString];
@@ -178,11 +180,19 @@
         _shopFirstLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shop_first_logo"]];
         [_shopFirstLogo sizeToFit];
         [_shopFirstLogo setX:96.0f];
-        [_shopFirstLogo setY:50.0f];
+        [_shopFirstLogo setY:44.0f];
         [_shopFirstLogo setHidden:YES];
         [_backgroundContentView addSubview:_shopFirstLogo];
     }
     return _shopFirstLogo;
+}
+
+- (CGFloat)getSizeLabelPostion
+{
+    if ([self.shopFirstLogo isHidden]) {
+        return 44.0f;
+    }
+    return 62.0f;
 }
 
 @end
