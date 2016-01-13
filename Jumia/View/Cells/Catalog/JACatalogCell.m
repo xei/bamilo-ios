@@ -143,7 +143,7 @@
     
     if (VALID_NOTEMPTY(cartItem.shopFirst, NSNumber) && [cartItem.shopFirst boolValue])	{
         [self.shopFirstLogo setHidden:NO];
-        
+        [self.shopFirstLogo setX:96.0f];
     } else {
         [self.shopFirstLogo setHidden:YES];
     }
