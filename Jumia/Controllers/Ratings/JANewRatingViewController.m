@@ -14,7 +14,7 @@
 #import "JADynamicForm.h"
 #import "JAAddRatingView.h"
 #import "RICustomer.h"
-#import "JAPriceView.h"
+#import "JAProductInfoPriceLine.h"
 #import "JAUtils.h"
 #import "RIProduct.h"
 #import <FBSDKCoreKit/FBSDKAppEvents.h>
@@ -55,7 +55,7 @@ UIAlertViewDelegate
 @property (nonatomic, strong) JADynamicForm* reviewsDynamicForm;
 @property (nonatomic, strong) UIView* reviewsContentView;
 
-@property (nonatomic, strong) JAPriceView *priceView;
+@property (nonatomic, strong) JAProductInfoPriceLine *priceLine;
 @property (assign, nonatomic) NSInteger numberOfFields;
 
 @property (assign, nonatomic) NSInteger numberOfRequests;
@@ -266,31 +266,30 @@ UIAlertViewDelegate
                                         self.view.frame.size.height)];
     [self.nameLabel sizeToFit];
     
-    if(VALID(self.priceView, JAPriceView))
+    
+    if(VALID(self.priceLine, JAProductInfoPriceLine))
     {
-        [self.priceView removeFromSuperview];
+        [self.priceLine removeFromSuperview];
     }
     
-    self.priceView = [[JAPriceView alloc] init];
-    if(RI_IS_RTL){
-    [self.priceView loadWithPrice:self.product.priceFormatted
-                     specialPrice:self.product.specialPriceFormatted
-                         fontSize:14.0f
-            specialPriceOnTheLeft:NO];
-    }
-    else{
-        [self.priceView loadWithPrice:self.product.priceFormatted
-                         specialPrice:self.product.specialPriceFormatted
-                             fontSize:14.0f
-                specialPriceOnTheLeft:YES];
-    }
-    self.priceView.frame = CGRectMake(12.0f,
-                                      CGRectGetMaxY(self.nameLabel.frame) + 4.0f,
-                                      self.priceView.frame.size.width,
-                                      self.priceView.frame.size.height);
-    [self.topView addSubview:self.priceView];
+    self.priceLine = [[JAProductInfoPriceLine alloc] initWithFrame:CGRectMake(12.0f,
+                                                                              CGRectGetMaxY(self.nameLabel.frame) + 4.0f,
+                                                                              self.topView.frame.size.width - 24.0f,
+                                                                              15)];
+    [self.priceLine setPriceSize:kPriceSizeSmall];
+    [self.priceLine setLineContentXOffset:0.f];
     
-    CGFloat topViewMinHeight = CGRectGetMaxY(self.priceView.frame);
+    [self.topView addSubview:self.priceLine];
+    
+    if (VALID_NOTEMPTY(self.product.specialPriceFormatted, NSString)) {
+        [self.priceLine setPrice:self.product.specialPriceFormatted];
+        [self.priceLine setOldPrice:self.product.priceFormatted];
+    } else {
+        [self.priceLine setPrice:self.product.priceFormatted];
+        [self.priceLine setOldPrice:nil];
+    }
+    
+    CGFloat topViewMinHeight = CGRectGetMaxY(self.priceLine.frame);
     if(topViewMinHeight < 38.0f)
     {
         topViewMinHeight = 38.0f;
