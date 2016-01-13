@@ -304,7 +304,11 @@
 
 "track_order_hint" = "Order Number";
 
+"items_in_your_order" = "Items in your order";
+
 "string_order_status" = "Order Status";
+
+"order_no" = "ORDER N.º %@";
 
 "string_loosing_order_title" = "Warning";
 
@@ -549,6 +553,8 @@
 "my_order_no_orders_label" = "You don't have yet any Orders.";
 
 "my_order_no_orders_title_label" = "No Orders";
+
+"reorder" = "Reorder";
 
 "like_us_on_facebook" = "Like us on Facebook";
 

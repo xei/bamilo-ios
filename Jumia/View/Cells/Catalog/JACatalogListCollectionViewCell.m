@@ -113,18 +113,15 @@
 {
     [super reloadViews];
     
-    CGSize imageSize = CGSizeMake(68, 85);
-    CGFloat distXImage = 32.f;
-    CGFloat distXAfterImage = imageSize.width + distXImage + 16.f;
-    CGFloat brandTextWidth = self.width - distXAfterImage - 55;
+    CGFloat distXImage = JACatalogListCellDistXImage_ipad;
+    CGFloat distXAfterImage = JACatalogListCellImageSize.width + distXImage + JACatalogListCellDistXAfterImage_ipad;
+    CGFloat brandTextWidth = self.width - distXAfterImage - JACatalogListCellBrandTextWidth_ipad;
     CGFloat textWidth = self.width - distXAfterImage - distXImage;
-    CGFloat distXRecent = 10.f;
     
     if ([UIDevice currentDevice].userInterfaceIdiom != UIUserInterfaceIdiomPad) {
-        imageSize = CGSizeMake(68, 85);
-        distXImage = 6.f;
-        distXAfterImage = imageSize.width + distXImage + 6.f;
-        brandTextWidth = self.width - distXAfterImage - 40;
+        distXImage = JACatalogListCellDistXImage;
+        distXAfterImage = JACatalogListCellImageSize.width + distXImage + JACatalogListCellDistXAfterImage;
+        brandTextWidth = self.width - distXAfterImage - JACatalogListCellBrandTextWidth;
         textWidth = self.width - distXAfterImage - distXImage;
     }
     
@@ -155,13 +152,23 @@
     }
     [self setForRTL:self.priceLine];
     
+    
+    CGRect shopFirstRect = CGRectMake(distXAfterImage, CGRectGetMaxY(self.priceLine.frame) + 6.f, self.shopFirstImageView.frame.size.width, self.shopFirstImageView.frame.size.height);
+    if (!CGRectEqualToRect(shopFirstRect, self.self.shopFirstImageView.frame)) {
+        [self.shopFirstImageView setFrame:shopFirstRect];
+        [self setForRTL:self.shopFirstImageView];
+    }
+    
     CGRect ratingRect = CGRectMake(distXAfterImage, CGRectGetMaxY(self.priceLine.frame) + 6.f, self.width - 2*distXAfterImage, self.ratingLine.imageHeight);
+    if (NO == self.shopFirstImageView.hidden) {
+        ratingRect = CGRectMake(ratingRect.origin.x, CGRectGetMaxY(shopFirstRect) + 6.f, ratingRect.size.width, ratingRect.size.height);
+    }
     if (!CGRectEqualToRect(ratingRect, self.ratingLine.frame)) {
         [self.ratingLine setFrame:ratingRect];
     }
     [self setForRTL:self.ratingLine];
     
-    CGRect productImageViewRect = CGRectMake(distXImage, 6.f, imageSize.width, imageSize.height);
+    CGRect productImageViewRect = CGRectMake(distXImage, 6.f, JACatalogListCellImageSize.width, JACatalogListCellImageSize.height);
     if (!CGRectEqualToRect(productImageViewRect, self.productImageView.frame)) {
         [self.productImageView setFrame:productImageViewRect];
         [self setForRTL:self.productImageView];
