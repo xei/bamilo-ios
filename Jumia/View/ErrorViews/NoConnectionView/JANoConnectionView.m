@@ -30,11 +30,11 @@
 
 @property (nonatomic) BOOL noConnection;
 
+@property (nonatomic, strong) void(^retryBock)(BOOL dismiss);
+
 @end
 
 @implementation JANoConnectionView
-
-void(^retryBock)(BOOL dismiss);
 
 + (JANoConnectionView *)getNewJANoConnectionViewWithFrame:(CGRect)frame
 {
@@ -213,15 +213,15 @@ void(^retryBock)(BOOL dismiss);
 {
     [self.animationView startAnimating];
     
-    if (retryBock)
+    if (self.retryBock)
     {
-        retryBock(YES);
+        self.retryBock(YES);
     }   
 }
 
 - (void)setRetryBlock:(void(^)(BOOL dismiss))completion
 {
-    retryBock = completion;
+    self.retryBock = completion;
 }
 
 @end
