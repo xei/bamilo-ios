@@ -536,7 +536,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
                       
                   } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
                       
-                      [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:nil objects:nil];
+                      [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(finishAddToCart) objects:nil];
                       [self hideLoading];
                   }];
 }

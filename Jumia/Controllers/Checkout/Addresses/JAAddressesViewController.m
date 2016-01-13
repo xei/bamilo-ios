@@ -986,7 +986,7 @@ UICollectionViewDelegateFlowLayout>
                                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutError]
                                                                                 data:[trackingDictionary copy]];
                                       
-                                      [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
+                                      [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:@selector(nextStepButtonPressed) objects:nil];
                                       [self hideLoading];
                                   }];
     } else {
@@ -1002,7 +1002,7 @@ UICollectionViewDelegateFlowLayout>
                     successBlock:^(RIApiResponse apiResponse, NSArray *successMessage) {
                         [self setDefaultBillingAddress:self.billingAddress];
                     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-                        [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
+                        [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:@selector(nextStepButtonPressed) objects:nil];
                         [self setDefaultBillingAddress:self.billingAddress];
                     }];
 }
@@ -1016,7 +1016,7 @@ UICollectionViewDelegateFlowLayout>
                         [self onSuccessResponse:apiResponse messages:successMessage showMessage:YES];
                         [self hideLoading];
                     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-                        [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
+                        [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:@selector(nextStepButtonPressed) objects:nil];
                         [self hideLoading];
                     }];
 }

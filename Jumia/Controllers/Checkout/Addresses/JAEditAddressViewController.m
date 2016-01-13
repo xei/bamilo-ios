@@ -440,7 +440,7 @@ JAPickerDelegate>
 {
     [self showLoading];
     if ([self.dynamicForm checkErrors]) {
-        [self onErrorResponse:RIApiResponseSuccess messages:@[self.dynamicForm.firstErrorInFields] showAsMessage:YES selector:nil objects:nil];
+        [self onErrorResponse:RIApiResponseSuccess messages:@[self.dynamicForm.firstErrorInFields] showAsMessage:YES selector:@selector(saveChangesButtonPressed) objects:nil];
         [self hideLoading];
         return;
     }
@@ -480,16 +480,16 @@ JAPickerDelegate>
          if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
              [self.dynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(saveChangesButtonPressed) objects:nil];
              }];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
              [self.dynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(saveChangesButtonPressed) objects:nil];
              }];
          }else{
-             [self onErrorResponse:apiResponse messages:@[STRING_ERROR_INVALID_FIELDS] showAsMessage:YES selector:nil objects:nil];
+             [self onErrorResponse:apiResponse messages:@[STRING_ERROR_INVALID_FIELDS] showAsMessage:YES selector:@selector(saveChangesButtonPressed) objects:nil];
          }
          
          self.hasErrors = NO;

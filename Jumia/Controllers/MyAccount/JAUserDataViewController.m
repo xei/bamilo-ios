@@ -279,7 +279,7 @@
     [self hideKeyboard];
     
     if ([self.userForm checkErrors]) {
-        [self onErrorResponse:RIApiResponseSuccess messages:@[self.userForm.firstErrorInFields] showAsMessage:YES selector:nil objects:nil];
+        [self onErrorResponse:RIApiResponseSuccess messages:@[self.userForm.firstErrorInFields] showAsMessage:YES selector:@selector(saveButtonPressed) objects:nil];
         [self hideLoading];
         return;
     }
@@ -292,14 +292,14 @@
     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
         if (VALID_NOTEMPTY(errorObject, NSDictionary)) {
             [self.userForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                [self onErrorResponse:RIApiResponseUnknownError messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                [self onErrorResponse:RIApiResponseUnknownError messages:@[message] showAsMessage:YES selector:@selector(saveButtonPressed) objects:nil];
             }];
         } else if(VALID_NOTEMPTY(errorObject, NSArray)) {
             [self.userForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                [self onErrorResponse:RIApiResponseUnknownError messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                [self onErrorResponse:RIApiResponseUnknownError messages:@[message] showAsMessage:YES selector:@selector(saveButtonPressed) objects:nil];
             }];
         } else {
-            [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
+            [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(saveButtonPressed) objects:nil];
         }
         [self hideLoading];
     }];
@@ -311,7 +311,7 @@
     [self hideKeyboard];
     
     if ([self.changePasswordForm checkErrors]) {
-        [self onErrorResponse:RIApiResponseSuccess messages:@[self.changePasswordForm.firstErrorInFields] showAsMessage:YES selector:nil objects:nil];
+        [self onErrorResponse:RIApiResponseSuccess messages:@[self.changePasswordForm.firstErrorInFields] showAsMessage:YES selector:@selector(changePasswordButtonPressed) objects:nil];
         [self hideLoading];
         return;
     }
@@ -325,14 +325,14 @@
      } andFailureBlock:^(RIApiResponse apiResponse, id errorObject) {
          if (VALID_NOTEMPTY(errorObject, NSDictionary)) {
              [self.changePasswordForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(changePasswordButtonPressed) objects:nil];
              }];
          } else if(VALID_NOTEMPTY(errorObject, NSArray)) {
              [self.changePasswordForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(changePasswordButtonPressed) objects:nil];
              }];
          } else {
-             [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
+             [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(changePasswordButtonPressed) objects:nil];
          }
          [self hideLoading];
      }];

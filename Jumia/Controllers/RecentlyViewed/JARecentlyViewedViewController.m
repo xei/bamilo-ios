@@ -510,7 +510,7 @@
                       
                   } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                       
-                      [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
+                      [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:@selector(finishAddToCartWithButton:) objects:@[button]];
                       [self hideLoading];
                   }];
 }
@@ -523,7 +523,7 @@
         [self hideLoading];
         self.productsDictionary = nil;
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-        [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
+        [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(clearAllButtonPressed) objects:nil];
         [self hideLoading];
     }];
 }

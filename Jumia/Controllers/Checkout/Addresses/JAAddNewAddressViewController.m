@@ -664,7 +664,7 @@ JAPickerDelegate>
 {
     [self showLoading];
     if ([self.shippingDynamicForm checkErrors]) {
-        [self onErrorResponse:RIApiResponseSuccess messages:@[self.shippingDynamicForm.firstErrorInFields] showAsMessage:YES selector:nil objects:nil];
+        [self onErrorResponse:RIApiResponseSuccess messages:@[self.shippingDynamicForm.firstErrorInFields] showAsMessage:YES selector:@selector(createAddressButtonPressed) objects:nil];
         [self hideLoading];
         return;
     }
@@ -684,7 +684,7 @@ JAPickerDelegate>
 //        }
 //    }
     if (![self.billingContentView isHidden] && [self.billingDynamicForm checkErrors]) {
-        [self onErrorResponse:RIApiResponseSuccess messages:@[self.shippingDynamicForm.firstErrorInFields] showAsMessage:YES selector:nil objects:nil];
+        [self onErrorResponse:RIApiResponseSuccess messages:@[self.shippingDynamicForm.firstErrorInFields] showAsMessage:YES selector:@selector(createAddressButtonPressed) objects:nil];
         [self hideLoading];
         return;
     }
@@ -761,13 +761,13 @@ JAPickerDelegate>
              if(VALID_NOTEMPTY(errorObject, NSDictionary))
              {
                  [self.billingDynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                     [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                     [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(createAddressButtonPressed) objects:nil];
                  }];
              }
              else if(VALID_NOTEMPTY(errorObject, NSArray))
              {
                  [self.billingDynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                     [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                     [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(createAddressButtonPressed) objects:nil];
                  }];
              }
          }];
@@ -790,18 +790,18 @@ JAPickerDelegate>
          if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
              [self.shippingDynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(createAddressButtonPressed) objects:nil];
              }];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
              [self.shippingDynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(createAddressButtonPressed) objects:nil];
              }];
          }
          else
          {
-             [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
+             [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(createAddressButtonPressed) objects:nil];
          }
      }];
 }
@@ -812,7 +812,7 @@ JAPickerDelegate>
     
     if(self.hasErrors)
     {
-        [self onErrorResponse:RIApiResponseSuccess messages:@[STRING_ERROR_INVALID_FIELDS] showAsMessage:YES selector:nil objects:nil];
+        [self onErrorResponse:RIApiResponseSuccess messages:@[STRING_ERROR_INVALID_FIELDS] showAsMessage:YES selector:@selector(createAddressButtonPressed) objects:nil];
         
         self.hasErrors = NO;
     }
