@@ -36,6 +36,47 @@
 
 @implementation JAOrderViewController
 
+
+-(UIScrollView *)scrollView {
+    if (!VALID_NOTEMPTY(_scrollView, UIScrollView)) {
+        
+        
+        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x,
+                                                                         self.view.bounds.origin.y,
+                                                                         self.view.bounds.size.width,
+                                                                         self.view.bounds.size.height)];
+        [_scrollView setHidden:YES];
+        [_scrollView setShowsVerticalScrollIndicator:YES];
+        [self.view addSubview:_scrollView];
+    }
+    return _scrollView;
+}
+
+-(UIScrollView *)secondScrollView {
+    if (!VALID_NOTEMPTY(_secondScrollView, UIScrollView)) {
+
+    _secondScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+    [_secondScrollView setShowsVerticalScrollIndicator:YES];
+    [self.view addSubview:_secondScrollView];
+    }
+    return _secondScrollView;
+}
+
+-(JAButtonWithBlur *)bottomView {
+    if (!VALID_NOTEMPTY(_bottomView, JAButtonWithBlur)) {
+        
+        
+        _bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectMake(0.0f,
+                                                                             self.viewBounds.size.height - _bottomView.frame.size.height,
+                                                                             self.view.frame.size.width,
+                                                                             _bottomView.frame.size.height)
+                                                      orientation:UIInterfaceOrientationPortrait];
+        [_bottomView setHidden:YES];
+        [self.view addSubview:_bottomView];
+    }
+    return _bottomView;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -52,23 +93,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x,
-                                                                     self.view.bounds.origin.y,
-                                                                     self.view.bounds.size.width,
-                                                                     self.view.bounds.size.height)];
-    [self.scrollView setHidden:YES];
-    [self.scrollView setShowsVerticalScrollIndicator:YES];
-    [self.view addSubview:self.scrollView];
-    
-    self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectMake(0.0f,
-                                                                         self.view.frame.size.height - self.bottomView.frame.size.height,
-                                                                         self.view.frame.size.width,
-                                                                         self.bottomView.frame.size.height)
-                                                  orientation:UIInterfaceOrientationPortrait];
-    [self.bottomView setHidden:YES];
-    [self.view addSubview:self.bottomView];
     
     [self loadStep];
     
@@ -132,7 +156,7 @@
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
--(void)setupViews
+- (void)removeScrollViews
 {
     if(VALID_NOTEMPTY(self.scrollView, UIScrollView))
     {
@@ -143,52 +167,42 @@
                 [view removeFromSuperview];
             }
         }
+        [self.scrollView removeFromSuperview];
+        self.scrollView = nil;
     }
+    
+    if(VALID_NOTEMPTY(self.secondScrollView, UIScrollView))
+    {
+        for(UIView *view in self.secondScrollView.subviews)
+        {
+            if(kScrollViewTag == view.tag)
+            {
+                [view removeFromSuperview];
+            }
+        }
+        [self.secondScrollView removeFromSuperview];
+        self.secondScrollView = nil;
+    }
+}
+
+-(void)setupViews
+{
+    [self removeScrollViews];
+    
     
     CGFloat horizontalMargin = 6.0f;
     CGFloat viewsWidth = self.view.frame.size.width - (2 * horizontalMargin);
     CGFloat originY = 0.0f;
-
+    
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
     {
         viewsWidth = (self.view.frame.size.width - (3 * horizontalMargin)) / 2;
-        self.secondScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(horizontalMargin + viewsWidth + horizontalMargin,
-                                                                               originY,
-                                                                               viewsWidth,
-                                                                               self.view.bounds.size.height)];
-        [self.secondScrollView setShowsVerticalScrollIndicator:YES];
-        [self.view addSubview:self.secondScrollView];
-    }
-    else
-    {
-        if(VALID_NOTEMPTY(self.secondScrollView, UIScrollView))
-        {
-            for(UIView *view in self.secondScrollView.subviews)
-            {
-                if(kScrollViewTag == view.tag)
-                {
-                    [view removeFromSuperview];
-                }
-            }
-            [self.secondScrollView removeFromSuperview];
-            self.secondScrollView = nil;
-        }
-    }
-    
-    [self.scrollView setFrame:CGRectMake(horizontalMargin,
-                                         originY,
-                                         viewsWidth,
-                                         self.view.bounds.size.height)];
-    [self.scrollView setShowsVerticalScrollIndicator:YES];
-    
-    //relative to scroll
-    self.scrollViewCurrentY = self.scrollView.frame.origin.y + 6.0f;
-    self.scrollViewCurrentY += [self setupOrderView:self.scrollView atYPostion:self.scrollViewCurrentY];
-    self.scrollViewCurrentY += [self setupSubtotalView:self.scrollView atYPostion:self.scrollViewCurrentY];
-
-    // If we have a second scroll view
-    if(VALID_NOTEMPTY(self.secondScrollView, UIScrollView))
-    {
+        
+        [self.secondScrollView setFrame:CGRectMake(horizontalMargin + viewsWidth + horizontalMargin,
+                                                   originY,
+                                                   viewsWidth,
+                                                   self.view.bounds.size.height)];
+        
         CGFloat secondScrollViewCurrentY = self.secondScrollView.frame.origin.y + 6.0f;
         secondScrollViewCurrentY += [self setupShippingAddressView:self.secondScrollView atYPostion:secondScrollViewCurrentY];
         secondScrollViewCurrentY += [self setupBillingAddressView:self.secondScrollView atYPostion:secondScrollViewCurrentY];
@@ -198,7 +212,18 @@
         [self.secondScrollView setContentSize:CGSizeMake(self.secondScrollView.frame.size.width,
                                                          secondScrollViewCurrentY + self.bottomView.frame.size.height)];
     }
-    else
+    
+    [self.scrollView setFrame:CGRectMake(horizontalMargin,
+                                         originY,
+                                         viewsWidth,
+                                         self.view.bounds.size.height)];
+    
+    //relative to scroll
+    self.scrollViewCurrentY = self.scrollView.frame.origin.y + 6.0f;
+    self.scrollViewCurrentY += [self setupOrderView:self.scrollView atYPostion:self.scrollViewCurrentY];
+    self.scrollViewCurrentY += [self setupSubtotalView:self.scrollView atYPostion:self.scrollViewCurrentY];
+    
+    if(!(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)))
     {
         self.scrollViewCurrentY += [self setupShippingAddressView:self.scrollView atYPostion:self.scrollViewCurrentY];
         self.scrollViewCurrentY += [self setupBillingAddressView:self.scrollView atYPostion:self.scrollViewCurrentY];
@@ -210,15 +235,8 @@
     [self setupConfirmButton];
     
     [self.scrollView setHidden:NO];
-    
-    CGFloat offset = 0.0;
-    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0") && UIUserInterfaceIdiomPhone == UI_USER_INTERFACE_IDIOM()){
-        //For some reason on iphone ios9 the view controller's view doesn't take the nav bar into account
-        offset = 64.0f;
-    }
-    
     [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
-                                               self.scrollViewCurrentY + self.bottomView.frame.size.height + offset)];
+                                               self.scrollViewCurrentY + self.bottomView.frame.size.height)];
     [self hideLoading];
     
     if (RI_IS_RTL) {
@@ -278,18 +296,6 @@
                                  nameLabel.frame.size.height);
     [itemCell addSubview:nameLabel];
     
-    UILabel* quantityLabel = [UILabel new];
-    quantityLabel.textAlignment = NSTextAlignmentLeft;
-    quantityLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-    quantityLabel.textColor = UIColorFromRGB(0x666666);
-    quantityLabel.text = [NSString stringWithFormat:STRING_QUANTITY, cartItem.quantity];
-    [quantityLabel sizeToFit];
-    quantityLabel.frame = CGRectMake(nameLabel.frame.origin.x,
-                                     CGRectGetMaxY(nameLabel.frame) + 5.0f,
-                                     nameLabel.frame.size.width,
-                                     quantityLabel.frame.size.height);
-    [itemCell addSubview:quantityLabel];
-    
     UILabel* priceLabel = [UILabel new];
     priceLabel.textAlignment = NSTextAlignmentLeft;
     priceLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
@@ -300,10 +306,11 @@
     }
     [priceLabel sizeToFit];
     priceLabel.frame = CGRectMake(nameLabel.frame.origin.x,
-                                  CGRectGetMaxY(quantityLabel.frame),
+                                  CGRectGetMaxY(nameLabel.frame),
                                   nameLabel.frame.size.width,
                                   priceLabel.frame.size.height);
     [itemCell addSubview:priceLabel];
+    CGFloat sizeLabelY = CGRectGetMaxY(priceLabel.frame);
     
     if ([cartItem.shopFirst boolValue]){
         UIImageView *shopFirstLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shop_first_logo"]];
@@ -312,6 +319,7 @@
         [shopFirstLogo setY:CGRectGetMaxY(priceLabel.frame) + 2.0f];
         [shopFirstLogo setHidden:NO];
         [itemCell addSubview:shopFirstLogo];
+        sizeLabelY = CGRectGetMaxY(shopFirstLogo.frame);
     }
 
     UILabel* sizeLabel = [UILabel new];
@@ -321,10 +329,20 @@
     sizeLabel.text = cartItem.variation;
     [sizeLabel sizeToFit];
     sizeLabel.frame = CGRectMake(nameLabel.frame.origin.x,
-                                 CGRectGetMaxY(priceLabel.frame),
+                                 sizeLabelY,
                                  nameLabel.frame.size.width,
                                  sizeLabel.frame.size.height);
     [itemCell addSubview:sizeLabel];
+    
+    UILabel* quantityLabel = [UILabel new];
+    quantityLabel.textAlignment = NSTextAlignmentLeft;
+    quantityLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
+    quantityLabel.textColor = UIColorFromRGB(0x666666);
+    quantityLabel.text = [NSString stringWithFormat:STRING_QUANTITY, cartItem.quantity];
+    [quantityLabel sizeToFit];
+    [quantityLabel setX:itemCell.bounds.size.width - quantityLabel.width - 8.0f];
+    [quantityLabel setY:CGRectGetMaxY(nameLabel.frame) + 45.0f];
+    [itemCell addSubview:quantityLabel];
 }
 
 - (void)placeGreySeparatorInContentView:(UIView*)contentView
@@ -814,17 +832,9 @@
     {
         newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     }
-    
-    
-    CGFloat offset = 0.0;
-    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0") && NO == self.alreadyLoadedConfirmButton){
-        //For some reason on iphone ios9 the view controller's view doesn't take the nav bar into account
-        offset = 64.0f;
-        self.alreadyLoadedConfirmButton = YES;
-    }
-    
+
     [self.bottomView reloadFrame:CGRectMake((self.view.frame.size.width - newWidth) / 2,
-                                            self.view.frame.size.height - self.bottomView.frame.size.height - offset,
+                                            self.viewBounds.size.height - self.bottomView.frame.size.height,
                                             newWidth,
                                             self.bottomView.frame.size.height)];
     
