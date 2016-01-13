@@ -39,7 +39,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
 @property (weak, nonatomic) IBOutlet JAClickableView *feedbackView;
 @property (strong, nonatomic)JAPriceView *priceView;
-@property (strong, nonatomic) UIImageView *shopFirstLogo;
+@property (nonatomic) UIImageView *shopFirstLogo;
 
 - (void)loadWithProduct:(RIProduct*)product;
 - (void)loadWithCartItem:(RICartItem*)cartItem;
