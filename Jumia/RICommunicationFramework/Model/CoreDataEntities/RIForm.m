@@ -325,9 +325,13 @@
     
     if ([entitiesJSON objectForKey:@"customer_entity"]) {
         
+        NSString* loginMethod = @"normal";
+        if (!VALID_NOTEMPTY(plainPassword, NSString)) {
+            loginMethod = @"guest";
+        }
         RICustomer *newCustomer = [RICustomer parseCustomerWithJson:[entitiesJSON objectForKey:@"customer_entity"]
                                                       plainPassword:plainPassword
-                                                        loginMethod:@"normal"];
+                                                        loginMethod:loginMethod];
         [newEntities setObject:newCustomer forKey:@"customer"];
     }
     
