@@ -21,6 +21,7 @@
     CGRect _noConnectionViewFrame;
     NSString* _searchBarText;
     BOOL rotation;
+    UIInterfaceOrientation _orientation;
 }
 
 @property (assign, nonatomic) int requestNumber;
@@ -101,6 +102,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _orientation = self.interfaceOrientation;
     self.firstLoading = YES;
     
     self.screenName = @"";
@@ -161,6 +163,7 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     rotation = YES;
+    _orientation = toInterfaceOrientation;
     [self changeLoadingFrame:[[UIScreen mainScreen] bounds] orientation:toInterfaceOrientation];
     
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
@@ -252,6 +255,10 @@
     
     [self reloadNavBar];
     [self reloadTabBar];
+    
+    if (_orientation != self.interfaceOrientation) {
+        [self onOrientationChanged];
+    }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnMenuSwipePanelNotification
                                                         object:nil];

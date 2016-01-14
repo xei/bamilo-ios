@@ -70,9 +70,8 @@
     
     if(VALID_NOTEMPTY([json objectForKey:@"price"], NSString))
     {
-        NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-        f.numberStyle = NSNumberFormatterDecimalStyle;
-        item.total = [f numberFromString:[json objectForKey:@"price"]];
+        float f = [[json objectForKey:@"price"] floatValue];
+        item.total = [NSNumber numberWithFloat:f];
         
         item.totalFormatted = [RICountryConfiguration formatPrice:item.total country:country];
     }
