@@ -409,6 +409,45 @@
     }
 }
 
++ (BOOL)checkIfUserIsLoggedByFacebook
+{
+    NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
+    
+    if (VALID_NOTEMPTY(customers, NSArray))
+    {
+        RICustomer* customer = [customers firstObject];
+        
+        if ([customer.loginMethod isEqualToString:@"facebook"]) {
+            return YES;
+        } else
+            return NO;
+    }
+    else
+    {
+        return NO;
+    }
+}
+
++ (BOOL)checkIfUserIsLoggedAsGuest
+{
+    NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
+    
+    if (VALID_NOTEMPTY(customers, NSArray))
+    {
+        RICustomer* customer = [customers firstObject];
+        
+        if ([customer.loginMethod isEqualToString:@"guest"]) {
+            return YES;
+        } else
+            return NO;
+    }
+    else
+    {
+        return NO;
+    }
+}
+
+
 + (BOOL)checkIfUserHasAddresses
 {
     NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
