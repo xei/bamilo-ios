@@ -297,7 +297,12 @@ UICollectionViewDelegateFlowLayout>
     }
     
     if (RI_IS_RTL) {
+        [self.ordersCollectionView flipViewPositionInsideSuperview];
+        [self.orderDetailsScrollView flipViewPositionInsideSuperview];
+        
         [self.ordersHistoryHeader setFrame:self.ordersHistoryHeader.frame];
+        [self.ordersHistoryHeader setWidth:self.ordersCollectionView.width];
+        [self.ordersHistoryHeader setX:self.ordersCollectionView.x];
         [self.ordersHistoryHeader flipAllSubviews];
     }
 }

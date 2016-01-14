@@ -173,7 +173,10 @@
     [self.priceLine setTitle:item.totalFormatted];
     [self.estimateDeliveryLabel setText:item.delivery];
     [self.deliveredLabel setText:[NSString stringWithFormat:@"%@\n%@", item.statusLabel, item.statusDate]];
-    [self.deliveredLabel sizeToFit];
+    
+    CGSize size = [self.deliveredLabel sizeThatFits:CGSizeMake(200.f, CGFLOAT_MAX)];
+    [self.deliveredLabel setHeight:size.height];
+    [self.deliveredLabel setWidth:size.width];
     [self.deliveredLabel setYBottomAligned:16.f];
     [self.deliveredLabel setXRightAligned:16.f];
     
