@@ -456,21 +456,11 @@ JAPickerDelegate>
         successBlock:^(id object)
      {
          [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-         NSDictionary* entitiesDictionary = (NSDictionary*)object;
-         self.cart = [entitiesDictionary objectForKey:@"cart"];
          [self.dynamicForm resetValues];
-         if(self.fromCheckout)
-         {
-             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:@"cart"];
-             [JAUtils goToNextStep:self.cart.nextStep
-                          userInfo:userInfo];
-         }
-         else
-         {
-             [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
-                                                                 object:nil
-                                                               userInfo:nil];
-         }
+         
+         [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
+                                                             object:nil
+                                                           userInfo:nil];
          [self hideLoading];
          
      } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
