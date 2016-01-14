@@ -681,7 +681,15 @@
         }
     };
     if ([RICustomer checkIfUserIsLogged]) {
-        block();
+        [RICustomer autoLogin:^(BOOL success, NSDictionary *entities, NSString *loginMethod) {
+            if (success) {
+                block();
+            }else{
+                [JAAuthenticationViewController authenticateAndExecuteBlock:^{
+                    block();
+                } showBackButtonForAuthentication:YES];
+            }
+        }];
     }else{
         [JAAuthenticationViewController authenticateAndExecuteBlock:^{
             block();

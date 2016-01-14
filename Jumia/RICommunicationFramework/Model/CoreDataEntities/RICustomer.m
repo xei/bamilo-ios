@@ -9,7 +9,7 @@
 #import "RICustomer.h"
 #import "RIAddress.h"
 #import "RIForm.h"
-#import "RIForm.h"
+#import "RIField.h"
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 @interface RICustomer ()
@@ -126,7 +126,6 @@
     
     NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
     
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     if (customers.count > 0) {
         RICustomer *customerObject = [customers objectAtIndex:0];
         
@@ -153,11 +152,18 @@
         }
         else if([@"normal" isEqualToString:customerObject.loginMethod])
         {
-            [parameters setValue:customerObject.email forKey:@"Alice_Module_Customer_Model_LoginForm[email]"];
-            [parameters setValue:customerObject.plainPassword forKey:@"Alice_Module_Customer_Model_LoginForm[password]"];
-            
-            return [RIForm getForm:@"login" successBlock:^(id form)
+            return [RIForm getForm:@"login" successBlock:^(RIForm *form)
                     {
+                        NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+                        for (RIField *field in form.fields)
+                        {
+                            if ([field.key isEqualToString:@"email"]) {
+                                [parameters setValue:customerObject.email forKey:field.name];
+                            }else
+                            if ([field.key isEqualToString:@"password"]) {
+                                [parameters setValue:customerObject.plainPassword forKey:field.name];
+                            }
+                        }
                         [RIForm sendForm:form parameters:parameters
                             successBlock:^(id jsonObject)
                          {
