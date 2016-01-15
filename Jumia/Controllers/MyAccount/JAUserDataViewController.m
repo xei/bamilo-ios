@@ -15,6 +15,7 @@
 #import "RIField.h"
 #import "JABottomBar.h"
 #import "RIPhonePrefix.h"
+#import "RICustomer.h"
 #import "JAUtils.h"
 
 #define kSideMargin 16.f
@@ -249,28 +250,31 @@
 
 - (void)requestChangePasswordForm
 {
-    [RIForm getForm:@"change_password" successBlock:^(RIForm *form)
-    {
-        self.changePasswordForm = [[JADynamicForm alloc] initWithForm:form
-                                                     startingPosition:CGRectGetMaxY(self.passwordHeader.frame) + kPasswordMargin
-                                                            widthSize:self.mainScrollView.width - (kSideMargin * 2)
-                                                   hasFieldNavigation:YES];
-        self.changePasswordForm.delegate = self;
+    if (!([RICustomer checkIfUserIsLoggedByFacebook] || [RICustomer checkIfUserIsLoggedAsGuest])) {
         
-        for (UIView *view in self.changePasswordForm.formViews) {
-            [self.mainScrollView addSubview:view];
-        }
-        
-        [self.mainScrollView addSubview:self.changePasswordButton];
-        
-        [self setupChangePasswordFormViews];
-        [self setupFixedElements];
-        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-    } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-        self.apiResponse = apiResponse;
-        [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(requestUserEditForm) objects:nil];
-        [self hideLoading];
-    }];
+        [RIForm getForm:@"change_password" successBlock:^(RIForm *form)
+         {
+             self.changePasswordForm = [[JADynamicForm alloc] initWithForm:form
+                                                          startingPosition:CGRectGetMaxY(self.passwordHeader.frame) + kPasswordMargin
+                                                                 widthSize:self.mainScrollView.width - (kSideMargin * 2)
+                                                        hasFieldNavigation:YES];
+             self.changePasswordForm.delegate = self;
+             
+             for (UIView *view in self.changePasswordForm.formViews) {
+                 [self.mainScrollView addSubview:view];
+             }
+             
+             [self.mainScrollView addSubview:self.changePasswordButton];
+             
+             [self setupChangePasswordFormViews];
+             [self setupFixedElements];
+             [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+         } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+             self.apiResponse = apiResponse;
+             [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(requestUserEditForm) objects:nil];
+             [self hideLoading];
+         }];
+    }
 }
 
 - (void)saveButtonPressed
@@ -279,7 +283,7 @@
     [self hideKeyboard];
     
     if ([self.userForm checkErrors]) {
-        [self onErrorResponse:RIApiResponseSuccess messages:@[self.userForm.firstErrorInFields] showAsMessage:YES selector:nil objects:nil];
+        [self onErrorResponse:RIApiResponseSuccess messages:@[self.userForm.firstErrorInFields] showAsMessage:YES selector:@selector(saveButtonPressed) objects:nil];
         [self hideLoading];
         return;
     }
@@ -292,14 +296,14 @@
     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
         if (VALID_NOTEMPTY(errorObject, NSDictionary)) {
             [self.userForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                [self onErrorResponse:RIApiResponseUnknownError messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                [self onErrorResponse:RIApiResponseUnknownError messages:@[message] showAsMessage:YES selector:@selector(saveButtonPressed) objects:nil];
             }];
         } else if(VALID_NOTEMPTY(errorObject, NSArray)) {
             [self.userForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                [self onErrorResponse:RIApiResponseUnknownError messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                [self onErrorResponse:RIApiResponseUnknownError messages:@[message] showAsMessage:YES selector:@selector(saveButtonPressed) objects:nil];
             }];
         } else {
-            [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
+            [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(saveButtonPressed) objects:nil];
         }
         [self hideLoading];
     }];
@@ -311,7 +315,7 @@
     [self hideKeyboard];
     
     if ([self.changePasswordForm checkErrors]) {
-        [self onErrorResponse:RIApiResponseSuccess messages:@[self.changePasswordForm.firstErrorInFields] showAsMessage:YES selector:nil objects:nil];
+        [self onErrorResponse:RIApiResponseSuccess messages:@[self.changePasswordForm.firstErrorInFields] showAsMessage:YES selector:@selector(changePasswordButtonPressed) objects:nil];
         [self hideLoading];
         return;
     }
@@ -325,14 +329,14 @@
      } andFailureBlock:^(RIApiResponse apiResponse, id errorObject) {
          if (VALID_NOTEMPTY(errorObject, NSDictionary)) {
              [self.changePasswordForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(changePasswordButtonPressed) objects:nil];
              }];
          } else if(VALID_NOTEMPTY(errorObject, NSArray)) {
              [self.changePasswordForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(changePasswordButtonPressed) objects:nil];
              }];
          } else {
-             [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
+             [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(changePasswordButtonPressed) objects:nil];
          }
          [self hideLoading];
      }];
@@ -382,13 +386,14 @@
     }
     
     [self.saveButton setY:maxY + kButtonsMargin];
-    [self.passwordHeader setY:CGRectGetMaxY(self.saveButton.frame) + kPasswordHeaderMargin];
 }
 
 - (void)setupChangePasswordFormViews
 {
-    CGFloat maxY = CGRectGetMaxY(self.personalDataHeader.frame);
+    CGFloat maxY = CGRectGetMaxY(self.saveButton.frame);
     
+    [self.passwordHeader setY:maxY + kPasswordHeaderMargin];
+
     [self.passwordHeader setWidth:self.mainScrollView.width];
     
     for (JADynamicField *view in self.changePasswordForm.formViews) {

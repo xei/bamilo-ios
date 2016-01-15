@@ -1048,7 +1048,7 @@
                              [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                              [self hideLoading];
                          } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-                             [self onErrorResponse:apiResponse messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:nil objects:nil];
+                             [self onErrorResponse:apiResponse messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:@selector(removeFromCartPressed:) objects:button];
                              [self hideLoading];
                          }];
     }
@@ -1142,7 +1142,7 @@
             [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
             [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-            [self onErrorResponse:apiResponse messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:nil objects:NO];
+            [self onErrorResponse:apiResponse messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:@selector(useCouponButtonPressed) objects:nil];
             [self hideLoading];
         }];
     }
@@ -1166,7 +1166,7 @@
             Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
             NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
             if (networkStatus == NotReachable) {
-                [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:nil objects:nil];
+                [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:@selector(useCouponButtonPressed) objects:nil];
             }
             else{
                 [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
@@ -1231,7 +1231,7 @@
             
             [self hideLoading];
             
-            [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
+            [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:@selector(checkoutButtonPressed) objects:nil];
         }];
     }];
 }
@@ -1399,6 +1399,11 @@
 }
 
 #pragma mark JAPickerDelegate
+- (void)selectedRowNumber:(NSNumber *)selectedRowNumber
+{
+    [self selectedRow:selectedRowNumber.integerValue];
+}
+
 - (void)selectedRow:(NSInteger)selectedRow
 {
     NSInteger newQuantity = selectedRow + 1;
@@ -1467,10 +1472,10 @@
                             Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
                             NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
                             if (networkStatus == NotReachable) {
-                                [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:nil objects:nil];
+                                [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:@selector(selectedRowNumber:) objects:@[[NSNumber numberWithInteger:selectedRow]]];
                             }
                             else {
-                                [self onErrorResponse:RIApiResponseUnknownError messages:errorMessages showAsMessage:YES selector:nil objects:nil];
+                                [self onErrorResponse:RIApiResponseUnknownError messages:errorMessages showAsMessage:YES selector:@selector(selectedRowNumber:) objects:@[[NSNumber numberWithInteger:selectedRow]]];
                             }
                         }];
     }

@@ -440,7 +440,7 @@ JAPickerDelegate>
 {
     [self showLoading];
     if ([self.dynamicForm checkErrors]) {
-        [self onErrorResponse:RIApiResponseSuccess messages:@[self.dynamicForm.firstErrorInFields] showAsMessage:YES selector:nil objects:nil];
+        [self onErrorResponse:RIApiResponseSuccess messages:@[self.dynamicForm.firstErrorInFields] showAsMessage:YES selector:@selector(saveChangesButtonPressed) objects:nil];
         [self hideLoading];
         return;
     }
@@ -456,21 +456,11 @@ JAPickerDelegate>
         successBlock:^(id object)
      {
          [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-         NSDictionary* entitiesDictionary = (NSDictionary*)object;
-         self.cart = [entitiesDictionary objectForKey:@"cart"];
          [self.dynamicForm resetValues];
-         if(self.fromCheckout)
-         {
-             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:@"cart"];
-             [JAUtils goToNextStep:self.cart.nextStep
-                          userInfo:userInfo];
-         }
-         else
-         {
-             [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
-                                                                 object:nil
-                                                               userInfo:nil];
-         }
+         
+         [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
+                                                             object:nil
+                                                           userInfo:nil];
          [self hideLoading];
          
      } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
@@ -480,16 +470,16 @@ JAPickerDelegate>
          if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
              [self.dynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(saveChangesButtonPressed) objects:nil];
              }];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
              [self.dynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(saveChangesButtonPressed) objects:nil];
              }];
          }else{
-             [self onErrorResponse:apiResponse messages:@[STRING_ERROR_INVALID_FIELDS] showAsMessage:YES selector:nil objects:nil];
+             [self onErrorResponse:apiResponse messages:@[STRING_ERROR_INVALID_FIELDS] showAsMessage:YES selector:@selector(saveChangesButtonPressed) objects:nil];
          }
          
          self.hasErrors = NO;

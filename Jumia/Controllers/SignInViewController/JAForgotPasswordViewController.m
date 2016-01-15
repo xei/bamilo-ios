@@ -164,7 +164,7 @@
      {
          
          if (self.loginEmail== nil) {
-             [self onErrorResponse:RIApiResponseSuccess messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
+             [self onErrorResponse:RIApiResponseSuccess messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(getForgotPasswordForm) objects:nil];
              [self finishedFormLoading];
          } else {
              [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
@@ -184,7 +184,7 @@
        failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
     {
         self.apiResponse = apiResponse;
-        [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
+        [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(getForgotPasswordForm) objects:nil];
         if (VALID_NOTEMPTY(self.dynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.dynamicForm.formViews, NSMutableArray)) {
             [self finishedFormLoading];
         }
@@ -213,7 +213,7 @@
     [self showLoading];
     
     if ([self.dynamicForm checkErrors]) {
-        [self onErrorResponse:RIApiResponseSuccess messages:@[self.dynamicForm.firstErrorInFields] showAsMessage:YES selector:nil objects:nil];
+        [self onErrorResponse:RIApiResponseSuccess messages:@[self.dynamicForm.firstErrorInFields] showAsMessage:YES selector:@selector(continueForgotPassword) objects:nil];
         [self hideLoading];
         return;
     }
@@ -228,15 +228,15 @@
      {
          if(VALID_NOTEMPTY(errorObject, NSDictionary)) {
              [self.dynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(continueForgotPassword) objects:nil];
              }];
          } else if(VALID_NOTEMPTY(errorObject, NSArray)) {
              [self.dynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(continueForgotPassword) objects:nil];
              }];
          }else{
              [self.dynamicForm checkErrors];
-             [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
+             [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(continueForgotPassword) objects:nil];
          }
          [self hideLoading];
      }];

@@ -462,20 +462,20 @@ JADynamicFormDelegate
         if (VALID_NOTEMPTY(errorObject, NSDictionary))
         {
             [self.dynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                [self onErrorResponse:RIApiResponseUnknownError messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                [self onErrorResponse:RIApiResponseUnknownError messages:@[message] showAsMessage:YES selector:@selector(continueRegister) objects:nil];
             }];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
             [self.dynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                [self onErrorResponse:RIApiResponseUnknownError messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                [self onErrorResponse:RIApiResponseUnknownError messages:@[message] showAsMessage:YES selector:@selector(continueRegister) objects:nil];
             }];
         }
         else
         {
             [self.dynamicForm checkErrors];
             
-            [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
+            [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(continueRegister) objects:nil];
         }
     }];
 }

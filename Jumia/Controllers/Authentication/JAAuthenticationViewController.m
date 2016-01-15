@@ -300,7 +300,7 @@
                      return;
                  }
                  if([result objectForKey:@"email"] == NULL || [result objectForKey:@"birthday"] == NULL) {
-                     [self onErrorResponse:RIApiResponseSuccess messages:@[STRING_LOGIN_INCOMPLETE] showAsMessage:YES selector:nil objects:nil];
+                     [self onErrorResponse:RIApiResponseSuccess messages:@[STRING_LOGIN_INCOMPLETE] showAsMessage:YES selector:@selector(facebookLoginButtonPressed:) objects:sender];
                      return;
                  }
                  if (![RICustomer checkIfUserIsLogged])
@@ -423,14 +423,14 @@
                                                               [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookLoginFail]
                                                                                                         data:[trackingDictionary copy]];
                                                               
-                                                              [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
+                                                              [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(facebookLoginButtonPressed:) objects:sender];
                                                               [self hideLoading];
                                                               
                                                           }];
                  }
                  else
                  {
-                     [self onErrorResponse:RIApiResponseSuccess messages:@[[error description]] showAsMessage:YES selector:nil objects:nil];
+                     [self onErrorResponse:RIApiResponseSuccess messages:@[[error description]] showAsMessage:YES selector:@selector(facebookLoginButtonPressed:) objects:sender];
                  }
              }];
         [connection start];
@@ -479,7 +479,7 @@
             }
         }
         
-        [self onErrorResponse:apiResponse messages:@[errorMessage] showAsMessage:YES selector:nil objects:nil];
+        [self onErrorResponse:apiResponse messages:@[errorMessage] showAsMessage:YES selector:@selector(checkEmail) objects:nil];
         
         [self hideLoading];
     }];
@@ -535,7 +535,7 @@
         }
         [self.emailTextField setError:errorMessage];
         
-        [self onErrorResponse:apiResponse messages:@[errorMessage] showAsMessage:YES selector:nil objects:nil];
+        [self onErrorResponse:apiResponse messages:@[errorMessage] showAsMessage:YES selector:@selector(continueWithoutLogin) objects:nil];
         
         [self hideLoading];
     }];

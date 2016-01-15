@@ -1119,7 +1119,7 @@ JAActivityViewControllerDelegate
                           
                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                           
-                          [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
+                          [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:@selector(addToCart) objects:nil];
                           [self hideLoading];
                       }];
     }
@@ -1417,7 +1417,7 @@ JAActivityViewControllerDelegate
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             
-            [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:nil objects:nil];
+            [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(addToFavorites:) objects:@[button]];
             [self hideLoading];
         }];
     }else{
@@ -1465,7 +1465,7 @@ JAActivityViewControllerDelegate
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             
             [self hideLoading];
-            [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:nil objects:nil];
+            [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(removeFromFavorites:) objects:@[button]];
         }];
     }
 }

@@ -175,6 +175,7 @@ UICollectionViewDelegateFlowLayout>
 -(void)viewDidLoad {
     
     [super viewDidLoad];
+    _selectedCellIndex = -1;
     self.apiResponse = RIApiResponseSuccess;
     self.currentOrdersPage = 0;
     self.orders = [[NSMutableArray alloc] init];
@@ -200,10 +201,8 @@ UICollectionViewDelegateFlowLayout>
 
 - (void) loadOrders
 {
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
-    {
-        [self showLoading];
-    }
+    [self showLoading];
+    
     self.isLoadingOrders = YES;
     
     [RIOrder getOrdersPage:[NSNumber numberWithInteger:self.currentOrdersPage+1]
@@ -223,11 +222,9 @@ UICollectionViewDelegateFlowLayout>
                   if ((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && (ordersTotal > 0)) {
                       self.selectedOrderIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
                       [self loadOrderDetails];
-                  } else
-                      [self hideLoading];
-              } else {
-                  [self hideLoading];
+                  }
               }
+              [self hideLoading];
               [self.ordersCollectionView reloadData];
           }
            andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
@@ -240,11 +237,7 @@ UICollectionViewDelegateFlowLayout>
 
 - (void)loadOrderDetails
 {
-    if(!self.firstLoading &&
-       (self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess) )
-    {
-        [self showLoading];
-    }
+    [self showLoading];
     
     RITrackOrder *  order = [self.orders objectAtIndex:[self.selectedOrderIndexPath row]];
     
@@ -264,6 +257,10 @@ UICollectionViewDelegateFlowLayout>
                           }
                           [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                           [self hideLoading];
+                          
+                          if (!((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) && _selectedCellIndex >=0) {
+                              [self gotoDetails:_selectedCellIndex];
+                          }
                           
                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                           self.apiResponse = apiResponse;
@@ -300,7 +297,12 @@ UICollectionViewDelegateFlowLayout>
     }
     
     if (RI_IS_RTL) {
+        [self.ordersCollectionView flipViewPositionInsideSuperview];
+        [self.orderDetailsScrollView flipViewPositionInsideSuperview];
+        
         [self.ordersHistoryHeader setFrame:self.ordersHistoryHeader.frame];
+        [self.ordersHistoryHeader setWidth:self.ordersCollectionView.width];
+        [self.ordersHistoryHeader setX:self.ordersCollectionView.x];
         [self.ordersHistoryHeader flipAllSubviews];
     }
 }
@@ -445,9 +447,6 @@ UICollectionViewDelegateFlowLayout>
     self.selectedOrderIndexPath = [NSIndexPath indexPathForRow:_selectedCellIndex inSection:0];
     
     [self loadOrderDetails];
-    if (!((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))) {
-        [self gotoDetails:_selectedCellIndex];
-    }
 }
 
 - (void)gotoDetails:(NSInteger)tag

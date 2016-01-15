@@ -542,7 +542,7 @@
                       
                   } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                       
-                      [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
+                      [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:@selector(finishAddToCart:) objects:@[button]];
                       [self hideLoading];
                   }];
 }
@@ -657,7 +657,7 @@
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         
-        [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:nil objects:nil];
+        [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(removeFromSavedList:) objects:@[product]];
         
         [self hideLoading];
     }];
@@ -702,6 +702,7 @@
     if (VALID_NOTEMPTY(product.sizeGuideUrl, NSString)) {
         NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:product.sizeGuideUrl, @"sizeGuideUrl", nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowSizeGuideNotification object:nil userInfo:dic];
+        [self closePicker];
     }
 }
 

@@ -292,15 +292,11 @@
 - (UIView *)verticalCrossView
 {
     if (!VALID(_verticalCrossView, UIView)) {
-        _verticalCrossView = [[UIView alloc] initWithFrame:CGRectMake(self.width/2-1, 0, 1, self.height)];
+        _verticalCrossView = [[UIView alloc] initWithFrame:CGRectMake(self.width/2-1, CGRectGetMaxY(self.orderNumberHeader.frame), 1, self.height)];
         [_verticalCrossView setBackgroundColor:JABlack300Color];
     }
     return _verticalCrossView;
 }
-
-
-
-
 
 - (void)setOrder:(RITrackOrder *)order
 {

@@ -14,6 +14,8 @@
 #import "JAFallbackView.h"
 #import "JASearchResultsView.h"
 #import "JASearchView.h"
+#import "RICustomer.h"
+#import "JAAuthenticationViewController.h"
 
 #define kSearchViewBarHeight 32.0f
 
@@ -21,6 +23,7 @@
     CGRect _noConnectionViewFrame;
     NSString* _searchBarText;
     BOOL rotation;
+    UIInterfaceOrientation _orientation;
 }
 
 @property (assign, nonatomic) int requestNumber;
@@ -101,6 +104,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _orientation = self.interfaceOrientation;
     self.firstLoading = YES;
     
     self.screenName = @"";
@@ -160,7 +164,9 @@
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    
     rotation = YES;
+    _orientation = toInterfaceOrientation;
     [self changeLoadingFrame:[[UIScreen mainScreen] bounds] orientation:toInterfaceOrientation];
     
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
@@ -252,6 +258,10 @@
     
     [self reloadNavBar];
     [self reloadTabBar];
+    
+    if (_orientation != self.interfaceOrientation) {
+        [self onOrientationChanged];
+    }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnMenuSwipePanelNotification
                                                         object:nil];
@@ -567,7 +577,10 @@
 - (void)onErrorResponse:(RIApiResponse)apiResponse messages:(NSArray *)errorMessages showAsMessage:(BOOL)showAsMessage target:(id)target selector:(SEL)selector objects:(NSArray *)objects
 {
     [self removeErrorView];
-    if (RIApiResponseMaintenancePage == apiResponse) {
+    if (RIApiResponseAuthorizationError == apiResponse) {
+        [self showAuthenticationPage:target selector:selector objects:objects];
+    }
+    else if (RIApiResponseMaintenancePage == apiResponse) {
         [self showMaintenancePage:target selector:selector objects:objects];
     }
     else if(RIApiResponseKickoutView == apiResponse)
@@ -654,6 +667,41 @@
 - (void)removeErrorView {
     [self.noConnectionView removeFromSuperview];
     self.noConnectionView = nil;
+}
+
+- (void)showAuthenticationPage:(id)target selector:(SEL)selector objects:(NSArray *)objects {
+    
+    // This is to avoid a retain cycle
+    __block id viewController = target;
+    __block void (^block)(void) = ^
+    {
+        if ([viewController respondsToSelector:selector]) {
+            if (ISEMPTY(objects)) {
+                ((void (*)(id, SEL))[viewController methodForSelector:selector])(viewController, selector);
+            }
+            else if (1 == [objects count]) {
+                ((void (*)(id, SEL, id))[viewController methodForSelector:selector])(viewController, selector, [objects objectAtIndex:0]);
+            }
+            else if (2 == [objects count]) {
+                ((void (*)(id, SEL, id, id))[viewController methodForSelector:selector])(viewController, selector, [objects objectAtIndex:0], [objects objectAtIndex:1]);
+            }
+        }
+    };
+    if ([RICustomer checkIfUserIsLogged]) {
+        [RICustomer autoLogin:^(BOOL success, NSDictionary *entities, NSString *loginMethod) {
+            if (success) {
+                block();
+            }else{
+                [JAAuthenticationViewController authenticateAndExecuteBlock:^{
+                    block();
+                } showBackButtonForAuthentication:YES];
+            }
+        }];
+    }else{
+        [JAAuthenticationViewController authenticateAndExecuteBlock:^{
+            block();
+        } showBackButtonForAuthentication:YES];
+    }
 }
 
 - (void)showMaintenancePage:(id)target selector:(SEL)selector objects:(NSArray *)objects {

@@ -51,13 +51,13 @@
         cartItem.variation = [info objectForKey:@"variation"];
     }
     
-    if (VALID_NOTEMPTY([info objectForKey:@"unit_price"], NSNumber)) {
-        cartItem.price = [info objectForKey:@"unit_price"];
+    if (VALID_NOTEMPTY([info objectForKey:@"price"], NSNumber)) {
+        cartItem.price = [info objectForKey:@"price"];
         cartItem.priceFormatted = [RICountryConfiguration formatPrice:cartItem.price country:country];
     }
     
-    if (VALID_NOTEMPTY([info objectForKey:@"unit_price_converted"], NSNumber)) {
-        cartItem.priceEuroConverted = [info objectForKey:@"unit_price_converted"];
+    if (VALID_NOTEMPTY([info objectForKey:@"price_converted"], NSNumber)) {
+        cartItem.priceEuroConverted = [info objectForKey:@"price_converted"];
     }
     
     if ([info objectForKey:@"shop_first"]) {
