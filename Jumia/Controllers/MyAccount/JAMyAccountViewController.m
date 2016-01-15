@@ -588,6 +588,11 @@
                      }];
 }
 
+- (void)selectedRowNumber:(NSNumber *)selectedRowNumber
+{
+    [self selectedRow:selectedRowNumber.integerValue];
+}
+
 - (void)selectedRow:(NSInteger)selectedRow
 {
     [self removePickerView];
@@ -621,7 +626,7 @@
             
             if (RIApiResponseNoInternetConnection == apiResponse && VALID_NOTEMPTY(errorMessages, NSArray)) {
                 
-                [self onErrorResponse:apiResponse messages:@[[errorMessages firstObject]] showAsMessage:YES selector:nil objects:nil];
+                [self onErrorResponse:apiResponse messages:@[[errorMessages firstObject]] showAsMessage:YES selector:@selector(selectedRowNumber:) objects:@[[NSNumber numberWithInteger:selectedRow]]];
             } else {
                 RICountry* uniqueCountry = [RICountry getUniqueCountry];
                 if (VALID_NOTEMPTY(uniqueCountry, RICountry)) {

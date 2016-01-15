@@ -551,13 +551,13 @@ UICollectionViewDelegateFlowLayout
                                                  [JAUtils goToNextStep:nextStep
                                                               userInfo:nil];
                                              } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-                                                 [self onErrorResponse:apiResponse messages:@[STRING_ERROR_SETTING_SHIPPING_METHOD] showAsMessage:YES selector:nil objects:nil];
+                                                 [self onErrorResponse:apiResponse messages:@[STRING_ERROR_SETTING_SHIPPING_METHOD] showAsMessage:YES selector:@selector(nextStepButtonPressed) objects:nil];
                                                  [self hideLoading];
                                              }];
         }
         else
         {
-            [self onErrorResponse:RIApiResponseSuccess messages:@[STRING_ERROR_INVALID_FIELDS] showAsMessage:YES selector:nil objects:nil];
+            [self onErrorResponse:RIApiResponseSuccess messages:@[STRING_ERROR_INVALID_FIELDS] showAsMessage:YES selector:@selector(nextStepButtonPressed) objects:nil];
         }
     }
 }

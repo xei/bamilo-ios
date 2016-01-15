@@ -355,7 +355,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
         
         [self onSuccessResponse:RIApiResponseSuccess messages:@[STRING_ITEM_WAS_ADDED_TO_CART] showMessage:YES];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock) {
-        [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
+        [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:@selector(addComboToCart) objects:nil];
         [self hideLoading];
     }];
 }

@@ -7,7 +7,6 @@
 //
 
 #import "RIOperation.h"
-#import "RICustomer.h"
 
 @interface RIOperation()
 
@@ -130,27 +129,28 @@
         
         if(VALID_NOTEMPTY(responseJSON, NSDictionary) &&  (!ISEMPTY([responseJSON objectForKey:@"success"]) && ![[responseJSON objectForKey:@"success"] boolValue]))
         {
-            ////$$$ RADIOACTIVE AREA //// (this shouldn't be calling stuff from RICustomer, framework has to be refactored
             NSDictionary* messages = [responseJSON objectForKey:@"messages"];
             if (VALID_NOTEMPTY(messages, NSDictionary)) {
                 NSArray* errorMessages = [messages objectForKey:@"error"];
                 if (VALID_NOTEMPTY(errorMessages, NSArray)) {
-                    for (NSString* errorMessage in errorMessages) {
+                    for (id errorMessage in errorMessages) {
                         if (VALID_NOTEMPTY(errorMessage, NSString)) {
                             if ([errorMessage isEqualToString:@"CUSTOMER_NOT_LOGGED_IN"]) {
-                                if ([RICustomer checkIfUserIsLogged]) {
-                                    [RICustomer autoLogin:^(BOOL success, NSDictionary *entities, NSString *loginMethod) {
-                                        [self startRequest];
-                                    }];
-                                    return;
-                                }
-                                break;
+                                self.failureBlock(RIApiResponseAuthorizationError, responseJSON, nil);
+                                return;
+                            }
+                        }else if (VALID_NOTEMPTY(errorMessage, NSDictionary))
+                        {
+                            if([[errorMessage objectForKey:@"reason"] isEqualToString:@"CUSTOMER_NOT_LOGGED_IN"] ||
+                               [(NSNumber *)[errorMessage objectForKey:@"code"] isEqualToNumber:@231])
+                            {
+                                self.failureBlock(RIApiResponseAuthorizationError, responseJSON, nil);
+                                return;
                             }
                         }
                     }
                 }
             }
-            ////$$$ END OF RADIOACTIVE AREA ////
             self.failureBlock(RIApiResponseAPIError, responseJSON, nil);            
         }
         else

@@ -870,7 +870,7 @@
                          return;
                      }
                      if([result objectForKey:@"email"] == NULL || [result objectForKey:@"birthday"] == NULL){
-                         [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_LOGIN_INCOMPLETE] showAsMessage:YES selector:nil objects:nil];
+                         [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_LOGIN_INCOMPLETE] showAsMessage:YES selector:@selector(facebookLoginButtonPressed:) objects:@[sender]];
                          return;
                      }
                      if (!error)
@@ -976,21 +976,21 @@
                                                                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookLoginFail]
                                                                                                                 data:[trackingDictionary copy]];
                                                                       
-                                                                      [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
+                                                                      [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(facebookLoginButtonPressed:) objects:@[sender]];
                                                                   }];
                              
                          }
                      }
                      else
                      {
-                         [self onErrorResponse:RIApiResponseUnknownError messages:@[[error description]] showAsMessage:YES selector:nil objects:nil];
+                         [self onErrorResponse:RIApiResponseUnknownError messages:@[[error description]] showAsMessage:YES selector:@selector(facebookLoginButtonPressed:) objects:@[sender]];
                      }
                  }];
             [connection start];
         }
         else
         {
-            [self onErrorResponse:RIApiResponseUnknownError messages:@[[error description]] showAsMessage:YES selector:nil objects:nil];
+            [self onErrorResponse:RIApiResponseUnknownError messages:@[[error description]] showAsMessage:YES selector:@selector(facebookLoginButtonPressed:) objects:@[sender]];
         }
     }];
 }
@@ -1080,19 +1080,19 @@
         if(VALID_NOTEMPTY(errorObject, NSDictionary))
         {
             [self.loginDynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(loginButtonPressed) objects:nil];
             }];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
             [self.loginDynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(loginButtonPressed) objects:nil];
             }];
         }
         else
         {
             [self.loginDynamicForm checkErrors];
-            [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
+            [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(loginButtonPressed) objects:nil];
         }
     }];
 }
@@ -1144,19 +1144,19 @@
         if(VALID_NOTEMPTY(errorObject, NSDictionary))
         {
             [self.signupDynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(signUpButtonPressed) objects:nil];
             }];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
             [self.signupDynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(signUpButtonPressed) objects:nil];
             }];
         }
         else
         {
             [self.signupDynamicForm checkErrors];
-            [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
+            [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(signUpButtonPressed) objects:nil];
         }
     }];
 }

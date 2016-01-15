@@ -349,7 +349,7 @@
                       [self hideLoading];
                       
                   }andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-                      [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:nil objects:nil];
+                      [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(addToCartButtonPressed:) objects:@[sender]];
                       [self hideLoading];
                   }];
 }

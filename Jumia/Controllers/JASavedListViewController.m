@@ -546,7 +546,7 @@
                       
                   } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                       
-                      [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
+                      [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:@selector(finishAddToCart:) objects:@[button]];
                       [self hideLoading];
                   }];
 }
@@ -661,7 +661,7 @@
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         
-        [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:nil objects:nil];
+        [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(removeFromSavedList:) objects:@[product]];
         
         [self hideLoading];
     }];

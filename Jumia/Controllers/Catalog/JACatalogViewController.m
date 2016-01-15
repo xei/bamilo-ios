@@ -665,7 +665,7 @@ typedef void (^ProcessActionBlock)(void);
     
     if(VALID_NOTEMPTY(self.productsArray, NSArray))
     {
-        [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
+        [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(loadMoreProducts) objects:nil];
     }
     else
     {
@@ -1263,7 +1263,7 @@ typedef void (^ProcessActionBlock)(void);
             [self.collectionView reloadData];
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-            [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:nil objects:nil];
+            [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(addToFavorites:) objects:@[button]];
             [self hideLoading];
         }];
     }else{
@@ -1312,7 +1312,7 @@ typedef void (^ProcessActionBlock)(void);
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             
-            [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:nil objects:nil];
+            [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(removeFromFavorites:) objects:@[button]];
             [self hideLoading];
         }];
     }else{

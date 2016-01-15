@@ -241,7 +241,7 @@ UIAlertViewDelegate
     }
     if(VALID_NOTEMPTY(self.reviewsDynamicForm, JADynamicForm) && VALID_NOTEMPTY(self.reviewsDynamicForm.formViews, NSMutableArray))
     {
-        [self onErrorResponse:self.apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
+        [self onErrorResponse:self.apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(formRequest) objects:nil];
     }
     else
     {
@@ -473,19 +473,19 @@ UIAlertViewDelegate
             if(VALID_NOTEMPTY(errorObject, NSDictionary))
             {
                 [currentDynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
-                    [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                    [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(sendReview:) objects:sender];
                 }];
             }
             else if(VALID_NOTEMPTY(errorObject, NSArray))
             {
                 [currentDynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
-                    [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:nil objects:nil];
+                    [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(sendReview:) objects:sender];
                 }];
             }
             else
             {
                 [currentDynamicForm checkErrors];
-                [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:nil objects:nil];
+                [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(sendReview:) objects:sender];
             }
         }];
 }

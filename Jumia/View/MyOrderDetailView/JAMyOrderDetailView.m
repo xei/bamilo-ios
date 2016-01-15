@@ -158,7 +158,7 @@
                       [self.parent onSuccessResponse:RIApiResponseTimeOut messages:successMessage showMessage:YES];
                       [self.parent hideLoading];
                   } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-                      [self.parent onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
+                      [self.parent onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:@selector(addToCart:) objects:@[button]];
                       [self.parent hideLoading];
                   }];
 }

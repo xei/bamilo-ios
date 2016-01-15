@@ -612,7 +612,7 @@ UITextFieldDelegate>
                        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutPaymentFail]
                                                                  data:[trackingDictionary copy]];
                        
-                       [self onErrorResponse:apiResponse messages:@[STRING_ERROR_SETTING_PAYMENT_METHOD] showAsMessage:YES selector:nil objects:nil];
+                       [self onErrorResponse:apiResponse messages:@[STRING_ERROR_SETTING_PAYMENT_METHOD] showAsMessage:YES selector:@selector(nextStepButtonPressed) objects:nil];
                        [self hideLoading];
                    }];
 }
