@@ -67,9 +67,6 @@
         [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.frame.size.width,
                                                        mainScrollY)];
         
-        if(RI_IS_RTL){
-            self.mainScrollView.scrollIndicatorInsets = UIEdgeInsetsMake(0,0,0,self.mainScrollView.bounds.size.width-7);
-        }
     }
 }
 
