@@ -887,33 +887,65 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAAddressesViewController class]] && [RICustomer checkIfUserIsLogged])
     {
-        JAAddressesViewController *addressesVC = [[JAAddressesViewController alloc] initWithNibName:@"JAAddressesViewController" bundle:nil];
-        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        {
-            addressesVC = [[JAAddressesViewController alloc] initWithNibName:@"JAAddressesViewController~iPad" bundle:nil];
-        
+        if (![RICustomer checkIfUserHasAddresses]) {
+            JAAddNewAddressViewController *addAddressVC = [[JAAddNewAddressViewController alloc]initWithNibName:@"JAAddNewAddressViewController" bundle:nil];
+            
+            if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) {
+                addAddressVC = [[JAAddNewAddressViewController alloc]initWithNibName:@"JAAddNewAddressViewController~iPad" bundle:nil];
+            }
+            
+            BOOL isBillingAddress = [[notification.userInfo objectForKey:@"is_billing_address"] boolValue];
+            BOOL isShippingAddress = [[notification.userInfo objectForKey:@"is_shipping_address"] boolValue];
+            BOOL showBackButton = [[notification.userInfo objectForKey:@"show_back_button"] boolValue];
+            
+            addAddressVC.isBillingAddress = isBillingAddress;
+            addAddressVC.isShippingAddress = isShippingAddress;
+            addAddressVC.fromCheckout = fromCheckout;
+            addAddressVC.cart = self.cart;
+            
+            if (fromCheckout) {
+                addAddressVC.navBarLayout.showCartButton = NO;
+                if (showBackButton) {
+                    [addAddressVC.navBarLayout setShowBackButton:YES];
+                    addAddressVC.navBarLayout.showLogo = NO;
+                } else {
+                    addAddressVC.navBarLayout.title = STRING_CHECKOUT;
+                }
+            } else {
+                [addAddressVC.navBarLayout setShowBackButton:YES];
+                addAddressVC.navBarLayout.showLogo = NO;
+            }
+            
+            [self pushViewController:addAddressVC animated:animated];
+        } else {
+            JAAddressesViewController *addressesVC = [[JAAddressesViewController alloc] initWithNibName:@"JAAddressesViewController" bundle:nil];
+            if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+            {
+                addressesVC = [[JAAddressesViewController alloc] initWithNibName:@"JAAddressesViewController~iPad" bundle:nil];
+            
+            }
+            
+            addressesVC.cart = self.cart;
+            addressesVC.fromCheckout = fromCheckout;
+            
+            if(fromCheckout)
+            {
+                addressesVC.navBarLayout.showCartButton = NO;
+                addressesVC.navBarLayout.title = STRING_CHECKOUT;
+            }
+            else
+            {
+                [addressesVC.navBarLayout setShowBackButton:YES];
+                addressesVC.navBarLayout.showLogo = NO;
+            }
+            
+            if ([topViewController isKindOfClass:[JALoginViewController class]])
+            {
+                [self popViewControllerAnimated:NO];
+            }
+            
+            [self pushViewController:addressesVC animated:NO];
         }
-        
-        addressesVC.cart = self.cart;
-        addressesVC.fromCheckout = fromCheckout;
-        
-        if(fromCheckout)
-        {
-            addressesVC.navBarLayout.showCartButton = NO;
-            addressesVC.navBarLayout.title = STRING_CHECKOUT;
-        }
-        else
-        {
-            [addressesVC.navBarLayout setShowBackButton:YES];
-            addressesVC.navBarLayout.showLogo = NO;
-        }
-        
-        if ([topViewController isKindOfClass:[JALoginViewController class]])
-        {
-            [self popViewControllerAnimated:NO];
-        }
-        
-        [self pushViewController:addressesVC animated:NO];
     }
     else
     {

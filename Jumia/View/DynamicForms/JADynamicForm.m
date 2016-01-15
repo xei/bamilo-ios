@@ -695,14 +695,6 @@
             {
                 [radioComponent setLocaleValue:region];
             }
-            else if([radioComponent isComponentWithKey:@"city"])
-            {
-                [radioComponent setLocaleValue:nil];
-            }
-            else if ([radioComponent isComponentWithKey:@"postcode"])
-            {
-                [radioComponent setLocaleValue:nil];
-            }
         }
     }
 }

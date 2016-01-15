@@ -123,6 +123,20 @@
 + (BOOL)checkIfUserIsLogged;
 
 /**
+ * Method to check if the user is logged in by facebook
+ *
+ * @return success case user is logged by facebook
+ */
++ (BOOL)checkIfUserIsLoggedByFacebook;
+
+/**
+ * Method to check if the user is logged as guest
+ *
+ * @return success case user is logged as guest
+ */
++ (BOOL)checkIfUserIsLoggedAsGuest;
+
+/**
  * Method to check if the user has any addresses stored
  *
  * @return success case user has addresses
