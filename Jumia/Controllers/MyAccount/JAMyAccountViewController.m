@@ -265,9 +265,6 @@
     
     _reloadLock = [NSLock new];
     
-    if(RI_IS_RTL){
-        self.mainScrollView.scrollIndicatorInsets = UIEdgeInsetsMake(0,0,0,self.mainScrollView.bounds.size.width-7);
-    }
 }
 
 - (void)viewWillLayoutSubviews
