@@ -8,6 +8,13 @@
 
 #import "JAProductCollectionViewFlowLayout.h"
 
+@interface JAProductCollectionViewFlowLayout ()
+{
+    CGRect _previousFrame;
+}
+
+@end
+
 @implementation JAProductCollectionViewFlowLayout
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
@@ -49,63 +56,51 @@
             [decorationAttributes addObject:attributes];
         }
     }
-    return [decorationAttributes copy];
+    return decorationAttributes;
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewLayoutAttributes* currentItemAttributes =
-    [super layoutAttributesForItemAtIndexPath:indexPath];
+    
+    UICollectionViewLayoutAttributes* currentItemAttributes = [[super layoutAttributesForItemAtIndexPath:indexPath] copy];
     
     UIEdgeInsets sectionInset = [(UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout sectionInset];
     
+    CGRect frame = currentItemAttributes.frame;
+    CGRect strecthedCurrentFrame = CGRectMake(0,
+                                              frame.origin.y,
+                                              self.collectionView.frame.size.width,
+                                              frame.size.height);
     if (indexPath.item == 0) { // first item of section
-        CGRect frame = currentItemAttributes.frame;
         frame.origin.x = sectionInset.left; // first item of the section should always be left aligned
         if (RI_IS_RTL) {
             frame.origin.x = self.collectionView.frame.size.width - frame.size.width;
         }
         
-        currentItemAttributes.frame = frame;
-        
-        return currentItemAttributes;
-    }
-    
-    NSIndexPath* previousIndexPath = [NSIndexPath indexPathForItem:indexPath.item-1 inSection:indexPath.section];
-    CGRect previousFrame = [self layoutAttributesForItemAtIndexPath:previousIndexPath].frame;
-    CGFloat previousFrameRightPoint = previousFrame.origin.x + previousFrame.size.width + self.minimumLineSpacing;
-    CGFloat previousFrameLeftPoint = previousFrame.origin.x - self.minimumLineSpacing;
-    
-    CGRect currentFrame = currentItemAttributes.frame;
-    CGRect strecthedCurrentFrame = CGRectMake(0,
-                                              currentFrame.origin.y,
-                                              self.collectionView.frame.size.width,
-                                              currentFrame.size.height);
-    
-    if (!CGRectIntersectsRect(previousFrame, strecthedCurrentFrame)) { // if current item is the first item on the line
+    }else if (!CGRectIntersectsRect(_previousFrame, strecthedCurrentFrame)) { // if current item is the first item on the line
         // the approach here is to take the current frame, left align it to the edge of the view
         // then stretch it the width of the collection view, if it intersects with the previous frame then that means it
         // is on the same line, otherwise it is on it's own new line
-        CGRect frame = currentItemAttributes.frame;
         frame.origin.x = sectionInset.left; // first item on the line should always be left aligned
         if (RI_IS_RTL) {
             frame.origin.x = self.collectionView.frame.size.width - frame.size.width;
         }
-        currentItemAttributes.frame = frame;
-        return currentItemAttributes;
+    } else {
+        CGFloat previousFrameRightPoint = _previousFrame.origin.x + _previousFrame.size.width + self.minimumLineSpacing;
+        CGFloat previousFrameLeftPoint = _previousFrame.origin.x - self.minimumLineSpacing;
+        CGRect frame = currentItemAttributes.frame;
+        frame.origin.x = previousFrameRightPoint;
+        if (RI_IS_RTL) {
+            frame.origin.x = previousFrameLeftPoint - frame.size.width;
+        }
     }
     
-    CGRect frame = currentItemAttributes.frame;
-    frame.origin.x = previousFrameRightPoint;
-    if (RI_IS_RTL) {
-        frame.origin.x = previousFrameLeftPoint - frame.size.width;
-    }
     currentItemAttributes.frame = frame;
-    return [currentItemAttributes copy];
+    _previousFrame = frame;
+    return currentItemAttributes;
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForDecorationViewOfKind:(NSString *)decorationViewKind atIndexPath:(NSIndexPath *)indexPath
 {
-//    NSInteger countOfItems = [self.collectionView.dataSource collectionView:self.collectionView numberOfItemsInSection:0];
     CGRect itemFrame = [self layoutAttributesForItemAtIndexPath:indexPath].frame;
     
     UICollectionViewLayoutAttributes *layoutAttributes = [[UICollectionViewLayoutAttributes layoutAttributesForDecorationViewOfKind:decorationViewKind withIndexPath:indexPath] copy];
