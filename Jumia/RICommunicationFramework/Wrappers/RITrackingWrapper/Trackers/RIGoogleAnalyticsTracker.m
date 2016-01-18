@@ -163,11 +163,40 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     
     id tracker = [[GAI sharedInstance] defaultTracker];
     
-    if (!ISEMPTY(tracker))
-    {
-        if(VALID_NOTEMPTY(campaignName, NSString))
-        {
-            self.campaignData = [NSString stringWithFormat:@"http://www.google.com?utm_campaign=%@&utm_source=push&utm_medium=referrer", campaignName];
+    if (!ISEMPTY(tracker)) {
+        if(VALID_NOTEMPTY(campaignName, NSString)) {
+        
+            NSArray* components = [campaignName componentsSeparatedByString:@"&"];
+            NSMutableDictionary* campaignDic = [NSMutableDictionary new];
+            NSMutableString* finalStr = [NSMutableString new];
+            
+            for (NSString* component in components) {
+                NSArray* keyValue = [component componentsSeparatedByString:@"="];
+                if ([keyValue count] == 2) {
+                    NSString* key = [keyValue objectAtIndex:0];
+                    
+                    if ([key isEqualToString:@"utm_source"] || [key isEqualToString:@"utm_campaign"] || [key isEqualToString:@"utm_medium"]) {
+                        
+                        NSString* value = [keyValue objectAtIndex:1];
+                        [campaignDic setObject:value forKey:key];
+                    }
+                }
+            }
+            [finalStr appendFormat:@"http://www.google.com?%@",campaignName];
+            
+            if (!VALID_NOTEMPTY([campaignDic objectForKey:@"utm_source"], NSString)) {
+                if (VALID_NOTEMPTY([campaignDic objectForKey:@"utm_campaign"], NSString)) {
+                    [finalStr appendString:@"&utm_souce=push"];
+                }
+            }
+            
+            if (!VALID_NOTEMPTY([campaignDic objectForKey:@"utm_medium"], NSString)) {
+                if (VALID_NOTEMPTY([campaignDic objectForKey:@"utm_campaign"], NSString)) {
+                    [finalStr appendString:@"&utm_medium=referrer"];
+                }
+            }
+            self.campaignData = finalStr;
+            [tracker send:[[[GAIDictionaryBuilder createScreenView] setCampaignParametersFromUrl:self.campaignData] build]];
         }
     }
     else
