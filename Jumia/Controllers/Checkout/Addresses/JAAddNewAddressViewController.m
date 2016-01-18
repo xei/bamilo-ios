@@ -807,20 +807,6 @@ JAPickerDelegate>
         return;
     }
     
-//    NSString* selectedGender;
-//    //search for gender in shipping
-//    for (JADynamicField* dynamicField in self.shippingDynamicForm.formViews) {
-//        if (VALID_NOTEMPTY(dynamicField, JARadioComponent)) {
-//            JARadioComponent* radioComponent = (JARadioComponent*)dynamicField;
-//            selectedGender = [radioComponent getSelectedValue];
-//        }
-//    }
-//    for (JADynamicField* dynamicField in self.shippingDynamicForm.formViews) {
-//        if (VALID_NOTEMPTY(dynamicField, JARadioComponent)) {
-//            JARadioComponent* radioComponent = (JARadioComponent*)dynamicField;
-//            selectedGender = [radioComponent getSelectedValue];
-//        }
-//    }
     if (![self.billingContentView isHidden] && [self.billingDynamicForm checkErrors]) {
         [self onErrorResponse:RIApiResponseSuccess messages:@[self.shippingDynamicForm.firstErrorInFields] showAsMessage:YES selector:@selector(createAddressButtonPressed) objects:nil];
         [self hideLoading];
@@ -877,8 +863,6 @@ JAPickerDelegate>
              [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAddAddressSuccess]
                                                        data:nil];
              
-             NSDictionary* entitiesDictionary = (NSDictionary*) object;
-             self.cart = [entitiesDictionary objectForKey:@"cart"];
              [self.billingDynamicForm resetValues];
              self.numberOfRequests--;
          } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
@@ -916,8 +900,7 @@ JAPickerDelegate>
           parameters:shippingParameters
         successBlock:^(id object)
      {
-         NSDictionary* entitiesDictionary = (NSDictionary*)object;
-         self.cart = [entitiesDictionary objectForKey:@"cart"];
+         
          [self.shippingDynamicForm resetValues];
          self.numberOfRequests--;
      } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
