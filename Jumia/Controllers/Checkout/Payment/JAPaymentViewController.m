@@ -165,6 +165,7 @@ UITextFieldDelegate>
         
         self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:cart.paymentMethodForm width:(self.view.frame.size.width - 12.0f)];
         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+        [self setupViews:self.view.width toInterfaceOrientation:self.interfaceOrientation];
         [self finishedLoadingPaymentMethods];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
         self.apiResponse = apiResponse;
@@ -200,6 +201,7 @@ UITextFieldDelegate>
     [self.collectionView setBackgroundColor:UIColorFromRGB(0xffffff)];
     [self.collectionView registerNib:paymentListHeaderNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"paymentListHeader"];
     [self.collectionView registerNib:paymentListCellNib forCellWithReuseIdentifier:@"paymentListCell"];
+    [self.collectionView registerNib:paymentListCellNib forCellWithReuseIdentifier:@"paymentListCell_Empty"];
     [self.collectionView setDataSource:self];
     [self.collectionView setDelegate:self];
     [self.collectionView setScrollEnabled:NO];
@@ -434,7 +436,7 @@ UITextFieldDelegate>
                                      56)];
     [_bottomView setTotalValue:self.cart.cartValueFormatted];
     [_bottomView setButtonText:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
-    if (! VALID_NOTEMPTY(self.paymentMethods,NSArray)) {
+    if (!VALID_NOTEMPTY(self.paymentMethods,NSArray) && self.cart.cartValue.integerValue > 0) {
         [_bottomView disableButton];
     }
     
@@ -549,7 +551,7 @@ UITextFieldDelegate>
             [self.couponTextField setEnabled: YES];
             [self.couponTextField setText:@""];
             
-            [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+            [self continueLoading];
             [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
@@ -570,7 +572,7 @@ UITextFieldDelegate>
             [self.useCouponButton setTitle:STRING_REMOVE forState:UIControlStateNormal];
             [self.couponTextField setEnabled:NO];
             
-            [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+            [self continueLoading];
             [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
@@ -582,7 +584,7 @@ UITextFieldDelegate>
 
 -(void)nextStepButtonPressed
 {
-    if (!self.selectedPaymentMethod) {
+    if (!self.selectedPaymentMethod && self.cart.cartValue.integerValue > 0) {
         return;
     }
     [self showLoading];
@@ -713,7 +715,7 @@ UITextFieldDelegate>
         } else {
             if (indexPath.row == 0 && VALID_NOTEMPTY(self.checkoutFormForPaymentMethod.paymentMethodFormViews, NSMutableDictionary)) {
                 
-                NSString *cellIdentifier = @"paymentListCell";
+                NSString *cellIdentifier = @"paymentListCell_Empty";
                 
                 JAPaymentCell *paymentListCell = (JAPaymentCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
                 
