@@ -165,6 +165,7 @@
                                                 object:nil];
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"ShoppingCart"];
     [self continueLoading];
+    
 }
 
 - (void)setEmptyCartViewHidden:(BOOL)hidden
@@ -980,6 +981,8 @@
         [self.couponView flipSubviewPositions];
         [self.subtotalView flipSubviewAlignments];
         [self.subtotalView flipSubviewPositions];
+        
+        self.cartScrollView.scrollIndicatorInsets = UIEdgeInsetsMake(0,0,0,self.cartScrollView.bounds.size.width-7);
     }
 }
 

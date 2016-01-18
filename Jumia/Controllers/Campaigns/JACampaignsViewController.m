@@ -72,7 +72,6 @@
     self.scrollView.scrollEnabled = NO;
     self.scrollView.delegate = self;
     [self.view addSubview:self.scrollView];
-
     
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
@@ -234,6 +233,7 @@
     self.isLoaded = YES;
     
     [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
+    
 }
 
 - (JACampaignPageView*)createCampaignPageAtX:(CGFloat)xPosition

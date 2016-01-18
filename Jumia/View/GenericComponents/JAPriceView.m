@@ -95,13 +95,18 @@ specialPriceOnTheLeft:(BOOL)specialPriceOnTheLeft;
             _strike = [[UIView alloc] init];
             [self addSubview:_strike];
         }
-        CGFloat strikePosition = self.frame.size.width - oldPriceLabel.frame.size.width;
+        CGFloat strikePosition;
         
+        if (specialPriceOnTheLeft){
+        strikePosition = self.frame.size.width - oldPriceLabel.frame.size.width;
+        }
+        else{
+        strikePosition = self.frame.size.width - 2 * oldPriceLabel.frame.size.width + 4;
+        }
         _strike.frame = CGRectMake(strikePosition,
-                                  _label.y + _label.height/2 - 1.f,
-                                  oldPriceLabel.frame.size.width,
-                                  1.0f);
-        
+                                   _label.y + _label.height/2 - 1.f,
+                                   oldPriceLabel.frame.size.width,
+                                   1.0f);
         _strike.backgroundColor = JABlack800Color;
     }else{
         if (_strike) {

@@ -188,10 +188,7 @@
                                              selector:@selector(updatedProduct:)
                                                  name:kProductChangedNotification
                                                object:nil];
-    
-    if(RI_IS_RTL){
-        self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(0,0,0,self.collectionView.bounds.size.width-7);
-    }
+
 }
 
 - (void)viewWillLayoutSubviews {
