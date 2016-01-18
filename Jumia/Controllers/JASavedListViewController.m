@@ -364,6 +364,7 @@
     
     JARecentlyViewedCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"CellWithLines" forIndexPath:indexPath];
     [cell setHideRating:YES];
+    [cell setHideShopFirstLogo:YES];
     [cell loadWithProduct:product];
     
     if (1 < product.productSimples.count) {

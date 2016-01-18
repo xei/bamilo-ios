@@ -170,7 +170,6 @@
         [_shopFirstLogo setX:CGRectGetMaxX(self.sellerNameLabel.frame) + 8.f];
         [_shopFirstLogo setY:self.sellerNameLabel.y];
         [self.clickableView addSubview:_shopFirstLogo];
-        [_shopFirstLogo setHidden:YES];
     }
     return _shopFirstLogo;
 }
@@ -259,6 +258,8 @@
             [self.sellerNameLabel setWidth:190.f];
         }
         [self.shopFirstLogo setHidden:NO];
+    } else {
+        [self.shopFirstLogo setHidden:YES];
     }
 }
 
