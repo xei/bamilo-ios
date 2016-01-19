@@ -142,6 +142,7 @@
     [self.backgroundContentView addSubview:self.priceView];
     
     if (VALID_NOTEMPTY(cartItem.shopFirst, NSNumber) && [cartItem.shopFirst boolValue])	{
+        self.shopFirstOverlay = cartItem.shopFirstOverlay;
         [self.shopFirstLogo setHidden:NO];
         [self.shopFirstLogo setX:96.0f];
     } else {
@@ -182,7 +183,12 @@
         [_shopFirstLogo setX:96.0f];
         [_shopFirstLogo setY:44.0f];
         [_shopFirstLogo setHidden:YES];
+        [_shopFirstLogo setUserInteractionEnabled:YES];
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                    action:@selector(shopFirstLogoTapped:)];
+        [_shopFirstLogo addGestureRecognizer:singleTap];
         [_backgroundContentView addSubview:_shopFirstLogo];
+        [_backgroundContentView bringSubviewToFront:_shopFirstLogo];
     }
     return _shopFirstLogo;
 }
@@ -193,6 +199,16 @@
         return 44.0f;
     }
     return 62.0f;
+}
+
+- (void)shopFirstLogoTapped:(UIGestureRecognizer *)gestureRecognizer
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
+                                                    message:self.shopFirstOverlay
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
 }
 
 @end

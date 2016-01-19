@@ -194,6 +194,7 @@
         <attribute name="richRelevanceParameter" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="richRelevanceTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shopFirst" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="shopFirstOverlay" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shortSummary" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sizeGuideUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sku" optional="YES" attributeType="String" syncable="YES"/>
@@ -297,7 +298,7 @@
         <element name="RIImage" positionX="70" positionY="486" width="128" height="135"/>
         <element name="RIImageResolution" positionX="-270" positionY="560" width="128" height="103"/>
         <element name="RILanguage" positionX="-270" positionY="-207" width="128" height="103"/>
-        <element name="RIProduct" positionX="-99" positionY="0" width="128" height="750"/>
+        <element name="RIProduct" positionX="-99" positionY="0" width="128" height="765"/>
         <element name="RIProductSimple" positionX="162" positionY="14" width="128" height="255"/>
         <element name="RISearchSuggestion" positionX="-828" positionY="183" width="128" height="105"/>
         <element name="RISection" positionX="-261" positionY="428" width="128" height="103"/>

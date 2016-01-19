@@ -13,6 +13,7 @@
 
 @property (nonatomic) RISeller *seller;
 @property (nonatomic) UIImageView *shopFirstLogo;
+@property (nonatomic) NSString *shopFirstOverlayText;
 @property (assign, nonatomic) NSNumber *isShopFirst;
 
 - (void)addTarget:(id)target action:(SEL)action;
