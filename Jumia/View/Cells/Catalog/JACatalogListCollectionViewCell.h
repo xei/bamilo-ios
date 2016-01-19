@@ -30,5 +30,6 @@
 @property (nonatomic) BOOL showSelector;
 @property (nonatomic) UIButton *selectorButton;
 @property (nonatomic, readonly) JAProductInfoRatingLine *ratingLine;
+@property (nonatomic) BOOL hideShopFirstLogo;
 
 @end

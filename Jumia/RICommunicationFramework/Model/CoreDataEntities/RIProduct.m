@@ -422,6 +422,8 @@
         
         if ([dataDic objectForKey:@"shop_first"]) {
             newProduct.shopFirst = [NSNumber numberWithBool:[[dataDic objectForKey:@"shop_first"] boolValue]];
+        } else {
+            newProduct.shopFirst = false;
         }
         
         if ([dataDic objectForKey:@"max_price"]) {

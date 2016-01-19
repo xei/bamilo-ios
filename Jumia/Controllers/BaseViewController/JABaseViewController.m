@@ -525,33 +525,16 @@
 
 - (void)showMessage:(NSString *)message success:(BOOL)success {
     UIViewController *rootViewController = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController;
-    
     if (!VALID_NOTEMPTY(self.messageView, JAMessageView)) {
-        self.messageView = [JAMessageView getNewJAMessageView];
+        self.messageView = [[JAMessageView alloc] initWithFrame:CGRectMake(0, 64, self.bounds.size.width, kMessageViewHeight)];
         [self.messageView setupView];
+    }else{
+        [self.messageView setFrame:CGRectMake(0, 64, self.bounds.size.width, kMessageViewHeight)];
     }
     
     if (!VALID_NOTEMPTY([self.messageView superview], UIView)) {
-        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-        CGFloat width = rootViewController.view.frame.size.width;
-        if (UIInterfaceOrientationIsLandscape(orientation)) {
-            if (width < rootViewController.view.frame.size.height) {
-                width = rootViewController.view.frame.size.height;
-            }
-        }
-        else {
-            if (width > rootViewController.view.frame.size.height) {
-                width = rootViewController.view.frame.size.height;
-            }
-        }
-        
-        [self.messageView setFrame:CGRectMake(self.messageView.frame.origin.x,
-                                              self.messageView.frame.origin.y,
-                                              width,
-                                              self.messageView.frame.size.height)];
         [rootViewController.view addSubview:self.messageView];
     }
-    
     [self.messageView setTitle:message success:success];
 }
 
