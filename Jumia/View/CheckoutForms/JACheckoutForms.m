@@ -104,7 +104,7 @@
         [descriptionLabel setNumberOfLines:0];
         [descriptionLabel setLineBreakMode:NSLineBreakByWordWrapping];
         [descriptionLabel setTextColor:UIColorFromRGB(0x666666)];
-        [descriptionLabel setText:((RIPaymentMethodFormField*)[paymentMethodForm.fields firstObject]).value];
+        [descriptionLabel setText:((RIPaymentMethodFormField*)[paymentMethodForm.fields firstObject]).label];
         [descriptionLabel setTextAlignment:NSTextAlignmentCenter];
         [descriptionLabel sizeToFit];
         [descriptionLabel setWidth:width - (27.0f * 2)];
