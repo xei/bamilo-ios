@@ -609,10 +609,10 @@
     
     [json setValue:customer.createdAt forKey:@"created_at"];
     
-    NSMutableArray * addresses = [[NSMutableArray alloc] init];
+    NSMutableDictionary * addresses = [NSMutableDictionary new];
     
     for ( RIAddress* addr in customer.addresses) {
-        [addresses addObject:[RIAddress toJSON:addr]];
+        [addresses setObject:[RIAddress toJSON:addr] forKey:addr.uid];
     }
     
     [json setValue:addresses forKey:@"address_list"];
