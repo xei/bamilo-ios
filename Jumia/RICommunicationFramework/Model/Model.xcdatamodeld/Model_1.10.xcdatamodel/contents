@@ -194,7 +194,7 @@
         <attribute name="richRelevanceParameter" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="richRelevanceTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shopFirst" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="shopFirstOverlay" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shopFirstOverlayText" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shortSummary" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sizeGuideUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sku" optional="YES" attributeType="String" syncable="YES"/>
