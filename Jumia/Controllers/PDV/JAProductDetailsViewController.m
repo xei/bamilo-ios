@@ -69,7 +69,7 @@
     
     [self.mainScrollView setPagingEnabled:YES];
     [self.mainScrollView setScrollEnabled:NO];
-    
+        
     if (VALID_NOTEMPTY(self.product.sku, NSString)) {
         self.screenName = [NSString stringWithFormat:@"PDSSecondScreen / %@", self.product.sku];
     }
