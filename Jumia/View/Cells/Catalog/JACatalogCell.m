@@ -142,7 +142,7 @@
     [self.backgroundContentView addSubview:self.priceView];
     
     if (VALID_NOTEMPTY(cartItem.shopFirst, NSNumber) && [cartItem.shopFirst boolValue])	{
-        self.shopFirstOverlay = cartItem.shopFirstOverlay;
+        self.shopFirstOverlayText = cartItem.shopFirstOverlayText;
         [self.shopFirstLogo setHidden:NO];
         [self.shopFirstLogo setX:96.0f];
     } else {
@@ -204,7 +204,7 @@
 - (void)shopFirstLogoTapped:(UIGestureRecognizer *)gestureRecognizer
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
-                                                    message:self.shopFirstOverlay
+                                                    message:self.shopFirstOverlayText
                                                    delegate:nil
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];

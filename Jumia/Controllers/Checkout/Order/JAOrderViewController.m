@@ -313,7 +313,7 @@
     CGFloat sizeLabelY = CGRectGetMaxY(priceLabel.frame);
     
     if ([cartItem.shopFirst boolValue]){
-        self.shopFirstOverlay = cartItem.shopFirstOverlay;
+        self.shopFirstOverlayText = cartItem.shopFirstOverlayText;
         UIImageView *shopFirstLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shop_first_logo"]];
         [shopFirstLogo sizeToFit];
         [shopFirstLogo setX:priceLabel.frame.origin.x];
@@ -1007,7 +1007,7 @@
 - (void)shopFirstLogoTapped:(UIGestureRecognizer *)gestureRecognizer
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
-                                                    message:self.shopFirstOverlay
+                                                    message:self.shopFirstOverlayText
                                                    delegate:nil
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];

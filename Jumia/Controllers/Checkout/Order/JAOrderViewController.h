@@ -11,6 +11,6 @@
 
 @interface JAOrderViewController : JABaseViewController
 
-@property (nonatomic, retain) NSString * shopFirstOverlay;
+@property (nonatomic, retain) NSString * shopFirstOverlayText;
 
 @end

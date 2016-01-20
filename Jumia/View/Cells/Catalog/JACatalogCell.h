@@ -40,7 +40,7 @@
 @property (weak, nonatomic) IBOutlet JAClickableView *feedbackView;
 @property (strong, nonatomic)JAPriceView *priceView;
 @property (nonatomic) UIImageView *shopFirstLogo;
-@property (nonatomic, retain) NSString * shopFirstOverlay;
+@property (nonatomic, retain) NSString * shopFirstOverlayText;
 
 - (void)loadWithProduct:(RIProduct*)product;
 - (void)loadWithCartItem:(RICartItem*)cartItem;
