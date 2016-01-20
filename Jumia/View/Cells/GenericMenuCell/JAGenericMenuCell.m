@@ -9,6 +9,17 @@
 #import "JAGenericMenuCell.h"
 #import "UIImageView+WebCache.h"
 
+#define kLeftAndRightMargin 16.f
+#define kLeftIPadMargin 24.f
+#define kCellLevelOneMargin 50.f
+#define kCellLevelOneIPadMargin 58.f
+#define kHeaderHeight 48.f
+#define kCellHeight 40.f
+#define kIconImageWidthAndHeight 22.f
+#define kIconImageRightMargin 10.f
+#define kAcessoryImageWidthAndHeight 11.f
+#define kSeparatorHeight 1.f
+
 @interface JAGenericMenuCell()
 
 @property (nonatomic, strong) UILabel* mainLabel;
@@ -41,7 +52,7 @@
         [self.backgroundClickableView addSubview:self.iconImageView];
         
         self.separatorView = [UIView new];
-        [self.separatorView setBackgroundColor:UIColorFromRGB(0xe2e2e2)];
+        [self.separatorView setBackgroundColor:JABlack400Color];
         [self.backgroundClickableView addSubview:self.separatorView];
     }
     return self;
@@ -55,56 +66,62 @@
           hasSeparator:(BOOL)hasSeparator;
 {
     //SETUP DEFAULT VARIABLES
-    
     CGFloat height = [JAGenericMenuCell heightForStyle:style];
     UIColor* backgroundColor = [UIColor whiteColor];
     BOOL clickableViewIsEnabled = YES;
     CGFloat textTopOffset = 0.0f;
-    CGFloat leftMargin = 16.0f;
-    CGFloat rightMargin = 16.0f;
-    UIFont* font = [UIFont fontWithName:kFontMediumName size:17.0f];
+    CGFloat leftMargin = kLeftAndRightMargin;
+    CGFloat rightMargin = kLeftAndRightMargin;
+    UIFont* font = JAList2Font;
     UIColor* textColor = [UIColor blackColor];
     NSString* text = cellText;
-    CGFloat accessoryImageWidth = 22.0f;
-    CGFloat accessoryImageMargin = 16.0f;
+    
+    CGFloat accessoryImageWidth = kAcessoryImageWidthAndHeight;
+    CGFloat accessoryImageMargin = kLeftAndRightMargin;
     [self.accessoryImageView setImage:[UIImage imageNamed:accessoryImageName]];
+    
     CGFloat iconImageWidth = 0.0f;
-    CGFloat iconImageMargin = 0.0f;
+    CGFloat iconImageRightMargin = 0.0f;
     if (VALID_NOTEMPTY(iconImageUrl, NSString)) {
         
-        iconImageWidth = 22.0f;
-        iconImageMargin = 16.0f;
+        iconImageWidth = kIconImageWidthAndHeight;
+        iconImageRightMargin = kIconImageRightMargin;
         
         [self.iconImageView setImageWithURL:[NSURL URLWithString:iconImageUrl]
                            placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
     }
+    
     CGFloat separatorHeight = 0.0f;
     if (hasSeparator) {
-        separatorHeight = 1.0f;
+        separatorHeight = kSeparatorHeight;
     }
     
-    
     //CHANGE VARIABLES ACCORDING TO STYLE
-    
     if (JAGenericMenuCellStyleHeader == style) {
-        backgroundColor = UIColorFromRGB(0xf0f0f0);
+        backgroundColor = JABlack300Color;
         clickableViewIsEnabled = NO;
-        textTopOffset = 3.0f;
+        textTopOffset = 2.0f;
         
         text = [cellText uppercaseString];
+        font = JACaption2Font;
         
         accessoryImageWidth = 0.0f;
         accessoryImageMargin = 0.0f;
         
         separatorHeight = 0.0f; //force this to have no separator
+        
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            leftMargin = kLeftIPadMargin;
+        }
     } else if (JAGenericMenuCellStyleLevelOne == style) {
-        leftMargin = 32.0f;
-        font = [UIFont fontWithName:kFontRegularName size:12.0f];
+        leftMargin = kCellLevelOneMargin;
+        
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            leftMargin = kCellLevelOneIPadMargin;
+        }
     }
-
     
     //SET VIEWS USING VARIABLES
-    
     self.backgroundClickableView.backgroundColor = backgroundColor;
     [self.backgroundClickableView setFrame:CGRectMake(self.bounds.origin.x,
                                                       self.bounds.origin.y,
@@ -117,9 +134,9 @@
                                             iconImageWidth,
                                             iconImageWidth)];
     
-    [self.mainLabel setFrame:CGRectMake(leftMargin + iconImageWidth + iconImageMargin,
+    [self.mainLabel setFrame:CGRectMake(leftMargin + iconImageWidth + iconImageRightMargin,
                                         self.backgroundClickableView.bounds.origin.y + textTopOffset,
-                                        self.backgroundClickableView.bounds.size.width - leftMargin - accessoryImageWidth - accessoryImageMargin - iconImageWidth - iconImageMargin - rightMargin,
+                                        self.backgroundClickableView.bounds.size.width - leftMargin - accessoryImageWidth - accessoryImageMargin - iconImageWidth - iconImageRightMargin - rightMargin,
                                         height)];
     [self.mainLabel setText:text];
     [self.mainLabel setFont:font];
@@ -144,11 +161,9 @@
 
 + (CGFloat)heightForStyle:(JAGenericMenuCellStyle)style
 {
-    CGFloat height = 0.0f;
+    CGFloat height = kCellHeight;
     if (JAGenericMenuCellStyleHeader == style) {
-        height = 64.0f;
-    } else {
-        height = 48.0f;
+        height = kHeaderHeight;
     }
     return height;
 }

@@ -57,6 +57,7 @@
 @property (strong, nonatomic) JAProductInfoHeaderLine *passwordHeader;
 @property (strong, nonatomic) JADynamicForm *changePasswordForm;
 @property (strong, nonatomic) JABottomBar *changePasswordButton;
+@property (strong, nonatomic) UIView* changePasswordView;
 
 @property (assign, nonatomic) RIApiResponse apiResponse;
 @property (assign, nonatomic) CGFloat currentY;
@@ -133,6 +134,13 @@
         [_changePasswordButton addButton:[STRING_CHANGE_PASSWORD uppercaseString] target:self action:@selector(changePasswordButtonPressed)];
     }
     return _changePasswordButton;
+}
+
+- (UIView *)changePasswordView {
+    if (!VALID_NOTEMPTY(_changePasswordView, UIView)) {
+        _changePasswordView = [UIView new];
+    }
+    return _changePasswordView;
 }
 
 #pragma mark viewLifeCycle
@@ -236,7 +244,6 @@
            }
            
            [self.mainScrollView addSubview:self.saveButton];
-           [self.mainScrollView addSubview:self.passwordHeader];
            
            [self setupUserEditFormViews];
            [self requestChangePasswordForm];
@@ -261,10 +268,12 @@
              self.changePasswordForm.delegate = self;
              
              for (UIView *view in self.changePasswordForm.formViews) {
-                 [self.mainScrollView addSubview:view];
+                 [self.changePasswordView addSubview:view];
              }
              
-             [self.mainScrollView addSubview:self.changePasswordButton];
+             [self.mainScrollView addSubview:self.changePasswordView];
+             [self.changePasswordView addSubview:self.passwordHeader];
+             [self.changePasswordView addSubview:self.changePasswordButton];
              
              [self setupChangePasswordFormViews];
              [self setupFixedElements];
@@ -391,22 +400,22 @@
 - (void)setupChangePasswordFormViews
 {
     CGFloat maxY = CGRectGetMaxY(self.saveButton.frame);
+    [self.changePasswordView setFrame:CGRectMake(0.f, maxY, self.mainScrollView.width, 0.f)];
     
-    [self.passwordHeader setY:maxY + kPasswordHeaderMargin];
-
+    [self.passwordHeader setY:kPasswordHeaderMargin];
     [self.passwordHeader setWidth:self.mainScrollView.width];
     
+    CGFloat formCurrY = 0.0f;
     for (JADynamicField *view in self.changePasswordForm.formViews) {
         [view setFrame:CGRectMake(
                                   kSideMargin,
                                   view.y,
                                   self.mainScrollView.width - (2 * kSideMargin),
                                   view.height)];
-        
-        maxY = CGRectGetMaxY(view.frame);
+        formCurrY = CGRectGetMaxY(view.frame);
     }
-    
-    [self.changePasswordButton setY:maxY + kButtonsMargin];
+    [self.changePasswordButton setY:formCurrY + kButtonsMargin];
+    [self.changePasswordView setHeight:CGRectGetMaxY(self.changePasswordButton.frame)];
 }
 
 - (void)setupFixedElements

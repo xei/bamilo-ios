@@ -87,7 +87,6 @@
     } else {
         CGFloat previousFrameRightPoint = _previousFrame.origin.x + _previousFrame.size.width + self.minimumLineSpacing;
         CGFloat previousFrameLeftPoint = _previousFrame.origin.x - self.minimumLineSpacing;
-        CGRect frame = currentItemAttributes.frame;
         frame.origin.x = previousFrameRightPoint;
         if (RI_IS_RTL) {
             frame.origin.x = previousFrameLeftPoint - frame.size.width;
