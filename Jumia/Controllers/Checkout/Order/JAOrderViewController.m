@@ -313,12 +313,18 @@
     CGFloat sizeLabelY = CGRectGetMaxY(priceLabel.frame);
     
     if ([cartItem.shopFirst boolValue]){
+        self.shopFirstOverlayText = cartItem.shopFirstOverlayText;
         UIImageView *shopFirstLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shop_first_logo"]];
         [shopFirstLogo sizeToFit];
         [shopFirstLogo setX:priceLabel.frame.origin.x];
         [shopFirstLogo setY:CGRectGetMaxY(priceLabel.frame) + 2.0f];
         [shopFirstLogo setHidden:NO];
+        [shopFirstLogo setUserInteractionEnabled:YES];
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                    action:@selector(shopFirstLogoTapped:)];
+        [shopFirstLogo addGestureRecognizer:singleTap];
         [itemCell addSubview:shopFirstLogo];
+        [itemCell bringSubviewToFront:shopFirstLogo];
         sizeLabelY = CGRectGetMaxY(shopFirstLogo.frame);
     }
 
@@ -996,6 +1002,16 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutPaymentScreenNotification
                                                         object:nil
                                                       userInfo:nil];
+}
+
+- (void)shopFirstLogoTapped:(UIGestureRecognizer *)gestureRecognizer
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
+                                                    message:self.shopFirstOverlayText
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
 }
 
 @end
