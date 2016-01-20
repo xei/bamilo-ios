@@ -88,8 +88,10 @@
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
-                                                              if (VALID(metadata, NSDictionary)) {
+                                                              if (VALID_NOTEMPTY(metadata, NSDictionary)) {
                                                                   successBlock([RIAddress parseAddressList:metadata]);
+                                                              } else if ([jsonObject objectForKey:@"success"] && ![jsonObject objectForKey:@"metadata"]) {
+                                                                  successBlock(metadata);
                                                               } else {
                                                                   failureBlock(apiResponse, nil);
                                                               }
