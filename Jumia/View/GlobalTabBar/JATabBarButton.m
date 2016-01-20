@@ -11,6 +11,14 @@
 #define kLabelNormalTextColor [UIColor blackColor]
 #define kLabelHighlightedTextColor JAOrange1Color
 
+// These values are being used to calculate positions, using as reference its parent view's height.
+// So, the bigger the number is, the smaller real top margin will be.
+#define kImageTopMargin 8.f
+#define kShopImageTopMargin 12.f
+
+#define kLabelBottomMargin 8.f
+#define kShopLabelBottomMargin 6.f
+
 @interface JATabBarButton ()
 
 @property (nonatomic, strong) UIView* separatorView;
@@ -41,6 +49,17 @@
       highlightedImageName:(NSString*)highlightedImageName
                      title:(NSString*)title;
 {
+    // If font type is Zawgyi-One (expected to happen when target is shop),
+    // Adjust variables accordingly.
+    CGFloat labelBottomMargin = kLabelBottomMargin;
+    CGFloat imageOffset = kImageTopMargin;
+    UIFont *numberLabelFont = [UIFont fontWithName:kFontRegularName size:8.f];
+    if ([@"Zawgyi-One" isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:kFontRegularNameKey]]) {
+        labelBottomMargin = kShopLabelBottomMargin;
+        imageOffset = kShopImageTopMargin;
+        numberLabelFont = [UIFont fontWithName:@"HelveticaNeue" size:8.f];
+    }
+    
     if (ISEMPTY(self.clickableView)) {
         self.clickableView = [[JAClickableView alloc] init];
         self.clickableView.frame = self.bounds;
@@ -69,17 +88,18 @@
     self.normalImage = [UIImage imageNamed:imageName];
     self.highlightedImage = [UIImage imageNamed:highlightedImageName];
     [self.imageView setFrame:CGRectMake((self.clickableView.bounds.size.width - self.normalImage.size.width) / 2,
-                                        6.0f,
+                                        (self.clickableView.height - (self.label.height + imageOffset + self.normalImage.size.height)) / 2, // 6.0f,
                                         self.normalImage.size.width,
                                         self.normalImage.size.height)];
     
     if (ISEMPTY(self.numberLabel)) {
         self.numberLabel = [UILabel new];
         self.numberLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
-        self.numberLabel.font = [UIFont fontWithName:kFontRegularName size:9.0];
+        self.numberLabel.font = numberLabelFont;
         self.numberLabel.textColor = [UIColor whiteColor];
         self.numberLabel.adjustsFontSizeToFitWidth = YES;
         self.numberLabel.textAlignment = NSTextAlignmentCenter;
+        [self.numberLabel setBackgroundColor:[UIColor redColor]];
         [self.imageView addSubview:self.numberLabel];
     }
     
@@ -94,7 +114,7 @@
     [self.label setText:title];
     [self.label sizeToFit];
     [self.label setFrame:CGRectMake(self.clickableView.bounds.origin.x,
-                                    CGRectGetMaxY(self.imageView.frame)-3.f,
+                                    self.clickableView.height - self.label.frame.size.height - labelBottomMargin,
                                     self.clickableView.bounds.size.width,
                                     self.label.frame.size.height)];
     
@@ -104,26 +124,14 @@
 
 - (void)setNumber:(NSInteger)number
 {
-    //magic numbers... there's no way around it here
-    CGRect frame;
-    if (number < 10) {
-        frame = CGRectMake(self.imageView.bounds.size.width/2 + 2.0f,
-                           3.0f,
-                           10.0f,
-                           12.0f);
-    } else if (number < 100) {
-        frame = CGRectMake(self.imageView.bounds.size.width/2 + 2.0f,
-                           3.0f,
-                           12.0f,
-                           12.0f);
-    } else {
-        frame = CGRectMake(self.imageView.bounds.size.width/2 + 2.0f,
-                           3.0f,
-                           12.0f,
-                           12.0f);
-    }
+    CGRect frame = CGRectMake(self.imageView.bounds.size.width / 2 + 2.f,
+                              0.f,
+                              10.f,
+                              10.f);
     [self.numberLabel setFrame:frame];
     self.numberLabel.text = [NSString stringWithFormat:@"%ld", (long)number];
+    self.numberLabel.layer.masksToBounds = YES;
+    self.numberLabel.layer.cornerRadius = frame.size.width / 2;
 }
 
 @end
