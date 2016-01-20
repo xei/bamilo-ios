@@ -530,11 +530,9 @@ typedef void (^ProcessActionBlock)(void);
                 NSString* urlToUse = [RITarget getURLStringforTargetString:self.catalogTargetString];
                 if (VALID_NOTEMPTY(self.categoryName, NSString)) {
                     urlToUse = [NSString stringWithFormat:@"%@%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_CATALOG, self.categoryName];
-                }else
-                if (VALID_NOTEMPTY(self.category, RICategory) && VALID_NOTEMPTY(self.category.targetString, NSString)) {
+                }else if (VALID_NOTEMPTY(self.category, RICategory) && VALID_NOTEMPTY(self.category.targetString, NSString)) {
                     urlToUse = [RITarget getURLStringforTargetString:self.category.targetString];
-                }else
-                if (VALID_NOTEMPTY(self.filterCategory, RICategory) && VALID_NOTEMPTY(self.filterCategory.targetString, NSString)) {
+                }else if (VALID_NOTEMPTY(self.filterCategory, RICategory) && VALID_NOTEMPTY(self.filterCategory.targetString, NSString)) {
                     urlToUse = [RITarget getURLStringforTargetString:self.filterCategory.targetString];
                 }
                 
