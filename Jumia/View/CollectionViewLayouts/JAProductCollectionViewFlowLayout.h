@@ -11,6 +11,4 @@
 
 @interface JAProductCollectionViewFlowLayout : UICollectionViewFlowLayout
 
-@property (nonatomic) BOOL hasBanner;
-
 @end

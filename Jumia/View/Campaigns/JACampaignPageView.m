@@ -22,12 +22,15 @@
 #define kButtonWidth 288
 
 @interface JACampaignPageView()
+{
+    BOOL _hasBanner;
+}
 
 @property (nonatomic, strong) RICampaign* campaign;
 @property (nonatomic, strong) UICollectionView* collectionView;
 @property (nonatomic, strong) JAProductCollectionViewFlowLayout* flowLayout;
 @property (nonatomic, strong) NSString* cellIdentifier;
-@property (nonatomic, strong) UIImageView* bannerImage;
+@property (nonatomic, strong) UIImageView* bannerImageView;
 @property (nonatomic, assign) NSInteger elapsedTimeInSeconds;
 @property (nonatomic, strong) NSMutableArray* chosenSimpleNames;
 @property (nonatomic, strong) JACampaignProductCell* lastPressedCampaignProductCell;
@@ -116,30 +119,32 @@
     }
 }
 
-@synthesize bannerImage = _bannerImage;
-- (UIImageView*)bannerImage
+@synthesize bannerImageView = _bannerImageView;
+- (UIImageView*)bannerImageView
 {
-    if (VALID_NOTEMPTY(_bannerImage, UIImageView)) {
-        //do nothing
-    } else {
-        _bannerImage = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                     0.0f,
-                                                                     1.0f,
-                                                                     1.0f)];
-        
-        if (VALID_NOTEMPTY(self.campaign.bannerImageURL, NSString)) {
-            __block UIImageView *blockedImageView = _bannerImage;
+    if (VALID_NOTEMPTY(self.campaign.bannerImageURL, NSString)) {
+        if (!VALID_NOTEMPTY(_bannerImageView, UIImageView)) {
+            _bannerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                         0.0f,
+                                                                         0.0f,
+                                                                         0.0f)];
+            
+            __block UIImageView *blockedImageView = _bannerImageView;
             __weak JACampaignPageView* weakSelf = self;
-            [_bannerImage setImageWithURL:[NSURL URLWithString:self.campaign.bannerImageURL]
+            [_bannerImageView setImageWithURL:[NSURL URLWithString:self.campaign.bannerImageURL]
                                   success:^(UIImage *image, BOOL cached){
+                                      _hasBanner = YES;
                                       [blockedImageView changeImageHeight:0.0f andWidth:weakSelf.frame.size.width];
-                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                          [weakSelf.collectionView reloadData];
-                                      });
-                                  }failure:^(NSError *error){}];
+                                      [weakSelf.collectionView reloadData];
+                                  }failure:^(NSError *error){
+                                      _hasBanner = NO;
+                                  }];
         }
+    }else{
+        _hasBanner = NO;
+        _bannerImageView = nil;
     }
-    return _bannerImage;
+    return _bannerImageView;
 }
 
 - (void)loadWithCampaign:(RICampaign*)campaign
@@ -189,18 +194,19 @@
         [self.flowLayout setSectionInset:UIEdgeInsetsMake(0.f, 0.0, 0.0, 0.0)];
         self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
         
-        if (VALID_NOTEMPTY(campaign.bannerImageURL, NSString)) {
-            [self.flowLayout setHasBanner:YES];
-        }
-        
         self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:self.flowLayout];
         self.collectionView.backgroundColor = [UIColor clearColor];
         self.collectionView.delegate = self;
         self.collectionView.dataSource = self;
         [self addSubview:self.collectionView];
         
-        [self.collectionView registerClass:[JACampaignProductCell class] forCellWithReuseIdentifier:@"campaignProductCell"];
-        [self.collectionView registerClass:[JACampaignBannerCell class] forCellWithReuseIdentifier:@"campaignBannerCell"];
+        self.cellIdentifier = @"campaignProductCell";
+        [self.collectionView registerClass:[JACampaignProductCell class] forCellWithReuseIdentifier:self.cellIdentifier];
+        
+        if (VALID_NOTEMPTY(self.campaign.bannerImageURL, NSString)) {
+            [self.collectionView registerClass:[JACampaignBannerCell class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"campaignBannerCell"];
+            [self bannerImageView];
+        }
         
         
         [self reloadViewToInterfaceOrientation:self.interfaceOrientation];
@@ -209,10 +215,9 @@
 
 - (void)reloadViewToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    self.bannerImage = nil;
-    
-    self.cellIdentifier = @"campaignProductCell";
-    
+    if (_hasBanner) {
+        [self.bannerImageView changeImageHeight:0.0f andWidth:self.frame.size.width];
+    }
     [self.collectionView setFrame:self.bounds];
     [self.collectionView reloadData];
 }
@@ -231,18 +236,11 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    CGFloat numberOfCells = self.campaign.campaignProducts.count;
-    if (VALID_NOTEMPTY(self.campaign.bannerImageURL, NSString)) {
-        numberOfCells++;
-    }
-    return numberOfCells;
+    return self.campaign.campaignProducts.count;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (VALID_NOTEMPTY(self.campaign.bannerImageURL, NSString) && 0 == indexPath.row) {
-        return self.bannerImage.frame.size;
-    }
     CGSize size = [self getCellLayoutForInterfaceOrientation:self.interfaceOrientation];
     self.flowLayout.itemSize = CGSizeMake(size.width, size.height);
     return size;
@@ -269,32 +267,40 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger realIndex = indexPath.row;
-    BOOL campaignHasBanner = NO;
-    if (VALID_NOTEMPTY(self.campaign.bannerImageURL, NSString)) {
-        campaignHasBanner = YES;
-        if (0 == indexPath.row) {
-            JACampaignBannerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"campaignBannerCell" forIndexPath:indexPath];
-            [cell loadWithImageView:self.bannerImage];
-            return cell;
-        }
-        realIndex--;
-    }
     JACampaignProductCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:self.cellIdentifier forIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
     
     cell.delegate = self;
-    cell.tag = realIndex;
+    cell.tag = indexPath.row;
     
-    RICampaignProduct* product = [self.campaign.campaignProducts objectAtIndex:realIndex];
+    RICampaignProduct* product = [self.campaign.campaignProducts objectAtIndex:indexPath.row];
     
-    NSString* chosenSimpleName = [self.chosenSimpleNames objectAtIndex:realIndex];
+    NSString* chosenSimpleName = [self.chosenSimpleNames objectAtIndex:indexPath.row];
     
     [cell loadWithCampaignProduct:product
              elapsedTimeInSeconds:self.elapsedTimeInSeconds
-                       chosenSize:chosenSimpleName
-                 capaignHasBanner:campaignHasBanner];
+                       chosenSize:chosenSimpleName];
     
     return cell;
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    if (kind == UICollectionElementKindSectionHeader && _hasBanner) {
+        
+        JACampaignBannerCell *cell = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"campaignBannerCell" forIndexPath:indexPath];
+        
+        [cell loadWithImageView:self.bannerImageView];
+        
+        return cell;
+    }
+    return nil;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    if (_hasBanner) {
+        return self.bannerImageView.frame.size;
+    }
+    return CGSizeMake(0, 0);
 }
 
 #pragma mark - Timer
