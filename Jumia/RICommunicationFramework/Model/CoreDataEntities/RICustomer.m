@@ -79,7 +79,7 @@
 }
 
 + (NSString *)checkEmailWithParameters:(NSDictionary *)parameters
-                          successBlock:(void (^)(BOOL knownEmail))successBlock
+                          successBlock:(void (^)(BOOL knownEmail, RICustomer *customerAlreadyLoggedIn))successBlock
                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, @"customer/emailcheck/"]]
@@ -90,12 +90,26 @@
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                              NSDictionary* messages = [jsonObject objectForKey:@"messages"];
+                                                              NSDictionary *error = nil;
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                               {
+                                                                  if (VALID_NOTEMPTY(messages, NSDictionary)) {
+                                                                      if (VALID_NOTEMPTY([messages objectForKey:@"error"], NSArray)) {
+                                                                          if (VALID_NOTEMPTY([[messages objectForKey:@"error"] firstObject], NSDictionary)) {
+                                                                              error = [[messages objectForKey:@"error"] firstObject];
+                                                                          }
+                                                                      }
+                                                                  }
                                                                   NSNumber* exists = [metadata objectForKey:@"exist"];
                                                                   if (VALID_NOTEMPTY(exists, NSNumber))
                                                                   {
-                                                                      successBlock([exists boolValue]);
+                                                                      successBlock([exists boolValue], nil);
+                                                                  } else if (VALID_NOTEMPTY(error, NSDictionary)) {
+                                                                      if (VALID_NOTEMPTY([error objectForKey:@"code"], NSNumber) && [[error objectForKey:@"code"] isEqualToNumber:@232]) {
+                                                                          RICustomer *customer = [RICustomer parseCustomerWithJson:[metadata objectForKey:@"customer_entity"]];
+                                                                          successBlock(NO, customer);
+                                                                      }
                                                                   } else
                                                                   {
                                                                       failureBlock(apiResponse, [RIError getErrorMessages:jsonObject]);
@@ -127,9 +141,8 @@
     NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
     
     if (customers.count > 0) {
-        RICustomer *customerObject = [customers objectAtIndex:0];
+        __block RICustomer *customerObject = [customers objectAtIndex:0];
         
-        [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICustomer class])];
         
         if([@"facebook" isEqualToString:customerObject.loginMethod])
         {
