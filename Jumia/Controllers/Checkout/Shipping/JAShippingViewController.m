@@ -65,6 +65,7 @@ UICollectionViewDelegateFlowLayout
 @property (strong, nonatomic) NSString *selectedShippingMethod;
 @property (strong, nonatomic) NSIndexPath *collectionViewIndexSelected;
 @property (strong, nonatomic) NSIndexPath *selectedPickupStationIndexPath;
+@property (strong, nonatomic) JASellerDeliveryView *seller;
 @property (strong, nonatomic) NSMutableArray *sellerDeliveryViews;
 
 @property (assign, nonatomic) RIApiResponse apiResponse;
@@ -72,6 +73,14 @@ UICollectionViewDelegateFlowLayout
 @end
 
 @implementation JAShippingViewController
+
+- (JASellerDeliveryView *)seller
+{
+    if (!VALID_NOTEMPTY(_seller, JASellerDeliveryView)) {
+        _seller = [[JASellerDeliveryView alloc] init];
+    }
+    return _seller;
+}
 
 - (void)viewDidLoad
 {
@@ -343,22 +352,20 @@ UICollectionViewDelegateFlowLayout
     [self hideLoading];
 }
 
-- (void) setupSellerDelivery:(CGFloat)width {
-    
+- (void) setupSellerDelivery:(CGFloat)width
+{
     if (VALID_ISEMPTY(self.sellerDeliveryViews, NSMutableArray)) {
         NSInteger index = 1;
         NSInteger max = [self.cart.sellerDelivery count];
         for (RISellerDelivery* sell in self.cart.sellerDelivery) {
-            JASellerDeliveryView* seller = [[JASellerDeliveryView alloc] init];
-            [seller setupWithSellerDelivery:sell index:index++ ofMax:max width:width];
-            [self.scrollView addSubview:seller];
-            [self.sellerDeliveryViews addObject:seller];
+            [self.seller setupWithSellerDelivery:sell index:index++ ofMax:max width:width];
+            [self.scrollView addSubview:self.seller];
+            [self.sellerDeliveryViews addObject:self.seller];
         }
     }
-    CGFloat currentY = self.collectionView.frame.origin.y + self.collectionView.frame.size.height + 24.0f;
     
     if (VALID_NOTEMPTY(self.sellerDeliveryViews, NSMutableArray)) {
-     
+        CGFloat currentY = self.collectionView.frame.origin.y + self.collectionView.frame.size.height + 24.f;
         for (JASellerDeliveryView *sell in self.sellerDeliveryViews) {
             [UIView animateWithDuration:0.5f
                              animations:^{
