@@ -645,7 +645,7 @@ UICollectionViewDelegateFlowLayout>
         {
             if(self.useSameAddressAsBillingAndShipping)
             {
-                [headerView loadHeaderWithText:STRING_DEFAULT_SHIPPING_ADDRESSES width:self.contentScrollView.frame.size.width - 12.0f];
+                [headerView loadHeaderWithText:STRING_SHIPPING_BILLING_ADDRESS width:self.contentScrollView.frame.size.width - 12.0f];
             }
             else
             {
