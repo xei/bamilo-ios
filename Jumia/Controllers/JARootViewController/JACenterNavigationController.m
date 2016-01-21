@@ -42,7 +42,6 @@
 #import "RICustomer.h"
 #import "JAEmailNotificationsViewController.h"
 #import "JACampaignsViewController.h"
-#import "JAProductDetailsViewController.h"
 #import "JATabNavigationViewController.h"
 #import "JARatingsViewController.h"
 #import "JANewRatingViewController.h"
@@ -908,16 +907,14 @@
         }
         
         [self pushViewController:addressesVC animated:NO];
-    } else {
-        if (!fromCheckout && ![topViewController isKindOfClass:[JAAuthenticationViewController class]]) {
-            JAAuthenticationViewController *auth = [[JAAuthenticationViewController alloc] init];
-            
-            auth.navBarLayout.showBackButton = YES;
-            auth.fromSideMenu = NO;
-            auth.nextStepBlock = ^{ [[NSNotificationCenter defaultCenter] postNotification:notification]; };
-            
-            [self pushViewController:auth animated:NO];
-        }
+    } else if (!fromCheckout && ![topViewController isKindOfClass:[JAAuthenticationViewController class]]) {
+        JAAuthenticationViewController *auth = [[JAAuthenticationViewController alloc] init];
+        
+        auth.navBarLayout.showBackButton = YES;
+        auth.fromSideMenu = NO;
+        auth.nextStepBlock = ^{ [[NSNotificationCenter defaultCenter] postNotification:notification]; };
+        
+        [self pushViewController:auth animated:NO];
     }
 }
 

@@ -203,6 +203,9 @@ typedef void (^ProcessActionBlock)(void);
     
     if (VALID_NOTEMPTY(self.category, RICategory)) {
         self.categoryUrlKey = self.category.urlKey;
+    }else if (VALID_NOTEMPTY(self.categoryUrlKey, NSString))
+    {
+        self.catalogTargetString = [NSString stringWithFormat:@"catalog_category::%@", self.categoryUrlKey];
     }
     
     self.apiResponse = RIApiResponseSuccess;
@@ -525,11 +528,9 @@ typedef void (^ProcessActionBlock)(void);
                 NSString* urlToUse = [RITarget getURLStringforTargetString:self.catalogTargetString];
                 if (VALID_NOTEMPTY(self.categoryName, NSString)) {
                     urlToUse = [NSString stringWithFormat:@"%@%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_CATALOG, self.categoryName];
-                }
-                if (VALID_NOTEMPTY(self.category, RICategory) && VALID_NOTEMPTY(self.category.targetString, NSString)) {
+                }else if (VALID_NOTEMPTY(self.category, RICategory) && VALID_NOTEMPTY(self.category.targetString, NSString)) {
                     urlToUse = [RITarget getURLStringforTargetString:self.category.targetString];
-                }
-                if (VALID_NOTEMPTY(self.filterCategory, RICategory) && VALID_NOTEMPTY(self.filterCategory.targetString, NSString)) {
+                }else if (VALID_NOTEMPTY(self.filterCategory, RICategory) && VALID_NOTEMPTY(self.filterCategory.targetString, NSString)) {
                     urlToUse = [RITarget getURLStringforTargetString:self.filterCategory.targetString];
                 }
                 

@@ -82,6 +82,7 @@
 @dynamic sum;
 @dynamic targetString;
 @dynamic shopFirst;
+@dynamic shopFirstOverlayText;
 @dynamic isNew;
 @dynamic favoriteAddDate;
 @dynamic recentlyViewedDate;
@@ -422,6 +423,9 @@
         
         if ([dataDic objectForKey:@"shop_first"]) {
             newProduct.shopFirst = [NSNumber numberWithBool:[[dataDic objectForKey:@"shop_first"] boolValue]];
+            if ([dataDic objectForKey:@"shop_first_overlay"]) {
+                newProduct.shopFirstOverlayText = [dataDic objectForKey:@"shop_first_overlay"];
+            }
         } else {
             newProduct.shopFirst = false;
         }

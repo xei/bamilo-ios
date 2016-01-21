@@ -64,6 +64,8 @@
             urlString = [urlString stringByAppendingString:RI_API_PRODUCT_DETAIL];
         } else if ([type isEqualToString:@"catalog"]) {
             urlString = [urlString stringByAppendingString:RI_API_CATALOG_HASH];
+        }else if ([type isEqualToString:@"catalog_category"]) {
+            urlString = [urlString stringByAppendingString:RI_API_CATALOG];
         } else if ([type isEqualToString:@"catalog_brand"]) {
             urlString = [urlString stringByAppendingString:RI_API_CATALOG_BRAND];
         } else if ([type isEqualToString:@"catalog_seller"]) {

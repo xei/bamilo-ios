@@ -21,7 +21,6 @@
 #import "JAPDVGallery.h"
 #import "RIProductRatings.h"
 #import "JARatingsViewController.h"
-#import "JAProductDetailsViewController.h"
 #import "JANewRatingViewController.h"
 #import "JAAppDelegate.h"
 #import "JAActivityViewController.h"
