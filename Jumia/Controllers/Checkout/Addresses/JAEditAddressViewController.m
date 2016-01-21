@@ -447,10 +447,6 @@ JAPickerDelegate>
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithDictionary:[self.dynamicForm getValues]];
     
-    [parameters setValue:[self.editAddress uid] forKey:[self.dynamicForm getFieldNameForKey:@"id"]];
-    [parameters setValue:[self.editAddress isDefaultShipping] forKey:[self.dynamicForm getFieldNameForKey:@"is_default_shipping"]];
-    [parameters setValue:[self.editAddress isDefaultBilling] forKey:[self.dynamicForm getFieldNameForKey:@"is_default_billing"]];
-    
     [RIForm sendForm:[self.dynamicForm form]
           parameters:parameters
         successBlock:^(id object)
