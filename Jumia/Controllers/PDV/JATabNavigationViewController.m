@@ -42,7 +42,7 @@
         UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, _tabBarView.height-1, _tabBarView.width, 1)];
         [separator setBackgroundColor:JABlack300Color];
         [_tabBarView addSubview:separator];
-        [self.descriptionTabButton setSelected:YES];
+        [self reloadTabs];
     }else{
         if (!CGRectEqualToRect(frame, _tabBarView.frame)) {
             [_tabBarView setFrame:frame];
