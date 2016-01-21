@@ -207,6 +207,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     JACatalogListCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"CellWithLines" forIndexPath:indexPath];
     [cell setShowSelector:YES];
     [cell setHideRating:YES];
+    [cell setHideShopFirstLogo:YES];
     [cell loadWithProduct:bundleProduct];
     
     if (![self.product.sku isEqualToString:bundleProduct.sku]) {

@@ -164,16 +164,16 @@
             frame.origin.y = startingY;
             textField.frame = frame;
             
-            UITapGestureRecognizer *tapTheEye = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showPassword:)];
-            tapTheEye.numberOfTapsRequired = 1;
+            UITapGestureRecognizer *eyeGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showPassword:)];
+            eyeGestureRecognizer.numberOfTapsRequired = 1;
             
             UIImageView *eyeView;
-            UIImage *eye = [UIImage imageNamed:@"btn_eye_closed"];
-            eyeView = [[UIImageView alloc] initWithImage:eye];
-            [eyeView setFrame:CGRectMake(0, 0, eye.size.width, eye.size.height)];
+            UIImage *eyeImage = [UIImage imageNamed:@"btn_eye_closed"];
+            eyeView = [[UIImageView alloc] initWithImage:eyeImage];
+            [eyeView setFrame:CGRectMake(0, 0, eyeImage.size.width, eyeImage.size.height)];
             
             [eyeView setUserInteractionEnabled:YES];
-            [eyeView addGestureRecognizer:tapTheEye];
+            [eyeView addGestureRecognizer:eyeGestureRecognizer];
             
             if (RI_IS_RTL) {
                 textField.textField.leftViewMode = UITextFieldViewModeAlways;

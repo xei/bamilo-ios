@@ -357,18 +357,19 @@
     
     if (VALID_NOTEMPTY(campaignProduct.priceRange, NSString)) {
         [self.priceLine setPrice:campaignProduct.priceRange];
+        [self.priceLine setOldPrice:nil];
         [self.savingView setHidden:YES];
-    } else
-        if (VALID_NOTEMPTY(campaignProduct.specialPrice, NSNumber)) {
-            [self.priceLine setPrice:campaignProduct.specialPriceFormatted];
-            [self.priceLine setOldPrice:campaignProduct.priceFormatted];
-            [self.savingMoneyLabel setText:campaignProduct.savePriceFormatted];
-            [self.savingView setHidden:NO];
-            
-        }else{
-            [self.priceLine setPrice:campaignProduct.priceFormatted];
-            [self.savingView setHidden:YES];
-        }
+    } else if (VALID_NOTEMPTY(campaignProduct.specialPrice, NSNumber)) {
+        [self.priceLine setPrice:campaignProduct.specialPriceFormatted];
+        [self.priceLine setOldPrice:campaignProduct.priceFormatted];
+        [self.savingMoneyLabel setText:campaignProduct.savePriceFormatted];
+        [self.savingView setHidden:NO];
+        
+    } else {
+        [self.priceLine setPrice:campaignProduct.priceFormatted];
+        [self.priceLine setOldPrice:nil];
+        [self.savingView setHidden:YES];
+    }
     
     if (campaignProduct.productSimples.count > 1) {
         [self.sizeLine setHidden:NO];

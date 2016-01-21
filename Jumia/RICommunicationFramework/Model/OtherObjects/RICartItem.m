@@ -62,6 +62,9 @@
     
     if ([info objectForKey:@"shop_first"]) {
         cartItem.shopFirst = [NSNumber numberWithBool:[[info objectForKey:@"shop_first"] boolValue]];
+        if ([info objectForKey:@"shop_first_overlay"]) {
+            cartItem.shopFirstOverlayText = [info objectForKey:@"shop_first_overlay"];
+        }
     }
     
     if (VALID_NOTEMPTY([info objectForKey:@"special_price"], NSNumber)) {

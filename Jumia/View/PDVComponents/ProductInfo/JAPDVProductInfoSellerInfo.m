@@ -169,8 +169,12 @@
         [_shopFirstLogo sizeToFit];
         [_shopFirstLogo setX:CGRectGetMaxX(self.sellerNameLabel.frame) + 8.f];
         [_shopFirstLogo setY:self.sellerNameLabel.y];
-        [self.clickableView addSubview:_shopFirstLogo];
-        [_shopFirstLogo setHidden:YES];
+        [_shopFirstLogo setUserInteractionEnabled:YES];
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                    action:@selector(shopFirstLogoTapped:)];
+        [_shopFirstLogo addGestureRecognizer:singleTap];
+        [self bringSubviewToFront:_shopFirstLogo];
+        [self addSubview:_shopFirstLogo];
     }
     return _shopFirstLogo;
 }
@@ -259,7 +263,19 @@
             [self.sellerNameLabel setWidth:190.f];
         }
         [self.shopFirstLogo setHidden:NO];
+    } else {
+        [self.shopFirstLogo setHidden:YES];
     }
+}
+
+- (void)shopFirstLogoTapped:(UIGestureRecognizer *)gestureRecognizer
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
+                                                    message:self.shopFirstOverlayText
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
 }
 
 @end
