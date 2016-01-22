@@ -92,8 +92,8 @@
             frame.origin.x = self.collectionView.frame.size.width - frame.size.width;
         }
     } else {
-        CGFloat previousFrameRightPoint = lastFrame.origin.x + lastFrame.size.width + self.minimumLineSpacing;
-        CGFloat previousFrameLeftPoint = lastFrame.origin.x - self.minimumLineSpacing;
+        CGFloat previousFrameRightPoint = lastFrame.origin.x + lastFrame.size.width;
+        CGFloat previousFrameLeftPoint = lastFrame.origin.x;
         frame.origin.x = previousFrameRightPoint;
         if (RI_IS_RTL) {
             frame.origin.x = previousFrameLeftPoint - frame.size.width;
