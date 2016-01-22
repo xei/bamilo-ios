@@ -12,7 +12,6 @@
 #import "JAPercentageBarView.h"
 #import "UIImageView+WebCache.h"
 #import "JAProductInfoPriceLine.h"
-#import "JAProductInfoSubLine.h"
 #import "JABottomBar.h"
 #import "UIImage+WithColor.h"
 
