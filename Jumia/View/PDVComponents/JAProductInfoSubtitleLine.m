@@ -50,7 +50,7 @@
 {
     if (!VALID(_titleLineLabel, UILabel)) {
         _titleLineLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.lineContentXOffset, kTopMargin, self.width, 16.f)];
-        [_titleLineLabel setFont:JACaptionFont];
+        [_titleLineLabel setFont:JAList2Font];
         [_titleLineLabel setTextColor:JABlackColor];
         [self addSubview:_titleLineLabel];
     }

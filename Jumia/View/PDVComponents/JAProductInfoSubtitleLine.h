@@ -8,7 +8,7 @@
 
 #import "JAProductInfoBaseLine.h"
 
-#define kProductInfoSubtitleLineHeight 64
+#define kProductInfoSubtitleLineHeight 68
 
 @interface JAProductInfoSubtitleLine : JAProductInfoBaseLine
 
