@@ -42,7 +42,12 @@
         UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, _tabBarView.height-1, _tabBarView.width, 1)];
         [separator setBackgroundColor:JABlack300Color];
         [_tabBarView addSubview:separator];
-        [self.descriptionTabButton setSelected:YES];
+        if (RI_IS_RTL) {
+            [self.reviewsTabButton setSelected:YES];
+        }
+        else{
+            [self.descriptionTabButton setSelected:YES];
+        }
     }else{
         if (!CGRectEqualToRect(frame, _tabBarView.frame)) {
             [_tabBarView setFrame:frame];
