@@ -402,4 +402,6 @@
 #define STRING_USER_DATA_EDITED_SUCCESS RILocalizedString(@"user_data_edited_with_success", nil)
 #define STRING_PRE_ORDER RILocalizedString(@"pre_order", nil)
 
+#define STRING_SHIPPING_BILLING_ADDRESS RILocalizedString(@"shipping_billing_address", nil)
+
 #endif

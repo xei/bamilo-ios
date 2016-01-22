@@ -85,8 +85,17 @@
     
     if(VALID_NOTEMPTY([self.field value], NSString))
     {
-        self.storedValue = @"1";
-        [self.switchComponent setOn:YES animated:NO];
+        if ([[self.field value] isEqualToString:@"1"]) {
+            self.storedValue = @"1";
+            [self.switchComponent setOn:YES animated:NO];
+        } else {
+            self.storedValue = @"";
+            [self.switchComponent setOn:NO animated:NO];
+        }
+    }
+    
+    if (VALID_NOTEMPTY(self.field.disabled, NSNumber) && YES == [self.field.disabled boolValue]) {
+        [self.switchComponent setEnabled:NO];
     }
 }
 

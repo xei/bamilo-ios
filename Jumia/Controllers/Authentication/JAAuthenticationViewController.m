@@ -446,11 +446,36 @@
         return;
     }
     [self showLoading];
-    [RICustomer checkEmailWithParameters:[NSDictionary dictionaryWithObject:self.emailTextField.textField.text forKey:@"email"] successBlock:^(BOOL knownEmail) {
+    [RICustomer checkEmailWithParameters:[NSDictionary dictionaryWithObject:self.emailTextField.textField.text forKey:@"email"] successBlock:^(BOOL knownEmail, RICustomer *customerAlreadyLoggedIn) {
         
         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         
         [self.emailTextField cleanError];
+        
+        if (VALID_NOTEMPTY(customerAlreadyLoggedIn, RICustomer)) {
+            if (self.fromSideMenu) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+            } else {
+                NSInteger count = [self.navigationController.viewControllers count];
+                if (count > 2)
+                {
+                    UIViewController *viewController = [self.navigationController.viewControllers objectAtIndex:count-2];
+                    UIViewController *viewControllerToPop = [self.navigationController.viewControllers objectAtIndex:count-3];
+                    if ([viewController isKindOfClass:[JAAuthenticationViewController class]]) {
+                        [self.navigationController popToViewController:viewControllerToPop animated:YES];
+                    }else{
+                        [self.navigationController popViewControllerAnimated:YES];
+                    }
+                }else{
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+                if(self.nextStepBlock) {
+                    self.nextStepBlock();
+                }
+            }
+            [self hideLoading];
+            return;
+        }
         
         NSMutableDictionary *userInfo;
         if (!VALID_NOTEMPTY(self.userInfo, NSDictionary)) {

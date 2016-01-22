@@ -33,7 +33,6 @@ typedef void(^OnSelected)(void);
 
 - (void)loadWithCampaignProduct:(RICampaignProduct*)campaignProduct
            elapsedTimeInSeconds:(NSInteger)elapsedTimeInSeconds
-                     chosenSize:(NSString*)chosenSize
-               capaignHasBanner:(BOOL)hasBanner;
+                     chosenSize:(NSString*)chosenSize;
 
 @end

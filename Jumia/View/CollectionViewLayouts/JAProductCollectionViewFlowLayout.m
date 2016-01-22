@@ -10,7 +10,7 @@
 
 @interface JAProductCollectionViewFlowLayout ()
 {
-    CGRect _previousFrame;
+    NSMutableDictionary *_frameDictionary;
 }
 
 @end
@@ -20,10 +20,20 @@
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
     NSArray* attributesToReturn = [super layoutAttributesForElementsInRect:rect];
     
+    if (!VALID(_frameDictionary, NSMutableDictionary)) {
+        _frameDictionary = [NSMutableDictionary new];
+    }
+    
     int init = (int)[(UICollectionViewLayoutAttributes*)[attributesToReturn firstObject] indexPath].row;
     int last = (int)[(UICollectionViewLayoutAttributes*)[attributesToReturn lastObject] indexPath].row;
     
     for (UICollectionViewLayoutAttributes* attributes in attributesToReturn) {
+        if (last<attributes.indexPath.row) {
+            last = (int)attributes.indexPath.row;
+        }
+        if (init>attributes.indexPath.row) {
+            init = (int)attributes.indexPath.row;
+        }
         NSIndexPath* indexPath = attributes.indexPath;
         if (nil == attributes.representedElementKind) {
             attributes.frame = [self layoutAttributesForItemAtIndexPath:indexPath].frame;
@@ -33,6 +43,7 @@
 }
 
 - (NSArray*)getLayoutAttributesForSeparatorsInRect:(CGRect)rect forInitIndex:(NSInteger)init andLastIndex:(NSInteger)last {
+    NSMutableArray* decorationAttributes = [NSMutableArray new];
     NSInteger numberOfItemsPerLine = floorf(rect.size.width / self.itemSize.width);
     NSInteger countOfItems = [self.collectionView.dataSource collectionView:self.collectionView numberOfItemsInSection:0];
     
@@ -40,18 +51,12 @@
         return nil;
     }
     
-    NSMutableArray* decorationAttributes = [NSMutableArray new];
     for (int i = (int)init; i <= (int)last; i++) {
-        int j = i;
-        if (self.hasBanner && i != 0 && i < (last - numberOfItemsPerLine) ) {
-            j--;
-        }
-        
-        if (last == j || (j+1 % numberOfItemsPerLine != 0)) {
+        if (countOfItems == i+1 || ((i+1) % numberOfItemsPerLine != 0)) {
             UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForDecorationViewOfKind:@"verticalSeparator" atIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
             [decorationAttributes addObject:attributes];
         }
-        if (((j+1) % numberOfItemsPerLine == 0 || j+1 == countOfItems) && j != countOfItems) {
+        if (((i+1) % numberOfItemsPerLine == 0 || i+1 == countOfItems) && i != countOfItems) {
             UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForDecorationViewOfKind:@"horizontalSeparator" atIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
             [decorationAttributes addObject:attributes];
         }
@@ -60,7 +65,7 @@
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
+
     UICollectionViewLayoutAttributes* currentItemAttributes = [[super layoutAttributesForItemAtIndexPath:indexPath] copy];
     
     UIEdgeInsets sectionInset = [(UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout sectionInset];
@@ -70,37 +75,42 @@
                                               frame.origin.y,
                                               self.collectionView.frame.size.width,
                                               frame.size.height);
+    NSValue *lastFrameValue = [_frameDictionary objectForKey:[NSNumber numberWithInteger:indexPath.row-1]];
+    CGRect lastFrame = CGRectZero;
+    if (lastFrameValue) {
+        lastFrame = lastFrameValue.CGRectValue;
+    }
     if (indexPath.item == 0) { // first item of section
         frame.origin.x = sectionInset.left; // first item of the section should always be left aligned
         if (RI_IS_RTL) {
             frame.origin.x = self.collectionView.frame.size.width - frame.size.width;
         }
         
-    }else if (!CGRectIntersectsRect(_previousFrame, strecthedCurrentFrame)) { // if current item is the first item on the line
-        // the approach here is to take the current frame, left align it to the edge of the view
-        // then stretch it the width of the collection view, if it intersects with the previous frame then that means it
-        // is on the same line, otherwise it is on it's own new line
-        frame.origin.x = sectionInset.left; // first item on the line should always be left aligned
+    }else if (!CGRectIntersectsRect(lastFrame, strecthedCurrentFrame)) {
+        frame.origin.x = sectionInset.left;
         if (RI_IS_RTL) {
             frame.origin.x = self.collectionView.frame.size.width - frame.size.width;
         }
     } else {
-        CGFloat previousFrameRightPoint = _previousFrame.origin.x + _previousFrame.size.width + self.minimumLineSpacing;
-        CGFloat previousFrameLeftPoint = _previousFrame.origin.x - self.minimumLineSpacing;
+        CGFloat previousFrameRightPoint = lastFrame.origin.x + lastFrame.size.width;
+        CGFloat previousFrameLeftPoint = lastFrame.origin.x;
         frame.origin.x = previousFrameRightPoint;
         if (RI_IS_RTL) {
             frame.origin.x = previousFrameLeftPoint - frame.size.width;
         }
     }
-    
     currentItemAttributes.frame = frame;
-    _previousFrame = frame;
+    [_frameDictionary setObject:[NSValue valueWithCGRect:frame] forKey:[NSNumber numberWithInteger:indexPath.row]];
     return currentItemAttributes;
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForDecorationViewOfKind:(NSString *)decorationViewKind atIndexPath:(NSIndexPath *)indexPath
 {
-    CGRect itemFrame = [self layoutAttributesForItemAtIndexPath:indexPath].frame;
+    NSValue *itemFrameValue = [_frameDictionary objectForKey:[NSNumber numberWithInteger:indexPath.row]];
+    CGRect itemFrame = CGRectZero;
+    if (itemFrameValue) {
+        itemFrame = itemFrameValue.CGRectValue;
+    }
     
     UICollectionViewLayoutAttributes *layoutAttributes = [[UICollectionViewLayoutAttributes layoutAttributesForDecorationViewOfKind:decorationViewKind withIndexPath:indexPath] copy];
     if ([decorationViewKind isEqualToString:@"horizontalSeparator"]) {
