@@ -182,21 +182,30 @@ static RIGoogleAnalyticsTracker *sharedInstance;
                     }
                 }
             }
-            [finalStr appendFormat:@"http://www.google.com?%@",campaignName];
+            //hostname doesn't matter
+            [finalStr appendString:@"http://www.hostname.com?"];
+            NSMutableArray* params = [NSMutableArray new];
+            
+            if ([campaignDic objectForKey:@"utm_campaign"]) {
+                [params addObject:[NSString stringWithFormat:@"utm_campaign=%@",[campaignDic objectForKey:@"utm_campaign"]]];
+            }
             
             if (!VALID_NOTEMPTY([campaignDic objectForKey:@"utm_source"], NSString)) {
                 if (VALID_NOTEMPTY([campaignDic objectForKey:@"utm_campaign"], NSString)) {
-                    [finalStr appendString:@"&utm_souce=push"];
+                    [params addObject:@"utm_source=push"];
                 }
-            }
+            } else
+                [params addObject:[NSString stringWithFormat:@"utm_source=%@",[campaignDic objectForKey:@"utm_source"]]];
             
             if (!VALID_NOTEMPTY([campaignDic objectForKey:@"utm_medium"], NSString)) {
                 if (VALID_NOTEMPTY([campaignDic objectForKey:@"utm_campaign"], NSString)) {
-                    [finalStr appendString:@"&utm_medium=referrer"];
+                    [params addObject:@"utm_medium=referrer"];
                 }
-            }
-            self.campaignData = finalStr;
-            [tracker send:[[[GAIDictionaryBuilder createScreenView] setCampaignParametersFromUrl:self.campaignData] build]];
+            } else
+                [params addObject:[NSString stringWithFormat:@"utm_medium=%@",[campaignDic objectForKey:@"utm_medium"]]];
+            
+            [finalStr appendString:[params componentsJoinedByString:@"&"]];
+            self.campaignData = [finalStr copy];
         }
     }
     else
@@ -237,8 +246,12 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     if (!ISEMPTY(tracker))
     {
         [tracker set:kGAIScreenName value:name];
-        [tracker send:[[[GAIDictionaryBuilder createScreenView] setCampaignParametersFromUrl:self.campaignData] build]];
-        [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+        
+        GAIDictionaryBuilder* params = [GAIDictionaryBuilder createScreenView];
+        if (VALID_NOTEMPTY(self.campaignData, NSString)) {
+            [params setCampaignParametersFromUrl:self.campaignData];
+        }
+        [tracker send:[params build]];
     }
     else
     {
@@ -269,12 +282,15 @@ static RIGoogleAnalyticsTracker *sharedInstance;
             NSString *label = [data objectForKey:kRIEventLabelKey];
             NSNumber *value = [data objectForKey:kRIEventValueKey];
             
-            NSDictionary *dict = [[[GAIDictionaryBuilder createEventWithCategory:category
-                                                                          action:action
-                                                                           label:label
-                                                                           value:value]
-                                   setCampaignParametersFromUrl:self.campaignData] build];
-            [tracker send:dict];
+            GAIDictionaryBuilder* params = [GAIDictionaryBuilder createEventWithCategory:category
+                                                                                   action:action
+                                                                                    label:label
+                                                                                   value:value];
+            if (VALID_NOTEMPTY(self.campaignData, NSString)) {
+                [params setCampaignParametersFromUrl:self.campaignData];
+
+            }
+            [tracker send:[params build]];
         }
         else
         {
