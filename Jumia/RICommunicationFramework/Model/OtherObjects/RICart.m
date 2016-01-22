@@ -332,12 +332,8 @@
 {
     NSMutableDictionary* parameters = [NSMutableDictionary new];
     
-    [parameters setObject:bundleId forKey:@"bundleId"];
-    
-    for (int i = 0; i < simpleSkus.count; i++) {
-        NSString* productSimpleSku = [simpleSkus objectAtIndex:i];
-        [parameters setObject:productSimpleSku forKey:[NSString stringWithFormat:@"product-_list[%d]",i]];
-    }
+    [parameters setObject:bundleId forKey:@"bundle_id"];
+    [parameters setObject:simpleSkus forKey:[NSString stringWithFormat:@"product_list[]"]];
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_ADD_BUNDLE]]
                                                             parameters:parameters

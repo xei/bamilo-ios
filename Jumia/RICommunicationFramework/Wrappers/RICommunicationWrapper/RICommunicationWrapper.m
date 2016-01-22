@@ -342,8 +342,17 @@
     if(NOTEMPTY(parametersKeys)) {
         for(NSString *parameterKey in parametersKeys) {
             if(NOTEMPTY([parameters objectForKey:parameterKey])) {
-                NSString *parameterValue = [parameters objectForKey:parameterKey];
-                [encodedParameters addObject:[NSString stringWithFormat:@"%@=%@", parameterKey, [self encodeParameter:parameterValue]]];
+                id obj = [parameters objectForKey:parameterKey];
+                if ([obj isKindOfClass:[NSString class]]) {
+                    obj = @[obj];
+                }
+                if ([obj isKindOfClass:[NSArray class]]) {
+                    for (NSString *parameterValue in obj) {
+                        if (VALID_NOTEMPTY(parameterValue, NSString)) {
+                            [encodedParameters addObject:[NSString stringWithFormat:@"%@=%@", parameterKey, [self encodeParameter:parameterValue]]];
+                        }
+                    }
+                }
             }
         }
     }
