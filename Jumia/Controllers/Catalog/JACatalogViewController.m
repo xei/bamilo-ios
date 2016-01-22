@@ -43,6 +43,7 @@ typedef void (^ProcessActionBlock)(void);
 {
     BOOL _needAddToFavBlock;
     ProcessActionBlock _processActionBlock;
+    BOOL _hasBanner;
 }
 
 //$WIZ$
@@ -75,45 +76,42 @@ typedef void (^ProcessActionBlock)(void);
 
 @property (nonatomic, strong) JASortingView* sortingView;
 @property (nonatomic, strong) RIBanner *banner;
-@property (nonatomic, strong) UIImageView* bannerImage;
+@property (nonatomic, strong) UIImageView *bannerImageView;
 
 @end
 
 @implementation JACatalogViewController
 
-@synthesize bannerImage = _bannerImage;
-- (UIImageView*)bannerImage
+@synthesize bannerImageView = _bannerImageView;
+- (UIImageView*)bannerImageView
 {
-    if (VALID_NOTEMPTY(_bannerImage, UIImageView)) { 
-        //do nothing
-    } else {
-        _bannerImage = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                     0.0f,
-                                                                     1.0f,
-                                                                     1.0f)];
-        if (VALID_NOTEMPTY(self.banner, RIBanner)) {
-            NSString* imageUrl;
-            BOOL isLandscape = self.view.frame.size.width > self.view.frame.size.height?YES:NO;
-            if((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && isLandscape) {
-                imageUrl = self.banner.iPadImageUrl;
-            } else {
-                imageUrl = self.banner.iPhoneImageUrl;
+    if (VALID_NOTEMPTY(self.banner, RIBanner)) {
+        if (!VALID_NOTEMPTY(_bannerImageView, UIImageView)) {
+            _bannerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                             0.0f,
+                                                                             0.0f,
+                                                                             0.0f)];
+            
+            __block UIImageView *blockedImageView = _bannerImageView;
+            __weak JACatalogViewController *weakSelf = self;
+            NSString *imageURL = self.banner.iPhoneImageUrl;
+            if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+                imageURL = self.banner.iPadImageUrl;
             }
-            if (VALID_NOTEMPTY(imageUrl, NSString)) {
-                __block UIImageView *blockedImageView = _bannerImage;
-                __weak JACatalogViewController* weakSelf = self;
-                [_bannerImage setImageWithURL:[NSURL URLWithString:imageUrl]
+            [_bannerImageView setImageWithURL:[NSURL URLWithString:imageURL]
                                       success:^(UIImage *image, BOOL cached){
-                                          [blockedImageView changeImageHeight:0.0f andWidth:weakSelf.collectionView.frame.size.width];
-                                          dispatch_async(dispatch_get_main_queue(), ^{
-                                              [weakSelf.collectionView reloadData];
-                                          });
-                                      }failure:^(NSError *error){}];
-            }
+                                          _hasBanner = YES;
+                                          [blockedImageView changeImageHeight:0.0f andWidth:weakSelf.view.width];
+                                          [weakSelf.collectionView reloadData];
+                                      }failure:^(NSError *error){
+                                          _hasBanner = NO;
+                                      }];
         }
+    }else{
+        _hasBanner = NO;
+        _bannerImageView = nil;
     }
-    return _bannerImage;
-    
+    return _bannerImageView;
 }
 
 @synthesize searchString = _searchString;
@@ -163,8 +161,6 @@ typedef void (^ProcessActionBlock)(void);
     
         self.catalogTopView.hidden = YES;
         
-        [self.bannerImage setHidden:YES];
-        
         [self.collectionView setHidden:YES];
         
         [self.filteredNoResultsView setupView:[self viewBounds]];
@@ -181,8 +177,6 @@ typedef void (^ProcessActionBlock)(void);
 -(void)pressedEditFiltersButton:(JAFilteredNoResultsView *)view
 {
     [self.collectionView setHidden:NO];
-    
-    [self.bannerImage setHidden:NO];
     
     self.catalogTopView.hidden = NO;
     
@@ -292,8 +286,12 @@ typedef void (^ProcessActionBlock)(void);
                                                object:nil];
 }
 
-- (void)viewDidLayoutSubviews
+- (void)viewWillLayoutSubviews
 {
+    if (_hasBanner) {
+        _bannerImageView = nil;
+        [self bannerImageView];
+    }
     [self.collectionView setWidth:self.view.width];
     [self.collectionView setHeight:self.view.height - CGRectGetMaxY(self.catalogTopView.frame)];
     [self.catalogTopView repositionForWidth:self.view.frame.size.width];
@@ -564,8 +562,10 @@ typedef void (^ProcessActionBlock)(void);
     self.catalogTopView.sortingButton.enabled = YES;
     
     self.banner = catalog.banner;
+    
     if (VALID_NOTEMPTY(self.banner, RIBanner)) {
-        self.flowLayout.hasBanner = YES;
+        [self.collectionView registerClass:[JACampaignBannerCell class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"bannerCell"];
+        [self bannerImageView];
     }
     
     if (NOTEMPTY(catalog.categories)) {
@@ -760,7 +760,6 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)changeViewToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    self.bannerImage = nil;
     switch (self.catalogTopView.cellTypeSelected) {
         case JACatalogCollectionViewGridCell:
             if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
@@ -857,43 +856,22 @@ typedef void (^ProcessActionBlock)(void);
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-   CGFloat numberOfCells = self.productsArray.count;
-    
-    if (VALID_NOTEMPTY(self.banner, RIBanner)) {
-        numberOfCells++;
-    }
-
-    return numberOfCells;
+    return self.productsArray.count;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (VALID_NOTEMPTY(self.banner, RIBanner) && 0 == indexPath.row) {
-        return self.bannerImage.frame.size;
-    }
     return [self getLayoutItemSizeForInterfaceOrientation:[UIApplication sharedApplication].statusBarOrientation];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger realIndex = indexPath.row;
-   
     if (!self.loadedEverything && self.productsArray.count - self.numberOfCellsInScreen <= indexPath.row)
     {
         [self loadMoreProducts];
     }
     
-    if (VALID_NOTEMPTY(self.banner, RIBanner)) {
-        if (0 == indexPath.row) {
-            JACatalogBannerCell *bannerCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"bannerCell" forIndexPath:indexPath];
-            [bannerCell loadWithImageView:self.bannerImage];
-            bannerCell.tag = 0;
-            return bannerCell;
-        }
-        realIndex--;
-    }
-    
-    RIProduct *product = [self.productsArray objectAtIndex:realIndex];
+    RIProduct *product = [self.productsArray objectAtIndex:indexPath.row];
     
     JACatalogCollectionViewCell *cell;
     
@@ -905,7 +883,7 @@ typedef void (^ProcessActionBlock)(void);
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JACatalogPictureCollectionViewCell" forIndexPath:indexPath];
     }
     
-    cell.favoriteButton.tag = realIndex;
+    cell.favoriteButton.tag = indexPath.row;
     [cell.favoriteButton addTarget:self
                             action:@selector(addToFavoritesPressed:)
                   forControlEvents:UIControlEventTouchUpInside];
@@ -921,6 +899,26 @@ typedef void (^ProcessActionBlock)(void);
     
     return cell;
     
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    if (kind == UICollectionElementKindSectionHeader && _hasBanner) {
+        
+        JACampaignBannerCell *cell = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"bannerCell" forIndexPath:indexPath];
+        
+        [cell loadWithImageView:self.bannerImageView];
+        
+        return cell;
+    }
+    return nil;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    if (_hasBanner) {
+        return self.bannerImageView.frame.size;
+    }
+    return CGSizeMake(0, 0);
 }
 
 -(void)clickableBannerPressed
@@ -971,20 +969,7 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger realIndex = indexPath.row;
-    if (VALID_NOTEMPTY(self.banner, RIBanner)) {
-        if (0 == indexPath.row) {
-            //click banner
-            
-            [self clickableBannerPressed];
-            
-            return;
-        }
-        realIndex--;
-    }
-    
-    
-    RIProduct *product = [self.productsArray objectAtIndex:realIndex];
+    RIProduct *product = [self.productsArray objectAtIndex:indexPath.row];
     
     NSInteger count = self.productsArray.count;
     

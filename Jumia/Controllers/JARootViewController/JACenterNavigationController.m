@@ -42,7 +42,6 @@
 #import "RICustomer.h"
 #import "JAEmailNotificationsViewController.h"
 #import "JACampaignsViewController.h"
-#import "JAProductDetailsViewController.h"
 #import "JATabNavigationViewController.h"
 #import "JARatingsViewController.h"
 #import "JANewRatingViewController.h"

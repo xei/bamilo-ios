@@ -105,10 +105,7 @@
         text = [cellText uppercaseString];
         font = JACaption2Font;
         
-        accessoryImageWidth = 0.0f;
-        accessoryImageMargin = 0.0f;
-        
-        separatorHeight = 0.0f; //force this to have no separator
+        accessoryImageWidth = accessoryImageMargin = iconImageWidth = iconImageRightMargin = separatorHeight = 0.0f;
         
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             leftMargin = kLeftIPadMargin;
@@ -129,8 +126,10 @@
                                                       height)];
     self.backgroundClickableView.enabled = clickableViewIsEnabled;
     
+    
+    self.iconImageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.iconImageView setFrame:CGRectMake(leftMargin,
-                                            (height - iconImageWidth)/2,//image is square so width=height,
+                                            (height - iconImageWidth)/2,
                                             iconImageWidth,
                                             iconImageWidth)];
     

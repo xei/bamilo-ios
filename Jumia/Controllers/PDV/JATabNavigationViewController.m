@@ -42,7 +42,12 @@
         UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, _tabBarView.height-1, _tabBarView.width, 1)];
         [separator setBackgroundColor:JABlack300Color];
         [_tabBarView addSubview:separator];
-        [self.descriptionTabButton setSelected:YES];
+        if (RI_IS_RTL) {
+            [self.reviewsTabButton setSelected:YES];
+        }
+        else{
+            [self.descriptionTabButton setSelected:YES];
+        }
     }else{
         if (!CGRectEqualToRect(frame, _tabBarView.frame)) {
             [_tabBarView setFrame:frame];
@@ -51,6 +56,7 @@
             [self reviewsTabButton];
         }
     }
+
     return _tabBarView;
 }
 
@@ -82,7 +88,13 @@
 
 - (JATabButton *)descriptionTabButton
 {
-    CGRect frame = CGRectMake(0, 0, self.view.width/3, kTabsHeight);
+    CGRect frame;
+    if(RI_IS_RTL){
+        frame = CGRectMake(2*self.view.width/3, 0, self.view.width/3, kTabsHeight);
+    }
+    else{
+        frame = CGRectMake(0, 0, self.view.width/3, kTabsHeight);
+    }
     if (!VALID_NOTEMPTY(_descriptionTabButton, JATabButton)) {
         _descriptionTabButton = [[JATabButton alloc] initWithFrame:frame];
         [_descriptionTabButton.titleButton setTitle:STRING_DESCRIPTION forState:UIControlStateNormal];
@@ -112,7 +124,13 @@
 
 - (JATabButton *)reviewsTabButton
 {
-    CGRect frame = CGRectMake(2*self.view.width/3, 0, self.view.width/3, kTabsHeight);
+    CGRect frame;
+    if (RI_IS_RTL) {
+        frame = CGRectMake(0, 0, self.view.width/3, kTabsHeight);
+    }
+    else{
+        frame = CGRectMake(2*self.view.width/3, 0, self.view.width/3, kTabsHeight);
+    }
     if (!VALID_NOTEMPTY(_reviewsTabButton, JATabButton)) {
         _reviewsTabButton = [[JATabButton alloc] initWithFrame:frame];
         [_reviewsTabButton.titleButton setTitle:STRING_REVIEWS_RATINGS forState:UIControlStateNormal];
@@ -127,7 +145,13 @@
 
 - (JAProductDescriptionView *)descriptionView
 {
-    CGRect frame = CGRectMake(0, 0, self.view.width, self.contentScrollView.height);
+    CGRect frame;
+    if(RI_IS_RTL){
+        frame = CGRectMake(self.view.width*2, 0, self.view.width, self.contentScrollView.height);
+    }
+    else{
+        frame = CGRectMake(0, 0, self.view.width, self.contentScrollView.height);
+    }
     if (!VALID_NOTEMPTY(_descriptionView, JAProductDescriptionView))
     {
         _descriptionView = [[JAProductDescriptionView alloc] initWithFrame:frame];
@@ -161,7 +185,14 @@
 
 - (JAProductReviewsView *)reviewsView
 {
-    CGRect frame = CGRectMake(self.view.width*2, 0, self.view.width, self.contentScrollView.height);
+    CGRect frame;
+    
+    if(RI_IS_RTL) {
+        frame = CGRectMake(0, 0, self.view.width, self.contentScrollView.height);
+    }
+    else{
+        frame = CGRectMake(self.view.width*2, 0, self.view.width, self.contentScrollView.height);
+    }
     if (!VALID_NOTEMPTY(_reviewsView, JAProductReviewsView))
     {
         _reviewsView = [[JAProductReviewsView alloc] initWithFrame:frame];
