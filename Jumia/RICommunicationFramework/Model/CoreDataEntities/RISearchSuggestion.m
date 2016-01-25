@@ -556,8 +556,8 @@
                             brand.image = @"";
                         }
                         
-                        if ([dic objectForKey:@"url"]) {
-                            brand.url = [dic objectForKey:@"url"];
+                        if ([dic objectForKey:@"target"]) {
+                            brand.targetString = [dic objectForKey:@"target"];
                         }
                         
                         [tempBrandsArray addObject:brand];
