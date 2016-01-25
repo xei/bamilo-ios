@@ -274,11 +274,9 @@
     
     RICampaignProduct* product = [self.campaign.campaignProducts objectAtIndex:indexPath.row];
     
-    NSString* chosenSimpleName = [self.chosenSimpleNames objectAtIndex:indexPath.row];
-    
     [cell loadWithCampaignProduct:product
              elapsedTimeInSeconds:self.elapsedTimeInSeconds
-                       chosenSize:chosenSimpleName];
+                       chosenSize:@""];
     
     return cell;
 }
