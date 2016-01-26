@@ -586,10 +586,12 @@ JAActivityViewControllerDelegate
 
 - (void)setProductBundle:(RIBundle *)productBundle {
     _productBundle = productBundle;
-    self.selectedBundles = [[NSMutableDictionary alloc]init];
-    
-    for (RIProduct* pd in productBundle.bundleProducts) {
-        [self.selectedBundles setObject:[pd.productSimples firstObject] forKey:pd.sku];
+    if (!VALID(self.selectedBundles, NSMutableDictionary)) {
+        self.selectedBundles = [[NSMutableDictionary alloc]init];
+        
+        for (RIProduct* pd in productBundle.bundleProducts) {
+            [self.selectedBundles setObject:[pd.productSimples firstObject] forKey:pd.sku];
+        }
     }
 }
 
