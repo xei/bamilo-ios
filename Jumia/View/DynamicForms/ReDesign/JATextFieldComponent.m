@@ -274,12 +274,11 @@
             }];
         }
         
-        if (!VALID_NOTEMPTY(pattern, NSString) && !VALID_NOTEMPTY(errorMessage, NSString)) {
-            if (VALID_NOTEMPTY(self.field.pattern, NSString)) {
+        if (!VALID_NOTEMPTY(pattern, NSString) && !VALID_NOTEMPTY(errorMessage, NSString) && VALID_NOTEMPTY(self.field.pattern, NSString)) {
                 pattern = self.field.pattern;
                 errorMessage = self.field.patternMessage;
-            }
         }
+
         if (VALID_NOTEMPTY(pattern, NSString)) {
             if (![self validateInputWithString:self.textField.text andRegularExpression:pattern])
             {

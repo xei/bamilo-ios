@@ -98,12 +98,10 @@
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     if(VALID_NOTEMPTY(self.storedValue, NSString) || [[self.field required] boolValue])
     {
-        RIField* selectedRelatedField;
+        RIField* selectedRelatedField = [self.field.relatedFields lastObject];;
         if (VALID_NOTEMPTY(self.storedValue, NSString)) {
             if ([self.storedValue isEqualToString:@"1"]) {
                 selectedRelatedField = [self.field.relatedFields firstObject];
-            } else {
-                selectedRelatedField = [self.field.relatedFields lastObject];
             }
         }
         [parameters setValue:selectedRelatedField.value forKey:selectedRelatedField.name];

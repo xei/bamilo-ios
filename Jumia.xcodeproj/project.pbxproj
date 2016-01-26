@@ -3452,7 +3452,6 @@
 		CEDBF85F1B0A01B60073971A /* UIImage+Mirror.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Mirror.h"; path = "Categories/UIImage+Mirror.h"; sourceTree = "<group>"; };
 		CEDBF8601B0A01B60073971A /* UIImage+Mirror.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Mirror.m"; path = "Categories/UIImage+Mirror.m"; sourceTree = "<group>"; };
 		CEDBF8741B0CEC570073971A /* JACheckBoxComponent_RTL.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACheckBoxComponent_RTL.xib; sourceTree = "<group>"; };
-		CEDBF8861B0DF4AD0073971A /* JARadioRelatedComponent_RTL.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JARadioRelatedComponent_RTL.xib; sourceTree = "<group>"; };
 		CEDBF88C1B0DF5D00073971A /* JANewsletterComponent_RTL.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JANewsletterComponent_RTL.xib; sourceTree = "<group>"; };
 		CEDBF88D1B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANewsletterComponent~iPad_RTL.xib"; sourceTree = "<group>"; };
 		CEDEB981199A51E30022BAB5 /* RIFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIFilter.h; sourceTree = "<group>"; };
@@ -3487,7 +3486,6 @@
 		CEDEB9AE199BA8FA0022BAB5 /* NMRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMRangeSlider.m; sourceTree = "<group>"; };
 		CEE558601AFCC2FB00FC87D4 /* JARadioRelatedComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARadioRelatedComponent.h; sourceTree = "<group>"; };
 		CEE558611AFCC2FB00FC87D4 /* JARadioRelatedComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARadioRelatedComponent.m; sourceTree = "<group>"; };
-		CEE5586D1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JARadioRelatedComponent.xib; sourceTree = "<group>"; };
 		CEE5F4DF1B1CB6B500556150 /* JARecentSearchesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JARecentSearchesViewController.xib; sourceTree = "<group>"; };
 		CEE91B9A1989065A0078DFC9 /* JATeaserPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATeaserPageView.h; sourceTree = "<group>"; };
 		CEE91B9B1989065A0078DFC9 /* JATeaserPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATeaserPageView.m; sourceTree = "<group>"; };
@@ -4641,8 +4639,6 @@
 				CEDBF88D1B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib */,
 				CEE558601AFCC2FB00FC87D4 /* JARadioRelatedComponent.h */,
 				CEE558611AFCC2FB00FC87D4 /* JARadioRelatedComponent.m */,
-				CEE5586D1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib */,
-				CEDBF8861B0DF4AD0073971A /* JARadioRelatedComponent_RTL.xib */,
 				CEA2A1B11B25D20C00E5973F /* JADynamicField.h */,
 				CEA2A1B21B25D20C00E5973F /* JADynamicField.m */,
 			);
