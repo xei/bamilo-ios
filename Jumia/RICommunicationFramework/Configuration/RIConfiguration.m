@@ -119,7 +119,7 @@ NSString *const RI_API_FORMS_GET = @"forms/";
 NSString *const RI_API_FORMS_ADDRESS_EDIT = @"addressedit/id/";
 
 NSString *const RI_API_RICH_RELEVANCE = @"richrelevance/request/req/";
-NSString *const RI_API_RICH_RELEVANCE_CLICK = @"request/req/";
+NSString *const RI_API_RICH_RELEVANCE_CLICK = @"req/";
 
 NSString *const RI_API_MULTISTEP_GET_ADDRESSES = @"multistep/getstepaddresses/";
 NSString *const RI_API_MULTISTEP_SUBMIT_ADDRESSES = @"multistep/addresses/";
