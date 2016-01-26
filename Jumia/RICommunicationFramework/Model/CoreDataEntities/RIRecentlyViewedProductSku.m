@@ -22,13 +22,14 @@
     
     if (VALID(recentlyViewedProductSkus, NSArray)) {
         
-        //reverse array
-        NSMutableArray *reversedArray = [NSMutableArray arrayWithCapacity:recentlyViewedProductSkus.count];
-        NSEnumerator *enumerator = [recentlyViewedProductSkus reverseObjectEnumerator];
-        for (id element in enumerator) {
-            [reversedArray addObject:element];
-        }
-        successBlock(reversedArray);
+        NSSortDescriptor *dateDescriptor = [NSSortDescriptor
+                                            sortDescriptorWithKey:@"lastViewedDate"
+                                            ascending:NO];
+        NSArray *sortDescriptors = [NSArray arrayWithObject:dateDescriptor];
+        NSArray *sortedArray = [recentlyViewedProductSkus
+                                sortedArrayUsingDescriptors:sortDescriptors];
+        
+        successBlock(sortedArray);
     } else {
         successBlock(nil);
     }

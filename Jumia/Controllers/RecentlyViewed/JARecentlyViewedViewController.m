@@ -181,14 +181,12 @@
     self.navBarLayout.showBackButton = YES;
     [self.collectionView registerClass:[JARecentlyViewedCell class] forCellWithReuseIdentifier:@"CellWithLines"];
     self.navBarLayout.title = STRING_RECENTLY_VIEWED;
-    
-    [self loadProducts];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updatedProduct:)
-                                                 name:kProductChangedNotification
-                                               object:nil];
+}
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self loadProducts];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -271,28 +269,6 @@
         return [self.productsDictionary objectForKey:sku];
     }
     return nil;
-}
-
-#pragma mark - kProductChangedNotification
-
-- (void)updatedProduct:(NSNotification *)notification
-{
-    __block NSString *sku = notification.object;
-    [RIProduct getCompleteProductWithSku:sku successBlock:^(id product) {
-        if (![self.productsArray containsObject:sku]) {
-            [self.productsArray addObject:sku];
-        }
-        [self.productsDictionary setObject:product forKey:sku];
-        
-        [self.collectionView reloadData];
-    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
-        
-        [self hideLoading];
-        if (RIApiResponseMaintenancePage == apiResponse || RIApiResponseKickoutView == apiResponse)
-        {
-            [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(updatedProduct:) objects:@[notification]];
-        }
-    }];
 }
 
 #pragma mark - collectionView methods

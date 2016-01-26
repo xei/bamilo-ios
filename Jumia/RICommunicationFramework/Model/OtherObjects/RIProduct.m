@@ -305,15 +305,19 @@
 {
     NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_PROD_VALIDATE]];
     
-    NSMutableDictionary* parameters = [NSMutableDictionary new];
+    NSMutableDictionary* parametersDictionary = [NSMutableDictionary new];
+    NSMutableArray* parametersArray = [NSMutableArray new];
     for (int i = 0; i < recentlyViewedProductSkus.count; i++) {
-        NSString* key = [NSString stringWithFormat:@"products[%d]",i];
         RIRecentlyViewedProductSku* recentlyViewedProductSku = [recentlyViewedProductSkus objectAtIndex:i];
-         [parameters setValue:recentlyViewedProductSku.productSku forKey:key];
+        [parametersArray addObject:recentlyViewedProductSku.productSku];
     }
+    NSString* key = [NSString stringWithFormat:@"products[]"];
+    [parametersDictionary setObject:parametersArray forKey:key];
+    
+    
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
-                                                            parameters:[parameters copy]
+                                                            parameters:[parametersDictionary copy]
                                                             httpMethod:HttpResponsePost
                                                              cacheType:RIURLCacheDBCache
                                                              cacheTime:RIURLCacheDefaultTime
