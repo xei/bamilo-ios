@@ -7,6 +7,7 @@
 //
 
 #import "JATextFieldComponent.h"
+#import "JARadioRelatedComponent.h"
 
 @interface JATextFieldComponent ()
 
@@ -43,7 +44,7 @@
 - (UILabel *)requiredSymbol
 {
     if (!VALID_NOTEMPTY(_requiredSymbol, UILabel)) {
-        _requiredSymbol = [[UILabel alloc] initWithFrame:CGRectMake(self.width - 10, self.height - 28, 10, 20)];
+        _requiredSymbol = [[UILabel alloc] initWithFrame:CGRectMake(self.width - 20, self.height - 28, 10, 20)];
         [_requiredSymbol setTextAlignment:NSTextAlignmentCenter];
         [_requiredSymbol setText:@"*"];
         [_requiredSymbol setTextColor:JAOrange1Color];
@@ -81,9 +82,9 @@
         xOffset = self.fixedX;
     }
     [self.underLineView setFrame:CGRectMake(xOffset, self.height-5, self.width - xOffset, 1.f)];
-    [self.requiredSymbol setFrame:CGRectMake(self.width - 10, self.height - 28, 10, 20)];
-    [self.textField setFrame:CGRectMake(xOffset, self.height - 28, self.width - xOffset, 20)];
-    [self.titleLabel setFrame:CGRectMake(xOffset, 0, self.width - xOffset, 20)];
+    [self.requiredSymbol setFrame:CGRectMake(self.width - 20, self.height - 28, 10, 20)];
+    [self.textField setFrame:CGRectMake(xOffset, self.height - 28, self.width - xOffset - 10, 20)];
+    [self.titleLabel setFrame:CGRectMake(xOffset, 0, self.width - xOffset - 28 , 20)];
     if (self.iconImageView) {
         [self.iconImageView setY:self.y + self.textField.y + (self.textField.height - self.iconImageView.height)/2];
     }
@@ -249,23 +250,35 @@
     {
         __block NSString* pattern;
         __block NSString* errorMessage;
+        
+        NSDictionary* dict;
         if (VALID_NOTEMPTY(self.relatedComponent, JARadioComponent)) {
-            NSDictionary* dict = [self.relatedComponent getValues];
+            JARadioComponent* radiocomp = (JARadioComponent*) self.relatedComponent;
+            dict = [radiocomp getValues];
+        } else if (VALID_NOTEMPTY(self.relatedComponent, JARadioRelatedComponent)) {
+            JARadioRelatedComponent* radiocomp = (JARadioRelatedComponent*) self.relatedComponent;
+            dict = [radiocomp getValues];
+        }
+        
+        if (VALID_NOTEMPTY(dict, NSDictionary)) {
+        
             [dict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
                 for (RIField* relatedField in self.field.relatedFields) {
                     if ([relatedField.value isEqualToString:obj] && VALID_NOTEMPTY(relatedField.pattern, NSString)) {
                         pattern = relatedField.pattern;
                         errorMessage = relatedField.patternMessage;
+                        *stop = YES;
                         break;
                     }
                 }
             }];
-            
-        } else if (VALID_NOTEMPTY(self.field.pattern, NSString)) {
-            pattern = self.field.pattern;
-            errorMessage = self.field.patternMessage;
         }
         
+        if (!VALID_NOTEMPTY(pattern, NSString) && !VALID_NOTEMPTY(errorMessage, NSString) && VALID_NOTEMPTY(self.field.pattern, NSString)) {
+                pattern = self.field.pattern;
+                errorMessage = self.field.patternMessage;
+        }
+
         if (VALID_NOTEMPTY(pattern, NSString)) {
             if (![self validateInputWithString:self.textField.text andRegularExpression:pattern])
             {

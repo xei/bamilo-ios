@@ -92,15 +92,16 @@
             newField.apiCallParameters = [newParams copy];
         }
     }
-    
-    //$$$ LINK IS NOW AN OBJECT, CHECK LATER
-    if ([fieldJSON objectForKey:@"label"]) {
-        newField.linkText = [fieldJSON objectForKey:@"label"];
+    if ([fieldJSON objectForKey:@"link"]) {
+        NSDictionary* linkJSON = [fieldJSON objectForKey:@"link"];
+        
+        if ([linkJSON objectForKey:@"label"]) {
+            newField.linkText = [linkJSON objectForKey:@"label"];
+        }
+        if ([linkJSON objectForKey:@"target"]) {
+            newField.linkTargetString = [linkJSON objectForKey:@"target"];
+        }
     }
-    if ([fieldJSON objectForKey:@"target"]) {
-        newField.linkTargetString = [fieldJSON objectForKey:@"target"];
-    }
-    
     
     if ([fieldJSON objectForKey:@"options"]) {
         NSArray *optionsArray = [fieldJSON objectForKey:@"options"];
@@ -209,7 +210,9 @@
                 RIField* relatedField = [RIField parseField:relatedFieldJSON];
                 relatedField.parentField = newField;
                 relatedField.type = typeForRelatedFields;
-                relatedField.name = nameForRelatedFields;
+                if (!VALID_NOTEMPTY(relatedField.name, NSString)) {
+                    relatedField.name = nameForRelatedFields;
+                }
                 [newField addRelatedFieldsObject:relatedField];
             }
         }
