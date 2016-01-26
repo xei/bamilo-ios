@@ -15,18 +15,16 @@
 @property (strong, nonatomic) UILabel *labelText;
 @property (strong, nonatomic) UISwitch *switchComponent;
 
--(void)setup;
-
 -(void)setupWithField:(RIField*)field;
 
 -(BOOL)isComponentWithKey:(NSString*)key;
-
--(void)resetValue;
 
 -(NSDictionary*)getValues;
 
 -(void)setValue:(NSString*)value;
 
 -(BOOL)isCheckBoxOn;
+
+-(NSString*)getFieldName;
 
 @end

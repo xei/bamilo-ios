@@ -267,33 +267,39 @@
         }
         else if ([@"related_number" isEqualToString:field.type])
         {
+            
+            JATextFieldComponent *textField = [[JATextFieldComponent alloc] init];
+            [textField setupWithField:field];
+            [textField.textField setDelegate:self];
+            [textField.textField setReturnKeyType:returnKeyType];
+            
+            [textField setY:startingY];
+            startingY += textField.frame.size.height;
+            
+            [textField.textField setTag:tag];
+            [textField setTag:tag];
+            
+            [textField.textField setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
+            if ([@"phone" isEqualToString:field.key]) {
+                textField.textField.keyboardType = UIKeyboardTypePhonePad;
+                textField.textField.inputAccessoryView = keyboardDoneButtonView;
+            }
+            
+            
+            
+            lastTextFieldIndex = [self.formViews count];
+            [self.formViews addObject:textField];
+            tag++;
+            
+            
             if (1 == field.relatedFields.count) {
+                //must be list type
                 
                 CGFloat phoneOffset = 80.f;
                 CGFloat prefixWidth = 70.f;
                 
-                JATextFieldComponent *textField = [[JATextFieldComponent alloc] init];
-                [textField setupWithField:field];
-                [textField.textField setDelegate:self];
-                [textField.textField setReturnKeyType:returnKeyType];
                 [textField setFixedX:phoneOffset];
                 
-                CGRect frame = textField.frame;
-                frame.origin.y = startingY;
-                textField.frame = frame;
-                
-                [textField.textField setTag:tag];
-                [textField setTag:tag];
-                
-                [textField.textField setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
-                if ([@"phone" isEqualToString:field.key]) {
-                    textField.textField.keyboardType = UIKeyboardTypePhonePad;
-                    textField.textField.inputAccessoryView = keyboardDoneButtonView;
-                }
-                
-                lastTextFieldIndex = [self.formViews count];
-                [self.formViews addObject:textField];
-                tag++;
                 JARadioComponent* radioRelated = [[JARadioComponent alloc] initWithFrame:CGRectMake(8.f, 0, prefixWidth, 48.f)];
                 [radioRelated.textField setDelegate:self];
                 RIField *relatedField = [field.relatedFields firstObject];
@@ -304,16 +310,33 @@
                 [radioRelated.textField setPlaceholder:@"+"];
                 [radioRelated.textField setEnabled:NO];
                 
-                frame = radioRelated.frame;
-                frame.origin.y = startingY;
+                CGRect frame = radioRelated.frame;
+                frame.origin.y = textField.frame.origin.y;
                 radioRelated.frame = frame;
-                startingY += radioRelated.frame.size.height;
                 
                 [self.formViews addObject:radioRelated];
                 
                 self.phonePrefixComponent = radioRelated;
                 
                 textField.relatedComponent = radioRelated;
+                
+            } else if (2 == [field.relatedFields count]) {
+                //must be radio type
+                
+                JARadioRelatedComponent* radioRelatedComp = [[JARadioRelatedComponent alloc]init];
+                
+                [radioRelatedComp setTag:tag];
+                [radioRelatedComp.switchComponent setTag:tag];
+                tag++;
+                
+                [radioRelatedComp setupWithField:field];
+
+                
+                [radioRelatedComp setY:startingY];
+                startingY += radioRelatedComp.frame.size.height;
+                
+                [self.formViews addObject:radioRelatedComp];
+                textField.relatedComponent = radioRelatedComp;                
             }
         }
         else if (0 != [field.type rangeOfString:@"checkbox"].length)
@@ -507,7 +530,10 @@
     {
         for (id obj in self.formViews)
         {
-            if ([obj isKindOfClass:[JATextFieldComponent class]] || [obj isKindOfClass:[JABirthDateComponent class]] || [obj isKindOfClass:[JARadioComponent class]])
+            if ([obj isKindOfClass:[JATextFieldComponent class]] ||
+                [obj isKindOfClass:[JABirthDateComponent class]] ||
+                [obj isKindOfClass:[JARadioComponent class]] ||
+                [obj isKindOfClass:[JARadioRelatedComponent class]])
             {
                 //ignore gender as an error, can't evaluate it here because the billing address form has it but it isn't shown on screen.
                 if (NO == [[obj getFieldName] isEqualToString:genderFieldName]) {

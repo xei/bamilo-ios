@@ -21,44 +21,50 @@
 - (UILabel *)labelText
 {
     if (!VALID_NOTEMPTY(_labelText, UILabel)) {
-        
+        _labelText = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.switchComponent.frame) + 16.f, 0,
+                                                              self.width, self.height)];
+        [_labelText setFont:JABody3Font];
+        [_labelText setTextColor:JABlack900Color];
+        [_labelText setTextAlignment:NSTextAlignmentLeft];
+        [self addSubview:_labelText];
     }
     return _labelText;
 }
 
 - (UISwitch *)switchComponent
 {
+    if (!VALID_NOTEMPTY(_switchComponent, UISwitch)) {
+        _switchComponent = [UISwitch new];
+        [_switchComponent setFrame:CGRectMake( 8.f, (self.height - _switchComponent.height) / 2,
+                                              _switchComponent.width, _switchComponent.height)];
+        [_switchComponent addTarget:self action:@selector(changedState:) forControlEvents:UIControlEventValueChanged];
+        
+        [self addSubview:_switchComponent];
+    }
     return _switchComponent;
 }
 
--(void)setup
+- (instancetype)init
 {
-    self.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.labelText.font = [UIFont fontWithName:kFontRegularName size:self.labelText.font.pointSize];
-    [self.labelText setTextColor:UIColorFromRGB(0x666666)];
-    self.labelText.adjustsFontSizeToFitWidth = YES;
-    
-    self.storedValue = @"";
+    self = [super init];
+    if (self) {
+        [self setFrame:CGRectMake(8.f, 0, 288.f, 48.f)];
+    }
+    return self;
 }
 
 -(void)setupWithField:(RIField*)field
 {
-    [self setup];
     
     self.field = field;
     
-    RIField* lastRelatedField = [field.relatedFields lastObject];
+    RIField* firstRelatedField = [field.relatedFields firstObject];
     
-    NSString* text = lastRelatedField.label;
+    [self.switchComponent setOn:[firstRelatedField.checked boolValue] animated:NO];
+
+    [self changedState:self.switchComponent];
     
-    [self.switchComponent addTarget:self action:@selector(changedState:) forControlEvents:UIControlEventValueChanged];
-    [self.switchComponent setAccessibilityLabel:text];
-    self.labelText.text = text;
-    
-    self.switchComponent.on = [lastRelatedField.checked boolValue];
-    
-    [self resetValue];
+    [self flipIfIsRTL];
 }
 
 -(BOOL)isComponentWithKey:(NSString*)key
@@ -75,20 +81,16 @@
 
 -(void)setStateValue:(BOOL)state
 {
-    if(state)
-    {
+    if(state) {
         self.storedValue = @"1";
+        RIField* firstRelatedField = [self.field.relatedFields firstObject];
+        self.labelText.text = firstRelatedField.label;
     }
-    else
-    {
-        self.storedValue = @"";
+    else {
+        self.storedValue = @"0";
+        RIField* lastRelatedField = [self.field.relatedFields lastObject];
+        self.labelText.text = lastRelatedField.label;
     }
-}
-
--(void)resetValue
-{
-    self.storedValue = @"";
-    [self.switchComponent setOn:NO animated:NO];
 }
 
 -(NSDictionary*)getValues
@@ -98,9 +100,11 @@
     {
         RIField* selectedRelatedField;
         if (VALID_NOTEMPTY(self.storedValue, NSString)) {
-            selectedRelatedField = [self.field.relatedFields lastObject];
-        } else {
-            selectedRelatedField = [self.field.relatedFields firstObject];
+            if ([self.storedValue isEqualToString:@"1"]) {
+                selectedRelatedField = [self.field.relatedFields firstObject];
+            } else {
+                selectedRelatedField = [self.field.relatedFields lastObject];
+            }
         }
         [parameters setValue:selectedRelatedField.value forKey:selectedRelatedField.name];
     }
@@ -117,5 +121,41 @@
     return self.switchComponent.on;
 }
 
+-(NSString*)getFieldName
+{
+    return self.field.name;
+}
+
+-(BOOL)isValid
+{
+    if (![self.storedValue isEqualToString:@"1"] && ![self.storedValue isEqualToString:@"0"]) {
+        return NO;
+    }
+    return YES;
+}
+
+- (void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    
+    
+    [self.switchComponent setFrame:CGRectMake( 8.f, (self.height - self.switchComponent.height) / 2,
+                                              self.switchComponent.width, self.switchComponent.height)];
+
+    [self.labelText setFrame:CGRectMake(CGRectGetMaxX(self.switchComponent.frame) + 16.f, 0,
+                                                               self.width, self.height)];
+    [self.labelText setTextAlignment:NSTextAlignmentLeft];
+    
+    [self flipIfIsRTL];
+}
+
+- (void)flipIfIsRTL
+{
+    if (RI_IS_RTL) {
+        [self.switchComponent flipViewPositionInsideSuperview];
+        [self.labelText flipViewPositionInsideSuperview];
+        [self.labelText flipViewAlignment];
+    }
+}
 
 @end
