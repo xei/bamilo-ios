@@ -28,8 +28,7 @@
 <
 JADynamicFormDelegate,
 JAPickerDelegate,
-JADatePickerDelegate,
-JADynamicFormDelegate
+JADatePickerDelegate
 >
 {
     UIView *_firstResponder;
