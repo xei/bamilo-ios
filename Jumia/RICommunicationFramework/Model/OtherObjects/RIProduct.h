@@ -7,10 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
 #import "RIBanner.h"
 #import "RICatalog.h"
-
+#import "RIRecentlyViewedProductSku.h"
 
 @class RIImage, RIProductSimple, RIVariation, RIBundle, RISeller;
 
@@ -29,7 +28,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
     RICatalogSortingBrand
 };
 
-@interface RIProduct : NSManagedObject
+@interface RIProduct : NSObject
 
 @property (nonatomic, retain) NSString * attributeCareLabel;
 @property (nonatomic, retain) NSString * attributeColor;
@@ -61,10 +60,9 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSString * targetString;
 @property (nonatomic, retain) NSNumber * isNew;
 @property (nonatomic, retain) NSDate * favoriteAddDate;
-@property (nonatomic, retain) NSDate * recentlyViewedDate;
-@property (nonatomic, retain) NSOrderedSet *images;
-@property (nonatomic, retain) NSOrderedSet *productSimples;
-@property (nonatomic, retain) NSOrderedSet *variations;
+@property (nonatomic, retain) NSArray *images;
+@property (nonatomic, retain) NSArray *productSimples;
+@property (nonatomic, retain) NSArray *variations;
 @property (nonatomic, retain) NSString * sizeGuideUrl;
 @property (nonatomic, retain) NSNumber * reviewsTotal;
 @property (nonatomic, retain) NSString * richRelevanceParameter;
@@ -77,11 +75,9 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSNumber *bucketActive;
 @property (nonatomic, retain) NSString *shortSummary;
 @property (nonatomic, retain) NSString *summary;
-@property (nonatomic, retain) NSNumber *numberOfTimesSeen;
 @property (nonatomic) BOOL preOrder;
 
-//Not a coredata relationship
-@property (nonatomic, retain) NSOrderedSet *categoryIds;
+@property (nonatomic, retain) NSArray *categoryIds;
 @property (nonatomic, retain) NSSet *relatedProducts;
 @property (nonatomic, retain) NSSet *specifications;
 @property (nonatomic, retain) RISeller *seller;
@@ -157,61 +153,6 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
- *  Method to reload a set of products given their skus
- *
- *  @param an array of skus to be reloaded
- *  @param the success block containing the obtained products
- *  @param the failure block containing the error message
- *
- *  @return a string with the operationID that can be used to cancel the operation
- */
-+ (NSString *)getUpdatedProductsWithSkus:(NSArray*)productSkus
-                            successBlock:(void (^)(NSArray *products))successBlock
-                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
-
-/**
- *  Method to load a the recently viewed products from coredata
- *
- *  @param the success block containing the recently viewed product
- *  @param the failure block containing the error message
- *
- */
-+ (void)getRecentlyViewedProductsWithSuccessBlock:(void (^)(NSArray *recentlyViewedProducts))successBlock
-                                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
-
-/**
- *  Method to add a product to recently viewed list (and save it in coredata)
- *
- *  @param the product to be added to the recently viewed list
- *
- */
-+ (void)addToRecentlyViewed:(RIProduct*)product
-               successBlock:(void (^)(RIProduct* product))successBlock
-            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
-
-/**
- *  Method to remove a recentrly viewed product
- *
- *  @param the product to be removed from the recently viewed list
- *
- */
-+ (void)removeFromRecentlyViewed:(RIProduct *)product;
-
-/**
- * Method to update product in local database
- *
- * @param the product to insert in database
- * @param the product´s sku to remove, if it already exists in db
- */
-+ (void)updateRecentlyViewedProduct:(RIProduct *)product withSku:(NSString *)sku;
-
-/**
- *  Method to delete all recently viewed products from coredata
- */
-+ (void)removeAllRecentlyViewedWithSuccessBlock:(void (^)(void))successBlock
-                                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
-
-/**
  *  Method to load a the favorite products from coredata
  *
  *  @param the success block containing the favorite products
@@ -248,6 +189,17 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
             andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 
 /**
+ *  Method to load a the recently viewed products from coredata
+ *
+ *  @param the success block containing the recently viewed product
+ *  @param the failure block containing the error message
+ *
+ */
++ (void)getRecentlyViewedProductsWithSuccessBlock:(void (^)(NSArray *recentlyViewedProducts))successBlock
+                                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+
+
+/**
  *  Method to cancel the request
  *
  *  @param the operationID
@@ -273,41 +225,6 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 
 @end
 
-@interface RIProduct (CoreDataGeneratedAccessors)
-
-- (void)insertObject:(RIImage *)value inImagesAtIndex:(NSUInteger)idx;
-- (void)removeObjectFromImagesAtIndex:(NSUInteger)idx;
-- (void)insertImages:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
-- (void)removeImagesAtIndexes:(NSIndexSet *)indexes;
-- (void)replaceObjectInImagesAtIndex:(NSUInteger)idx withObject:(RIImage *)value;
-- (void)replaceImagesAtIndexes:(NSIndexSet *)indexes withImages:(NSArray *)values;
-- (void)addImagesObject:(RIImage *)value;
-- (void)removeImagesObject:(RIImage *)value;
-- (void)addImages:(NSOrderedSet *)values;
-- (void)removeImages:(NSOrderedSet *)values;
-- (void)insertObject:(RIProductSimple *)value inProductSimplesAtIndex:(NSUInteger)idx;
-- (void)removeObjectFromProductSimplesAtIndex:(NSUInteger)idx;
-- (void)insertProductSimples:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
-- (void)removeProductSimplesAtIndexes:(NSIndexSet *)indexes;
-- (void)replaceObjectInProductSimplesAtIndex:(NSUInteger)idx withObject:(RIProductSimple *)value;
-- (void)replaceProductSimplesAtIndexes:(NSIndexSet *)indexes withProductSimples:(NSArray *)values;
-- (void)addProductSimplesObject:(RIProductSimple *)value;
-- (void)removeProductSimplesObject:(RIProductSimple *)value;
-- (void)addProductSimples:(NSOrderedSet *)values;
-- (void)removeProductSimples:(NSOrderedSet *)values;
-- (void)insertObject:(RIVariation *)value inVariationsAtIndex:(NSUInteger)idx;
-- (void)removeObjectFromVariationsAtIndex:(NSUInteger)idx;
-- (void)insertVariations:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
-- (void)removeVariationsAtIndexes:(NSIndexSet *)indexes;
-- (void)replaceObjectInVariationsAtIndex:(NSUInteger)idx withObject:(RIVariation *)value;
-- (void)replaceVariationsAtIndexes:(NSIndexSet *)indexes withVariations:(NSArray *)values;
-- (void)addVariationsObject:(RIVariation *)value;
-- (void)removeVariationsObject:(RIVariation *)value;
-- (void)addVariations:(NSOrderedSet *)values;
-- (void)removeVariations:(NSOrderedSet *)values;
-
-
-@end
 
 @interface RIBundle : NSObject
 

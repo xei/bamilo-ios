@@ -13,17 +13,17 @@
 
 @implementation RIVariation
 
-@dynamic brand;
-@dynamic name;
-@dynamic price;
-@dynamic specialPrice;
-@dynamic sku;
-@dynamic image;
-@dynamic product;
+@synthesize brand;
+@synthesize name;
+@synthesize price;
+@synthesize specialPrice;
+@synthesize sku;
+@synthesize image;
+@synthesize product;
 
 + (RIVariation *)parseVariation:(NSDictionary*)variation;
 {
-    RIVariation* newVariation = (RIVariation*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIVariation class])];
+    RIVariation* newVariation = [[RIVariation alloc] init];
     
     if ([variation objectForKey:@"brand"]) {
         newVariation.brand = [variation objectForKey:@"brand"];
@@ -53,22 +53,6 @@
     }
     
     return newVariation;
-}
-
-+ (void)saveVariation:(RIVariation*)variation andContext:(BOOL)save;
-{
-    if (variation.image) {
-        NSArray *images = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIImage class])];
-        if (![images containsObject:variation.image]) {
-            [[RIDataBaseWrapper sharedInstance] insertManagedObject:variation.image];
-        }
-    }
-    
-    [[RIDataBaseWrapper sharedInstance] insertManagedObject:variation];
-    if (save) {
-        [[RIDataBaseWrapper sharedInstance] saveContext];
-    }
-    
 }
 
 @end

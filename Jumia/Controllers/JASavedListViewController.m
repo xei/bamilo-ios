@@ -235,56 +235,36 @@
         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         if (favoriteProducts.count > 0) {
             
-            [RIProduct getUpdatedProductsWithSkus:[favoriteProducts valueForKey:@"sku"] successBlock:^(NSArray *products) {
-                
-                [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-                
-                if (currentPage == totalPages) {
-                    self.lastPage = YES;
+            if (currentPage == totalPages) {
+                self.lastPage = YES;
+            }
+            
+            for (RIProduct *product in favoriteProducts) {
+                if ([self.productsArray containsObject:product.sku]) {
+                    [self.productsArray removeObject:product.sku];
                 }
-                
-                
-                for (RIProduct *product in products) {
-                    if ([self.productsArray containsObject:product.sku]) {
-                        [self.productsArray removeObject:product.sku];
-                    }
-                    [self.productsArray addObject:product.sku];
-                    [self.productsDictionary setObject:product forKey:product.sku];
-                }
-                
-                self.chosenSimples = [NSMutableDictionary new];
-                
-                [self reloadData];
-                
-                [self hideLoading];
-                
-                self.currentPage = [NSNumber numberWithInteger:self.currentPage.integerValue+1];
-                
-                if(self.firstLoading)
-                {
-                    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-                    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-                    self.firstLoading = NO;
-                }
-                
-            } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
-                
-                [self onErrorResponse:apiResponse messages:error showAsMessage:NO selector:@selector(loadProducts) objects:nil];
-                
-                if(self.firstLoading)
-                {
-                    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-                    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-                    self.firstLoading = NO;
-                }
-                
-                [self hideLoading];
-            }];
+                [self.productsArray addObject:product.sku];
+                [self.productsDictionary setObject:product forKey:product.sku];
+            }
+            
+            self.chosenSimples = [NSMutableDictionary new];
+            
+            [self reloadData];
+            
+            self.currentPage = [NSNumber numberWithInteger:self.currentPage.integerValue+1];
+            
+            if(self.firstLoading)
+            {
+                NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                self.firstLoading = NO;
+            }
         } else {
             self.productsDictionary = nil;
             [self reloadData];
-            [self hideLoading];
         }
+        
+        [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
         
         [self onErrorResponse:apiResponse messages:error showAsMessage:NO selector:@selector(loadProducts) objects:nil];
@@ -473,7 +453,7 @@
                       
                       if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet))
                       {
-                          NSArray *categoryIds = [product.categoryIds array];
+                          NSArray *categoryIds = product.categoryIds;
                           NSInteger subCategoryIndex = [categoryIds count] - 1;
                           NSInteger categoryIndex = subCategoryIndex - 1;
                           

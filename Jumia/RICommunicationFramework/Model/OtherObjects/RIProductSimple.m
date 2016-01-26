@@ -11,24 +11,24 @@
 
 @implementation RIProductSimple
 
-@dynamic attributePackageType;
-@dynamic variation;
-@dynamic maxDeliveryTime;
-@dynamic minDeliveryTime;
-@dynamic price;
-@dynamic priceFormatted;
-@dynamic priceEuroConverted;
-@dynamic quantity;
-@dynamic sku;
-@dynamic specialPrice;
-@dynamic specialPriceFormatted;
-@dynamic specialPriceEuroConverted;
-@dynamic stock;
-@dynamic product;
+@synthesize attributePackageType;
+@synthesize variation;
+@synthesize maxDeliveryTime;
+@synthesize minDeliveryTime;
+@synthesize price;
+@synthesize priceFormatted;
+@synthesize priceEuroConverted;
+@synthesize quantity;
+@synthesize sku;
+@synthesize specialPrice;
+@synthesize specialPriceFormatted;
+@synthesize specialPriceEuroConverted;
+@synthesize stock;
+@synthesize product;
 
 + (RIProductSimple *)parseProductSimple:(NSDictionary*)productSimpleJSON country:(RICountryConfiguration*)country variationKey:(NSString*)variationKey
 {
-    RIProductSimple* newProductSimple = (RIProductSimple*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIProductSimple class])];
+    RIProductSimple* newProductSimple = [[RIProductSimple alloc] init];
     
     if (ISEMPTY(productSimpleJSON)) {
         productSimpleJSON = productSimpleJSON;
@@ -126,15 +126,6 @@
     }
     
     return newProductSimple;
-}
-
-+ (void)saveProductSimple:(RIProductSimple*)productSimple andContext:(BOOL)save;
-{
-    [[RIDataBaseWrapper sharedInstance] insertManagedObject:productSimple];
-    if (save) {
-        [[RIDataBaseWrapper sharedInstance] saveContext];
-    }
-    
 }
 
 @end

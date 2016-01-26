@@ -1556,7 +1556,7 @@ typedef void (^ProcessActionBlock)(void);
     }
     else if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet))
     {
-        NSArray *categoryIds = [product.categoryIds array];
+        NSArray *categoryIds = product.categoryIds;
         NSInteger subCategoryIndex = [categoryIds count] - 1;
         NSInteger categoryIndex = subCategoryIndex - 1;
         

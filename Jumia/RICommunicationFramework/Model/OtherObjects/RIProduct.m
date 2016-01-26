@@ -55,52 +55,50 @@
 
 @implementation RIProduct
 
-@dynamic attributeCareLabel;
-@dynamic attributeColor;
-@dynamic attributeDescription;
-@dynamic attributeMainMaterial;
-@dynamic attributeSetId;
-@dynamic attributeShortDescription;
-@dynamic avr;
-@dynamic brand;
-@dynamic descriptionString;
-@dynamic maxPrice;
-@dynamic maxPriceFormatted;
-@dynamic maxPriceEuroConverted;
-@dynamic maxSavingPercentage;
-@dynamic maxSpecialPrice;
-@dynamic maxSpecialPriceFormatted;
-@dynamic maxSpecialPriceEuroConverted;
-@dynamic name;
-@dynamic price;
-@dynamic priceFormatted;
-@dynamic priceEuroConverted;
-@dynamic sku;
-@dynamic specialPrice;
-@dynamic specialPriceFormatted;
-@dynamic specialPriceEuroConverted;
-@dynamic sum;
-@dynamic targetString;
-@dynamic shopFirst;
-@dynamic shopFirstOverlayText;
-@dynamic isNew;
-@dynamic favoriteAddDate;
-@dynamic recentlyViewedDate;
-@dynamic images;
-@dynamic productSimples;
-@dynamic variations;
-@dynamic sizeGuideUrl;
-@dynamic reviewsTotal;
-@dynamic offersMinPrice;
-@dynamic offersMinPriceEuroConverted;
-@dynamic offersMinPriceFormatted;
-@dynamic offersTotal;
-@dynamic bucketActive;
-@dynamic shortSummary;
-@dynamic summary;
-@dynamic numberOfTimesSeen;
-@dynamic richRelevanceParameter;
-@dynamic richRelevanceTitle;
+@synthesize attributeCareLabel;
+@synthesize attributeColor;
+@synthesize attributeDescription;
+@synthesize attributeMainMaterial;
+@synthesize attributeSetId;
+@synthesize attributeShortDescription;
+@synthesize avr;
+@synthesize brand;
+@synthesize descriptionString;
+@synthesize maxPrice;
+@synthesize maxPriceFormatted;
+@synthesize maxPriceEuroConverted;
+@synthesize maxSavingPercentage;
+@synthesize maxSpecialPrice;
+@synthesize maxSpecialPriceFormatted;
+@synthesize maxSpecialPriceEuroConverted;
+@synthesize name;
+@synthesize price;
+@synthesize priceFormatted;
+@synthesize priceEuroConverted;
+@synthesize sku;
+@synthesize specialPrice;
+@synthesize specialPriceFormatted;
+@synthesize specialPriceEuroConverted;
+@synthesize sum;
+@synthesize targetString;
+@synthesize shopFirst;
+@synthesize shopFirstOverlayText;
+@synthesize isNew;
+@synthesize favoriteAddDate;
+@synthesize images;
+@synthesize productSimples;
+@synthesize variations;
+@synthesize sizeGuideUrl;
+@synthesize reviewsTotal;
+@synthesize offersMinPrice;
+@synthesize offersMinPriceEuroConverted;
+@synthesize offersMinPriceFormatted;
+@synthesize offersTotal;
+@synthesize bucketActive;
+@synthesize shortSummary;
+@synthesize summary;
+@synthesize richRelevanceParameter;
+@synthesize richRelevanceTitle;
 
 @synthesize categoryIds;
 @synthesize relatedProducts;
@@ -289,16 +287,29 @@
                                                           }];
 }
 
-+ (NSString *)getUpdatedProductsWithSkus:(NSArray*)productSkus
-                            successBlock:(void (^)(NSArray *products))successBlock
-                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
++ (void)getRecentlyViewedProductsWithSuccessBlock:(void (^)(NSArray *recentlyViewedProducts))successBlock
+                                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+{
+    [RIRecentlyViewedProductSku getRecentlyViewedProductSkusWithSuccessBlock:^(NSArray *recentlyViewedProductSkus) {
+        if (VALID_NOTEMPTY(recentlyViewedProductSkus, NSArray)) {
+            [RIProduct getUpdatedProductsWithRecentlyViewedProductSkus:recentlyViewedProductSkus successBlock:successBlock andFailureBlock:failureBlock];
+        } else {
+            successBlock(nil);
+        }
+    }];
+}
+
++ (NSString *)getUpdatedProductsWithRecentlyViewedProductSkus:(NSArray*)recentlyViewedProductSkus
+                                                 successBlock:(void (^)(NSArray *products))successBlock
+                                              andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
     NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_PROD_VALIDATE]];
     
     NSMutableDictionary* parameters = [NSMutableDictionary new];
-    for (int i = 0; i < productSkus.count; i++) {
+    for (int i = 0; i < recentlyViewedProductSkus.count; i++) {
         NSString* key = [NSString stringWithFormat:@"products[%d]",i];
-         [parameters setValue:[productSkus objectAtIndex:i] forKey:key];
+        RIRecentlyViewedProductSku* recentlyViewedProductSku = [recentlyViewedProductSkus objectAtIndex:i];
+         [parameters setValue:recentlyViewedProductSku.productSku forKey:key];
     }
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
@@ -326,9 +337,9 @@
                                                                               [validProducts addObject:validProduct];
                                                                           }
                                                                           
-                                                                          [RIProduct resetRecentlyViewedWithProducts:validProducts successBlock:^(NSArray *productsArray) {
+                                                                          [RIRecentlyViewedProductSku resetRecentlyViewedWithProducts:validProducts successBlock:^(NSArray *productsArray) {
                                                                               dispatch_async(dispatch_get_main_queue(), ^{
-                                                                                  successBlock(productsArray);
+                                                                                  successBlock(validProducts);
                                                                               });
                                                                           } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
                                                                               failureBlock(RIApiResponseAPIError, nil);
@@ -371,7 +382,7 @@
 
 + (RIProduct *)parseProduct:(NSDictionary *)productJSON country:(RICountryConfiguration*)country
 {
-    RIProduct* newProduct = (RIProduct*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIProduct class])];
+    RIProduct* newProduct = [[RIProduct alloc] init];
     
     NSDictionary *dataDic = [productJSON copy];
     
@@ -513,7 +524,7 @@
             newProduct.attributeSetId = [dataDic objectForKey:@"attribute_set_id"];
         }
         if ([dataDic objectForKey:@"categories"]) {
-            newProduct.categoryIds = [NSOrderedSet orderedSetWithArray:[[dataDic objectForKey:@"categories"] componentsSeparatedByString:@"|"]];
+            newProduct.categoryIds = [[dataDic objectForKey:@"categories"] componentsSeparatedByString:@"|"];
         }
         
         if ([dataDic objectForKey:@"size_guide"]) {
@@ -543,15 +554,17 @@
         }
         
         if ([dataDic objectForKey:@"simples"]) {
+            NSMutableArray* productSimplesMutableArray = [NSMutableArray new];
             NSArray* productSimplesJSON = [dataDic objectForKey:@"simples"];
             for (NSDictionary* simpleJSON in productSimplesJSON) {
                 if (VALID_NOTEMPTY(simpleJSON, NSDictionary)) {
                     
                     RIProductSimple* productSimple = [RIProductSimple parseProductSimple:simpleJSON country:country variationKey:variationKey];
                     productSimple.product = newProduct;
-                    [newProduct addProductSimplesObject:productSimple];
+                    [productSimplesMutableArray addObject:productSimple];
                 }
             }
+            newProduct.productSimples = [productSimplesMutableArray copy];
         }
         
         if([dataDic objectForKey:@"specifications"]){
@@ -571,13 +584,16 @@
         if ([dataDic objectForKey:@"variations"]) {
             NSDictionary* variationsJSON = [dataDic objectForKey:@"variations"];
             if (VALID_NOTEMPTY(variationsJSON, NSArray)) {
+                NSMutableArray* variationsMutableArray = [NSMutableArray new];
                 for (NSDictionary *varDictionary in variationsJSON) {
                     RIVariation* variation = [RIVariation parseVariation:varDictionary];
-                    [newProduct addVariationsObject:variation];
+                    [variationsMutableArray addObject:variation];
                 }
+                newProduct.variations = [variationsMutableArray copy];
             }
         }
         
+        NSMutableArray* imagesMutableArray = [NSMutableArray new];
         if ([dataDic objectForKey:@"image_list"]) {
             NSArray* imageListJSON = [dataDic objectForKey:@"image_list"];
             
@@ -586,7 +602,7 @@
                     
                     RIImage* image = [RIImage parseImage:imageJSON];
                     image.product = newProduct;
-                    [newProduct addImagesObject:image];
+                    [imagesMutableArray addObject:image];
                 }
             }
         } else if ([dataDic objectForKey:@"image"]) {
@@ -594,14 +610,15 @@
             NSDictionary* imageDic = [NSDictionary dictionaryWithObject:[dataDic objectForKey:@"image"] forKey:@"image"];
             RIImage* image = [RIImage parseImage:imageDic];
             image.product = newProduct;
-            [newProduct addImagesObject:image];
+            [imagesMutableArray addObject:image];
         } else if ([dataDic objectForKey:@"image_url"]) {
             NSMutableDictionary* imageDict = [NSMutableDictionary new];
             [imageDict setObject:[dataDic objectForKey:@"image_url"] forKey:@"url"];
             RIImage* image = [RIImage parseImage:imageDict];
             image.product = newProduct;
-            [newProduct addImagesObject:image];
+            [imagesMutableArray addObject:image];
         }
+        newProduct.images = [imagesMutableArray copy];
         
         if ([dataDic objectForKey:@"seller_entity"]) {
             NSDictionary* sellerJSON = [dataDic objectForKey:@"seller_entity"];
@@ -740,227 +757,6 @@
     return sortingName;
 }
 
-#pragma mark - Recently Viewed
-
-+ (void)getRecentlyViewedProductsWithSuccessBlock:(void (^)(NSArray *recentlyViewedProducts))successBlock
-                                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
-{
-    NSArray* recentlyViewedProducts = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIProduct class]) withPropertyName:@"recentlyViewedDate"];
-    
-    if (VALID(recentlyViewedProducts, NSArray) && successBlock) {
-        
-        //reverse array
-        NSMutableArray *reversedArray = [NSMutableArray arrayWithCapacity:recentlyViewedProducts.count];
-        NSEnumerator *enumerator = [recentlyViewedProducts reverseObjectEnumerator];
-        for (id element in enumerator) {
-            [reversedArray addObject:element];
-        }
-        successBlock(reversedArray);
-    } else if (failureBlock) {
-        failureBlock(RIApiResponseUnknownError, nil);
-    }
-}
-
-+ (void)addToRecentlyViewed:(RIProduct*)product
-               successBlock:(void (^)(RIProduct* product))successBlock
-            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
-{
-    NSArray* allProducts = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIProduct class])];
-    
-    BOOL productExists = NO;
-    for (RIProduct* currentProduct in allProducts) {
-        if ([currentProduct.sku isEqualToString:product.sku]) {
-            
-            //found it, so just change the product by deleting the previous entry
-            product.recentlyViewedDate = [NSDate date];
-            [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
-            [RIProduct saveProduct:product andContext:YES];
-            productExists = YES;
-            break;
-        }
-    }
-    if (NO == productExists) {
-        //did not find it, so save the product
-        product.recentlyViewedDate = [NSDate date];
-        [RIProduct saveProduct:product andContext:YES];
-    }
-    
-    //now we need to check if there are more than 15 products
-    [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
-        
-        if (VALID_NOTEMPTY(recentlyViewedProducts, NSArray) && recentlyViewedProducts.count > 15) {
-            
-            //there are more than 15, we need to remove the oldest
-            RIProduct* productToDelete = nil;
-            for (RIProduct* recentProduct in recentlyViewedProducts) {
-                
-                if (ISEMPTY(productToDelete)) {
-                    productToDelete = recentProduct;
-                } else {
-                    NSDate* oldestDate = [recentProduct.recentlyViewedDate earlierDate:productToDelete.recentlyViewedDate];
-                    if ([oldestDate isEqualToDate:recentProduct.recentlyViewedDate]) {
-                        productToDelete = recentProduct;
-                    }
-                }
-            }
-        
-            if (VALID_NOTEMPTY(productToDelete, RIProduct)) {
-                [RIProduct removeFromRecentlyViewed:productToDelete successBlock:^{
-                    if (successBlock) {
-                        successBlock(product);
-                        return;
-                    }
-                } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-                    if (failureBlock) {
-                        failureBlock(apiResponse, error);
-                        return;
-                    }
-                }];
-            }
-        }
-        if (successBlock) {
-            successBlock(product);
-        }
-    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-        if (failureBlock) {
-            failureBlock(apiResponse, error);
-        }
-    }];
-}
-
-+ (void)resetRecentlyViewedWithProducts:(NSArray *)productsArray
-                           successBlock:(void (^)(NSArray* productsArray))successBlock
-                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
-{
-    [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
-
-        for (RIProduct* currentProduct in recentlyViewedProducts) {
-            
-            BOOL shouldDelete = YES;
-            
-            for (RIProduct* product in productsArray) {
-                
-                if ([currentProduct.sku isEqualToString:product.sku]) {
-                    
-                    //found it, so just change the product by deleting the previous entry
-                    product.recentlyViewedDate = [NSDate date];
-                    product.favoriteAddDate = currentProduct.favoriteAddDate;
-                    [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
-                    [[RIDataBaseWrapper sharedInstance] saveContext];
-                    //already deleted
-                    shouldDelete = NO;
-                    
-                    [RIProduct saveProduct:product andContext:YES];
-                    
-                    break;
-                }
-            }
-            
-            if (YES == shouldDelete) {
-                [RIProduct removeFromRecentlyViewed:currentProduct];
-            }
-        }
-
-        if (successBlock) {
-            successBlock(productsArray);
-        }
-        
-    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-        if (failureBlock) {
-            failureBlock(apiResponse, error);
-        }
-    }];
-}
-
-+ (void)removeFromRecentlyViewed:(RIProduct *)product
-{
-    [[RIDataBaseWrapper sharedInstance] deleteObject:product];
-    [[RIDataBaseWrapper sharedInstance] saveContext];
-}
-
-+ (void)removeArrayFromRecentlyViewed:(NSArray*)productsArray
-{
-    NSArray* allProducts = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIProduct class])];
-    
-    for (RIProduct* savedProduct in allProducts) {
-        for (RIProduct* newProduct in productsArray) {
-            if ([newProduct.sku isEqualToString:savedProduct.sku]) {
-                
-                [RIProduct removeFromRecentlyViewed:savedProduct];
-            }
-        }
-    }
-}
-
-+ (void)removeAllRecentlyViewedWithSuccessBlock:(void (^)(void))successBlock
-                                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *))failureBlock;
-{
-    [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
-        
-        for (RIProduct* productToDelete in recentlyViewedProducts) {
-            if (VALID_NOTEMPTY(productToDelete.favoriteAddDate, NSDate)) {
-                //has date, don't delete, just remove recentlyViewedDate
-                productToDelete.recentlyViewedDate = nil;
-            } else {
-                //remove the product
-                [[RIDataBaseWrapper sharedInstance] deleteObject:productToDelete];
-            }
-            [[RIDataBaseWrapper sharedInstance] saveContext];
-        }
-        
-        if (successBlock) {
-            successBlock();
-        }
-        
-    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-        if (failureBlock) {
-            failureBlock(apiResponse, error);
-        }
-    }];
-}
-
-+ (void)removeFromRecentlyViewed:(RIProduct *)product
-                    successBlock:(void (^)(void))successBlock
-                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
-{
-    [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
-        
-        for (RIProduct* currentProduct in recentlyViewedProducts) {
-            if ([currentProduct.sku isEqualToString:product.sku]) {
-                //found it
-
-                if (VALID_NOTEMPTY(currentProduct.favoriteAddDate, NSDate)) {
-                    currentProduct.recentlyViewedDate = nil;
-                } else {
-                    [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
-                }
-                [[RIDataBaseWrapper sharedInstance] saveContext];
-            }
-        }
-        if (successBlock) {
-            successBlock();
-        }
-        
-    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-        if (failureBlock) {
-            failureBlock(apiResponse, error);
-        }
-    }];
-}
-
-+ (void)updateRecentlyViewedProduct:(RIProduct *)product withSku:(NSString *)sku
-{
-    NSArray *productLastEntry = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIProduct class])
-                                                                  withPropertyName:@"sku"
-                                                                  andPropertyValue:sku];
-    
-    if ([productLastEntry count] > 0) {
-        [[RIDataBaseWrapper sharedInstance] deleteObject:[productLastEntry objectAtIndex:0]];
-    }
-    product.recentlyViewedDate = [NSDate new];
-    [[RIDataBaseWrapper sharedInstance] insertManagedObject:product];
-}
-
 #pragma mark - Favorites
 
 + (void)getFavoriteProductsWithSuccessBlock:(void (^)(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages))successBlock
@@ -982,57 +778,61 @@
     if (maxItems != -1) {
         [parameters setObject:[NSString stringWithFormat:@"%ld",(long)maxItems] forKey:@"per_page"];
     }
-    [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl] parameters:parameters httpMethod:HttpResponsePost cacheType:RIURLCacheNoCache cacheTime:RIURLCacheDefaultTime userAgentInjection:[RIApi getCountryUserAgentInjection] successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-        if (VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary)) {
-            NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
-            NSInteger currentPage = 1;
-            NSInteger totalPages = 1;
-            if (VALID_NOTEMPTY([metadata objectForKey:@"pagination"], NSDictionary)) {
-                
-                if (VALID_NOTEMPTY([[metadata objectForKey:@"pagination"] objectForKey:@"current_page"], NSNumber)) {
-                    currentPage = [(NSNumber *)[[metadata objectForKey:@"pagination"] objectForKey:@"current_page"] integerValue];
-                }
-                if (VALID_NOTEMPTY([[metadata objectForKey:@"pagination"] objectForKey:@"total_pages"], NSNumber)) {
-                    totalPages = [(NSNumber *)[[metadata objectForKey:@"pagination"] objectForKey:@"total_pages"] integerValue];
-                }
-            }
-            if (VALID_NOTEMPTY([metadata objectForKey:@"products"], NSArray)) {
-                NSArray *productsArray = [metadata objectForKey:@"products"];
-                NSMutableArray *favoriteProducts = [NSMutableArray new];
-                for (NSDictionary *productDict in productsArray) {
-                    if (VALID_NOTEMPTY(productDict, NSDictionary)) {
-                        RIProduct *product = [RIProduct parseProduct:productDict country:[RICountryConfiguration getCurrentConfiguration]];
-                        if (VALID_NOTEMPTY(product, RIProduct)) {
-                            [favoriteProducts addObject:product];
-                            [RIProduct saveProduct:product andContext:YES];
-                        }
-                    }
-                }
-                
-                if (VALID(favoriteProducts, NSArray) && successBlock) {
-                    NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"favoriteAddDate" ascending:NO];
-                    NSArray *sorted = [favoriteProducts sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateDescriptor]];
-                    successBlock(sorted, currentPage, totalPages);
-                    return;
-                }
-            } else {
-                if (successBlock) {
-                    successBlock([[NSArray alloc] init], 1, 0);
-                    return;
-                }
-            }
-        }
-        if (failureBlock) {
-            failureBlock(RIApiResponseUnknownError, nil);
-        }
-        
-    } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
-        if (errorObject) {
-            failureBlock(apiResponse, [NSArray arrayWithObject:[errorObject localizedDescription]]);
-        }else{
-            failureBlock(apiResponse, nil);
-        }
-    }];
+    [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl]
+                                                     parameters:parameters
+                                                     httpMethod:HttpResponsePost
+                                                      cacheType:RIURLCacheNoCache
+                                                      cacheTime:RIURLCacheDefaultTime
+                                             userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                   successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                       if (VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary)) {
+                                                           NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
+                                                           NSInteger currentPage = 1;
+                                                           NSInteger totalPages = 1;
+                                                           if (VALID_NOTEMPTY([metadata objectForKey:@"pagination"], NSDictionary)) {
+                                                               
+                                                               if (VALID_NOTEMPTY([[metadata objectForKey:@"pagination"] objectForKey:@"current_page"], NSNumber)) {
+                                                                   currentPage = [(NSNumber *)[[metadata objectForKey:@"pagination"] objectForKey:@"current_page"] integerValue];
+                                                               }
+                                                               if (VALID_NOTEMPTY([[metadata objectForKey:@"pagination"] objectForKey:@"total_pages"], NSNumber)) {
+                                                                   totalPages = [(NSNumber *)[[metadata objectForKey:@"pagination"] objectForKey:@"total_pages"] integerValue];
+                                                               }
+                                                           }
+                                                           if (VALID_NOTEMPTY([metadata objectForKey:@"products"], NSArray)) {
+                                                               NSArray *productsArray = [metadata objectForKey:@"products"];
+                                                               NSMutableArray *favoriteProducts = [NSMutableArray new];
+                                                               for (NSDictionary *productDict in productsArray) {
+                                                                   if (VALID_NOTEMPTY(productDict, NSDictionary)) {
+                                                                       RIProduct *product = [RIProduct parseProduct:productDict country:[RICountryConfiguration getCurrentConfiguration]];
+                                                                       if (VALID_NOTEMPTY(product, RIProduct)) {
+                                                                           [favoriteProducts addObject:product];
+                                                                       }
+                                                                   }
+                                                               }
+                                                               if (VALID(favoriteProducts, NSArray) && successBlock) {
+                                                                   NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"favoriteAddDate" ascending:NO];
+                                                                   NSArray *sorted = [favoriteProducts sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateDescriptor]];
+                                                                   successBlock(sorted, currentPage, totalPages);
+                                                                   return;
+                                                               }
+                                                           } else {
+                                                               if (successBlock) {
+                                                                   successBlock([[NSArray alloc] init], 1, 0);
+                                                                   return;
+                                                               }
+                                                           }
+                                                       }
+                                                       if (failureBlock) {
+                                                           failureBlock(RIApiResponseUnknownError, nil);
+                                                       }
+                                                       
+                                                   } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
+                                                       if (errorObject) {
+                                                           failureBlock(apiResponse, [NSArray arrayWithObject:[errorObject localizedDescription]]);
+                                                       }else{
+                                                           failureBlock(apiResponse, nil);
+                                                       }
+                                                   }];
 }
 
 + (void)addToFavorites:(RIProduct*)product
@@ -1042,64 +842,46 @@
     
     NSString *finalUrl = [NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_ADD_TO_WISHLIST];
     NSDictionary *parameters = [NSDictionary dictionaryWithObject:product.sku forKey:@"sku"];
-    [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl] parameters:parameters httpMethod:HttpResponsePost cacheType:RIURLCacheNoCache cacheTime:RIURLCacheDefaultTime userAgentInjection:[RIApi getCountryUserAgentInjection] successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-        
-        NSArray* allProducts = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIProduct class])];
-        
-        BOOL productExists = NO;
-        for (RIProduct* currentProduct in allProducts) {
-            if ([currentProduct.sku isEqualToString:product.sku]) {
-                
-                //found it, so just change the product by deleting the previous entry
-                product.recentlyViewedDate = currentProduct.recentlyViewedDate;
-                product.favoriteAddDate = [NSDate date];
-                if (product == currentProduct) {
-                    [[RIDataBaseWrapper sharedInstance] saveContext];
-                } else {
-                    [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
-                    [RIProduct saveProduct:product andContext:YES];
-                }
-                productExists = YES;
-                break;
-            }
-        }
-        if (NO == productExists) {
-            product.favoriteAddDate = [NSDate date];
-            [RIProduct saveProduct:product andContext:YES];
-        }
-        if (VALID_NOTEMPTY([jsonObject objectForKey:@"messages"], NSDictionary)) {
-            NSDictionary *messages = [jsonObject objectForKey:@"messages"];
-            if (VALID_NOTEMPTY([messages objectForKey:@"success"], NSArray)) {
-                NSArray *success = [messages objectForKey:@"success"];
-                if (VALID_NOTEMPTY([success valueForKey:@"message"], NSArray)) {
-                    NSArray *successMessage = [success valueForKey:@"message"];
-                    successBlock(apiResponse, successMessage);
-                    return;
-                }
-                
-            }
-        }
-        successBlock(apiResponse, nil);
-        
-    } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
-        if (errorObject) {
-            failureBlock(apiResponse, [NSArray arrayWithObject:[errorObject localizedDescription]]);
-        }else{
-            if (VALID_NOTEMPTY([errorJsonObject objectForKey:@"messages"], NSDictionary)) {
-                NSDictionary *messages = [errorJsonObject objectForKey:@"messages"];
-                if (VALID_NOTEMPTY([messages objectForKey:@"error"], NSArray)) {
-                    NSArray *error = [messages objectForKey:@"error"];
-                    if (VALID_NOTEMPTY([error valueForKey:@"message"], NSArray)) {
-                        NSArray *errorMessage = [error valueForKey:@"message"];
-                        failureBlock(apiResponse, errorMessage);
-                        return;
-                    }
-
-                }
-            }
-            failureBlock(apiResponse, nil);
-        }
-    }];
+    [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl]
+                                                     parameters:parameters
+                                                     httpMethod:HttpResponsePost
+                                                      cacheType:RIURLCacheNoCache
+                                                      cacheTime:RIURLCacheDefaultTime
+                                             userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                   successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                       if (VALID_NOTEMPTY([jsonObject objectForKey:@"messages"], NSDictionary)) {
+                                                           NSDictionary *messages = [jsonObject objectForKey:@"messages"];
+                                                           if (VALID_NOTEMPTY([messages objectForKey:@"success"], NSArray)) {
+                                                               NSArray *success = [messages objectForKey:@"success"];
+                                                               if (VALID_NOTEMPTY([success valueForKey:@"message"], NSArray)) {
+                                                                   NSArray *successMessage = [success valueForKey:@"message"];
+                                                                   successBlock(apiResponse, successMessage);
+                                                                   return;
+                                                               }
+                                                               
+                                                           }
+                                                       }
+                                                       successBlock(apiResponse, nil);
+                                                       
+                                                   } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
+                                                       if (errorObject) {
+                                                           failureBlock(apiResponse, [NSArray arrayWithObject:[errorObject localizedDescription]]);
+                                                       }else{
+                                                           if (VALID_NOTEMPTY([errorJsonObject objectForKey:@"messages"], NSDictionary)) {
+                                                               NSDictionary *messages = [errorJsonObject objectForKey:@"messages"];
+                                                               if (VALID_NOTEMPTY([messages objectForKey:@"error"], NSArray)) {
+                                                                   NSArray *error = [messages objectForKey:@"error"];
+                                                                   if (VALID_NOTEMPTY([error valueForKey:@"message"], NSArray)) {
+                                                                       NSArray *errorMessage = [error valueForKey:@"message"];
+                                                                       failureBlock(apiResponse, errorMessage);
+                                                                       return;
+                                                                   }
+                                                                   
+                                                               }
+                                                           }
+                                                           failureBlock(apiResponse, nil);
+                                                       }
+                                                   }];
 }
 
 + (void)removeFromFavorites:(RIProduct*)product
@@ -1108,61 +890,45 @@
 {
     NSString *finalUrl = [NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_REMOVE_FOM_WISHLIST];
     NSDictionary *parameters = [NSDictionary dictionaryWithObject:product.sku forKey:@"sku"];
-    [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl] parameters:parameters httpMethod:HttpResponseDelete cacheType:RIURLCacheNoCache cacheTime:RIURLCacheDefaultTime userAgentInjection:[RIApi getCountryUserAgentInjection] successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-        
-        [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
-            BOOL found = NO;
-            for (RIProduct* currentProduct in favoriteProducts) {
-                if ([currentProduct.sku isEqualToString:product.sku]) {
-                    //found it
-                    
-                    if (VALID_NOTEMPTY(currentProduct.favoriteAddDate, NSDate)) {
-                        //do not delete, just remove favorite variable
-                        currentProduct.favoriteAddDate = nil;
-                        found = YES;
-                    } else {
-                        [[RIDataBaseWrapper sharedInstance] deleteObject:currentProduct];
-                    }
-                    [[RIDataBaseWrapper sharedInstance] saveContext];
-                }
-            }
-            if (VALID_NOTEMPTY([jsonObject objectForKey:@"messages"], NSDictionary)) {
-                NSDictionary *messages = [jsonObject objectForKey:@"messages"];
-                if (VALID_NOTEMPTY([messages objectForKey:@"success"], NSArray)) {
-                    NSArray *success = [messages objectForKey:@"success"];
-                    if (VALID_NOTEMPTY([success valueForKey:@"message"], NSArray)) {
-                        NSArray *successMessage = [success valueForKey:@"message"];
-                        successBlock(apiResponse, successMessage);
-                        return;
-                    }
-                    
-                }
-            }
-            successBlock(apiResponse, nil);
-        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-            if (failureBlock) {
-                failureBlock(apiResponse, error);
-            }
-        }];
-    } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
-        if (errorObject) {
-            failureBlock(apiResponse, [NSArray arrayWithObject:[errorObject localizedDescription]]);
-        }else{
-            if (VALID_NOTEMPTY([errorJsonObject objectForKey:@"messages"], NSDictionary)) {
-                NSDictionary *messages = [errorJsonObject objectForKey:@"messages"];
-                if (VALID_NOTEMPTY([messages objectForKey:@"error"], NSArray)) {
-                    NSArray *error = [messages objectForKey:@"error"];
-                    if (VALID_NOTEMPTY([error valueForKey:@"message"], NSArray)) {
-                        NSArray *errorMessage = [error valueForKey:@"message"];
-                        failureBlock(apiResponse, errorMessage);
-                        return;
-                    }
-                    
-                }
-            }
-            failureBlock(apiResponse, nil);
-        }
-    }];
+    [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:finalUrl]
+                                                     parameters:parameters httpMethod:HttpResponseDelete
+                                                      cacheType:RIURLCacheNoCache
+                                                      cacheTime:RIURLCacheDefaultTime
+                                             userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                   successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                       if (VALID_NOTEMPTY([jsonObject objectForKey:@"messages"], NSDictionary)) {
+                                                           NSDictionary *messages = [jsonObject objectForKey:@"messages"];
+                                                           if (VALID_NOTEMPTY([messages objectForKey:@"success"], NSArray)) {
+                                                               NSArray *success = [messages objectForKey:@"success"];
+                                                               if (VALID_NOTEMPTY([success valueForKey:@"message"], NSArray)) {
+                                                                   NSArray *successMessage = [success valueForKey:@"message"];
+                                                                   successBlock(apiResponse, successMessage);
+                                                                   return;
+                                                               }
+                                                               
+                                                           }
+                                                       }
+                                                       successBlock(apiResponse, nil);
+                                                       
+                                                   } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
+                                                       if (errorObject) {
+                                                           failureBlock(apiResponse, [NSArray arrayWithObject:[errorObject localizedDescription]]);
+                                                       }else{
+                                                           if (VALID_NOTEMPTY([errorJsonObject objectForKey:@"messages"], NSDictionary)) {
+                                                               NSDictionary *messages = [errorJsonObject objectForKey:@"messages"];
+                                                               if (VALID_NOTEMPTY([messages objectForKey:@"error"], NSArray)) {
+                                                                   NSArray *error = [messages objectForKey:@"error"];
+                                                                   if (VALID_NOTEMPTY([error valueForKey:@"message"], NSArray)) {
+                                                                       NSArray *errorMessage = [error valueForKey:@"message"];
+                                                                       failureBlock(apiResponse, errorMessage);
+                                                                       return;
+                                                                   }
+                                                                   
+                                                               }
+                                                           }
+                                                           failureBlock(apiResponse, nil);
+                                                       }
+                                                   }];
 }
 
 + (NSDate*)productIsFavoriteInDatabase:(RIProduct*)product
@@ -1177,6 +943,7 @@
     
     return nil;
 }
+
 
 + (NSString *)getBundleWithSku:(NSString *)sku
                   successBlock:(void (^)(RIBundle* bundle))successBlock
@@ -1224,25 +991,25 @@
     
     NSMutableDictionary *brandsDictionary = [NSMutableDictionary new];
     NSString *topBrand = nil;
-    NSArray* databaseBrands = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIProduct class]) withPropertyName:@"brand"];
-    for(RIProduct *product in databaseBrands)
+    NSArray* databaseBrands = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIRecentlyViewedProductSku class]) withPropertyName:@"brand"];
+    for(RIRecentlyViewedProductSku *recentlyViewedProductSku in databaseBrands)
     {
         if(ISEMPTY(topBrand))
         {
-            topBrand = product.brand;
-            [brandsDictionary setObject:product.numberOfTimesSeen forKey:product.brand];
+            topBrand = recentlyViewedProductSku.brand;
+            [brandsDictionary setObject:recentlyViewedProductSku.numberOfTimesSeen forKey:recentlyViewedProductSku.brand];
         }
         else
         {
-            if (VALID_NOTEMPTY([brandsDictionary objectForKey:product.brand], NSNumber)) {
-                NSNumber *sum = [NSNumber numberWithLong:[[brandsDictionary objectForKey:product.brand] longValue] + [product.numberOfTimesSeen longValue]];
-                [brandsDictionary setObject:sum forKey:product.brand];
+            if (VALID_NOTEMPTY([brandsDictionary objectForKey:recentlyViewedProductSku.brand], NSNumber)) {
+                NSNumber *sum = [NSNumber numberWithLong:[[brandsDictionary objectForKey:recentlyViewedProductSku.brand] longValue] + [recentlyViewedProductSku.numberOfTimesSeen longValue]];
+                [brandsDictionary setObject:sum forKey:recentlyViewedProductSku.brand];
             }else{
-                [brandsDictionary setObject:product.numberOfTimesSeen forKey:product.brand];
+                [brandsDictionary setObject:recentlyViewedProductSku.numberOfTimesSeen forKey:recentlyViewedProductSku.brand];
             }
-            if([brandsDictionary[topBrand] longValue] < [brandsDictionary[product.brand] longValue])
+            if([brandsDictionary[topBrand] longValue] < [brandsDictionary[recentlyViewedProductSku.brand] longValue])
             {
-                topBrand = product.brand;
+                topBrand = recentlyViewedProductSku.brand;
             }
         }
     }
@@ -1254,39 +1021,14 @@
 {
     if(VALID_NOTEMPTY(seenProduct, RIProduct))
     {
-        if (VALID_NOTEMPTY(seenProduct.numberOfTimesSeen, NSNumber)) {
-            seenProduct.numberOfTimesSeen = [NSNumber numberWithInt:0];
+        NSArray* databaseProds = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIRecentlyViewedProductSku class]) withPropertyName:@"productSku" andPropertyValue:seenProduct.sku];
+        RIRecentlyViewedProductSku *recentlyViewedProductSku = [databaseProds firstObject];
+        
+        if (VALID_NOTEMPTY(recentlyViewedProductSku.numberOfTimesSeen, NSNumber)) {
+            recentlyViewedProductSku.numberOfTimesSeen = [NSNumber numberWithInt:0];
         }
-        seenProduct.numberOfTimesSeen = [NSNumber numberWithInt:([seenProduct.numberOfTimesSeen intValue] + 1)];
-    }
-}
-
-#pragma mark - Save method
-
-+ (void)saveProduct:(RIProduct *)product andContext:(BOOL)save
-{
-    for (RIImage* image in product.images) {
-//        if (!image.product) {
-//            image.product = product;
-//        }
-        [RIImage saveImage:image andContext:NO];
-    }
-    for (RIProductSimple* productSimple in product.productSimples) {
-//        if (!productSimple.product) {
-//            productSimple.product = product;
-//        }
-        [RIProductSimple saveProductSimple:productSimple andContext:NO];
-    }
-    for (RIVariation* variation in product.variations) {
-//        if (!variation.product) {
-//            variation.product = product;
-//        }
-        [RIVariation saveVariation:variation andContext:NO];
-    }
-    
-    [[RIDataBaseWrapper sharedInstance] insertManagedObject:product];
-    if (save) {
-        [[RIDataBaseWrapper sharedInstance] saveContext];
+        recentlyViewedProductSku.numberOfTimesSeen = [NSNumber numberWithInt:([recentlyViewedProductSku.numberOfTimesSeen intValue] + 1)];
+        [RIRecentlyViewedProductSku saveRecentlyViewedProductSku:recentlyViewedProductSku andContext:YES];
     }
 }
 

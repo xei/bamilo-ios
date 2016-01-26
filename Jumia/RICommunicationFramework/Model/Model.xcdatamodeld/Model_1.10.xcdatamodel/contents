@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15C50" minimumToolsVersion="Xcode 4.3">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="14F27" minimumToolsVersion="Xcode 4.3">
     <entity name="RIAddress" representedClassName="RIAddress" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
@@ -138,14 +138,6 @@
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="form" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RIForm" inverseName="formIndex" inverseEntity="RIForm" syncable="YES"/>
     </entity>
-    <entity name="RIImage" representedClassName="RIImage" syncable="YES">
-        <attribute name="format" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="height" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="width" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIProduct" inverseName="images" inverseEntity="RIProduct" syncable="YES"/>
-        <relationship name="variation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIVariation" inverseName="image" inverseEntity="RIVariation" syncable="YES"/>
-    </entity>
     <entity name="RIImageResolution" representedClassName="RIImageResolution" syncable="YES">
         <attribute name="extension" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="height" optional="YES" attributeType="String" syncable="YES"/>
@@ -158,71 +150,11 @@
         <attribute name="langName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="countryConfig" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RICountryConfiguration" inverseName="languages" inverseEntity="RICountryConfiguration" syncable="YES"/>
     </entity>
-    <entity name="RIProduct" representedClassName="RIProduct" syncable="YES">
-        <attribute name="attributeCareLabel" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="attributeColor" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="attributeDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="attributeMainMaterial" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="attributeSetId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="attributeShortDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="avr" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+    <entity name="RIRecentlyViewedProductSku" representedClassName="RIRecentlyViewedProductSku" syncable="YES">
         <attribute name="brand" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="bucketActive" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="descriptionString" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="favoriteAddDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="isNew" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="maxPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="maxPriceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="maxPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="maxSavingPercentage" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="maxSpecialPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="maxSpecialPriceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="maxSpecialPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="numberOfTimesSeen" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="offersMinPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="offersMinPriceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="offersMinPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="offersTotal" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="priceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="priceFormatted" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="ratingAverage" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="ratingsTotal" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="recentlyViewedDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="reviewsTotal" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="richRelevanceParameter" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="richRelevanceTitle" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="shopFirst" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="shopFirstOverlayText" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="shortSummary" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="sizeGuideUrl" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="sku" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="specialPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="specialPriceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="specialPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="sum" optional="YES" attributeType="Integer 64" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="summary" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="targetString" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="images" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIImage" inverseName="product" inverseEntity="RIImage" syncable="YES"/>
-        <relationship name="productSimples" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIProductSimple" inverseName="product" inverseEntity="RIProductSimple" syncable="YES"/>
-        <relationship name="variations" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RIVariation" inverseName="product" inverseEntity="RIVariation" syncable="YES"/>
-    </entity>
-    <entity name="RIProductSimple" representedClassName="RIProductSimple" syncable="YES">
-        <attribute name="attributePackageType" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="maxDeliveryTime" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="minDeliveryTime" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="priceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="priceFormatted" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="quantity" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="sku" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="specialPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="specialPriceEuroConverted" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="specialPriceFormatted" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="stock" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="variation" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIProduct" inverseName="productSimples" inverseEntity="RIProduct" syncable="YES"/>
+        <attribute name="lastViewedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="numberOfTimesSeen" optional="YES" attributeType="Integer 64" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="productSku" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="RISearchSuggestion" representedClassName="RISearchSuggestion" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
@@ -274,17 +206,8 @@
         <attribute name="responseData" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="RIVariation" representedClassName="RIVariation" syncable="YES">
-        <attribute name="brand" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sku" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="specialPrice" optional="YES" attributeType="Float" syncable="YES"/>
-        <relationship name="image" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RIImage" inverseName="variation" inverseEntity="RIImage" syncable="YES"/>
-        <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RIProduct" inverseName="variations" inverseEntity="RIProduct" syncable="YES"/>
-    </entity>
     <elements>
-        <element name="RIAddress" positionX="90" positionY="666" width="128" height="390"/>
+        <element name="RIAddress" positionX="144" positionY="726" width="128" height="390"/>
         <element name="RIApi" positionX="-308" positionY="227" width="128" height="180"/>
         <element name="RICategory" positionX="-261" positionY="27" width="128" height="180"/>
         <element name="RICountryConfiguration" positionX="-459" positionY="-423" width="128" height="285"/>
@@ -295,17 +218,14 @@
         <element name="RIFieldRatingStars" positionX="-477" positionY="990" width="128" height="118"/>
         <element name="RIForm" positionX="-504" positionY="362" width="128" height="120"/>
         <element name="RIFormIndex" positionX="-504" positionY="234" width="128" height="90"/>
-        <element name="RIImage" positionX="70" positionY="486" width="128" height="135"/>
         <element name="RIImageResolution" positionX="-270" positionY="560" width="128" height="103"/>
         <element name="RILanguage" positionX="-270" positionY="-207" width="128" height="103"/>
-        <element name="RIProduct" positionX="-99" positionY="0" width="128" height="765"/>
-        <element name="RIProductSimple" positionX="162" positionY="14" width="128" height="255"/>
+        <element name="RIRecentlyViewedProductSku" positionX="-522" positionY="18" width="128" height="105"/>
         <element name="RISearchSuggestion" positionX="-828" positionY="183" width="128" height="105"/>
         <element name="RISection" positionX="-261" positionY="428" width="128" height="103"/>
         <element name="RIStaticBlockIndex" positionX="-90" positionY="-126" width="128" height="90"/>
         <element name="RITeaserComponent" positionX="-731" positionY="-414" width="128" height="300"/>
         <element name="RITeaserGrouping" positionX="-873" positionY="-90" width="128" height="90"/>
         <element name="RIURLCache" positionX="-675" positionY="180" width="128" height="90"/>
-        <element name="RIVariation" positionX="180" positionY="360" width="128" height="150"/>
     </elements>
 </model>
