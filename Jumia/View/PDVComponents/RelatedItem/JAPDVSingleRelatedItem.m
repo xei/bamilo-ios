@@ -120,18 +120,21 @@
         self.labelPrice.text = product.specialPriceFormatted;
     }
     [self.labelPrice setYBottomAligned:0];
+    [self.labelPrice setTextAlignment:NSTextAlignmentRight];
     
     [self.labelName setX:6];
     [self.labelName setYTopOf:self.labelPrice at:20];
     [self.labelName setWidth:self.width - 12];
     [self.labelName setHeight:20];
     self.labelName.text = product.name;
+    [self.labelName setTextAlignment:NSTextAlignmentLeft];
     
     [self.labelBrand setX:6];
     [self.labelBrand setYTopOf:self.labelName at:20];
     [self.labelBrand setWidth:self.width - 12];
     [self.labelBrand setHeight:20];
     self.labelBrand.text = product.brand;
+    [self.labelBrand setTextAlignment:NSTextAlignmentLeft];
     
     [self.favoriteImage setFrame:CGRectMake(self.width - 28, 10, 22, 22)];
     [self setFavorite:VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate)];
