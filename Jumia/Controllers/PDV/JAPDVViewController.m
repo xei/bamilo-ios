@@ -395,23 +395,22 @@ JAActivityViewControllerDelegate
 
     if (VALID_NOTEMPTY(self.productTargetString, NSString)) {
         [RIProduct getCompleteProductWithTargetString:self.productTargetString
-                           			withRichParameter:richParameter
-                                		 successBlock:^(id product) {
-            _needRefreshProduct = NO;
-            self.apiResponse = RIApiResponseSuccess;
-            
-            [self loadedProduct:product];
+                                    withRichParameter:richParameter
+                                         successBlock:^(id product) {
+                                             _needRefreshProduct = NO;
+                                             self.apiResponse = RIApiResponseSuccess;
+                                             
+                                             [self loadedProduct:product];
                                              [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-            self.apiResponse = apiResponse;
-            if(self.firstLoading)
-            {
-                [self trackingEventLoadingTime];
-                self.firstLoading = NO;
-            }
-            [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadCompleteProduct) objects:nil];
-            [self hideLoading];
-        }];
+                                         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+                                             self.apiResponse = apiResponse;
+                                             if(self.firstLoading) {
+                                                 [self trackingEventLoadingTime];
+                                                 self.firstLoading = NO;
+                                             }
+                                             [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadCompleteProduct) objects:nil];
+                                             [self hideLoading];
+                                         }];
     } else if (VALID_NOTEMPTY(self.productSku, NSString)) {
         [RIProduct getCompleteProductWithSku:self.productSku
                                 successBlock:^(id product) {
@@ -561,23 +560,17 @@ JAActivityViewControllerDelegate
 - (void)requestBundles
 {
     //fill the views
-    [RIProduct getBundleWithSku:self.product.sku successBlock:^(RIBundle* bundle) {
-        self.productBundle = bundle;
-        
-        [self fillTheViews];
-        
-        [self hideLoading];
-    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
-        
-        self.productBundle = nil;
-        
-        [self fillTheViews];
-        
-        [self.bundleLayout removeFromSuperview];
-        
-        [self hideLoading];
-        
-    }];
+    [RIProduct getBundleWithSku:self.product.sku
+                   successBlock:^(RIBundle* bundle) {
+                       self.productBundle = bundle;
+                       [self fillTheViews];
+                       [self hideLoading];
+                   } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
+                       self.productBundle = nil;
+                       [self fillTheViews];
+                       [self.bundleLayout removeFromSuperview];
+                       [self hideLoading];
+                   }];
     
 }
 
