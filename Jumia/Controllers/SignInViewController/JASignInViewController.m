@@ -250,9 +250,8 @@
     [self.forgotPasswordButton setY:dynamicFormCurrentY + kForgotPasswordMargin];
     [self.loginButton setY:CGRectGetMaxY(self.forgotPasswordButton.frame) + kLoginButtonMargin];
     
-    [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, CGRectGetMaxY(self.loginButton.frame))];
-    
-    self.contentScrollOriginalHeight = CGRectGetMaxY(self.loginButton.frame);
+    [self.mainScrollView setHeight:self.viewBounds.size.height];
+    self.contentScrollOriginalHeight = CGRectGetHeight(self.mainScrollView.frame);
     
     [self setupViewsHorizontally];
 }
