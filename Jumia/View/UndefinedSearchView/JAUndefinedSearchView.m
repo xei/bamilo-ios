@@ -11,6 +11,7 @@
 #import "UIImageView+WebCache.h"
 #import "RIConfiguration.h"
 #import "RICountry.h"
+#import "RITarget.h"
 
 @implementation JABrandView
 
@@ -299,7 +300,7 @@
             {
                 JABrandView *brandView = [[JABrandView alloc] initWithFrame:CGRectMake(brandsCurrentX, 0, 110, 110)];
                 brandView.backgroundColor = [UIColor clearColor];
-                brandView.brandUrl = brand.url;
+                brandView.brandTargetString = brand.targetString;
                 brandView.brandName = brand.name;
                 
                 UIImageView *brandImage = [[UIImageView alloc] initWithFrame:CGRectMake(30, 20, 50, 40)];
@@ -405,9 +406,9 @@
     RIFeaturedBrandBox *featuredBrandBox = self.searchResult.featuredBrandBox;
     RIBrand* brand = [featuredBrandBox.brands objectAtIndex:sender.tag];
     
-    if (NOTEMPTY(self.delegate) && [self.delegate respondsToSelector:@selector(didSelectBrand:brandName:)])
+    if (NOTEMPTY(self.delegate) && [self.delegate respondsToSelector:@selector(didSelectBrandTargetString:brandName:)])
     {
-        [self.delegate didSelectBrand:brand.url
+        [self.delegate didSelectBrandTargetString:brand.targetString
                             brandName:brand.name];
     }
 }

@@ -27,9 +27,10 @@
 @interface JASignInViewController() <JADynamicFormDelegate>
 {
     CGFloat _elementsWidth;
+    UIView *_firstResponder;
 }
 
-@property (nonatomic, strong) UIScrollView *mainScrollView;
+@property (strong, nonatomic) UIScrollView *mainScrollView;
 @property (strong, nonatomic) UILabel *titleLabel;
 @property (strong, nonatomic) UILabel *subTitleLabel;
 @property (strong, nonatomic) JADynamicForm *dynamicForm;
@@ -47,6 +48,9 @@
 {
     if (!VALID_NOTEMPTY(_mainScrollView, UIScrollView)) {
         _mainScrollView = [[UIScrollView alloc] initWithFrame:self.viewBounds];
+        [_mainScrollView setShowsHorizontalScrollIndicator:NO];
+        [_mainScrollView setShowsVerticalScrollIndicator:NO];
+        [_mainScrollView setContentSize:_mainScrollView.bounds.size];
     }
     return _mainScrollView;
 }
@@ -162,7 +166,6 @@
     [self.mainScrollView addSubview:self.subTitleLabel];
     [self.mainScrollView addSubview:self.forgotPasswordButton];
     [self.mainScrollView addSubview:self.loginButton];
-    [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, CGRectGetMaxY(self.loginButton.frame))];
     
     if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
     {
@@ -235,12 +238,10 @@
 }
 
 #pragma mark - Action
-
 - (void)setupViewsVertically
 {
     CGFloat dynamicFormCurrentY = CGRectGetMaxY(self.subTitleLabel.frame) + kBeforeDynamicFormMargin;
-    for(UIView *view in self.dynamicForm.formViews)
-    {
+    for (UIView *view in self.dynamicForm.formViews) {
         [view setX:kSideMargin];
         [view setY:dynamicFormCurrentY + kDynamicFormMargin];
         dynamicFormCurrentY = CGRectGetMaxY(view.frame);
@@ -249,7 +250,8 @@
     [self.forgotPasswordButton setY:dynamicFormCurrentY + kForgotPasswordMargin];
     [self.loginButton setY:CGRectGetMaxY(self.forgotPasswordButton.frame) + kLoginButtonMargin];
     
-    self.contentScrollOriginalHeight = self.mainScrollView.height;
+    [self.mainScrollView setHeight:self.viewBounds.size.height];
+    self.contentScrollOriginalHeight = CGRectGetHeight(self.mainScrollView.frame);
     
     [self setupViewsHorizontally];
 }
@@ -440,42 +442,79 @@
 }
 
 #pragma mark - Keyboard observers
-
 - (void) hideKeyboard
 {
-    [self.dynamicForm resignResponder];
+    [[self findFirstResponder] resignFirstResponder];
 }
 
 - (void) keyboardWillShow:(NSNotification *)notification
 {
-    NSDictionary *userInfo = [notification userInfo];
-    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    CGFloat height = kbSize.height;
+    CGFloat keyboardHeight = [self getKeyboardHeight:notification];
     
-    if(self.view.frame.size.width == kbSize.height)
-    {
-        height = kbSize.width;
+    if (!keyboardHeight) {
+        return;
+    }
+    
+    CGFloat keyboardY = self.viewBounds.size.height - keyboardHeight;
+    UIView *firstResponder = [self findFirstResponder];
+    
+    if (!firstResponder || CGRectGetMaxY(firstResponder.frame) < keyboardY) {
+        return;
     }
     
     [UIView animateWithDuration:0.3 animations:^{
         [self.mainScrollView setFrame:CGRectMake(self.mainScrollView.frame.origin.x,
                                                  self.mainScrollView.frame.origin.y,
                                                  self.mainScrollView.frame.size.width,
-                                                 self.contentScrollOriginalHeight - height)];
+                                                 self.contentScrollOriginalHeight - keyboardHeight)];
     }];
 }
 
 - (void) keyboardWillHide:(NSNotification *)notification
 {
-    if (self.contentScrollOriginalHeight == 0) {
+    if (self.contentScrollOriginalHeight == 0 || self.contentScrollOriginalHeight == CGRectGetHeight(self.mainScrollView.frame)) {
         return;
     }
+    
     [UIView animateWithDuration:0.3 animations:^{
         [self.mainScrollView setFrame:CGRectMake(self.mainScrollView.frame.origin.x,
                                                  self.mainScrollView.frame.origin.y,
                                                  self.mainScrollView.frame.size.width,
                                                  self.contentScrollOriginalHeight)];
     }];
+}
+
+#pragma mark - DynamicForms delegate
+- (void)changedFocus:(UIView *)view
+{
+    _firstResponder = view;
+}
+
+- (void)lostFocus
+{
+    _firstResponder = nil;
+}
+
+- (UIView *)findFirstResponder
+{
+    if (_firstResponder) {
+        return _firstResponder;
+    }
+    return nil;
+}
+
+#pragma mark - helper functions
+- (CGFloat)getKeyboardHeight:(NSNotification *)notification
+{
+    NSDictionary *userInfo = [notification userInfo];
+    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    CGFloat height = kbSize.height;
+    
+    if (self.view.frame.size.width == kbSize.height) {
+        height = kbSize.width;
+    }
+    
+    return height;
 }
 
 @end
