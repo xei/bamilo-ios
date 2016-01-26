@@ -78,6 +78,7 @@
         [_mainScrollView setShowsHorizontalScrollIndicator:NO];
         [_mainScrollView setShowsVerticalScrollIndicator:NO];
         [_mainScrollView setContentSize:_mainScrollView.bounds.size];
+        self.mainScrollViewInitialRect = _mainScrollView.frame;
         
         [self.mainScrollView addSubview:self.personalDataHeader];
     }
@@ -428,7 +429,7 @@
     
     [self.mainScrollView setContentSize:CGSizeMake(
                                                    self.mainScrollView.width,
-                                                   CGRectGetMaxY(self.changePasswordButton.frame))];
+                                                   CGRectGetMaxY(self.changePasswordView.frame) + 6.f)];
     
     self.mainScrollViewInitialRect = self.mainScrollView.frame;
     
