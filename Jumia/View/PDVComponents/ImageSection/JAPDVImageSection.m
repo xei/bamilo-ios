@@ -172,7 +172,7 @@
     
     CGRect imagePageFrame = CGRectMake(0, CGRectGetMaxY(self.productDescriptionLabel.frame), self.width, imagesPageHeight);
     [self.imagesPagedView setFrame:imagePageFrame];
-    [self loadWithImages:[product.images array]];
+    [self loadWithImages:product.images];
     
     [self reloadViews];
 }

@@ -7,11 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
 
 @class RIProduct;
 
-@interface RIProductSimple : NSManagedObject
+@interface RIProductSimple : NSObject
 
 @property (nonatomic, retain) NSString * attributePackageType;
 @property (nonatomic, retain) NSString * variation;
@@ -37,11 +36,5 @@
                                 country:(RICountryConfiguration*)country
                            variationKey:(NSString*)variationKey;
 
-/**
- *  Method to save an RIProductSimple in coredata
- *
- *  @param the RIProductSimple to be saved
- */
-+ (void)saveProductSimple:(RIProductSimple*)productSimple andContext:(BOOL)save;
 
 @end
