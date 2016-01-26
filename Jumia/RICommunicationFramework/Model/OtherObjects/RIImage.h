@@ -7,11 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
 
 @class RIProduct, RIVariation;
 
-@interface RIImage : NSManagedObject
+@interface RIImage : NSObject
 
 @property (nonatomic, retain) NSString * format;
 @property (nonatomic, retain) NSString * height;
@@ -26,13 +25,6 @@
  *  @return the parsed RIImage
  */
 + (RIImage *)parseImage:(NSDictionary *)image;
-
-/**
- *  Method to save an RIImage in coredata
- *
- *  @param the RIImage to be saved
- */
-+ (void)saveImage:(RIImage*)image andContext:(BOOL)save;
 
 @end
 

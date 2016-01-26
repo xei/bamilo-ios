@@ -181,14 +181,12 @@
     self.navBarLayout.showBackButton = YES;
     [self.collectionView registerClass:[JARecentlyViewedCell class] forCellWithReuseIdentifier:@"CellWithLines"];
     self.navBarLayout.title = STRING_RECENTLY_VIEWED;
-    
-    [self loadProducts];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updatedProduct:)
-                                                 name:kProductChangedNotification
-                                               object:nil];
+}
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self loadProducts];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -226,46 +224,30 @@
                 [skus addObject:product.sku];
             }
             
-            [RIProduct getUpdatedProductsWithSkus:skus successBlock:^(NSArray *products) {
-                
-                [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-                [self hideLoading];
-                
-                self.productsArray = [NSMutableArray new];
-                NSMutableDictionary *temp = [NSMutableDictionary new];
-                for (RIProduct *product in products) {
-                    [self.productsArray addObject:product.sku];
-                    [temp setObject:product forKey:product.sku];
-                }
-                self.productsDictionary = [temp mutableCopy];
-                
-                self.chosenSimples = [NSMutableDictionary new];
-                
-                [self.collectionView reloadData];
-                
-                if(self.firstLoading)
-                {
-                    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-                    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-                    self.firstLoading = NO;
-                }
-                
-            } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
-                
-                if(self.firstLoading)
-                {
-                    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-                    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-                    self.firstLoading = NO;
-                }
-                
-                [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadProducts) objects:nil];
-                [self hideLoading];
-            }];
+            self.productsArray = [NSMutableArray new];
+            NSMutableDictionary *temp = [NSMutableDictionary new];
+            for (RIProduct *product in recentlyViewedProducts) {
+                [self.productsArray addObject:product.sku];
+                [temp setObject:product forKey:product.sku];
+            }
+            self.productsDictionary = [temp mutableCopy];
+            
+            self.chosenSimples = [NSMutableDictionary new];
+            
+            [self.collectionView reloadData];
+            
+            if(self.firstLoading)
+            {
+                NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                self.firstLoading = NO;
+            }
+
         } else {
-            [self hideLoading];
             self.productsDictionary = nil;
         }
+        
+        [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         
         if(self.firstLoading)
@@ -287,30 +269,6 @@
         return [self.productsDictionary objectForKey:sku];
     }
     return nil;
-}
-
-#pragma mark - kProductChangedNotification
-
-- (void)updatedProduct:(NSNotification *)notification
-{
-    __block NSString *sku = notification.object;
-    [RIProduct getCompleteProductWithSku:sku successBlock:^(id product) {
-        if (![self.productsArray containsObject:sku]) {
-            [self.productsArray addObject:sku];
-        }
-        [self.productsDictionary setObject:product forKey:sku];
-        
-        [RIProduct updateRecentlyViewedProduct:product withSku:sku];
-        
-        [self.collectionView reloadData];
-    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
-        
-        [self hideLoading];
-        if (RIApiResponseMaintenancePage == apiResponse || RIApiResponseKickoutView == apiResponse)
-        {
-            [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(updatedProduct:) objects:@[notification]];
-        }
-    }];
 }
 
 #pragma mark - collectionView methods
@@ -440,7 +398,7 @@
                       
                       if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet))
                       {
-                          NSArray *categoryIds = [product.categoryIds array];
+                          NSArray *categoryIds = product.categoryIds;
                           NSInteger subCategoryIndex = [categoryIds count] - 1;
                           NSInteger categoryIndex = subCategoryIndex - 1;
                           
@@ -496,7 +454,7 @@
                                                   FBSDKAppEventParameterNameContentType : product.name,
                                                   FBSDKAppEventParameterNameContentID   : product.sku}];
                       
-                      [RIProduct removeFromRecentlyViewed:product];
+                      [RIRecentlyViewedProductSku removeFromRecentlyViewed:product];
                       
                       [self loadProducts];
                       
@@ -515,15 +473,8 @@
 
 - (void)clearAllButtonPressed
 {
-    [self showLoading];
-    [RIProduct removeAllRecentlyViewedWithSuccessBlock:^{
-        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-        [self hideLoading];
-        self.productsDictionary = nil;
-    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-        [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(clearAllButtonPressed) objects:nil];
-        [self hideLoading];
-    }];
+    [RIRecentlyViewedProductSku removeAllRecentlyViewedProductSkus];
+    self.productsDictionary = nil;
 }
 
 - (void)sizeButtonPressed:(UIButton*)button

@@ -7,11 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
 
 @class RIImage, RIProduct;
 
-@interface RIVariation : NSManagedObject
+@interface RIVariation : NSObject
 
 @property (nonatomic, retain) NSString *brand;
 @property (nonatomic, retain) NSString *name;
@@ -27,13 +26,6 @@
  *  @return the parsed RIVariation
  */
 + (RIVariation *)parseVariation:(NSDictionary *)variation;
-
-/**
- *  Method to save an RIVariation in coredata
- *
- *  @param the RIVariation to be saved
- */
-+ (void)saveVariation:(RIVariation*)variation andContext:(BOOL)save;
 
 
 @end

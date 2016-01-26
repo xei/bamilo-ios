@@ -272,7 +272,7 @@ UITableViewDataSource
     
     if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
     {
-        NSArray *categoryIds = [self.product.categoryIds array];
+        NSArray *categoryIds = self.product.categoryIds;
         NSInteger subCategoryIndex = [categoryIds count] - 1;
         NSInteger categoryIndex = subCategoryIndex - 1;
         

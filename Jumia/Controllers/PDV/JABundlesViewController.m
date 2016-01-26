@@ -513,7 +513,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     
     if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
     {
-        NSArray *categoryIds = [self.product.categoryIds array];
+        NSArray *categoryIds = self.product.categoryIds;
         [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryIdKey];
     }
     
