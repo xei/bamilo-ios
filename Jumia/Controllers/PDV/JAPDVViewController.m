@@ -456,7 +456,7 @@ JAActivityViewControllerDelegate
         self.firstLoading = NO;
     }
     
-    [RIProduct addToRecentlyViewed:product successBlock:^(RIProduct *product) {
+    [RIRecentlyViewedProductSku addToRecentlyViewed:product successBlock:^{
         [self requestBundles];
     } andFailureBlock:nil];
     
@@ -464,9 +464,6 @@ JAActivityViewControllerDelegate
     if (self.product.favoriteAddDate) {
         userInfo = [NSDictionary dictionaryWithObject:self.product.favoriteAddDate forKey:@"favoriteAddDate"];
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
-                                                        object:self.product.sku
-                                                      userInfo:userInfo];
     
     [self trackingEventMostViewedBrand];
 }
@@ -1011,7 +1008,7 @@ JAActivityViewControllerDelegate
     {
         obj = self.product;
         if (VALID_NOTEMPTY(self.product.variations, NSOrderedSet)) {
-            [userInfo setObject:[self.product.variations array] forKeyedSubscript:@"product.variations"];
+            [userInfo setObject:self.product.variations forKeyedSubscript:@"product.variations"];
         }
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenProductVariationsScreen object:obj userInfo:userInfo];
@@ -1314,7 +1311,7 @@ JAActivityViewControllerDelegate
     
     _galleryPaged = [[JAPDVGallery alloc] initWithFrame:CGRectMake(0, height, width, height-statusBarHeight)];
     CGRect openFrame = CGRectMake(0, statusBarHeight, width, height-statusBarHeight);
-    [_galleryPaged loadGalleryWithArray:[self.product.images array] atIndex:index];
+    [_galleryPaged loadGalleryWithArray:self.product.images atIndex:index];
     [gallerySuperView addSubview:_galleryPaged];
     [_galleryPaged setBackgroundColor:[UIColor whiteColor]];
     [UIView animateWithDuration:.3f delay:0.f options:UIViewAnimationOptionCurveEaseInOut
@@ -1618,7 +1615,7 @@ JAActivityViewControllerDelegate
     }
     else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
     {
-        NSArray *categoryIds = [self.product.categoryIds array];
+        NSArray *categoryIds = self.product.categoryIds;
         NSInteger subCategoryIndex = [categoryIds count] - 1;
         NSInteger categoryIndex = subCategoryIndex - 1;
         
@@ -1681,7 +1678,7 @@ JAActivityViewControllerDelegate
     
     if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
     {
-        NSArray *categoryIds = [self.product.categoryIds array];
+        NSArray *categoryIds = self.product.categoryIds;
         [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryIdKey];
     }
     
@@ -1718,7 +1715,7 @@ JAActivityViewControllerDelegate
     }
     else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
     {
-        NSArray *categoryIds = [self.product.categoryIds array];
+        NSArray *categoryIds = self.product.categoryIds;
         NSInteger subCategoryIndex = [categoryIds count] - 1;
         NSInteger categoryIndex = subCategoryIndex - 1;
         
@@ -1871,7 +1868,7 @@ JAActivityViewControllerDelegate
     }
     else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
     {
-        NSArray *categoryIds = [self.product.categoryIds array];
+        NSArray *categoryIds = self.product.categoryIds;
         NSInteger subCategoryIndex = [categoryIds count] - 1;
         NSInteger categoryIndex = subCategoryIndex - 1;
         
@@ -1969,7 +1966,7 @@ JAActivityViewControllerDelegate
     }
     else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
     {
-        NSArray *categoryIds = [self.product.categoryIds array];
+        NSArray *categoryIds = self.product.categoryIds;
         NSInteger subCategoryIndex = [categoryIds count] - 1;
         NSInteger categoryIndex = subCategoryIndex - 1;
         

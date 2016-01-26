@@ -10,19 +10,18 @@
 #import "RIProduct.h"
 #import "RIVariation.h"
 
-
 @implementation RIImage
 
-@dynamic format;
-@dynamic height;
-@dynamic url;
-@dynamic width;
-@dynamic product;
-@dynamic variation;
+@synthesize format;
+@synthesize height;
+@synthesize url;
+@synthesize width;
+@synthesize product;
+@synthesize variation;
 
 + (RIImage*)parseImage:(NSDictionary*)image;
 {
-    RIImage* newImage = (RIImage*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIImage class])];
+    RIImage* newImage = [[RIImage alloc] init];
     
     if ([image objectForKey:@"url"]) {
         newImage.url = [image objectForKey:@"url"];
@@ -47,19 +46,6 @@
     }
     
     return newImage;
-}
-
-+ (void)saveImage:(RIImage*)image andContext:(BOOL)save
-{
-    if (VALID_NOTEMPTY(image.variation, RIVariation)) {
-        [RIVariation saveVariation:image.variation andContext:NO];
-    }
-    
-    [[RIDataBaseWrapper sharedInstance] insertManagedObject:image];
-    if (save) {
-        [[RIDataBaseWrapper sharedInstance] saveContext];
-    }
-    
 }
 
 @end

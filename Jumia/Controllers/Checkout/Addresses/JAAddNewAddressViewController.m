@@ -1178,7 +1178,7 @@ JAPickerDelegate>
     self.picker = [[JAPicker alloc] initWithFrame:self.view.frame];
     [self.picker setDelegate:self];
     
-    NSMutableArray *dataSource = [[NSMutableArray alloc] initWithObjects:@"", nil];
+    NSMutableArray *dataSource = [[NSMutableArray alloc] init];
     if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent) && VALID_NOTEMPTY(self.radioComponentDataset, NSArray))
     {
         for(id currentObject in self.radioComponentDataset)
@@ -1230,7 +1230,7 @@ JAPickerDelegate>
         {
             if(VALID_NOTEMPTY(self.radioComponentDataset, NSArray) && selectedRow < [self.radioComponentDataset count])
             {                                                                   //   0 is ""
-                id selectedObject = [self.radioComponentDataset objectAtIndex:selectedRow-1];
+                id selectedObject = [self.radioComponentDataset objectAtIndex:selectedRow];
                 
                 if(self.shippingContentView == [self.radioComponent superview])
                 {
