@@ -17,7 +17,7 @@
 @property (nonatomic, strong) NSString* currentErrorMessage;
 @property (nonatomic) CGFloat fixedX;
 
-@property (nonatomic, strong) JARadioComponent* relatedComponent;
+@property (nonatomic, strong) JADynamicField* relatedComponent;
 
 -(BOOL)isValid;
 

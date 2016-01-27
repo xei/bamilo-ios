@@ -2453,11 +2453,6 @@
 		CEDBF8771B0CEC570073971A /* JACheckBoxComponent_RTL.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEDBF8741B0CEC570073971A /* JACheckBoxComponent_RTL.xib */; };
 		CEDBF8781B0CEC570073971A /* JACheckBoxComponent_RTL.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEDBF8741B0CEC570073971A /* JACheckBoxComponent_RTL.xib */; };
 		CEDBF8791B0CEC570073971A /* JACheckBoxComponent_RTL.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEDBF8741B0CEC570073971A /* JACheckBoxComponent_RTL.xib */; };
-		CEDBF8871B0DF4AD0073971A /* JARadioRelatedComponent_RTL.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEDBF8861B0DF4AD0073971A /* JARadioRelatedComponent_RTL.xib */; };
-		CEDBF8881B0DF4AD0073971A /* JARadioRelatedComponent_RTL.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEDBF8861B0DF4AD0073971A /* JARadioRelatedComponent_RTL.xib */; };
-		CEDBF8891B0DF4AD0073971A /* JARadioRelatedComponent_RTL.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEDBF8861B0DF4AD0073971A /* JARadioRelatedComponent_RTL.xib */; };
-		CEDBF88A1B0DF4AD0073971A /* JARadioRelatedComponent_RTL.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEDBF8861B0DF4AD0073971A /* JARadioRelatedComponent_RTL.xib */; };
-		CEDBF88B1B0DF4AD0073971A /* JARadioRelatedComponent_RTL.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEDBF8861B0DF4AD0073971A /* JARadioRelatedComponent_RTL.xib */; };
 		CEDBF88E1B0DF5D00073971A /* JANewsletterComponent_RTL.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEDBF88C1B0DF5D00073971A /* JANewsletterComponent_RTL.xib */; };
 		CEDBF88F1B0DF5D00073971A /* JANewsletterComponent_RTL.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEDBF88C1B0DF5D00073971A /* JANewsletterComponent_RTL.xib */; };
 		CEDBF8901B0DF5D00073971A /* JANewsletterComponent_RTL.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEDBF88C1B0DF5D00073971A /* JANewsletterComponent_RTL.xib */; };
@@ -2505,11 +2500,6 @@
 		CEE558641AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE558611AFCC2FB00FC87D4 /* JARadioRelatedComponent.m */; };
 		CEE558651AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE558611AFCC2FB00FC87D4 /* JARadioRelatedComponent.m */; };
 		CEE558661AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE558611AFCC2FB00FC87D4 /* JARadioRelatedComponent.m */; };
-		CEE5586E1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE5586D1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib */; };
-		CEE5586F1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE5586D1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib */; };
-		CEE558701AFCC39C00FC87D4 /* JARadioRelatedComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE5586D1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib */; };
-		CEE558711AFCC39C00FC87D4 /* JARadioRelatedComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE5586D1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib */; };
-		CEE558721AFCC39C00FC87D4 /* JARadioRelatedComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE5586D1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib */; };
 		CEE5F4E01B1CB6B500556150 /* JARecentSearchesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE5F4DF1B1CB6B500556150 /* JARecentSearchesViewController.xib */; };
 		CEE5F4E11B1CB6B500556150 /* JARecentSearchesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE5F4DF1B1CB6B500556150 /* JARecentSearchesViewController.xib */; };
 		CEE5F4E21B1CB6B500556150 /* JARecentSearchesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE5F4DF1B1CB6B500556150 /* JARecentSearchesViewController.xib */; };
@@ -3462,7 +3452,6 @@
 		CEDBF85F1B0A01B60073971A /* UIImage+Mirror.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Mirror.h"; path = "Categories/UIImage+Mirror.h"; sourceTree = "<group>"; };
 		CEDBF8601B0A01B60073971A /* UIImage+Mirror.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Mirror.m"; path = "Categories/UIImage+Mirror.m"; sourceTree = "<group>"; };
 		CEDBF8741B0CEC570073971A /* JACheckBoxComponent_RTL.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACheckBoxComponent_RTL.xib; sourceTree = "<group>"; };
-		CEDBF8861B0DF4AD0073971A /* JARadioRelatedComponent_RTL.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JARadioRelatedComponent_RTL.xib; sourceTree = "<group>"; };
 		CEDBF88C1B0DF5D00073971A /* JANewsletterComponent_RTL.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JANewsletterComponent_RTL.xib; sourceTree = "<group>"; };
 		CEDBF88D1B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANewsletterComponent~iPad_RTL.xib"; sourceTree = "<group>"; };
 		CEDEB981199A51E30022BAB5 /* RIFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIFilter.h; sourceTree = "<group>"; };
@@ -3497,7 +3486,6 @@
 		CEDEB9AE199BA8FA0022BAB5 /* NMRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMRangeSlider.m; sourceTree = "<group>"; };
 		CEE558601AFCC2FB00FC87D4 /* JARadioRelatedComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARadioRelatedComponent.h; sourceTree = "<group>"; };
 		CEE558611AFCC2FB00FC87D4 /* JARadioRelatedComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARadioRelatedComponent.m; sourceTree = "<group>"; };
-		CEE5586D1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JARadioRelatedComponent.xib; sourceTree = "<group>"; };
 		CEE5F4DF1B1CB6B500556150 /* JARecentSearchesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JARecentSearchesViewController.xib; sourceTree = "<group>"; };
 		CEE91B9A1989065A0078DFC9 /* JATeaserPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATeaserPageView.h; sourceTree = "<group>"; };
 		CEE91B9B1989065A0078DFC9 /* JATeaserPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATeaserPageView.m; sourceTree = "<group>"; };
@@ -4651,8 +4639,6 @@
 				CEDBF88D1B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib */,
 				CEE558601AFCC2FB00FC87D4 /* JARadioRelatedComponent.h */,
 				CEE558611AFCC2FB00FC87D4 /* JARadioRelatedComponent.m */,
-				CEE5586D1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib */,
-				CEDBF8861B0DF4AD0073971A /* JARadioRelatedComponent_RTL.xib */,
 				CEA2A1B11B25D20C00E5973F /* JADynamicField.h */,
 				CEA2A1B21B25D20C00E5973F /* JADynamicField.m */,
 			);
@@ -6198,7 +6184,6 @@
 				CE0218A81B3D54A0005B2C75 /* JAUserDataViewController~iPad.xib in Resources */,
 				6CCE08981B1EF21E004311E2 /* JAAddressesViewController.xib in Resources */,
 				B5B21B4819ED944900099E25 /* JAMaintenancePage.xib in Resources */,
-				CEDBF8881B0DF4AD0073971A /* JARadioRelatedComponent_RTL.xib in Resources */,
 				d4d033bbf2ace93ceba9031e /* JAPickupStationInfoCell.xib in Resources */,
 				BBB7F57719E532FA00E898E3 /* 21_native_checkout.feature in Resources */,
 				e21f541d289492fe85dd190e /* JAShippingCell.xib in Resources */,
@@ -6320,7 +6305,6 @@
 				4f946a6031dc658465b500d8 /* slider-default7-trackCrossedOver.png in Resources */,
 				9A9CD3821B72514A0061ACE0 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib in Resources */,
 				BB9546B019F5515F00AC7D05 /* 11_catalog.feature in Resources */,
-				CEE5586F1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib in Resources */,
 				9A9CD4E01B72514A0061ACE0 /* BMA4SiPhoneTextNotifView-nobuttons-landscape.xib in Resources */,
 				9A2036F21B25F39D00F36F55 /* JANoConnectionView~iPad.xib in Resources */,
 				6CCE08921B1DBC20004311E2 /* JAAddNewAddressViewController~iPad.xib in Resources */,
@@ -6517,7 +6501,6 @@
 				9A9CD3F41B72514A0061ACE0 /* BMA4SiPhoneWebViewNotifView-landscape-iPad.xib in Resources */,
 				CEDEB9C5199BA8FA0022BAB5 /* slider-metal-track.png in Resources */,
 				9A9CD4991B72514A0061ACE0 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape.xib in Resources */,
-				CEDBF8871B0DF4AD0073971A /* JARadioRelatedComponent_RTL.xib in Resources */,
 				B510B01319AE466B00A9754A /* JACheckBoxComponent.xib in Resources */,
 				9A9CD30E1B72514A0061ACE0 /* A4S.bundle in Resources */,
 				9A9CD4F31B72514A0061ACE0 /* BMA4SiPhoneWebViewNotifView-nobuttons-iPad.xib in Resources */,
@@ -6551,7 +6534,6 @@
 				6CCE08911B1DBC20004311E2 /* JAAddNewAddressViewController~iPad.xib in Resources */,
 				9A9CD4801B72514A0061ACE0 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-iPad.xib in Resources */,
 				CE283E6A1A714FD300F3E92D /* JAOtherOffersView_Landscape~iPad.xib in Resources */,
-				CEE5586E1AFCC39C00FC87D4 /* JARadioRelatedComponent.xib in Resources */,
 				9A9CD4B21B72514A0061ACE0 /* BMA4SRichPushWebView-nobuttons-iPad.xib in Resources */,
 				BBB12A9C19DDA01E00656529 /* 09_home.feature in Resources */,
 				9A9CD3951B72514A0061ACE0 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape.xib in Resources */,
@@ -6622,7 +6604,6 @@
 				CEDBF8951B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib in Resources */,
 				CE9ADC481AB34C4600D56481 /* JANewsletterComponent~iPad.xib in Resources */,
 				9A9CD4BE1B72514A0061ACE0 /* BMA4SRichPushWebViewWithToolBar-nobuttons-iPad.xib in Resources */,
-				CEE558701AFCC39C00FC87D4 /* JARadioRelatedComponent.xib in Resources */,
 				9A9CD3BA1B72514A0061ACE0 /* BMA4SRichPushWebViewWithToolBar-iPad.xib in Resources */,
 				CE9ADC491AB34C4600D56481 /* 13_related_items.feature in Resources */,
 				9A9CD4CD1B72514A0061ACE0 /* BMA4SiPhoneTextNotifView-nobuttons-landscape-iPad.xib in Resources */,
@@ -6742,7 +6723,6 @@
 				CE9ADCBE1AB34C4600D56481 /* slider-default-track@2x.png in Resources */,
 				CE9ADCBF1AB34C4600D56481 /* slider-metal-track.png in Resources */,
 				6CCE088D1B1CBA77004311E2 /* JAAddNewAddressViewController.xib in Resources */,
-				CEDBF8891B0DF4AD0073971A /* JARadioRelatedComponent_RTL.xib in Resources */,
 				CE9ADCC11AB34C4600D56481 /* JACheckBoxComponent.xib in Resources */,
 				CE9ADCC31AB34C4600D56481 /* slider-default7-trackCrossedOver.png in Resources */,
 				9A9CD4E11B72514A0061ACE0 /* BMA4SiPhoneTextNotifView-nobuttons-landscape.xib in Resources */,
@@ -6949,7 +6929,6 @@
 				CE9ADEB81AB6D6E900D56481 /* slider-default-track@2x.png in Resources */,
 				CE9ADEB91AB6D6E900D56481 /* slider-metal-track.png in Resources */,
 				CE9ADEBB1AB6D6E900D56481 /* JACheckBoxComponent.xib in Resources */,
-				CEDBF88A1B0DF4AD0073971A /* JARadioRelatedComponent_RTL.xib in Resources */,
 				CE9ADEBD1AB6D6E900D56481 /* slider-default7-trackCrossedOver.png in Resources */,
 				CE9ADEBE1AB6D6E900D56481 /* JAPDVVariations~iPad.xib in Resources */,
 				9A0F9B961B5E58E900569DF2 /* LICENSE in Resources */,
@@ -6981,7 +6960,6 @@
 				CE9ADEDF1AB6D6E900D56481 /* JAOtherOffersView_Landscape~iPad.xib in Resources */,
 				9A9CD4B51B72514A0061ACE0 /* BMA4SRichPushWebView-nobuttons-iPad.xib in Resources */,
 				9A9CD3981B72514A0061ACE0 /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape.xib in Resources */,
-				CEE558711AFCC39C00FC87D4 /* JARadioRelatedComponent.xib in Resources */,
 				CE9ADEE01AB6D6E900D56481 /* 09_home.feature in Resources */,
 				CE9ADEE21AB6D6E900D56481 /* JACatalogListCell.xib in Resources */,
 				9A9CD3F21B72514A0061ACE0 /* BMA4SiPhoneWebViewNotifView-iPad.xib in Resources */,
@@ -7041,7 +7019,6 @@
 				CE9AE03C1AB6D78200D56481 /* JANewsletterComponent~iPad.xib in Resources */,
 				CE9AE03D1AB6D78200D56481 /* 13_related_items.feature in Resources */,
 				9A9CD4C01B72514A0061ACE0 /* BMA4SRichPushWebViewWithToolBar-nobuttons-iPad.xib in Resources */,
-				CEE558721AFCC39C00FC87D4 /* JARadioRelatedComponent.xib in Resources */,
 				9A9CD3BC1B72514A0061ACE0 /* BMA4SRichPushWebViewWithToolBar-iPad.xib in Resources */,
 				CE9AE03E1AB6D78200D56481 /* init.rb in Resources */,
 				9A9CD4CF1B72514A0061ACE0 /* BMA4SiPhoneTextNotifView-nobuttons-landscape-iPad.xib in Resources */,
@@ -7162,7 +7139,6 @@
 				CE9AE0B31AB6D78200D56481 /* slider-metal-track.png in Resources */,
 				6CCE088F1B1CBA77004311E2 /* JAAddNewAddressViewController.xib in Resources */,
 				6C18BD741AB87E0A00905FD2 /* Images.xcassets in Resources */,
-				CEDBF88B1B0DF4AD0073971A /* JARadioRelatedComponent_RTL.xib in Resources */,
 				CE9AE0B51AB6D78200D56481 /* JACheckBoxComponent.xib in Resources */,
 				9A9CD4E31B72514A0061ACE0 /* BMA4SiPhoneTextNotifView-nobuttons-landscape.xib in Resources */,
 				CE9AE0B71AB6D78200D56481 /* slider-default7-trackCrossedOver.png in Resources */,
@@ -9338,6 +9314,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9377,6 +9354,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9416,6 +9394,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9455,6 +9434,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

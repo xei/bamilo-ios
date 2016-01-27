@@ -47,7 +47,7 @@
 - (UILabel *)requiredSymbol
 {
     if (!VALID_NOTEMPTY(_requiredSymbol, UILabel)) {
-        _requiredSymbol = [[UILabel alloc] initWithFrame:CGRectMake(self.width - 10, self.height - 28, 10, 20)];
+        _requiredSymbol = [[UILabel alloc] initWithFrame:CGRectMake(self.width - 20, self.height - 28, 10, 20)];
         [_requiredSymbol setTextAlignment:NSTextAlignmentCenter];
         [_requiredSymbol setText:@"*"];
         [_requiredSymbol setTextColor:JAOrange1Color];
@@ -91,7 +91,7 @@
 {
     [super setFrame:frame];
     [self.underLineView setFrame:CGRectMake(0, self.height-5, self.width, 1.f)];
-    [self.requiredSymbol setFrame:CGRectMake(self.width - 10, self.height - 28, 10, 20)];
+    [self.requiredSymbol setFrame:CGRectMake(self.width - 20, self.height - 28, 10, 20)];
     [self.textField setFrame:CGRectMake(0, self.height - 28, self.width, 20)];
     [self.titleLabel setFrame:CGRectMake(0, 0, self.width, 20)];
     [self.dropdownImageView setXLeftOf:self.requiredSymbol at:0];
