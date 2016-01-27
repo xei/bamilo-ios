@@ -1161,6 +1161,8 @@ typedef void (^ProcessActionBlock)(void);
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:self.catalogTopView.cellTypeSelected] forKey:JACatalogGridSelected];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
+    [self.flowLayout resetSizes];
+    
     [self changeViewToInterfaceOrientation:self.interfaceOrientation];
 }
 
