@@ -1084,6 +1084,10 @@ JAActivityViewControllerDelegate
     {
         [self showLoading];
         
+        if (!self.currentSimple && self.product.productSimples.count == 1) {
+            self.currentSimple = [self.product.productSimples firstObject];
+        }
+        
         [RICart addProductWithQuantity:@"1"
                              simpleSku:self.currentSimple.sku
                       withSuccessBlock:^(RICart *cart, RIApiResponse apiResponse,  NSArray *successMessage) {
