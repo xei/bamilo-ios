@@ -148,6 +148,8 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
                                                             object:nil
                                                           userInfo:userInfo];
+        
+        return NO;
     }
     
     return YES;
