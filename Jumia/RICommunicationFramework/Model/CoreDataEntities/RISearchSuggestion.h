@@ -142,4 +142,9 @@
  */
 + (void)deleteAllSearches;
 
+/**
+ * Method to parse RIUndefinedSearchTerm from json
+ */
++ (RIUndefinedSearchTerm *)parseUndefinedSearchTerm:(NSDictionary *)json;
+
 @end

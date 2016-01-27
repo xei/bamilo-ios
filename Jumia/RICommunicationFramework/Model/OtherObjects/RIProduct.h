@@ -11,7 +11,7 @@
 #import "RICatalog.h"
 #import "RIRecentlyViewedProductSku.h"
 
-@class RIImage, RIProductSimple, RIVariation, RIBundle, RISeller;
+@class RIImage, RIProductSimple, RIVariation, RIBundle, RISeller, RIUndefinedSearchTerm;
 
 /*
  * IMPORTANT NOTICE
@@ -137,7 +137,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
                                 filters:(NSArray*)filters
                              filterPush:(NSString*)filterPush
                            successBlock:(void (^)(RICatalog *catalog))successBlock
-                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error, RIUndefinedSearchTerm *undefSearchTerm))failureBlock;
 
 /**
  *  Method to load a set of products given an url
@@ -150,7 +150,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  */
 + (NSString *)getProductsWithFullUrl:(NSString*)url
                         successBlock:(void (^)(RICatalog *catalog))successBlock
-                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
+                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error, RIUndefinedSearchTerm *undefSearchTerm))failureBlock;
 
 /**
  *  Method to load a the favorite products from coredata
