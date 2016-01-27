@@ -324,11 +324,8 @@
         [self.searchView removeFromSuperview];
     }
     if (NO == self.searchViewAlwaysHidden) {
-        self.searchView = [[JASearchView alloc] initWithFrame:window.bounds];
+        self.searchView = [[JASearchView alloc] initWithFrame:window.bounds andText:_searchBarText];
         [window addSubview:self.searchView];
-    }
-    if (VALID_NOTEMPTY(_searchBarText, NSString)) {
-        [self.searchView setSearchBarText:_searchBarText];
     }
 }
 

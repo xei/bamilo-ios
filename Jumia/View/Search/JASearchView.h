@@ -10,9 +10,9 @@
 
 @interface JASearchView : UIView <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
 
+- (instancetype)initWithFrame:(CGRect)frame andText:(NSString *)text;
+
 - (void)resetFrame:(CGRect)frame
        orientation:(UIInterfaceOrientation)orientation;
-
-- (void)setSearchBarText:(NSString*)text;
 
 @end
