@@ -81,7 +81,6 @@
 		4A2FD842199119D900C65C1D /* JAPDVProductInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2FD840199119D900C65C1D /* JAPDVProductInfo.m */; };
 		4A2FD843199119D900C65C1D /* JAPDVProductInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A2FD841199119D900C65C1D /* JAPDVProductInfo.xib */; };
 		4A2FD84619912BC500C65C1D /* JAPDVSingleRelatedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2FD84519912BC500C65C1D /* JAPDVSingleRelatedItem.m */; };
-		4A2FD84819912BD000C65C1D /* JAPDVSingleRelatedItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A2FD84719912BD000C65C1D /* JAPDVSingleRelatedItem.xib */; };
 		4A2FD84A19913FCA00C65C1D /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A2FD84919913FCA00C65C1D /* Social.framework */; };
 		4A3719BD19C05F52002D4199 /* JAUndefinedSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3719BC19C05F52002D4199 /* JAUndefinedSearchView.m */; };
 		4A3719BF19C05F5D002D4199 /* JAUndefinedSearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A3719BE19C05F5D002D4199 /* JAUndefinedSearchView.xib */; };
@@ -91,7 +90,6 @@
 		4A454F4A199CE67500B44821 /* JAForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A454F49199CE67500B44821 /* JAForgotPasswordViewController.m */; };
 		4A4ABF0C198B903B00342D92 /* JACountryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4ABF0B198B903B00342D92 /* JACountryCell.m */; };
 		4A4ABF0E198B9DE600342D92 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4ABF0D198B9DE600342D92 /* QuartzCore.framework */; };
-		4A4F12EA198FF35600F93C89 /* JAPDVRelatedItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A4F12E9198FF35600F93C89 /* JAPDVRelatedItem.xib */; };
 		4A7F7481198A4EDA00621C0D /* JACenterNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7F7480198A4EDA00621C0D /* JACenterNavigationController.m */; };
 		4A862227198FA00D007FD76A /* JAPDVVariations.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A862226198FA00D007FD76A /* JAPDVVariations.xib */; };
 		4A944FF51992805100C02734 /* RIProductRatings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A944FF41992805100C02734 /* RIProductRatings.m */; };
@@ -314,7 +312,6 @@
 		94e152e4d8dd3055aab7a4d0 /* JAPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B50B03A2198A5441002046DF /* JAPaymentViewController.m */; };
 		94febd202fcef8b0aaefb6e4 /* RIStrings.strings in Resources */ = {isa = PBXBuildFile; fileRef = B5210E8819C4863400FDB0D1 /* RIStrings.strings */; };
 		952aecdd0bf3e87bd38f9e12 /* RITrackingWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302AA19811E9200F71726 /* RITrackingWrapper.m */; };
-		9542b3bdd30fbe4bec186675 /* JAPDVSingleRelatedItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A2FD84719912BD000C65C1D /* JAPDVSingleRelatedItem.xib */; };
 		976cc1afdb4c41be05ed1470 /* RIOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C682F41986C41D0094C92C /* RIOrder.m */; };
 		9801c6e9659d2d2092b05198 /* slider-default7-trackCrossedOver@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9A3199BA8FA0022BAB5 /* slider-default7-trackCrossedOver@2x.png */; };
 		98f2c1c10bfdddd3c20a7666 /* RIGTMTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A0058F19D5A1EE0069C0A9 /* RIGTMTracker.m */; };
@@ -1642,7 +1639,6 @@
 		CE9ADC7F1AB34C4600D56481 /* slider-default-handle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB994199BA8FA0022BAB5 /* slider-default-handle@2x.png */; };
 		CE9ADC801AB34C4600D56481 /* 20_cart.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CD719E45799004271B2 /* 20_cart.feature */; };
 		CE9ADC811AB34C4600D56481 /* JAFallbackView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE9193BE19F5040E00F89840 /* JAFallbackView.xib */; };
-		CE9ADC821AB34C4600D56481 /* JAPDVSingleRelatedItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A2FD84719912BD000C65C1D /* JAPDVSingleRelatedItem.xib */; };
 		CE9ADC851AB34C4600D56481 /* 05_user_data.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459919DC56BF003F0CA7 /* 05_user_data.feature */; };
 		CE9ADC861AB34C4600D56481 /* JAAddNewAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA7D19B88DDB00DE7960 /* JAAddNewAddressCell.xib */; };
 		CE9ADC881AB34C4600D56481 /* 16_recent_searches.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CC819E42E9A004271B2 /* 16_recent_searches.feature */; };
@@ -1670,7 +1666,6 @@
 		CE9ADCB01AB34C4600D56481 /* wait.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A519DC56BF003F0CA7 /* wait.rb */; };
 		CE9ADCB41AB34C4600D56481 /* JACartListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */; };
 		CE9ADCB51AB34C4600D56481 /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B5007AC119A4E8EC0024035A /* HockeySDKResources.bundle */; };
-		CE9ADCB71AB34C4600D56481 /* JAPDVRelatedItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A4F12E9198FF35600F93C89 /* JAPDVRelatedItem.xib */; };
 		CE9ADCB81AB34C4600D56481 /* JACatalogTopView_iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE06FCBA1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib */; };
 		CE9ADCB91AB34C4600D56481 /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B5007AC019A4E8EC0024035A /* HockeySDK.xcconfig */; };
 		CE9ADCBA1AB34C4600D56481 /* 11_catalog.feature in Resources */ = {isa = PBXBuildFile; fileRef = BB128EA219E2FA410033514F /* 11_catalog.feature */; };
@@ -1948,7 +1943,6 @@
 		CE9ADE791AB6D6E900D56481 /* slider-default-handle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB994199BA8FA0022BAB5 /* slider-default-handle@2x.png */; };
 		CE9ADE7A1AB6D6E900D56481 /* 20_cart.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CD719E45799004271B2 /* 20_cart.feature */; };
 		CE9ADE7B1AB6D6E900D56481 /* JAFallbackView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE9193BE19F5040E00F89840 /* JAFallbackView.xib */; };
-		CE9ADE7C1AB6D6E900D56481 /* JAPDVSingleRelatedItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A2FD84719912BD000C65C1D /* JAPDVSingleRelatedItem.xib */; };
 		CE9ADE7F1AB6D6E900D56481 /* 05_user_data.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459919DC56BF003F0CA7 /* 05_user_data.feature */; };
 		CE9ADE801AB6D6E900D56481 /* JAAddNewAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA7D19B88DDB00DE7960 /* JAAddNewAddressCell.xib */; };
 		CE9ADE821AB6D6E900D56481 /* 16_recent_searches.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CC819E42E9A004271B2 /* 16_recent_searches.feature */; };
@@ -1976,7 +1970,6 @@
 		CE9ADEAA1AB6D6E900D56481 /* wait.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A519DC56BF003F0CA7 /* wait.rb */; };
 		CE9ADEAE1AB6D6E900D56481 /* JACartListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */; };
 		CE9ADEAF1AB6D6E900D56481 /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B5007AC119A4E8EC0024035A /* HockeySDKResources.bundle */; };
-		CE9ADEB11AB6D6E900D56481 /* JAPDVRelatedItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A4F12E9198FF35600F93C89 /* JAPDVRelatedItem.xib */; };
 		CE9ADEB21AB6D6E900D56481 /* JACatalogTopView_iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE06FCBA1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib */; };
 		CE9ADEB31AB6D6E900D56481 /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B5007AC019A4E8EC0024035A /* HockeySDK.xcconfig */; };
 		CE9ADEB41AB6D6E900D56481 /* 11_catalog.feature in Resources */ = {isa = PBXBuildFile; fileRef = BB128EA219E2FA410033514F /* 11_catalog.feature */; };
@@ -2254,7 +2247,6 @@
 		CE9AE0731AB6D78200D56481 /* slider-default-handle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB994199BA8FA0022BAB5 /* slider-default-handle@2x.png */; };
 		CE9AE0741AB6D78200D56481 /* 20_cart.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CD719E45799004271B2 /* 20_cart.feature */; };
 		CE9AE0751AB6D78200D56481 /* JAFallbackView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE9193BE19F5040E00F89840 /* JAFallbackView.xib */; };
-		CE9AE0761AB6D78200D56481 /* JAPDVSingleRelatedItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A2FD84719912BD000C65C1D /* JAPDVSingleRelatedItem.xib */; };
 		CE9AE0791AB6D78200D56481 /* 05_user_data.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459919DC56BF003F0CA7 /* 05_user_data.feature */; };
 		CE9AE07A1AB6D78200D56481 /* JAAddNewAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA7D19B88DDB00DE7960 /* JAAddNewAddressCell.xib */; };
 		CE9AE07C1AB6D78200D56481 /* 16_recent_searches.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CC819E42E9A004271B2 /* 16_recent_searches.feature */; };
@@ -2282,7 +2274,6 @@
 		CE9AE0A41AB6D78200D56481 /* wait.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A519DC56BF003F0CA7 /* wait.rb */; };
 		CE9AE0A81AB6D78200D56481 /* JACartListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */; };
 		CE9AE0A91AB6D78200D56481 /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B5007AC119A4E8EC0024035A /* HockeySDKResources.bundle */; };
-		CE9AE0AB1AB6D78200D56481 /* JAPDVRelatedItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A4F12E9198FF35600F93C89 /* JAPDVRelatedItem.xib */; };
 		CE9AE0AC1AB6D78200D56481 /* JACatalogTopView_iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE06FCBA1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib */; };
 		CE9AE0AD1AB6D78200D56481 /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B5007AC019A4E8EC0024035A /* HockeySDK.xcconfig */; };
 		CE9AE0AE1AB6D78200D56481 /* 11_catalog.feature in Resources */ = {isa = PBXBuildFile; fileRef = BB128EA219E2FA410033514F /* 11_catalog.feature */; };
@@ -2616,7 +2607,6 @@
 		f86a3b267a8e343aedfa85f7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4ABF0D198B9DE600342D92 /* QuartzCore.framework */; };
 		f8c3d3d4e4aeb8e1b38b80e7 /* RIImageResolution.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3027419811E9200F71726 /* RIImageResolution.m */; };
 		ff08457f9bea1c88653ee552 /* JACatalogListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2F576F19913B6D000A9E09 /* JACatalogListCell.xib */; };
-		ff66c78cdee50a4002746a01 /* JAPDVRelatedItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A4F12E9198FF35600F93C89 /* JAPDVRelatedItem.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2645,7 +2635,6 @@
 		4A2FD841199119D900C65C1D /* JAPDVProductInfo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAPDVProductInfo.xib; sourceTree = "<group>"; };
 		4A2FD84419912BC500C65C1D /* JAPDVSingleRelatedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVSingleRelatedItem.h; sourceTree = "<group>"; };
 		4A2FD84519912BC500C65C1D /* JAPDVSingleRelatedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVSingleRelatedItem.m; sourceTree = "<group>"; };
-		4A2FD84719912BD000C65C1D /* JAPDVSingleRelatedItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAPDVSingleRelatedItem.xib; sourceTree = "<group>"; };
 		4A2FD84919913FCA00C65C1D /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		4A3719BB19C05F52002D4199 /* JAUndefinedSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAUndefinedSearchView.h; sourceTree = "<group>"; };
 		4A3719BC19C05F52002D4199 /* JAUndefinedSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAUndefinedSearchView.m; sourceTree = "<group>"; };
@@ -2662,7 +2651,6 @@
 		4A4ABF0A198B903B00342D92 /* JACountryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACountryCell.h; sourceTree = "<group>"; };
 		4A4ABF0B198B903B00342D92 /* JACountryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACountryCell.m; sourceTree = "<group>"; };
 		4A4ABF0D198B9DE600342D92 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		4A4F12E9198FF35600F93C89 /* JAPDVRelatedItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAPDVRelatedItem.xib; sourceTree = "<group>"; };
 		4A7F747F198A4EDA00621C0D /* JACenterNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACenterNavigationController.h; sourceTree = "<group>"; };
 		4A7F7480198A4EDA00621C0D /* JACenterNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACenterNavigationController.m; sourceTree = "<group>"; };
 		4A862226198FA00D007FD76A /* JAPDVVariations.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAPDVVariations.xib; sourceTree = "<group>"; };
@@ -4029,10 +4017,8 @@
 			children = (
 				4AE730BC198F8ADF000CA1DD /* JAPDVRelatedItem.h */,
 				4AE730BD198F8ADF000CA1DD /* JAPDVRelatedItem.m */,
-				4A4F12E9198FF35600F93C89 /* JAPDVRelatedItem.xib */,
 				4A2FD84419912BC500C65C1D /* JAPDVSingleRelatedItem.h */,
 				4A2FD84519912BC500C65C1D /* JAPDVSingleRelatedItem.m */,
-				4A2FD84719912BD000C65C1D /* JAPDVSingleRelatedItem.xib */,
 			);
 			path = RelatedItem;
 			sourceTree = "<group>";
@@ -6230,7 +6216,6 @@
 				CEDBF8761B0CEC570073971A /* JACheckBoxComponent_RTL.xib in Resources */,
 				2a68cbeb778041d497796638 /* slider-default-handle@2x.png in Resources */,
 				9A2036E71B25D45500F36F55 /* JANewRatingViewController.xib in Resources */,
-				9542b3bdd30fbe4bec186675 /* JAPDVSingleRelatedItem.xib in Resources */,
 				9AF49A391B1DB6C10028105D /* JACatalogListCell_ipad_landscape.xib in Resources */,
 				37a7d0b54c205bb3a0c500c0 /* JAAddNewAddressCell.xib in Resources */,
 				9A007C6A1C2027BA007D99FC /* JACatalogViewController.xib in Resources */,
@@ -6289,7 +6274,6 @@
 				CEDE870C1B25FEE1006D18EA /* JANoConnectionView.xib in Resources */,
 				9A9CD44F1B72514A0061ACE0 /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-iPad.xib in Resources */,
 				73e27fe926d9b8bfdf5533aa /* HockeySDKResources.bundle in Resources */,
-				ff66c78cdee50a4002746a01 /* JAPDVRelatedItem.xib in Resources */,
 				9A9CD4091B72514A0061ACE0 /* BMA4SiPhoneWebViewNotifView-landscape.xib in Resources */,
 				CE283E7E1A765AEF00F3E92D /* JAOfferCollectionViewCell_ipad_portrait.xib in Resources */,
 				9cd5e1568d3e8d595420bc7f /* HockeySDK.xcconfig in Resources */,
@@ -6443,7 +6427,6 @@
 				9A9CD3C71B72514A0061ACE0 /* BMA4SiPhoneTextNotifView-landscape-iPad.xib in Resources */,
 				9A9CD3EA1B72514A0061ACE0 /* BMA4SiPhoneTextNotifView.xib in Resources */,
 				CE9193BF19F5040E00F89840 /* JAFallbackView.xib in Resources */,
-				4A2FD84819912BD000C65C1D /* JAPDVSingleRelatedItem.xib in Resources */,
 				BBA145AE19DC56BF003F0CA7 /* 05_user_data.feature in Resources */,
 				B59DCA7F19B88DDB00DE7960 /* JAAddNewAddressCell.xib in Resources */,
 				B5FE9FB519A1FCD9006F7D63 /* RITracking_JUMIA.plist in Resources */,
@@ -6489,7 +6472,6 @@
 				BBA145B919DC56BF003F0CA7 /* wait.rb in Resources */,
 				B542546C19AE9F7500C792FF /* JACartListHeaderView.xib in Resources */,
 				B5007AC419A4E8EC0024035A /* HockeySDKResources.bundle in Resources */,
-				4A4F12EA198FF35600F93C89 /* JAPDVRelatedItem.xib in Resources */,
 				9A564CB11B3411AD00F23057 /* JANewSellerRatingViewController.xib in Resources */,
 				CE06FCBB1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib in Resources */,
 				9A9CD3631B72514A0061ACE0 /* BMA4SiPhoneIntersticialWebViewNotifView-landscape.xib in Resources */,
@@ -6660,7 +6642,6 @@
 				CE9ADC7F1AB34C4600D56481 /* slider-default-handle@2x.png in Resources */,
 				CE9ADC801AB34C4600D56481 /* 20_cart.feature in Resources */,
 				CE9ADC811AB34C4600D56481 /* JAFallbackView.xib in Resources */,
-				CE9ADC821AB34C4600D56481 /* JAPDVSingleRelatedItem.xib in Resources */,
 				CE9ADC851AB34C4600D56481 /* 05_user_data.feature in Resources */,
 				CE9ADC861AB34C4600D56481 /* JAAddNewAddressCell.xib in Resources */,
 				CE9ADC881AB34C4600D56481 /* 16_recent_searches.feature in Resources */,
@@ -6705,7 +6686,6 @@
 				CE9ADCB41AB34C4600D56481 /* JACartListHeaderView.xib in Resources */,
 				CE9ADCB51AB34C4600D56481 /* HockeySDKResources.bundle in Resources */,
 				9A9CD4F51B72514A0061ACE0 /* BMA4SiPhoneWebViewNotifView-nobuttons-iPad.xib in Resources */,
-				CE9ADCB71AB34C4600D56481 /* JAPDVRelatedItem.xib in Resources */,
 				9A9CD3DD1B72514A0061ACE0 /* BMA4SiPhoneTextNotifView-landscape.xib in Resources */,
 				CE9ADCB81AB34C4600D56481 /* JACatalogTopView_iphone.xib in Resources */,
 				9A9CD4F01B72514A0061ACE0 /* BMA4SiPhoneTextNotifView-nobuttons.xib in Resources */,
@@ -6871,7 +6851,6 @@
 				9A9CD4241B72514A0061ACE0 /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape-iPad.xib in Resources */,
 				CE9ADE7A1AB6D6E900D56481 /* 20_cart.feature in Resources */,
 				CE9ADE7B1AB6D6E900D56481 /* JAFallbackView.xib in Resources */,
-				CE9ADE7C1AB6D6E900D56481 /* JAPDVSingleRelatedItem.xib in Resources */,
 				CE9ADE7F1AB6D6E900D56481 /* 05_user_data.feature in Resources */,
 				CE9ADE801AB6D6E900D56481 /* JAAddNewAddressCell.xib in Resources */,
 				CE9ADE821AB6D6E900D56481 /* 16_recent_searches.feature in Resources */,
@@ -6919,7 +6898,6 @@
 				9A9CD3BB1B72514A0061ACE0 /* BMA4SRichPushWebViewWithToolBar-iPad.xib in Resources */,
 				CE9ADEAE1AB6D6E900D56481 /* JACartListHeaderView.xib in Resources */,
 				CE9ADEAF1AB6D6E900D56481 /* HockeySDKResources.bundle in Resources */,
-				CE9ADEB11AB6D6E900D56481 /* JAPDVRelatedItem.xib in Resources */,
 				CE9ADEB21AB6D6E900D56481 /* JACatalogTopView_iphone.xib in Resources */,
 				CE9ADEB31AB6D6E900D56481 /* HockeySDK.xcconfig in Resources */,
 				CE9ADEB41AB6D6E900D56481 /* 11_catalog.feature in Resources */,
@@ -7074,7 +7052,6 @@
 				CE9AE0731AB6D78200D56481 /* slider-default-handle@2x.png in Resources */,
 				CE9AE0741AB6D78200D56481 /* 20_cart.feature in Resources */,
 				CE9AE0751AB6D78200D56481 /* JAFallbackView.xib in Resources */,
-				CE9AE0761AB6D78200D56481 /* JAPDVSingleRelatedItem.xib in Resources */,
 				CE9AE0791AB6D78200D56481 /* 05_user_data.feature in Resources */,
 				CE9AE07A1AB6D78200D56481 /* JAAddNewAddressCell.xib in Resources */,
 				CE9AE07C1AB6D78200D56481 /* 16_recent_searches.feature in Resources */,
@@ -7120,7 +7097,6 @@
 				CE9AE0A81AB6D78200D56481 /* JACartListHeaderView.xib in Resources */,
 				CE9AE0A91AB6D78200D56481 /* HockeySDKResources.bundle in Resources */,
 				9A9CD4F71B72514A0061ACE0 /* BMA4SiPhoneWebViewNotifView-nobuttons-iPad.xib in Resources */,
-				CE9AE0AB1AB6D78200D56481 /* JAPDVRelatedItem.xib in Resources */,
 				9A9CD3DF1B72514A0061ACE0 /* BMA4SiPhoneTextNotifView-landscape.xib in Resources */,
 				CE9AE0AC1AB6D78200D56481 /* JACatalogTopView_iphone.xib in Resources */,
 				9A9CD4F21B72514A0061ACE0 /* BMA4SiPhoneTextNotifView-nobuttons.xib in Resources */,
