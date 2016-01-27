@@ -92,7 +92,7 @@
 - (void)setProduct:(RIProduct *)product
 {
     _product = product;
-    if (VALID_NOTEMPTY(product.images, NSOrderedSet))
+    if (VALID_NOTEMPTY(product.images, NSArray))
     {
         RIImage *imageTemp = [product.images firstObject];
         UIImage *placeHolderImage = [UIImage imageNamed:@"placeholder_scrollable"];

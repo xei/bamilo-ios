@@ -16,8 +16,6 @@
 @synthesize height;
 @synthesize url;
 @synthesize width;
-@synthesize product;
-@synthesize variation;
 
 + (RIImage*)parseImage:(NSDictionary*)image;
 {

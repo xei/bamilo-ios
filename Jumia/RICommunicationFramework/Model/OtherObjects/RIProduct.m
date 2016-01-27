@@ -623,7 +623,6 @@
                 if (VALID_NOTEMPTY(simpleJSON, NSDictionary)) {
                     
                     RIProductSimple* productSimple = [RIProductSimple parseProductSimple:simpleJSON country:country variationKey:variationKey];
-                    productSimple.product = newProduct;
                     [productSimplesMutableArray addObject:productSimple];
                 }
             }
@@ -664,7 +663,6 @@
                 if (VALID_NOTEMPTY(imageJSON, NSDictionary)) {
                     
                     RIImage* image = [RIImage parseImage:imageJSON];
-                    image.product = newProduct;
                     [imagesMutableArray addObject:image];
                 }
             }
@@ -672,13 +670,11 @@
             //a related item only has one image url, inside the data dictionary
             NSDictionary* imageDic = [NSDictionary dictionaryWithObject:[dataDic objectForKey:@"image"] forKey:@"image"];
             RIImage* image = [RIImage parseImage:imageDic];
-            image.product = newProduct;
             [imagesMutableArray addObject:image];
         } else if ([dataDic objectForKey:@"image_url"]) {
             NSMutableDictionary* imageDict = [NSMutableDictionary new];
             [imageDict setObject:[dataDic objectForKey:@"image_url"] forKey:@"url"];
             RIImage* image = [RIImage parseImage:imageDict];
-            image.product = newProduct;
             [imagesMutableArray addObject:image];
         }
         newProduct.images = [imagesMutableArray copy];

@@ -1549,7 +1549,7 @@ typedef void (^ProcessActionBlock)(void);
             categoryName = self.category.label;
         }
     }
-    else if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet))
+    else if(VALID_NOTEMPTY(product.categoryIds, NSArray))
     {
         NSArray *categoryIds = product.categoryIds;
         NSInteger subCategoryIndex = [categoryIds count] - 1;

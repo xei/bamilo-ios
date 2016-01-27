@@ -175,7 +175,7 @@
      *  SIZES
      */
     
-    if (VALID_NOTEMPTY(product.productSimples, NSOrderedSet) && product.productSimples.count > 1)
+    if (VALID_NOTEMPTY(product.productSimples, NSArray) && product.productSimples.count > 1)
     {
         NSString *sizesText = @"";
         if (VALID_NOTEMPTY(preSelectedSize, NSString)) {
@@ -200,7 +200,7 @@
      *  VARIATIONS
      */
     
-    if (VALID_NOTEMPTY(product.variations, NSOrderedSet)) {
+    if (VALID_NOTEMPTY(product.variations, NSArray)) {
         JAProductInfoSingleLine *singleVariations = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
         [singleVariations setTopSeparatorVisibility:YES];
         if (product.fashion) {
