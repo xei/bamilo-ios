@@ -52,7 +52,7 @@
     
     NSString* notificationName;
     
-    if ([teaserTarget.type isEqualToString:@"catalog"]) {
+    if ([teaserTarget.type isEqualToString:@"catalog"] || [teaserTarget.type isEqualToString:@"catalog_category"]) {
         
         notificationName = kDidSelectTeaserWithCatalogUrlNofication;
         
