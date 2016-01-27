@@ -228,7 +228,7 @@
         [sellerInfoView setIsShopFirst:product.shopFirst];
         [sellerInfoView setShopFirstOverlayText:product.shopFirstOverlayText];
         [sellerInfoView setSeller:product.seller];
-        [self addTargetToSellerInfoView:sellerInfoView isGlobal:product.seller.isGlobal];
+        [self addTargetToSellerInfoView:sellerInfoView seller:product.seller];
 
         [self addSubview:sellerInfoView];
         yOffset = CGRectGetMaxY(sellerInfoView.frame);
@@ -279,9 +279,9 @@
     [self setHeight:yOffset];
 }
 
-- (void)addTargetToSellerInfoView:(JAPDVProductInfoSellerInfo *)sellerInfoView isGlobal:(BOOL)isGlobal
+- (void)addTargetToSellerInfoView:(JAPDVProductInfoSellerInfo *)sellerInfoView seller:(RISeller*)seller
 {
-    if (isGlobal) {
+    if (VALID_NOTEMPTY(seller.targetString, NSString)) {
         [sellerInfoView addTarget:self action:@selector(tapSellerCatalogLine)];
         [sellerInfoView addLinkTarget:self action:@selector(tapSellerLink)];
     }
