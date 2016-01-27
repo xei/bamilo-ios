@@ -111,14 +111,17 @@
                        value:stringTextColor
                        range:NSMakeRange(0, stringTextLenght)];
     
-    NSRange range = [text rangeOfString:searchText];
-    
-    [stringText addAttribute:NSFontAttributeName
-                       value:subStringTextFont
-                       range:range];
-    
-    self.labelNoResults.attributedText = stringText;
-    [self.labelNoResults sizeToFit];
+    if (VALID_NOTEMPTY(searchText, NSString)) {
+        NSRange range = [text rangeOfString:searchText];
+        
+        [stringText addAttribute:NSFontAttributeName
+                           value:subStringTextFont
+                           range:range];
+        
+        self.labelNoResults.attributedText = stringText;
+        [self.labelNoResults sizeToFit];
+        
+    }
     [self.labelNoResults setFrame:CGRectMake(6.0f,
                                              CGRectGetMaxY(self.searchIconImageView.frame) + 20.0f,
                                              self.topView.bounds.size.width - 6.0f*2,

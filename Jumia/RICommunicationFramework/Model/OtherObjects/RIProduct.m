@@ -16,6 +16,7 @@
 #import "RIBanner.h"
 #import "RISpecification.h"
 #import "RITarget.h"
+#import "RISearchSuggestion.h"
 
 @implementation RIBundle
 
@@ -233,7 +234,7 @@
                                 filters:(NSArray*)filters
                              filterPush:(NSString*)filterPush
                            successBlock:(void (^)(RICatalog *catalog))successBlock
-                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
+                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
 {
     NSString* fullUrl = @"";
     NSString *filtersString = @"";
@@ -284,7 +285,7 @@
 
 + (NSString *)getProductsWithFullUrl:(NSString*)url
                         successBlock:(void (^)(RICatalog *catalog))successBlock
-                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
+                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error,  RIUndefinedSearchTerm *undefSearchTerm))failureBlock
 {
     url = [url  stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *finalURL = [NSURL URLWithString:url];
@@ -309,28 +310,39 @@
                                                                           });
                                                                       }else
                                                                       {
-                                                                          failureBlock(RIApiResponseAPIError, nil);
+                                                                          failureBlock(RIApiResponseAPIError, nil, nil);
                                                                       }
                                                                   }
                                                                   else
                                                                   {
-                                                                      failureBlock(RIApiResponseAPIError, nil);
+                                                                      failureBlock(RIApiResponseAPIError, nil, nil);
                                                                   }
                                                               } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-                                                                  failureBlock(apiResponse, nil);
+                                                                  failureBlock(apiResponse, nil, nil);
                                                               }];
                                                           } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
-                                                              if(NOTEMPTY(errorJsonObject))
-                                                              {
-                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
-                                                              } else if(NOTEMPTY(errorObject))
-                                                              {
-                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(apiResponse, errorArray);
-                                                              } else
-                                                              {
-                                                                  failureBlock(apiResponse, nil);
-                                                              }
+                                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                                  if ([errorJsonObject objectForKey:@"metadata"])
+                                                                  {
+                                                                      failureBlock(apiResponse, nil, [RISearchSuggestion parseUndefinedSearchTerm:[errorJsonObject objectForKey:@"metadata"]]);
+                                                                  }
+                                                                  else
+                                                                  {
+                                                                      if(NOTEMPTY(errorJsonObject))
+                                                                      {
+                                                                          failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject], nil);
+                                                                      }
+                                                                      else if(NOTEMPTY(errorObject))
+                                                                      {
+                                                                          NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                          failureBlock(apiResponse, errorArray, nil);
+                                                                      }
+                                                                      else
+                                                                      {
+                                                                          failureBlock(apiResponse, nil, nil);
+                                                                      }
+                                                                  }
+                                                              });
                                                           }];
 }
 
