@@ -114,46 +114,41 @@
 shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType
 {    
-    NSString* url = [request.URL absoluteString];
-    NSArray *parts = [url componentsSeparatedByString: @"::"];
-    
-    if (VALID_NOTEMPTY(parts, NSArray) && 2 == parts.count) {
-        NSString* identifier = [parts objectAtIndex:0];
-        NSString* url = [parts objectAtIndex:1];
-        
-        if (VALID_NOTEMPTY(identifier, NSString) && VALID_NOTEMPTY(url, NSString)) {
+    NSString* targetString = [request.URL absoluteString];
 
-            NSMutableDictionary* userInfo = [NSMutableDictionary new];
-            [userInfo setObject:url forKey:@"url"];
-            [userInfo setObject:STRING_BACK forKey:@"show_back_button_title"];
+    RITarget* target = [RITarget parseTarget:targetString];
+    if (VALID_NOTEMPTY(target.type, NSString)) {
+        NSString* notificationName;
+        
+        if ([target.type isEqualToString:@"catalog"]) {
             
-            if (self.teaserTrackingInfo) {
-                [userInfo setObject:self.teaserTrackingInfo forKey:@"teaserTrackingInfo"];
-            }
+            notificationName = kDidSelectTeaserWithCatalogUrlNofication;
             
-            if ([identifier isEqualToString:@"pdv"]) {
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                                    object:nil
-                                                                  userInfo:userInfo];
-                
-            } else if ([identifier isEqualToString:@"catalog"]) {
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithCatalogUrlNofication
-                                                                    object:nil
-                                                                  userInfo:userInfo];
-                
-            } else if ([identifier isEqualToString:@"campaign"]) {
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectCampaignNofication
-                                                                    object:nil
-                                                                  userInfo:userInfo];
-                
-            }
+        } else if ([target.type isEqualToString:@"product_detail"]) {
+            
+            notificationName = kDidSelectTeaserWithPDVUrlNofication;
+            
+        } else if ([target.type isEqualToString:@"static_page"]) {
+            
+            notificationName = kDidSelectTeaserWithShopUrlNofication;
+            
+        } else if ([target.type isEqualToString:@"campaign"]) {
+            
+            notificationName = kDidSelectCampaignNofication;
             
         }
+        
+        NSMutableDictionary* userInfo = [NSMutableDictionary new];
+        [userInfo setObject:STRING_BACK forKey:@"show_back_button_title"];
+        
+        if (self.teaserTrackingInfo) {
+            [userInfo setObject:self.teaserTrackingInfo forKey:@"teaserTrackingInfo"];
+        }
+        [userInfo setObject:targetString forKey:@"targetString"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
+                                                            object:nil
+                                                          userInfo:userInfo];
     }
-    
     
     return YES;
 }
