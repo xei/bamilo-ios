@@ -1225,86 +1225,71 @@ JAPickerDelegate>
 #pragma mark JAPickerDelegate
 - (void)selectedRow:(NSInteger)selectedRow
 {
-    if (selectedRow > 0) {
-        if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent))
-        {
-            if(VALID_NOTEMPTY(self.radioComponentDataset, NSArray) && selectedRow < [self.radioComponentDataset count])
-            {                                                                   //   0 is ""
-                id selectedObject = [self.radioComponentDataset objectAtIndex:selectedRow];
+    if (VALID_NOTEMPTY(self.radioComponent, JARadioComponent)
+        && VALID_NOTEMPTY(self.radioComponentDataset, NSArray)
+        && selectedRow < [self.radioComponentDataset count]) {
+        
+        id selectedObject = [self.radioComponentDataset objectAtIndex:selectedRow];
+        
+        if (self.shippingContentView == [self.radioComponent superview]) {
+            if (VALID_NOTEMPTY(selectedObject, RILocale)
+                && [self.radioComponent isComponentWithKey:@"region"]
+                && ![[(RILocale*)selectedObject value] isEqualToString:[self.shippingSelectedRegion value]]) {
                 
-                if(self.shippingContentView == [self.radioComponent superview])
-                {
-                    if(VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"region"] && ![[(RILocale*)selectedObject value] isEqualToString:[self.shippingSelectedRegion value]])
-                    {
-                        self.shippingSelectedRegion = selectedObject;
-                        self.shippingSelectedCity = nil;
-                        self.shippingCitiesDataset = nil;
-                        self.shippingSelectedPostcode = nil;
-                        self.shippingPostcodesDataset = nil;
-                        
-                        [self.shippingDynamicForm setRegionValue:selectedObject];
-                        [self.shippingDynamicForm setCityValue:nil];
-                        [self.shippingDynamicForm setPostcodeValue:nil];
-                    }
-                    else if(VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"city"])
-                    {
-                        self.shippingSelectedCity = selectedObject;
-                        self.shippingSelectedPostcode = nil;
-                        self.shippingPostcodesDataset = nil;
-                        
-                        [self.shippingDynamicForm setCityValue:selectedObject];
-                        [self.shippingDynamicForm setPostcodeValue:nil];
-                    }
-                    else if(VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"postcode"])
-                    {
-                        self.shippingSelectedPostcode = selectedObject;
-                        
-                        [self.shippingDynamicForm setPostcodeValue:selectedObject];
-                    }
-                    else if(VALID_NOTEMPTY(selectedObject, NSString))
-                    {
-                        [self.radioComponent setValue:selectedObject];
-                    }
-                }
-                else if(self.billingContentView == [self.radioComponent superview])
-                {
-                    if(VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"region"]  && ![[(RILocale*) selectedObject value] isEqualToString:[self.billingSelectedRegion value]])
-                    {
-                        self.billingSelectedRegion = selectedObject;
-                        self.billingSelectedCity = nil;
-                        self.billingCitiesDataset = nil;
-                        self.billingSelectedPostcode = nil;
-                        self.billingPostcodesDataset = nil;
-                        
-                        [self.billingDynamicForm setRegionValue:selectedObject];
-                        [self.billingDynamicForm setCityValue:nil];
-                        [self.billingDynamicForm setPostcodeValue:nil];
-                    }
-                    else if(VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"city"])
-                    {
-                        self.billingSelectedCity = selectedObject;
-                        self.billingSelectedPostcode = nil;
-                        self.billingPostcodesDataset = nil;
-                        
-                        [self.billingDynamicForm setCityValue:selectedObject];
-                        [self.billingDynamicForm setPostcodeValue:nil];
-                    }
-                    else if(VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"postcode"])
-                    {
-                        self.billingSelectedPostcode = selectedObject;
-                        
-                        [self.billingDynamicForm setPostcodeValue:selectedObject];
-                    }
-                    else if(VALID_NOTEMPTY(selectedObject, NSString))
-                    {
-                        [self.radioComponent setValue:selectedObject];
-                    }
-                }
+                self.shippingSelectedRegion = selectedObject;
+                self.shippingSelectedCity = nil;
+                self.shippingCitiesDataset = nil;
+                self.shippingSelectedPostcode = nil;
+                self.shippingPostcodesDataset = nil;
+                
+                [self.shippingDynamicForm setRegionValue:selectedObject];
+                [self.shippingDynamicForm setCityValue:nil];
+                [self.shippingDynamicForm setPostcodeValue:nil];
+            } else if (VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"city"]) {
+                self.shippingSelectedCity = selectedObject;
+                self.shippingSelectedPostcode = nil;
+                self.shippingPostcodesDataset = nil;
+                
+                [self.shippingDynamicForm setCityValue:selectedObject];
+                [self.shippingDynamicForm setPostcodeValue:nil];
+            } else if (VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"postcode"]) {
+                self.shippingSelectedPostcode = selectedObject;
+                
+                [self.shippingDynamicForm setPostcodeValue:selectedObject];
+            } else if (VALID_NOTEMPTY(selectedObject, NSString)) {
+                [self.radioComponent setValue:selectedObject];
+            }
+        } else if (self.billingContentView == [self.radioComponent superview]) {
+            if (VALID_NOTEMPTY(selectedObject, RILocale)
+                && [self.radioComponent isComponentWithKey:@"region"]
+                && ![[(RILocale*) selectedObject value] isEqualToString:[self.billingSelectedRegion value]]) {
+                self.billingSelectedRegion = selectedObject;
+                self.billingSelectedCity = nil;
+                self.billingCitiesDataset = nil;
+                self.billingSelectedPostcode = nil;
+                self.billingPostcodesDataset = nil;
+                
+                [self.billingDynamicForm setRegionValue:selectedObject];
+                [self.billingDynamicForm setCityValue:nil];
+                [self.billingDynamicForm setPostcodeValue:nil];
+            } else if(VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"city"]) {
+                self.billingSelectedCity = selectedObject;
+                self.billingSelectedPostcode = nil;
+                self.billingPostcodesDataset = nil;
+                
+                [self.billingDynamicForm setCityValue:selectedObject];
+                [self.billingDynamicForm setPostcodeValue:nil];
+            } else if(VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"postcode"]) {
+                self.billingSelectedPostcode = selectedObject;
+                
+                [self.billingDynamicForm setPostcodeValue:selectedObject];
+            } else if(VALID_NOTEMPTY(selectedObject, NSString)) {
+                [self.radioComponent setValue:selectedObject];
             }
         }
-        
-        [self removePickerView];
     }
+    
+    [self removePickerView];
 }
 
 #pragma mark - Keyboard notifications
