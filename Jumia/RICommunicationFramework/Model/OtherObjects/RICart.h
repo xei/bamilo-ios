@@ -152,6 +152,12 @@
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
+ * Method to clear the cart data
+ */
++ (NSString *) resetCartWithSuccessBlock:(void (^)(void))sucessBlock
+                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
+
+/**
  *  Method to add voucher information
  *
  *  @param the voucher code

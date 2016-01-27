@@ -102,6 +102,31 @@
                                                           }];
 }
 
++ (NSString *) resetCartWithSuccessBlock:(void (^)(void))sucessBlock
+                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
+{
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_CLEAR_CART]]
+                                                            parameters:nil
+                                                            httpMethod:HttpResponseDelete
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              sucessBlock();
+                                                          } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
+                                                              if (NOTEMPTY(errorJsonObject))
+                                                              {
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+                                                              } else if (NOTEMPTY(errorObject))
+                                                              {
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(apiResponse, errorArray);
+                                                              } else {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }
+                                                          }];
+}
+
 #pragma mark - Add product to cart
 
 + (NSString *)addProductWithQuantity:(NSString *)quantity
