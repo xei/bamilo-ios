@@ -842,7 +842,7 @@ JAActivityViewControllerDelegate
                 relatedItemX = 0.0f;
                 relatedItemY += singleItem.frame.size.height + 5.0f;
             }else{
-                relatedItemX += singleItem.frame.size.width + 5.0f + 5.f;
+                relatedItemX += singleItem.frame.size.width + 5.0f;
             }
             
         }

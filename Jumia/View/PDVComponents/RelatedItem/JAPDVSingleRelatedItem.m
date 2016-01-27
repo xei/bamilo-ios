@@ -92,29 +92,30 @@
 - (void)setProduct:(RIProduct *)product
 {
     _product = product;
-    if (VALID_NOTEMPTY(product.images, NSOrderedSet))
+    
+    UIImage *placeHolderImage = [UIImage imageNamed:@"placeholder_scrollable"];
+    [self.imageViewItem setY:6.f];
+    CGFloat ratio = placeHolderImage.size.height/placeHolderImage.size.width;
+    self.imageViewItem.width = self.width - 30;
+    self.imageViewItem.height = self.imageViewItem.width*ratio;
+    [self.imageViewItem setXCenterAligned];
+    
+    if (VALID_NOTEMPTY(product.images, NSArray))
     {
         RIImage *imageTemp = [product.images firstObject];
-        UIImage *placeHolderImage = [UIImage imageNamed:@"placeholder_scrollable"];
-        [self.imageViewItem setY:6.f];
-        
-        CGFloat ratio = placeHolderImage.size.height/placeHolderImage.size.width;
-        self.imageViewItem.width = self.width - 30;
-        self.imageViewItem.height = self.imageViewItem.width*ratio;
-        
-//        __weak typeof (self) weakSelf = self;
         [self.imageViewItem setImageWithURL:[NSURL URLWithString:imageTemp.url]
                            placeholderImage:placeHolderImage success:^(UIImage *image, BOOL cached) {
                            } failure:^(NSError *error) {
                                NSLog(@"error getting image [%@] %@", imageTemp.url, error);
                            }];
-        [self.imageViewItem setXCenterAligned];
+    }else{
+        [self.imageViewItem setImage:placeHolderImage];
     }
     
     [self.labelPrice setX:6];
     [self.labelPrice setHeight:20];
     [self.labelPrice setWidth:self.width - 12];
-    if (VALID_NOTEMPTY(product.specialPrice, NSNumber) && 0.0f == [product.specialPrice floatValue]) {
+    if (!VALID_NOTEMPTY(product.specialPrice, NSNumber) || 0.0f == [product.specialPrice floatValue]) {
         self.labelPrice.text = product.priceFormatted;
     } else {
         self.labelPrice.text = product.specialPriceFormatted;

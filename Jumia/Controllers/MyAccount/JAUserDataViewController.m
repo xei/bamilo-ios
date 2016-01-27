@@ -194,7 +194,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    [self setupFixedElements];
     [self hideKeyboard];
 }
 
@@ -284,7 +284,8 @@
              [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(requestUserEditForm) objects:nil];
              [self hideLoading];
          }];
-    }
+    } else
+        [self setupFixedElements];
 }
 
 - (void)saveButtonPressed
@@ -421,15 +422,20 @@
 
 - (void)setupFixedElements
 {
-    [self.mainScrollView setFrame:CGRectMake(
-                                             0,
+    [self.mainScrollView setFrame:CGRectMake(0,
                                              self.viewBounds.origin.y,
                                              self.viewBounds.size.width,
                                              self.viewBounds.size.height)];
     
-    [self.mainScrollView setContentSize:CGSizeMake(
-                                                   self.mainScrollView.width,
-                                                   CGRectGetMaxY(self.changePasswordView.frame) + 6.f)];
+    CGSize size = CGSizeMake(self.mainScrollView.width,
+                             CGRectGetMaxY(self.changePasswordView.frame) + 6.f);
+    
+    if (!VALID_NOTEMPTY(self.changePasswordForm, JADynamicForm)) {
+        size = CGSizeMake(self.mainScrollView.width,
+                          CGRectGetMaxY(self.saveButton.frame) + 6.f);
+    }
+    
+    [self.mainScrollView setContentSize:size];
     
     self.mainScrollViewInitialRect = self.mainScrollView.frame;
     

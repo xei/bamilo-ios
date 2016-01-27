@@ -512,6 +512,7 @@ UIAlertViewDelegate
     } else {
         // Add space between last form field and send review button
         currentY += 38.0f;
+        [self onErrorResponse:self.apiResponse messages:nil showAsMessage:NO selector:@selector(ratingsRequests) objects:nil];
     }
     
     if (self.isShowingRating) {
