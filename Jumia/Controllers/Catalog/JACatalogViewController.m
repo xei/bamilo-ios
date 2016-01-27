@@ -486,14 +486,9 @@ typedef void (^ProcessActionBlock)(void);
             [self processCatalog:catalog];
         };
         
-        typedef void (^ProcessSearchProductsFailureBlock)(RIApiResponse apiResponse,  NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm);
-        ProcessSearchProductsFailureBlock processSearchProductsFailureBlock = ^(RIApiResponse apiResponse,  NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm) {
+        typedef void (^ProcessProductsFailureBlock)(RIApiResponse apiResponse,  NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm);
+        ProcessProductsFailureBlock processProductsFailureBlock = ^(RIApiResponse apiResponse,  NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm) {
             [self setLoadProductsError:apiResponse errorMessages:errorMessages undefSearchTerm:undefSearchTerm];
-        };
-        
-        typedef void (^ProcessCategoryProductsFailureBlock)(RIApiResponse apiResponse,  NSArray *errorMessages);
-        ProcessCategoryProductsFailureBlock processCategoryProductsFailureBlock = ^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-            [self setLoadProductsError:apiResponse errorMessages:errorMessages undefSearchTerm:nil];
         };
         
         if (VALID_NOTEMPTY(self.searchString, NSString))
@@ -512,7 +507,7 @@ typedef void (^ProcessActionBlock)(void);
                                                                          sortingMethod:self.sortingMethod
                                                                                filters:self.filtersArray
                                                                           successBlock:processProductsBlock
-                                                                       andFailureBlock:processSearchProductsFailureBlock];
+                                                                       andFailureBlock:processProductsFailureBlock];
         }
         else
         {
@@ -541,7 +536,7 @@ typedef void (^ProcessActionBlock)(void);
                                                                            filters:self.filtersArray
                                                                         filterPush:self.filterPush
                                                                       successBlock:processProductsBlock
-                                                                   andFailureBlock:processCategoryProductsFailureBlock];
+                                                                   andFailureBlock:processProductsFailureBlock];
             }
         }
     }

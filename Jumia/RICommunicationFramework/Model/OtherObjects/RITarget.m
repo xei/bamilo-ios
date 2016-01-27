@@ -20,15 +20,20 @@
 {
     RITarget* newTarget = [[RITarget alloc] init];
     
+    NSString* type;
+    NSString* node;
     if (VALID_NOTEMPTY(targetString, NSString)) {
         NSArray *components = [targetString componentsSeparatedByString:@"::"];
-        if (0 < components.count) {
-            newTarget.type = [components firstObject];
-            if (1 < components.count) {
-                newTarget.node = [components objectAtIndex:1];
-            }
+        if (1 == components.count) {
+            node = [components firstObject];
+        } else if (2 == components.count) {
+            type = [components firstObject];
+            node = [components lastObject];
         }
     }
+    
+    newTarget.type = type;
+    newTarget.node = node;
     
     return newTarget;
 }
