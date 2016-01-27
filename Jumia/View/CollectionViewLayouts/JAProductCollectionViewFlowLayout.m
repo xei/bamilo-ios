@@ -131,4 +131,9 @@
     return layoutAttributes;
 }
 
+- (void)resetSizes
+{
+    _frameDictionary = [NSMutableDictionary new];
+}
+
 @end
