@@ -24,15 +24,11 @@
 @synthesize specialPriceFormatted;
 @synthesize specialPriceEuroConverted;
 @synthesize stock;
-@synthesize product;
 
 + (RIProductSimple *)parseProductSimple:(NSDictionary*)productSimpleJSON country:(RICountryConfiguration*)country variationKey:(NSString*)variationKey
 {
     RIProductSimple* newProductSimple = [[RIProductSimple alloc] init];
     
-    if (ISEMPTY(productSimpleJSON)) {
-        productSimpleJSON = productSimpleJSON;
-    }
     if ([productSimpleJSON isKindOfClass:[NSDictionary class]]) {
         
         if ([productSimpleJSON objectForKey:@"sku"]) {

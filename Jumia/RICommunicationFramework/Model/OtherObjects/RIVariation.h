@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class RIImage, RIProduct;
+@class RIImage;
 
 @interface RIVariation : NSObject
 
@@ -18,7 +18,6 @@
 @property (nonatomic, retain) NSNumber *specialPrice;
 @property (nonatomic, retain) NSString *sku;
 @property (nonatomic, retain) RIImage *image;
-@property (nonatomic, retain) RIProduct *product;
 
 /**
  *  Method to parse an RIVariation given a JSON object

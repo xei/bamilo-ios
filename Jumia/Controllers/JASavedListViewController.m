@@ -451,7 +451,7 @@
                       [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
                       [trackingDictionary setValue:product.name forKey:kRIEventProductNameKey];
                       
-                      if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet))
+                      if(VALID_NOTEMPTY(product.categoryIds, NSArray))
                       {
                           NSArray *categoryIds = product.categoryIds;
                           NSInteger subCategoryIndex = [categoryIds count] - 1;
@@ -507,7 +507,7 @@
                       NSMutableDictionary *tracking = [NSMutableDictionary new];
                       [tracking setValue:product.name forKey:kRIEventProductNameKey];
                       [tracking setValue:product.sku forKey:kRIEventSkuKey];
-                      if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet)) {
+                      if(VALID_NOTEMPTY(product.categoryIds, NSArray)) {
                           [tracking setValue:[product.categoryIds lastObject] forKey:kRIEventLastCategoryAddedToCartKey];
                       }
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
