@@ -1081,11 +1081,10 @@
         NSArray* databaseProds = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIRecentlyViewedProductSku class]) withPropertyName:@"productSku" andPropertyValue:seenProduct.sku];
         RIRecentlyViewedProductSku *recentlyViewedProductSku = [databaseProds firstObject];
         
-        if (VALID_NOTEMPTY(recentlyViewedProductSku.numberOfTimesSeen, NSNumber)) {
+        if (NO == VALID_NOTEMPTY(recentlyViewedProductSku.numberOfTimesSeen, NSNumber)) {
             recentlyViewedProductSku.numberOfTimesSeen = [NSNumber numberWithInt:0];
         }
         recentlyViewedProductSku.numberOfTimesSeen = [NSNumber numberWithInt:([recentlyViewedProductSku.numberOfTimesSeen intValue] + 1)];
-        [RIRecentlyViewedProductSku saveRecentlyViewedProductSku:recentlyViewedProductSku andContext:YES];
     }
 }
 
