@@ -23,7 +23,7 @@
 
 @implementation JASearchView
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame andText:(NSString *)text
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -56,6 +56,7 @@
         self.searchBar.barTintColor = [UIColor whiteColor];
         self.searchBar.placeholder = STRING_SEARCH;
         self.searchBar.showsCancelButton = YES;
+        [self.searchBar setSearchBarStyle:UISearchBarStyleDefault];
         
         [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor orangeColor]];
         
@@ -94,6 +95,8 @@
         
         self.resultsTableView.hidden = YES;
         [self searchBar:self.searchBar textDidChange:@""];
+        
+        [self.searchBar setText:text];
     }
     return self;
 }
@@ -214,12 +217,6 @@
         } else {
             [self removeResultsTableViewFromView];
         }
-    }
-}
-
-- (void)setSearchBarText:(NSString*)text {
-    if (VALID_NOTEMPTY(self.searchBar, UISearchBar)) {
-        [self.searchBar setText:text];
     }
 }
 
