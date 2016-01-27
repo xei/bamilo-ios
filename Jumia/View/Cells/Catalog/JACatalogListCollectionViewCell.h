@@ -10,8 +10,8 @@
 #import "JACatalogCollectionViewCell.h"
 #import "JAProductInfoRatingLine.h"
 
-#define JACatalogViewControllerListCellHeight_ipad 97.0f + 25.f + 10.f // +25 = new label size / +10 = new label top margin - as of NAFAMZ-15160: https://jira.rocket-internet.de/browse/NAFAMZ-15160
-#define JACatalogViewControllerListCellHeight 97.0f + 25.f + 10.f // +25 = new label size / +10 = new label top margin - as of NAFAMZ-15160: https://jira.rocket-internet.de/browse/NAFAMZ-15160
+#define JACatalogViewControllerListCellHeight_ipad 108.0f + 25.f + 10.f // +25 = new label size / +10 = new label top margin - as of NAFAMZ-15160: https://jira.rocket-internet.de/browse/NAFAMZ-15160
+#define JACatalogViewControllerListCellHeight 108.0f + 25.f + 10.f // +25 = new label size / +10 = new label top margin - as of NAFAMZ-15160: https://jira.rocket-internet.de/browse/NAFAMZ-15160
 #define JACatalogViewControllerListCellNewLabelX 4.0f
 #define JACatalogViewControllerListCellNewLabelY 15.0f
 #define JACatalogViewControllerListCellNewLabelX_ipad -2.0f
