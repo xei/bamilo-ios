@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@class RIProduct;
-
 @interface RIProductSimple : NSObject
 
 @property (nonatomic, retain) NSString * attributePackageType;
@@ -25,7 +23,6 @@
 @property (nonatomic, retain) NSString * specialPriceFormatted;
 @property (nonatomic, retain) NSNumber * specialPriceEuroConverted;
 @property (nonatomic, retain) NSNumber * stock;
-@property (nonatomic, retain) RIProduct *product;
 
 /**
  *  Method to parse an RIProductSimple given a JSON object

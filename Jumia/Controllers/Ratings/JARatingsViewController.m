@@ -270,7 +270,7 @@ UITableViewDataSource
     NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
     [trackingDictionary setValue:price forKey:kRIEventPriceKey];
     
-    if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
+    if(VALID_NOTEMPTY(self.product.categoryIds, NSArray))
     {
         NSArray *categoryIds = self.product.categoryIds;
         NSInteger subCategoryIndex = [categoryIds count] - 1;
