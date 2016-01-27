@@ -23,10 +23,22 @@
 @property (weak, nonatomic) IBOutlet UILabel *deliveryLabel;
 @property (nonatomic, strong) RIProductOffer *productOfferSeller;
 @property (nonatomic) UIView *separator;
+@property (nonatomic) UIImageView *shopFirstImageView;
 
 @end
 
 @implementation JAOfferCollectionViewCell
+
+- (UIImageView*)shopFirstImageView
+{
+    if (!VALID_NOTEMPTY(_shopFirstImageView, UIImageView)) {
+        
+        UIImage *shopFirstImage = [UIImage imageNamed:@"shop_first_logo"];
+        _shopFirstImageView = [[UIImageView alloc] initWithImage:shopFirstImage];
+        [_shopFirstImageView setFrame:CGRectMake(10.f, CGRectGetMaxY(self.sellerLabel.frame), shopFirstImage.size.width, shopFirstImage.size.height)];
+    }
+    return _shopFirstImageView;
+}
 
 - (void)loadWithProductOffer:(RIProductOffer*)productOffer withProductSimple:(RIProductSimple* )productSimple
 {
@@ -67,7 +79,7 @@
     [self.sellerLabel setWidth:self.addToCartButton.x - 20];
     self.sellerLabel.font = JABody1Font;
     self.sellerLabel.textColor = JABlackColor;
-    self.sellerLabel.numberOfLines = 2;
+    self.sellerLabel.numberOfLines = 1;
     self.sellerLabel.text = productOffer.seller.name;
     [self.sellerLabel sizeToFit];
     
@@ -89,6 +101,16 @@
         [self addSubview:self.separator];
     }
     [self.separator setFrame:CGRectMake(0, self.height - 1, self.width, 1)];
+    
+    if (!VALID(self.shopFirstImageView.superview, UIView)) {
+        [self.backgroundContentView addSubview:self.shopFirstImageView];
+    }
+    [self.shopFirstImageView setX:10.f];
+    if (VALID_NOTEMPTY(productOffer.shopFirst, NSNumber) && [productOffer.shopFirst boolValue]) {
+        self.shopFirstImageView.hidden = NO;
+    } else {
+        self.shopFirstImageView.hidden = YES;
+    }
     
     CGFloat sellerLabelMaxWidth = self.addToCartButton.x - self.sellerLabel.x - 6.f;
     if (self.sellerLabel.width > sellerLabelMaxWidth) {

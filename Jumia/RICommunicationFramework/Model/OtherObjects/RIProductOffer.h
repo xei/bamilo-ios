@@ -22,6 +22,7 @@
 @property (nonatomic, strong) NSNumber* specialPriceEuroConverted;
 @property (nonatomic, strong) NSNumber* minDeliveryTime;
 @property (nonatomic, strong) NSNumber* maxDeliveryTime;
+@property (nonatomic, strong) NSNumber* shopFirst;
 @property (nonatomic, strong) RISeller* seller;
 
 + (NSString*)getProductOffersForProductWithSku:(NSString*)sku
