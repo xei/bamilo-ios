@@ -47,6 +47,7 @@ typedef NS_ENUM(NSUInteger, JACatalogCollectionViewCellType) {
 
 @property (nonatomic) RIProduct *product;
 @property (nonatomic) RIVariation *variation;
+@property (nonatomic) BOOL hideShopFirstLogo;
 
 - (void)initViews;
 - (void)reloadViews;

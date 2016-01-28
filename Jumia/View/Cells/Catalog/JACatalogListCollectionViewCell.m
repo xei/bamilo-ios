@@ -59,11 +59,6 @@
     [self.nameLabel setNumberOfLines:2];
 }
 
-- (void)setHideShopFirstLogo:(BOOL)hideShopFirstLogo
-{
-    _hideShopFirstLogo = hideShopFirstLogo;
-}
-
 - (void)setShowSelector:(BOOL)showSelector
 {
     _showSelector = showSelector;
@@ -257,25 +252,14 @@
         }
     }
     
-    [self checkShopFirstLogo];
     [self reloadViews];
 }
 
 - (void)loadWithVariation:(RIVariation *)variation
 {
     [super loadWithVariation:variation];
-    [self checkShopFirstLogo];
     self.sizeButton.hidden = YES;
     [self reloadViews];
-}
-
-- (void)checkShopFirstLogo
-{
-    if (self.hideShopFirstLogo) {
-        [self.shopFirstImageView setHidden:YES];
-    } else {
-        [self.shopFirstImageView setHidden:NO];
-    }
 }
 
 @end
