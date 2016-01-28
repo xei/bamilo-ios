@@ -93,9 +93,7 @@
 {
     [self.label setHidden:YES];
     [self.titleLineLabel setText:title];
-    CGFloat height = self.titleLineLabel.height;
     [self.titleLineLabel sizeToFit];
-    [self.titleLineLabel setHeight:height];
 }
 
 - (void)setSubTitle:(NSString *)subTitle
