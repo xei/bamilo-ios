@@ -75,8 +75,6 @@ JAPickerDelegate>
 @property (assign, nonatomic) NSInteger numberOfGetFormRequests;
 @property (assign, nonatomic) BOOL hasErrors;
 
-@property (strong, nonatomic) JACheckBoxComponent *checkBoxComponent;
-
 // Order summary
 @property (strong, nonatomic) JAOrderSummaryView *orderSummary;
 
@@ -521,17 +519,6 @@ JAPickerDelegate>
         newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     }
     
-    if(self.isBillingAddress && self.isShippingAddress)
-    {
-        self.checkBoxComponent = [JACheckBoxComponent getNewJACheckBoxComponent];
-        [self.checkBoxComponent setup];
-        [self.checkBoxComponent.labelText setText:STRING_BILLING_SAME_ADDRESSES];
-        [self.checkBoxComponent.switchComponent setOn:YES];
-        [self.checkBoxComponent.switchComponent addTarget:self action:@selector(changedAddressState:) forControlEvents:UIControlEventValueChanged];
-        [self.checkBoxComponent.switchComponent setAccessibilityLabel:STRING_BILLING_SAME_ADDRESSES];
-        [self.shippingContentView addSubview:self.checkBoxComponent];
-    }
-    
     [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
     
     [self hideLoading];
@@ -663,13 +650,6 @@ JAPickerDelegate>
         self.shippingAddressViewCurrentY += view.frame.size.height;
     }
     
-    [self.checkBoxComponent setFrame:CGRectMake(self.checkBoxComponent.frame.origin.x,
-                                                self.shippingAddressViewCurrentY,
-                                                self.shippingContentView.frame.size.width - 12.0f,
-                                                self.checkBoxComponent.frame.size.height)];
-    
-    self.shippingAddressViewCurrentY += self.checkBoxComponent.frame.size.height;
-    
     if(!self.isBillingAddress || !self.isShippingAddress)
     {
         self.shippingAddressViewCurrentY += 12.0f;
@@ -738,16 +718,8 @@ JAPickerDelegate>
         [self.bottomView addButton:STRING_SAVE_LABEL target:self action:@selector(createAddressButtonPressed)];
     }
     
-    if(!VALID_NOTEMPTY(self.checkBoxComponent, JACheckBoxComponent) || [self.checkBoxComponent isCheckBoxOn])
-    {
-        [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width,
-                                                          self.shippingContentView.frame.origin.y + self.shippingContentView.frame.size.height + self.bottomView.frame.size.height)];
-    }
-    else
-    {
-        [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width,
-                                                          self.shippingContentView.frame.origin.y + self.shippingContentView.frame.size.height + 6.0f + self.billingContentView.frame.size.height + self.bottomView.frame.size.height)];
-    }
+    [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width,
+                                                      self.shippingContentView.frame.origin.y + self.shippingContentView.frame.size.height + self.bottomView.frame.size.height)];
     
     if (RI_IS_RTL) {
         [self.view flipAllSubviews];
