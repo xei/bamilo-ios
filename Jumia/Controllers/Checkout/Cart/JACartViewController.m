@@ -11,7 +11,7 @@
 #import "JACatalogListCell.h"
 #import "JAConstants.h"
 #import "JACartListHeaderView.h"
-#import "JAPriceView.h"
+#import "JAProductInfoPriceLine.h"
 #import "JAUtils.h"
 #import "RIForm.h"
 #import "RIField.h"
@@ -618,30 +618,29 @@
     [self.articlesCount sizeToFit];
     [self.articlesCount setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.subtotalTitleSeparator.frame) + 10.0f, self.articlesCount.width, self.articlesCount.frame.size.height)];
     
-    if (!self.totalPriceView) {
-        self.totalPriceView = [[JAPriceView alloc] init];
-        [self.subtotalView addSubview:self.totalPriceView];
+    if (!self.totalPriceLine) {
+        self.totalPriceLine = [[JAProductInfoPriceLine alloc] init];
+        [self.totalPriceLine setPriceSize:kPriceSizeSmall];
+        [self.totalPriceLine setLineContentXOffset:0.f];
+        [self.subtotalView addSubview:self.totalPriceLine];
     }
     
+
     if(VALID_NOTEMPTY([[self cart] cartUnreducedValueFormatted], NSString))
     {
-        [self.totalPriceView loadWithPrice:[[self cart] cartUnreducedValueFormatted]
-                              specialPrice:[[self cart] subTotalFormatted]
-                                  fontSize:11.0f
-                     specialPriceOnTheLeft:NO];
+        [self.totalPriceLine setPrice:[[self cart] subTotalFormatted]];
+        [self.totalPriceLine setOldPrice:[[self cart] cartUnreducedValueFormatted]];
     }
     else
     {
-        [self.totalPriceView loadWithPrice:[[self cart] subTotalFormatted]
-                              specialPrice:nil
-                                  fontSize:11.0f
-                     specialPriceOnTheLeft:NO];
+        [self.totalPriceLine setPrice:[[self cart] cartUnreducedValueFormatted]];
     }
     
-    self.totalPriceView.frame = CGRectMake(self.subtotalView.frame.size.width - self.totalPriceView.frame.size.width - 4.0f,
-                                           CGRectGetMaxY(self.subtotalTitleSeparator.frame) + 10.0f,
-                                           self.totalPriceView.frame.size.width,
-                                           self.totalPriceView.frame.size.height);
+    [self.totalPriceLine sizeToFit];
+    self.totalPriceLine.frame = CGRectMake(self.subtotalView.frame.size.width - self.totalPriceLine.frame.size.width - 4.0f,
+                                           CGRectGetMaxY(self.subtotalTitleSeparator.frame) + 13.0f,
+                                           self.totalPriceLine.frame.size.width,
+                                           self.totalPriceLine.frame.size.height);
     
     if (!self.cartVatLabel) {
         self.cartVatLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -981,6 +980,7 @@
         [self.couponView flipSubviewPositions];
         [self.subtotalView flipSubviewAlignments];
         [self.subtotalView flipSubviewPositions];
+        [self.totalPriceLine flipAllSubviews];
         
         self.cartScrollView.scrollIndicatorInsets = UIEdgeInsetsMake(0,0,0,self.cartScrollView.bounds.size.width-7);
     }

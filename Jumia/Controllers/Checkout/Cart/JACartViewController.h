@@ -10,7 +10,7 @@
 #import "JAPicker.h"
 #import "JABottomBar.h"
 
-@class JAPriceView;
+@class JAProductInfoPriceLine;
 @class RICart;
 @class RICartItem;
 
@@ -50,7 +50,7 @@ JAPickerDelegate
 @property (strong, nonatomic) UILabel *subtotalTitle;
 @property (strong, nonatomic) UIView *subtotalTitleSeparator;
 @property (strong, nonatomic) UILabel *articlesCount;
-@property (strong, nonatomic) JAPriceView *totalPriceView;
+@property (strong, nonatomic) JAProductInfoPriceLine *totalPriceLine;
 @property (strong, nonatomic) UILabel *priceRulesLabel;
 @property (strong, nonatomic) UILabel *priceRulesValue;
 @property (strong, nonatomic) UILabel *cartVatLabel;
