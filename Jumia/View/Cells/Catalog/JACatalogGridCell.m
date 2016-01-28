@@ -22,12 +22,11 @@
     [self.nameLabel setX:6.f];
     [self.nameLabel setWidth:self.backgroundContentView.width - 2*6.f];
     
-    self.priceView.frame = CGRectMake(self.nameLabel.frame.origin.x,// + priceXOffset,
+    self.priceLine.frame = CGRectMake(self.nameLabel.frame.origin.x,// + priceXOffset,
                                       CGRectGetMaxY(self.nameLabel.frame) + JACatalogCellPriceLabelOffsetY,
-                                      self.priceView.frame.size.width,
-                                      self.priceView.frame.size.height);
-    [self.priceView sizeToFit];
-    [self.priceView setY:CGRectGetMaxY(self.nameLabel.frame) + 2*JACatalogCellPriceLabelOffsetY];
+                                      self.priceLine.frame.size.width,
+                                      self.priceLine.frame.size.height);
+    [self.priceLine setY:CGRectGetMaxY(self.nameLabel.frame) + 2*JACatalogCellPriceLabelOffsetY];
     
     [self.favoriteButton setX:self.backgroundContentView.width - self.favoriteButton.width - 6.f];
     
@@ -41,9 +40,8 @@
         priceY = JACatalogViewControllerGridCellPriceViewY_ipad;
     }
     
-    self.priceView.x = 6.f;
-    self.priceView.y = priceY;
-    [self.priceView sizeToFit];
+    self.priceLine.x = 6.f;
+    self.priceLine.y = priceY;
     
     CGFloat recentLabelY = JACatalogViewControllerGridCellNewLabelY;
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {

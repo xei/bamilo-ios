@@ -65,27 +65,26 @@
     self.nameLabel.textColor = UIColorFromRGB(0x666666);
     [self.nameLabel setTextAlignment:NSTextAlignmentLeft];
     
-    [self.priceView removeFromSuperview];
-    self.priceView = [[JAPriceView alloc] init];
-    if (VALID_NOTEMPTY(product.priceRange, NSString)) {
-        [self.priceView loadWithPrice:product.priceRange
-                         specialPrice:nil
-                             fontSize:10.0f
-                specialPriceOnTheLeft:YES];
-    } else {
-        [self.priceView loadWithPrice:product.priceFormatted
-                         specialPrice:product.specialPriceFormatted
-                             fontSize:10.0f
-                specialPriceOnTheLeft:YES];
-    }
-    [self.priceView sizeToFit];
-    
     CGFloat priceXOffset = JACatalogCellPriceLabelOffsetX;
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         priceXOffset = JACatalogCellPriceLabelOffsetX_ipad;
     }
+    [self.priceLine removeFromSuperview];
+    self.priceLine = [[JAProductInfoPriceLine alloc] initWithFrame:CGRectMake(0, 0, self.width, 15)];
+    [self.priceLine setPriceSize:kPriceSizeSmall];
+    [self.priceLine setLineContentXOffset:priceXOffset];
+    if (VALID_NOTEMPTY(product.priceRange, NSString)) {
+        [self.priceLine setPrice:product.priceRange];
+        [self.priceLine setOldPrice:nil];
+    } else if (VALID_NOTEMPTY(product.specialPriceFormatted, NSString)) {
+        [self.priceLine setPrice:product.specialPriceFormatted];
+        [self.priceLine setOldPrice:product.priceFormatted];
+    } else {
+        [self.priceLine setPrice:product.priceFormatted];
+        [self.priceLine setOldPrice:nil];
+    }
     
-    [self.backgroundContentView addSubview:self.priceView];
+    [self.backgroundContentView addSubview:self.priceLine];
     
     self.discountLabel.text = [NSString stringWithFormat:@"-%@%%",product.maxSavingPercentage];
     self.discountLabel.hidden = !product.maxSavingPercentage;
@@ -129,17 +128,23 @@
     self.nameLabel.text = cartItem.name;
     self.nameLabel.textColor = UIColorFromRGB(0x666666);
     
-    [self.priceView removeFromSuperview];
-    self.priceView = [[JAPriceView alloc] init];
-    [self.priceView loadWithPrice:cartItem.priceFormatted
-                     specialPrice:cartItem.specialPriceFormatted
-                         fontSize:10.0f
-            specialPriceOnTheLeft:YES];
-    self.priceView.frame = CGRectMake(96.0f,
-                                      28.0f,
-                                      self.priceView.frame.size.width,
-                                      self.priceView.frame.size.height);
-    [self.backgroundContentView addSubview:self.priceView];
+    
+    [self.priceLine removeFromSuperview];
+    self.priceLine = [[JAProductInfoPriceLine alloc] init];
+    [self.priceLine setPriceSize:kPriceSizeSmall];
+    [self.priceLine setLineContentXOffset:0.0f];
+    if (VALID_NOTEMPTY(cartItem.specialPriceFormatted, NSString)) {
+        [self.priceLine setPrice:cartItem.specialPriceFormatted];
+        [self.priceLine setOldPrice:cartItem.priceFormatted];
+    } else {
+        [self.priceLine setPrice:cartItem.priceFormatted];
+        [self.priceLine setOldPrice:nil];
+    }
+    self.priceLine.frame = CGRectMake(96.0f,
+                                      34.0f,
+                                      self.priceLine.frame.size.width,
+                                      self.priceLine.frame.size.height);
+    [self.backgroundContentView addSubview:self.priceLine];
     
     if (VALID_NOTEMPTY(cartItem.shopFirst, NSNumber) && [cartItem.shopFirst boolValue])	{
         self.shopFirstOverlayText = cartItem.shopFirstOverlayText;

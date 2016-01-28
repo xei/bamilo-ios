@@ -900,8 +900,10 @@ JAPickerDelegate>
           parameters:shippingParameters
         successBlock:^(id object)
      {
-         
          [self.shippingDynamicForm resetValues];
+         if (NOTEMPTY([object valueForKey:@"next_step"])) {
+             self.cart.nextStep = [object valueForKey:@"next_step"];
+         }
          self.numberOfRequests--;
      } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
      {
