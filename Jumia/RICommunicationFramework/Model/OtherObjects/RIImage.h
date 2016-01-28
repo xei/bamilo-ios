@@ -8,16 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@class RIProduct, RIVariation;
-
 @interface RIImage : NSObject
 
 @property (nonatomic, retain) NSString * format;
 @property (nonatomic, retain) NSString * height;
 @property (nonatomic, retain) NSString * url;
 @property (nonatomic, retain) NSString * width;
-@property (nonatomic, retain) RIProduct *product;
-@property (nonatomic, retain) RIVariation *variation;
 
 /**
  *  Method to parse an RIImage given a JSON object

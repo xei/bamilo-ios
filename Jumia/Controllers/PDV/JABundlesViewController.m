@@ -511,7 +511,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
     [trackingDictionary setValue:self.product.name forKey:kRIEventProductNameKey];
     
-    if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
+    if(VALID_NOTEMPTY(self.product.categoryIds, NSArray))
     {
         NSArray *categoryIds = self.product.categoryIds;
         [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryIdKey];
@@ -558,7 +558,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     NSMutableDictionary *tracking = [NSMutableDictionary new];
     [tracking setValue:self.product.name forKey:kRIEventProductNameKey];
     [tracking setValue:self.product.sku forKey:kRIEventSkuKey];
-    if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet)) {
+    if(VALID_NOTEMPTY(self.product.categoryIds, NSArray)) {
         [tracking setValue:[self.product.categoryIds lastObject] forKey:kRIEventLastCategoryAddedToCartKey];
     }
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];

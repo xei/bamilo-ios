@@ -104,6 +104,9 @@
         if ([productJSON objectForKey:@"sku"]) {
             newProductOffer.productSku = [productJSON objectForKey:@"sku"];
         }
+        if (VALID_NOTEMPTY([productJSON objectForKey:@"shop_first"], NSNumber)) {
+            newProductOffer.shopFirst = [productJSON objectForKey:@"shop_first"];
+        }
         if ([productJSON objectForKey:@"simples"]) {
             NSArray* simplesArray = [productJSON objectForKey:@"simples"];
             NSMutableArray* newSimples = [[NSMutableArray alloc]init];

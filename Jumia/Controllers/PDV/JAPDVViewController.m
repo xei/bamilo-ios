@@ -632,7 +632,7 @@ JAActivityViewControllerDelegate
         scrollViewY = CGRectGetMaxY(self.productImageSection.frame) + 6.0f;
     }
     
-    if (VALID_NOTEMPTY(self.product.variations, NSOrderedSet))
+    if (VALID_NOTEMPTY(self.product.variations, NSArray))
     {
         self.variationsSection = [JAPDVVariations getNewPDVVariationsSection];
         [self.variationsSection setupWithFrame:self.mainScrollView.frame];
@@ -701,7 +701,7 @@ JAActivityViewControllerDelegate
             tempFrame.origin.x = bundleSingleItemStart;
             bundleSingleItem.frame = tempFrame;
             
-            if (VALID_NOTEMPTY(bundleProduct.images, NSOrderedSet))
+            if (VALID_NOTEMPTY(bundleProduct.images, NSArray))
             {
                 RIImage *imageTemp = [bundleProduct.images firstObject];
                 
@@ -1007,7 +1007,7 @@ JAActivityViewControllerDelegate
     if(VALID_NOTEMPTY(self.product, RIProduct))
     {
         obj = self.product;
-        if (VALID_NOTEMPTY(self.product.variations, NSOrderedSet)) {
+        if (VALID_NOTEMPTY(self.product.variations, NSArray)) {
             [userInfo setObject:self.product.variations forKeyedSubscript:@"product.variations"];
         }
     }
@@ -1075,7 +1075,7 @@ JAActivityViewControllerDelegate
 
 - (void)addToCart
 {
-    if(VALID_NOTEMPTY(self.product.productSimples, NSOrderedSet) && self.product.productSimples.count > 1 && !VALID_NOTEMPTY(self.currentSimple, RIProductSimple))
+    if(VALID_NOTEMPTY(self.product.productSimples, NSArray) && self.product.productSimples.count > 1 && !VALID_NOTEMPTY(self.currentSimple, RIProductSimple))
     {
         self.openPickerFromCart = YES;
         [self showSizePicker];
@@ -1139,7 +1139,7 @@ JAActivityViewControllerDelegate
     self.pickerDataSource = [NSMutableArray new];
     NSMutableArray *options = [[NSMutableArray alloc] init];
     
-    if(VALID_NOTEMPTY(self.product.productSimples, NSOrderedSet))
+    if(VALID_NOTEMPTY(self.product.productSimples, NSArray))
     {
         for (RIProductSimple *simple in self.product.productSimples)
         {
@@ -1516,7 +1516,7 @@ JAActivityViewControllerDelegate
     }
     [trackingDictionary setValue:discount forKey:kRIEventDiscountKey];
     
-    if (VALID_NOTEMPTY(self.product.productSimples, NSOrderedSet) && 1 == self.product.productSimples.count)
+    if (VALID_NOTEMPTY(self.product.productSimples, NSArray) && 1 == self.product.productSimples.count)
     {
         self.currentSimple = self.product.productSimples[0];
         if (VALID_NOTEMPTY(self.currentSimple.variation, NSString))
@@ -1533,7 +1533,7 @@ JAActivityViewControllerDelegate
     if(VALID_NOTEMPTY(self.category, RICategory))
     {
         [trackingDictionary setValue:[RICategory getTree:self.category.label] forKey:kRIEventTreeKey];
-    }else if (VALID_NOTEMPTY(product.categoryIds, NSOrderedSet))
+    }else if (VALID_NOTEMPTY(product.categoryIds, NSArray))
     {
         [trackingDictionary setValue:[RICategory getTree:[product.categoryIds firstObject]] forKey:kRIEventTreeKey];
     }
@@ -1617,7 +1617,7 @@ JAActivityViewControllerDelegate
             categoryName = self.category.label;
         }
     }
-    else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
+    else if(VALID_NOTEMPTY(self.product.categoryIds, NSArray))
     {
         NSArray *categoryIds = self.product.categoryIds;
         NSInteger subCategoryIndex = [categoryIds count] - 1;
@@ -1680,7 +1680,7 @@ JAActivityViewControllerDelegate
     [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
     [trackingDictionary setValue:self.product.name forKey:kRIEventProductNameKey];
     
-    if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
+    if(VALID_NOTEMPTY(self.product.categoryIds, NSArray))
     {
         NSArray *categoryIds = self.product.categoryIds;
         [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryIdKey];
@@ -1717,7 +1717,7 @@ JAActivityViewControllerDelegate
             categoryName = self.category.label;
         }
     }
-    else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
+    else if(VALID_NOTEMPTY(self.product.categoryIds, NSArray))
     {
         NSArray *categoryIds = self.product.categoryIds;
         NSInteger subCategoryIndex = [categoryIds count] - 1;
@@ -1775,7 +1775,7 @@ JAActivityViewControllerDelegate
     NSMutableDictionary *tracking = [NSMutableDictionary new];
     [tracking setValue:self.product.name forKey:kRIEventProductNameKey];
     [tracking setValue:self.product.sku forKey:kRIEventSkuKey];
-    if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet)) {
+    if(VALID_NOTEMPTY(self.product.categoryIds, NSArray)) {
         [tracking setValue:[self.product.categoryIds lastObject] forKey:kRIEventLastCategoryAddedToCartKey];
     }
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
@@ -1870,7 +1870,7 @@ JAActivityViewControllerDelegate
             categoryName = self.category.label;
         }
     }
-    else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
+    else if(VALID_NOTEMPTY(self.product.categoryIds, NSArray))
     {
         NSArray *categoryIds = self.product.categoryIds;
         NSInteger subCategoryIndex = [categoryIds count] - 1;
@@ -1968,7 +1968,7 @@ JAActivityViewControllerDelegate
             categoryName = self.category.label;
         }
     }
-    else if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
+    else if(VALID_NOTEMPTY(self.product.categoryIds, NSArray))
     {
         NSArray *categoryIds = self.product.categoryIds;
         NSInteger subCategoryIndex = [categoryIds count] - 1;

@@ -1161,6 +1161,8 @@ typedef void (^ProcessActionBlock)(void);
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:self.catalogTopView.cellTypeSelected] forKey:JACatalogGridSelected];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
+    [self.flowLayout resetSizes];
+    
     [self changeViewToInterfaceOrientation:self.interfaceOrientation];
 }
 
@@ -1549,7 +1551,7 @@ typedef void (^ProcessActionBlock)(void);
             categoryName = self.category.label;
         }
     }
-    else if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet))
+    else if(VALID_NOTEMPTY(product.categoryIds, NSArray))
     {
         NSArray *categoryIds = product.categoryIds;
         NSInteger subCategoryIndex = [categoryIds count] - 1;

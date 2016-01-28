@@ -62,7 +62,6 @@
         _labelPrice = [[UILabel alloc] initWithFrame:CGRectZero];
         [_labelPrice setFont:JACaptionFont];
         [_labelPrice setTextColor:JABlackColor];
-        [_labelBrand setTextAlignment:NSTextAlignmentRight];
         [self addSubview:_labelPrice];
     }
     return _labelPrice;
@@ -121,7 +120,7 @@
         self.labelPrice.text = product.specialPriceFormatted;
     }
     [self.labelPrice setYBottomAligned:0];
-    [self.labelPrice setTextAlignment:NSTextAlignmentRight];
+    [self.labelPrice setTextAlignment:NSTextAlignmentLeft];
     
     [self.labelName setX:6];
     [self.labelName setYTopOf:self.labelPrice at:20];
