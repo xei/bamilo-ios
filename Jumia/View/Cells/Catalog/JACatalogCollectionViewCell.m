@@ -144,6 +144,11 @@
     return _shopFirstImageView;
 }
 
+- (void)setHideShopFirstLogo:(BOOL)hideShopFirstLogo
+{
+    _hideShopFirstLogo = hideShopFirstLogo;
+}
+
 - (void)initViews
 {
     [self addSubview:self.feedbackView];
@@ -206,7 +211,11 @@
     }
     
     if (VALID_NOTEMPTY(product.shopFirst, NSNumber) && [product.shopFirst boolValue]) {
-        self.shopFirstImageView.hidden = NO;
+        if (self.hideShopFirstLogo) {
+            [self.shopFirstImageView setHidden:YES];
+        } else {
+            [self.shopFirstImageView setHidden:NO];
+        }
     } else {
         self.shopFirstImageView.hidden = YES;
     }
@@ -249,6 +258,12 @@
     //self.recentProductImageView.hidden = YES;
     self.discountLabel.hidden = YES;
     self.favoriteButton.hidden = YES;
+    
+    if (self.hideShopFirstLogo) {
+        [self.shopFirstImageView setHidden:YES];
+    } else {
+        [self.shopFirstImageView setHidden:NO];
+    }
 }
 
 
