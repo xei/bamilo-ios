@@ -64,46 +64,40 @@
     [self addSubview:itemView];
     [self.viewsArray addObject:itemView];
     [self setHeight:CGRectGetMaxY(itemView.frame)];
-    if (self.height >= _lastItemSize.height*2) {
-        [self reloadCrossSeparators];
-    }else{
-        [self reloadVerticalSeparators];
-    }
+    [self reloadHorizontalSeparators];
+    [self reloadVerticalSeparators];
 }
 
 // separators for a table with 2 columns
-- (void)reloadCrossSeparators
+- (void)reloadHorizontalSeparators
 {
-    [self removeAllSeperators];
+    [self removeHorizontalSeperators];
     
     //horizontal separators
-    NSInteger nItems = [self.viewsArray count];
-    if (nItems%2 == 0) {
-        nItems -= 1;
+    for (int i = 0; i < self.viewsArray.count ; i++) {
+        UIView *view = [self.viewsArray objectAtIndex:i];
+        if (CGRectGetMaxY(view.frame) != self.height) {
+            UIView* hseparator = [self newHorizontalSeparator];
+            [hseparator setFrame:CGRectMake(view.x, CGRectGetMaxY(view.frame),
+                                            view.width, 1.f)];
+        }
     }
-    for (NSInteger i = 0; 2*i+1 < nItems; i++) {
-        UIView* hseparator = [self newHorizontalSeparator];
-        UIView* item = [self.viewsArray objectAtIndex:2*i+1];//odd number item
-        [hseparator setFrame:CGRectMake(0, CGRectGetMaxY(item.frame),
-                                        self.width, 1.f)];
-    }
-
-    UIView* verticalSeparator = [self newVerticalSeparator];
-    [verticalSeparator setFrame:CGRectMake(self.width/2, self.topLabel.height,
-                                           1, CGRectGetMaxY([(UIView *)[self.viewsArray lastObject] frame]) - CGRectGetMaxY(self.topLabel.frame))];
 }
 
 //separators for single column
 - (void)reloadVerticalSeparators
 {
-    [self removeAllSeperators];
+    [self removeVerticalSeperators];
 
-    for (int i = 1; i < self.viewsArray.count ; i++) {
+    for (int i = 0; i < self.viewsArray.count ; i++) {
         UIView *view = [self.viewsArray objectAtIndex:i];
         
-        UIView* seperator = [self newVerticalSeparator];
-        [seperator setFrame:CGRectMake(view.x, self.topLabel.height,
-                                       1, self.height - self.topLabel.height)];
+        if (CGRectGetMaxX(view.frame) != self.height) {
+            UIView* seperator = [self newVerticalSeparator];
+            CGFloat x = CGRectGetMaxX(view.frame);
+            [seperator setFrame:CGRectMake(x, view.y,
+                                           1, view.height)];
+        }
     }
 }
 
@@ -133,15 +127,17 @@
     return verticalSeparator;
 }
 
-
-- (void)removeAllSeperators {
+- (void)removeVerticalSeperators {
     for (UIView *separator in self.verticalSeparators) {
         [separator removeFromSuperview];
     }
+    [self.verticalSeparators removeAllObjects];
+}
+
+- (void)removeHorizontalSeperators {
     for (UIView *separator in self.horizontalSeparators) {
         [separator removeFromSuperview];
     }
-    [self.verticalSeparators removeAllObjects];
     [self.horizontalSeparators removeAllObjects];
 }
 

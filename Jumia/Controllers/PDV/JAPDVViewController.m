@@ -804,25 +804,24 @@ JAActivityViewControllerDelegate
         
         NSArray* relatedProducts = [self.product.relatedProducts allObjects];
         
+        CGFloat singleItemHeight = 230;
+        NSInteger numberOfCols = 2;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            if (!isiPadInLandscape) {
+                numberOfCols = 4;
+                singleItemHeight = 280;
+            }else{
+                singleItemHeight = 350;
+            }
+        }
+        
+        CGFloat singleItemWidth = self.mainScrollView.width/numberOfCols;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && !isiPadInLandscape) {
+            singleItemWidth = self.mainScrollView.width/numberOfCols;
+        }
+        
         for (int i = 0; i < relatedProducts.count; i++) {
             RIProduct* product = [relatedProducts objectAtIndex:i];
-            
-            CGFloat singleItemWidth = self.mainScrollView.width/2 - 5;
-            CGFloat singleItemHeight = 230;
-            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && !isiPadInLandscape) {
-                singleItemWidth = self.mainScrollView.width/4 - 5;
-            }
-            
-            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-            {
-                UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-                if(UIInterfaceOrientationLandscapeLeft == orientation || UIInterfaceOrientationLandscapeRight == orientation)
-                {
-                    singleItemHeight = 350;
-                }else{
-                    singleItemHeight = 280;
-                }
-            }
             
             JAPDVSingleRelatedItem *singleItem = [[JAPDVSingleRelatedItem alloc] initWithFrame:CGRectMake(0, 0, singleItemWidth, singleItemHeight)];
             singleItem.tag = i;
@@ -838,11 +837,11 @@ JAActivityViewControllerDelegate
             
             [self.relatedItemsView addRelatedItemView:singleItem];
             
-            if ((i+1)%2==0 && !(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && !isiPadInLandscape)) {
+            if ((i+1)%numberOfCols==0) {
                 relatedItemX = 0.0f;
-                relatedItemY += singleItem.frame.size.height + 5.0f;
+                relatedItemY += singleItem.frame.size.height;
             }else{
-                relatedItemX += singleItem.frame.size.width + 5.0f;
+                relatedItemX += singleItem.frame.size.width;
             }
             
         }
