@@ -739,7 +739,7 @@ JAPickerDelegate>
                                              if([selectedPostcodeId isEqualToString:postcode.value])
                                              {
                                                  self.selectedPostcode = postcode;
-                                                 [self.dynamicForm setPostcodeValue:self.selectedCity];
+                                                 [self.dynamicForm setPostcodeValue:self.selectedPostcode];
                                                  break;
                                              }
                                          }

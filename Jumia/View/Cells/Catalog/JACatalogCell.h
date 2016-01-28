@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JAPriceView.h"
+#import "JAProductInfoPriceLine.h"
 #import "JAClickableView.h"
 #import "UIButton+Extensions.h"
 
@@ -38,7 +38,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *sizeButton;
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
 @property (weak, nonatomic) IBOutlet JAClickableView *feedbackView;
-@property (strong, nonatomic)JAPriceView *priceView;
+@property (strong, nonatomic)JAProductInfoPriceLine *priceLine;
 @property (nonatomic) UIImageView *shopFirstLogo;
 @property (nonatomic, retain) NSString * shopFirstOverlayText;
 
