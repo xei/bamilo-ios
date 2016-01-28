@@ -63,7 +63,7 @@ JADatePickerDelegate
 - (UIScrollView *)mainScrollView
 {
     if (!VALID(_mainScrollView, UIScrollView)) {
-        _mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(kLateralMargin, self.viewBounds.origin.y, self.viewBounds.size.width - 2*kLateralMargin, self.viewBounds.size.height)];
+        _mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(kLateralMargin, self.viewBounds.origin.y, self.viewBounds.size.width - 2*kLateralMargin, self.viewBounds.size.height - self.registerButton.height)];
         [_mainScrollView setShowsHorizontalScrollIndicator:NO];
         [_mainScrollView setShowsVerticalScrollIndicator:NO];
         [_mainScrollView setContentSize:_mainScrollView.bounds.size];
@@ -234,7 +234,7 @@ JADatePickerDelegate
                                              self.view.width,
                                              self.registerButton.height)];
     
-    [self.mainScrollView setFrame:CGRectMake(kLateralMargin, 0.f, self.viewBounds.size.width - 2*kLateralMargin, self.registerButton.y)];
+    [self.mainScrollView setFrame:CGRectMake(kLateralMargin, 0.f, self.viewBounds.size.width - 2*kLateralMargin, self.viewBounds.size.height - self.registerButton.height)];
     
     self.contentScrollOriginalHeight = self.mainScrollView.frame.size.height;
     
@@ -318,7 +318,7 @@ JADatePickerDelegate
         [self.mainScrollView setFrame:CGRectMake(self.mainScrollView.frame.origin.x,
                                                     self.mainScrollView.frame.origin.y,
                                                     self.mainScrollView.frame.size.width,
-                                                    self.contentScrollOriginalHeight - height)];
+                                                    self.view.bounds.size.height - height)];
     }];
 }
 
@@ -328,7 +328,7 @@ JADatePickerDelegate
         [self.mainScrollView setFrame:CGRectMake(self.mainScrollView.frame.origin.x,
                                                     self.mainScrollView.frame.origin.y,
                                                     self.mainScrollView.frame.size.width,
-                                                    self.contentScrollOriginalHeight)];
+                                                    self.view.bounds.size.height - self.registerButton.height)];
     }];
 }
 
@@ -367,6 +367,10 @@ JADatePickerDelegate
 - (void)continueRegister
 {
     [self hideKeyboard];
+    
+    if ([self.dynamicForm checkErrors]) {
+        return;
+    }
     
     [self showLoading];
     
