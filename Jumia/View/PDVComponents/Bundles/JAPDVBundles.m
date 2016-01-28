@@ -129,13 +129,15 @@
         if (bundleItem.selected) {
             if (VALID_NOTEMPTY(bundleItem.product, RIProduct)) {
                 if (VALID_NOTEMPTY(bundleItem.productSimple, RIProductSimple)) {
-                    if (VALID_NOTEMPTY(bundleItem.productSimple.specialPrice, NSNumber) && 0.0f == [bundleItem.productSimple.specialPrice floatValue]) {
+                    if (NO == VALID_NOTEMPTY(bundleItem.productSimple.specialPrice, NSNumber) ||
+                        (VALID_NOTEMPTY(bundleItem.productSimple.specialPrice, NSNumber) && 0.0f == [bundleItem.productSimple.specialPrice floatValue])) {
                         total += bundleItem.productSimple.price.floatValue;
                     } else {
                         total += bundleItem.productSimple.specialPrice.floatValue;
                     }
                 } else
-                    if (VALID_NOTEMPTY(bundleItem.product.specialPrice, NSNumber) && 0.0f == [self.product.specialPrice floatValue]) {
+                    if (NO == VALID_NOTEMPTY(bundleItem.product.specialPrice, NSNumber) ||
+                        (VALID_NOTEMPTY(bundleItem.product.specialPrice, NSNumber) && 0.0f == [self.product.specialPrice floatValue])) {
                         total += bundleItem.product.price.floatValue;
                     } else {
                         total += bundleItem.product.specialPrice.floatValue;
