@@ -64,6 +64,7 @@
     if (!VALID_NOTEMPTY(_buyBundleLine, JAProductInfoSingleLine)) {
         _buyBundleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, 0, self.width, kProductInfoSingleLineHeight)];
         [_buyBundleLine setTopSeparatorVisibility:YES];
+        [_buyBundleLine setTopSeparatorXOffset:0.f];
         [_buyBundleLine setBottomSeparatorVisibility:NO];
         [_buyBundleLine.label setTextColor:JAOrange1Color];
         [_buyBundleLine setBackgroundColor:[UIColor whiteColor]];
@@ -116,8 +117,11 @@
         [self setHeight:itemView.height];
     }
     [_bundlesArray addObject:itemView];
+    
     [self.buyBundleLine setX:self.bundlesScrollView.x];
     [self.buyBundleLine setWidth:self.bundlesScrollView.width];
+    [self.buyBundleLine setY:CGRectGetMaxY(self.bundlesScrollView.frame)];
+    [self setHeight:CGRectGetMaxY(self.buyBundleLine.frame)];
     
     [self refreshTotal];
 }
@@ -126,29 +130,30 @@
 {
     CGFloat total = .0f;
     for (JAPDVBundleSingleItem *bundleItem in _bundlesArray) {
-        if (bundleItem.selected) {
-            if (VALID_NOTEMPTY(bundleItem.product, RIProduct)) {
-                if (VALID_NOTEMPTY(bundleItem.productSimple, RIProductSimple)) {
-                    if (NO == VALID_NOTEMPTY(bundleItem.productSimple.specialPrice, NSNumber) ||
-                        (VALID_NOTEMPTY(bundleItem.productSimple.specialPrice, NSNumber) && 0.0f == [bundleItem.productSimple.specialPrice floatValue])) {
-                        total += bundleItem.productSimple.price.floatValue;
-                    } else {
-                        total += bundleItem.productSimple.specialPrice.floatValue;
-                    }
-                } else
-                    if (NO == VALID_NOTEMPTY(bundleItem.product.specialPrice, NSNumber) ||
-                        (VALID_NOTEMPTY(bundleItem.product.specialPrice, NSNumber) && 0.0f == [self.product.specialPrice floatValue])) {
-                        total += bundleItem.product.price.floatValue;
-                    } else {
-                        total += bundleItem.product.specialPrice.floatValue;
-                    }
+        if (bundleItem.selected && VALID_NOTEMPTY(bundleItem.product, RIProduct)) {
+            if (VALID_NOTEMPTY(bundleItem.productSimple, RIProductSimple)) {
+                if (NO == VALID_NOTEMPTY(bundleItem.productSimple.specialPrice, NSNumber) ||
+                    (VALID_NOTEMPTY(bundleItem.productSimple.specialPrice, NSNumber) && 0.0f == [bundleItem.productSimple.specialPrice floatValue])) {
+                    total += bundleItem.productSimple.price.floatValue;
+                } else {
+                    total += bundleItem.productSimple.specialPrice.floatValue;
+                }
+            } else {
+                if (NO == VALID_NOTEMPTY(bundleItem.product.specialPrice, NSNumber) ||
+                    (VALID_NOTEMPTY(bundleItem.product.specialPrice, NSNumber) && 0.0f == [self.product.specialPrice floatValue])) {
+                    total += bundleItem.product.price.floatValue;
+                } else {
+                    total += bundleItem.product.specialPrice.floatValue;
+                }
             }
         }
     }
     NSString* totalText = [NSString stringWithFormat:@"%@", [RICountryConfiguration formatPrice:[NSNumber numberWithFloat:total] country:[RICountryConfiguration getCurrentConfiguration]]];
     [self.buyBundleLine setTitle:totalText];
-    [self.buyBundleLine setY:CGRectGetMaxY(self.bundlesScrollView.frame)];
-    [self setHeight:CGRectGetMaxY(self.buyBundleLine.frame)];
+    [self.buyBundleLine.label setTextAlignment:NSTextAlignmentLeft];
+    if (RI_IS_RTL) {
+        [self.buyBundleLine flipAllSubviews];
+    }
 }
 
 - (void)addBuyingBundleTarget:(id)target action:(SEL)action
