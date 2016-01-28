@@ -903,6 +903,7 @@ typedef void (^ProcessActionBlock)(void);
         JACampaignBannerCell *cell = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"bannerCell" forIndexPath:indexPath];
         
         [cell loadWithImageView:self.bannerImageView];
+        [cell.feedbackView addTarget:self action:@selector(clickableBannerPressed) forControlEvents:UIControlEventTouchUpInside];
         
         return cell;
     }
