@@ -397,7 +397,7 @@
 - (void)productSelected:(UIControl *)sender
 {
     RIFeaturedBox *featuredBox = self.searchResult.featuredBox;
-    RISearchTypeProduct *item = [featuredBox.products objectAtIndex:sender.tag];
+    RISearchTypeProduct *item = [RI_IS_RTL?[[featuredBox.products reverseObjectEnumerator] allObjects]:featuredBox.products objectAtIndex:sender.tag];
     
     if (NOTEMPTY(self.delegate) && [self.delegate respondsToSelector:@selector(didSelectProduct:)])
     {
@@ -407,7 +407,7 @@
 - (void)brandSelected:(UIControl *)sender
 {
     RIFeaturedBrandBox *featuredBrandBox = self.searchResult.featuredBrandBox;
-    RIBrand* brand = [featuredBrandBox.brands objectAtIndex:sender.tag];
+    RIBrand* brand = [RI_IS_RTL?[[featuredBrandBox.brands reverseObjectEnumerator] allObjects]:featuredBrandBox.brands objectAtIndex:sender.tag];
     
     if (NOTEMPTY(self.delegate) && [self.delegate respondsToSelector:@selector(didSelectBrandTargetString:brandName:)])
     {
