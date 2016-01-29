@@ -518,7 +518,7 @@
                       [tracking setValue:cart.cartCount forKey:kRIEventQuantityKey];
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
                                                                 data:[tracking copy]];
-                      [self removeFromSavedList:product];
+                      [self removeFromSavedList:product showMessage:NO];
                       [self hideLoading];
                       
                   } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
@@ -586,16 +586,16 @@
 
 - (void)removeFromSavedListPressed:(UIButton *)button
 {
-    [self removeFromSavedList:[self getProductFromIndex:button.tag]];
+    [self removeFromSavedList:[self getProductFromIndex:button.tag] showMessage:YES];
 }
 
-- (void)removeFromSavedList:(RIProduct *)product
+- (void)removeFromSavedList:(RIProduct *)product showMessage:(BOOL)showMessage
 {
     NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted floatValue] > 0.0f) ? product.specialPriceEuroConverted :product.priceEuroConverted;
     [self showLoading];
     [RIProduct removeFromFavorites:product successBlock:^(RIApiResponse apiResponse, NSArray *success) {
         
-        [self onSuccessResponse:RIApiResponseSuccess messages:@[STRING_REMOVED_FROM_WISHLIST] showMessage:YES];
+        [self onSuccessResponse:RIApiResponseSuccess messages:@[STRING_REMOVED_FROM_WISHLIST] showMessage:showMessage];
         
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
