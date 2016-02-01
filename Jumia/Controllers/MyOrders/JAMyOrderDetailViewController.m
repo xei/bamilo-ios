@@ -8,6 +8,7 @@
 
 #import "JAMyOrderDetailViewController.h"
 #import "JAMyOrderDetailView.h"
+#import "JAMyOrdersViewController.h"
 
 @interface JAMyOrderDetailViewController ()
 //
@@ -57,27 +58,21 @@
     self.apiResponse = RIApiResponseSuccess;
 
     if (VALID(self.trackingOrder, RITrackOrder)) {
-        [self loadOrderDetails];
+        [self loadOrderDetails:self.trackingOrder.orderId];
     }else{
-        [self setupViews];
-        if(self.firstLoading)
-        {
-            NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-            self.firstLoading = NO;
-        }
-        
+        [self loadOrderDetails:self.orderNumber];
     }
 }
 
 
-- (void)loadOrderDetails
+- (void)loadOrderDetails:(NSString *)orderNumber
 {
+    self.orderNumber = orderNumber;
     if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess) {
         [self showLoading];
     }
     
-    [RIOrder trackOrderWithOrderNumber:self.trackingOrder.orderId
+    [RIOrder trackOrderWithOrderNumber:orderNumber
                       WithSuccessBlock:^(RITrackOrder *trackingOrder) {
                           
                           self.trackingOrder = trackingOrder;
@@ -103,7 +98,7 @@
                               self.firstLoading = NO;
                           }
                           
-                          [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadOrderDetails) objects:nil];
+                          [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadOrderDetails:) objects:@[orderNumber]];
                           [self hideLoading];
                       }];
 }
@@ -116,7 +111,12 @@
 - (void)onOrientationChanged
 {
     if ((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
-        [self.navigationController popViewControllerAnimated:YES];
+        UIViewController *viewController = [[[self.navigationController.viewControllers reverseObjectEnumerator] allObjects] objectAtIndex:1];
+        [self.navigationController popViewControllerAnimated:NO];
+        if (![viewController isKindOfClass:[JAMyOrdersViewController class]])
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowMyOrdersScreenNotification object:self.orderNumber];
+        }
     }
 }
 

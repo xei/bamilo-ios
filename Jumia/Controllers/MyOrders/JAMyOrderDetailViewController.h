@@ -11,6 +11,7 @@
 
 @interface JAMyOrderDetailViewController : JABaseViewController
 
+@property (nonatomic, strong) NSString *orderNumber;
 @property (strong, nonatomic) RITrackOrder *trackingOrder;
 
 @end
