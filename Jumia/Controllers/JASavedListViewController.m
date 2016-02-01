@@ -383,7 +383,7 @@
 {
     CGSize size = CGSizeZero;
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        size = CGSizeMake((self.bounds.size.width/2)-1, 154.5f);
+        size = CGSizeMake(self.bounds.size.width/2, 154.5f);
     } else {
         size = CGSizeMake(self.view.frame.size.width, 154.5f);
     }
