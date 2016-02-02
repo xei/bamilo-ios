@@ -13,6 +13,7 @@
 #import "UIButton+Extensions.h"
 #import "RIVariation.h"
 #import "JAProductInfoPriceLine.h"
+#import "JAProductInfoRatingLine.h"
 #import "JADropdownControl.h"
 
 #define JACatalogCellContentCornerRadius 3.0f
@@ -43,11 +44,13 @@ typedef NS_ENUM(NSUInteger, JACatalogCollectionViewCellType) {
 @property (nonatomic) JADropdownControl *sizeButton;
 @property (nonatomic) JAClickableView *feedbackView;
 @property (nonatomic) JAProductInfoPriceLine *priceLine;
+@property (nonatomic) JAProductInfoRatingLine *ratingLine;
 @property (nonatomic) UIImageView *shopFirstImageView;
 
 @property (nonatomic) RIProduct *product;
 @property (nonatomic) RIVariation *variation;
 @property (nonatomic) BOOL hideShopFirstLogo;
+@property (nonatomic) BOOL hideRating;
 
 - (void)initViews;
 - (void)reloadViews;
