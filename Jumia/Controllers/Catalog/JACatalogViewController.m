@@ -709,11 +709,11 @@ typedef void (^ProcessActionBlock)(void);
                     height = JACatalogViewControllerGridCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewListCell:
-                    width = self.view.frame.size.width;
+                    width = self.view.frame.size.width/2;
                     height = JACatalogViewControllerListCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewPictureCell:
-                    width = self.view.frame.size.width;
+                    width = self.view.frame.size.width/2;
                     height = JACatalogViewControllerPictureCellHeight_ipad;
                     break;
             }
@@ -724,11 +724,11 @@ typedef void (^ProcessActionBlock)(void);
                     height = JACatalogViewControllerGridCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewListCell:
-                    width =  self.view.frame.size.width/2;
+                    width =  self.view.frame.size.width/3;
                     height = JACatalogViewControllerListCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewPictureCell:
-                    width =  self.view.frame.size.width/2;
+                    width =  self.view.frame.size.width/3;
                     height = JACatalogViewControllerPictureCellHeight_ipad;
                     break;
             }
