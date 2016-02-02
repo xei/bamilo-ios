@@ -273,6 +273,8 @@
                 _ratingRefresh = YES;
             }
         }
+    } else {
+        [self.ratingLine setHidden:YES];
     }
 }
 
