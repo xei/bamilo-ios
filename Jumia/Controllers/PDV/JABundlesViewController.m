@@ -277,13 +277,13 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         
         if(UIDeviceOrientationPortrait == ([UIDevice currentDevice].orientation) || UIDeviceOrientationPortraitUpsideDown == ([UIDevice currentDevice].orientation)) {
-            size = CGSizeMake(self.bounds.size.width, 104.0f);
+            size = CGSizeMake(self.bounds.size.width, JACatalogViewControllerListCellHeight_ipad);
             
         } else {
-            size = CGSizeMake((self.bounds.size.width/2), 104.0f);
+            size = CGSizeMake((self.bounds.size.width/2), JACatalogViewControllerListCellHeight_ipad);
         }
     } else {
-        size = CGSizeMake(self.view.frame.size.width, 104.0f);
+        size = CGSizeMake(self.view.frame.size.width, JACatalogViewControllerListCellHeight);
     }
     
     self.flowLayout.itemSize = size;

@@ -252,6 +252,9 @@
     
     _discountLabel.text = [NSString stringWithFormat:STRING_FORMAT_OFF,[product.maxSavingPercentage integerValue]];
     _discountLabel.hidden = !product.maxSavingPercentage;
+    if (VALID_NOTEMPTY(product.priceRange, NSString)) {
+        _discountLabel.hidden = YES;
+    }
     _discountLabel.font = JACaptionFont;
     _discountLabel.frame = CGRectMake(0.0f, 0.0f, 30.0f, 16.0f);
     
@@ -302,6 +305,7 @@
     //self.recentProductImageView.hidden = YES;
     self.discountLabel.hidden = YES;
     self.favoriteButton.hidden = YES;
+    self.ratingLine.hidden = YES;
     
     if (self.hideShopFirstLogo) {
         [self.shopFirstImageView setHidden:YES];
