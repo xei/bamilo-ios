@@ -64,7 +64,7 @@
     CGFloat brandYOffset = 313;
     CGFloat distXRecent = 16.f;
     
-    CGFloat textWidth = self.width - xOffset*2;
+    CGFloat textWidth = self.width - xOffset*2 - self.discountLabel.frame.size.width;
     
     CGRect brandLabelRect = CGRectMake(xOffset, brandYOffset, textWidth, 15);
     if (!CGRectEqualToRect(brandLabelRect, self.brandLabel.frame)) {

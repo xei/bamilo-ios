@@ -77,7 +77,6 @@
     }
     CGFloat xOffset = 16.f;
     CGFloat brandYOffset = imageSize.height + imageY * 2;
-    CGFloat distXRecent = 10.f;
     CGFloat verticalMarginBetweenLabels = 2.0f;
 
     CGFloat textWidth = self.width - xOffset*2;
@@ -103,17 +102,18 @@
     if (VALID_NOTEMPTY(self.product.priceRange, NSString)) {
         [self.priceLine setPrice:self.product.priceRange];
         [self.priceLine setOldPrice:nil];
-    } else {
-        [self.priceLine setPrice:self.product.priceFormatted];
-        [self.priceLine setOldPrice:nil];
-    }
-    
-    if (VALID_NOTEMPTY(self.product.specialPriceFormatted, NSString)) {
-        [self.secondPriceLine setPrice:nil];
-        [self.secondPriceLine setOldPrice:self.product.specialPriceFormatted];
-        [self.secondPriceLine setHidden:NO];
-    } else {
         [self.secondPriceLine setHidden:YES];
+        [self.discountLabel setHidden:YES];
+    } else {
+        if (VALID_NOTEMPTY(self.product.specialPriceFormatted, NSString)) {
+            [self.priceLine setPrice:self.product.specialPriceFormatted];
+            [self.priceLine setOldPrice:nil];
+            [self.secondPriceLine setPrice:nil];
+            [self.secondPriceLine setOldPrice:self.product.priceFormatted];
+            [self.secondPriceLine setHidden:NO];
+        } else {
+            [self.secondPriceLine setHidden:YES];
+        }
     }
     
     CGRect priceLineRect = CGRectMake(xOffset, CGRectGetMaxY(nameLabelRect) + verticalMarginBetweenLabels, self.priceLine.frame.size.width, self.priceLine.height);
