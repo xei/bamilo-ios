@@ -625,16 +625,8 @@
         [self.subtotalView addSubview:self.totalPriceLine];
     }
     
-
-    if(VALID_NOTEMPTY([[self cart] cartUnreducedValueFormatted], NSString))
-    {
-        [self.totalPriceLine setPrice:[[self cart] subTotalFormatted]];
-        [self.totalPriceLine setOldPrice:[[self cart] cartUnreducedValueFormatted]];
-    }
-    else
-    {
-        [self.totalPriceLine setPrice:[[self cart] cartUnreducedValueFormatted]];
-    }
+    [self.totalPriceLine setPrice:[[self cart] subTotalFormatted]];
+    [self.totalPriceLine setOldPrice:[[self cart] cartUnreducedValueFormatted]];
     
     [self.totalPriceLine sizeToFit];
     self.totalPriceLine.frame = CGRectMake(self.subtotalView.frame.size.width - self.totalPriceLine.frame.size.width - 4.0f,
