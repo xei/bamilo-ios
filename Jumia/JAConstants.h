@@ -52,6 +52,7 @@
 #define kShowChooseCountryScreenNotification @"NOTIFICATION_CHOOSE_COUNTRY_SCREEN"
 #define kShowHomeScreenNotification @"NOTIFICATION_HOME_SCREEN"
 #define kShowAuthenticationScreenNotification @"NOTIFICATION_SHOW_AUTHENTICATION_SCREEN"
+#define kRunBlockAfterAuthenticationNotification @"NOTIFICATION_RUN_BLOCK_AFTER_AUTHENTICATION"
 #define kShowSignInScreenNotification @"NOTIFICATION_SHOW_SIGN_IN_SCREEN"
 #define kShowSignUpScreenNotification @"NOTIFICATION_SHOW_SIGN_UP_SCREEN"
 #define kShowForgotPasswordScreenNotification @"NOTIFICATION_SHOW_FORGOT_PASSWORD_SCREEN"
