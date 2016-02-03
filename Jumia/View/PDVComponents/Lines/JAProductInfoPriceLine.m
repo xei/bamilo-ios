@@ -96,7 +96,7 @@
 - (void)setPriceOff:(NSInteger)priceOff
 {
     _priceOff = priceOff;
-    [self.priceOffLabel setText:[NSString stringWithFormat:@"-%ld%% OFF", (long)priceOff]];
+    [self.priceOffLabel setText:[NSString stringWithFormat:STRING_FORMAT_OFF, (long)priceOff]];
     [self.priceOffLabel sizeToFit];
     
     CGRect rect;
