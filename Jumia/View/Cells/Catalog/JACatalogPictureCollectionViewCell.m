@@ -105,10 +105,7 @@
         [self setForRTL:self.shopFirstImageView];
     }
     
-    CGRect ratingRect = CGRectMake(xOffset, CGRectGetMaxY(self.priceLine.frame) + 14.f, textWidth, self.ratingLine.imageHeight);
-    if (NO == self.shopFirstImageView.hidden) {
-        ratingRect = CGRectMake(ratingRect.origin.x, CGRectGetMaxY(shopFirstRect) + 3.f, ratingRect.size.width, ratingRect.size.height);
-    }
+    CGRect ratingRect = CGRectMake(xOffset, CGRectGetMaxY(shopFirstRect) + 10.f, textWidth, self.ratingLine.imageHeight);
     if (!CGRectEqualToRect(ratingRect, self.ratingLine.frame)) {
         [self.ratingLine setFrame:ratingRect];
     }

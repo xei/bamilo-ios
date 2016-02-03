@@ -83,13 +83,7 @@
     if (VALID_NOTEMPTY(product.priceRange, NSString)) {
         [_priceLine setPrice:product.priceRange];
     } else {
-        [self setSpecialPrice:product.specialPriceFormatted andPrice:product.priceFormatted];
-    }
-    if (VALID_NOTEMPTY(product.maxSavingPercentage, NSString)) {
-        NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-        f.numberStyle = NSNumberFormatterDecimalStyle;
-        NSNumber *myNumber = [f numberFromString:product.maxSavingPercentage];
-        [_priceLine setPriceOff:myNumber.integerValue];
+        [self setSpecialPrice:product.specialPriceFormatted andPrice:product.priceFormatted andMaxSavingPercentage:product.maxSavingPercentage shouldForceFlip:NO];
     }
     [self addSubview:_priceLine];
     yOffset = CGRectGetMaxY(_priceLine.frame);
@@ -296,7 +290,7 @@
     }
 }
 
-- (void)setSpecialPrice:(NSString*)special andPrice:(NSString*)price
+- (void)setSpecialPrice:(NSString*)special andPrice:(NSString*)price andMaxSavingPercentage:(NSString*)maxSavingPercentage shouldForceFlip:(BOOL)forceFlip
 {
     [_priceLine setPrice:price];
     
@@ -305,6 +299,16 @@
         [_priceLine setPrice:special];
     } else {
         [_priceLine setOldPrice:@""];
+    }
+    if (VALID_NOTEMPTY(maxSavingPercentage, NSString)) {
+        NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+        f.numberStyle = NSNumberFormatterDecimalStyle;
+        NSNumber *myNumber = [f numberFromString:maxSavingPercentage];
+        [_priceLine setPriceOff:myNumber.integerValue];
+    }
+    
+    if (forceFlip) {
+        [_priceLine flipAllSubviews];
     }
 }
 

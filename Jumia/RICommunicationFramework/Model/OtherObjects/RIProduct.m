@@ -244,23 +244,7 @@
         filtersString = filterPush;
     }
     else
-    {
-        BOOL discountMode = NO;
-        for (RIFilter* filter in filters) {
-            for (RIFilterOption* filterOption in filter.options) {
-                if (filterOption.discountOnly) {
-                    discountMode = YES;
-                    break;
-                }
-            }
-        }
-        if (discountMode) {
-            NSString* countryUrl = [RIApi getCountryUrlInUse];
-            NSString* endingUrl = [url stringByReplacingOccurrencesOfString:countryUrl withString:@""];
-            endingUrl = [endingUrl stringByReplacingOccurrencesOfString:RI_API_VERSION withString:@""];
-            url = [NSString stringWithFormat:@"%@%@special-price/%@", countryUrl, RI_API_VERSION, endingUrl];
-        }
-        
+    {        
         filtersString = [RIFilter urlWithFiltersArray:filters];
     }
 
