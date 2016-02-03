@@ -307,8 +307,10 @@
         [_priceLine setPriceOff:myNumber.integerValue];
     }
     
-    if (forceFlip) {
-        [_priceLine flipAllSubviews];
+    if (RI_IS_RTL) {
+        if (forceFlip) {
+            [_priceLine flipAllSubviews];
+        }
     }
 }
 

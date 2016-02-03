@@ -119,9 +119,9 @@
 
                 if (filterOption.discountOnly) {
                     if (VALID_NOTEMPTY(urlString, NSString)) {
-                        urlString = [NSString stringWithFormat:@"%@/special-price/1", urlString];
+                        urlString = [NSString stringWithFormat:@"%@/special_price/1", urlString];
                     } else {
-                        urlString = @"/special-price/1";
+                        urlString = @"special_price/1";
                     }
                 }
             }
