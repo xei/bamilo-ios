@@ -158,13 +158,10 @@
 
 -(void)setPrice:(NSString *)price {
     _price = price;
-    if (VALID_NOTEMPTY(price, NSString)) {
-        
-        [self.priceLabel setText:price];
-        [self.priceLabel sizeToFit];
-        [self.priceLabel setFrame:CGRectMake(self.lineContentXOffset, self.height/2 - self.priceLabel.height/2,
-                                             self.priceLabel.width, self.priceLabel.height)];
-    }
+    [self.priceLabel setText:price];
+    [self.priceLabel sizeToFit];
+    [self.priceLabel setFrame:CGRectMake(self.lineContentXOffset, self.height/2 - self.priceLabel.height/2,
+                                         self.priceLabel.width, self.priceLabel.height)];
 }
 
 -(UILabel *)priceLabel {
