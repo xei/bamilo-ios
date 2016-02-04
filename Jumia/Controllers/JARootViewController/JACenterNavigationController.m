@@ -146,6 +146,11 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(runBlockAfterAuthentication:)
+                                                 name:kRunBlockAfterAuthenticationNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showSignInScreen:)
                                                  name:kShowSignInScreenNotification
                                                object:nil];
@@ -617,6 +622,33 @@
     }
     
     [self pushViewController:authenticationViewController animated:YES];
+}
+
+- (void)runBlockAfterAuthentication:(NSNotification *)notification
+{
+    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"from_side_menu"], NSNumber)) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+    } else {
+        NSInteger count = [self.viewControllers count];
+        if (count > 2)
+        {
+            UIViewController *viewController = [self.viewControllers objectAtIndex:count-2];
+            UIViewController *viewControllerToPop = [self.viewControllers objectAtIndex:count-3];
+            if ([viewController isKindOfClass:[JAAuthenticationViewController class]]) {
+                [self popToViewController:viewControllerToPop animated:NO];
+            }else{
+                [self popViewControllerAnimated:YES];
+            }
+        }else{
+            [self popViewControllerAnimated:YES];
+        }
+        
+        if (VALID_NOTEMPTY(notification, NSNotification) && notification.object) {
+            typedef void (^NextStepBlock)(void);
+            NextStepBlock nextStepBlock = notification.object;
+            nextStepBlock();
+        }
+    }
 }
 
 - (void)showSignInScreen:(NSNotification *)notification

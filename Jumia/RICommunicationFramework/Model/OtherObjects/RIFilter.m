@@ -116,6 +116,14 @@
                 if (filterOption.lowerValue != filterOption.min || filterOption.upperValue != filterOption.max) {
                     urlString = [NSString stringWithFormat:@"price/%ld%@%ld", (long)filterOption.lowerValue, filter.filterSeparator, (long)filterOption.upperValue];
                 }
+
+                if (filterOption.discountOnly) {
+                    if (VALID_NOTEMPTY(urlString, NSString)) {
+                        urlString = [NSString stringWithFormat:@"%@/special_price/1", urlString];
+                    } else {
+                        urlString = @"special_price/1";
+                    }
+                }
             }
         } else {
             NSString *brands = [NSString new];

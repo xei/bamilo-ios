@@ -563,7 +563,24 @@ UIAlertViewDelegate
     [self.scrollView setHidden:NO];
     
     if (RI_IS_RTL) {
-        [self.view flipAllSubviews];
+        [self.topView flipAllSubviews];
+        [self.modeSwitch flipViewPositionInsideSuperview];
+        [self.writeReviewLabel flipViewPositionInsideSuperview];
+        [self.fixedLabel setTextAlignment:NSTextAlignmentRight];
+        CGFloat x = -200;
+        for (UIView* component in self.ratingsDynamicForm.formViews) {
+            if ([component isKindOfClass:[JAAddRatingView class]]) {
+                [component setFrame:CGRectMake(CGRectGetMaxX(self.fixedLabel.frame) - component.frame.size.width, component.frame.origin.y, component.frame.size.width, component.frame.size.height)];
+                x = component.frame.origin.x;
+                break;
+            }
+        }
+        for (UIView* component in self.reviewsDynamicForm.formViews) {
+            if ([component isKindOfClass:[JAAddRatingView class]]) {
+                [component setFrame:CGRectMake(x, component.frame.origin.y, component.frame.size.width, component.frame.size.height)];
+                break;
+            }
+        }
     }
 }
 

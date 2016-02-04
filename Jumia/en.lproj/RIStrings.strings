@@ -414,7 +414,7 @@
 
 "campaign_is_over_resume" = "Even so, we have plenty of other great offers waiting for you.";
 
-"string_format_off_label" = "-%d%% OFF";
+"string_format_off_label" = "-%d%%";
 
 "campaigns_label" = "Campaigns";
 

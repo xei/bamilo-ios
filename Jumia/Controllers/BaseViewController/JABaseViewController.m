@@ -575,7 +575,9 @@
             [self showErrorView:YES startingY:self.viewBounds.origin.y target:target selector:selector objects:objects];
         }
     }else if (showAsMessage) {
-        [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
+        if (VALID_NOTEMPTY(errorMessages, NSArray)) {
+            [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
+        }
     }else{
         [self showErrorView:NO startingY:self.viewBounds.origin.y target:target selector:selector objects:objects];
     }

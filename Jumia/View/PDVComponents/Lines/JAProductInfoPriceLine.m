@@ -96,7 +96,7 @@
 - (void)setPriceOff:(NSInteger)priceOff
 {
     _priceOff = priceOff;
-    [self.priceOffLabel setText:[NSString stringWithFormat:@"-%ld%% OFF", (long)priceOff]];
+    [self.priceOffLabel setText:[NSString stringWithFormat:STRING_FORMAT_OFF, (long)priceOff]];
     [self.priceOffLabel sizeToFit];
     
     CGRect rect;
@@ -129,7 +129,12 @@
     _oldPrice = oldPrice;
     [self.priceLabel setY:self.height/2 - self.priceLabel.height/2];
     [self.oldPriceLabel setText:oldPrice];
-    [self.oldPriceLabel sizeToFit];    [self.oldPriceLabel setX:CGRectGetMaxX(self.priceLabel.frame) + 10.f];
+    [self.oldPriceLabel sizeToFit];
+    CGFloat margin = 0.0f;
+    if (VALID_NOTEMPTY(_price, NSString)) {
+        margin = 10.0f;
+    }
+    [self.oldPriceLabel setX:CGRectGetMaxX(self.priceLabel.frame) + margin];
     [self.oldPriceLabel setY:self.height/2 - self.oldPriceLabel.height/2];
     [self.oldPriceLine setX:self.oldPriceLabel.x];
     [self.oldPriceLine setWidth:self.oldPriceLabel.width];
@@ -153,13 +158,10 @@
 
 -(void)setPrice:(NSString *)price {
     _price = price;
-    if (VALID_NOTEMPTY(price, NSString)) {
-        
-        [self.priceLabel setText:price];
-        [self.priceLabel sizeToFit];
-        [self.priceLabel setFrame:CGRectMake(self.lineContentXOffset, self.height/2 - self.priceLabel.height/2,
-                                             self.priceLabel.width, self.priceLabel.height)];
-    }
+    [self.priceLabel setText:price];
+    [self.priceLabel sizeToFit];
+    [self.priceLabel setFrame:CGRectMake(self.lineContentXOffset, self.height/2 - self.priceLabel.height/2,
+                                         self.priceLabel.width, self.priceLabel.height)];
 }
 
 -(UILabel *)priceLabel {
