@@ -157,7 +157,12 @@
         [_countrySubtitleLine setTopSeparatorVisibility:NO];
         [_countrySubtitleLine setTitle:STRING_COUNTRY];
         [_countrySubtitleLine setSubTitle:@""];
-        [_countrySubtitleLine addTarget:self action:@selector(countrySelection) forControlEvents:UIControlEventTouchUpInside];
+        RICountry* uniqueCountry = [RICountry getUniqueCountry];
+        if (VALID_NOTEMPTY(uniqueCountry, RICountry)) {
+            [_countrySubtitleLine setEnabled:NO];
+        } else {
+            [_countrySubtitleLine addTarget:self action:@selector(countrySelection) forControlEvents:UIControlEventTouchUpInside];
+        }
     }
     return _countrySubtitleLine;
 }

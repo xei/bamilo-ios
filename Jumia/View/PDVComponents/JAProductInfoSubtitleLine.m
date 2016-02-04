@@ -114,4 +114,14 @@
     [self.subTitleLineLabel setX:16.f];
 }
 
+- (void)setEnabled:(BOOL)enabled
+{
+    [super setEnabled:enabled];
+    if (enabled) {
+        [_titleLineLabel setTextColor:JABlackColor];
+    } else {
+        [_titleLineLabel setTextColor:JABlack800Color];
+    }
+}
+
 @end
