@@ -349,6 +349,16 @@
                                              selector:@selector(showMoreMenu)
                                                  name:kShowMoreMenuScreenNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didLoggedIn)
+                                                 name:kUserLoggedInNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didLoggedOut)
+                                                 name:kUserLoggedOutNotification
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -1863,6 +1873,18 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenMenuNotification
                                                         object:nil
                                                       userInfo:[userInfo copy]];
+}
+
+- (void)didLoggedIn
+{
+    //remove existing ones from database
+    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RITeaserGrouping class])];
+}
+
+- (void)didLoggedOut
+{
+    //remove existing ones from database
+    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RITeaserGrouping class])];
 }
 
 @end

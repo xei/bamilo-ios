@@ -13,10 +13,15 @@
 #import "JAShopTeaserView.h"
 #import "JABrandTeaserView.h"
 #import "JAShopsWeekTeaserView.h"
+#import "JANewsletterTeaserView.h"
 #import "JAFeatureStoresTeaserView.h"
 #import "JATopSellersTeaserView.h"
+#import "JADynamicForm.h"
 
 @interface JATeaserPageView()
+{
+    BOOL _needsRefresh;
+}
 
 @property (nonatomic, strong)UIScrollView* mainScrollView;
 //we need to keep the main teaser because we have to access it to know about it's last position
@@ -29,7 +34,11 @@
 
 - (void)loadTeasersForFrame:(CGRect)frame;
 {
+    if (!_needsRefresh) {
+        return;
+    }
     self.frame = frame;
+    _needsRefresh = NO;
     
     self.accessibilityLabel = @"teaserPageScrollView";
     
@@ -59,15 +68,27 @@
         mainScrollY = [self loadShopTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
         mainScrollY = [self loadBrandTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
         mainScrollY = [self loadShopsWeekTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
+        mainScrollY = [self loadNewsletterForInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
         mainScrollY = [self loadFeatureStoresTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
         mainScrollY = [self loadTopSellersTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
         
         mainScrollY += 6.0f;
         
-        [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.frame.size.width,
-                                                       mainScrollY)];
+        [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.frame.size.width, mainScrollY)];
         
     }
+}
+
+- (void)setNewsletterForm:(RIForm *)newsletterForm
+{
+    _newsletterForm = newsletterForm;
+    _needsRefresh = YES;
+}
+
+- (void)layoutSubviews
+{
+    _needsRefresh = YES;
+    [self loadTeasersForFrame:self.frame];
 }
 
 - (void)addTeaserGrouping:(NSString*)type {
@@ -218,6 +239,26 @@
         [shopsWeekTeaserView load];
         
         yPosition += shopsWeekTeaserView.frame.size.height;
+        
+    }
+    return yPosition;
+}
+
+- (CGFloat)loadNewsletterForInScrollView:(UIScrollView*)scrollView
+                                      xPosition:(CGFloat)xPosition
+                                      yPosition:(CGFloat)yPosition
+                                          width:(CGFloat)width
+{
+    if ([self.teaserGroupings objectForKey:@"form_newsletter"] && self.newsletterForm) {
+        JANewsletterTeaserView* newsletterTeaserView = [[JANewsletterTeaserView alloc] initWithFrame:CGRectMake(xPosition,
+                                                                                                                yPosition,
+                                                                                                                width,
+                                                                                                                1)]; //height is set by the view itself
+        [newsletterTeaserView setGenderPickerDelegate:self.genderPickerDelegate?:nil];
+        [newsletterTeaserView setForm:self.newsletterForm];
+        [scrollView addSubview:newsletterTeaserView];
+        
+        yPosition += newsletterTeaserView.frame.size.height;
         
     }
     return yPosition;

@@ -19,6 +19,7 @@
 @property (strong, nonatomic) UILabel *requiredSymbol;
 @property (strong, nonatomic) NSArray *dataset;
 @property (strong, nonatomic) NSArray *options;
+@property (strong, nonatomic) NSDictionary *optionsLabels;
 @property (strong, nonatomic) NSString *apiCallTarget;
 @property (strong, nonatomic) NSDictionary *apiCallParameters;
 @property (nonatomic, strong) NSString* currentErrorMessage;

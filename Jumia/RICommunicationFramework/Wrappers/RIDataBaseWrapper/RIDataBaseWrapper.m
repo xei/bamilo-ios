@@ -218,6 +218,27 @@
     }
 }
 
+-(void)deleteAllEntriesOfType:(NSString *)objectType
+             withPropertyName:(NSString *)propertyName
+             andPropertyValue:(NSString *)propertyValue
+{
+    NSEntityDescription *entity = [NSEntityDescription entityForName:objectType inManagedObjectContext:self.managedObjectContext];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    // retrive the objects with a given value for a certain property
+    [request setPredicate:[NSPredicate predicateWithFormat: @"%K == %@", propertyName, propertyValue]];
+    [request setEntity:entity];
+    [request setIncludesPendingChanges:YES];
+    
+    NSError *error = nil;
+    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&error];
+    if (NOTEMPTY(error)) {
+        NSLog(@"ERROR WHILE FETCHING COREDATA REQUEST");
+    }
+    for(NSManagedObject *obj in results) {
+        [self.managedObjectContext deleteObject:obj];
+    }
+}
+
 -(void)deleteObject:(NSManagedObject *)managedObject
 {
     [self.managedObjectContext deleteObject:managedObject];

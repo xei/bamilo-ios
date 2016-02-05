@@ -432,6 +432,11 @@
 		9A1737311B68EBAF004905B4 /* JACheckoutBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */; };
 		9A1737321B68EBAF004905B4 /* JACheckoutBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */; };
 		9A1737331B68EBB0004905B4 /* JACheckoutBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */; };
+		9A17D19B1C60CFF000851D6E /* JANewsletterTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17D19A1C60CFF000851D6E /* JANewsletterTeaserView.m */; };
+		9A17D19C1C60CFF000851D6E /* JANewsletterTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17D19A1C60CFF000851D6E /* JANewsletterTeaserView.m */; };
+		9A17D19D1C60CFF000851D6E /* JANewsletterTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17D19A1C60CFF000851D6E /* JANewsletterTeaserView.m */; };
+		9A17D19E1C60CFF000851D6E /* JANewsletterTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17D19A1C60CFF000851D6E /* JANewsletterTeaserView.m */; };
+		9A17D19F1C60CFF000851D6E /* JANewsletterTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17D19A1C60CFF000851D6E /* JANewsletterTeaserView.m */; };
 		9A189E441BB190020039BC14 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
 		9A189E451BB190020039BC14 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
 		9A189E461BB190030039BC14 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
@@ -2772,6 +2777,9 @@
 		9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACheckoutBottomView.m; path = ../Controllers/Checkout/JACheckoutBottomView.m; sourceTree = "<group>"; };
 		9A17372D1B679740004905B4 /* UIImage+WithColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+WithColor.h"; path = "Categories/UIImage+WithColor.h"; sourceTree = "<group>"; };
 		9A17372E1B679740004905B4 /* UIImage+WithColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+WithColor.m"; path = "Categories/UIImage+WithColor.m"; sourceTree = "<group>"; };
+		9A17D1991C60CFF000851D6E /* JANewsletterTeaserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANewsletterTeaserView.h; sourceTree = "<group>"; };
+		9A17D19A1C60CFF000851D6E /* JANewsletterTeaserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANewsletterTeaserView.m; sourceTree = "<group>"; };
+		9A17D1A01C63C29A00851D6E /* Model_1.11.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.11.xcdatamodel; sourceTree = "<group>"; };
 		9A189E4E1BB1A5780039BC14 /* JAScrolledImageGalleryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAScrolledImageGalleryView.h; sourceTree = "<group>"; };
 		9A189E4F1BB1A5780039BC14 /* JAScrolledImageGalleryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAScrolledImageGalleryView.m; sourceTree = "<group>"; };
 		9A189E5B1BB31AC70039BC14 /* JAProductInfoHeaderLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAProductInfoHeaderLine.h; path = Lines/JAProductInfoHeaderLine.h; sourceTree = "<group>"; };
@@ -5727,6 +5735,8 @@
 				CE59BF181AE8097C0057F4E2 /* JAFeatureStoresTeaserView.m */,
 				CE59BF1E1AE906180057F4E2 /* JATopSellersTeaserView.h */,
 				CE59BF1F1AE906180057F4E2 /* JATopSellersTeaserView.m */,
+				9A17D1991C60CFF000851D6E /* JANewsletterTeaserView.h */,
+				9A17D19A1C60CFF000851D6E /* JANewsletterTeaserView.m */,
 			);
 			path = TeaserViews;
 			sourceTree = "<group>";
@@ -7511,6 +7521,7 @@
 				74c288d3007d11abbcd827d3 /* RIAd4PushTracker.m in Sources */,
 				9AEADDCA1C0EF9350074034A /* JARegisterViewController.m in Sources */,
 				CE4848981A162803003C3D53 /* JAFiltersView.m in Sources */,
+				9A17D19C1C60CFF000851D6E /* JANewsletterTeaserView.m in Sources */,
 				CE8DB8641AF916F90061807E /* JASearchResultsView.m in Sources */,
 				460503d31c163545ffffa862 /* RIBugSenseTracker.m in Sources */,
 				1fab3dec6fadd712d6a2a8c0 /* RIOpenURLHandler.m in Sources */,
@@ -7763,6 +7774,7 @@
 				B5A302C419811E9200F71726 /* RIFormIndex.m in Sources */,
 				9A17372B1B669B0E004905B4 /* JACheckoutBottomView.m in Sources */,
 				B510B01419AE466B00A9754A /* JADynamicForm.m in Sources */,
+				9A17D19B1C60CFF000851D6E /* JANewsletterTeaserView.m in Sources */,
 				B5A301AE19811D0700F71726 /* main.m in Sources */,
 				B5A3025D19811E8A00F71726 /* UIButton+WebCache.m in Sources */,
 				B5CBFF661A10B33D0050C553 /* JARatingsViewMedium.m in Sources */,
@@ -8069,6 +8081,7 @@
 				CE9ADBF51AB34C4600D56481 /* JADynamicForm.m in Sources */,
 				CE9ADBF61AB34C4600D56481 /* main.m in Sources */,
 				CE9ADBF71AB34C4600D56481 /* UIButton+WebCache.m in Sources */,
+				9A17D19D1C60CFF000851D6E /* JANewsletterTeaserView.m in Sources */,
 				89C7AF531BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */,
 				9A1737311B68EBAF004905B4 /* JACheckoutBottomView.m in Sources */,
 				CE9ADBF81AB34C4600D56481 /* JARatingsViewMedium.m in Sources */,
@@ -8365,6 +8378,7 @@
 				CE9ADDEF1AB6D6E900D56481 /* JADynamicForm.m in Sources */,
 				CE9ADDF01AB6D6E900D56481 /* main.m in Sources */,
 				CE9ADDF11AB6D6E900D56481 /* UIButton+WebCache.m in Sources */,
+				9A17D19E1C60CFF000851D6E /* JANewsletterTeaserView.m in Sources */,
 				89C7AF541BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */,
 				9A1737321B68EBAF004905B4 /* JACheckoutBottomView.m in Sources */,
 				CE9ADDF21AB6D6E900D56481 /* JARatingsViewMedium.m in Sources */,
@@ -8661,6 +8675,7 @@
 				CE9ADFE81AB6D78200D56481 /* RIFormIndex.m in Sources */,
 				CE9ADFE91AB6D78200D56481 /* JADynamicForm.m in Sources */,
 				89C7AF551BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */,
+				9A17D19F1C60CFF000851D6E /* JANewsletterTeaserView.m in Sources */,
 				CE9ADFEA1AB6D78200D56481 /* main.m in Sources */,
 				CE9ADFEB1AB6D78200D56481 /* UIButton+WebCache.m in Sources */,
 				CE9ADFEC1AB6D78200D56481 /* JARatingsViewMedium.m in Sources */,
@@ -9934,6 +9949,7 @@
 		B5A3028F19811E9200F71726 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				9A17D1A01C63C29A00851D6E /* Model_1.11.xcdatamodel */,
 				9D39EA2D1BFFA32D00C3F6E9 /* Model_1.10.xcdatamodel */,
 				CE35147F1BB1AE370076EF1F /* Model_1.9.xcdatamodel */,
 				CED7C52B1B7A3A990070C855 /* Model_1.8.xcdatamodel */,
@@ -9946,7 +9962,7 @@
 				CE73D4FF19E5866D0074F7F3 /* Model_1.1.xcdatamodel */,
 				B5A3029019811E9200F71726 /* Model.xcdatamodel */,
 			);
-			currentVersion = 9D39EA2D1BFFA32D00C3F6E9 /* Model_1.10.xcdatamodel */;
+			currentVersion = 9A17D1A01C63C29A00851D6E /* Model_1.11.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

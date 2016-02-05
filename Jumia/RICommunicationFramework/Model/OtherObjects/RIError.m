@@ -100,15 +100,12 @@
         if(VALID_NOTEMPTY([messagesObject objectForKey:@"error"], NSArray))
         {
             NSArray *errorCodesObject = [messagesObject objectForKey:@"error"];
-            if(NOTEMPTY(errorCodesObject))
+            NSMutableArray *errorCodesArray = [[NSMutableArray alloc] init];
+            for (NSString *errorCodeString in errorCodesObject)
             {
-                NSMutableArray *errorCodesArray = [[NSMutableArray alloc] init];
-                for (NSString *errorCodeString in errorCodesObject)
-                {
-                    [errorCodesArray addObject:errorCodeString];
-                }
-                error.errorCodes = [errorCodesArray copy];
+                [errorCodesArray addObject:errorCodeString];
             }
+            error.errorCodes = [errorCodesArray copy];
         }
     
         if(NOT_NIL([messagesObject objectForKey:@"validate"]))
