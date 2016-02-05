@@ -21,6 +21,7 @@
 @property (nonatomic, strong) JARadioComponent *regionComponent;
 @property (nonatomic, strong) JARadioComponent *cityComponent;
 @property (nonatomic, strong) JARadioComponent *postcodeComponent;
+@property (nonatomic, strong) JARadioComponent *newsletterGenderComponent;
 @property (nonatomic, strong) JARadioComponent *phonePrefixComponent;
 
 @end
@@ -263,6 +264,10 @@
             else if([radioComponent isComponentWithKey:@"postcode"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
             {
                 self.postcodeComponent = radioComponent;
+            }
+            else if([radioComponent isComponentWithKey:@"newsletter_categories_subscribed"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
+            {
+                self.newsletterGenderComponent = radioComponent;
             }
         }
         else if ([@"related_number" isEqualToString:field.type])

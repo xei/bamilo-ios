@@ -24,6 +24,7 @@
 @property (nonatomic, retain) NSString * createdAt;
 @property (nonatomic, retain) NSString * loginMethod;
 @property (nonatomic, retain) NSOrderedSet *addresses;
+@property (nonatomic, retain) NSNumber *newsletterSubscribed;
 
 @property (nonatomic, retain) NSArray *wishlistProducts;
 

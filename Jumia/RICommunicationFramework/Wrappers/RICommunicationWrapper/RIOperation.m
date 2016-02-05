@@ -147,6 +147,12 @@
                                 self.failureBlock(RIApiResponseAuthorizationError, responseJSON, nil);
                                 return;
                             }
+                            // MUST BE A BETTER WAY
+                            if([[errorMessage objectForKey:@"reason"] isEqualToString:@"ALREADY_SUBSCRIBED"])
+                            {
+                                self.failureBlock(RIApiResponseSuccess, responseJSON, nil);
+                                return;
+                            }
                         }
                     }
                 }

@@ -168,7 +168,8 @@
 
 - (void)userDidLogout
 {
-    [RICommunicationWrapper deleteSessionCookie];
+    [RICommunicationWrapper deleteSessionCookie];    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedOutNotification object:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
 }

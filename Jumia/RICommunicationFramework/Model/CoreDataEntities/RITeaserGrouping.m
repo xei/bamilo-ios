@@ -193,15 +193,10 @@
                     NSNumber* hasData = [teaserGroupingJSON objectForKey:@"has_data"];
                     if ( [hasData boolValue]) {
                         
-                        if ([[teaserGroupingJSON objectForKey:@"type"] isEqualToString:@"form_newsletter"]) {
-                            RIForm* form_newsletter = [RIForm parseForm:[teaserGroupingJSON objectForKey:@"data"]];
-                            [newFormTeaser setObject:form_newsletter forKey:@"form_newsletter"];
-                        } else {
-                            
-                            RITeaserGrouping* newTeaserGrouping = [RITeaserGrouping parseTeaserGrouping:teaserGroupingJSON
-                                                                                                country:country];
-                            [newTeaserGroupings setObject:newTeaserGrouping forKey:[teaserGroupingJSON objectForKey:@"type"]];
-                        }
+                        RITeaserGrouping* newTeaserGrouping = [RITeaserGrouping parseTeaserGrouping:teaserGroupingJSON
+                                                                                            country:country];
+                        [newTeaserGroupings setObject:newTeaserGrouping forKey:[teaserGroupingJSON objectForKey:@"type"]];
+                        
                     } else {
                         if ([[teaserGroupingJSON objectForKey:@"type"] isEqualToString:@"top_sellers"]) {
                             [newRichTeaserGroupings setObject:teaserGroupingJSON forKey:[teaserGroupingJSON objectForKey:@"type"]];
@@ -241,19 +236,24 @@
             newTeaserGrouping.type = [teaserGroupingJSON objectForKey:@"type"];
         }
         
-        NSArray* data = [teaserGroupingJSON objectForKey:@"data"];
-        
-        if (VALID_NOTEMPTY(data, NSArray)) {
-
-            for (NSDictionary* teaserComponentJSON in data) {
+        if ([[teaserGroupingJSON objectForKey:@"type"] isEqualToString:@"form_newsletter"]) {
+            RIForm* form_newsletter = [RIForm parseForm:[teaserGroupingJSON objectForKey:@"data"]];
+            [RIForm saveForm:form_newsletter andContext:YES];
+        } else {
+            NSArray* data = [teaserGroupingJSON objectForKey:@"data"];
+            
+            if (VALID_NOTEMPTY(data, NSArray)) {
                 
-                if (VALID_NOTEMPTY(teaserComponentJSON, NSDictionary)) {
-                 
-                    RITeaserComponent* newTeaserComponent = [RITeaserComponent parseTeaserComponent:teaserComponentJSON
-                                                                                            country:country];
-                    newTeaserComponent.teaserGrouping = newTeaserGrouping;
+                for (NSDictionary* teaserComponentJSON in data) {
                     
-                    [newTeaserGrouping addTeaserComponentsObject:newTeaserComponent];
+                    if (VALID_NOTEMPTY(teaserComponentJSON, NSDictionary)) {
+                        
+                        RITeaserComponent* newTeaserComponent = [RITeaserComponent parseTeaserComponent:teaserComponentJSON
+                                                                                                country:country];
+                        newTeaserComponent.teaserGrouping = newTeaserGrouping;
+                        
+                        [newTeaserGrouping addTeaserComponentsObject:newTeaserComponent];
+                    }
                 }
             }
         }

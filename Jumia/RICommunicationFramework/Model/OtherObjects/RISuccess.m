@@ -95,8 +95,13 @@
                 }
                 success.successCodes = [successCodesArray copy];
             }
-        }
-
+        }else if(VALID_NOTEMPTY([messagesObject objectForKey:@"success"], NSDictionary))
+            {
+                NSDictionary *successCodesObject = [messagesObject objectForKey:@"success"];
+                if (VALID_NOTEMPTY([successCodesObject objectForKey:@"message"], NSString)) {
+                    success.successCodes = @[[successCodesObject objectForKey:@"message"]];
+                }
+            }
     }
     return success;
 }
