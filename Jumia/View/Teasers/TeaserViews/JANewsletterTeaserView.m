@@ -153,8 +153,6 @@
 - (void)setGenderView:(UIView *)view
 {
     [self setGenderRadioComponent:(JARadioComponent *)view];
-//    [self.genderRadioComponent.textField setEnabled:NO];
-//    [self.genderRadioComponent.textField setDelegate:self];
     [view setFrame:CGRectMake(_genderX, self.emailTextFieldComponent?self.emailTextFieldComponent.y:view.y, _genderWidth, view.height)];
     [self addView:view];
 }
