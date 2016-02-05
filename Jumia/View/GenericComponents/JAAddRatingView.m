@@ -209,7 +209,7 @@
         [_starButton5 setImage:emptyStar forState:UIControlStateNormal];
         [_starButton5 setImage:[self getFilledStar] forState:UIControlStateSelected];
         [_starButton5 setTag:5];
-        [_starButton5 setFrame:CGRectMake(CGRectGetMaxX(self.starButton4.frame) + KLineContentXOffset,
+        [_starButton5 setFrame:CGRectMake(CGRectGetMaxX(self.starButton4.frame) + KStarSpacing,
                                           self.height/2 - emptyStar.size.height/2,
                                           emptyStar.size.width, emptyStar.size.height)];
         [self addSubview:_starButton5];

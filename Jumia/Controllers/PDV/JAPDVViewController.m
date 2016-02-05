@@ -647,7 +647,7 @@ JAActivityViewControllerDelegate
     [self.productInfoSection setupWithFrame:productInfoSectionFrame product:self.product preSelectedSize:self.preSelectedSize];
 
     if (VALID_NOTEMPTY(self.currentSimple, RIProductSimple)) {
-        [self.productInfoSection setSpecialPrice:self.currentSimple.specialPriceFormatted andPrice:self.currentSimple.priceFormatted];
+        [self.productInfoSection setSpecialPrice:self.currentSimple.specialPriceFormatted andPrice:self.currentSimple.priceFormatted andMaxSavingPercentage:self.product.maxSavingPercentage shouldForceFlip:NO];
     }
     [self.productInfoSection addReviewsTarget:self action:@selector(goToReviews)];
     [self.productInfoSection addSpecificationsTarget:self action:@selector(goToSpecifications)];
@@ -1235,7 +1235,9 @@ JAActivityViewControllerDelegate
     self.preSelectedSize = option;
     [self.productInfoSection setSizesText:option];
     [self.productInfoSection setSpecialPrice:self.currentSimple.specialPriceFormatted
-                                    andPrice:self.currentSimple.priceFormatted];
+                                    andPrice:self.currentSimple.priceFormatted
+                      andMaxSavingPercentage:self.product.maxSavingPercentage
+                             shouldForceFlip:YES];
     
     CGRect frame = self.picker.frame;
     frame.origin.y = self.view.frame.size.height;

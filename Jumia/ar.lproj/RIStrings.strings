@@ -376,7 +376,7 @@
 
 "campaing_timer_end" = "تنتهي في:";
 
-"string_format_off_label" = "تخفيض %d%%";
+"string_format_off_label" = "-%d%%";
 
 "campaigns_label" = "العروض";
 

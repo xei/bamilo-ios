@@ -774,13 +774,23 @@ JAPickerDelegate>
 {
     [self showLoading];
     if ([self.shippingDynamicForm checkErrors]) {
-        [self onErrorResponse:RIApiResponseSuccess messages:@[self.shippingDynamicForm.firstErrorInFields] showAsMessage:YES selector:@selector(createAddressButtonPressed) objects:nil];
+        NSArray* message;
+        if (VALID_NOTEMPTY(self.shippingDynamicForm.firstErrorInFields, NSString)) {
+            message = [NSArray arrayWithObject:self.shippingDynamicForm.firstErrorInFields];
+        }
+        
+        [self onErrorResponse:RIApiResponseSuccess messages:message showAsMessage:YES selector:@selector(createAddressButtonPressed) objects:nil];
         [self hideLoading];
         return;
     }
     
     if (![self.billingContentView isHidden] && [self.billingDynamicForm checkErrors]) {
-        [self onErrorResponse:RIApiResponseSuccess messages:@[self.shippingDynamicForm.firstErrorInFields] showAsMessage:YES selector:@selector(createAddressButtonPressed) objects:nil];
+        NSArray* message;
+        if (VALID_NOTEMPTY(self.shippingDynamicForm.firstErrorInFields, NSString)) {
+            message = [NSArray arrayWithObject:self.shippingDynamicForm.firstErrorInFields];
+        }
+        
+        [self onErrorResponse:RIApiResponseSuccess messages:message showAsMessage:YES selector:@selector(createAddressButtonPressed) objects:nil];
         [self hideLoading];
         return;
     }

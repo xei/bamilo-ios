@@ -104,9 +104,7 @@
         RIImage *imageTemp = [product.images firstObject];
         [self.imageViewItem setImageWithURL:[NSURL URLWithString:imageTemp.url]
                            placeholderImage:placeHolderImage success:^(UIImage *image, BOOL cached) {
-                           } failure:^(NSError *error) {
-                               NSLog(@"error getting image [%@] %@", imageTemp.url, error);
-                           }];
+                           } failure:nil];
     }else{
         [self.imageViewItem setImage:placeHolderImage];
     }

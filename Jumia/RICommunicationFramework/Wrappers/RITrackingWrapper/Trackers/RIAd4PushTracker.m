@@ -7,10 +7,10 @@
 //
 
 #import "RIAd4PushTracker.h"
-#import <libBMA4SSDK/BMA4SInAppNotification.h>
-#import <libBMA4SSDK/BMA4SNotification.h>
-#import <libBMA4SSDK/BMA4STracker+Analytics.h>
-#import <libBMA4SSDK/BMA4STracker.h>
+#import "BMA4SInAppNotification.h"
+#import "BMA4SNotification.h"
+#import "BMA4STracker+Analytics.h"
+#import "BMA4STracker.h"
 #import "GAIFields.h"
 #import "RIGoogleAnalyticsTracker.h"
 #import "RICategory.h"

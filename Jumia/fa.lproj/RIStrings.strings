@@ -376,7 +376,7 @@
 
 "campaing_timer_end" = "پایان";
 
-"string_format_off_label" = "- ‎%d‎ درصد تخفیف";
+"string_format_off_label" = "-%d%%‎";
 
 "campaigns_label" = "کمپین ها";
 

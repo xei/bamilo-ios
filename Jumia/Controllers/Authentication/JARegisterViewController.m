@@ -421,27 +421,11 @@ JADatePickerDelegate
         [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedInNotification
                                                             object:nil];
 
-        
+        NSMutableDictionary *userInfo = [NSMutableDictionary new];
         if (self.fromSideMenu) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
-        } else {
-            NSInteger count = [self.navigationController.viewControllers count];
-            if (count > 2)
-            {
-                UIViewController *viewController = [self.navigationController.viewControllers objectAtIndex:count-2];
-                UIViewController *viewControllerToPop = [self.navigationController.viewControllers objectAtIndex:count-3];
-                if ([viewController isKindOfClass:[JAAuthenticationViewController class]]) {
-                    [self.navigationController popToViewController:viewControllerToPop animated:YES];
-                }else{
-                    [self.navigationController popViewControllerAnimated:YES];
-                }
-            }else{
-                [self.navigationController popViewControllerAnimated:YES];
-            }
-            if(self.nextStepBlock) {
-                self.nextStepBlock();
-            }
+            [userInfo setObject:@YES forKey:@"from_side_menu"];
         }
+        [[NSNotificationCenter defaultCenter] postNotificationName:kRunBlockAfterAuthenticationNotification object:self.nextStepBlock userInfo:userInfo];
         
     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
         
