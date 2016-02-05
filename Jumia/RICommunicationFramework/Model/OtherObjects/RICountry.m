@@ -281,11 +281,11 @@
         uniqueCountry.countryIso = RI_UNIQUE_COUNTRY_ISO_BAMILO;
         uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO;
         uniqueCountry.isLive = YES;
-//#if defined(STAGING) && STAGING
-//        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO_STAGING;
-//        uniqueCountry.isLive = NO;
-//        uniqueCountry.userAgentInjection = RI_UNIQUE_COUNTRY_USER_AGENT_INJECTION_BAMILO_INTEGRATION_MOBILE;
-//#endif
+#if defined(STAGING) && STAGING
+        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO_STAGING;
+        uniqueCountry.isLive = NO;
+        uniqueCountry.userAgentInjection = RI_UNIQUE_COUNTRY_USER_AGENT_INJECTION_BAMILO_INTEGRATION_MOBILE;
+#endif
         return uniqueCountry;
     } else {
         return nil;
