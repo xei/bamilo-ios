@@ -697,6 +697,11 @@
 		9A17D1961C5F775900851D6E /* BMA4SiPhoneWebViewNotifView-nobuttons.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A17D08F1C5F775900851D6E /* BMA4SiPhoneWebViewNotifView-nobuttons.xib */; };
 		9A17D1971C5F775900851D6E /* BMA4SiPhoneWebViewNotifView-nobuttons.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A17D08F1C5F775900851D6E /* BMA4SiPhoneWebViewNotifView-nobuttons.xib */; };
 		9A17D1981C5F775900851D6E /* BMA4SiPhoneWebViewNotifView-nobuttons.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A17D08F1C5F775900851D6E /* BMA4SiPhoneWebViewNotifView-nobuttons.xib */; };
+		9A17D1A11C64B60B00851D6E /* JANewsletterTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17D19A1C60CFF000851D6E /* JANewsletterTeaserView.m */; };
+		9A17D1A21C64B61000851D6E /* JANewsletterTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17D19A1C60CFF000851D6E /* JANewsletterTeaserView.m */; };
+		9A17D1A31C64B61100851D6E /* JANewsletterTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17D19A1C60CFF000851D6E /* JANewsletterTeaserView.m */; };
+		9A17D1A41C64B61100851D6E /* JANewsletterTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17D19A1C60CFF000851D6E /* JANewsletterTeaserView.m */; };
+		9A17D1A51C64B61200851D6E /* JANewsletterTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17D19A1C60CFF000851D6E /* JANewsletterTeaserView.m */; };
 		9A189E441BB190020039BC14 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
 		9A189E451BB190020039BC14 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
 		9A189E461BB190030039BC14 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
@@ -2777,9 +2782,6 @@
 		9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACheckoutBottomView.m; path = ../Controllers/Checkout/JACheckoutBottomView.m; sourceTree = "<group>"; };
 		9A17372D1B679740004905B4 /* UIImage+WithColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+WithColor.h"; path = "Categories/UIImage+WithColor.h"; sourceTree = "<group>"; };
 		9A17372E1B679740004905B4 /* UIImage+WithColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+WithColor.m"; path = "Categories/UIImage+WithColor.m"; sourceTree = "<group>"; };
-		9A17D1991C60CFF000851D6E /* JANewsletterTeaserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANewsletterTeaserView.h; sourceTree = "<group>"; };
-		9A17D19A1C60CFF000851D6E /* JANewsletterTeaserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANewsletterTeaserView.m; sourceTree = "<group>"; };
-		9A17D1A01C63C29A00851D6E /* Model_1.11.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.11.xcdatamodel; sourceTree = "<group>"; };
 		9A17D0351C5F775900851D6E /* BMA4SViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMA4SViewController.h; sourceTree = "<group>"; };
 		9A17D0361C5F775900851D6E /* BMA4SViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMA4SViewController.m; sourceTree = "<group>"; };
 		9A17D0381C5F775900851D6E /* A4SWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A4SWebView.h; sourceTree = "<group>"; };
@@ -2851,6 +2853,9 @@
 		9A17D08D1C5F775900851D6E /* BMA4SiPhoneWebViewNotifView-nobuttons-landscape-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneWebViewNotifView-nobuttons-landscape-iPad.xib"; sourceTree = "<group>"; };
 		9A17D08E1C5F775900851D6E /* BMA4SiPhoneWebViewNotifView-nobuttons-landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneWebViewNotifView-nobuttons-landscape.xib"; sourceTree = "<group>"; };
 		9A17D08F1C5F775900851D6E /* BMA4SiPhoneWebViewNotifView-nobuttons.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BMA4SiPhoneWebViewNotifView-nobuttons.xib"; sourceTree = "<group>"; };
+		9A17D1991C60CFF000851D6E /* JANewsletterTeaserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANewsletterTeaserView.h; sourceTree = "<group>"; };
+		9A17D19A1C60CFF000851D6E /* JANewsletterTeaserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANewsletterTeaserView.m; sourceTree = "<group>"; };
+		9A17D1A01C63C29A00851D6E /* Model_1.11.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.11.xcdatamodel; sourceTree = "<group>"; };
 		9A189E4E1BB1A5780039BC14 /* JAScrolledImageGalleryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAScrolledImageGalleryView.h; sourceTree = "<group>"; };
 		9A189E4F1BB1A5780039BC14 /* JAScrolledImageGalleryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAScrolledImageGalleryView.m; sourceTree = "<group>"; };
 		9A189E5B1BB31AC70039BC14 /* JAProductInfoHeaderLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAProductInfoHeaderLine.h; path = Lines/JAProductInfoHeaderLine.h; sourceTree = "<group>"; };
@@ -7501,6 +7506,7 @@
 				9A7EE9A41B5546A0004E2505 /* Adjust.m in Sources */,
 				f8c3d3d4e4aeb8e1b38b80e7 /* RIImageResolution.m in Sources */,
 				b30c4e6be5c0c8eee6b4a94c /* RIURLCacheWrapper.m in Sources */,
+				9A17D1A21C64B61000851D6E /* JANewsletterTeaserView.m in Sources */,
 				1ab3cd2be973c7bdad01987e /* JAButtonWithBlur.m in Sources */,
 				9A7EE97C1B5546A0004E2505 /* ADJDeviceInfo.m in Sources */,
 				b42870fb0eb0010aae996ca1 /* JALoginViewController.m in Sources */,
@@ -7577,7 +7583,6 @@
 				74c288d3007d11abbcd827d3 /* RIAd4PushTracker.m in Sources */,
 				9AEADDCA1C0EF9350074034A /* JARegisterViewController.m in Sources */,
 				CE4848981A162803003C3D53 /* JAFiltersView.m in Sources */,
-				9A17D19C1C60CFF000851D6E /* JANewsletterTeaserView.m in Sources */,
 				CE8DB8641AF916F90061807E /* JASearchResultsView.m in Sources */,
 				460503d31c163545ffffa862 /* RIBugSenseTracker.m in Sources */,
 				1fab3dec6fadd712d6a2a8c0 /* RIOpenURLHandler.m in Sources */,
@@ -7777,6 +7782,7 @@
 				9A7EE9361B554696004E2505 /* ADJActivityKind.m in Sources */,
 				CEABEEBC1A1119AB000D0CF8 /* JAPriceFiltersView.m in Sources */,
 				4A1C8E3E199B789D0045BD8D /* RIFieldDataSetComponent.m in Sources */,
+				9A17D1A11C64B60B00851D6E /* JANewsletterTeaserView.m in Sources */,
 				897460DB1C19DDFD00A38073 /* JACollectionHeaderView.m in Sources */,
 				B5A302C619811E9200F71726 /* RIImageResolution.m in Sources */,
 				9AEA3B261B15D4AC00771EEA /* UIView+Frame.m in Sources */,
@@ -7831,7 +7837,6 @@
 				B5A302C419811E9200F71726 /* RIFormIndex.m in Sources */,
 				9A17372B1B669B0E004905B4 /* JACheckoutBottomView.m in Sources */,
 				B510B01419AE466B00A9754A /* JADynamicForm.m in Sources */,
-				9A17D19B1C60CFF000851D6E /* JANewsletterTeaserView.m in Sources */,
 				B5A301AE19811D0700F71726 /* main.m in Sources */,
 				B5A3025D19811E8A00F71726 /* UIButton+WebCache.m in Sources */,
 				B5CBFF661A10B33D0050C553 /* JARatingsViewMedium.m in Sources */,
@@ -8084,6 +8089,7 @@
 				9A7EE9381B554696004E2505 /* ADJActivityKind.m in Sources */,
 				CE9ADBCE1AB34C4600D56481 /* JAPriceFiltersView.m in Sources */,
 				CE9ADBCF1AB34C4600D56481 /* RIFieldDataSetComponent.m in Sources */,
+				9A17D1A31C64B61100851D6E /* JANewsletterTeaserView.m in Sources */,
 				CE9ADBD11AB34C4600D56481 /* RIImageResolution.m in Sources */,
 				9AEA3B271B15DD9B00771EEA /* UIView+Frame.m in Sources */,
 				CE28A7A11BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */,
@@ -8137,7 +8143,6 @@
 				CE9ADBF51AB34C4600D56481 /* JADynamicForm.m in Sources */,
 				CE9ADBF61AB34C4600D56481 /* main.m in Sources */,
 				CE9ADBF71AB34C4600D56481 /* UIButton+WebCache.m in Sources */,
-				9A17D19D1C60CFF000851D6E /* JANewsletterTeaserView.m in Sources */,
 				89C7AF531BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */,
 				9A1737311B68EBAF004905B4 /* JACheckoutBottomView.m in Sources */,
 				CE9ADBF81AB34C4600D56481 /* JARatingsViewMedium.m in Sources */,
@@ -8381,6 +8386,7 @@
 				9A7EE9391B554696004E2505 /* ADJActivityKind.m in Sources */,
 				CE9ADDC81AB6D6E900D56481 /* JAPriceFiltersView.m in Sources */,
 				CE9ADDC91AB6D6E900D56481 /* RIFieldDataSetComponent.m in Sources */,
+				9A17D1A41C64B61100851D6E /* JANewsletterTeaserView.m in Sources */,
 				CE9ADDCB1AB6D6E900D56481 /* RIImageResolution.m in Sources */,
 				9AEA3B281B15DD9C00771EEA /* UIView+Frame.m in Sources */,
 				CE28A7A21BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */,
@@ -8434,7 +8440,6 @@
 				CE9ADDEF1AB6D6E900D56481 /* JADynamicForm.m in Sources */,
 				CE9ADDF01AB6D6E900D56481 /* main.m in Sources */,
 				CE9ADDF11AB6D6E900D56481 /* UIButton+WebCache.m in Sources */,
-				9A17D19E1C60CFF000851D6E /* JANewsletterTeaserView.m in Sources */,
 				89C7AF541BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */,
 				9A1737321B68EBAF004905B4 /* JACheckoutBottomView.m in Sources */,
 				CE9ADDF21AB6D6E900D56481 /* JARatingsViewMedium.m in Sources */,
@@ -8678,6 +8683,7 @@
 				CE9ADFC11AB6D78200D56481 /* JARadioComponent.m in Sources */,
 				9AB488841B72748500886A44 /* JAShopWebViewController.m in Sources */,
 				9A7EE93A1B554696004E2505 /* ADJActivityKind.m in Sources */,
+				9A17D1A51C64B61200851D6E /* JANewsletterTeaserView.m in Sources */,
 				CE9ADFC21AB6D78200D56481 /* JAPriceFiltersView.m in Sources */,
 				CE9ADFC31AB6D78200D56481 /* RIFieldDataSetComponent.m in Sources */,
 				CE28A7A31BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */,
@@ -8732,7 +8738,6 @@
 				CE9ADFE81AB6D78200D56481 /* RIFormIndex.m in Sources */,
 				CE9ADFE91AB6D78200D56481 /* JADynamicForm.m in Sources */,
 				89C7AF551BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */,
-				9A17D19F1C60CFF000851D6E /* JANewsletterTeaserView.m in Sources */,
 				CE9ADFEA1AB6D78200D56481 /* main.m in Sources */,
 				CE9ADFEB1AB6D78200D56481 /* UIButton+WebCache.m in Sources */,
 				CE9ADFEC1AB6D78200D56481 /* JARatingsViewMedium.m in Sources */,
@@ -8950,7 +8955,6 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8964,7 +8968,6 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10/",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/BMA4SSDK",
 				);
 				ONLY_ACTIVE_ARCH = NO;
@@ -9062,7 +9065,6 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -9076,7 +9078,6 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10/",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/BMA4SSDK",
 				);
 				ONLY_ACTIVE_ARCH = NO;
@@ -9261,7 +9262,6 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -9275,7 +9275,6 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10/",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/BMA4SSDK",
 				);
 				ONLY_ACTIVE_ARCH = NO;
@@ -9302,7 +9301,6 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -9316,7 +9314,6 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10/",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/BMA4SSDK",
 				);
 				ONLY_ACTIVE_ARCH = NO;
@@ -9388,7 +9385,6 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -9398,12 +9394,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10/",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/BMA4SSDK",
 				);
 				ONLY_ACTIVE_ARCH = NO;
@@ -9430,7 +9424,6 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -9440,12 +9433,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10/",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/BMA4SSDK",
 				);
 				ONLY_ACTIVE_ARCH = NO;
@@ -9472,7 +9463,6 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -9482,12 +9472,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10/",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/BMA4SSDK",
 				);
 				ONLY_ACTIVE_ARCH = NO;
@@ -9514,7 +9502,6 @@
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -9524,12 +9511,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK/lib",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalyticsServicesiOS_3.10/",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/AccengageiOSSDK",
 					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/BMA4SSDK",
 				);
 				ONLY_ACTIVE_ARCH = NO;
