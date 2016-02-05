@@ -62,11 +62,18 @@
             
             UILabel* subTitleLabel = [UILabel new];
             subTitleLabel.font = [UIFont fontWithName:kFontLightName size:9.0f];
+            CGFloat subtitleYOffset = 0.0f;
+            if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+            {
+                //SHOP font adjustment
+                subtitleYOffset = -2.0f;
+                subTitleLabel.font = [UIFont fontWithName:kFontLightName size:8.0f];
+            }
             subTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
             subTitleLabel.text = component.subTitle;
             [subTitleLabel sizeToFit];
             [subTitleLabel setFrame:CGRectMake(clickableView.bounds.origin.x + textMarginX,
-                                               CGRectGetMaxY(titleLabel.frame),
+                                               CGRectGetMaxY(titleLabel.frame) + subtitleYOffset,
                                                clickableView.bounds.size.width - textMarginX*2,
                                                subTitleLabel.frame.size.height)];
             [clickableView addSubview:subTitleLabel];

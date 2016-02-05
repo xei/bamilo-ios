@@ -117,6 +117,11 @@
             
             UILabel* priceLabel = [UILabel new];
             priceLabel.font = [UIFont fontWithName:kFontRegularName size:10.0f];
+            if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+            {
+                //SHOP font adjustment
+                priceLabel.font = [UIFont fontWithName:kFontLightName size:8.0f];
+            }
             priceLabel.textColor = UIColorFromRGB(0xcc0000);
             priceLabel.textAlignment = NSTextAlignmentCenter;
             priceLabel.text = priceToPresent;
