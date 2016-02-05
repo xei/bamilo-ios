@@ -1186,6 +1186,7 @@
     NSString* categoryUrlKey = [selectedItem objectForKey:@"category_url_key"];
     NSString* filterPush = [selectedItem objectForKey:@"filter"];
     NSNumber* sorting = [selectedItem objectForKey:@"sorting"];
+    NSString* targetString = [selectedItem objectForKey:@"targetString"];
     
     if (VALID_NOTEMPTY(category, RICategory))
     {
@@ -1212,6 +1213,16 @@
         JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         
         catalog.categoryUrlKey = categoryUrlKey;
+        catalog.filterPush = filterPush;
+        catalog.sortingMethodFromPush = sorting;
+        
+        [self pushViewController:catalog animated:YES];
+    }
+    else if (VALID_NOTEMPTY(targetString, NSString))
+    {
+        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
+        
+        catalog.catalogTargetString = targetString;
         catalog.filterPush = filterPush;
         catalog.sortingMethodFromPush = sorting;
         
