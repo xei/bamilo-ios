@@ -28,6 +28,15 @@
 #define VALID_NOTEMPTY(__OBJECT, __CLASSNAME) (VALID(__OBJECT, __CLASSNAME) == YES && ISEMPTY(__OBJECT) == NO)
 #endif
 
+#ifndef VALID_NOTEMPTY_VALUE
+#define VALID_NOTEMPTY_VALUE(__OBJECT, __CLASSNAME) (VALID(__OBJECT, __CLASSNAME) == YES && ISEMPTY(__OBJECT) == NO)?__OBJECT:nil
+#endif
+
+#ifndef VALID_VALUE
+#define VALID_VALUE(__OBJECT, __CLASSNAME) (nil != __OBJECT && [__OBJECT isKindOfClass:[__CLASSNAME class]])?__OBJECT:nil
+#endif
+
+
 #ifndef SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 #endif

@@ -48,6 +48,9 @@
         <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RICategory" inverseName="children" inverseEntity="RICategory" syncable="YES"/>
     </entity>
     <entity name="RICountryConfiguration" representedClassName="RICountryConfiguration" syncable="YES">
+        <attribute name="algoliaApiKey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="algoliaAppId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="algoliaNamespacePrefix" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="csEmail" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="currencyIso" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="currencyPosition" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -63,6 +66,7 @@
         <attribute name="reviewIsEnabled" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="reviewRequiresLogin" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="richRelevanceEnabled" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="suggesterProvider" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="thousandsSep" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="languages" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="RILanguage" inverseName="countryConfig" inverseEntity="RILanguage" syncable="YES"/>
     </entity>
@@ -211,7 +215,7 @@
         <element name="RIAddress" positionX="144" positionY="726" width="128" height="390"/>
         <element name="RIApi" positionX="-308" positionY="227" width="128" height="180"/>
         <element name="RICategory" positionX="-261" positionY="27" width="128" height="180"/>
-        <element name="RICountryConfiguration" positionX="-459" positionY="-423" width="128" height="285"/>
+        <element name="RICountryConfiguration" positionX="-459" positionY="-423" width="128" height="30"/>
         <element name="RICustomer" positionX="279" positionY="650" width="128" height="225"/>
         <element name="RIField" positionX="-299" positionY="681" width="128" height="405"/>
         <element name="RIFieldDataSetComponent" positionX="-63" positionY="837" width="128" height="118"/>
