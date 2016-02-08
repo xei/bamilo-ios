@@ -155,6 +155,7 @@
 {
     if (!VALID_NOTEMPTY(_sellerWarrantyLabel, UILabel)) {
         _sellerWarrantyLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, CGRectGetMaxY(self.sellerDeliveryLabel.frame) + 8.f, self.width-32, 20)];
+        [_sellerWarrantyLabel setNumberOfLines:2];
         [_sellerWarrantyLabel setFont:JABody3Font];
         [_sellerWarrantyLabel setTextColor:JABlack800Color];
         [self.clickableView addSubview:_sellerWarrantyLabel];
@@ -228,18 +229,16 @@
     } else {
         [self setHeight:CGRectGetMaxY(self.linkGlobalButton.frame) + 16.f];
     }
-    
     if (seller.warranty != NULL) {
         [self.sellerWarrantyLabel setText:[NSString stringWithFormat:@"%@: %@", STRING_SELLER_INFO_WARRANTY, seller.warranty]];
         [self.sellerWarrantyLabel setFont:JACaption2Font];
         [self.sellerWarrantyLabel setTextColor:JABlackColor];
-        [self.sellerWarrantyLabel sizeToFit];
-        [self.sellerWarrantyLabel setX:CGRectGetMaxX(self.warrantyIcon.frame) + 12.f];
-        [self.sellerWarrantyLabel setY:CGRectGetMidY(self.warrantyIcon.frame) - 7.f];
+        [self.sellerWarrantyLabel setFrame:CGRectMake(CGRectGetMaxX(self.warrantyIcon.frame) + 12.f, CGRectGetMidY(self.warrantyIcon.frame) - 7.f, self.width - (CGRectGetMaxX(self.warrantyIcon.frame) + 12.f + 16.f), self.sellerWarrantyLabel.height)];
+        [self.sellerWarrantyLabel setHeight:[self.sellerWarrantyLabel sizeThatFits:CGSizeMake(self.sellerWarrantyLabel.width, CGFLOAT_MAX)].height];
         [self.warrantyIcon setHidden:NO];
         [self setHeight:CGRectGetMaxY(self.sellerWarrantyLabel.frame) + 16.f];
     }
-    
+
     [self.clickableView setHeight:[self height]];
     
     [self arrow];

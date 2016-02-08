@@ -16,6 +16,7 @@
 #import "RICategory.h"
 #import <AdSupport/AdSupport.h>
 #import "RIProduct.h"
+#import "RITarget.h"
 
 #define kAd4PushIDFAIdKey                                   @"idfa"
 #define kAd4PushProfileShopCountryKey                       @"shopCountry"
@@ -758,6 +759,11 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 // Catalog view sorted by name - category name
                 [categoryDictionary setObject:[NSNumber numberWithInteger:5] forKey:@"sorting"];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:categoryDictionary];
+            }
+            else if ([key isEqualToString:@"b"] && VALID_NOTEMPTY(arguments, NSString))
+            {
+                // Catalog view - brand id
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"targetString":[RITarget getTargetString:CATALOG_BRAND node:arguments]}];
             }
             else if ([key isEqualToString:@"n"] && VALID_NOTEMPTY(arguments, NSString))
             {
