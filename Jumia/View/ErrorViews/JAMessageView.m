@@ -108,6 +108,11 @@
                                                  repeats:NO];
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
+}
+
 - (void)removeView
 {
     if ((self.hidden == NO) && (self != nil))

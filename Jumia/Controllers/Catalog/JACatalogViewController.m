@@ -205,7 +205,7 @@ typedef void (^ProcessActionBlock)(void);
         self.categoryUrlKey = self.category.urlKey;
     }else if (VALID_NOTEMPTY(self.categoryUrlKey, NSString))
     {
-        self.catalogTargetString = [NSString stringWithFormat:@"catalog_category::%@", self.categoryUrlKey];
+        self.catalogTargetString = [RITarget getTargetString:CATALOG_CATEGORY node:self.categoryUrlKey];
     }
     
     self.apiResponse = RIApiResponseSuccess;

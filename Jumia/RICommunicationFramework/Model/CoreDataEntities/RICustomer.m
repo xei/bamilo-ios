@@ -31,6 +31,7 @@
 @dynamic createdAt;
 @dynamic loginMethod;
 @dynamic addresses;
+@dynamic newsletterSubscribed;
 @synthesize costumerRequestID, wishlistProducts;
 
 + (NSString *)signUpAccount:(NSString *)email
@@ -141,7 +142,7 @@
     NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
     
     if (customers.count > 0) {
-        __block RICustomer *customerObject = [customers objectAtIndex:0];
+        __block RICustomer *customerObject = [customers lastObject];
         
         
         if([@"facebook" isEqualToString:customerObject.loginMethod])
@@ -219,7 +220,7 @@
     
     if (customers.count > 0)
     {
-        RICustomer *customer = (RICustomer *)customers[0];
+        RICustomer *customer = (RICustomer *)[customers lastObject];
                                 
         return [customer.idCustomer stringValue];
     }
@@ -236,7 +237,7 @@
     NSString *gender = nil;
     if (customers.count > 0)
     {
-        RICustomer *customer = (RICustomer *)customers[0];
+        RICustomer *customer = (RICustomer *)[customers lastObject];
         gender = customer.gender;
     }
     
@@ -250,7 +251,7 @@
     
     if (customers.count > 0)
     {
-        RICustomer *customer = (RICustomer *)customers[0];
+        RICustomer *customer = (RICustomer *)[customers lastObject];
         wasSignup = [@"signup" isEqualToString:customer.loginMethod];
     }
     
@@ -321,7 +322,7 @@
     NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
     
     if (customers.count > 0) {
-        successBlock(customers[0]);
+        successBlock([customers lastObject]);
         return nil;
     }
     
@@ -473,7 +474,7 @@
     
     if (VALID_NOTEMPTY(customers, NSArray))
     {
-        RICustomer *customer = [customers objectAtIndex:0];
+        RICustomer *customer = [customers lastObject];
         if(VALID_NOTEMPTY(customer.addresses, NSOrderedSet))
         {
             return YES;
@@ -502,12 +503,20 @@
 {
     RICustomer *customer = (RICustomer *)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RICustomer class])];
     
-    if ([json objectForKey:@"id"]) {
-        customer.idCustomer = [json objectForKey:@"id"];
-    }
-    
     if ([json objectForKey:@"email"]) {
         customer.email = [json objectForKey:@"email"];
+        
+        NSArray *customers = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RICustomer class]) withPropertyName:@"email" andPropertyValue:[json objectForKey:@"email"]];
+        
+        if (customers.count > 0) {
+            customer = [customers lastObject];
+        }else{
+            [RICustomer saveCustomer:customer andContext:YES];
+        }
+    }
+    
+    if ([json objectForKey:@"id"]) {
+        customer.idCustomer = [json objectForKey:@"id"];
     }
     
     if ([json objectForKey:@"first_name"]) {
@@ -560,8 +569,6 @@
         }
         customer.wishlistProducts = [wishlist copy];
     }
-    
-    [RICustomer saveCustomer:customer andContext:YES];
     
     return customer;
 }

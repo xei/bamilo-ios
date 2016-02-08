@@ -10,4 +10,6 @@
 
 @interface JAMyOrdersViewController : JABaseViewController
 
+@property (nonatomic, strong) NSString *orderNumber;
+
 @end

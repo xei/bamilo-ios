@@ -404,4 +404,7 @@
 
 #define STRING_SHIPPING_BILLING_ADDRESS RILocalizedString(@"shipping_billing_address", nil)
 
+#define STRING_SIGNUP_NEWSLETTER RILocalizedString(@"sign_up_to_our_newsletter", nil)
+#define STRING_SIGNUP_NEWSLETTER_BODY RILocalizedString(@"sign_up_to_our_newsletter_body", nil)
+
 #endif

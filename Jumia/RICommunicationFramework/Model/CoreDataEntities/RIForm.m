@@ -13,6 +13,7 @@
 #import "RIFieldOption.h"
 #import "RICart.h"
 #import "RITarget.h"
+#import "RISuccess.h"
 
 @implementation RIForm
 
@@ -281,7 +282,7 @@
                                                               else
                                                               {
                                                                   responseProcessed = YES;
-                                                                  successBlock(nil);
+                                                                  successBlock([RISuccess getSuccessMessages:jsonObject]);
                                                               }
                                                               
                                                               if(!responseProcessed)

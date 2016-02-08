@@ -354,6 +354,16 @@
                                              selector:@selector(showMoreMenu)
                                                  name:kShowMoreMenuScreenNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didLoggedIn)
+                                                 name:kUserLoggedInNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didLoggedOut)
+                                                 name:kUserLoggedOutNotification
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -765,10 +775,36 @@
     UIViewController *topViewController = [self topViewController];
     if([RICustomer checkIfUserIsLogged])
     {
-        if (![topViewController isKindOfClass:[JAMyOrdersViewController class]])
-        {
-            JAMyOrdersViewController *myOrderVC = [JAMyOrdersViewController new];
-            [self pushViewController:myOrderVC animated:YES];
+        if (VALID_NOTEMPTY(notification.object, NSString)) {
+            if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+                if(UIDeviceOrientationLandscapeLeft == [UIDevice currentDevice].orientation || UIDeviceOrientationLandscapeRight == [UIDevice currentDevice].orientation) {
+                    if (![topViewController isKindOfClass:[JAMyOrdersViewController class]])
+                    {
+                        JAMyOrdersViewController *myOrderVC = [JAMyOrdersViewController new];
+                        [myOrderVC setOrderNumber:notification.object];
+                        [self pushViewController:myOrderVC animated:YES];
+                    }
+                }else if (![topViewController isKindOfClass:[JAMyOrderDetailViewController class]])
+                {
+                    JAMyOrderDetailViewController *myOrderVC = [JAMyOrderDetailViewController new];
+                    [myOrderVC setOrderNumber:notification.object];
+                    [self pushViewController:myOrderVC animated:YES];
+                }
+            }else{
+                
+                if (![topViewController isKindOfClass:[JAMyOrderDetailViewController class]])
+                {
+                    JAMyOrderDetailViewController *myOrderVC = [JAMyOrderDetailViewController new];
+                    [myOrderVC setOrderNumber:notification.object];
+                    [self pushViewController:myOrderVC animated:YES];
+                }
+            }
+        }else{
+            if (![topViewController isKindOfClass:[JAMyOrdersViewController class]])
+            {
+                JAMyOrdersViewController *myOrderVC = [JAMyOrdersViewController new];
+                [self pushViewController:myOrderVC animated:YES];
+            }
         }
     } else {
         if (![topViewController isKindOfClass:[JAAuthenticationViewController class]])
@@ -1150,6 +1186,7 @@
     NSString* categoryUrlKey = [selectedItem objectForKey:@"category_url_key"];
     NSString* filterPush = [selectedItem objectForKey:@"filter"];
     NSNumber* sorting = [selectedItem objectForKey:@"sorting"];
+    NSString* targetString = [selectedItem objectForKey:@"targetString"];
     
     if (VALID_NOTEMPTY(category, RICategory))
     {
@@ -1176,6 +1213,16 @@
         JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         
         catalog.categoryUrlKey = categoryUrlKey;
+        catalog.filterPush = filterPush;
+        catalog.sortingMethodFromPush = sorting;
+        
+        [self pushViewController:catalog animated:YES];
+    }
+    else if (VALID_NOTEMPTY(targetString, NSString))
+    {
+        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
+        
+        catalog.catalogTargetString = targetString;
         catalog.filterPush = filterPush;
         catalog.sortingMethodFromPush = sorting;
         
@@ -1869,6 +1916,18 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenMenuNotification
                                                         object:nil
                                                       userInfo:[userInfo copy]];
+}
+
+- (void)didLoggedIn
+{
+    //remove existing ones from database
+    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RITeaserGrouping class])];
+}
+
+- (void)didLoggedOut
+{
+    //remove existing ones from database
+    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RITeaserGrouping class])];
 }
 
 @end

@@ -175,7 +175,7 @@ UICollectionViewDelegateFlowLayout>
 -(void)viewDidLoad {
     
     [super viewDidLoad];
-    _selectedCellIndex = -1;
+    _selectedCellIndex = 0;
     self.apiResponse = RIApiResponseSuccess;
     self.currentOrdersPage = 0;
     self.orders = [[NSMutableArray alloc] init];
