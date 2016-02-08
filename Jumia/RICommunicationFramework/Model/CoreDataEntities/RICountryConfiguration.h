@@ -13,6 +13,11 @@
 
 @interface RICountryConfiguration : NSManagedObject
 
+typedef enum {
+    API,
+    ALGOLIA
+} SuggesterProvider;
+
 @property (nonatomic, retain) NSString * csEmail;
 @property (nonatomic, retain) NSString * currencyIso;
 @property (nonatomic, retain) NSNumber * currencyPosition;
@@ -30,6 +35,12 @@
 @property (nonatomic, retain) NSOrderedSet *languages;
 @property (nonatomic, retain) NSNumber *facebookAvailable;
 @property (nonatomic, retain) NSNumber *richRelevanceEnabled;
+@property (nonatomic, retain) NSString *suggesterProvider;
+@property (nonatomic, retain) NSString *algoliaAppId;
+@property (nonatomic, retain) NSString *algoliaNamespacePrefix;
+@property (nonatomic, retain) NSString *algoliaApiKey;
+
+@property (nonatomic) SuggesterProvider suggesterProviderEnum;
 
 /**
  *  Method to parse an RICountryConfiguration given a JSON object
