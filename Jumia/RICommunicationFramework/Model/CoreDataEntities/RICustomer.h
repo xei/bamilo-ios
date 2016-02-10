@@ -13,7 +13,7 @@
 
 @interface RICustomer : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * idCustomer;
+@property (nonatomic, retain) NSNumber * customerId;
 @property (nonatomic, retain) NSString * email;
 @property (nonatomic, retain) NSString * firstName;
 @property (nonatomic, retain) NSString * lastName;
@@ -24,6 +24,7 @@
 @property (nonatomic, retain) NSString * createdAt;
 @property (nonatomic, retain) NSString * loginMethod;
 @property (nonatomic, retain) NSOrderedSet *addresses;
+@property (nonatomic, retain) NSNumber *newsletterSubscribed;
 
 @property (nonatomic, retain) NSArray *wishlistProducts;
 

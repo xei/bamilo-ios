@@ -20,7 +20,7 @@
 
 @implementation RICustomer
 
-@dynamic idCustomer;
+@dynamic customerId;
 @dynamic email;
 @dynamic firstName;
 @dynamic lastName;
@@ -221,7 +221,7 @@
     {
         RICustomer *customer = (RICustomer *)customers[0];
                                 
-        return [customer.idCustomer stringValue];
+        return [customer.customerId stringValue];
     }
     else
     {
@@ -503,7 +503,7 @@
     RICustomer *customer = (RICustomer *)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RICustomer class])];
     
     if ([json objectForKey:@"id"]) {
-        customer.idCustomer = [json objectForKey:@"id"];
+        customer.customerId = [json objectForKey:@"id"];
     }
     
     if ([json objectForKey:@"email"]) {
@@ -602,7 +602,7 @@
 + (NSDictionary *)toJSON:(RICustomer*)customer {
     NSMutableDictionary * json = [[NSMutableDictionary alloc] init];
     
-    [json setValue:customer.idCustomer forKey:@"id"];
+    [json setValue:customer.customerId forKey:@"id"];
     
     [json setValue:customer.email forKey:@"email"];
     

@@ -390,10 +390,10 @@ JADatePickerDelegate
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-        [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventLabelKey];
+        [trackingDictionary setValue:customerObject.customerId forKey:kRIEventLabelKey];
         [trackingDictionary setValue:@"CreateSuccess" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-        [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventUserIdKey];
+        [trackingDictionary setValue:customerObject.customerId forKey:kRIEventUserIdKey];
         [trackingDictionary setValue:customerObject.firstName forKey:kRIEventUserFirstNameKey];
         [trackingDictionary setValue:customerObject.lastName forKey:kRIEventUserLastNameKey];
         [trackingDictionary setValue:customerObject.gender forKey:kRIEventGenderKey];
