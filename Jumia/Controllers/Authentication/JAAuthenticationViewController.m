@@ -350,10 +350,10 @@
                                                               RICustomer* customer = [entities objectForKey:@"customer"];
                                                               
                                                               NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                                                              [trackingDictionary setValue:customer.idCustomer forKey:kRIEventLabelKey];
+                                                              [trackingDictionary setValue:customer.customerId forKey:kRIEventLabelKey];
                                                               [trackingDictionary setValue:@"FacebookLoginSuccess" forKey:kRIEventActionKey];
                                                               [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-                                                              [trackingDictionary setValue:customer.idCustomer forKey:kRIEventUserIdKey];
+                                                              [trackingDictionary setValue:customer.customerId forKey:kRIEventUserIdKey];
                                                               [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
                                                               [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
                                                               [trackingDictionary setValue:customer.gender forKey:kRIEventGenderKey];

@@ -13,7 +13,7 @@
 
 @interface RICustomer : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * idCustomer;
+@property (nonatomic, retain) NSNumber * customerId;
 @property (nonatomic, retain) NSString * email;
 @property (nonatomic, retain) NSString * firstName;
 @property (nonatomic, retain) NSString * lastName;

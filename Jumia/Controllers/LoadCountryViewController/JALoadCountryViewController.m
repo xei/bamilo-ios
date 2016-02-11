@@ -335,8 +335,8 @@
         
         if(VALID_NOTEMPTY(self.customer, RICustomer))
         {
-            [trackingDictionary setValue:self.customer.idCustomer forKey:kRIEventLabelKey];
-            [trackingDictionary setValue:self.customer.idCustomer forKey:kRIEventUserIdKey];
+            [trackingDictionary setValue:self.customer.customerId forKey:kRIEventLabelKey];
+            [trackingDictionary setValue:self.customer.customerId forKey:kRIEventUserIdKey];
             [trackingDictionary setValue:self.customer.firstName forKey:kRIEventUserFirstNameKey];
             [trackingDictionary setValue:self.customer.lastName forKey:kRIEventUserLastNameKey];
             [trackingDictionary setValue:self.customer.gender forKey:kRIEventGenderKey];
