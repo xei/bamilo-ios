@@ -1498,11 +1498,6 @@
 		CE8C92AE1B8B555600C77706 /* JAMainFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8C92AB1B8B555600C77706 /* JAMainFilterCell.m */; };
 		CE8C92AF1B8B555600C77706 /* JAMainFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8C92AB1B8B555600C77706 /* JAMainFilterCell.m */; };
 		CE8C92B01B8B555600C77706 /* JAMainFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8C92AB1B8B555600C77706 /* JAMainFilterCell.m */; };
-		CE8DB8631AF916F90061807E /* JASearchResultsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8DB8621AF916F90061807E /* JASearchResultsView.m */; };
-		CE8DB8641AF916F90061807E /* JASearchResultsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8DB8621AF916F90061807E /* JASearchResultsView.m */; };
-		CE8DB8651AF916F90061807E /* JASearchResultsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8DB8621AF916F90061807E /* JASearchResultsView.m */; };
-		CE8DB8661AF916F90061807E /* JASearchResultsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8DB8621AF916F90061807E /* JASearchResultsView.m */; };
-		CE8DB8671AF916F90061807E /* JASearchResultsView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8DB8621AF916F90061807E /* JASearchResultsView.m */; };
 		CE9193BD19F503FB00F89840 /* JAFallbackView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9193BC19F503FB00F89840 /* JAFallbackView.m */; };
 		CE9193BF19F5040E00F89840 /* JAFallbackView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE9193BE19F5040E00F89840 /* JAFallbackView.xib */; };
 		CE97D2EE19AE1ED50090D01C /* JANavigationBarLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = CE97D2ED19AE1ED50090D01C /* JANavigationBarLayout.m */; };
@@ -3504,8 +3499,6 @@
 		CE8C929B1B861F2100C77706 /* RISeller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RISeller.m; sourceTree = "<group>"; };
 		CE8C92AA1B8B555600C77706 /* JAMainFilterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMainFilterCell.h; sourceTree = "<group>"; };
 		CE8C92AB1B8B555600C77706 /* JAMainFilterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMainFilterCell.m; sourceTree = "<group>"; };
-		CE8DB8611AF916F90061807E /* JASearchResultsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASearchResultsView.h; sourceTree = "<group>"; };
-		CE8DB8621AF916F90061807E /* JASearchResultsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASearchResultsView.m; sourceTree = "<group>"; };
 		CE9193BB19F503FB00F89840 /* JAFallbackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAFallbackView.h; sourceTree = "<group>"; };
 		CE9193BC19F503FB00F89840 /* JAFallbackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAFallbackView.m; sourceTree = "<group>"; };
 		CE9193BE19F5040E00F89840 /* JAFallbackView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAFallbackView.xib; sourceTree = "<group>"; };
@@ -4222,8 +4215,6 @@
 			children = (
 				CE7CC08C1BE38B47006F4A56 /* JASearchView.h */,
 				CE7CC08D1BE38B47006F4A56 /* JASearchView.m */,
-				CE8DB8611AF916F90061807E /* JASearchResultsView.h */,
-				CE8DB8621AF916F90061807E /* JASearchResultsView.m */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -7769,7 +7760,6 @@
 				9AED080C1C6DFBE000B5FDF0 /* AFHTTPSessionManager.m in Sources */,
 				9AEADDCA1C0EF9350074034A /* JARegisterViewController.m in Sources */,
 				CE4848981A162803003C3D53 /* JAFiltersView.m in Sources */,
-				CE8DB8641AF916F90061807E /* JASearchResultsView.m in Sources */,
 				460503d31c163545ffffa862 /* RIBugSenseTracker.m in Sources */,
 				1fab3dec6fadd712d6a2a8c0 /* RIOpenURLHandler.m in Sources */,
 				89FB32561BCD41C5002A6FC2 /* RISellerDelivery.m in Sources */,
@@ -7911,7 +7901,6 @@
 				9A6BC07F1C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */,
 				B5C682F91986C41D0094C92C /* RIShippingMethodFormField.m in Sources */,
 				B5225E1B1989308300C18F1E /* RIPaymentMethodFormOption.m in Sources */,
-				CE8DB8631AF916F90061807E /* JASearchResultsView.m in Sources */,
 				CEA86E0E1A49D247000032AD /* JAPercentageBarView.m in Sources */,
 				4AE730B8198F8ACA000CA1DD /* JAPDVImageSection.m in Sources */,
 				CE2FB75B1993BCB900E7CD00 /* JACatalogCell.m in Sources */,
@@ -8233,7 +8222,6 @@
 				CE9ADB841AB34C4600D56481 /* RIShippingMethodFormField.m in Sources */,
 				9A6BC0811C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */,
 				CE9ADB851AB34C4600D56481 /* RIPaymentMethodFormOption.m in Sources */,
-				CE8DB8651AF916F90061807E /* JASearchResultsView.m in Sources */,
 				CE9ADB861AB34C4600D56481 /* JAPercentageBarView.m in Sources */,
 				CE9ADB891AB34C4600D56481 /* JAPDVImageSection.m in Sources */,
 				CE9ADB8B1AB34C4600D56481 /* JACatalogCell.m in Sources */,
@@ -8547,7 +8535,6 @@
 				CE9ADD7E1AB6D6E900D56481 /* RIShippingMethodFormField.m in Sources */,
 				9A6BC0821C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */,
 				CE9ADD7F1AB6D6E900D56481 /* RIPaymentMethodFormOption.m in Sources */,
-				CE8DB8661AF916F90061807E /* JASearchResultsView.m in Sources */,
 				CE9ADD801AB6D6E900D56481 /* JAPercentageBarView.m in Sources */,
 				CE9ADD831AB6D6E900D56481 /* JAPDVImageSection.m in Sources */,
 				CE9ADD851AB6D6E900D56481 /* JACatalogCell.m in Sources */,
@@ -8858,7 +8845,6 @@
 				CE9ADF761AB6D78200D56481 /* RIFieldOption.m in Sources */,
 				CE9ADF781AB6D78200D56481 /* RIShippingMethodFormField.m in Sources */,
 				CE9ADF791AB6D78200D56481 /* RIPaymentMethodFormOption.m in Sources */,
-				CE8DB8671AF916F90061807E /* JASearchResultsView.m in Sources */,
 				CE9ADF7A1AB6D78200D56481 /* JAPercentageBarView.m in Sources */,
 				9A6BC0831C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */,
 				CE9ADF7D1AB6D78200D56481 /* JAPDVImageSection.m in Sources */,

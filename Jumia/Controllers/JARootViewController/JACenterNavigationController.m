@@ -410,6 +410,7 @@
             [self pushViewController:catalog animated:YES];
             break;
         }
+        case CATALOG_HASH:
         case CATALOG_CATEGORY: {
             JACatalogViewController *catalog = [JACatalogViewController new];
             [catalog setCatalogTargetString:targetString];
