@@ -9,8 +9,14 @@
 #import "JASearchView.h"
 #import "RISearchSuggestion.h"
 #import "JAClickableView.h"
+#import "JACenterNavigationController.h"
+#import "RITarget.h"
 
 @interface JASearchView()
+{
+    BOOL _newSearch;
+    NSInteger _randomNumber;
+}
 
 @property (nonatomic, strong)UIView* backView;
 @property (nonatomic, strong)UISearchBar* searchBar;
@@ -18,10 +24,20 @@
 @property (nonatomic, assign)CGRect resultsTableOriginalFrame;
 @property (nonatomic, assign)CGFloat keyboardHeight;
 @property (nonatomic, strong)NSMutableArray* resultsArray;
+@property (nonatomic, strong) NSLock *refreshLock;
 
 @end
 
 @implementation JASearchView
+
+- (NSLock *)refreshLock
+{
+    if (!VALID
+        (_refreshLock, NSLock)) {
+        _refreshLock = [NSLock new];
+    }
+    return _refreshLock;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame andText:(NSString *)text
 {
@@ -70,11 +86,9 @@
         [self addSubview:self.searchBar];
         
         [UIView animateWithDuration:0.3f animations:^{
-            self.backView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
+            self.backView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:1.f];
             [self.searchBar setFrame:finalFrame];
         }];
-        [self.searchBar becomeFirstResponder];
-        
         
         self.resultsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f,
                                                                               CGRectGetMaxY(self.searchBar.frame),
@@ -94,42 +108,12 @@
         [self addSubview:self.resultsTableView];
         
         self.resultsTableView.hidden = YES;
-        [self searchBar:self.searchBar textDidChange:@""];
-        
-        [self.searchBar setText:text];
     }
     return self;
 }
 
 - (void)resetFrame:(CGRect)frame
-       orientation:(UIInterfaceOrientation)orientation
 {
-    CGFloat screenWidth = frame.size.width;
-    CGFloat screenHeight = frame.size.height;
-    
-    if(UIInterfaceOrientationIsPortrait(orientation))
-    {
-        if(screenWidth > screenHeight)
-        {
-            frame  = CGRectMake(0.0f, 0.0f, screenHeight, screenWidth);
-        }
-        else
-        {
-            frame  = CGRectMake(0.0f, 0.0f, screenWidth, screenHeight);
-        }
-    }
-    else
-    {
-        if(screenWidth > screenHeight)
-        {
-            frame  = CGRectMake(0.0f, 0.0f, screenWidth, screenHeight);
-        }
-        else
-        {
-            frame  = CGRectMake(0.0f, 0.0f, screenHeight, screenWidth);
-        }
-    }
-    
     self.frame = frame;
     
     self.backView.frame = CGRectMake(self.bounds.origin.x,
@@ -147,6 +131,22 @@
                                              self.frame.size.width,
                                              self.frame.size.height - CGRectGetMaxY(self.searchBar.frame));
     [self.resultsTableView reloadData];
+    
+    CGFloat duration = 0.3f;
+    [UIView animateWithDuration:duration animations:^{
+        self.backView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:1.f];
+    }];
+}
+
+- (void)setHidden:(BOOL)hidden
+{
+    [super setHidden:hidden];
+    if (!hidden) {
+        [self resetFrame:self.frame];
+        [self refreshData];
+    }else{
+        [self popAnimated:YES];
+    }
 }
 
 - (void)dealloc
@@ -162,55 +162,65 @@
     
     CGFloat duration = animated?0.3f:0.0f;
     [UIView animateWithDuration:duration animations:^{
-        self.backView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.0f];
+        self.backView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
         [self.searchBar setFrame:CGRectMake(0.0f,
                                             0.0f - 64.0f,
                                             self.searchBar.frame.size.width,
                                             self.searchBar.frame.size.height)];
-    } completion:^(BOOL finished) {
-        [self removeFromSuperview];
-    }];
+    } completion:nil];
+    [super setHidden:YES];
 }
 
 #pragma mark - searchBar
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    [self searchFor:searchBar.text];
+    RISearchSuggestion *searchSuggestion = [RISearchSuggestion getSearchSuggestionWithQuery:searchBar.text isRecentSearch:YES andContext:YES];
+    [searchSuggestion setTargetString:[RITarget getTargetString:CATALOG_SEARCH node:searchBar.text]];
+    [self searchForSuggestion:searchSuggestion];
 }
 
-- (void)searchFor:(NSString*)stringToSearch
+- (void)searchForSuggestion:(RISearchSuggestion *)suggestion
 {
-    [RISearchSuggestion saveSearchSuggestionOnDB:stringToSearch
-                                  isRecentSearch:YES
-                                      andContext:YES];
     
-    // I changed the index to 99 to know that it's to display a search result
-    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                        object:@{@"index": @(99),
-                                                                 @"name": STRING_SEARCH,
-                                                                 @"text": stringToSearch }];
-    [self popAnimated:YES];
+    if (_newSearch)
+    {
+        [RISearchSuggestion saveSearchSuggestionOnDB:suggestion
+                                      isRecentSearch:YES
+                                          andContext:YES];
+    }
+    [[JACenterNavigationController sharedInstance] openTarget:suggestion.targetString];
+    [self setHidden:YES];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
-    [self popAnimated:YES];
+    [self setHidden:YES];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    if (searchText.length > 1)
+    [self refreshData];
+}
+
+- (void)refreshData
+{
+    NSInteger randomNumber = arc4random() % NSIntegerMax;
+    _randomNumber = randomNumber;
+    if (self.searchBar.text.length > 1)
     {
-        [RISearchSuggestion getSuggestionsForQuery:searchText
+        [RISearchSuggestion getSuggestionsForQuery:self.searchBar.text
                                       successBlock:^(NSArray *suggestions) {
-                                          dispatch_async(dispatch_get_main_queue(), ^{
-                                              self.resultsArray = [suggestions mutableCopy];
-                                              [self addResultsTableViewToView];
-                                          });
+                                          if (randomNumber != _randomNumber) {
+                                              return;
+                                          }
+                                          _newSearch = YES;
+                                          self.resultsArray = [suggestions mutableCopy];
+                                          [self addResultsTableViewToView];
                                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                                       }];
     } else {
+        _newSearch = NO;
         self.resultsArray = [[RISearchSuggestion getRecentSearches] mutableCopy];
         if (VALID_NOTEMPTY(self.resultsArray, NSMutableArray)) {
             [self addResultsTableViewToView];
@@ -218,6 +228,8 @@
             [self removeResultsTableViewFromView];
         }
     }
+    [self.resultsTableView layoutIfNeeded];
+    [self.searchBar becomeFirstResponder];
 }
 
 #pragma mark - resultsTableView
@@ -282,135 +294,138 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    CGFloat heightLabel = 44.0f;
-    //remove the clickable view
-    for (UIView* view in cell.subviews) {
-        if ([view isKindOfClass:[JAClickableView class]]) { //remove the clickable view
-            [view removeFromSuperview];
-        } else {
-            for (UIView* subview in view.subviews) {
-                if ([subview isKindOfClass:[JAClickableView class]]) { //remove the clickable view
-                    [subview removeFromSuperview];
+    
+    if(VALID([self.resultsArray objectAtIndex:indexPath.row], RISearchSuggestion))
+    {
+        CGFloat heightLabel = 44.0f;
+        //remove the clickable view
+        for (UIView* view in cell.subviews) {
+            if ([view isKindOfClass:[JAClickableView class]]) { //remove the clickable view
+                [view removeFromSuperview];
+            } else {
+                for (UIView* subview in view.subviews) {
+                    if ([subview isKindOfClass:[JAClickableView class]]) { //remove the clickable view
+                        [subview removeFromSuperview];
+                    }
                 }
             }
         }
-    }
-    
-    //add the new clickable view
-    CGFloat cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
-    [cell setFrame:CGRectMake(cell.frame.origin.x,
-                              cell.frame.origin.y,
-                              self.resultsTableView.frame.size.width,
-                              cell.frame.size.height)];
-    
-    JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                                   0.0f,
-                                                                                   self.resultsTableView.frame.size.width,
-                                                                                   cellHeight)];
-    clickView.tag = indexPath.row;
-    [cell addSubview:clickView];
-    
-    UILabel *customTextLabel = [UILabel new];
-    customTextLabel.textAlignment = NSTextAlignmentLeft;
-    [clickView addSubview:customTextLabel];
-    
-    RISearchSuggestion *sugestion = [self.resultsArray objectAtIndex:indexPath.row];
-    
-    NSString *text = sugestion.item;
-    NSString *searchedText = self.searchBar.text;
-    
-    if (text.length == 0)
-    {
-        text = STRING_ERROR;
-    }
-    
-    NSMutableAttributedString *stringText = [[NSMutableAttributedString alloc] initWithString:text];
-    NSInteger stringTextLenght = text.length;
-    
-    UIFont *stringTextFont = [UIFont fontWithName:kFontLightName size:17.0f];
-    UIFont *subStringTextFont = [UIFont fontWithName:kFontRegularName size:17.0f];
-    UIColor *stringTextColor = UIColorFromRGB(0x4e4e4e);
-    
-    
-    [stringText addAttribute:NSFontAttributeName
-                       value:stringTextFont
-                       range:NSMakeRange(0, stringTextLenght)];
-    
-    [stringText addAttribute:NSStrokeColorAttributeName
-                       value:stringTextColor
-                       range:NSMakeRange(0, stringTextLenght)];
-    
-    NSRange range = [text rangeOfString:searchedText];
-    
-    [stringText addAttribute:NSFontAttributeName
-                       value:subStringTextFont
-                       range:range];
-    
-    customTextLabel.attributedText = stringText;
-    
-    UIImage *recentSearchImage;
-    UIImageView *recentSearchImageView = [UIImageView new];
-    
-    
-    if (1 == sugestion.isRecentSearch)
-    {
-        recentSearchImage = [UIImage imageNamed:@"ico_recentsearchsuggestion"];
-    }
-    else
-    {
-        recentSearchImage = [UIImage imageNamed:@"ico_searchsuggestion"];
-    }
-    
-    [recentSearchImageView setImage:recentSearchImage];
-    [clickView addSubview:recentSearchImageView];
-    
-    CGFloat customImageX = recentSearchImage.size.width;
-    CGFloat customTextX = (recentSearchImage.size.width*2) + 18.0f;
-    CGFloat separatorX = 45.0f;
-    CGFloat separatorWidth = cell.frame.size.width-20;
-    CGFloat customTextLabelWidth = clickView.frame.size.width - separatorX - 6.0f;
-    
-    [recentSearchImageView setFrame:CGRectMake(customImageX,
-                                               (heightLabel - recentSearchImage.size.height)/2,
-                                               recentSearchImage.size.width,
-                                               recentSearchImage.size.height)];
-    
-    
-    [customTextLabel setFrame:CGRectMake(customTextX,
-                                         0.0f,
-                                         customTextLabelWidth,
-                                         heightLabel)];
-    
-    //remove the clickable view
-    for (UIView* view in cell.subviews) {
-        if (99 == view.tag || 98 == view.tag) {
-            [view removeFromSuperview];
-        }
-    }
-    UIImageView *line;
-    if (0 == indexPath.row)
-    {
-        line = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, 1)];
-        line.backgroundColor = UIColorFromRGB(0xcccccc);
-        line.tag = 99;
-        [clickView addSubview:line];
-    }
-    
-    UIImageView *line2 = [[UIImageView alloc] initWithFrame:CGRectMake(separatorX, cell.frame.size.height-1, separatorWidth, 1)];
-    line2.backgroundColor = UIColorFromRGB(0xcccccc);
-    line2.tag = 98;
-    [clickView addSubview:line2];
-    
-    if(RI_IS_RTL){
         
-        [cell flipSubviewPositions];
-        [line flipViewPositionInsideSuperview];
-        [line2 flipViewPositionInsideSuperview];
-        [recentSearchImageView flipViewPositionInsideSuperview];
-        [customTextLabel flipViewPositionInsideSuperview];
-        [customTextLabel setTextAlignment:NSTextAlignmentRight];
+        //add the new clickable view
+        CGFloat cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
+        [cell setFrame:CGRectMake(cell.frame.origin.x,
+                                  cell.frame.origin.y,
+                                  self.resultsTableView.frame.size.width,
+                                  cell.frame.size.height)];
+        
+        JAClickableView* clickView = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                                       0.0f,
+                                                                                       self.resultsTableView.frame.size.width,
+                                                                                       cellHeight)];
+        clickView.tag = indexPath.row;
+        [cell addSubview:clickView];
+        
+        UILabel *customTextLabel = [UILabel new];
+        customTextLabel.textAlignment = NSTextAlignmentLeft;
+        [clickView addSubview:customTextLabel];
+        
+        RISearchSuggestion *sugestion = [self.resultsArray objectAtIndex:indexPath.row];
+        
+        NSString *value = sugestion.item;
+        NSString *label;
+        UIColor *highlightColor;
+        
+        if ([RITarget parseTarget:sugestion.targetString].targetType == STATIC_PAGE) {
+            value = [value stringByReplacingCharactersInRange:NSMakeRange(0,1)
+                                                                   withString:[[value substringToIndex:1] capitalizedString]];
+            label = [NSString stringWithFormat:@"Visit our %@ Store", value];
+            highlightColor = JABlue1Color;
+        }else if ([RITarget parseTarget:sugestion.targetString].targetType == CATALOG_CATEGORY) {
+            label = [NSString stringWithFormat:@"in %@", value];
+            highlightColor = JABlue1Color;
+        }else{
+            label = value;
+            value = self.searchBar.text;
+            highlightColor = [UIColor blackColor];
+        }
+        
+        UIFont *stringTextFont = [UIFont fontWithName:kFontLightName size:17.0f];
+        UIColor *stringTextColor = UIColorFromRGB(0x4e4e4e);
+        
+        NSRange range = [[label lowercaseString] rangeOfString:[value lowercaseString]];
+        NSMutableAttributedString *stringText = [[NSMutableAttributedString alloc] initWithString:label attributes:@{NSFontAttributeName: stringTextFont, NSForegroundColorAttributeName: stringTextColor}];
+        
+        [stringText addAttribute:NSForegroundColorAttributeName
+                           value:highlightColor
+                           range:range];
+        
+        customTextLabel.attributedText = stringText;
+    
+        
+        UIImage *recentSearchImage;
+        UIImageView *recentSearchImageView = [UIImageView new];
+        
+        
+        if (1 == sugestion.isRecentSearch)
+        {
+            recentSearchImage = [UIImage imageNamed:@"ico_recentsearchsuggestion"];
+        }
+        else
+        {
+            recentSearchImage = [UIImage imageNamed:@"ico_searchsuggestion"];
+        }
+        
+        [recentSearchImageView setImage:recentSearchImage];
+        [clickView addSubview:recentSearchImageView];
+        
+        CGFloat customImageX = recentSearchImage.size.width;
+        CGFloat customTextX = (recentSearchImage.size.width*2) + 18.0f;
+        CGFloat separatorX = 45.0f;
+        CGFloat separatorWidth = cell.frame.size.width-20;
+        CGFloat customTextLabelWidth = clickView.frame.size.width - separatorX - 6.0f;
+        
+        [recentSearchImageView setFrame:CGRectMake(customImageX,
+                                                   (heightLabel - recentSearchImage.size.height)/2,
+                                                   recentSearchImage.size.width,
+                                                   recentSearchImage.size.height)];
+        
+        
+        [customTextLabel setFrame:CGRectMake(customTextX,
+                                             0.0f,
+                                             customTextLabelWidth,
+                                             heightLabel)];
+        
+        //remove the clickable view
+        for (UIView* view in cell.subviews) {
+            if (99 == view.tag || 98 == view.tag) {
+                [view removeFromSuperview];
+            }
+        }
+        UIImageView *line;
+        if (0 == indexPath.row)
+        {
+            line = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, 1)];
+            line.backgroundColor = UIColorFromRGB(0xcccccc);
+            line.tag = 99;
+            [clickView addSubview:line];
+        }
+        
+        UIImageView *line2 = [[UIImageView alloc] initWithFrame:CGRectMake(separatorX, cell.frame.size.height-1, separatorWidth, 1)];
+        line2.backgroundColor = UIColorFromRGB(0xcccccc);
+        line2.tag = 98;
+        [clickView addSubview:line2];
+        
+        if(RI_IS_RTL){
+            
+            [cell flipSubviewPositions];
+            [line flipViewPositionInsideSuperview];
+            [line2 flipViewPositionInsideSuperview];
+            [recentSearchImageView flipViewPositionInsideSuperview];
+            [customTextLabel flipViewPositionInsideSuperview];
+            [customTextLabel setTextAlignment:NSTextAlignmentRight];
+        }
+        [clickView addTarget:self action:@selector(resultCellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
-    [clickView addTarget:self action:@selector(resultCellWasPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }
@@ -428,8 +443,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     RISearchSuggestion *suggestion = [self.resultsArray objectAtIndex:indexPath.row];
-    
-    [self searchFor:suggestion.item];
+    [suggestion setDate:[NSDate new]];
+    [self searchForSuggestion:suggestion];
 }
 
 #pragma mark - Keyboard
@@ -447,15 +462,18 @@
     [UIView animateWithDuration:0.3 animations:^{
         [self.resultsTableView setFrame:CGRectMake(self.resultsTableOriginalFrame.origin.x,
                                                    self.resultsTableOriginalFrame.origin.y,
-                                                   self.resultsTableOriginalFrame.size.width,
-                                                   self.resultsTableOriginalFrame.size.height - self.keyboardHeight)];
+                                                   self.frame.size.width,
+                                                   self.frame.size.height - self.keyboardHeight)];
     }];
 }
 
 - (void) keyboardWillHide:(NSNotification *)notification
 {
     [UIView animateWithDuration:0.3 animations:^{
-        [self.resultsTableView setFrame:self.resultsTableOriginalFrame];
+        [self.resultsTableView setFrame:CGRectMake(self.resultsTableOriginalFrame.origin.x,
+                                                   self.resultsTableOriginalFrame.origin.y,
+                                                   self.frame.size.width,
+                                                   self.frame.size.height)];
     }];
 }
 

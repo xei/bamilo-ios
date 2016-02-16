@@ -56,8 +56,10 @@
 #import "JAMoreMenuViewController.h"
 #import "RICountry.h"
 #import "JAFiltersViewController.h"
+#import "RITarget.h"
 
 #import "JAAuthenticationViewController.h"
+#import "JASearchView.h"
 
 @interface JACenterNavigationController ()
 
@@ -65,9 +67,20 @@
 @property (assign, nonatomic) BOOL neeedsExternalPaymentMethod;
 @property (strong, nonatomic) UIStoryboard *mainStoryboard;
 
+@property (nonatomic, strong) JASearchView *searchView;
+
 @end
 
 @implementation JACenterNavigationController
+
++ (instancetype)sharedInstance {
+    static id defaultInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        defaultInstance = [self new];
+    });
+    return defaultInstance;
+}
 
 #pragma mark - View Lifecycle
 
@@ -378,6 +391,51 @@
     
     [self customizeNavigationBar];
     [self customizeTabBar];
+}
+
+- (void)openTarget:(NSString *)targetString
+{
+    RITarget *target = [RITarget parseTarget:targetString];
+    
+    switch (target.targetType) {
+        case PRODUCT_DETAIL: {
+            JAPDVViewController *pdv = [JAPDVViewController new];
+            [pdv setProductTargetString:targetString];
+            [self pushViewController:pdv animated:YES];
+            break;
+        }
+        case CATALOG_SEARCH: {
+            JACatalogViewController *catalog = [JACatalogViewController new];
+            [catalog setSearchString:[RITarget parseTarget:targetString].node];
+            [self pushViewController:catalog animated:YES];
+            break;
+        }
+        case CATALOG_CATEGORY: {
+            JACatalogViewController *catalog = [JACatalogViewController new];
+            [catalog setCatalogTargetString:targetString];
+            [self pushViewController:catalog animated:YES];
+            break;
+        }
+        case STATIC_PAGE: {
+            JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
+            
+            [viewController.navBarLayout setShowBackButton:YES];
+            [viewController.navBarLayout setTitle:[RITarget parseTarget:targetString].node];
+                
+            [viewController setTargetString:targetString];
+            [self pushViewController:viewController animated:YES];
+            break;
+        }
+        case CATALOG_BRAND: {
+            JACatalogViewController *catalog = [JACatalogViewController new];
+            [catalog setCatalogTargetString:targetString];
+            [self pushViewController:catalog animated:YES];
+            break;
+        }
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark Home Screen
@@ -1871,8 +1929,7 @@
 
 - (void)search
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressSearchButtonNotification
-                                                        object:nil];
+    [self showSearchView];
 }
 
 - (void)openCart
@@ -1928,6 +1985,30 @@
 {
     //remove existing ones from database
     [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RITeaserGrouping class])];
+}
+
+- (void)viewWillLayoutSubviews
+{
+    [self.searchView resetFrame:self.view.bounds];
+}
+
+#pragma mark - Search Bar
+
+- (JASearchView *)searchView
+{
+    if (!VALID(_searchView, JASearchView)) {
+        _searchView = [[JASearchView alloc] initWithFrame:self.view.bounds andText:@""];
+        [_searchView setHidden:YES];
+        [self.view addSubview:_searchView];
+    }
+    return _searchView;
+}
+
+- (void)showSearchView
+{
+    if (NO == self.searchViewAlwaysHidden) {
+        [self.searchView setHidden:NO];
+    }
 }
 
 @end

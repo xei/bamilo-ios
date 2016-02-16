@@ -9,6 +9,7 @@
 #import "JASearchResultsView.h"
 #import "JAClickableView.h"
 #import "RISearchSuggestion.h"
+#import "JACenterNavigationController.h"
 
 @interface JASearchResultsView()
 
@@ -335,7 +336,7 @@
 {
     RISearchSuggestion *suggestion = [self.resultsArray objectAtIndex:indexPath.row];
     
-    [self searchFor:suggestion.item];
+    [self searchForSuggestion:suggestion];
 }
 
 #pragma mark - Keyboard
@@ -360,21 +361,15 @@
 
 - (void) keyboardWillHide:(NSNotification *)notification
 {
-    [self popSearchResults];
 }
 
 #pragma mark - Search Actions
-- (void)searchFor:(NSString*)stringToSearch
+
+- (void)searchForSuggestion:(RISearchSuggestion *)suggestion
 {
-    [RISearchSuggestion saveSearchSuggestionOnDB:stringToSearch
+    [RISearchSuggestion saveSearchSuggestionOnDB:suggestion
                                   isRecentSearch:YES andContext:YES];
-    
-    // I changed the index to 99 to know that it's to display a search result
-    [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
-                                                        object:@{@"index": @(99),
-                                                                 @"name": STRING_SEARCH,
-                                                                 @"text": stringToSearch }];
-    
+    [[JACenterNavigationController sharedInstance] openTarget:suggestion.targetString];
     [self popSearchResults];
 }
 
