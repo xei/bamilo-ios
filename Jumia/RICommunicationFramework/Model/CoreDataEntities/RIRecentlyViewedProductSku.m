@@ -75,9 +75,9 @@
                 
                 if (VALID_NOTEMPTY(productSkuToDelete, RIRecentlyViewedProductSku)) {
                     [[RIDataBaseWrapper sharedInstance] deleteObject:productSkuToDelete];
+                    [recentlyViewedProductSkusMutable removeObject:productSkuToDelete];
                 }
                 
-                [recentlyViewedProductSkusMutable removeObject:productSkuToDelete];
                 recentlyViewedProductSkus = [recentlyViewedProductSkusMutable copy];
             }
             [[RIDataBaseWrapper sharedInstance] saveContext];
