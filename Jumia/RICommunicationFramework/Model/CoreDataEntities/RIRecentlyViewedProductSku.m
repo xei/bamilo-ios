@@ -66,16 +66,23 @@
     //now we need to check if there are more than 15 products
     [RIRecentlyViewedProductSku getRecentlyViewedProductSkusWithSuccessBlock:^(NSArray *recentlyViewedProductSkus) {
         //there are more than 15, we need to remove the oldest
-        if (VALID_NOTEMPTY(recentlyViewedProductSkus, NSArray) && recentlyViewedProductSkus.count > 15) {
-            //NSArray recentlyViewedProductSkus is already ordered in getRecentlyViewedProductSkusWithSuccessBlock
-            RIRecentlyViewedProductSku* productSkuToDelete = [recentlyViewedProductSkus lastObject];
-            
-            if (VALID_NOTEMPTY(productSkuToDelete, RIRecentlyViewedProductSku)) {
-                [[RIDataBaseWrapper sharedInstance] deleteObject:productSkuToDelete];
+        if (VALID_NOTEMPTY(recentlyViewedProductSkus, NSArray)) {
+            while (recentlyViewedProductSkus.count > 15) {
+                //NSArray recentlyViewedProductSkus is already ordered in getRecentlyViewedProductSkusWithSuccessBlock
+                RIRecentlyViewedProductSku* productSkuToDelete = [recentlyViewedProductSkus lastObject];
+                
+                NSMutableArray* recentlyViewedProductSkusMutable = [NSMutableArray arrayWithArray:recentlyViewedProductSkus];
+                
+                if (VALID_NOTEMPTY(productSkuToDelete, RIRecentlyViewedProductSku)) {
+                    [[RIDataBaseWrapper sharedInstance] deleteObject:productSkuToDelete];
+                }
+                
+                [recentlyViewedProductSkusMutable removeObject:productSkuToDelete];
+                recentlyViewedProductSkus = [recentlyViewedProductSkusMutable copy];
             }
-            
             [[RIDataBaseWrapper sharedInstance] saveContext];
         }
+        
         if (successBlock) {
             successBlock();
         }
