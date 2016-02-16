@@ -139,7 +139,7 @@
     }else{
         [self setLeftPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
     }
-    [self setCenterPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"rootNavigationController"]];
+    [self setCenterPanel:[JACenterNavigationController sharedInstance]];
 }
 
 - (void)updateCountry:(NSNotification*)notification

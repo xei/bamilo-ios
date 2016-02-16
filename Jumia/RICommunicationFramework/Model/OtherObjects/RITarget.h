@@ -11,8 +11,10 @@
 @interface RITarget : NSObject
 
 typedef enum {
+    UNKNOWN,
     PRODUCT_DETAIL,
-    CATALOG,
+    CATALOG_SEARCH,
+    CATALOG_HASH,
     CATALOG_CATEGORY,
     CATALOG_BRAND,
     CATALOG_SELLER,
@@ -25,6 +27,7 @@ typedef enum {
 } TargetType;
 
 @property (nonatomic, strong) NSString* type;
+@property (nonatomic) TargetType targetType;
 @property (nonatomic, strong) NSString* node;
 @property (nonatomic, strong) NSString* urlString;
 

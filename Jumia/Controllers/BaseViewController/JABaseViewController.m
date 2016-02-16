@@ -12,10 +12,9 @@
 #import "JAMaintenancePage.h"
 #import "JAKickoutView.h"
 #import "JAFallbackView.h"
-#import "JASearchResultsView.h"
-#import "JASearchView.h"
 #import "RICustomer.h"
 #import "JAAuthenticationViewController.h"
+#import "JACenterNavigationController.h"
 
 #define kSearchViewBarHeight 32.0f
 
@@ -36,8 +35,6 @@
 @property (nonatomic, strong) UIView *searchBarBackground;
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) UIImageView *searchIconImageView;
-@property (nonatomic, strong) JASearchResultsView *searchResultsView;
-@property (nonatomic, strong) JASearchView *searchView;
 @property (nonatomic, strong) UIButton *searchBarBackButton;
 
 @end
@@ -177,10 +174,6 @@
     if (VALID_NOTEMPTY(self.kickoutView, JAKickoutView)) {
         [self.kickoutView setupKickoutView:CGRectMake(0.0f, 0.0f, window.frame.size.height, window.frame.size.width) orientation:toInterfaceOrientation];
     }
-    
-    if (VALID_NOTEMPTY(self.searchView, JASearchView)) {
-        [self.searchView removeFromSuperview];
-    }
 }
 
 - (void)viewWillLayoutSubviews
@@ -194,7 +187,9 @@
 
 - (void)onOrientationChanged
 {
-    
+    if (self.searchBarIsVisible) {
+        [self reloadSearchBar];
+    }
 }
 
 - (void)changeLoadingFrame:(CGRect)frame orientation:(UIInterfaceOrientation)orientation {
@@ -294,7 +289,6 @@
 }
 
 - (void)sideMenuIsOpening {
-    [self.searchResultsView popSearchResults];
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
@@ -313,20 +307,6 @@
 - (void)reloadTabBar {
     [[NSNotificationCenter defaultCenter] postNotificationName:kChangeTabBarVisibility
                                                         object:[NSNumber numberWithBool:self.tabBarIsVisible]];
-}
-
-#pragma mark - Search Bar
-
-- (void)showSearchView
-{
-    UIView* window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
-    if (self.searchView) {
-        [self.searchView removeFromSuperview];
-    }
-    if (NO == self.searchViewAlwaysHidden) {
-        self.searchView = [[JASearchView alloc] initWithFrame:window.bounds andText:_searchBarText];
-        [window addSubview:self.searchView];
-    }
 }
 
 - (void)showSearchBar {
@@ -405,74 +385,21 @@
         [self.searchBar setPositionAdjustment:UIOffsetMake(-self.searchBar.frame.size.width + 48.0f, 0) forSearchBarIcon:UISearchBarIconClear];
         [self.searchBar setSearchTextPositionAdjustment:UIOffsetMake(24.0f, 0)];
     }
-    
-    [self.searchResultsView reloadFrame:CGRectMake([self viewBounds].origin.x,
-                                                   [self viewBounds].origin.y,
-                                                   [self viewBounds].size.width,
-                                                   [self viewBounds].size.height - kTabBarHeight)];
 }
 
 #pragma mark Search Bar && Search Results View Delegate
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    [self.searchResultsView searchFor:searchBar.text];
+    
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    self.searchResultsView.searchText = searchText;
-    if (0 < searchText.length) {
-        self.searchIconImageView.hidden = YES;
-    }
-    else {
-        self.searchIconImageView.hidden = NO;
-    }
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar;
 {
-    UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
-    self.searchBarBackButton = [[UIButton alloc] initWithFrame:CGRectMake(window.bounds.origin.x,
-                                                                          window.bounds.origin.y + 20.0f,
-                                                                          80.0f,
-                                                                          44.0f)];
-    [self.searchBarBackButton setImageEdgeInsets:UIEdgeInsetsMake(0.0f,
-                                                                  10.0f,
-                                                                  0.0f,
-                                                                  0.0f)];
-    self.searchBarBackButton.backgroundColor = JANavBarBackgroundGrey;
-    [self.searchBarBackButton setImage:[UIImage imageNamed:@"btn_back"] forState:UIControlStateNormal];
-    [self.searchBarBackButton setImage:[UIImage imageNamed:@"btn_back_pressed"] forState:UIControlStateHighlighted];
-    [self.searchBarBackButton setImage:[UIImage imageNamed:@"btn_back_pressed"] forState:UIControlStateSelected];
-    self.searchBarBackButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [window addSubview:self.searchBarBackButton];
-    if (RI_IS_RTL) {
-        [self.searchBarBackButton flipViewPositionInsideSuperview];
-        [self.searchBarBackButton flipViewImage];
-        [self.searchBarBackButton flipViewAlignment];
-    }
-    
-    self.searchResultsView = [[JASearchResultsView alloc] initWithFrame:CGRectMake([self viewBounds].origin.x,
-                                                                                   [self viewBounds].origin.y,
-                                                                                   [self viewBounds].size.width,
-                                                                                   [self viewBounds].size.height + kTabBarHeight)];
-    self.searchResultsView.delegate = self;
-    [self.view addSubview:self.searchResultsView];
-    [self.searchResultsView setSearchText:@""];
-    
-    [self.searchBarBackButton addTarget:self.searchResultsView action:@selector(popSearchResults) forControlEvents:UIControlEventTouchUpInside];
-    
-    return YES;
-}
-
-- (void)searchResultsViewWillPop {
-    [self.searchBarBackButton removeFromSuperview];
-    self.searchBar.text = @"";
-    [self.searchBar resignFirstResponder];
-    self.searchIconImageView.hidden = NO;
-    //    //remove results
-    //    [self.searchBar performSelector: @selector(resignFirstResponder)
-    //                         withObject: nil
-    //                         afterDelay: 0.1];
+    [[JACenterNavigationController sharedInstance] showSearchView];
+    return NO;
 }
 
 # pragma mark Loading View

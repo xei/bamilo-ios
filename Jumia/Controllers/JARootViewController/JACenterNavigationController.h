@@ -15,4 +15,11 @@
 @property (strong, nonatomic) JACustomNavigationBarView *navigationBarView;
 @property (strong, nonatomic) JATabBarView *tabBarView;
 
+@property (nonatomic, assign)BOOL searchViewAlwaysHidden;
+
++ (instancetype)sharedInstance;
+
+- (void)openTarget:(NSString *)targetString;
+- (void)showSearchView;
+
 @end
