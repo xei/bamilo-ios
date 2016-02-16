@@ -78,7 +78,7 @@ NSString *const RI_API_PROD_VALIDATE = @"catalog/validate/";
 NSString *const RI_CATALOG_CATEGORIES = @"catalog/categories/";
 NSString *const RI_API_CATALOG = @"search/find/";
 NSString *const RI_API_CATALOG_CATEGORY = @"search/find/category/";
-NSString *const RI_API_SEARCH_SUGGESTIONS = @"search/suggest/q/";
+NSString *const RI_API_SEARCH_SUGGESTIONS = @"search/suggester/q/";
 
 NSString *const RI_API_ADD_ORDER = @"cart/addproduct/";
 NSString *const RI_API_ADD_BUNDLE = @"cart/addbundle/";

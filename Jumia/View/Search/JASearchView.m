@@ -340,7 +340,7 @@
                                                                    withString:[[value substringToIndex:1] capitalizedString]];
             label = [NSString stringWithFormat:@"Visit our %@ Store", value];
             highlightColor = JABlue1Color;
-        }else if ([RITarget parseTarget:sugestion.targetString].targetType == CATALOG_CATEGORY) {
+        }else if ([RITarget parseTarget:sugestion.targetString].targetType == CATALOG_CATEGORY || [RITarget parseTarget:sugestion.targetString].targetType == CATALOG_HASH) {
             label = [NSString stringWithFormat:@"in %@", value];
             highlightColor = JABlue1Color;
         }else{
