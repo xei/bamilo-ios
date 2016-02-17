@@ -634,6 +634,16 @@ UIAlertViewDelegate
     NSString* skuKey = [currentDynamicForm getFieldNameForKey:@"sku"];
     [parameters addEntriesFromDictionary:@{skuKey: self.product.sku}];
     
+    if ([currentDynamicForm checkErrors]) {
+        [self onErrorResponse:RIApiResponseSuccess
+                     messages:@[currentDynamicForm.firstErrorInFields]
+                showAsMessage:YES
+                     selector:@selector(sendReview:)
+                      objects:@[sender]];
+        [self hideLoading];
+        return;
+    }
+    
     [RIForm sendForm:currentForm
           parameters:parameters
         successBlock:^(id object) {
