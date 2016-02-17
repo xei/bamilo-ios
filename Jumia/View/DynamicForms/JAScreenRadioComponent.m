@@ -58,10 +58,7 @@
 - (UILabel *)optionLabel
 {
     if (!VALID_NOTEMPTY(_optionLabel, UILabel)) {
-        _optionLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f,
-                                                                 0.0f,
-                                                                 50.0f,
-                                                                 20.0f)];
+        _optionLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 40.0f, 20.0f)];
         [_optionLabel setTextColor:JABlack700Color];
         [_optionLabel setFont:JACaptionFont];
         [self.clickableView addSubview:_optionLabel];
@@ -103,13 +100,6 @@
         self.optionLabel.text = STRING_INACTIVE;
         separatorViewY = self.clickableView.frame.size.height - self.separatorView.frame.size.height;
     }
-    [_optionLabel sizeToFit];
-    CGFloat arrowY = self.arrowImageView.frame.origin.y;
-    CGFloat arrowX = self.arrowImageView.frame.origin.x;
-    [_optionLabel setFrame:CGRectMake(arrowX - _optionLabel.frame.size.width - 5.0f,
-                                      arrowY,
-                                      _optionLabel.frame.size.width,
-                                      _optionLabel.frame.size.height)];
     
     self.separatorView.y = separatorViewY;
 }
@@ -127,13 +117,41 @@
 {
     [super setFrame:frame];
     
+    self.titleLabel.frame = CGRectMake(16.0f, 10.0f, 230.0f, 20.0f);
+    self.titleLabel.textAlignment = NSTextAlignmentLeft;
+    self.subTitleLabel.frame = CGRectMake(16.0f, 30.0f, 230.0f, 40.0f);
+    self.subTitleLabel.textAlignment = NSTextAlignmentLeft;
+    
+    self.arrowImageView.frame = CGRectMake(self.frame.size.width - self.arrowImageView.frame.size.width - 16.0f,
+                                           (self.frame.size.height - self.arrowImageView.frame.size.height) / 2,
+                                           self.arrowImageView.frame.size.width,
+                                           self.arrowImageView.frame.size.height);
+    
+    self.separatorView.frame = CGRectMake(16.0f, 0.0f, 304.0f, 1.0f);
+    
+
+    [self.optionLabel setFrame:CGRectMake(self.arrowImageView.frame.origin.x - self.optionLabel.frame.size.width - 5.0f,
+                                          (self.frame.size.height - self.optionLabel.frame.size.height) / 2,
+                                          self.optionLabel.frame.size.width,
+                                          self.optionLabel.frame.size.height)];
+    self.optionLabel.textAlignment = NSTextAlignmentLeft;
+    
     [self flipIfIsRTL];
 }
 
 - (void)flipIfIsRTL
 {
     if (RI_IS_RTL) {
-        //$$$ DO RTL
+        [self.titleLabel flipViewPositionInsideSuperview];
+        [self.titleLabel flipViewAlignment];
+        [self.subTitleLabel flipViewPositionInsideSuperview];
+        [self.subTitleLabel flipViewAlignment];
+        [self.optionLabel flipViewPositionInsideSuperview];
+        [self.optionLabel flipViewAlignment];
+        [self.arrowImageView flipViewPositionInsideSuperview];
+        [self.arrowImageView flipViewImage];
+        
+        [self.separatorView flipViewPositionInsideSuperview];
     }
 }
 

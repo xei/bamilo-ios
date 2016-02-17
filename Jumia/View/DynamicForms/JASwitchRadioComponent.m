@@ -32,8 +32,11 @@
 - (UILabel *)labelText
 {
     if (!VALID_NOTEMPTY(_labelText, UILabel)) {
-        _labelText = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.switchComponent.frame) + 16.f, 0,
-                                                              self.width, self.height)];
+        _labelText = [[UILabel alloc]init];
+        _labelText.frame = CGRectMake(76.f,
+                                      14.0f,
+                                      self.width - 76.0f - 16.0f,
+                                      20.0f);
         [_labelText setFont:JABody3Font];
         [_labelText setTextColor:JABlackColor];
         [_labelText setTextAlignment:NSTextAlignmentLeft];
@@ -46,10 +49,10 @@
 {
     if (!VALID_NOTEMPTY(_switchComponent, UISwitch)) {
         _switchComponent = [UISwitch new];
-        [_switchComponent setFrame:CGRectMake(16.f,
-                                              (self.height - _switchComponent.height) / 2,
-                                              _switchComponent.width,
-                                              _switchComponent.height)];
+        _switchComponent.frame = CGRectMake(16.f,
+                                            (48.0f - _switchComponent.height) / 2,
+                                            _switchComponent.width,
+                                            _switchComponent.height);
         [_switchComponent addTarget:self action:@selector(changedState:) forControlEvents:UIControlEventValueChanged];
         
         [self addSubview:_switchComponent];
@@ -89,6 +92,16 @@
     self.contentBaseSize = CGSizeMake(320.0f,
                                       48.0f);
     
+    self.labelText.frame = CGRectMake(76.f,
+                                      14.0f,
+                                      self.width - 76.0f - 16.0f,
+                                      20.0f);
+    self.labelText.textAlignment = NSTextAlignmentLeft;
+    self.switchComponent.frame = CGRectMake(16.f,
+                                            (48.0f - self.switchComponent.height) / 2,
+                                            self.switchComponent.width,
+                                            self.switchComponent.height);
+    
     [self flipIfIsRTL];
 }
 
@@ -99,7 +112,14 @@
         [self.labelText flipViewPositionInsideSuperview];
         [self.labelText flipViewAlignment];
         
-        //$$$ flip the variable containers and shit
+        self.checkboxBaseRect = CGRectMake(self.frame.size.width - self.checkboxBaseRect.origin.x - self.checkboxBaseRect.size.width,
+                                           self.checkboxBaseRect.origin.y,
+                                           self.checkboxBaseRect.size.width,
+                                           self.checkboxBaseRect.size.height);
+        self.labelBaseRect = CGRectMake(self.frame.size.width - self.labelBaseRect.origin.x - self.labelBaseRect.size.width,
+                                        self.labelBaseRect.origin.y,
+                                        self.labelBaseRect.size.width,
+                                        self.labelBaseRect.size.height);
     }
 }
 
@@ -141,6 +161,10 @@
             [optionLabel setTextColor:JABlackColor];
             [optionLabel setFont:JABody3Font];
             optionLabel.text = relatedField.label;
+            optionLabel.textAlignment = NSTextAlignmentLeft;
+            if (RI_IS_RTL) {
+                optionLabel.textAlignment = NSTextAlignmentRight;
+            }
             [contentView addSubview:optionLabel];
             
             UIImageView* checkboxImageView = [[UIImageView alloc] initWithImage:checkboxImage];
@@ -156,7 +180,7 @@
             }
             
             if (i < field.relatedFields.count - 1) {
-                UIView* separatorView = [[UIView alloc] initWithFrame:CGRectMake(16.0f,
+                UIView* separatorView = [[UIView alloc] initWithFrame:CGRectMake(self.labelBaseRect.origin.x,
                                                                                  contentView.frame.size.height - 1.0f,
                                                                                  contentView.frame.size.width - 16.0f,
                                                                                  1.0f)];

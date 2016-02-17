@@ -62,7 +62,14 @@
 - (void)flipIfIsRTL
 {
     if (RI_IS_RTL) {
-        //$$$ DO RTL
+        self.checkboxBaseRect = CGRectMake(self.frame.size.width - self.checkboxBaseRect.origin.x - self.checkboxBaseRect.size.width,
+                                           self.checkboxBaseRect.origin.y,
+                                           self.checkboxBaseRect.size.width,
+                                           self.checkboxBaseRect.size.height);
+        self.labelBaseRect = CGRectMake(self.frame.size.width - self.labelBaseRect.origin.x - self.labelBaseRect.size.width,
+                                        self.labelBaseRect.origin.y,
+                                        self.labelBaseRect.size.width,
+                                        self.labelBaseRect.size.height);
     }
 }
 
@@ -93,6 +100,10 @@
         UILabel* optionLabel = [[UILabel alloc] initWithFrame:self.labelBaseRect];
         [optionLabel setTextColor:JABlackColor];
         [optionLabel setFont:JABody3Font];
+        optionLabel.textAlignment = NSTextAlignmentLeft;
+        if (RI_IS_RTL) {
+            optionLabel.textAlignment = NSTextAlignmentRight;
+        }
         optionLabel.text = option.label;
         [contentView addSubview:optionLabel];
         
@@ -109,7 +120,7 @@
         }
         
         if (i < field.options.count - 1) {
-            UIView* separatorView = [[UIView alloc] initWithFrame:CGRectMake(16.0f,
+            UIView* separatorView = [[UIView alloc] initWithFrame:CGRectMake(self.labelBaseRect.origin.x,
                                                                              contentView.frame.size.height - 1.0f,
                                                                              contentView.frame.size.width - 16.0f,
                                                                              1.0f)];

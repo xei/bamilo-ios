@@ -54,11 +54,11 @@
 {
     [super setFrame:frame];
     
-    [self.titleLabel setFrame:CGRectMake(16.0f, 10.0f, self.width - 16.0f, 20)];
-    if (self.iconImageView) {
-        [self.iconImageView setY:self.y + self.titleLabel.y + (self.titleLabel.height - self.iconImageView.height)/2];
-    }
+    [self.titleLabel setFrame:CGRectMake(16.0f, 10.0f, self.width - 16.0f*2, 20)];
     [self.titleLabel setTextAlignment:NSTextAlignmentLeft];
+    [self.subTitleLabel setFrame:CGRectMake(16.0f, 30.0f, self.width - 16.f*2, 60)];
+    [self.subTitleLabel setTextAlignment:NSTextAlignmentLeft];
+
     
     [self flipIfIsRTL];
 }
@@ -67,6 +67,7 @@
 {
     if (RI_IS_RTL) {
         [self.titleLabel flipViewAlignment];
+        [self.subTitleLabel flipViewAlignment];
     }
 }
 
