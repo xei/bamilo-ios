@@ -122,7 +122,7 @@
                                                                      CGRectGetMaxY(self.forgotPasswordButton.frame) + kLoginButtonMargin,
                                                                      _elementsWidth,
                                                                      kBottomDefaultHeight)];
-        [_loginButton addButton:[@"Continue" uppercaseString] target:self action:@selector(loginButtonPressed:)];
+        [_loginButton addButton:[STRING_CONTINUE uppercaseString] target:self action:@selector(loginButtonPressed:)];
     }
     return _loginButton;
 }

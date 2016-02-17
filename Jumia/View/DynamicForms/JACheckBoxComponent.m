@@ -60,7 +60,7 @@
     
     NSMutableAttributedString* attributedText;
     NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                UIColorFromRGB(0x666666), NSForegroundColorAttributeName, nil];
+                                JABlackColor, NSForegroundColorAttributeName, nil];
 
     NSRange linkRange;
     if(VALID_NOTEMPTY(field.label, NSString))

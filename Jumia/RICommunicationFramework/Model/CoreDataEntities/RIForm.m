@@ -56,7 +56,7 @@
         if (VALID_NOTEMPTY(formIndex.targetString, NSString))
         {
             NSString* urlString = [RITarget getURLStringforTargetString:formIndex.targetString];
-            
+
             NSURL *url = [NSURL URLWithString:urlString];
             
             [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
@@ -121,6 +121,7 @@
                 failureBlock:(void (^)(RIApiResponse, NSArray *))failureBlock
 {
     urlString = [NSString stringWithFormat:@"%@%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_FORMS_GET, urlString];
+    
     NSURL *url = [NSURL URLWithString:urlString];
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url

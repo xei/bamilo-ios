@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * type;
 @property (nonatomic, retain) NSString * label;
+@property (nonatomic, retain) NSString * subLabel;
 @property (nonatomic, retain) NSString * value;
 @property (nonatomic, retain) NSNumber * checked;
 @property (nonatomic, retain) NSString * apiCallTarget;

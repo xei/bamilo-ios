@@ -63,6 +63,7 @@
 #define kShowMyAccountScreenNotification @"NOTIFICATION_SHOW_MY_ACCOUNT_SCREEN"
 #define kShowUserDataScreenNotification @"NOTIFICATION_SHOW_USER_DATA_SCREEN"
 #define kShowEmailNotificationsScreenNotification @"NOTIFICATION_SHOW_EMAIL_NOTIFICAITONS_SCREEN"
+#define kShowNewsletterSubscriptionsScreenNotification @"NOTIFICATION_SHOW_NEWSLETTER_SUBSCRIPTIONS_NOTIFICAITONS_SCREEN"
 
 // Checkout
 #define kShowCheckoutForgotPasswordScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_FORGOT_PASSWORD_SCREEN"
