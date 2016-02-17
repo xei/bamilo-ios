@@ -52,6 +52,7 @@
             break;
         }
     }
+    
     if (NO == productExists) {
         //did not find it, so create a new object and save
         RIRecentlyViewedProductSku* newRecentlyViewedProductSku = (RIRecentlyViewedProductSku*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RIRecentlyViewedProductSku class])];
@@ -61,30 +62,27 @@
         newRecentlyViewedProductSku.lastViewedDate = [NSDate date];
         [RIRecentlyViewedProductSku saveRecentlyViewedProductSku:newRecentlyViewedProductSku andContext:YES];
     }
+    
     //now we need to check if there are more than 15 products
     [RIRecentlyViewedProductSku getRecentlyViewedProductSkusWithSuccessBlock:^(NSArray *recentlyViewedProductSkus) {
-        
-        if (VALID_NOTEMPTY(recentlyViewedProductSkus, NSArray) && recentlyViewedProductSkus.count > 15) {
-            
-            //there are more than 15, we need to remove the oldest
-            RIRecentlyViewedProductSku* productSkuToDelete = nil;
-            for (RIRecentlyViewedProductSku* recentProductSku in recentlyViewedProductSkus) {
+        //there are more than 15, we need to remove the oldest
+        if (VALID_NOTEMPTY(recentlyViewedProductSkus, NSArray)) {
+            while (recentlyViewedProductSkus.count > 15) {
+                //NSArray recentlyViewedProductSkus is already ordered in getRecentlyViewedProductSkusWithSuccessBlock
+                RIRecentlyViewedProductSku* productSkuToDelete = [recentlyViewedProductSkus lastObject];
                 
-                if (ISEMPTY(productSkuToDelete)) {
-                    productSkuToDelete = recentProductSku;
-                } else {
-                    NSDate* oldestDate = [productSkuToDelete.lastViewedDate earlierDate:productSkuToDelete.lastViewedDate];
-                    if ([oldestDate isEqualToDate:recentProductSku.lastViewedDate]) {
-                        productSkuToDelete = recentProductSku;
-                    }
+                NSMutableArray* recentlyViewedProductSkusMutable = [NSMutableArray arrayWithArray:recentlyViewedProductSkus];
+                
+                if (VALID_NOTEMPTY(productSkuToDelete, RIRecentlyViewedProductSku)) {
+                    [[RIDataBaseWrapper sharedInstance] deleteObject:productSkuToDelete];
+                    [recentlyViewedProductSkusMutable removeObject:productSkuToDelete];
                 }
-            }
-            
-            if (VALID_NOTEMPTY(productSkuToDelete, RIRecentlyViewedProductSku)) {
-                [[RIDataBaseWrapper sharedInstance] deleteObject:productSkuToDelete];
+                
+                recentlyViewedProductSkus = [recentlyViewedProductSkusMutable copy];
             }
             [[RIDataBaseWrapper sharedInstance] saveContext];
         }
+        
         if (successBlock) {
             successBlock();
         }
