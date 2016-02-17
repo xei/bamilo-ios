@@ -374,6 +374,12 @@ JAActivityViewControllerDelegate
         }
     }
     if (VALID_NOTEMPTY(notification.object, NSString) && [self.productSku isEqualToString:notification.object]) {
+        if (VALID_NOTEMPTY(notification.userInfo, NSDictionary)) {
+            NSDate *favoriteAddDate = [notification.userInfo valueForKey: @"favoriteAddDate"];
+            if (VALID_NOTEMPTY(favoriteAddDate, NSDate)) {
+                self.product.favoriteAddDate = favoriteAddDate;
+            }
+        }
         _needRefreshProduct = YES;
     }
 }
