@@ -766,7 +766,7 @@ UITableViewDataSource
     
     [RIForm sendForm:currentForm
           parameters:parameters
-        successBlock:^(id object) {
+        successBlock:^(id object, NSArray* successMessages) {
             
             [self hideLoading];
             

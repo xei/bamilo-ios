@@ -1002,7 +1002,7 @@
     
     [self showLoading];
     
-    [RIForm sendForm:[self.loginDynamicForm form] parameters:[self.loginDynamicForm getValues] successBlock:^(id object) {
+    [RIForm sendForm:[self.loginDynamicForm form] parameters:[self.loginDynamicForm getValues] successBlock:^(id object, NSArray* successMessages) {
         
         if ([object isKindOfClass:[NSDictionary class]]) {
             NSDictionary* responseDictionary = (NSDictionary*)object;
@@ -1112,7 +1112,7 @@
     
     [self showLoading];
     
-    [RIForm sendForm:[self.signupDynamicForm form] parameters:[self.signupDynamicForm getValues] successBlock:^(id object) {
+    [RIForm sendForm:[self.signupDynamicForm form] parameters:[self.signupDynamicForm getValues] successBlock:^(id object, NSArray* successMessages) {
         [self.signupDynamicForm resetValues];
         
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];

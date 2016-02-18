@@ -56,7 +56,7 @@
  * @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString*)sendForm:(RIForm*)form
-         successBlock:(void (^)(id object))successBlock
+         successBlock:(void (^)(id object, NSArray* successMessages))successBlock
       andFailureBlock:(void (^)(RIApiResponse apiResponse, id errorObject))failureBlock;
 
 /**
@@ -70,7 +70,7 @@
  */
 + (NSString*)sendForm:(RIForm*)form
            parameters:(NSDictionary*)parameters
-         successBlock:(void (^)(id object))successBlock
+         successBlock:(void (^)(id object, NSArray* successMessages))successBlock
       andFailureBlock:(void (^)(RIApiResponse apiResponse, id errorObject))failureBlock;
 
 /**
@@ -86,7 +86,7 @@
 + (NSString*)sendForm:(RIForm*)form
        extraArguments:(NSDictionary*)extraArguments
            parameters:(NSDictionary*)parameters
-         successBlock:(void (^)(id object))successBlock
+         successBlock:(void (^)(id object, NSArray* successMessages))successBlock
       andFailureBlock:(void (^)(RIApiResponse apiResponse, id errorObject))failureBlock;
 
 + (void)cancelRequest:(NSString *)operationID;

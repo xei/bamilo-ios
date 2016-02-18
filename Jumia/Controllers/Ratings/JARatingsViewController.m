@@ -1042,7 +1042,7 @@ UITableViewDataSource
     
     [RIForm sendForm:currentForm
           parameters:parameters
-        successBlock:^(id object) {
+        successBlock:^(id object, NSArray* successMessages) {
             
             NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
             

@@ -220,7 +220,7 @@
     
     [RIForm sendForm:[self.dynamicForm form]
           parameters:[self.dynamicForm getValues]
-        successBlock:^(id object)
+        successBlock:^(id object, NSArray* successMessages)
      {
          [self onSuccessResponse:RIApiResponseSuccess messages:@[STRING_EMAIL_SENT] showMessage:YES];
          [self hideLoading];

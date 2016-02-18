@@ -84,7 +84,8 @@
     } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
         
         [self hideLoading];
-        //$$$DO ERROR HANDLING
+        
+        [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadForms) objects:nil];
     }];
 }
 
@@ -112,13 +113,16 @@
     
     NSDictionary* parameters = [self.dynamicForm getValues];
     
-    [RIForm sendForm:self.newsletterPreferencesForm extraArguments:nil parameters:parameters successBlock:^(id object) {
+    [RIForm sendForm:self.newsletterPreferencesForm extraArguments:nil parameters:parameters successBlock:^(id object, NSArray* successMessages) {
         [self hideLoading];
+        
+        [self onSuccessResponse:0 messages:successMessages showMessage:YES];
         
         [self.navigationController popViewControllerAnimated:YES];
     } andFailureBlock:^(RIApiResponse apiResponse, id errorObject) {
         [self hideLoading];
-        //$$$ HANDLE ERROR
+        
+        [self onErrorResponse:apiResponse messages:nil showAsMessage:YES selector:@selector(saveClickableViewPressed) objects:nil];
     }];
 }
 

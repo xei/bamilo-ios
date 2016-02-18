@@ -332,7 +332,7 @@
     
     [RIForm sendForm:[self.dynamicForm form]
           parameters:[self.dynamicForm getValues]
-        successBlock:^(id object)
+        successBlock:^(id object, NSArray* successMessages)
      {
          [self.dynamicForm resetValues];
          

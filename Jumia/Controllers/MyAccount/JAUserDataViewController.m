@@ -301,7 +301,7 @@
     
     [RIForm sendForm:[self.userForm form]
           parameters:[self.userForm getValues]
-        successBlock:^(id object) {
+        successBlock:^(id object, NSArray* successMessages) {
         [self onSuccessResponse:RIApiResponseSuccess messages:@[STRING_USER_DATA_EDITED_SUCCESS] showMessage:YES];
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
@@ -333,7 +333,7 @@
     
     [RIForm sendForm:[self.changePasswordForm form]
           parameters:[self.changePasswordForm getValues]
-        successBlock:^(id object) {
+        successBlock:^(id object, NSArray* successMessages) {
          [self onSuccessResponse:RIApiResponseSuccess messages:@[STRING_CHANGED_PASSWORD_SUCCESS] showMessage:YES];
          [self hideLoading];
          [self resetValues:self.changePasswordForm];

@@ -61,7 +61,8 @@
             } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
                 
                 [self hideLoading];
-                //$$$DO ERROR HANDLING
+
+                [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadForms) objects:nil];
             }];
     
         }
@@ -98,18 +99,20 @@
 - (void)submitButtonPressed
 {
     [self showLoading];
-    [RIForm sendForm:self.newsletterSubscriptionForm extraArguments:nil parameters:[self.dynamicForm getValues] successBlock:^(id object) {
+    [RIForm sendForm:self.newsletterSubscriptionForm extraArguments:nil parameters:[self.dynamicForm getValues] successBlock:^(id object, NSArray* successMessages) {
         [self hideLoading];
        
         if (self.delegate && [self.delegate respondsToSelector:@selector(newsletterSubscriptionSelected:)]) {
             [self.delegate newsletterSubscriptionSelected:YES];
         }
         
+        [self onSuccessResponse:0 messages:successMessages showMessage:YES];
+        
         [self.navigationController popViewControllerAnimated:YES];
     } andFailureBlock:^(RIApiResponse apiResponse, id errorObject) {
         [self hideLoading];
         
-        //$$$ HANDLE ERROR
+        [self onErrorResponse:apiResponse messages:nil showAsMessage:YES selector:@selector(submitButtonPressed) objects:nil];
     }];
 }
 

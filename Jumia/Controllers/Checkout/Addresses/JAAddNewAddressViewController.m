@@ -832,7 +832,7 @@ JAPickerDelegate>
         
         [RIForm sendForm:[self.billingDynamicForm form]
               parameters:billingParameters
-            successBlock:^(id object)
+            successBlock:^(id object, NSArray* successMessages)
          {
              NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
              [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
@@ -880,7 +880,7 @@ JAPickerDelegate>
     [RIForm sendForm:[self.shippingDynamicForm form]
       extraArguments:self.extraParameters
           parameters:shippingParameters
-        successBlock:^(id object)
+        successBlock:^(id object, NSArray* successMessages)
      {
          [self.shippingDynamicForm resetValues];
          if (NOTEMPTY([object valueForKey:@"next_step"])) {

@@ -187,7 +187,7 @@
 }
 
 + (NSString*)sendForm:(RIForm*)form
-         successBlock:(void (^)(id object))successBlock
+         successBlock:(void (^)(id object, NSArray* successMessages))successBlock
       andFailureBlock:(void (^)(RIApiResponse apiResponse, id errorObject))failureBlock
 {
     return [RIForm sendForm:form
@@ -199,7 +199,7 @@
 
 + (NSString*)sendForm:(RIForm*)form
            parameters:(NSDictionary *)parameters
-         successBlock:(void (^)(id object))successBlock
+         successBlock:(void (^)(id object, NSArray* successMessages))successBlock
       andFailureBlock:(void (^)(RIApiResponse apiResponse, id errorObject))failureBlock
 {
     return [RIForm sendForm:form
@@ -212,7 +212,7 @@
 + (NSString*)sendForm:(RIForm*)form
        extraArguments:(NSDictionary *)extraArguments
            parameters:(NSDictionary*)parameters
-         successBlock:(void (^)(id object))successBlock
+         successBlock:(void (^)(id object, NSArray* successMessages))successBlock
       andFailureBlock:(void (^)(RIApiResponse apiResponse, id errorObject))failureBlock
 {
     //BOOL isPostRequest = [@"post" isEqualToString:[form.method lowercaseString]];
@@ -252,6 +252,21 @@
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
                                                               
+                                                              NSMutableArray* messagesArray = [NSMutableArray new];
+                                                              NSDictionary* messages = [jsonObject objectForKey:@"messages"];
+                                                              if (VALID_NOTEMPTY(messages, NSDictionary)) {
+                                                                  NSArray* successMessages = [messages objectForKey:@"success"];
+                                                                  if (VALID_NOTEMPTY(successMessages, NSArray)) {
+                                                                      NSDictionary* messageDictionary = [successMessages firstObject];
+                                                                      if (VALID_NOTEMPTY(messageDictionary, NSDictionary)) {
+                                                                          NSString* message = [messageDictionary objectForKey:@"message"];
+                                                                          if (VALID_NOTEMPTY(message, NSString)) {
+                                                                              [messagesArray addObject:message];
+                                                                          }
+                                                                      }
+                                                                  }
+                                                              }
+                                                              
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                               
                                                               NSString *password = nil;
@@ -277,13 +292,13 @@
                                                               {
                                                                   NSDictionary* entities = [RIForm parseEntities:metadata plainPassword:password];
                                                                   
-                                                                  successBlock(entities);
+                                                                  successBlock(entities, [messagesArray copy]);
                                                                   responseProcessed = YES;
                                                               }
                                                               else
                                                               {
                                                                   responseProcessed = YES;
-                                                                  successBlock([RISuccess getSuccessMessages:jsonObject]);
+                                                                  successBlock([RISuccess getSuccessMessages:jsonObject], [messagesArray copy]);
                                                               }
                                                               
                                                               if(!responseProcessed)
