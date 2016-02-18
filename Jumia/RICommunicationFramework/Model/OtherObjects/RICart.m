@@ -761,7 +761,10 @@
                                 {
                                     if(VALID_NOTEMPTY([priceRulesDictionary objectForKey:@"value"], NSNumber))
                                     {
-                                        [priceRules setValue:[RICountryConfiguration formatPrice:[priceRulesDictionary objectForKey:@"value"] country:country] forKey: [priceRulesDictionary objectForKey:@"label"]];
+                                        //since it's a rule to create a discount, add the minus signal to the string
+                                        [priceRules setValue:[@"- " stringByAppendingString:[RICountryConfiguration formatPrice:[priceRulesDictionary objectForKey:@"value"]
+                                                                                                                        country:country]]
+                                                      forKey:[priceRulesDictionary objectForKey:@"label"]];
                                     }
                                     else
                                     {
