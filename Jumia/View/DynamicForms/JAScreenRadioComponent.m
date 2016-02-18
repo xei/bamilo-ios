@@ -117,17 +117,14 @@
 {
     [super setFrame:frame];
     
-    self.titleLabel.frame = CGRectMake(16.0f, 10.0f, 230.0f, 20.0f);
-    self.titleLabel.textAlignment = NSTextAlignmentLeft;
-    self.subTitleLabel.frame = CGRectMake(16.0f, 30.0f, 230.0f, 40.0f);
-    self.subTitleLabel.textAlignment = NSTextAlignmentLeft;
+    [self.clickableView setFrame:self.bounds];
     
     self.arrowImageView.frame = CGRectMake(self.frame.size.width - self.arrowImageView.frame.size.width - 16.0f,
                                            (self.frame.size.height - self.arrowImageView.frame.size.height) / 2,
                                            self.arrowImageView.frame.size.width,
                                            self.arrowImageView.frame.size.height);
     
-    self.separatorView.frame = CGRectMake(16.0f, 0.0f, 304.0f, 1.0f);
+    self.separatorView.frame = CGRectMake(16.0f, self.separatorView.frame.origin.y, self.width-16.0f, 1.0f);
     
 
     [self.optionLabel setFrame:CGRectMake(self.arrowImageView.frame.origin.x - self.optionLabel.frame.size.width - 5.0f,
@@ -135,6 +132,11 @@
                                           self.optionLabel.frame.size.width,
                                           self.optionLabel.frame.size.height)];
     self.optionLabel.textAlignment = NSTextAlignmentLeft;
+    
+    self.titleLabel.frame = CGRectMake(16.0f, 10.0f, self.optionLabel.frame.origin.x - 16.0f*2, 20.0f);
+    self.titleLabel.textAlignment = NSTextAlignmentLeft;
+    self.subTitleLabel.frame = CGRectMake(16.0f, 30.0f, self.titleLabel.frame.size.width, 40.0f);
+    self.subTitleLabel.textAlignment = NSTextAlignmentLeft;
     
     [self flipIfIsRTL];
 }

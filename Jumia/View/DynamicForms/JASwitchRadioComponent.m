@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UIView* switchExpandableContainer;
 
 @property (nonatomic, strong) NSMutableArray* checkboxViewsArray;
+@property (nonatomic, strong) NSMutableArray* optionLabelsArray;
 @property (nonatomic, strong) NSMutableArray* contentViewsArray;
 @property (nonatomic, assign) CGRect labelBaseRect;
 @property (nonatomic, assign) CGRect checkboxBaseRect;
@@ -74,24 +75,6 @@
 {
     [super setFrame:frame];
     
-    CGFloat xOffset = 16.f;
-    CGFloat checkboxMargins = 0.0f;
-    UIImage* checkboxImage = [UIImage imageNamed:@"selectionCheckmark"];
-    self.checkboxBaseRect = CGRectMake(self.frame.size.width - checkboxMargins - checkboxImage.size.width - xOffset,
-                                       (self.frame.size.height - checkboxImage.size.height) / 2,
-                                       checkboxImage.size.width,
-                                       checkboxImage.size.height);
-    
-    CGFloat labelHeight = 20.0f;
-    CGFloat labelBottom = 28.0f;
-    self.labelBaseRect = CGRectMake(xOffset,
-                                    self.height - labelBottom,
-                                    self.width - self.checkboxBaseRect.size.width - checkboxMargins*2,
-                                    labelHeight);
-    
-    self.contentBaseSize = CGSizeMake(320.0f,
-                                      48.0f);
-    
     self.labelText.frame = CGRectMake(76.f,
                                       14.0f,
                                       self.width - 76.0f - 16.0f,
@@ -102,7 +85,41 @@
                                             self.switchComponent.width,
                                             self.switchComponent.height);
     
+    self.contentBaseSize = CGSizeMake(self.width,
+                                      48.0f);
+    
+    CGFloat xOffset = 16.0f;
+    CGFloat checkboxMargins = 0.0f;
+    UIImage* checkboxImage = [UIImage imageNamed:@"selectionCheckmark"];
+    self.checkboxBaseRect = CGRectMake(self.contentBaseSize.width - checkboxMargins - checkboxImage.size.width - xOffset,
+                                       (self.contentBaseSize.height - checkboxImage.size.height) / 2,
+                                       checkboxImage.size.width,
+                                       checkboxImage.size.height);
+    
+    CGFloat labelHeight = 20.0f;
+    CGFloat labelBottom = 28.0f;
+    self.labelBaseRect = CGRectMake(xOffset,
+                                    self.contentBaseSize.height - labelBottom,
+                                    self.contentBaseSize.width - self.checkboxBaseRect.size.width - checkboxMargins*2,
+                                    labelHeight);
+    
     [self flipIfIsRTL];
+    
+    self.switchExpandableContainer.width = self.contentBaseSize.width;
+    
+    for (UIView* contentView in self.contentViewsArray) {
+        contentView.width = self.contentBaseSize.width;
+        contentView.height = self.contentBaseSize.height;
+    }
+    
+    for (UIView* checkbox in self.checkboxViewsArray) {
+        [checkbox setFrame:self.checkboxBaseRect];
+    }
+    
+    for (UIView* optionLabel in self.optionLabelsArray) {
+        [optionLabel setFrame:self.labelBaseRect];
+    }
+    
 }
 
 - (void)flipIfIsRTL
@@ -140,6 +157,7 @@
         [self addSubview:self.switchExpandableContainer];
         
         self.contentViewsArray = [NSMutableArray new];
+        self.optionLabelsArray = [NSMutableArray new];
         self.checkboxViewsArray = [NSMutableArray new];
         
         UIImage* checkboxImage = [UIImage imageNamed:@"selectionCheckmark"];
@@ -166,6 +184,7 @@
                 optionLabel.textAlignment = NSTextAlignmentRight;
             }
             [contentView addSubview:optionLabel];
+            [self.optionLabelsArray addObject:optionLabel];
             
             UIImageView* checkboxImageView = [[UIImageView alloc] initWithImage:checkboxImage];
             [checkboxImageView setFrame:self.checkboxBaseRect];
@@ -184,6 +203,7 @@
                                                                                  contentView.frame.size.height - 1.0f,
                                                                                  contentView.frame.size.width - 16.0f,
                                                                                  1.0f)];
+                [separatorView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
                 [separatorView setBackgroundColor:JABlack400Color];
                 [contentView addSubview:separatorView];
             }

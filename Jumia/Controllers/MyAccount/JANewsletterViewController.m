@@ -52,6 +52,7 @@
         [self.view addSubview:_saveContentView];
         
         UIView* separator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _saveContentView.frame.size.width, 1.0f)];
+        [separator setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
         separator.backgroundColor = JABlack400Color;
         [_saveContentView addSubview:separator];
     }
@@ -67,7 +68,6 @@
     
     [self loadForms];
 }
-
 
 - (void)loadForms
 {
@@ -91,20 +91,33 @@
 
 - (void)setupViews
 {
+    [self.scrollView setFrame:CGRectMake(0.0f, 0.0f, [self viewBounds].size.width, [self viewBounds].size.height - 70.0f)];
+    [self.saveContentView setFrame:CGRectMake(0.0f, [self viewBounds].size.height - 70.0f, self.view.frame.size.width, 70.0f)];
+    [self.saveClickableView setFrame:CGRectMake(16.0f, 10.0f, self.saveContentView.frame.size.width - 16.0f*2, 50.0f)];
+    
     if (VALID_NOTEMPTY(self.newsletterPreferencesForm, RIForm)) {
         
-        self.dynamicForm = [[JADynamicForm alloc] initWithForm:self.newsletterPreferencesForm startingPosition:0.0f];
-        [self.dynamicForm setDelegate:self];
+        if (NO == VALID_NOTEMPTY(self.dynamicForm, JADynamicForm)) {
+            self.dynamicForm = [[JADynamicForm alloc] initWithForm:self.newsletterPreferencesForm startingPosition:0.0f];
+            [self.dynamicForm setDelegate:self];
+        }
         
         for(UIView *view in self.dynamicForm.formViews)
         {
             [self.scrollView addSubview:view];
+            view.width = self.scrollView.width;
         }
         
         [self dynamicFormChangedHeight];
         
         [self.saveClickableView addTarget:self action:@selector(saveClickableViewPressed) forControlEvents:UIControlEventTouchUpInside];
     }
+}
+
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    [self setupViews];
 }
 
 - (void)saveClickableViewPressed

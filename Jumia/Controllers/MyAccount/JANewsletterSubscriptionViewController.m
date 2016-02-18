@@ -16,6 +16,7 @@
 @property (nonatomic, strong)RIForm* newsletterSubscriptionForm;
 @property (nonatomic, strong)JADynamicForm* dynamicForm;
 @property (nonatomic, strong)UIScrollView* scrollView;
+@property (nonatomic, strong)JAClickableView* submitButton;
 
 @end
 
@@ -71,29 +72,43 @@
 
 - (void)setupViews
 {
+    [self.scrollView setFrame:[self viewBounds]];
+    
     if (VALID_NOTEMPTY(self.newsletterSubscriptionForm, RIForm)) {
         
-        self.dynamicForm = [[JADynamicForm alloc] initWithForm:self.newsletterSubscriptionForm startingPosition:0.0f];
-        [self.dynamicForm setDelegate:self];
+        if (NO == VALID_NOTEMPTY(self.dynamicForm, JADynamicForm)) {
+            self.dynamicForm = [[JADynamicForm alloc] initWithForm:self.newsletterSubscriptionForm startingPosition:0.0f];
+            [self.dynamicForm setDelegate:self];
+        }
         
         CGFloat maxY = 0.0f;
         for(UIView *view in self.dynamicForm.formViews)
         {
             [self.scrollView addSubview:view];
             maxY = CGRectGetMaxY(view.frame);
+            view.width = self.scrollView.width;
         }
         
-        JAClickableView* submitButton = [[JAClickableView alloc] initWithFrame:CGRectMake(0.0f, maxY, self.scrollView.frame.size.width, 44.0f)];
-        [submitButton setTitle:@"Submit" forState:UIControlStateNormal];
-        [submitButton setTitleColor:self.view.tintColor forState:UIControlStateNormal];
-        [submitButton addTarget:self action:@selector(submitButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-        [self.scrollView addSubview:submitButton];
+        if (NO == VALID_NOTEMPTY(self.submitButton, JAClickableView)) {
+            self.submitButton = [[JAClickableView alloc] init];
+            [self.submitButton setTitle:@"Submit" forState:UIControlStateNormal];
+            [self.submitButton setTitleColor:self.view.tintColor forState:UIControlStateNormal];
+            [self.submitButton addTarget:self action:@selector(submitButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+            [self.scrollView addSubview:self.submitButton];
+        }
+        [self.submitButton setFrame:CGRectMake(0.0f, maxY, self.scrollView.frame.size.width, 44.0f)];
         
-        maxY = CGRectGetMaxY(submitButton.frame);
+        maxY = CGRectGetMaxY(self.submitButton.frame);
         
         [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
                                                    maxY)];
     }
+}
+
+- (void)onOrientationChanged
+{
+    [super onOrientationChanged];
+    [self setupViews];
 }
 
 - (void)submitButtonPressed
