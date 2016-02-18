@@ -8,6 +8,8 @@
 
 #import "RISearchSuggestion.h"
 #import "RIFilter.h"
+#import "RITarget.h"
+#import "RIAlgolia.h"
 
 @implementation RISearchType
 
@@ -39,6 +41,7 @@
 @dynamic relevance;
 @dynamic isRecentSearch;
 @dynamic date;
+@dynamic targetString;
 
 + (void)deleteSearchSuggestionByQuery:(NSString *)query
 {
@@ -54,22 +57,28 @@
     }
 }
 
-+ (void)saveSearchSuggestionOnDB:(NSString *)query
++ (RISearchSuggestion *)getSearchSuggestionWithQuery:(NSString *)query isRecentSearch:(BOOL)isRecentSearch andContext:(BOOL)save
+{
+    RISearchSuggestion *newSearchSuggestion = (RISearchSuggestion*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RISearchSuggestion class])];
+    newSearchSuggestion.item = query;
+    newSearchSuggestion.relevance = @(0);
+    newSearchSuggestion.isRecentSearch = isRecentSearch;
+    newSearchSuggestion.date = [NSDate date];
+    return newSearchSuggestion;
+}
+
++ (void)saveSearchSuggestionOnDB:(RISearchSuggestion *)searchSuggestion
                   isRecentSearch:(BOOL)isRecentSearch andContext:(BOOL)save
 {
-    if(VALID_NOTEMPTY(query, NSString))
+    if(VALID_NOTEMPTY(searchSuggestion.item, NSString))
     {
-        if ([RISearchSuggestion checkIfSuggestionsExistsOnDB:query])
+        if ([RISearchSuggestion checkIfSuggestionsExistsOnDB:searchSuggestion.item])
         {
-            [RISearchSuggestion deleteSearchSuggestionByQuery:query];
+            [RISearchSuggestion deleteSearchSuggestionByQuery:searchSuggestion.item];
         }
         
-        RISearchSuggestion *newSearchSuggestion = (RISearchSuggestion*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RISearchSuggestion class])];
-        
-        newSearchSuggestion.item = query;
-        newSearchSuggestion.relevance = @(0);
-        newSearchSuggestion.isRecentSearch = isRecentSearch;
-        newSearchSuggestion.date = [NSDate date];
+        [searchSuggestion setIsRecentSearch:isRecentSearch];
+        [searchSuggestion setDate:[NSDate date]];
         
         // The limit for recent search is 5, if there is > 5 it's necessary to delete the old one
         if (isRecentSearch)
@@ -99,7 +108,7 @@
                 
             }
 
-            [[RIDataBaseWrapper sharedInstance] insertManagedObject:newSearchSuggestion];
+            [[RIDataBaseWrapper sharedInstance] insertManagedObject:searchSuggestion];
             if (save) {
                 [[RIDataBaseWrapper sharedInstance] saveContext];
             }
@@ -107,79 +116,94 @@
     }
 }
 
-+ (NSString*)getSuggestionsForQuery:(NSString *)query
++ (NSString *)getSuggestionsForQuery:(NSString *)query
                        successBlock:(void (^)(NSArray *suggestions))successBlock
                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
-    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_SEARCH_SUGGESTIONS,query]];
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
-                                                            parameters:nil
-                                                            httpMethod:HttpResponseGet
-                                                             cacheType:RIURLCacheNoCache
-                                                             cacheTime:RIURLCacheNoTime
-                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
-                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              NSMutableArray *suggestions = [[NSMutableArray alloc] init];
-                                                              
-                                                              // Add recent search suggestions
-                                                              NSMutableArray *databaseSuggesions = [NSMutableArray new];
-                                                              
-                                                              NSArray *searches = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RISearchSuggestion class])];
-                                                              
-                                                              for (RISearchSuggestion *tempSearch in searches)
-                                                              {
-                                                                  if ([[tempSearch.item lowercaseString] rangeOfString:[query lowercaseString]].location != NSNotFound)
+        if([RICountryConfiguration getCurrentConfiguration].suggesterProviderEnum == ALGOLIA &&
+           VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].algoliaAppId, NSString) &&
+           VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].algoliaApiKey, NSString))
+    {
+        __block NSLock *searchLock = [NSLock new];
+        __block NSArray *outsideBlockProductsResultsArray;
+        __block NSArray *outsideBlockShopInShopResultsArray;
+        [[RIAlgolia sharedInstance] getSearchResultsForQuery:query onFirstStepSuccess:^(NSArray *productsResults, NSArray *shopInShopResults) {
+            
+            [searchLock lock];
+            NSMutableArray *productsSuggestionArray = [NSMutableArray new];
+            for (NSDictionary *item in productsResults) {
+                RISearchSuggestion *suggestion = [RISearchSuggestion parseSearchSuggestion:item];
+                suggestion.targetString = [RITarget getTargetString:PRODUCT_DETAIL node:[item objectForKey:@"value"]];
+                [productsSuggestionArray addObject:suggestion];
+            }
+            NSMutableArray *shopInShopSuggestionArray = [NSMutableArray new];
+            for (NSDictionary *item in shopInShopResults) {
+                RISearchSuggestion *suggestion = [RISearchSuggestion parseSearchSuggestion:item];
+                suggestion.targetString = [RITarget getTargetString:STATIC_PAGE node:[item objectForKey:@"value"]];
+                [shopInShopSuggestionArray addObject:suggestion];
+            }
+            outsideBlockProductsResultsArray = [productsSuggestionArray copy];
+            outsideBlockShopInShopResultsArray = [shopInShopSuggestionArray copy];
+            if (VALID_NOTEMPTY(productsSuggestionArray, NSMutableArray) || VALID_NOTEMPTY(shopInShopSuggestionArray, NSMutableArray)) {
+                successBlock([[productsSuggestionArray arrayByAddingObjectsFromArray:[shopInShopSuggestionArray copy]] copy]);
+            }else{
+                failureBlock(RIApiResponseAPIError, nil);
+            }
+            [searchLock unlock];
+            
+        } onSecondStepSuccess:^(NSArray *categoryResults) {
+            
+            [searchLock lock];
+            NSMutableArray *categoryArray = [NSMutableArray new];
+            for (NSDictionary *item in categoryResults) {
+                RISearchSuggestion *suggestion = [RISearchSuggestion parseSearchSuggestion:item];
+                suggestion.targetString = [RITarget getTargetString:CATALOG_CATEGORY node:[item objectForKey:@"value"]];
+                [categoryArray addObject:suggestion];
+            }
+            successBlock([[outsideBlockShopInShopResultsArray arrayByAddingObjectsFromArray:[categoryArray copy] ] arrayByAddingObjectsFromArray:[outsideBlockProductsResultsArray copy]]);
+            [searchLock unlock];
+        } onError:^(NSString *error) {
+            failureBlock(RIApiResponseAPIError, @[error]);
+        }];
+        return nil;
+    }else{
+        
+        NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_SEARCH_SUGGESTIONS,query]];
+        return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
+                                                                parameters:nil
+                                                                httpMethod:HttpResponseGet
+                                                                 cacheType:RIURLCacheNoCache
+                                                                 cacheTime:RIURLCacheNoTime
+                                                        userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                              successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                                  
+                                                                  // Add request search suggestions
+                                                                  NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                                  if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                                   {
-                                                                      [databaseSuggesions addObject:tempSearch];
+                                                                      NSArray *shopInShopSuggestions = VALID_NOTEMPTY_VALUE([RISearchSuggestion parseSearchSuggestions:[metadata objectForKey:@"shops"]], NSArray);
+                                                                      NSArray *categoriesSuggestions = VALID_NOTEMPTY_VALUE([RISearchSuggestion parseSearchSuggestions:[metadata objectForKey:@"categories"]], NSArray);
+                                                                      NSArray *productsSuggestions = VALID_NOTEMPTY_VALUE([RISearchSuggestion parseSearchSuggestions:[metadata objectForKey:@"products"]], NSArray);
+                                                                      if (VALID_NOTEMPTY(shopInShopSuggestions, NSArray) || VALID_NOTEMPTY(categoriesSuggestions, NSArray) || VALID_NOTEMPTY(productsSuggestions, NSArray)) {
+                                                                          successBlock([[[shopInShopSuggestions arrayByAddingObjectsFromArray:[categoriesSuggestions copy]] arrayByAddingObjectsFromArray:[productsSuggestions copy]] copy]);
+                                                                      }else{
+                                                                          failureBlock(RIApiResponseAPIError, nil);
+                                                                      }
                                                                   }
-                                                              }
-                                                              
-                                                              if(VALID_NOTEMPTY(databaseSuggesions, NSMutableArray))
-                                                              {
-                                                                  [suggestions addObjectsFromArray:[databaseSuggesions copy]];
-                                                              }
-                                                              
-                                                              // Add request search suggestions
-                                                              NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
-                                                              if (VALID_NOTEMPTY(metadata, NSDictionary))
-                                                              {
-                                                                  NSArray *requestSuggestions = [RISearchSuggestion parseSearchSuggestions:[metadata objectForKey:@"suggestions"]];
-                                                                  if(VALID_NOTEMPTY(requestSuggestions, NSArray))
+                                                              } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                                  if(NOTEMPTY(errorJsonObject))
                                                                   {
-                                                                      if (!VALID_NOTEMPTY(databaseSuggesions, NSMutableArray))
-                                                                      {
-                                                                          [suggestions addObjectsFromArray:requestSuggestions];
-                                                                      }
-                                                                      else
-                                                                      {
-                                                                          for (RISearchSuggestion *requestSuggestion in requestSuggestions)
-                                                                          {
-                                                                              for (RISearchSuggestion *databaseSuggesion in databaseSuggesions)
-                                                                              {
-                                                                                  if (![databaseSuggesion.item isEqualToString:requestSuggestion.item])
-                                                                                  {
-                                                                                      [suggestions addObject:requestSuggestion];
-                                                                                  }
-                                                                              }
-                                                                          }
-                                                                      }
+                                                                      failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+                                                                  } else if(NOTEMPTY(errorObject))
+                                                                  {
+                                                                      NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                      failureBlock(apiResponse, errorArray);
+                                                                  } else
+                                                                  {
+                                                                      failureBlock(apiResponse, nil);
                                                                   }
-                                                              }
-                                                              
-                                                              successBlock([suggestions copy]);
-                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
-                                                              if(NOTEMPTY(errorJsonObject))
-                                                              {
-                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
-                                                              } else if(NOTEMPTY(errorObject))
-                                                              {
-                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
-                                                                  failureBlock(apiResponse, errorArray);
-                                                              } else
-                                                              {
-                                                                  failureBlock(apiResponse, nil);
-                                                              }
-                                                          }];
+                                                              }];
+    }
 }
 
 + (NSString *)getResultsForSearch:(NSString *)query
@@ -397,18 +421,13 @@
 {
     RISearchSuggestion *newSearchSuggestion = (RISearchSuggestion*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RISearchSuggestion class])];
     
-    if ([jsonObject objectForKey:@"item"]) {
-        id item = [jsonObject objectForKey:@"item"];
-        if ([item isKindOfClass:[NSString class]]) {
-            newSearchSuggestion.item = (NSString*)item;
-        } else if ([item isKindOfClass:[NSNumber class]]){
-            newSearchSuggestion.item = [NSString stringWithFormat:@"%ld",(long)[(NSNumber*)item integerValue]];
-        }
+    [newSearchSuggestion setItem:VALID_NOTEMPTY_VALUE([jsonObject objectForKey:@"sub_string"], NSString)];
+    if (!newSearchSuggestion.item && VALID_NOTEMPTY([jsonObject objectForKey:@"name"], NSString)) {
+        newSearchSuggestion.item = [jsonObject objectForKey:@"name"];
     }
     
-    if ([jsonObject objectForKey:@"relevance"]) {
-        newSearchSuggestion.relevance = [jsonObject objectForKey:@"relevance"];
-    }
+    [newSearchSuggestion setTargetString:VALID_NOTEMPTY_VALUE([jsonObject objectForKey:@"target"], NSString)];
+    [newSearchSuggestion setRelevance:VALID_NOTEMPTY_VALUE([jsonObject objectForKey:@"relevance"], NSNumber)];
     
     return newSearchSuggestion;
 }

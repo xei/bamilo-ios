@@ -197,7 +197,7 @@
                     [textField.textField setText:[values objectForKey:@"email"]];
                 }
                 
-                if (field.disabled) {
+                if ([field.disabled boolValue]) {
                     textField.textField.enabled = NO;
                     [textField.textField setTextColor:JABlack700Color];
                 }

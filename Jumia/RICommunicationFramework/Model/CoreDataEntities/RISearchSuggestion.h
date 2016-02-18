@@ -73,6 +73,7 @@
 @property (nonatomic, retain) NSNumber * relevance;
 @property (nonatomic, assign) BOOL isRecentSearch;
 @property (nonatomic, assign) NSDate *date;
+@property (nonatomic, assign) NSString *targetString;
 
 /**
  * Method to save a search suggestions on core data
@@ -80,7 +81,8 @@
  * @param the query to be saved on core data
  * @param boolean if it's recent search
  */
-+ (void)saveSearchSuggestionOnDB:(NSString *)query
++ (RISearchSuggestion *)getSearchSuggestionWithQuery:(NSString *)query isRecentSearch:(BOOL)isRecentSearch andContext:(BOOL)save;
++ (void)saveSearchSuggestionOnDB:(RISearchSuggestion *)searchSuggestion
                   isRecentSearch:(BOOL)isRecentSearch andContext:(BOOL)save;
 
 /**

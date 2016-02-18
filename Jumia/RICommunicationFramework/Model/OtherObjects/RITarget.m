@@ -16,6 +16,36 @@
     return [RITarget getURLStringforTarget:self];
 }
 
+- (TargetType)targetType
+{
+    if ([self.type isEqualToString:[RITarget getTargetKey:PRODUCT_DETAIL]]) {
+        return PRODUCT_DETAIL;
+    }else if ([self.type isEqualToString:[RITarget getTargetKey:CATALOG_HASH]]) {
+        return CATALOG_HASH;
+    }else if ([self.type isEqualToString:[RITarget getTargetKey:CATALOG_SEARCH]]) {
+        return CATALOG_SEARCH;
+    }else if ([self.type isEqualToString:[RITarget getTargetKey:CATALOG_CATEGORY]]) {
+        return CATALOG_CATEGORY;
+    }else if ([self.type isEqualToString:[RITarget getTargetKey:CATALOG_BRAND]]) {
+        return CATALOG_BRAND;
+    }else if ([self.type isEqualToString:[RITarget getTargetKey:CATALOG_SELLER]]) {
+        return CATALOG_SELLER;
+    }else if ([self.type isEqualToString:[RITarget getTargetKey:CAMAPAIGN]]) {
+        return CAMAPAIGN;
+    }else if ([self.type isEqualToString:[RITarget getTargetKey:STATIC_PAGE]]) {
+        return STATIC_PAGE;
+    }else if ([self.type isEqualToString:[RITarget getTargetKey:FORM_SUBMIT]]) {
+        return FORM_SUBMIT;
+    }else if ([self.type isEqualToString:[RITarget getTargetKey:FORM_GET]]) {
+        return FORM_GET;
+    }else if ([self.type isEqualToString:[RITarget getTargetKey:RR_RECOMENDATION]]) {
+        return RR_RECOMENDATION;
+    }else if ([self.type isEqualToString:[RITarget getTargetKey:RR_CLICK]]) {
+        return RR_CLICK;
+    }
+    return UNKNOWN;
+}
+
 + (RITarget*)parseTarget:(NSString*)targetString;
 {
     RITarget* newTarget = [[RITarget alloc] init];
@@ -67,10 +97,12 @@
     if (VALID_NOTEMPTY(type, NSString)) {
         if ([type isEqualToString:[self getTargetKey:PRODUCT_DETAIL]]) {
             urlString = [urlString stringByAppendingString:RI_API_PRODUCT_DETAIL];
-        } else if ([type isEqualToString:[self getTargetKey:CATALOG]]) {
+        } else if ([type isEqualToString:[self getTargetKey:CATALOG_HASH]]) {
             urlString = [urlString stringByAppendingString:RI_API_CATALOG_HASH];
-        }else if ([type isEqualToString:[self getTargetKey:CATALOG_CATEGORY]]) {
+        } else if ([type isEqualToString:[self getTargetKey:CATALOG_SEARCH]]) {
             urlString = [urlString stringByAppendingString:RI_API_CATALOG];
+        }else if ([type isEqualToString:[self getTargetKey:CATALOG_CATEGORY]]) {
+            urlString = [urlString stringByAppendingString:RI_API_CATALOG_CATEGORY];
         } else if ([type isEqualToString:[self getTargetKey:CATALOG_BRAND]]) {
             urlString = [urlString stringByAppendingString:RI_API_CATALOG_BRAND];
         } else if ([type isEqualToString:[self getTargetKey:CATALOG_SELLER]]) {
@@ -109,7 +141,9 @@
     switch (type) {
         case PRODUCT_DETAIL:
             return @"product_detail";
-        case CATALOG:
+        case CATALOG_SEARCH:
+            return @"catalog_search";
+        case CATALOG_HASH:
             return @"catalog";
         case CATALOG_BRAND:
             return @"catalog_brand";
