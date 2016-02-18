@@ -1,98 +1,183 @@
 //
-//  JAThanksViewController.m
+//  JASuccessPageViewController.m
 //  Jumia
 //
-//  Created by Pedro Lopes on 12/09/14.
-//  Copyright (c) 2014 Rocket Internet. All rights reserved.
+//  Created by Jose Mota on 17/02/16.
+//  Copyright © 2016 Rocket Internet. All rights reserved.
 //
 
-#import "JAThanksViewController.h"
+#import "JASuccessPageViewController.h"
 #import "RICustomer.h"
 #import "RICartItem.h"
 #import "JAUtils.h"
 #import "RIAddress.h"
 #import <FBSDKCoreKit/FBSDKAppEvents.h>
+#import "RIProduct.h"
+#import "JABottomBar.h"
+#import "JAProductInfoHeaderLine.h"
+#import "JAPDVSingleRelatedItem.h"
 
-@interface JAThanksViewController ()
+#define kTopMargin 20.f
+#define kLateralMargin 16.f
 
-@property (weak, nonatomic) IBOutlet UIView *contentView;
-@property (weak, nonatomic) IBOutlet UILabel *thankYouLabel;
-@property (weak, nonatomic) IBOutlet UILabel *successMessage;
-@property (weak, nonatomic) IBOutlet UILabel *trackOrderMessage;
-@property (weak, nonatomic) IBOutlet UITextField *orderNumberField;
-@property (weak, nonatomic) IBOutlet UIButton *orderCopyButton;
-@property (weak, nonatomic) IBOutlet UIButton *continueShoppingButton;
+@interface JASuccessPageViewController ()
 
-@property (nonatomic, strong)UIButton* goToTrackOrdersButton;
+@property (nonatomic, strong) UIScrollView *topScrollView;
+@property (nonatomic, strong) UIImageView *topImageView;
+@property (nonatomic, strong) UILabel *thankYouLabel;
+@property (nonatomic, strong) UILabel *successMessageLabel;
+@property (nonatomic, strong) UIButton *orderDetailsButton;
+@property (nonatomic, strong) UIButton *continueShoppingButton;
+@property (nonatomic, strong) JABottomBar *orderDetailsButtonBar;
+@property (nonatomic, strong) JABottomBar *continueShoppingButtonBar;
+
+@property (nonatomic, strong) UIView *rrView;
+@property (nonatomic, strong) JAProductInfoHeaderLine *rrHeaderLine;
+@property (nonatomic, strong) UIScrollView *rrScrollView;
+
+@property (nonatomic, strong) NSSet *rrProducts;
 
 @end
 
-@implementation JAThanksViewController
+@implementation JASuccessPageViewController
+
+- (UIScrollView *)topScrollView
+{
+    if (!VALID(_topScrollView, UIScrollView)) {
+        CGFloat viewWidth = 320;
+        _topScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.view.width/2-viewWidth/2, 0, viewWidth, self.viewBounds.size.height)];
+    }
+    return _topScrollView;
+}
+
+- (UIImageView *)topImageView
+{
+    if (!VALID(_topImageView, UIImageView)) {
+        CGSize imageSize = CGSizeMake(50, 50);
+        _topImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.topScrollView.width/2-imageSize.width/2, kTopMargin, imageSize.width, imageSize.height)];
+        [_topImageView setImage:[UIImage imageNamed:@"successIcon"]];
+    }
+    return _topImageView;
+}
+
+- (UILabel *)thankYouLabel
+{
+    if (!VALID(_thankYouLabel, UILabel)) {
+        CGFloat viewWidth = self.topScrollView.width;
+        _thankYouLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.topImageView.frame) + 16.f, viewWidth-2*kLateralMargin, 20)];
+        [_thankYouLabel setText:STRING_THANK_YOU_ORDER_TITLE];
+        [_thankYouLabel setTextAlignment:NSTextAlignmentCenter];
+        [_thankYouLabel setFont:JADisplay1NewFont];
+        [_thankYouLabel setTextColor:JAGreen1Color];
+        [_thankYouLabel setHeight:[_thankYouLabel sizeThatFits:CGSizeMake(viewWidth, CGFLOAT_MAX)].height];
+    }
+    return _thankYouLabel;
+}
+
+- (UILabel *)successMessageLabel
+{
+    if (!VALID(_successMessageLabel, UILabel)) {
+        CGFloat viewWidth = self.topScrollView.width;
+        _successMessageLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.thankYouLabel.frame) + 16.f, viewWidth-2*kLateralMargin, 20)];
+        [_successMessageLabel setText:STRING_ORDER_SUCCESS];
+        [_successMessageLabel setNumberOfLines:0];
+        [_successMessageLabel setTextAlignment:NSTextAlignmentCenter];
+        [_successMessageLabel setFont:JABodyFont];
+        [_successMessageLabel setTextColor:JABlack800Color];
+        [_successMessageLabel setHeight:[_successMessageLabel sizeThatFits:CGSizeMake(viewWidth, CGFLOAT_MAX)].height];
+    }
+    return _successMessageLabel;
+}
+
+- (JABottomBar *)orderDetailsButtonBar
+{
+    if (!VALID(_orderDetailsButtonBar, JABottomBar)) {
+        CGFloat viewWidth = self.topScrollView.width;
+        _orderDetailsButtonBar = [[JABottomBar alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.successMessageLabel.frame)+16.f, viewWidth-2*kLateralMargin, kBottomDefaultHeight)];
+        self.orderDetailsButton = [_orderDetailsButtonBar addButton:STRING_ORDER_DETAILS target:self action:@selector(goToTrackOrders)];
+        [self.orderDetailsButton setBackgroundColor:[UIColor whiteColor]];
+        [self.orderDetailsButton.layer setBorderColor:JABlack300Color.CGColor];
+        [self.orderDetailsButton.layer setBorderWidth:1];
+        [self.orderDetailsButton setTintColor:JABlack800Color];
+    }
+    return _orderDetailsButtonBar;
+}
+
+- (JABottomBar *)continueShoppingButtonBar
+{
+    if (!VALID(_continueShoppingButtonBar, JABottomBar)) {
+        CGFloat viewWidth = self.topScrollView.width;
+        _continueShoppingButtonBar = [[JABottomBar alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.orderDetailsButtonBar.frame)+16.f, viewWidth-2*kLateralMargin, kBottomDefaultHeight)];
+        self.continueShoppingButton = [_continueShoppingButtonBar addButton:STRING_CONTINUE_SHOPPING target:self action:@selector(goToHomeScreen)];
+    }
+    return _continueShoppingButtonBar;
+}
+
+- (UIView *)rrView
+{
+    if (!VALID(_rrView, UIView)) {
+        _rrView = [[UIView alloc] init];
+    }
+    return _rrView;
+}
+
+- (JAProductInfoHeaderLine *)rrHeaderLine
+{
+    if (!VALID(_rrHeaderLine, JAProductInfoHeaderLine)) {
+        _rrHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, 0, self.rrView.width, kProductInfoHeaderLineHeight)];
+        [_rrHeaderLine setTopSeparatorVisibility:YES];
+        [_rrHeaderLine setBottomSeparatorVisibility:YES];
+        [_rrHeaderLine setBackgroundColor:[UIColor whiteColor]];
+    }
+    return _rrHeaderLine;
+}
+
+- (UIScrollView *)rrScrollView
+{
+    if (!VALID(_rrScrollView, UIScrollView)) {
+        _rrScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.rrHeaderLine.frame), self.rrView.width, 200)];
+        [_rrScrollView setBackgroundColor:JABlack200Color];
+        [_rrScrollView setContentSize:CGSizeMake(1024, _rrScrollView.height)];
+    }
+    return _rrScrollView;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
- 
+    
     self.screenName = @"CheckoutFinish";
     
     self.navBarLayout.title = STRING_CHECKOUT;
     self.navBarLayout.showCartButton = NO;
+    self.tabBarIsVisible = YES;
     
-    self.view.backgroundColor = JABackgroundGrey;
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    [self.view addSubview:self.topScrollView];
+    [self.topScrollView addSubview:self.topImageView];
+    [self.topScrollView addSubview:self.thankYouLabel];
+    [self.topScrollView addSubview:self.successMessageLabel];
+    [self.topScrollView addSubview:self.orderDetailsButtonBar];
+    [self.topScrollView addSubview:self.continueShoppingButtonBar];
+    [self.rrView addSubview:self.rrHeaderLine];
+    [self.rrView addSubview:self.rrScrollView];
     
     // Notification to clean cart
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
     [RICart resetCartWithSuccessBlock:^{} andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {}];
     
-    self.contentView.layer.cornerRadius = 5.0f;
-    self.thankYouLabel.font = [UIFont fontWithName:kFontRegularName size:self.thankYouLabel.font.pointSize];
-    self.thankYouLabel.textColor = UIColorFromRGB(0x666666);
-    self.thankYouLabel.text = STRING_THANK_YOU_ORDER_TITLE;
-    self.successMessage.font = [UIFont fontWithName:kFontLightName size:self.successMessage.font.pointSize];
-    self.successMessage.textColor = UIColorFromRGB(0x666666);
-    self.successMessage.text = STRING_ORDER_SUCCESS;
-
-    NSString* baseString = STRING_ORDER_TRACK_SUCCESS;
-    NSDictionary* baseAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    [UIFont fontWithName:kFontLightName size:12], NSFontAttributeName,
-                                    UIColorFromRGB(0x666666), NSForegroundColorAttributeName, nil];
-    
-    NSString* particleString = STRING_ORDER_TRACK_LINK;
-    NSRange particleStringRange = [baseString rangeOfString:particleString];
-    NSDictionary* highlightAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         [UIFont fontWithName:kFontLightName size:12], NSFontAttributeName,
-                                         UIColorFromRGB(0x55a1ff), NSForegroundColorAttributeName, nil];
-    
-    NSMutableAttributedString* finalString = [[NSMutableAttributedString alloc] initWithString:baseString attributes:baseAttributes];
-    [finalString setAttributes:highlightAttributes range:particleStringRange];
-    
-    self.trackOrderMessage.font = [UIFont fontWithName:kFontLightName size:self.trackOrderMessage.font.pointSize];
-    self.trackOrderMessage.attributedText = finalString;
-    
-    self.goToTrackOrdersButton = [[UIButton alloc] init];
-    [self.goToTrackOrdersButton addTarget:self action:@selector(goToTrackOrders) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:self.goToTrackOrdersButton];
-    
-    //STRING_ORDER_TRACK_LINK
-    self.orderNumberField.font = [UIFont fontWithName:kFontBoldName size:self.orderNumberField.font.pointSize];
-    [self.orderNumberField setText:self.cart.orderNr];
-    self.orderNumberField.textColor = UIColorFromRGB(0x4e4e4e);
-    
-    [self.orderCopyButton addTarget:self action:@selector(copyOrderNumber) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.continueShoppingButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.continueShoppingButton.titleLabel.font.pointSize];
-    [self.continueShoppingButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
-    [self.continueShoppingButton setTitle:STRING_CONTINUE_SHOPPING forState:UIControlStateNormal];
-    
-    self.continueShoppingButton.layer.cornerRadius = 5.0f;
-    
-    [self.continueShoppingButton addTarget:self action:@selector(goToHomeScreen) forControlEvents:UIControlEventTouchUpInside];
+    [RIProduct getRichRelevanceRecommendationFromTarget:self.rrTargetString successBlock:^(NSSet *recommendationProducts) {
+        [self setRrProducts:recommendationProducts];
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
+        NSLog(@"recommendationProducts: FAILED!!!! %@", [errorMessage componentsJoinedByString:@", "]);
+    }];
     
     BOOL userDidFirstBuy = NO;
     if(VALID_NOTEMPTY([[NSUserDefaults standardUserDefaults] objectForKey:kDidFirstBuyKey], NSNumber))
     {
         userDidFirstBuy = [[[NSUserDefaults standardUserDefaults] objectForKey:kDidFirstBuyKey] boolValue];
     }
-
+    
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
     
@@ -112,7 +197,7 @@
     numberOfPurchases = [NSNumber numberWithInteger:numberOfPurchasesValue];
     [[NSUserDefaults standardUserDefaults] setObject:numberOfPurchases forKey:kRIEventAmountTransactions];
     [[NSUserDefaults standardUserDefaults] synchronize];
-
+    
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"Finished" forKey:kRIEventActionKey];
@@ -145,7 +230,7 @@
             discount = @"true";
             priceNumber = cartItem.specialPriceEuroConverted;
         }
-
+        
         if(!VALID_NOTEMPTY(priceNumber, NSNumber))
         {
             isConverted = NO;
@@ -181,7 +266,7 @@
         {
             [trackingDictionary setObject:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
         }
-
+        
         [trackingDictionary setValue:cartItem.quantity forKey:kRIEventQuantityKey];
         
         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
@@ -195,7 +280,7 @@
         [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
         [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
         [trackingDictionary setValue:cartItem.sku forKey:kRIEventSkuKey];
-       
+        
         // Since we're sending the converted price, we have to send the currency as EUR.
         // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
         [trackingDictionary setValue:priceNumber forKey:kRIEventPriceKey];
@@ -207,7 +292,7 @@
         {
             [trackingDictionary setObject:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
         }
-
+        
         [trackingDictionary setValue:discount forKey:kRIEventDiscountKey];
         [trackingDictionary setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
         [trackingDictionary setValue:cartItem.variation forKey:kRIEventSizeKey];
@@ -238,8 +323,8 @@
         
         float value = [cartItem.price floatValue];
         [FBSDKAppEvents logPurchase:value currency:@"EUR" parameters:@{FBSDKAppEventParameterNameContentID: cartItem.sku,
-                                                                  FBSDKAppEventParameterNameContentType:cartItem.name}];
-
+                                                                       FBSDKAppEventParameterNameContentType:cartItem.name}];
+        
         NSMutableDictionary *viewCartTrackingProduct = [[NSMutableDictionary alloc] init];
         [viewCartTrackingProduct setValue:cartItem.sku forKey:kRIEventSkuKey];
         
@@ -261,7 +346,7 @@
     
     //clean teaserTrackingInfoDictionary from user defaults
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kSkusFromTeaserInCartKey];
-
+    
     trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
     [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
@@ -270,7 +355,7 @@
     [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
     [trackingDictionary setValue:self.cart.orderNr forKey:kRIEventTransactionIdKey];
     [trackingDictionary setValue:isNewCustomer forKey:kRIEventNewCustomerKey];
-
+    
     if(VALID_NOTEMPTY(viewCartTrackingProducts, NSMutableArray))
     {
         [trackingDictionary setObject:[viewCartTrackingProducts copy] forKey:kRIEventProductsKey];
@@ -291,7 +376,7 @@
         [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithFloat:RIEventGuestCustomer] data:customerDictionary];
     }
     
-
+    
     NSMutableDictionary *ecommerceDictionary = [[NSMutableDictionary alloc] init];
     [ecommerceDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
     [ecommerceDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
@@ -325,7 +410,7 @@
             {
                 price = product.specialPriceEuroConverted;
             }
-
+            
             if(!VALID_NOTEMPTY(price, NSNumber))
             {
                 isConverted = NO;
@@ -349,7 +434,7 @@
             {
                 [productDictionary setObject:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
             }
-
+            
             [ecommerceProductsArray addObject:productDictionary];
         }
         
@@ -372,7 +457,7 @@
     [ecommerceDictionary setValue:self.cart.vatValue forKey:kRIEcommerceTaxKey];
     
     NSNumber *total = self.cart.cartValue;
-
+    
     NSNumber *convertedTotal = [NSNumber numberWithFloat:0.0f];
     if(VALID_NOTEMPTY(self.cart.cartValueEuroConverted, NSNumber))
     {
@@ -420,9 +505,97 @@
     
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kDidFirstBuyKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
- 
+    
     NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
     [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+}
+
+- (void)setRrProducts:(NSSet *)rrProducts
+{
+    _rrProducts = rrProducts;
+    [self reloadRR];
+}
+
+- (void)reloadRR
+{
+    [[self.rrScrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    /*******
+     Related Items
+     *******/
+    
+    if (VALID_NOTEMPTY(self.rrProducts, NSSet) && 0 < self.rrProducts.count)
+    {
+        CGFloat relatedItemX = 6.f;
+        CGFloat relatedItemY = 10.f;
+        
+        NSArray* relatedProducts = [self.rrProducts allObjects];
+        
+        CGSize itemSize = CGSizeMake(128, 230);
+        
+        for (int i = 0; i < relatedProducts.count; i++) {
+            RIProduct* product = [relatedProducts objectAtIndex:i];
+            
+            JAPDVSingleRelatedItem *singleItem = [[JAPDVSingleRelatedItem alloc] initWithFrame:CGRectMake(0, 0, itemSize.width, itemSize.height)];
+            [singleItem setBackgroundColor:[UIColor whiteColor]];
+            singleItem.tag = i;
+            [singleItem addTarget:self
+                           action:@selector(goToSelectedRelatedItem:)
+                 forControlEvents:UIControlEventTouchUpInside];
+            
+            CGRect tempFrame = singleItem.frame;
+            tempFrame.origin.x = relatedItemX;
+            tempFrame.origin.y = relatedItemY;
+            singleItem.frame = tempFrame;
+            singleItem.product = product;
+            
+            [self.rrScrollView addSubview:singleItem];
+            relatedItemX += singleItem.frame.size.width+6.f;
+        }
+        [self.rrScrollView setHeight:itemSize.height+20];
+        [self.rrView setHeight:CGRectGetMaxY(self.rrScrollView.frame)];
+        
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+        {
+            if (!VALID(self.rrView.superview, UIView)) {
+                [self.view addSubview:self.rrView];
+            }
+            [self.rrView setY:self.viewBounds.size.height - self.rrView.height];
+            [self.rrView setWidth:self.rrView.superview.width];
+        }else{
+            if (!VALID(self.rrView.superview, UIView)) {
+                [self.topScrollView addSubview:self.rrView];
+            }
+            [self.rrView setY:CGRectGetMaxY(self.continueShoppingButtonBar.frame)+16.f];
+            [self.rrView setWidth:self.rrView.superview.width];
+            [self.topScrollView setContentSize:CGSizeMake(self.topScrollView.width, CGRectGetMaxY(self.rrView.frame))];
+        }
+        [self.rrHeaderLine setWidth:self.rrView.width];
+        [self.rrScrollView setWidth:self.rrView.width];
+        
+        self.rrScrollView.contentSize = CGSizeMake(relatedItemX<self.rrScrollView.width?self.rrScrollView.width:relatedItemX, self.rrScrollView.frame.size.height);
+        
+        if (RI_IS_RTL) {
+            [self.rrView flipAllSubviews];
+        }
+    }
+    
+}
+
+- (void)onOrientationChanged
+{
+    [super onOrientationChanged];
+    CGFloat viewWidth = 320;
+    [self.topScrollView setFrame:CGRectMake(self.view.width/2-viewWidth/2, 0, viewWidth, self.viewBounds.size.height)];
+    if (VALID_NOTEMPTY(self.rrProducts, NSSet)) {
+        [self reloadRR];
+    }
+}
+
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    [self.topScrollView setHeight:self.viewBounds.size.height];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -430,20 +603,31 @@
     [super viewDidAppear:animated];
     
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"ThankYou"];
-    
-    [self.goToTrackOrdersButton setFrame:self.trackOrderMessage.frame];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    
-    [self.goToTrackOrdersButton setFrame:self.trackOrderMessage.frame];
-}
+#pragma mark - Actions
 
-- (void)copyOrderNumber
+- (void)goToSelectedRelatedItem:(UIControl*)sender
 {
-    [[UIPasteboard generalPasteboard] setString:[self.orderNumberField text]];
+    NSArray* relatedProducts = [self.rrProducts allObjects];
+    RIProduct *tempProduct = [relatedProducts objectAtIndex:sender.tag];
+    
+    NSMutableDictionary* userInfo = [NSMutableDictionary new];
+    [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"show_back_button"];
+    
+    if (VALID_NOTEMPTY(tempProduct.targetString, NSString)) {
+        [userInfo setObject:tempProduct.targetString forKey:@"targetString"];
+        
+        if (VALID_NOTEMPTY(tempProduct.richRelevanceParameter, NSString)) {
+            [userInfo setObject:tempProduct.richRelevanceParameter forKey:@"richRelevance"];
+        }
+    } else if (VALID_NOTEMPTY(tempProduct.sku, NSString)) {
+        [userInfo setObject:tempProduct.sku forKey:@"sku"];
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                        object:nil
+                                                      userInfo:userInfo];
 }
 
 - (void)goToHomeScreen

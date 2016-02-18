@@ -372,7 +372,7 @@
 
 "thank_you_order_title" = "Thank You!";
 
-"order_success" = "Your order has been successfully registered with the number:";
+"order_success" = "Your order has been successfully registered. You can check the status through Order Details.";
 
 "order_track_success" = "You can track your order visiting the order status area in this app";
 
