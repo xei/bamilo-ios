@@ -102,6 +102,7 @@
 #define STRING_CART RILocalizedString(@"cart_label", nil)
 #define STRING_NO_ITEMS_IN_CART RILocalizedString(@"wishlist_notiems", nil)
 #define STRING_CONTINUE_SHOPPING RILocalizedString(@"continue_shopping", nil)
+#define STRING_RECOMMENDED_FOR_YOU RILocalizedString(@"recommended_for_you", nil)
 #define STRING_COUPON RILocalizedString(@"my_order_coupon_label", nil)
 #define STRING_USE RILocalizedString(@"voucher_use", nil)
 #define STRING_REMOVE RILocalizedString(@"voucher_remove", nil)

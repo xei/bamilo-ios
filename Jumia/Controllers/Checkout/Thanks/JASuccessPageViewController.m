@@ -127,6 +127,7 @@
         _rrHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, 0, self.rrView.width, kProductInfoHeaderLineHeight)];
         [_rrHeaderLine setTopSeparatorVisibility:YES];
         [_rrHeaderLine setBottomSeparatorVisibility:YES];
+        [_rrHeaderLine setTitle:[STRING_RECOMMENDED_FOR_YOU uppercaseString]];
         [_rrHeaderLine setBackgroundColor:[UIColor whiteColor]];
     }
     return _rrHeaderLine;
