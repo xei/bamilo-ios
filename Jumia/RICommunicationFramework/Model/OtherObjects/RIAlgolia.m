@@ -79,13 +79,13 @@
     }
     __block NSInteger index = _searchId;
     [self.apiClient multipleQueries:self.queries
-                            success:^(ASAPIClient *client, NSArray *queries, NSDictionary *result) {
+                            success:^(ASAPIClient *client, NSArray *queries, NSDictionary *multipleResults) {
                                 
                                 if (index < _searchId) {
                                     return;
                                 }
-                                NSDictionary *results = [result objectForKey:@"results"];
-                                if (result) {
+                                NSDictionary *results = [multipleResults objectForKey:@"results"];
+                                if (multipleResults) {
                                     NSArray *facetCategoryArray = [NSMutableArray new];
                                     
                                     NSMutableArray *tmpProducts = [NSMutableArray array];
@@ -105,13 +105,11 @@
                                                 
                                                 self.categoriesQuery.facetFiltersRaw = [NSString stringWithFormat:@"(%@)", [facets componentsJoinedByString:@","]];
                                                 __block NSInteger indexCat = _searchId;
-                                                [self.categoriesIndex search:self.categoriesQuery success:^(ASRemoteIndex *index, ASQuery *query, NSDictionary *result) {
-                                                    
+                                                [self.categoriesIndex search:self.categoriesQuery success:^(ASRemoteIndex *index, ASQuery *query, NSDictionary *categoriesResult) {
                                                     if (indexCat < _searchId) {
                                                         return;
                                                     }
-                                                    
-                                                    NSArray *hits = result[@"hits"];
+                                                    NSArray *hits = categoriesResult[@"hits"];
                                                     NSMutableArray *tmpCategories = [NSMutableArray array];
                                                     for (NSDictionary *hit in hits) {
                                                         
