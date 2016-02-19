@@ -43,12 +43,12 @@
 @dynamic date;
 @dynamic targetString;
 
-+ (void)deleteSearchSuggestionByQuery:(NSString *)query
++ (void)deleteSearchSuggestionByTargetString:(NSString *)targetString
 {
     NSArray *searches = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RISearchSuggestion class])];
     
     for (RISearchSuggestion *tempSearch in searches) {
-        if ([tempSearch.item isEqualToString:query]) {
+        if ([tempSearch.targetString isEqualToString:targetString]) {
             [[RIDataBaseWrapper sharedInstance] deleteObject:tempSearch];
             [[RIDataBaseWrapper sharedInstance] saveContext];
             
@@ -72,9 +72,9 @@
 {
     if(VALID_NOTEMPTY(searchSuggestion.item, NSString))
     {
-        if ([RISearchSuggestion checkIfSuggestionsExistsOnDB:searchSuggestion.item])
+        if ([RISearchSuggestion checkIfSuggestionsExistsOnDB:searchSuggestion.targetString])
         {
-            [RISearchSuggestion deleteSearchSuggestionByQuery:searchSuggestion.item];
+            [RISearchSuggestion deleteSearchSuggestionByTargetString:searchSuggestion.targetString];
         }
         
         [searchSuggestion setIsRecentSearch:isRecentSearch];
@@ -384,10 +384,10 @@
 
 #pragma mark - Private methods
 
-+ (BOOL)checkIfSuggestionsExistsOnDB:(NSString *)query
++ (BOOL)checkIfSuggestionsExistsOnDB:(NSString *)targetString
 {
     BOOL suggestionExists = false;
-    NSArray* searchSuggestions = [RISearchSuggestion getSearchSuggestionsOnDBForQuery:query];
+    NSArray* searchSuggestions = [RISearchSuggestion getSearchSuggestionsOnDBForTargetString:targetString];
     if(VALID_NOTEMPTY(searchSuggestions, NSArray))
     {
         suggestionExists = true;
@@ -395,10 +395,9 @@
     return suggestionExists;
 }
 
-
-+ (NSArray *)getSearchSuggestionsOnDBForQuery:(NSString*)query
++ (NSArray *)getSearchSuggestionsOnDBForTargetString:(NSString*)targetString
 {
-    return [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RISearchSuggestion class]) withPropertyName:@"item" andPropertyValue:query];
+    return [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RISearchSuggestion class]) withPropertyName:@"targetString" andPropertyValue:targetString];
 }
 
 + (NSArray*) parseSearchSuggestions:(NSArray*)jsonObject
