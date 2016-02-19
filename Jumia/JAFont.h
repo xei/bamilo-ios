@@ -30,7 +30,20 @@
 #define JABody3Font [UIFont fontWithName:kFontRegularName size:13]
 #define JACaptionFont [UIFont fontWithName:kFontRegularName size:11]
 #define JACaption2Font [UIFont fontWithName:kFontBoldName size:11]
-
 #define JABadgeFont [UIFont fontWithName:kFontBoldName size:10]
+
+
+
+#define JADisplay1NewFont [UIFont fontWithName:kFontRegularName size:30]
+#define JADisplay2NewFont [UIFont fontWithName:kFontRegularName size:20]
+#define JADisplay3NewFont [UIFont fontWithName:kFontRegularName size:16]
+#define JATitleFont [UIFont fontWithName:kFontMediumName size:14]
+#define JAListNewFont [UIFont fontWithName:kFontRegularName size:14]
+#define JAHEADLINEFont [UIFont fontWithName:kFontBoldName size:12]
+#define JABodyFont [UIFont fontWithName:kFontRegularName size:12]
+#define JACaptionNewFont [UIFont fontWithName:kFontRegularName size:10]
+#define JABADGENewFont [UIFont fontWithName:kFontMediumName size:10]
+#define JABUTTONNewFont [UIFont fontWithName:kFontBoldName size:14]
+#define JASystemTitleFont [UIFont fontWithName:kFontRegularName size:17]
 
 #endif

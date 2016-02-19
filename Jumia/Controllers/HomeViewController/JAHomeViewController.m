@@ -313,7 +313,7 @@
 - (void)submitNewsletter:(JADynamicForm *)dynamicForm andEmail:(NSString *)email
 {
     [self showLoading];
-    [RIForm sendForm:dynamicForm.form parameters:[dynamicForm getValues] successBlock:^(id object) {
+    [RIForm sendForm:dynamicForm.form parameters:[dynamicForm getValues] successBlock:^(id object, NSArray* successMessages) {
         [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RIForm class]) withPropertyName:@"type" andPropertyValue:@"newsletter_homepage"];
         [self reload];
         [self onSuccessResponse:RIApiResponseSuccess messages:object showMessage:YES];

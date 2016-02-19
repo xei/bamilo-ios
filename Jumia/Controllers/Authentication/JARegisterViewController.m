@@ -374,7 +374,7 @@ JADatePickerDelegate
     
     [self showLoading];
     
-    [RIForm sendForm:[self.dynamicForm form] parameters:[self.dynamicForm getValues]  successBlock:^(id object) {
+    [RIForm sendForm:[self.dynamicForm form] parameters:[self.dynamicForm getValues]  successBlock:^(id object, NSArray* successMessages) {
         
         RICustomer *customerObject = [(NSDictionary*)object objectForKey:@"customer"];
         

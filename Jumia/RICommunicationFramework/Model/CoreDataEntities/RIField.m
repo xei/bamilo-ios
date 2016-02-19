@@ -16,6 +16,7 @@
 
 @dynamic key;
 @dynamic label;
+@dynamic subLabel;
 @dynamic max;
 @dynamic min;
 @dynamic name;
@@ -54,6 +55,9 @@
     }
     if ([fieldJSON objectForKey:@"label"]) {
         newField.label = [fieldJSON objectForKey:@"label"];
+    }
+    if ([fieldJSON objectForKey:@"sub_label"]) {
+        newField.subLabel = [fieldJSON objectForKey:@"sub_label"];
     }
     id value = [fieldJSON objectForKey:@"value"];
     if (VALID(value, NSString)) {
@@ -192,6 +196,7 @@
 
         NSString* typeForRelatedFields = [relatedJSON objectForKey:@"type"];
         NSString* nameForRelatedFields = [relatedJSON objectForKey:@"name"];
+        NSString* valueForRelatedFields = [relatedJSON objectForKey:@"value"];
         
         if ([typeForRelatedFields isEqualToString:@"list"]) {
             
@@ -205,6 +210,9 @@
         }
         
         NSArray* relatedFieldsArrayJSON = [relatedJSON objectForKey:@"fields"];
+        if (NO == VALID_NOTEMPTY(relatedFieldsArrayJSON, NSArray)) {
+            relatedFieldsArrayJSON = [relatedJSON objectForKey:@"options"];
+        }
         for (NSDictionary* relatedFieldJSON in relatedFieldsArrayJSON) {
             if (VALID_NOTEMPTY(relatedFieldJSON, NSDictionary)) {
                 RIField* relatedField = [RIField parseField:relatedFieldJSON];
@@ -212,6 +220,9 @@
                 relatedField.type = typeForRelatedFields;
                 if (!VALID_NOTEMPTY(relatedField.name, NSString)) {
                     relatedField.name = nameForRelatedFields;
+                }
+                if ([relatedField.value isEqualToString:valueForRelatedFields]) {
+                    relatedField.checked = [NSNumber numberWithBool:YES];
                 }
                 [newField addRelatedFieldsObject:relatedField];
             }

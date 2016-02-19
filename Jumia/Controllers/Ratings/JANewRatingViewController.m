@@ -634,9 +634,19 @@ UIAlertViewDelegate
     NSString* skuKey = [currentDynamicForm getFieldNameForKey:@"sku"];
     [parameters addEntriesFromDictionary:@{skuKey: self.product.sku}];
     
+    if ([currentDynamicForm checkErrors]) {
+        [self onErrorResponse:RIApiResponseSuccess
+                     messages:@[currentDynamicForm.firstErrorInFields]
+                showAsMessage:YES
+                     selector:@selector(sendReview:)
+                      objects:@[sender]];
+        [self hideLoading];
+        return;
+    }
+    
     [RIForm sendForm:currentForm
           parameters:parameters
-        successBlock:^(id object) {
+        successBlock:^(id object, NSArray* successMessages) {
             
             NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
             

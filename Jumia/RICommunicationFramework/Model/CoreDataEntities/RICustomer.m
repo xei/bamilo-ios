@@ -179,7 +179,7 @@
                             }
                         }
                         [RIForm sendForm:form parameters:parameters
-                            successBlock:^(id jsonObject)
+                            successBlock:^(id jsonObject, NSArray* successMessages)
                          {
                              dispatch_async(dispatch_get_main_queue(), ^{
                                  returnBlock(YES, jsonObject, customerObject.loginMethod);
