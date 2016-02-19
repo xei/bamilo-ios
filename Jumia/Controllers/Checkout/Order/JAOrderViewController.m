@@ -943,7 +943,6 @@
 
     
     [RICart setMultistepFinishForCart:self.cart withSuccessBlock:^(RICart *cart, NSString *rrTargetString) {
-        NSLog(@"SUCCESS Finishing checkout");
         
         if(VALID_NOTEMPTY(cart.paymentInformation, RIPaymentInformation))
         {

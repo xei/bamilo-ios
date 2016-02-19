@@ -205,9 +205,11 @@
                                              userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                    successBlock:^(RIApiResponse apiResponse, NSDictionary* jsonObject) {
                                                        [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-                                                           NSDictionary *recommendedMetadata = [jsonObject objectForKey:@"metadata"];
-                                                           if (VALID_NOTEMPTY(recommendedMetadata, NSDictionary)) {
-                                                               successBlock(VALID_VALUE([RIProduct parseRichRelevanceProducts:[recommendedMetadata objectForKey:@"data"] country:configuration], NSSet));
+                                                           NSDictionary *recommendedMetadata = VALID_NOTEMPTY_VALUE([jsonObject objectForKey:@"metadata"], NSDictionary);
+                                                           NSArray *data = VALID_NOTEMPTY_VALUE([recommendedMetadata objectForKey:@"data"], NSArray);
+                                                           NSSet *productsSet = VALID_NOTEMPTY_VALUE([RIProduct parseRichRelevanceProducts:data country:configuration], NSSet);
+                                                           if (productsSet) {
+                                                                successBlock(productsSet);
                                                            } else {
                                                                failureBlock(apiResponse, nil);
                                                            }
