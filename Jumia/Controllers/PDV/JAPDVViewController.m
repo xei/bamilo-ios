@@ -97,8 +97,8 @@ JAActivityViewControllerDelegate
         _productImageSection = [[JAPDVImageSection alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 500)];
         _productImageSection.delegate = self;
         [_productImageSection.wishListButton addTarget:self
-                                                    action:@selector(addToFavoritesPressed:)
-                                          forControlEvents:UIControlEventTouchUpInside];
+                                                action:@selector(addToFavoritesPressed:)
+                                      forControlEvents:UIControlEventTouchUpInside];
     }
     _productImageSection.wishListButton.selected = VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate);
     return _productImageSection;
@@ -138,22 +138,21 @@ JAActivityViewControllerDelegate
                                                  name: UIApplicationDidEnterBackgroundNotification
                                                object: nil];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductChangedNotification object:self.product.sku];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
+    
     //$WIZ$
-//    BOOL alreadyShowedWizardPDV = [[NSUserDefaults standardUserDefaults] boolForKey:kJAPDVWizardUserDefaultsKey];
-//    if(alreadyShowedWizardPDV == NO)
-//    {
-//        [self hideLoading];
-//        self.wizardView = [[JAPDVWizardView alloc] initWithFrame:self.view.bounds];
-//        [self.view addSubview:self.wizardView];
-//        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJAPDVWizardUserDefaultsKey];
-//    }
+    //    BOOL alreadyShowedWizardPDV = [[NSUserDefaults standardUserDefaults] boolForKey:kJAPDVWizardUserDefaultsKey];
+    //    if(alreadyShowedWizardPDV == NO)
+    //    {
+    //        [self hideLoading];
+    //        self.wizardView = [[JAPDVWizardView alloc] initWithFrame:self.view.bounds];
+    //        [self.view addSubview:self.wizardView];
+    //        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJAPDVWizardUserDefaultsKey];
+    //    }
     
     if(self.hasLoaddedProduct)
     {
@@ -184,6 +183,8 @@ JAActivityViewControllerDelegate
             _processActionBlock();
         }
     }
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductChangedNotification object:self.product.sku];
+    _needRefreshProduct = NO;
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -196,7 +197,7 @@ JAActivityViewControllerDelegate
                                                  name:kProductChangedNotification
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self  
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updatedProduct:)
                                                  name:kUserLoggedInNotification
                                                object:nil];
@@ -241,16 +242,16 @@ JAActivityViewControllerDelegate
     [self.mainScrollView setHidden:YES];
     [self.landscapeScrollView setHidden:YES];
     [self.ctaView setHidden:YES];
-
+    
     //$WIZ$
-//    if(VALID_NOTEMPTY(self.wizardView, JAPDVWizardView))
-//    {
-//        CGRect newFrame = CGRectMake(self.wizardView.frame.origin.x,
-//                                     self.wizardView.frame.origin.y,
-//                                     self.view.frame.size.height + self.view.frame.origin.y,
-//                                     self.view.frame.size.width - self.view.frame.origin.y);
-//        [self.wizardView reloadForFrame:newFrame];
-//    }
+    //    if(VALID_NOTEMPTY(self.wizardView, JAPDVWizardView))
+    //    {
+    //        CGRect newFrame = CGRectMake(self.wizardView.frame.origin.x,
+    //                                     self.wizardView.frame.origin.y,
+    //                                     self.view.frame.size.height + self.view.frame.origin.y,
+    //                                     self.view.frame.size.width - self.view.frame.origin.y);
+    //        [self.wizardView reloadForFrame:newFrame];
+    //    }
     
     if (VALID_NOTEMPTY(self.picker, JAPicker)) {
         [self closePicker];
@@ -289,12 +290,12 @@ JAActivityViewControllerDelegate
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self fillTheViews];
-
+    
     //$WIZ$
-//    if(VALID_NOTEMPTY(self.wizardView, JAPDVWizardView))
-//    {
-//        [self.wizardView reloadForFrame:self.view.bounds];
-//    }
+    //    if(VALID_NOTEMPTY(self.wizardView, JAPDVWizardView))
+    //    {
+    //        [self.wizardView reloadForFrame:self.view.bounds];
+    //    }
     
     if(VALID_NOTEMPTY(self.galleryPaged, JAPDVGallery))
     {
@@ -374,12 +375,6 @@ JAActivityViewControllerDelegate
         }
     }
     if (VALID_NOTEMPTY(notification.object, NSString) && [self.productSku isEqualToString:notification.object]) {
-        if (VALID_NOTEMPTY(notification.userInfo, NSDictionary)) {
-            NSDate *favoriteAddDate = [notification.userInfo valueForKey: @"favoriteAddDate"];
-            if (VALID_NOTEMPTY(favoriteAddDate, NSDate)) {
-                self.product.favoriteAddDate = favoriteAddDate;
-            }
-        }
         _needRefreshProduct = YES;
     }
 }
@@ -398,7 +393,7 @@ JAActivityViewControllerDelegate
         richParameter = [NSDictionary dictionaryWithObject:self.richRelevanceParameter forKey:@"rich_parameter"];
     } else
         richParameter = nil;
-
+    
     if (VALID_NOTEMPTY(self.productTargetString, NSString)) {
         [RIProduct getCompleteProductWithTargetString:self.productTargetString
                                     withRichParameter:richParameter
@@ -420,22 +415,22 @@ JAActivityViewControllerDelegate
     } else if (VALID_NOTEMPTY(self.productSku, NSString)) {
         [RIProduct getCompleteProductWithSku:self.productSku
                                 successBlock:^(id product) {
-            self.apiResponse = RIApiResponseSuccess;
-            
+                                    self.apiResponse = RIApiResponseSuccess;
+                                    
                                     [self loadedProduct:product];
                                     [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-            self.apiResponse = apiResponse;
-            if(self.firstLoading)
-            {
-                [self trackingEventLoadingTime];
-                self.firstLoading = NO;
-            }
-            
-            [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadCompleteProduct) objects:nil];
-            
-            [self hideLoading];
-        }];
+                                } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+                                    self.apiResponse = apiResponse;
+                                    if(self.firstLoading)
+                                    {
+                                        [self trackingEventLoadingTime];
+                                        self.firstLoading = NO;
+                                    }
+                                    
+                                    [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadCompleteProduct) objects:nil];
+                                    
+                                    [self hideLoading];
+                                }];
     }
 }
 
@@ -452,7 +447,7 @@ JAActivityViewControllerDelegate
     [self reloadNavBar];
     
     //$WIZ$
-//    [self.wizardView setHasNoSeller:product.seller?NO:YES];
+    //    [self.wizardView setHasNoSeller:product.seller?NO:YES];
     
     [self trackingEventViewProduct:product];
     
@@ -536,10 +531,10 @@ JAActivityViewControllerDelegate
     }
     
     [self.ctaView setFrame:CGRectMake(self.mainScrollView.x,
-                                          self.view.frame.size.height - self.ctaView.frame.size.height,
-                                          self.mainScrollView.frame.size.width,
-                                          self.ctaView.frame.size.height)];
-        
+                                      self.view.frame.size.height - self.ctaView.frame.size.height,
+                                      self.mainScrollView.frame.size.width,
+                                      self.ctaView.frame.size.height)];
+    
     [self.view addSubview:self.ctaView];
     [self.ctaView setYBottomAligned:0.f];
     self.mainScrollView.height -= self.ctaView.height;
@@ -559,7 +554,7 @@ JAActivityViewControllerDelegate
     
     //make sure wizard and picker are in front
     //$WIZ$
-//    [self.view bringSubviewToFront:self.wizardView];
+    //    [self.view bringSubviewToFront:self.wizardView];
     [self.view bringSubviewToFront:self.picker];
 }
 
@@ -619,9 +614,9 @@ JAActivityViewControllerDelegate
      *******/
     
     self.productImageSection.frame = CGRectMake(0.0f,
-                                         scrollViewY,
-                                         self.productImageSection.frame.size.width,
-                                         self.productImageSection.frame.size.height);
+                                                scrollViewY,
+                                                self.productImageSection.frame.size.width,
+                                                self.productImageSection.frame.size.height);
     
     CGRect imageSectionFrame = self.mainScrollView.bounds;
     [self.productImageSection setupWithFrame:imageSectionFrame product:self.product preSelectedSize:self.preSelectedSize];
@@ -651,7 +646,7 @@ JAActivityViewControllerDelegate
     self.productInfoSection = [[JAPDVProductInfo alloc] init];
     CGRect productInfoSectionFrame = CGRectMake(0, 6, self.mainScrollView.width, 0);
     [self.productInfoSection setupWithFrame:productInfoSectionFrame product:self.product preSelectedSize:self.preSelectedSize];
-
+    
     if (VALID_NOTEMPTY(self.currentSimple, RIProductSimple)) {
         [self.productInfoSection setSpecialPrice:self.currentSimple.specialPriceFormatted andPrice:self.currentSimple.priceFormatted andMaxSavingPercentage:self.product.maxSavingPercentage shouldForceFlip:NO];
     }
@@ -769,9 +764,9 @@ JAActivityViewControllerDelegate
                                              scrollViewY,
                                              self.bundleLayout.frame.size.width,
                                              self.bundleLayout.frame.size.height);
-
+        
         [self.mainScrollView addSubview:self.bundleLayout];
-
+        
         [self.bundleLayout addBuyingBundleTarget:self action:@selector(goToBundlesScreen)];
         
         
@@ -859,13 +854,13 @@ JAActivityViewControllerDelegate
         scrollViewY += (6.0f + self.relatedItemsView.frame.size.height);
         
     }
-
+    
     self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.frame.size.width, scrollViewY);
     self.landscapeScrollView.contentSize = CGSizeMake(self.landscapeScrollView.frame.size.width, landscapeScrollViewY);
     
     //make sure wizard is in front
     //$WIZ$
-//    [self.view bringSubviewToFront:self.wizardView];
+    //    [self.view bringSubviewToFront:self.wizardView];
     
     if (RI_IS_RTL) {
         [self.view flipAllSubviews];
@@ -904,7 +899,7 @@ JAActivityViewControllerDelegate
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                         object:nil
                                                       userInfo:userInfo];
-
+    
     [self trackingEventRelatedItemSelection:tempProduct];
     [self trackingEventScreenName:[NSString stringWithFormat:@"related_item_%@",tempProduct.name]];
 }
@@ -927,7 +922,7 @@ JAActivityViewControllerDelegate
     if(VALID_NOTEMPTY(self.product.seller, RISeller))
     {
         [userInfo setObject:self.product.seller.name forKey:@"name"];
-
+        
         [userInfo setObject:self.product.seller.targetString forKey:@"targetString"];
     }
     
@@ -946,7 +941,7 @@ JAActivityViewControllerDelegate
             [userInfo setObject:self.product.seller.linkTextGlobal forKey:@"title"];
             [userInfo setObject:self.product.seller.linkTargetStringGlobal forKey:@"targetString"];
             [userInfo setObject:STRING_BACK forKey:@"show_back_button_title"];
-
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithShopUrlNofication
                                                                 object:nil
                                                               userInfo:userInfo];
@@ -1040,9 +1035,9 @@ JAActivityViewControllerDelegate
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_PRODUCT_MESSAGE, [NSURL URLWithString:url], whatsappMsg] applicationActivities:nil];
     
     if(!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")){
-       
+        
         activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_PRODUCT_MESSAGE, [NSURL URLWithString:url], whatsappMsg] applicationActivities:objectToShare];
-         
+        
     }
     
     
@@ -1368,7 +1363,6 @@ JAActivityViewControllerDelegate
         _needAddToFavBlock = YES;
         _processActionBlock = block;
         
-        _needRefreshProduct = YES;
         NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
         [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification object:nil userInfo:userInfoLogin];
