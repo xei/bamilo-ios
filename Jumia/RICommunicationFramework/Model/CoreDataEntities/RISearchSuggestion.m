@@ -120,7 +120,7 @@
                        successBlock:(void (^)(NSArray *suggestions))successBlock
                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
-        if([RICountryConfiguration getCurrentConfiguration].suggesterProviderEnum == ALGOLIA &&
+       if([RICountryConfiguration getCurrentConfiguration].suggesterProviderEnum == ALGOLIA &&
            VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].algoliaAppId, NSString) &&
            VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].algoliaApiKey, NSString))
     {
@@ -181,11 +181,11 @@
                                                                   NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                                   if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                                   {
-                                                                      NSArray *shopInShopSuggestions = VALID_NOTEMPTY_VALUE([RISearchSuggestion parseSearchSuggestions:[metadata objectForKey:@"shops"]], NSArray);
-                                                                      NSArray *categoriesSuggestions = VALID_NOTEMPTY_VALUE([RISearchSuggestion parseSearchSuggestions:[metadata objectForKey:@"categories"]], NSArray);
-                                                                      NSArray *productsSuggestions = VALID_NOTEMPTY_VALUE([RISearchSuggestion parseSearchSuggestions:[metadata objectForKey:@"products"]], NSArray);
+                                                                      NSArray *shopInShopSuggestions = VALID_VALUE([RISearchSuggestion parseSearchSuggestions:[metadata objectForKey:@"shops"]], NSArray);
+                                                                      NSArray *categoriesSuggestions = VALID_VALUE([RISearchSuggestion parseSearchSuggestions:[metadata objectForKey:@"categories"]], NSArray);
+                                                                      NSArray *productsSuggestions = VALID_VALUE([RISearchSuggestion parseSearchSuggestions:[metadata objectForKey:@"products"]], NSArray);
                                                                       if (VALID_NOTEMPTY(shopInShopSuggestions, NSArray) || VALID_NOTEMPTY(categoriesSuggestions, NSArray) || VALID_NOTEMPTY(productsSuggestions, NSArray)) {
-                                                                          successBlock([[[shopInShopSuggestions arrayByAddingObjectsFromArray:[categoriesSuggestions copy]] arrayByAddingObjectsFromArray:[productsSuggestions copy]] copy]);
+                                                                          successBlock([[[shopInShopSuggestions?:[NSArray new] arrayByAddingObjectsFromArray:[categoriesSuggestions copy]] arrayByAddingObjectsFromArray:[productsSuggestions copy]] copy]);
                                                                       }else{
                                                                           failureBlock(RIApiResponseAPIError, nil);
                                                                       }
@@ -424,6 +424,8 @@
     [newSearchSuggestion setItem:VALID_NOTEMPTY_VALUE([jsonObject objectForKey:@"sub_string"], NSString)];
     if (!newSearchSuggestion.item && VALID_NOTEMPTY([jsonObject objectForKey:@"name"], NSString)) {
         newSearchSuggestion.item = [jsonObject objectForKey:@"name"];
+    } else if (VALID_NOTEMPTY([jsonObject objectForKey:@"item"], NSString)) {
+        newSearchSuggestion.item = [jsonObject objectForKey:@"item"];
     }
     
     [newSearchSuggestion setTargetString:VALID_NOTEMPTY_VALUE([jsonObject objectForKey:@"target"], NSString)];
