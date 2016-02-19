@@ -12,9 +12,14 @@
 #import "RIFieldOption.h"
 #import "JAAddRatingView.h"
 #import "JARadioRelatedComponent.h"
+#import "JATitleComponent.h"
+#import "JAScreenTitleComponent.h"
+#import "JARadioGroupComponent.h"
+#import "JASwitchRadioComponent.h"
+#import "JAScreenRadioComponent.h"
 
 @interface JADynamicForm ()
-<UITextFieldDelegate>
+<UITextFieldDelegate, JASwitchRadioComponentDelegate, JAScreenRadioComponentDelegate>
 
 @property (nonatomic, strong) UITextField* currentTextField;
 
@@ -23,6 +28,8 @@
 @property (nonatomic, strong) JARadioComponent *postcodeComponent;
 @property (nonatomic, strong) JARadioComponent *newsletterGenderComponent;
 @property (nonatomic, strong) JARadioComponent *phonePrefixComponent;
+
+@property (nonatomic, assign) CGFloat distanceToScreenRadioComponent;
 
 @end
 
@@ -114,7 +121,71 @@
         RIField *field = [fields objectAtIndex:i];
         NSInteger tag = [self.formViews count];
         
-        if ([@"string" isEqualToString:field.type] || [@"text" isEqualToString:field.type] || [@"email" isEqualToString:field.type])
+        if ([@"screen_radio" isEqualToString:field.type]) {
+            JAScreenRadioComponent* screenRadio = [[JAScreenRadioComponent alloc] init];
+            screenRadio.delegate = self;
+            [screenRadio setupWithField:field];
+            
+            CGRect frame = screenRadio.frame;
+            frame.origin.y = startingY;
+            screenRadio.frame = frame;
+            startingY += screenRadio.frame.size.height;
+            
+            [self.formViews addObject:screenRadio];
+            
+            self.distanceToScreenRadioComponent = screenRadio.frame.origin.y;
+            
+        } else if ([@"switch_radio" isEqualToString:field.type]) {
+            JASwitchRadioComponent* switchRadio = [[JASwitchRadioComponent alloc] init];
+            switchRadio.delegate = self;
+            [switchRadio setupWithField:field];
+            
+            CGRect frame = switchRadio.frame;
+            frame.origin.y = startingY;
+            switchRadio.frame = frame;
+            startingY += switchRadio.frame.size.height;
+            
+            [self.formViews addObject:switchRadio];
+            
+            
+        } else if ([@"radio_group" isEqualToString:field.type]) {
+            JARadioGroupComponent* radioGroup = [[JARadioGroupComponent alloc] init];
+            [radioGroup setupWithField:field];
+            
+            CGRect frame = radioGroup.frame;
+            frame.origin.y = startingY;
+            radioGroup.frame = frame;
+            startingY += radioGroup.frame.size.height;
+            
+            [self.formViews addObject:radioGroup];
+            
+        } else if ([@"section_title" isEqualToString:field.type]) {
+            
+            JATitleComponent* titleField = [[JATitleComponent alloc] init];
+            [titleField setupWithField:field];
+            
+            CGRect frame = titleField.frame;
+            frame.origin.y = startingY;
+            titleField.frame = frame;
+            startingY += titleField.frame.size.height;
+            
+            lastTextFieldIndex = [self.formViews count];
+            [self.formViews addObject:titleField];
+            
+        } else if ([@"screen_title" isEqualToString:field.type]) {
+            
+            JAScreenTitleComponent* titleField = [[JAScreenTitleComponent alloc] init];
+            [titleField setupWithField:field];
+            
+            CGRect frame = titleField.frame;
+            frame.origin.y = startingY;
+            titleField.frame = frame;
+            startingY += titleField.frame.size.height;
+            
+            lastTextFieldIndex = [self.formViews count];
+            [self.formViews addObject:titleField];
+            
+        } else if ([@"string" isEqualToString:field.type] || [@"text" isEqualToString:field.type] || [@"email" isEqualToString:field.type])
         {
             JATextFieldComponent *textField = [[JATextFieldComponent alloc] init];
             [textField setupWithField:field];
@@ -432,6 +503,17 @@
     {
         [self setValues:values];
     }
+    
+    //if there is a screen radio that is set to innactive, we have to "close" the form
+    for (UIView* field in self.formViews) {
+        if ([field isKindOfClass:[JAScreenRadioComponent class]]) {
+            JAScreenRadioComponent* screenRadio = (JAScreenRadioComponent*)field;
+            if (NO == screenRadio.currentlyChecked) {
+                [self unsubscribedNewsletters];
+                break;
+            }
+        }
+    }
 }
 
 -(UIView*)viewWithTag:(NSInteger) tag
@@ -568,7 +650,22 @@
     {
         for (UIView *view in self.formViews)
         {
-            if ([view isKindOfClass:[JABirthDateComponent class]])
+            if ([view isKindOfClass:[JASwitchRadioComponent class]]) {
+                JASwitchRadioComponent* switchRadio = (JASwitchRadioComponent*) view;
+                if(VALID_NOTEMPTY([switchRadio getValues], NSDictionary))
+                {
+                    [parameters addEntriesFromDictionary:[switchRadio getValues]];
+                }
+            }
+            else if ([view isKindOfClass:[JARadioGroupComponent class]])
+            {
+                JARadioGroupComponent* radioGroup = (JARadioGroupComponent*) view;
+                if(VALID_NOTEMPTY([radioGroup getValues], NSDictionary))
+                {
+                    [parameters addEntriesFromDictionary:[radioGroup getValues]];
+                }
+            }
+            else if ([view isKindOfClass:[JABirthDateComponent class]])
             {
                 JABirthDateComponent *birthdateComponent = (JABirthDateComponent*) view;
                 [parameters addEntriesFromDictionary:[birthdateComponent getValues]];
@@ -885,6 +982,68 @@
         }
     }
     return fieldId;
+}
+
+#pragma mark - JASwitchRadioComponentDelegate
+- (void)switchRadioComponent:(JASwitchRadioComponent*)switchRadioComponent
+               changedHeight:(CGFloat)delta;
+{
+    BOOL belowRadioComponent = NO;
+    for (UIView* field in self.formViews) {
+        if (belowRadioComponent) {
+            [UIView animateWithDuration:0.3 animations:^{
+                field.y = field.y + delta;
+            }];
+        }
+        
+        if (field == switchRadioComponent) {
+            belowRadioComponent = YES;
+        }
+    }
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(dynamicFormChangedHeight)]) {
+        [self.delegate dynamicFormChangedHeight];
+    }
+}
+
+#pragma mark - JAScreenRadioComponentDelegate
+- (void)screenRadioComponentWasPressed:(JAScreenRadioComponent *)screenRadioComponent
+{
+    if (screenRadioComponent.currentlyChecked) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(screenRadioWasPressedWithTargetString:)]) {
+            [self.delegate screenRadioWasPressedWithTargetString:screenRadioComponent.field.apiCallTarget];
+        }
+    } else {
+        for (UIView* field in self.formViews) {
+            [UIView animateWithDuration:0.3 animations:^{
+                field.y = field.y + self.distanceToScreenRadioComponent;
+            }];
+            if ([field isKindOfClass:[JASwitchRadioComponent class]]) {
+                JASwitchRadioComponent* switchRadio = (JASwitchRadioComponent*)field;
+                [switchRadio forceSelection];
+            }
+        }
+        screenRadioComponent.currentlyChecked = YES;
+        if (self.delegate && [self.delegate respondsToSelector:@selector(dynamicFormChangedHeight)]) {
+            [self.delegate dynamicFormChangedHeight];
+        }
+    }
+}
+
+- (void)unsubscribedNewsletters
+{
+    for (UIView* field in self.formViews) {
+        [UIView animateWithDuration:0.0 animations:^{
+            field.y = field.y - self.distanceToScreenRadioComponent;
+        }];
+        if ([field isKindOfClass:[JAScreenRadioComponent class]]) {
+            JAScreenRadioComponent* screenRadio = (JAScreenRadioComponent*)field;
+            screenRadio.currentlyChecked = NO;
+        }
+    }
+    if (self.delegate && [self.delegate respondsToSelector:@selector(dynamicFormChangedHeight)]) {
+        [self.delegate dynamicFormChangedHeight];
+    }
 }
 
 

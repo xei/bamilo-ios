@@ -407,4 +407,7 @@
 #define STRING_SIGNUP_NEWSLETTER RILocalizedString(@"sign_up_to_our_newsletter", nil)
 #define STRING_SIGNUP_NEWSLETTER_BODY RILocalizedString(@"sign_up_to_our_newsletter_body", nil)
 
+#define STRING_ACTIVE RILocalizedString(@"active", nil)
+#define STRING_INACTIVE RILocalizedString(@"inactive", nil)
+
 #endif

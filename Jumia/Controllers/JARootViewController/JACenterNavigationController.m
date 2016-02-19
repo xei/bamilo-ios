@@ -16,7 +16,6 @@
 #import "JARecentlyViewedViewController.h"
 #import "JAMyAccountViewController.h"
 #import "JAUserDataViewController.h"
-#import "JAEmailNotificationsViewController.h"
 #import "JAMyOrdersViewController.h"
 #import "JAMyOrderDetailViewController.h"
 #import "JASignInViewController.h"
@@ -40,7 +39,6 @@
 #import "RISeller.h"
 #import "JANavigationBarLayout.h"
 #import "RICustomer.h"
-#import "JAEmailNotificationsViewController.h"
 #import "JACampaignsViewController.h"
 #import "JATabNavigationViewController.h"
 #import "JARatingsViewController.h"
@@ -56,6 +54,8 @@
 #import "JAMoreMenuViewController.h"
 #import "RICountry.h"
 #import "JAFiltersViewController.h"
+#import "JANewsletterViewController.h"
+#import "JANewsletterSubscriptionViewController.h"
 #import "RITarget.h"
 
 #import "JAAuthenticationViewController.h"
@@ -141,6 +141,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showEmailNotificaitons:)
                                                  name:kShowEmailNotificationsScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showNewsletterSubscritions:)
+                                                 name:kShowNewsletterSubscriptionsScreenNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -933,17 +938,10 @@
     UIViewController *topViewController = [self topViewController];
     if([RICustomer checkIfUserIsLogged])
     {
-        if (![topViewController isKindOfClass:[JAEmailNotificationsViewController class]])
+        if (![topViewController isKindOfClass:[JANewsletterViewController class]])
         {
-            BOOL animated = NO;
-            if(VALID_NOTEMPTY(notification.object, NSDictionary) && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber))
-            {
-                animated = [[notification.object objectForKey:@"animated"] boolValue];
-            }
-            
-            JAEmailNotificationsViewController *email = [[JAEmailNotificationsViewController alloc]init];
-            
-            [self pushViewController:email animated:animated];
+            JANewsletterViewController* vc = [[JANewsletterViewController alloc] init];
+            [self pushViewController:vc animated:YES];
         }
     }
     else
@@ -958,6 +956,24 @@
             
             [self pushViewController:auth animated:YES];
         }
+    }
+}
+
+- (void)showNewsletterSubscritions:(NSNotification*)notification
+{
+    NSDictionary* userInfo = notification.userInfo;
+    NSString* targetString = [userInfo objectForKey:@"targetString"];
+    
+    if (VALID_NOTEMPTY(targetString, NSString)) {
+        JANewsletterSubscriptionViewController* vc = [[JANewsletterSubscriptionViewController alloc] init];
+        vc.targetString = targetString;
+        
+        id<JANewsletterSubscriptionDelegate> delegate = [userInfo objectForKey:@"delegate"];
+        if (delegate) {
+            vc.delegate = delegate;
+        }
+        
+        [self pushViewController:vc animated:YES];
     }
 }
 

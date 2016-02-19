@@ -449,7 +449,7 @@ JAPickerDelegate>
     
     [RIForm sendForm:[self.dynamicForm form]
           parameters:parameters
-        successBlock:^(id object)
+        successBlock:^(id object, NSArray* successMessages)
      {
          [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
          [self.dynamicForm resetValues];
