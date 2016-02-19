@@ -184,6 +184,7 @@ JAActivityViewControllerDelegate
         }
     }
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductChangedNotification object:self.product.sku];
+    _needRefreshProduct = NO;
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -1362,7 +1363,6 @@ JAActivityViewControllerDelegate
         _needAddToFavBlock = YES;
         _processActionBlock = block;
         
-        _needRefreshProduct = YES;
         NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
         [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification object:nil userInfo:userInfoLogin];
@@ -1408,7 +1408,6 @@ JAActivityViewControllerDelegate
             [[NSNotificationCenter defaultCenter] postNotificationName:kProductChangedNotification
                                                                 object:self.product.sku
                                                               userInfo:userInfo];
-            [self loadCompleteProduct];
             
             [self onSuccessResponse:RIApiResponseSuccess messages:success showMessage:YES];
             
