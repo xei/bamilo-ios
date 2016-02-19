@@ -142,7 +142,7 @@
         case PRODUCT_DETAIL:
             return @"product_detail";
         case CATALOG_SEARCH:
-            return @"catalog_search";
+            return @"catalog_query";
         case CATALOG_HASH:
             return @"catalog";
         case CATALOG_BRAND:
