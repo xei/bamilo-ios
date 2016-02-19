@@ -218,7 +218,7 @@
 +(NSString*)getMultistepFinishWithSuccessBlock:(void (^)(RICart *cart))successBlock
                                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 +(NSString*)setMultistepFinishForCart:(RICart*)cart
-                     withSuccessBlock:(void (^)(RICart* cart))successBlock
+                     withSuccessBlock:(void (^)(RICart* cart, NSString *rrStringTarget))successBlock
                       andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 @end

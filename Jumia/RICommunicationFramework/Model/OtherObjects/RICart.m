@@ -13,6 +13,7 @@
 #import "RIPaymentInformation.h"
 #import "RIAddress.h"
 #import "RISellerDelivery.h"
+#import "RIProduct.h"
 
 @implementation RICart
 
@@ -1096,7 +1097,7 @@
 }
 
 +(NSString*)setMultistepFinishForCart:(RICart*)cart
-                     withSuccessBlock:(void (^)(RICart* cart))successBlock
+                     withSuccessBlock:(void (^)(RICart* cart, NSString *rrTargetString))successBlock
                       andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 {
     NSMutableDictionary* parameters = [NSMutableDictionary new];
@@ -1117,8 +1118,8 @@
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
                                                                   if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
                                                                   {
-                                                                      successBlock([RICart parseCheckoutFinish:[jsonObject objectForKey:@"metadata"]
-                                                                                                       forCart:cart]);
+                                                                      NSString *rrTarget = VALID_NOTEMPTY_VALUE([VALID_NOTEMPTY_VALUE([VALID_NOTEMPTY_VALUE([jsonObject objectForKey:@"metadata"], NSDictionary) objectForKey:@"recommended_products"], NSDictionary) objectForKey:@"target"], NSString);
+                                                                      successBlock([RICart parseCheckoutFinish:[jsonObject objectForKey:@"metadata"] forCart:cart], rrTarget);
                                                                   } else
                                                                   {
                                                                       failureBlock(apiResponse, nil);
