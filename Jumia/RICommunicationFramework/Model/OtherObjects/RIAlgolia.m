@@ -129,8 +129,12 @@
                                         }
                                         for (int i = 0; i < [hits count]; ++i) {
                                             if ([[result objectForKey:@"index"] isEqualToString:self.shopInShopIndexName]) {
-                                                NSString *value = [hits[i] objectForKey:@"domain"];
-                                                NSDictionary *shopInShopDict = @{@"item":value, @"value":value};
+                                                NSString *label = [hits[i] objectForKey:@"domain"];
+                                                NSString *value = VALID_NOTEMPTY_VALUE([hits[i] objectForKey:@"pointer"], NSString);
+                                                if (!value) {
+                                                    value = label;
+                                                }
+                                                NSDictionary *shopInShopDict = @{@"item":label, @"value":value};
                                                 [tmpShopInShop addObject:shopInShopDict];
                                             }else if ([[result objectForKey:@"index"] isEqualToString:self.productsIndexName]) {
                                                 NSString *label = [[[hits[i] objectForKey:@"localizable_attributes"] objectForKey:_langCode] objectForKey:@"name"];
