@@ -21,12 +21,15 @@
 @interface JATeaserPageView()
 {
     BOOL _needsRefresh;
+    BOOL _keyboardEvent;
+    CGFloat _scrollViewHeight;
 }
 
-@property (nonatomic, strong)UIScrollView* mainScrollView;
+@property (nonatomic)UIScrollView* mainScrollView;
 //we need to keep the main teaser because we have to access it to know about it's last position
 @property (nonatomic, strong)JAMainTeaserView* mainTeaserView;
 @property (nonatomic, assign)NSInteger mainTeaserLastIndex;
+@property (nonatomic, strong) JANewsletterTeaserView* newsletterTeaserView;
 
 @end
 
@@ -64,11 +67,11 @@
         
         mainScrollY = [self loadMainTeasersInScrollView:self.mainScrollView yPosition:mainScrollY];
         mainScrollY = [self loadSmallTeasersInScrollView:self.mainScrollView yPosition:mainScrollY];
+        mainScrollY = [self loadNewsletterForInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
         mainScrollY = [self loadCampaignTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
         mainScrollY = [self loadShopTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
         mainScrollY = [self loadBrandTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
         mainScrollY = [self loadShopsWeekTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
-        mainScrollY = [self loadNewsletterForInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
         mainScrollY = [self loadFeatureStoresTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
         mainScrollY = [self loadTopSellersTeasersInScrollView:self.mainScrollView xPosition:centerScrollX yPosition:mainScrollY width:centerScrollWidth];
         
@@ -77,6 +80,7 @@
         [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.frame.size.width, mainScrollY)];
         
     }
+    _scrollViewHeight = self.mainScrollView.height;
 }
 
 - (void)setNewsletterForm:(RIForm *)newsletterForm
@@ -87,8 +91,11 @@
 
 - (void)layoutSubviews
 {
-    _needsRefresh = YES;
-    [self loadTeasersForFrame:self.frame];
+    if (!_keyboardEvent) {
+        _needsRefresh = YES;
+        [self loadTeasersForFrame:self.frame];
+    }
+    _keyboardEvent = NO;
 }
 
 - (void)addTeaserGrouping:(NSString*)type {
@@ -151,6 +158,35 @@
         [smallTeaserView load];
         
         yPosition += smallTeaserView.frame.size.height;
+        
+    }
+    return yPosition;
+}
+
+- (CGFloat)loadNewsletterForInScrollView:(UIScrollView*)scrollView
+                               xPosition:(CGFloat)xPosition
+                               yPosition:(CGFloat)yPosition
+                                   width:(CGFloat)width
+{
+    if ([self.teaserGroupings objectForKey:@"form_newsletter"] && self.newsletterForm) {
+        if (!VALID_NOTEMPTY(self.newsletterTeaserView, JANewsletterTeaserView)) {
+            self.newsletterTeaserView = [[JANewsletterTeaserView alloc] initWithFrame:CGRectMake(xPosition,
+                                                                                                 yPosition,
+                                                                                                 width,
+                                                                                                 1)]; //height is set by the view itself
+            [self.newsletterTeaserView setGenderPickerDelegate:self.genderPickerDelegate?:nil];
+            [self.newsletterTeaserView setForm:self.newsletterForm];
+        }else{
+            [self.newsletterTeaserView setFrame:CGRectMake(xPosition,
+                                                           yPosition,
+                                                           width,
+                                                           self.newsletterTeaserView.height)];
+        }
+        if (self.newsletterTeaserView.superview != self.mainScrollView) {
+            [scrollView addSubview:self.newsletterTeaserView];
+        }
+        
+        yPosition += self.newsletterTeaserView.frame.size.height + 10.f;
         
     }
     return yPosition;
@@ -244,26 +280,6 @@
     return yPosition;
 }
 
-- (CGFloat)loadNewsletterForInScrollView:(UIScrollView*)scrollView
-                                      xPosition:(CGFloat)xPosition
-                                      yPosition:(CGFloat)yPosition
-                                          width:(CGFloat)width
-{
-    if ([self.teaserGroupings objectForKey:@"form_newsletter"] && self.newsletterForm) {
-        JANewsletterTeaserView* newsletterTeaserView = [[JANewsletterTeaserView alloc] initWithFrame:CGRectMake(xPosition,
-                                                                                                                yPosition,
-                                                                                                                width,
-                                                                                                                1)]; //height is set by the view itself
-        [newsletterTeaserView setGenderPickerDelegate:self.genderPickerDelegate?:nil];
-        [newsletterTeaserView setForm:self.newsletterForm];
-        [scrollView addSubview:newsletterTeaserView];
-        
-        yPosition += newsletterTeaserView.frame.size.height;
-        
-    }
-    return yPosition;
-}
-
 - (CGFloat)loadFeatureStoresTeasersInScrollView:(UIScrollView*)scrollView
                                       xPosition:(CGFloat)xPosition
                                       yPosition:(CGFloat)yPosition
@@ -306,6 +322,29 @@
         
     }
     return yPosition;
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    NSDictionary *userInfo = [notification userInfo];
+    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    CGFloat height = kbSize.height;
+    CGFloat yoffset = [UIScreen mainScreen].bounds.size.height - [self.mainScrollView convertPoint:CGPointMake(1, CGRectGetMaxY(self.mainScrollView.frame)) toView:nil].y;
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, height-yoffset, 0.0);
+    self.mainScrollView.contentInset = contentInsets;
+    self.mainScrollView.scrollIndicatorInsets = contentInsets;
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    self.mainScrollView.contentInset = contentInsets;
+    self.mainScrollView.scrollIndicatorInsets = contentInsets;
+}
+
+- (void)hideKeyboard
+{
+    [self endEditing:YES];
 }
 
 @end

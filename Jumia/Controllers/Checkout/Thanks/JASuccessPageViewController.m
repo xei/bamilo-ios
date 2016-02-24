@@ -167,11 +167,13 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
     [RICart resetCartWithSuccessBlock:^{} andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {}];
     
-    [RIProduct getRichRelevanceRecommendationFromTarget:self.rrTargetString successBlock:^(NSSet *recommendationProducts) {
-        [self setRrProducts:recommendationProducts];
-    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
-        NSLog(@"recommendationProducts: FAILED!!!! %@", [errorMessage componentsJoinedByString:@", "]);
-    }];
+    if (VALID_NOTEMPTY(self.rrTargetString, NSString)) {
+        [RIProduct getRichRelevanceRecommendationFromTarget:self.rrTargetString successBlock:^(NSSet *recommendationProducts) {
+            [self setRrProducts:recommendationProducts];
+        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
+            NSLog(@"recommendationProducts: FAILED!!!! %@", [errorMessage componentsJoinedByString:@", "]);
+        }];
+    }
     
     BOOL userDidFirstBuy = NO;
     if(VALID_NOTEMPTY([[NSUserDefaults standardUserDefaults] objectForKey:kDidFirstBuyKey], NSNumber))
