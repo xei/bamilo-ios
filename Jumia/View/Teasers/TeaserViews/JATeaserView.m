@@ -52,19 +52,19 @@
     
     NSString* notificationName;
     
-    if ([teaserTarget.type isEqualToString:@"catalog"] || [teaserTarget.type isEqualToString:@"catalog_category"]) {
+    if ([teaserTarget.type isEqualToString:[RITarget getTargetKey:CATALOG_HASH]] || [teaserTarget.type isEqualToString:[RITarget getTargetKey:CATALOG_CATEGORY]]) {
         
         notificationName = kDidSelectTeaserWithCatalogUrlNofication;
         
-    } else if ([teaserTarget.type isEqualToString:@"product_detail"]) {
+    } else if ([teaserTarget.type isEqualToString:[RITarget getTargetKey:PRODUCT_DETAIL]]) {
         
         notificationName = kDidSelectTeaserWithPDVUrlNofication;
         
-    } else if ([teaserTarget.type isEqualToString:@"static_page"]) {
+    } else if ([teaserTarget.type isEqualToString:[RITarget getTargetKey:STATIC_PAGE]]) {
         
         notificationName = kDidSelectTeaserWithShopUrlNofication;
         
-    } else if ([teaserTarget.type isEqualToString:@"campaign"]) {
+    } else if ([teaserTarget.type isEqualToString:[RITarget getTargetKey:CAMAPAIGN]]) {
         
         notificationName = kDidSelectCampaignNofication;
         

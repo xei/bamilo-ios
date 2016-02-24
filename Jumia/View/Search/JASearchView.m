@@ -339,7 +339,7 @@
         UIFont *queryFont = [UIFont fontWithName:kFontMediumName size:17.0f];
         UIColor *stringTextColor = UIColorFromRGB(0x4e4e4e);
         
-        if ([RITarget parseTarget:sugestion.targetString].targetType == STATIC_PAGE) {
+        if ([RITarget parseTarget:sugestion.targetString].targetType == SHOP_IN_SHOP) {
             value = [value stringByReplacingCharactersInRange:NSMakeRange(0,1)
                                                                    withString:[[value substringToIndex:1] capitalizedString]];
             label = [NSString stringWithFormat:@"Visit our %@ Store", value];
