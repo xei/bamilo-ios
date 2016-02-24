@@ -372,21 +372,16 @@
         {
             recentSearchImage = [UIImage imageNamed:@"ico_recentsearchsuggestion"];
             [recentSearchImageView setHidden:NO];
-        }
-        else
-        {
-            recentSearchImage = [UIImage imageNamed:@"ico_searchsuggestion"];
-            [recentSearchImageView setHidden:YES];
+            [recentSearchImageView setImage:recentSearchImage];
+            [clickView addSubview:recentSearchImageView];
         }
         
-        [recentSearchImageView setImage:recentSearchImage];
-        [clickView addSubview:recentSearchImageView];
         
         CGFloat customImageX = recentSearchImage.size.width;
         CGFloat customTextX = (recentSearchImage.size.width*2) + 18.0f;
-        CGFloat separatorX = 45.0f;
-        CGFloat separatorWidth = cell.frame.size.width-20;
-        CGFloat customTextLabelWidth = clickView.frame.size.width - separatorX - 6.0f;
+        CGFloat separatorX = .0f;
+        CGFloat separatorWidth = cell.frame.size.width;
+        CGFloat customTextLabelWidth = clickView.frame.size.width - separatorX - 20.0f;
         
         [recentSearchImageView setFrame:CGRectMake(customImageX,
                                                    (heightLabel - recentSearchImage.size.height)/2,
@@ -405,24 +400,15 @@
                 [view removeFromSuperview];
             }
         }
-        UIImageView *line;
-        if (0 == indexPath.row)
-        {
-            line = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, 1)];
-            line.backgroundColor = UIColorFromRGB(0xcccccc);
-            line.tag = 99;
-            [clickView addSubview:line];
-        }
         
         UIImageView *line2 = [[UIImageView alloc] initWithFrame:CGRectMake(separatorX, cell.frame.size.height-1, separatorWidth, 1)];
-        line2.backgroundColor = UIColorFromRGB(0xcccccc);
+        line2.backgroundColor = JABlack400Color;
         line2.tag = 98;
         [clickView addSubview:line2];
         
         if(RI_IS_RTL){
             
             [cell flipSubviewPositions];
-            [line flipViewPositionInsideSuperview];
             [line2 flipViewPositionInsideSuperview];
             [recentSearchImageView flipViewPositionInsideSuperview];
             [customTextLabel flipViewPositionInsideSuperview];
@@ -467,7 +453,7 @@
         [self.resultsTableView setFrame:CGRectMake(self.resultsTableOriginalFrame.origin.x,
                                                    self.resultsTableOriginalFrame.origin.y,
                                                    self.frame.size.width,
-                                                   self.frame.size.height - self.keyboardHeight)];
+                                                   self.frame.size.height - self.searchBar.height - self.keyboardHeight)];
     }];
 }
 
