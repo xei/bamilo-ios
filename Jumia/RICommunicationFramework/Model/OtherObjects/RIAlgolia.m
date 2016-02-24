@@ -46,7 +46,7 @@
     
     self.productsQuery = [[ASQuery alloc] init];
     self.productsQuery.hitsPerPage =3;
-    self.productsQuery.attributesToRetrieve = @[@"sku", @"localizable_attributes"];
+    self.productsQuery.attributesToRetrieve = @[@"sku", @"brand", @"localizable_attributes"];
     self.productsQuery.attributesToHighlight = @[@"facet_category"];
     self.productsQuery.facets = @[@"facet_category"];
     self.productsQuery.maxValuesPerFacet = 4;
@@ -54,7 +54,7 @@
     self.shopInShopQuery = [[ASQuery alloc] init];
     self.shopInShopQuery.hitsPerPage =1;
     
-    self.productsIndexName = [NSString stringWithFormat:@"%@_products_popular", [RICountryConfiguration getCurrentConfiguration].algoliaNamespacePrefix];
+    self.productsIndexName = [NSString stringWithFormat:@"%@_products_search", [RICountryConfiguration getCurrentConfiguration].algoliaNamespacePrefix];
     self.shopInShopIndexName = [NSString stringWithFormat:@"%@_shopinshop", [RICountryConfiguration getCurrentConfiguration].algoliaNamespacePrefix];
     self.categoriesIndexName = [NSString stringWithFormat:@"%@_categories", [RICountryConfiguration getCurrentConfiguration].algoliaNamespacePrefix];
     self.queries = @[@{@"indexName": self.productsIndexName, @"query": self.productsQuery},
@@ -135,7 +135,8 @@
                                                 NSDictionary *shopInShopDict = @{@"item":label, @"value":value};
                                                 [tmpShopInShop addObject:shopInShopDict];
                                             }else if ([[result objectForKey:@"index"] isEqualToString:self.productsIndexName]) {
-                                                NSString *label = [[[hits[i] objectForKey:@"localizable_attributes"] objectForKey:_langCode] objectForKey:@"name"];
+                                                NSString *brand = [[hits[i] objectForKey:@"brand"] objectForKey:@"name"];
+                                                NSString *label = [NSString stringWithFormat:@"%@ %@", brand, [[[hits[i] objectForKey:@"localizable_attributes"] objectForKey:_langCode] objectForKey:@"name"]];
                                                 NSString *value = [hits[i] objectForKey:@"sku"];
                                                 NSDictionary *productDict = @{@"item":label, @"value":value};
                                                 [tmpProducts addObject:productDict];

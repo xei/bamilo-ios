@@ -549,6 +549,8 @@ typedef void (^ProcessActionBlock)(void);
     self.searchSuggestionOperationID = nil;
     self.getProductsOperationID = nil;
     
+    self.catalogTopView.filterButton.enabled = NO;
+    
     if (ISEMPTY(self.filtersArray) && NOTEMPTY(catalog.filters)) {
         self.filtersArray = catalog.filters;
         self.catalogTopView.filterButton.enabled = YES;

@@ -860,9 +860,7 @@
                                                                    }
                                                                }
                                                                if (VALID(favoriteProducts, NSArray) && successBlock) {
-                                                                   NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"favoriteAddDate" ascending:NO];
-                                                                   NSArray *sorted = [favoriteProducts sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateDescriptor]];
-                                                                   successBlock(sorted, currentPage, totalPages);
+                                                                   successBlock(favoriteProducts, currentPage, totalPages);
                                                                    return;
                                                                }
                                                            } else {
