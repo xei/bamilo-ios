@@ -140,7 +140,7 @@
             NSMutableArray *shopInShopSuggestionArray = [NSMutableArray new];
             for (NSDictionary *item in shopInShopResults) {
                 RISearchSuggestion *suggestion = [RISearchSuggestion parseSearchSuggestion:item forTextQuery:query];
-                suggestion.targetString = [RITarget getTargetString:STATIC_PAGE node:[item objectForKey:@"value"]];
+                suggestion.targetString = [RITarget getTargetString:SHOP_IN_SHOP node:[item objectForKey:@"value"]];
                 [shopInShopSuggestionArray addObject:suggestion];
             }
             outsideBlockProductsResultsArray = [productsSuggestionArray copy];

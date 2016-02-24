@@ -154,7 +154,7 @@
                                                                       RIProduct* newProduct = [RIProduct parseProduct:metadata country:configuration];
                                                                       if (VALID_NOTEMPTY(newProduct, RIProduct) && VALID_NOTEMPTY(newProduct.sku, NSString)) {
                                                                           if ([metadata objectForKey:@"recommended_products"]) {
-                                                                              [self getRichRelevanceRecommendation:[metadata objectForKey:@"recommended_products"] successBlock:^(id recommendationProducts) {
+                                                                              [self getRichRelevanceRecommendation:[metadata objectForKey:@"recommended_products"] successBlock:^(id recommendationProducts, NSString *title) {
                                                                                   newProduct.relatedProducts = recommendationProducts;
                                                                                   successBlock(newProduct);
                                                                               } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
@@ -185,14 +185,14 @@
 }
 
 + (void)getRichRelevanceRecommendation:(NSDictionary*)recomendedJsonObject
-                          successBlock:(void (^)(NSSet *recommendationProducts))successBlock
+                          successBlock:(void (^)(NSSet *recommendationProducts, NSString *title))successBlock
                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
 {
     [RIProduct getRichRelevanceRecommendationFromTarget:[recomendedJsonObject objectForKey:@"target"] successBlock:successBlock andFailureBlock:failureBlock];
 }
 
 + (NSString *)getRichRelevanceRecommendationFromTarget:(NSString *)rrTargetString
-                               successBlock:(void (^)(NSSet *recommendationProducts))successBlock
+                               successBlock:(void (^)(NSSet *recommendationProducts, NSString *title))successBlock
                             andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
 {
     NSURL *url = [NSURL URLWithString:[RITarget getURLStringforTargetString:rrTargetString]];
@@ -208,8 +208,9 @@
                                                            NSDictionary *recommendedMetadata = VALID_NOTEMPTY_VALUE([jsonObject objectForKey:@"metadata"], NSDictionary);
                                                            NSArray *data = VALID_NOTEMPTY_VALUE([recommendedMetadata objectForKey:@"data"], NSArray);
                                                            NSSet *productsSet = VALID_NOTEMPTY_VALUE([RIProduct parseRichRelevanceProducts:data country:configuration], NSSet);
+                                                           NSString *title = VALID_NOTEMPTY_VALUE([recommendedMetadata objectForKey:@"title"], NSString);
                                                            if (productsSet) {
-                                                                successBlock(productsSet);
+                                                                successBlock(productsSet, title);
                                                            } else {
                                                                failureBlock(apiResponse, nil);
                                                            }

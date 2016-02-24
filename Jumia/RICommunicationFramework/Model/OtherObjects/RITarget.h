@@ -20,6 +20,7 @@ typedef enum {
     CATALOG_SELLER,
     CAMAPAIGN,
     STATIC_PAGE,
+    SHOP_IN_SHOP,
     FORM_SUBMIT,
     FORM_GET,
     RR_RECOMENDATION,
@@ -31,9 +32,9 @@ typedef enum {
 @property (nonatomic, strong) NSString* node;
 @property (nonatomic, strong) NSString* urlString;
 
-+ (RITarget*)parseTarget:(NSString*)targetString;
-+ (NSString*)getURLStringforTargetString:(NSString*)targetString;
-
++ (RITarget *)parseTarget:(NSString*)targetString;
++ (NSString *)getURLStringforTargetString:(NSString*)targetString;
++ (NSString *)getTargetKey:(TargetType)type;
 + (NSString *)getTargetString:(TargetType)type node:(NSString *)string;
 + (RITarget *)getTarget:(TargetType)type node:(NSString *)string;
 

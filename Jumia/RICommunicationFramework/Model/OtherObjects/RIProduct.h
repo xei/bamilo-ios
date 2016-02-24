@@ -224,7 +224,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 + (NSString*)getTopBrand:(RIProduct *)seenProduct;
 
 + (NSString *)getRichRelevanceRecommendationFromTarget:(NSString *)rrTargetString
-                                          successBlock:(void (^)(NSSet *recommendationProducts))successBlock
+                                          successBlock:(void (^)(NSSet *recommendationProducts, NSString *title))successBlock
                                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 
 @end

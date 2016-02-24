@@ -422,6 +422,7 @@
             [self pushViewController:catalog animated:YES];
             break;
         }
+        case SHOP_IN_SHOP:
         case STATIC_PAGE: {
             JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
             

@@ -168,7 +168,10 @@
     [RICart resetCartWithSuccessBlock:^{} andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {}];
     
     if (VALID_NOTEMPTY(self.rrTargetString, NSString)) {
-        [RIProduct getRichRelevanceRecommendationFromTarget:self.rrTargetString successBlock:^(NSSet *recommendationProducts) {
+        [RIProduct getRichRelevanceRecommendationFromTarget:self.rrTargetString successBlock:^(NSSet *recommendationProducts, NSString *title) {
+            if (VALID_NOTEMPTY([title uppercaseString], NSString)) {
+                [self.rrHeaderLine setTitle:[title uppercaseString]];
+            }
             [self setRrProducts:recommendationProducts];
         } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
             NSLog(@"recommendationProducts: FAILED!!!! %@", [errorMessage componentsJoinedByString:@", "]);

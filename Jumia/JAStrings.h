@@ -411,4 +411,6 @@
 #define STRING_ACTIVE RILocalizedString(@"active", nil)
 #define STRING_INACTIVE RILocalizedString(@"inactive", nil)
 
+#define STRING_VISIT_THE_OFFICIAL_BRAND_STORE RILocalizedString(@"visit_the_official_brand_store", nil)
+
 #endif
