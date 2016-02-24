@@ -42,6 +42,7 @@
 @dynamic isRecentSearch;
 @dynamic date;
 @dynamic targetString;
+@dynamic queryString;
 
 + (void)deleteSearchSuggestionByTargetString:(NSString *)targetString
 {
@@ -132,13 +133,13 @@
             [searchLock lock];
             NSMutableArray *productsSuggestionArray = [NSMutableArray new];
             for (NSDictionary *item in productsResults) {
-                RISearchSuggestion *suggestion = [RISearchSuggestion parseSearchSuggestion:item];
+                RISearchSuggestion *suggestion = [RISearchSuggestion parseSearchSuggestion:item forTextQuery:query];
                 suggestion.targetString = [RITarget getTargetString:PRODUCT_DETAIL node:[item objectForKey:@"value"]];
                 [productsSuggestionArray addObject:suggestion];
             }
             NSMutableArray *shopInShopSuggestionArray = [NSMutableArray new];
             for (NSDictionary *item in shopInShopResults) {
-                RISearchSuggestion *suggestion = [RISearchSuggestion parseSearchSuggestion:item];
+                RISearchSuggestion *suggestion = [RISearchSuggestion parseSearchSuggestion:item forTextQuery:query];
                 suggestion.targetString = [RITarget getTargetString:STATIC_PAGE node:[item objectForKey:@"value"]];
                 [shopInShopSuggestionArray addObject:suggestion];
             }
@@ -156,7 +157,7 @@
             [searchLock lock];
             NSMutableArray *categoryArray = [NSMutableArray new];
             for (NSDictionary *item in categoryResults) {
-                RISearchSuggestion *suggestion = [RISearchSuggestion parseSearchSuggestion:item];
+                RISearchSuggestion *suggestion = [RISearchSuggestion parseSearchSuggestion:item forTextQuery:query];
                 suggestion.targetString = [RITarget getTargetString:CATALOG_CATEGORY node:[item objectForKey:@"value"]];
                 [categoryArray addObject:suggestion];
             }
@@ -181,10 +182,10 @@
                                                                   NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                                   if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                                   {
-                                                                      NSArray *shopInShopSuggestions = VALID_VALUE([RISearchSuggestion parseSearchSuggestions:[metadata objectForKey:@"shops"]], NSArray);
-                                                                      NSArray *categoriesSuggestions = VALID_VALUE([RISearchSuggestion parseSearchSuggestions:[metadata objectForKey:@"categories"]], NSArray);
-                                                                      NSArray *productsSuggestions = VALID_VALUE([RISearchSuggestion parseSearchSuggestions:[metadata objectForKey:@"products"]], NSArray);
-                                                                      NSArray *queriesSuggestions = VALID_VALUE([RISearchSuggestion parseSearchSuggestions:[metadata objectForKey:@"queries"]], NSArray);
+                                                                      NSArray *shopInShopSuggestions = VALID_VALUE([RISearchSuggestion parseSearchSuggestions:[metadata objectForKey:@"shops"] forTextQuery:query], NSArray);
+                                                                      NSArray *categoriesSuggestions = VALID_VALUE([RISearchSuggestion parseSearchSuggestions:[metadata objectForKey:@"categories"] forTextQuery:query], NSArray);
+                                                                      NSArray *productsSuggestions = VALID_VALUE([RISearchSuggestion parseSearchSuggestions:[metadata objectForKey:@"products"] forTextQuery:query], NSArray);
+                                                                      NSArray *queriesSuggestions = VALID_VALUE([RISearchSuggestion parseSearchSuggestions:[metadata objectForKey:@"queries"] forTextQuery:query], NSArray);
                                                                       if (VALID_NOTEMPTY(shopInShopSuggestions, NSArray) || VALID_NOTEMPTY(categoriesSuggestions, NSArray) || VALID_NOTEMPTY(productsSuggestions, NSArray) || VALID_NOTEMPTY(queriesSuggestions, NSArray)) {
                                                                           successBlock([[[shopInShopSuggestions?:[NSArray new] arrayByAddingObjectsFromArray:[categoriesSuggestions copy]] arrayByAddingObjectsFromArray:[productsSuggestions copy]] arrayByAddingObjectsFromArray:[queriesSuggestions copy]]);
                                                                       }else{
@@ -400,7 +401,7 @@
     return [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RISearchSuggestion class]) withPropertyName:@"targetString" andPropertyValue:targetString];
 }
 
-+ (NSArray*) parseSearchSuggestions:(NSArray*)jsonObject
++ (NSArray*) parseSearchSuggestions:(NSArray*)jsonObject forTextQuery:(NSString *)textQuery
 {
     NSMutableArray *suggestions = [[NSMutableArray alloc] init];
     
@@ -410,14 +411,14 @@
         {
             if(VALID_NOTEMPTY(suggestionObject, NSDictionary))
             {
-                [suggestions addObject:[RISearchSuggestion parseSearchSuggestion:suggestionObject]];
+                [suggestions addObject:[RISearchSuggestion parseSearchSuggestion:suggestionObject forTextQuery:textQuery]];
             }
         }
     }
     return [suggestions copy];
 }
 
-+ (RISearchSuggestion *)parseSearchSuggestion:(NSDictionary*)jsonObject
++ (RISearchSuggestion *)parseSearchSuggestion:(NSDictionary*)jsonObject forTextQuery:(NSString *)textQuery
 {
     RISearchSuggestion *newSearchSuggestion = (RISearchSuggestion*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RISearchSuggestion class])];
     
@@ -430,6 +431,7 @@
     
     [newSearchSuggestion setTargetString:VALID_NOTEMPTY_VALUE([jsonObject objectForKey:@"target"], NSString)];
     [newSearchSuggestion setRelevance:VALID_NOTEMPTY_VALUE([jsonObject objectForKey:@"relevance"], NSNumber)];
+    [newSearchSuggestion setQueryString:textQuery];
     
     return newSearchSuggestion;
 }
