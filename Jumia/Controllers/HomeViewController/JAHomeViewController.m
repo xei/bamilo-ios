@@ -18,8 +18,9 @@
 #import "RIAddress.h"
 #import "RIForm.h"
 #import "JAPicker.h"
+#import "JANewsletterTeaserView.h"
 
-@interface JAHomeViewController () <JAPickerDelegate>
+@interface JAHomeViewController () <JAPickerDelegate, JANewsletterGenderProtocol>
 
 @property (strong, nonatomic) JATeaserPageView* teaserPageView;
 
@@ -119,6 +120,21 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffMenuSwipePanelNotification
                                                         object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self.teaserPageView
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self.teaserPageView
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self.teaserPageView
+                                             selector:@selector(hideKeyboard)
+                                                 name:kOpenMenuNotification
+                                               object:nil];
+    
     [self hideLoading];
 }
 
@@ -126,6 +142,7 @@
 {
     // notify the InAppNotification SDK that this view controller in no more active
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_DISAPPEAR object:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self.teaserPageView];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -312,6 +329,10 @@
 
 - (void)submitNewsletter:(JADynamicForm *)dynamicForm andEmail:(NSString *)email
 {
+    if([dynamicForm checkErrors])
+    {
+        return;
+    }
     [self showLoading];
     [RIForm sendForm:dynamicForm.form parameters:[dynamicForm getValues] successBlock:^(id object, NSArray* successMessages) {
         [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RIForm class]) withPropertyName:@"type" andPropertyValue:@"newsletter_homepage"];

@@ -514,6 +514,8 @@
             }
         }
     }
+    
+    [self hideRequiredSymbolsIfNeeded];
 }
 
 -(UIView*)viewWithTag:(NSInteger) tag
@@ -1046,5 +1048,28 @@
     }
 }
 
+- (void)hideRequiredSymbolsIfNeeded
+{
+    BOOL hide = YES;
+    for (JADynamicField* field in self.formViews) {
+        if (![field.field.required boolValue]) {
+            hide = NO;
+        }
+    }
+    if (hide) {
+        [self hideRequiredSymbols];
+    }
+}
+
+- (void)hideRequiredSymbols
+{
+    for (UIView* field in self.formViews) {
+        if ([field isKindOfClass:[JATextFieldComponent class]]  ) {
+            [[(JATextFieldComponent *)field requiredSymbol] setHidden:YES];
+        }else if ([field isKindOfClass:[JARadioComponent class]]  ) {
+            [[(JARadioComponent *)field requiredSymbol] setHidden:YES];
+        }
+    }
+}
 
 @end

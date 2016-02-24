@@ -333,31 +333,33 @@
         
         NSString *value = sugestion.item;
         NSString *label;
-        UIColor *highlightColor;
+        UIColor *highlightColor = JABlue1Color;;
+        
+        UIFont *highlightFont = [UIFont fontWithName:kFontLightName size:17.0f];
+        UIFont *queryFont = [UIFont fontWithName:kFontMediumName size:17.0f];
+        UIColor *stringTextColor = UIColorFromRGB(0x4e4e4e);
         
         if ([RITarget parseTarget:sugestion.targetString].targetType == STATIC_PAGE) {
             value = [value stringByReplacingCharactersInRange:NSMakeRange(0,1)
                                                                    withString:[[value substringToIndex:1] capitalizedString]];
             label = [NSString stringWithFormat:@"Visit our %@ Store", value];
-            highlightColor = JABlue1Color;
         }else if ([RITarget parseTarget:sugestion.targetString].targetType == CATALOG_CATEGORY || [RITarget parseTarget:sugestion.targetString].targetType == CATALOG_HASH) {
-            label = [NSString stringWithFormat:@"in %@", value];
-            highlightColor = JABlue1Color;
+            label = [NSString stringWithFormat:@"%@ in %@", sugestion.queryString, value];
         }else{
             label = value;
-            value = self.searchBar.text;
-            highlightColor = [UIColor blackColor];
+            value = @"";
         }
         
-        UIFont *stringTextFont = [UIFont fontWithName:kFontLightName size:17.0f];
-        UIColor *stringTextColor = UIColorFromRGB(0x4e4e4e);
-        
-        NSRange range = [[label lowercaseString] rangeOfString:[value lowercaseString]];
-        NSMutableAttributedString *stringText = [[NSMutableAttributedString alloc] initWithString:label attributes:@{NSFontAttributeName: stringTextFont, NSForegroundColorAttributeName: stringTextColor}];
+        NSRange blueRange = [[label lowercaseString] rangeOfString:[value lowercaseString]];
+        NSRange blackRange = [[label lowercaseString] rangeOfString:[self.searchBar.text lowercaseString]];
+        NSMutableAttributedString *stringText = [[NSMutableAttributedString alloc] initWithString:label attributes:@{NSFontAttributeName: highlightFont, NSForegroundColorAttributeName: stringTextColor}];
         
         [stringText addAttribute:NSForegroundColorAttributeName
                            value:highlightColor
-                           range:range];
+                           range:blueRange];
+        [stringText addAttribute:NSFontAttributeName
+                           value:queryFont
+                           range:blackRange];
         
         customTextLabel.attributedText = stringText;
     
@@ -369,10 +371,12 @@
         if (1 == sugestion.isRecentSearch)
         {
             recentSearchImage = [UIImage imageNamed:@"ico_recentsearchsuggestion"];
+            [recentSearchImageView setHidden:NO];
         }
         else
         {
             recentSearchImage = [UIImage imageNamed:@"ico_searchsuggestion"];
+            [recentSearchImageView setHidden:YES];
         }
         
         [recentSearchImageView setImage:recentSearchImage];
