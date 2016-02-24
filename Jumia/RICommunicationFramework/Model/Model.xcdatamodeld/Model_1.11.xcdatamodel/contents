@@ -166,6 +166,7 @@
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="isRecentSearch" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="item" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="queryString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="relevance" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="targetString" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -228,7 +229,7 @@
         <element name="RIImageResolution" positionX="-270" positionY="560" width="128" height="103"/>
         <element name="RILanguage" positionX="-270" positionY="-207" width="128" height="103"/>
         <element name="RIRecentlyViewedProductSku" positionX="-522" positionY="18" width="128" height="105"/>
-        <element name="RISearchSuggestion" positionX="-828" positionY="183" width="128" height="120"/>
+        <element name="RISearchSuggestion" positionX="-828" positionY="183" width="128" height="135"/>
         <element name="RISection" positionX="-261" positionY="428" width="128" height="103"/>
         <element name="RIStaticBlockIndex" positionX="-90" positionY="-126" width="128" height="90"/>
         <element name="RITeaserComponent" positionX="-731" positionY="-414" width="128" height="300"/>
