@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSNumber *specialPrice;
 @property (nonatomic, retain) NSString *sku;
 @property (nonatomic, retain) RIImage *image;
+@property (nonatomic) BOOL shop_first;
 
 /**
  *  Method to parse an RIVariation given a JSON object

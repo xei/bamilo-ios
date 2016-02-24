@@ -119,6 +119,9 @@
         if (self.hideRating) {
             [self.nameLabel sizeToFit];
             nameLabelRect = self.nameLabel.frame;
+            if (NOTEMPTY(self.variation)) {
+                [self.nameLabel setWidth:textWidth];
+            }
         }
         [self setForRTL:self.nameLabel];
     }

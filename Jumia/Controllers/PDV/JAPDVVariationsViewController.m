@@ -90,7 +90,13 @@
     
     JACatalogListCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"CellWithLines" forIndexPath:indexPath];
     [cell setHideRating:YES];
+    [cell.nameLabel setNumberOfLines:1];
+    
     [cell setHideShopFirstLogo:YES];
+    if (variationProduct.shop_first) {
+        [cell setHideShopFirstLogo:NO];
+    }
+    
     [cell loadWithVariation:variationProduct];
     cell.favoriteButton.tag = indexPath.row;
     [cell.favoriteButton addTarget:self
