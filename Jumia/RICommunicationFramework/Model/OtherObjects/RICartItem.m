@@ -47,6 +47,22 @@
         cartItem.name = [info objectForKey:@"name"];
     }
     
+    if (VALID_NOTEMPTY([info objectForKey:@"brand"], NSString)) {
+        cartItem.brand = [info objectForKey:@"brand"];
+    }
+    
+    if (VALID_NOTEMPTY([info objectForKey:@"brand_url_key"], NSString)) {
+        cartItem.brandUrlKey = [info objectForKey:@"brand_url_key"];
+    }
+    
+    if (VALID_NOTEMPTY([info objectForKey:@"category"], NSString)) {
+        cartItem.category = [info objectForKey:@"category"];
+    }
+    
+    if (VALID_NOTEMPTY([info objectForKey:@"category_url_key"], NSString)) {
+        cartItem.categoryUrlKey = [info objectForKey:@"category_url_key"];
+    }
+    
     if (VALID_NOTEMPTY([info objectForKey:@"variation"], NSString)) {
         cartItem.variation = [info objectForKey:@"variation"];
     }

@@ -64,6 +64,7 @@
 @synthesize attributeShortDescription;
 @synthesize avr;
 @synthesize brand;
+@synthesize brandUrlKey;
 @synthesize descriptionString;
 @synthesize maxPrice;
 @synthesize maxPriceFormatted;
@@ -455,6 +456,15 @@
         }
         if ([dataDic objectForKey:@"brand"]) {
             newProduct.brand = [dataDic objectForKey:@"brand"];
+        }
+        if ([dataDic objectForKey:@"brand_url_key"]) {
+            newProduct.brandUrlKey = [dataDic objectForKey:@"brand_url_key"];
+        }
+        if ([dataDic objectForKey:@"category_name"]) {
+            newProduct.categoryName = [dataDic objectForKey:@"category_name"];
+        }
+        if ([dataDic objectForKey:@"category_url_key"]) {
+            newProduct.categoryUrlKey = [dataDic objectForKey:@"category_url_key"];
         }
         
         if([dataDic objectForKey:@"bucket_active"]){

@@ -1522,7 +1522,8 @@ typedef void (^ProcessActionBlock)(void);
     [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
     
     [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
-    [trackingDictionary setValue:product.brand forKey:kRIEventBrandKey];
+    [trackingDictionary setValue:product.brand forKey:kRIEventBrandName];
+    [trackingDictionary setValue:product.brandUrlKey forKey:kRIEventBrandKey];
     
     NSString *discountPercentage = @"0";
     if(VALID_NOTEMPTY(product.maxSavingPercentage, NSString))
@@ -1582,8 +1583,27 @@ typedef void (^ProcessActionBlock)(void);
         [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryNameKey];
     }
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]
-                                              data:[trackingDictionary copy]];
+    if (ISEMPTY(categoryName) && ISEMPTY(subCategoryName) && VALID_NOTEMPTY(product.categoryName, NSString)) {
+        [trackingDictionary setValue:product.categoryName forKey:kRIEventCategoryNameKey];
+    }
+    if (VALID_NOTEMPTY(product.categoryUrlKey, NSString)) {
+        [trackingDictionary setValue:product.categoryUrlKey forKey:kRIEventCategoryKey];
+    }
+    
+    [trackingDictionary setValue:product.name forKey:kRIEventProductNameKey];
+    
+    [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
+        
+        [trackingDictionary setValue:[NSNumber numberWithInteger:favoriteProducts.count] forKey:kRIEventTotalWishlistKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]
+                                                  data:[trackingDictionary copy]];
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]
+                                                  data:[trackingDictionary copy]];
+    }];
+    
+
     float value = [price floatValue];
     [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToWishlist
                   valueToSum:value
@@ -1615,8 +1635,16 @@ typedef void (^ProcessActionBlock)(void);
     [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
     [trackingDictionary setValue:product.avr forKey:kRIEventRatingKey];
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
-                                              data:[trackingDictionary copy]];
+    [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
+        
+        [trackingDictionary setValue:[NSNumber numberWithInteger:favoriteProducts.count] forKey:kRIEventTotalWishlistKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
+                                                  data:[trackingDictionary copy]];
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
+                                                  data:[trackingDictionary copy]];
+    }];
 }
 
 - (void)trackingEventSort

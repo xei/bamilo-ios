@@ -537,7 +537,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         [event addPartnerParameter:kAdjustEventKeywordsKey value:keywords];
     }
     
-    NSString *brand = [data objectForKey:kRIEventBrandKey];
+    NSString *brand = [data objectForKey:kRIEventBrandName];
     if(VALID_NOTEMPTY(brand, NSString))
     {
         [event addCallbackParameter:kAdjustEventBrandKey value:brand];

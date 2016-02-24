@@ -652,7 +652,8 @@ UIAlertViewDelegate
             
             NSMutableDictionary *globalRateDictionary = [[NSMutableDictionary alloc] init];
             [globalRateDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
-            [globalRateDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
+            [globalRateDictionary setObject:self.product.brand forKey:kRIEventBrandName];
+            [globalRateDictionary setObject:self.product.brandUrlKey forKey:kRIEventBrandKey];
             [globalRateDictionary setValue:price forKey:kRIEventPriceKey];
             [globalRateDictionary setValue:[RICategory getCategoryName:[self.product.categoryIds firstObject]] forKey:kRIEventCategoryNameKey];
             [globalRateDictionary setValue:[RICategory getCategoryName:[self.product.categoryIds lastObject]] forKey:kRIEventSubCategoryNameKey];

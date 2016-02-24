@@ -517,7 +517,8 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
         [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryIdKey];
     }
     
-    [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandKey];
+    [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandName];
+    [trackingDictionary setValue:self.product.brandUrlKey forKey:kRIEventBrandKey];
     
     NSString *discountPercentage = @"0";
     if(VALID_NOTEMPTY(self.product.maxSavingPercentage, NSString))
@@ -526,7 +527,12 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     }
     [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
     [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
-    [trackingDictionary setValue:@"1" forKey:kRIEventQuantityKey];
+    [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandName];
+    [trackingDictionary setValue:self.product.brandUrlKey forKey:kRIEventBrandKey];
+    [trackingDictionary setValue:self.product.name forKey:kRIEventProductNameKey];
+    [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
+    [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+    [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
     [trackingDictionary setValue:@"Product Detail screen" forKey:kRIEventLocationKey];
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]

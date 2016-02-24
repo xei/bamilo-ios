@@ -182,7 +182,7 @@ typedef NS_ENUM(NSInteger, RICartState) {
 #define kRIEventCategoryIdKey           @"RIEventCategoryIdKey"
 #define kRIEventSkusKey                 @"RIEventSkusKey"
 #define kRIEventCategoryNameKey         @"RIEventCategoryNameKey"
-#define kRIEventLastViewedCategoryKey   @"RIEventLastViewedCategoryKey"
+#define kRIEventCategoryKey             @"RIEventCategoryKey"
 #define kRIEventSubCategoryNameKey      @"RIEventSubCategoryNameKey"
 #define kRIEventTreeKey                 @"RIEventTreeKey"
 #define kRIEventQueryKey                @"RIEventQueryKey"
@@ -191,6 +191,7 @@ typedef NS_ENUM(NSInteger, RICartState) {
 #define kRIEventKeywordsKey             @"RIEventKeywordsKey"
 #define kRIEventNewCustomerKey          @"RIEventNewCustomerKey"
 #define kRIEventDiscountKey             @"RIEventDiscountKey"
+#define kRIEventBrandName               @"RIEventBrandName"
 #define kRIEventBrandKey                @"RIEventBrandKey"
 #define kRIEventSizeKey                 @"RIEventSizeKey"
 #define kRIEventTotalWishlistKey        @"RIEventTotalWishlistKey"
@@ -233,6 +234,9 @@ typedef NS_ENUM(NSInteger, RICartState) {
 #define kRIEventAttributeSetIDCartKey   @"RIEventAttributeSetIDCartKey"
 #define kRIEventLastCategoryAddedToCartKey @"RIEventLastCategoryAddedToCartKey"
 #define kRIEventGAIdKey                 @"RIEventGAIdKey"
+#define kRIEventOrderNumber             @"RIEventOrderNumber"
+#define kRIEventAggregateNumberOfOrders @"RIEventAggregateNumberOfOrders"
+#define kRIEventLanguageCode            @"RIEventLanguageCode"
 
 /**
  *  Struct to identify events
@@ -313,7 +317,8 @@ typedef NS_ENUM(NSInteger, RIEventType) {
     RIEventLastViewedCategory = 72,
     RIEventCart = 73,
     RIEventLastAddedToCart = 74,
-    RIEventMostViewedBrand = 75
+    RIEventMostViewedBrand = 75,
+    RIEventUserInfoChanged = 76
 };
 
 /**

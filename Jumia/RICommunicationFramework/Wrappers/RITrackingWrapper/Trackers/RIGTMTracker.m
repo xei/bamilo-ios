@@ -598,9 +598,9 @@ NSString *kGTMToken = @"kGTMToken";
                     [pushedData setObject:[data objectForKey:kRIEventProductKey] forKey:kGTMEventProductSKUKey];
                 }
                 
-                if(VALID_NOTEMPTY([data objectForKey:kRIEventBrandKey], NSString))
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventBrandName], NSString))
                 {
-                    [pushedData setObject:[data objectForKey:kRIEventBrandKey] forKey:kGTMEventProductBrandKey];
+                    [pushedData setObject:[data objectForKey:kRIEventBrandName] forKey:kGTMEventProductBrandKey];
                 }
                 
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventPriceKey], NSNumber))
@@ -643,9 +643,9 @@ NSString *kGTMToken = @"kGTMToken";
                     [pushedData setObject:[data objectForKey:kRIEventSkuKey] forKey:kGTMEventProductSKUKey];
                 }
                 
-                if(VALID_NOTEMPTY([data objectForKey:kRIEventBrandKey], NSString))
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventBrandName], NSString))
                 {
-                    [pushedData setObject:[data objectForKey:kRIEventBrandKey] forKey:kGTMEventProductBrandKey];
+                    [pushedData setObject:[data objectForKey:kRIEventBrandName] forKey:kGTMEventProductBrandKey];
                 }
                 
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventPriceKey], NSNumber))
@@ -732,9 +732,9 @@ NSString *kGTMToken = @"kGTMToken";
                     [pushedData setObject:[RIGTMTracker formatPrice:[data objectForKey:kRIEventPriceKey]] forKey:kGTMEventProductPriceKey];
                 }
                 
-                if(VALID_NOTEMPTY([data objectForKey:kRIEventBrandKey], NSString))
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventBrandName], NSString))
                 {
-                    [pushedData setObject:[data objectForKey:kRIEventBrandKey] forKey:kGTMEventProductBrandKey];
+                    [pushedData setObject:[data objectForKey:kRIEventBrandName] forKey:kGTMEventProductBrandKey];
                 }
                 
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventRatingKey], NSString))
@@ -774,9 +774,9 @@ NSString *kGTMToken = @"kGTMToken";
                     [pushedData setObject:[data objectForKey:kRIEventSkuKey] forKey:kGTMEventProductSKUKey];
                 }
                 
-                if(VALID_NOTEMPTY([data objectForKey:kRIEventBrandKey], NSString))
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventBrandName], NSString))
                 {
-                    [pushedData setObject:[data objectForKey:kRIEventBrandKey] forKey:kGTMEventProductBrandKey];
+                    [pushedData setObject:[data objectForKey:kRIEventBrandName] forKey:kGTMEventProductBrandKey];
                 }
                 
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventPriceKey], NSNumber))
@@ -856,9 +856,9 @@ NSString *kGTMToken = @"kGTMToken";
                     [pushedData setObject:[data objectForKey:kRIEventSkuKey] forKey:kGTMEventProductSKUKey];
                 }
                 
-                if(VALID_NOTEMPTY([data objectForKey:kRIEventBrandKey], NSString))
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventBrandName], NSString))
                 {
-                    [pushedData setObject:[data objectForKey:kRIEventBrandKey] forKey:kGTMEventProductBrandKey];
+                    [pushedData setObject:[data objectForKey:kRIEventBrandName] forKey:kGTMEventProductBrandKey];
                 }
                 
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventPriceKey], NSNumber))
