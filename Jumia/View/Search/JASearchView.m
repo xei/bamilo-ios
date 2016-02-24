@@ -371,10 +371,12 @@
         if (1 == sugestion.isRecentSearch)
         {
             recentSearchImage = [UIImage imageNamed:@"ico_recentsearchsuggestion"];
+            [recentSearchImageView setHidden:NO];
         }
         else
         {
             recentSearchImage = [UIImage imageNamed:@"ico_searchsuggestion"];
+            [recentSearchImageView setHidden:YES];
         }
         
         [recentSearchImageView setImage:recentSearchImage];
