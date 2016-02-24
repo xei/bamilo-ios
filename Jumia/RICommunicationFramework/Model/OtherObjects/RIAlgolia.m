@@ -54,7 +54,7 @@
     self.shopInShopQuery = [[ASQuery alloc] init];
     self.shopInShopQuery.hitsPerPage =1;
     
-    self.productsIndexName = [NSString stringWithFormat:@"%@_products_popular", [RICountryConfiguration getCurrentConfiguration].algoliaNamespacePrefix];
+    self.productsIndexName = [NSString stringWithFormat:@"%@_products_search", [RICountryConfiguration getCurrentConfiguration].algoliaNamespacePrefix];
     self.shopInShopIndexName = [NSString stringWithFormat:@"%@_shopinshop", [RICountryConfiguration getCurrentConfiguration].algoliaNamespacePrefix];
     self.categoriesIndexName = [NSString stringWithFormat:@"%@_categories", [RICountryConfiguration getCurrentConfiguration].algoliaNamespacePrefix];
     self.queries = @[@{@"indexName": self.productsIndexName, @"query": self.productsQuery},
