@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *subTitleLabel;
+@property (nonatomic, strong) UIView *separatorView;
 
 @end
 
@@ -41,6 +42,16 @@
     return _subTitleLabel;
 }
 
+- (UIView *)separatorView
+{
+    if (!VALID_NOTEMPTY(_separatorView, UIView)) {
+        _separatorView = [[UIView alloc] initWithFrame:CGRectMake(16.0, self.height - 1.0f, self.width, 1.0f)];
+        _separatorView.backgroundColor = JABlack400Color;
+        [self addSubview:_separatorView];
+    }
+    return _separatorView;
+}
+
 - (instancetype)init
 {
     self = [super init];
@@ -58,7 +69,7 @@
     [self.titleLabel setTextAlignment:NSTextAlignmentLeft];
     [self.subTitleLabel setFrame:CGRectMake(16.0f, 30.0f, self.width - 16.f*2, 60)];
     [self.subTitleLabel setTextAlignment:NSTextAlignmentLeft];
-
+    [self.separatorView setFrame:CGRectMake(16.0f, self.height - 1.0f, self.width, 1.0f)];
     
     [self flipIfIsRTL];
 }
@@ -68,6 +79,7 @@
     if (RI_IS_RTL) {
         [self.titleLabel flipViewAlignment];
         [self.subTitleLabel flipViewAlignment];
+        [self.separatorView flipViewPositionInsideSuperview];
     }
 }
 
@@ -81,7 +93,7 @@
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               self.frame.size.width,
-                              CGRectGetMaxY(self.subTitleLabel.frame))];
+                              CGRectGetMaxY(self.subTitleLabel.frame) + 30.0f)];
 }
 
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -30,14 +30,24 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pDo-Ki-8pG">
+                    <rect key="frame" x="16" y="50" width="292" height="1"/>
+                    <color key="backgroundColor" white="0.90122155975877183" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="sFW-6Y-lCh"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="pDo-Ki-8pG" secondAttribute="bottom" id="221-vC-def"/>
                 <constraint firstItem="06D-re-hHb" firstAttribute="leading" secondItem="or4-7n-9RV" secondAttribute="trailing" constant="16" id="6nP-gH-VZB"/>
                 <constraint firstItem="2xE-dz-hd1" firstAttribute="leading" secondItem="or4-7n-9RV" secondAttribute="trailing" constant="16" id="BEH-gV-MqO"/>
                 <constraint firstItem="or4-7n-9RV" firstAttribute="leading" secondItem="xSd-NR-Bjy" secondAttribute="leading" constant="18" id="CWC-qk-ssJ"/>
                 <constraint firstItem="06D-re-hHb" firstAttribute="top" secondItem="xSd-NR-Bjy" secondAttribute="top" constant="15" id="IT2-Nt-nId"/>
+                <constraint firstAttribute="trailing" secondItem="pDo-Ki-8pG" secondAttribute="trailing" id="Oy0-Dq-Odh"/>
                 <constraint firstAttribute="trailing" secondItem="06D-re-hHb" secondAttribute="trailing" constant="15" id="Xot-Rj-7X5"/>
+                <constraint firstItem="pDo-Ki-8pG" firstAttribute="leading" secondItem="xSd-NR-Bjy" secondAttribute="leading" constant="16" id="ff5-mb-f6h"/>
                 <constraint firstAttribute="trailing" secondItem="2xE-dz-hd1" secondAttribute="trailing" id="hgS-Wl-fuv"/>
                 <constraint firstAttribute="bottom" secondItem="or4-7n-9RV" secondAttribute="bottom" constant="10" id="m7r-ZI-6Wu"/>
                 <constraint firstAttribute="bottom" secondItem="06D-re-hHb" secondAttribute="bottom" constant="15" id="rVx-Yf-YfG"/>
@@ -54,9 +64,4 @@
             <point key="canvasLocation" x="458" y="274.5"/>
         </view>
     </objects>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>

@@ -14,6 +14,7 @@
 
 @property (strong, nonatomic) UILabel *labelText;
 @property (strong, nonatomic) UISwitch *switchComponent;
+@property (nonatomic, strong) UIView *separatorView;
 
 @property (nonatomic, strong) UIView* switchExpandableContainer;
 
@@ -61,6 +62,18 @@
     return _switchComponent;
 }
 
+- (UIView *)separatorView
+{
+    if (!VALID_NOTEMPTY(_separatorView, UIView)) {
+        _separatorView = [UIView new];
+        _separatorView.frame = CGRectMake(16.0f, 47.0f, self.width - 16.0f, 1.0f);
+        _separatorView.backgroundColor = JABlack400Color;
+        
+        [self addSubview:_separatorView];
+    }
+    return _separatorView;
+}
+
 - (instancetype)init
 {
     self = [super init];
@@ -87,6 +100,8 @@
     
     self.contentBaseSize = CGSizeMake(self.width,
                                       48.0f);
+    
+    self.separatorView.frame = CGRectMake(16.0f, 47.0f, self.width - 16.0f, 1.0f);
     
     CGFloat xOffset = 16.0f;
     CGFloat checkboxMargins = 0.0f;
@@ -198,15 +213,13 @@
                 [checkboxImageView setHidden:YES];
             }
             
-            if (i < field.relatedFields.count - 1) {
-                UIView* separatorView = [[UIView alloc] initWithFrame:CGRectMake(self.labelBaseRect.origin.x,
-                                                                                 contentView.frame.size.height - 1.0f,
-                                                                                 contentView.frame.size.width - 16.0f,
-                                                                                 1.0f)];
-                [separatorView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-                [separatorView setBackgroundColor:JABlack400Color];
-                [contentView addSubview:separatorView];
-            }
+            UIView* separatorView = [[UIView alloc] initWithFrame:CGRectMake(self.labelBaseRect.origin.x,
+                                                                             contentView.frame.size.height - 1.0f,
+                                                                             contentView.frame.size.width - 16.0f,
+                                                                             1.0f)];
+            [separatorView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+            [separatorView setBackgroundColor:JABlack400Color];
+            [contentView addSubview:separatorView];
             
             currentY += contentView.frame.size.height;
         }
