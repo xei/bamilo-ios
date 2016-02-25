@@ -181,9 +181,10 @@ typedef NS_ENUM(NSInteger, RICartState) {
 #define kRIEventAmountSessions          @"RIEventAmountSessions"
 #define kRIEventCategoryIdKey           @"RIEventCategoryIdKey"
 #define kRIEventSkusKey                 @"RIEventSkusKey"
+#define kRIEventCategoryIdKey           @"RIEventCategoryIdKey"
 #define kRIEventCategoryNameKey         @"RIEventCategoryNameKey"
-#define kRIEventLastViewedCategoryKey   @"RIEventLastViewedCategoryKey"
-#define kRIEventSubCategoryNameKey      @"RIEventSubCategoryNameKey"
+#define kRIEventCategoryKey             @"RIEventCategoryKey"
+#define kRIEventSubCategoryIdKey        @"RIEventSubCategoryIdKey"
 #define kRIEventTreeKey                 @"RIEventTreeKey"
 #define kRIEventQueryKey                @"RIEventQueryKey"
 #define kRIEventProductKey              @"RIEventProductKey"
@@ -191,6 +192,7 @@ typedef NS_ENUM(NSInteger, RICartState) {
 #define kRIEventKeywordsKey             @"RIEventKeywordsKey"
 #define kRIEventNewCustomerKey          @"RIEventNewCustomerKey"
 #define kRIEventDiscountKey             @"RIEventDiscountKey"
+#define kRIEventBrandName               @"RIEventBrandName"
 #define kRIEventBrandKey                @"RIEventBrandKey"
 #define kRIEventSizeKey                 @"RIEventSizeKey"
 #define kRIEventTotalWishlistKey        @"RIEventTotalWishlistKey"
@@ -233,6 +235,9 @@ typedef NS_ENUM(NSInteger, RICartState) {
 #define kRIEventAttributeSetIDCartKey   @"RIEventAttributeSetIDCartKey"
 #define kRIEventLastCategoryAddedToCartKey @"RIEventLastCategoryAddedToCartKey"
 #define kRIEventGAIdKey                 @"RIEventGAIdKey"
+#define kRIEventOrderNumber             @"RIEventOrderNumber"
+#define kRIEventAggregateNumberOfOrders @"RIEventAggregateNumberOfOrders"
+#define kRIEventLanguageCode            @"RIEventLanguageCode"
 
 /**
  *  Struct to identify events
@@ -313,7 +318,8 @@ typedef NS_ENUM(NSInteger, RIEventType) {
     RIEventLastViewedCategory = 72,
     RIEventCart = 73,
     RIEventLastAddedToCart = 74,
-    RIEventMostViewedBrand = 75
+    RIEventMostViewedBrand = 75,
+    RIEventUserInfoChanged = 76
 };
 
 /**

@@ -405,20 +405,18 @@
                           if(categoryIndex >= 0)
                           {
                               NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
-                              [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryNameKey];
+                              [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryIdKey];
                               
                               NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
-                              [trackingDictionary setValue:[RICategory getCategoryName:subCategoryId] forKey:kRIEventSubCategoryNameKey];
+                              [trackingDictionary setValue:[RICategory getCategoryName:subCategoryId] forKey:kRIEventSubCategoryIdKey];
                           }
                           else
                           {
                               NSString *categoryId = [categoryIds objectAtIndex:subCategoryIndex];
-                              [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryNameKey];
+                              [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryIdKey];
                           }
                       }
-                      
-                      [trackingDictionary setValue:product.brand forKey:kRIEventBrandKey];
-                      
+
                       NSString *discountPercentage = @"0";
                       if(VALID_NOTEMPTY(product.maxSavingPercentage, NSString))
                       {
@@ -426,7 +424,12 @@
                       }
                       [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
                       [trackingDictionary setValue:product.avr forKey:kRIEventRatingKey];
-                      [trackingDictionary setValue:@"1" forKey:kRIEventQuantityKey];
+                      [trackingDictionary setValue:product.brand forKey:kRIEventBrandName];
+                      [trackingDictionary setValue:product.brandUrlKey forKey:kRIEventBrandKey];
+                      [trackingDictionary setValue:product.name forKey:kRIEventProductNameKey];
+                      [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
+                      [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+                      [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
                       [trackingDictionary setValue:@"Recently Viewed" forKey:kRIEventLocationKey];
                       
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]

@@ -494,7 +494,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
                       
                       [trackingDictionary setValue:@"Campaings" forKey:kRIEventLocationKey];
                       [trackingDictionary setValue:self.backupSimpleSku forKey:kRIEventSkuKey];
-                      [trackingDictionary setValue:self.backupCampaignProduct.brand forKey:kRIEventBrandKey];
+                      [trackingDictionary setValue:self.backupCampaignProduct.brand forKey:kRIEventBrandName];
                       [trackingDictionary setValue:self.backupCampaignProduct.name forKey:kRIEventProductNameKey];
                       
                       NSString *discountPercentage = @"0";
@@ -503,7 +503,8 @@ withCampaignTargetString:(NSString*)campaignTargetString
                           discountPercentage = [self.backupCampaignProduct.maxSavingPercentage stringValue];
                       }
                       [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
-                      [trackingDictionary setValue:@"1" forKey:kRIEventQuantityKey];
+                      [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+                      [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
                       
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                 data:[trackingDictionary copy]];

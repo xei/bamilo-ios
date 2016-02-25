@@ -11,6 +11,7 @@
 #import "RICartItem.h"
 #import "JAUtils.h"
 #import "RIAddress.h"
+#import "RICartItem.h"
 #import <FBSDKCoreKit/FBSDKAppEvents.h>
 #import "RIProduct.h"
 #import "JABottomBar.h"
@@ -215,6 +216,18 @@
         [attributeSetID appendFormat:@"%@;",[pd attributeSetID]];
     }
     [trackingDictionary setValue:[attributeSetID copy] forKey:kRIEventAttributeSetIDCartKey];
+    
+    if (VALID_NOTEMPTY(self.cart.totalNumberOfOrders, NSNumber)) {
+        [trackingDictionary setObject:self.cart.totalNumberOfOrders forKey:kRIEventAggregateNumberOfOrders];
+    }
+    [trackingDictionary setObject:self.cart.orderNr forKey:kRIEventOrderNumber];
+    RICartItem* lastCartItem = [self.cart.cartItems lastObject];
+    if (VALID_NOTEMPTY(lastCartItem, RICartItem)) {
+        [trackingDictionary setObject:lastCartItem.name forKey:kRIEventProductNameKey];
+        [trackingDictionary setObject:lastCartItem.sku forKey:kRIEventSkuKey];
+        [trackingDictionary setObject:lastCartItem.brand forKey:kRIEventBrandName];
+        [trackingDictionary setObject:lastCartItem.brandUrlKey forKey:kRIEventBrandKey];
+    }
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutEnd]
                                               data:[trackingDictionary copy]];

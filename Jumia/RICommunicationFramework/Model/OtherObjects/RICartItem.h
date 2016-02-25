@@ -19,6 +19,10 @@
 @property (nonatomic, strong) NSNumber *maxQuantity;
 @property (nonatomic, strong) NSString *configId;
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *brand;
+@property (nonatomic, strong) NSString *brandUrlKey;
+@property (nonatomic, strong) NSString *category;
+@property (nonatomic, strong) NSString *categoryUrlKey;
 @property (nonatomic, strong) NSString *variation;
 @property (nonatomic, strong) NSNumber *price;
 @property (nonatomic, strong) NSString *priceFormatted;

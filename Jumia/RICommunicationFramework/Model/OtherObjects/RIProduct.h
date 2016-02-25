@@ -38,6 +38,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSString * attributeShortDescription;
 @property (nonatomic, retain) NSNumber * avr;
 @property (nonatomic, retain) NSString * brand;
+@property (nonatomic, retain) NSString * brandUrlKey;
 @property (nonatomic, retain) NSString * descriptionString;
 @property (nonatomic, retain) NSNumber * maxPrice;
 @property (nonatomic, retain) NSString * maxPriceFormatted;
@@ -77,6 +78,8 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSString *summary;
 @property (nonatomic) BOOL preOrder;
 
+@property (nonatomic, strong) NSString* categoryName;
+@property (nonatomic, strong) NSString* categoryUrlKey;
 @property (nonatomic, retain) NSArray *categoryIds;
 @property (nonatomic, retain) NSSet *relatedProducts;
 @property (nonatomic, retain) NSSet *specifications;

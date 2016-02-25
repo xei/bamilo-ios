@@ -387,6 +387,10 @@
     trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
     
+    NSDictionary *componentsFromLocale =  [NSLocale componentsFromLocaleIdentifier:[RILocalizationWrapper getLocalization]];
+    NSString *languageCode = [componentsFromLocale objectForKey:NSLocaleLanguageCode];
+    [trackingDictionary setValue:languageCode forKey:kRIEventLanguageCode];
+    
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventChangeCountry]
                                               data:[trackingDictionary copy]];
     

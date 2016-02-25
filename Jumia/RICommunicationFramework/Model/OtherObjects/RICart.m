@@ -551,6 +551,14 @@
 + (RICart *)parseCheckoutFinish:(NSDictionary*)json
                         forCart:(RICart*)cart
 {
+    if (VALID_NOTEMPTY([json objectForKey:@"orders_count"], NSString)) {
+        NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+        f.numberStyle = NSNumberFormatterDecimalStyle;
+        cart.totalNumberOfOrders = [f numberFromString:[json objectForKey:@"orders_count"]];
+    } else if (VALID_NOTEMPTY([json objectForKey:@"orders_count"], NSNumber)){
+        cart.totalNumberOfOrders = [json objectForKey:@"orders_count"];
+    }
+    
     if(VALID_NOTEMPTY([json objectForKey:@"order_nr"], NSString)) {
         cart.orderNr = [json objectForKey:@"order_nr"];
     }

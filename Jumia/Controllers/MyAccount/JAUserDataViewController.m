@@ -304,6 +304,11 @@
         successBlock:^(id object, NSArray* successMessages) {
         [self onSuccessResponse:RIApiResponseSuccess messages:@[STRING_USER_DATA_EDITED_SUCCESS] showMessage:YES];
         [self hideLoading];
+            NSDictionary* dictionary = (NSDictionary*)object;
+            RICustomer* customer = [dictionary objectForKey:@"customer"];
+            if (VALID_NOTEMPTY(customer, RICustomer)) {
+                [self trackCustumerDataUpdated:customer];
+            }
     } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
         if (VALID_NOTEMPTY(errorObject, NSDictionary)) {
             [self.userForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
@@ -318,6 +323,30 @@
         }
         [self hideLoading];
     }];
+}
+
+- (void)trackCustumerDataUpdated:(RICustomer*)customer
+{
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:customer.customerId forKey:kRIEventLabelKey];
+    [trackingDictionary setValue:@"UserInfoUpdated" forKey:kRIEventActionKey];
+    [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
+    [trackingDictionary setValue:customer.customerId forKey:kRIEventUserIdKey];
+    [trackingDictionary setValue:customer.firstName forKey:kRIEventUserFirstNameKey];
+    [trackingDictionary setValue:customer.lastName forKey:kRIEventUserLastNameKey];
+    [trackingDictionary setValue:customer.gender forKey:kRIEventGenderKey];
+    [trackingDictionary setValue:customer.birthday forKey:kRIEventBirthDayKey];
+    
+    NSDate* now = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSDate *dateOfBirth = [dateFormatter dateFromString:customer.birthday];
+    NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
+    [trackingDictionary setValue:[NSNumber numberWithInteger:[ageComponents year]] forKey:kRIEventAgeKey];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventUserInfoChanged]
+                                              data:[trackingDictionary copy]];
+
 }
 
 - (void)changePasswordButtonPressed

@@ -1524,7 +1524,8 @@ typedef void (^ProcessActionBlock)(void);
     [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
     
     [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
-    [trackingDictionary setValue:product.brand forKey:kRIEventBrandKey];
+    [trackingDictionary setValue:product.brand forKey:kRIEventBrandName];
+    [trackingDictionary setValue:product.brandUrlKey forKey:kRIEventBrandKey];
     
     NSString *discountPercentage = @"0";
     if(VALID_NOTEMPTY(product.maxSavingPercentage, NSString))
@@ -1577,15 +1578,34 @@ typedef void (^ProcessActionBlock)(void);
     
     if(VALID_NOTEMPTY(categoryName, NSString))
     {
-        [trackingDictionary setValue:categoryName forKey:kRIEventCategoryNameKey];
+        [trackingDictionary setValue:categoryName forKey:kRIEventCategoryIdKey];
     }
     if(VALID_NOTEMPTY(subCategoryName, NSString))
     {
-        [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryNameKey];
+        [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryIdKey];
     }
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]
-                                              data:[trackingDictionary copy]];
+    if (VALID_NOTEMPTY(product.categoryName, NSString)) {
+        [trackingDictionary setValue:product.categoryName forKey:kRIEventCategoryNameKey];
+    }
+    if (VALID_NOTEMPTY(product.categoryUrlKey, NSString)) {
+        [trackingDictionary setValue:product.categoryUrlKey forKey:kRIEventCategoryKey];
+    }
+    
+    [trackingDictionary setValue:product.name forKey:kRIEventProductNameKey];
+    
+    [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
+        
+        [trackingDictionary setValue:[NSNumber numberWithInteger:favoriteProducts.count] forKey:kRIEventTotalWishlistKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]
+                                                  data:[trackingDictionary copy]];
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]
+                                                  data:[trackingDictionary copy]];
+    }];
+    
+
     float value = [price floatValue];
     [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToWishlist
                   valueToSum:value
@@ -1617,8 +1637,16 @@ typedef void (^ProcessActionBlock)(void);
     [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
     [trackingDictionary setValue:product.avr forKey:kRIEventRatingKey];
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
-                                              data:[trackingDictionary copy]];
+    [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
+        
+        [trackingDictionary setValue:[NSNumber numberWithInteger:favoriteProducts.count] forKey:kRIEventTotalWishlistKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
+                                                  data:[trackingDictionary copy]];
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
+                                                  data:[trackingDictionary copy]];
+    }];
 }
 
 - (void)trackingEventSort
@@ -1714,11 +1742,11 @@ typedef void (^ProcessActionBlock)(void);
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     if(VALID_NOTEMPTY(categoryName, NSString))
     {
-        [trackingDictionary setValue:categoryName forKey:kRIEventCategoryNameKey];
+        [trackingDictionary setValue:categoryName forKey:kRIEventCategoryIdKey];
     }
     if(VALID_NOTEMPTY(subCategoryName, NSString))
     {
-        [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryNameKey];
+        [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryIdKey];
     }
     [self trackingEventGTMListing:trackingDictionary];
 }
@@ -1766,7 +1794,7 @@ typedef void (^ProcessActionBlock)(void);
     
     if(VALID_NOTEMPTY(self.categoryName, NSString))
     {
-        [trackingDictionary setValue:self.categoryName forKey:kRIEventCategoryNameKey];
+        [trackingDictionary setValue:self.categoryName forKey:kRIEventCategoryIdKey];
     }
     
     if(VALID_NOTEMPTY(categories, NSArray))
