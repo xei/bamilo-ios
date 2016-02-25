@@ -14,6 +14,7 @@
 
 @property (strong, nonatomic) UILabel *labelText;
 @property (strong, nonatomic) UISwitch *switchComponent;
+@property (nonatomic, strong) UIView *separatorView;
 
 @property (nonatomic, strong) UIView* switchExpandableContainer;
 
@@ -61,6 +62,18 @@
     return _switchComponent;
 }
 
+- (UIView *)separatorView
+{
+    if (!VALID_NOTEMPTY(_separatorView, UIView)) {
+        _separatorView = [UIView new];
+        _separatorView.frame = CGRectMake(16.0f, 47.0f, self.width - 16.0f, 1.0f);
+        _separatorView.backgroundColor = JABlack400Color;
+        
+        [self addSubview:_separatorView];
+    }
+    return _separatorView;
+}
+
 - (instancetype)init
 {
     self = [super init];
@@ -88,6 +101,8 @@
     self.contentBaseSize = CGSizeMake(self.width,
                                       48.0f);
     
+    self.separatorView.frame = CGRectMake(16.0f, 47.0f, self.width - 16.0f, 1.0f);
+    
     CGFloat xOffset = 16.0f;
     CGFloat checkboxMargins = 0.0f;
     UIImage* checkboxImage = [UIImage imageNamed:@"selectionCheckmark"];
@@ -96,11 +111,11 @@
                                        checkboxImage.size.width,
                                        checkboxImage.size.height);
     
-    CGFloat labelHeight = 20.0f;
-    CGFloat labelBottom = 28.0f;
+    CGFloat labelHeight = 40.0f;
+    CGFloat labelBottom = 40.0f;
     self.labelBaseRect = CGRectMake(xOffset,
                                     self.contentBaseSize.height - labelBottom,
-                                    self.contentBaseSize.width - self.checkboxBaseRect.size.width - checkboxMargins*2,
+                                    self.contentBaseSize.width - self.checkboxBaseRect.size.width - checkboxMargins*2 - xOffset,
                                     labelHeight);
     
     [self flipIfIsRTL];
@@ -176,6 +191,7 @@
             [self.contentViewsArray addObject:contentView];
             
             UILabel* optionLabel = [[UILabel alloc] initWithFrame:self.labelBaseRect];
+            [optionLabel setNumberOfLines:2];
             [optionLabel setTextColor:JABlackColor];
             [optionLabel setFont:JABody3Font];
             optionLabel.text = relatedField.label;
@@ -198,15 +214,13 @@
                 [checkboxImageView setHidden:YES];
             }
             
-            if (i < field.relatedFields.count - 1) {
-                UIView* separatorView = [[UIView alloc] initWithFrame:CGRectMake(self.labelBaseRect.origin.x,
-                                                                                 contentView.frame.size.height - 1.0f,
-                                                                                 contentView.frame.size.width - 16.0f,
-                                                                                 1.0f)];
-                [separatorView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-                [separatorView setBackgroundColor:JABlack400Color];
-                [contentView addSubview:separatorView];
-            }
+            UIView* separatorView = [[UIView alloc] initWithFrame:CGRectMake(self.labelBaseRect.origin.x,
+                                                                             contentView.frame.size.height - 1.0f,
+                                                                             contentView.frame.size.width - 16.0f,
+                                                                             1.0f)];
+            [separatorView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+            [separatorView setBackgroundColor:JABlack400Color];
+            [contentView addSubview:separatorView];
             
             currentY += contentView.frame.size.height;
         }

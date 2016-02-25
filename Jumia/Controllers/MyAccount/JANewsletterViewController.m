@@ -39,7 +39,7 @@
         _saveClickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(16.0f, 10.0f, self.saveContentView.frame.size.width - 16.0f*2, 50.0f)];
         _saveClickableView.backgroundColor = JAOrange1Color;
         [_saveClickableView setTitle:[STRING_SAVE_LABEL uppercaseString] forState:UIControlStateNormal];
-        [_saveClickableView setFont:JACaption2Font];
+        [_saveClickableView setFont:JAButtonFont];
         [self.saveContentView addSubview:_saveClickableView];
     }
     return _saveClickableView;
@@ -62,6 +62,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.navBarLayout.title = STRING_NEWSLETTER_PREFERENCES;
     self.navBarLayout.showBackButton = YES;
     self.tabBarIsVisible = YES;
     self.view.backgroundColor = [UIColor whiteColor];

@@ -92,16 +92,14 @@
 
 - (void)setCurrentlyChecked:(BOOL)currentlyChecked
 {
-    CGFloat separatorViewY = 0.0f;
     _currentlyChecked = currentlyChecked;
     if (_currentlyChecked) {
         self.optionLabel.text = STRING_ACTIVE;
+        self.separatorView.hidden = YES;
     } else {
         self.optionLabel.text = STRING_INACTIVE;
-        separatorViewY = self.clickableView.frame.size.height - self.separatorView.frame.size.height;
+        self.separatorView.hidden = NO;
     }
-    
-    self.separatorView.y = separatorViewY;
 }
 
 - (instancetype)init
@@ -124,7 +122,7 @@
                                            self.arrowImageView.frame.size.width,
                                            self.arrowImageView.frame.size.height);
     
-    self.separatorView.frame = CGRectMake(16.0f, self.separatorView.frame.origin.y, self.width-16.0f, 1.0f);
+    self.separatorView.frame = CGRectMake(16.0f, self.height - 1.0f, self.width-16.0f, 1.0f);
     
 
     [self.optionLabel setFrame:CGRectMake(self.arrowImageView.frame.origin.x - self.optionLabel.frame.size.width - 5.0f,
