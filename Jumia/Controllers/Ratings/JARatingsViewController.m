@@ -279,15 +279,15 @@ UITableViewDataSource
         if(categoryIndex >= 0)
         {
             NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
-            [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryNameKey];
+            [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryIdKey];
             
             NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
-            [trackingDictionary setValue:[RICategory getCategoryName:subCategoryId] forKey:kRIEventSubCategoryNameKey];
+            [trackingDictionary setValue:[RICategory getCategoryName:subCategoryId] forKey:kRIEventSubCategoryIdKey];
         }
         else
         {
             NSString *categoryId = [categoryIds objectAtIndex:subCategoryIndex];
-            [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryNameKey];
+            [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryIdKey];
         }
     }
     
@@ -1050,8 +1050,8 @@ UITableViewDataSource
             [globalRateDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
             [globalRateDictionary setObject:self.product.brand forKey:kRIEventBrandName];
             [globalRateDictionary setValue:price forKey:kRIEventPriceKey];
-            [globalRateDictionary setValue:[RICategory getCategoryName:[self.product.categoryIds firstObject]] forKey:kRIEventCategoryNameKey];
-            [globalRateDictionary setValue:[RICategory getCategoryName:[self.product.categoryIds lastObject]] forKey:kRIEventSubCategoryNameKey];
+            [globalRateDictionary setValue:[RICategory getCategoryName:[self.product.categoryIds firstObject]] forKey:kRIEventCategoryIdKey];
+            [globalRateDictionary setValue:[RICategory getCategoryName:[self.product.categoryIds lastObject]] forKey:kRIEventSubCategoryIdKey];
             
             for (UIView *component in currentDynamicForm.formViews)
             {

@@ -272,12 +272,8 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         switch (event) {
             case RIEventViewProduct:
             {
-                NSString* categoryName = [data objectForKey:kRIEventSubCategoryNameKey];
-                if (NO == VALID_NOTEMPTY(categoryName, NSString)) {
-                    categoryName = [data objectForKey:kRIEventCategoryNameKey];
-                }
-                if (categoryName) {
-                    [deviceInfo setObject:categoryName forKey:kAd4PushProfileLastViewedCategoryName];
+                if (VALID_NOTEMPTY([data objectForKey:kRIEventCategoryNameKey], NSString)) {
+                    [deviceInfo setObject:[data objectForKey:kRIEventCategoryNameKey] forKey:kAd4PushProfileLastViewedCategoryName];
                 }
                 NSString* categoryUrlKey = [data objectForKey:kRIEventCategoryKey];
                 if (VALID_NOTEMPTY(categoryUrlKey, NSString)) {
@@ -315,12 +311,8 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 }
                 [deviceInfo setObject:currentDate forKey:kAd4PushDateLastCartUpdated];
                 
-                NSString* categoryName = [data objectForKey:kRIEventSubCategoryNameKey];
-                if (NO == VALID_NOTEMPTY(categoryName, NSString)) {
-                    categoryName = [data objectForKey:kRIEventCategoryNameKey];
-                }
-                if (categoryName) {
-                    [deviceInfo setObject:categoryName forKey:kAd4PushProfileLastViewedCategoryName];
+                if (VALID_NOTEMPTY([data objectForKey:kRIEventCategoryNameKey], NSString)) {
+                    [deviceInfo setObject:[data objectForKey:kRIEventCategoryNameKey] forKey:kAd4PushProfileLastViewedCategoryName];
                 }
                 NSString* categoryUrlKey = [data objectForKey:kRIEventCategoryKey];
                 if (VALID_NOTEMPTY(categoryUrlKey, NSString)) {
@@ -397,12 +389,8 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 if (VALID_NOTEMPTY([data objectForKey:kRIEventBrandKey], NSString)) {
                     [deviceInfo setObject:[data objectForKey:kRIEventBrandKey] forKey:kAd4PushLastBrandAddedToWishlistKey];
                 }
-                NSString* categoryName = [data objectForKey:kRIEventSubCategoryNameKey];
-                if (NO == VALID_NOTEMPTY(categoryName, NSString)) {
-                    categoryName = [data objectForKey:kRIEventCategoryNameKey];
-                }
-                if (categoryName) {
-                    [deviceInfo setObject:categoryName forKey:kAd4PushLastCategoryAddedToWishlistName];
+                if (VALID_NOTEMPTY([data objectForKey:kRIEventCategoryNameKey], NSString)) {
+                    [deviceInfo setObject:[data objectForKey:kRIEventCategoryNameKey] forKey:kAd4PushLastCategoryAddedToWishlistName];
                 }
                 if (VALID_NOTEMPTY([data objectForKey:kRIEventCategoryKey], NSString)) {
                     [deviceInfo setObject:[data objectForKey:kRIEventCategoryKey] forKey:kAd4PushLastCategoryAddedToWishlistKey];
@@ -488,12 +476,8 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 if (VALID_NOTEMPTY([data objectForKey:kRIEventBrandKey], NSString)) {
                     [deviceInfo setObject:[data objectForKey:kRIEventBrandKey] forKey:kAd4PushLastBrandPurchasedKey];
                 }
-                NSString* categoryName = [data objectForKey:kRIEventSubCategoryNameKey];
-                if (NO == VALID_NOTEMPTY(categoryName, NSString)) {
-                    categoryName = [data objectForKey:kRIEventCategoryNameKey];
-                }
-                if (categoryName) {
-                    [deviceInfo setObject:categoryName forKey:kAd4PushLastCategoryPurchasedName];
+                if (VALID_NOTEMPTY([data objectForKey:kRIEventCategoryNameKey], NSString)) {
+                    [deviceInfo setObject:[data objectForKey:kRIEventCategoryNameKey] forKey:kAd4PushLastCategoryPurchasedName];
                 }
                 NSString* categoryUrlKey = [data objectForKey:kRIEventCategoryKey];
                 if (VALID_NOTEMPTY(categoryUrlKey, NSString)) {

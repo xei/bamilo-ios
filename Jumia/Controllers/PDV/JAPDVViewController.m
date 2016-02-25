@@ -1643,14 +1643,14 @@ JAActivityViewControllerDelegate
     
     if(VALID_NOTEMPTY(categoryName, NSString))
     {
-        [trackingDictionary setValue:categoryName forKey:kRIEventCategoryNameKey];
+        [trackingDictionary setValue:categoryName forKey:kRIEventCategoryIdKey];
     }
     if(VALID_NOTEMPTY(subCategoryName, NSString))
     {
-        [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryNameKey];
+        [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryIdKey];
     }
     
-    if (ISEMPTY(categoryName) && ISEMPTY(subCategoryName) && VALID_NOTEMPTY(self.product.categoryName, NSString)) {
+    if (VALID_NOTEMPTY(self.product.categoryName, NSString)) {
         [trackingDictionary setValue:self.product.categoryName forKey:kRIEventCategoryNameKey];
     }
     if (VALID_NOTEMPTY(self.product.categoryUrlKey, NSString)) {
@@ -1755,13 +1755,13 @@ JAActivityViewControllerDelegate
     
     if(VALID_NOTEMPTY(categoryName, NSString))
     {
-        [trackingDictionary setValue:categoryName forKey:kRIEventCategoryNameKey];
+        [trackingDictionary setValue:categoryName forKey:kRIEventCategoryIdKey];
     }
     if(VALID_NOTEMPTY(subCategoryName, NSString))
     {
-        [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryNameKey];
+        [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryIdKey];
     }
-    if (ISEMPTY(categoryName) && ISEMPTY(subCategoryName) && VALID_NOTEMPTY(self.product.categoryName, NSString)) {
+    if (VALID_NOTEMPTY(self.product.categoryName, NSString)) {
         [trackingDictionary setValue:self.product.categoryName forKey:kRIEventCategoryNameKey];
     }
     if (VALID_NOTEMPTY(self.product.categoryUrlKey, NSString)) {
@@ -1927,13 +1927,13 @@ JAActivityViewControllerDelegate
     
     if(VALID_NOTEMPTY(categoryName, NSString))
     {
-        [trackingDictionary setValue:categoryName forKey:kRIEventCategoryNameKey];
+        [trackingDictionary setValue:categoryName forKey:kRIEventCategoryIdKey];
     }
     if(VALID_NOTEMPTY(subCategoryName, NSString))
     {
-        [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryNameKey];
+        [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryIdKey];
     }
-    if (ISEMPTY(categoryName) && ISEMPTY(subCategoryName) && VALID_NOTEMPTY(self.product.categoryName, NSString)) {
+    if (VALID_NOTEMPTY(self.product.categoryName, NSString)) {
         [trackingDictionary setValue:self.product.categoryName forKey:kRIEventCategoryNameKey];
     }
     if (VALID_NOTEMPTY(self.product.categoryUrlKey, NSString)) {
@@ -2041,11 +2041,11 @@ JAActivityViewControllerDelegate
     
     if(VALID_NOTEMPTY(categoryName, NSString))
     {
-        [trackingDictionary setValue:categoryName forKey:kRIEventCategoryNameKey];
+        [trackingDictionary setValue:categoryName forKey:kRIEventCategoryIdKey];
     }
     if(VALID_NOTEMPTY(subCategoryName, NSString))
     {
-        [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryNameKey];
+        [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryIdKey];
     }
     
     [[RITrackingWrapper sharedInstance] trackEvent:eventType

@@ -1578,14 +1578,14 @@ typedef void (^ProcessActionBlock)(void);
     
     if(VALID_NOTEMPTY(categoryName, NSString))
     {
-        [trackingDictionary setValue:categoryName forKey:kRIEventCategoryNameKey];
+        [trackingDictionary setValue:categoryName forKey:kRIEventCategoryIdKey];
     }
     if(VALID_NOTEMPTY(subCategoryName, NSString))
     {
-        [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryNameKey];
+        [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryIdKey];
     }
     
-    if (ISEMPTY(categoryName) && ISEMPTY(subCategoryName) && VALID_NOTEMPTY(product.categoryName, NSString)) {
+    if (VALID_NOTEMPTY(product.categoryName, NSString)) {
         [trackingDictionary setValue:product.categoryName forKey:kRIEventCategoryNameKey];
     }
     if (VALID_NOTEMPTY(product.categoryUrlKey, NSString)) {
@@ -1742,11 +1742,11 @@ typedef void (^ProcessActionBlock)(void);
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     if(VALID_NOTEMPTY(categoryName, NSString))
     {
-        [trackingDictionary setValue:categoryName forKey:kRIEventCategoryNameKey];
+        [trackingDictionary setValue:categoryName forKey:kRIEventCategoryIdKey];
     }
     if(VALID_NOTEMPTY(subCategoryName, NSString))
     {
-        [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryNameKey];
+        [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryIdKey];
     }
     [self trackingEventGTMListing:trackingDictionary];
 }
@@ -1794,7 +1794,7 @@ typedef void (^ProcessActionBlock)(void);
     
     if(VALID_NOTEMPTY(self.categoryName, NSString))
     {
-        [trackingDictionary setValue:self.categoryName forKey:kRIEventCategoryNameKey];
+        [trackingDictionary setValue:self.categoryName forKey:kRIEventCategoryIdKey];
     }
     
     if(VALID_NOTEMPTY(categories, NSArray))

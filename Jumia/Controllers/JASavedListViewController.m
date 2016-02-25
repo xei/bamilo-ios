@@ -460,15 +460,15 @@
                           if(categoryIndex >= 0)
                           {
                               NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
-                              [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryNameKey];
+                              [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryIdKey];
                               
                               NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
-                              [trackingDictionary setValue:[RICategory getCategoryName:subCategoryId] forKey:kRIEventSubCategoryNameKey];
+                              [trackingDictionary setValue:[RICategory getCategoryName:subCategoryId] forKey:kRIEventSubCategoryIdKey];
                           }
                           else
                           {
                               NSString *categoryId = [categoryIds objectAtIndex:subCategoryIndex];
-                              [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryNameKey];
+                              [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryIdKey];
                           }
                       }
                       

@@ -488,7 +488,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         [event addPartnerParameter:kAdjustEventGenderKey value:gender];
     }
     
-    NSString *categoryName = [data objectForKey:kRIEventCategoryNameKey];
+    NSString *categoryName = [data objectForKey:kRIEventCategoryIdKey];
     if(VALID_NOTEMPTY(categoryName, NSString))
     {
         [event addCallbackParameter:kAdjustEventCategoryNameKey value:categoryName];
