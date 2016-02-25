@@ -127,7 +127,6 @@
         _rrHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, 0, self.rrView.width, kProductInfoHeaderLineHeight)];
         [_rrHeaderLine setTopSeparatorVisibility:YES];
         [_rrHeaderLine setBottomSeparatorVisibility:YES];
-        [_rrHeaderLine setTitle:[STRING_RECOMMENDED_FOR_YOU uppercaseString]];
         [_rrHeaderLine setBackgroundColor:[UIColor whiteColor]];
     }
     return _rrHeaderLine;
@@ -169,9 +168,7 @@
     
     if (VALID_NOTEMPTY(self.rrTargetString, NSString)) {
         [RIProduct getRichRelevanceRecommendationFromTarget:self.rrTargetString successBlock:^(NSSet *recommendationProducts, NSString *title) {
-            if (VALID_NOTEMPTY([title uppercaseString], NSString)) {
-                [self.rrHeaderLine setTitle:[title uppercaseString]];
-            }
+            [self.rrHeaderLine setTitle:[title uppercaseString]];
             [self setRrProducts:recommendationProducts];
         } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
             NSLog(@"recommendationProducts: FAILED!!!! %@", [errorMessage componentsJoinedByString:@", "]);

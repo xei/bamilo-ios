@@ -690,12 +690,12 @@
 
 "shipping_billing_address" = "Shipping/Billing Address";
 
-"active" = "Active";
+"active_label" = "Active";
 
-"inactive" = "Inactive";
+"inactive_label" = "Inactive";
 
 "visit_the_official_brand_store" = "Visit the official %@ store";
 
-"newsletter" = "Newsletter";
+"newsletter_label" = "Newsletter";
 
 "newsletter_preferences" = "Newsletter Preferences";
