@@ -15,6 +15,7 @@ git config --local user.email "mobile-rocket-porto@gmail.com"
 git config --local user.name "mobile-rocket-porto"
 git config --local credential.helper 'store --file=credentials.git' 
 
+git add .
 git commit -m "Uploading new translations from wti"
 git push origin HEAD:development 
 
