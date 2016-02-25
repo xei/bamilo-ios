@@ -16,7 +16,6 @@
 @property (nonatomic, strong)RIForm* newsletterSubscriptionForm;
 @property (nonatomic, strong)JADynamicForm* dynamicForm;
 @property (nonatomic, strong)UIScrollView* scrollView;
-@property (nonatomic, strong)UIView* buttonSeparator;
 @property (nonatomic, strong)JAClickableView* submitButton;
 
 @end
@@ -90,13 +89,6 @@
             maxY = CGRectGetMaxY(view.frame);
             view.width = self.scrollView.width;
         }
-        
-        if (NO == VALID_NOTEMPTY(self.buttonSeparator, UIView)) {
-            self.buttonSeparator = [[UIView alloc] init];
-            self.buttonSeparator.backgroundColor = JABlack400Color;
-            [self.scrollView addSubview:self.buttonSeparator];
-        }
-        [self.buttonSeparator setFrame:CGRectMake(16.0f, maxY, self.scrollView.frame.size.width, 1.0f)];
         
         if (NO == VALID_NOTEMPTY(self.submitButton, JAClickableView)) {
             self.submitButton = [[JAClickableView alloc] init];
