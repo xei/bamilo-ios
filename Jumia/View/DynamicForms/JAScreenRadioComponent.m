@@ -95,8 +95,10 @@
     _currentlyChecked = currentlyChecked;
     if (_currentlyChecked) {
         self.optionLabel.text = STRING_ACTIVE;
+        self.separatorView.hidden = YES;
     } else {
         self.optionLabel.text = STRING_INACTIVE;
+        self.separatorView.hidden = NO;
     }
 }
 

@@ -49,11 +49,11 @@
                                        checkboxImage.size.width,
                                        checkboxImage.size.height);
     
-    CGFloat labelHeight = 20.0f;
-    CGFloat labelBottom = 28.0f;
+    CGFloat labelHeight = 40.0f;
+    CGFloat labelBottom = 40.0f;
     self.labelBaseRect = CGRectMake(xOffset,
                                     self.contentBaseSize.height - labelBottom,
-                                    self.contentBaseSize.width - self.checkboxBaseRect.size.width - checkboxMargins*2,
+                                    self.contentBaseSize.width - self.checkboxBaseRect.size.width - checkboxMargins*2 - xOffset,
                                     labelHeight);
     
     [self flipIfIsRTL];
@@ -112,6 +112,7 @@
         [self.contentViewsArray addObject:contentView];
         
         UILabel* optionLabel = [[UILabel alloc] initWithFrame:self.labelBaseRect];
+        [optionLabel setNumberOfLines:2];
         [optionLabel setTextColor:JABlackColor];
         [optionLabel setFont:JABody3Font];
         optionLabel.textAlignment = NSTextAlignmentLeft;
