@@ -366,7 +366,7 @@
 
 "campaing_timer_end" = "Termina em:";
 
-"string_format_off_label" = "%d%% OFF";
+"string_format_off_label" = "-%d%%";
 
 "campaigns_label" = "Campanhas";
 

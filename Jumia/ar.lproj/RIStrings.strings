@@ -64,9 +64,7 @@
 
 "string_vat_shipping_included" = "يشمل السعر الضريبة وتكاليف الشحن";
 
-"catalog_no_results" = "لا توجد نتائج بحث تتطابق مع الخيارات.";
-
-"catalog_no_results_tip" = "يمكنك محاولة استخدام مرشحات أقل تقييدا";
+"catalog_no_results" = "لا توجد نتائج بحث تتطابق مع الخيارات.\nيمكنك محاولة استخدام خيارات أقل.";
 
 "catalog_edit_filters" = "تعديل الخيارات";
 
@@ -88,7 +86,7 @@
 
 "string_ratings" = "تقييمات ‪%d‪";
 
-"string_nratings" = "تعليقات / التقييمات (‎%d‎)";
+"string_nratings" = "(‎%d‎)";
 
 "string_review" = "تعليق 1";
 
@@ -114,7 +112,7 @@
 
 "string_with_discount_only" = "فقط مع وجود خصم";
 
-"favourite_no_favourites" = "ليس لديكم أي منتجات مسجلة.";
+"favourite_no_favourites" = "لا يوجد منتجات مفضلة لديك الآن";
 
 "favourite_addalltocart" = "إضافة كل المنتجات إلى عربة التسوق";
 
@@ -172,12 +170,6 @@
 
 "continue_shopping" = "الاستمرار في التسوق";
 
-"continue" = "تابع";
-
-"continue_without_login" = "الاستمرار بدون تسجيل الدخول";
-
-"login_long_message" = "ادخل على حسابك بجوميا من اجل الحصول على معلوماتك وحفظ منتجاتك المفضلة والحصول على معلومات متعلقة بطلباتك  والمزيد.";
-
 "my_order_coupon_label" = "كوبون";
 
 "voucher_use" = "استخدم";
@@ -230,7 +222,7 @@
 
 "fgt_pass" = "هل نسيت كلمة المرور";
 
-"forgotten_password" = "يُرجى كتابة البريد الإلكتروني الخاص بك";
+"forgotten_password" = "يُرجى كتابة البريد الإلكتروني الخاص بك.";
 
 "forgotten_password_sub_text" = "سيتم إرسال رابط إليك لتغيير كلمة المرور";
 
@@ -304,11 +296,7 @@
 
 "track_order_hint" = "رقم الطلب";
 
-"items_in_your_order" = "المنتجات الموجودة في طلبك";
-
 "string_order_status" = "حالة الطلب";
-
-"order_no" = "طلب رقم %@";
 
 "string_loosing_order_title" = "تحذير";
 
@@ -318,9 +306,7 @@
 
 "recentsearch_clear_searches" = "مسح آخر عمليات البحث";
 
-"recentlyview_no_searches_title" = "لم تشاهد أي منتج مؤخرا";
-
-"recentlyview_no_searches" = "لم تعرض أي منتوجات مؤخرا";
+"recentlyview_no_searches" = "لا توجد هنا قائمة بآخر منتجات تم مشاهدتها";
 
 "recentlyview_clear_viewed" = "مسح آخر ما تم مشاهدته";
 
@@ -339,22 +325,6 @@
 "section_title_notification" = "إعدادات الإشعارات";
 
 "notifications" = "الإخطارات";
-
-"push_notifications" = "الإخطارات";
-
-"update_now" = "تحديث الآن";
-
-"app_version" = "إصدار التطبيق";
-
-"help_center" = "مركز المساعدة";
-
-"terms_and_conditions" = "الشروط والأحكام";
-
-"app_social" = "تطبيق مواقع التواصل الإجتماعى";
-
-"rate_the_app" = "قم بتقييم البرنامج";
-
-"shop_settings" = "إعدادات المتجر";
 
 "notifications_summary" = "استلم العروض الحصرية والتحديثات";
 
@@ -400,19 +370,11 @@
 
 "string_campaign_ramaining_stock" = "المخزون المتبقي: %d%%";
 
-"string_campaign_ramaining_stock_without_value" = "المخزون المتبقي";
-
 "campaign_save" = "أنت توفر";
 
 "campaing_offer_ended" = "انتهى العرض!";
 
-"not_available" = "غير متوفر";
-
 "campaing_timer_end" = "تنتهي في:";
-
-"campaign_is_over" = "هذا العرض قد انتهى";
-
-"campaign_is_over_resume" = "مع ذلك ، لدينا الكثير من العروض الاخرى الرائعة في انتظاركم .";
 
 "string_format_off_label" = "-%d%%";
 
@@ -490,10 +452,6 @@
 
 "fallback_welcome" = "مرحبًا في";
 
-"welcome" = "مرحباً";
-
-"new_to_jumia" = "يبدو أنك جديد على جوميا .\n نحن بحاجة إلى بعض من المعلومات لإنشاء حسابك .";
-
 "reviews" = "التعليقات";
 
 "more" = "أكثر";
@@ -550,11 +508,7 @@
 
 "my_order_quantity_label" = "عدد";
 
-"my_order_no_orders_label" = "ليس لديكم أي طلب.";
-
-"my_order_no_orders_title_label" = "لم يتم القيام بأي طلبات";
-
-"reorder" = "إعادة الطلب";
+"my_order_no_orders_label" = "لم يتم القيام بأي طلبات";
 
 "like_us_on_facebook" = "تابعنا على الفايسبوك";
 
@@ -565,8 +519,6 @@
 "bundle_total_price" = "السعر الكلي:";
 
 "buy_now" = "شراء الآن";
-
-"buy" = "شراء";
 
 "other_sellers" = "بائعين آخرين";
 
@@ -655,32 +607,4 @@
 "by_someone" = "منشور بواسطة %@";
 
 "user_reviews" = "تقييمات المستخدم";
-
-"profile" = "حسابك";
-
-"favourites_no_saved_items" = "لم يتم حفظ منتجات في الوقت الحالي";
-
-"favourites_no_saved_items_description" = "ليس لديكم أي منتجات مسجلة";
-
-"login_enter_your_password_to_continue" = "يُرجى إدخال كلمة المرور للاستمرار";
-
-"login_welcome_back" = "مرحبًا مجددًا";
-
-"fgt_your_pass" = "نسيت كلمة المرور؟";
-
-"password_recovery" = "استعادة كلمة المرور";
-
-"email_address" = "عنوان بريد إلكتروني";
-
-"email_example" = "email@domain.com";
-
-"password" = "كلمة السر";
-
-"change_password" = "غيّر كلمة السر";
-
-"user_data_edited_with_success" = "تم تحرير بيانات المستخدم بنجاح";
-
-"pre_order" = "حجز المنتج";
-
-"shipping_billing_address" = "عنوان الفواتير/الشحن";
 

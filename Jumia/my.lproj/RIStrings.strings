@@ -64,9 +64,7 @@
 
 "string_vat_shipping_included" = "အခြန္ႏွင့္ ပို႕ေဆာင္ခ ပါ၀င္ျပီး";
 
-"catalog_no_results" = "ရွာမေတြ႕ပါ. အျခားအခ်က္အလက္ျဖင့္ ေျပာင္းလဲရွာေဖြၾကည္႕ပါ";
-
-"catalog_no_results_tip" = "စစ္ထုတ္ခ်က္မ်ာကိုအနည္းငယ္ေလွ်ာ႕ၿပီးျပန္လည္ႀကိဳးစားၾကည္႕ပါ";
+"catalog_no_results" = "သင္ရွာေဖြေသာ ပစၥည္း ရွာမေတြ႕ပါ. အျခားအခ်က္အလက္ျဖင့္ ေျပာင္းလဲ ရွာေဖြၾကည္႕ပါ";
 
 "catalog_edit_filters" = "ရွာေဖြမွဳ ျပင္ဆင္ရန္";
 
@@ -104,7 +102,7 @@
 
 "products_sort_priceup" = "အမ်ားဆံုးေစ်းႏွဳန္း";
 
-"products_sort_pricedown" = "အမ်ားဆံုးေစ်းမွစ၍";
+"products_sort_pricedown" = "အနည္းဆံုးေစ်း";
 
 "products_sort_name" = "ကုန္ပစၥည္းအမည္";
 
@@ -172,12 +170,6 @@
 
 "continue_shopping" = "ေစ်းဆက္၀ယ္မည္";
 
-"continue" = "ဆက္ရန္";
-
-"continue_without_login" = "Log in မ၀င္ဘဲ ဆက္ရန္";
-
-"login_long_message" = "သင္၏ပရိုဖိုင္ကိုျပင္ျခင္း၊ႏွစ္သက္ရာမ်ားကိုသိမ္းဆည္းျခငး္၊ေအာ္ဒါအခ်က္အလက္ၾကည္႕ျခင္းႏွင့္အျခားအရာမ်ားလုပ္ေဆာင္ရန္ Log in ၀င္ပါ။";
-
 "my_order_coupon_label" = "ကူပြန္";
 
 "voucher_use" = "သံုးရန္";
@@ -230,7 +222,7 @@
 
 "fgt_pass" = "Password ေမ့သြားပါသလား?";
 
-"forgotten_password" = "သင့္အီးေမးလ္ ျဖည္႕သြင္းပါ";
+"forgotten_password" = "သင့္ အီးေမးလ္ ျဖည္႕သြင္းပါ";
 
 "forgotten_password_sub_text" = "Password ျပင္ဆင္ရန္ link ပို႕ေပးပါမည္";
 
@@ -304,11 +296,7 @@
 
 "track_order_hint" = "ေအာ္ဒါကုဒ္";
 
-"items_in_your_order" = "သင္မွာယူထားေသာေအာ္ဒါမ်ား";
-
 "string_order_status" = "ေအာ္ဒါ အေျခအေန";
-
-"order_no" = "ေအာ္ဒါနံပါတ္º%@";
 
 "string_loosing_order_title" = "သတိေပးခ်က္";
 
@@ -317,8 +305,6 @@
 "recentsearch_no_searches" = "လတ္တေလာ ရွာေဖြထားသည္မ်ား မရွိပါ";
 
 "recentsearch_clear_searches" = "လတ္တေလာ ရွာေဖြမွဳမ်ားကို ရွင္းလင္းရန္";
-
-"recentlyview_no_searches_title" = "လတ္တေလာၾကည္႕ရွဳထားေသာပစၥညး္မ်ားမရွိေသးပါ";
 
 "recentlyview_no_searches" = "လတ္တေလာ ၾကည္႕ရွဳထားသည္႕ ပစၥည္းမရွိပါ";
 
@@ -339,22 +325,6 @@
 "section_title_notification" = "အေၾကာင္းၾကားျခင္း ဆက္တင္မ်ား";
 
 "notifications" = "အေၾကာင္းၾကားမွဳမ်ား";
-
-"push_notifications" = "သတင္းေပးခ်က္မ်ား";
-
-"update_now" = "Update ျပဳလုပ္ရန္";
-
-"app_version" = "App ဗားရွင္း";
-
-"help_center" = "အကူအညီ";
-
-"terms_and_conditions" = "စည္းမ်ဥ္းစည္းကမ္းမ်ား";
-
-"app_social" = "App မွ်ေ၀ရန္";
-
-"rate_the_app" = "App အားအမွတ္ေပးရန္";
-
-"shop_settings" = "Shop ဆက္တင္မ်ား";
 
 "notifications_summary" = "အထူး အစီအစဥ္မ်ားႏွင့္ ေနာက္ဆံုးေပၚသတင္းမ်ား သိရွိရန္";
 
@@ -400,23 +370,15 @@
 
 "string_campaign_ramaining_stock" = "ကုန္ပစၥည္းလက္က်န္: %d%%";
 
-"string_campaign_ramaining_stock_without_value" = "ကုန္လက္က်န္";
-
 "campaign_save" = "သက္သာျပီး";
 
 "campaing_offer_ended" = "အစီအစဥ္ ျပီးဆံုးပါျပီ!";
 
-"not_available" = "မရရွိႏုိင္ပါ!";
-
 "campaing_timer_end" = ": တြင္ ကုန္ဆံုးမည္";
-
-"campaign_is_over" = "အစီအစဥ္ၿပီးဆံုးပါၿပီ";
-
-"campaign_is_over_resume" = "သို႕ေသာ္အျခားအစီအစဥ္မ်ားရွိပါေသးသည္";
 
 "string_format_off_label" = "-%d%%";
 
-"campaigns_label" = "အထူးေလွ်ာ႕ေစ်းမ်ား";
+"campaigns_label" = "အထူး အစီအစဥ္မ်ား";
 
 "product_specifications" = "အေသးစိတ္ အခ်က္အလက္မ်ား";
 
@@ -490,10 +452,6 @@
 
 "fallback_welcome" = "ၾကိဳဆိုပါသည္";
 
-"welcome" = "ႀကိဳဆိုပါတယ္";
-
-"new_to_jumia" = "အသံုးျပဳသူအသစ္ျဖစ္ပါကအေကာင့္ျပဳလုပ္ရန္စာရင္းသြင္းႏုိင္ပါသည္";
-
 "reviews" = "ထင္ျမင္ခ်က္မ်ား";
 
 "more" = "အျခား";
@@ -552,10 +510,6 @@
 
 "my_order_no_orders_label" = "သင္ေအာ္ဒါမမွာရေသးပါ";
 
-"my_order_no_orders_title_label" = "ေအာ္ဒါမရွိေသးပါ";
-
-"reorder" = "ေအာ္ဒါထပ္မွာရန္";
-
 "like_us_on_facebook" = "Facebook တြင္ Like ေပးရန္";
 
 "seller_info_warranty" = "အာမခံ";
@@ -565,8 +519,6 @@
 "bundle_total_price" = "စုစုေပါင္း ေစ်းႏွဳန္း:";
 
 "buy_now" = "၀ယ္ယူမည္";
-
-"buy" = "၀ယ္ရန္";
 
 "other_sellers" = "အျခား ေရာင္းခ်သူမ်ား";
 
@@ -624,7 +576,7 @@
 
 "country" = "ႏိုင္ငံ";
 
-"language" = "Language";
+"language" = "ဘာသာစကား";
 
 "combos" = "ပစၥည္းအစံုလိုက္မ်ား";
 
@@ -655,32 +607,4 @@
 "by_someone" = "%@ မွ ေရးသားသည္";
 
 "user_reviews" = "မွတ္ခ်က္မ်ား";
-
-"profile" = "ပရိုဖုိင္";
-
-"favourites_no_saved_items" = "မွတ္ထားေသာပစၥည္းမရွိပါ";
-
-"favourites_no_saved_items_description" = "မွတ္ထားေသာပစၥည္းမရွိေသးပါ";
-
-"login_enter_your_password_to_continue" = "ဆက္လက္လုပ္ေဆာင္ရန္ password ျဖည္႕သြင္းပါ";
-
-"login_welcome_back" = "ၾကိဳဆိုပါတယ္";
-
-"fgt_your_pass" = "Passwordေမ့သြားပါသလား?";
-
-"password_recovery" = "Password ျပန္လည္ျပင္ဆင္ရန္";
-
-"email_address" = "အီးေမးလ္လိပ္စာ";
-
-"email_example" = "email@domain.com";
-
-"password" = "Password";
-
-"change_password" = "Password ေျပာင္းလဲရန္";
-
-"user_data_edited_with_success" = "အသံုးျပဳသူ၏အခ်က္အလက္မ်ားကိုျပင္ဆင္ၿပီးပါၿပီ";
-
-"pre_order" = "ႀကိဳတင္မွာယူရန္";
-
-"shipping_billing_address" = "ပို႕ေဆာင္ရန္/ေငြေခ်ရန္လိပ္စာ";
 

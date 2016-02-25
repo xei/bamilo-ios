@@ -66,8 +66,6 @@
 
 "catalog_no_results" = "آپ کے معیارِ چھلنی کے مماثل کوئی نتیجہ نہیں ملا۔\nآپ کم تفصیلات والی چھلنی کے ساتھ دوبارہ کوشش کر سکتے ہیں۔";
 
-"catalog_no_results_tip" = "آپ کم مخصوص آردو استعمال کر سکتے ہین.";
-
 "catalog_edit_filters" = "چھلنی میں ترامیم کریں";
 
 "teaser_campaign_button_first_line" = "گرما گرم";
@@ -171,12 +169,6 @@
 "wishlist_notiems" = "آپ کی ٹوکری میں کوئی شے نہیں ہے";
 
 "continue_shopping" = "خریداری جاری رکھیں";
-
-"continue" = "جاری رکھیں";
-
-"continue_without_login" = "لاگ ان کے بغیر جاری رکھیں";
-
-"login_long_message" = "اپنی پروفائل، بچا پسندیدہ رسائی, ارڑر کی معلومات اور بہت کچھ جانیں جومیا اکاؤنٹ سے.";
 
 "my_order_coupon_label" = "کوپن";
 
@@ -304,11 +296,7 @@
 
 "track_order_hint" = "آرڈر نمبر";
 
-"items_in_your_order" = "آپ کے آرڈر میں اشیاء";
-
 "string_order_status" = "آرڈر کی صورتِ حال";
-
-"order_no" = "آرڈرN.º %@";
 
 "string_loosing_order_title" = "انتباہ";
 
@@ -317,8 +305,6 @@
 "recentsearch_no_searches" = "کوئی حالیہ تلاش نہیں";
 
 "recentsearch_clear_searches" = "حالیہ تلاش صاف کریں";
-
-"recentlyview_no_searches_title" = "کوئی حال دیکھے اشیاء نہیں";
 
 "recentlyview_no_searches" = "یہاں کوئی حالیہ دیکھے جانے والی اشیاء نہیں ہیں۔";
 
@@ -339,22 +325,6 @@
 "section_title_notification" = "تنظیمِ اطلاعات";
 
 "notifications" = "اطلاعات";
-
-"push_notifications" = "پش نوٹیفکیشن";
-
-"update_now" = "ابہی جدید بنایں";
-
-"app_version" = "اپلی کیشن ورژن";
-
-"help_center" = "مدد کا مرکز";
-
-"terms_and_conditions" = "شرائط و ضوابط";
-
-"app_social" = "سماجی ایپ";
-
-"rate_the_app" = "ایپ کو درجات دین";
-
-"shop_settings" = "دکان سیٹنگیں";
 
 "notifications_summary" = "خصوصی پیشکشیں اور تازہ معلومات حاصل کریں۔";
 
@@ -400,19 +370,11 @@
 
 "string_campaign_ramaining_stock" = "بقیہ ذخیرہ: ‎%d‎%%";
 
-"string_campaign_ramaining_stock_without_value" = "بقیہ ذخیرہ";
-
 "campaign_save" = "آپ کی بچت";
 
 "campaing_offer_ended" = "پیشکش ختم ہوئی!";
 
-"not_available" = "دستیاب نہیں ہے!";
-
 "campaing_timer_end" = "وقتِ اختتام:";
-
-"campaign_is_over" = "یہ مہم ختم ہو گی ہے";
-
-"campaign_is_over_resume" = "باوجود اس کے، اور بھی بہترین فراہم آپ ک انتظار مین ہین.";
 
 "string_format_off_label" = "-%d%%";
 
@@ -490,10 +452,6 @@
 
 "fallback_welcome" = "میں خوش آمدید";
 
-"welcome" = "خوش آمدید";
-
-"new_to_jumia" = "لگتا ہے آپ جومیا ک لیے نئے ہیں۔ ہمیں آپ کے اکاؤنٹ کی تخلیق کے لیے بس تھوڑی سی مزید تفصیلات کی ضرورت ہے ۔";
-
 "reviews" = "جائزے";
 
 "more" = "مزید";
@@ -552,10 +510,6 @@
 
 "my_order_no_orders_label" = "آپ نے کوئی آرڈر نہیں کیا";
 
-"my_order_no_orders_title_label" = "کوئی احکامات نہیں";
-
-"reorder" = "ری آرڑر";
-
 "like_us_on_facebook" = "ہمیں فیس بک پر پسند کریں";
 
 "seller_info_warranty" = "وارنٹی";
@@ -565,8 +519,6 @@
 "bundle_total_price" = "کُل قیمت:";
 
 "buy_now" = "ابھی خریدیں";
-
-"buy" = "خریدیے";
 
 "other_sellers" = "دوسرے فروخت کنندگان";
 
@@ -655,32 +607,3 @@
 "by_someone" = "ازطرف %@";
 
 "user_reviews" = "صارفین کی آراء";
-
-"profile" = "پروفائل";
-
-"favourites_no_saved_items" = "کوئی محفوظ شدہ اشیا نہیں";
-
-"favourites_no_saved_items_description" = "آپ کے کوئی محفوظ شدہ اشیا نہیں.";
-
-"login_enter_your_password_to_continue" = "جاری رکنے کے لئے پاس ورڈ داخل کرین.";
-
-"login_welcome_back" = "خوش آمديد";
-
-"fgt_your_pass" = "آپ اپنا پاس ورڈ بھول گئے ہیں؟";
-
-"password_recovery" = "پاس ورڈ کی وصولی";
-
-"email_address" = "ای میل ایڈریس";
-
-"email_example" = "email@domain.com";
-
-"password" = "پاس ورڈ";
-
-"change_password" = "پاس ورڈ بدلیں";
-
-"user_data_edited_with_success" = "صارف کوائف کامیابی کے ساتھ ترمیم";
-
-"pre_order" = "پیشکی آرڈر";
-
-"shipping_billing_address" = "شپنگ/بل کی ادائیگی کا پتہ";
-
