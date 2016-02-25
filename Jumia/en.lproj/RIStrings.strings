@@ -172,6 +172,8 @@
 
 "continue_shopping" = "Continue Shopping";
 
+"recommended_for_you" = "Recommended for you";
+
 "continue" = "Continue";
 
 "continue_without_login" = "Continue without log in";
@@ -372,7 +374,7 @@
 
 "thank_you_order_title" = "Thank You!";
 
-"order_success" = "Your order has been successfully registered with the number:";
+"order_success" = "Your order has been successfully registered. You can check the status through Order Details.";
 
 "order_track_success" = "You can track your order visiting the order status area in this app";
 
@@ -691,3 +693,5 @@
 "active" = "Active";
 
 "inactive" = "Inactive";
+
+"visit_the_official_brand_store" = "Visit the official %@ store";

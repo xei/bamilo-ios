@@ -19,6 +19,7 @@
 @synthesize specialPrice;
 @synthesize sku;
 @synthesize image;
+@synthesize shop_first;
 
 + (RIVariation *)parseVariation:(NSDictionary*)variation;
 {
@@ -48,6 +49,10 @@
         
         RIImage* image = [RIImage parseImage:variation];
         newVariation.image = image;
+    }
+    
+    if ([variation objectForKey:@"shop_first"]) {
+        newVariation.shop_first = [variation objectForKey:@"shop_first"];
     }
     
     return newVariation;

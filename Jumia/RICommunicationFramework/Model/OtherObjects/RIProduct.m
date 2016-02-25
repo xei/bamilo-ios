@@ -151,15 +151,21 @@
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
                                                                   NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                                   if (VALID_NOTEMPTY(metadata, NSDictionary)) {
-                                                                      if ([metadata objectForKey:@"recommended_products"]) {
-                                                                          [self getRichRelevanceRecommendation:metadata successBlock:successBlock andFailureBlock:failureBlock];
-                                                                      } else {
-                                                                          RIProduct* newProduct = [RIProduct parseProduct:metadata country:configuration];
-                                                                          if (VALID_NOTEMPTY(newProduct, RIProduct) && VALID_NOTEMPTY(newProduct.sku, NSString)) {
-                                                                              successBlock(newProduct);
+                                                                      
+                                                                      RIProduct* newProduct = [RIProduct parseProduct:metadata country:configuration];
+                                                                      if (VALID_NOTEMPTY(newProduct, RIProduct) && VALID_NOTEMPTY(newProduct.sku, NSString)) {
+                                                                          if ([metadata objectForKey:@"recommended_products"]) {
+                                                                              [self getRichRelevanceRecommendation:[metadata objectForKey:@"recommended_products"] successBlock:^(id recommendationProducts, NSString *title) {
+                                                                                  newProduct.relatedProducts = recommendationProducts;
+                                                                                  successBlock(newProduct);
+                                                                              } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
+                                                                                  successBlock(newProduct);
+                                                                              }];
                                                                           } else {
-                                                                              failureBlock(apiResponse, nil);
+                                                                              successBlock(newProduct);
                                                                           }
+                                                                      } else {
+                                                                          failureBlock(apiResponse, nil);
                                                                       }
                                                                   } else {
                                                                       failureBlock(apiResponse, nil);
@@ -179,15 +185,20 @@
                                                           }];
 }
 
-+ (void)getRichRelevanceRecommendation:(NSDictionary*)metadata
-                          successBlock:(void (^)(id productWithRecommendations))successBlock
++ (void)getRichRelevanceRecommendation:(NSDictionary*)recomendedJsonObject
+                          successBlock:(void (^)(NSSet *recommendationProducts, NSString *title))successBlock
                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
 {
-    NSDictionary *recommendedProducts = [metadata objectForKey:@"recommended_products"];
-    NSString *recommendedProductsTarget = [RITarget getURLStringforTargetString:[recommendedProducts objectForKey:@"target"]];
-    NSURL *url = [NSURL URLWithString:recommendedProductsTarget];
+    [RIProduct getRichRelevanceRecommendationFromTarget:[recomendedJsonObject objectForKey:@"target"] successBlock:successBlock andFailureBlock:failureBlock];
+}
+
++ (NSString *)getRichRelevanceRecommendationFromTarget:(NSString *)rrTargetString
+                               successBlock:(void (^)(NSSet *recommendationProducts, NSString *title))successBlock
+                            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
+{
+    NSURL *url = [NSURL URLWithString:[RITarget getURLStringforTargetString:rrTargetString]];
     
-    [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
                                                      parameters:nil
                                                      httpMethod:HttpResponsePost
                                                       cacheType:RIURLCacheNoCache
@@ -195,22 +206,13 @@
                                              userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                    successBlock:^(RIApiResponse apiResponse, NSDictionary* jsonObject) {
                                                        [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-                                                           NSDictionary *recommendedMetadata = [jsonObject objectForKey:@"metadata"];
-                                                           
-                                                           if (VALID_NOTEMPTY(recommendedMetadata, NSDictionary)) {
-                                                               NSMutableDictionary *mutableMetadata =  [metadata mutableCopy];
-                                                               
-                                                               [mutableMetadata setObject:recommendedMetadata forKey:@"recommended_products"];
-                                                               
-                                                               NSDictionary *metadata = [mutableMetadata copy];
-                                                               
-                                                               RIProduct* newProduct = [RIProduct parseProduct:metadata country:configuration];
-                                                               if (VALID_NOTEMPTY(newProduct, RIProduct) && VALID_NOTEMPTY(newProduct.sku, NSString)) {
-                                                                   successBlock(newProduct);
-                                                               } else {
-                                                                   failureBlock(apiResponse, nil);
-                                                               }
-                                                            } else {
+                                                           NSDictionary *recommendedMetadata = VALID_NOTEMPTY_VALUE([jsonObject objectForKey:@"metadata"], NSDictionary);
+                                                           NSArray *data = VALID_NOTEMPTY_VALUE([recommendedMetadata objectForKey:@"data"], NSArray);
+                                                           NSSet *productsSet = VALID_NOTEMPTY_VALUE([RIProduct parseRichRelevanceProducts:data country:configuration], NSSet);
+                                                           NSString *title = VALID_NOTEMPTY_VALUE([recommendedMetadata objectForKey:@"title"], NSString);
+                                                           if (productsSet) {
+                                                                successBlock(productsSet, title);
+                                                           } else {
                                                                failureBlock(apiResponse, nil);
                                                            }
                                                        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
@@ -728,17 +730,7 @@
                 relatedProductsArray = [dataDic objectForKey:@"related_products"];
             }
             
-            if (VALID_NOTEMPTY(relatedProductsArray, NSArray)) {
-                
-                NSMutableSet *newRelatedProducts = [NSMutableSet new];
-                for (NSDictionary* relatedProductJSON in relatedProductsArray) {
-                    if (VALID_NOTEMPTY(relatedProductJSON, NSDictionary)) {
-                        RIProduct* relatedProduct = [RIProduct parseProduct:relatedProductJSON country:country];
-                        [newRelatedProducts addObject:relatedProduct];
-                    }
-                }
-                newProduct.relatedProducts = [newRelatedProducts copy];
-            }
+            newProduct.relatedProducts = [self parseRichRelevanceProducts:relatedProductsArray country:country];
         }
         
         if ([dataDic objectForKey:@"pre_order"]) {
@@ -747,6 +739,21 @@
     }
     
     return newProduct;
+}
+
++ (NSSet *)parseRichRelevanceProducts:(NSArray *)jsonObject country:(RICountryConfiguration*)country
+{
+    if (VALID_NOTEMPTY(jsonObject, NSArray)) {
+        NSMutableSet *newRelatedProducts = [NSMutableSet new];
+        for (NSDictionary* relatedProductJSON in jsonObject) {
+            if (VALID_NOTEMPTY(relatedProductJSON, NSDictionary)) {
+                RIProduct* relatedProduct = [RIProduct parseProduct:relatedProductJSON country:country];
+                [newRelatedProducts addObject:relatedProduct];
+            }
+        }
+        return [newRelatedProducts copy];
+    }
+    return nil;
 }
 
 + (NSString*)urlComponentForSortingMethod:(RICatalogSorting)sortingMethod
@@ -863,9 +870,7 @@
                                                                    }
                                                                }
                                                                if (VALID(favoriteProducts, NSArray) && successBlock) {
-                                                                   NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"favoriteAddDate" ascending:NO];
-                                                                   NSArray *sorted = [favoriteProducts sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateDescriptor]];
-                                                                   successBlock(sorted, currentPage, totalPages);
+                                                                   successBlock(favoriteProducts, currentPage, totalPages);
                                                                    return;
                                                                }
                                                            } else {

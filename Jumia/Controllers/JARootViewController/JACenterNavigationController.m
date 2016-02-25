@@ -34,7 +34,7 @@
 #import "JAForgotPasswordViewController.h"
 #import "JALoginViewController.h"
 #import "JAExternalPaymentsViewController.h"
-#import "JAThanksViewController.h"
+#import "JASuccessPageViewController.h"
 #import "RIProduct.h"
 #import "RISeller.h"
 #import "JANavigationBarLayout.h"
@@ -422,6 +422,7 @@
             [self pushViewController:catalog animated:YES];
             break;
         }
+        case SHOP_IN_SHOP:
         case STATIC_PAGE: {
             JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
             
@@ -1213,13 +1214,14 @@
 - (void)showCheckoutThanksScreen:(NSNotification *)notification
 {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAThanksViewController class]] && [RICustomer checkIfUserIsLogged])
+    if (![topViewController isKindOfClass:[JASuccessPageViewController class]] && [RICustomer checkIfUserIsLogged])
     {
         self.neeedsExternalPaymentMethod = NO;
         
-        JAThanksViewController *thanksVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"thanksViewController"];
+        JASuccessPageViewController *thanksVC = [[JASuccessPageViewController alloc] init];
         
         thanksVC.cart = [notification.userInfo objectForKey:@"cart"];
+        thanksVC.rrTargetString = [notification.userInfo objectForKey:@"rrTargetString"];
         
         [self pushViewController:thanksVC animated:YES];
     }

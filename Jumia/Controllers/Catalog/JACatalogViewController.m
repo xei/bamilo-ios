@@ -549,6 +549,8 @@ typedef void (^ProcessActionBlock)(void);
     self.searchSuggestionOperationID = nil;
     self.getProductsOperationID = nil;
     
+    self.catalogTopView.filterButton.enabled = NO;
+    
     if (ISEMPTY(self.filtersArray) && NOTEMPTY(catalog.filters)) {
         self.filtersArray = catalog.filters;
         self.catalogTopView.filterButton.enabled = YES;
@@ -931,19 +933,19 @@ typedef void (^ProcessActionBlock)(void);
         
         RITarget* target = [RITarget parseTarget:self.banner.targetString];
         
-        if ([target.type isEqualToString:@"catalog"]) {
+        if ([target.type isEqualToString:[RITarget getTargetKey:CATALOG_HASH]]) {
             
             notificationName = kDidSelectTeaserWithCatalogUrlNofication;
             
-        } else if ([target.type isEqualToString:@"product_detail"]) {
+        } else if ([target.type isEqualToString:[RITarget getTargetKey:PRODUCT_DETAIL]]) {
             
             notificationName = kDidSelectTeaserWithPDVUrlNofication;
             
-        } else if ([target.type isEqualToString:@"static_page"]) {
+        } else if ([target.type isEqualToString:[RITarget getTargetKey:STATIC_PAGE]]) {
             
             notificationName = kDidSelectTeaserWithShopUrlNofication;
             
-        } else if ([target.type isEqualToString:@"campaign"]) {
+        } else if ([target.type isEqualToString:[RITarget getTargetKey:CAMAPAIGN]]) {
             
             notificationName = kDidSelectCampaignNofication;
 

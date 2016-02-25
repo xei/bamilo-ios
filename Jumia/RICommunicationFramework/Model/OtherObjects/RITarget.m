@@ -34,6 +34,8 @@
         return CAMAPAIGN;
     }else if ([self.type isEqualToString:[RITarget getTargetKey:STATIC_PAGE]]) {
         return STATIC_PAGE;
+    }else if ([self.type isEqualToString:[RITarget getTargetKey:SHOP_IN_SHOP]]) {
+        return SHOP_IN_SHOP;
     }else if ([self.type isEqualToString:[RITarget getTargetKey:FORM_SUBMIT]]) {
         return FORM_SUBMIT;
     }else if ([self.type isEqualToString:[RITarget getTargetKey:FORM_GET]]) {
@@ -111,6 +113,8 @@
             urlString = [urlString stringByAppendingString:RI_API_CAMPAIGN_PAGE];
         } else if ([type isEqualToString:[self getTargetKey:STATIC_PAGE]]) {
             urlString = [urlString stringByAppendingString:RI_API_STATIC_PAGE];
+        } else if ([type isEqualToString:[self getTargetKey:SHOP_IN_SHOP]]) {
+            urlString = [urlString stringByAppendingString:RI_API_STATIC_PAGE];
         } else if ([type isEqualToString:[self getTargetKey:FORM_SUBMIT]]) {
             //append nothing here
         } else if ([type isEqualToString:[self getTargetKey:FORM_GET]]) {
@@ -142,7 +146,7 @@
         case PRODUCT_DETAIL:
             return @"product_detail";
         case CATALOG_SEARCH:
-            return @"catalog_search";
+            return @"catalog_query";
         case CATALOG_HASH:
             return @"catalog";
         case CATALOG_BRAND:
@@ -155,6 +159,8 @@
             return @"campaign";
         case STATIC_PAGE:
             return @"static_page";
+        case SHOP_IN_SHOP:
+            return @"static_sis";
         case FORM_SUBMIT:
             return @"form_submit";
         case FORM_GET:

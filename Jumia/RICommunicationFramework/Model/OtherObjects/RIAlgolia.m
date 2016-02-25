@@ -46,7 +46,7 @@
     
     self.productsQuery = [[ASQuery alloc] init];
     self.productsQuery.hitsPerPage =3;
-    self.productsQuery.attributesToRetrieve = @[@"sku", @"localizable_attributes"];
+    self.productsQuery.attributesToRetrieve = @[@"sku", @"brand", @"localizable_attributes"];
     self.productsQuery.attributesToHighlight = @[@"facet_category"];
     self.productsQuery.facets = @[@"facet_category"];
     self.productsQuery.maxValuesPerFacet = 4;
@@ -54,7 +54,7 @@
     self.shopInShopQuery = [[ASQuery alloc] init];
     self.shopInShopQuery.hitsPerPage =1;
     
-    self.productsIndexName = [NSString stringWithFormat:@"%@_products_popular", [RICountryConfiguration getCurrentConfiguration].algoliaNamespacePrefix];
+    self.productsIndexName = [NSString stringWithFormat:@"%@_products_search", [RICountryConfiguration getCurrentConfiguration].algoliaNamespacePrefix];
     self.shopInShopIndexName = [NSString stringWithFormat:@"%@_shopinshop", [RICountryConfiguration getCurrentConfiguration].algoliaNamespacePrefix];
     self.categoriesIndexName = [NSString stringWithFormat:@"%@_categories", [RICountryConfiguration getCurrentConfiguration].algoliaNamespacePrefix];
     self.queries = @[@{@"indexName": self.productsIndexName, @"query": self.productsQuery},
@@ -79,13 +79,13 @@
     }
     __block NSInteger index = _searchId;
     [self.apiClient multipleQueries:self.queries
-                            success:^(ASAPIClient *client, NSArray *queries, NSDictionary *result) {
+                            success:^(ASAPIClient *client, NSArray *queries, NSDictionary *multipleResults) {
                                 
                                 if (index < _searchId) {
                                     return;
                                 }
-                                NSDictionary *results = [result objectForKey:@"results"];
-                                if (result) {
+                                NSDictionary *results = [multipleResults objectForKey:@"results"];
+                                if (multipleResults) {
                                     NSArray *facetCategoryArray = [NSMutableArray new];
                                     
                                     NSMutableArray *tmpProducts = [NSMutableArray array];
@@ -105,13 +105,11 @@
                                                 
                                                 self.categoriesQuery.facetFiltersRaw = [NSString stringWithFormat:@"(%@)", [facets componentsJoinedByString:@","]];
                                                 __block NSInteger indexCat = _searchId;
-                                                [self.categoriesIndex search:self.categoriesQuery success:^(ASRemoteIndex *index, ASQuery *query, NSDictionary *result) {
-                                                    
+                                                [self.categoriesIndex search:self.categoriesQuery success:^(ASRemoteIndex *index, ASQuery *query, NSDictionary *categoriesResult) {
                                                     if (indexCat < _searchId) {
                                                         return;
                                                     }
-                                                    
-                                                    NSArray *hits = result[@"hits"];
+                                                    NSArray *hits = categoriesResult[@"hits"];
                                                     NSMutableArray *tmpCategories = [NSMutableArray array];
                                                     for (NSDictionary *hit in hits) {
                                                         
@@ -129,11 +127,16 @@
                                         }
                                         for (int i = 0; i < [hits count]; ++i) {
                                             if ([[result objectForKey:@"index"] isEqualToString:self.shopInShopIndexName]) {
-                                                NSString *value = [hits[i] objectForKey:@"domain"];
-                                                NSDictionary *shopInShopDict = @{@"item":value, @"value":value};
+                                                NSString *label = [hits[i] objectForKey:@"domain"];
+                                                NSString *value = VALID_NOTEMPTY_VALUE([hits[i] objectForKey:@"pointer"], NSString);
+                                                if (!value) {
+                                                    value = label;
+                                                }
+                                                NSDictionary *shopInShopDict = @{@"item":label, @"value":value};
                                                 [tmpShopInShop addObject:shopInShopDict];
                                             }else if ([[result objectForKey:@"index"] isEqualToString:self.productsIndexName]) {
-                                                NSString *label = [[[hits[i] objectForKey:@"localizable_attributes"] objectForKey:_langCode] objectForKey:@"name"];
+                                                NSString *brand = [[hits[i] objectForKey:@"brand"] objectForKey:@"name"];
+                                                NSString *label = [NSString stringWithFormat:@"%@ %@", brand, [[[hits[i] objectForKey:@"localizable_attributes"] objectForKey:_langCode] objectForKey:@"name"]];
                                                 NSString *value = [hits[i] objectForKey:@"sku"];
                                                 NSDictionary *productDict = @{@"item":label, @"value":value};
                                                 [tmpProducts addObject:productDict];

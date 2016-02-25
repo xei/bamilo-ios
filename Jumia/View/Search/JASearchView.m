@@ -333,31 +333,33 @@
         
         NSString *value = sugestion.item;
         NSString *label;
-        UIColor *highlightColor;
+        UIColor *highlightColor = JABlue1Color;;
         
-        if ([RITarget parseTarget:sugestion.targetString].targetType == STATIC_PAGE) {
+        UIFont *highlightFont = [UIFont fontWithName:kFontLightName size:17.0f];
+        UIFont *queryFont = [UIFont fontWithName:kFontMediumName size:17.0f];
+        UIColor *stringTextColor = UIColorFromRGB(0x4e4e4e);
+        
+        if ([RITarget parseTarget:sugestion.targetString].targetType == SHOP_IN_SHOP) {
             value = [value stringByReplacingCharactersInRange:NSMakeRange(0,1)
                                                                    withString:[[value substringToIndex:1] capitalizedString]];
             label = [NSString stringWithFormat:@"Visit our %@ Store", value];
-            highlightColor = JABlue1Color;
         }else if ([RITarget parseTarget:sugestion.targetString].targetType == CATALOG_CATEGORY || [RITarget parseTarget:sugestion.targetString].targetType == CATALOG_HASH) {
-            label = [NSString stringWithFormat:@"in %@", value];
-            highlightColor = JABlue1Color;
+            label = [NSString stringWithFormat:@"%@ in %@", sugestion.queryString, value];
         }else{
             label = value;
-            value = self.searchBar.text;
-            highlightColor = [UIColor blackColor];
+            value = @"";
         }
         
-        UIFont *stringTextFont = [UIFont fontWithName:kFontLightName size:17.0f];
-        UIColor *stringTextColor = UIColorFromRGB(0x4e4e4e);
-        
-        NSRange range = [[label lowercaseString] rangeOfString:[value lowercaseString]];
-        NSMutableAttributedString *stringText = [[NSMutableAttributedString alloc] initWithString:label attributes:@{NSFontAttributeName: stringTextFont, NSForegroundColorAttributeName: stringTextColor}];
+        NSRange blueRange = [[label lowercaseString] rangeOfString:[value lowercaseString]];
+        NSRange blackRange = [[label lowercaseString] rangeOfString:[self.searchBar.text lowercaseString]];
+        NSMutableAttributedString *stringText = [[NSMutableAttributedString alloc] initWithString:label attributes:@{NSFontAttributeName: highlightFont, NSForegroundColorAttributeName: stringTextColor}];
         
         [stringText addAttribute:NSForegroundColorAttributeName
                            value:highlightColor
-                           range:range];
+                           range:blueRange];
+        [stringText addAttribute:NSFontAttributeName
+                           value:queryFont
+                           range:blackRange];
         
         customTextLabel.attributedText = stringText;
     
@@ -369,20 +371,17 @@
         if (1 == sugestion.isRecentSearch)
         {
             recentSearchImage = [UIImage imageNamed:@"ico_recentsearchsuggestion"];
-        }
-        else
-        {
-            recentSearchImage = [UIImage imageNamed:@"ico_searchsuggestion"];
+            [recentSearchImageView setHidden:NO];
+            [recentSearchImageView setImage:recentSearchImage];
+            [clickView addSubview:recentSearchImageView];
         }
         
-        [recentSearchImageView setImage:recentSearchImage];
-        [clickView addSubview:recentSearchImageView];
         
         CGFloat customImageX = recentSearchImage.size.width;
         CGFloat customTextX = (recentSearchImage.size.width*2) + 18.0f;
-        CGFloat separatorX = 45.0f;
-        CGFloat separatorWidth = cell.frame.size.width-20;
-        CGFloat customTextLabelWidth = clickView.frame.size.width - separatorX - 6.0f;
+        CGFloat separatorX = .0f;
+        CGFloat separatorWidth = cell.frame.size.width;
+        CGFloat customTextLabelWidth = clickView.frame.size.width - separatorX - 20.0f;
         
         [recentSearchImageView setFrame:CGRectMake(customImageX,
                                                    (heightLabel - recentSearchImage.size.height)/2,
@@ -401,24 +400,15 @@
                 [view removeFromSuperview];
             }
         }
-        UIImageView *line;
-        if (0 == indexPath.row)
-        {
-            line = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, 1)];
-            line.backgroundColor = UIColorFromRGB(0xcccccc);
-            line.tag = 99;
-            [clickView addSubview:line];
-        }
         
         UIImageView *line2 = [[UIImageView alloc] initWithFrame:CGRectMake(separatorX, cell.frame.size.height-1, separatorWidth, 1)];
-        line2.backgroundColor = UIColorFromRGB(0xcccccc);
+        line2.backgroundColor = JABlack400Color;
         line2.tag = 98;
         [clickView addSubview:line2];
         
         if(RI_IS_RTL){
             
             [cell flipSubviewPositions];
-            [line flipViewPositionInsideSuperview];
             [line2 flipViewPositionInsideSuperview];
             [recentSearchImageView flipViewPositionInsideSuperview];
             [customTextLabel flipViewPositionInsideSuperview];
@@ -463,7 +453,7 @@
         [self.resultsTableView setFrame:CGRectMake(self.resultsTableOriginalFrame.origin.x,
                                                    self.resultsTableOriginalFrame.origin.y,
                                                    self.frame.size.width,
-                                                   self.frame.size.height - self.keyboardHeight)];
+                                                   self.frame.size.height - self.searchBar.height - self.keyboardHeight)];
     }];
 }
 

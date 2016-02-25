@@ -942,15 +942,13 @@
     }
 
     
-    [RICart setMultistepFinishForCart:self.cart withSuccessBlock:^(RICart *cart) {
-        NSLog(@"SUCCESS Finishing checkout");
+    [RICart setMultistepFinishForCart:self.cart withSuccessBlock:^(RICart *cart, NSString *rrTargetString) {
         
         if(VALID_NOTEMPTY(cart.paymentInformation, RIPaymentInformation))
         {
             if(RIPaymentInformationCheckoutEnded == cart.paymentInformation.type)
             {
-                NSDictionary *userInfo = [NSDictionary dictionaryWithObject:cart forKey:@"cart"];
-                
+                NSDictionary *userInfo = VALID_NOTEMPTY(rrTargetString, NSString)?@{ @"cart" : cart, @"rrTargetString" : rrTargetString }:@{ @"cart" : cart };
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutThanksScreenNotification
                                                                     object:nil
                                                                   userInfo:userInfo];

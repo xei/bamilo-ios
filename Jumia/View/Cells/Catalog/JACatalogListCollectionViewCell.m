@@ -137,6 +137,9 @@
     
     CGRect shopFirstRect = CGRectMake(distXAfterImage, CGRectGetMaxY(ratingRect) + 8.f, self.shopFirstImageView.frame.size.width, self.shopFirstImageView.frame.size.height);
     if (!CGRectEqualToRect(shopFirstRect, self.self.shopFirstImageView.frame)) {
+        if (NOTEMPTY(self.variation)) {
+            shopFirstRect.origin.y = CGRectGetMaxY(priceLineRect) + 8.f;
+        }
         [self.shopFirstImageView setFrame:shopFirstRect];
         [self setForRTL:self.shopFirstImageView];
     }
