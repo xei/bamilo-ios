@@ -542,23 +542,6 @@
         customer.createdAt = [json objectForKey:@"created_at"];
     }
     
-    if ([json objectForKey:@"address_list"]) {
-        NSDictionary *addressesObject = [json objectForKey:@"address_list"];
-        if(VALID_NOTEMPTY(addressesObject, addressesObject))
-        {
-            NSArray *addressesObjectKeys = [addressesObject allKeys];
-            if(VALID_NOTEMPTY(addressesObjectKeys, NSArray))
-            {
-                for(NSString *addressObjectKey in addressesObjectKeys)
-                {
-                    RIAddress *address = [RIAddress parseAddressFromCustomer:addressObjectKey jsonObject:[addressesObject objectForKey:addressObjectKey]];
-                    address.customer = customer;
-                    [customer addAddressesObject:address];
-                }
-            }
-        }
-    }
-    
     if (VALID_NOTEMPTY([json objectForKey:@"wishlist_products"], NSArray)) {
         NSMutableArray *wishlist = [NSMutableArray new];
         for (NSDictionary *dictionary in [json objectForKey:@"wishlist_products"]) {
