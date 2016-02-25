@@ -66,6 +66,8 @@
 
 "catalog_no_results" = "نتیجه ای در این فیلتر یافت نشد.\nشما می توانید فیلتر دیگری را انتخاب نمایید";
 
+"catalog_no_results_tip" = "فیلتر های کمتری را برای جستجوی خود امتحان کنید.";
+
 "catalog_edit_filters" = "ویرایش فیلترها";
 
 "teaser_campaign_button_first_line" = "داغ";
@@ -169,6 +171,14 @@
 "wishlist_notiems" = "شما هیچ کالایی در سبد خرید ندارید.";
 
 "continue_shopping" = "ادامه خرید";
+
+"recommended_for_you" = "پیشنهاد برای شما";
+
+"continue" = "ادامه";
+
+"continue_without_login" = "ادامه بدون ورود به حساب کاربری";
+
+"login_long_message" = "وارد شوید تا به حساب کاربری خود در بامیلو، کالاهای ذخیره شده، سفارش ها و امکانات دیگردسترسی پیدا کنید.";
 
 "my_order_coupon_label" = "کوپن";
 
@@ -296,7 +306,11 @@
 
 "track_order_hint" = "شماره سفارش";
 
+"items_in_your_order" = "کالا های سفارش شما";
+
 "string_order_status" = "وضعیت سفارش";
+
+"order_no" = "شماره سفارش";
 
 "string_loosing_order_title" = "اخطار";
 
@@ -305,6 +319,8 @@
 "recentsearch_no_searches" = "جستجویی وجود ندارد";
 
 "recentsearch_clear_searches" = "پاک کردن جستجوها";
+
+"recentlyview_no_searches_title" = "کالایی اخیراً مشاهده نشده است.";
 
 "recentlyview_no_searches" = "هیچ کالای مشاهده شده ای وجود ندارد.";
 
@@ -325,6 +341,22 @@
 "section_title_notification" = "تنظیمات اطلاعیه ها";
 
 "notifications" = "اطلاعیه ها";
+
+"push_notifications" = "اطلاعیه ها";
+
+"update_now" = "به روز رسانی";
+
+"app_version" = "نسخه نرم افزار";
+
+"help_center" = "مرکز پشتیبانی";
+
+"terms_and_conditions" = "شرایط و ضوابط";
+
+"app_social" = "نرم افزار شبکه های اجتماعی";
+
+"rate_the_app" = "به نرم افزار امتیاز دهید";
+
+"shop_settings" = "تنظیمات";
 
 "notifications_summary" = "دریافت پیشنهادات اختصاصی و بروزرسانی ها";
 
@@ -370,13 +402,21 @@
 
 "string_campaign_ramaining_stock" = "موجودی باقیمانده: %d%%";
 
+"string_campaign_ramaining_stock_without_value" = "موجودی باقیمانده";
+
 "campaign_save" = "میزان تخفیف";
 
 "campaing_offer_ended" = "زمان پیشنهاد به پایان رسیده است";
 
+"not_available" = "موجود نمیباشد";
+
 "campaing_timer_end" = "پایان";
 
-"string_format_off_label" = "-%d%%‎";
+"campaign_is_over" = "پیشنهاد به پایان رسیده است";
+
+"campaign_is_over_resume" = "با این حال، پیشنهادات بی نظیری انتظار شما را میکشند.";
+
+"string_format_off_label" = "-%d%%";
 
 "campaigns_label" = "کمپین ها";
 
@@ -452,6 +492,10 @@
 
 "fallback_welcome" = "خوش آمدید به";
 
+"welcome" = "خوش آمدید";
+
+"new_to_jumia" = "ظاهرا بامیلو برای شما تجربه جدیدی است.\nبرای ایجاد حساب کاربری، به اطلاعات بیشتری از شما نیاز است.";
+
 "reviews" = "نقدها و بررسی ها";
 
 "more" = "بیشتر";
@@ -510,6 +554,10 @@
 
 "my_order_no_orders_label" = "شما هیچ سفارشی ثبت نکرده اید.";
 
+"my_order_no_orders_title_label" = "سفارشی ثبت نشده است.";
+
+"reorder" = "سفارش مجدد";
+
 "like_us_on_facebook" = "ما را در فیسبوک لایک کنید";
 
 "seller_info_warranty" = "گارانتی";
@@ -519,6 +567,8 @@
 "bundle_total_price" = "قیمت کل:";
 
 "buy_now" = "خرید کنید";
+
+"buy" = "خرید کنید";
 
 "other_sellers" = "سایر تامین کنندگان";
 
@@ -607,4 +657,40 @@
 "by_someone" = "پست شده توسط %@";
 
 "user_reviews" = "نظرات و پیشنهادهای کاربر";
+
+"profile" = "حساب کاربری";
+
+"favourites_no_saved_items" = "کالای ذخیره‌ شده‌ای وجود ندارد.";
+
+"favourites_no_saved_items_description" = "شما کالای ذخیره شده ای ندارید";
+
+"login_enter_your_password_to_continue" = "برای ادامه رمز عبور خود را وارد کنید.";
+
+"login_welcome_back" = "خوش آمدید";
+
+"fgt_your_pass" = "رمز عبور را فراموش کرده اید؟";
+
+"password_recovery" = "بازیابی رمز عبور";
+
+"email_address" = "نشانی پست الکترونیکی";
+
+"email_example" = "email@bamilo.com";
+
+"password" = "رمز عبور";
+
+"change_password" = "تغییر رمز عبور";
+
+"user_data_edited_with_success" = "اطلاعات کاربر با موفقیت ویرایش شد";
+
+"pre_order" = "پیش سفارش";
+
+"sign_up_to_our_newsletter" = "عضو خبرنامه شوید";
+
+"sign_up_to_our_newsletter_body" = "برای اطلاع از فروش های ویژه، تازه ها و پیشنهادهای بینظیر";
+
+"shipping_billing_address" = "نشانی";
+
+"active" = "فعال";
+
+"inactive" = "غیرفعال";
 

@@ -1,0 +1,22 @@
+dependencies: \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/Controllers/HomeViewController/JAHomeViewController.m \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/Controllers/HomeViewController/JAHomeViewController.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/View/GenericComponents/JAPickerScrollView.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/Controllers/ShopWeb/JAShopWebViewController.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/RICommunicationFramework/Model/CoreDataEntities/RITeaserGrouping.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/View/Teasers/JATeaserPageView.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/View/Teasers/TeaserViews/JACampaignsTeaserView.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/View/Teasers/TeaserViews/JATeaserView.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/RICommunicationFramework/Model/CoreDataEntities/RITeaserComponent.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/Utils/JAUtils.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/RICommunicationFramework/Model/OtherObjects/RICart.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/RICommunicationFramework/Model/CoreDataEntities/RICustomer.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/View/PromotionPopUp/JAPromotionPopUp.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/RICommunicationFramework/Model/OtherObjects/RIPromotion.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/JAAppDelegate.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/View/ErrorViews/FallbackView/JAFallbackView.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/RICommunicationFramework/Model/CoreDataEntities/RIAddress.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/RICommunicationFramework/Model/CoreDataEntities/RIForm.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/RICommunicationFramework/Model/CoreDataEntities/RIFormIndex.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/View/PDVComponents/JAPicker/JAPicker.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/View/Teasers/TeaserViews/JANewsletterTeaserView.h

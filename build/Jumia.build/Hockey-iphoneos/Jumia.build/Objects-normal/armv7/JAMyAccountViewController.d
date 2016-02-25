@@ -1,0 +1,26 @@
+dependencies: \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/Controllers/MyAccount/JAMyAccountViewController.m \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/Controllers/MyAccount/JAMyAccountViewController.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/View/PDVComponents/Lines/JAProductInfoHeaderLine.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/View/PDVComponents/Lines/JAProductInfoBaseLine.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/View/GenericComponents/JAClickableView.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/View/PDVComponents/Lines/JAProductInfoSubLine.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/View/PDVComponents/JAProductInfoSubtitleLine.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/View/PDVComponents/Lines/JAProductInfoSwitchLine.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/View/PDVComponents/Lines/JAProductInfoRightSubtitleLine.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/View/PDVComponents/JAPicker/JAPicker.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/Controllers/PDV/JAActivityViewController.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/ExternalFrameworks/FacebookSDK/FBSDKMessengerShareKit.framework/Headers/FBSDKMessengerBroadcastContext.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/ExternalFrameworks/FacebookSDK/FBSDKMessengerShareKit.framework/Headers/FBSDKMessengerShareOptions.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/ExternalFrameworks/FacebookSDK/FBSDKMessengerShareKit.framework/Headers/FBSDKMessengerURLHandlerCancelContext.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/ExternalFrameworks/FacebookSDK/FBSDKMessengerShareKit.framework/Headers/FBSDKMessengerButton.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/ExternalFrameworks/FacebookSDK/FBSDKMessengerShareKit.framework/Headers/FBSDKMessengerURLHandlerOpenFromComposerContext.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/ExternalFrameworks/FacebookSDK/FBSDKMessengerShareKit.framework/Headers/FBSDKMessengerURLHandlerReplyContext.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/ExternalFrameworks/FacebookSDK/FBSDKMessengerShareKit.framework/Headers/FBSDKMessengerURLHandler.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/ExternalFrameworks/FacebookSDK/FBSDKMessengerShareKit.framework/Headers/FBSDKMessengerSharer.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/ExternalFrameworks/FacebookSDK/FBSDKMessengerShareKit.framework/Headers/FBSDKMessengerContext.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/ExternalFrameworks/FacebookSDK/FBSDKMessengerShareKit.framework/Headers/FBSDKMessengerShareKit.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/ExternalFrameworks/FacebookSDK/FBSDKMessengerShareKit.framework/Modules/module.modulemap \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/ExternalFrameworks/AQSFacebookMessengerActivity/AQSFacebookMessengerActivity.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/ExternalFrameworks/WhatsAppActivity/JBWhatsAppActivity.h \
+  /Users/rocket/Workspace/Jenkins/workspace/Jumia_-_iOS_-_Dev/Jumia/RICommunicationFramework/Model/OtherObjects/RITarget.h
