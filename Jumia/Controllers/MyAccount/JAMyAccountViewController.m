@@ -135,7 +135,7 @@
 {
     if (!VALID(_emailNotificationsSubLine, JAProductInfoSubLine)) {
         _emailNotificationsSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.pushNotificationsSwitchLine.frame), self.mainScrollView.width, kProductInfoSubLineHeight)];
-        [_emailNotificationsSubLine setTitle:STRING_EMAIL_NOTIFICATIONS];
+        [_emailNotificationsSubLine setTitle:STRING_NEWSLETTER];
         [_emailNotificationsSubLine addTarget:self action:@selector(emailNotificationSelection) forControlEvents:UIControlEventTouchUpInside];
     }
     return _emailNotificationsSubLine;
