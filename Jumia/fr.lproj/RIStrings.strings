@@ -64,7 +64,9 @@
 
 "string_vat_shipping_included" = "TVA et frais de port inclus";
 
-"catalog_no_results" = "Il n'y a pas de résultats correspondant à vos critères de filtre. \nVous pouvez réessayer avec des filtres moins spécifiques.";
+"catalog_no_results" = "Il n'y a pas de résultats correspondant à vos critères de filtre.";
+
+"catalog_no_results_tip" = "Vous pouvez essayer d'utiliser des filtres moins spécifiques.";
 
 "catalog_edit_filters" = "Modifier Filtres";
 
@@ -86,7 +88,7 @@
 
 "string_ratings" = "%d Notes";
 
-"string_nratings" = "(%d)";
+"string_nratings" = "Note (%d)";
 
 "string_review" = "1 Avis";
 
@@ -112,7 +114,7 @@
 
 "string_with_discount_only" = "Avec réduction seulement";
 
-"favourite_no_favourites" = "Vous n'avez pas de favoris pour le moment";
+"favourite_no_favourites" = "Vous n'avez pas encore mis d'articles de côté.";
 
 "favourite_addalltocart" = "Tout ajouter au Panier";
 
@@ -170,6 +172,12 @@
 
 "continue_shopping" = "Continuer Votre Shopping";
 
+"continue" = "Suivant";
+
+"continue_without_login" = "Continuer sans s'identifier";
+
+"login_long_message" = "Identifiez vous sur votre compte Jumia afin de consulter votre profil, enregistrer vos favoris, avoir des informations sur vos commandes et autres.";
+
 "my_order_coupon_label" = "Coupon";
 
 "voucher_use" = "Utiliser";
@@ -214,7 +222,7 @@
 
 "facebook_signup_button_text" = "Se connecter via Facebook";
 
-"facebook_login_button_text" = "Se connecter via Facebook";
+"facebook_login_button_text" = "se connecter avec Facebook";
 
 "login_incomplete" = "Votre adresse email et date de naissance sont requis pour s'identifier";
 
@@ -222,7 +230,7 @@
 
 "fgt_pass" = "Mot de passe oublié ?";
 
-"forgotten_password" = "Veillez entrer votre e-mail.";
+"forgotten_password" = "Veuillez entrer votre e-mail";
 
 "forgotten_password_sub_text" = "Nous vous enverrons un lien pour modifier le mot de passe.";
 
@@ -296,7 +304,11 @@
 
 "track_order_hint" = "Numéro de Commande";
 
+"items_in_your_order" = "Articles dans votre commande";
+
 "string_order_status" = "Statut de la Commande";
+
+"order_no" = "Commande N.° %@";
 
 "string_loosing_order_title" = "Attention";
 
@@ -306,7 +318,9 @@
 
 "recentsearch_clear_searches" = "Effacer les Recherches Récentes";
 
-"recentlyview_no_searches" = "Aucun produit vu récemment";
+"recentlyview_no_searches_title" = "Aucun article vu récemment.";
+
+"recentlyview_no_searches" = "Vous n'avez aucun éléments récemment consultés.";
 
 "recentlyview_clear_viewed" = "Effacer les Derniers Produits Vus";
 
@@ -325,6 +339,22 @@
 "section_title_notification" = "Paramètres de notification";
 
 "notifications" = "Notifications";
+
+"push_notifications" = "Notifications";
+
+"update_now" = "Mettre à jour";
+
+"app_version" = "Version application";
+
+"help_center" = "Centre d'Aide";
+
+"terms_and_conditions" = "Termes et Conditions";
+
+"app_social" = "Communauté de l'App";
+
+"rate_the_app" = "Evaluez notre application";
+
+"shop_settings" = "Paramètres boutique";
 
 "notifications_summary" = "Recevez des offres exclusives et mises à jour personnelles";
 
@@ -370,11 +400,19 @@
 
 "string_campaign_ramaining_stock" = "Stock Restant: %d%%";
 
+"string_campaign_ramaining_stock_without_value" = "Stock restant";
+
 "campaign_save" = "Vous économisez";
 
 "campaing_offer_ended" = "Promo Expirée!";
 
+"not_available" = "Non disponible";
+
 "campaing_timer_end" = "Se termine le:";
+
+"campaign_is_over" = "Cette campagne est terminée";
+
+"campaign_is_over_resume" = "Ainsi, nous avons beaucoup d' autres offres qui vous attendent.";
 
 "string_format_off_label" = "-%d%%";
 
@@ -452,6 +490,10 @@
 
 "fallback_welcome" = "BIENVENUE";
 
+"welcome" = "Bienvenue";
+
+"new_to_jumia" = "On dirait que vous êtes nouveau à Jumia .\n Nous avons juste besoin d'un peu plus de détails pour créer votre compte .";
+
 "reviews" = "Avis";
 
 "more" = "Plus";
@@ -508,7 +550,11 @@
 
 "my_order_quantity_label" = "Qté.";
 
-"my_order_no_orders_label" = "Vous n'avez rien commandé";
+"my_order_no_orders_label" = "Vous n'avez aucune commande.";
+
+"my_order_no_orders_title_label" = "Vous n'avez rien commandé";
+
+"reorder" = "Recommander";
 
 "like_us_on_facebook" = "Aimez nous sur Facebook!";
 
@@ -518,7 +564,9 @@
 
 "bundle_total_price" = "Prix total:";
 
-"buy_now" = "Acheter maintenant";
+"buy_now" = "Acheter";
+
+"buy" = "Achète";
 
 "other_sellers" = "Autres Vendeurs";
 
@@ -574,9 +622,9 @@
 
 "birthday" = "Anniversaire";
 
-"country" = "pays";
+"country" = "Pays";
 
-"language" = "langue";
+"language" = "Langue";
 
 "combos" = "Produits fréquemment achetés ensemble";
 
@@ -607,4 +655,32 @@
 "by_someone" = "Posté par %@";
 
 "user_reviews" = "Avis des utilisateurs";
+
+"profile" = "Profil";
+
+"favourites_no_saved_items" = "Aucun produit mis de côté.";
+
+"favourites_no_saved_items_description" = "Vous n'avez pas encore mis d'articles de côté.";
+
+"login_enter_your_password_to_continue" = "Entrer votre mot de passe pour continuer";
+
+"login_welcome_back" = "Merci de votre retour";
+
+"fgt_your_pass" = "Vous avez oublié votre mot de passe ?";
+
+"password_recovery" = "Récupération du mot de passe";
+
+"email_address" = "Adresse email";
+
+"email_example" = "email@domain.com";
+
+"password" = "Mot de passe";
+
+"change_password" = "Changer mot de Passe";
+
+"user_data_edited_with_success" = "Les données de l'utilisateur édités avec succès";
+
+"pre_order" = "PRE-COMMANDE";
+
+"shipping_billing_address" = "Adresse de Facturation / Livraison";
 
