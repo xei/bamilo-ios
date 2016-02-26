@@ -61,7 +61,7 @@
                    successBlock:(void (^)(RICampaign* campaign))successBlock
                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 {
-    NSString *campaignUrl = [NSString stringWithFormat:RI_GET_CAMPAIGN, campaignId];
+    NSString *campaignUrl = [RI_API_CAMPAIGN_PAGE stringByAppendingString:campaignId];
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, campaignUrl]];
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
