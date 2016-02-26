@@ -100,7 +100,6 @@ NSString *const RI_API_LOGOUT_CUSTOMER = @"customer/logout/";
 NSString *const RI_API_GET_CUSTOMER_ADDRESS_LIST = @"customer/getaddresslist/";
 NSString *const RI_API_GET_CUSTOMER_SELECT_DEFAULT = @"customer/makedefaultaddress/";
 
-NSString *const RI_GET_CAMPAIGN = @"campaign/get/campaign_slug/%@/";
 NSString *const RI_API_BUNDLE = @"catalog/bundle/sku/";
 
 NSString *const RI_API_GET_WISHLIST = @"wishlist/getproducts/";

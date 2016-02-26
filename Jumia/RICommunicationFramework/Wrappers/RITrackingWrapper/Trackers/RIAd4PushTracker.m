@@ -17,6 +17,7 @@
 #import <AdSupport/AdSupport.h>
 #import "RIProduct.h"
 #import "RITarget.h"
+#import "JACenterNavigationController.h"
 
 #define kAd4PushIDFAIdKey                                   @"idfa"
 #define kAd4PushProfileShopCountryKey                       @"shopCountry"
@@ -769,9 +770,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 {
                     NSString* shopID = [urlComponents objectAtIndex:2];
                     if (VALID_NOTEMPTY(shopID, NSString)) {
-                        NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
-                        [userInfo setObject:shopID forKey:@"shop_id"];
-                        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithShopUrlNofication object:nil userInfo:userInfo];
+                        [[JACenterNavigationController sharedInstance] openTarget:[RITarget getTargetString:STATIC_PAGE node:shopID]];
                     }
                 }
             }
