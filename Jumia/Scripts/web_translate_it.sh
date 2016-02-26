@@ -15,6 +15,7 @@ git config --local user.email "mobile-rocket-porto@gmail.com"
 git config --local user.name "mobile-rocket-porto"
 git config --local credential.helper 'store --file=credentials.git' 
 
+git checkout -- JumiaTests/*.plist Jumia/*.plist
 git add Jumia/ar.lproj/RIStrings.strings
 git add Jumia/fa.lproj/RIStrings.strings
 git add Jumia/fr.lproj/RIStrings.strings
