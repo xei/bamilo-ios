@@ -408,10 +408,10 @@
 #define STRING_SIGNUP_NEWSLETTER RILocalizedString(@"sign_up_to_our_newsletter", nil)
 #define STRING_SIGNUP_NEWSLETTER_BODY RILocalizedString(@"sign_up_to_our_newsletter_body", nil)
 
-#define STRING_ACTIVE RILocalizedString(@"active", nil)
-#define STRING_INACTIVE RILocalizedString(@"inactive", nil)
+#define STRING_ACTIVE RILocalizedString(@"active_label", nil)
+#define STRING_INACTIVE RILocalizedString(@"inactive_label", nil)
 
 #define STRING_VISIT_THE_OFFICIAL_BRAND_STORE RILocalizedString(@"visit_the_official_brand_store", nil)
-#define STRING_NEWSLETTER RILocalizedString(@"newsletter", nil)
+#define STRING_NEWSLETTER RILocalizedString(@"newsletter_label", nil)
 #define STRING_NEWSLETTER_PREFERENCES RILocalizedString(@"newsletter_preferences", nil)
 #endif
