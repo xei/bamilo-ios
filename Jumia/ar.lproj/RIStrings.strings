@@ -102,9 +102,9 @@
 
 "products_sort_newin" = "الأحدث";
 
-"products_sort_priceup" = "الأعلى سعرًا";
+"products_sort_priceup" = "الأقل سعرًا";
 
-"products_sort_pricedown" = "الأقل سعرًا";
+"products_sort_pricedown" = "الأعلى سعرًا";
 
 "products_sort_name" = "الاسم";
 
@@ -683,4 +683,3 @@
 "pre_order" = "حجز المنتج";
 
 "shipping_billing_address" = "عنوان الفواتير/الشحن";
-
