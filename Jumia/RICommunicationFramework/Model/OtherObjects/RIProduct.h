@@ -37,8 +37,6 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSString * attributeSetId;
 @property (nonatomic, retain) NSString * attributeShortDescription;
 @property (nonatomic, retain) NSNumber * avr;
-@property (nonatomic, retain) NSString * brand;
-@property (nonatomic, retain) NSString * brandUrlKey;
 @property (nonatomic, retain) NSString * descriptionString;
 @property (nonatomic, retain) NSNumber * maxPrice;
 @property (nonatomic, retain) NSString * maxPriceFormatted;
@@ -88,6 +86,12 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSString *priceRange;
 @property (nonatomic, retain) NSString *vertical;
 @property (nonatomic) BOOL fashion;
+
+@property (nonatomic, retain) NSString *brandId;
+@property (nonatomic, retain) NSString *brandImage;
+@property (nonatomic, retain) NSString *brand;
+@property (nonatomic, retain) NSString *brandTarget;
+@property (nonatomic, retain) NSString *brandUrlKey;
 
 /**
  *  Method to load a product and all its details given his sku. This method uses getCompleteProductWithUrl:successBlock:andFailureBlock:

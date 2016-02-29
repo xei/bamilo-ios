@@ -63,8 +63,6 @@
 @synthesize attributeSetId;
 @synthesize attributeShortDescription;
 @synthesize avr;
-@synthesize brand;
-@synthesize brandUrlKey;
 @synthesize descriptionString;
 @synthesize maxPrice;
 @synthesize maxPriceFormatted;
@@ -111,12 +109,17 @@
 @synthesize vertical;
 @synthesize fashion;
 @synthesize preOrder;
+@synthesize brandId;
+@synthesize brandImage;
+@synthesize brand;
+@synthesize brandTarget;
+@synthesize brandUrlKey;
 
 + (NSString *)getCompleteProductWithSku:(NSString*)sku
                            successBlock:(void (^)(id product))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
 {
-    NSString *finalTargetString = [NSString stringWithFormat:@"product_detail::%@",sku];
+    NSString *finalTargetString = [RITarget getTargetString:PRODUCT_DETAIL node:sku];
     return [RIProduct getCompleteProductWithTargetString:finalTargetString
                               		   withRichParameter:nil
                                             successBlock:^(id product) {
@@ -456,12 +459,6 @@
         if ([dataDic objectForKey:@"description"]) {
             newProduct.descriptionString = [dataDic objectForKey:@"description"];
         }
-        if ([dataDic objectForKey:@"brand"]) {
-            newProduct.brand = [dataDic objectForKey:@"brand"];
-        }
-        if ([dataDic objectForKey:@"brand_url_key"]) {
-            newProduct.brandUrlKey = [dataDic objectForKey:@"brand_url_key"];
-        }
         if ([dataDic objectForKey:@"category_name"]) {
             newProduct.categoryName = [dataDic objectForKey:@"category_name"];
         }
@@ -735,6 +732,31 @@
         
         if ([dataDic objectForKey:@"pre_order"]) {
             newProduct.preOrder = YES;
+        }
+        
+        if ([dataDic objectForKey:@"brand_entity"]) {
+            NSDictionary *brandEntityDictionary = [dataDic objectForKey:@"brand_entity"];
+            if (VALID_NOTEMPTY(brandEntityDictionary, NSDictionary)) {
+                if ([brandEntityDictionary objectForKey:@"id"]) {
+                    newProduct.brandId = [brandEntityDictionary objectForKey:@"id"];
+                }
+                
+                if ([brandEntityDictionary objectForKey:@"image"]) {
+                    newProduct.brandImage = [brandEntityDictionary objectForKey:@"image"];
+                }
+                
+                if ([brandEntityDictionary objectForKey:@"name"]) {
+                    newProduct.brand = [brandEntityDictionary objectForKey:@"name"];
+                }
+                
+                if ([brandEntityDictionary objectForKey:@"target"]) {
+                    newProduct.brandTarget = [brandEntityDictionary objectForKey:@"target"];
+                }
+                
+                if ([brandEntityDictionary objectForKey:@"url_key"]) {
+                    newProduct.brandUrlKey = [brandEntityDictionary objectForKey:@"url_key"];
+                }
+            }
         }
     }
     

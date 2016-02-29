@@ -1124,6 +1124,11 @@
 		9AF49A491B1DE1FF0028105D /* JANoConnectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A471B1DE1FF0028105D /* JANoConnectionView.xib */; };
 		9AF49A4A1B1DE1FF0028105D /* JANoConnectionView~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A481B1DE1FF0028105D /* JANoConnectionView~iPad.xib */; };
 		9D4431EA1C242BA8005A8B4A /* JAUserDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4431E91C242BA8005A8B4A /* JAUserDataViewController.m */; };
+		9DBD0C1D1C7F1CBB00F60374 /* JAProductInfoSISLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBD0C1C1C7F1CBB00F60374 /* JAProductInfoSISLine.m */; };
+		9DBD0C1E1C7F1CBB00F60374 /* JAProductInfoSISLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBD0C1C1C7F1CBB00F60374 /* JAProductInfoSISLine.m */; };
+		9DBD0C1F1C7F1CBB00F60374 /* JAProductInfoSISLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBD0C1C1C7F1CBB00F60374 /* JAProductInfoSISLine.m */; };
+		9DBD0C201C7F1CBB00F60374 /* JAProductInfoSISLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBD0C1C1C7F1CBB00F60374 /* JAProductInfoSISLine.m */; };
+		9DBD0C211C7F1CBB00F60374 /* JAProductInfoSISLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBD0C1C1C7F1CBB00F60374 /* JAProductInfoSISLine.m */; };
 		9a39dc0f3a939d6e0ce2df01 /* RITrackingConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302B019811E9200F71726 /* RITrackingConfiguration.m */; };
 		9cbdf4e3cedc6bf19d69072d /* RICommunicationWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029F19811E9200F71726 /* RICommunicationWrapper.m */; };
 		9cd5e1568d3e8d595420bc7f /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B5007AC019A4E8EC0024035A /* HockeySDK.xcconfig */; };
@@ -3146,6 +3151,8 @@
 		9D39EA2D1BFFA32D00C3F6E9 /* Model_1.10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.10.xcdatamodel; sourceTree = "<group>"; };
 		9D4431E81C242BA8005A8B4A /* JAUserDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAUserDataViewController.h; sourceTree = "<group>"; };
 		9D4431E91C242BA8005A8B4A /* JAUserDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAUserDataViewController.m; sourceTree = "<group>"; };
+		9DBD0C1B1C7F1CBB00F60374 /* JAProductInfoSISLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAProductInfoSISLine.h; path = Lines/JAProductInfoSISLine.h; sourceTree = "<group>"; };
+		9DBD0C1C1C7F1CBB00F60374 /* JAProductInfoSISLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAProductInfoSISLine.m; path = Lines/JAProductInfoSISLine.m; sourceTree = "<group>"; };
 		B5007ABE19A4E8EC0024035A /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		B5007AC019A4E8EC0024035A /* HockeySDK.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = HockeySDK.xcconfig; sourceTree = "<group>"; };
 		B5007AC119A4E8EC0024035A /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
@@ -4666,6 +4673,8 @@
 				9A007C821C206DE4007D99FC /* JAProductInfoSubtitleLine.m */,
 				9A007C881C2095A9007D99FC /* JAProductInfoRightSubtitleLine.h */,
 				9A007C891C2095A9007D99FC /* JAProductInfoRightSubtitleLine.m */,
+				9DBD0C1B1C7F1CBB00F60374 /* JAProductInfoSISLine.h */,
+				9DBD0C1C1C7F1CBB00F60374 /* JAProductInfoSISLine.m */,
 			);
 			name = Lines;
 			sourceTree = "<group>";
@@ -4799,15 +4808,6 @@
 				9AEADDC81C0DEA450074034A /* JARegisterViewController.m */,
 			);
 			name = Authentication;
-			sourceTree = "<group>";
-		};
-		9AE03A8C1C0C6A9C003CBEF1 /* ReDesign */ = {
-			isa = PBXGroup;
-			children = (
-				9AE03A8D1C0C6ADA003CBEF1 /* JATextFieldComponent.h */,
-				9AE03A8E1C0C6ADA003CBEF1 /* JATextFieldComponent.m */,
-			);
-			name = ReDesign;
 			sourceTree = "<group>";
 		};
 		9AED07B41C6DEA7400B5FDF0 /* Algolia */ = {
@@ -7601,6 +7601,7 @@
 				9AED07C41C6DEA8800B5FDF0 /* ASAPIClient.m in Sources */,
 				CE28A7A71BDE987400B1FADA /* JATabBarButton.m in Sources */,
 				c795918e6661f2b2410f9f58 /* RIFilter.m in Sources */,
+				9DBD0C1E1C7F1CBB00F60374 /* JAProductInfoSISLine.m in Sources */,
 				9AED07E21C6DEA8800B5FDF0 /* ASRemoteIndex.m in Sources */,
 				CED9B5C11B5810ED0097EB30 /* RIHtmlShop.m in Sources */,
 				abfbf9f4e3ea7badd0389cb2 /* JACatalogViewController.m in Sources */,
@@ -7997,6 +7998,7 @@
 				9A7EE99E1B5546A0004E2505 /* ADJTimerOnce.m in Sources */,
 				CEE558621AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */,
 				9AED07E11C6DEA8800B5FDF0 /* ASRemoteIndex.m in Sources */,
+				9DBD0C1D1C7F1CBB00F60374 /* JAProductInfoSISLine.m in Sources */,
 				FFB0A37D1C529E9900EF9FE5 /* RIImage.m in Sources */,
 				B5C2B0681A0911AB00B4872D /* JAPicker.m in Sources */,
 				CE9193BD19F503FB00F89840 /* JAFallbackView.m in Sources */,
@@ -8327,6 +8329,7 @@
 				9A7EE9A01B5546A0004E2505 /* ADJTimerOnce.m in Sources */,
 				CEE558641AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */,
 				FFB0A37F1C529E9900EF9FE5 /* RIImage.m in Sources */,
+				9DBD0C1F1C7F1CBB00F60374 /* JAProductInfoSISLine.m in Sources */,
 				9AED07E31C6DEA8800B5FDF0 /* ASRemoteIndex.m in Sources */,
 				CE9ADBA01AB34C4600D56481 /* JAPicker.m in Sources */,
 				CE9ADBA31AB34C4600D56481 /* JAFallbackView.m in Sources */,
@@ -8647,6 +8650,7 @@
 				9A7EE9A11B5546A0004E2505 /* ADJTimerOnce.m in Sources */,
 				CEE558651AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */,
 				FFB0A3801C529E9900EF9FE5 /* RIImage.m in Sources */,
+				9DBD0C201C7F1CBB00F60374 /* JAProductInfoSISLine.m in Sources */,
 				9AED07E41C6DEA8800B5FDF0 /* ASRemoteIndex.m in Sources */,
 				CE9ADD9A1AB6D6E900D56481 /* JAPicker.m in Sources */,
 				CE9ADD9D1AB6D6E900D56481 /* JAFallbackView.m in Sources */,
@@ -8967,6 +8971,7 @@
 				CE9ADF941AB6D78200D56481 /* JAPicker.m in Sources */,
 				CE9ADF971AB6D78200D56481 /* JAFallbackView.m in Sources */,
 				9A7EE9351B554696004E2505 /* ADJActivityHandler.m in Sources */,
+				9DBD0C211C7F1CBB00F60374 /* JAProductInfoSISLine.m in Sources */,
 				9AED07E51C6DEA8800B5FDF0 /* ASRemoteIndex.m in Sources */,
 				FFB0A3811C529E9900EF9FE5 /* RIImage.m in Sources */,
 				CE9ADF9A1AB6D78200D56481 /* JASmallTeaserView.m in Sources */,
