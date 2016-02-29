@@ -172,6 +172,8 @@
 
 "continue_shopping" = "Continuer Votre Shopping";
 
+"recommended_for_you" = "Recommandé pour vous";
+
 "continue" = "Suivant";
 
 "continue_without_login" = "Continuer sans s'identifier";
@@ -372,7 +374,7 @@
 
 "thank_you_order_title" = "Merci!";
 
-"order_success" = "Votre commande a été enregistré avec succès,sous le numéro suivant:";
+"order_success" = "Votre commande a été enregistrée avec succès,vous pouvez consulter son statut dans les détails de la commande";
 
 "order_track_success" = "Vous pouvez suivre le statut de votre commande en allant dans la rubrique dédiée dans l'application";
 

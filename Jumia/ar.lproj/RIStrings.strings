@@ -102,9 +102,9 @@
 
 "products_sort_newin" = "الأحدث";
 
-"products_sort_priceup" = "الأعلى سعرًا";
+"products_sort_priceup" = "الأقل سعرًا";
 
-"products_sort_pricedown" = "الأقل سعرًا";
+"products_sort_pricedown" = "الأعلى سعرًا";
 
 "products_sort_name" = "الاسم";
 
@@ -171,6 +171,8 @@
 "wishlist_notiems" = "لا يوجد منتجات في عربة التسوق";
 
 "continue_shopping" = "الاستمرار في التسوق";
+
+"recommended_for_you" = "مرشح لك";
 
 "continue" = "تابع";
 
@@ -682,5 +684,18 @@
 
 "pre_order" = "حجز المنتج";
 
+"sign_up_to_our_newsletter" = "التسجيل للحصول على رسالة جوميا الإخبارية";
+
+"sign_up_to_our_newsletter_body" = "للحصول بشكل حصري على تقارير المبيعات والمنتجات الأحدث وصولًا والاتجاهات السوقية والحملات الإعلانية";
+
 "shipping_billing_address" = "عنوان الفواتير/الشحن";
 
+"active_label" = "نشط";
+
+"inactive_label" = "غير نشط";
+
+"visit_the_official_brand_store" = "زيارة المخزن %@ الرسمي";
+
+"newsletter_label" = "رسالة جوميا الإخبارية";
+
+"newsletter_preferences" = "تفضيلات الرسالة الإخبارية";

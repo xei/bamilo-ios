@@ -160,7 +160,7 @@
         case STATIC_PAGE:
             return @"static_page";
         case SHOP_IN_SHOP:
-            return @"static_sis";
+            return @"shop_in_shop";
         case FORM_SUBMIT:
             return @"form_submit";
         case FORM_GET:

@@ -19,6 +19,7 @@
 #import "RISpecification.h"
 #import "RISpecificationAttribute.h"
 #import "JAPDVProductInfoSellerInfo.h"
+#import "JAProductInfoSISLine.h"
 
 @interface JAPDVProductInfo() {
     UILabel *_sizesLabel;
@@ -36,6 +37,7 @@
 @property (nonatomic) id otherOffersTarget;
 @property (nonatomic) id specificationsTarget;
 @property (nonatomic) id descriptionTarget;
+@property (nonatomic) id sisTarget;
 @property (nonatomic) SEL variationsSelector;
 @property (nonatomic) SEL sizeSelector;
 @property (nonatomic) SEL reviewsSelector;
@@ -45,6 +47,7 @@
 @property (nonatomic) SEL otherOffersSelector;
 @property (nonatomic) SEL specificationsSelector;
 @property (nonatomic) SEL descriptionSelector;
+@property (nonatomic) SEL sisSelector;
 
 @end
 
@@ -205,6 +208,29 @@
         [singleVariations addTarget:self action:@selector(tapVariationsLine) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:singleVariations];
         yOffset = CGRectGetMaxY(singleVariations.frame);
+    }
+    
+    /*
+     *  SIS
+     */
+    
+    if (VALID_NOTEMPTY(product.brandTarget, NSString)) {
+        JAProductInfoSISLine *sis = [[JAProductInfoSISLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSISLineHeight)];
+        [sis setTitle:[NSString stringWithFormat:STRING_VISIT_THE_OFFICIAL_BRAND_STORE, product.brand]];
+        if (product.brandImage) {
+            NSString* sisImageUrl = product.brandImage;
+            
+            __weak JAProductInfoSISLine *weakSis = sis;
+            [sis.sisImageView setImageWithURL:[NSURL URLWithString:sisImageUrl] placeholderImage:nil success:^(UIImage *image, BOOL cached) {
+                [weakSis.sisImageView setWidth:image.size.width*weakSis.sisImageView.height/image.size.height];
+                weakSis.lineContentXOffset = CGRectGetMaxX(weakSis.sisImageView.frame) + 8.f;
+                [weakSis setTitle:weakSis.title];
+            } failure:nil];
+        }
+        
+        [sis addTarget:self action:@selector(tapSisLine) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:sis];
+        yOffset = CGRectGetMaxY(sis.frame);
     }
     
     /*
@@ -391,6 +417,13 @@
     }
 }
 
+- (void)tapSisLine
+{
+    if (self.sisTarget && [self.sisTarget respondsToSelector:self.sisSelector]) {
+        ((void (*)(id, SEL))[self.sisTarget methodForSelector:self.sisSelector])(self.sisTarget, self.sisSelector);
+    }
+}
+
 - (void)addVariationsTarget:(id)target action:(SEL)action
 {
     self.variationsTarget = target;
@@ -443,6 +476,12 @@
 {
     self.descriptionTarget = target;
     self.descriptionSelector = action;
+}
+
+- (void)addSisTarget:(id)target action:(SEL)action
+{
+    self.sisTarget = target;
+    self.sisSelector = action;
 }
 
 @end
