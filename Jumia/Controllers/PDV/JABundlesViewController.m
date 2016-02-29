@@ -545,7 +545,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
     [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
         
-    [trackingDictionary setValue:price forKey:kRIEventFBValueToSumKey];
+    [trackingDictionary setValue:[price stringValue] forKey:kRIEventFBValueToSumKey];
     [trackingDictionary setValue:self.product.sku forKey:kRIEventFBContentIdKey];
     [trackingDictionary setValue:@"product" forKey:kRIEventFBContentTypeKey];
     [trackingDictionary setValue:@"EUR" forKey:kRIEventFBCurrency];

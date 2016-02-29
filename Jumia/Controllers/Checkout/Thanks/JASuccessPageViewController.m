@@ -302,7 +302,7 @@
     
     trackingDictionary = [[NSMutableDictionary alloc] init];
     
-    [trackingDictionary setValue:priceSum forKey:kRIEventFBValueToSumKey];
+    [trackingDictionary setValue:[priceSum stringValue] forKey:kRIEventFBValueToSumKey];
     [trackingDictionary setValue:[skusArray componentsJoinedByString:@","] forKey:kRIEventFBContentIdKey];
     [trackingDictionary setValue:@"product" forKey:kRIEventFBContentTypeKey];
     [trackingDictionary setValue:@"EUR" forKey:kRIEventFBCurrency];
