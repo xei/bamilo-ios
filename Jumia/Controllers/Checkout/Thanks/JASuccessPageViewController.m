@@ -233,9 +233,10 @@
     
     NSDictionary* teaserTrackingInfoDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey];
     
+    NSNumber *priceSum = [NSNumber numberWithFloat:0.0f];
+    NSMutableArray *skusArray = [NSMutableArray new];
+    
     for (int i = 0; i < self.cart.cartItems.count; i++) {
-        trackingDictionary = [[NSMutableDictionary alloc] init];
-        
         RICartItem *cartItem = [self.cart.cartItems objectAtIndex:i];
         
         BOOL isConverted = YES;
@@ -258,6 +259,9 @@
             }
         }
         
+        [skusArray addObject:cartItem.sku];
+        priceSum = [NSNumber numberWithFloat:([priceSum floatValue] + [priceNumber floatValue])];
+        
         //check if came from teasers and track that info
         NSString* teaserTrackingInfo = [teaserTrackingInfoDictionary objectForKey:cartItem.sku];
         if (VALID_NOTEMPTY(teaserTrackingInfo, NSString)) {
@@ -269,72 +273,6 @@
             
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventTeaserPurchase]
                                                       data:[teaserTrackingDictionary copy]];
-        }
-        
-        // Since we're sending the converted price, we have to send the currency as EUR.
-        // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-        [trackingDictionary setValue:priceNumber forKey:kRIEventPriceKey];
-        if(isConverted)
-        {
-            [trackingDictionary setObject:@"EUR" forKey:kRIEventCurrencyCodeKey];
-        }
-        else
-        {
-            [trackingDictionary setObject:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
-        }
-        
-        [trackingDictionary setValue:cartItem.quantity forKey:kRIEventQuantityKey];
-        
-        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-        NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
-        if(VALID_NOTEMPTY(numberOfSessions, NSNumber))
-        {
-            [trackingDictionary setValue:[numberOfSessions stringValue] forKey:kRIEventAmountSessions];
-        }
-        [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
-        [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-        [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-        [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-        [trackingDictionary setValue:cartItem.sku forKey:kRIEventSkuKey];
-        
-        // Since we're sending the converted price, we have to send the currency as EUR.
-        // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-        [trackingDictionary setValue:priceNumber forKey:kRIEventPriceKey];
-        if(isConverted)
-        {
-            [trackingDictionary setObject:@"EUR" forKey:kRIEventCurrencyCodeKey];
-        }
-        else
-        {
-            [trackingDictionary setObject:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEventCurrencyCodeKey];
-        }
-        
-        [trackingDictionary setValue:discount forKey:kRIEventDiscountKey];
-        [trackingDictionary setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
-        [trackingDictionary setValue:cartItem.variation forKey:kRIEventSizeKey];
-        [trackingDictionary setValue:isNewCustomer forKey:kRIEventNewCustomerKey];
-        [trackingDictionary setValue:[self.cart.cartValueEuroConverted stringValue] forKey:kRIEventTotalTransactionKey];
-        [trackingDictionary setValue:self.cart.orderNr forKey:kRIEventTransactionIdKey];
-        
-        if ([RICustomer checkIfUserIsLogged]) {
-            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-            [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
-            [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
-                RIAddress *shippingAddress = (RIAddress *)[adressList objectForKey:@"shipping"];
-                [trackingDictionary setValue:shippingAddress.city forKey:kRIEventCityKey];
-                [trackingDictionary setValue:shippingAddress.customerAddressRegion forKey:kRIEventRegionKey];
-                
-                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewTransaction]
-                                                          data:[trackingDictionary copy]];
-                
-            } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-                NSLog(@"ERROR: getting customer");
-                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewTransaction]
-                                                          data:[trackingDictionary copy]];
-            }];
-        }else{
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewTransaction]
-                                                      data:[trackingDictionary copy]];
         }
         
         float value = [cartItem.price floatValue];
@@ -358,7 +296,19 @@
         
         [viewCartTrackingProduct setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
         [viewCartTrackingProducts addObject:viewCartTrackingProduct];
+        
+        
     }
+    
+    trackingDictionary = [[NSMutableDictionary alloc] init];
+    
+    [trackingDictionary setValue:priceSum forKey:kRIEventFBValueToSumKey];
+    [trackingDictionary setValue:[skusArray componentsJoinedByString:@","] forKey:kRIEventFBContentIdKey];
+    [trackingDictionary setValue:@"product" forKey:kRIEventFBContentTypeKey];
+    [trackingDictionary setValue:@"EUR" forKey:kRIEventFBCurrency];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewTransaction]
+                                              data:[trackingDictionary copy]];
     
     //clean teaserTrackingInfoDictionary from user defaults
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kSkusFromTeaserInCartKey];

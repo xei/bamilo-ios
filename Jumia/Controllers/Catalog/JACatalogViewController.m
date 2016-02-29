@@ -1782,46 +1782,28 @@ typedef void (^ProcessActionBlock)(void);
     NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
     
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-    NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
-    if(VALID_NOTEMPTY(numberOfSessions, NSNumber))
-    {
-        [trackingDictionary setValue:[numberOfSessions stringValue] forKey:kRIEventAmountSessions];
-    }
-    
     [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
     [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
     
-    if(VALID_NOTEMPTY(self.categoryName, NSString))
-    {
-        [trackingDictionary setValue:self.categoryName forKey:kRIEventCategoryIdKey];
+    NSString* category;
+    if (VALID_NOTEMPTY(categories, NSArray)) {
+        category = [categories lastObject];
+    }
+    if (VALID_NOTEMPTY(productsToTrack, NSArray)) {
+        RIProduct* product = [productsToTrack firstObject];
+        
+//        if (VALID_NOTEMPTY(product.category, NSString)) {
+//            category = product.category;
+//        }
     }
     
-    if(VALID_NOTEMPTY(categories, NSArray))
-    {
-        [trackingDictionary setValue:[categories firstObject] forKey:kRIEventCategoryIdKey];
-        [trackingDictionary setValue:[RICategory getTree:[categories firstObject]] forKey:kRIEventTreeKey];
+    if (VALID_NOTEMPTY(category, NSString)) {
+        [trackingDictionary setValue:category forKey:kRIEventFBContentCategory];
     }
+
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewListing]
+                                              data:[trackingDictionary copy]];
     
-    [trackingDictionary setValue:productsToTrack forKey:kRIEventSkusKey];
-    
-    if ([RICustomer checkIfUserIsLogged]) {
-        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-        [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
-        [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
-            RIAddress *shippingAddress = (RIAddress *)[adressList objectForKey:@"shipping"];
-            [trackingDictionary setValue:shippingAddress.city forKey:kRIEventCityKey];
-            [trackingDictionary setValue:shippingAddress.customerAddressRegion forKey:kRIEventRegionKey];
-            
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewListing] data:[trackingDictionary copy]];
-            
-        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-            NSLog(@"ERROR: getting customer");
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewListing] data:[trackingDictionary copy]];
-        }];
-    }else{
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewListing] data:[trackingDictionary copy]];
-    }
 }
 
 @end

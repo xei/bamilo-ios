@@ -239,6 +239,12 @@ typedef NS_ENUM(NSInteger, RICartState) {
 #define kRIEventAggregateNumberOfOrders @"RIEventAggregateNumberOfOrders"
 #define kRIEventLanguageCode            @"RIEventLanguageCode"
 
+#define kRIEventFBValueToSumKey         @"RIEventFBValueToSumKey"
+#define kRIEventFBContentIdKey          @"RIEventFBContentIdKey"
+#define kRIEventFBContentTypeKey        @"RIEventFBContentTypeKey"
+#define kRIEventFBCurrency              @"RIEventFBCurrency"
+#define kRIEventFBContentCategory       @"RIEventFBContentCategory"
+
 /**
  *  Struct to identify events
  */
@@ -319,7 +325,8 @@ typedef NS_ENUM(NSInteger, RIEventType) {
     RIEventCart = 73,
     RIEventLastAddedToCart = 74,
     RIEventMostViewedBrand = 75,
-    RIEventUserInfoChanged = 76
+    RIEventUserInfoChanged = 76,
+    RIEventFacebookAddToCart = 77
 };
 
 /**

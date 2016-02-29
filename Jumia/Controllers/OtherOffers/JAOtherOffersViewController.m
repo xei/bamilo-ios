@@ -347,6 +347,19 @@
                                                   FBSDKAppEventParameterNameContentType : self.product.name,
                                                   FBSDKAppEventParameterNameContentID   : self.product.sku}];
                       
+                      trackingDictionary = [NSMutableDictionary new];
+                      [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                      NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
+                      [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
+                      
+                      [trackingDictionary setValue:price forKey:kRIEventFBValueToSumKey];
+                      [trackingDictionary setValue:self.product.sku forKey:kRIEventFBContentIdKey];
+                      [trackingDictionary setValue:@"product" forKey:kRIEventFBContentTypeKey];
+                      [trackingDictionary setValue:@"EUR" forKey:kRIEventFBCurrency];
+                      
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookAddToCart]
+                                                                data:[trackingDictionary copy]];
+                      
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       
