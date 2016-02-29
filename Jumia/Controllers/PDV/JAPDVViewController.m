@@ -1495,82 +1495,15 @@ JAActivityViewControllerDelegate
     
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-    NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
-    if(VALID_NOTEMPTY(numberOfSessions, NSNumber))
-    {
-        [trackingDictionary setValue:[numberOfSessions stringValue] forKey:kRIEventAmountSessions];
-    }
-    
-    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
     [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-    if(VALID_NOTEMPTY([RICustomer getCustomerGender], NSString))
-    {
-        [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
-    }
-    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-    [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
+
+    [trackingDictionary setValue:[price stringValue] forKey:kRIEventFBValueToSumKey];
+    [trackingDictionary setValue:self.product.sku forKey:kRIEventFBContentIdKey];
+    [trackingDictionary setValue:@"product" forKey:kRIEventFBContentTypeKey];
+    [trackingDictionary setValue:@"EUR" forKey:kRIEventFBCurrency];
     
-    // Since we're sending the converted price, we have to send the currency as EUR.
-    // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-    [trackingDictionary setValue:price forKey:kRIEventPriceKey];
-    [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
-    
-    [trackingDictionary setObject:self.product.brand forKey:kRIEventBrandName];
-    [trackingDictionary setObject:self.product.brandUrlKey forKey:kRIEventBrandKey];
-    
-    NSString *discount = @"false";
-    if (self.product.maxSavingPercentage.length > 0)
-    {
-        discount = @"true";
-    }
-    [trackingDictionary setValue:discount forKey:kRIEventDiscountKey];
-    
-    if (VALID_NOTEMPTY(self.product.productSimples, NSArray) && 1 == self.product.productSimples.count)
-    {
-        self.currentSimple = self.product.productSimples[0];
-        if (VALID_NOTEMPTY(self.currentSimple.variation, NSString))
-        {
-            [trackingDictionary setValue:self.currentSimple.variation forKey:kRIEventSizeKey];
-        }
-    }
-    
-    if (VALID_NOTEMPTY(self.product.attributeColor, NSString))
-    {
-        [trackingDictionary setValue:self.product.attributeColor forKey:kRIEventColorKey];
-    }
-    
-    if(VALID_NOTEMPTY(self.category, RICategory))
-    {
-        [trackingDictionary setValue:[RICategory getTree:self.category.label] forKey:kRIEventTreeKey];
-    }else if (VALID_NOTEMPTY(product.categoryIds, NSArray))
-    {
-        [trackingDictionary setValue:[RICategory getTree:[product.categoryIds firstObject]] forKey:kRIEventTreeKey];
-    }
-    
-    
-    if ([RICustomer checkIfUserIsLogged]) {
-        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-        [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
-        [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
-            RIAddress *shippingAddress = (RIAddress *)[adressList objectForKey:@"shipping"];
-            [trackingDictionary setValue:shippingAddress.city forKey:kRIEventCityKey];
-            [trackingDictionary setValue:shippingAddress.customerAddressRegion forKey:kRIEventRegionKey];
-            
-            
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewProduct]
-                                                      data:[trackingDictionary copy]];
-            
-        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-            NSLog(@"ERROR: getting customer");
-            
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewProduct]
-                                                      data:[trackingDictionary copy]];
-        }];
-    }else{
-        
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewProduct]
-                                                  data:[trackingDictionary copy]];
-    }
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewProduct]
+                                              data:[trackingDictionary copy]];
     
     trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:self.product.sku forKey:kRIEventLabelKey];
@@ -1780,6 +1713,21 @@ JAActivityViewControllerDelegate
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                               data:[trackingDictionary copy]];
+    
+    
+    trackingDictionary = [NSMutableDictionary new];
+    [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+    NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
+    [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
+    
+    [trackingDictionary setValue:[price stringValue] forKey:kRIEventFBValueToSumKey];
+    [trackingDictionary setValue:self.product.sku forKey:kRIEventFBContentIdKey];
+    [trackingDictionary setValue:@"product" forKey:kRIEventFBContentTypeKey];
+    [trackingDictionary setValue:@"EUR" forKey:kRIEventFBCurrency];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookAddToCart]
+                                              data:[trackingDictionary copy]];
+    
     [self trackingEventCart:cart];
 }
 

@@ -538,6 +538,22 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                               data:[trackingDictionary copy]];
     
+    
+    trackingDictionary = [NSMutableDictionary new];
+    
+    [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+    NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
+    [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
+        
+    [trackingDictionary setValue:[price stringValue] forKey:kRIEventFBValueToSumKey];
+    [trackingDictionary setValue:self.product.sku forKey:kRIEventFBContentIdKey];
+    [trackingDictionary setValue:@"product" forKey:kRIEventFBContentTypeKey];
+    [trackingDictionary setValue:@"EUR" forKey:kRIEventFBCurrency];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookAddToCart]
+                                              data:[trackingDictionary copy]];
+    
+    
     [self trackingEventCart:cart];
 }
 
