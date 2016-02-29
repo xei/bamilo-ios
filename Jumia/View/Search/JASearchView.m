@@ -53,6 +53,11 @@
                                                      name:UIKeyboardWillHideNotification
                                                    object:nil];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(updateCountry:)
+                                                     name:kUpdateCountryNotification
+                                                   object:nil];
+        
         self.backView = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
                                                                  self.bounds.origin.y + 20.0f,
                                                                  self.bounds.size.width,
@@ -130,7 +135,7 @@
                                              CGRectGetMaxY(self.searchBar.frame),
                                              self.frame.size.width,
                                              self.frame.size.height - CGRectGetMaxY(self.searchBar.frame));
-    [self.resultsTableView reloadData];
+    [self refreshData];
     
     CGFloat duration = 0.3f;
     [UIView animateWithDuration:duration animations:^{
@@ -467,5 +472,9 @@
     }];
 }
 
+- (void)updateCountry:(NSNotification *)notification
+{
+    [self refreshData];
+}
 
 @end
