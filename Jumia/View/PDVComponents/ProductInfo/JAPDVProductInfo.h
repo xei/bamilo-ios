@@ -38,4 +38,6 @@
 
 - (void)addDescriptionTarget:(id)target action:(SEL)action;
 
+- (void)addSisTarget:(id)target action:(SEL)action;
+
 @end

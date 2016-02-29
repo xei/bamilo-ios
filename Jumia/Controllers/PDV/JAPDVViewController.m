@@ -40,6 +40,7 @@
 #import "RIAddress.h"
 #import "JABottomBar.h"
 #import "RISeller.h"
+#import "JACenterNavigationController.h"
 
 typedef void (^ProcessActionBlock)(void);
 
@@ -658,6 +659,7 @@ JAActivityViewControllerDelegate
     [self.productInfoSection addSizeTarget:self action:@selector(showSizePicker)];
     [self.productInfoSection addVariationsTarget:self action:@selector(goToVariationsScreen)];
     [self.productInfoSection addOtherOffersTarget:self action:@selector(goToOtherSellersScreen)];
+    [self.productInfoSection addSisTarget:self action:@selector(goToSisScreen)];
     
     [self.productInfoSection setY:scrollViewY];
     
@@ -1012,6 +1014,11 @@ JAActivityViewControllerDelegate
         }
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenProductVariationsScreen object:obj userInfo:userInfo];
+}
+
+- (void)goToSisScreen
+{
+    [[JACenterNavigationController sharedInstance] openTarget:self.product.brandTarget];
 }
 
 - (void)goToOtherSellersScreen
@@ -2066,7 +2073,10 @@ JAActivityViewControllerDelegate
 
 - (void)trackingEventMostViewedBrand
 {
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventMostViewedBrand] data:[NSDictionary dictionaryWithObject:[RIProduct getTopBrand:self.product] forKey:kRIEventBrandName]];
+    NSString *topBrand = [RIProduct getTopBrand:self.product];
+    if (VALID_NOTEMPTY(topBrand, NSString)) {
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventMostViewedBrand] data:[NSDictionary dictionaryWithObject:topBrand forKey:kRIEventBrandName]];
+    }
 }
 
 - (void)trackingEventScreenName:(NSString *)screenName

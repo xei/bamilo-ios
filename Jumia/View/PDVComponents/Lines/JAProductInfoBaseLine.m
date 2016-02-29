@@ -215,4 +215,9 @@
     return self.label;
 }
 
+- (NSString *)title
+{
+    return self.label.text;
+}
+
 @end
