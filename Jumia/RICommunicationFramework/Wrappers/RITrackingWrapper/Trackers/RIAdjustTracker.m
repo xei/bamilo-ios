@@ -88,15 +88,11 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         [events addObject:[NSNumber numberWithInt:RIEventViewListing]];
         [events addObject:[NSNumber numberWithInt:RIEventViewCart]];
         [events addObject:[NSNumber numberWithInt:RIEventTransactionConfirm]];
-        [events addObject:[NSNumber numberWithInt:RIEventFacebookHome]];
-        [events addObject:[NSNumber numberWithInt:RIEventFacebookSearch]];
-        [events addObject:[NSNumber numberWithInt:RIEventFacebookViewWishlist]];
-        [events addObject:[NSNumber numberWithInt:RIEventFacebookViewTransaction]];
         [events addObject:[NSNumber numberWithInt:RIEventOpenApp]];
         
         [events addObject:[NSNumber numberWithInt:RIEventFacebookViewProduct]];
         [events addObject:[NSNumber numberWithInt:RIEventFacebookViewListing]];
-        [events addObject:[NSNumber numberWithInt:RIEventFacebookViewCart]];
+        [events addObject:[NSNumber numberWithInt:RIEventFacebookViewTransaction]];
         [events addObject:[NSNumber numberWithInt:RIEventFacebookAddToCart]];
         
         self.registeredEvents = [events copy];
@@ -168,33 +164,17 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         NSString *keyRIEventTransactionConfirm;
         NSString *keyRIEventOpenApp;
 
-        
-        //new
         NSString *keyRIEventFacebookViewProduct;
         NSString *keyRIEventFacebookViewListing;
         NSString *keyRIEventFacebookViewTransaction;
         NSString *keyRIEventFacebookAddToCart;
         
-        //remove
-        NSString *keyRIEventFacebookHome;
-        NSString *keyRIEventFacebookSearch;
-        NSString *keyRIEventFacebookViewCart;
-        NSString *keyRIEventFacebookViewWishlist;
-        
         if ([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"]){
-            
-            //new
+
             keyRIEventFacebookViewProduct = @"e91496";
             keyRIEventFacebookViewListing = @"hdcfgj";
             keyRIEventFacebookViewTransaction = @"29kvfe";
             keyRIEventFacebookAddToCart = @"hjk3f4";
-            
-            
-            //to remove
-            keyRIEventFacebookHome = @"xgdla8";
-            keyRIEventFacebookSearch = @"g240ad";
-            keyRIEventFacebookViewCart = @"adojsu";
-            keyRIEventFacebookViewWishlist = @"sshinc";
             
             keyRIEventLoginSuccess = @"1uv3mg";
             keyRIEventLogout = @"qdcwli";
@@ -241,12 +221,8 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
             keyRIEventViewListing = @"no3zac";
             keyRIEventViewCart = @"lmueu3";
             keyRIEventTransactionConfirm = @"ltv1b3";
-            keyRIEventFacebookHome = @"1rkhyk";
             keyRIEventFacebookViewListing = @"mlnk8m";
             keyRIEventFacebookViewProduct = @"l71l28";
-            keyRIEventFacebookSearch = @"cexwr7";
-            keyRIEventFacebookViewWishlist = @"bydr93";
-            keyRIEventFacebookViewCart = @"txbggp";
             keyRIEventFacebookViewTransaction = @"gzixi6";
             keyRIEventOpenApp = @"3rpdak";
             
@@ -274,12 +250,8 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
             keyRIEventViewListing = @"txh1xg";
             keyRIEventViewCart = @"qjpcka";
             keyRIEventTransactionConfirm = @"lfar8t";
-            keyRIEventFacebookHome = @"ik7rct";
             keyRIEventFacebookViewListing = @"lpvuzj";
             keyRIEventFacebookViewProduct = @"xyl86d";
-            keyRIEventFacebookSearch = @"annlfu";
-            keyRIEventFacebookViewWishlist = @"tei7va";
-            keyRIEventFacebookViewCart = @"38f24c";
             keyRIEventFacebookViewTransaction = @"u6q2wt";
             keyRIEventOpenApp = @"8upm01";
 
@@ -308,12 +280,8 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
             keyRIEventViewListing = @"n5hlwu";
             keyRIEventViewCart = @"pexi13";
             keyRIEventTransactionConfirm = @"ca8jou";
-            keyRIEventFacebookHome = @"dthws5";
             keyRIEventFacebookViewListing = @"dtglhr";
             keyRIEventFacebookViewProduct = @"l2fxva";
-            keyRIEventFacebookSearch = @"p1nosg";
-            keyRIEventFacebookViewWishlist = @"52a5la";
-            keyRIEventFacebookViewCart = @"1m0slz";
             keyRIEventFacebookViewTransaction = @"ys7sle";
             keyRIEventOpenApp = @"3qdwyi";
 
@@ -387,23 +355,11 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
             case RIEventTransactionConfirm:
                 eventKey = keyRIEventTransactionConfirm;
                 break;
-            case RIEventFacebookHome:
-                eventKey = keyRIEventFacebookHome;
-                break;
             case RIEventFacebookViewListing:
                 eventKey = keyRIEventFacebookViewListing;
                 break;
             case RIEventFacebookViewProduct:
                 eventKey = keyRIEventFacebookViewProduct;
-                break;
-            case RIEventFacebookSearch:
-                eventKey = keyRIEventFacebookSearch;
-                break;
-            case RIEventFacebookViewWishlist:
-                eventKey = keyRIEventFacebookViewWishlist;
-                break;
-            case RIEventFacebookViewCart:
-                eventKey = keyRIEventFacebookViewCart;
                 break;
             case RIEventFacebookViewTransaction:
                 eventKey = keyRIEventFacebookViewTransaction;

@@ -259,69 +259,6 @@
         for (int i = 0; i < self.cart.cartItems.count; i++) {
             RICartItem *cartItem = [[self.cart cartItems] objectAtIndex:i];
             
-            trackingDictionary = [[NSMutableDictionary alloc] init];
-            NSMutableDictionary *viewCartTrackingProduct = [[NSMutableDictionary alloc] init];
-
-            NSString *discount = @"false";
-            NSNumber *price = cartItem.priceEuroConverted;
-            if (VALID_NOTEMPTY(cartItem.specialPriceEuroConverted, NSNumber) && [cartItem.specialPriceEuroConverted floatValue] > 0.0f)
-            {
-                discount = @"true";
-                price = cartItem.specialPriceEuroConverted;
-            }
-            
-            // Since we're sending the converted price, we have to send the currency as EUR.
-            // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-            [viewCartTrackingProduct setValue:price forKey:kRIEventPriceKey];
-            [viewCartTrackingProduct setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
-            [viewCartTrackingProduct setValue:cartItem.sku forKey:kRIEventSkuKey];
-            [viewCartTrackingProduct setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
-
-            [trackingDictionary setValue:price forKey:kRIEventPriceKey];
-            [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
-            [trackingDictionary setValue:discount forKey:kRIEventDiscountKey];
-            [trackingDictionary setValue:cartItem.sku forKey:kRIEventSkuKey];
-            [trackingDictionary setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
-            
-            [viewCartTrackingProducts addObject:viewCartTrackingProduct];
-            
-            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-            NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
-            if(VALID_NOTEMPTY(numberOfSessions, NSNumber))
-            {
-                [trackingDictionary setValue:[numberOfSessions stringValue] forKey:kRIEventAmountSessions];
-            }
-            [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
-            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-            [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-            [trackingDictionary setValue:cartItem.variation forKey:kRIEventSizeKey];
-            [trackingDictionary setValue:cartData.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-
-            
-            if ([RICustomer checkIfUserIsLogged]) {
-                [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-                [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
-                [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
-                    RIAddress *shippingAddress = (RIAddress *)[adressList objectForKey:@"shipping"];
-                    [trackingDictionary setValue:shippingAddress.city forKey:kRIEventCityKey];
-                    [trackingDictionary setValue:shippingAddress.customerAddressRegion forKey:kRIEventRegionKey];
-                    
-                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewCart]
-                                                              data:[trackingDictionary copy]];
-                    
-                } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-                    NSLog(@"ERROR: getting customer");
-                    
-                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewCart]
-                                                              data:[trackingDictionary copy]];
-                }];
-            }else{
-                
-                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewCart]
-                                                          data:[trackingDictionary copy]];
-            }
-            
             float value = [cartItem.price floatValue];
             [FBSDKAppEvents logEvent:FBSDKAppEventNameInitiatedCheckout
                         valueToSum:value
