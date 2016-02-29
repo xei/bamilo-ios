@@ -439,6 +439,12 @@
             [self pushViewController:catalog animated:YES];
             break;
         }
+        case CAMPAIGN: {
+            JACampaignsViewController *campaign = [JACampaignsViewController new];
+            [campaign setCampaignTargetString:targetString];
+            [self pushViewController:campaign animated:YES];
+            break;
+        }
             
         default:
             break;

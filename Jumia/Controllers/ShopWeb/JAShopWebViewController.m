@@ -132,7 +132,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
             
             notificationName = kDidSelectTeaserWithShopUrlNofication;
             
-        } else if ([target.type isEqualToString:[RITarget getTargetKey:CAMAPAIGN]]) {
+        } else if ([target.type isEqualToString:[RITarget getTargetKey:CAMPAIGN]]) {
             
             notificationName = kDidSelectCampaignNofication;
             
