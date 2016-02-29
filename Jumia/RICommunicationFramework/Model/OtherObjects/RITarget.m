@@ -30,8 +30,8 @@
         return CATALOG_BRAND;
     }else if ([self.type isEqualToString:[RITarget getTargetKey:CATALOG_SELLER]]) {
         return CATALOG_SELLER;
-    }else if ([self.type isEqualToString:[RITarget getTargetKey:CAMAPAIGN]]) {
-        return CAMAPAIGN;
+    }else if ([self.type isEqualToString:[RITarget getTargetKey:CAMPAIGN]]) {
+        return CAMPAIGN;
     }else if ([self.type isEqualToString:[RITarget getTargetKey:STATIC_PAGE]]) {
         return STATIC_PAGE;
     }else if ([self.type isEqualToString:[RITarget getTargetKey:SHOP_IN_SHOP]]) {
@@ -109,7 +109,7 @@
             urlString = [urlString stringByAppendingString:RI_API_CATALOG_BRAND];
         } else if ([type isEqualToString:[self getTargetKey:CATALOG_SELLER]]) {
             urlString = [urlString stringByAppendingString:RI_API_CATALOG_SELLER];
-        } else if ([type isEqualToString:[self getTargetKey:CAMAPAIGN]]) {
+        } else if ([type isEqualToString:[self getTargetKey:CAMPAIGN]]) {
             urlString = [urlString stringByAppendingString:RI_API_CAMPAIGN_PAGE];
         } else if ([type isEqualToString:[self getTargetKey:STATIC_PAGE]]) {
             urlString = [urlString stringByAppendingString:RI_API_STATIC_PAGE];
@@ -155,7 +155,7 @@
             return @"catalog_category";
         case CATALOG_SELLER:
             return @"catalog_seller";
-        case CAMAPAIGN:
+        case CAMPAIGN:
             return @"campaign";
         case STATIC_PAGE:
             return @"static_page";

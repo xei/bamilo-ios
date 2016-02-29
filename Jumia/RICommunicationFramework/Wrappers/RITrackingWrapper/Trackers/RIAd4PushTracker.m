@@ -760,9 +760,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
             }
             else if ([key isEqualToString:@"camp"] && VALID_NOTEMPTY(arguments, NSString))
             {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectCampaignNofication
-                                                                    object:nil
-                                                                  userInfo:@{@"campaign_id":arguments}];
+                [[JACenterNavigationController sharedInstance] openTarget:[RITarget getTargetString:CAMPAIGN node:arguments]];
             }
             else if ([key isEqualToString:@"ss"])
             {

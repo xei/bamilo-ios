@@ -64,7 +64,7 @@
         
         notificationName = kDidSelectTeaserWithShopUrlNofication;
         
-    } else if ([teaserTarget.type isEqualToString:[RITarget getTargetKey:CAMAPAIGN]]) {
+    } else if ([teaserTarget.type isEqualToString:[RITarget getTargetKey:CAMPAIGN]]) {
         
         notificationName = kDidSelectCampaignNofication;
         
