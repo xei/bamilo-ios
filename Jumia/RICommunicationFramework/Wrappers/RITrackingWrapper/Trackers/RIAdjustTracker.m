@@ -200,7 +200,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
             
         }else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
         {
-            keyRIEventFacebookAddToCart = @"";
+            keyRIEventFacebookAddToCart = @"3plk96";
             keyRIEventLoginSuccess = @"uimi1s";
             keyRIEventLogout = @"b7d5z7";
             keyRIEventRegisterSuccess = @"ki2v58";
@@ -229,7 +229,7 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         
         }else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
         {
-            keyRIEventFacebookAddToCart = @"";
+            keyRIEventFacebookAddToCart = @"id2m8z";
             keyRIEventLoginSuccess = @"9z78zz";
             keyRIEventLogout = @"odyj1u";
             keyRIEventRegisterSuccess = @"o0zaft";
