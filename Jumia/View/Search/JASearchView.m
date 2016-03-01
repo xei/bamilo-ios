@@ -229,7 +229,9 @@
         }
     }
     [self.resultsTableView layoutIfNeeded];
-    [self.searchBar becomeFirstResponder];
+    if (!self.hidden) {
+        [self.searchBar becomeFirstResponder];
+    }
 }
 
 #pragma mark - resultsTableView
