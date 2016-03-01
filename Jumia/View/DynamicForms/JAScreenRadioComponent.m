@@ -94,10 +94,10 @@
 {
     _currentlyChecked = currentlyChecked;
     if (_currentlyChecked) {
-        self.optionLabel.text = STRING_ACTIVE;
+        self.optionLabel.text = [STRING_ON uppercaseString];
         self.separatorView.hidden = YES;
     } else {
-        self.optionLabel.text = STRING_INACTIVE;
+        self.optionLabel.text = [STRING_OFF uppercaseString];
         self.separatorView.hidden = NO;
     }
 }
