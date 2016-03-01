@@ -1589,7 +1589,7 @@ typedef void (^ProcessActionBlock)(void);
         [trackingDictionary setValue:product.categoryName forKey:kRIEventCategoryNameKey];
     }
     if (VALID_NOTEMPTY(product.categoryUrlKey, NSString)) {
-        [trackingDictionary setValue:product.categoryUrlKey forKey:kRIEventCategoryKey];
+        [trackingDictionary setValue:product.categoryUrlKey forKey:kRIEventCategoryIdKey];
     }
     
     [trackingDictionary setValue:product.name forKey:kRIEventProductNameKey];

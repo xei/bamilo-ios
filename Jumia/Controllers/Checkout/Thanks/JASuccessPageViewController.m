@@ -224,7 +224,14 @@
         [trackingDictionary setObject:lastCartItem.sku forKey:kRIEventSkuKey];
         [trackingDictionary setObject:lastCartItem.brand forKey:kRIEventBrandName];
         [trackingDictionary setObject:lastCartItem.brandUrlKey forKey:kRIEventBrandKey];
+        if (VALID_NOTEMPTY(lastCartItem.category, NSString)) {
+            [trackingDictionary setObject:lastCartItem.category forKey:kRIEventCategoryNameKey];
+        }
+        if (VALID_NOTEMPTY(lastCartItem.categoryUrlKey, NSString)) {
+            [trackingDictionary setObject:lastCartItem.categoryUrlKey forKey:kRIEventCategoryIdKey];
+        }
     }
+    [trackingDictionary setObject:@"0" forKey:kRIEventQuantityKey];
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutEnd]
                                               data:[trackingDictionary copy]];

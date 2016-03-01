@@ -530,10 +530,15 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandName];
     [trackingDictionary setValue:self.product.brandUrlKey forKey:kRIEventBrandKey];
     [trackingDictionary setValue:self.product.name forKey:kRIEventProductNameKey];
-    [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
     [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
     [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
     [trackingDictionary setValue:@"Product Detail screen" forKey:kRIEventLocationKey];
+    
+    NSMutableArray* simpleSku = [NSMutableArray new];
+    for (RIProductSimple *simple in [self.selectedItems allValues]) {
+        [simpleSku addObject:simple.sku];
+    }
+    [trackingDictionary setValue:[simpleSku lastObject] forKey:kRIEventSkuKey];
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                               data:[trackingDictionary copy]];

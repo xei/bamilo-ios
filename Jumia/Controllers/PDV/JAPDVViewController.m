@@ -1594,7 +1594,7 @@ JAActivityViewControllerDelegate
         [trackingDictionary setValue:self.product.categoryName forKey:kRIEventCategoryNameKey];
     }
     if (VALID_NOTEMPTY(self.product.categoryUrlKey, NSString)) {
-        [trackingDictionary setValue:self.product.categoryUrlKey forKey:kRIEventCategoryKey];
+        [trackingDictionary setValue:self.product.categoryUrlKey forKey:kRIEventCategoryIdKey];
     }
     
     if (VALID_NOTEMPTY(self.product.name, NSString)) {
@@ -1631,7 +1631,7 @@ JAActivityViewControllerDelegate
     [trackingDictionary setValue:price forKey:kRIEventPriceKey];
     [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
     
-    [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
+    [trackingDictionary setValue:self.currentSimple.sku forKey:kRIEventSkuKey];
     [trackingDictionary setValue:self.product.name forKey:kRIEventProductNameKey];
     
     if(VALID_NOTEMPTY(self.product.categoryIds, NSArray))
@@ -1705,7 +1705,7 @@ JAActivityViewControllerDelegate
         [trackingDictionary setValue:self.product.categoryName forKey:kRIEventCategoryNameKey];
     }
     if (VALID_NOTEMPTY(self.product.categoryUrlKey, NSString)) {
-        [trackingDictionary setValue:self.product.categoryUrlKey forKey:kRIEventCategoryKey];
+        [trackingDictionary setValue:self.product.categoryUrlKey forKey:kRIEventCategoryIdKey];
     }
     
     [trackingDictionary setValue:self.product.name forKey:kRIEventProductNameKey];
@@ -1892,7 +1892,7 @@ JAActivityViewControllerDelegate
         [trackingDictionary setValue:self.product.categoryName forKey:kRIEventCategoryNameKey];
     }
     if (VALID_NOTEMPTY(self.product.categoryUrlKey, NSString)) {
-        [trackingDictionary setValue:self.product.categoryUrlKey forKey:kRIEventCategoryKey];
+        [trackingDictionary setValue:self.product.categoryUrlKey forKey:kRIEventCategoryIdKey];
     }
     
     [trackingDictionary setValue:self.product.name forKey:kRIEventProductNameKey];

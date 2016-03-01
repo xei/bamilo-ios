@@ -26,8 +26,14 @@
 #define kAd4PushProfileLastViewedCategoryName @"lastViewedCategoryName"
 #define kAd4PushProfileLastViewedCategoryKey @"lastViewedCategoryKey"
 #define kAd4PushLastProductViewed @"LastProductViewed"
+#define kAd4PushLastSKUViewed @"LastSKUViewed"
 #define kAd4PushLastBrandViewedKey @"LastBrandViewedKey"
 #define kAd4PushLastBrandViewedName @"LastBrandViewedName"
+
+#define kAd4PushLastCategoryAddedToCartName @"lastCategoryAddedToCartName"
+#define kAd4PushLastCategoryAddedToCartKey @"lastCategoryAddedToCartKey"
+#define kAd4PushLastBrandAddedToCartName @"LastBrandAddedToCartName"
+#define kAd4PushLastBrandAddedToCartKey @"LastBrandAddedToCartKey"
 
 #define kAd4PushCartStatus @"cartStatus"
 #define kAd4PushCartValue  @"cartValue"
@@ -57,7 +63,7 @@
 #define kAd4PushLastCategoryPurchasedName @"lastCategoryPurchasedName"
 #define kAd4PushLastCategoryPurchasedKey @"lastCategoryPurchasedKey"
 #define kAd4PushLastProductNamePurchased @"lastProductNamePurchased"
-#define kAd4PushLastSkuPurchased @"lastSkuPurchased"
+#define kAd4PushLastSkuPurchased @"lastSKUPurchased"
 
 #define kAd4PushLastOpenDate @"Last_Open_Date"
 
@@ -89,6 +95,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         [events addObject:[NSNumber numberWithInt:RIEventRemoveFromWishlist]];
         [events addObject:[NSNumber numberWithInt:RIEventLoginSuccess]];
         [events addObject:[NSNumber numberWithInt:RIEventAutoLoginSuccess]];
+        [events addObject:[NSNumber numberWithInt:RIEventFacebookLoginSuccess]];
         [events addObject:[NSNumber numberWithInt:RIEventUserInfoChanged]];
         [events addObject:[NSNumber numberWithInt:RIEventCheckoutEnd]];
         [events addObject:[NSNumber numberWithInt:RIEventChangeCountry]];
@@ -131,7 +138,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                                  options:options];
         
         NSMutableDictionary *deviceInfo = [[NSMutableDictionary alloc] init];
-        [deviceInfo setObject:@"0" forKey:kAd4PushProfileUserIdKey];
+        [deviceInfo setObject:userId forKey:kAd4PushProfileUserIdKey];
         NSString *idfaString = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
         [deviceInfo setObject:idfaString ? : @"" forKey:kAd4PushIDFAIdKey];
         
@@ -276,9 +283,9 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 if (VALID_NOTEMPTY([data objectForKey:kRIEventCategoryNameKey], NSString)) {
                     [deviceInfo setObject:[data objectForKey:kRIEventCategoryNameKey] forKey:kAd4PushProfileLastViewedCategoryName];
                 }
-                NSString* categoryUrlKey = [data objectForKey:kRIEventCategoryKey];
-                if (VALID_NOTEMPTY(categoryUrlKey, NSString)) {
-                    [deviceInfo setObject:categoryUrlKey forKey:kAd4PushProfileLastViewedCategoryKey];
+                NSString* categoryIdKey = [data objectForKey:kRIEventCategoryIdKey];
+                if (VALID_NOTEMPTY(categoryIdKey, NSString)) {
+                    [deviceInfo setObject:categoryIdKey forKey:kAd4PushProfileLastViewedCategoryKey];
                 }
                 NSString* productName = [data objectForKey:kRIEventProductNameKey];
                 if (VALID_NOTEMPTY(productName, NSString)) {
@@ -286,7 +293,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 }
                 NSString* productSku = [data objectForKey:kRIEventProductKey];
                 if (VALID_NOTEMPTY(productSku, NSString)) {
-                    [deviceInfo setObject:productSku forKey:kAd4PushLastProductViewed];
+                    [deviceInfo setObject:productSku forKey:kAd4PushLastSKUViewed];
                 }
                 NSString* productBrandName = [data objectForKey:kRIEventBrandName];
                 if (VALID_NOTEMPTY(productBrandName, NSString)) {
@@ -313,21 +320,21 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 [deviceInfo setObject:currentDate forKey:kAd4PushDateLastCartUpdated];
                 
                 if (VALID_NOTEMPTY([data objectForKey:kRIEventCategoryNameKey], NSString)) {
-                    [deviceInfo setObject:[data objectForKey:kRIEventCategoryNameKey] forKey:kAd4PushProfileLastViewedCategoryName];
+                    [deviceInfo setObject:[data objectForKey:kRIEventCategoryNameKey] forKey:kAd4PushLastCategoryAddedToCartName];
                 }
-                NSString* categoryUrlKey = [data objectForKey:kRIEventCategoryKey];
-                if (VALID_NOTEMPTY(categoryUrlKey, NSString)) {
-                    [deviceInfo setObject:categoryUrlKey forKey:kAd4PushProfileLastViewedCategoryKey];
+                NSString* categoryIdKey = [data objectForKey:kRIEventCategoryIdKey];
+                if (VALID_NOTEMPTY(categoryIdKey, NSString)) {
+                    [deviceInfo setObject:categoryIdKey forKey:kAd4PushLastCategoryAddedToCartKey];
                 }
                 
                 NSString* productBrandName = [data objectForKey:kRIEventBrandName];
                 if (VALID_NOTEMPTY(productBrandName, NSString)) {
-                    [deviceInfo setObject:productBrandName forKey:kAd4PushLastBrandViewedName];
+                    [deviceInfo setObject:productBrandName forKey:kAd4PushLastBrandAddedToCartName];
                 }
                 
                 NSString* productBrandKey = [data objectForKey:kRIEventBrandKey];
                 if (VALID_NOTEMPTY(productBrandKey, NSString)) {
-                    [deviceInfo setObject:productBrandKey forKey:kAd4PushLastBrandViewedKey];
+                    [deviceInfo setObject:productBrandKey forKey:kAd4PushLastBrandAddedToCartKey];
                 }
                 
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventSkuKey], NSString))
@@ -363,8 +370,8 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 break;
             case RIEventRemoveFromCart:
             {
-                NSNumber* cartCount = [data objectForKey:kRIEventQuantityKey];
-                if (VALID_NOTEMPTY(cartCount, NSNumber))
+                NSString* cartCount = [data objectForKey:kRIEventQuantityKey];
+                if (VALID_NOTEMPTY(cartCount, NSString))
                 {
                     [deviceInfo setObject:cartCount forKey:kAd4PushCartStatus];
                 }
@@ -393,8 +400,8 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 if (VALID_NOTEMPTY([data objectForKey:kRIEventCategoryNameKey], NSString)) {
                     [deviceInfo setObject:[data objectForKey:kRIEventCategoryNameKey] forKey:kAd4PushLastCategoryAddedToWishlistName];
                 }
-                if (VALID_NOTEMPTY([data objectForKey:kRIEventCategoryKey], NSString)) {
-                    [deviceInfo setObject:[data objectForKey:kRIEventCategoryKey] forKey:kAd4PushLastCategoryAddedToWishlistKey];
+                if (VALID_NOTEMPTY([data objectForKey:kRIEventCategoryIdKey], NSString)) {
+                    [deviceInfo setObject:[data objectForKey:kRIEventCategoryIdKey] forKey:kAd4PushLastCategoryAddedToWishlistKey];
                 }
                 if (VALID_NOTEMPTY([data objectForKey:kRIEventSkuKey], NSString)) {
                     [deviceInfo setObject:[data objectForKey:kRIEventSkuKey] forKey:kAd4PushLastWishlistSku];
@@ -408,13 +415,16 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 if (VALID_NOTEMPTY([data objectForKey:kRIEventTotalWishlistKey], NSNumber)) {
                     [deviceInfo setObject:[data objectForKey:kRIEventTotalWishlistKey] forKey:kAd4PushWishlistStatus];
                 }
+                [BMA4STracker updateDeviceInfo:deviceInfo];
                 break;
             }
             case RIEventLoginSuccess:
             case RIEventAutoLoginSuccess:
-                if(VALID_NOTEMPTY([data objectForKey:kRIEventUserIdKey], NSString))
+            case RIEventFacebookLoginSuccess:
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventUserIdKey], NSNumber))
                 {
-                    [parameters addObject:[NSString stringWithFormat:@"loginUserID=%@", [data objectForKey:kRIEventUserIdKey]]];
+                    NSNumber* userID = [data objectForKey:kRIEventUserIdKey];
+                    [parameters addObject:[NSString stringWithFormat:@"loginUserID=%@", [userID stringValue]]];
                     [deviceInfo setObject:[data objectForKey:kRIEventUserIdKey] forKey:kAd4PushProfileUserIdKey];
                 }
                 
@@ -432,12 +442,30 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 }
                 
                 if (VALID_NOTEMPTY([data objectForKey:kRIEventBirthDayKey], NSString)) {
-                    [deviceInfo setObject:[data objectForKey:kRIEventBirthDayKey] forKey:kAd4PushProfileBirthDayKey];
+                    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+                    NSDate* dateOfBirth = [dateFormatter dateFromString:[data objectForKey:kRIEventBirthDayKey]];
+                    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                    [deviceInfo setObject:[dateFormatter stringFromDate:dateOfBirth] forKey:kAd4PushProfileBirthDayKey];
                 }
                 [BMA4STracker trackEventWithType:1001 parameters:parameters];
                 [BMA4STracker updateDeviceInfo:deviceInfo];
                 break;
             case RIEventUserInfoChanged:
+                
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventUserIdKey], NSNumber))
+                {
+                    [deviceInfo setObject:[data objectForKey:kRIEventUserIdKey] forKey:kAd4PushProfileUserIdKey];
+                }
+                
+                if (VALID_NOTEMPTY([data objectForKey:kRIEventBirthDayKey], NSString)) {
+                    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+                    NSDate* dateOfBirth = [dateFormatter dateFromString:[data objectForKey:kRIEventBirthDayKey]];
+                    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                    [deviceInfo setObject:[dateFormatter stringFromDate:dateOfBirth] forKey:kAd4PushProfileBirthDayKey];
+                }
+                
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventUserFirstNameKey], NSString))
                 {
                     [deviceInfo setObject:[data objectForKey:kRIEventUserFirstNameKey] forKey:kAd4PushProfileFirstNameKey];
@@ -459,7 +487,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
             case RIEventCheckoutEnd:
             {
                 NSNumber* cartCount = [data objectForKey:kRIEventQuantityKey];
-                if (VALID_NOTEMPTY(cartCount, NSNumber))
+                if (VALID_NOTEMPTY(cartCount, NSString))
                 {
                     [deviceInfo setObject:cartCount forKey:kAd4PushCartStatus];
                 }
@@ -480,17 +508,18 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 if (VALID_NOTEMPTY([data objectForKey:kRIEventCategoryNameKey], NSString)) {
                     [deviceInfo setObject:[data objectForKey:kRIEventCategoryNameKey] forKey:kAd4PushLastCategoryPurchasedName];
                 }
-                NSString* categoryUrlKey = [data objectForKey:kRIEventCategoryKey];
-                if (VALID_NOTEMPTY(categoryUrlKey, NSString)) {
-                    [deviceInfo setObject:categoryUrlKey forKey:kAd4PushLastCategoryPurchasedKey];
+                NSString* categoryIdKey = [data objectForKey:kRIEventCategoryIdKey];
+                if (VALID_NOTEMPTY(categoryIdKey, NSString)) {
+                    [deviceInfo setObject:categoryIdKey forKey:kAd4PushLastCategoryPurchasedKey];
                 }
                 NSString* productName = [data objectForKey:kRIEventProductNameKey];
                 if (VALID_NOTEMPTY(productName, NSString)) {
                     [deviceInfo setObject:productName forKey:kAd4PushLastProductNamePurchased];
                 }
-                NSString* productSku = [data objectForKey:kRIEventProductKey];
-                if (VALID_NOTEMPTY(productSku, NSString)) {
-                    [deviceInfo setObject:productSku forKey:kAd4PushLastSkuPurchased];
+                if(VALID_NOTEMPTY([data objectForKey:kRIEventSkuKey], NSString))
+                {
+                    articleId = [data objectForKey:kRIEventSkuKey];
+                    [deviceInfo setObject:articleId forKey:kAd4PushLastSkuPurchased];
                 }
                 
                 [BMA4STracker updateDeviceInfo:deviceInfo];

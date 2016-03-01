@@ -365,7 +365,7 @@
                                                               NSDate *dateOfBirth = [dateFormatter dateFromString:customer.birthday];
                                                               NSDateComponents* ageComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:dateOfBirth toDate:now options:0];
                                                               [trackingDictionary setValue:[NSNumber numberWithInteger:[ageComponents year]] forKey:kRIEventAgeKey];
-                                                              
+                                                              [trackingDictionary setValue:[dateFormatter stringFromDate:dateOfBirth] forKey:kRIEventBirthDayKey];
                                                               
                                                               NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                                                               [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
