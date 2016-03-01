@@ -684,5 +684,18 @@
 
 "pre_order" = "PRE-COMMANDE";
 
+"sign_up_to_our_newsletter" = "Inscrivez-vous à la newsletter";
+
+"sign_up_to_our_newsletter_body" = "Pour accéder à des offres exclusives, toutes les nouveautés et promotions";
+
 "shipping_billing_address" = "Adresse de Facturation / Livraison";
 
+"active_label" = "ON";
+
+"inactive_label" = "OFF";
+
+"visit_the_official_brand_store" = "Visitez la boutique officielle %@";
+
+"newsletter_label" = "Newsletter";
+
+"newsletter_preferences" = "Abonnement à la newsletter";

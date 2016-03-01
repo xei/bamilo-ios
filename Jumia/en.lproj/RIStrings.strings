@@ -690,9 +690,9 @@
 
 "shipping_billing_address" = "Shipping/Billing Address";
 
-"active_label" = "Active";
+"on_label" = "On";
 
-"inactive_label" = "Inactive";
+"off_label" = "Off";
 
 "visit_the_official_brand_store" = "Visit the official %@ store";
 
