@@ -475,7 +475,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 break;
             case RIEventCheckoutEnd:
             {
-                NSNumber* cartCount = [data objectForKey:kRIEventQuantityKey];
+                NSString* cartCount = [data objectForKey:kRIEventQuantityKey];
                 if (VALID_NOTEMPTY(cartCount, NSString))
                 {
                     [deviceInfo setObject:cartCount forKey:kAd4PushCartStatus];
