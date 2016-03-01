@@ -318,7 +318,7 @@
                       [trackingDictionary setObject:self.product.brand forKey:kRIEventBrandName];
                       [trackingDictionary setObject:self.product.brandUrlKey forKey:kRIEventBrandKey];
                       [trackingDictionary setValue:self.product.name forKey:kRIEventProductNameKey];
-                      [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
+                      [trackingDictionary setValue:simpleSku forKey:kRIEventSkuKey];
                       [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
                       [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
                       

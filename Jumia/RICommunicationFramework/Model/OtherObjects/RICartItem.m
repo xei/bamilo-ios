@@ -55,8 +55,8 @@
         cartItem.brandUrlKey = [info objectForKey:@"brand_url_key"];
     }
     
-    if (VALID_NOTEMPTY([info objectForKey:@"category"], NSString)) {
-        cartItem.category = [info objectForKey:@"category"];
+    if (VALID_NOTEMPTY([info objectForKey:@"category_name"], NSString)) {
+        cartItem.category = [info objectForKey:@"category_name"];
     }
     
     if (VALID_NOTEMPTY([info objectForKey:@"category_url_key"], NSString)) {

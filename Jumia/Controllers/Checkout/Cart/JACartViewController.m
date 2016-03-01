@@ -958,7 +958,7 @@
                              [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
                              
                              [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
-                             [trackingDictionary setValue:[product.quantity stringValue] forKey:kRIEventQuantityKey];
+                             [trackingDictionary setValue:[cart.cartCount stringValue] forKey:kRIEventQuantityKey];
                              [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
                              
                              [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromCart]
