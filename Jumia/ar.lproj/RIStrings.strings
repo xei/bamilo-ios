@@ -374,7 +374,7 @@
 
 "thank_you_order_title" = "شكراً !";
 
-"order_success" = "تم تسجيل الطلب بنجاح بهذا الرقم:";
+"order_success" = "تم تسجيل الطلب بنجاح بهذا الرقم:\nيمكنك متابعة حالة الطلب من خلال \"تتبع طلبك\"";
 
 "order_track_success" = "يمكنك متابعة الطلب بزيارة منطقة حالة الطلب في هذا التطبيق";
 
@@ -690,12 +690,9 @@
 
 "shipping_billing_address" = "عنوان الفواتير/الشحن";
 
-"active_label" = "نشط";
-
-"inactive_label" = "غير نشط";
-
 "visit_the_official_brand_store" = "زيارة المخزن %@ الرسمي";
 
 "newsletter_label" = "رسالة جوميا الإخبارية";
 
 "newsletter_preferences" = "تفضيلات الرسالة الإخبارية";
+

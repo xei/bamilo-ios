@@ -28,7 +28,7 @@
 
 "string_error" = "မွားယြင္းမွဳ";
 
-"login_label" = "Login၀င္ရန္";
+"login_label" = "အေကာင့္၀င္ရန္";
 
 "action_label_logout" = "ထြက္ရန္";
 
@@ -172,6 +172,8 @@
 
 "continue_shopping" = "ေစ်းဆက္၀ယ္မည္";
 
+"recommended_for_you" = "အႀကံျပဳလုိေသာပစၥည္းမ်ား";
+
 "continue" = "ဆက္ရန္";
 
 "continue_without_login" = "Log in မ၀င္ဘဲ ဆက္ရန္";
@@ -222,7 +224,7 @@
 
 "facebook_signup_button_text" = "Facebook စာရင္းသြင္းရန္";
 
-"facebook_login_button_text" = "Facebook ျဖင့္ ၀င္မည္";
+"facebook_login_button_text" = "Facebook ျဖင့္ ၀င္ရန္";
 
 "login_incomplete" = "Login ၀င္ရန္ အီးေမးလ္ႏွင့္ ေမြးရက္ လိုအပ္ပါသည္";
 
@@ -372,7 +374,7 @@
 
 "thank_you_order_title" = "ေက်းဇူးတင္ပါသည္!";
 
-"order_success" = "သင္၏ ေအာ္ဒါကို ေအာင္ျမင္စြာ စာရင္း သြင္းျပီးပါျပီ";
+"order_success" = "သင့္ေအာ္ဒါအား စာရင္းသြင္းၿပီးပါၿပီ။ သင္၏ေအာ္ဒါမွတ္တမ္းတြင္ စစ္ေဆးၾကည္႕ရွဳႏိုင္ပါသည္။";
 
 "order_track_success" = "သင္၏ ေအာ္ဒါအား ေအာ္ဒါအေျခအေန က႑တြင္ စစ္ေဆးႏုိင္ပါသည္";
 
@@ -682,5 +684,15 @@
 
 "pre_order" = "ႀကိဳတင္မွာယူရန္";
 
+"sign_up_to_our_newsletter" = "သတင္းလႊာရယူရန္စာရင္းသြင္းပါ";
+
+"sign_up_to_our_newsletter_body" = "ေလွ်ာ႕ေစ်းရွိပစၥည္းမ်ား၊အသစ္ေရာက္ရွိပစၥည္းမ်ား၊ေခတ္ေပၚပစၥည္းမ်ားႏွင့္ ပရိုမိုးရွင္းမ်ားကို ဦးဦးဖ်ားဖ်ား သိရွိႏိုင္ရန္";
+
 "shipping_billing_address" = "ပို႕ေဆာင္ရန္/ေငြေခ်ရန္လိပ္စာ";
+
+"visit_the_official_brand_store" = "တရား၀င္ %@ စတိုးသို႕ ၀င္ေရာက္ၾကည္႕ရွဳရန္";
+
+"newsletter_label" = "သတင္းလႊာ";
+
+"newsletter_preferences" = "ရယူလိုေသာသတင္းလႊာအမ်ိဳးအစား";
 

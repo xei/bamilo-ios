@@ -88,7 +88,7 @@
 
 "string_ratings" = "%d امتیاز";
 
-"string_nratings" = "(‎%d‎)";
+"string_nratings" = "امتیازات (‎%d‎)";
 
 "string_review" = "1 نظر";
 
@@ -310,7 +310,7 @@
 
 "string_order_status" = "وضعیت سفارش";
 
-"order_no" = "شماره سفارش";
+"order_no" = "شماره سفارش %@";
 
 "string_loosing_order_title" = "اخطار";
 
@@ -374,7 +374,7 @@
 
 "thank_you_order_title" = "با تشکر از شما!";
 
-"order_success" = "سفارش شما با موفقیت ثبت شد.\n شماره سفارش شما:";
+"order_success" = "سفارش شما با موفقیت ثبت شد.\nمیتوانید وضعیت سفارش خود را در جزئیات سفارش مشاهده کنید.";
 
 "order_track_success" = "شما می توانید سفارش خود را \n با مراجعه به بخش وضعیت سفارش رهگیری کنید.";
 
@@ -684,7 +684,15 @@
 
 "pre_order" = "پیش سفارش";
 
+"sign_up_to_our_newsletter" = "عضویت در خبرنامه";
+
 "sign_up_to_our_newsletter_body" = "برای اطلاع از فروش های ویژه، تازه ها و پیشنهادهای بینظیر";
 
 "shipping_billing_address" = "نشانی";
+
+"visit_the_official_brand_store" = "مشاهده محصولات %@";
+
+"newsletter_label" = "خبرنامه";
+
+"newsletter_preferences" = "تنظیمات خبرنامه";
 
