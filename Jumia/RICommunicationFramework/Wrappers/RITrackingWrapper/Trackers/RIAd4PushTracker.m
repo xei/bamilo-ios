@@ -442,11 +442,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 }
                 
                 if (VALID_NOTEMPTY([data objectForKey:kRIEventBirthDayKey], NSString)) {
-                    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-                    NSDate* dateOfBirth = [dateFormatter dateFromString:[data objectForKey:kRIEventBirthDayKey]];
-                    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-                    [deviceInfo setObject:[dateFormatter stringFromDate:dateOfBirth] forKey:kAd4PushProfileBirthDayKey];
+                    [deviceInfo setObject:[data objectForKey:kRIEventBirthDayKey] forKey:kAd4PushProfileBirthDayKey];
                 }
                 [BMA4STracker trackEventWithType:1001 parameters:parameters];
                 [BMA4STracker updateDeviceInfo:deviceInfo];
@@ -459,11 +455,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 }
                 
                 if (VALID_NOTEMPTY([data objectForKey:kRIEventBirthDayKey], NSString)) {
-                    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-                    NSDate* dateOfBirth = [dateFormatter dateFromString:[data objectForKey:kRIEventBirthDayKey]];
-                    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-                    [deviceInfo setObject:[dateFormatter stringFromDate:dateOfBirth] forKey:kAd4PushProfileBirthDayKey];
+                    [deviceInfo setObject:[data objectForKey:kRIEventBirthDayKey] forKey:kAd4PushProfileBirthDayKey];
                 }
                 
                 if(VALID_NOTEMPTY([data objectForKey:kRIEventUserFirstNameKey], NSString))
@@ -479,9 +471,6 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                     [deviceInfo setObject:[data objectForKey:kRIEventGenderKey] forKey:kAd4PushProfileUserGenderKey];
                 }
                 
-                if (VALID_NOTEMPTY([data objectForKey:kRIEventBirthDayKey], NSString)) {
-                    [deviceInfo setObject:[data objectForKey:kRIEventBirthDayKey] forKey:kAd4PushProfileBirthDayKey];
-                }
                 [BMA4STracker updateDeviceInfo:deviceInfo];
                 break;
             case RIEventCheckoutEnd:
