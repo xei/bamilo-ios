@@ -130,7 +130,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         return;
     }
     
-    [BMA4STracker setDebugMode:NO];//YES];
+    [BMA4STracker setDebugMode:YES];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [BMA4STracker trackWithPartnerId:userId
@@ -313,8 +313,9 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 {
                     [deviceInfo setObject:cartCount forKey:kAd4PushCartStatus];
                 }
-                NSNumber* cartTotal = [data objectForKey:kRIEventTotalCartKey];
-                if (VALID_NOTEMPTY(cartTotal, NSNumber)) {
+                NSNumber* cartTotalNumber = [data objectForKey:kRIEventTotalCartKey];
+                NSString* cartTotal = [cartTotalNumber stringValue];
+                if (VALID_NOTEMPTY(cartTotal, NSString)) {
                     [deviceInfo setObject:cartTotal forKey:kAd4PushCartValue];
                 }
                 [deviceInfo setObject:currentDate forKey:kAd4PushDateLastCartUpdated];
@@ -375,8 +376,9 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 {
                     [deviceInfo setObject:cartCount forKey:kAd4PushCartStatus];
                 }
-                NSNumber* cartTotal = [data objectForKey:kRIEventTotalCartKey];
-                if (VALID_NOTEMPTY(cartTotal, NSNumber)) {
+                NSNumber* cartTotalNumber = [data objectForKey:kRIEventTotalCartKey];
+                NSString* cartTotal = [cartTotalNumber stringValue];
+                if (VALID_NOTEMPTY(cartTotal, NSString)) {
                     [deviceInfo setObject:cartTotal forKey:kAd4PushCartValue];
                 }
                 [deviceInfo setObject:currentDate forKey:kAd4PushDateLastCartUpdated];
