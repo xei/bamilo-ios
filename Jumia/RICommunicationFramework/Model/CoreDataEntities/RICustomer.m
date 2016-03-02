@@ -366,12 +366,10 @@
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICustomer class])];
-                                                              [[RIDataBaseWrapper sharedInstance] saveContext];
+                                                              [RICustomer cleanCustomerFromDB];
                                                               successBlock();
                                                           } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
-                                                              [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICustomer class])];
-                                                              [[RIDataBaseWrapper sharedInstance] saveContext];
+                                                              [RICustomer cleanCustomerFromDB];
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
                                                                   failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
@@ -385,6 +383,12 @@
                                                                   failureBlock(apiResponse, nil);
                                                               }
                                                           }];
+}
+
++ (void)cleanCustomerFromDB
+{
+    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICustomer class])];
+    [[RIDataBaseWrapper sharedInstance] saveContext];
 }
 
 + (NSString *)requestPasswordReset:(void (^)())successBlock

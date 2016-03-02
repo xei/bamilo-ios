@@ -72,6 +72,12 @@
                              andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
 
 /**
+ * Method to clean the customer from the db
+ *
+ */
++ (void)cleanCustomerFromDB;
+
+/**
  * Method to get the current user id
  *
  * @return a string with the customer id
