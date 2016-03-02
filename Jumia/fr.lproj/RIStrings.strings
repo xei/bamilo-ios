@@ -690,9 +690,12 @@
 
 "shipping_billing_address" = "Adresse de Facturation / Livraison";
 
+"on_label" = "Oui";
+
+"off_label" = "Non";
+
 "visit_the_official_brand_store" = "Visitez la boutique officielle %@";
 
 "newsletter_label" = "Newsletter";
 
 "newsletter_preferences" = "Abonnement à la newsletter";
-
