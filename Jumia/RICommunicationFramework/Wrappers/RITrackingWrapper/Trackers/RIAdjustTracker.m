@@ -588,7 +588,8 @@ NSString * const kRIAdjustToken = @"kRIAdjustToken";
         [event addPartnerParameter:kAdjustEventQuantityKey value:quantity];
     }
     
-    NSString *totalCartValue = [data objectForKey:kRIEventTotalCartKey];
+    NSNumber *totalCartValueNumber = [data objectForKey:kRIEventTotalCartKey];
+    NSString *totalCartValue = [totalCartValueNumber stringValue];
     if(VALID_NOTEMPTY(totalCartValue, NSString))
     {
         [event addCallbackParameter:kAdjustEventTotalCartKey value:totalCartValue];
