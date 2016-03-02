@@ -6,11 +6,11 @@
    Copyright (c) 2014 Rocket Internet. All rights reserved. */
 "string_update_necessary_title" = "اپ ڈیٹ کرنا ضروری ہے";
 
-"string_update_necessary_message_ios" = "ہمیں کچھ ایسا ملا ہے جس کو درست کرنا، دراز پر آپ کی خریداری کے تجربے کو بہترین بنانےکے لیے نہایت ضروری ہے۔ اس ایپلیکیشن کو مزید استعمال کرنے سے پہلے اسے ازسرِنو تازہ کرنا پڑے گا۔";
+"string_update_necessary_message_ios" = "ہمیں کچھ ایسا ملا ہے جس کو درست کرنا، دراز پر آپ کی خریداری کے تجربے کو بہترین بنانےکے لیے نہایت ضروری ہے۔ اس ایپلیکیشن کو مزید استعمال کرنے سے پہلے اسے اَپ ڈیٹ کرنا پڑے گا۔";
 
 "string_update_available_title" = "اپ ڈیٹ کرنے کی سہولت دستیاب ہے";
 
-"string_update_available_message_ios" = "ہمیں کچھ ایسا ملا ہے جس کو بہتر کرنا آپ کے دراز پر خریداری کے تجربے کو مزید بہتر بنا دے گا۔ براہِ مہربانی اپنی ایپ کو تازہ کریں۔";
+"string_update_available_message_ios" = "ہمیں کچھ ایسا ملا ہے جس کو بہتر کرنا آپ کے دراز پر خریداری کے تجربے کو مزید بہتر بنا دے گا۔ براہِ مہربانی اپنی ایپ کو اَپ ڈیٹ کریں۔";
 
 "string_update" = "اپ ڈیٹ کریں!";
 
@@ -66,7 +66,7 @@
 
 "catalog_no_results" = "آپ کے فلٹر کے مطابق کوئی نتیجہ نہیں آیا";
 
-"catalog_no_results_tip" = "آپ کم مخصوص آردو استعمال کر سکتے ہین.";
+"catalog_no_results_tip" = "آپ کم فِلٹرز استعمال کر سکتے ہین";
 
 "catalog_edit_filters" = "فلٹر میں ترامیم کریں";
 
@@ -88,7 +88,7 @@
 
 "string_ratings" = "‎%d‎ درجہ بندیاں";
 
-"string_nratings" = "‎%d‎";
+"string_nratings" = "درجہ بندی (‎%d)";
 
 "string_review" = "1 تبصرہ";
 
@@ -138,13 +138,13 @@
 
 "description" = "تفصیل";
 
-"key_features" = "کلیدی خصوصیات";
+"key_features" = "چیدہ چیدہ خصوصیات";
 
 "product_desc_summary_title" = "خلاصہ";
 
 "product_description_title" = "شے کی تفصیل";
 
-"share_subject_ios" = "%@ شریک کریں";
+"share_subject_ios" = "%@ شیئر کریں";
 
 "share_checkout_this_product" = "یہ چیز دیکھیں، جو مجھے ملی:";
 
@@ -172,11 +172,13 @@
 
 "continue_shopping" = "خریداری جاری رکھیں";
 
+"recommended_for_you" = "آپ کے لیے تجویز کردہ";
+
 "continue" = "جاری رکھیں";
 
-"continue_without_login" = "لاگ ان کے بغیر جاری رکھیں";
+"continue_without_login" = "لاگ اِن کے بغیر جاری رکھیں";
 
-"login_long_message" = "اپنی پروفائل، بچا پسندیدہ رسائی, ارڑر کی معلومات اور بہت کچھ جانیں جومیا اکاؤنٹ سے.";
+"login_long_message" = "دراز اکاؤنٹ لاگ اِن کریں اور اپنی پروفائل، محفوظ ,آرڑر کی معلومات اور بہت کچھ جانیں.";
 
 "my_order_coupon_label" = "کوپن";
 
@@ -192,7 +194,7 @@
 
 "string_articles" = "‎%d‎ چیزیں";
 
-"string_item_cart" = "1 چیز";
+"string_item_cart" = "1 شے";
 
 "string_items_cart" = "‎%d‎ اشیاء";
 
@@ -200,7 +202,7 @@
 
 "shipping" = "شِپنگ";
 
-"shipment_of" = "کھیپ کی l % شناخت";
+"shipment_of" = "شِپمینٹ کی l % شناخت";
 
 "fulfilled_by" = "تکمیل کیا";
 
@@ -340,11 +342,11 @@
 
 "notifications" = "اطلاعات";
 
-"push_notifications" = "پش نوٹیفکیشن";
+"push_notifications" = "Push Notifications";
 
 "update_now" = "ابہی جدید بنایں";
 
-"app_version" = "اپلی کیشن ورژن";
+"app_version" = "ایپ ورژن";
 
 "help_center" = "مدد کا مرکز";
 
@@ -354,7 +356,7 @@
 
 "rate_the_app" = "ایپ کو درجات دین";
 
-"shop_settings" = "دکان سیٹنگیں";
+"shop_settings" = "دکان کی سیٹنگس";
 
 "notifications_summary" = "خصوصی پیشکشیں اور تازہ معلومات حاصل کریں۔";
 
@@ -412,7 +414,7 @@
 
 "campaign_is_over" = "یہ مہم ختم ہو گی ہے";
 
-"campaign_is_over_resume" = "باوجود اس کے، اور بھی بہترین فراہم آپ ک انتظار مین ہین.";
+"campaign_is_over_resume" = "باوجود اس کے، اور بھی بہترین آفرز آپ ک انتظار مین ہین.";
 
 "string_format_off_label" = "-%d%%";
 
@@ -492,7 +494,7 @@
 
 "welcome" = "خوش آمدید";
 
-"new_to_jumia" = "لگتا ہے آپ جومیا ک لیے نئے ہیں۔ ہمیں آپ کے اکاؤنٹ کی تخلیق کے لیے بس تھوڑی سی مزید تفصیلات کی ضرورت ہے ۔";
+"new_to_jumia" = "لگتا ہے آپ دراز میں نئے ہیں۔ ہمیں آپ کے اکاؤنٹ کی تخلیق کے لیے بس تھوڑی سی مزید تفصیلات کی ضرورت ہے ۔";
 
 "reviews" = "تبصرے";
 
@@ -524,23 +526,23 @@
 
 "share_app_ios" = "ایپ کو پھیلائیں";
 
-"delivery_time" = "مدتِ ترسیل:";
+"delivery_time" = "مدتِ ڈیلوری:";
 
-"product_outof_stock" = "شے ذخیرے میں موجود نہیں";
+"product_outof_stock" = "یہ شے اسٹاک میں موجود نہیں";
 
-"products_outof_stock" = "اشیاء ذخیرے میں موجود نہیں";
+"products_outof_stock" = "اشیاء اسٹاک میں موجود نہیں";
 
-"login_remember_user_email" = "میری ای میل یاد رکھیں";
+"login_remember_user_email" = "میرا ای میل یاد رکھیں";
 
 "my_orders_label" = "میرے آرڈرز";
 
 "my_order_history_label" = "میری تاریخِ آرڈرز";
 
-"my_order_tracking_label" = "آرڈر کا پیچھا";
+"my_order_tracking_label" = "آرڈر کی ٹریکنگ";
 
 "my_order_details_label" = "آرڈر کی تفصیلات";
 
-"my_order_number_label" = ".NR";
+"my_order_number_label" = "نمبر.";
 
 "my_order_date_label" = "تاریخ:";
 
@@ -552,9 +554,9 @@
 
 "my_order_no_orders_label" = "آپ نے کوئی آرڈر نہیں کیا";
 
-"my_order_no_orders_title_label" = "کوئی احکامات نہیں";
+"my_order_no_orders_title_label" = "کوئی آرڈر نہیں";
 
-"reorder" = "ری آرڑر";
+"reorder" = "واپس سے آرڑر";
 
 "like_us_on_facebook" = "ہمیں فیس بک پر پسند کریں";
 
@@ -574,7 +576,7 @@
 
 "from" = "منجانب";
 
-"product_delivery_time" = "مدتِ ترسیل:";
+"product_delivery_time" = "مدتِ ڈیلوری:";
 
 "product_delivery_days" = "ایام";
 
@@ -602,7 +604,7 @@
 
 "review_this_seller" = "اس تاجر کے بارے میں ابھی تبصرہ کریں۔";
 
-"string_wizard_back_top" = "فہرستِ مصنوعات کو واپس اوپر لے جانے کے لیے خانہِ صورتِ حال کو تھپکیں۔";
+"string_wizard_back_top" = "فہرستِ مصنوعات کو واپس اوپر لے جانے کے لیے اِسٹیٹس بار کو ٹیپ کریں۔";
 
 "shops_of_the_week" = "ہفتے کی بہترین دکانیں";
 
@@ -622,7 +624,7 @@
 
 "birthday" = "تاریخِ پیدائش";
 
-"country" = "ملک";
+"country" = "مُلک";
 
 "language" = "زبان";
 
@@ -630,7 +632,7 @@
 
 "clear_all" = "سب صاف کریں";
 
-"buy_the_look" = "مکمل لک خریدیں";
+"buy_the_look" = "مکمل لُک خریدیں";
 
 "read_more" = "مزید پڑھیں";
 
@@ -658,7 +660,7 @@
 
 "profile" = "پروفائل";
 
-"favourites_no_saved_items" = "کوئی محفوظ شدہ اشیا نہیں";
+"favourites_no_saved_items" = "کوئی محفوظ شدہ اشیاء نہیں";
 
 "favourites_no_saved_items_description" = "آپ کے کوئی محفوظ شدہ اشیاء نہیں.";
 
@@ -666,7 +668,7 @@
 
 "login_welcome_back" = "خوش آمديد";
 
-"fgt_your_pass" = "آپ اپنا پاس ورڈ بھول گئے ہیں؟";
+"fgt_your_pass" = "کیا آپ اپنا پاس ورڈ بھول گئے ہیں؟";
 
 "password_recovery" = "پاس ورڈ کی وصولی";
 
@@ -678,8 +680,22 @@
 
 "change_password" = "پاس ورڈ بدلیں";
 
-"user_data_edited_with_success" = "صارف کوائف کامیابی کے ساتھ ترمیم";
+"user_data_edited_with_success" = "صارف کی معلومات میں کامیابی کے ساتھ ترمیم ہو گئی";
 
-"pre_order" = "پیشکی آرڈر";
+"pre_order" = "پہلے سے آرڈر";
 
-"shipping_billing_address" = "شپنگ/بل کی ادائیگی کا پتہ";
+"sign_up_to_our_newsletter" = "نیوز لیٹر کے لئے اندراج کروائیں";
+
+"sign_up_to_our_newsletter_body" = "خصوصی سیلس، ڈیلزاور نۓ اِسٹاک پہ نظر رکھنے کے لیے";
+
+"shipping_billing_address" = "شِپنگ/بل کی ادائیگی کا پتہ";
+
+"on_label" = "کھولیں";
+
+"off_label" = "بند کریں";
+
+"visit_the_official_brand_store" = "%@ برینڈ کے مکزی سٹور پہ تشریف لیجائیں";
+
+"newsletter_label" = "نیوز لیٹر";
+
+"newsletter_preferences" = "نیوز لیٹر کی ترجیحات";
