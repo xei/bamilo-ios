@@ -60,7 +60,7 @@
         
         notificationName = kDidSelectTeaserWithPDVUrlNofication;
         
-    } else if ([teaserTarget.type isEqualToString:[RITarget getTargetKey:STATIC_PAGE]]) {
+    } else if ([teaserTarget.type isEqualToString:[RITarget getTargetKey:STATIC_PAGE]] || [teaserTarget.type isEqualToString:[RITarget getTargetKey:SHOP_IN_SHOP]]) {
         
         notificationName = kDidSelectTeaserWithShopUrlNofication;
         
