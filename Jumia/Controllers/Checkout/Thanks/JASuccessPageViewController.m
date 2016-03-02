@@ -221,7 +221,7 @@
     RICartItem* lastCartItem = [self.cart.cartItems lastObject];
     if (VALID_NOTEMPTY(lastCartItem, RICartItem)) {
         [trackingDictionary setObject:lastCartItem.name forKey:kRIEventProductNameKey];
-        [trackingDictionary setObject:lastCartItem.sku forKey:kRIEventSkuKey];
+        [trackingDictionary setObject:lastCartItem.simpleSku forKey:kRIEventSkuKey];
         [trackingDictionary setObject:lastCartItem.brand forKey:kRIEventBrandName];
         [trackingDictionary setObject:lastCartItem.brandUrlKey forKey:kRIEventBrandKey];
         if (VALID_NOTEMPTY(lastCartItem.category, NSString)) {
