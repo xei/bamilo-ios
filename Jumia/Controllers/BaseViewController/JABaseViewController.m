@@ -601,6 +601,7 @@
             if (success) {
                 block();
             }else{
+                [RICustomer cleanCustomerFromDB];
                 [JAAuthenticationViewController authenticateAndExecuteBlock:^{
                     block();
                 } showBackButtonForAuthentication:YES];
