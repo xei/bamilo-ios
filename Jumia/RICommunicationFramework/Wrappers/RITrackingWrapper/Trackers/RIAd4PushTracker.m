@@ -69,6 +69,8 @@
 
 #define kAd4PushLanguageSelection @"LanguageSelection"
 
+#define IS_IOS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+
 @implementation RIAd4PushTracker
 
 NSString * const kRIAdd4PushUserID = @"kRIAdd4PushUserID";
@@ -147,6 +149,62 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         [deviceInfo setObject:[dateFormatter stringFromDate:date] forKey:kAd4PushLastOpenDate];
         
+        
+        // Push Notifications Activation
+        
+        BOOL checkNotificationsSwitch = YES;
+        BOOL checkSoundSwitch = YES;
+        
+        if(!ISEMPTY([[NSUserDefaults standardUserDefaults] objectForKey:kChangeNotificationsOptions]))
+        {
+            checkNotificationsSwitch = [[NSUserDefaults standardUserDefaults] boolForKey:kChangeNotificationsOptions];
+        }
+        else
+        {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kChangeNotificationsOptions];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+        
+        if(!ISEMPTY([[NSUserDefaults standardUserDefaults] objectForKey:kChangeSoundOptions]))
+        {
+            checkSoundSwitch = [[NSUserDefaults standardUserDefaults] boolForKey:kChangeSoundOptions];
+        }
+        else
+        {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kChangeSoundOptions];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+        
+        NSSet *categories = [[BMA4SNotification sharedBMA4S] notificationCategories];
+        if (checkNotificationsSwitch && checkSoundSwitch)
+        {
+            
+            if(IS_IOS_8_OR_LATER) {
+                UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: (UIRemoteNotificationTypeBadge
+                                                                                                      |UIRemoteNotificationTypeSound
+                                                                                                      |UIRemoteNotificationTypeAlert) categories:categories];
+                [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+            } else {
+                [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
+                                                                                        UIRemoteNotificationTypeSound |
+                                                                                        UIRemoteNotificationTypeAlert )];
+            }
+        }
+        else if(checkNotificationsSwitch && !checkNotificationsSwitch)
+        {
+            if(IS_IOS_8_OR_LATER) {
+                UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: (UIRemoteNotificationTypeBadge
+                                                                                                      |UIRemoteNotificationTypeSound) categories:categories];
+                [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+            } else {
+                [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
+                                                                                        UIRemoteNotificationTypeAlert )];
+            }
+        }
+        else{
+            [[UIApplication sharedApplication] unregisterForRemoteNotifications];
+        }
+        
         [BMA4STracker updateDeviceInfo:deviceInfo];
         
         [[BMA4SNotification sharedBMA4S] didFinishLaunchingWithOptions:options];
@@ -206,6 +264,11 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
     dispatch_sync(dispatch_get_main_queue(), ^{
         [[BMA4SNotification sharedBMA4S] didReceiveLocalNotification:notification];
     });
+}
+
+- (void)applicationHandleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo
+{
+    [[BMA4SNotification sharedBMA4S] handleActionWithIdentifier:identifier forRemoteNotification:userInfo];
 }
 
 #pragma mark - RIOpenURL protocol

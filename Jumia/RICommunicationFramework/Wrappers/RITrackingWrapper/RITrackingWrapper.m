@@ -243,6 +243,13 @@ static dispatch_once_t sharedInstanceToken;
     }
 }
 
+- (void)applicationHandleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo
+{
+    [self RI_callTrackersConformToProtocol:@protocol(RINotificationTracking)
+                                  selector:@selector(applicationHandleActionWithIdentifier:forRemoteNotification:)
+                                 arguments:@[identifier, userInfo]];
+}
+
 - (void)handlePushNotifcation:(NSDictionary *)info
 {
     RIDebugLog(@"Handling push notification with info '%@'", info);

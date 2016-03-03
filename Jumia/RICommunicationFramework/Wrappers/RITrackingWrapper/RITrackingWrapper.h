@@ -77,6 +77,8 @@ typedef NS_ENUM(NSInteger, RICartState) {
  */
 - (void)applicationDidReceiveLocalNotification:(UILocalNotification *)notification;
 
+- (void)applicationHandleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo;
+
 /**
  *  Handle a push notification
  *
