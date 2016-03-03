@@ -378,7 +378,6 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
     [[RITrackingWrapper sharedInstance] applicationDidRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
-    
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
@@ -386,10 +385,6 @@
     if(!VALID_NOTEMPTY(application, UIApplication) || UIApplicationStateActive != application.applicationState)
     {
         [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:userInfo];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification
-                                                            object:nil
-                                                          userInfo:userInfo];
     }
 }
 
@@ -445,9 +440,7 @@
         
         if ([facebookSchema isEqualToString:urlScheme])
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification
-                                                                object:nil
-                                                              userInfo:pushNotification];
+            [[RITrackingWrapper sharedInstance] handlePushNotifcation:pushNotification];
         }
         else
         {
@@ -496,10 +489,8 @@
             {
                 [pushNotification addEntriesFromDictionary:dict];
             }
-
-            [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification
-                                                                object:nil
-                                                              userInfo:pushNotification];
+            
+            [[RITrackingWrapper sharedInstance] handlePushNotifcation:pushNotification];
         }
     }
 }

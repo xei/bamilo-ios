@@ -224,6 +224,10 @@ static dispatch_once_t sharedInstanceToken;
     [self RI_callTrackersConformToProtocol:@protocol(RINotificationTracking)
                                   selector:@selector(applicationDidReceiveRemoteNotification:)
                                  arguments:@[userInfo]];
+    if(VALID_NOTEMPTY(userInfo, NSDictionary))
+    {
+        [self handlePushNotifcation:[userInfo copy]];
+    }
 }
 
 - (void)applicationDidReceiveLocalNotification:(UILocalNotification *)notification
@@ -233,6 +237,10 @@ static dispatch_once_t sharedInstanceToken;
     [self RI_callTrackersConformToProtocol:@protocol(RINotificationTracking)
                                   selector:@selector(applicationDidReceiveLocalNotification:)
                                  arguments:@[notification]];
+    if(VALID_NOTEMPTY(notification.userInfo, NSDictionary))
+    {
+        [self handlePushNotifcation:[notification.userInfo copy]];
+    }
 }
 
 - (void)handlePushNotifcation:(NSDictionary *)info

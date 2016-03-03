@@ -66,6 +66,4 @@ JAPickerDelegate
 @property (strong, nonatomic) UIButton *checkoutButton;
 @property (strong, nonatomic) UIButton *callToOrderButton;
 
-@property (nonatomic, retain) NSString* A4SViewControllerAlias;
-
 @end

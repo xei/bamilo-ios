@@ -190,6 +190,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.A4SViewControllerAlias = @"MYFAVOURITES";
     self.navBarLayout.title = STRING_MY_FAVOURITES;
     self.navBarLayout.showCartButton = NO;
     self.tabBarIsVisible = YES;

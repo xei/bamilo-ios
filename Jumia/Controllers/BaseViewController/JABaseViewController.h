@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "JANavigationBarLayout.h"
 #import "JATabBarView.h"
+#import "BMA4SViewController.h"
 
-@interface JABaseViewController : UIViewController <UISearchBarDelegate>
+@interface JABaseViewController : BMA4SViewController <UISearchBarDelegate>
 
 @property (nonatomic, strong)JANavigationBarLayout* navBarLayout;
 
