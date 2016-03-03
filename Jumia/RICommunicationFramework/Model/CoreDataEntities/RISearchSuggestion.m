@@ -128,7 +128,7 @@
         __block NSLock *searchLock = [NSLock new];
         __block NSArray *outsideBlockProductsResultsArray;
         __block NSArray *outsideBlockShopInShopResultsArray;
-        [[RIAlgolia sharedInstance] getSearchResultsForQuery:query onFirstStepSuccess:^(NSArray *productsResults, NSArray *shopInShopResults) {
+        [[RIAlgolia sharedInstance] getSearchResultsForQuery:[query stringByReplacingOccurrencesOfString:@" " withString:@"+"] onFirstStepSuccess:^(NSArray *productsResults, NSArray *shopInShopResults) {
             
             [searchLock lock];
             NSMutableArray *productsSuggestionArray = [NSMutableArray new];
@@ -169,7 +169,7 @@
         return nil;
     }else{
         
-        NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_SEARCH_SUGGESTIONS,query]];
+        NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_SEARCH_SUGGESTIONS,[query stringByReplacingOccurrencesOfString:@" " withString:@"+"]]];
         return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url
                                                                 parameters:nil
                                                                 httpMethod:HttpResponseGet
