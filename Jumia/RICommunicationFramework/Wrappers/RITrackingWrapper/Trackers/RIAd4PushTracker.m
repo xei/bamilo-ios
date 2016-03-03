@@ -266,6 +266,11 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
     });
 }
 
+- (void)applicationHandleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo
+{
+    [[BMA4SNotification sharedBMA4S] handleActionWithIdentifier:identifier forRemoteNotification:userInfo];
+}
+
 #pragma mark - RIOpenURL protocol
 
 -(void)trackOpenURL:(NSURL *)url

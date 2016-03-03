@@ -173,11 +173,12 @@
 
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString   *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
 {
-    //handle the actions
-    if ([identifier isEqualToString:@"declineAction"]){
+    if(!VALID_NOTEMPTY(application, UIApplication) || UIApplicationStateActive != application.applicationState)
+    {
+        [[RITrackingWrapper sharedInstance] applicationHandleActionWithIdentifier:identifier forRemoteNotification:userInfo];
     }
-    else if ([identifier isEqualToString:@"answerAction"]){
-    }
+    
+    completionHandler();
 }
 #endif
 
