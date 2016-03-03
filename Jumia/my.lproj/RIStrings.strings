@@ -690,9 +690,12 @@
 
 "shipping_billing_address" = "ပို႕ေဆာင္ရန္/ေငြေခ်ရန္လိပ္စာ";
 
+"on_label" = "ဖြင့္ရန္";
+
+"off_label" = "ပိတ္ရန္";
+
 "visit_the_official_brand_store" = "တရား၀င္ %@ စတိုးသို႕ ၀င္ေရာက္ၾကည္႕ရွဳရန္";
 
 "newsletter_label" = "သတင္းလႊာ";
 
 "newsletter_preferences" = "ရယူလိုေသာသတင္းလႊာအမ်ိဳးအစား";
-
