@@ -236,7 +236,6 @@ typedef NS_ENUM(NSInteger, RICartState) {
 #define kRIEventLastCategoryAddedToCartKey @"RIEventLastCategoryAddedToCartKey"
 #define kRIEventGAIdKey                 @"RIEventGAIdKey"
 #define kRIEventOrderNumber             @"RIEventOrderNumber"
-#define kRIEventAggregateNumberOfOrders @"RIEventAggregateNumberOfOrders"
 #define kRIEventLanguageCode            @"RIEventLanguageCode"
 
 #define kRIEventFBValueToSumKey         @"RIEventFBValueToSumKey"

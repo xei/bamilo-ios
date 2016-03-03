@@ -191,17 +191,6 @@
         isNewCustomer = @"true";
     }
     
-    NSInteger numberOfPurchasesValue = 0;
-    NSNumber *numberOfPurchases = [[NSUserDefaults standardUserDefaults] objectForKey:kRIEventAmountTransactions];
-    if(VALID_NOTEMPTY(numberOfPurchases, NSNumber))
-    {
-        numberOfPurchasesValue = [numberOfPurchases integerValue];
-    }
-    numberOfPurchasesValue++;
-    numberOfPurchases = [NSNumber numberWithInteger:numberOfPurchasesValue];
-    [[NSUserDefaults standardUserDefaults] setObject:numberOfPurchases forKey:kRIEventAmountTransactions];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"Finished" forKey:kRIEventActionKey];
@@ -215,7 +204,7 @@
     [trackingDictionary setValue:[attributeSetID copy] forKey:kRIEventAttributeSetIDCartKey];
     
     if (VALID_NOTEMPTY(self.cart.totalNumberOfOrders, NSNumber)) {
-        [trackingDictionary setObject:self.cart.totalNumberOfOrders forKey:kRIEventAggregateNumberOfOrders];
+        [trackingDictionary setObject:self.cart.totalNumberOfOrders forKey:kRIEventAmountTransactions];
     }
     [trackingDictionary setObject:self.cart.orderNr forKey:kRIEventOrderNumber];
     RICartItem* lastCartItem = [self.cart.cartItems lastObject];
@@ -231,7 +220,7 @@
             [trackingDictionary setObject:lastCartItem.categoryUrlKey forKey:kRIEventCategoryIdKey];
         }
     }
-    [trackingDictionary setObject:@"0" forKey:kRIEventQuantityKey];
+    [trackingDictionary setObject:@"0" forKey:kRIEventTotalCartKey];
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutEnd]
                                               data:[trackingDictionary copy]];
@@ -357,7 +346,7 @@
     [ecommerceDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
     [ecommerceDictionary setValue:self.cart.orderNr forKey:kRIEcommerceTransactionIdKey];
     [ecommerceDictionary setValue:[RICountryConfiguration getCurrentConfiguration].currencyIso forKey:kRIEcommerceCurrencyKey];
-    [ecommerceDictionary setValue:numberOfPurchases forKey:kRIEventAmountTransactions];
+    [ecommerceDictionary setValue:self.cart.totalNumberOfOrders forKey:kRIEventAmountTransactions];
     [ecommerceDictionary setValue:self.cart.paymentMethod forKey:kRIEcommercePaymentMethodKey];
     
     NSArray *products = self.cart.cartItems;
