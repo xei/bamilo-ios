@@ -65,7 +65,6 @@ UICollectionViewDelegateFlowLayout
 @property (strong, nonatomic) NSString *selectedShippingMethod;
 @property (strong, nonatomic) NSIndexPath *collectionViewIndexSelected;
 @property (strong, nonatomic) NSIndexPath *selectedPickupStationIndexPath;
-@property (strong, nonatomic) JASellerDeliveryView *seller;
 @property (strong, nonatomic) NSMutableArray *sellerDeliveryViews;
 
 @property (assign, nonatomic) RIApiResponse apiResponse;
@@ -73,14 +72,6 @@ UICollectionViewDelegateFlowLayout
 @end
 
 @implementation JAShippingViewController
-
-- (JASellerDeliveryView *)seller
-{
-    if (!VALID_NOTEMPTY(_seller, JASellerDeliveryView)) {
-        _seller = [[JASellerDeliveryView alloc] init];
-    }
-    return _seller;
-}
 
 - (void)viewDidLoad
 {
@@ -358,9 +349,10 @@ UICollectionViewDelegateFlowLayout
         NSInteger index = 1;
         NSInteger max = [self.cart.sellerDelivery count];
         for (RISellerDelivery* sell in self.cart.sellerDelivery) {
-            [self.seller setupWithSellerDelivery:sell index:index++ ofMax:max width:width];
-            [self.scrollView addSubview:self.seller];
-            [self.sellerDeliveryViews addObject:self.seller];
+            JASellerDeliveryView* sellerDeliveryView = [[JASellerDeliveryView alloc] init];
+            [sellerDeliveryView setupWithSellerDelivery:sell index:index++ ofMax:max width:width];
+            [self.scrollView addSubview:sellerDeliveryView];
+            [self.sellerDeliveryViews addObject:sellerDeliveryView];
         }
     }
     
