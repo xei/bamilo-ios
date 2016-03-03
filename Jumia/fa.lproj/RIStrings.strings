@@ -690,6 +690,10 @@
 
 "shipping_billing_address" = "نشانی";
 
+"on_label" = "فعال";
+
+"off_label" = "تخفیف";
+
 "visit_the_official_brand_store" = "مشاهده محصولات %@";
 
 "newsletter_label" = "خبرنامه";

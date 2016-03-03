@@ -690,6 +690,10 @@
 
 "shipping_billing_address" = "عنوان الفواتير/الشحن";
 
+"on_label" = "فتح";
+
+"off_label" = "إغلاق";
+
 "visit_the_official_brand_store" = "زيارة المخزن %@ الرسمي";
 
 "newsletter_label" = "رسالة جوميا الإخبارية";
