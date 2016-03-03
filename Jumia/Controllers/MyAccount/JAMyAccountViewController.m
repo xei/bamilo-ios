@@ -632,17 +632,14 @@
             } else {
                 RICountry* uniqueCountry = [RICountry getUniqueCountry];
                 if (VALID_NOTEMPTY(uniqueCountry, RICountry)) {
-                    if ([uniqueCountry.name isEqualToString:self.languageSubtitleLine.subTitle]) {
-                        //found it
-                        NSArray* languages = [[RICountryConfiguration getCurrentConfiguration].languages array];
-                        //find language
-                        for (RILanguage* language in languages) {
-                            if ([language.langCode isEqualToString:selectedLanguage.langCode]) {
-                                //found it
-                                uniqueCountry.selectedLanguage = language;
-                                [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification object:uniqueCountry];
-                                break;
-                            }
+                    NSArray* languages = [[RICountryConfiguration getCurrentConfiguration].languages array];
+                    //find language
+                    for (RILanguage* language in languages) {
+                        if ([language.langCode isEqualToString:selectedLanguage.langCode]) {
+                            //found it
+                            uniqueCountry.selectedLanguage = language;
+                            [[NSNotificationCenter defaultCenter] postNotificationName:kSelectedCountryNotification object:uniqueCountry];
+                            break;
                         }
                     }
                 }
