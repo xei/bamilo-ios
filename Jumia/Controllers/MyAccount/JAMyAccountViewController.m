@@ -174,6 +174,9 @@
         [_languageSubtitleLine setTitle:STRING_LANGUAGE];
         [_languageSubtitleLine setSubTitle:@""];
         [_languageSubtitleLine addTarget:self action:@selector(openLanguagePicker) forControlEvents:UIControlEventTouchUpInside];
+        if ([RICountryConfiguration getCurrentConfiguration].languages.count <= 1) {
+            [_languageSubtitleLine setEnabled:NO];
+        }
     }
     return _languageSubtitleLine;
 }
