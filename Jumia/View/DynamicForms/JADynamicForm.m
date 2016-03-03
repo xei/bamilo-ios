@@ -1052,8 +1052,10 @@
 {
     BOOL hide = YES;
     for (JADynamicField* field in self.formViews) {
-        if (![field.field.required boolValue]) {
-            hide = NO;
+        if (VALID_NOTEMPTY(field, JADynamicField)) {
+            if (![field.field.required boolValue]) {
+                hide = NO;
+            }
         }
     }
     if (hide) {

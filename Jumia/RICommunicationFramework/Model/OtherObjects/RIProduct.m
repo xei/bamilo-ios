@@ -734,6 +734,10 @@
             newProduct.preOrder = YES;
         }
         
+        if (VALID_NOTEMPTY([dataDic objectForKey:@"brand"], NSString)) {
+            newProduct.brand = [dataDic objectForKey:@"brand"];
+        }
+        
         if ([dataDic objectForKey:@"brand_entity"]) {
             NSDictionary *brandEntityDictionary = [dataDic objectForKey:@"brand_entity"];
             if (VALID_NOTEMPTY(brandEntityDictionary, NSDictionary)) {
