@@ -126,7 +126,7 @@
 - (void)setTitle:(NSString *)title
 {
     [self.label setText:title];
-    CGFloat labelWidth = self.width - self.lineContentXOffset;
+    CGFloat labelWidth = self.width - self.lineContentXOffset - (self.width - self.arrow.x);
     [self.label sizeToFit];
     [self.label setWidth:labelWidth];
 }
