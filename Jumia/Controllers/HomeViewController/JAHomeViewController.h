@@ -16,8 +16,6 @@ JAPickerScrollViewDelegate,
 UIScrollViewDelegate
 >
 
-@property (nonatomic, retain) NSString* A4SViewControllerAlias;
-
 - (void)stopLoading;
 
 @end

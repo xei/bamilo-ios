@@ -228,7 +228,11 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
 
 - (void)handlePushNotifcation:(NSDictionary *)info
 {
-    [self handleNotificationWithDictionary:info];
+    if (VALID_NOTEMPTY(info, NSDictionary)) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self handleNotificationWithDictionary:info];
+        });
+    }
 }
 
 #pragma mark - RILaunchEventTracker implementation
