@@ -16,7 +16,6 @@
 #import "RIProduct.h"
 
 #define kSessionDuration 1800.0f
-#define IS_IOS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
 @interface JAAppDelegate ()
 <RIAdjustTrackerDelegate>
@@ -150,61 +149,6 @@
         NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
         [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
     }
-    
-    // Push Notifications Activation
-    
-    BOOL checkNotificationsSwitch = YES;
-    BOOL checkSoundSwitch = YES;
-
-    if(!ISEMPTY([[NSUserDefaults standardUserDefaults] objectForKey:kChangeNotificationsOptions]))
-    {
-        checkNotificationsSwitch = [[NSUserDefaults standardUserDefaults] boolForKey:kChangeNotificationsOptions];
-    }
-    else
-    {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kChangeNotificationsOptions];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-    
-    if(!ISEMPTY([[NSUserDefaults standardUserDefaults] objectForKey:kChangeSoundOptions]))
-    {
-        checkSoundSwitch = [[NSUserDefaults standardUserDefaults] boolForKey:kChangeSoundOptions];
-    }
-    else
-    {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kChangeSoundOptions];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-    
-    if (checkNotificationsSwitch && checkSoundSwitch)
-    {
-
-        if(IS_IOS_8_OR_LATER) {
-            UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: (UIRemoteNotificationTypeBadge
-                                                                                                  |UIRemoteNotificationTypeSound
-                                                                                                  |UIRemoteNotificationTypeAlert) categories:nil];
-            [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-        } else {
-            [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
-                                                                                    UIRemoteNotificationTypeSound |
-                                                                                    UIRemoteNotificationTypeAlert )];
-        }
-    }
-    else if(checkNotificationsSwitch && !checkNotificationsSwitch)
-    {
-        if(IS_IOS_8_OR_LATER) {
-            UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: (UIRemoteNotificationTypeBadge
-                                                                                                  |UIRemoteNotificationTypeSound) categories:nil];
-            [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-        } else {
-            [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
-                                                                                    UIRemoteNotificationTypeAlert )];
-        }
-    }
-    else{
-        [[UIApplication sharedApplication] unregisterForRemoteNotifications];
-    }
-
 
     if ([launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey] != nil)
     {
