@@ -477,15 +477,15 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 break;
             case RIEventCheckoutEnd:
             {
-                NSString* cartCount = [data objectForKey:kRIEventQuantityKey];
+                NSString* cartCount = [data objectForKey:kRIEventTotalCartKey];
                 if (VALID_NOTEMPTY(cartCount, NSString))
                 {
                     [deviceInfo setObject:cartCount forKey:kAd4PushCartStatus];
                 }
                 [deviceInfo setObject:currentDate forKey:kAd4PushLastOrderDate];
                 
-                if (VALID_NOTEMPTY([data objectForKey:kRIEventAggregateNumberOfOrders], NSNumber)) {
-                    [deviceInfo setObject:[data objectForKey:kRIEventAggregateNumberOfOrders] forKey:kAd4PushAggregatedNumberOfPurchase];
+                if (VALID_NOTEMPTY([data objectForKey:kRIEventAmountTransactions], NSNumber)) {
+                    [deviceInfo setObject:[data objectForKey:kRIEventAmountTransactions] forKey:kAd4PushAggregatedNumberOfPurchase];
                 }
                 if (VALID_NOTEMPTY([data objectForKey:kRIEventOrderNumber], NSString)) {
                     [deviceInfo setObject:[data objectForKey:kRIEventOrderNumber] forKey:kAd4PushOrderNumber];
@@ -556,20 +556,12 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         numberOfPurchases = [data objectForKey:kRIEventAmountTransactions];
     }
 
-    if (VALID_NOTEMPTY([data objectForKey:kRIEventAggregateNumberOfOrders], NSNumber)) {
-        [deviceInfo setObject:[data objectForKey:kRIEventAggregateNumberOfOrders] forKey:kAd4PushAggregatedNumberOfPurchase];
-    }
     [deviceInfo setObject:numberOfPurchases forKey:kAd4PushAggregatedNumberOfPurchase];
     
     NSNumber *total = [data objectForKey:kRIEcommerceTotalValueKey];
     [deviceInfo setObject:total forKey:kAd4PushCartValue];
     
-    NSInteger numberOfProducts = 0;
-    if(VALID_NOTEMPTY([data objectForKey:kRIEcommerceSkusKey], NSArray))
-    {
-        numberOfProducts = [[data objectForKey:kRIEcommerceSkusKey] count];
-    }
-    [deviceInfo setObject:[NSNumber numberWithInteger:numberOfProducts] forKey:kAd4PushCartStatus];
+    [deviceInfo setObject:[NSNumber numberWithInteger:0] forKey:kAd4PushCartStatus];
     
     [[NSUserDefaults standardUserDefaults] synchronize];
     
