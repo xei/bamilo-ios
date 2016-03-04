@@ -1129,7 +1129,9 @@
                                                               [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
                                                                   if(VALID_NOTEMPTY(jsonObject, NSDictionary) && VALID_NOTEMPTY([jsonObject objectForKey:@"metadata"], NSDictionary))
                                                                   {
-                                                                      NSString *rrTarget = VALID_NOTEMPTY_VALUE([VALID_NOTEMPTY_VALUE([VALID_NOTEMPTY_VALUE([jsonObject objectForKey:@"metadata"], NSDictionary) objectForKey:@"recommended_products"], NSDictionary) objectForKey:@"target"], NSString);
+                                                                      NSDictionary *metadata = VALID_NOTEMPTY_VALUE([jsonObject objectForKey:@"metadata"], NSDictionary);
+                                                                      NSDictionary *recommendedProducts = VALID_NOTEMPTY_VALUE([metadata objectForKey:@"recommended_products"], NSDictionary);
+                                                                      NSString *rrTarget = VALID_NOTEMPTY_VALUE([recommendedProducts objectForKey:@"target"], NSString);
                                                                       successBlock([RICart parseCheckoutFinish:[jsonObject objectForKey:@"metadata"] forCart:cart], rrTarget);
                                                                   } else
                                                                   {

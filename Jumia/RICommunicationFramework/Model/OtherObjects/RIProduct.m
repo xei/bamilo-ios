@@ -158,7 +158,7 @@
                                                                       RIProduct* newProduct = [RIProduct parseProduct:metadata country:configuration];
                                                                       if (VALID_NOTEMPTY(newProduct, RIProduct) && VALID_NOTEMPTY(newProduct.sku, NSString)) {
                                                                           if ([metadata objectForKey:@"recommended_products"]) {
-                                                                              [self getRichRelevanceRecommendation:[metadata objectForKey:@"recommended_products"] successBlock:^(id recommendationProducts, NSString *title) {
+                                                                              [RIProduct getRichRelevanceRecommendation:[metadata objectForKey:@"recommended_products"] successBlock:^(id recommendationProducts, NSString *title) {
                                                                                   newProduct.relatedProducts = recommendationProducts;
                                                                                   successBlock(newProduct);
                                                                               } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
@@ -727,7 +727,7 @@
                 relatedProductsArray = [dataDic objectForKey:@"related_products"];
             }
             
-            newProduct.relatedProducts = [self parseRichRelevanceProducts:relatedProductsArray country:country];
+            newProduct.relatedProducts = [RIProduct parseRichRelevanceProducts:relatedProductsArray country:country];
         }
         
         if ([dataDic objectForKey:@"pre_order"]) {
