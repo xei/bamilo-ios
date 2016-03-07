@@ -23,10 +23,22 @@
 @property (weak, nonatomic) IBOutlet UILabel *deliveryLabel;
 @property (nonatomic, strong) RIProductOffer *productOfferSeller;
 @property (nonatomic) UIView *separator;
+@property (nonatomic) UIImageView *shopFirstImageView;
 
 @end
 
 @implementation JAOfferCollectionViewCell
+
+- (UIImageView*)shopFirstImageView
+{
+    if (!VALID_NOTEMPTY(_shopFirstImageView, UIImageView)) {
+        
+        UIImage *shopFirstImage = [UIImage imageNamed:@"shop_first_logo"];
+        _shopFirstImageView = [[UIImageView alloc] initWithImage:shopFirstImage];
+        [_shopFirstImageView setFrame:CGRectMake(10.f, CGRectGetMaxY(self.sellerLabel.frame), shopFirstImage.size.width, shopFirstImage.size.height)];
+    }
+    return _shopFirstImageView;
+}
 
 - (void)loadWithProductOffer:(RIProductOffer*)productOffer withProductSimple:(RIProductSimple* )productSimple
 {
@@ -40,7 +52,6 @@
     self.priceLine = [[JAProductInfoPriceLine alloc]initWithFrame:CGRectMake(10.f, 10.f, self.width-10.f, 15.f)];
     [self.priceLine setLineContentXOffset:0.f];
     self.priceLine.priceSize = kPriceSizeSmall;
-    [self.priceLine sizeToFit];
     [self addSubview:self.priceLine];
     
     self.productOfferSeller = productOffer;
@@ -68,7 +79,7 @@
     [self.sellerLabel setWidth:self.addToCartButton.x - 20];
     self.sellerLabel.font = JABody1Font;
     self.sellerLabel.textColor = JABlackColor;
-    self.sellerLabel.numberOfLines = 2;
+    self.sellerLabel.numberOfLines = 1;
     self.sellerLabel.text = productOffer.seller.name;
     [self.sellerLabel sizeToFit];
     
@@ -91,6 +102,16 @@
     }
     [self.separator setFrame:CGRectMake(0, self.height - 1, self.width, 1)];
     
+    if (!VALID(self.shopFirstImageView.superview, UIView)) {
+        [self.backgroundContentView addSubview:self.shopFirstImageView];
+    }
+    [self.shopFirstImageView setX:10.f];
+    if (VALID_NOTEMPTY(productOffer.shopFirst, NSNumber) && [productOffer.shopFirst boolValue]) {
+        self.shopFirstImageView.hidden = NO;
+    } else {
+        self.shopFirstImageView.hidden = YES;
+    }
+    
     CGFloat sellerLabelMaxWidth = self.addToCartButton.x - self.sellerLabel.x - 6.f;
     if (self.sellerLabel.width > sellerLabelMaxWidth) {
         [self.sellerLabel setWidth:sellerLabelMaxWidth];
@@ -106,11 +127,11 @@
 -(void)setProductSimple:(RIProductSimple*)productSimple {
     if (VALID_NOTEMPTY(productSimple.specialPriceFormatted, NSString)) {
         self.priceLabel.text = productSimple.specialPriceFormatted;
-        [self.priceLine setTitle:productSimple.specialPriceFormatted];
+        [self.priceLine setPrice:productSimple.specialPriceFormatted];
         [self.priceLine setOldPrice:productSimple.priceFormatted];
     } else {
         self.priceLabel.text = productSimple.priceFormatted;
-        [self.priceLine setTitle:productSimple.priceFormatted];
+        [self.priceLine setPrice:productSimple.priceFormatted];
         [self.priceLine setOldPrice:@""];
     }
     [self.priceLabel sizeToFit];
@@ -133,9 +154,9 @@
     
     if(VALID_NOTEMPTY(self.productOfferSeller.seller, RISeller))
     {
-        if (VALID_NOTEMPTY(self.productOfferSeller.seller.url, NSString)) {
+        if (VALID_NOTEMPTY(self.productOfferSeller.seller.targetString, NSString)) {
         [userInfo setObject:self.productOfferSeller.seller.name forKey:@"name"];
-        [userInfo setObject:self.productOfferSeller.seller.url forKey:@"url"];
+        [userInfo setObject:self.productOfferSeller.seller.targetString forKey:@"targetString"];
     
         [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:self.productOfferSeller.seller userInfo:userInfo];
         }

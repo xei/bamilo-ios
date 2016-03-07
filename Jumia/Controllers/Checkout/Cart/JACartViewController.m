@@ -11,7 +11,7 @@
 #import "JACatalogListCell.h"
 #import "JAConstants.h"
 #import "JACartListHeaderView.h"
-#import "JAPriceView.h"
+#import "JAProductInfoPriceLine.h"
 #import "JAUtils.h"
 #import "RIForm.h"
 #import "RIField.h"
@@ -20,6 +20,14 @@
 #import "RICustomer.h"
 #import "RIAddress.h"
 #import <FBSDKCoreKit/FBSDKAppEvents.h>
+#import "JAAuthenticationViewController.h"
+
+#define kLateralMargin 16
+#define kTopMargin 48
+#define kImageTopMargin 28
+#define kImageBottomMargin 28
+#define kButtonTopMargin 48
+#define kButtonWidth 288
 
 @interface JACartViewController () {
     BOOL _emptyImageFlipOnce;
@@ -39,13 +47,49 @@
 
 @implementation JACartViewController
 
-- (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray *)objects
+- (UIView *)emptyCartView
 {
-    [self setEmptyCartViewHidden:YES];
-    [self setCartViewHidden:YES];
-    self.requestDone = NO;
-    
-    [super showErrorView:isNoInternetConnection startingY:startingY selector:selector objects:objects];
+    if (!VALID_NOTEMPTY(_emptyCartView, UIView)) {
+        _emptyCartView = [[UIView alloc] initWithFrame:self.viewBounds];
+        [_emptyCartView setBackgroundColor:[UIColor whiteColor]];
+        [self.view addSubview:_emptyCartView];
+    }
+    return _emptyCartView;
+}
+
+- (UILabel *)emptyCartLabel
+{
+    if (!VALID_NOTEMPTY(_emptyCartLabel, UILabel)) {
+        _emptyCartLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, kTopMargin, self.view.width - 2*kLateralMargin, 17)];
+        [_emptyCartLabel setFont:JADisplay2Font];
+        [_emptyCartLabel setTextColor:JABlackColor];
+        [_emptyCartLabel setTextAlignment:NSTextAlignmentCenter];
+        [_emptyCartLabel setNumberOfLines:2];
+        [_emptyCartLabel setText:STRING_NO_ITEMS_IN_CART];
+        [self.emptyCartView addSubview:_emptyCartLabel];
+    }
+    return _emptyCartLabel;
+}
+
+- (UIImageView *)emptyCartImageView
+{
+    if (!VALID_NOTEMPTY(_emptyCartImageView, UIImageView)) {
+        UIImage *image = [UIImage imageNamed:@"img_emptyCart"];
+        _emptyCartImageView = [[UIImageView alloc] initWithImage:image];
+        [_emptyCartImageView setFrame:CGRectMake((self.view.width - image.size.width)/2, CGRectGetMaxY(self.emptyCartLabel.frame) + kImageTopMargin, image.size.width, image.size.height)];
+        [self.emptyCartView addSubview:_emptyCartImageView];
+    }
+    return _emptyCartImageView;
+}
+
+- (JABottomBar *)continueShoppingButton
+{
+    if (!VALID_NOTEMPTY(_continueShoppingButton, JABottomBar)) {
+        _continueShoppingButton = [[JABottomBar alloc] initWithFrame:CGRectMake((self.view.width - kButtonWidth)/2, CGRectGetMaxY(self.emptyCartImageView.frame) + kImageBottomMargin, kButtonWidth, kBottomDefaultHeight)];
+        [_continueShoppingButton addButton:[STRING_CONTINUE_SHOPPING uppercaseString] target:self action:@selector(goToHomeScreen)];
+        [self.emptyCartView addSubview:_continueShoppingButton];
+    }
+    return _continueShoppingButton;
 }
 
 - (void)viewDidLoad
@@ -106,9 +150,9 @@
 {
     [super viewWillAppear:animated];
     
-    [self.emptyCartView setWidth:self.view.width-12.f];
-    [self.continueShoppingButton setWidth:self.view.width-12.f];
-    [self.emptyCartLabel setX:self.view.width/2-self.emptyCartLabel.width/2];
+    [self.emptyCartView setFrame:self.viewBounds];
+    [self.continueShoppingButton setX:(self.view.width - self.continueShoppingButton.width)/2];
+    [self.emptyCartLabel setWidth:self.view.width - 2*kLateralMargin];
     [self.emptyCartImageView setX:self.view.width/2-self.emptyCartImageView.width/2];
     
     if (!_emptyImageFlipOnce && RI_IS_RTL)
@@ -121,6 +165,7 @@
                                                 object:nil];
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"ShoppingCart"];
     [self continueLoading];
+    
 }
 
 - (void)setEmptyCartViewHidden:(BOOL)hidden
@@ -140,6 +185,14 @@
 {
     [self setEmptyCartViewHidden:YES];
     [self setCartViewHidden:YES];
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [self.emptyCartView setFrame:self.viewBounds];
+    [self.continueShoppingButton setX:(self.view.width - self.continueShoppingButton.width)/2];
+    [self.emptyCartLabel setWidth:self.view.width - 2*kLateralMargin];
+    [self.emptyCartImageView setX:self.view.width/2-self.emptyCartImageView.width/2];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -184,7 +237,7 @@
         NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
         NSMutableDictionary *trackingDictionary = nil;
         NSMutableArray *viewCartTrackingProducts = [[NSMutableArray alloc] init];
-        [self removeErrorView];
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
 
         //reset teaserTrackingInfo for items that have been removed somehow (i.e. logout)
         NSDictionary* teaserTrackingInfoDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey];
@@ -205,69 +258,6 @@
         
         for (int i = 0; i < self.cart.cartItems.count; i++) {
             RICartItem *cartItem = [[self.cart cartItems] objectAtIndex:i];
-            
-            trackingDictionary = [[NSMutableDictionary alloc] init];
-            NSMutableDictionary *viewCartTrackingProduct = [[NSMutableDictionary alloc] init];
-
-            NSString *discount = @"false";
-            NSNumber *price = cartItem.priceEuroConverted;
-            if (VALID_NOTEMPTY(cartItem.specialPriceEuroConverted, NSNumber) && [cartItem.specialPriceEuroConverted floatValue] > 0.0f)
-            {
-                discount = @"true";
-                price = cartItem.specialPriceEuroConverted;
-            }
-            
-            // Since we're sending the converted price, we have to send the currency as EUR.
-            // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
-            [viewCartTrackingProduct setValue:price forKey:kRIEventPriceKey];
-            [viewCartTrackingProduct setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
-            [viewCartTrackingProduct setValue:cartItem.sku forKey:kRIEventSkuKey];
-            [viewCartTrackingProduct setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
-
-            [trackingDictionary setValue:price forKey:kRIEventPriceKey];
-            [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
-            [trackingDictionary setValue:discount forKey:kRIEventDiscountKey];
-            [trackingDictionary setValue:cartItem.sku forKey:kRIEventSkuKey];
-            [trackingDictionary setValue:[cartItem.quantity stringValue] forKey:kRIEventQuantityKey];
-            
-            [viewCartTrackingProducts addObject:viewCartTrackingProduct];
-            
-            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-            NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
-            if(VALID_NOTEMPTY(numberOfSessions, NSNumber))
-            {
-                [trackingDictionary setValue:[numberOfSessions stringValue] forKey:kRIEventAmountSessions];
-            }
-            [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
-            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-            [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-            [trackingDictionary setValue:cartItem.variation forKey:kRIEventSizeKey];
-            [trackingDictionary setValue:cartData.cartValueEuroConverted forKey:kRIEventTotalCartKey];
-
-            
-            if ([RICustomer checkIfUserIsLogged]) {
-                [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-                [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
-                [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
-                    RIAddress *shippingAddress = (RIAddress *)[adressList objectForKey:@"shipping"];
-                    [trackingDictionary setValue:shippingAddress.city forKey:kRIEventCityKey];
-                    [trackingDictionary setValue:shippingAddress.customerAddressRegion forKey:kRIEventRegionKey];
-                    
-                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewCart]
-                                                              data:[trackingDictionary copy]];
-                    
-                } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-                    NSLog(@"ERROR: getting customer");
-                    
-                    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewCart]
-                                                              data:[trackingDictionary copy]];
-                }];
-            }else{
-                
-                [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewCart]
-                                                          data:[trackingDictionary copy]];
-            }
             
             float value = [cartItem.price floatValue];
             [FBSDKAppEvents logEvent:FBSDKAppEventNameInitiatedCheckout
@@ -311,7 +301,6 @@
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         self.apiResponse = apiResponse;
-        self.requestDone = YES;
         
         if(_firstLoading)
         {
@@ -320,24 +309,10 @@
             _firstLoading = NO;
         }
         
-        if(RIApiResponseMaintenancePage == apiResponse)
-        {
-            [self showMaintenancePage:@selector(continueLoading) objects:nil];
-        }
-        else if(RIApiResponseKickoutView == apiResponse)
-        {
-            [self showKickoutView:@selector(continueLoading) objects:nil];
-        }
-        else
-        {
-            BOOL noConnection = NO;
-            if (RIApiResponseNoInternetConnection == apiResponse)
-            {
-                noConnection = YES;
-            }
-            [self showErrorView:noConnection startingY:0.0f selector:@selector(continueLoading) objects:nil];
-        }
-        
+        [self setEmptyCartViewHidden:YES];
+        [self setCartViewHidden:YES];
+        self.requestDone = NO;
+        [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(continueLoading) objects:nil];
         [self hideLoading];
     }];
 }
@@ -371,26 +346,10 @@
     
     self.screenName = @"CartEmpty";
     
-    self.emptyCartView.layer.cornerRadius = 5.0f;
-    self.emptyCartLabel.font = [UIFont fontWithName:kFontRegularName size:self.emptyCartLabel.font.pointSize];
-    [self.emptyCartLabel setText:STRING_NO_ITEMS_IN_CART];
-    [self.emptyCartLabel setTextColor:JALabelGrey];
-    [self.emptyCartLabel setNumberOfLines:1];
-    [self.emptyCartLabel sizeToFit];
-
-    self.continueShoppingButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.continueShoppingButton.titleLabel.font.pointSize];
-    [self.continueShoppingButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
-    [self.continueShoppingButton setTitle:STRING_CONTINUE_SHOPPING forState:UIControlStateNormal];
+    [self.emptyCartView setFrame:self.viewBounds];
+    [self.continueShoppingButton setX:(self.view.width - self.continueShoppingButton.width)/2];
     
-    self.continueShoppingButton.layer.cornerRadius = 5.0f;
-    
-    [self.continueShoppingButton addTarget:self action:@selector(goToHomeScreen) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.emptyCartView setWidth:self.view.width-12.f];
-    [self.emptyCartView setY:[self viewBounds].origin.y+6.0f];
-    [self.continueShoppingButton setWidth:self.view.width-12.f];
-    [self.continueShoppingButton setY:CGRectGetMaxY(self.emptyCartView.frame)+6.0f];
-    [self.emptyCartLabel setX:self.view.width/2-self.emptyCartLabel.width/2];
+    [self.emptyCartLabel setWidth:self.view.width - 2*kLateralMargin];
     [self.emptyCartImageView setX:self.view.width/2-self.emptyCartImageView.width/2];
     
     [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CartEmpty"];
@@ -596,34 +555,21 @@
     [self.articlesCount sizeToFit];
     [self.articlesCount setFrame:CGRectMake(6.0f, CGRectGetMaxY(self.subtotalTitleSeparator.frame) + 10.0f, self.articlesCount.width, self.articlesCount.frame.size.height)];
     
-    CGRect articleNumberWidth = [self.articlesCount.text boundingRectWithSize:CGSizeMake([self viewBounds].size.width, [self viewBounds].size.height)
-                                                                       options:NSStringDrawingUsesLineFragmentOrigin
-                                                                    attributes:@{NSFontAttributeName:self.articlesCount.font} context:nil];
-    
-    if (!self.totalPriceView) {
-        self.totalPriceView = [[JAPriceView alloc] init];
-        [self.subtotalView addSubview:self.totalPriceView];
+    if (!self.totalPriceLine) {
+        self.totalPriceLine = [[JAProductInfoPriceLine alloc] init];
+        [self.totalPriceLine setPriceSize:kPriceSizeSmall];
+        [self.totalPriceLine setLineContentXOffset:0.f];
+        [self.subtotalView addSubview:self.totalPriceLine];
     }
     
-    if(VALID_NOTEMPTY([[self cart] cartUnreducedValueFormatted], NSString))
-    {
-        [self.totalPriceView loadWithPrice:[[self cart] cartUnreducedValueFormatted]
-                              specialPrice:[[self cart] subTotalFormatted]
-                                  fontSize:11.0f
-                     specialPriceOnTheLeft:NO];
-    }
-    else
-    {
-        [self.totalPriceView loadWithPrice:[[self cart] subTotalFormatted]
-                              specialPrice:nil
-                                  fontSize:11.0f
-                     specialPriceOnTheLeft:NO];
-    }
+    [self.totalPriceLine setPrice:[[self cart] subTotalFormatted]];
+    [self.totalPriceLine setOldPrice:[[self cart] cartUnreducedValueFormatted]];
     
-    self.totalPriceView.frame = CGRectMake(self.subtotalView.frame.size.width - self.totalPriceView.frame.size.width - 4.0f,
-                                           CGRectGetMaxY(self.subtotalTitleSeparator.frame) + 10.0f,
-                                           self.totalPriceView.frame.size.width,
-                                           self.totalPriceView.frame.size.height);
+    [self.totalPriceLine sizeToFit];
+    self.totalPriceLine.frame = CGRectMake(self.subtotalView.frame.size.width - self.totalPriceLine.frame.size.width - 4.0f,
+                                           CGRectGetMaxY(self.subtotalTitleSeparator.frame) + 13.0f,
+                                           self.totalPriceLine.frame.size.width,
+                                           self.totalPriceLine.frame.size.height);
     
     if (!self.cartVatLabel) {
         self.cartVatLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -963,6 +909,9 @@
         [self.couponView flipSubviewPositions];
         [self.subtotalView flipSubviewAlignments];
         [self.subtotalView flipSubviewPositions];
+        [self.totalPriceLine flipAllSubviews];
+        
+        self.cartScrollView.scrollIndicatorInsets = UIEdgeInsetsMake(0,0,0,self.cartScrollView.bounds.size.width-7);
     }
 }
 
@@ -986,8 +935,7 @@
         RICartItem *product = [self.cart.cartItems objectAtIndex:button.tag];
         NSNumber *cartValue = self.cart.cartValue;
         [self showLoading];
-        [RICart removeProductWithQuantity:[product.quantity stringValue]
-                                      sku:product.simpleSku
+        [RICart removeProductWithSku:product.simpleSku
                          withSuccessBlock:^(RICart *cart) {
                              
                              NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
@@ -1010,7 +958,7 @@
                              [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
                              
                              [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
-                             [trackingDictionary setValue:[product.quantity stringValue] forKey:kRIEventQuantityKey];
+                             [trackingDictionary setValue:[cart.cartCount stringValue] forKey:kRIEventQuantityKey];
                              [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
                              
                              [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromCart]
@@ -1026,11 +974,11 @@
                              [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                              
                              [self loadCartInfo];
-                             
+                             [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                              [self hideLoading];
                          } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+                             [self onErrorResponse:apiResponse messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:@selector(removeFromCartPressed:) objects:button];
                              [self hideLoading];
-                             [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
                          }];
     }
 }
@@ -1120,10 +1068,11 @@
             [self setupCart];
             [self.couponTextField setEnabled:YES];
              [self.couponTextField setText:@""];
+            [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
             [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+            [self onErrorResponse:apiResponse messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:@selector(useCouponButtonPressed) objects:nil];
             [self hideLoading];
-            [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
         }];
     }
     else
@@ -1146,7 +1095,7 @@
             Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
             NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
             if (networkStatus == NotReachable) {
-                [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
+                [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:@selector(useCouponButtonPressed) objects:nil];
             }
             else{
                 [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
@@ -1157,11 +1106,10 @@
 
 - (void)checkoutButtonPressed
 {
-    if([RICustomer checkIfUserIsLogged])
-    {
+    [JAAuthenticationViewController goToCheckoutWithBlock:^{
         [self showLoading];
-        [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
             
+        [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
             [trackingDictionary setValue:@"Started" forKey:kRIEventActionKey];
@@ -1171,7 +1119,7 @@
             [trackingDictionary setValue:[self.cart cartValueEuroConverted] forKey:kRIEventTotalCartKey];
             
             NSMutableString* attributeSetID = [NSMutableString new];
-            for( RICartItem* pd in [self.cart cartItems]) {
+            for (RICartItem* pd in [self.cart cartItems]) {
                 [attributeSetID appendFormat:@"%@;",[pd attributeSetID]];
             }
             [trackingDictionary setValue:[attributeSetID copy] forKey:kRIEventAttributeSetIDCartKey];
@@ -1179,17 +1127,15 @@
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutStart]
                                                       data:[trackingDictionary copy]];
             
+            [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
             [self hideLoading];
             
-            if(VALID_NOTEMPTY(adressList, NSDictionary))
-            {
+            if (VALID_NOTEMPTY(adressList, NSDictionary)) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
                                                                     object:nil
                                                                   userInfo:nil];
                 [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckoutAddress"];
-            }
-            else
-            {
+            } else {
                 NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button", @"from_checkout"]];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
@@ -1197,9 +1143,7 @@
                                                                   userInfo:userInfo];
                 [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckoutAddress"];
             }
-            
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-            
             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
             [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
             [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];
@@ -1209,17 +1153,10 @@
                                                       data:[trackingDictionary copy]];
             
             [self hideLoading];
-        
-            #warning TODO String
-            [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
+            
+            [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:@selector(checkoutButtonPressed) objects:nil];
         }];
-    }
-    else
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutLoginScreenNotification
-                                                            object:nil
-                                                          userInfo:nil];
-    }
+    }];
 }
 
 - (void)callToOrderButtonPressed
@@ -1336,7 +1273,7 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
                                                             object:nil
-                                                          userInfo:@{ @"url" : product.productUrl,
+                                                          userInfo:@{ @"sku" : product.sku,
                                                                       @"previousCategory" : STRING_CART,
                                                                       @"show_back_button" : [NSNumber numberWithBool:NO]}];
         
@@ -1385,6 +1322,11 @@
 }
 
 #pragma mark JAPickerDelegate
+- (void)selectedRowNumber:(NSNumber *)selectedRowNumber
+{
+    [self selectedRow:selectedRowNumber.integerValue];
+}
+
 - (void)selectedRow:(NSInteger)selectedRow
 {
     NSInteger newQuantity = selectedRow + 1;
@@ -1428,12 +1370,8 @@
         
         
         NSMutableDictionary *quantitiesToChange = [[NSMutableDictionary alloc] init];
-        for (int i = 0; i < self.cart.cartItems.count; i++) {
-            RICartItem *cartItem = [[self.cart cartItems] objectAtIndex:i];
-            [quantitiesToChange setValue:[NSString stringWithFormat:@"%ld", [[cartItem quantity] longValue]] forKey:[NSString stringWithFormat:@"qty_%@", cartItem.simpleSku]];
-        }
-        
-        [quantitiesToChange setValue:[NSString stringWithFormat:@"%ld", (long)newQuantity] forKey:[NSString stringWithFormat:@"qty_%@", [self.currentItem simpleSku]]];
+        [quantitiesToChange setValue:[NSString stringWithFormat:@"%ld", (long)newQuantity] forKey:@"quantity"];
+        [quantitiesToChange setValue:[self.currentItem simpleSku] forKey:@"sku"];
         
         [RICart changeQuantityInProducts:quantitiesToChange
                         withSuccessBlock:^(RICart *cart) {
@@ -1457,10 +1395,10 @@
                             Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
                             NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
                             if (networkStatus == NotReachable) {
-                                [self showMessage:STRING_NO_NETWORK_DETAILS success:NO];
+                                [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_NO_NETWORK_DETAILS] showAsMessage:YES selector:@selector(selectedRowNumber:) objects:@[[NSNumber numberWithInteger:selectedRow]]];
                             }
                             else {
-                                [self showMessage:STRING_ERROR_CHANGING_QUANTITY success:NO];
+                                [self onErrorResponse:RIApiResponseUnknownError messages:errorMessages showAsMessage:YES selector:@selector(selectedRowNumber:) objects:@[[NSNumber numberWithInteger:selectedRow]]];
                             }
                         }];
     }

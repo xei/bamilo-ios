@@ -99,61 +99,7 @@
     
     if(!self.isRequestDone)
     {
-        if(VALID_NOTEMPTY(self.pushNotification, NSDictionary))
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
-                                                                object:nil];
-            
-            if (VALID_NOTEMPTY([self.pushNotification objectForKey:@"u"], NSString))
-            {
-                NSString *urlString = [self.pushNotification objectForKey:@"u"];
-                
-                // Check if the country is the same
-                NSString *currentCountry = [RIApi getCountryIsoInUse];
-                NSString *countryFromUrl = [[urlString substringWithRange:NSMakeRange(0, 2)] uppercaseString];
-                if([currentCountry isEqualToString:countryFromUrl])
-                {
-                    [self continueProcessing];
-                }
-                else
-                {
-                    RICountry* country = [RICountry getUniqueCountry];
-                    if (VALID_NOTEMPTY(country, RICountry)) {
-                        self.selectedCountry = country;
-                        [self continueProcessing];
-                    } else {
-                        // Change country
-                        self.countriesRequestId = [RICountry getCountriesWithSuccessBlock:^(id countries)
-                                                   {
-                                                       for (RICountry *country in countries)
-                                                       {
-                                                           if ([[country.countryIso uppercaseString] isEqualToString:[countryFromUrl uppercaseString]])
-                                                           {
-                                                               self.selectedCountry = country;
-                                                               
-                                                               [self continueProcessing];
-                                                           }
-                                                       }
-                                                       
-                                                   } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages)
-                                                   {
-                                                       [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
-                                                   }];
-                    }
-                }
-            }
-            else
-            {
-                if(VALID_NOTEMPTY(self.pushNotification, NSDictionary) && VALID_NOTEMPTY([self.pushNotification objectForKey:@"UTM"], NSString))
-                {
-                    [[RITrackingWrapper sharedInstance] trackCampaignWithName:[self.pushNotification objectForKey:@"UTM"]];
-                }
-            }
-        }
-        else
-        {
-            [self continueProcessing];
-        }
+        [self continueProcessing];
     }
 }
 
@@ -225,6 +171,8 @@
                                      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:STRING_UPDATE_NECESSARY_TITLE message:[NSString stringWithFormat:STRING_UPDATE_NECESSARY_MESSAGE, APP_NAME] delegate:self cancelButtonTitle:STRING_OK_UPDATE otherButtonTitles:nil];
                                      [alert setTag:kForceUpdateAlertViewTag];
                                      [alert show];
+                                     [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+                                     return;
 //                                     [self hideLoading];
                                  }
                                  else
@@ -243,7 +191,8 @@
                                      [self getConfigurations];
                                  }
                              }
-                             [self removeErrorView];
+                             [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+                             [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCountryNotification object:nil userInfo:self.pushNotification];
                              //show loading has to be added here, in case the no connection error view was shown
                              // and the loading was removed because of that
 //                             [self showLoading];
@@ -252,25 +201,7 @@
                          {
                              self.apiResponse = apiResponse;
                              self.isRequestDone=YES;
-                             if(RIApiResponseMaintenancePage == apiResponse)
-                             {
-                                 [self showMaintenancePage:@selector(continueProcessing) objects:nil];
-                             }
-                             else if(RIApiResponseKickoutView == apiResponse)
-                             {
-                                 [self showKickoutView:@selector(continueProcessing) objects:nil];
-                             }
-                             else
-                             {
-                                 BOOL noInternet = NO;
-                                 if(RIApiResponseNoInternetConnection == apiResponse)
-                                 {
-                                     noInternet = YES;
-                                 }
-                                 
-                                 [self showErrorView:noInternet startingY:0.0f selector:@selector(continueProcessing) objects:nil];
-                             }
-//                             [self hideLoading];
+                             [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(continueProcessing) objects:nil];
                          }];
 }
 
@@ -353,8 +284,8 @@
         
         if(VALID_NOTEMPTY(self.customer, RICustomer))
         {
-            [trackingDictionary setValue:self.customer.idCustomer forKey:kRIEventLabelKey];
-            [trackingDictionary setValue:self.customer.idCustomer forKey:kRIEventUserIdKey];
+            [trackingDictionary setValue:self.customer.customerId forKey:kRIEventLabelKey];
+            [trackingDictionary setValue:self.customer.customerId forKey:kRIEventUserIdKey];
             [trackingDictionary setValue:self.customer.firstName forKey:kRIEventUserFirstNameKey];
             [trackingDictionary setValue:self.customer.lastName forKey:kRIEventUserLastNameKey];
             [trackingDictionary setValue:self.customer.gender forKey:kRIEventGenderKey];
@@ -405,12 +336,15 @@
     trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
     
+    NSDictionary *componentsFromLocale =  [NSLocale componentsFromLocaleIdentifier:[RILocalizationWrapper getLocalization]];
+    NSString *languageCode = [componentsFromLocale objectForKey:NSLocaleLanguageCode];
+    [trackingDictionary setValue:languageCode forKey:kRIEventLanguageCode];
+    
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventChangeCountry]
                                               data:[trackingDictionary copy]];
     
 //    [self hideLoading];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCountryNotification object:nil userInfo:self.pushNotification];
 }
 
 #pragma mark UIAlertView

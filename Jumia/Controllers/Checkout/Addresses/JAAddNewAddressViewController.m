@@ -75,8 +75,6 @@ JAPickerDelegate>
 @property (assign, nonatomic) NSInteger numberOfGetFormRequests;
 @property (assign, nonatomic) BOOL hasErrors;
 
-@property (strong, nonatomic) JACheckBoxComponent *checkBoxComponent;
-
 // Order summary
 @property (strong, nonatomic) JAOrderSummaryView *orderSummary;
 
@@ -167,13 +165,15 @@ JAPickerDelegate>
     
     typedef void (^GetBillingDynamicFormBlock)(void);
     GetBillingDynamicFormBlock getBillingDynamicFormBlock = ^void{
-        [RIForm getForm:@"address"
+        [RIForm getForm:@"addresscreate"
            forceRequest:YES
            successBlock:^(RIForm *form)
          {
              self.billingDynamicForm = [[JADynamicForm alloc] initWithForm:form startingPosition:self.billingAddressViewCurrentY widthSize:self.billingContentView.frame.size.width hasFieldNavigation:NO];
              
              [self.billingDynamicForm setDelegate:self];
+             
+             [self getBillingLocales];
              
              _genderRadioHeight = 0;
              CGFloat offset = 0;
@@ -203,7 +203,7 @@ JAPickerDelegate>
          }];
     };
     
-    [RIForm getForm:@"address"
+    [RIForm getForm:@"addresscreate"
        forceRequest:YES
        successBlock:^(RIForm *form)
     {
@@ -212,6 +212,7 @@ JAPickerDelegate>
         [self.shippingDynamicForm setDelegate:self];
         
          getBillingDynamicFormBlock();
+        [self getShippingLocales];
          
          for(UIView *view in self.shippingDynamicForm.formViews)
          {
@@ -233,7 +234,142 @@ JAPickerDelegate>
      }];
 }
 
-- (void) hideKeyboard
+- (void)getShippingLocales
+{
+    
+    for (JADynamicField* field in self.shippingDynamicForm.formViews) {
+        if ([field isKindOfClass:[JARadioComponent class]]) {
+            JARadioComponent* radioComponent = (JARadioComponent*)field;
+            
+            if([radioComponent isComponentWithKey:@"region"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
+            {
+                [RILocale getLocalesForUrl:[radioComponent getApiCallUrl] parameters:nil successBlock:^(NSArray *regions) {
+                    self.regionsDataset = [regions copy];
+                    
+                    for (RILocale* region in self.regionsDataset) {
+                        if ([region.value isEqualToString:[radioComponent getSelectedValue]]) {
+                            [self.shippingDynamicForm setRegionValue:region];
+                            self.shippingSelectedRegion = region;
+                            break;
+                        }
+                    }
+                } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
+                }];
+            }
+            else if([radioComponent isComponentWithKey:@"city"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
+            {
+                NSDictionary* requestParameters = [self getRequestParametersForRadioComponent:radioComponent andForm:self.shippingDynamicForm];
+                [RILocale getLocalesForUrl:[radioComponent getApiCallUrl]
+                                parameters:requestParameters
+                              successBlock:^(NSArray *cities) {
+                                  self.shippingCitiesDataset = [cities copy];
+                                  
+                                  for (RILocale* city in self.shippingCitiesDataset) {
+                                      if ([city.value isEqualToString:[radioComponent getSelectedValue]]) {
+                                          [self.shippingDynamicForm setCityValue:city];
+                                          self.shippingSelectedCity = city;
+                                          break;
+                                      }
+                                  }
+                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+                              }];
+            }
+            else if([radioComponent isComponentWithKey:@"postcode"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
+            {
+                NSDictionary* requestParameters = [self getRequestParametersForRadioComponent:radioComponent andForm:self.shippingDynamicForm];
+                [RILocale getLocalesForUrl:[radioComponent getApiCallUrl]
+                                parameters:requestParameters
+                              successBlock:^(NSArray *postcodes) {
+                                  self.shippingPostcodesDataset = [postcodes copy];
+                                  
+                                  for (RILocale* postcode in self.shippingPostcodesDataset) {
+                                      if ([postcode.value isEqualToString:[radioComponent getSelectedValue]]) {
+                                          [self.shippingDynamicForm setPostcodeValue:postcode];
+                                          self.shippingSelectedPostcode = postcode;
+                                          break;
+                                      }
+                                  }
+                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+                                  [self hideLoading];
+                              }];
+            }
+        }
+    }
+}
+
+- (void)getBillingLocales
+{
+    for (JADynamicField* field in self.shippingDynamicForm.formViews) {
+        if ([field isKindOfClass:[JARadioComponent class]]) {
+            JARadioComponent* radioComponent = (JARadioComponent*)field;
+            
+            if([radioComponent isComponentWithKey:@"region"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
+            {
+                if (VALID_NOTEMPTY(self.regionsDataset, NSArray)) {
+                    for (RILocale* region in self.regionsDataset) {
+                        if ([region.value isEqualToString:[radioComponent getSelectedValue]]) {
+                            [self.billingDynamicForm setRegionValue:region];
+                            self.billingSelectedRegion = region;
+                            break;
+                        }
+                    }
+                } else
+                    [RILocale getLocalesForUrl:[radioComponent getApiCallUrl] parameters:nil successBlock:^(NSArray *regions) {
+                        self.regionsDataset = [regions copy];
+                        
+                        for (RILocale* region in self.regionsDataset) {
+                            if ([region.value isEqualToString:[radioComponent getSelectedValue]]) {
+                                [self.billingDynamicForm setRegionValue:region];
+                                self.billingSelectedRegion = region;
+                                break;
+                            }
+                        }
+                    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
+                    }];
+            }
+            else if([radioComponent isComponentWithKey:@"city"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
+            {
+                NSDictionary* requestParameters = [self getRequestParametersForRadioComponent:radioComponent andForm:self.billingDynamicForm];
+                [RILocale getLocalesForUrl:[radioComponent getApiCallUrl]
+                                parameters:requestParameters
+                              successBlock:^(NSArray *cities) {
+                                  self.billingCitiesDataset = [cities copy];
+                                  
+                                  for (RILocale* city in self.billingCitiesDataset) {
+                                      if ([city.value isEqualToString:[radioComponent getSelectedValue]]) {
+                                          [self.billingDynamicForm setCityValue:city];
+                                          self.billingSelectedCity = city;
+                                          break;
+                                      }
+                                  }
+                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+                                  [self hideLoading];
+                              }];
+            }
+            else if([radioComponent isComponentWithKey:@"postcode"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
+            {
+                NSDictionary* requestParameters = [self getRequestParametersForRadioComponent:radioComponent andForm:self.billingDynamicForm];
+                [RILocale getLocalesForUrl:[radioComponent getApiCallUrl]
+                                parameters:requestParameters
+                              successBlock:^(NSArray *postcodes) {
+                                  self.billingPostcodesDataset = [postcodes copy];
+                                  
+                                  for (RILocale* postcode in self.billingPostcodesDataset) {
+                                      if ([postcode.value isEqualToString:[radioComponent getSelectedValue]]) {
+                                          [self.billingDynamicForm setPostcodeValue:postcode];
+                                          self.billingSelectedPostcode = postcode;
+                                          break;
+                                      }
+                                  }
+                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+                                  [self hideLoading];
+                              }];
+            }
+        }
+    }
+}
+
+- (void)hideKeyboard
 {
     [self.shippingDynamicForm resignResponder];
     [self.billingDynamicForm resignResponder];
@@ -243,20 +379,13 @@ JAPickerDelegate>
 {
     if(self.loadFailed)
     {
-        BOOL noInternetConnection = NO;
-        if (RIApiResponseNoInternetConnection == self.apiResponse)
-        {
-            noInternetConnection = YES;
-        }
-        
+        [self onErrorResponse:self.apiResponse messages:nil showAsMessage:NO selector:@selector(getForms) objects:nil];
         [self hideLoading];
-        
-        [self showErrorView:noInternetConnection startingY:0.0f selector:@selector(getForms) objects:nil];
     }
     else
     {
         [self finishedFormLoading];
-        [self removeErrorView];
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
 
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
         [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
@@ -390,17 +519,6 @@ JAPickerDelegate>
         newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     }
     
-    if(self.isBillingAddress && self.isShippingAddress)
-    {
-        self.checkBoxComponent = [JACheckBoxComponent getNewJACheckBoxComponent];
-        [self.checkBoxComponent setup];
-        [self.checkBoxComponent.labelText setText:STRING_BILLING_SAME_ADDRESSES];
-        [self.checkBoxComponent.switchComponent setOn:YES];
-        [self.checkBoxComponent.switchComponent addTarget:self action:@selector(changedAddressState:) forControlEvents:UIControlEventValueChanged];
-        [self.checkBoxComponent.switchComponent setAccessibilityLabel:STRING_BILLING_SAME_ADDRESSES];
-        [self.shippingContentView addSubview:self.checkBoxComponent];
-    }
-    
     [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
     
     [self hideLoading];
@@ -532,13 +650,6 @@ JAPickerDelegate>
         self.shippingAddressViewCurrentY += view.frame.size.height;
     }
     
-    [self.checkBoxComponent setFrame:CGRectMake(self.checkBoxComponent.frame.origin.x,
-                                                self.shippingAddressViewCurrentY,
-                                                self.shippingContentView.frame.size.width - 12.0f,
-                                                self.checkBoxComponent.frame.size.height)];
-    
-    self.shippingAddressViewCurrentY += self.checkBoxComponent.frame.size.height;
-    
     if(!self.isBillingAddress || !self.isShippingAddress)
     {
         self.shippingAddressViewCurrentY += 12.0f;
@@ -607,16 +718,8 @@ JAPickerDelegate>
         [self.bottomView addButton:STRING_SAVE_LABEL target:self action:@selector(createAddressButtonPressed)];
     }
     
-    if(!VALID_NOTEMPTY(self.checkBoxComponent, JACheckBoxComponent) || [self.checkBoxComponent isCheckBoxOn])
-    {
-        [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width,
-                                                          self.shippingContentView.frame.origin.y + self.shippingContentView.frame.size.height + self.bottomView.frame.size.height)];
-    }
-    else
-    {
-        [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width,
-                                                          self.shippingContentView.frame.origin.y + self.shippingContentView.frame.size.height + 6.0f + self.billingContentView.frame.size.height + self.bottomView.frame.size.height)];
-    }
+    [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width,
+                                                      self.shippingContentView.frame.origin.y + self.shippingContentView.frame.size.height + self.bottomView.frame.size.height)];
     
     if (RI_IS_RTL) {
         [self.view flipAllSubviews];
@@ -671,27 +774,23 @@ JAPickerDelegate>
 {
     [self showLoading];
     if ([self.shippingDynamicForm checkErrors]) {
-        [self showMessage:self.shippingDynamicForm.firstErrorInFields success:NO];
+        NSArray* message;
+        if (VALID_NOTEMPTY(self.shippingDynamicForm.firstErrorInFields, NSString)) {
+            message = [NSArray arrayWithObject:self.shippingDynamicForm.firstErrorInFields];
+        }
+        
+        [self onErrorResponse:RIApiResponseSuccess messages:message showAsMessage:YES selector:@selector(createAddressButtonPressed) objects:nil];
         [self hideLoading];
         return;
     }
     
-//    NSString* selectedGender;
-//    //search for gender in shipping
-//    for (JADynamicField* dynamicField in self.shippingDynamicForm.formViews) {
-//        if (VALID_NOTEMPTY(dynamicField, JARadioComponent)) {
-//            JARadioComponent* radioComponent = (JARadioComponent*)dynamicField;
-//            selectedGender = [radioComponent getSelectedValue];
-//        }
-//    }
-//    for (JADynamicField* dynamicField in self.shippingDynamicForm.formViews) {
-//        if (VALID_NOTEMPTY(dynamicField, JARadioComponent)) {
-//            JARadioComponent* radioComponent = (JARadioComponent*)dynamicField;
-//            selectedGender = [radioComponent getSelectedValue];
-//        }
-//    }
     if (![self.billingContentView isHidden] && [self.billingDynamicForm checkErrors]) {
-        [self showMessage:self.billingDynamicForm.firstErrorInFields success:NO];
+        NSArray* message;
+        if (VALID_NOTEMPTY(self.shippingDynamicForm.firstErrorInFields, NSString)) {
+            message = [NSArray arrayWithObject:self.shippingDynamicForm.firstErrorInFields];
+        }
+        
+        [self onErrorResponse:RIApiResponseSuccess messages:message showAsMessage:YES selector:@selector(createAddressButtonPressed) objects:nil];
         [self hideLoading];
         return;
     }
@@ -733,7 +832,7 @@ JAPickerDelegate>
         
         [RIForm sendForm:[self.billingDynamicForm form]
               parameters:billingParameters
-            successBlock:^(id object)
+            successBlock:^(id object, NSArray* successMessages)
          {
              NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
              [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
@@ -746,8 +845,6 @@ JAPickerDelegate>
              [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutAddAddressSuccess]
                                                        data:nil];
              
-             NSDictionary* entitiesDictionary = (NSDictionary*) object;
-             self.cart = [entitiesDictionary objectForKey:@"cart"];
              [self.billingDynamicForm resetValues];
              self.numberOfRequests--;
          } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
@@ -767,11 +864,15 @@ JAPickerDelegate>
              
              if(VALID_NOTEMPTY(errorObject, NSDictionary))
              {
-                 [self.billingDynamicForm validateFields:errorObject];
+                 [self.billingDynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
+                     [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(createAddressButtonPressed) objects:nil];
+                 }];
              }
              else if(VALID_NOTEMPTY(errorObject, NSArray))
              {
-                 [self.billingDynamicForm checkErrors];
+                 [self.billingDynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
+                     [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(createAddressButtonPressed) objects:nil];
+                 }];
              }
          }];
     }
@@ -779,32 +880,33 @@ JAPickerDelegate>
     [RIForm sendForm:[self.shippingDynamicForm form]
       extraArguments:self.extraParameters
           parameters:shippingParameters
-        successBlock:^(id object)
+        successBlock:^(id object, NSArray* successMessages)
      {
-         NSDictionary* entitiesDictionary = (NSDictionary*)object;
-         self.cart = [entitiesDictionary objectForKey:@"cart"];
          [self.shippingDynamicForm resetValues];
+         if (NOTEMPTY([object valueForKey:@"next_step"])) {
+             self.cart.nextStep = [object valueForKey:@"next_step"];
+         }
          self.numberOfRequests--;
      } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
      {
          self.hasErrors = YES;
          self.numberOfRequests--;
          
-         if (RIApiResponseNoInternetConnection == apiResponse)
+         if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
-             [self showMessage:STRING_NO_CONNECTION success:NO];
-         }
-         else if(VALID_NOTEMPTY(errorObject, NSDictionary))
-         {
-             [self.shippingDynamicForm validateFields:errorObject];
+             [self.shippingDynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(createAddressButtonPressed) objects:nil];
+             }];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
-             [self.shippingDynamicForm checkErrors];
+             [self.shippingDynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(createAddressButtonPressed) objects:nil];
+             }];
          }
          else
          {
-             [self showMessage:STRING_ERROR success:NO];
+             [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(createAddressButtonPressed) objects:nil];
          }
      }];
 }
@@ -815,7 +917,7 @@ JAPickerDelegate>
     
     if(self.hasErrors)
     {
-        [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
+        [self onErrorResponse:RIApiResponseSuccess messages:@[STRING_ERROR_INVALID_FIELDS] showAsMessage:YES selector:@selector(createAddressButtonPressed) objects:nil];
         
         self.hasErrors = NO;
     }
@@ -860,6 +962,37 @@ JAPickerDelegate>
     //                     }];
 }
 
+- (NSDictionary*)getRequestParametersForRadioComponent:(JARadioComponent*)component
+                                               andForm:(JADynamicForm*)dynamicForm
+{
+    NSMutableDictionary* requestParameters = [NSMutableDictionary new];
+    
+    NSDictionary* parameterMap = [component getApiCallParameters];
+    
+    if (VALID_NOTEMPTY(parameterMap, NSDictionary)) {
+        [parameterMap enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            //look for value of field corresponding to key
+            for (JADynamicField* field in dynamicForm.formViews) {
+                if ([field isKindOfClass:[JARadioComponent class]]) {
+                    //found the right class, so cast it
+                    JARadioComponent* relatedComponent = (JARadioComponent*)field;
+                    
+                    //check for key
+                    if ([relatedComponent isComponentWithKey:key]) {
+                        //found the component, so look for value and add it to the request parameters
+                        // using the object from the parameter map as the key
+                        [requestParameters setValue:[relatedComponent getSelectedValue] forKey:obj];
+                        break;
+                    }
+                }
+            }
+            //use the obj as the key in the request parameters
+        }];
+    }
+    
+    return [requestParameters copy];
+}
+
 - (void)openPicker:(JARadioComponent *)radioComponent
 {
     [self.shippingDynamicForm resignResponder];
@@ -871,9 +1004,16 @@ JAPickerDelegate>
     
     if([radioComponent isComponentWithKey:@"region"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
     {
-        self.radioComponentDataset = self.regionsDataset;
-        
-        [self setupPickerView];
+        [self showLoading];
+        [RILocale getLocalesForUrl:[radioComponent getApiCallUrl] parameters:nil successBlock:^(NSArray *regions) {
+            self.regionsDataset = [regions copy];
+            self.radioComponentDataset = [regions copy];
+            
+            [self hideLoading];
+            [self setupPickerView];
+        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
+            [self hideLoading];
+        }];
     }
     else if([radioComponent isComponentWithKey:@"city"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
     {
@@ -887,19 +1027,19 @@ JAPickerDelegate>
             }
             else
             {
-                NSString *url = [radioComponent getApiCallUrl];
                 [self showLoading];
-                [RILocale getCitiesForUrl:url region:self.shippingSelectedRegion.value successBlock:^(NSArray *cities)
-                 {
-                     self.shippingCitiesDataset = [cities copy];
-                     self.radioComponentDataset = [cities copy];
-                     
-                     [self hideLoading];
-                     [self setupPickerView];
-                 } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error)
-                 {
-                     [self hideLoading];
-                 }];
+                NSDictionary* requestParameters = [self getRequestParametersForRadioComponent:radioComponent andForm:self.shippingDynamicForm];
+                [RILocale getLocalesForUrl:[radioComponent getApiCallUrl]
+                                parameters:requestParameters
+                              successBlock:^(NSArray *cities) {
+                                  self.shippingCitiesDataset = [cities copy];
+                                  self.radioComponentDataset = [cities copy];
+                                  
+                                  [self hideLoading];
+                                  [self setupPickerView];
+                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+                                  [self hideLoading];
+                              }];
             }
         }
         else if(self.billingContentView == [radioComponent superview])
@@ -912,19 +1052,19 @@ JAPickerDelegate>
             }
             else
             {
-                NSString *url = [radioComponent getApiCallUrl];
                 [self showLoading];
-                [RILocale getCitiesForUrl:url region:self.billingSelectedRegion.value successBlock:^(NSArray *cities)
-                 {
-                     self.billingCitiesDataset = [cities copy];
-                     self.radioComponentDataset = [cities copy];
-                     
-                     [self hideLoading];
-                     [self setupPickerView];
-                 } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error)
-                 {
-                     [self hideLoading];
-                 }];
+                NSDictionary* requestParameters = [self getRequestParametersForRadioComponent:radioComponent andForm:self.billingDynamicForm];
+                [RILocale getLocalesForUrl:[radioComponent getApiCallUrl]
+                                parameters:requestParameters
+                              successBlock:^(NSArray *cities) {
+                                  self.billingCitiesDataset = [cities copy];
+                                  self.radioComponentDataset = [cities copy];
+                                  
+                                  [self hideLoading];
+                                  [self setupPickerView];
+                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+                                  [self hideLoading];
+                              }];
             }
         }
     }
@@ -940,19 +1080,19 @@ JAPickerDelegate>
             }
             else
             {
-                NSString *url = [radioComponent getApiCallUrl];
                 [self showLoading];
-                [RILocale getPostcodesForUrl:url city:self.shippingSelectedCity.value successBlock:^(NSArray *postcodes)
-                 {
-                     self.shippingPostcodesDataset = [postcodes copy];
-                     self.radioComponentDataset = [postcodes copy];
-                     
-                     [self hideLoading];
-                     [self setupPickerView];
-                 } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error)
-                 {
-                     [self hideLoading];
-                 }];
+                NSDictionary* requestParameters = [self getRequestParametersForRadioComponent:radioComponent andForm:self.shippingDynamicForm];
+                [RILocale getLocalesForUrl:[radioComponent getApiCallUrl]
+                                parameters:requestParameters
+                              successBlock:^(NSArray *postcodes) {
+                                  self.shippingPostcodesDataset = [postcodes copy];
+                                  self.radioComponentDataset = [postcodes copy];
+                                  
+                                  [self hideLoading];
+                                  [self setupPickerView];
+                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+                                  [self hideLoading];
+                              }];
             }
         }
         else if(self.billingContentView == [radioComponent superview])
@@ -965,19 +1105,19 @@ JAPickerDelegate>
             }
             else
             {
-                NSString *url = [radioComponent getApiCallUrl];
                 [self showLoading];
-                [RILocale getPostcodesForUrl:url city:self.billingSelectedCity.value successBlock:^(NSArray *postcodes)
-                 {
-                     self.billingPostcodesDataset = [postcodes copy];
-                     self.radioComponentDataset = [postcodes copy];
-                     
-                     [self hideLoading];
-                     [self setupPickerView];
-                 } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error)
-                 {
-                     [self hideLoading];
-                 }];
+                NSDictionary* requestParameters = [self getRequestParametersForRadioComponent:radioComponent andForm:self.billingDynamicForm];
+                [RILocale getLocalesForUrl:[radioComponent getApiCallUrl]
+                                parameters:requestParameters
+                              successBlock:^(NSArray *postcodes) {
+                                  self.billingPostcodesDataset = [postcodes copy];
+                                  self.radioComponentDataset = [postcodes copy];
+                                  
+                                  [self hideLoading];
+                                  [self setupPickerView];
+                              } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+                                  [self hideLoading];
+                              }];
             }
         }
     }
@@ -1061,138 +1201,6 @@ JAPickerDelegate>
                      }];
 }
 
-
-- (void)downloadLocalesForComponents:(NSDictionary *)componentDictionary
-{
-    JARadioComponent* regionComponent = [componentDictionary objectForKey:@"regionComponent"];
-    
-    if(VALID_NOTEMPTY(regionComponent, JARadioComponent) )
-    {
-        if(!VALID_NOTEMPTY(self.regionsDataset, NSArray))
-        {
-            [self downloadRegionComponent:regionComponent andOtherComponents:componentDictionary];
-        } else {
-            if (VALID_NOTEMPTY(self.billingSelectedRegion, RILocale)) {
-                [self.billingDynamicForm setRegionValue:self.billingSelectedRegion];
-            }
-        }
-    }
-}
-
-- (void)downloadRegionComponent:(JARadioComponent*) regionComponent andOtherComponents:(NSDictionary*)componentDictionary {
-    JARadioComponent* cityComponent = [componentDictionary objectForKey:@"cityComponent"];
-    JARadioComponent* postcodeComponent = [componentDictionary objectForKey:@"postcodeComponent"];
-    
-    
-    [self showLoading];
-    [RILocale getRegionsForUrl:[regionComponent getApiCallUrl] successBlock:^(NSArray *regions)
-     {
-         if (VALID_NOTEMPTY(regions, NSArray)) {
-         self.regionsDataset = [regions copy];
-         
-         NSString *selectedRegionId = [regionComponent getSelectedValue];
-        if(VALID_NOTEMPTY(selectedRegionId, NSString))
-             {
-                 for(RILocale *region in regions)
-                 {
-                     if([selectedRegionId isEqualToString:region.value])
-                     {
-                         self.shippingSelectedRegion = region;
-                         self.billingSelectedRegion = region;
-                         
-                         [self.shippingDynamicForm setRegionValue:region];
-                         [self.billingDynamicForm setRegionValue:region];
-                         break;
-                     }
-                 }
-                 
-                 if(!VALID_NOTEMPTY(self.shippingSelectedRegion, RILocale))
-                 {
-                     self.shippingSelectedRegion = [regions objectAtIndex:0];
-                     [self.shippingDynamicForm setRegionValue:self.shippingSelectedRegion];
-                 }
-                 if (!VALID_NOTEMPTY(self.billingSelectedRegion, RILocale))
-                 {
-                     self.billingSelectedRegion = [regions objectAtIndex:0];
-                     [self.billingDynamicForm setRegionValue:self.shippingSelectedRegion];
-                 }
-             }
-             else
-             {
-                 self.shippingSelectedRegion = [regions objectAtIndex:0];
-                 self.billingSelectedRegion = [regions objectAtIndex:0];
-                 
-                 [self.shippingDynamicForm setRegionValue:self.shippingSelectedRegion];
-                 [self.billingDynamicForm setRegionValue:self.shippingSelectedRegion];
-             }
-         }
-         
-         [self downloadCityComponent:cityComponent andPostcodeComponent:postcodeComponent];
-         
-     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error)
-     {
-         [self hideLoading];
-     }];
-    
-}
-
-- (void)downloadCityComponent:(JARadioComponent*) cityComponent andPostcodeComponent:(JARadioComponent*) postcodeComponent {
-    if(VALID_NOTEMPTY(self.shippingSelectedRegion, RILocale) && VALID_NOTEMPTY(cityComponent, JARadioComponent))
-    {
-        [RILocale getCitiesForUrl:[cityComponent getApiCallUrl] region:self.shippingSelectedRegion.value successBlock:^(NSArray *cities) {
-            self.shippingCitiesDataset = [cities copy];
-            self.billingCitiesDataset = [cities copy];
-            
-            if (VALID_NOTEMPTY(cities, NSArray)) {
-                
-                RILocale *city = [cities objectAtIndex:0];
-                
-                self.shippingSelectedCity = city;
-                self.billingSelectedCity = city;
-                
-                [self.shippingDynamicForm setCityValue:city];
-                [self.billingDynamicForm setCityValue:city];
-                
-            }
-            
-            [self downloadPostcodeComponent:postcodeComponent];
-            
-        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-            [self hideLoading];
-        }];
-    }
-    else
-    {
-        [self hideLoading];
-    }
-}
-
-- (void)downloadPostcodeComponent:(JARadioComponent*) postcodeComponent {
-    if (VALID_NOTEMPTY(self.shippingSelectedCity, RILocale) && VALID_NOTEMPTY(postcodeComponent, JARadioComponent)) {
-        [RILocale getPostcodesForUrl:[postcodeComponent getApiCallUrl] city:self.shippingSelectedCity.value successBlock:^(NSArray *postcodes) {
-            self.shippingPostcodesDataset = [postcodes copy];
-            self.billingPostcodesDataset = [postcodes copy];
-            
-            if (VALID_NOTEMPTY(postcodes, NSArray)) {
-                
-                RILocale* postcode = [postcodes objectAtIndex:0];
-                
-                self.shippingSelectedPostcode = postcode;
-                self.billingSelectedPostcode = postcode;
-                
-                [self.shippingDynamicForm setPostcodeValue:postcode];
-                [self.billingDynamicForm setPostcodeValue:postcode];
-            }
-            
-            [self hideLoading];
-        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
-            [self hideLoading];
-        }];
-    } else {
-        [self hideLoading];
-    }
-}
-
 - (IBAction)doneClicked:(id)sender
 {
     [self.view endEditing:YES];
@@ -1201,69 +1209,66 @@ JAPickerDelegate>
 #pragma mark JAPickerDelegate
 - (void)selectedRow:(NSInteger)selectedRow
 {
-    if(VALID_NOTEMPTY(self.radioComponent, JARadioComponent))
-    {
-        if(VALID_NOTEMPTY(self.radioComponentDataset, NSArray) && selectedRow < [self.radioComponentDataset count])
-        {
-            id selectedObject = [self.radioComponentDataset objectAtIndex:selectedRow];
-            
-            if(self.shippingContentView == [self.radioComponent superview])
-            {
-                if(VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"region"] && ![[(RILocale*)selectedObject value] isEqualToString:[self.shippingSelectedRegion value]])
-                {
-                    self.shippingSelectedRegion = selectedObject;
-                    self.shippingSelectedCity = nil;
-                    self.shippingCitiesDataset = nil;
-                    
-                    [self.shippingDynamicForm setRegionValue:selectedObject];
-                }
-                else if(VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"city"])
-                {
-                    self.shippingSelectedCity = selectedObject;
-                    self.shippingSelectedPostcode = nil;
-                    self.shippingPostcodesDataset = nil;
-                    
-                    [self.shippingDynamicForm setCityValue:selectedObject];
-                }
-                else if(VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"postcode"])
-                {
-                    self.shippingSelectedPostcode = selectedObject;
-                    
-                    [self.shippingDynamicForm setPostcodeValue:selectedObject];
-                }
-                else if(VALID_NOTEMPTY(selectedObject, NSString))
-                {
-                    [self.radioComponent setValue:selectedObject];
-                }
+    if (VALID_NOTEMPTY(self.radioComponent, JARadioComponent)
+        && VALID_NOTEMPTY(self.radioComponentDataset, NSArray)
+        && selectedRow < [self.radioComponentDataset count]) {
+        
+        id selectedObject = [self.radioComponentDataset objectAtIndex:selectedRow];
+        
+        if (self.shippingContentView == [self.radioComponent superview]) {
+            if (VALID_NOTEMPTY(selectedObject, RILocale)
+                && [self.radioComponent isComponentWithKey:@"region"]
+                && ![[(RILocale*)selectedObject value] isEqualToString:[self.shippingSelectedRegion value]]) {
+                
+                self.shippingSelectedRegion = selectedObject;
+                self.shippingSelectedCity = nil;
+                self.shippingCitiesDataset = nil;
+                self.shippingSelectedPostcode = nil;
+                self.shippingPostcodesDataset = nil;
+                
+                [self.shippingDynamicForm setRegionValue:selectedObject];
+                [self.shippingDynamicForm setCityValue:nil];
+                [self.shippingDynamicForm setPostcodeValue:nil];
+            } else if (VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"city"]) {
+                self.shippingSelectedCity = selectedObject;
+                self.shippingSelectedPostcode = nil;
+                self.shippingPostcodesDataset = nil;
+                
+                [self.shippingDynamicForm setCityValue:selectedObject];
+                [self.shippingDynamicForm setPostcodeValue:nil];
+            } else if (VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"postcode"]) {
+                self.shippingSelectedPostcode = selectedObject;
+                
+                [self.shippingDynamicForm setPostcodeValue:selectedObject];
+            } else if (VALID_NOTEMPTY(selectedObject, NSString)) {
+                [self.radioComponent setValue:selectedObject];
             }
-            else if(self.billingContentView == [self.radioComponent superview])
-            {
-                if(VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"region"]  && ![[(RILocale*) selectedObject value] isEqualToString:[self.billingSelectedRegion value]])
-                {
-                    self.billingSelectedRegion = selectedObject;
-                    self.billingSelectedCity = nil;
-                    self.billingCitiesDataset = nil;
-                    
-                    [self.billingDynamicForm setRegionValue:selectedObject];
-                }
-                else if(VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"city"])
-                {
-                    self.billingSelectedCity = selectedObject;
-                    self.billingSelectedPostcode = nil;
-                    self.billingPostcodesDataset = nil;
-                    
-                    [self.billingDynamicForm setCityValue:selectedObject];
-                }
-                else if(VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"postcode"])
-                {
-                    self.billingSelectedPostcode = selectedObject;
-                    
-                    [self.billingDynamicForm setPostcodeValue:selectedObject];
-                }
-                else if(VALID_NOTEMPTY(selectedObject, NSString))
-                {
-                    [self.radioComponent setValue:selectedObject];
-                }
+        } else if (self.billingContentView == [self.radioComponent superview]) {
+            if (VALID_NOTEMPTY(selectedObject, RILocale)
+                && [self.radioComponent isComponentWithKey:@"region"]
+                && ![[(RILocale*) selectedObject value] isEqualToString:[self.billingSelectedRegion value]]) {
+                self.billingSelectedRegion = selectedObject;
+                self.billingSelectedCity = nil;
+                self.billingCitiesDataset = nil;
+                self.billingSelectedPostcode = nil;
+                self.billingPostcodesDataset = nil;
+                
+                [self.billingDynamicForm setRegionValue:selectedObject];
+                [self.billingDynamicForm setCityValue:nil];
+                [self.billingDynamicForm setPostcodeValue:nil];
+            } else if(VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"city"]) {
+                self.billingSelectedCity = selectedObject;
+                self.billingSelectedPostcode = nil;
+                self.billingPostcodesDataset = nil;
+                
+                [self.billingDynamicForm setCityValue:selectedObject];
+                [self.billingDynamicForm setPostcodeValue:nil];
+            } else if(VALID_NOTEMPTY(selectedObject, RILocale) && [self.radioComponent isComponentWithKey:@"postcode"]) {
+                self.billingSelectedPostcode = selectedObject;
+                
+                [self.billingDynamicForm setPostcodeValue:selectedObject];
+            } else if(VALID_NOTEMPTY(selectedObject, NSString)) {
+                [self.radioComponent setValue:selectedObject];
             }
         }
     }

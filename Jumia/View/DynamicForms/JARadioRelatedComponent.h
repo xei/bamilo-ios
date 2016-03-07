@@ -7,27 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RIField.h"
 #import "JADynamicField.h"
 
 @interface JARadioRelatedComponent : JADynamicField
 
-@property (weak, nonatomic) IBOutlet UILabel *labelText;
-@property (weak, nonatomic) IBOutlet UISwitch *switchComponent;
-
-+ (JARadioRelatedComponent *)getNewJARadioRelatedComponent;
-
--(void)setup;
+@property (strong, nonatomic) UILabel *labelText;
+@property (strong, nonatomic) UISwitch *switchComponent;
 
 -(void)setupWithField:(RIField*)field;
 
 -(BOOL)isComponentWithKey:(NSString*)key;
-
--(void)resetValue;
 
 -(NSDictionary*)getValues;
 
 -(void)setValue:(NSString*)value;
 
 -(BOOL)isCheckBoxOn;
+
+-(NSString*)getFieldName;
 
 @end

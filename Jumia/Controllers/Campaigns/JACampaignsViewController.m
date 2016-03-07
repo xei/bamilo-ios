@@ -72,7 +72,6 @@
     self.scrollView.scrollEnabled = NO;
     self.scrollView.delegate = self;
     [self.view addSubview:self.scrollView];
-
     
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
@@ -209,13 +208,13 @@
                     JACampaignPageView* campaignPageView = [self createCampaignPageAtX:currentX];
                     currentX += campaignPageView.frame.size.width;
                     
-                    if (VALID_NOTEMPTY(component.name, NSString)) {
-                        [optionList addObject:component.name];
+                    if (VALID_NOTEMPTY(component.title, NSString)) {
+                        [optionList addObject:component.title];
                         [self.activeCampaignComponents addObject:component];
                         [[RITrackingWrapper sharedInstance]trackScreenWithName:@"Campaign"];
-                        [[RITrackingWrapper sharedInstance]trackScreenWithName:component.name];
+                        [[RITrackingWrapper sharedInstance]trackScreenWithName:component.title];
                         
-                        if ([component.name isEqualToString:self.startingTitle]) {
+                        if ([component.title isEqualToString:self.startingTitle]) {
                             startingIndex = i;
                         }
                     }
@@ -227,13 +226,14 @@
         self.pickerNamesAlreadySet = YES;
         self.pickerScrollView.startingIndex = startingIndex;
     }
-    else if (VALID_NOTEMPTY(self.campaignUrl, NSString)) {
+    else if (VALID_NOTEMPTY(self.campaignTargetString, NSString)) {
         [self createCampaignPageAtX:currentX];
     }
     
     self.isLoaded = YES;
     
     [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
+    
 }
 
 - (JACampaignPageView*)createCampaignPageAtX:(CGFloat)xPosition
@@ -263,32 +263,48 @@
                 
                 RITeaserComponent* component = [self.activeCampaignComponents objectAtIndex:index.intValue];
                 
-                if (VALID_NOTEMPTY(component, RITeaserComponent) && VALID_NOTEMPTY(component.url, NSString)) {
-                    [self loadPage:campaignPageView withCampaignUrl:component.url];
+                if (VALID_NOTEMPTY(component, RITeaserComponent) && VALID_NOTEMPTY(component.targetString, NSString)) {
+                    [self loadPage:campaignPageView withCampaignTargetString:component.targetString];
                 }
-            } else if (VALID_NOTEMPTY(self.campaignUrl, NSString)) {
-                [self loadPage:campaignPageView withCampaignUrl:self.campaignUrl];
+            } else if (VALID_NOTEMPTY(self.campaignTargetString, NSString)) {
+                [self loadPage:campaignPageView withCampaignTargetString:self.campaignTargetString];
             }
         }
     }
 }
 
 - (void)loadPage:(JACampaignPageView*)campaignPage
- withCampaignUrl:(NSString*)campaignUrl
+withCampaignTargetString:(NSString*)campaignTargetString
 {
     if (RIApiResponseNoInternetConnection != self.apiResponse)
     {
         [self showLoading];
     }
     self.apiResponse = RIApiResponseSuccess;
-    [RICampaign getCampaignWithUrl:campaignUrl successBlock:^(RICampaign *campaign) {
+    [RICampaign getCampaignWithTargetString:campaignTargetString successBlock:^(RICampaign *campaign) {
         if (VALID_NOTEMPTY(self.pickerScrollView, JAPickerScrollView) && 0 == self.pickerScrollView.optionLabels.count) {
             [self.pickerScrollView setOptions:[NSArray arrayWithObject:campaign.name]];
         }
-        [self removeErrorView];
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         [campaignPage loadWithCampaign:campaign];
         [self hideLoading];
-    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errors) {
+        
+        if (apiResponse == RIApiResponseAPIError) {
+            for (NSDictionary *error in errors) {
+                if (VALID([error objectForKey:@"reason"], NSString)) {
+                    if ([[error objectForKey:@"reason"] isEqualToString:@"CAMPAIGN_NOT_EXIST"]) {
+                        if (VALID_NOTEMPTY(self.pickerScrollView, JAPickerScrollView) && 0 == self.pickerScrollView.optionLabels.count) {
+                            [self.pickerScrollView setOptions:[NSArray arrayWithObject:STRING_NOT_AVAILABLE]];
+                        }
+                        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+                        [campaignPage loadWithCampaign:nil];
+                        [self hideLoading];
+                        return;
+                    }
+                }
+            }
+        }
         [self loadCampaignFailedWithResponse:apiResponse];
     }];
 }
@@ -298,11 +314,26 @@
 {
     [self showLoading];
     [RICampaign getCampaignWithId:campaignId successBlock:^(RICampaign *campaign) {
-        [self removeErrorView];
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         [campaignPage loadWithCampaign:campaign];
         [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
         
+        if (apiResponse == RIApiResponseAPIError) {
+            for (NSDictionary *error in error) {
+                if (VALID([error objectForKey:@"reason"], NSString)) {
+                    if ([[error objectForKey:@"reason"] isEqualToString:@"CAMPAIGN_NOT_EXIST"]) {
+                        if (VALID_NOTEMPTY(self.pickerScrollView, JAPickerScrollView) && 0 == self.pickerScrollView.optionLabels.count) {
+                            [self.pickerScrollView setOptions:[NSArray arrayWithObject:STRING_NOT_AVAILABLE]];
+                        }
+                        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+                        [campaignPage loadWithCampaign:nil];
+                        [self hideLoading];
+                        return;
+                    }
+                }
+            }
+        }
         [self loadCampaignFailedWithResponse:apiResponse];
     }];
 }
@@ -321,23 +352,8 @@
 - (void)loadCampaignFailedWithResponse:(RIApiResponse)apiResponse
 {
     self.apiResponse = apiResponse;
-    BOOL noConnection = NO;
-    if(RIApiResponseMaintenancePage == apiResponse)
-    {
-        [self showMaintenancePage:@selector(loadCampaignPageAtIndex:) objects:[NSArray arrayWithObject:_clickedCampaignIndex]];
-    }
-    else if(RIApiResponseKickoutView == apiResponse)
-    {
-        [self showKickoutView:@selector(loadCampaignPageAtIndex:) objects:[NSArray arrayWithObject:_clickedCampaignIndex]];
-    }
-    else
-    {
-        if (RIApiResponseNoInternetConnection == apiResponse)
-        {
-            noConnection = YES;
-        }
-        [self showErrorView:noConnection startingY:0.0f selector:@selector(loadCampaignPageAtIndex:) objects:[NSArray arrayWithObject:_clickedCampaignIndex]];
-    }
+    
+    [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadCampaignPageAtIndex:) objects:[NSArray arrayWithObject:_clickedCampaignIndex]];
     [self hideLoading];
 }
 
@@ -380,11 +396,11 @@
     }
 }
 
-- (void)openCampaignWithSku:(NSString*)sku;
+- (void)openCampaignProductWithTarget:(NSString*)targetString;
 {
     
     NSMutableDictionary* userInfo = [NSMutableDictionary new];
-    [userInfo setObject:sku forKey:@"sku"];
+    [userInfo setObject:targetString forKey:@"targetString"];
     [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"show_back_button"];
     if (self.teaserTrackingInfo) {
         [userInfo setObject:self.teaserTrackingInfo forKey:@"teaserTrackingInfo"];
@@ -435,19 +451,19 @@
 
 - (void)finishAddToCart
 {
+    //TODO backupCampaignProduct.sku was removed on RICampaign, will be replaced by deep linkin
     [self showLoading];
     [RICart addProductWithQuantity:@"1"
-                               sku:self.backupCampaignProduct.sku
-                            simple:self.backupSimpleSku
-                  withSuccessBlock:^(RICart *cart) {
+                         simpleSku:self.backupSimpleSku
+                  withSuccessBlock:^(RICart *cart, RIApiResponse apiResponse, NSArray *successMessage) {
                       
                       if (VALID_NOTEMPTY(self.teaserTrackingInfo, NSString)) {
                           NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
                           
-                          NSString* obj = [skusFromTeaserInCart objectForKey:self.backupCampaignProduct.sku];
+                          NSString* obj = [skusFromTeaserInCart objectForKey:self.backupSimpleSku];
                           
                           if (ISEMPTY(obj)) {
-                              [skusFromTeaserInCart setValue:self.teaserTrackingInfo forKey:self.backupCampaignProduct.sku];
+                              [skusFromTeaserInCart setValue:self.teaserTrackingInfo forKey:self.backupSimpleSku];
                               [[NSUserDefaults standardUserDefaults] setObject:[skusFromTeaserInCart copy] forKey:kSkusFromTeaserInCartKey];
                           }
                       }
@@ -459,7 +475,7 @@
                       }
                       
                       NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                      [trackingDictionary setValue:self.backupCampaignProduct.sku forKey:kRIEventLabelKey];
+                      [trackingDictionary setValue:self.backupSimpleSku forKey:kRIEventLabelKey];
                       [trackingDictionary setValue:@"AddToCart" forKey:kRIEventActionKey];
                       [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
                       [trackingDictionary setValue:price forKey:kRIEventValueKey];
@@ -477,8 +493,8 @@
                       [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
                       
                       [trackingDictionary setValue:@"Campaings" forKey:kRIEventLocationKey];
-                      [trackingDictionary setValue:self.backupCampaignProduct.sku forKey:kRIEventSkuKey];
-                      [trackingDictionary setValue:self.backupCampaignProduct.brand forKey:kRIEventBrandKey];
+                      [trackingDictionary setValue:self.backupSimpleSku forKey:kRIEventSkuKey];
+                      [trackingDictionary setValue:self.backupCampaignProduct.brand forKey:kRIEventBrandName];
                       [trackingDictionary setValue:self.backupCampaignProduct.name forKey:kRIEventProductNameKey];
                       
                       NSString *discountPercentage = @"0";
@@ -487,14 +503,15 @@
                           discountPercentage = [self.backupCampaignProduct.maxSavingPercentage stringValue];
                       }
                       [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
-                      [trackingDictionary setValue:@"1" forKey:kRIEventQuantityKey];
+                      [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+                      [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
                       
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                 data:[trackingDictionary copy]];
                       
                       NSMutableDictionary *tracking = [NSMutableDictionary new];
                       [tracking setValue:self.backupCampaignProduct.name forKey:kRIEventProductNameKey];
-                      [tracking setValue:self.backupCampaignProduct.sku forKey:kRIEventSkuKey];
+                      [tracking setValue:self.backupSimpleSku forKey:kRIEventSkuKey];
                       [tracking setValue:nil forKey:kRIEventLastCategoryAddedToCartKey];
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
                       
@@ -509,22 +526,33 @@
                                     valueToSum:value
                                  parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
                                                FBSDKAppEventParameterNameContentType : self.backupCampaignProduct.name,
-                                               FBSDKAppEventParameterNameContentID   : self.backupCampaignProduct.sku}];
+                                               FBSDKAppEventParameterNameContentID   : self.backupSimpleSku}];
+                      
+                      
+                      trackingDictionary = [NSMutableDictionary new];
+                      [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                      NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
+                      [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
+                      
+                      [trackingDictionary setValue:[price stringValue] forKey:kRIEventFBValueToSumKey];
+                      [trackingDictionary setValue:self.backupSimpleSku forKey:kRIEventFBContentIdKey];
+                      [trackingDictionary setValue:@"product" forKey:kRIEventFBContentTypeKey];
+                      [trackingDictionary setValue:@"EUR" forKey:kRIEventFBCurrency];
+                      
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookAddToCart]
+                                                                data:[trackingDictionary copy]];
+                      
 
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       
-                      [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
+            
+                      [self onSuccessResponse:RIApiResponseSuccess messages:successMessage showMessage:YES];
                       [self hideLoading];
                       
                   } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-                      NSString *addToCartError = STRING_ERROR_ADDING_TO_CART;
-                      if(RIApiResponseNoInternetConnection == apiResponse)
-                      {
-                          addToCartError = STRING_NO_CONNECTION;
-                      }
                       
-                      [self showMessage:addToCartError success:NO];
+                      [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(finishAddToCart) objects:nil];
                       [self hideLoading];
                   }];
 }

@@ -22,10 +22,16 @@
 
 + (NSString*)loadTeasersIntoDatabaseForCountryUrl:(NSString*)countryUrl
                         countryUserAgentInjection:(NSString *)countryUserAgentInjection
-                                 withSuccessBlock:(void (^)(NSArray* teaserGroupings))successBlock
+                                 withSuccessBlock:(void (^)(NSDictionary* teaserGroupings, BOOL richTeasers))successBlock
                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
-+ (NSString*)getTeaserGroupingsWithSuccessBlock:(void (^)(NSArray* teaserGroupings))successBlock
-                                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
+
++ (NSString*)getTeaserGroupingsWithSuccessBlock:(void (^)(NSDictionary* teaserGroupings, BOOL richTeaserGrouping))successBlock
+                                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
+                                   andRichBlock:(void(^)(RITeaserGrouping* richTeaserGroupings))richBlock;
+
++ (void)getTeaserRichRelevance:(NSDictionary*) richTeasers
+                  successBlock:(void(^)(RITeaserGrouping * richTeaserGrouping))richBlock
+               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 
 - (void)addTeaserComponentsObject:(RITeaserComponent *)value;
 - (void)removeTeaserComponentsObject:(RITeaserComponent *)value;

@@ -17,9 +17,12 @@
 @dynamic name;
 @dynamic endingDate;
 @dynamic subTitle;
-@dynamic targetType;
+@dynamic targetString;
 @dynamic title;
-@dynamic url;
+@dynamic brand;
+@dynamic richRelevance;
+@dynamic maxSavingPercentage;
+@dynamic sku;
 @dynamic price;
 @dynamic priceEuroConverted;
 @dynamic priceFormatted;
@@ -38,7 +41,7 @@
     
     if (VALID_NOTEMPTY(teaserComponentJSON, NSDictionary)) {
 
-        if ([teaserComponentJSON objectForKey:@"image"]) {
+        if (VALID([teaserComponentJSON objectForKey:@"image"], NSString)) {
             NSString* url = [teaserComponentJSON objectForKey:@"image"];
             NSString* realURL = [url stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
             newTeaserComponent.imagePortraitUrl = realURL;
@@ -73,12 +76,24 @@
             newTeaserComponent.subTitle = [teaserComponentJSON objectForKey:@"sub_title"];
         }
         
-        if ([teaserComponentJSON objectForKey:@"target_type"]) {
-            newTeaserComponent.targetType = [teaserComponentJSON objectForKey:@"target_type"];
+        if ([teaserComponentJSON objectForKey:@"target"]) {
+            newTeaserComponent.targetString = [teaserComponentJSON objectForKey:@"target"];
         }
         
-        if ([teaserComponentJSON objectForKey:@"url"]) {
-            newTeaserComponent.url = [teaserComponentJSON objectForKey:@"url"];
+        if ([teaserComponentJSON objectForKey:@"brand"]) {
+            newTeaserComponent.brand = [teaserComponentJSON objectForKey:@"brand"];
+        }
+        
+        if ([teaserComponentJSON objectForKey:@"click_request"]) {
+            newTeaserComponent.richRelevance = [teaserComponentJSON objectForKey:@"click_request"];
+        }
+        
+        if ([teaserComponentJSON objectForKey:@"max_saving_percentage"]) {
+            newTeaserComponent.maxSavingPercentage = [teaserComponentJSON objectForKey:@"max_saving_percentage"];
+        }
+        
+        if ([teaserComponentJSON objectForKey:@"sku"]) {
+            newTeaserComponent.sku = [teaserComponentJSON objectForKey:@"sku"];
         }
         
         if ([teaserComponentJSON objectForKey:@"max_price"]) {

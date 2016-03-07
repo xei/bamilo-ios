@@ -44,6 +44,7 @@
 #define STRING_YOUR_CART_IS_EMPTY RILocalizedString(@"navigation_cart_empty", nil)
 #define STRING_VAT_SHIPPING_INCLUDED RILocalizedString(@"string_vat_shipping_included", nil)
 #define STRING_FILTER_NO_RESULTS RILocalizedString(@"catalog_no_results", nil)
+#define STRING_FILTER_NO_RESULTS_TIP RILocalizedString(@"catalog_no_results_tip", nil)
 #define STRING_CATALOG_EDIT_FILTERS RILocalizedString(@"catalog_edit_filters", nil)
 
 #define STRING_HOT RILocalizedString(@"teaser_campaign_button_first_line", nil)
@@ -101,6 +102,7 @@
 #define STRING_CART RILocalizedString(@"cart_label", nil)
 #define STRING_NO_ITEMS_IN_CART RILocalizedString(@"wishlist_notiems", nil)
 #define STRING_CONTINUE_SHOPPING RILocalizedString(@"continue_shopping", nil)
+#define STRING_RECOMMENDED_FOR_YOU RILocalizedString(@"recommended_for_you", nil)
 #define STRING_COUPON RILocalizedString(@"my_order_coupon_label", nil)
 #define STRING_USE RILocalizedString(@"voucher_use", nil)
 #define STRING_REMOVE RILocalizedString(@"voucher_remove", nil)
@@ -126,6 +128,8 @@
 #define STRING_SIGNUP RILocalizedString(@"signup_label", nil)
 #define STRING_LOGIN_WITH_FACEBOOK RILocalizedString(@"facebook_login_button_text", nil)
 #define STRING_LOGIN_INCOMPLETE RILocalizedString(@"login_incomplete", nil)
+#define STRING_LOGIN_LONG_MESSAGE RILocalizedString(@"login_long_message", nil)
+
 #define STRING_OR RILocalizedString(@"or_text", nil)
 #define STRING_SIGNUP_WITH_FACEBOOK RILocalizedString(@"facebook_signup_button_text", nil)
 #define STRING_FORGOT_PASSWORD RILocalizedString(@"fgt_pass", nil)
@@ -140,6 +144,11 @@
 #define STRING_CREATE_ACCOUNT RILocalizedString(@"register_title", nil)
 #define STRING_ACCOUNT_DATA RILocalizedString(@"register_sectiontitle", nil)
 #define STRING_REGISTER RILocalizedString(@"registration_text", nil)
+#define STRING_CONTINUE RILocalizedString(@"continue", nil)
+#define STRING_CONTINUE_WITHOUT_LOGIN RILocalizedString(@"continue_without_login", nil)
+
+#define STRING_EMAIL_ADDRESS RILocalizedString(@"email_address", nil)
+#define STRING_EMAIL_EXAMPLE RILocalizedString(@"email_example", nil)
 
 #define STRING_CHECKOUT_ADDRESS RILocalizedString(@"checkout_header_step_2", nil)
 #define STRING_ADD_NEW_ADDRESS RILocalizedString(@"action_label_add_address", nil)
@@ -179,7 +188,9 @@
 #define STRING_NO_RECENT_SEARCHES RILocalizedString(@"recentsearch_no_searches", nil)
 #define STRING_CLEAR_RECENT_SEARCHES RILocalizedString(@"recentsearch_clear_searches", nil)
 
+#define STRING_NO_RECENTLY_VIEWED_PRODUCTS_TITLE RILocalizedString(@"recentlyview_no_searches_title", nil)
 #define STRING_NO_RECENTLY_VIEWED_PRODUCTS RILocalizedString(@"recentlyview_no_searches", nil)
+
 #define STRING_CLEAR_RECENTLY_VIEWED RILocalizedString(@"recentlyview_clear_viewed", nil)
 
 #define STRING_USER_DATA RILocalizedString(@"string_user_data", nil)
@@ -190,6 +201,14 @@
 #define STRING_SUBSCRIVE_UNSUBSCRIVE RILocalizedString(@"option3_description", nil)
 #define STRING_NOTIFICATIONS_SETTINGS RILocalizedString(@"section_title_notification", nil)
 #define STRING_NOTIFICATIONS RILocalizedString(@"notifications", nil)
+#define STRING_PUSH_NOTIFICATIONS RILocalizedString(@"push_notifications", nil)
+#define STRING_UPDATE_NOW RILocalizedString(@"update_now", nil)
+#define STRING_APP_VERSION RILocalizedString(@"app_version", nil)
+#define STRING_HELP_CENTER RILocalizedString(@"help_center", nil)
+#define STRING_TERMS_AND_CONDITIONS RILocalizedString(@"terms_and_conditions", nil)
+#define STRING_APP_SOCIAL RILocalizedString(@"app_social", nil)
+#define STRING_RATE_THE_APP RILocalizedString(@"rate_the_app", nil)
+#define STRING_SHOP_SETTINGS RILocalizedString(@"shop_settings", nil)
 #define STRING_RECEIVE_EXCLUSIVE_OFFERS RILocalizedString(@"notifications_summary", nil)
 #define STRING_SOUND RILocalizedString(@"sound", nil)
 #define STRING_PLAY_SOUND RILocalizedString(@"sound_summary", nil)
@@ -218,12 +237,15 @@
 #define STRING_SAVE_LABEL RILocalizedString(@"save_label", nil)
 #define STRING_SPECIFICATIONS RILocalizedString(@"product_specifications", nil)
 
-#define STRING_CAMPAIGN_REMAINING_STOCK RILocalizedString(@"string_campaign_ramaining_stock", nil)
+#define STRING_CAMPAIGN_REMAINING_STOCK RILocalizedString(@"string_campaign_ramaining_stock_without_value", nil)
 #define STRING_CAMPAIGN_SAVE RILocalizedString(@"campaign_save", nil)
 #define STRING_CAMPAIGN_OFFER_ENDED RILocalizedString(@"campaing_offer_ended", nil)
 #define STRING_CAMPAIGN_TIMER_END RILocalizedString(@"campaing_timer_end", nil)
 #define STRING_FORMAT_OFF RILocalizedString(@"string_format_off_label", nil)
 #define STRING_CAMPAIGNS RILocalizedString(@"campaigns_label", nil)
+#define STRING_CAMPAIGN_IS_OVER RILocalizedString(@"campaign_is_over", nil)
+#define STRING_CAMPAIGN_IS_OVER_RESUME RILocalizedString(@"campaign_is_over_resume", nil)
+#define STRING_NOT_AVAILABLE RILocalizedString(@"not_available", nil)
 
 #define STRING_GO_SHOP RILocalizedString(@"go_shop_text", nil)
 #define STRING_PROMOTION_TIP_TAP RILocalizedString(@"promotion_tip_tap_text", nil)
@@ -269,6 +291,9 @@
 #define STRING_FALLBACK_MOBILE RILocalizedString(@"fallback_mobile", nil)
 #define STRING_FALLBACK_WELCOME RILocalizedString(@"fallback_welcome", nil)
 
+#define STRING_WELCOME RILocalizedString(@"welcome", nil)
+#define STRING_NEW_TO_JUMIA RILocalizedString(@"new_to_jumia", nil)
+
 #define STRING_REVIEWS_LABEL RILocalizedString(@"reviews", nil)
 #define STRING_MORE RILocalizedString(@"more", nil)
 #define STRING_REVIEWS_EMPTY RILocalizedString(@"reviews_empty", nil)
@@ -306,6 +331,12 @@
 #define STRING_ORDER_PAYMENT_STATUS RILocalizedString(@"my_order_payment_status_label", nil)
 #define STRING_ORDER_QUANTITY RILocalizedString(@"my_order_quantity_label", nil)
 #define STRING_NO_ORDERS RILocalizedString(@"my_order_no_orders_label", nil)
+#define STRING_NO_ORDERS_TITLE RILocalizedString(@"my_order_no_orders_title_label", nil)
+
+#define STRING_REORDER RILocalizedString(@"reorder", nil)
+
+#define STRING_ORDER_ITEMS RILocalizedString(@"items_in_your_order", nil)
+#define STRING_ORDER_NO RILocalizedString(@"order_no", nil)
 
 #define STRING_SELLER_INFO_WARRANTY RILocalizedString(@"seller_info_warranty", nil)
 
@@ -313,6 +344,7 @@
 #define STRING_BUNDLE_TITLE RILocalizedString(@"bundle_title", nil)
 #define STRING_BUNDLE_TOTAL_PRICE RILocalizedString(@"bundle_total_price", nil)
 #define STRING_BUY_NOW RILocalizedString(@"buy_now", nil)
+#define STRING_BUY RILocalizedString(@"buy", nil)
 
 #define STRING_OTHER_SELLERS RILocalizedString(@"other_sellers", nil)
 #define STRING_SAME_PRODUCT_FROM_OTHER_SELLERS RILocalizedString(@"same_product_from_other_sellers", nil)
@@ -358,5 +390,28 @@
 #define STRING_BY_SOMEONE RILocalizedString(@"by_someone", nil)
 
 #define STRING_USER_REVIEWS RILocalizedString(@"user_reviews", nil)
+#define STRING_PROFILE RILocalizedString(@"profile", nil)
+#define STRING_FAVOURITES_NO_SAVED_ITEMS RILocalizedString(@"favourites_no_saved_items", nil)
+#define STRING_FAVOURITES_NO_SAVED_ITEMS_DESCRIPTION RILocalizedString(@"favourites_no_saved_items_description", nil)
 
+#define STRING_LOGIN_ENTER_PASSWORD_TO_CONTINUE RILocalizedString(@"login_enter_your_password_to_continue", nil)
+#define STRING_LOGIN_WELCOME_BACK RILocalizedString(@"login_welcome_back", nil)
+#define STRING_FORGOT_YOUR_PASSWORD RILocalizedString(@"fgt_your_pass", nil)
+#define STRING_PASSWORD_RECOVERY RILocalizedString(@"password_recovery", nil)
+#define STRING_PASSWORD RILocalizedString(@"password", nil)
+#define STRING_CHANGE_PASSWORD RILocalizedString(@"change_password", nil)
+#define STRING_USER_DATA_EDITED_SUCCESS RILocalizedString(@"user_data_edited_with_success", nil)
+#define STRING_PRE_ORDER RILocalizedString(@"pre_order", nil)
+
+#define STRING_SHIPPING_BILLING_ADDRESS RILocalizedString(@"shipping_billing_address", nil)
+
+#define STRING_SIGNUP_NEWSLETTER RILocalizedString(@"sign_up_to_our_newsletter", nil)
+#define STRING_SIGNUP_NEWSLETTER_BODY RILocalizedString(@"sign_up_to_our_newsletter_body", nil)
+
+#define STRING_ON RILocalizedString(@"on_label", nil)
+#define STRING_OFF RILocalizedString(@"off_label", nil)
+
+#define STRING_VISIT_THE_OFFICIAL_BRAND_STORE RILocalizedString(@"visit_the_official_brand_store", nil)
+#define STRING_NEWSLETTER RILocalizedString(@"newsletter_label", nil)
+#define STRING_NEWSLETTER_PREFERENCES RILocalizedString(@"newsletter_preferences", nil)
 #endif

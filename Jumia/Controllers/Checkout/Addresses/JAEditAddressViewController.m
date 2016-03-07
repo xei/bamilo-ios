@@ -117,31 +117,24 @@ JAPickerDelegate>
 
     self.apiResponse = RIApiResponseSuccess;
     
-    [RIForm getFormWithUrl:[NSString stringWithFormat:@"addressedit?id=%@", self.editAddress.uid]
-              successBlock:^(RIForm *form) {
-                  self.dynamicForm = [[JADynamicForm alloc] initWithForm:form values:[self getAddressValues] startingPosition:self.addressViewCurrentY hasFieldNavigation:NO];
-                  
-                  [self.dynamicForm setDelegate:self];
-                  
-                  for(UIView *view in self.dynamicForm.formViews)
-                  {
-                      [self.contentView addSubview:view];
-                  }
-                  
-                  [self removeErrorView];
-                  [self finishedFormLoading];
-              } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-                  self.apiResponse = apiResponse;
-                  
-                  BOOL noInternetConnection = NO;
-                  if (RIApiResponseNoInternetConnection == self.apiResponse)
-                  {
-                      noInternetConnection = YES;
-                  }
-                  
-                  [self showErrorView:noInternetConnection startingY:0.0f selector:@selector(getForm) objects:nil];
-                  [self hideLoading];
-              }];
+    [RIForm getForm:[NSString stringWithFormat:@"%@%@", RI_API_FORMS_ADDRESS_EDIT, self.editAddress.uid]
+       successBlock:^(RIForm *form) {
+           self.dynamicForm = [[JADynamicForm alloc] initWithForm:form values:[self getAddressValues] startingPosition:self.addressViewCurrentY hasFieldNavigation:NO];
+           
+           [self.dynamicForm setDelegate:self];
+           
+           for(UIView *view in self.dynamicForm.formViews)
+           {
+               [self.contentView addSubview:view];
+           }
+           
+           [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+           [self finishedFormLoading];
+       } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+           self.apiResponse = apiResponse;
+           [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(getForm) objects:nil];
+           [self hideLoading];
+       }];
 }
 
 - (void) hideKeyboard
@@ -447,36 +440,23 @@ JAPickerDelegate>
 {
     [self showLoading];
     if ([self.dynamicForm checkErrors]) {
-        [self showMessage:self.dynamicForm.firstErrorInFields success:NO];
+        [self onErrorResponse:RIApiResponseSuccess messages:@[self.dynamicForm.firstErrorInFields] showAsMessage:YES selector:@selector(saveChangesButtonPressed) objects:nil];
         [self hideLoading];
         return;
     }
     
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithDictionary:[self.dynamicForm getValues]];
     
-    [parameters setValue:[self.editAddress uid] forKey:[self.dynamicForm getFieldNameForKey:@"id_customer_address"]];
-    [parameters setValue:[self.editAddress isDefaultShipping] forKey:[self.dynamicForm getFieldNameForKey:@"is_default_shipping"]];
-    [parameters setValue:[self.editAddress isDefaultBilling] forKey:[self.dynamicForm getFieldNameForKey:@"is_default_billing"]];
-    
     [RIForm sendForm:[self.dynamicForm form]
           parameters:parameters
-        successBlock:^(id object)
+        successBlock:^(id object, NSArray* successMessages)
      {
-         NSDictionary* entitiesDictionary = (NSDictionary*)object;
-         self.cart = [entitiesDictionary objectForKey:@"cart"];
+         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
          [self.dynamicForm resetValues];
-         if(self.fromCheckout)
-         {
-             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.cart forKey:@"cart"];
-             [JAUtils goToNextStep:self.cart.nextStep
-                          userInfo:userInfo];
-         }
-         else
-         {
-             [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
-                                                                 object:nil
-                                                               userInfo:nil];
-         }
+         
+         [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
+                                                             object:nil
+                                                           userInfo:nil];
          [self hideLoading];
          
      } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
@@ -485,18 +465,17 @@ JAPickerDelegate>
          
          if(VALID_NOTEMPTY(errorObject, NSDictionary))
          {
-             [self.dynamicForm validateFields:errorObject];
+             [self.dynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(saveChangesButtonPressed) objects:nil];
+             }];
          }
          else if(VALID_NOTEMPTY(errorObject, NSArray))
          {
-             [self.dynamicForm checkErrors];
-         }
-         
-         if (RIApiResponseNoInternetConnection == apiResponse)
-         {
-             [self showMessage:STRING_NO_CONNECTION success:NO];
-         } else {
-             [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
+             [self.dynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
+                 [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(saveChangesButtonPressed) objects:nil];
+             }];
+         }else{
+             [self onErrorResponse:apiResponse messages:@[STRING_ERROR_INVALID_FIELDS] showAsMessage:YES selector:@selector(saveChangesButtonPressed) objects:nil];
          }
          
          self.hasErrors = NO;
@@ -540,64 +519,60 @@ JAPickerDelegate>
     //                     }];
 }
 
+- (NSDictionary*)getRequestParametersForRadioComponent:(JARadioComponent*)component
+{
+    NSMutableDictionary* requestParameters = [NSMutableDictionary new];
+    
+    NSDictionary* parameterMap = [component getApiCallParameters];
+    
+    if (VALID_NOTEMPTY(parameterMap, NSDictionary)) {
+        [parameterMap enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            //look for value of field corresponding to key
+            for (JADynamicField* field in self.dynamicForm.formViews) {
+                if ([field isKindOfClass:[JARadioComponent class]]) {
+                    //found the right class, so cast it
+                    JARadioComponent* relatedComponent = (JARadioComponent*)field;
+                    
+                    //check for key
+                    if ([relatedComponent isComponentWithKey:key]) {
+                        //found the component, so look for value and add it to the request parameters
+                        // using the object from the parameter map as the key
+                        [requestParameters setValue:[relatedComponent getSelectedValue] forKey:obj];
+                        break;
+                    }
+                }
+            }
+            //use the obj as the key in the request parameters
+        }];
+    }
+    
+    return [requestParameters copy];
+}
+
 - (void)openPicker:(JARadioComponent *)radioComponent
 {
     [self removePickerView];
     
     self.radioComponent = radioComponent;
     
-    if([radioComponent isComponentWithKey:@"region"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
-    {
-        self.radioComponentDataset = self.regionsDataset;
+    if (VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString)) {
         
-        [self setupPickerView];
-    }
-    else if([radioComponent isComponentWithKey:@"city"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
-    {
-        if(VALID_NOTEMPTY(self.citiesDataset, NSArray))
-        {
-            self.radioComponentDataset = self.citiesDataset;
-            
-            [self setupPickerView];
+        
+        NSDictionary* requestParameters = [self getRequestParametersForRadioComponent:radioComponent];
+
+        if (VALID_NOTEMPTY([radioComponent getApiCallParameters], NSDictionary) && ISEMPTY(requestParameters)) {
+            //if there is a map but the request parameters are empty, it means the prior fields were
+            // not filled
+            return;
         }
-        else
-        {
-            NSString *url = [radioComponent getApiCallUrl];
-            [self showLoading];
-            [RILocale getCitiesForUrl:url region:[self.selectedRegion value] successBlock:^(NSArray *cities)
-             {
-                 self.citiesDataset = [cities copy];
-                 self.radioComponentDataset = [cities copy];
-                 
-                 [self hideLoading];
-                 [self setupPickerView];
-             } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error)
-             {
-                 [self hideLoading];
-             }];
-        }
-    }
-    else if ([radioComponent isComponentWithKey:@"postcode"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
-    {
-        if (VALID_NOTEMPTY(self.postcodesDataset, NSArray)) {
-            self.radioComponentDataset = self.postcodesDataset;
-            
-            [self setupPickerView];
-        } else {
-            NSString *url = [radioComponent getApiCallUrl];
-            [self showLoading];
-            [RILocale getPostcodesForUrl:url city:[self.selectedCity value] successBlock:^(NSArray *postcodes)
-             {
-                 self.postcodesDataset = [postcodes copy];
-                 self.radioComponentDataset = [postcodes copy];
-                 
-                 [self hideLoading];
-                 [self setupPickerView];
-             } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error)
-             {
-                 [self hideLoading];
-             }];
-        }
+        [RILocale getLocalesForUrl:[radioComponent getApiCallUrl]
+                        parameters:requestParameters
+                      successBlock:^(NSArray *locales) {
+                          self.radioComponentDataset = locales;
+                          [self setupPickerView];
+                      } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
+                          
+                      }];
     }
 }
 
@@ -645,25 +620,27 @@ JAPickerDelegate>
         }
     }
     
-    [self.picker setDataSourceArray:[dataSource copy]
-                       previousText:[self getPickerSelectedRow]
-                    leftButtonTitle:nil];
-    
-    CGFloat pickerViewHeight = self.view.frame.size.height;
-    CGFloat pickerViewWidth = self.view.frame.size.width;
-    [self.picker setFrame:CGRectMake(0.0f,
-                                     pickerViewHeight,
-                                     pickerViewWidth,
-                                     pickerViewHeight)];
-    [self.view addSubview:self.picker];
-    
-    [UIView animateWithDuration:0.4f
-                     animations:^{
-                         [self.picker setFrame:CGRectMake(0.0f,
-                                                          0.0f,
-                                                          pickerViewWidth,
-                                                          pickerViewHeight)];
-                     }];
+    if (VALID_NOTEMPTY(dataSource, NSMutableArray)) {
+        [self.picker setDataSourceArray:[dataSource copy]
+                           previousText:[self getPickerSelectedRow]
+                        leftButtonTitle:nil];
+        
+        CGFloat pickerViewHeight = self.view.frame.size.height;
+        CGFloat pickerViewWidth = self.view.frame.size.width;
+        [self.picker setFrame:CGRectMake(0.0f,
+                                         pickerViewHeight,
+                                         pickerViewWidth,
+                                         pickerViewHeight)];
+        [self.view addSubview:self.picker];
+        
+        [UIView animateWithDuration:0.4f
+                         animations:^{
+                             [self.picker setFrame:CGRectMake(0.0f,
+                                                              0.0f,
+                                                              pickerViewWidth,
+                                                              pickerViewHeight)];
+                         }];
+    }
 }
 
 - (void)downloadLocalesForComponents:(NSDictionary *)componentDictionary
@@ -677,11 +654,11 @@ JAPickerDelegate>
         if(!VALID_NOTEMPTY(self.regionsDataset, NSArray))
         {
             [self showLoading];
-            [RILocale getRegionsForUrl:[regionComponent getApiCallUrl] successBlock:^(NSArray *regions)
+            [RILocale getLocalesForUrl:[regionComponent getApiCallUrl] parameters:nil successBlock:^(NSArray *regions)
              {
                  self.regionsDataset = [regions copy];
                  
-                 NSString *selectedRegionId = [self.editAddress customerAddressRegionId];
+                 NSString *selectedRegionId = regionComponent.field.value;
                  
                  if (VALID_NOTEMPTY(regions, NSArray)) {
                      if(VALID_NOTEMPTY(selectedRegionId, NSString))
@@ -712,10 +689,13 @@ JAPickerDelegate>
                  
                  if(VALID_NOTEMPTY(self.selectedRegion, RILocale) && VALID_NOTEMPTY(cityComponent, JARadioComponent))
                  {
-                     [RILocale getCitiesForUrl:[cityComponent getApiCallUrl] region:self.selectedRegion.value successBlock:^(NSArray *cities) {
+                     NSDictionary* requestParameters = [self getRequestParametersForRadioComponent:cityComponent];
+                     [RILocale getLocalesForUrl:[cityComponent getApiCallUrl]
+                                     parameters:requestParameters
+                                   successBlock:^(NSArray *cities) {
                          self.citiesDataset = [cities copy];
                          
-                         NSString *selectedCityId = [self.editAddress customerAddressCityId];
+                         NSString *selectedCityId = cityComponent.field.value;
                          if (VALID_NOTEMPTY(cities, NSArray)) {
                              if(VALID_NOTEMPTY(selectedCityId, NSString))
                              {
@@ -743,10 +723,14 @@ JAPickerDelegate>
                          }
                          
                          if (VALID_NOTEMPTY(self.selectedCity, RILocale) && VALID_NOTEMPTY(postcodeComponent, JARadioComponent)) {
-                             [RILocale getPostcodesForUrl:[postcodeComponent getApiCallUrl] city:self.selectedCity.value successBlock:^(NSArray *postcodes) {
+                             
+                             NSDictionary* requestParameters = [self getRequestParametersForRadioComponent:postcodeComponent];
+                             [RILocale getLocalesForUrl:[postcodeComponent getApiCallUrl]
+                                             parameters:requestParameters
+                                           successBlock:^(NSArray *postcodes) {
                                  self.postcodesDataset = [postcodes copy];
                                  
-                                 NSString *selectedPostcodeId = [self.editAddress customerAddressPostcodeId];
+                                 NSString *selectedPostcodeId = postcodeComponent.field.value;
                                  if (VALID_NOTEMPTY(postcodes, NSArray)) {
                                      if(VALID_NOTEMPTY(selectedPostcodeId, NSString))
                                      {
@@ -755,7 +739,7 @@ JAPickerDelegate>
                                              if([selectedPostcodeId isEqualToString:postcode.value])
                                              {
                                                  self.selectedPostcode = postcode;
-                                                 [self.dynamicForm setPostcodeValue:self.selectedCity];
+                                                 [self.dynamicForm setPostcodeValue:self.selectedPostcode];
                                                  break;
                                              }
                                          }

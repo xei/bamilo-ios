@@ -41,12 +41,11 @@
     [self.nameLabel setX:80.f];
     [self.nameLabel setWidth:self.backgroundContentView.width - self.productImageView.width - self.favoriteButton.width - 3*6.f];
     
-    self.priceView.frame = CGRectMake(self.nameLabel.frame.origin.x,// + priceXOffset,
+    self.priceLine.frame = CGRectMake(self.nameLabel.frame.origin.x,// + priceXOffset,
                                       CGRectGetMaxY(self.nameLabel.frame) + JACatalogCellPriceLabelOffsetY,
-                                      self.priceView.frame.size.width,
-                                      self.priceView.frame.size.height);
-    [self.priceView sizeToFit];
-    [self.priceView setY:CGRectGetMaxY(self.nameLabel.frame) + 2*JACatalogCellPriceLabelOffsetY];
+                                      self.priceLine.frame.size.width,
+                                      self.priceLine.frame.size.height);
+    [self.priceLine setY:CGRectGetMaxY(self.nameLabel.frame) + 2*JACatalogCellPriceLabelOffsetY];
     
     [self.favoriteButton setX:self.backgroundContentView.width - self.favoriteButton.width - 6.f];
     [self.favoriteButton setHitTestEdgeInsets:UIEdgeInsetsMake(-10, -10, -10, -10)];
@@ -57,7 +56,7 @@
     
     if (self.numberOfReviewsLabel) {
         [self.ratingsView setFrame:CGRectMake(80.f,
-                                              CGRectGetMaxY(self.priceView.frame) + 6.f,
+                                              CGRectGetMaxY(self.priceLine.frame) + 6.f,
                                               self.ratingsView.frame.size.width,
                                               self.ratingsView.frame.size.height)];
         self.ratingsView.rating = [product.avr integerValue];

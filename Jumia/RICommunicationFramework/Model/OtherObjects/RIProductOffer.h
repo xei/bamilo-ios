@@ -22,10 +22,10 @@
 @property (nonatomic, strong) NSNumber* specialPriceEuroConverted;
 @property (nonatomic, strong) NSNumber* minDeliveryTime;
 @property (nonatomic, strong) NSNumber* maxDeliveryTime;
+@property (nonatomic, strong) NSNumber* shopFirst;
 @property (nonatomic, strong) RISeller* seller;
 
-+ (NSString*)getProductOffersForProductUrl:(NSString*)productUrl
-                              successBlock:(void (^)(NSArray *productOffers))successBlock
-                           andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
-
++ (NSString*)getProductOffersForProductWithSku:(NSString*)sku
+                                  successBlock:(void (^)(NSArray *productOffers))successBlock
+                               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
 @end

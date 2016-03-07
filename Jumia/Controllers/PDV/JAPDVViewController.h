@@ -15,14 +15,13 @@
 @interface JAPDVViewController : JABaseViewController <JAPDVImageSectionDelegate>
 
 @property (strong, nonatomic) RIProduct *product;
-@property (strong, nonatomic) NSString* productUrl;
+@property (strong, nonatomic) NSString* productTargetString;
 @property (strong, nonatomic) NSString* productSku;
 @property (strong, nonatomic) RICategory *category;
 @property (assign, nonatomic) BOOL fromCatalogue;
 @property (strong, nonatomic) NSString *previousCategory;
 @property (strong, nonatomic) NSString *preSelectedSize;
-
-@property (nonatomic, retain) NSString* A4SViewControllerAlias;
+@property (strong, nonatomic) NSString *richRelevanceParameter;
 
 @property (nonatomic, strong) NSString* teaserTrackingInfo;
 

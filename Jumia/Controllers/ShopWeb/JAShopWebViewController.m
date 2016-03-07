@@ -10,6 +10,7 @@
 #import "RIHtmlShop.h"
 #import "RIFeaturedBoxTeaserGrouping.h"
 #import "JATopSellersTeaserView.h"
+#import "RITarget.h"
 
 @interface JAShopWebViewController ()
 
@@ -42,9 +43,7 @@
 {
     [super viewWillAppear:animated];
     
-    NSString *staticKey = [[[[self.url componentsSeparatedByString:@"main/getstatic/?key="] lastObject] componentsSeparatedByString:@"&"] firstObject];
-    
-    [[RITrackingWrapper sharedInstance] trackStaticPage:staticKey];
+    [[RITrackingWrapper sharedInstance] trackStaticPage:self.targetString];
     
     [self.scrollView setFrame:[self viewBounds]];
     [self.scrollView setBackgroundColor:[UIColor whiteColor]];
@@ -54,20 +53,16 @@
                                       1.0f)];
     
     if (NO == self.isLoaded) {
-        
-        [RIHtmlShop getHtmlShopForUrlString:self.url successBlock:^(RIHtmlShop *htmlShop) {
+        [self showLoading];
+        [RIHtmlShop getHtmlShopForTargetString:self.targetString successBlock:^(RIHtmlShop *htmlShop) {
             self.htmlShop = htmlShop;
             self.isLoaded = YES;
-            
-            [self removeErrorView];
-            [self.webView loadHTMLString:self.htmlShop.html baseURL:[NSURL URLWithString:self.url]];
+            [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+            [self.webView loadHTMLString:self.htmlShop.html baseURL:[NSURL URLWithString:[RITarget getURLStringforTargetString:self.targetString]]];
             
         } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-            if (RIApiResponseNoInternetConnection == apiResponse) {
-                [self showErrorView:YES startingY:0.0f selector:@selector(viewWillAppear:) objects:nil];
-            } else {
-                [self showErrorView:NO startingY:0.0f selector:@selector(viewWillAppear:) objects:nil];
-            }
+            [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(viewWillAppear:) objects:nil];
+            [self hideLoading];
         }];
     } else {
         [self loadViews];
@@ -112,65 +107,69 @@
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    [self.webView loadHTMLString:self.htmlShop.html baseURL:[NSURL URLWithString:self.url]];
+    [self.webView loadHTMLString:self.htmlShop.html baseURL:[NSURL URLWithString:[RITarget getURLStringforTargetString:self.targetString]]];
 }
 
 - (BOOL)webView:(UIWebView *)webView
 shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType
 {    
-    NSString* url = [request.URL absoluteString];
-    NSArray *parts = [url componentsSeparatedByString: @"::"];
-    
-    if (VALID_NOTEMPTY(parts, NSArray) && 2 == parts.count) {
-        NSString* identifier = [parts objectAtIndex:0];
-        NSString* url = [parts objectAtIndex:1];
-        
-        if (VALID_NOTEMPTY(identifier, NSString) && VALID_NOTEMPTY(url, NSString)) {
+    NSString* targetString = [request.URL absoluteString];
 
-            NSMutableDictionary* userInfo = [NSMutableDictionary new];
-            [userInfo setObject:url forKey:@"url"];
-            [userInfo setObject:STRING_BACK forKey:@"show_back_button_title"];
+    RITarget* target = [RITarget parseTarget:targetString];
+    if (VALID_NOTEMPTY(target.type, NSString)) {
+        NSString* notificationName;
+        
+        if ([target.type isEqualToString:[RITarget getTargetKey:CATALOG_HASH]]) {
             
-            if (self.teaserTrackingInfo) {
-                [userInfo setObject:self.teaserTrackingInfo forKey:@"teaserTrackingInfo"];
-            }
+            notificationName = kDidSelectTeaserWithCatalogUrlNofication;
             
-            if ([identifier isEqualToString:@"pdv"]) {
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                                    object:nil
-                                                                  userInfo:userInfo];
-                
-            } else if ([identifier isEqualToString:@"catalog"]) {
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithCatalogUrlNofication
-                                                                    object:nil
-                                                                  userInfo:userInfo];
-                
-            } else if ([identifier isEqualToString:@"campaign"]) {
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectCampaignNofication
-                                                                    object:nil
-                                                                  userInfo:userInfo];
-                
-            }
+        } else if ([target.type isEqualToString:[RITarget getTargetKey:PRODUCT_DETAIL]]) {
+            
+            notificationName = kDidSelectTeaserWithPDVUrlNofication;
+            
+        } else if ([target.type isEqualToString:[RITarget getTargetKey:STATIC_PAGE]]) {
+            
+            notificationName = kDidSelectTeaserWithShopUrlNofication;
+            
+        } else if ([target.type isEqualToString:[RITarget getTargetKey:CAMPAIGN]]) {
+            
+            notificationName = kDidSelectCampaignNofication;
             
         }
+        
+        NSMutableDictionary* userInfo = [NSMutableDictionary new];
+        [userInfo setObject:STRING_BACK forKey:@"show_back_button_title"];
+        
+        if (self.teaserTrackingInfo) {
+            [userInfo setObject:self.teaserTrackingInfo forKey:@"teaserTrackingInfo"];
+        }
+        [userInfo setObject:targetString forKey:@"targetString"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
+                                                            object:nil
+                                                          userInfo:userInfo];
+        
+        return NO;
     }
-    
     
     return YES;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+    [self hideLoading];
     [self.scrollView setFrame:[self viewBounds]];
     [self.webView setFrame:CGRectMake(self.scrollView.bounds.origin.x,
                                       self.scrollView.bounds.origin.y,
                                       self.scrollView.bounds.size.width,
                                       1.0f)];
     [self loadViews];
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    [self hideLoading];
+    [self onErrorResponse:RIApiResponseUnknownError messages:nil showAsMessage:NO selector:@selector(viewWillAppear:) objects:nil];
 }
 
 @end

@@ -8,9 +8,13 @@
 
 #import "JACatalogGridCollectionViewCell.h"
 
+#define xFavOffset 16.f
+
 @interface JACatalogGridCollectionViewCell () {
     CGFloat _lastWidth;
 }
+
+@property (nonatomic, strong)JAProductInfoPriceLine* secondPriceLine;
 
 @end
 
@@ -48,22 +52,40 @@
 
 - (void)initViews
 {
+    [self addSubview:self.secondPriceLine];
     [super initViews];
+}
+
+- (JAProductInfoPriceLine *)secondPriceLine
+{
+    if (!VALID_NOTEMPTY(_secondPriceLine, JAProductInfoPriceLine)) {
+        _secondPriceLine = [[JAProductInfoPriceLine alloc] initWithFrame:CGRectMake(0, 0, self.width, 15)];
+        [_secondPriceLine setPriceSize:kPriceSizeSmall];
+        [_secondPriceLine setLineContentXOffset:0.f];
+    }
+    return _secondPriceLine;
 }
 
 - (void)reloadViews
 {
     [super reloadViews];
     
-    CGSize imageSize = CGSizeMake(112, 140);
-    CGFloat xOffset = 16.f;
-    CGFloat discountWidth = 60.f;
-    CGFloat brandYOffset = 170;
-    
+    CGSize imageSize = JACatalogViewControllerGridCellImageSize_ipad;
+    CGFloat imageY = 10.0f;
     if ([UIDevice currentDevice].userInterfaceIdiom != UIUserInterfaceIdiomPad) {
-        xOffset = 6.f;
+        imageSize = JACatalogViewControllerGridCellImageSize;
     }
+    CGFloat xOffset = 16.f;
+    CGFloat brandYOffset = imageSize.height + imageY * 2;
+    CGFloat verticalMarginBetweenLabels = 2.0f;
+
     CGFloat textWidth = self.width - xOffset*2;
+    
+    CGRect productImageViewRect = CGRectMake(self.width/2 - imageSize.width/2, imageY, imageSize.width, imageSize.height);
+    if (!CGRectEqualToRect(productImageViewRect, self.productImageView.frame)) {
+        [self.productImageView setFrame:productImageViewRect];
+        [self setForRTL:self.productImageView];
+    }
     
     CGRect brandLabelRect = CGRectMake(xOffset, brandYOffset, textWidth, 15);
     if (!CGRectEqualToRect(brandLabelRect, self.brandLabel.frame)) {
@@ -71,35 +93,71 @@
         [self setForRTL:self.brandLabel];
     }
     
-    CGRect nameLabelRect = CGRectMake(xOffset, CGRectGetMaxY(brandLabelRect), textWidth, 15);
+    CGRect nameLabelRect = CGRectMake(xOffset, CGRectGetMaxY(brandLabelRect) + verticalMarginBetweenLabels, textWidth, 15);
     if (!CGRectEqualToRect(nameLabelRect, self.nameLabel.frame)) {
         [self.nameLabel setFrame:nameLabelRect];
         [self setForRTL:self.nameLabel];
     }
     
-    CGRect productImageViewRect = CGRectMake(self.width/2 - imageSize.width/2, 8, imageSize.width, imageSize.height);
-    if (!CGRectEqualToRect(productImageViewRect, self.productImageView.frame)) {
-        [self.productImageView setFrame:productImageViewRect];
-        [self setForRTL:self.productImageView];
+    if (VALID_NOTEMPTY(self.product.priceRange, NSString)) {
+        [self.priceLine setPrice:self.product.priceRange];
+        [self.priceLine setOldPrice:nil];
+        [self.secondPriceLine setHidden:YES];
+        [self.discountLabel setHidden:YES];
+    } else {
+        if (VALID_NOTEMPTY(self.product.specialPriceFormatted, NSString)) {
+            [self.priceLine setPrice:self.product.specialPriceFormatted];
+            [self.priceLine setOldPrice:nil];
+            [self.secondPriceLine setPrice:nil];
+            [self.secondPriceLine setOldPrice:self.product.priceFormatted];
+            [self.secondPriceLine setHidden:NO];
+        } else {
+            [self.secondPriceLine setHidden:YES];
+        }
     }
     
-    CGRect discountLabelRect = CGRectMake(self.discountLabel.superview.width - discountWidth - xOffset, CGRectGetMaxY(productImageViewRect), discountWidth, 19);
+    CGRect priceLineRect = CGRectMake(xOffset, CGRectGetMaxY(nameLabelRect) + verticalMarginBetweenLabels, self.priceLine.frame.size.width, self.priceLine.height);
+    if (!CGRectEqualToRect(priceLineRect, self.priceLine.frame)) {
+        [self.priceLine setFrame:priceLineRect];
+        [self setForRTL:self.priceLine];
+    }
+    
+    CGRect secondPriceLineRect = CGRectMake(xOffset, CGRectGetMaxY(priceLineRect) + verticalMarginBetweenLabels, self.secondPriceLine.frame.size.width, self.secondPriceLine.height);
+    if (!CGRectEqualToRect(secondPriceLineRect, self.secondPriceLine.frame)) {
+        [self.secondPriceLine setFrame:secondPriceLineRect];
+        [self setForRTL:self.secondPriceLine];
+    }
+    
+    CGRect discountLabelRect = CGRectMake(self.discountLabel.superview.width - self.discountLabel.frame.size.width - xOffset, priceLineRect.origin.y, self.discountLabel.frame.size.width, self.discountLabel.frame.size.height);
     if (!CGRectEqualToRect(discountLabelRect, self.discountLabel.frame)) {
         [self.discountLabel setFrame:discountLabelRect];
         [self setForRTL:self.discountLabel];
     }
     
-    CGRect priceLineRect = CGRectMake(xOffset, CGRectGetMaxY(nameLabelRect) + 6.f, textWidth, self.priceLine.height);
-    if (!CGRectEqualToRect(priceLineRect, self.priceLine.frame)) {
-        [self.priceLine setFrame:priceLineRect];
+    CGRect shopFirstRect = CGRectMake(xOffset, CGRectGetMaxY(self.secondPriceLine.frame) + verticalMarginBetweenLabels, self.shopFirstImageView.frame.size.width, self.shopFirstImageView.frame.size.height);
+    if (!CGRectEqualToRect(shopFirstRect, self.self.shopFirstImageView.frame)) {
+        [self.shopFirstImageView setFrame:shopFirstRect];
+        [self setForRTL:self.shopFirstImageView];
     }
-    [self setForRTL:self.priceLine];
     
-    CGFloat favX = self.favoriteButton.superview.width - self.favoriteButton.width - xOffset;
+    CGFloat ratingTopMargin = 3.0f;
+    CGRect ratingRect = CGRectMake(xOffset, CGRectGetMaxY(shopFirstRect) + ratingTopMargin, textWidth, self.ratingLine.imageHeight);
+    if (!CGRectEqualToRect(ratingRect, self.ratingLine.frame)) {
+        [self.ratingLine setFrame:ratingRect];
+    }
+    [self setForRTL:self.ratingLine];
+    
+    CGFloat favX = self.favoriteButton.superview.width - self.favoriteButton.width - xFavOffset;
     if (self.favoriteButton.x != favX) {
         [self.favoriteButton setX:favX];
         [self setForRTL:self.favoriteButton];
     }
+        
+    CGRect recentProductBadgeRect = CGRectMake(self.discountLabel.superview.width - self.discountLabel.frame.size.width - xOffset, CGRectGetMaxY(discountLabelRect) + 10.0f, self.discountLabel.frame.size.width, self.discountLabel.frame.size.height);
+    if (!CGRectEqualToRect(recentProductBadgeRect, self.recentProductBadgeLabel.frame)) {
+        [self.recentProductBadgeLabel setFrame:recentProductBadgeRect];
+    }
+    [self setForRTL:self.recentProductBadgeLabel];
     
     _lastWidth = self.width;
 }

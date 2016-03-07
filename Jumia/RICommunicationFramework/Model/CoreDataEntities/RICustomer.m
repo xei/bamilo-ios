@@ -9,7 +9,7 @@
 #import "RICustomer.h"
 #import "RIAddress.h"
 #import "RIForm.h"
-#import "RINewsletterCategory.h"
+#import "RIField.h"
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 @interface RICustomer ()
@@ -20,7 +20,7 @@
 
 @implementation RICustomer
 
-@dynamic idCustomer;
+@dynamic customerId;
 @dynamic email;
 @dynamic firstName;
 @dynamic lastName;
@@ -31,7 +31,109 @@
 @dynamic createdAt;
 @dynamic loginMethod;
 @dynamic addresses;
+@dynamic newsletterSubscribed;
 @synthesize costumerRequestID, wishlistProducts;
+
++ (NSString *)signUpAccount:(NSString *)email
+               successBlock:(void (^)(id object))successBlock
+            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock
+{
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, @"customer/createsignup"]]
+                                                            parameters:@{@"email": email}
+                                                            httpMethod:HttpResponsePost
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              
+                                                              if (VALID([jsonObject objectForKey:@"success"], NSNumber)) {
+                                                                  
+                                                                  NSNumber* success = [jsonObject objectForKey:@"success"];
+                                                                  if (success) {
+                                                                      NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                                      if (VALID_NOTEMPTY(metadata, NSDictionary))
+                                                                      {
+                                                                          NSDictionary* entities = [RIForm parseEntities:metadata plainPassword:nil];
+                                                                          successBlock(entities);
+                                                                      }
+                                                                  } else {
+                                                                      failureBlock(apiResponse, [RIError getErrorMessages:jsonObject]);
+                                                                  }
+                                                              } else
+                                                              {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }
+                                                              
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                              if(NOTEMPTY(errorJsonObject))
+                                                              {
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+                                                              } else if(NOTEMPTY(errorObject))
+                                                              {
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(apiResponse, errorArray);
+                                                              } else
+                                                              {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }
+                                                          }];
+}
+
++ (NSString *)checkEmailWithParameters:(NSDictionary *)parameters
+                          successBlock:(void (^)(BOOL knownEmail, RICustomer *customerAlreadyLoggedIn))successBlock
+                       andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock
+{
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, @"customer/emailcheck/"]]
+                                                            parameters:parameters
+                                                            httpMethod:HttpResponsePost
+                                                             cacheType:RIURLCacheNoCache
+                                                             cacheTime:RIURLCacheNoTime
+                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                          successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
+                                                              NSDictionary* messages = [jsonObject objectForKey:@"messages"];
+                                                              NSDictionary *error = nil;
+                                                              if (VALID_NOTEMPTY(metadata, NSDictionary))
+                                                              {
+                                                                  if (VALID_NOTEMPTY(messages, NSDictionary)) {
+                                                                      if (VALID_NOTEMPTY([messages objectForKey:@"error"], NSArray)) {
+                                                                          if (VALID_NOTEMPTY([[messages objectForKey:@"error"] firstObject], NSDictionary)) {
+                                                                              error = [[messages objectForKey:@"error"] firstObject];
+                                                                          }
+                                                                      }
+                                                                  }
+                                                                  NSNumber* exists = [metadata objectForKey:@"exist"];
+                                                                  if (VALID_NOTEMPTY(exists, NSNumber))
+                                                                  {
+                                                                      successBlock([exists boolValue], nil);
+                                                                  } else if (VALID_NOTEMPTY(error, NSDictionary)) {
+                                                                      if (VALID_NOTEMPTY([error objectForKey:@"code"], NSNumber) && [[error objectForKey:@"code"] isEqualToNumber:@232]) {
+                                                                          RICustomer *customer = [RICustomer parseCustomerWithJson:[metadata objectForKey:@"customer_entity"]];
+                                                                          successBlock(NO, customer);
+                                                                      }
+                                                                  } else
+                                                                  {
+                                                                      failureBlock(apiResponse, [RIError getErrorMessages:jsonObject]);
+                                                                  }
+                                                              } else
+                                                              {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }
+                                                              
+                                                          } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                              if(NOTEMPTY(errorJsonObject))
+                                                              {
+                                                                  failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+                                                              } else if(NOTEMPTY(errorObject))
+                                                              {
+                                                                  NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                  failureBlock(apiResponse, errorArray);
+                                                              } else
+                                                              {
+                                                                  failureBlock(apiResponse, nil);
+                                                              }
+                                                          }];
+}
 
 + (NSString*)autoLogin:(void (^)(BOOL success, NSDictionary *entities, NSString *loginMethod))returnBlock
 {
@@ -39,11 +141,9 @@
     
     NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
     
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     if (customers.count > 0) {
-        RICustomer *customerObject = [customers objectAtIndex:0];
+        __block RICustomer *customerObject = [customers lastObject];
         
-        [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICustomer class])];
         
         if([@"facebook" isEqualToString:customerObject.loginMethod])
         {
@@ -66,13 +166,20 @@
         }
         else if([@"normal" isEqualToString:customerObject.loginMethod])
         {
-            [parameters setValue:customerObject.email forKey:@"Alice_Module_Customer_Model_LoginForm[email]"];
-            [parameters setValue:customerObject.plainPassword forKey:@"Alice_Module_Customer_Model_LoginForm[password]"];
-            
-            return [RIForm getForm:@"login" successBlock:^(id form)
+            return [RIForm getForm:@"login" successBlock:^(RIForm *form)
                     {
+                        NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+                        for (RIField *field in form.fields)
+                        {
+                            if ([field.key isEqualToString:@"email"]) {
+                                [parameters setValue:customerObject.email forKey:field.name];
+                            }else
+                            if ([field.key isEqualToString:@"password"]) {
+                                [parameters setValue:customerObject.plainPassword forKey:field.name];
+                            }
+                        }
                         [RIForm sendForm:form parameters:parameters
-                            successBlock:^(id jsonObject)
+                            successBlock:^(id jsonObject, NSArray* successMessages)
                          {
                              dispatch_async(dispatch_get_main_queue(), ^{
                                  returnBlock(YES, jsonObject, customerObject.loginMethod);
@@ -113,9 +220,9 @@
     
     if (customers.count > 0)
     {
-        RICustomer *customer = (RICustomer *)customers[0];
+        RICustomer *customer = (RICustomer *)[customers lastObject];
                                 
-        return customer.idCustomer;
+        return [customer.customerId stringValue];
     }
     else
     {
@@ -130,7 +237,7 @@
     NSString *gender = nil;
     if (customers.count > 0)
     {
-        RICustomer *customer = (RICustomer *)customers[0];
+        RICustomer *customer = (RICustomer *)[customers lastObject];
         gender = customer.gender;
     }
     
@@ -144,7 +251,7 @@
     
     if (customers.count > 0)
     {
-        RICustomer *customer = (RICustomer *)customers[0];
+        RICustomer *customer = (RICustomer *)[customers lastObject];
         wasSignup = [@"signup" isEqualToString:customer.loginMethod];
     }
     
@@ -160,7 +267,7 @@
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_FACEBOOK_LOGIN_CUSTOMER]]
                                                             parameters:parameters
-                                                        httpMethodPost:YES
+                                                            httpMethod:HttpResponsePost
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
@@ -215,13 +322,13 @@
     NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
     
     if (customers.count > 0) {
-        successBlock(customers[0]);
+        successBlock([customers lastObject]);
         return nil;
     }
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_CUSTOMER]]
                                                             parameters:nil
-                                                        httpMethodPost:YES
+                                                            httpMethod:HttpResponsePost
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
@@ -254,17 +361,15 @@
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_LOGOUT_CUSTOMER]]
                                                             parameters:nil
-                                                        httpMethodPost:YES
+                                                            httpMethod:HttpResponsePost
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICustomer class])];
-                                                              [[RIDataBaseWrapper sharedInstance] saveContext];
+                                                              [RICustomer cleanCustomerFromDB];
                                                               successBlock();
                                                           } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
-                                                              [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICustomer class])];
-                                                              [[RIDataBaseWrapper sharedInstance] saveContext];
+                                                              [RICustomer cleanCustomerFromDB];
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
                                                                   failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
@@ -280,12 +385,18 @@
                                                           }];
 }
 
++ (void)cleanCustomerFromDB
+{
+    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICustomer class])];
+    [[RIDataBaseWrapper sharedInstance] saveContext];
+}
+
 + (NSString *)requestPasswordReset:(void (^)())successBlock
                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_LOGOUT_CUSTOMER]]
                                                             parameters:nil
-                                                        httpMethodPost:YES
+                                                            httpMethod:HttpResponsePost
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
@@ -322,13 +433,52 @@
     }
 }
 
++ (BOOL)checkIfUserIsLoggedByFacebook
+{
+    NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
+    
+    if (VALID_NOTEMPTY(customers, NSArray))
+    {
+        RICustomer* customer = [customers firstObject];
+        
+        if ([customer.loginMethod isEqualToString:@"facebook"]) {
+            return YES;
+        } else
+            return NO;
+    }
+    else
+    {
+        return NO;
+    }
+}
+
++ (BOOL)checkIfUserIsLoggedAsGuest
+{
+    NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
+    
+    if (VALID_NOTEMPTY(customers, NSArray))
+    {
+        RICustomer* customer = [customers firstObject];
+        
+        if ([customer.loginMethod isEqualToString:@"guest"]) {
+            return YES;
+        } else
+            return NO;
+    }
+    else
+    {
+        return NO;
+    }
+}
+
+
 + (BOOL)checkIfUserHasAddresses
 {
     NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
     
     if (VALID_NOTEMPTY(customers, NSArray))
     {
-        RICustomer *customer = [customers objectAtIndex:0];
+        RICustomer *customer = [customers lastObject];
         if(VALID_NOTEMPTY(customer.addresses, NSOrderedSet))
         {
             return YES;
@@ -358,11 +508,18 @@
     RICustomer *customer = (RICustomer *)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RICustomer class])];
     
     if ([json objectForKey:@"id"]) {
-        customer.idCustomer = [json objectForKey:@"id"];
+        customer.customerId = [json objectForKey:@"id"];
     }
-    
     if ([json objectForKey:@"email"]) {
         customer.email = [json objectForKey:@"email"];
+        
+        NSArray *customers = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RICustomer class]) withPropertyName:@"email" andPropertyValue:[json objectForKey:@"email"]];
+        
+        if (customers.count > 0) {
+            customer = [customers lastObject];
+        }else{
+            [RICustomer saveCustomer:customer andContext:YES];
+        }
     }
     
     if ([json objectForKey:@"first_name"]) {
@@ -389,23 +546,6 @@
         customer.createdAt = [json objectForKey:@"created_at"];
     }
     
-    if ([json objectForKey:@"address_list"]) {
-        NSDictionary *addressesObject = [json objectForKey:@"address_list"];
-        if(VALID_NOTEMPTY(addressesObject, addressesObject))
-        {
-            NSArray *addressesObjectKeys = [addressesObject allKeys];
-            if(VALID_NOTEMPTY(addressesObjectKeys, NSArray))
-            {
-                for(NSString *addressObjectKey in addressesObjectKeys)
-                {
-                    RIAddress *address = [RIAddress parseAddressFromCustomer:addressObjectKey jsonObject:[addressesObject objectForKey:addressObjectKey]];
-                    address.customer = customer;
-                    [customer addAddressesObject:address];
-                }
-            }
-        }
-    }
-    
     if (VALID_NOTEMPTY([json objectForKey:@"wishlist_products"], NSArray)) {
         NSMutableArray *wishlist = [NSMutableArray new];
         for (NSDictionary *dictionary in [json objectForKey:@"wishlist_products"]) {
@@ -415,8 +555,6 @@
         }
         customer.wishlistProducts = [wishlist copy];
     }
-    
-    [RICustomer saveCustomer:customer andContext:YES];
     
     return customer;
 }
@@ -435,8 +573,6 @@
     {
         customer.plainPassword = plainPassword;
     }
-    
-    [self updateCustomerNewsletterWithJson:json];
     
     [RICustomer saveCustomer:customer andContext:YES];
     
@@ -459,7 +595,7 @@
 + (NSDictionary *)toJSON:(RICustomer*)customer {
     NSMutableDictionary * json = [[NSMutableDictionary alloc] init];
     
-    [json setValue:customer.idCustomer forKey:@"id"];
+    [json setValue:customer.customerId forKey:@"id"];
     
     [json setValue:customer.email forKey:@"email"];
     
@@ -479,47 +615,15 @@
     
     [json setValue:customer.createdAt forKey:@"created_at"];
     
-    NSMutableArray * addresses = [[NSMutableArray alloc] init];
+    NSMutableDictionary * addresses = [NSMutableDictionary new];
     
     for ( RIAddress* addr in customer.addresses) {
-        [addresses addObject:[RIAddress toJSON:addr]];
+        [addresses setObject:[RIAddress toJSON:addr] forKey:addr.uid];
     }
     
     [json setValue:addresses forKey:@"address_list"];
     
     return json;
-}
-
-#pragma mark - Save newsletter preferences
-
-+ (void)updateCustomerNewsletterWithJson:(NSDictionary *)json
-{
-    if ([json objectForKey:@"subscribed_categories"])
-    {
-        [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RINewsletterCategory class])];
-        [[RIDataBaseWrapper sharedInstance] saveContext];
-        
-        NSArray *newsletterArray = [json objectForKey:@"subscribed_categories"];
-        
-        for (NSDictionary *dic in newsletterArray)
-        {
-            RINewsletterCategory *newsletter = [RINewsletterCategory parseNewsletterCategory:dic];
-            [RINewsletterCategory saveNewsLetterCategory:newsletter andContext:YES];
-        }
-    }
-    else if ([json objectForKey:@"newsletter_subscription"])
-    {
-        [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RINewsletterCategory class])];
-        [[RIDataBaseWrapper sharedInstance] saveContext];
-        
-        NSArray *newsletterArray = [json objectForKey:@"newsletter_subscription"];
-        
-        for (NSDictionary *dic in newsletterArray)
-        {
-            RINewsletterCategory *newsletter = [RINewsletterCategory parseNewsletterCategory:dic];
-            [RINewsletterCategory saveNewsLetterCategory:newsletter andContext:YES];
-        }
-    }
 }
 
 @end

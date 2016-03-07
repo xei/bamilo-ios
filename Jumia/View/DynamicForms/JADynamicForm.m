@@ -12,15 +12,24 @@
 #import "RIFieldOption.h"
 #import "JAAddRatingView.h"
 #import "JARadioRelatedComponent.h"
+#import "JATitleComponent.h"
+#import "JAScreenTitleComponent.h"
+#import "JARadioGroupComponent.h"
+#import "JASwitchRadioComponent.h"
+#import "JAScreenRadioComponent.h"
 
 @interface JADynamicForm ()
-<UITextFieldDelegate>
+<UITextFieldDelegate, JASwitchRadioComponentDelegate, JAScreenRadioComponentDelegate>
 
 @property (nonatomic, strong) UITextField* currentTextField;
 
 @property (nonatomic, strong) JARadioComponent *regionComponent;
 @property (nonatomic, strong) JARadioComponent *cityComponent;
 @property (nonatomic, strong) JARadioComponent *postcodeComponent;
+@property (nonatomic, strong) JARadioComponent *newsletterGenderComponent;
+@property (nonatomic, strong) JARadioComponent *phonePrefixComponent;
+
+@property (nonatomic, assign) CGFloat distanceToScreenRadioComponent;
 
 @end
 
@@ -77,6 +86,9 @@
         if (VALID_NOTEMPTY(self.postcodeComponent, JARadioComponent)) {
             [componentDictionary setObject:self.postcodeComponent forKey:@"postcodeComponent"];
         }
+        if (VALID_NOTEMPTY(self.phonePrefixComponent, JARadioComponent)) {
+            [componentDictionary setObject:self.phonePrefixComponent forKey:@"phonePrefixComponent"];
+        }
         [self.delegate performSelector:@selector(downloadLocalesForComponents:) withObject:componentDictionary];
     }
 }
@@ -109,17 +121,90 @@
         RIField *field = [fields objectAtIndex:i];
         NSInteger tag = [self.formViews count];
         
-        if ([@"string" isEqualToString:field.type] || [@"text" isEqualToString:field.type] || [@"email" isEqualToString:field.type])
+        if ([@"screen_radio" isEqualToString:field.type]) {
+            JAScreenRadioComponent* screenRadio = [[JAScreenRadioComponent alloc] init];
+            screenRadio.delegate = self;
+            [screenRadio setupWithField:field];
+            
+            CGRect frame = screenRadio.frame;
+            frame.origin.y = startingY;
+            screenRadio.frame = frame;
+            startingY += screenRadio.frame.size.height;
+            
+            [self.formViews addObject:screenRadio];
+            
+            self.distanceToScreenRadioComponent = screenRadio.frame.origin.y;
+            
+        } else if ([@"switch_radio" isEqualToString:field.type]) {
+            JASwitchRadioComponent* switchRadio = [[JASwitchRadioComponent alloc] init];
+            switchRadio.delegate = self;
+            [switchRadio setupWithField:field];
+            
+            CGRect frame = switchRadio.frame;
+            frame.origin.y = startingY;
+            switchRadio.frame = frame;
+            startingY += switchRadio.frame.size.height;
+            
+            [self.formViews addObject:switchRadio];
+            
+            
+        } else if ([@"radio_group" isEqualToString:field.type]) {
+            JARadioGroupComponent* radioGroup = [[JARadioGroupComponent alloc] init];
+            [radioGroup setupWithField:field];
+            
+            CGRect frame = radioGroup.frame;
+            frame.origin.y = startingY;
+            radioGroup.frame = frame;
+            startingY += radioGroup.frame.size.height;
+            
+            [self.formViews addObject:radioGroup];
+            
+        } else if ([@"section_title" isEqualToString:field.type]) {
+            
+            JATitleComponent* titleField = [[JATitleComponent alloc] init];
+            [titleField setupWithField:field];
+            
+            CGRect frame = titleField.frame;
+            frame.origin.y = startingY;
+            titleField.frame = frame;
+            startingY += titleField.frame.size.height;
+            
+            lastTextFieldIndex = [self.formViews count];
+            [self.formViews addObject:titleField];
+            
+        } else if ([@"screen_title" isEqualToString:field.type]) {
+            
+            JAScreenTitleComponent* titleField = [[JAScreenTitleComponent alloc] init];
+            [titleField setupWithField:field];
+            
+            CGRect frame = titleField.frame;
+            frame.origin.y = startingY;
+            titleField.frame = frame;
+            startingY += titleField.frame.size.height;
+            
+            lastTextFieldIndex = [self.formViews count];
+            [self.formViews addObject:titleField];
+            
+        } else if ([@"string" isEqualToString:field.type] || [@"text" isEqualToString:field.type] || [@"email" isEqualToString:field.type])
         {
-            JATextFieldComponent *textField = [JATextFieldComponent getNewJATextFieldComponent];
+            JATextFieldComponent *textField = [[JATextFieldComponent alloc] init];
             [textField setupWithField:field];
             [textField.textField setDelegate:self];
             [textField.textField setReturnKeyType:returnKeyType];
             
-            if([@"email" isEqualToString:field.type])
-            {
+            if ([@"email" isEqualToString:field.type]) {
+                if (VALID_NOTEMPTY([values objectForKey:@"email"], NSString)) {
+                    [textField.textField setText:[values objectForKey:@"email"]];
+                }
+                
+                if ([field.disabled boolValue]) {
+                    textField.textField.enabled = NO;
+                    [textField.textField setTextColor:JABlack700Color];
+                }
+                
                 [textField.textField setKeyboardType:UIKeyboardTypeEmailAddress];
-            }else{
+                textField.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+            } else {
                 textField.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
             }
             
@@ -141,7 +226,7 @@
         }
         else if ([@"password" isEqualToString:field.type] || [@"password2" isEqualToString:field.type])
         {
-            JATextFieldComponent *textField = [JATextFieldComponent getNewJATextFieldComponent];
+            JATextFieldComponent *textField = [[JATextFieldComponent alloc] init];
             [textField setupWithField:field];
             [textField.textField setDelegate:self];
             [textField.textField setReturnKeyType:returnKeyType];
@@ -150,6 +235,26 @@
             CGRect frame = textField.frame;
             frame.origin.y = startingY;
             textField.frame = frame;
+            
+            UITapGestureRecognizer *eyeGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showPassword:)];
+            eyeGestureRecognizer.numberOfTapsRequired = 1;
+            
+            UIImageView *eyeView;
+            UIImage *eyeImage = [UIImage imageNamed:@"btn_eye_closed"];
+            eyeView = [[UIImageView alloc] initWithImage:eyeImage];
+            [eyeView setFrame:CGRectMake(0, 0, eyeImage.size.width, eyeImage.size.height)];
+            
+            [eyeView setUserInteractionEnabled:YES];
+            [eyeView addGestureRecognizer:eyeGestureRecognizer];
+            
+            if (RI_IS_RTL) {
+                textField.textField.leftViewMode = UITextFieldViewModeAlways;
+                textField.textField.leftView = eyeView;
+            } else {
+                textField.textField.rightViewMode = UITextFieldViewModeAlways;
+                textField.textField.rightView = eyeView;
+            }
+            
             startingY += textField.frame.size.height;
             
             [textField.textField setTag:tag];
@@ -160,7 +265,7 @@
         }
         else if ([field.type isEqualToString:@"integer"] || [field.type isEqualToString:@"number"])
         {
-            JATextFieldComponent *textField = [JATextFieldComponent getNewJATextFieldComponent];
+            JATextFieldComponent *textField = [[JATextFieldComponent alloc] init];
             [textField setupWithField:field];
             [textField.textField setDelegate:self];
             [textField.textField setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
@@ -185,7 +290,7 @@
         }
         else if ([field.type isEqualToString:@"date"])
         {
-            JABirthDateComponent *birthDateComponent = [JABirthDateComponent getNewJABirthDateComponent];
+            JABirthDateComponent *birthDateComponent = [[JABirthDateComponent alloc] init];
             [birthDateComponent setupWithField:field];
             [birthDateComponent.textField setDelegate:self];
             [birthDateComponent.textField setReturnKeyType:returnKeyType];
@@ -202,7 +307,7 @@
         }
         else if ([@"radio" isEqualToString:field.type] || [@"list" isEqualToString:field.type])
         {
-            JARadioComponent *radioComponent = [JARadioComponent getNewJARadioComponent];
+            JARadioComponent *radioComponent = [[JARadioComponent alloc] init];
             [radioComponent setupWithField:field];
             [radioComponent.textField setDelegate:self];
             [radioComponent.textField setReturnKeyType:returnKeyType];
@@ -231,45 +336,83 @@
             {
                 self.postcodeComponent = radioComponent;
             }
+            else if([radioComponent isComponentWithKey:@"newsletter_categories_subscribed"] && VALID_NOTEMPTY([radioComponent getApiCallUrl], NSString))
+            {
+                self.newsletterGenderComponent = radioComponent;
+            }
         }
         else if ([@"related_number" isEqualToString:field.type])
         {
-            //we only accept two options, no more, no less
-            if (2 == field.relatedFields.count) {
+            
+            JATextFieldComponent *textField = [[JATextFieldComponent alloc] init];
+            [textField setupWithField:field];
+            [textField.textField setDelegate:self];
+            [textField.textField setReturnKeyType:returnKeyType];
+            
+            [textField setY:startingY];
+            startingY += textField.frame.size.height;
+            
+            [textField.textField setTag:tag];
+            [textField setTag:tag];
+            
+            [textField.textField setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
+            if ([@"phone" isEqualToString:field.key]) {
+                textField.textField.keyboardType = UIKeyboardTypePhonePad;
+                textField.textField.inputAccessoryView = keyboardDoneButtonView;
+            }
+            
+            
+            
+            lastTextFieldIndex = [self.formViews count];
+            [self.formViews addObject:textField];
+            tag++;
+            
+            
+            if (1 == field.relatedFields.count) {
+                //must be list type
                 
-                JATextFieldComponent *textField = [JATextFieldComponent getNewJATextFieldComponent];
-                [textField setupWithField:field];
-                [textField.textField setDelegate:self];
-                [textField.textField setReturnKeyType:returnKeyType];
+                CGFloat phoneOffset = 80.f;
+                CGFloat prefixWidth = 70.f;
                 
-                CGRect frame = textField.frame;
-                frame.origin.y = startingY;
-                textField.frame = frame;
-                startingY += textField.frame.size.height;
+                [textField setFixedX:phoneOffset];
                 
-                [textField.textField setTag:tag];
-                [textField setTag:tag];
+                JARadioComponent* radioRelated = [[JARadioComponent alloc] initWithFrame:CGRectMake(8.f, 0, prefixWidth, 48.f)];
+                [radioRelated.textField setDelegate:self];
+                RIField *relatedField = [field.relatedFields firstObject];
+                [radioRelated setupWithField:relatedField];
+                [radioRelated setFixedWidth:prefixWidth];
+                [radioRelated.textField setTag:tag];
+                [radioRelated setTag:tag];
+                [radioRelated.textField setPlaceholder:@"+"];
+                [radioRelated.textField setEnabled:NO];
                 
-                [textField.textField setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
-                if ([@"phone" isEqualToString:field.key]) {
-                    textField.textField.keyboardType = UIKeyboardTypePhonePad;
-                    textField.textField.inputAccessoryView = keyboardDoneButtonView;
-                }
-                
-                lastTextFieldIndex = [self.formViews count];
-                [self.formViews addObject:textField];
-                
-                JARadioRelatedComponent* radioRelated = [JARadioRelatedComponent getNewJARadioRelatedComponent];
-                [radioRelated setupWithField:field];
-                
-                frame = radioRelated.frame;
-                frame.origin.y = startingY;
+                CGRect frame = radioRelated.frame;
+                frame.origin.y = textField.frame.origin.y;
                 radioRelated.frame = frame;
-                startingY += radioRelated.frame.size.height;
                 
                 [self.formViews addObject:radioRelated];
                 
+                self.phonePrefixComponent = radioRelated;
+                
                 textField.relatedComponent = radioRelated;
+                
+            } else if (2 == [field.relatedFields count]) {
+                //must be radio type
+                
+                JARadioRelatedComponent* radioRelatedComp = [[JARadioRelatedComponent alloc]init];
+                
+                [radioRelatedComp setTag:tag];
+                [radioRelatedComp.switchComponent setTag:tag];
+                tag++;
+                
+                [radioRelatedComp setupWithField:field];
+
+                
+                [radioRelatedComp setY:startingY];
+                startingY += radioRelatedComp.frame.size.height;
+                
+                [self.formViews addObject:radioRelatedComp];
+                textField.relatedComponent = radioRelatedComp;                
             }
         }
         else if (0 != [field.type rangeOfString:@"checkbox"].length)
@@ -328,18 +471,14 @@
                 
                 for (RIFieldRatingStars *ratingStars in field.ratingStars)
                 {
-                    JAAddRatingView *stars = [JAAddRatingView getNewJAAddRatingView];
+                    JAAddRatingView *stars = [[JAAddRatingView alloc]initWithFrame:CGRectMake(0,
+                                                                                             startingY,
+                                                                                             widthComponent,
+                                                                                             0)];
                     [stars setupWithFieldRatingStars:ratingStars];
                     
-                    CGRect frame = stars.frame;
-                    frame.origin.y = startingY;
-                    frame.origin.x = 0.0;
-                    frame.size.width = widthComponent;
-                    [stars setFrame:frame];
-                    
                     [self.formViews addObject:stars];
-                    startingY += stars.frame.size.height;
-                    
+                    startingY += stars.frame.size.height;                    
                 }
             }
         }
@@ -364,6 +503,19 @@
     {
         [self setValues:values];
     }
+    
+    //if there is a screen radio that is set to innactive, we have to "close" the form
+    for (UIView* field in self.formViews) {
+        if ([field isKindOfClass:[JAScreenRadioComponent class]]) {
+            JAScreenRadioComponent* screenRadio = (JAScreenRadioComponent*)field;
+            if (NO == screenRadio.currentlyChecked) {
+                [self unsubscribedNewsletters];
+                break;
+            }
+        }
+    }
+    
+    [self hideRequiredSymbolsIfNeeded];
 }
 
 -(UIView*)viewWithTag:(NSInteger) tag
@@ -380,72 +532,80 @@
     return view;
 }
 
--(void)validateFields:(NSDictionary*)errors
+-(void)validateFieldsWithErrorArray:(NSArray*)errorsArray
+                        finishBlock:(void (^)(NSString*))finishBlock;
 {
-    NSArray *errorKeys = [errors allKeys];
-    for (NSString *errorKey in errorKeys)
-    {
-        if(VALID_NOTEMPTY([errors objectForKey:errorKey], NSArray))
-        {
-            NSArray *errorArray = [errors objectForKey:errorKey];
-            [self setError:[errorArray componentsJoinedByString:@","] inFieldKey:errorKey];
-        }
-        else if(VALID_NOTEMPTY([errors objectForKey:errorKey], NSDictionary))
-        {
-            NSDictionary *errorDictionary = [errors objectForKey:errorKey];
-            NSArray *errorDictionaryKeys = [errorDictionary allKeys];
-            NSString *errorString = nil;
-            for(NSString *errorDictionaryKey in errorDictionaryKeys)
-            {
-                if(VALID_NOTEMPTY(errorString, NSString))
-                {
-                    errorString = [NSString stringWithFormat:@"%@, %@", errorString, [errorDictionary objectForKey:errorDictionaryKey]];
-                }
-                else
-                {
-                    errorString =  [errorDictionary objectForKey:errorDictionaryKey];
+    NSString* firstMessage = @""; //starts empty
+    for (id error in errorsArray) {
+        if (VALID_NOTEMPTY(error, NSDictionary)) {
+            //do not pass the finish block. we take care of that at the end of this method
+            [self validateFieldWithErrorDictionary:error finishBlock:nil];
+            if (VALID_NOTEMPTY(firstMessage, NSString)) {
+                //do nothing, we already have an error message
+            } else {
+                //we don't have an error message yet, so this is the one we should show
+                if ([error objectForKey:@"message"]) {
+                    firstMessage = [error objectForKey:@"message"];
                 }
             }
-            
-            [self setError:[errors objectForKey:errorKey] inFieldKey:errorKey];
+        } else if (VALID_NOTEMPTY(error, NSString)) {
+            firstMessage = error;
         }
-        else if(VALID_NOTEMPTY([errors objectForKey:errorKey], NSString))
-        {
-            [self setError:[errors objectForKey:errorKey] inFieldKey:errorKey];
-        }
+
+    }
+    if (VALID_NOTEMPTY(firstMessage, NSString)) {
+        //we have a message, do nothing else
+    } else {
+        //we don't have a message, we have to use the generic one
+        firstMessage = STRING_ERROR_INVALID_FIELDS;
+    }
+    if (finishBlock) {
+        finishBlock(firstMessage);
     }
 }
 
--(void)setError:(NSString*)error inFieldKey:(NSString*)key
+-(void)validateFieldWithErrorDictionary:(NSDictionary*)errorDictionary
+                            finishBlock:(void (^)(NSString*))finishBlock;
 {
-    for (id view in self.formViews)
-    {
-        if ([view isKindOfClass:[JATextFieldComponent class]])
+    NSString* field = [errorDictionary objectForKey:@"field"];
+    NSString* message = [errorDictionary objectForKey:@"message"];
+    
+    if (VALID_NOTEMPTY(field, NSString)) {
+        for (id view in self.formViews)
         {
-            JATextFieldComponent *textFieldView = (JATextFieldComponent*)view;
-            if([textFieldView isComponentWithKey:key])
+            if ([view isKindOfClass:[JATextFieldComponent class]])
             {
-                [textFieldView setError:error];
-                break;
+                JATextFieldComponent *textFieldView = (JATextFieldComponent*)view;
+                if([textFieldView isComponentWithKey:field])
+                {
+                    [textFieldView setError:message];
+                    break;
+                }
+            }
+            else if ([view isKindOfClass:[JABirthDateComponent class]])
+            {
+                JABirthDateComponent *birthDateComponent = (JABirthDateComponent*)view;
+                if([birthDateComponent isComponentWithKey:field])
+                {
+                    [birthDateComponent setError:message];
+                    break;
+                }
+            }
+            else if ([view isKindOfClass:[JARadioComponent class]])
+            {
+                JARadioComponent *radioComponent = (JARadioComponent*)view;
+                if([radioComponent isComponentWithKey:field])
+                {
+                    [radioComponent setError:message];
+                    break;
+                }
             }
         }
-        else if ([view isKindOfClass:[JABirthDateComponent class]])
-        {
-            JABirthDateComponent *birthDateComponent = (JABirthDateComponent*)view;
-            if([birthDateComponent isComponentWithKey:key])
-            {
-                [birthDateComponent setError:error];
-                break;
-            }
-        }
-        else if ([view isKindOfClass:[JARadioComponent class]])
-        {
-            JARadioComponent *radioComponent = (JARadioComponent*)view;
-            if([radioComponent isComponentWithKey:key])
-            {
-                [radioComponent setError:error];
-                break;
-            }
+    }
+    
+    if (VALID_NOTEMPTY(message, NSString)) {
+        if (finishBlock) {
+            finishBlock(message);
         }
     }
 }
@@ -459,7 +619,10 @@
     {
         for (id obj in self.formViews)
         {
-            if ([obj isKindOfClass:[JATextFieldComponent class]] || [obj isKindOfClass:[JABirthDateComponent class]] || [obj isKindOfClass:[JARadioComponent class]])
+            if ([obj isKindOfClass:[JATextFieldComponent class]] ||
+                [obj isKindOfClass:[JABirthDateComponent class]] ||
+                [obj isKindOfClass:[JARadioComponent class]] ||
+                [obj isKindOfClass:[JARadioRelatedComponent class]])
             {
                 //ignore gender as an error, can't evaluate it here because the billing address form has it but it isn't shown on screen.
                 if (NO == [[obj getFieldName] isEqualToString:genderFieldName]) {
@@ -489,7 +652,22 @@
     {
         for (UIView *view in self.formViews)
         {
-            if ([view isKindOfClass:[JABirthDateComponent class]])
+            if ([view isKindOfClass:[JASwitchRadioComponent class]]) {
+                JASwitchRadioComponent* switchRadio = (JASwitchRadioComponent*) view;
+                if(VALID_NOTEMPTY([switchRadio getValues], NSDictionary))
+                {
+                    [parameters addEntriesFromDictionary:[switchRadio getValues]];
+                }
+            }
+            else if ([view isKindOfClass:[JARadioGroupComponent class]])
+            {
+                JARadioGroupComponent* radioGroup = (JARadioGroupComponent*) view;
+                if(VALID_NOTEMPTY([radioGroup getValues], NSDictionary))
+                {
+                    [parameters addEntriesFromDictionary:[radioGroup getValues]];
+                }
+            }
+            else if ([view isKindOfClass:[JABirthDateComponent class]])
             {
                 JABirthDateComponent *birthdateComponent = (JABirthDateComponent*) view;
                 [parameters addEntriesFromDictionary:[birthdateComponent getValues]];
@@ -497,8 +675,10 @@
             else if ([view isKindOfClass:[JARadioComponent class]])
             {
                 JARadioComponent *radioComponent = (JARadioComponent*) view;
-                if(([@"register" isEqualToString:[self.form type]] || [@"address" isEqualToString:[self.form type]]) && [radioComponent isComponentWithKey:@"gender"])
-                {
+                if(([@"register" isEqualToString:[self.form type]]
+                    || [@"address" isEqualToString:[self.form type]]
+                    || [@"edit" isEqualToString:[self.form type]])
+                   && [radioComponent isComponentWithKey:@"gender"]) {
                     genderComponent = radioComponent;
                 }
                 
@@ -537,7 +717,7 @@
             }
             else if ([view isKindOfClass:[JATextFieldComponent class]])
             {
-                JATextFieldComponent *textFieldComponent = (JATextFieldComponent*) view;
+                JATextFieldComponent *textFieldComponent = (JATextFieldComponent *) view;
                 
                 if(VALID_NOTEMPTY([textFieldComponent getValues], NSDictionary))
                 {
@@ -601,7 +781,7 @@
     {
         if ([view isKindOfClass:[JATextFieldComponent class]])
         {
-            JATextFieldComponent *textFieldView = (JATextFieldComponent*)view;
+            JATextFieldComponent *textFieldView = (JATextFieldComponent *)view;
             if([textFieldView isComponentWithKey:key])
             {
                 [textFieldView setValue:value];
@@ -644,14 +824,6 @@
             if([radioComponent isComponentWithKey:@"region"])
             {
                 [radioComponent setLocaleValue:region];
-            }
-            else if([radioComponent isComponentWithKey:@"city"])
-            {
-                [radioComponent setLocaleValue:nil];
-            }
-            else if ([radioComponent isComponentWithKey:@"postcode"])
-            {
-                [radioComponent setLocaleValue:nil];
             }
         }
     }
@@ -703,6 +875,33 @@
     }
     
     self.currentTextField = nil;
+}
+
+/*
+ showPassword()
+ Toggles password's eye image
+ Show/Hide password characters
+ recieves UITapGestureRecognizer gestureRecognizer
+ */
+- (void)showPassword:(UITapGestureRecognizer *)gestureRecognizer
+{
+    UIImageView *imageViewClicked = (UIImageView*)gestureRecognizer.view;
+    
+    id superView = imageViewClicked.superview;
+    if ([superView isKindOfClass:[UITextField class]]) {
+        UITextField *passwordTextField = (UITextField *)superView;
+        BOOL passwordHidden = passwordTextField.secureTextEntry;
+        UIImage *image;
+        
+        if (passwordHidden) {
+            image = [UIImage imageNamed:@"btn_eye"];
+        } else {
+            image = [UIImage imageNamed:@"btn_eye_closed"];
+        }
+        
+        [imageViewClicked setImage:image];
+        [passwordTextField setSecureTextEntry:!passwordHidden];
+    }
 }
 
 #pragma mark UITextFieldDelegate
@@ -787,5 +986,92 @@
     return fieldId;
 }
 
+#pragma mark - JASwitchRadioComponentDelegate
+- (void)switchRadioComponent:(JASwitchRadioComponent*)switchRadioComponent
+               changedHeight:(CGFloat)delta;
+{
+    BOOL belowRadioComponent = NO;
+    for (UIView* field in self.formViews) {
+        if (belowRadioComponent) {
+            [UIView animateWithDuration:0.3 animations:^{
+                field.y = field.y + delta;
+            }];
+        }
+        
+        if (field == switchRadioComponent) {
+            belowRadioComponent = YES;
+        }
+    }
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(dynamicFormChangedHeight)]) {
+        [self.delegate dynamicFormChangedHeight];
+    }
+}
+
+#pragma mark - JAScreenRadioComponentDelegate
+- (void)screenRadioComponentWasPressed:(JAScreenRadioComponent *)screenRadioComponent
+{
+    if (screenRadioComponent.currentlyChecked) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(screenRadioWasPressedWithTargetString:)]) {
+            [self.delegate screenRadioWasPressedWithTargetString:screenRadioComponent.field.apiCallTarget];
+        }
+    } else {
+        for (UIView* field in self.formViews) {
+            [UIView animateWithDuration:0.3 animations:^{
+                field.y = field.y + self.distanceToScreenRadioComponent;
+            }];
+            if ([field isKindOfClass:[JASwitchRadioComponent class]]) {
+                JASwitchRadioComponent* switchRadio = (JASwitchRadioComponent*)field;
+                [switchRadio forceSelection];
+            }
+        }
+        screenRadioComponent.currentlyChecked = YES;
+        if (self.delegate && [self.delegate respondsToSelector:@selector(dynamicFormChangedHeight)]) {
+            [self.delegate dynamicFormChangedHeight];
+        }
+    }
+}
+
+- (void)unsubscribedNewsletters
+{
+    for (UIView* field in self.formViews) {
+        [UIView animateWithDuration:0.0 animations:^{
+            field.y = field.y - self.distanceToScreenRadioComponent;
+        }];
+        if ([field isKindOfClass:[JAScreenRadioComponent class]]) {
+            JAScreenRadioComponent* screenRadio = (JAScreenRadioComponent*)field;
+            screenRadio.currentlyChecked = NO;
+        }
+    }
+    if (self.delegate && [self.delegate respondsToSelector:@selector(dynamicFormChangedHeight)]) {
+        [self.delegate dynamicFormChangedHeight];
+    }
+}
+
+- (void)hideRequiredSymbolsIfNeeded
+{
+    BOOL hide = YES;
+    for (JADynamicField* field in self.formViews) {
+        if (VALID_NOTEMPTY(field, JADynamicField)) {
+            if (![field.field.required boolValue]) {
+                hide = NO;
+            }
+        }
+    }
+    if (hide) {
+        [self hideRequiredSymbols];
+    }
+}
+
+- (void)hideRequiredSymbols
+{
+    for (UIView* field in self.formViews) {
+        if ([field isKindOfClass:[JATextFieldComponent class]]  ) {
+            [[(JATextFieldComponent *)field requiredSymbol] setHidden:YES];
+        }else if ([field isKindOfClass:[JARadioComponent class]]  ) {
+            [[(JARadioComponent *)field requiredSymbol] setHidden:YES];
+        }
+    }
+}
 
 @end

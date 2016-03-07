@@ -48,8 +48,18 @@
 
 - (UILabel *)label
 {
-    [super.label setFont:JACaptionFont];
+    [super.label setFont:JAList2Font];
     return super.label;
+}
+
+- (void)sizeToFit
+{
+    [super sizeToFit];
+    [self.label setWidth:self.width - 2*self.lineContentXOffset];
+    [self.label sizeToFit];
+    [self setWidth:CGRectGetMaxX(self.label.frame)];
+    [self setHeight:self.label.height];
+    [self.label setYCenterAligned];
 }
 
 @end

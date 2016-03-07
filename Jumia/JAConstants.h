@@ -51,20 +51,22 @@
 //************ side menu navigation controller notifications
 #define kShowChooseCountryScreenNotification @"NOTIFICATION_CHOOSE_COUNTRY_SCREEN"
 #define kShowHomeScreenNotification @"NOTIFICATION_HOME_SCREEN"
+#define kShowAuthenticationScreenNotification @"NOTIFICATION_SHOW_AUTHENTICATION_SCREEN"
+#define kRunBlockAfterAuthenticationNotification @"NOTIFICATION_RUN_BLOCK_AFTER_AUTHENTICATION"
 #define kShowSignInScreenNotification @"NOTIFICATION_SHOW_SIGN_IN_SCREEN"
 #define kShowSignUpScreenNotification @"NOTIFICATION_SHOW_SIGN_UP_SCREEN"
 #define kShowForgotPasswordScreenNotification @"NOTIFICATION_SHOW_FORGOT_PASSWORD_SCREEN"
-#define kShowFavoritesScreenNotification @"NOTIFICATION_SHOW_FAVORITES_SCREEN"
+#define kShowSavedListScreenNotification @"NOTIFICATION_SHOW_SAVEDLIST_SCREEN"
 #define kShowMoreMenuScreenNotification @"NOTIFICATION_MORE_MENU_SCREEN"
 #define kShowRecentSearchesScreenNotification @"NOTIFICATION_SHOW_RECENT_SEARCHES_SCREEN"
 #define kShowRecentlyViewedScreenNotification @"NOTIFICATION_SHOW_RECENTLY_VIEWED_SCREEN"
 #define kShowMyAccountScreenNotification @"NOTIFICATION_SHOW_MY_ACCOUNT_SCREEN"
 #define kShowUserDataScreenNotification @"NOTIFICATION_SHOW_USER_DATA_SCREEN"
 #define kShowEmailNotificationsScreenNotification @"NOTIFICATION_SHOW_EMAIL_NOTIFICAITONS_SCREEN"
+#define kShowNewsletterSubscriptionsScreenNotification @"NOTIFICATION_SHOW_NEWSLETTER_SUBSCRIPTIONS_NOTIFICAITONS_SCREEN"
 
 // Checkout
 #define kShowCheckoutForgotPasswordScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_FORGOT_PASSWORD_SCREEN"
-#define kShowCheckoutLoginScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_LOGIN_SCREEN"
 #define kShowCheckoutAddressesScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_ADDRESSES_SCREEN"
 #define kShowCheckoutAddAddressScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_ADD_ADDRESS_SCREEN"
 #define kShowCheckoutEditAddressScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_EDIT_ADDRESS_SCREEN"
@@ -74,6 +76,7 @@
 #define kShowCheckoutExternalPaymentsScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_EXTERNAL_PAYMENTS_SCREEN"
 #define kShowCheckoutThanksScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_THANKS_SCREEN"
 #define kShowMyOrdersScreenNotification @"NOTIFICATION_SHOW_MY_ORDERS_SCREEN"
+#define kShowMyOrderDetailScreenNotification @"NOTIFICATION_SHOW_MY_ORDER_DETAIL_SCREEN"
 
 // Filters
 #define kShowFiltersScreenNotification @"NOTIFICATION_SHOW_FILTERS_SCREEN"
@@ -133,6 +136,12 @@
 #define kAppStoreUrlShop @"https://itunes.apple.com/app/shop.com.mm-online-shopping/id979214282"
 #define kAppStoreUrlBamilo @"https://itunes.apple.com/app/bamylw/id979950698"
 
+// App Store Id
+#define kAppStoreId @"925015459"
+#define kAppStoreIdDaraz @"978058048"
+#define kAppStoreIdShop @"979214282"
+#define kAppStoreIdBamilo @"979950698"
+
 // Preferences
 #define kDidFirstBuyKey @"did_first_buy"
 #define kNumberOfSessions @"amount_sessions"
@@ -167,15 +176,3 @@
 #define JAGreen1Color UIColorFromRGB(0xa3cf62)
 #define JABlue1Color UIColorFromRGB(0x416998)
 #define JASysBlueColor UIColorFromRGB(0x007aff)
-
-#define JADisplay1Font [UIFont fontWithName:@"HelveticaNeue" size:23]
-#define JADisplay2Font [UIFont fontWithName:@"HelveticaNeue" size:19]
-#define JAListFont [UIFont fontWithName:@"HelveticaNeue-Bold" size:16]
-#define JAList1Font [UIFont fontWithName:@"HelveticaNeue-Medium" size:16]
-#define JAList2Font [UIFont fontWithName:@"HelveticaNeue" size:16]
-#define JABody1Font [UIFont fontWithName:@"HelveticaNeue-Bold" size:13]
-#define JABody2Font [UIFont fontWithName:@"HelveticaNeue-Medium" size:13]
-#define JABody3Font [UIFont fontWithName:@"HelveticaNeue" size:13]
-#define JACaptionFont [UIFont fontWithName:@"HelveticaNeue" size:11]
-#define JACaption2Font [UIFont fontWithName:@"HelveticaNeue-Bold" size:11]
-

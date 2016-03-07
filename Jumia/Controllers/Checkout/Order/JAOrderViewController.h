@@ -11,6 +11,6 @@
 
 @interface JAOrderViewController : JABaseViewController
 
-@property (nonatomic, strong)RICart* cart;
+@property (nonatomic, retain) NSString * shopFirstOverlayText;
 
 @end

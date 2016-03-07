@@ -11,9 +11,9 @@
 
 @interface RIPaymentMethodForm : NSObject
 
-@property (nonatomic, retain) NSString * uid;
+@property (nonatomic, retain) NSString * type;
 @property (nonatomic, retain) NSString * method;
-@property (nonatomic, retain) NSString * action;
+@property (nonatomic, retain) NSString * targetString;
 @property (nonatomic, retain) NSArray *fields;
 
 /**

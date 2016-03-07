@@ -13,7 +13,7 @@
 
 @interface RICustomer : NSManagedObject
 
-@property (nonatomic, retain) NSString * idCustomer;
+@property (nonatomic, retain) NSNumber * customerId;
 @property (nonatomic, retain) NSString * email;
 @property (nonatomic, retain) NSString * firstName;
 @property (nonatomic, retain) NSString * lastName;
@@ -24,8 +24,17 @@
 @property (nonatomic, retain) NSString * createdAt;
 @property (nonatomic, retain) NSString * loginMethod;
 @property (nonatomic, retain) NSOrderedSet *addresses;
+@property (nonatomic, retain) NSNumber *newsletterSubscribed;
 
 @property (nonatomic, retain) NSArray *wishlistProducts;
+
++ (NSString *)signUpAccount:(NSString *)email
+               successBlock:(void (^)(id object))successBlock
+            andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
+
++ (NSString *)checkEmailWithParameters:(NSDictionary *)parameters
+                          successBlock:(void (^)(BOOL knownEmail, RICustomer *customerAlreadyLoggedIn))successBlock
+                       andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
 
 + (NSString*)autoLogin:(void (^)(BOOL success, NSDictionary *entities, NSString *loginMethod))returnBlock;
 
@@ -61,6 +70,12 @@
  */
 + (NSString *)logoutCustomerWithSuccessBlock:(void (^)())successBlock
                              andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
+
+/**
+ * Method to clean the customer from the db
+ *
+ */
++ (void)cleanCustomerFromDB;
 
 /**
  * Method to get the current user id
@@ -115,6 +130,20 @@
 + (BOOL)checkIfUserIsLogged;
 
 /**
+ * Method to check if the user is logged in by facebook
+ *
+ * @return success case user is logged by facebook
+ */
++ (BOOL)checkIfUserIsLoggedByFacebook;
+
+/**
+ * Method to check if the user is logged as guest
+ *
+ * @return success case user is logged as guest
+ */
++ (BOOL)checkIfUserIsLoggedAsGuest;
+
+/**
  * Method to check if the user has any addresses stored
  *
  * @return success case user has addresses
@@ -131,8 +160,6 @@
  */
 + (NSString *)requestPasswordReset:(void (^)())successBlock
                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
-
-+ (void)updateCustomerNewsletterWithJson:(NSDictionary *)json;
 
 @end
 

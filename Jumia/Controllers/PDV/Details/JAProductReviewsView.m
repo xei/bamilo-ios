@@ -425,7 +425,7 @@
 
 - (UIView *)getGraphic
 {
-    UIView *graphic = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX([self getNumbersLabel].frame) + 6.f, 0, kBarWidth, 6.f)];
+    UIView *graphic = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX([self getNumbersLabel].frame) + 6.f, 0, RI_IS_RTL ? 0 : kBarWidth, 6.f)];
     [graphic setBackgroundColor:JAOrange1Color];
     [graphic setHidden:YES];
     return graphic;
@@ -445,19 +445,13 @@
     [RIProductRatings getRatingsDetails:_product.sku successBlock:^(NSDictionary *ratingsDictionary) {
         _ratingsDictionary = ratingsDictionary;
         [self fillGraphics];
+        [self.viewControllerEvents onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         [self.viewControllerEvents hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
         
         if(RIApiResponseSuccess != apiResponse)
         {
-            if (RIApiResponseNoInternetConnection == apiResponse)
-            {
-                [self.viewControllerEvents showErrorView:YES startingY:0.0f selector:@selector(requestRatings) objects:nil];
-            }
-            else
-            {
-                [self.viewControllerEvents showErrorView:NO startingY:0.0f selector:@selector(requestRatings) objects:nil];
-            }
+            [self.viewControllerEvents onErrorResponse:apiResponse messages:nil showAsMessage:NO target:self selector:@selector(requestRatings) objects:nil];
         }
         [self.viewControllerEvents hideLoading];
     }];
@@ -466,23 +460,17 @@
 - (void)requestReviews
 {
     [self.viewControllerEvents showLoading];
-    [RIProductRatings getRatingsForProductWithUrl:self.product.url allowRating:1 pageNumber:(VALID_NOTEMPTY(self.productRatings, RIProductRatings)?self.productRatings.currentPage.intValue+1:1) successBlock:^(RIProductRatings *ratings) {
+    [RIProductRatings getRatingsForProductWithSku:self.product.sku allowRating:1 pageNumber:(VALID_NOTEMPTY(self.productRatings, RIProductRatings)?self.productRatings.currentPage.intValue+1:1) successBlock:^(RIProductRatings *ratings) {
         self.productRatings = ratings;
         [self.reviewsArray addObjectsFromArray:[self.productRatings.reviews mutableCopy]];
         _currentPage = self.productRatings.currentPage.integerValue;
         [self.collectionView reloadData];
+        [self.viewControllerEvents onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         [self.viewControllerEvents hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
         if(RIApiResponseSuccess != apiResponse)
         {
-            if (RIApiResponseNoInternetConnection == apiResponse)
-            {
-                [self.viewControllerEvents showErrorView:YES startingY:0.0f selector:@selector(requestReviews) objects:nil];
-            }
-            else
-            {
-                [self.viewControllerEvents showErrorView:NO startingY:0.0f selector:@selector(requestReviews) objects:nil];
-            }
+            [self.viewControllerEvents onErrorResponse:apiResponse messages:nil showAsMessage:NO target:self selector:@selector(requestReviews) objects:nil];
         }
         [self.viewControllerEvents hideLoading];
     }];
@@ -495,13 +483,19 @@
         UILabel *label = [self.starsTotalLabelDictionary objectForKey:starNumber];
         if ([_ratingsDictionary objectForKey:[NSString stringWithFormat:@"%d", starNumber.intValue]]) {
             NSNumber *sum = [_ratingsDictionary objectForKey:[NSString stringWithFormat:@"%d", starNumber.intValue]];
-            CGFloat full = graphic.width;
+            CGFloat barWidth = kBarWidth*sum.intValue/self.product.sum.intValue;
+            if (RI_IS_RTL)
+            {
+                barWidth = barWidth*-1;
+            }
             [graphic setWidth:0];
             [graphic setHidden:NO];
-            [UIView animateWithDuration:.3 animations:^{
-                [graphic setWidth:full*sum.intValue/self.product.sum.intValue];
+            [UIView animateWithDuration:0.3 animations:^{
+                [graphic setWidth:barWidth];
             }];
             [label setText:[NSString stringWithFormat:@"(%d)", sum.intValue]];
+            [label sizeToFit];
+
         }else{
             [graphic setWidth:0.f];
             [label setText:@"(0)"];

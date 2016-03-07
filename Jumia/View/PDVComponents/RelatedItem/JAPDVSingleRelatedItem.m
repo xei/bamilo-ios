@@ -38,6 +38,7 @@
         _labelBrand = [[UILabel alloc] initWithFrame:CGRectZero];
         [_labelBrand setTextColor:JABlack800Color];
         [_labelBrand setFont:JACaptionFont];
+        [_labelBrand setTextAlignment:NSTextAlignmentLeft];
         [self addSubview:_labelBrand];
     }
     return _labelBrand;
@@ -49,6 +50,7 @@
         _labelName = [[UILabel alloc] initWithFrame:CGRectZero];
         [_labelName setFont:JABody3Font];
         [_labelName setTextColor:JABlackColor];
+        [_labelBrand setTextAlignment:NSTextAlignmentLeft];
         [self addSubview:_labelName];
     }
     return _labelName;
@@ -89,46 +91,48 @@
 - (void)setProduct:(RIProduct *)product
 {
     _product = product;
-    if (VALID_NOTEMPTY(product.images, NSOrderedSet))
+    
+    UIImage *placeHolderImage = [UIImage imageNamed:@"placeholder_scrollable"];
+    [self.imageViewItem setY:6.f];
+    CGFloat ratio = placeHolderImage.size.height/placeHolderImage.size.width;
+    self.imageViewItem.width = self.width - 30;
+    self.imageViewItem.height = self.imageViewItem.width*ratio;
+    [self.imageViewItem setXCenterAligned];
+    
+    if (VALID_NOTEMPTY(product.images, NSArray))
     {
         RIImage *imageTemp = [product.images firstObject];
-        UIImage *placeHolderImage = [UIImage imageNamed:@"placeholder_scrollable"];
-        [self.imageViewItem setY:6.f];
-        
-        CGFloat ratio = placeHolderImage.size.height/placeHolderImage.size.width;
-        self.imageViewItem.width = self.width - 30;
-        self.imageViewItem.height = self.imageViewItem.width*ratio;
-        
-//        __weak typeof (self) weakSelf = self;
         [self.imageViewItem setImageWithURL:[NSURL URLWithString:imageTemp.url]
                            placeholderImage:placeHolderImage success:^(UIImage *image, BOOL cached) {
-                           } failure:^(NSError *error) {
-                               NSLog(@"error getting image [%@] %@", imageTemp.url, error);
-                           }];
-        [self.imageViewItem setXCenterAligned];
+                           } failure:nil];
+    }else{
+        [self.imageViewItem setImage:placeHolderImage];
     }
     
     [self.labelPrice setX:6];
     [self.labelPrice setHeight:20];
     [self.labelPrice setWidth:self.width - 12];
-    if (VALID_NOTEMPTY(product.specialPrice, NSNumber) && 0.0f == [product.specialPrice floatValue]) {
+    if (!VALID_NOTEMPTY(product.specialPrice, NSNumber) || 0.0f == [product.specialPrice floatValue]) {
         self.labelPrice.text = product.priceFormatted;
     } else {
         self.labelPrice.text = product.specialPriceFormatted;
     }
     [self.labelPrice setYBottomAligned:0];
+    [self.labelPrice setTextAlignment:NSTextAlignmentLeft];
     
     [self.labelName setX:6];
     [self.labelName setYTopOf:self.labelPrice at:20];
     [self.labelName setWidth:self.width - 12];
     [self.labelName setHeight:20];
     self.labelName.text = product.name;
+    [self.labelName setTextAlignment:NSTextAlignmentLeft];
     
     [self.labelBrand setX:6];
     [self.labelBrand setYTopOf:self.labelName at:20];
     [self.labelBrand setWidth:self.width - 12];
     [self.labelBrand setHeight:20];
     self.labelBrand.text = product.brand;
+    [self.labelBrand setTextAlignment:NSTextAlignmentLeft];
     
     [self.favoriteImage setFrame:CGRectMake(self.width - 28, 10, 22, 22)];
     [self setFavorite:VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate)];
@@ -145,17 +149,44 @@
 
 - (void)setSearchTypeProduct:(RISearchTypeProduct *)product
 {
-    if (VALID_NOTEMPTY(product.imagesArray, NSOrderedSet))
+    if (VALID_NOTEMPTY(product.image, NSString))
     {
-        RIImage *imageTemp = [product.imagesArray firstObject];
-        
-        [self.imageViewItem setImageWithURL:[NSURL URLWithString:imageTemp.url]
+        [self.imageViewItem setImageWithURL:[NSURL URLWithString:product.image]
                            placeholderImage:[UIImage imageNamed:@"placeholder_scrollable"]];
+        [self.imageViewItem setX:30.f];
+        [self.imageViewItem setY:6.f];
+        
+        CGFloat ratio = self.imageViewItem.image.size.height/self.imageViewItem.image.size.width;
+        self.imageViewItem.width = self.width - 60;
+        self.imageViewItem.height = self.imageViewItem.width*ratio;
     }
-    
-    self.labelBrand.text = product.brand;
-    self.labelName.text = product.name;
-    self.labelPrice.text = product.priceFormatted;
+    if (VALID_NOTEMPTY(product.priceFormatted, NSString)) {
+        self.labelPrice.text = product.priceFormatted;
+        [self.labelPrice setX:6];
+        [self.labelPrice setY:self.height - 13];
+        [self.labelPrice setTextAlignment:NSTextAlignmentCenter];
+        [self.labelPrice setTextColor:[UIColor redColor]];
+        [self.labelPrice setHeight:10];
+        [self.labelPrice setWidth:self.width - 12];
+    }
+    if (VALID_NOTEMPTY(product.name, NSString)) {
+        self.labelName.text = product.name;
+        [self.labelName setX:6];
+        [self.labelName setYTopOf:self.labelPrice at:13];
+        [self.labelName setTextAlignment:NSTextAlignmentCenter];
+        [self.labelName setFont:JACaptionFont];
+        [self.labelName setTextColor:JABlack800Color];
+        [self.labelName setHeight:10];
+        [self.labelName setWidth:self.width - 12];
+    }
+    if (VALID_NOTEMPTY(product.brand, NSString)) {
+        self.labelBrand.text = product.brand;
+        [self.labelBrand setX:6];
+        [self.labelBrand setYTopOf:self.labelName at:13];
+        [self.labelBrand setTextAlignment:NSTextAlignmentCenter];
+        [self.labelBrand setHeight:10];
+        [self.labelBrand setWidth:self.width - 12];
+    }
 }
 
 @end

@@ -9,11 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @class RIShippingMethodForm, RIPaymentMethodForm, RIPaymentInformation,
-    RIAddress, RIForm, RISellerDelivery;
+    RIAddress, RIForm, RISellerDelivery, RICustomer;
 
 @interface RICart : NSObject
 
-@property (strong, nonatomic) NSArray *cartItems;
+@property (strong, nonatomic) NSNumber *totalNumberOfOrders;
+@property (strong, nonatomic) NSArray  *cartItems;
 @property (strong, nonatomic) NSNumber *cartCount;
 @property (strong, nonatomic) NSNumber *cartValue;
 @property (strong, nonatomic) NSString *cartValueFormatted;
@@ -75,35 +76,32 @@
  *
  *  @param the quantity that will be added
  *  @param the simple product sku (format: SH660AAAC1MWNGAMZ-177254)
- *  @param the product sku
  *  @param the success block
  *  @param the error block that contains the error case the operation fails
  *
  *  @return the string with the code to cancel the request
  */
 + (NSString *)addProductWithQuantity:(NSString *)quantity
-                                 sku:(NSString *)sku
-                              simple:(NSString *)simple
-                    withSuccessBlock:(void (^)(RICart *cart))sucessBlock
+                           simpleSku:(NSString *)simpleSku
+                    withSuccessBlock:(void (^)(RICart *cart, RIApiResponse apiResponse, NSArray *successMessage))sucessBlock
                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  *  Method to add multiple products to the cart
  *
- *  @param an array of products to add (format: each element of this array should contain a dictionary with three keys quantity, p and simple)
+ *  @param an array of products to add (format: each element of this array should be a string representing the simple sku to add)
  *  @param the success block
  *  @param the error block that contains the error case the operation fails
  *
  *  @return the string with the code to cancel the request
  */
-+ (NSString *)addProductsWithQuantity:(NSArray *)productsToAdd
-                     withSuccessBlock:(void (^)(RICart *cart, NSArray *productsNotAdded))sucessBlock
-                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock))failureBlock;
++ (NSString *)addMultipleProducts:(NSArray *)productsToAdd
+                 withSuccessBlock:(void (^)(RICart *cart, NSArray *productsNotAdded))sucessBlock
+                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock))failureBlock;
 
 /**
  *  Method to add multiple products from a bundle to the cart
  *
- *  @param an array of products skus to add
  *  @param an array of products simple skus to add
  *  @param the id of the bundle
  *  @param the success block
@@ -111,27 +109,24 @@
  *
  *  @return the string with the code to cancel the request
  */
-+ (NSString *)addBundleProductsWithSkus:(NSArray *)productSkus
-                             simpleSkus:(NSArray *)simpleSkus
-                               bundleId:(NSString *)bundleId
-                       withSuccessBlock:(void (^)(RICart *cart, NSArray *productsNotAdded))sucessBlock
-                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock))failureBlock;
++ (NSString *)addBundleProductsWithSimpleSkus:(NSArray *)simpleSkus
+                                     bundleId:(NSString *)bundleId
+                             withSuccessBlock:(void (^)(RICart *cart, NSArray *productsNotAdded))sucessBlock
+                              andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock))failureBlock;
 
 
 /**
  *  Method to remove product from cart
  *
- *  @param the quantity that will be removed
  *  @param the product sku
  *  @param the success block
  *  @param the error block that contains the error case the operation fails
  *
  *  @return the string with the code to cancel the request
  */
-+ (NSString *)removeProductWithQuantity:(NSString *)quantity
-                                    sku:(NSString *)sku
-                       withSuccessBlock:(void (^)(RICart *cart))sucessBlock
-                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
++ (NSString *)removeProductWithSku:(NSString *)sku
+                  withSuccessBlock:(void (^)(RICart *cart))sucessBlock
+                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  *  Method to get the cart data
@@ -156,6 +151,12 @@
 + (NSString *) changeQuantityInProducts:(NSDictionary *)productsQuantities
                        withSuccessBlock:(void (^)(RICart *cart))sucessBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
+
+/**
+ * Method to clear the cart data
+ */
++ (NSString *) resetCartWithSuccessBlock:(void (^)(void))sucessBlock
+                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 /**
  *  Method to add voucher information
@@ -193,93 +194,32 @@
 + (void)cancelRequest:(NSString *)operationID;
 
 
++(NSString*)getMultistepAddressWithSuccessBlock:(void (^)(RICart *cart, RICustomer *customer))successBlock
+                                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
++(NSString*)setMultistepAddressForShipping:(NSString*)shippingAddressId
+                                   billing:(NSString*)billingAddressId
+                              successBlock:(void (^)(NSString* nextStep))successBlock
+                           andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
-//$$$ FROM CHECKOUT
-
-/**
- * Method to get the address forms needed for checkout process
- *
- * @param the block where the success response can be processed
- * @param the block where the failure response can be processed
- * @return a string with the operationID that can be used to cancel the operation
- */
-+ (NSString*)getCheckoutAddressFormsWithSuccessBlock:(void (^)(RICart *cart))successBlock
-                                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
-
-/**
- * Method to set the addresses needed for checkout process
- *
- * @param the address form
- * @param the parameters to send along with the form
- * @param the block where the success response can be processed
- * @param the block where the failure response can be processed
- * @return a string with the operationID that can be used to cancel the operation
- */
-+ (NSString*)setCheckoutAddresses:(RIForm*)form
-                       parameters:(NSDictionary*)parameters
-                     successBlock:(void (^)(RICart *cart))successBlock
-                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
-
-
-/**
- * Method to get the shipping method form needed for checkout process
- *
- * @param the block where the success response can be processed
- * @param the block where the failure response can be processed
- * @return a string with the operationID that can be used to cancel the operation
- */
-+ (NSString*)getShippingMethodFormWithSuccessBlock:(void (^)(RICart *cart))successBlock
-                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
-
-/**
- * Method to set the shipping method needed for checkout process
- *
- * @param the shipping method form
- * @param the parameters to send along with the form
- * @param the block where the success response can be processed
- * @param the block where the failure response can be processed
- * @return a string with the operationID that can be used to cancel the operation
- */
-+ (NSString*)setShippingMethod:(RIShippingMethodForm*)form
-                    parameters:(NSDictionary*)parameters
-                  successBlock:(void (^)(RICart *cart))successBlock
-               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
-
-/**
- * Method to get the payment method form needed for checkout process
- *
- * @param the block where the success response can be processed
- * @param the block where the failure response can be processed
- * @return a string with the operationID that can be used to cancel the operation
- */
-+ (NSString*)getPaymentMethodFormWithSuccessBlock:(void (^)(RICart *cart))successBlock
++(NSString*)getMultistepShippingWithSuccessBlock:(void (^)(RICart *cart))successBlock
+                                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
++(NSString*)setMultistepShippingForShippingMethod:(NSString*)shippingMethod
+                                    pickupStation:(NSString*)pickupStation
+                                           region:(NSString*)region
+                                     successBlock:(void (^)(NSString* nextStep))successBlock
                                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
-/**
- * Method to set the payment method needed for checkout process
- *
- * @param the payment method form
- * @param the parameters to send along with the form
- * @param the block where the success response can be processed
- * @param the block where the failure response can be processed
- * @return a string with the operationID that can be used to cancel the operation
- */
-+ (NSString*)setPaymentMethod:(RIPaymentMethodForm *)form
-                   parameters:(NSDictionary*)parameters
-                 successBlock:(void (^)(RICart *cart))successBlock
-              andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
++(NSString*)getMultistepPaymentWithSuccessBlock:(void (^)(RICart *cart))successBlock
+                                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
++(NSString*)setMultistepPayment:(NSDictionary*)parameters
+                   successBlock:(void (^)(NSString* nextStep))successBlock
+                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
-/**
- * Method to end the checkout proccess
- *
- * @param the cart that is finishing the checkout
- * @param the block where the success response can be processed
- * @param the block where the failure response can be processed
- * @return a string with the operationID that can be used to cancel the operation
- */
-+ (NSString*)finishCheckoutForCart:(RICart*)cart
-                  withSuccessBlock:(void (^)(RICart *cart))successBlock
-                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
++(NSString*)getMultistepFinishWithSuccessBlock:(void (^)(RICart *cart))successBlock
+                               andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
++(NSString*)setMultistepFinishForCart:(RICart*)cart
+                     withSuccessBlock:(void (^)(RICart* cart, NSString *rrStringTarget))successBlock
+                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 
 @end

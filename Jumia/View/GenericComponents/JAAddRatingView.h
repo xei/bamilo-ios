@@ -12,12 +12,8 @@
 @interface JAAddRatingView : UIView
 
 @property (assign, nonatomic) NSInteger rating;
-//@property (strong, nonatomic) NSArray *ratingOptions;
 @property (nonatomic, strong) RIFieldRatingStars* fieldRatingStars;
 
-+ (JAAddRatingView *)getNewJAAddRatingView;
-
-//- (void)setupWithOption:(RIRatingsDetails*)option;
 - (void)setupWithFieldRatingStars:(RIFieldRatingStars*)fieldRatingStars;
 
 @end

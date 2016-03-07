@@ -82,6 +82,21 @@
     [_label setY:self.height/2-_label.height/2];
 }
 
+- (void)setMultilineTitle:(BOOL)multiline
+{
+    if (multiline) {
+        [self.label setTextAlignment:NSTextAlignmentLeft];
+        [self.label setNumberOfLines:2];
+    } else {
+        [self.label setNumberOfLines:1];
+    }
+}
+
+- (void)setTag:(NSInteger)tag
+{
+    [super setTag:tag];
+}
+
 - (void)addTarget:(id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents
 {
     [self setEnabled:YES];
@@ -111,7 +126,7 @@
 - (void)setTitle:(NSString *)title
 {
     [self.label setText:title];
-    CGFloat labelWidth = self.width - self.lineContentXOffset;
+    CGFloat labelWidth = self.width - self.lineContentXOffset - (self.width - self.arrow.x);
     [self.label sizeToFit];
     [self.label setWidth:labelWidth];
 }
@@ -190,6 +205,19 @@
         [_bottomSeparator setFrame:frame];
     }
     return _bottomSeparator;
+}
+
+/*
+ * to avoid confusions with label
+ */
+- (UILabel *)titleLabel
+{
+    return self.label;
+}
+
+- (NSString *)title
+{
+    return self.label.text;
 }
 
 @end

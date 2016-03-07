@@ -20,8 +20,8 @@
     if ([sellerJSON objectForKey:@"name"]) {
         newSeller.name = [sellerJSON objectForKey:@"name"];
     }
-    if ([sellerJSON objectForKey:@"url"]) {
-        newSeller.url = [sellerJSON objectForKey:@"url"];
+    if ([sellerJSON objectForKey:@"target"]) {
+        newSeller.targetString = [sellerJSON objectForKey:@"target"];
     }
     if ([sellerJSON objectForKey:@"min_delivery_time"]) {
         newSeller.minDeliveryTime = [sellerJSON objectForKey:@"min_delivery_time"];
@@ -47,7 +47,7 @@
             if ([global objectForKey:@"link"]) {
                 NSDictionary* link = [global objectForKey:@"link"];
                 newSeller.linkTextGlobal = [link objectForKey:@"text"];
-                newSeller.linkUrlGlobal = [link objectForKey:@"url"];
+                newSeller.linkTargetStringGlobal = [link objectForKey:@"target"];
             }
             
             if ([global objectForKey:@"cms_info"]) {

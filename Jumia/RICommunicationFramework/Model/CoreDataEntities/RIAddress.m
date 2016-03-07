@@ -39,7 +39,7 @@
 
 + (NSString*)setDefaultAddress:(RIAddress*)address
                      isBilling:(BOOL)isBilling
-                  successBlock:(void (^)(void))successBlock
+                  successBlock:(void (^)(RIApiResponse apiResponse, NSArray *successMessage))successBlock
                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 {
     NSString* type = isBilling?@"billing":@"shipping";
@@ -48,12 +48,23 @@
     NSString* urlPart = RI_API_GET_CUSTOMER_SELECT_DEFAULT;
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, urlPart]]
-                                                            parameters:parameters httpMethodPost:YES
+                                                            parameters:parameters httpMethod:HttpResponsePut
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
-                                                              successBlock();
+                                                              if (VALID_NOTEMPTY([jsonObject objectForKey:@"messages"], NSDictionary)) {
+                                                                  NSDictionary *messages = [jsonObject objectForKey:@"messages"];
+                                                                  if (VALID_NOTEMPTY([messages objectForKey:@"success"], NSArray)) {
+                                                                      NSArray *success = [messages objectForKey:@"success"];
+                                                                      if (VALID_NOTEMPTY([success valueForKey:@"message"], NSArray)) {
+                                                                          NSArray *successMessage = [success valueForKey:@"message"];
+                                                                          successBlock(apiResponse, successMessage);
+                                                                          return;
+                                                                      }
+                                                                  }
+                                                              }
+                                                              successBlock(apiResponse, nil);
                                                           } failureBlock:^(RIApiResponse apiResponse, NSDictionary* errorJsonObject, NSError *errorObject) {
                                                               if(NOTEMPTY(errorJsonObject))
                                                               {
@@ -71,7 +82,7 @@
                                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_CUSTOMER_ADDRESS_LIST]]
-                                                            parameters:nil httpMethodPost:YES
+                                                            parameters:nil httpMethod:HttpResponsePost
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
@@ -79,6 +90,8 @@
                                                               NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary)) {
                                                                   successBlock([RIAddress parseAddressList:metadata]);
+                                                              } else if ([jsonObject objectForKey:@"success"] && ![jsonObject objectForKey:@"metadata"]) {
+                                                                  successBlock(metadata);
                                                               } else {
                                                                   failureBlock(apiResponse, nil);
                                                               }

@@ -58,20 +58,21 @@
     }
 }
 
-- (void)addButton:(NSString *)name target:(id)target action:(SEL)action
+- (UIButton *)addButton:(NSString *)name target:(id)target action:(SEL)action
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [button setTitle:name forState:UIControlStateNormal];
-    [button.titleLabel setFont:JABody2Font];
+    [button setTitle:[name uppercaseString] forState:UIControlStateNormal];
+    [button.titleLabel setFont:JAButtonFont];
     [button setBackgroundColor:JAOrange1Color];
     [button setTintColor:[UIColor whiteColor]];
     [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:button];
     [self.buttonsArray addObject:button];
     [self reloadFrame:self.frame];
+    return button;
 }
 
-- (void)addSmallButton:(UIImage *)image target:(id)target action:(SEL)action
+- (UIButton *)addSmallButton:(UIImage *)image target:(id)target action:(SEL)action
 {
     UIButton *smallButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [[smallButton imageView] setContentMode:UIViewContentModeCenter];
@@ -82,6 +83,7 @@
     [self addSubview:smallButton];
     [self.smallButtonsArray addObject:smallButton];
     [self reloadFrame:self.frame];
+    return smallButton;
 }
 
 @end

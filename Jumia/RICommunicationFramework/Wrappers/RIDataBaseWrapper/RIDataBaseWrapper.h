@@ -22,6 +22,9 @@
 -(NSArray*) getEntryOfType:(NSString *)objectType
           withPropertyName:(NSString *)propertyName;
 -(void)deleteAllEntriesOfType:(NSString *)objectType;
+-(void)deleteAllEntriesOfType:(NSString *)objectType
+             withPropertyName:(NSString *)propertyName
+             andPropertyValue:(NSString *)propertyValue;
 -(void)deleteObject:(NSManagedObject *)managedObject;
 - (void)resetApplicationModel;
 

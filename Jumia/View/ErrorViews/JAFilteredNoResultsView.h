@@ -19,15 +19,9 @@
 
 @interface JAFilteredNoResultsView : UIView
 
-@property(nonatomic, weak) IBOutlet UILabel *filtersLabel;
-
 @property(nonatomic, weak) id <JAFilteredNoResulsViewDelegate> delegate;
 
-+(JAFilteredNoResultsView *)getFilteredNoResultsView;
-
 -(void)setupView:(CGRect)frame;
-
--(IBAction)editFiltersButtonPressed;
 
 
 @end

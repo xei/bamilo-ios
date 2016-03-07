@@ -593,7 +593,7 @@
     
     if(!self.loadFailed)
     {
-        [self removeErrorView];
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         [self finishingSetupViews];
         [self setup];
         [self.checkBoxComponent setHidden:YES];
@@ -601,23 +601,7 @@
     }
     else
     {
-        if(RIApiResponseMaintenancePage == self.apiResponse)
-        {
-            [self showMaintenancePage:@selector(getForms) objects:nil];
-        }
-        else if(RIApiResponseKickoutView == self.apiResponse)
-        {
-            [self showKickoutView:@selector(getForms) objects:nil];
-        }
-        else
-        {
-            BOOL hasNoConnection = NO;
-            if(RIApiResponseNoInternetConnection == self.apiResponse)
-            {
-                hasNoConnection = YES;
-            }
-            [self showErrorView:hasNoConnection startingY:0.0f selector:@selector(getForms) objects:nil];
-        }
+        [self onErrorResponse:self.apiResponse messages:nil showAsMessage:NO selector:@selector(getForms) objects:nil];
     }
 }
 
@@ -886,7 +870,7 @@
                          return;
                      }
                      if([result objectForKey:@"email"] == NULL || [result objectForKey:@"birthday"] == NULL){
-                         [self showMessage:STRING_LOGIN_INCOMPLETE success:NO];
+                         [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_LOGIN_INCOMPLETE] showAsMessage:YES selector:@selector(facebookLoginButtonPressed:) objects:@[sender]];
                          return;
                      }
                      if (!error)
@@ -939,10 +923,10 @@
                                                                       RICustomer *customerObject = [entities objectForKey:@"customer"];
                                                                       
                                                                       NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-                                                                      [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventLabelKey];
+                                                                      [trackingDictionary setValue:customerObject.customerId forKey:kRIEventLabelKey];
                                                                       [trackingDictionary setValue:@"FacebookLoginSuccess" forKey:kRIEventActionKey];
                                                                       [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-                                                                      [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventUserIdKey];
+                                                                      [trackingDictionary setValue:customerObject.customerId forKey:kRIEventUserIdKey];
                                                                       [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
                                                                       [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
                                                                       [trackingDictionary setValue:customerObject.gender forKey:kRIEventGenderKey];
@@ -992,21 +976,21 @@
                                                                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookLoginFail]
                                                                                                                 data:[trackingDictionary copy]];
                                                                       
-                                                                      [self showMessage:STRING_ERROR success:NO];
+                                                                      [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(facebookLoginButtonPressed:) objects:@[sender]];
                                                                   }];
                              
                          }
                      }
                      else
                      {
-                         [self showMessage:[error description] success:NO];
+                         [self onErrorResponse:RIApiResponseUnknownError messages:@[[error description]] showAsMessage:YES selector:@selector(facebookLoginButtonPressed:) objects:@[sender]];
                      }
                  }];
             [connection start];
         }
         else
         {
-            [self showMessage:[error description] success:NO];
+            [self onErrorResponse:RIApiResponseUnknownError messages:@[[error description]] showAsMessage:YES selector:@selector(facebookLoginButtonPressed:) objects:@[sender]];
         }
     }];
 }
@@ -1018,7 +1002,7 @@
     
     [self showLoading];
     
-    [RIForm sendForm:[self.loginDynamicForm form] parameters:[self.loginDynamicForm getValues] successBlock:^(id object) {
+    [RIForm sendForm:[self.loginDynamicForm form] parameters:[self.loginDynamicForm getValues] successBlock:^(id object, NSArray* successMessages) {
         
         if ([object isKindOfClass:[NSDictionary class]]) {
             NSDictionary* responseDictionary = (NSDictionary*)object;
@@ -1038,10 +1022,10 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
             
             NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-            [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventLabelKey];
+            [trackingDictionary setValue:customerObject.customerId forKey:kRIEventLabelKey];
             [trackingDictionary setValue:@"LoginSuccess" forKey:kRIEventActionKey];
             [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
-            [trackingDictionary setValue:customerObject.idCustomer forKey:kRIEventUserIdKey];
+            [trackingDictionary setValue:customerObject.customerId forKey:kRIEventUserIdKey];
             [trackingDictionary setValue:customerObject.firstName forKey:kRIEventUserFirstNameKey];
             [trackingDictionary setValue:customerObject.lastName forKey:kRIEventUserLastNameKey];
             [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
@@ -1095,21 +1079,20 @@
         
         if(VALID_NOTEMPTY(errorObject, NSDictionary))
         {
-            [self.loginDynamicForm validateFields:errorObject];
-            
-            [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
+            [self.loginDynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
+                [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(loginButtonPressed) objects:nil];
+            }];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
-            [self.loginDynamicForm checkErrors];
-            
-            [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
+            [self.loginDynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
+                [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(loginButtonPressed) objects:nil];
+            }];
         }
         else
         {
             [self.loginDynamicForm checkErrors];
-            
-            [self showMessage:STRING_ERROR success:NO];
+            [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(loginButtonPressed) objects:nil];
         }
     }];
 }
@@ -1129,7 +1112,7 @@
     
     [self showLoading];
     
-    [RIForm sendForm:[self.signupDynamicForm form] parameters:[self.signupDynamicForm getValues] successBlock:^(id object) {
+    [RIForm sendForm:[self.signupDynamicForm form] parameters:[self.signupDynamicForm getValues] successBlock:^(id object, NSArray* successMessages) {
         [self.signupDynamicForm resetValues];
         
         NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
@@ -1160,21 +1143,20 @@
         
         if(VALID_NOTEMPTY(errorObject, NSDictionary))
         {
-            [self.signupDynamicForm validateFields:errorObject];
-            
-            [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
+            [self.signupDynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
+                [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(signUpButtonPressed) objects:nil];
+            }];
         }
         else if(VALID_NOTEMPTY(errorObject, NSArray))
         {
-            [self.signupDynamicForm checkErrors];
-            
-            [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
+            [self.signupDynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
+                [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(signUpButtonPressed) objects:nil];
+            }];
         }
         else
         {
             [self.signupDynamicForm checkErrors];
-            
-            [self showMessage:STRING_ERROR success:NO];
+            [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(signUpButtonPressed) objects:nil];
         }
     }];
 }

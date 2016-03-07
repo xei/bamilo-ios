@@ -42,7 +42,7 @@
 
 - (UIView *)ratingsView
 {
-    CGRect frame = CGRectMake(0, 18, self.width - self.dateLabel.width, 70);
+    CGRect frame = CGRectMake(0, 18, self.width - self.dateLabel.width, self.dateLabel.height);
     if (!VALID_NOTEMPTY(_ratingsView, UIView)) {
         _ratingsView = [[UIView alloc] initWithFrame:frame];
         [self.clickableArea addSubview:_ratingsView];
@@ -140,7 +140,7 @@
 {
     if (!VALID_NOTEMPTY(_separator, UIView)) {
         _separator = [[UIView alloc] initWithFrame:CGRectMake(0, self.height, self.width, 1)];
-        [_separator setBackgroundColor:JABlack800Color];
+        [_separator setBackgroundColor:JABlack400Color];
         [self.clickableArea addSubview:_separator];
     }
     return _separator;
@@ -215,7 +215,7 @@
     }else{
         [self.separator setHidden:YES];
     }
-    [self.separator setYBottomAligned:1];
+    [self.separator setYBottomAligned:0];
 }
 
 + (CGFloat)cellHeightWithReview:(RIReview *)review width:(CGFloat)width

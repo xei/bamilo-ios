@@ -13,11 +13,9 @@
 @interface JABirthDateComponent : JADynamicField
 
 @property (assign, nonatomic) BOOL hasError;
-@property (weak, nonatomic) IBOutlet UITextField *textField;
-@property (weak, nonatomic) IBOutlet UILabel *requiredSymbol;
+@property (strong, nonatomic) UITextField *textField;
+@property (strong, nonatomic) UILabel *requiredSymbol;
 @property (nonatomic, strong) NSString* currentErrorMessage;
-
-+(JABirthDateComponent *)getNewJABirthDateComponent;
 
 -(void)setupWithField:(RIField*)field;
 

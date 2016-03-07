@@ -255,46 +255,39 @@ UITableViewDataSource
     
     if(RIApiResponseSuccess != self.apiResponse)
     {
-        if (RIApiResponseNoInternetConnection == self.apiResponse)
-        {
-            [self showErrorView:YES startingY:0.0f selector:@selector(ratingsRequests) objects:nil];
-        }
-        else
-        {
-            [self showErrorView:NO startingY:0.0f selector:@selector(ratingsRequests) objects:nil];
-        }
+            [self onErrorResponse:self.apiResponse messages:nil showAsMessage:NO selector:@selector(ratingsRequests) objects:nil];
     }else{
-        [self removeErrorView];
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
     }
     
     self.requestsDone = YES;
     
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
-    [trackingDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
+    [trackingDictionary setObject:self.product.brand forKey:kRIEventBrandName];
     [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
     
     NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
     [trackingDictionary setValue:price forKey:kRIEventPriceKey];
     
-    if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
+    if(VALID_NOTEMPTY(self.product.categoryIds, NSArray))
     {
-        NSArray *categoryIds = [self.product.categoryIds array];
+        NSArray *categoryIds = self.product.categoryIds;
         NSInteger subCategoryIndex = [categoryIds count] - 1;
         NSInteger categoryIndex = subCategoryIndex - 1;
         
         if(categoryIndex >= 0)
         {
             NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
-            [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryNameKey];
+            [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryIdKey];
             
             NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
-            [trackingDictionary setValue:[RICategory getCategoryName:subCategoryId] forKey:kRIEventSubCategoryNameKey];
+            [trackingDictionary setValue:[RICategory getCategoryName:subCategoryId] forKey:kRIEventSubCategoryIdKey];
         }
         else
         {
             NSString *categoryId = [categoryIds objectAtIndex:subCategoryIndex];
-            [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryNameKey];
+            [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryIdKey];
         }
     }
     
@@ -579,7 +572,7 @@ UITableViewDataSource
 -(void)addReviewsToTable:(NSArray *)reviews
 {
     self.apiResponse = RIApiResponseSuccess;
-    [self removeErrorView];
+    [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
     
     BOOL isEmpty = NO;
     if(ISEMPTY(self.reviewsArray))
@@ -616,14 +609,14 @@ UITableViewDataSource
     }
     
     [self showLoading];
-    [RIProductRatings getRatingsForProductWithUrl:self.product.url
+    [RIProductRatings getRatingsForProductWithSku:self.product.sku
                                       allowRating:1
                                        pageNumber:currentPage
                                      successBlock:^(RIProductRatings *ratings) {
                                          
                                          self.productRatings = ratings;
                                          
-                                         [self removeErrorView];
+                                         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                                          
                                          if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
                                          {
@@ -644,20 +637,13 @@ UITableViewDataSource
                                          self.apiResponse = apiResponse;
                                          if(RIApiResponseSuccess != apiResponse)
                                          {
-                                             if (RIApiResponseNoInternetConnection == apiResponse)
-                                             {
-                                                 [self showErrorView:YES startingY:0.0f selector:@selector(requestReviews) objects:nil];
-                                             }
-                                             else
-                                             {
-                                                 [self showErrorView:NO startingY:0.0f selector:@selector(requestReviews) objects:nil];
-                                             }
+                                             [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(requestReviews) objects:nil];
                                          }
                                          self.numberOfRequests = 0;
                                          
                                          [self hideLoading];
                                      }];
-
+    
 }
 
 - (void)setupResumeView
@@ -1032,7 +1018,7 @@ UITableViewDataSource
             [self hideLoading];
             NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
             [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfoLogin];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification object:nil userInfo:userInfoLogin];
             return;
         }
     } else {
@@ -1042,7 +1028,7 @@ UITableViewDataSource
             [self hideLoading];
             NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
             [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfoLogin];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification object:nil userInfo:userInfoLogin];
             return;
         }
     }
@@ -1056,16 +1042,16 @@ UITableViewDataSource
     
     [RIForm sendForm:currentForm
           parameters:parameters
-        successBlock:^(id object) {
+        successBlock:^(id object, NSArray* successMessages) {
             
             NSNumber *price = (VALID_NOTEMPTY(self.product.specialPriceEuroConverted, NSNumber) && [self.product.specialPriceEuroConverted floatValue] > 0.0f) ? self.product.specialPriceEuroConverted : self.product.priceEuroConverted;
             
             NSMutableDictionary *globalRateDictionary = [[NSMutableDictionary alloc] init];
             [globalRateDictionary setObject:self.product.sku forKey:kRIEventSkuKey];
-            [globalRateDictionary setObject:self.product.brand forKey:kRIEventBrandKey];
+            [globalRateDictionary setObject:self.product.brand forKey:kRIEventBrandName];
             [globalRateDictionary setValue:price forKey:kRIEventPriceKey];
-            [globalRateDictionary setValue:[RICategory getCategoryName:[self.product.categoryIds firstObject]] forKey:kRIEventCategoryNameKey];
-            [globalRateDictionary setValue:[RICategory getCategoryName:[self.product.categoryIds lastObject]] forKey:kRIEventSubCategoryNameKey];
+            [globalRateDictionary setValue:[RICategory getCategoryName:[self.product.categoryIds firstObject]] forKey:kRIEventCategoryIdKey];
+            [globalRateDictionary setValue:[RICategory getCategoryName:[self.product.categoryIds lastObject]] forKey:kRIEventSubCategoryIdKey];
             
             for (UIView *component in currentDynamicForm.formViews)
             {
@@ -1123,8 +1109,7 @@ UITableViewDataSource
                                                       data:[globalRateDictionary copy]];
             
             [self hideLoading];
-            
-            [self showMessage:STRING_REVIEW_SENT success:YES];
+            [self onSuccessResponse:RIApiResponseSuccess messages:@[STRING_REVIEW_SENT] showMessage:YES];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
                                                                 object:nil
@@ -1133,27 +1118,22 @@ UITableViewDataSource
             
             [self hideLoading];
             
-            if (RIApiResponseNoInternetConnection == apiResponse)
+            if(VALID_NOTEMPTY(errorObject, NSDictionary))
             {
-                [self showMessage:STRING_NO_CONNECTION success:NO];
-            }
-            else if(VALID_NOTEMPTY(errorObject, NSDictionary))
-            {
-                [currentDynamicForm validateFields:errorObject];
-                
-                [self showMessage:STRING_ERROR_INVALID_FIELDS success:NO];
+                [currentDynamicForm validateFieldWithErrorDictionary:errorObject finishBlock:^(NSString *message) {
+                    [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(sendReview:) objects:@[sender]];
+                }];
             }
             else if(VALID_NOTEMPTY(errorObject, NSArray))
             {
-                [currentDynamicForm checkErrors];
-                
-                [self showMessage:[errorObject componentsJoinedByString:@","] success:NO];
+                [currentDynamicForm validateFieldsWithErrorArray:errorObject finishBlock:^(NSString *message) {
+                    [self onErrorResponse:apiResponse messages:@[message] showAsMessage:YES selector:@selector(sendReview:) objects:@[sender]];
+                }];
             }
             else
             {
                 [currentDynamicForm checkErrors];
-                
-                [self showMessage:STRING_ERROR success:NO];
+                [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(sendReview:) objects:@[sender]];
             }
         }];
 }

@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JAClickableView.h"
 
 @interface JACampaignBannerCell : UICollectionViewCell
+
+@property (nonatomic) JAClickableView *feedbackView;
 
 - (void)loadWithImageView:(UIImageView*)imageView;
 

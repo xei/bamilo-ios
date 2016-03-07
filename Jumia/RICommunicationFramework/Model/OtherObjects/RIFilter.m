@@ -94,7 +94,7 @@
                     if (ISEMPTY(urlString)) {
                         urlString = stringForFilter;
                     } else {
-                        urlString = [NSString stringWithFormat:@"%@&%@", urlString, stringForFilter];
+                        urlString = [NSString stringWithFormat:@"%@/%@", urlString, stringForFilter];
                     }
                 }
             }
@@ -114,7 +114,15 @@
             if (VALID_NOTEMPTY(filterOption, RIFilterOption)) {
                 
                 if (filterOption.lowerValue != filterOption.min || filterOption.upperValue != filterOption.max) {
-                    urlString = [NSString stringWithFormat:@"price=%ld-%ld", (long)filterOption.lowerValue, (long)filterOption.upperValue];
+                    urlString = [NSString stringWithFormat:@"price/%ld%@%ld", (long)filterOption.lowerValue, filter.filterSeparator, (long)filterOption.upperValue];
+                }
+
+                if (filterOption.discountOnly) {
+                    if (VALID_NOTEMPTY(urlString, NSString)) {
+                        urlString = [NSString stringWithFormat:@"%@/special_price/1", urlString];
+                    } else {
+                        urlString = @"special_price/1";
+                    }
                 }
             }
         } else {
@@ -128,7 +136,7 @@
                     
                     if (ISEMPTY(urlString)) {
                         NSString* filterUidString = filter.uid;
-                        urlString = [NSString stringWithFormat:@"%@=%@", filterUidString, filterOption.val];
+                        urlString = [NSString stringWithFormat:@"%@/%@", filterUidString, filterOption.val];
                     } else {
                         urlString = [NSString stringWithFormat:@"%@%@%@", urlString, filter.filterSeparator, filterOption.val];
                     }
@@ -157,7 +165,11 @@
                 RIFilter* newFilter = [RIFilter parseFilter:filterJSON];
                 
                 if (VALID_NOTEMPTY(newFilter, RIFilter)) {
-                    [newFiltersArray addObject:newFilter];
+                    if ([newFilter.uid isEqualToString:@"category"]) {
+                        //do nothing
+                    } else {
+                        [newFiltersArray addObject:newFilter];    
+                    }
                 }
             }
         }

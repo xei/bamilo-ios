@@ -18,7 +18,6 @@
 #import "JAFilteredNoResultsView.h"
 #import "JAAppDelegate.h"
 #import <FBSDKCoreKit/FBSDKAppEvents.h>
-#import "JANavigationBarView.h"
 #import "UIImageView+JA.h"
 #import "UIImageView+WebCache.h"
 #import "JACampaignBannerCell.h"
@@ -30,6 +29,7 @@
 #import "RIAddress.h"
 #import "JACatalogPictureCollectionViewCell.h"
 #import "JACollectionSeparator.h"
+#import "RITarget.h"
 
 #define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
 #define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
@@ -43,6 +43,7 @@ typedef void (^ProcessActionBlock)(void);
 {
     BOOL _needAddToFavBlock;
     ProcessActionBlock _processActionBlock;
+    BOOL _hasBanner;
 }
 
 //$WIZ$
@@ -75,56 +76,48 @@ typedef void (^ProcessActionBlock)(void);
 
 @property (nonatomic, strong) JASortingView* sortingView;
 @property (nonatomic, strong) RIBanner *banner;
-@property (nonatomic, strong) UIImageView* bannerImage;
+@property (nonatomic, strong) UIImageView *bannerImageView;
 
 @end
 
 @implementation JACatalogViewController
 
-@synthesize bannerImage = _bannerImage;
-- (UIImageView*)bannerImage
+@synthesize bannerImageView = _bannerImageView;
+- (UIImageView*)bannerImageView
 {
-    if (VALID_NOTEMPTY(_bannerImage, UIImageView)) { 
-        //do nothing
-    } else {
-        _bannerImage = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                     0.0f,
-                                                                     1.0f,
-                                                                     1.0f)];
-        if (VALID_NOTEMPTY(self.banner, RIBanner)) {
-            NSString* imageUrl;
-            BOOL isLandscape = self.view.frame.size.width > self.view.frame.size.height?YES:NO;
-            if((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && isLandscape) {
-                imageUrl = self.banner.iPadImageUrl;
-            } else {
-                imageUrl = self.banner.iPhoneImageUrl;
+    if (VALID_NOTEMPTY(self.banner, RIBanner)) {
+        if (!VALID_NOTEMPTY(_bannerImageView, UIImageView)) {
+            _bannerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                             0.0f,
+                                                                             0.0f,
+                                                                             0.0f)];
+            
+            __block UIImageView *blockedImageView = _bannerImageView;
+            __weak JACatalogViewController *weakSelf = self;
+            NSString *imageURL = self.banner.iPhoneImageUrl;
+            if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+                imageURL = self.banner.iPadImageUrl;
             }
-            if (VALID_NOTEMPTY(imageUrl, NSString)) {
-                __block UIImageView *blockedImageView = _bannerImage;
-                __weak JACatalogViewController* weakSelf = self;
-                [_bannerImage setImageWithURL:[NSURL URLWithString:imageUrl]
+            [_bannerImageView setImageWithURL:[NSURL URLWithString:imageURL]
                                       success:^(UIImage *image, BOOL cached){
-                                          [blockedImageView changeImageHeight:0.0f andWidth:weakSelf.collectionView.frame.size.width];
-                                          dispatch_async(dispatch_get_main_queue(), ^{
-                                              [weakSelf.collectionView reloadData];
-                                          });
-                                      }failure:^(NSError *error){}];
-            }
+                                          _hasBanner = YES;
+                                          [blockedImageView changeImageHeight:0.0f andWidth:weakSelf.view.width];
+                                          [weakSelf.collectionView reloadData];
+                                      }failure:^(NSError *error){
+                                          _hasBanner = NO;
+                                      }];
         }
+    }else{
+        _hasBanner = NO;
+        _bannerImageView = nil;
     }
-    return _bannerImage;
-    
+    return _bannerImageView;
 }
 
-
-- (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY selector:(SEL)selector objects:(NSArray*)objects;
-{
-    //$WIZ$
-//    if (VALID_NOTEMPTY(self.wizardView, JACatalogWizardView)) {
-//        [self.wizardView removeFromSuperview];
-//    }
-
-    [super showErrorView:isNoInternetConnection startingY:startingY selector:selector objects:objects];
+@synthesize searchString = _searchString;
+- (void)setSearchString:(NSString *)searchString {
+    _searchString = searchString;
+    [self setSearchBarText:self.searchString];
 }
 
 -(void)showNoResultsView:(CGFloat)withVerticalPadding undefinedSearchTerm:(RIUndefinedSearchTerm*)undefinedSearchTerm
@@ -134,7 +127,7 @@ typedef void (^ProcessActionBlock)(void);
     
     self.filteredNoResultsView.delegate = nil;
     [self.filteredNoResultsView removeFromSuperview];
-    self.filteredNoResultsView = [JAFilteredNoResultsView getFilteredNoResultsView];
+    self.filteredNoResultsView = [[JAFilteredNoResultsView alloc] initWithFrame:[self viewBounds]];
     
     self.filteredNoResultsView.tag = 1001;
     
@@ -153,7 +146,7 @@ typedef void (^ProcessActionBlock)(void);
         }
         else
         {
-            [self showErrorView:NO startingY:withVerticalPadding selector:@selector(loadMoreProducts) objects:nil];
+            [self onErrorResponse:RIApiResponseUnknownError messages:nil showAsMessage:NO selector:@selector(loadMoreProducts) objects:nil];
         }
     }
     else
@@ -167,8 +160,6 @@ typedef void (^ProcessActionBlock)(void);
 //        }
     
         self.catalogTopView.hidden = YES;
-        
-        [self.bannerImage setHidden:YES];
         
         [self.collectionView setHidden:YES];
         
@@ -186,8 +177,6 @@ typedef void (^ProcessActionBlock)(void);
 -(void)pressedEditFiltersButton:(JAFilteredNoResultsView *)view
 {
     [self.collectionView setHidden:NO];
-    
-    [self.bannerImage setHidden:NO];
     
     self.catalogTopView.hidden = NO;
     
@@ -214,6 +203,9 @@ typedef void (^ProcessActionBlock)(void);
     
     if (VALID_NOTEMPTY(self.category, RICategory)) {
         self.categoryUrlKey = self.category.urlKey;
+    }else if (VALID_NOTEMPTY(self.categoryUrlKey, NSString))
+    {
+        self.catalogTargetString = [RITarget getTargetString:CATALOG_CATEGORY node:self.categoryUrlKey];
     }
     
     self.apiResponse = RIApiResponseSuccess;
@@ -247,7 +239,7 @@ typedef void (^ProcessActionBlock)(void);
     
     [self setupViews];
     
-    if (VALID_NOTEMPTY(self.searchString, NSString) || VALID_NOTEMPTY(self.category, RICategory) || VALID_NOTEMPTY(self.catalogUrl, NSString))
+    if (VALID_NOTEMPTY(self.searchString, NSString) || VALID_NOTEMPTY(self.category, RICategory) || VALID_NOTEMPTY(self.catalogTargetString, NSString))
     {
         [self loadMoreProducts];
     }
@@ -294,11 +286,18 @@ typedef void (^ProcessActionBlock)(void);
                                                object:nil];
 }
 
-- (void)viewDidLayoutSubviews
+- (void)viewWillLayoutSubviews
 {
+    if (_hasBanner) {
+        _bannerImageView = nil;
+        [self bannerImageView];
+    }
     [self.collectionView setWidth:self.view.width];
     [self.collectionView setHeight:self.view.height - CGRectGetMaxY(self.catalogTopView.frame)];
     [self.catalogTopView repositionForWidth:self.view.frame.size.width];
+    if (self.filteredNoResultsView.superview) {
+        [self.filteredNoResultsView setupView:[self viewBounds]];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -340,6 +339,9 @@ typedef void (^ProcessActionBlock)(void);
             _processActionBlock();
         }
     }
+    if (self.filteredNoResultsView.superview) {
+        self.catalogTopView.hidden = YES;
+    }
 }
  
 - (void)setupViews
@@ -370,7 +372,7 @@ typedef void (^ProcessActionBlock)(void);
     [self.collectionView registerClass:[JACatalogListCollectionViewCell class] forCellWithReuseIdentifier:@"JACatalogListCollectionViewCell"];
     [self.collectionView registerClass:[JACatalogGridCollectionViewCell class] forCellWithReuseIdentifier:@"JACatalogGridCollectionViewCell"];
     [self.collectionView registerClass:[JACatalogPictureCollectionViewCell class] forCellWithReuseIdentifier:@"JACatalogPictureCollectionViewCell"];
-    
+        
     self.flowLayout = [[JAProductCollectionViewFlowLayout alloc] init];
     self.flowLayout.minimumLineSpacing = 1.0f;
     self.flowLayout.minimumInteritemSpacing = 0.f;
@@ -405,7 +407,7 @@ typedef void (^ProcessActionBlock)(void);
     [RICategory getAllCategoriesWithSuccessBlock:^(id categories)
      {
          self.apiResponse = RIApiResponseSuccess;
-         [self removeErrorView];
+         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
          
          for (RICategory *category in categories)
          {             
@@ -426,32 +428,15 @@ typedef void (^ProcessActionBlock)(void);
          }
          else
          {
-             //do nothing
+             self.categoryName = self.categoryUrlKey;
+             [self loadMoreProducts];
          }
          
          [self hideLoading];
          
      } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
          self.apiResponse = apiResponse;
-         
-         if(RIApiResponseMaintenancePage == apiResponse)
-         {
-             [self showMaintenancePage:@selector(getCategories) objects:nil];
-         }
-         else if(RIApiResponseKickoutView == apiResponse)
-         {
-             [self showKickoutView:@selector(getCategories) objects:nil];
-         }
-         else
-         {
-             BOOL noConnection = NO;
-             if (RIApiResponseNoInternetConnection == apiResponse)
-             {
-                 noConnection = YES;
-             }
-             [self showErrorView:noConnection startingY:CGRectGetMaxY(self.catalogTopView.frame) selector:@selector(getCategories) objects:nil];
-         }
-         
+         [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(getCategories) objects:nil];
          [self hideLoading];
      }];
 }
@@ -466,7 +451,7 @@ typedef void (^ProcessActionBlock)(void);
 - (void)addProductsToTable:(NSArray*)products
 {
     self.apiResponse = RIApiResponseSuccess;
-    [self removeErrorView];
+    [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
     
     BOOL isEmpty = NO;
     if(ISEMPTY(self.productsArray))
@@ -501,14 +486,9 @@ typedef void (^ProcessActionBlock)(void);
             [self processCatalog:catalog];
         };
         
-        typedef void (^ProcessSearchProductsFailureBlock)(RIApiResponse apiResponse,  NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm);
-        ProcessSearchProductsFailureBlock processSearchProductsFailureBlock = ^(RIApiResponse apiResponse,  NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm) {
+        typedef void (^ProcessProductsFailureBlock)(RIApiResponse apiResponse,  NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm);
+        ProcessProductsFailureBlock processProductsFailureBlock = ^(RIApiResponse apiResponse,  NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm) {
             [self setLoadProductsError:apiResponse errorMessages:errorMessages undefSearchTerm:undefSearchTerm];
-        };
-        
-        typedef void (^ProcessCategoryProductsFailureBlock)(RIApiResponse apiResponse,  NSArray *errorMessages);
-        ProcessCategoryProductsFailureBlock processCategoryProductsFailureBlock = ^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-            [self setLoadProductsError:apiResponse errorMessages:errorMessages undefSearchTerm:nil];
         };
         
         if (VALID_NOTEMPTY(self.searchString, NSString))
@@ -527,7 +507,7 @@ typedef void (^ProcessActionBlock)(void);
                                                                          sortingMethod:self.sortingMethod
                                                                                filters:self.filtersArray
                                                                           successBlock:processProductsBlock
-                                                                       andFailureBlock:processSearchProductsFailureBlock];
+                                                                       andFailureBlock:processProductsFailureBlock];
         }
         else
         {
@@ -540,15 +520,13 @@ typedef void (^ProcessActionBlock)(void);
                 
                 self.isLoadingMoreProducts =YES;
                 
-                NSString* urlToUse = self.catalogUrl;
+                NSString* urlToUse = [RITarget getURLStringforTargetString:self.catalogTargetString];
                 if (VALID_NOTEMPTY(self.categoryName, NSString)) {
-                    urlToUse = [NSString stringWithFormat:@"%@%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_CATALOG, self.categoryName];
-                }
-                if (VALID_NOTEMPTY(self.category, RICategory) && VALID_NOTEMPTY(self.category.apiUrl, NSString)) {
-                    urlToUse = self.category.apiUrl;
-                }
-                if (VALID_NOTEMPTY(self.filterCategory, RICategory) && VALID_NOTEMPTY(self.filterCategory.apiUrl, NSString)) {
-                    urlToUse = self.filterCategory.apiUrl;
+                    urlToUse = [NSString stringWithFormat:@"%@%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_CATALOG_CATEGORY, self.categoryName];
+                }else if (VALID_NOTEMPTY(self.category, RICategory) && VALID_NOTEMPTY(self.category.targetString, NSString)) {
+                    urlToUse = [RITarget getURLStringforTargetString:self.category.targetString];
+                }else if (VALID_NOTEMPTY(self.filterCategory, RICategory) && VALID_NOTEMPTY(self.filterCategory.targetString, NSString)) {
+                    urlToUse = [RITarget getURLStringforTargetString:self.filterCategory.targetString];
                 }
                 
                 self.getProductsOperationID = [RIProduct getProductsWithCatalogUrl:urlToUse
@@ -558,7 +536,7 @@ typedef void (^ProcessActionBlock)(void);
                                                                            filters:self.filtersArray
                                                                         filterPush:self.filterPush
                                                                       successBlock:processProductsBlock
-                                                                   andFailureBlock:processCategoryProductsFailureBlock];
+                                                                   andFailureBlock:processProductsFailureBlock];
             }
         }
     }
@@ -566,7 +544,7 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)processCatalog:(RICatalog *)catalog
 {
-    [self removeErrorView];
+    [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
     
     self.searchSuggestionOperationID = nil;
     self.getProductsOperationID = nil;
@@ -579,6 +557,11 @@ typedef void (^ProcessActionBlock)(void);
     self.catalogTopView.sortingButton.enabled = YES;
     
     self.banner = catalog.banner;
+    
+    if (VALID_NOTEMPTY(self.banner, RIBanner)) {
+        [self.collectionView registerClass:[JACampaignBannerCell class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"bannerCell"];
+        [self bannerImageView];
+    }
     
     if (NOTEMPTY(catalog.categories)) {
         self.categoriesArray = catalog.categories;
@@ -623,8 +606,6 @@ typedef void (^ProcessActionBlock)(void);
         if (VALID_NOTEMPTY(self.searchString, NSString)) {
             [self trackingEventSearchForString:self.searchString with:catalog.totalProducts];
             
-            [self trackingEventFacebookSearchWithCategories:catalog.categories];
-            
             [self trackingEventLoadingTime];
         }else{
             NSMutableArray *productsToTrack = [[NSMutableArray alloc] init];
@@ -637,9 +618,11 @@ typedef void (^ProcessActionBlock)(void);
                 }
             }
             
+            RIProduct* firstProduct = [catalog.products firstObject];
+            
             [self trackingEventViewListingForProducts:productsToTrack];
             
-            [self trackingEventFacebookListeningForProducts:productsToTrack categories:catalog.categories];
+            [self trackingEventFacebookListeningForProductCategoryName:firstProduct.categoryName];
             
             [self trackingEventGTMListingForCategoryName:categoryName andSubCategoryName:subCategoryName];
         }
@@ -676,35 +659,22 @@ typedef void (^ProcessActionBlock)(void);
     
     if(VALID_NOTEMPTY(self.productsArray, NSArray))
     {
-        NSString *erroMessasge = STRING_ERROR;
-        if (RIApiResponseNoInternetConnection == apiResponse)
-        {
-            erroMessasge = STRING_NO_CONNECTION;
-        }
-        
-        [self showMessage:erroMessasge success:NO];
+        [self onErrorResponse:apiResponse messages:@[STRING_ERROR] showAsMessage:YES selector:@selector(loadMoreProducts) objects:nil];
     }
     else
     {
-        if(RIApiResponseMaintenancePage == apiResponse)
+//$WIZ$
+//        if (VALID_NOTEMPTY(self.wizardView, JACatalogWizardView))
+//        {
+//            [self.wizardView removeFromSuperview];
+//        }
+        
+        if(RIApiResponseAPIError == apiResponse)
         {
-            [self showMaintenancePage:@selector(loadMoreProducts) objects:nil];
-        }
-        else if(RIApiResponseKickoutView == apiResponse)
-        {
-            [self showKickoutView:@selector(loadMoreProducts) objects:nil];
-        }
-        else
-        {
-            if (RIApiResponseNoInternetConnection == apiResponse)
-            {
-                [self showErrorView:YES startingY:CGRectGetMaxY(self.catalogTopView.frame) selector:@selector(loadMoreProducts) objects:nil];
-                
-            }
-            else if(RIApiResponseAPIError == apiResponse)
-            {
-                [self showNoResultsView:CGRectGetMaxY(self.catalogTopView.frame) undefinedSearchTerm:undefSearchTerm];
-            }
+            [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+            [self showNoResultsView:CGRectGetMaxY(self.catalogTopView.frame) undefinedSearchTerm:undefSearchTerm];
+        }else{
+            [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadMoreProducts) objects:nil];
         }
     }
     
@@ -739,11 +709,11 @@ typedef void (^ProcessActionBlock)(void);
                     height = JACatalogViewControllerGridCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewListCell:
-                    width = self.view.frame.size.width;
+                    width = self.view.frame.size.width/2;
                     height = JACatalogViewControllerListCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewPictureCell:
-                    width = self.view.frame.size.width;
+                    width = self.view.frame.size.width/2;
                     height = JACatalogViewControllerPictureCellHeight_ipad;
                     break;
             }
@@ -754,11 +724,11 @@ typedef void (^ProcessActionBlock)(void);
                     height = JACatalogViewControllerGridCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewListCell:
-                    width =  self.view.frame.size.width/2;
+                    width =  self.view.frame.size.width/3;
                     height = JACatalogViewControllerListCellHeight_ipad;
                     break;
                 case JACatalogCollectionViewPictureCell:
-                    width =  self.view.frame.size.width/2;
+                    width =  self.view.frame.size.width/3;
                     height = JACatalogViewControllerPictureCellHeight_ipad;
                     break;
             }
@@ -785,7 +755,6 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)changeViewToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    self.bannerImage = nil;
     switch (self.catalogTopView.cellTypeSelected) {
         case JACatalogCollectionViewGridCell:
             if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
@@ -882,43 +851,22 @@ typedef void (^ProcessActionBlock)(void);
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-   CGFloat numberOfCells = self.productsArray.count;
-    
-    if (VALID_NOTEMPTY(self.banner, RIBanner)) {
-        numberOfCells++;
-    }
-
-    return numberOfCells;
+    return self.productsArray.count;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (VALID_NOTEMPTY(self.banner, RIBanner) && 0 == indexPath.row) {
-        return self.bannerImage.frame.size;
-    }
     return [self getLayoutItemSizeForInterfaceOrientation:[UIApplication sharedApplication].statusBarOrientation];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger realIndex = indexPath.row;
-   
     if (!self.loadedEverything && self.productsArray.count - self.numberOfCellsInScreen <= indexPath.row)
     {
         [self loadMoreProducts];
     }
     
-    if (VALID_NOTEMPTY(self.banner, RIBanner)) {
-        if (0 == indexPath.row) {
-            JACatalogBannerCell *bannerCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"bannerCell" forIndexPath:indexPath];
-            [bannerCell loadWithImageView:self.bannerImage];
-            bannerCell.tag = 0;
-            return bannerCell;
-        }
-        realIndex--;
-    }
-    
-    RIProduct *product = [self.productsArray objectAtIndex:realIndex];
+    RIProduct *product = [self.productsArray objectAtIndex:indexPath.row];
     
     JACatalogCollectionViewCell *cell;
     
@@ -930,7 +878,7 @@ typedef void (^ProcessActionBlock)(void);
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JACatalogPictureCollectionViewCell" forIndexPath:indexPath];
     }
     
-    cell.favoriteButton.tag = realIndex;
+    cell.favoriteButton.tag = indexPath.row;
     [cell.favoriteButton addTarget:self
                             action:@selector(addToFavoritesPressed:)
                   forControlEvents:UIControlEventTouchUpInside];
@@ -948,6 +896,27 @@ typedef void (^ProcessActionBlock)(void);
     
 }
 
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    if (kind == UICollectionElementKindSectionHeader && _hasBanner) {
+        
+        JACampaignBannerCell *cell = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"bannerCell" forIndexPath:indexPath];
+        
+        [cell loadWithImageView:self.bannerImageView];
+        [cell.feedbackView addTarget:self action:@selector(clickableBannerPressed) forControlEvents:UIControlEventTouchUpInside];
+        
+        return cell;
+    }
+    return nil;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    if (_hasBanner) {
+        return self.bannerImageView.frame.size;
+    }
+    return CGSizeMake(0, 0);
+}
+
 -(void)clickableBannerPressed
 {
     if(VALID_NOTEMPTY(self.banner, RIBanner)) {
@@ -960,26 +929,28 @@ typedef void (^ProcessActionBlock)(void);
         
         NSString* notificationName;
         
-        if ([self.banner.targetType isEqualToString:@"catalog"]) {
+        RITarget* target = [RITarget parseTarget:self.banner.targetString];
+        
+        if ([target.type isEqualToString:[RITarget getTargetKey:CATALOG_HASH]]) {
             
             notificationName = kDidSelectTeaserWithCatalogUrlNofication;
             
-        } else if ([self.banner.targetType isEqualToString:@"product_detail"]) {
+        } else if ([target.type isEqualToString:[RITarget getTargetKey:PRODUCT_DETAIL]]) {
             
             notificationName = kDidSelectTeaserWithPDVUrlNofication;
             
-        } else if ([self.banner.targetType isEqualToString:@"static_page"]) {
+        } else if ([target.type isEqualToString:[RITarget getTargetKey:STATIC_PAGE]]) {
             
             notificationName = kDidSelectTeaserWithShopUrlNofication;
             
-        } else if ([self.banner.targetType isEqualToString:@"campaign"]) {
+        } else if ([target.type isEqualToString:[RITarget getTargetKey:CAMPAIGN]]) {
             
             notificationName = kDidSelectCampaignNofication;
 
         }
         
-        if (VALID_NOTEMPTY(self.banner.url, NSString)) {
-            [userInfo setObject:self.banner.url forKey:@"url"];
+        if (VALID_NOTEMPTY(self.banner.targetString, NSString)) {
+            [userInfo setObject:self.banner.targetString forKey:@"targetString"];
             [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
                                                                 object:nil
                                                               userInfo:userInfo];
@@ -994,20 +965,7 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger realIndex = indexPath.row;
-    if (VALID_NOTEMPTY(self.banner, RIBanner)) {
-        if (0 == indexPath.row) {
-            //click banner
-            
-            [self clickableBannerPressed];
-            
-            return;
-        }
-        realIndex--;
-    }
-    
-    
-    RIProduct *product = [self.productsArray objectAtIndex:realIndex];
+    RIProduct *product = [self.productsArray objectAtIndex:indexPath.row];
     
     NSInteger count = self.productsArray.count;
     
@@ -1018,7 +976,7 @@ typedef void (^ProcessActionBlock)(void);
     NSString *temp = self.category.label;
     
     NSMutableDictionary* userInfo = [NSMutableDictionary new];
-    [userInfo setObject:product.url forKey:@"url"];
+    [userInfo setObject:product.targetString forKey:@"targetString"];
     [userInfo setObject:@"YES" forKey:@"fromCatalog"];
     [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"show_back_button"];
     
@@ -1204,6 +1162,8 @@ typedef void (^ProcessActionBlock)(void);
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:self.catalogTopView.cellTypeSelected] forKey:JACatalogGridSelected];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
+    [self.flowLayout resetSizes];
+    
     [self changeViewToInterfaceOrientation:self.interfaceOrientation];
 }
 
@@ -1237,7 +1197,7 @@ typedef void (^ProcessActionBlock)(void);
         _processActionBlock = block;
         NSMutableDictionary* userInfoLogin = [[NSMutableDictionary alloc] init];
         [userInfoLogin setObject:[NSNumber numberWithBool:NO] forKey:@"from_side_menu"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfoLogin];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification object:nil userInfo:userInfoLogin];
         return NO;
     }
     return YES;
@@ -1265,17 +1225,15 @@ typedef void (^ProcessActionBlock)(void);
     RIProduct* product = [self.productsArray objectAtIndex:button.tag];
     if (!button.selected && !VALID_NOTEMPTY(product.favoriteAddDate, NSDate))
     {
-        [RIProduct addToFavorites:product successBlock:^{
+        [RIProduct addToFavorites:product successBlock:^(RIApiResponse apiResponse,  NSArray *success){
             button.selected = YES;
             product.favoriteAddDate = [NSDate date];
             
-            [self removeErrorView];
-            
             [self trackingEventAddToWishList:product];
             
+            [self onSuccessResponse:RIApiResponseSuccess messages:success showMessage:YES];
             [self hideLoading];
             
-            [self showMessage:STRING_ADDED_TO_WISHLIST success:YES];
             NSDictionary *userInfo = nil;
             if (product.favoriteAddDate) {
                 userInfo = [NSDictionary dictionaryWithObject:product.favoriteAddDate forKey:@"favoriteAddDate"];
@@ -1287,14 +1245,8 @@ typedef void (^ProcessActionBlock)(void);
             [self.collectionView reloadData];
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-            
+            [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(addToFavorites:) objects:@[button]];
             [self hideLoading];
-            NSString *errorMessage = STRING_ERROR_ADDING_TO_WISHLIST;
-            if (RIApiResponseNoInternetConnection == apiResponse)
-            {
-                errorMessage = STRING_NO_CONNECTION;
-            }
-            [self showMessage:errorMessage success:NO];
         }];
     }else{
         [self hideLoading];
@@ -1322,17 +1274,15 @@ typedef void (^ProcessActionBlock)(void);
     RIProduct* product = [self.productsArray objectAtIndex:button.tag];
     if (button.selected && VALID_NOTEMPTY(product.favoriteAddDate, NSDate))
     {
-        [RIProduct removeFromFavorites:product successBlock:^(void) {
+        [RIProduct removeFromFavorites:product successBlock:^(RIApiResponse apiResponse, NSArray *success) {
             button.selected = NO;
             product.favoriteAddDate = nil;
-            [self removeErrorView];
             
             [self trackingEventRemoveFromWishlist:product];
             
+            [self onSuccessResponse:RIApiResponseSuccess messages:success showMessage:YES];
             //update favoriteProducts
             [self hideLoading];
-            
-            [self showMessage:STRING_REMOVED_FROM_WISHLIST success:YES];
             
             NSDictionary *userInfo = nil;
             if (product.favoriteAddDate) {
@@ -1344,14 +1294,8 @@ typedef void (^ProcessActionBlock)(void);
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             
+            [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(removeFromFavorites:) objects:@[button]];
             [self hideLoading];
-            
-            NSString *errorMessage = STRING_ERROR_REMOVING_FROM_WISHLIST;
-            if (RIApiResponseNoInternetConnection == apiResponse)
-            {
-                errorMessage = STRING_NO_CONNECTION;
-            }
-            [self showMessage:errorMessage success:NO];
         }];
     }else{
         [self hideLoading];
@@ -1382,15 +1326,15 @@ typedef void (^ProcessActionBlock)(void);
 
 #pragma mark - Undefined view delegate
 
-- (void)didSelectProduct:(NSString *)productUrl
+- (void)didSelectProduct:(NSString *)productTargetString
 {
     NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
     [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"show_back_button"];
     [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"fromCatalog"];
     [userInfo setObject:self forKey:@"delegate"];
-    if(VALID_NOTEMPTY(productUrl, NSString))
+    if(VALID_NOTEMPTY(productTargetString, NSString))
     {
-        [userInfo setObject:productUrl forKey:@"url"];
+        [userInfo setObject:productTargetString forKey:@"targetString"];
     }
     if(VALID_NOTEMPTY(self.category, RICategory))
     {
@@ -1414,13 +1358,13 @@ typedef void (^ProcessActionBlock)(void);
                                                       userInfo:userInfo];
 }
 
-- (void)didSelectBrand:(NSString *)brandUrl
-             brandName:(NSString *)brandName
+- (void)didSelectBrandTargetString:(NSString *)brandTargetString
+                         brandName:(NSString *)brandName
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectOptionNotification
                                                         object:@{@"index": @(98),
                                                                  @"name": brandName,
-                                                                 @"url": brandUrl }];
+                                                                 @"targetString": brandTargetString }];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -1486,7 +1430,7 @@ typedef void (^ProcessActionBlock)(void);
         [self.catalogTopView setSorting:self.sortingMethod];
         
         self.apiResponse = RIApiResponseSuccess;
-        [self removeErrorView];
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         
         [self resetCatalog];
         [self loadMoreProducts];
@@ -1509,7 +1453,8 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)trackingEventFilter:(NSMutableDictionary *)trackingDictionary
 {
-    [trackingDictionary setValue:self.catalogUrl forKey:kRIEventLabelKey];
+    NSString* url = [RITarget getURLStringforTargetString:self.catalogTargetString];
+    [trackingDictionary setValue:url forKey:kRIEventLabelKey];
     [trackingDictionary setValue:STRING_FILTERS forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
     
@@ -1577,7 +1522,8 @@ typedef void (^ProcessActionBlock)(void);
     [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
     
     [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
-    [trackingDictionary setValue:product.brand forKey:kRIEventBrandKey];
+    [trackingDictionary setValue:product.brand forKey:kRIEventBrandName];
+    [trackingDictionary setValue:product.brandUrlKey forKey:kRIEventBrandKey];
     
     NSString *discountPercentage = @"0";
     if(VALID_NOTEMPTY(product.maxSavingPercentage, NSString))
@@ -1607,9 +1553,9 @@ typedef void (^ProcessActionBlock)(void);
             categoryName = self.category.label;
         }
     }
-    else if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet))
+    else if(VALID_NOTEMPTY(product.categoryIds, NSArray))
     {
-        NSArray *categoryIds = [product.categoryIds array];
+        NSArray *categoryIds = product.categoryIds;
         NSInteger subCategoryIndex = [categoryIds count] - 1;
         NSInteger categoryIndex = subCategoryIndex - 1;
         
@@ -1630,15 +1576,34 @@ typedef void (^ProcessActionBlock)(void);
     
     if(VALID_NOTEMPTY(categoryName, NSString))
     {
-        [trackingDictionary setValue:categoryName forKey:kRIEventCategoryNameKey];
+        [trackingDictionary setValue:categoryName forKey:kRIEventCategoryIdKey];
     }
     if(VALID_NOTEMPTY(subCategoryName, NSString))
     {
-        [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryNameKey];
+        [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryIdKey];
     }
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]
-                                              data:[trackingDictionary copy]];
+    if (VALID_NOTEMPTY(product.categoryName, NSString)) {
+        [trackingDictionary setValue:product.categoryName forKey:kRIEventCategoryNameKey];
+    }
+    if (VALID_NOTEMPTY(product.categoryUrlKey, NSString)) {
+        [trackingDictionary setValue:product.categoryUrlKey forKey:kRIEventCategoryIdKey];
+    }
+    
+    [trackingDictionary setValue:product.name forKey:kRIEventProductNameKey];
+    
+    [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
+        
+        [trackingDictionary setValue:[NSNumber numberWithInteger:favoriteProducts.count] forKey:kRIEventTotalWishlistKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]
+                                                  data:[trackingDictionary copy]];
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToWishlist]
+                                                  data:[trackingDictionary copy]];
+    }];
+    
+
     float value = [price floatValue];
     [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToWishlist
                   valueToSum:value
@@ -1670,8 +1635,16 @@ typedef void (^ProcessActionBlock)(void);
     [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
     [trackingDictionary setValue:product.avr forKey:kRIEventRatingKey];
     
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
-                                              data:[trackingDictionary copy]];
+    [RIProduct getFavoriteProductsWithSuccessBlock:^(NSArray *favoriteProducts, NSInteger currentPage, NSInteger totalPages) {
+        
+        [trackingDictionary setValue:[NSNumber numberWithInteger:favoriteProducts.count] forKey:kRIEventTotalWishlistKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
+                                                  data:[trackingDictionary copy]];
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventRemoveFromWishlist]
+                                                  data:[trackingDictionary copy]];
+    }];
 }
 
 - (void)trackingEventSort
@@ -1713,65 +1686,16 @@ typedef void (^ProcessActionBlock)(void);
                                FBSDKAppEventParameterNameSuccess: @1 }];
 }
 
-- (void)trackingEventFacebookSearchWithCategories:(NSArray *)categories
-{
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
-    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-    NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
-    if(VALID_NOTEMPTY(numberOfSessions, NSNumber))
-    {
-        [trackingDictionary setValue:[numberOfSessions stringValue] forKey:kRIEventAmountSessions];
-    }
-    
-    [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-    [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-    
-    
-    if(self.categoryId)
-    {
-        [trackingDictionary setValue:self.categoryId forKey:kRIEventCategoryIdKey];
-        [trackingDictionary setValue:[RICategory getTree:self.categoryId] forKey:kRIEventTreeKey];
-    }else if (VALID_NOTEMPTY(categories, NSArray)){
-        [trackingDictionary setValue:[categories firstObject] forKey:kRIEventCategoryIdKey];
-        [trackingDictionary setValue:[RICategory getTree:[categories firstObject]] forKey:kRIEventTreeKey];
-    }
-    
-    [trackingDictionary setValue:self.searchString forKey:kRIEventQueryKey];
-    
-    if ([RICustomer checkIfUserIsLogged]) {
-        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-        [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
-        [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
-            RIAddress *shippingAddress = (RIAddress *)[adressList objectForKey:@"shipping"];
-            [trackingDictionary setValue:shippingAddress.city forKey:kRIEventCityKey];
-            [trackingDictionary setValue:shippingAddress.customerAddressRegion forKey:kRIEventRegionKey];
-            
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookSearch]
-                                                      data:[trackingDictionary copy]];
-            
-        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-            NSLog(@"ERROR: getting customer");
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookSearch]
-                                                      data:[trackingDictionary copy]];
-        }];
-    }else{
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookSearch]
-                                                  data:[trackingDictionary copy]];
-    }
-}
-
 - (void)trackingEventGTMListingForCategoryName:(NSString *)categoryName andSubCategoryName:(NSString *)subCategoryName
 {
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     if(VALID_NOTEMPTY(categoryName, NSString))
     {
-        [trackingDictionary setValue:categoryName forKey:kRIEventCategoryNameKey];
+        [trackingDictionary setValue:categoryName forKey:kRIEventCategoryIdKey];
     }
     if(VALID_NOTEMPTY(subCategoryName, NSString))
     {
-        [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryNameKey];
+        [trackingDictionary setValue:subCategoryName forKey:kRIEventSubCategoryIdKey];
     }
     [self trackingEventGTMListing:trackingDictionary];
 }
@@ -1801,52 +1725,22 @@ typedef void (^ProcessActionBlock)(void);
                                               data:[trackingDictionary copy]];
 }
 
-- (void)trackingEventFacebookListeningForProducts:(NSArray *)productsToTrack categories:(NSArray *)categories
+- (void)trackingEventFacebookListeningForProductCategoryName:(NSString *)categoryName
 {
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
     
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-    NSNumber *numberOfSessions = [[NSUserDefaults standardUserDefaults] objectForKey:kNumberOfSessions];
-    if(VALID_NOTEMPTY(numberOfSessions, NSNumber))
-    {
-        [trackingDictionary setValue:[numberOfSessions stringValue] forKey:kRIEventAmountSessions];
-    }
-    
     [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
     [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
-    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
     
-    if(VALID_NOTEMPTY(self.categoryName, NSString))
-    {
-        [trackingDictionary setValue:self.categoryName forKey:kRIEventCategoryNameKey];
+    if (VALID_NOTEMPTY(categoryName, NSString)) {
+        [trackingDictionary setValue:categoryName forKey:kRIEventFBContentCategory];
     }
+
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewListing]
+                                              data:[trackingDictionary copy]];
     
-    if(VALID_NOTEMPTY(categories, NSArray))
-    {
-        [trackingDictionary setValue:[categories firstObject] forKey:kRIEventCategoryIdKey];
-        [trackingDictionary setValue:[RICategory getTree:[categories firstObject]] forKey:kRIEventTreeKey];
-    }
-    
-    [trackingDictionary setValue:productsToTrack forKey:kRIEventSkusKey];
-    
-    if ([RICustomer checkIfUserIsLogged]) {
-        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-        [trackingDictionary setValue:[RICustomer getCustomerGender] forKey:kRIEventGenderKey];
-        [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
-            RIAddress *shippingAddress = (RIAddress *)[adressList objectForKey:@"shipping"];
-            [trackingDictionary setValue:shippingAddress.city forKey:kRIEventCityKey];
-            [trackingDictionary setValue:shippingAddress.customerAddressRegion forKey:kRIEventRegionKey];
-            
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewListing] data:[trackingDictionary copy]];
-            
-        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-            NSLog(@"ERROR: getting customer");
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewListing] data:[trackingDictionary copy]];
-        }];
-    }else{
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookViewListing] data:[trackingDictionary copy]];
-    }
 }
 
 @end

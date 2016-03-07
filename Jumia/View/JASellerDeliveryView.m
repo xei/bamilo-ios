@@ -37,7 +37,7 @@
     self.title = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, 0.0f, width, 26.0f)];
     self.title.textAlignment = NSTextAlignmentLeft;
     [self.title setText:[NSString stringWithFormat:STRING_SHIPMENT_OF,(long)index,(long)max]];
-    [self.title setFont:[UIFont fontWithName:@"HelveticaNeue" size:12.0f]];
+    [self.title setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
     [self.title setTextColor:UIColorFromRGB(0x808080)];
     [self.contentView addSubview:self.title];
     
@@ -53,7 +53,7 @@
         currenty += 24.0f;
         UILabel *qty = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, currenty, width, 12.0f)];
         [qty setText:[NSString stringWithFormat:@"%@ %@ ",STRING_ORDER_QUANTITY,prod.quantity]];
-        [qty setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
+        [qty setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
         [qty setTextColor:UIColorFromRGB(0x666666)];
         [qty sizeToFit];
         [self.contentView addSubview:qty];
@@ -63,7 +63,7 @@
         currenty += qty.frame.size.height;
         UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, currenty, width-24.f, 12.0f)];
         [name setText:[NSString stringWithFormat:@"%@ ",prod.name]];
-        [name setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
+        [name setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
         [name setNumberOfLines:0];
         [name setLineBreakMode:NSLineBreakByWordWrapping];
         [name setTextColor:UIColorFromRGB(0x666666)];
@@ -81,7 +81,7 @@
     self.name = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, currenty, width, 12.0f)];
     self.name.textAlignment = NSTextAlignmentLeft;
     [self.name setText:[NSString stringWithFormat:@"%@ %@ ",STRING_FULFILLED,sellerDelivery.name]];
-    [self.name setFont:[UIFont fontWithName:@"HelveticaNeue" size:12.0f]];
+    [self.name setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
     [self.name setTextColor:UIColorFromRGB(0x666666)];
     [self.name sizeToFit];
     [self.contentView addSubview:self.name];
@@ -91,7 +91,7 @@
     self.delivery = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, currenty, width, 12.0f)];
     self.delivery.textAlignment = NSTextAlignmentLeft;
     [self.delivery setText:[NSString stringWithFormat:@"%@ ",sellerDelivery.deliveryTime]];
-    [self.delivery setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
+    [self.delivery setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
     [self.delivery setTextColor:UIColorFromRGB(0x666666)];
     [self.delivery sizeToFit];
     [self.contentView addSubview:self.delivery];
@@ -106,7 +106,7 @@
         self.shipping = [[UILabel alloc] initWithFrame:CGRectMake(24.0f, currenty, width, 42.0f)];
         self.shipping.textAlignment = NSTextAlignmentLeft;
         [self.shipping setText:[NSString stringWithFormat:@"%@ ",sellerDelivery.shippingGlobal]];
-        [self.shipping setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.0f]];
+        [self.shipping setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
         [self.shipping setTextColor:UIColorFromRGB(0xf68b1e)];
         [self.shipping setLineBreakMode:NSLineBreakByWordWrapping];
         [self.shipping setNumberOfLines:0];

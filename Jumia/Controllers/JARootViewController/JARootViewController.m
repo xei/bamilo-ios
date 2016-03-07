@@ -139,7 +139,7 @@
     }else{
         [self setLeftPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
     }
-    [self setCenterPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"rootNavigationController"]];
+    [self setCenterPanel:[JACenterNavigationController sharedInstance]];
 }
 
 - (void)updateCountry:(NSNotification*)notification
@@ -152,7 +152,7 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"first_screen"]];
 
-    if(VALID_NOTEMPTY(notification.userInfo, NSDictionary))
+    if(VALID_NOTEMPTY(notification.userInfo, NSDictionary) && VALID_NOTEMPTY([RIApi getCountryIsoInUse], NSString))
     {
         [[RITrackingWrapper sharedInstance] handlePushNotifcation:[notification.userInfo copy]];
     }

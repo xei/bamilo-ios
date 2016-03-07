@@ -11,6 +11,7 @@
 #import "UIImageView+WebCache.h"
 #import "RIConfiguration.h"
 #import "RICountry.h"
+#import "RITarget.h"
 
 @implementation JABrandView
 
@@ -110,14 +111,17 @@
                        value:stringTextColor
                        range:NSMakeRange(0, stringTextLenght)];
     
-    NSRange range = [text rangeOfString:searchText];
-    
-    [stringText addAttribute:NSFontAttributeName
-                       value:subStringTextFont
-                       range:range];
-    
-    self.labelNoResults.attributedText = stringText;
-    [self.labelNoResults sizeToFit];
+    if (VALID_NOTEMPTY(searchText, NSString)) {
+        NSRange range = [text rangeOfString:searchText];
+        
+        [stringText addAttribute:NSFontAttributeName
+                           value:subStringTextFont
+                           range:range];
+        
+        self.labelNoResults.attributedText = stringText;
+        [self.labelNoResults sizeToFit];
+        
+    }
     [self.labelNoResults setFrame:CGRectMake(6.0f,
                                              CGRectGetMaxY(self.searchIconImageView.frame) + 20.0f,
                                              self.topView.bounds.size.width - 6.0f*2,
@@ -219,18 +223,14 @@
             arrayToUse = convertedProd;
         }
 
-#warning TODO THIS
         for (int i = 0; i < featuredBox.products.count; i++) {
             RISearchTypeProduct* product = [arrayToUse objectAtIndex:i];
-            if (product.imagesArray.count > 0)
+            if (VALID_NOTEMPTY(product.image, NSString))
             {
-                JAPDVSingleRelatedItem *singleItem = [[JAPDVSingleRelatedItem alloc] initWithFrame:CGRectZero];
-                
-                CGRect tempFrame = singleItem.frame;
-                tempFrame.origin.x = currentX;
-                singleItem.frame = tempFrame;
+                JAPDVSingleRelatedItem *singleItem = [[JAPDVSingleRelatedItem alloc]
+                                                      initWithFrame:CGRectMake(currentX, 0, 110, productScrollView.height)];
                 [singleItem setSearchTypeProduct:product];
-                
+                                [singleItem setX:currentX];
                 singleItem.tag = i;
                 [singleItem addTarget:self
                                action:@selector(productSelected:)
@@ -241,10 +241,8 @@
                 currentX += 110.0f;
             }
         }
-        
         [productScrollView setContentSize:CGSizeMake(currentX,
                                                      productScrollView.frame.size.height)];
-        
         scrollViewY += self.topSellersView.frame.size.height + 6.0f;
     }
     
@@ -305,7 +303,7 @@
             {
                 JABrandView *brandView = [[JABrandView alloc] initWithFrame:CGRectMake(brandsCurrentX, 0, 110, 110)];
                 brandView.backgroundColor = [UIColor clearColor];
-                brandView.brandUrl = brand.url;
+                brandView.brandTargetString = brand.targetString;
                 brandView.brandName = brand.name;
                 
                 UIImageView *brandImage = [[UIImageView alloc] initWithFrame:CGRectMake(30, 20, 50, 40)];
@@ -399,21 +397,21 @@
 - (void)productSelected:(UIControl *)sender
 {
     RIFeaturedBox *featuredBox = self.searchResult.featuredBox;
-    RISearchTypeProduct *item = [featuredBox.products objectAtIndex:sender.tag];
+    RISearchTypeProduct *item = [RI_IS_RTL?[[featuredBox.products reverseObjectEnumerator] allObjects]:featuredBox.products objectAtIndex:sender.tag];
     
     if (NOTEMPTY(self.delegate) && [self.delegate respondsToSelector:@selector(didSelectProduct:)])
     {
-        [self.delegate didSelectProduct:item.url];
+        [self.delegate didSelectProduct:item.targetString];
     }
 }
 - (void)brandSelected:(UIControl *)sender
 {
     RIFeaturedBrandBox *featuredBrandBox = self.searchResult.featuredBrandBox;
-    RIBrand* brand = [featuredBrandBox.brands objectAtIndex:sender.tag];
+    RIBrand* brand = [RI_IS_RTL?[[featuredBrandBox.brands reverseObjectEnumerator] allObjects]:featuredBrandBox.brands objectAtIndex:sender.tag];
     
-    if (NOTEMPTY(self.delegate) && [self.delegate respondsToSelector:@selector(didSelectBrand:brandName:)])
+    if (NOTEMPTY(self.delegate) && [self.delegate respondsToSelector:@selector(didSelectBrandTargetString:brandName:)])
     {
-        [self.delegate didSelectBrand:brand.url
+        [self.delegate didSelectBrandTargetString:brand.targetString
                             brandName:brand.name];
     }
 }

@@ -7,20 +7,19 @@
 //
 
 #import "JACenterNavigationController.h"
-#import "JANavigationBarView.h"
 
 #import "JAChooseCountryViewController.h"
 #import "JAHomeViewController.h"
 #import "JALoadCountryViewController.h"
-#import "JAMyFavouritesViewController.h"
+#import "JASavedListViewController.h"
 #import "JARecentSearchesViewController.h"
 #import "JARecentlyViewedViewController.h"
 #import "JAMyAccountViewController.h"
 #import "JAUserDataViewController.h"
-#import "JAEmailNotificationsViewController.h"
 #import "JAMyOrdersViewController.h"
+#import "JAMyOrderDetailViewController.h"
 #import "JASignInViewController.h"
-#import "JASignupViewController.h"
+#import "JARegisterViewController.h"
 #import "JAForgotPasswordViewController.h"
 #import "JALoginViewController.h"
 #import "JAAddressesViewController.h"
@@ -31,20 +30,16 @@
 #import "JAOrderViewController.h"
 #import "JACatalogViewController.h"
 #import "JAPDVViewController.h"
-#import "JARecentlyViewedViewController.h"
 #import "JACartViewController.h"
 #import "JAForgotPasswordViewController.h"
 #import "JALoginViewController.h"
 #import "JAExternalPaymentsViewController.h"
-#import "JAThanksViewController.h"
+#import "JASuccessPageViewController.h"
 #import "RIProduct.h"
 #import "RISeller.h"
 #import "JANavigationBarLayout.h"
 #import "RICustomer.h"
-#import "JAUserDataViewController.h"
-#import "JAEmailNotificationsViewController.h"
 #import "JACampaignsViewController.h"
-#import "JAProductDetailsViewController.h"
 #import "JATabNavigationViewController.h"
 #import "JARatingsViewController.h"
 #import "JANewRatingViewController.h"
@@ -59,6 +54,12 @@
 #import "JAMoreMenuViewController.h"
 #import "RICountry.h"
 #import "JAFiltersViewController.h"
+#import "JANewsletterViewController.h"
+#import "JANewsletterSubscriptionViewController.h"
+#import "RITarget.h"
+
+#import "JAAuthenticationViewController.h"
+#import "JASearchView.h"
 
 @interface JACenterNavigationController ()
 
@@ -66,9 +67,20 @@
 @property (assign, nonatomic) BOOL neeedsExternalPaymentMethod;
 @property (strong, nonatomic) UIStoryboard *mainStoryboard;
 
+@property (nonatomic, strong) JASearchView *searchView;
+
 @end
 
 @implementation JACenterNavigationController
+
++ (instancetype)sharedInstance {
+    static id defaultInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        defaultInstance = [self new];
+    });
+    return defaultInstance;
+}
 
 #pragma mark - View Lifecycle
 
@@ -102,8 +114,8 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showFavoritesViewController:)
-                                                 name:kShowFavoritesScreenNotification
+                                             selector:@selector(showSavedListViewController:)
+                                                 name:kShowSavedListScreenNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -132,8 +144,28 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showNewsletterSubscritions:)
+                                                 name:kShowNewsletterSubscriptionsScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showMyOrdersViewController:)
                                                  name:kShowMyOrdersScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showMyOrderDetailViewController:)
+                                                 name:kShowMyOrderDetailScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showAuthenticationScreen:)
+                                                 name:kShowAuthenticationScreenNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(runBlockAfterAuthentication:)
+                                                 name:kRunBlockAfterAuthenticationNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -147,13 +179,8 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showForgotPasswordScreen)
+                                             selector:@selector(showForgotPasswordScreen:)
                                                  name:kShowForgotPasswordScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showCheckoutLoginScreen)
-                                                 name:kShowCheckoutLoginScreenNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -342,13 +369,18 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showSpecificationsScreen:)
-                                                 name:kOpenSpecificationsScreen
+                                             selector:@selector(showMoreMenu)
+                                                 name:kShowMoreMenuScreenNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showMoreMenu)
-                                                 name:kShowMoreMenuScreenNotification
+                                             selector:@selector(didLoggedIn)
+                                                 name:kUserLoggedInNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didLoggedOut)
+                                                 name:kUserLoggedOutNotification
                                                object:nil];
 }
 
@@ -364,6 +396,59 @@
     
     [self customizeNavigationBar];
     [self customizeTabBar];
+}
+
+- (void)openTarget:(NSString *)targetString
+{
+    RITarget *target = [RITarget parseTarget:targetString];
+    
+    switch (target.targetType) {
+        case PRODUCT_DETAIL: {
+            JAPDVViewController *pdv = [JAPDVViewController new];
+            [pdv setProductTargetString:targetString];
+            [self pushViewController:pdv animated:YES];
+            break;
+        }
+        case CATALOG_SEARCH: {
+            JACatalogViewController *catalog = [JACatalogViewController new];
+            [catalog setSearchString:[RITarget parseTarget:targetString].node];
+            [self pushViewController:catalog animated:YES];
+            break;
+        }
+        case CATALOG_HASH:
+        case CATALOG_CATEGORY: {
+            JACatalogViewController *catalog = [JACatalogViewController new];
+            [catalog setCatalogTargetString:targetString];
+            [self pushViewController:catalog animated:YES];
+            break;
+        }
+        case SHOP_IN_SHOP:
+        case STATIC_PAGE: {
+            JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
+            
+            [viewController.navBarLayout setShowBackButton:YES];
+            [viewController.navBarLayout setTitle:[RITarget parseTarget:targetString].node];
+                
+            [viewController setTargetString:targetString];
+            [self pushViewController:viewController animated:YES];
+            break;
+        }
+        case CATALOG_BRAND: {
+            JACatalogViewController *catalog = [JACatalogViewController new];
+            [catalog setCatalogTargetString:targetString];
+            [self pushViewController:catalog animated:YES];
+            break;
+        }
+        case CAMPAIGN: {
+            JACampaignsViewController *campaign = [JACampaignsViewController new];
+            [campaign setCampaignTargetString:targetString];
+            [self pushViewController:campaign animated:YES];
+            break;
+        }
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark Home Screen
@@ -468,7 +553,7 @@
             }
             else if ([index isEqual:@(98)])
             {
-                [self pushCatalogForUndefinedSearchWithBrandUrl:[selectedItem objectForKey:@"url"]
+                [self pushCatalogForUndefinedSearchWithBrandTargetString:[selectedItem objectForKey:@"targetString"]
                                                    andBrandName:[selectedItem objectForKey:@"name"]];
             }
             else
@@ -488,7 +573,7 @@
     }
     else if ([newScreenName isEqualToString:STRING_MY_FAVOURITES])
     {
-        [self showFavoritesViewController:nil];
+        [self showSavedListViewController:nil];
     }
     else if ([newScreenName isEqualToString:STRING_CHOOSE_COUNTRY])
     {
@@ -533,26 +618,17 @@
 }
 
 #pragma mark Favorites Screen
-- (void)showFavoritesViewController:(NSNotification*)notification
+- (void)showSavedListViewController:(NSNotification*)notification
 {
-    if(![RICustomer checkIfUserIsLogged]) {
-        NSNotification *nextNotification = [NSNotification notificationWithName:kShowFavoritesScreenNotification object:nil userInfo:nil];
-        
-        NSMutableDictionary* userInfo = [[NSMutableDictionary alloc] init];
-        [userInfo setObject:nextNotification forKey:@"notification"];
-        [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"tabbar_is_visible"];
-        [userInfo setObject:[NSNumber numberWithBool:NO] forKey:@"shows_back_button"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:nil userInfo:userInfo];
-        return;
-    }else{
+    [JAAuthenticationViewController authenticateAndExecuteBlock:^{
         UIViewController *topViewController = [self topViewController];
-        if (![topViewController isKindOfClass:[JAMyFavouritesViewController class]])
+        if (![topViewController isKindOfClass:[JASavedListViewController class]])
         {
-            JAMyFavouritesViewController *myFavouritesViewController = [[JAMyFavouritesViewController alloc]initWithNibName:@"JAMyFavouritesViewController" bundle:nil];
+            JASavedListViewController *savedListViewController = [JASavedListViewController new];
             
-            [self pushViewController:myFavouritesViewController animated:NO];
+            [self pushViewController:savedListViewController animated:NO];
         }
-    }
+    } showBackButtonForAuthentication:NO];
 }
 
 #pragma mark MoreMenu
@@ -582,35 +658,114 @@
 }
 
 #pragma mark Sign In Screen
-- (void)showSignInScreen:(NSNotification *)notification
+- (void)showAuthenticationScreen:(NSNotification *)notification
 {
-    JASignInViewController *signInVC = [[JASignInViewController alloc] init];
+    JAAuthenticationViewController *authenticationViewController = [[JAAuthenticationViewController alloc] init];
     
-    if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSNotification))
-    {
-        signInVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
+    if (VALID_NOTEMPTY(notification, NSNotification) && notification.object) {
+        [authenticationViewController setNextStepBlock:notification.object];
     }
+    
     if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"shows_back_button"], NSNumber)) {
         NSNumber* showsBack = [notification.userInfo objectForKey:@"shows_back_button"];
-        signInVC.navBarLayout.showBackButton = [showsBack boolValue];
+        authenticationViewController.navBarLayout.showBackButton = [showsBack boolValue];
+        if (![showsBack boolValue]) {
+            authenticationViewController.tabBarIsVisible = YES;
+            [self popToRootViewControllerAnimated:NO];
+        }
     } else {
-        signInVC.navBarLayout.showBackButton = YES;
+        authenticationViewController.navBarLayout.showBackButton = YES;
     }
-    signInVC.fromSideMenu = NO;
+    
+    authenticationViewController.fromSideMenu = NO;
     if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"from_side_menu"], NSNumber)) {
         NSNumber* fromSide = [notification.userInfo objectForKey:@"from_side_menu"];
-        signInVC.fromSideMenu = [fromSide boolValue];
+        authenticationViewController.fromSideMenu = [fromSide boolValue];
     }
     BOOL animated = YES;
     if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"tabbar_is_visible"], NSNumber)) {
         NSNumber* tabbarIsVisible = [notification.userInfo objectForKey:@"tabbar_is_visible"];
-        signInVC.tabBarIsVisible = [tabbarIsVisible boolValue];
+        authenticationViewController.tabBarIsVisible = [tabbarIsVisible boolValue];
         [self popToRootViewControllerAnimated:NO];
         animated = NO;
     }
     if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"animated"], NSNumber)) {
         NSNumber* animatedNumber = [notification.userInfo objectForKey:@"animated"];
         animated = [animatedNumber boolValue];
+    }
+    
+    if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"continue_button"], NSNumber)) {
+        authenticationViewController.checkout = [[notification.userInfo objectForKey:@"continue_button"] boolValue];
+    }
+    
+    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.userInfo, NSDictionary)) {
+        [authenticationViewController setUserInfo:notification.userInfo];
+    }
+    
+    [self pushViewController:authenticationViewController animated:YES];
+}
+
+- (void)runBlockAfterAuthentication:(NSNotification *)notification
+{
+    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"from_side_menu"], NSNumber)) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
+    } else {
+        NSInteger count = [self.viewControllers count];
+        if (count > 2)
+        {
+            UIViewController *viewController = [self.viewControllers objectAtIndex:count-2];
+            UIViewController *viewControllerToPop = [self.viewControllers objectAtIndex:count-3];
+            if ([viewController isKindOfClass:[JAAuthenticationViewController class]]) {
+                [self popToViewController:viewControllerToPop animated:NO];
+            }else{
+                [self popViewControllerAnimated:YES];
+            }
+        }else{
+            [self popViewControllerAnimated:YES];
+        }
+        
+        if (VALID_NOTEMPTY(notification, NSNotification) && notification.object) {
+            typedef void (^NextStepBlock)(void);
+            NextStepBlock nextStepBlock = notification.object;
+            nextStepBlock();
+        }
+    }
+}
+
+- (void)showSignInScreen:(NSNotification *)notification
+{
+    JASignInViewController *signInVC = [[JASignInViewController alloc] init];
+    
+    BOOL animated = YES;
+    if(VALID_NOTEMPTY(notification, NSNotification))
+    {
+        signInVC.nextStepBlock = notification.object;
+        
+        if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"shows_back_button"], NSNumber)) {
+            NSNumber* showsBack = [notification.userInfo objectForKey:@"shows_back_button"];
+            signInVC.navBarLayout.showBackButton = [showsBack boolValue];
+        } else {
+            signInVC.navBarLayout.showBackButton = YES;
+        }
+        signInVC.fromSideMenu = NO;
+        if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"from_side_menu"], NSNumber)) {
+            NSNumber* fromSide = [notification.userInfo objectForKey:@"from_side_menu"];
+            signInVC.fromSideMenu = [fromSide boolValue];
+        }
+        if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"tabbar_is_visible"], NSNumber)) {
+            NSNumber* tabbarIsVisible = [notification.userInfo objectForKey:@"tabbar_is_visible"];
+            signInVC.tabBarIsVisible = [tabbarIsVisible boolValue];
+            [self popToRootViewControllerAnimated:NO];
+            animated = NO;
+        }
+        if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"animated"], NSNumber)) {
+            NSNumber* animatedNumber = [notification.userInfo objectForKey:@"animated"];
+            animated = [animatedNumber boolValue];
+        }
+        
+        if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"email"], NSString)) {
+            signInVC.authenticationEmail = [notification.userInfo objectForKey:@"email"];
+        }
     }
     
     [self pushViewController:signInVC animated:animated];
@@ -620,18 +775,18 @@
 - (void)showSignUpScreen:(NSNotification *)notification
 {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JASignupViewController class]] && ![RICustomer checkIfUserIsLogged])
+    if (![topViewController isKindOfClass:[JARegisterViewController class]] && ![RICustomer checkIfUserIsLogged])
     {
-        JASignupViewController *signUpVC = [[JASignupViewController alloc] init];
+        JARegisterViewController *signUpVC = [[JARegisterViewController alloc] init];
         
         if(VALID_NOTEMPTY(notification, NSNotification)) {
             signUpVC.navBarLayout.showBackButton = YES;
             signUpVC.fromSideMenu = [[notification.userInfo objectForKey:@"from_side_menu"] boolValue];
-            if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"notification"], NSNotification))
-            {
-                signUpVC.nextNotification = [notification.userInfo objectForKey:@"notification"];
+            
+            if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"email"], NSString)) {
+                signUpVC.authenticationEmail = [notification.userInfo objectForKey:@"email"];
             }
-//            [self popViewControllerAnimated:NO];
+            signUpVC.nextStepBlock = notification.object;
         }
         else
         {
@@ -645,12 +800,16 @@
 }
 
 #pragma mark Forgot Password Screen
-- (void)showForgotPasswordScreen
+- (void)showForgotPasswordScreen:(NSNotification *)notification
 {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JASignupViewController class]] && ![RICustomer checkIfUserIsLogged])
+    if (![topViewController isKindOfClass:[JAForgotPasswordViewController class]] && ![RICustomer checkIfUserIsLogged])
     {
         JAForgotPasswordViewController *forgotVC = [[JAForgotPasswordViewController alloc] init];
+        
+        if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"email"], NSString)) {
+            forgotVC.loginEmail = [notification.userInfo objectForKey:@"email"];
+        }
         
         [forgotVC.navBarLayout setShowBackButton:YES];
         
@@ -664,7 +823,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JARecentlyViewedViewController class]])
     {
-        JARecentlyViewedViewController *recentlyViewedViewController = [[JARecentlyViewedViewController alloc]initWithNibName:@"JARecentlyViewedViewController" bundle:nil];
+        JARecentlyViewedViewController *recentlyViewedViewController = [[JARecentlyViewedViewController alloc]init];
         
         [self pushViewController:recentlyViewedViewController animated:YES];
     }
@@ -676,12 +835,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAMyAccountViewController class]])
     {
-        JAMyAccountViewController *myAccountViewController = [[JAMyAccountViewController alloc]initWithNibName:@"JAMyAccountViewController" bundle:nil];
-        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()){
-            
-            myAccountViewController = [[JAMyAccountViewController alloc] initWithNibName:@"JAMyAccountViewController~iPad" bundle:nil];
-        
-        }
+        JAMyAccountViewController *myAccountViewController = [[JAMyAccountViewController alloc] init];
         [self pushViewController:myAccountViewController animated:NO];
     }
 }
@@ -690,101 +844,97 @@
 - (void)showMyOrdersViewController:(NSNotification*)notification
 {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAMyOrdersViewController class]])
+    if([RICustomer checkIfUserIsLogged])
     {
-        JAMyOrdersViewController *myOrderVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"jAMyOrdersViewController"];
-        
-        NSString* orderNumber = notification.object;
-        if (VALID_NOTEMPTY(orderNumber, NSString))
-        {
-            myOrderVC.selectedIndex = 0;
-            myOrderVC.startingTrackOrderNumber = orderNumber;
+        if (VALID_NOTEMPTY(notification.object, NSString)) {
+            if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+                if(UIDeviceOrientationLandscapeLeft == [UIDevice currentDevice].orientation || UIDeviceOrientationLandscapeRight == [UIDevice currentDevice].orientation) {
+                    if (![topViewController isKindOfClass:[JAMyOrdersViewController class]])
+                    {
+                        JAMyOrdersViewController *myOrderVC = [JAMyOrdersViewController new];
+                        [myOrderVC setOrderNumber:notification.object];
+                        [self pushViewController:myOrderVC animated:YES];
+                    }
+                }else if (![topViewController isKindOfClass:[JAMyOrderDetailViewController class]])
+                {
+                    JAMyOrderDetailViewController *myOrderVC = [JAMyOrderDetailViewController new];
+                    [myOrderVC setOrderNumber:notification.object];
+                    [self pushViewController:myOrderVC animated:YES];
+                }
+            }else{
+                
+                if (![topViewController isKindOfClass:[JAMyOrderDetailViewController class]])
+                {
+                    JAMyOrderDetailViewController *myOrderVC = [JAMyOrderDetailViewController new];
+                    [myOrderVC setOrderNumber:notification.object];
+                    [self pushViewController:myOrderVC animated:YES];
+                }
+            }
+        }else{
+            if (![topViewController isKindOfClass:[JAMyOrdersViewController class]])
+            {
+                JAMyOrdersViewController *myOrderVC = [JAMyOrdersViewController new];
+                [self pushViewController:myOrderVC animated:YES];
+            }
         }
-
-        NSDictionary *userInfo = notification.userInfo;
-        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"selected_index"], NSNumber))
+    } else {
+        if (![topViewController isKindOfClass:[JAAuthenticationViewController class]])
         {
-            myOrderVC.selectedIndex = [[userInfo objectForKey:@"selected_index"] intValue];
-        }        
-        
-        [self pushViewController:myOrderVC animated:YES];
-    }
-    else
-    {
-        JAMyOrdersViewController *myOrderVC = (JAMyOrdersViewController*) topViewController;
-        NSDictionary *userInfo = notification.userInfo;
-        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"selected_index"], NSNumber))
-        {
-            myOrderVC.selectedIndex = [[userInfo objectForKey:@"selected_index"] intValue];
+            JAAuthenticationViewController *auth = [[JAAuthenticationViewController alloc] init];
+            
+            auth.navBarLayout.showBackButton = YES;
+            auth.fromSideMenu = NO;
+            auth.nextStepBlock = ^{ [[NSNotificationCenter defaultCenter] postNotification:notification]; };
+            
+            [self pushViewController:auth animated:YES];
         }
     }
 }
 
-- (void)showSpecificationsScreen:(NSNotification*)notification
+#pragma mark Track Order Detail Screen
+- (void)showMyOrderDetailViewController:(NSNotification*)notification
 {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAProductDetailsViewController class]])
-    {
-        JAProductDetailsViewController *productDetails = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"JAProductDetailsViewController"];
-        
-        NSString* orderNumber = notification.object;
-        if (VALID_NOTEMPTY(orderNumber, NSString))
-        {
-            productDetails.selectedIndex = 0;
-            productDetails.startingTrackOrderNumber = orderNumber;
-        }
+    if ([topViewController isKindOfClass:[JAMyOrdersViewController class]]) {
         
         NSDictionary *userInfo = notification.userInfo;
-        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"selected_index"], NSNumber))
+        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"order"], RITrackOrder))
         {
-            productDetails.selectedIndex = [[userInfo objectForKey:@"selected_index"] intValue];
-        }
-        
-        [self popToRootViewControllerAnimated:NO];
-        [self pushViewController:productDetails animated:NO];
-    }
-    else
-    {
-        JAProductDetailsViewController *productDetails = (JAProductDetailsViewController*) topViewController;
-        NSDictionary *userInfo = notification.userInfo;
-        if(VALID_NOTEMPTY(userInfo, NSDictionary) && VALID_NOTEMPTY([userInfo objectForKey:@"selected_index"], NSNumber))
-        {
-            productDetails.selectedIndex = [[userInfo objectForKey:@"selected_index"] intValue];
+            JAMyOrderDetailViewController *myOrderVC = [JAMyOrderDetailViewController new];
+            myOrderVC.trackingOrder = [userInfo objectForKey:@"order"];
+            
+            [self pushViewController:myOrderVC animated:YES];
         }
     }
 }
-
 
 #pragma mark User Data Screen
 - (void)showUserData:(NSNotification*)notification
 {
     UIViewController *topViewController = [self topViewController];
-    if([RICustomer checkIfUserIsLogged])
-    {
-        if (![topViewController isKindOfClass:[JAUserDataViewController class]])
-        {
+    if([RICustomer checkIfUserIsLogged]) {
+        if (![topViewController isKindOfClass:[JAUserDataViewController class]]) {
             BOOL animated = NO;
-            if(VALID_NOTEMPTY(notification.object, NSDictionary) && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber))
-            {
+            if(VALID_NOTEMPTY(notification.object, NSDictionary) && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber)) {
                 animated = [[notification.object objectForKey:@"animated"] boolValue];
             }
             
-            JAUserDataViewController *userData = [[JAUserDataViewController alloc] initWithNibName:@"JAUserDataViewController" bundle:nil];
+            JAUserDataViewController *userData = [[JAUserDataViewController alloc] init];
             
             [self pushViewController:userData animated:animated];
         }
     }
     else
     {
-        if (![topViewController isKindOfClass:[JASignInViewController class]])
+        if (![topViewController isKindOfClass:[JAAuthenticationViewController class]])
         {
-            JASignInViewController *signInViewController = [[JASignInViewController alloc] init];
+            JAAuthenticationViewController *auth = [[JAAuthenticationViewController alloc] init];
             
-            signInViewController.navBarLayout.showBackButton = YES;
-            signInViewController.fromSideMenu = NO;
-            signInViewController.nextNotification = notification;
+            auth.navBarLayout.showBackButton = YES;
+            auth.fromSideMenu = NO;
+            auth.nextStepBlock = ^{ [[NSNotificationCenter defaultCenter] postNotification:notification]; };
             
-            [self pushViewController:signInViewController animated:YES];
+            [self pushViewController:auth animated:YES];
         }
     }
 }
@@ -795,31 +945,42 @@
     UIViewController *topViewController = [self topViewController];
     if([RICustomer checkIfUserIsLogged])
     {
-        if (![topViewController isKindOfClass:[JAEmailNotificationsViewController class]])
+        if (![topViewController isKindOfClass:[JANewsletterViewController class]])
         {
-            BOOL animated = NO;
-            if(VALID_NOTEMPTY(notification.object, NSDictionary) && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber))
-            {
-                animated = [[notification.object objectForKey:@"animated"] boolValue];
-            }
-            
-            JAEmailNotificationsViewController *email = [[JAEmailNotificationsViewController alloc]init];
-            
-            [self pushViewController:email animated:animated];
+            JANewsletterViewController* vc = [[JANewsletterViewController alloc] init];
+            [self pushViewController:vc animated:YES];
         }
     }
     else
     {
-        if (![topViewController isKindOfClass:[JASignInViewController class]])
+        if (![topViewController isKindOfClass:[JAAuthenticationViewController class]])
         {
-            JASignInViewController *signInViewController = [[JASignInViewController alloc] init];
+            JAAuthenticationViewController *auth = [[JAAuthenticationViewController alloc] init];
             
-            signInViewController.navBarLayout.showBackButton = YES;
-            signInViewController.fromSideMenu = NO;
-            signInViewController.nextNotification = notification;
+            auth.navBarLayout.showBackButton = YES;
+            auth.fromSideMenu = NO;
+            auth.nextStepBlock = ^{ [[NSNotificationCenter defaultCenter] postNotification:notification]; };
             
-            [self pushViewController:signInViewController animated:YES];
+            [self pushViewController:auth animated:YES];
         }
+    }
+}
+
+- (void)showNewsletterSubscritions:(NSNotification*)notification
+{
+    NSDictionary* userInfo = notification.userInfo;
+    NSString* targetString = [userInfo objectForKey:@"targetString"];
+    
+    if (VALID_NOTEMPTY(targetString, NSString)) {
+        JANewsletterSubscriptionViewController* vc = [[JANewsletterSubscriptionViewController alloc] init];
+        vc.targetString = targetString;
+        
+        id<JANewsletterSubscriptionDelegate> delegate = [userInfo objectForKey:@"delegate"];
+        if (delegate) {
+            vc.delegate = delegate;
+        }
+        
+        [self pushViewController:vc animated:YES];
     }
 }
 
@@ -873,48 +1034,37 @@
     }
     
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAAddressesViewController class]] && [RICustomer checkIfUserIsLogged])
-    {
+    if (![topViewController isKindOfClass:[JAAddressesViewController class]] && [RICustomer checkIfUserIsLogged]) {
         JAAddressesViewController *addressesVC = [[JAAddressesViewController alloc] initWithNibName:@"JAAddressesViewController" bundle:nil];
-        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        {
-            addressesVC = [[JAAddressesViewController alloc] initWithNibName:@"JAAddressesViewController~iPad" bundle:nil];
         
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            addressesVC = [[JAAddressesViewController alloc] initWithNibName:@"JAAddressesViewController~iPad" bundle:nil];
         }
         
         addressesVC.cart = self.cart;
         addressesVC.fromCheckout = fromCheckout;
         
-        if(fromCheckout)
-        {
+        if (fromCheckout) {
             addressesVC.navBarLayout.showCartButton = NO;
             addressesVC.navBarLayout.title = STRING_CHECKOUT;
-        }
-        else
-        {
+        } else {
             [addressesVC.navBarLayout setShowBackButton:YES];
             addressesVC.navBarLayout.showLogo = NO;
         }
         
-        if ([topViewController isKindOfClass:[JALoginViewController class]])
-        {
+        if ([topViewController isKindOfClass:[JALoginViewController class]]) {
             [self popViewControllerAnimated:NO];
         }
         
         [self pushViewController:addressesVC animated:NO];
-    }
-    else
-    {
-        if (!fromCheckout && ![topViewController isKindOfClass:[JASignInViewController class]])
-        {
-            JASignInViewController *signInViewController = [[JASignInViewController alloc] init];
-            
-            signInViewController.navBarLayout.showBackButton = YES;
-            signInViewController.fromSideMenu = NO;
-            signInViewController.nextNotification = notification;
-            
-            [self pushViewController:signInViewController animated:NO];
-        }
+    } else if (!fromCheckout && ![topViewController isKindOfClass:[JAAuthenticationViewController class]]) {
+        JAAuthenticationViewController *auth = [[JAAuthenticationViewController alloc] init];
+        
+        auth.navBarLayout.showBackButton = YES;
+        auth.fromSideMenu = NO;
+        auth.nextStepBlock = ^{ [[NSNotificationCenter defaultCenter] postNotification:notification]; };
+        
+        [self pushViewController:auth animated:NO];
     }
 }
 
@@ -1046,8 +1196,6 @@
     {
         JAOrderViewController *orderVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"orderViewController"];
         
-        orderVC.cart = [notification.userInfo objectForKey:@"cart"];
-        
         [self pushViewController:orderVC animated:YES];
     }
 }
@@ -1072,13 +1220,14 @@
 - (void)showCheckoutThanksScreen:(NSNotification *)notification
 {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAThanksViewController class]] && [RICustomer checkIfUserIsLogged])
+    if (![topViewController isKindOfClass:[JASuccessPageViewController class]] && [RICustomer checkIfUserIsLogged])
     {
         self.neeedsExternalPaymentMethod = NO;
         
-        JAThanksViewController *thanksVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"thanksViewController"];
+        JASuccessPageViewController *thanksVC = [[JASuccessPageViewController alloc] init];
         
         thanksVC.cart = [notification.userInfo objectForKey:@"cart"];
+        thanksVC.rrTargetString = [notification.userInfo objectForKey:@"rrTargetString"];
         
         [self pushViewController:thanksVC animated:YES];
     }
@@ -1100,11 +1249,11 @@
     [self pushViewController:catalog animated:YES];
 }
 
-- (void)pushCatalogForUndefinedSearchWithBrandUrl:(NSString *)brandUrl
-                                     andBrandName:(NSString *)brandName
+- (void)pushCatalogForUndefinedSearchWithBrandTargetString:(NSString *)brandTargetString
+                                              andBrandName:(NSString *)brandName
 {
     JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
-    catalog.catalogUrl = brandUrl;
+    catalog.catalogTargetString = brandTargetString;
     catalog.forceShowBackButton = YES;
     
     catalog.navBarLayout.title = brandName;
@@ -1117,9 +1266,10 @@
     NSDictionary *selectedItem = [notification object];
     RICategory* category = [selectedItem objectForKey:@"category"];
     NSString* categoryId = [selectedItem objectForKey:@"category_id"];
-    NSString* categoryName = [selectedItem objectForKey:@"category_name"];
-    NSString* filterPush = [notification.userInfo objectForKey:@"filter"];
-    NSNumber* sorting = [notification.userInfo objectForKey:@"sorting"];
+    NSString* categoryUrlKey = [selectedItem objectForKey:@"category_url_key"];
+    NSString* filterPush = [selectedItem objectForKey:@"filter"];
+    NSNumber* sorting = [selectedItem objectForKey:@"sorting"];
+    NSString* targetString = [selectedItem objectForKey:@"targetString"];
     
     if (VALID_NOTEMPTY(category, RICategory))
     {
@@ -1141,11 +1291,21 @@
         
         [self pushViewController:catalog animated:YES];
     }
-    else if (VALID_NOTEMPTY(categoryName, NSString))
+    else if (VALID_NOTEMPTY(categoryUrlKey, NSString))
     {
         JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         
-        catalog.categoryName = categoryName;
+        catalog.categoryUrlKey = categoryUrlKey;
+        catalog.filterPush = filterPush;
+        catalog.sortingMethodFromPush = sorting;
+        
+        [self pushViewController:catalog animated:YES];
+    }
+    else if (VALID_NOTEMPTY(targetString, NSString))
+    {
+        JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
+        
+        catalog.catalogTargetString = targetString;
         catalog.filterPush = filterPush;
         catalog.sortingMethodFromPush = sorting;
         
@@ -1388,13 +1548,13 @@
 
 -(void)showSellerCatalog: (NSNotification *)notification
 {
-    NSString* url = [notification.userInfo objectForKey:@"url"];
+    NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
     NSString* title = [notification.userInfo objectForKey:@"name"];
     
-    if(VALID_NOTEMPTY(url, NSString))
+    if(VALID_NOTEMPTY(targetString, NSString))
     {
         JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
-        catalog.catalogUrl = url;
+        catalog.catalogTargetString = targetString;
         catalog.navBarLayout.title = title;
         catalog.navBarLayout.showBackButton = YES;
         
@@ -1408,14 +1568,14 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
                                                         object:nil];
     
-    NSString* url = [notification.userInfo objectForKey:@"url"];
+    NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
     NSString* title = [notification.userInfo objectForKey:@"title"];
     
-    if (VALID_NOTEMPTY(url, NSString)) {
+    if (VALID_NOTEMPTY(targetString, NSString)) {
         
         JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         
-        catalog.catalogUrl = url;
+        catalog.catalogTargetString = targetString;
         catalog.navBarLayout.title = title;
         
         if ([notification.userInfo objectForKey:@"show_back_button_title"]) {
@@ -1442,7 +1602,7 @@
     RITeaserGrouping* teaserGrouping = [notification.userInfo objectForKey:@"teaserGrouping"];
 
     //this is used when the teaserGrouping is not campaigns, so we're only going to be showing one
-    NSString* campaignUrl = [notification.userInfo objectForKey:@"url"];
+    NSString* campaignTargetString = [notification.userInfo objectForKey:@"targetString"];
     
     //this is used in deeplinking
     NSString* campaignId = [notification.userInfo objectForKey:@"campaign_id"];
@@ -1470,10 +1630,10 @@
         campaignsVC.teaserTrackingInfo = cameFromTeasers;
         
         [self pushViewController:campaignsVC animated:YES];
-    } else if (VALID_NOTEMPTY(campaignUrl, NSString)) {
+    } else if (VALID_NOTEMPTY(campaignTargetString, NSString)) {
         JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
         
-        campaignsVC.campaignUrl = campaignUrl;
+        campaignsVC.campaignTargetString = campaignTargetString;
         campaignsVC.teaserTrackingInfo = cameFromTeasers;
         
         [self pushViewController:campaignsVC animated:YES];
@@ -1485,14 +1645,18 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
                                                         object:nil];
     
-    NSString* url = [notification.userInfo objectForKey:@"url"];
+    NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
     NSString* productSku = [notification.userInfo objectForKey:@"sku"];
     
-    if (VALID_NOTEMPTY(url, NSString) || VALID_NOTEMPTY(productSku, NSString))
+    if (VALID_NOTEMPTY(targetString, NSString) || VALID_NOTEMPTY(productSku, NSString))
     {
         JAPDVViewController *pdv = [JAPDVViewController new];
-        pdv.productUrl = url;
+        pdv.productTargetString = targetString;
         pdv.productSku = productSku;
+        
+        if ([notification.userInfo objectForKey:@"richRelevance"]) {
+            pdv.richRelevanceParameter = [notification.userInfo objectForKey:@"richRelevance"];
+        }
         
         if ([notification.userInfo objectForKey:@"fromCatalog"])
         {
@@ -1536,7 +1700,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
                                                         object:nil];
     
-    NSString* url = [notification.userInfo objectForKey:@"url"];
+    NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
     NSString* uid = [notification.userInfo objectForKey:@"shop_id"];
 
     JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
@@ -1555,16 +1719,18 @@
         viewController.teaserTrackingInfo = [notification.userInfo objectForKey:@"teaserTrackingInfo"];
     }
     
-    if (VALID_NOTEMPTY(url, NSString))
+    if (VALID_NOTEMPTY(targetString, NSString))
     {
-        viewController.url = url;
+        viewController.targetString = targetString;
         [self pushViewController:viewController animated:YES];
 
-    } else if (VALID_NOTEMPTY(uid, NSString))
-    {
-        viewController.url = [NSString stringWithFormat:@"%@%@main/getstatic/?key=%@",[RIApi getCountryUrlInUse], RI_API_VERSION, uid];
-        [self pushViewController:viewController animated:YES];
     }
+    //$$$ HOPEFULLY THIS IS NO LONGER NEEDED
+//    else if (VALID_NOTEMPTY(uid, NSString))
+//    {
+//        viewController.url = [NSString stringWithFormat:@"%@%@main/getstatic/?key=%@",[RIApi getCountryUrlInUse], RI_API_VERSION, uid];
+//        [self pushViewController:viewController animated:YES];
+//    }
 
 }
 
@@ -1660,7 +1826,7 @@
     [self.navigationItem setHidesBackButton:YES
                                    animated:NO];
     
-    self.navigationBarView = [JANavigationBarView getNewNavBarView];
+    self.navigationBarView = [[JACustomNavigationBarView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     [self.navigationBarView initialSetup];
 
     
@@ -1788,8 +1954,7 @@
 
 - (void)search
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressSearchButtonNotification
-                                                        object:nil];
+    [self showSearchView];
 }
 
 - (void)openCart
@@ -1804,7 +1969,7 @@
     
     if (![[self topViewController] isKindOfClass:[JACartViewController class]])
     {
-        JACartViewController *cartViewController = [[JACartViewController alloc] initWithNibName:@"JACartViewController" bundle:nil];
+        JACartViewController *cartViewController = [[JACartViewController alloc] init];
         [cartViewController setCart:self.cart];
         
         [self popToRootViewControllerAnimated:NO];
@@ -1833,6 +1998,42 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kOpenMenuNotification
                                                         object:nil
                                                       userInfo:[userInfo copy]];
+}
+
+- (void)didLoggedIn
+{
+    //remove existing ones from database
+    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RITeaserGrouping class])];
+}
+
+- (void)didLoggedOut
+{
+    //remove existing ones from database
+    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RITeaserGrouping class])];
+}
+
+- (void)viewWillLayoutSubviews
+{
+    [self.searchView resetFrame:self.view.bounds];
+}
+
+#pragma mark - Search Bar
+
+- (JASearchView *)searchView
+{
+    if (!VALID(_searchView, JASearchView)) {
+        _searchView = [[JASearchView alloc] initWithFrame:self.view.bounds andText:@""];
+        [_searchView setHidden:YES];
+        [self.view addSubview:_searchView];
+    }
+    return _searchView;
+}
+
+- (void)showSearchView
+{
+    if (NO == self.searchViewAlwaysHidden) {
+        [self.searchView setHidden:NO];
+    }
 }
 
 @end

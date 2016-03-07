@@ -1,0 +1,41 @@
+//
+//  RITarget.h
+//  Jumia
+//
+//  Created by Telmo Pinto on 23/11/15.
+//  Copyright © 2015 Rocket Internet. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface RITarget : NSObject
+
+typedef enum {
+    UNKNOWN,
+    PRODUCT_DETAIL,
+    CATALOG_SEARCH,
+    CATALOG_HASH,
+    CATALOG_CATEGORY,
+    CATALOG_BRAND,
+    CATALOG_SELLER,
+    CAMPAIGN,
+    STATIC_PAGE,
+    SHOP_IN_SHOP,
+    FORM_SUBMIT,
+    FORM_GET,
+    RR_RECOMENDATION,
+    RR_CLICK
+} TargetType;
+
+@property (nonatomic, strong) NSString* type;
+@property (nonatomic) TargetType targetType;
+@property (nonatomic, strong) NSString* node;
+@property (nonatomic, strong) NSString* urlString;
+
++ (RITarget *)parseTarget:(NSString*)targetString;
++ (NSString *)getURLStringforTargetString:(NSString*)targetString;
++ (NSString *)getTargetKey:(TargetType)type;
++ (NSString *)getTargetString:(TargetType)type node:(NSString *)string;
++ (RITarget *)getTarget:(TargetType)type node:(NSString *)string;
+
+@end

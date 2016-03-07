@@ -76,7 +76,7 @@
     }
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", url, RI_API_VERSION, RI_API_INFO]]
-                                                            parameters:nil httpMethodPost:YES
+                                                            parameters:nil httpMethod:HttpResponsePost
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:countryUserAgentInjection
@@ -400,9 +400,17 @@ countryUserAgentInjection:(NSString*)countryUserAgentInjection
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
         [RITeaserGrouping loadTeasersIntoDatabaseForCountryUrl:url
                                      countryUserAgentInjection:countryUserAgentInjection
-                                              withSuccessBlock:^(NSArray *teaserGroupings) {
+                                              withSuccessBlock:^(NSDictionary *teaserGroupings, BOOL richTeaserGrouping) {
                                                   [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
                                                   [[NSNotificationCenter defaultCenter] postNotificationName:kHomeShouldReload object:nil];
+                                                  
+                                                  if ([teaserGroupings objectForKey:@"richTeaserGroupings"]) {
+                                                      [RITeaserGrouping getTeaserRichRelevance:[teaserGroupings objectForKey:@"richTeaserGroupings"]
+                                                                                  successBlock:^(RITeaserGrouping *richTeaserGrouping) {
+                                                                                      [[NSNotificationCenter defaultCenter] postNotificationName:kHomeShouldReload object:nil];
+                                                                                  }
+                                                                               andFailureBlock:failureBlock];
+                                                  }
                                                   successBlock();
                                               } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
                                                   [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];

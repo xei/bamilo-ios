@@ -10,6 +10,7 @@
 
 @interface JAProductInfoPriceLine ()
 
+@property (nonatomic) UILabel *priceLabel;
 @property (nonatomic) UILabel *priceOffLabel;
 @property (nonatomic) UILabel *oldPriceLabel;
 @property (nonatomic) UIView *oldPriceLine;
@@ -95,7 +96,7 @@
 - (void)setPriceOff:(NSInteger)priceOff
 {
     _priceOff = priceOff;
-    [self.priceOffLabel setText:[NSString stringWithFormat:@"-%ld%% OFF", (long)priceOff]];
+    [self.priceOffLabel setText:[NSString stringWithFormat:STRING_FORMAT_OFF, (long)priceOff]];
     [self.priceOffLabel sizeToFit];
     
     CGRect rect;
@@ -126,11 +127,14 @@
 - (void)setOldPrice:(NSString *)oldPrice
 {
     _oldPrice = oldPrice;
-    [self.label sizeToFit];
-    [self.label setY:self.height/2 - self.label.height/2];
+    [self.priceLabel setY:self.height/2 - self.priceLabel.height/2];
     [self.oldPriceLabel setText:oldPrice];
     [self.oldPriceLabel sizeToFit];
-    [self.oldPriceLabel setX:CGRectGetMaxX(self.label.frame) + 10.f];
+    CGFloat margin = 0.0f;
+    if (VALID_NOTEMPTY(_price, NSString)) {
+        margin = 10.0f;
+    }
+    [self.oldPriceLabel setX:CGRectGetMaxX(self.priceLabel.frame) + margin];
     [self.oldPriceLabel setY:self.height/2 - self.oldPriceLabel.height/2];
     [self.oldPriceLine setX:self.oldPriceLabel.x];
     [self.oldPriceLine setWidth:self.oldPriceLabel.width];
@@ -152,12 +156,55 @@
     return _oldPriceLine;
 }
 
+-(void)setPrice:(NSString *)price {
+    _price = price;
+    [self.priceLabel setText:price];
+    [self.priceLabel sizeToFit];
+    [self.priceLabel setFrame:CGRectMake(self.lineContentXOffset, self.height/2 - self.priceLabel.height/2,
+                                         self.priceLabel.width, self.priceLabel.height)];
+}
+
+-(UILabel *)priceLabel {
+    if (!VALID_NOTEMPTY(_priceLabel, UILabel)) {
+        _priceLabel = [UILabel new];
+        [_priceLabel setFont:[self priceSizeFont]];
+        [self addSubview:_priceLabel];
+    }
+    return _priceLabel;
+}
+
 - (void)setFashion:(BOOL)fashion
 {
     _fashion = fashion;
     if (self.priceOff) {
         [self setPriceOff:_priceOff];
     }
+}
+
+- (void)sizeToFit
+{
+    [super sizeToFit];
+    if (self.priceOff > 0) {
+        [self setWidth:CGRectGetMaxX(self.priceOffLabel.frame)];
+    }else if (self.oldPrice){
+        [self setWidth:CGRectGetMaxX(self.oldPriceLabel.frame)];
+    }else if (VALID_NOTEMPTY(self.price, NSString)) {
+        [self setWidth:CGRectGetMaxX(self.priceLabel.frame)];
+    } else {
+        [self setWidth:CGRectGetMaxX(self.label.frame)];
+    }
+    
+    [self setHeight:self.label.height];
+    [self.label setYCenterAligned];
+    if (self.oldPrice) {
+        [self.oldPriceLabel setYCenterAligned];
+        [self.oldPriceLine setYCenterAligned];
+    }
+    if (self.priceOff > 0) {
+        [self.priceOffLabel setYCenterAligned];
+    }
+    
+    [self.priceLabel setYCenterAligned];
 }
 
 @end

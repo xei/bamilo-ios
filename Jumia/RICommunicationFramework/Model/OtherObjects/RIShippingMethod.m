@@ -30,6 +30,11 @@
         {
             newShippingMethod.shippingFee = [shippingMethodJSON objectForKey:@"shipping_fee"];
         }
+        
+        if (VALID_NOTEMPTY([shippingMethodJSON objectForKey:@"value"], NSString))
+        {
+            newShippingMethod.value = [shippingMethodJSON objectForKey:@"value"];
+        }
     }
     
     return newShippingMethod;

@@ -16,7 +16,7 @@
 
 - (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize;
 
-- (void)setSpecialPrice:(NSString*)special andPrice:(NSString*)price;
+- (void)setSpecialPrice:(NSString*)special andPrice:(NSString*)price andMaxSavingPercentage:(NSString*)maxSavingPercentage shouldForceFlip:(BOOL)forceFlip;
 
 - (CGFloat)getSellerInfoYPosition;
 
@@ -37,5 +37,7 @@
 - (void)addSpecificationsTarget:(id)target action:(SEL)action;
 
 - (void)addDescriptionTarget:(id)target action:(SEL)action;
+
+- (void)addSisTarget:(id)target action:(SEL)action;
 
 @end

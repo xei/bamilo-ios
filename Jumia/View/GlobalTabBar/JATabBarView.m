@@ -68,7 +68,7 @@
     if ([identifier isEqualToString:@"home"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
     } else if ([identifier isEqualToString:@"wishlist"]){
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowFavoritesScreenNotification object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowSavedListScreenNotification object:nil];
     } else if ([identifier isEqualToString:@"cart"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCartNotification object:nil];
     } else if ([identifier isEqualToString:@"user"]) {

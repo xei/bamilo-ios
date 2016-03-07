@@ -7,6 +7,7 @@
 //
 
 #import "RICountry.h"
+#import "RIPhonePrefix.h"
 
 @implementation RICountry
 
@@ -37,7 +38,7 @@
 #endif
     return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:countryListURL]
                                                              parameters:nil
-                                                         httpMethodPost:NO
+                                                             httpMethod:HttpResponseGet
                                                               cacheType:RIURLCacheNoCache
                                                               cacheTime:RIURLCacheNoTime
                                                      userAgentInjection:nil
@@ -78,7 +79,7 @@
 {
     return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", countryUrl, RI_API_VERSION, RI_API_COUNTRY_CONFIGURATION]]
                                                              parameters:nil
-                                                         httpMethodPost:YES
+                                                             httpMethod:HttpResponsePost
                                                               cacheType:RIURLCacheNoCache
                                                               cacheTime:RIURLCacheNoTime
                                                      userAgentInjection:userAgentInjection
@@ -289,6 +290,78 @@
     } else {
         return nil;
     }
+}
+
++ (NSString *)getCountryPhonePrefixesWithSuccessBlock:(void (^)(NSArray *prefixes))successBlock
+                                      andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
+{
+    return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_PHONE_PREFIXES]]
+                                                             parameters:nil
+                                                             httpMethod:HttpResponsePost
+                                                              cacheType:RIURLCacheNoCache
+                                                              cacheTime:RIURLCacheNoTime
+                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                               
+                                                               NSMutableArray *prefixes = [NSMutableArray new];
+                                                               if ([jsonObject objectForKey:@"metadata"]) {
+                                                                   NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
+                                                                   if (VALID_NOTEMPTY([metadata objectForKey:@"data"], NSArray)) {
+                                                                       for (NSDictionary *prefix in [metadata objectForKey:@"data"]) {
+                                                                           [prefixes addObject:[RIPhonePrefix parse:prefix]];
+                                                                       }
+                                                                   }
+                                                                   
+                                                                   successBlock([prefixes copy]);
+                                                               } else {
+                                                                   
+                                                                   failureBlock(apiResponse, nil);
+                                                               }
+                                                               
+                                                           } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                               
+                                                               if(NOTEMPTY(errorJsonObject)) {
+                                                                   failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+                                                               } else if(NOTEMPTY(errorObject)) {
+                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                   failureBlock(apiResponse, errorArray);
+                                                               } else {
+                                                                   failureBlock(apiResponse, nil);
+                                                               }
+                                                           }];
+}
+
++ (NSString *)getCountryFaqAndTermsWithSuccessBlock:(void (^)(NSArray *faqAndTerms))successBlock
+                                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
+{
+    return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_GET_FAQ_AND_TERMS]]
+                                                             parameters:nil
+                                                         httpMethod:HttpResponsePost
+                                                              cacheType:RIURLCacheNoCache
+                                                              cacheTime:RIURLCacheNoTime
+                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                               
+                                                               if ([jsonObject objectForKey:@"metadata"]) {
+                                                                   NSDictionary *metadata = [jsonObject objectForKey:@"metadata"];
+                                                                   if (VALID_NOTEMPTY([metadata objectForKey:@"data"], NSArray)) {
+                                                                       successBlock([[metadata objectForKey:@"data"] copy]);
+                                                                       return;
+                                                                   }
+                                                               }
+                                                               failureBlock(apiResponse, nil);
+                                                               
+                                                           } failureBlock:^(RIApiResponse apiResponse,  NSDictionary* errorJsonObject, NSError *errorObject) {
+                                                               
+                                                               if(NOTEMPTY(errorJsonObject)) {
+                                                                   failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
+                                                               } else if(NOTEMPTY(errorObject)) {
+                                                                   NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                                   failureBlock(apiResponse, errorArray);
+                                                               } else {
+                                                                   failureBlock(apiResponse, nil);
+                                                               }
+                                                           }];
 }
 
 @end

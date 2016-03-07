@@ -23,5 +23,6 @@
 @property (nonatomic) CGFloat lineContentXOffset;
 
 - (void)setTitle:(NSString *)title;
+- (void)setMultilineTitle:(BOOL)multiline;
 
 @end

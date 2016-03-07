@@ -18,15 +18,18 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * type;
 @property (nonatomic, retain) NSString * label;
+@property (nonatomic, retain) NSString * subLabel;
 @property (nonatomic, retain) NSString * value;
 @property (nonatomic, retain) NSNumber * checked;
-@property (nonatomic, retain) NSString * apiCall;
+@property (nonatomic, retain) NSString * apiCallTarget;
+@property (nonatomic, retain) NSDictionary * apiCallParameters;
 @property (nonatomic, retain) NSString * linkText;
-@property (nonatomic, retain) NSString * linkUrl;
+@property (nonatomic, retain) NSString * linkTargetString;
 @property (nonatomic, retain) NSOrderedSet * ratingStars;
 @property (nonatomic, retain) NSOrderedSet * options;
 @property (nonatomic, retain) NSOrderedSet * dataSet;
 @property (nonatomic, retain) NSString * dateFormat;
+@property (nonatomic, retain) NSNumber * disabled;
 
 //related data
 @property (nonatomic, retain) RIField * parentField;

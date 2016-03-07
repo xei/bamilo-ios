@@ -13,7 +13,7 @@
 @dynamic label;
 @dynamic vertical;
 @dynamic urlKey;
-@dynamic apiUrl;
+@dynamic targetString;
 @dynamic imageUrl;
 @dynamic level;
 @dynamic numberOfTimesSeen;
@@ -26,7 +26,7 @@
                                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", country, RI_API_VERSION, RI_CATALOG_CATEGORIES]]
-                                                            parameters:nil httpMethodPost:YES
+                                                            parameters:nil httpMethod:HttpResponsePost
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:countryUserAgentInjection
@@ -240,8 +240,8 @@
     if ([category objectForKey:@"url_key"]) {
         newCategory.urlKey = [category objectForKey:@"url_key"];
     }
-    if ([category objectForKey:@"api_url"]) {
-        newCategory.apiUrl = [category objectForKey:@"api_url"];
+    if ([category objectForKey:@"target"]) {
+        newCategory.targetString = [category objectForKey:@"target"];
     }
     if ([category objectForKey:@"image"]) {
         newCategory.imageUrl = [category objectForKey:@"image"];

@@ -155,17 +155,38 @@
 {
     if (!VALID_NOTEMPTY(_sellerWarrantyLabel, UILabel)) {
         _sellerWarrantyLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, CGRectGetMaxY(self.sellerDeliveryLabel.frame) + 8.f, self.width-32, 20)];
+        [_sellerWarrantyLabel setNumberOfLines:2];
         [_sellerWarrantyLabel setFont:JABody3Font];
         [_sellerWarrantyLabel setTextColor:JABlack800Color];
         [self.clickableView addSubview:_sellerWarrantyLabel];
     }
     return _sellerWarrantyLabel;
 }
+
+- (UIImageView *)shopFirstLogo
+{
+    if (!_shopFirstLogo) {
+        _shopFirstLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shop_first_logo"]];
+        [_shopFirstLogo sizeToFit];
+        [_shopFirstLogo setX:CGRectGetMaxX(self.sellerNameLabel.frame) + 8.f];
+        [_shopFirstLogo setY:self.sellerNameLabel.y];
+        [_shopFirstLogo setUserInteractionEnabled:YES];
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                    action:@selector(shopFirstLogoTapped:)];
+        [_shopFirstLogo addGestureRecognizer:singleTap];
+        [self bringSubviewToFront:_shopFirstLogo];
+        [self addSubview:_shopFirstLogo];
+    }
+    return _shopFirstLogo;
+}
+
 - (void)setSeller:(RISeller *)seller
 {
     _seller = seller;
     [self.sellerNameLabel setText:seller.name];
     [self.sellerNameLabel sizeToFit];
+    
+    [self checkIsShopFirst];
     
     [self.sellerDeliveryLabel setText:seller.deliveryTime];
     [self.sellerDeliveryLabel setFont:JACaption2Font];
@@ -208,18 +229,16 @@
     } else {
         [self setHeight:CGRectGetMaxY(self.linkGlobalButton.frame) + 16.f];
     }
-    
     if (seller.warranty != NULL) {
         [self.sellerWarrantyLabel setText:[NSString stringWithFormat:@"%@: %@", STRING_SELLER_INFO_WARRANTY, seller.warranty]];
         [self.sellerWarrantyLabel setFont:JACaption2Font];
         [self.sellerWarrantyLabel setTextColor:JABlackColor];
-        [self.sellerWarrantyLabel sizeToFit];
-        [self.sellerWarrantyLabel setX:CGRectGetMaxX(self.warrantyIcon.frame) + 12.f];
-        [self.sellerWarrantyLabel setY:CGRectGetMidY(self.warrantyIcon.frame) - 7.f];
+        [self.sellerWarrantyLabel setFrame:CGRectMake(CGRectGetMaxX(self.warrantyIcon.frame) + 12.f, CGRectGetMidY(self.warrantyIcon.frame) - 7.f, self.width - (CGRectGetMaxX(self.warrantyIcon.frame) + 12.f + 16.f), self.sellerWarrantyLabel.height)];
+        [self.sellerWarrantyLabel setHeight:[self.sellerWarrantyLabel sizeThatFits:CGSizeMake(self.sellerWarrantyLabel.width, CGFLOAT_MAX)].height];
         [self.warrantyIcon setHidden:NO];
         [self setHeight:CGRectGetMaxY(self.sellerWarrantyLabel.frame) + 16.f];
     }
-    
+
     [self.clickableView setHeight:[self height]];
     
     [self arrow];
@@ -234,6 +253,28 @@
 - (void)addLinkTarget:(id)target action:(SEL)action
 {
     [self.linkGlobalButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)checkIsShopFirst
+{
+    if ([self.isShopFirst boolValue]) {
+        if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad && self.sellerNameLabel.width > 180.f) {
+            [self.sellerNameLabel setWidth:190.f];
+        }
+        [self.shopFirstLogo setHidden:NO];
+    } else {
+        [self.shopFirstLogo setHidden:YES];
+    }
+}
+
+- (void)shopFirstLogoTapped:(UIGestureRecognizer *)gestureRecognizer
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
+                                                    message:self.shopFirstOverlayText
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
 }
 
 @end

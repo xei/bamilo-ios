@@ -17,6 +17,11 @@
 #import "JARatingsView.h"
 #import "JAScrolledImageGalleryView.h"
 
+
+// as of https://jira.rocket-internet.de/browse/NAFAMZ-14582
+#define xFavOffset 16.f
+#define yFavOffset 20.f
+
 @interface JAPDVImageSection () {
     
 }
@@ -47,7 +52,7 @@
 
 - (UIButton *)wishListButton
 {
-    CGRect frame = CGRectMake(16.f, self.imagesPagedView.y, 25, 25);
+    CGRect frame = CGRectMake(16.f, 0, 25, 25);
     if (!_wishListButton) {
         _wishListButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_wishListButton setFrame:frame];
@@ -95,19 +100,22 @@
 
 - (UILabel *)productDescriptionLabel
 {
-    CGRect frame = CGRectMake(16.f, CGRectGetMaxY(self.productNameLabel.frame), self.width - 16.f*2, 60);
+    CGFloat width = self.width - xFavOffset * 2 - self.wishListButton.width;
     if (self.product.seller.isGlobal) {
-        frame.size.width = self.globalButton.x - frame.origin.x;
+        width = self.width - (xFavOffset * 2) - self.globalButton.width - xFavOffset;
     }
+
     if (!_productDescriptionLabel) {
+        CGRect frame = CGRectMake(xFavOffset, CGRectGetMaxY(self.productNameLabel.frame), width, 60);
+        
         _productDescriptionLabel = [[UILabel alloc] initWithFrame:frame];
         _productDescriptionLabel.font = JACaptionFont;
         [_productDescriptionLabel setTextColor:JABlack800Color];
         _productDescriptionLabel.numberOfLines = 2;
         [_productDescriptionLabel setLineBreakMode:NSLineBreakByTruncatingTail];
         [self addSubview:_productDescriptionLabel];
-    }else if (_productDescriptionLabel.width != frame.size.width) {
-        [_productDescriptionLabel setWidth:frame.size.width];
+    } else if (_productDescriptionLabel.width != width) {
+        [_productDescriptionLabel setWidth:width];
         [_productDescriptionLabel setHeight:60];
         [_productDescriptionLabel sizeToFit];
     }
@@ -164,7 +172,7 @@
     
     CGRect imagePageFrame = CGRectMake(0, CGRectGetMaxY(self.productDescriptionLabel.frame), self.width, imagesPageHeight);
     [self.imagesPagedView setFrame:imagePageFrame];
-    [self loadWithImages:[product.images array]];
+    [self loadWithImages:product.images];
     
     [self reloadViews];
 }
@@ -178,23 +186,32 @@
     [self.productDescriptionLabel setX:16.f];
     [self imagesPagedView];
     [self separatorImageView];
-    [self.wishListButton setX:16.f];
+    [self.wishListButton setXRightAligned:xFavOffset];
     [self.productNameLabel setTextAlignment:NSTextAlignmentLeft];
     [self.productDescriptionLabel setTextAlignment:NSTextAlignmentLeft];
     
     if (self.product.fashion) {
-        [_imagesPagedView setY:16.f];
+        if ([self.product.seller isGlobal]) {
+            [_imagesPagedView setYBottomOf:self.globalButton at:yFavOffset];
+        } else {
+            [_imagesPagedView setY:yFavOffset];
+        }
+        [self.wishListButton setY:self.imagesPagedView.y];
         [_productNameLabel setYBottomOf:_imagesPagedView at:16.f];
         [_productDescriptionLabel setYBottomOf:_productNameLabel at:0.f];
         [self setHeight:CGRectGetMaxY(_productDescriptionLabel.frame) + 16.f];
     }else{
         [_productNameLabel setY:14.f];
         [_productDescriptionLabel setYBottomOf:_productNameLabel at:0.f];
-        [_imagesPagedView setYBottomOf:_productDescriptionLabel at:16.f];
+        if ([self.product.seller isGlobal]) {
+            [_imagesPagedView setYBottomOf:self.globalButton at:yFavOffset];
+            [self.wishListButton setYBottomOf:self.globalButton at:yFavOffset];
+        } else {
+            [_imagesPagedView setYBottomOf:_productDescriptionLabel at:yFavOffset];
+            [self.wishListButton setY:yFavOffset];
+        }
         [self setHeight:CGRectGetMaxY(_imagesPagedView.frame)];
     }
-    
-    [_wishListButton setY:_imagesPagedView.y];
 }
 
 - (void)loadWithImages:(NSArray *)imagesArray
@@ -224,7 +241,7 @@
     [self.separatorImageView setY:CGRectGetMaxY(self.imagesPagedView.frame)];
     [self.separatorImageView setHidden:YES];
     [self.imagesPagedView setViews:items];
-    [self.wishListButton setY:self.imagesPagedView.y - 50];
+    [self.wishListButton setY:yFavOffset];
     
     if (self.product.images.count > 1)
     {

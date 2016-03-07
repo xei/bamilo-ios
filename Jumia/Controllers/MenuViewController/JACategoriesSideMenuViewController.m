@@ -111,6 +111,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCategories) name:kSideMenuShouldReload object:nil];
     
     [self reloadCategories];
+
 }
 
 - (void)reloadCategories
@@ -170,6 +171,7 @@
                                         self.view.bounds.origin.y + statusBarHeight,
                                         self.view.bounds.size.width,
                                         self.view.bounds.size.height - statusBarHeight)];
+    
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation

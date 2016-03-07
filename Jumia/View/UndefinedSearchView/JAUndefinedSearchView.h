@@ -12,7 +12,7 @@
 
 @interface JABrandView : JAClickableView
 
-@property (strong, nonatomic) NSString *brandUrl;
+@property (strong, nonatomic) NSString *brandTargetString;
 @property (strong, nonatomic) NSString *brandName;
 
 @end
@@ -20,9 +20,9 @@
 @protocol JAUndefinedSearchViewDelegate <NSObject>
 
 @optional
-- (void)didSelectProduct:(NSString *)productUrl;
+- (void)didSelectProduct:(NSString *)productTargetString;
 
-- (void)didSelectBrand:(NSString *)brandUrl
+- (void)didSelectBrandTargetString:(NSString *)brandTargetString
              brandName:(NSString *)brandName;
 
 @end

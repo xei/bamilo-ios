@@ -101,7 +101,13 @@
             nameLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
             nameLabel.textColor = [UIColor blackColor];
             nameLabel.textAlignment = NSTextAlignmentCenter;
-            nameLabel.text = component.name;
+            
+            if (VALID_NOTEMPTY(component.name, NSString)) {
+                nameLabel.text = component.name;
+            } else if (VALID_NOTEMPTY(component.title, NSString)) {
+                    nameLabel.text = component.title;
+                }
+            
             [nameLabel sizeToFit];
             [nameLabel setFrame:CGRectMake(textMarginX,
                                            CGRectGetMaxY(imageView.frame) + textMarginY,
@@ -111,6 +117,11 @@
             
             UILabel* priceLabel = [UILabel new];
             priceLabel.font = [UIFont fontWithName:kFontRegularName size:10.0f];
+            if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+            {
+                //SHOP font adjustment
+                priceLabel.font = [UIFont fontWithName:kFontLightName size:8.0f];
+            }
             priceLabel.textColor = UIColorFromRGB(0xcc0000);
             priceLabel.textAlignment = NSTextAlignmentCenter;
             priceLabel.text = priceToPresent;
@@ -174,8 +185,13 @@
         
         NSString* notificationName = kDidSelectTeaserWithPDVUrlNofication;
         
-        if (VALID_NOTEMPTY(teaserComponent.url, NSString)) {
-            [userInfo setObject:teaserComponent.url forKey:@"url"];
+        if (VALID_NOTEMPTY(teaserComponent.targetString, NSString)) {
+            [userInfo setObject:teaserComponent.targetString forKey:@"targetString"];
+            
+            if (VALID_NOTEMPTY(teaserComponent.richRelevance, NSString)) {
+                [userInfo setObject:teaserComponent.richRelevance forKey:@"rich_relevance"];
+            }
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
                                                                 object:nil
                                                               userInfo:userInfo];

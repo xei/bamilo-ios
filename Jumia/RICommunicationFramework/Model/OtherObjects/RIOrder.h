@@ -22,17 +22,23 @@
 @property (strong, nonatomic) NSString *total;
 @property (strong, nonatomic) NSString *totalFormatted;
 @property (strong, nonatomic) NSArray *itemCollection;
+@property (nonatomic, strong) RIAddress *shippingAddress;
+@property (nonatomic, strong) RIAddress *billingAddress;
 
 @end
 
 @interface RIItemCollection : NSObject
 
 @property (strong, nonatomic) NSString *sku;
+@property (strong, nonatomic) NSString *brand;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSNumber *quantity;
+@property (strong, nonatomic) NSString *imageURL;
 @property (strong, nonatomic) NSNumber *total;
 @property (strong, nonatomic) NSString *totalFormatted;
-@property (strong, nonatomic) NSArray *status;
+@property (strong, nonatomic) NSString *delivery;
+@property (strong, nonatomic) NSString *statusLabel;
+@property (strong, nonatomic) NSString *statusDate;
 
 @end
 

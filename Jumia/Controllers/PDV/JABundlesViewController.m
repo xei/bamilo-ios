@@ -207,6 +207,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     JACatalogListCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"CellWithLines" forIndexPath:indexPath];
     [cell setShowSelector:YES];
     [cell setHideRating:YES];
+    [cell setHideShopFirstLogo:YES];
     [cell loadWithProduct:bundleProduct];
     
     if (![self.product.sku isEqualToString:bundleProduct.sku]) {
@@ -276,13 +277,13 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         
         if(UIDeviceOrientationPortrait == ([UIDevice currentDevice].orientation) || UIDeviceOrientationPortraitUpsideDown == ([UIDevice currentDevice].orientation)) {
-            size = CGSizeMake(self.bounds.size.width, 104.0f);
+            size = CGSizeMake(self.bounds.size.width, JACatalogViewControllerListCellHeight_ipad);
             
         } else {
-            size = CGSizeMake((self.bounds.size.width/2), 104.0f);
+            size = CGSizeMake((self.bounds.size.width/2), JACatalogViewControllerListCellHeight_ipad);
         }
     } else {
-        size = CGSizeMake(self.view.frame.size.width, 104.0f);
+        size = CGSizeMake(self.view.frame.size.width, JACatalogViewControllerListCellHeight);
     }
     
     self.flowLayout.itemSize = size;
@@ -344,7 +345,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
         [simpleSku addObject:simple.sku];
     }
     
-    [RICart addBundleProductsWithSkus:[self.selectedItems allKeys] simpleSkus:simpleSku bundleId:self.bundle.bundleId withSuccessBlock:^(RICart *cart, NSArray *productsNotAdded) {
+    [RICart addBundleProductsWithSimpleSkus:simpleSku bundleId:self.bundle.bundleId withSuccessBlock:^(RICart *cart, NSArray *productsNotAdded) {
         
         [self hideLoading];
         
@@ -353,18 +354,10 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
         NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
         [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
         
-        [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
+        [self onSuccessResponse:RIApiResponseSuccess messages:@[STRING_ITEM_WAS_ADDED_TO_CART] showMessage:YES];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock) {
-        
+        [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:@selector(addComboToCart) objects:nil];
         [self hideLoading];
-        
-        NSString *addToCartError = STRING_ERROR_ADDING_TO_CART;
-        if (RIApiResponseNoInternetConnection == apiResponse)
-        {
-            addToCartError = STRING_NO_CONNECTION;
-        }
-        
-        [self showMessage:addToCartError success:NO];
     }];
 }
 
@@ -518,13 +511,14 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     [trackingDictionary setValue:self.product.sku forKey:kRIEventSkuKey];
     [trackingDictionary setValue:self.product.name forKey:kRIEventProductNameKey];
     
-    if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet))
+    if(VALID_NOTEMPTY(self.product.categoryIds, NSArray))
     {
-        NSArray *categoryIds = [self.product.categoryIds array];
+        NSArray *categoryIds = self.product.categoryIds;
         [trackingDictionary setValue:[categoryIds objectAtIndex:0] forKey:kRIEventCategoryIdKey];
     }
     
-    [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandKey];
+    [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandName];
+    [trackingDictionary setValue:self.product.brandUrlKey forKey:kRIEventBrandKey];
     
     NSString *discountPercentage = @"0";
     if(VALID_NOTEMPTY(self.product.maxSavingPercentage, NSString))
@@ -533,11 +527,37 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     }
     [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
     [trackingDictionary setValue:self.product.avr forKey:kRIEventRatingKey];
-    [trackingDictionary setValue:@"1" forKey:kRIEventQuantityKey];
+    [trackingDictionary setValue:self.product.brand forKey:kRIEventBrandName];
+    [trackingDictionary setValue:self.product.brandUrlKey forKey:kRIEventBrandKey];
+    [trackingDictionary setValue:self.product.name forKey:kRIEventProductNameKey];
+    [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+    [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
     [trackingDictionary setValue:@"Product Detail screen" forKey:kRIEventLocationKey];
+    
+    NSMutableArray* simpleSku = [NSMutableArray new];
+    for (RIProductSimple *simple in [self.selectedItems allValues]) {
+        [simpleSku addObject:simple.sku];
+    }
+    [trackingDictionary setValue:[simpleSku lastObject] forKey:kRIEventSkuKey];
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                               data:[trackingDictionary copy]];
+    
+    
+    trackingDictionary = [NSMutableDictionary new];
+    
+    [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+    NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
+    [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
+        
+    [trackingDictionary setValue:[price stringValue] forKey:kRIEventFBValueToSumKey];
+    [trackingDictionary setValue:self.product.sku forKey:kRIEventFBContentIdKey];
+    [trackingDictionary setValue:@"product" forKey:kRIEventFBContentTypeKey];
+    [trackingDictionary setValue:@"EUR" forKey:kRIEventFBCurrency];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookAddToCart]
+                                              data:[trackingDictionary copy]];
+    
     
     [self trackingEventCart:cart];
 }
@@ -565,7 +585,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     NSMutableDictionary *tracking = [NSMutableDictionary new];
     [tracking setValue:self.product.name forKey:kRIEventProductNameKey];
     [tracking setValue:self.product.sku forKey:kRIEventSkuKey];
-    if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet)) {
+    if(VALID_NOTEMPTY(self.product.categoryIds, NSArray)) {
         [tracking setValue:[self.product.categoryIds lastObject] forKey:kRIEventLastCategoryAddedToCartKey];
     }
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];

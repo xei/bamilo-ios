@@ -16,7 +16,7 @@
 - (void)pressedAddToCartForProduct:(RICampaignProduct*)campaignProduct
                  withProductSimple:(NSString*)simpleSku;
 - (void)pressedSizeOnView:(JACampaignProductCell*)campaignProductCell;
-- (void)pressedCampaignWithSku:(NSString*)sku;
+- (void)pressedCampaignProductWithTarget:(NSString*)targetString;
 
 @end
 
@@ -33,7 +33,6 @@ typedef void(^OnSelected)(void);
 
 - (void)loadWithCampaignProduct:(RICampaignProduct*)campaignProduct
            elapsedTimeInSeconds:(NSInteger)elapsedTimeInSeconds
-                     chosenSize:(NSString*)chosenSize
-               capaignHasBanner:(BOOL)hasBanner;
+                     chosenSize:(NSString*)chosenSize;
 
 @end

@@ -9,7 +9,6 @@
 #import "JACheckBoxWithOptionsComponent.h"
 #import "RIFieldOption.h"
 #import "JANewsletterComponent.h"
-#import "RINewsletterCategory.h"
 
 @interface JACheckBoxWithOptionsComponent ()
 
@@ -42,7 +41,7 @@
     {
         RIFieldOption *option = [[field options] objectAtIndex:i];
         NSString *fieldKey = [self.field name];
-        fieldKey = [fieldKey stringByReplacingOccurrencesOfString:@"[]" withString:[NSString stringWithFormat:@"[%@]", [option value]]];
+        fieldKey = [fieldKey stringByReplacingOccurrencesOfString:@"[]" withString:[NSString stringWithFormat:@"[%d]", i]];
         
         JANewsletterComponent *check = [JANewsletterComponent getNewJANewsletterComponent];
         [check setup];
@@ -52,33 +51,14 @@
         [check.switchComponent setAccessibilityLabel:option.label];
         [check setFrame:CGRectMake(0, 0, self.frame.size.width, check.frame.size.height)];        
         
-        NSArray *newsletterOption = [RINewsletterCategory getNewsletter];
-        
-        if (ISEMPTY(newsletterOption) || 0 == newsletterOption.count)
+        if ([option.isUserSubscribed boolValue])
         {
-            check.switchComponent.on = NO;
-            [self.values setObject:@"-1" forKey:fieldKey];
+            check.switchComponent.on = YES;
+            [self.values setObject:option.value forKey:fieldKey];
         }
         else
         {
-            BOOL finded = NO;
-            
-            for (RINewsletterCategory *newsletter in newsletterOption)
-            {
-                if ([[newsletter.idNewsletterCategory stringValue] isEqualToString:option.value])
-                {
-                    [self.values setObject:option.value forKey:fieldKey];                    
-                    check.switchComponent.on = YES;
-                    finded = YES;
-                    break;
-                }
-            }
-            
-            if (!finded)
-            {
-                check.switchComponent.on = NO;
-                [self.values setObject:@"-1" forKey:fieldKey];
-            }
+            check.switchComponent.on = NO;
         }
         
         [check.switchComponent addTarget:self action:@selector(changedState:) forControlEvents:UIControlEventValueChanged];
@@ -108,7 +88,7 @@
         RIFieldOption *option = [[self.field options] objectAtIndex:tag];
                 
         NSString *fieldKey = [self.field name];
-        fieldKey = [fieldKey stringByReplacingOccurrencesOfString:@"[]" withString:[NSString stringWithFormat:@"[%@]", [option value]]];
+        fieldKey = [fieldKey stringByReplacingOccurrencesOfString:@"[]" withString:[NSString stringWithFormat:@"[%ld]", tag]];
         
         if([sender isOn])
         {
@@ -116,7 +96,7 @@
         }
         else
         {
-            [self.values setObject:@"-1" forKey:fieldKey];
+            [self.values removeObjectForKey:fieldKey];
         }
     }
 }

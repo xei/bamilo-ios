@@ -13,6 +13,8 @@
 #import "UIButton+Extensions.h"
 #import "RIVariation.h"
 #import "JAProductInfoPriceLine.h"
+#import "JAProductInfoRatingLine.h"
+#import "JADropdownControl.h"
 
 #define JACatalogCellContentCornerRadius 3.0f
 #define JACatalogCellNormalFont [UIFont fontWithName:kFontRegularName size:10.0f]
@@ -36,15 +38,19 @@ typedef NS_ENUM(NSUInteger, JACatalogCollectionViewCellType) {
 @property (nonatomic) UIImageView *productImageView;
 @property (nonatomic) UILabel *brandLabel;
 @property (nonatomic) UILabel *nameLabel;
-@property (nonatomic) UIImageView *recentProductImageView;
+@property (nonatomic) UILabel *recentProductBadgeLabel;
 @property (nonatomic) UIButton *favoriteButton;
 @property (nonatomic) UILabel *discountLabel;
-@property (nonatomic) UIButton *sizeButton;
+@property (nonatomic) JADropdownControl *sizeButton;
 @property (nonatomic) JAClickableView *feedbackView;
 @property (nonatomic) JAProductInfoPriceLine *priceLine;
+@property (nonatomic) JAProductInfoRatingLine *ratingLine;
+@property (nonatomic) UIImageView *shopFirstImageView;
 
 @property (nonatomic) RIProduct *product;
 @property (nonatomic) RIVariation *variation;
+@property (nonatomic) BOOL hideShopFirstLogo;
+@property (nonatomic) BOOL hideRating;
 
 - (void)initViews;
 - (void)reloadViews;

@@ -28,6 +28,13 @@
 @dynamic languages;
 @dynamic facebookAvailable;
 @dynamic gtmId;
+@dynamic richRelevanceEnabled;
+@dynamic suggesterProvider;
+@dynamic algoliaAppId;
+@dynamic algoliaNamespacePrefix;
+@dynamic algoliaApiKey;
+
+@synthesize suggesterProviderEnum;
 
 + (RICountryConfiguration *)parseCountryConfiguration:(NSDictionary *)json
 {
@@ -71,6 +78,10 @@
     
     if([json objectForKey:@"gtm_ios"]){
         newConfig.gtmId = [json objectForKey:@"gtm_ios"];
+    }
+    
+    if([json objectForKey:@"rich_relevance_enabled"]){
+        newConfig.richRelevanceEnabled = [json objectForKey:@"rich_relevance_enabled"];
     }
     
     if([json objectForKey:@"facebook_is_available"]){
@@ -128,11 +139,28 @@
         }
     }
     
+    newConfig.suggesterProvider = VALID_VALUE([json objectForKey:@"suggester_provider"], NSString);
+    
+    NSDictionary *algolia = VALID_VALUE([json objectForKey:@"algolia"], NSDictionary);
+    if (algolia) {
+        newConfig.algoliaAppId = VALID_VALUE([algolia objectForKey:@"application_id"], NSString);
+        newConfig.algoliaNamespacePrefix = VALID_VALUE([algolia objectForKey:@"namespace_prefix"], NSString);
+        newConfig.algoliaApiKey = VALID_VALUE([algolia objectForKey:@"suggester_api_key"], NSString);
+    }
+    
     [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICountryConfiguration class])];
     
     [RICountryConfiguration saveConfiguration:newConfig andContext:YES];
     
     return newConfig;
+}
+
+- (SuggesterProvider)suggesterProviderEnum
+{
+    if (VALID_NOTEMPTY(self.suggesterProvider, NSString) && [self.suggesterProvider isEqualToString:@"algolia"]) {
+        return ALGOLIA;
+    }
+    return API;
 }
 
 + (NSString*)formatPrice:(NSNumber*)price country:(RICountryConfiguration*)country

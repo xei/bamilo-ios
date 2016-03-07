@@ -37,9 +37,9 @@
         fieldOption.value = [fieldOptionObject objectForKey:@"value"];
     }
     
-    if (VALID_NOTEMPTY([fieldOptionObject objectForKey:@"user_subscribed"], NSString))
+    if (VALID_NOTEMPTY([fieldOptionObject objectForKey:@"user_subscribed"], NSNumber))
     {
-        fieldOption.isUserSubscribed = [NSNumber numberWithBool:[[fieldOptionObject objectForKey:@"user_subscribed"] boolValue]];
+        fieldOption.isUserSubscribed = [fieldOptionObject objectForKey:@"user_subscribed"];
     }
     
     return fieldOption;

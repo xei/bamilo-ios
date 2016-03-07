@@ -17,7 +17,7 @@
 @property (nonatomic, strong)RITeaserGrouping* teaserGrouping;
 @property (nonatomic, strong)NSString* startingTitle;
 @property (nonatomic, strong)NSString* campaignId;
-@property (nonatomic, strong)NSString* campaignUrl;
+@property (nonatomic, strong)NSString* campaignTargetString;
 
 @property (nonatomic, strong) NSString* teaserTrackingInfo;
 

@@ -16,7 +16,7 @@
 @property (nonatomic, retain) NSString * label;
 @property (nonatomic, retain) NSString * vertical;
 @property (nonatomic, retain) NSString * urlKey;
-@property (nonatomic, retain) NSString * apiUrl;
+@property (nonatomic, retain) NSString * targetString;
 @property (nonatomic, retain) NSString * imageUrl;
 
 @property (nonatomic, retain) NSNumber * level;

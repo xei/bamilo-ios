@@ -53,14 +53,14 @@
     
     self.field = field;
     
-    if (VALID_NOTEMPTY(field.linkUrl, NSString)) {
+    if (VALID_NOTEMPTY(field.linkTargetString, NSString)) {
         [self.urlButton addTarget:self action:@selector(urlWasClicked) forControlEvents:UIControlEventTouchUpInside];
     }
     
     
     NSMutableAttributedString* attributedText;
     NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                UIColorFromRGB(0x666666), NSForegroundColorAttributeName, nil];
+                                JABlackColor, NSForegroundColorAttributeName, nil];
 
     NSRange linkRange;
     if(VALID_NOTEMPTY(field.label, NSString))
@@ -85,8 +85,17 @@
     
     if(VALID_NOTEMPTY([self.field value], NSString))
     {
-        self.storedValue = @"1";
-        [self.switchComponent setOn:YES animated:NO];
+        if ([[self.field value] isEqualToString:@"1"]) {
+            self.storedValue = @"1";
+            [self.switchComponent setOn:YES animated:NO];
+        } else {
+            self.storedValue = @"";
+            [self.switchComponent setOn:NO animated:NO];
+        }
+    }
+    
+    if (VALID_NOTEMPTY(self.field.disabled, NSNumber) && YES == [self.field.disabled boolValue]) {
+        [self.switchComponent setEnabled:NO];
     }
 }
 
@@ -100,8 +109,8 @@
     
     NSString* notificationName = kDidSelectTeaserWithShopUrlNofication;
     
-    if (VALID_NOTEMPTY(self.field.linkUrl, NSString)) {
-        [userInfo setObject:self.field.linkUrl forKey:@"url"];
+    if (VALID_NOTEMPTY(self.field.linkTargetString, NSString)) {
+        [userInfo setObject:self.field.linkTargetString forKey:@"targetString"];
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
                                                             object:nil
                                                           userInfo:userInfo];

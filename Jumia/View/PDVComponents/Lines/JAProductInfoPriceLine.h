@@ -20,6 +20,7 @@ typedef NS_ENUM(NSInteger, JAPriceSize) {
 @property (nonatomic) BOOL fashion;
 @property (nonatomic) NSInteger priceOff;
 @property (nonatomic) NSString *oldPrice;
+@property (nonatomic) NSString *price;
 @property (nonatomic) JAPriceSize priceSize;
 
 @end

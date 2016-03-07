@@ -14,9 +14,6 @@
 {
     RIPaymentMethodFormField* newField = [[RIPaymentMethodFormField alloc] init];
     
-    if ([fieldJSON objectForKey:@"id"]) {
-        newField.uid = [fieldJSON objectForKey:@"id"];
-    }
     if ([fieldJSON objectForKey:@"key"]) {
         newField.key = [fieldJSON objectForKey:@"key"];
     }
@@ -43,17 +40,15 @@
         }
     }
     
-    if (VALID_NOTEMPTY([fieldJSON objectForKey:@"options"], NSDictionary)) {
-        NSDictionary* optionsObject = [fieldJSON objectForKey:@"options"];
-        NSArray* optionsObjectKeys = [optionsObject allKeys];
+    if (VALID_NOTEMPTY([fieldJSON objectForKey:@"options"], NSArray)) {
+        NSArray* optionsObject = [fieldJSON objectForKey:@"options"];
         
         NSMutableArray *optionsArray = [[NSMutableArray alloc] init];
-        for(NSString *optionObjectKey in optionsObjectKeys)
+        for(NSDictionary *optionObject in optionsObject)
         {
-            NSDictionary *optionObject = [optionsObject objectForKey:optionObjectKey];
             if(VALID_NOTEMPTY(optionObject, NSDictionary))
             {
-                RIPaymentMethodFormOption *option = [RIPaymentMethodFormOption parseField:optionObject forId:optionObjectKey];
+                RIPaymentMethodFormOption *option = [RIPaymentMethodFormOption parseField:optionObject];
                 [optionsArray addObject:option];
             }
         }

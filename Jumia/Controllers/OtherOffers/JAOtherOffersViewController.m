@@ -182,7 +182,7 @@
 {
     [self showLoading];
     
-    [RIProductOffer getProductOffersForProductUrl:self.product.url successBlock:^(NSArray *productOffers) {
+    [RIProductOffer getProductOffersForProductWithSku:self.product.sku successBlock:^(NSArray *productOffers) {
         
         [self hideLoading];
         
@@ -223,7 +223,7 @@
     self.selectedProductSimple = [NSMutableDictionary new];
     for (RIProductOffer* po in productOffers) {
         for (RIProductSimple *simple in po.productSimples) {
-            if ([simple.quantity intValue] > 0) {
+            if ([simple.quantity intValue] > 0 || po.productSimples.count == 1) {
                 [self.selectedProductSimple setValue:simple forKey:po.productSku];
                 break;
             }
@@ -292,9 +292,8 @@
     
     [self showLoading];
     [RICart addProductWithQuantity:@"1"
-                               sku:offer.productSku
-                            simple:simpleSku
-                  withSuccessBlock:^(RICart *cart) {
+                         simpleSku:simpleSku
+                  withSuccessBlock:^(RICart *cart, RIApiResponse apiResponse,  NSArray *successMessage) {
                       
                       NSNumber *price = offer.priceEuroConverted;
                       
@@ -316,7 +315,12 @@
                       [trackingDictionary setValue:price forKey:kRIEventPriceKey];
                       [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
 
-                      [trackingDictionary setValue:@"1" forKey:kRIEventQuantityKey];
+                      [trackingDictionary setObject:self.product.brand forKey:kRIEventBrandName];
+                      [trackingDictionary setObject:self.product.brandUrlKey forKey:kRIEventBrandKey];
+                      [trackingDictionary setValue:self.product.name forKey:kRIEventProductNameKey];
+                      [trackingDictionary setValue:simpleSku forKey:kRIEventSkuKey];
+                      [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+                      [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
                       
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
                                                                 data:[trackingDictionary copy]];
@@ -325,7 +329,7 @@
                       NSMutableDictionary *tracking = [NSMutableDictionary new];
                       [tracking setValue:self.product.name forKey:kRIEventProductNameKey];
                       [tracking setValue:self.product.sku forKey:kRIEventSkuKey];
-                      if(VALID_NOTEMPTY(self.product.categoryIds, NSOrderedSet)) {
+                      if(VALID_NOTEMPTY(self.product.categoryIds, NSArray)) {
                           [tracking setValue:[self.product.categoryIds lastObject] forKey:kRIEventLastCategoryAddedToCartKey];
                       }
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
@@ -338,25 +342,32 @@
                       
                       float value = [price floatValue];
                       [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToCart
-                                 valueToSum:value
-                                 parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
-                                               FBSDKAppEventParameterNameContentType : self.product.name,
-                                               FBSDKAppEventParameterNameContentID   : self.product.sku}];
+                                    valueToSum:value
+                                    parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
+                                                  FBSDKAppEventParameterNameContentType : self.product.name,
+                                                  FBSDKAppEventParameterNameContentID   : self.product.sku}];
+                      
+                      trackingDictionary = [NSMutableDictionary new];
+                      [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                      NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
+                      [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
+                      
+                      [trackingDictionary setValue:[price stringValue] forKey:kRIEventFBValueToSumKey];
+                      [trackingDictionary setValue:self.product.sku forKey:kRIEventFBContentIdKey];
+                      [trackingDictionary setValue:@"product" forKey:kRIEventFBContentTypeKey];
+                      [trackingDictionary setValue:@"EUR" forKey:kRIEventFBCurrency];
+                      
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookAddToCart]
+                                                                data:[trackingDictionary copy]];
                       
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       
-                      [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
+                      [self onSuccessResponse:RIApiResponseSuccess messages:successMessage showMessage:YES];
                       [self hideLoading];
                       
-                  } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-                      NSString *addToCartError = STRING_ERROR_ADDING_TO_CART;
-                      if(RIApiResponseNoInternetConnection == apiResponse)
-                      {
-                          addToCartError = STRING_NO_CONNECTION;
-                      }
-                      
-                      [self showMessage:addToCartError success:NO];
+                  }andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
+                      [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(addToCartButtonPressed:) objects:@[sender]];
                       [self hideLoading];
                   }];
 }

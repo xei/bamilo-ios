@@ -19,6 +19,7 @@
 #import "RISpecification.h"
 #import "RISpecificationAttribute.h"
 #import "JAPDVProductInfoSellerInfo.h"
+#import "JAProductInfoSISLine.h"
 
 @interface JAPDVProductInfo() {
     UILabel *_sizesLabel;
@@ -36,6 +37,7 @@
 @property (nonatomic) id otherOffersTarget;
 @property (nonatomic) id specificationsTarget;
 @property (nonatomic) id descriptionTarget;
+@property (nonatomic) id sisTarget;
 @property (nonatomic) SEL variationsSelector;
 @property (nonatomic) SEL sizeSelector;
 @property (nonatomic) SEL reviewsSelector;
@@ -45,6 +47,7 @@
 @property (nonatomic) SEL otherOffersSelector;
 @property (nonatomic) SEL specificationsSelector;
 @property (nonatomic) SEL descriptionSelector;
+@property (nonatomic) SEL sisSelector;
 
 @end
 
@@ -81,15 +84,9 @@
     [_priceLine setFashion:product.fashion];
     
     if (VALID_NOTEMPTY(product.priceRange, NSString)) {
-        [_priceLine setTitle:product.priceRange];
+        [_priceLine setPrice:product.priceRange];
     } else {
-        [self setSpecialPrice:product.specialPriceFormatted andPrice:product.priceFormatted];
-    }
-    if (VALID_NOTEMPTY(product.maxSavingPercentage, NSString)) {
-        NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-        f.numberStyle = NSNumberFormatterDecimalStyle;
-        NSNumber *myNumber = [f numberFromString:product.maxSavingPercentage];
-        [_priceLine setPriceOff:myNumber.integerValue];
+        [self setSpecialPrice:product.specialPriceFormatted andPrice:product.priceFormatted andMaxSavingPercentage:product.maxSavingPercentage shouldForceFlip:NO];
     }
     [self addSubview:_priceLine];
     yOffset = CGRectGetMaxY(_priceLine.frame);
@@ -175,7 +172,7 @@
      *  SIZES
      */
     
-    if (VALID_NOTEMPTY(product.productSimples, NSOrderedSet) && product.productSimples.count > 1)
+    if (VALID_NOTEMPTY(product.productSimples, NSArray) && product.productSimples.count > 1)
     {
         NSString *sizesText = @"";
         if (VALID_NOTEMPTY(preSelectedSize, NSString)) {
@@ -189,8 +186,8 @@
         }
         JAProductInfoSingleLine *singleSizes = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
         [singleSizes setTopSeparatorVisibility:YES];
-        [singleSizes setTitle:sizesText];
-        _sizesLabel = singleSizes.label;
+        [singleSizes setText:sizesText];
+        _sizesLabel = singleSizes.lineLabel;
         [singleSizes addTarget:self action:@selector(tapSizeLine) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:singleSizes];
         yOffset = CGRectGetMaxY(singleSizes.frame);
@@ -200,7 +197,7 @@
      *  VARIATIONS
      */
     
-    if (VALID_NOTEMPTY(product.variations, NSOrderedSet)) {
+    if (VALID_NOTEMPTY(product.variations, NSArray)) {
         JAProductInfoSingleLine *singleVariations = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
         [singleVariations setTopSeparatorVisibility:YES];
         if (product.fashion) {
@@ -211,6 +208,29 @@
         [singleVariations addTarget:self action:@selector(tapVariationsLine) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:singleVariations];
         yOffset = CGRectGetMaxY(singleVariations.frame);
+    }
+    
+    /*
+     *  SIS
+     */
+    
+    if (VALID_NOTEMPTY(product.brandTarget, NSString)) {
+        JAProductInfoSISLine *sis = [[JAProductInfoSISLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSISLineHeight)];
+        [sis setTitle:[NSString stringWithFormat:STRING_VISIT_THE_OFFICIAL_BRAND_STORE, product.brand]];
+        if (product.brandImage) {
+            NSString* sisImageUrl = product.brandImage;
+            
+            __weak JAProductInfoSISLine *weakSis = sis;
+            [sis.sisImageView setImageWithURL:[NSURL URLWithString:sisImageUrl] placeholderImage:nil success:^(UIImage *image, BOOL cached) {
+                [weakSis.sisImageView setWidth:image.size.width*weakSis.sisImageView.height/image.size.height];
+                weakSis.lineContentXOffset = CGRectGetMaxX(weakSis.sisImageView.frame) + 8.f;
+                [weakSis setTitle:weakSis.title];
+            } failure:nil];
+        }
+        
+        [sis addTarget:self action:@selector(tapSisLine) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:sis];
+        yOffset = CGRectGetMaxY(sis.frame);
     }
     
     /*
@@ -225,11 +245,12 @@
         yOffset = CGRectGetMaxY(headerSeller.frame);
         
         JAPDVProductInfoSellerInfo *sellerInfoView = [[JAPDVProductInfoSellerInfo alloc] initWithFrame:CGRectMake(0, yOffset, self.width, 50)];
+        [sellerInfoView setIsShopFirst:product.shopFirst];
+        [sellerInfoView setShopFirstOverlayText:product.shopFirstOverlayText];
         [sellerInfoView setSeller:product.seller];
-        [sellerInfoView addTarget:self action:@selector(tapSellerCatalogLine)];
-        [sellerInfoView addLinkTarget:self action:@selector(tapSellerLink)];
+        [self addTargetToSellerInfoView:sellerInfoView seller:product.seller];
+
         [self addSubview:sellerInfoView];
-        
         yOffset = CGRectGetMaxY(sellerInfoView.frame);
     }
     
@@ -278,24 +299,44 @@
     [self setHeight:yOffset];
 }
 
+- (void)addTargetToSellerInfoView:(JAPDVProductInfoSellerInfo *)sellerInfoView seller:(RISeller*)seller
+{
+    if (VALID_NOTEMPTY(seller.targetString, NSString)) {
+        [sellerInfoView addTarget:self action:@selector(tapSellerCatalogLine)];
+        [sellerInfoView addLinkTarget:self action:@selector(tapSellerLink)];
+    }
+}
+
+
 - (void)setSizesText:(NSString *)sizesText
 {
     _sizesText = sizesText;
     if (VALID_NOTEMPTY(_sizesLabel, UILabel)) {
         [_sizesLabel setText:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, sizesText]];
-        [_sizesLabel sizeToFit];
     }
 }
 
-- (void)setSpecialPrice:(NSString*)special andPrice:(NSString*)price
+- (void)setSpecialPrice:(NSString*)special andPrice:(NSString*)price andMaxSavingPercentage:(NSString*)maxSavingPercentage shouldForceFlip:(BOOL)forceFlip
 {
-    [_priceLine setTitle:price];
+    [_priceLine setPrice:price];
     
     if (VALID_NOTEMPTY(special, NSString)) {
         [_priceLine setOldPrice:price];
-        [_priceLine setTitle:special];
+        [_priceLine setPrice:special];
     } else {
         [_priceLine setOldPrice:@""];
+    }
+    if (VALID_NOTEMPTY(maxSavingPercentage, NSString)) {
+        NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+        f.numberStyle = NSNumberFormatterDecimalStyle;
+        NSNumber *myNumber = [f numberFromString:maxSavingPercentage];
+        [_priceLine setPriceOff:myNumber.integerValue];
+    }
+    
+    if (RI_IS_RTL) {
+        if (forceFlip) {
+            [_priceLine flipAllSubviews];
+        }
     }
 }
 
@@ -376,6 +417,13 @@
     }
 }
 
+- (void)tapSisLine
+{
+    if (self.sisTarget && [self.sisTarget respondsToSelector:self.sisSelector]) {
+        ((void (*)(id, SEL))[self.sisTarget methodForSelector:self.sisSelector])(self.sisTarget, self.sisSelector);
+    }
+}
+
 - (void)addVariationsTarget:(id)target action:(SEL)action
 {
     self.variationsTarget = target;
@@ -428,6 +476,12 @@
 {
     self.descriptionTarget = target;
     self.descriptionSelector = action;
+}
+
+- (void)addSisTarget:(id)target action:(SEL)action
+{
+    self.sisTarget = target;
+    self.sisSelector = action;
 }
 
 @end

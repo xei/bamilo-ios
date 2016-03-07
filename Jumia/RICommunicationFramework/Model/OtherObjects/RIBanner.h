@@ -12,9 +12,8 @@
 
 @property (nonatomic, strong) NSString *iPhoneImageUrl;
 @property (nonatomic, strong) NSString *iPadImageUrl;
-@property (nonatomic, strong) NSString *targetType;
 @property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSString *url;
+@property (nonatomic, strong) NSString *targetString;
 
 /**
  *  Method to parse an RIBanner given a JSON object

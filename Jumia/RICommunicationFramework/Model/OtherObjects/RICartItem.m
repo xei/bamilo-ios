@@ -27,8 +27,8 @@
         cartItem.attributeSetID = [info objectForKey:@"attribute_set_id"];
     }
     
-    if (VALID_NOTEMPTY([info objectForKey:@"url"], NSString)) {
-        cartItem.productUrl = [info objectForKey:@"url"];
+    if (VALID_NOTEMPTY([info objectForKey:@"target"], NSString)) {
+        cartItem.targetString = [info objectForKey:@"target"];
     }
     
     if (VALID_NOTEMPTY([info objectForKey:@"image"], NSString)) {
@@ -47,17 +47,40 @@
         cartItem.name = [info objectForKey:@"name"];
     }
     
+    if (VALID_NOTEMPTY([info objectForKey:@"brand"], NSString)) {
+        cartItem.brand = [info objectForKey:@"brand"];
+    }
+    
+    if (VALID_NOTEMPTY([info objectForKey:@"brand_url_key"], NSString)) {
+        cartItem.brandUrlKey = [info objectForKey:@"brand_url_key"];
+    }
+    
+    if (VALID_NOTEMPTY([info objectForKey:@"category_name"], NSString)) {
+        cartItem.category = [info objectForKey:@"category_name"];
+    }
+    
+    if (VALID_NOTEMPTY([info objectForKey:@"category_url_key"], NSString)) {
+        cartItem.categoryUrlKey = [info objectForKey:@"category_url_key"];
+    }
+    
     if (VALID_NOTEMPTY([info objectForKey:@"variation"], NSString)) {
         cartItem.variation = [info objectForKey:@"variation"];
     }
     
-    if (VALID_NOTEMPTY([info objectForKey:@"unit_price"], NSNumber)) {
-        cartItem.price = [info objectForKey:@"unit_price"];
+    if (VALID_NOTEMPTY([info objectForKey:@"price"], NSNumber)) {
+        cartItem.price = [info objectForKey:@"price"];
         cartItem.priceFormatted = [RICountryConfiguration formatPrice:cartItem.price country:country];
     }
     
-    if (VALID_NOTEMPTY([info objectForKey:@"unit_price_converted"], NSNumber)) {
-        cartItem.priceEuroConverted = [info objectForKey:@"unit_price_converted"];
+    if (VALID_NOTEMPTY([info objectForKey:@"price_converted"], NSNumber)) {
+        cartItem.priceEuroConverted = [info objectForKey:@"price_converted"];
+    }
+    
+    if ([info objectForKey:@"shop_first"]) {
+        cartItem.shopFirst = [NSNumber numberWithBool:[[info objectForKey:@"shop_first"] boolValue]];
+        if ([info objectForKey:@"shop_first_overlay"]) {
+            cartItem.shopFirstOverlayText = [info objectForKey:@"shop_first_overlay"];
+        }
     }
     
     if (VALID_NOTEMPTY([info objectForKey:@"special_price"], NSNumber)) {

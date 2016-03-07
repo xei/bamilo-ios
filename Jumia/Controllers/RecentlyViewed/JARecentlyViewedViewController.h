@@ -2,18 +2,12 @@
 //  JARecentlyViewedViewController.h
 //  Jumia
 //
-//  Created by Miguel Chaves on 30/Jul/14.
-//  Copyright (c) 2014 Rocket Internet. All rights reserved.
+//  Created by Jose Mota on 21/12/15.
+//  Copyright © 2015 Rocket Internet. All rights reserved.
 //
 
 #import "JABaseViewController.h"
-#import "JAPicker.h"
 
 @interface JARecentlyViewedViewController : JABaseViewController
-<
-    UICollectionViewDataSource,
-    UICollectionViewDelegate,
-    JAPickerDelegate
->
 
 @end

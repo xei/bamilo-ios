@@ -18,11 +18,12 @@
     CGRect _brandLabelRect;
     CGRect _nameLabelRect;
     CGRect _productImageViewRect;
-    CGRect _recentProductImageViewRect;
+    CGRect _recentProductBadgeLabelRect;
     CGRect _favoriteButtonRect;
     CGRect _discountLabelRect;
     CGRect _sizeButtonRect;
     CGRect _sizeLabelRect;
+    BOOL _ratingRefresh;
 }
 
 @end
@@ -61,7 +62,7 @@
 {
     if (!VALID_NOTEMPTY(_nameLabel, UILabel)) {
         _nameLabel = [[UILabel alloc] init];
-        [_nameLabel setFont:JABody3Font];
+        [_nameLabel setFont:JABody1Font];
         [_nameLabel setText:@"NameLabel"];
         _nameLabel.textColor = UIColorFromRGB(0x000000);
     }
@@ -85,7 +86,7 @@
 - (UIButton *)favoriteButton
 {
     if (!VALID_NOTEMPTY(_favoriteButton, UIButton)) {
-        _favoriteButtonRect = CGRectMake(0, 10, 18, 18);
+        _favoriteButtonRect = CGRectMake(16, 16, 18, 18);
         _favoriteButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_favoriteButton setHitTestEdgeInsets:UIEdgeInsetsMake(-10, -10, -10, -10)];
         [_favoriteButton setFrame:_favoriteButtonRect];
@@ -95,27 +96,21 @@
     return _favoriteButton;
 }
 
-- (UIImageView *)recentProductImageView
+- (UILabel *)recentProductBadgeLabel
 {
-    if (!VALID_NOTEMPTY(_recentProductImageView, UIImageView)) {
-        NSString *langCode = [[NSUserDefaults standardUserDefaults] stringForKey:kLanguageCodeKey];
-        NSString* imageName = @"ProductBadgeNew_";
-        if (NSNotFound != [langCode rangeOfString:@"fr"].location) {
-            imageName = [imageName stringByAppendingString:@"fr"];
-        } else if (NSNotFound != [langCode rangeOfString:@"fa"].location) {
-            imageName = [imageName stringByAppendingString:@"fa"];
-        } else if (NSNotFound != [langCode rangeOfString:@"pt"].location) {
-            imageName = [imageName stringByAppendingString:@"pt"];
-        } else {
-            imageName = [imageName stringByAppendingString:@"en"];
-        }
-        
-        _recentProductImageViewRect = CGRectMake(0, 0, 48, 48);
-        _recentProductImageView = [[UIImageView alloc] initWithFrame:_recentProductImageViewRect];
-        UIImage* recentProductImage = [UIImage imageNamed:imageName];
-        [_recentProductImageView setImage:recentProductImage];
+    if (!VALID_NOTEMPTY(_recentProductBadgeLabel, UILabel)) {
+        _recentProductBadgeLabelRect = CGRectMake(0, 10, 200, 16);
+        _recentProductBadgeLabel = [[UILabel alloc] initWithFrame:_recentProductBadgeLabelRect];
+        [_recentProductBadgeLabel setFont:JABadgeFont];
+        [_recentProductBadgeLabel setBackgroundColor:JABlack700Color];
+        [_recentProductBadgeLabel setTextColor:[UIColor whiteColor]];
+        [_recentProductBadgeLabel setTextAlignment:NSTextAlignmentCenter];
+        [_recentProductBadgeLabel setText:[STRING_NEW uppercaseString]];
+        [_recentProductBadgeLabel sizeToFit];
+        [_recentProductBadgeLabel setWidth:_recentProductBadgeLabel.width + 8];
+        [_recentProductBadgeLabel setHeight:_recentProductBadgeLabel.height + 8];
     }
-    return _recentProductImageView;
+    return _recentProductBadgeLabel;
 }
 
 - (JAProductInfoPriceLine *)priceLine
@@ -128,18 +123,50 @@
     return _priceLine;
 }
 
-- (UIButton *)sizeButton
+- (JAProductInfoRatingLine *)ratingLine
+{
+    if (!VALID_NOTEMPTY(_ratingLine, JAProductInfoRatingLine)) {
+        _ratingLine = [[JAProductInfoRatingLine alloc] initWithFrame:CGRectZero];
+        _ratingLine.fashion = NO;
+        _ratingLine.imageRatingSize = kImageRatingSizeSmall;
+        _ratingLine.lineContentXOffset = 0.f;
+        _ratingLine.topSeparatorVisibility = NO;
+        _ratingLine.bottomSeparatorVisibility = NO;
+    }
+    return _ratingLine;
+}
+
+- (void)setHideRating:(BOOL)hideRating
+{
+    _hideRating = hideRating;
+    [self.nameLabel setNumberOfLines:2];
+}
+
+- (JADropdownControl *)sizeButton
 {
     if (!VALID_NOTEMPTY(_sizeButton, UIButton)) {
         
         CGRect frame = CGRectMake(self.priceLine.frame.origin.x, self.priceLine.frame.origin.y+20.0f,
-                                  self.width, self.priceLine.frame.size.height);
-        
-        _sizeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [_sizeButton setFrame:(frame)];
-        _sizeButton.titleLabel.font = JACaptionFont;
+                                  100, 20.f);
+        _sizeButton = [JADropdownControl buttonWithType:UIButtonTypeSystem];
+        [_sizeButton setFrame:frame];
     }
     return _sizeButton;
+}
+
+- (UIImageView*)shopFirstImageView
+{
+    if (!VALID_NOTEMPTY(_shopFirstImageView, UIImageView)) {
+        
+        UIImage *shopFirstImage = [UIImage imageNamed:@"shop_first_logo"];
+        _shopFirstImageView = [[UIImageView alloc] initWithImage:shopFirstImage];
+    }
+    return _shopFirstImageView;
+}
+
+- (void)setHideShopFirstLogo:(BOOL)hideShopFirstLogo
+{
+    _hideShopFirstLogo = hideShopFirstLogo;
 }
 
 - (void)initViews
@@ -149,10 +176,12 @@
     [self addSubview:self.brandLabel];
     [self addSubview:self.nameLabel];
     [self addSubview:self.favoriteButton];
-    [self addSubview:self.recentProductImageView];
+    [self addSubview:self.recentProductBadgeLabel];
     [self addSubview:self.priceLine];
+    [self addSubview:self.ratingLine];
     [self addSubview:self.sizeButton];
     [self addSubview:self.discountLabel];
+    [self addSubview:self.shopFirstImageView];
     [self setBackgroundColor:[UIColor whiteColor]];
     [self setClipsToBounds:YES];
 }
@@ -175,6 +204,7 @@
 - (void)setTag:(NSInteger)tag
 {
     [super setTag:tag];
+    [self.favoriteButton setTag:tag];
     [self.feedbackView setTag:tag];
     [self.sizeButton setTag:tag];
 }
@@ -191,20 +221,29 @@
                       placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
     
     if (VALID_NOTEMPTY(product.priceRange, NSString)) {
-        [self.priceLine setTitle:product.priceRange];
+        [self.priceLine setPrice:product.priceRange];
         [self.priceLine setOldPrice:nil];
     } else if (VALID_NOTEMPTY(product.specialPriceFormatted, NSString)) {
-        [self.priceLine setTitle:product.specialPriceFormatted];
+        [self.priceLine setPrice:product.specialPriceFormatted];
         [self.priceLine setOldPrice:product.priceFormatted];
-    }else{
-        [self.priceLine setTitle:product.priceFormatted];
+    } else {
+        [self.priceLine setPrice:product.priceFormatted];
         [self.priceLine setOldPrice:nil];
     }
     
+    if (VALID_NOTEMPTY(product.shopFirst, NSNumber) && [product.shopFirst boolValue]) {
+        if (self.hideShopFirstLogo) {
+            [self.shopFirstImageView setHidden:YES];
+        } else {
+            [self.shopFirstImageView setHidden:NO];
+        }
+    } else {
+        self.shopFirstImageView.hidden = YES;
+    }
     
     _favoriteButton.selected = VALID_NOTEMPTY(product.favoriteAddDate, NSDate);
     
-    _recentProductImageView.hidden = ![product.isNew boolValue];
+    self.recentProductBadgeLabel.hidden = ![product.isNew boolValue];
     
     CGFloat priceXOffset = JACatalogCellPriceLabelOffsetX;
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
@@ -213,7 +252,33 @@
     
     _discountLabel.text = [NSString stringWithFormat:STRING_FORMAT_OFF,[product.maxSavingPercentage integerValue]];
     _discountLabel.hidden = !product.maxSavingPercentage;
+    if (VALID_NOTEMPTY(product.priceRange, NSString)) {
+        _discountLabel.hidden = YES;
+    }
     _discountLabel.font = JACaptionFont;
+    _discountLabel.frame = CGRectMake(0.0f, 0.0f, 30.0f, 16.0f);
+    
+
+    if (!self.hideRating) {
+        if (0 == [product.sum integerValue] ) {
+            [self.ratingLine setHidden:YES];
+        }else
+            [self.ratingLine setHidden:NO];
+        
+        self.ratingLine.ratingAverage = product.avr;
+        self.ratingLine.ratingSum = product.sum;
+        
+        BOOL refresh = NO;
+        if (0 != [product.sum integerValue]) {
+            
+            if (!_ratingRefresh) {
+                refresh = YES;
+                _ratingRefresh = YES;
+            }
+        }
+    } else {
+        [self.ratingLine setHidden:YES];
+    }
 }
 
 - (void)loadWithVariation:(RIVariation *)variation
@@ -229,16 +294,24 @@
                       placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
 
     if (VALID_NOTEMPTY(variation.specialPrice, NSNumber)) {
-        [self.priceLine setTitle:[RICountryConfiguration formatPrice:variation.specialPrice country:[RICountryConfiguration getCurrentConfiguration]]];
+        [self.priceLine setPrice:[RICountryConfiguration formatPrice:variation.specialPrice country:[RICountryConfiguration getCurrentConfiguration]]];
         [self.priceLine setOldPrice:[RICountryConfiguration formatPrice:variation.price country:[RICountryConfiguration getCurrentConfiguration]]];
     }else{
-        [self.priceLine setTitle:[RICountryConfiguration formatPrice:variation.price country:[RICountryConfiguration getCurrentConfiguration]]];
+        [self.priceLine setPrice:[RICountryConfiguration formatPrice:variation.price country:[RICountryConfiguration getCurrentConfiguration]]];
         [self.priceLine setOldPrice:nil];
     }
     
-    self.recentProductImageView.hidden = YES;
+    self.recentProductBadgeLabel.hidden = YES;
+    //self.recentProductImageView.hidden = YES;
     self.discountLabel.hidden = YES;
     self.favoriteButton.hidden = YES;
+    self.ratingLine.hidden = YES;
+    
+    if (self.hideShopFirstLogo) {
+        [self.shopFirstImageView setHidden:YES];
+    } else {
+        [self.shopFirstImageView setHidden:NO];
+    }
 }
 
 

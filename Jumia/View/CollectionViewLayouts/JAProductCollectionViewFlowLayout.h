@@ -11,4 +11,6 @@
 
 @interface JAProductCollectionViewFlowLayout : UICollectionViewFlowLayout
 
+- (void)resetSizes;
+
 @end

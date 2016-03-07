@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "JAColorView.h"
+#import "JAClickableView.h"
+#import "RIFilter.h"
 
 @interface JAColorFilterCell : UITableViewCell
 
@@ -15,11 +17,16 @@
 @property (strong, nonatomic) UILabel *colorTitleLabel;
 @property (nonatomic, strong) UIImageView* customAccessoryView;
 @property (nonatomic, strong) UIView* separator;
+@property (nonatomic, strong) JAClickableView* clickableView;
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier
                             isLandscape:(BOOL)isLandscape
                                   frame:(CGRect)frame;
+
 - (void)setupIsLandscape:(BOOL)landscape;
+
+- (void)setFilterOption:(RIFilterOption*)option;
+
 + (CGFloat)height;
 
 @end

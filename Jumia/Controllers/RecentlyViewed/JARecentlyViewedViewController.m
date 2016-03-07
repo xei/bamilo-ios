@@ -2,32 +2,31 @@
 //  JARecentlyViewedViewController.m
 //  Jumia
 //
-//  Created by Miguel Chaves on 30/Jul/14.
-//  Copyright (c) 2014 Rocket Internet. All rights reserved.
+//  Created by Jose Mota on 21/12/15.
+//  Copyright © 2015 Rocket Internet. All rights reserved.
 //
 
 #import "JARecentlyViewedViewController.h"
-#import "JACatalogListCell.h"
-#import "JAButtonCell.h"
-#import "RIProduct.h"
-#import "RIProductSimple.h"
-#import "RICart.h"
-#import "JAUtils.h"
-#import "RICustomer.h"
-#import "JAProductListFlowLayout.h"
-#import "RICategory.h"
+#import "JAProductCollectionViewFlowLayout.h"
 #import <FBSDKCoreKit/FBSDKAppEvents.h>
+#import "JARecentlyViewedCell.h"
+#import "RIProductSimple.h"
+#import "RICategory.h"
+#import "RICustomer.h"
+#import "JAPicker.h"
+#import "JAUtils.h"
+#import "RICart.h"
 
-@interface JARecentlyViewedViewController ()
+@interface JARecentlyViewedViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, JAPickerDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *emptyListView;
-@property (weak, nonatomic) IBOutlet UILabel *emptyListLabel;
-@property (weak, nonatomic) IBOutlet UIImageView* emptyListImageView;
-@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (nonatomic, strong)JAProductListFlowLayout* flowLayout;
-@property (nonatomic, strong)NSString* cellIdentifier;
-@property (nonatomic, strong)NSString* buttonCellIdentifier;
-@property (nonatomic, strong) NSArray* productsArray;
+@property (strong, nonatomic) UIView *emptyListView;
+@property (strong, nonatomic) UILabel *emptyListLabel;
+@property (strong, nonatomic) UIImageView* emptyListImageView;
+@property (strong, nonatomic) UILabel *emptyTitleLabel;
+@property (nonatomic) UICollectionView *collectionView;
+@property (nonatomic) JAProductCollectionViewFlowLayout *flowLayout;
+@property (nonatomic, strong) NSMutableArray *productsArray;
+@property (nonatomic, strong) NSMutableDictionary *productsDictionary;
 @property (assign, nonatomic) BOOL selectedSizeAndAddToCart;
 
 // size picker view
@@ -37,72 +36,185 @@
 
 @property (strong, nonatomic) UIButton *backupButton; // for the retry connection, is necessary to store the button
 
+@property (strong, nonatomic) UIView *bottomView;
+@property (strong, nonatomic) UIButton *clearAllButton;
+
 @end
 
 @implementation JARecentlyViewedViewController
 
-@synthesize productsArray=_productsArray;
-- (void)setProductsArray:(NSArray *)productsArray
+- (void)setProductsDictionary:(NSMutableDictionary *)productsDictionary
 {
-    _productsArray = productsArray;
+    _productsDictionary = productsDictionary;
     [self.collectionView reloadData];
-    if (ISEMPTY(productsArray)) {
+    if (ISEMPTY(productsDictionary)) {
         self.emptyListView.hidden = NO;
         self.collectionView.hidden = YES;
+        [self.bottomView setHidden:YES];
+        [self.clearAllButton setHidden:YES];
     } else {
         self.emptyListView.hidden = YES;
         self.collectionView.hidden = NO;
+        [self.bottomView setHidden:NO];
+        [self.clearAllButton setHidden:NO];
     }
 }
 
-#pragma mark - View Lifecycle
 
-- (void)viewDidLoad
+-(UIView *)emptyListView {
+    if (!VALID_NOTEMPTY(_emptyListView, UIView)) {
+        _emptyListView = [[UIView alloc]initWithFrame:CGRectMake(self.viewBounds.origin.x,
+                                                                 self.viewBounds.origin.y,
+                                                                 self.viewBounds.size.width,
+                                                                 self.viewBounds.size.height)];
+        [_emptyListView setBackgroundColor:[UIColor whiteColor]];
+        [_emptyListView addSubview:self.emptyTitleLabel];
+        [_emptyListView addSubview:self.emptyListImageView];
+        [_emptyListView addSubview:self.emptyListLabel];
+        [self.view addSubview:_emptyListView];
+    }
+    return _emptyListView;
+}
+
+-(UILabel *)emptyTitleLabel {
+    if(!VALID_NOTEMPTY(_emptyTitleLabel, UILabel)) {
+        _emptyTitleLabel = [UILabel new];
+        [_emptyTitleLabel setFont:JADisplay2Font];
+        [_emptyTitleLabel setTextColor:JABlackColor];
+        [_emptyTitleLabel setText:STRING_NO_RECENTLY_VIEWED_PRODUCTS_TITLE];
+        [_emptyTitleLabel sizeToFit];
+        [_emptyTitleLabel setFrame:CGRectMake((self.viewBounds.size.width - _emptyTitleLabel.width)/2,
+                                              48.f,
+                                              _emptyTitleLabel.width, _emptyTitleLabel.height)];
+    }
+    return _emptyTitleLabel;
+}
+
+-(UIImageView *)emptyListImageView {
+    if (!VALID_NOTEMPTY(_emptyListImageView, UIImageView)) {
+        _emptyListImageView = [UIImageView new];
+        UIImage * img = [UIImage imageNamed:@"emptyRecentlyViewedIcon"];
+        [_emptyListImageView setImage:img];
+        [_emptyListImageView setFrame:CGRectMake((self.viewBounds.size.width - img.size.width)/2,
+                                                 CGRectGetMaxY(self.emptyTitleLabel.frame) + 28.f,
+                                                 img.size.width, img.size.height)];
+    }
+    return _emptyListImageView;
+}
+
+-(UILabel *)emptyListLabel {
+    if (!VALID_NOTEMPTY(_emptyListLabel, UILabel)) {
+        _emptyListLabel = [UILabel new];
+        _emptyListLabel.font = JABody3Font;
+        _emptyListLabel.textColor = JABlack800Color;
+        _emptyListLabel.text = STRING_NO_RECENTLY_VIEWED_PRODUCTS;
+        [_emptyListLabel sizeToFit];
+        [_emptyListLabel setFrame:CGRectMake((self.viewBounds.size.width - _emptyListLabel.width)/2,
+                                             CGRectGetMaxY(self.emptyListImageView.frame) + 28,
+                                             _emptyListLabel.width, _emptyListLabel.height)];
+    }
+    return _emptyListLabel;
+}
+
+- (JAProductCollectionViewFlowLayout *)flowLayout
 {
+    if (!VALID_NOTEMPTY(_flowLayout, JAProductCollectionViewFlowLayout)) {
+        
+        _flowLayout = [[JAProductCollectionViewFlowLayout alloc] init];
+        _flowLayout.minimumLineSpacing = 1.0f;
+        _flowLayout.minimumInteritemSpacing = 0.f;
+        [_flowLayout registerClass:[JACollectionSeparator class] forDecorationViewOfKind:@"horizontalSeparator"];
+        [_flowLayout registerClass:[JACollectionSeparator class] forDecorationViewOfKind:@"verticalSeparator"];
+        
+        //                                              top, left, bottom, right
+        [self.flowLayout setSectionInset:UIEdgeInsetsMake(0.f, 0.0, 0.0, 0.0)];
+        self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+    }
+    return _flowLayout;
+}
+
+- (UICollectionView *)collectionView
+{
+    CGRect frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.viewBounds.size.height - self.bottomView.height-self.clearAllButton.height);
+    if (!VALID_NOTEMPTY(_collectionView, UICollectionView)) {
+        _collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:self.flowLayout];
+        _collectionView.delegate = self;
+        _collectionView.dataSource = self;
+        [self.view addSubview:_collectionView];
+    }
+    else {
+        if (!CGRectEqualToRect(frame, _collectionView.frame)) {
+            [_collectionView reloadData];
+            [_collectionView setFrame:frame];
+        }
+    }
+
+    return _collectionView;
+}
+
+- (UIView *)bottomView
+{
+    if (!VALID(_bottomView, UIView)) {
+        _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.viewBounds.size.height - 49.f, self.viewBounds.size.width, 1.f)];
+        [_bottomView setBackgroundColor:JABlack700Color];
+        [self.view addSubview:_bottomView];
+    }
+    return _bottomView;
+}
+
+- (UIButton *)clearAllButton
+{
+    if (!VALID(_clearAllButton, UIButton)) {
+        _clearAllButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [_clearAllButton setFrame:CGRectMake(0, self.viewBounds.size.height - 48.f, self.viewBounds.size.width, 48.f)];
+        [_clearAllButton setBackgroundColor:[UIColor whiteColor]];
+        [_clearAllButton setTitle:STRING_CLEAR_ALL forState:UIControlStateNormal];
+        [_clearAllButton addTarget:self action:@selector(clearAllButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:_clearAllButton];
+    }
+    return _clearAllButton;
+}
+
+- (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.screenName = @"RecentlyViewed";
-    
-    self.selectedSizeAndAddToCart = NO;
-    self.navBarLayout.title = STRING_RECENTLY_VIEWED;
+    [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     self.navBarLayout.showBackButton = YES;
-    
-    self.collectionView.backgroundColor = UIColorFromRGB(0xc8c8c8);
-    
-    self.emptyListView.layer.cornerRadius = 3.0f;
-    
-    self.emptyListLabel.font = [UIFont fontWithName:kFontRegularName size:self.emptyListLabel.font.pointSize];
-    self.emptyListLabel.textColor = UIColorFromRGB(0xcccccc);
-    self.emptyListLabel.text = STRING_NO_RECENTLY_VIEWED_PRODUCTS;
-    
-    self.collectionView.delegate = self;
-    self.collectionView.dataSource = self;
-    
-    self.collectionView.translatesAutoresizingMaskIntoConstraints = YES;
-    self.emptyListView.translatesAutoresizingMaskIntoConstraints = YES;
-    self.emptyListLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    self.emptyListImageView.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    [self.collectionView registerNib:[UINib nibWithNibName:@"JARecentlyViewedListCell" bundle:nil] forCellWithReuseIdentifier:@"recentlyViewedListCell"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"JARecentlyViewedListCell_ipad_portrait" bundle:nil] forCellWithReuseIdentifier:@"recentlyViewedListCell_ipad_portrait"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"JARecentlyViewedListCell_ipad_landscape" bundle:nil] forCellWithReuseIdentifier:@"recentlyViewedListCell_ipad_landscape"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"JAGrayButtonCell" bundle:nil] forCellWithReuseIdentifier:@"buttonCell"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"JAGrayButtonCell_ipad_portrait" bundle:nil] forCellWithReuseIdentifier:@"buttonCell_ipad_portrait"];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"JAGrayButtonCell_ipad_landscape" bundle:nil] forCellWithReuseIdentifier:@"buttonCell_ipad_landscape"];
-    
-    self.flowLayout = [[JAProductListFlowLayout alloc] init];
-    self.flowLayout.manualCellSpacing = 6.0f;
-    self.flowLayout.minimumLineSpacing = 0;
-    self.flowLayout.minimumInteritemSpacing = 0;
-    self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    [self.collectionView setCollectionViewLayout:self.flowLayout];
-    
+    [self.collectionView registerClass:[JARecentlyViewedCell class] forCellWithReuseIdentifier:@"CellWithLines"];
+    self.navBarLayout.title = STRING_RECENTLY_VIEWED;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self loadProducts];
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    [self collectionView];
+    [self.emptyListView setFrame:self.viewBounds];
+    [self.emptyTitleLabel setXCenterAligned];
+    [self.emptyListImageView setXCenterAligned];
+    [self.emptyListLabel setXCenterAligned];
     
+    [self.bottomView setWidth:self.viewBounds.size.width];
+    [self.bottomView setYBottomAligned:48.f];
+    [self.clearAllButton setWidth:self.viewBounds.size.width];
+    [self.clearAllButton setYBottomAligned:0.f];
+}
+
+- (void)onOrientationChanged
+{
+    if(VALID(self.picker, JAPicker))
+    {
+        [self closePicker];
+    }
+}
+
+#pragma mark - Load Data
+
+- (void)loadProducts
+{
     [self showLoading];
     [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
         
@@ -112,45 +224,30 @@
                 [skus addObject:product.sku];
             }
             
-            [RIProduct getUpdatedProductsWithSkus:skus successBlock:^(NSArray *products) {
-                
-                [self hideLoading];
-                self.productsArray = products;
-                self.chosenSimples = [NSMutableDictionary new];
-                
-                [self.collectionView reloadData];
-                
-                if(self.firstLoading)
-                {
-                    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-                    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-                    self.firstLoading = NO;
-                }
-                
-            } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
-                
-                if(self.firstLoading)
-                {
-                    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-                    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-                    self.firstLoading = NO;
-                }
-                
-                [self hideLoading];
-                
-                if (RIApiResponseMaintenancePage == apiResponse) {
-                    [self showMaintenancePage:@selector(viewDidLoad) objects:nil];
-                }
-                else if(RIApiResponseKickoutView == apiResponse)
-                {
-                    [self showKickoutView:@selector(viewDidLoad) objects:nil];
-                }
-                
-            }];
+            self.productsArray = [NSMutableArray new];
+            NSMutableDictionary *temp = [NSMutableDictionary new];
+            for (RIProduct *product in recentlyViewedProducts) {
+                [self.productsArray addObject:product.sku];
+                [temp setObject:product forKey:product.sku];
+            }
+            self.productsDictionary = [temp mutableCopy];
+            
+            self.chosenSimples = [NSMutableDictionary new];
+            
+            [self.collectionView reloadData];
+            
+            if(self.firstLoading)
+            {
+                NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
+                [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                self.firstLoading = NO;
+            }
+
         } else {
-            [self hideLoading];
-            self.productsArray = nil;
+            self.productsDictionary = nil;
         }
+        
+        [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
         
         if(self.firstLoading)
@@ -160,230 +257,99 @@
             self.firstLoading = NO;
         }
         
+        [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadProducts) objects:nil];
         [self hideLoading];
     }];
-    
-    [self didRotateFromInterfaceOrientation:0];
 }
 
--(void)viewDidAppear:(BOOL)animated
+- (RIProduct *)getProductFromIndex:(NSInteger)index
 {
-    [super viewDidAppear:animated];
-    [[RITrackingWrapper sharedInstance]trackScreenWithName:@"RecentlyViewed"];
-    
-    self.collectionView.frame = CGRectMake(6.0f,
-                                           self.collectionView.frame.origin.y,
-                                           self.view.frame.size.width - 6.0f*2,
-                                           self.view.frame.size.height);
-    
-    self.emptyListView.frame = CGRectMake(self.emptyListView.frame.origin.x,
-                                          self.emptyListView.frame.origin.y,
-                                          self.view.frame.size.width - self.emptyListView.frame.origin.x * 2,
-                                          300.0f);
-    
-    self.emptyListImageView.frame = CGRectMake((self.emptyListView.frame.size.width - self.emptyListImageView.frame.size.width)/2,
-                                               56.0f,
-                                               self.emptyListImageView.frame.size.width,
-                                               self.emptyListImageView.frame.size.height);
-    
-    self.emptyListLabel.frame = CGRectMake(12.0f,
-                                           183.0f,
-                                           self.emptyListView.frame.size.width - 12*2,
-                                           self.emptyListLabel.frame.size.height);
-    
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    
-    [self.picker removeFromSuperview];
-    
-    self.collectionView.frame = CGRectMake(6.0f,
-                                           self.collectionView.frame.origin.y,
-                                           self.view.frame.size.width - 6.0f*2,
-                                           self.view.frame.size.height);
-    [self.collectionView reloadData];
-    
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
-        self.emptyListView.frame = CGRectMake(self.emptyListView.frame.origin.x,
-                                              self.emptyListView.frame.origin.y,
-                                              self.view.frame.size.width - self.emptyListView.frame.origin.x * 2,
-                                              300.0f);
-        self.emptyListImageView.frame = CGRectMake((self.emptyListView.frame.size.width - self.emptyListImageView.frame.size.width)/2,
-                                                   56.0f,
-                                                   self.emptyListImageView.frame.size.width,
-                                                   self.emptyListImageView.frame.size.height);
-        self.emptyListLabel.frame = CGRectMake(12.0f,
-                                               183.0f,
-                                               self.emptyListView.frame.size.width - 12*2,
-                                               self.emptyListLabel.frame.size.height);
+    NSString *sku = [self.productsArray objectAtIndex:index];
+    if (VALID_NOTEMPTY(sku, NSString)) {
+        return [self.productsDictionary objectForKey:sku];
     }
+    return nil;
+}
+
+#pragma mark - collectionView methods
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    RIProduct *product = [self getProductFromIndex:indexPath.row];
     
-    [self changeViewToInterfaceOrientation:self.interfaceOrientation];
-}
-
-- (void)changeViewToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        if (UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
-            self.cellIdentifier = @"recentlyViewedListCell_ipad_landscape";
-            self.buttonCellIdentifier = @"buttonCell_ipad_landscape";
-        } else {
-            self.cellIdentifier = @"recentlyViewedListCell_ipad_portrait";
-            self.buttonCellIdentifier = @"buttonCell_ipad_portrait";
-        }
-    } else {
-        self.cellIdentifier = @"recentlyViewedListCell";
-        self.buttonCellIdentifier = @"buttonCell";
-    }
+    JARecentlyViewedCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"CellWithLines" forIndexPath:indexPath];
+    [cell setHideRating:YES];
+    [cell setHideShopFirstLogo:YES];
+    [cell loadWithProduct:product];
     
-    [self.collectionView reloadData];
-}
-
-#pragma mark - UICollectionView
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    return 1;
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return self.productsArray.count + 1;
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (self.productsArray.count == indexPath.row) {
-        return [self getButtonLayoutItemSizeForInterfaceOrientation:self.interfaceOrientation];
-    } else {
-        return [self getLayoutItemSizeForInterfaceOrientation:self.interfaceOrientation];
-    }
-}
-
-- (CGSize)getLayoutItemSizeForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    CGFloat width = 0.0f;
-    CGFloat height = 0.0f;
-    
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        
-        if(UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
-            width = 375.0f;
-            height = JACatalogViewControllerListCellHeight_ipad;
-        } else {
-            width = 333.0f;
-            height = JACatalogViewControllerListCellHeight_ipad;
-        }
-    } else {
-        width = self.collectionView.frame.size.width;
-        height = JACatalogViewControllerListCellHeight;
-    }
-    
-    return CGSizeMake(width, height);
-}
-
-- (CGSize)getButtonLayoutItemSizeForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    CGFloat width = 0.0f;
-    CGFloat height = 55.0f;
-    
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        
-        if(UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
-            width = 756.0f;
-        } else {
-            width = 1012.0f;
-        }
-    } else {
-        width = self.collectionView.frame.size.width;
-    }
-    
-    return CGSizeMake(width, height);
-}
-
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row == self.productsArray.count) {
-        
-        JAButtonCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:self.buttonCellIdentifier forIndexPath:indexPath];
-        
-        [cell loadWithButtonName:STRING_CLEAR_RECENTLY_VIEWED];
-        
-        [cell.button addTarget:self
-                        action:@selector(clearAllButtonPressed)
-              forControlEvents:UIControlEventTouchUpInside];
-        
-        return cell;
-        
-    } else {
-        RIProduct *product = [self.productsArray objectAtIndex:indexPath.row];
-        
-        JACatalogListCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:self.cellIdentifier forIndexPath:indexPath];
-        
-        [cell loadWithProduct:product];
-        cell.addToCartButton.tag = indexPath.row;
-        [cell.addToCartButton addTarget:self
-                                 action:@selector(addToCartPressed:)
-                       forControlEvents:UIControlEventTouchUpInside];
-        
+    if (1 < product.productSimples.count) {
+        [cell.sizeButton setHidden:NO];
         RIProductSimple* chosenSimple = [self.chosenSimples objectForKey:product.sku];
         if (!VALID_NOTEMPTY(chosenSimple, RIProductSimple)) {
             [cell.sizeButton setTitle:STRING_SIZE forState:UIControlStateNormal];
         } else {
-            [cell.priceView loadWithPrice:chosenSimple.priceFormatted
-                             specialPrice:chosenSimple.specialPriceFormatted
-                                 fontSize:10.f specialPriceOnTheLeft:YES];
+            [cell setSimplePrice:chosenSimple.specialPriceFormatted andOldPrice:chosenSimple.priceFormatted];
             [cell.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE, chosenSimple.variation] forState:UIControlStateNormal];
         }
-        
-        cell.sizeButton.tag = indexPath.row;
         [cell.sizeButton addTarget:self
                             action:@selector(sizeButtonPressed:)
                   forControlEvents:UIControlEventTouchUpInside];
-        
-        cell.feedbackView.tag = indexPath.row;
-        [cell.feedbackView addTarget:self
-                              action:@selector(clickableViewPressedInCell:)
-                    forControlEvents:UIControlEventTouchUpInside];
-        
-        return cell;
+    }else{
+        [cell.sizeButton setHidden:YES];
     }
+    
+    [cell.favoriteButton setHidden:YES];
+    [cell setTag:indexPath.row];
+    [cell.feedbackView addTarget:self
+                          action:@selector(clickableViewPressedInCell:)
+                forControlEvents:UIControlEventTouchUpInside];
+    [cell.addToCartButton addTarget:self action:@selector(addToCartButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    return cell;
 }
 
-- (void)clickableViewPressedInCell:(UIControl*)sender
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    [self collectionView:self.collectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
+    return self.productsDictionary.count;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.productsArray.count) {
-        RIProduct *product = [self.productsArray objectAtIndex:indexPath.row];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
-                                                            object:nil
-                                                          userInfo:@{ @"url" : product.url,
-                                                                      @"previousCategory" : STRING_RECENTLY_VIEWED,
-                                                                      @"show_back_button" : [NSNumber numberWithBool:NO],
-                                                                      @"fromCatalog" : [NSNumber numberWithBool:YES]}];
-        [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"Catalog_%@",product.name]];
+    CGSize size = CGSizeZero;
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        size = CGSizeMake((self.bounds.size.width/2)-1, 154.5f);
+    } else {
+        size = CGSizeMake(self.view.frame.size.width, 154.5f);
     }
+    
+    self.flowLayout.itemSize = size;
+    return size;
 }
 
-#pragma mark - Button Actions
+#pragma mark - Actions
 
-- (void)addToCartPressed:(UIButton*)button;
+- (void)clickableViewPressedInCell:(UIButton *)button
+{
+    RIProduct *product = [self getProductFromIndex:button.tag];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidSelectTeaserWithPDVUrlNofication
+                                                        object:nil
+                                                      userInfo:@{ @"sku" : product.sku,
+                                                                  @"previousCategory" : STRING_RECENTLY_VIEWED,
+                                                                  @"show_back_button" : [NSNumber numberWithBool:NO],
+                                                                  @"fromCatalog" : [NSNumber numberWithBool:YES]}];
+    [[RITrackingWrapper sharedInstance] trackScreenWithName:[NSString stringWithFormat:@"Catalog_%@",product.name]];
+}
+
+- (void)addToCartButtonPressed:(UIButton *)button
 {
     self.backupButton = button;
-    
     [self finishAddToCartWithButton:button];
 }
 
 - (void)finishAddToCartWithButton:(UIButton *)button
 {
-    RIProduct* product = [self.productsArray objectAtIndex:button.tag];
+    RIProduct *product = [self getProductFromIndex:button.tag];
     
     RIProductSimple* productSimple;
     
@@ -400,18 +366,17 @@
             return;
         } else {
             productSimple = simple;
-                
+            
         }
     }
     
     [self showLoading];
     [RICart addProductWithQuantity:@"1"
-                               sku:product.sku
-                            simple:productSimple.sku
-                  withSuccessBlock:^(RICart *cart) {
+                         simpleSku:productSimple.sku
+                  withSuccessBlock:^(RICart *cart, RIApiResponse apiResponse, NSArray *successMessage){
                       
                       NSNumber *price = (VALID_NOTEMPTY(product.specialPriceEuroConverted, NSNumber) && [product.specialPriceEuroConverted floatValue] > 0.0f) ? product.specialPriceEuroConverted : product.priceEuroConverted;
-
+                      
                       NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
                       [trackingDictionary setValue:product.sku forKey:kRIEventLabelKey];
                       [trackingDictionary setValue:@"AddToCart" forKey:kRIEventActionKey];
@@ -427,33 +392,31 @@
                       // Otherwise we would have to send the country currency ([RICountryConfiguration getCurrentConfiguration].currencyIso)
                       [trackingDictionary setValue:price forKey:kRIEventPriceKey];
                       [trackingDictionary setValue:@"EUR" forKey:kRIEventCurrencyCodeKey];
-
+                      
                       [trackingDictionary setValue:product.sku forKey:kRIEventSkuKey];
                       [trackingDictionary setValue:product.name forKey:kRIEventProductNameKey];
                       
-                      if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet))
+                      if(VALID_NOTEMPTY(product.categoryIds, NSArray))
                       {
-                          NSArray *categoryIds = [product.categoryIds array];
+                          NSArray *categoryIds = product.categoryIds;
                           NSInteger subCategoryIndex = [categoryIds count] - 1;
                           NSInteger categoryIndex = subCategoryIndex - 1;
                           
                           if(categoryIndex >= 0)
                           {
                               NSString *categoryId = [categoryIds objectAtIndex:categoryIndex];
-                              [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryNameKey];
+                              [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryIdKey];
                               
                               NSString *subCategoryId = [categoryIds objectAtIndex:subCategoryIndex];
-                              [trackingDictionary setValue:[RICategory getCategoryName:subCategoryId] forKey:kRIEventSubCategoryNameKey];
+                              [trackingDictionary setValue:[RICategory getCategoryName:subCategoryId] forKey:kRIEventSubCategoryIdKey];
                           }
                           else
                           {
                               NSString *categoryId = [categoryIds objectAtIndex:subCategoryIndex];
-                              [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryNameKey];
+                              [trackingDictionary setValue:[RICategory getCategoryName:categoryId] forKey:kRIEventCategoryIdKey];
                           }
                       }
-                      
-                      [trackingDictionary setValue:product.brand forKey:kRIEventBrandKey];
-                      
+
                       NSString *discountPercentage = @"0";
                       if(VALID_NOTEMPTY(product.maxSavingPercentage, NSString))
                       {
@@ -461,7 +424,12 @@
                       }
                       [trackingDictionary setValue:discountPercentage forKey:kRIEventDiscountKey];
                       [trackingDictionary setValue:product.avr forKey:kRIEventRatingKey];
-                      [trackingDictionary setValue:@"1" forKey:kRIEventQuantityKey];
+                      [trackingDictionary setValue:product.brand forKey:kRIEventBrandName];
+                      [trackingDictionary setValue:product.brandUrlKey forKey:kRIEventBrandKey];
+                      [trackingDictionary setValue:product.name forKey:kRIEventProductNameKey];
+                      [trackingDictionary setValue:productSimple.sku forKey:kRIEventSkuKey];
+                      [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
+                      [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
                       [trackingDictionary setValue:@"Recently Viewed" forKey:kRIEventLocationKey];
                       
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventAddToCart]
@@ -471,7 +439,7 @@
                       NSMutableDictionary *tracking = [NSMutableDictionary new];
                       [tracking setValue:product.name forKey:kRIEventProductNameKey];
                       [tracking setValue:product.sku forKey:kRIEventSkuKey];
-                      if(VALID_NOTEMPTY(product.categoryIds, NSOrderedSet)) {
+                      if(VALID_NOTEMPTY(product.categoryIds, NSArray)) {
                           [tracking setValue:[product.categoryIds lastObject] forKey:kRIEventLastCategoryAddedToCartKey];
                       }
                       [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventLastAddedToCart] data:tracking];
@@ -484,66 +452,53 @@
                       
                       float value = [price floatValue];
                       [FBSDKAppEvents logEvent:FBSDKAppEventNameAddedToCart
-                                 valueToSum:value
-                                 parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
-                                               FBSDKAppEventParameterNameContentType : product.name,
-                                               FBSDKAppEventParameterNameContentID   : product.sku}];
+                                    valueToSum:value
+                                    parameters:@{ FBSDKAppEventParameterNameCurrency    : @"EUR",
+                                                  FBSDKAppEventParameterNameContentType : product.name,
+                                                  FBSDKAppEventParameterNameContentID   : product.sku}];
                       
-                      [RIProduct removeFromRecentlyViewed:product];
+                      trackingDictionary = [NSMutableDictionary new];
+                      [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+                      NSString *appVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
+                      [trackingDictionary setValue:appVersion forKey:kRILaunchEventAppVersionDataKey];
                       
-                      [RIProduct getRecentlyViewedProductsWithSuccessBlock:^(NSArray *recentlyViewedProducts) {
-                          
-                          self.productsArray = recentlyViewedProducts;
-                          self.chosenSimples = [NSMutableDictionary new];
-                          [self.collectionView reloadData];
-                          
-                      } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-                          
-                      }];
+                      [trackingDictionary setValue:[price stringValue] forKey:kRIEventFBValueToSumKey];
+                      [trackingDictionary setValue:product.sku forKey:kRIEventFBContentIdKey];
+                      [trackingDictionary setValue:@"product" forKey:kRIEventFBContentTypeKey];
+                      [trackingDictionary setValue:@"EUR" forKey:kRIEventFBCurrency];
+                      
+                      [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventFacebookAddToCart]
+                                                                data:[trackingDictionary copy]];
+                      
+                      
+                      [RIRecentlyViewedProductSku removeFromRecentlyViewed:product];
+                      
+                      [self loadProducts];
                       
                       NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
                       
+                      [self onSuccessResponse:RIApiResponseSuccess messages:successMessage showMessage:YES];
                       [self hideLoading];
-                      
-                      [self showMessage:STRING_ITEM_WAS_ADDED_TO_CART success:YES];
                       
                   } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                       
+                      [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:@selector(finishAddToCartWithButton:) objects:@[button]];
                       [self hideLoading];
-                      
-                       NSString *errorAddToCart = STRING_ERROR_ADDING_TO_CART;
-                      NSString *results = [[errorMessages valueForKey:@"description"] componentsJoinedByString:@""];
-                      if([results  isEqualToString: @"order_product_sold_out"]){
-                          
-                          errorAddToCart = STRING_PRODCUTS_OUT_OF_STOCK;
-                      }
-                      
-                      if (RIApiResponseNoInternetConnection == apiResponse)
-                      {
-                          errorAddToCart = STRING_NO_CONNECTION;
-                      }
-                      
-                      [self showMessage:errorAddToCart success:NO];
                   }];
 }
 
 - (void)clearAllButtonPressed
 {
-    [self showLoading];
-    [RIProduct removeAllRecentlyViewedWithSuccessBlock:^{
-        [self hideLoading];
-        self.productsArray = nil;
-    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-        [self hideLoading];
-    }];
+    [RIRecentlyViewedProductSku removeAllRecentlyViewedProductSkus];
+    self.productsDictionary = nil;
 }
 
 - (void)sizeButtonPressed:(UIButton*)button
 {
     self.backupButton = button;
     
-    RIProduct* product = [self.productsArray objectAtIndex:button.tag];
+    RIProduct *product = [self getProductFromIndex:button.tag];
     RIProductSimple* prevSimple = [self.chosenSimples objectForKey:product.sku];
     
     if(VALID(self.picker, JAPicker))
@@ -569,7 +524,7 @@
             [dataSource addObject:simple.variation];
         }
     }
-
+    
     NSString* sizeGuideTitle = nil;
     if (VALID_NOTEMPTY(product.sizeGuideUrl, NSString)) {
         sizeGuideTitle = STRING_SIZE_GUIDE;
@@ -598,7 +553,7 @@
 #pragma mark JAPickerDelegate
 -(void)selectedRow:(NSInteger)selectedRow
 {
-    RIProduct* product = [self.productsArray objectAtIndex:self.picker.tag];
+    RIProduct *product = [self getProductFromIndex:self.picker.tag];
     
     RIProductSimple* selectedSimple = [self.pickerDataSource objectAtIndex:selectedRow];
     
@@ -610,7 +565,7 @@
     if (self.selectedSizeAndAddToCart) {
         self.selectedSizeAndAddToCart = NO;
         
-        [self addToCartPressed:self.backupButton];
+        [self addToCartButtonPressed:self.backupButton];
     }
 }
 
@@ -630,36 +585,12 @@
 
 - (void)leftButtonPressed;
 {
-    RIProduct* product = [self.productsArray objectAtIndex:self.picker.tag];
+    RIProduct *product = [self getProductFromIndex:self.picker.tag];
     if (VALID_NOTEMPTY(product.sizeGuideUrl, NSString)) {
         NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:product.sizeGuideUrl, @"sizeGuideUrl", nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowSizeGuideNotification object:nil userInfo:dic];
+        [self closePicker];
     }
 }
-
-#pragma mark - UIPickerView
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 1;
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    RIProduct* product = [self.productsArray objectAtIndex:pickerView.tag];
-    return product.productSimples.count;
-}
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    RIProduct* product = [self.productsArray objectAtIndex:pickerView.tag];
-    RIProductSimple* simple = [product.productSimples objectAtIndex:row];
-    NSString* simpleName = @"";
-    if (VALID_NOTEMPTY(simple.variation, NSString)) {
-        simpleName = simple.variation;
-    }
-    NSString *title = [NSString stringWithFormat:@"%@", simpleName];
-    return title;
-}
-
 
 @end

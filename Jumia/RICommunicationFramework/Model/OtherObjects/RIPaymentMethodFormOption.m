@@ -10,14 +10,9 @@
 
 @implementation RIPaymentMethodFormOption
 
-+ (RIPaymentMethodFormOption *)parseField:(NSDictionary *)fieldJSON forId:(NSString*)uid
++ (RIPaymentMethodFormOption *)parseField:(NSDictionary *)fieldJSON
 {
     RIPaymentMethodFormOption* newOption = [[RIPaymentMethodFormOption alloc] init];
-    
-    if(VALID_NOTEMPTY(uid, NSString))
-    {
-        newOption.uid = uid;
-    }
     
     NSDictionary *descriptionObject = [fieldJSON objectForKey:@"description"];
     if(VALID_NOTEMPTY(descriptionObject, NSDictionary))

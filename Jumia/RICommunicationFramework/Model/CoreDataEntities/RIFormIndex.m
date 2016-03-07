@@ -13,7 +13,7 @@
 @implementation RIFormIndex
 
 @dynamic type;
-@dynamic url;
+@dynamic targetString;
 @dynamic form;
 
 + (NSString*)loadFormIndexesIntoDatabaseForCountry:(NSString*)countryUrl
@@ -23,7 +23,7 @@
                                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
 {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", countryUrl, RI_API_VERSION, RI_FORMS_INDEX]]
-                                                            parameters:nil httpMethodPost:YES
+                                                            parameters:nil httpMethod:HttpResponsePost
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
                                                     userAgentInjection:countryUserAgentInjection
@@ -111,8 +111,8 @@
     if ([formIndexJSON objectForKey:@"type"]) {
         newFormIndex.type = [formIndexJSON objectForKey:@"type"];
     }
-    if ([formIndexJSON objectForKey:@"url"]) {
-        newFormIndex.url = [formIndexJSON objectForKey:@"url"];
+    if ([formIndexJSON objectForKey:@"target"]) {
+        newFormIndex.targetString = [formIndexJSON objectForKey:@"target"];
     }
     
     return newFormIndex;

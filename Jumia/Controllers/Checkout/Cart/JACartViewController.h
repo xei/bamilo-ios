@@ -8,8 +8,9 @@
 
 #import "JABaseViewController.h"
 #import "JAPicker.h"
+#import "JABottomBar.h"
 
-@class JAPriceView;
+@class JAProductInfoPriceLine;
 @class RICart;
 @class RICartItem;
 
@@ -25,10 +26,10 @@ JAPickerDelegate
 @property (strong, nonatomic) RICartItem *currentItem;
 
 // Empty cart views
-@property (weak, nonatomic) IBOutlet UIView *emptyCartView;
-@property (weak, nonatomic) IBOutlet UILabel *emptyCartLabel;
-@property (weak, nonatomic) IBOutlet UIButton *continueShoppingButton;
-@property (weak, nonatomic) IBOutlet UIImageView *emptyCartImageView;
+@property (strong, nonatomic) UIView *emptyCartView;
+@property (strong, nonatomic) UILabel *emptyCartLabel;
+@property (strong, nonatomic) JABottomBar *continueShoppingButton;
+@property (strong, nonatomic) UIImageView *emptyCartImageView;
 
 // Cart views
 @property (strong, nonatomic) UIScrollView *cartScrollView;
@@ -49,7 +50,7 @@ JAPickerDelegate
 @property (strong, nonatomic) UILabel *subtotalTitle;
 @property (strong, nonatomic) UIView *subtotalTitleSeparator;
 @property (strong, nonatomic) UILabel *articlesCount;
-@property (strong, nonatomic) JAPriceView *totalPriceView;
+@property (strong, nonatomic) JAProductInfoPriceLine *totalPriceLine;
 @property (strong, nonatomic) UILabel *priceRulesLabel;
 @property (strong, nonatomic) UILabel *priceRulesValue;
 @property (strong, nonatomic) UILabel *cartVatLabel;
@@ -64,7 +65,5 @@ JAPickerDelegate
 
 @property (strong, nonatomic) UIButton *checkoutButton;
 @property (strong, nonatomic) UIButton *callToOrderButton;
-
-@property (nonatomic, retain) NSString* A4SViewControllerAlias;
 
 @end

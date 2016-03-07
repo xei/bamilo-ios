@@ -78,16 +78,16 @@
 {
     if (NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus])
     {
+        [self onErrorResponse:RIApiResponseNoInternetConnection messages:nil showAsMessage:NO selector:@selector(positionViews) objects:nil];
         [self hideLoading];
-        [self showErrorView:YES startingY:0.0f selector:@selector(positionViews) objects:nil];
     } else {
         if(sizeGuideImage == nil)
         {
             if (!self.sizeGuideUrl) {
-                [self showErrorView:NO startingY:0.0f selector:@selector(positionViews) objects:nil];
+                [self onErrorResponse:RIApiResponseUnknownError messages:nil showAsMessage:NO selector:@selector(positionViews) objects:nil];
                 return ;
             }
-            [self removeErrorView];
+            [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
             [self showLoading];
             
             dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -100,7 +100,7 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self hideLoading];
                     if (!imageData) {
-                        [self showErrorView:NO startingY:0.0f selector:@selector(positionViews) objects:nil];
+                        [self onErrorResponse:RIApiResponseUnknownError messages:nil showAsMessage:NO selector:@selector(positionViews) objects:nil];
                         return;
                     }
                     UIImage *image = [UIImage imageWithData:imageData];

@@ -163,11 +163,49 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     
     id tracker = [[GAI sharedInstance] defaultTracker];
     
-    if (!ISEMPTY(tracker))
-    {
-        if(VALID_NOTEMPTY(campaignName, NSString))
-        {
-            self.campaignData = [NSString stringWithFormat:@"http://www.google.com?utm_campaign=%@&utm_source=push&utm_medium=referrer", campaignName];
+    if (!ISEMPTY(tracker)) {
+        if(VALID_NOTEMPTY(campaignName, NSString)) {
+        
+            NSArray* components = [campaignName componentsSeparatedByString:@"&"];
+            NSMutableDictionary* campaignDic = [NSMutableDictionary new];
+            NSMutableString* finalStr = [NSMutableString new];
+            
+            for (NSString* component in components) {
+                NSArray* keyValue = [component componentsSeparatedByString:@"="];
+                if ([keyValue count] == 2) {
+                    NSString* key = [keyValue objectAtIndex:0];
+                    
+                    if ([key isEqualToString:@"utm_source"] || [key isEqualToString:@"utm_campaign"] || [key isEqualToString:@"utm_medium"]) {
+                        
+                        NSString* value = [keyValue objectAtIndex:1];
+                        [campaignDic setObject:value forKey:key];
+                    }
+                }
+            }
+            //hostname doesn't matter
+            [finalStr appendString:@"http://www.hostname.com?"];
+            NSMutableArray* params = [NSMutableArray new];
+            
+            if ([campaignDic objectForKey:@"utm_campaign"]) {
+                [params addObject:[NSString stringWithFormat:@"utm_campaign=%@",[campaignDic objectForKey:@"utm_campaign"]]];
+            }
+            
+            if (!VALID_NOTEMPTY([campaignDic objectForKey:@"utm_source"], NSString)) {
+                if (VALID_NOTEMPTY([campaignDic objectForKey:@"utm_campaign"], NSString)) {
+                    [params addObject:@"utm_source=push"];
+                }
+            } else
+                [params addObject:[NSString stringWithFormat:@"utm_source=%@",[campaignDic objectForKey:@"utm_source"]]];
+            
+            if (!VALID_NOTEMPTY([campaignDic objectForKey:@"utm_medium"], NSString)) {
+                if (VALID_NOTEMPTY([campaignDic objectForKey:@"utm_campaign"], NSString)) {
+                    [params addObject:@"utm_medium=referrer"];
+                }
+            } else
+                [params addObject:[NSString stringWithFormat:@"utm_medium=%@",[campaignDic objectForKey:@"utm_medium"]]];
+            
+            [finalStr appendString:[params componentsJoinedByString:@"&"]];
+            self.campaignData = [finalStr copy];
         }
     }
     else
@@ -208,8 +246,12 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     if (!ISEMPTY(tracker))
     {
         [tracker set:kGAIScreenName value:name];
-        [tracker send:[[[GAIDictionaryBuilder createScreenView] setCampaignParametersFromUrl:self.campaignData] build]];
-        [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+        
+        GAIDictionaryBuilder* params = [GAIDictionaryBuilder createScreenView];
+        if (VALID_NOTEMPTY(self.campaignData, NSString)) {
+            [params setCampaignParametersFromUrl:self.campaignData];
+        }
+        [tracker send:[params build]];
     }
     else
     {
@@ -240,12 +282,15 @@ static RIGoogleAnalyticsTracker *sharedInstance;
             NSString *label = [data objectForKey:kRIEventLabelKey];
             NSNumber *value = [data objectForKey:kRIEventValueKey];
             
-            NSDictionary *dict = [[[GAIDictionaryBuilder createEventWithCategory:category
-                                                                          action:action
-                                                                           label:label
-                                                                           value:value]
-                                   setCampaignParametersFromUrl:self.campaignData] build];
-            [tracker send:dict];
+            GAIDictionaryBuilder* params = [GAIDictionaryBuilder createEventWithCategory:category
+                                                                                   action:action
+                                                                                    label:label
+                                                                                   value:value];
+            if (VALID_NOTEMPTY(self.campaignData, NSString)) {
+                [params setCampaignParametersFromUrl:self.campaignData];
+
+            }
+            [tracker send:[params build]];
         }
         else
         {

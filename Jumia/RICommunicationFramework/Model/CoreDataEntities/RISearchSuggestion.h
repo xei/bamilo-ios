@@ -28,8 +28,8 @@
 @property (strong, nonatomic) NSString *priceEuroConverted;
 @property (strong, nonatomic) NSNumber *maxPercentageSaving;
 @property (strong, nonatomic) NSString *brand;
-@property (strong, nonatomic) NSString *url;
-@property (strong, nonatomic) NSArray *imagesArray;
+@property (strong, nonatomic) NSString *targetString;
+@property (strong, nonatomic) NSString *image;
 
 @end
 
@@ -46,7 +46,7 @@
 
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *image;
-@property (strong, nonatomic) NSString *url;
+@property (strong, nonatomic) NSString *targetString;
 
 @end
 
@@ -73,6 +73,8 @@
 @property (nonatomic, retain) NSNumber * relevance;
 @property (nonatomic, assign) BOOL isRecentSearch;
 @property (nonatomic, assign) NSDate *date;
+@property (nonatomic, assign) NSString *targetString;
+@property (nonatomic, assign) NSString *queryString;
 
 /**
  * Method to save a search suggestions on core data
@@ -80,7 +82,8 @@
  * @param the query to be saved on core data
  * @param boolean if it's recent search
  */
-+ (void)saveSearchSuggestionOnDB:(NSString *)query
++ (RISearchSuggestion *)getSearchSuggestionWithQuery:(NSString *)query isRecentSearch:(BOOL)isRecentSearch andContext:(BOOL)save;
++ (void)saveSearchSuggestionOnDB:(RISearchSuggestion *)searchSuggestion
                   isRecentSearch:(BOOL)isRecentSearch andContext:(BOOL)save;
 
 /**
@@ -141,5 +144,10 @@
  * Method to delete all searches
  */
 + (void)deleteAllSearches;
+
+/**
+ * Method to parse RIUndefinedSearchTerm from json
+ */
++ (RIUndefinedSearchTerm *)parseUndefinedSearchTerm:(NSDictionary *)json;
 
 @end

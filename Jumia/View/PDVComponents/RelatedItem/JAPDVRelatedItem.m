@@ -15,34 +15,13 @@
 }
 
 @property (nonatomic) JAProductInfoHeaderLine *topLabel;
-@property (nonatomic) UIView *horizontalSeparator;
-@property (nonatomic) UIView *verticalSeparator;
 @property (nonatomic) NSMutableArray *viewsArray;
 @property (nonatomic) NSMutableArray *verticalSeparators;
+@property (nonatomic) NSMutableArray *horizontalSeparators;
 
 @end
 
 @implementation JAPDVRelatedItem
-
-- (UIView *)horizontalSeparator
-{
-    if (!VALID_NOTEMPTY(_horizontalSeparator, UIView)) {
-        _horizontalSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, self.height/2, self.width, 1)];
-        [_horizontalSeparator setBackgroundColor:JABlack700Color];
-        [self addSubview:_horizontalSeparator];
-    }
-    return _horizontalSeparator;
-}
-
-- (UIView *)verticalSeparator
-{
-    if (!VALID_NOTEMPTY(_verticalSeparator, UIView)) {
-        _verticalSeparator = [[UIView alloc] initWithFrame:CGRectMake(self.width/2, self.topLabel.height, 1, self.height - self.topLabel.height)];
-        [_verticalSeparator setBackgroundColor:JABlack700Color];
-        [self addSubview:_verticalSeparator];
-    }
-    return _verticalSeparator;
-}
 
 - (NSMutableArray *)verticalSeparators
 {
@@ -65,6 +44,7 @@
 - (void)setHeaderText:(NSString *)headerText
 {
     _headerText = headerText;
+    [self.topLabel setMultilineTitle:YES];
     [self.topLabel setTitle:_headerText];
 }
 
@@ -84,52 +64,81 @@
     [self addSubview:itemView];
     [self.viewsArray addObject:itemView];
     [self setHeight:CGRectGetMaxY(itemView.frame)];
-    if (self.height >= _lastItemSize.height*2) {
-        [self reloadCrossSeparators];
-    }else{
-        [self reloadVerticalSeparators];
+    [self reloadHorizontalSeparators];
+    [self reloadVerticalSeparators];
+}
+
+// separators for a table with 2 columns
+- (void)reloadHorizontalSeparators
+{
+    [self removeHorizontalSeperators];
+    
+    //horizontal separators
+    for (int i = 0; i < self.viewsArray.count ; i++) {
+        UIView *view = [self.viewsArray objectAtIndex:i];
+        if (CGRectGetMaxY(view.frame) != self.height) {
+            UIView* hseparator = [self newHorizontalSeparator];
+            [hseparator setFrame:CGRectMake(view.x, CGRectGetMaxY(view.frame),
+                                            view.width, 1.f)];
+        }
     }
 }
 
-- (void)reloadCrossSeparators
+//separators for single column
+- (void)reloadVerticalSeparators
 {
-    [self.horizontalSeparator setHidden:NO];
-    [self.verticalSeparator setHidden:NO];
+    [self removeVerticalSeperators];
+
+    for (int i = 0; i < self.viewsArray.count ; i++) {
+        UIView *view = [self.viewsArray objectAtIndex:i];
+        
+        if (CGRectGetMaxX(view.frame) != self.height) {
+            UIView* seperator = [self newVerticalSeparator];
+            CGFloat x = CGRectGetMaxX(view.frame);
+            [seperator setFrame:CGRectMake(x, view.y,
+                                           1, view.height)];
+        }
+    }
+}
+
+- (UIView *)newHorizontalSeparator
+{
+    UIView* horizontalSeparator = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                                           self.height/2,
+                                                                           self.width,
+                                                                           1)];
+    [horizontalSeparator setBackgroundColor:JABlack700Color];
+    [self addSubview:horizontalSeparator];
+    [self.horizontalSeparators addObject:horizontalSeparator];
+    
+    return horizontalSeparator;
+}
+
+- (UIView *)newVerticalSeparator
+{
+    UIView* verticalSeparator = [[UIView alloc] initWithFrame:CGRectMake(self.width/2,
+                                                                         self.topLabel.height,
+                                                                         1,
+                                                                         self.height - self.topLabel.height)];
+    [verticalSeparator setBackgroundColor:JABlack700Color];
+    [self addSubview:verticalSeparator];
+    [self.verticalSeparators addObject:verticalSeparator];
+    
+    return verticalSeparator;
+}
+
+- (void)removeVerticalSeperators {
     for (UIView *separator in self.verticalSeparators) {
         [separator removeFromSuperview];
     }
     [self.verticalSeparators removeAllObjects];
-    
-    [self.horizontalSeparator setFrame:CGRectMake(0, self.topLabel.height + (self.height - self.topLabel.height)/2, self.width, 1)];
-    [self.verticalSeparator setFrame:CGRectMake(self.width/2, self.topLabel.height, 1, CGRectGetMaxY([(UIView *)[self.viewsArray lastObject] frame]) - CGRectGetMaxY(self.topLabel.frame))];
 }
 
-- (void)reloadVerticalSeparators
-{
-    [self.horizontalSeparator setHidden:YES];
-    [self.verticalSeparator setHidden:YES];
-    UIView *lastView;
-    for (int i = 0; i < self.viewsArray.count; i++) {
-        UIView *view = [self.viewsArray objectAtIndex:i];
-        if (lastView) {
-            CGFloat middlePoint = [self getMiddlePointFrom:CGRectGetMaxX(lastView.frame) andSecondPoint:view.x];
-            if (i < self.verticalSeparators.count) {
-                UIView *separator = [self.verticalSeparators objectAtIndex:i];
-                [separator setFrame:CGRectMake(middlePoint, self.topLabel.height, 1, self.height - self.topLabel.height)];
-            }else{
-                UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(middlePoint, self.topLabel.height, 1, self.height - self.topLabel.height)];
-                [separator setBackgroundColor:JABlack700Color];
-                [self addSubview:separator];
-                [self.verticalSeparators addObject:separator];
-            }
-        }
-        lastView = view;
+- (void)removeHorizontalSeperators {
+    for (UIView *separator in self.horizontalSeparators) {
+        [separator removeFromSuperview];
     }
-}
-
-- (CGFloat)getMiddlePointFrom:(CGFloat)firstPoint andSecondPoint:(CGFloat)secondPoint
-{
-    return firstPoint + (firstPoint - secondPoint)/2;
+    [self.horizontalSeparators removeAllObjects];
 }
 
 @end

@@ -16,6 +16,7 @@
 
 @dynamic key;
 @dynamic label;
+@dynamic subLabel;
 @dynamic max;
 @dynamic min;
 @dynamic name;
@@ -24,18 +25,20 @@
 @dynamic type;
 @dynamic value;
 @dynamic dataSet;
-@dynamic apiCall;
+@dynamic apiCallTarget;
+@dynamic apiCallParameters;
 @dynamic form;
 @dynamic options;
 @dynamic ratingStars;
 @dynamic linkText;
-@dynamic linkUrl;
+@dynamic linkTargetString;
 @dynamic pattern;
 @dynamic patternMessage;
 @dynamic relatedFields;
 @dynamic parentField;
 @dynamic checked;
 @dynamic dateFormat;
+@dynamic disabled;
 
 + (RIField *)parseField:(NSDictionary *)fieldJSON;
 {
@@ -53,6 +56,9 @@
     if ([fieldJSON objectForKey:@"label"]) {
         newField.label = [fieldJSON objectForKey:@"label"];
     }
+    if ([fieldJSON objectForKey:@"sub_label"]) {
+        newField.subLabel = [fieldJSON objectForKey:@"sub_label"];
+    }
     id value = [fieldJSON objectForKey:@"value"];
     if (VALID(value, NSString)) {
         newField.value = (NSString *)value;
@@ -66,17 +72,40 @@
     if ([fieldJSON objectForKey:@"format"]) {
         newField.dateFormat = [fieldJSON objectForKey:@"format"];
     }
-    
-    if(VALID_NOTEMPTY([fieldJSON objectForKey:@"api_call"], NSString)) {
-        newField.apiCall = [fieldJSON objectForKey:@"api_call"];
-    }
-    if ([fieldJSON objectForKey:@"link_text"]) {
-        newField.linkText = [fieldJSON objectForKey:@"link_text"];
-    }
-    if ([fieldJSON objectForKey:@"link_url"]) {
-        newField.linkUrl = [fieldJSON objectForKey:@"link_url"];
+    if ([fieldJSON objectForKey:@"disabled"]) {
+        newField.disabled = [fieldJSON objectForKey:@"disabled"];
     }
     
+    if(VALID_NOTEMPTY([fieldJSON objectForKey:@"api_call"], NSDictionary)) {
+        NSDictionary* apicall = [fieldJSON objectForKey:@"api_call"];
+        if (VALID_NOTEMPTY([apicall objectForKey:@"target"], NSString)) {
+            newField.apiCallTarget = [apicall objectForKey:@"target"];
+        }
+        if (VALID_NOTEMPTY([apicall objectForKey:@"params"], NSArray)) {
+            NSArray* params = [apicall objectForKey:@"params"];
+            NSMutableDictionary* newParams = [NSMutableDictionary new];
+            for (NSDictionary* parameter in params) {
+                if (VALID_NOTEMPTY(parameter, NSDictionary)) {
+                    NSString* key = [parameter objectForKey:@"key"];
+                    NSString* param = [parameter objectForKey:@"param"];
+                    if (VALID_NOTEMPTY(key, NSString) && VALID_NOTEMPTY(param, NSString)) {
+                        [newParams setObject:param forKey:key];
+                    }
+                }
+            }
+            newField.apiCallParameters = [newParams copy];
+        }
+    }
+    if ([fieldJSON objectForKey:@"link"]) {
+        NSDictionary* linkJSON = [fieldJSON objectForKey:@"link"];
+        
+        if ([linkJSON objectForKey:@"label"]) {
+            newField.linkText = [linkJSON objectForKey:@"label"];
+        }
+        if ([linkJSON objectForKey:@"target"]) {
+            newField.linkTargetString = [linkJSON objectForKey:@"target"];
+        }
+    }
     
     if ([fieldJSON objectForKey:@"options"]) {
         NSArray *optionsArray = [fieldJSON objectForKey:@"options"];
@@ -167,16 +196,34 @@
 
         NSString* typeForRelatedFields = [relatedJSON objectForKey:@"type"];
         NSString* nameForRelatedFields = [relatedJSON objectForKey:@"name"];
+        NSString* valueForRelatedFields = [relatedJSON objectForKey:@"value"];
         
-        NSArray* relatedFieldsArrayJSON = [relatedJSON objectForKey:@"fields"];
-        for (NSDictionary* relatedFieldJSON in relatedFieldsArrayJSON) {
-            if (VALID_NOTEMPTY(relatedFieldJSON, NSDictionary)) {
-                
-                RIField* relatedField = [RIField parseField:relatedFieldJSON];
+        if ([typeForRelatedFields isEqualToString:@"list"]) {
+            
+            if (VALID_NOTEMPTY(relatedJSON, NSDictionary)) {
+                RIField* relatedField = [RIField parseField:relatedJSON];
                 relatedField.parentField = newField;
                 relatedField.type = typeForRelatedFields;
                 relatedField.name = nameForRelatedFields;
-                
+                [newField addRelatedFieldsObject:relatedField];
+            }
+        }
+        
+        NSArray* relatedFieldsArrayJSON = [relatedJSON objectForKey:@"fields"];
+        if (NO == VALID_NOTEMPTY(relatedFieldsArrayJSON, NSArray)) {
+            relatedFieldsArrayJSON = [relatedJSON objectForKey:@"options"];
+        }
+        for (NSDictionary* relatedFieldJSON in relatedFieldsArrayJSON) {
+            if (VALID_NOTEMPTY(relatedFieldJSON, NSDictionary)) {
+                RIField* relatedField = [RIField parseField:relatedFieldJSON];
+                relatedField.parentField = newField;
+                relatedField.type = typeForRelatedFields;
+                if (!VALID_NOTEMPTY(relatedField.name, NSString)) {
+                    relatedField.name = nameForRelatedFields;
+                }
+                if ([relatedField.value isEqualToString:valueForRelatedFields]) {
+                    relatedField.checked = [NSNumber numberWithBool:YES];
+                }
                 [newField addRelatedFieldsObject:relatedField];
             }
         }

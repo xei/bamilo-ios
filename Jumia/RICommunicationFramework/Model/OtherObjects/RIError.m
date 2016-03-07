@@ -72,6 +72,19 @@
     return  errorDictionary;
 }
 
++ (NSArray *)getErrorCodes:(NSDictionary *)jsonObject
+{
+    
+    NSArray *errors = nil;
+    
+    RIError *error = [RIError parseErrorMessages:jsonObject];
+    if(NOTEMPTY(error.errorCodes))
+    {
+        return error.errorCodes;
+    }
+    return errors;
+}
+
 #pragma mark - private methods
 
 /**
@@ -87,15 +100,12 @@
         if(VALID_NOTEMPTY([messagesObject objectForKey:@"error"], NSArray))
         {
             NSArray *errorCodesObject = [messagesObject objectForKey:@"error"];
-            if(NOTEMPTY(errorCodesObject))
+            NSMutableArray *errorCodesArray = [[NSMutableArray alloc] init];
+            for (NSString *errorCodeString in errorCodesObject)
             {
-                NSMutableArray *errorCodesArray = [[NSMutableArray alloc] init];
-                for (NSString *errorCodeString in errorCodesObject)
-                {
-                    [errorCodesArray addObject:errorCodeString];
-                }
-                error.errorCodes = [errorCodesArray copy];
+                [errorCodesArray addObject:errorCodeString];
             }
+            error.errorCodes = [errorCodesArray copy];
         }
     
         if(NOT_NIL([messagesObject objectForKey:@"validate"]))
@@ -114,8 +124,11 @@
             else if (VALID_NOTEMPTY(errorMessagesObject, NSArray))
             {
                 NSMutableArray *errorMessagesArray = [[NSMutableArray alloc] init];
-                for (NSString *errorMessageString in errorMessagesObject) {
-                    [errorMessagesArray addObject:errorMessageString];
+                if (VALID_NOTEMPTY([errorMessagesObject valueForKey:@"message"], NSArray)) {
+                    NSArray *errorMessage = [errorMessagesObject valueForKey:@"message"];
+                    for (NSString *errorMessageString in errorMessage) {
+                        [errorMessagesArray addObject:errorMessageString];
+                    }
                 }
                 error.errorMessagesArray = [errorMessagesArray copy];
             }

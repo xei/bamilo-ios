@@ -25,6 +25,8 @@ NSString *const RI_MOBAPI_VERSION_HEADER_TOKEN_VALUE = @"a4f04c9433334e4ccd327df
 
 NSString *const RI_HTTP_METHOD_POST = @"POST";
 NSString *const RI_HTTP_METHOD_GET = @"GET";
+NSString *const RI_HTTP_METHOD_PUT = @"PUT";
+NSString *const RI_HTTP_METHOD_DELETE = @"DELETE";
 NSString *const RI_HTTP_CONTENT_TYPE_HEADER_NAME = @"Content-Type";
 NSString *const RI_HTTP_CONTENT_TYPE_HEADER_FORM_DATA_VALUE = @"application/x-www-form-urlencoded; charset=utf-8";
 NSString *const RI_HTTP_CONTENT_TYPE_HEADER_JSON_VALUE = @"application/json; charset=utf-8";
@@ -60,45 +62,73 @@ NSString *const RI_UNIQUE_COUNTRY_NAME_BAMILO = @"Iran";
 NSString *const RI_UNIQUE_COUNTRY_ISO_BAMILO = @"IR";
 
 NSString *const RI_MOBAPI_PREFIX = @"mobapi/";
-NSString *const RI_API_VERSION = @"v1.8/";
-NSString *const RI_CATALOG_CATEGORIES = @"catalog/categories/";
-NSString *const RI_API_CATALOG = @"search/find/?category=";
-NSString *const RI_FORMS_INDEX = @"forms/index/";
+NSString *const RI_API_VERSION = @"v2.1/";
+
 NSString *const RI_API_INFO = @"main/md5/";
 NSString *const RI_API_IMAGE_RESOLUTIONS = @"main/imageresolutions/";
 NSString *const RI_API_GET_TEASERS = @"main/home/";
-NSString *const RI_API_GET_STATICBLOCKS = @"main/getstaticblocks/";
-NSString *const RI_API_GET_CUSTOMER = @"customer/getdetails?setDevice=mobileApi";
+NSString *const RI_API_COUNTRY_CONFIGURATION = @"main/getconfigurations/";
+NSString *const RI_API_GET_STATICBLOCKS = @"main/getstaticblocks/"; //$$$ this one doesn't exist in android, does it have anything to do with the next one?
+NSString *const RI_API_PROMOTIONS_URL = @"main/getstatic/key/mobile_promotions/";
+
+NSString *const RI_FORMS_INDEX = @"forms/index/";
+
+NSString *const RI_API_PRODUCT_DETAIL = @"catalog/detail/sku/";
+NSString *const RI_API_PROD_VALIDATE = @"catalog/validate/";
+NSString *const RI_CATALOG_CATEGORIES = @"catalog/categories/";
+NSString *const RI_API_CATALOG = @"search/find/";
+NSString *const RI_API_CATALOG_CATEGORY = @"search/find/category/";
+NSString *const RI_API_SEARCH_SUGGESTIONS = @"search/suggester/q/";
+
+NSString *const RI_API_ADD_ORDER = @"cart/addproduct/";
+NSString *const RI_API_ADD_BUNDLE = @"cart/addbundle/";
+NSString *const RI_API_ADD_MULTIPLE_ORDER = @"cart/addmultiple/";
+NSString *const RI_API_REMOVE_PRODUCT_FROM_CART = @"cart/removeproduct/";
+NSString *const RI_API_GET_CART_DATA = @"cart/getdata/";
+NSString *const RI_API_CLEAR_CART = @"cart/clear/";
+NSString *const RI_API_GET_PRODUCT_UPDATE = @"cart/updateproduct/";
+NSString *const RI_API_ADD_VOUCHER_TO_CART = @"cart/addvoucher/";
+NSString *const RI_API_REMOVE_VOUCHER_FROM_CART = @"cart/removevoucher/";
+
+NSString *const RI_API_GET_ORDERS = @"customer/orderlist/";
+NSString *const RI_API_TRACK_ORDER = @"customer/trackingorder/ordernr/%@/";
+NSString *const RI_API_GET_CUSTOMER = @"customer/getdetails/";
 NSString *const RI_API_REGISTER_CUSTOMER = @"customer/create/";
 NSString *const RI_API_LOGIN_CUSTOMER = @"customer/login/";
-NSString *const RI_API_FACEBOOK_LOGIN_CUSTOMER = @"customer/facebooklogin?setDevice=mobileApi&facebook=true";
+NSString *const RI_API_FACEBOOK_LOGIN_CUSTOMER = @"customer/facebooklogin/";
 NSString *const RI_API_LOGOUT_CUSTOMER = @"customer/logout/";
-NSString *const RI_API_GET_ORDERS = @"order/list";
-NSString *const RI_API_TRACK_ORDER = @"order/trackingorder/?ordernr=%@";
-NSString *const RI_API_SEARCH_SUGGESTIONS = @"search/suggest/";
-NSString *const RI_API_COUNTRY_CONFIGURATION = @"main/getconfigurations/";
-NSString *const RI_API_ADD_ORDER = @"order/add?setDevice=mobileApi";
-NSString *const RI_API_ADD_MULTIPLE_ORDER = @"order/addmultiple?setDevice=mobileApi";
-NSString *const RI_API_GET_CART_DATA = @"order/cartdata?setDevice=mobileApi";
-NSString *const RI_API_GET_CART_CHANGE = @"order/cartchange/";
-NSString *const RI_API_REMOVE_FROM_CART = @"order/remove?setDevice=mobileApi";
-NSString *const RI_API_ADD_VOUCHER_TO_CART = @"/order/addvoucher/";
-NSString *const RI_API_REMOVE_VOUCHER_FROM_CART = @"/order/removevoucher/";
 NSString *const RI_API_GET_CUSTOMER_ADDRESS_LIST = @"customer/getaddresslist/";
-NSString *const RI_API_GET_CUSTOMER_SELECT_DEFAULT = @"/customer/makedefaultaddress";
-NSString *const RI_API_GET_MULTISTEP_ADDRESSES = @"multistep/addresses/";
-NSString *const RI_API_GET_SHIPPING_METHODS_FORM = @"multistep/shippingmethod/";
-NSString *const RI_API_GET_PAYMENT_METHODS_FORM = @"multistep/paymentmethod/";
-NSString *const RI_API_FINISH_CHECKOUT = @"multistep/finish/";
-NSString *const RI_API_PROMOTIONS_URL = @"main/getstatic?key=mobile_promotions";
-NSString *const RI_RATE_CONVERSION = @"http://rate-exchange.appspot.com/currency?from=%@&to=EUR";
-NSString *const RI_GET_CAMPAIGN = @"campaign/get/?campaign_slug=%@";
+NSString *const RI_API_GET_CUSTOMER_SELECT_DEFAULT = @"customer/makedefaultaddress/";
+
 NSString *const RI_API_BUNDLE = @"catalog/bundle/sku/";
-NSString *const RI_API_ADD_BUNDLE = @"order/addbundle/";
+
 NSString *const RI_API_GET_WISHLIST = @"wishlist/getproducts/";
 NSString *const RI_API_ADD_TO_WISHLIST = @"wishlist/addproduct/";
 NSString *const RI_API_REMOVE_FOM_WISHLIST = @"wishlist/removeproduct/";
-NSString *const RI_API_PRODUCT_OFFERS = @"&all_offers=1";
-NSString *const RI_API_SELLER_RATING = @"?seller_rating=1&per_page=%d&page=%d";
-NSString *const RI_API_PROD_RATING = @"&rating=%d&page=%d";
-NSString *const RI_API_PROD_VALIDATE = @"catalog/validate/";
+
+NSString *const RI_API_PRODUCT_OFFERS = @"all_offers/1/";
+NSString *const RI_API_SELLER_RATING = @"seller_rating/1/per_page/%d/page/%d/";
+NSString *const RI_API_PROD_RATING = @"rating/%d/page/%d/";
+NSString *const RI_API_PROD_RATING_DETAILS = @"rating/1/";
+
+NSString *const RI_API_CATALOG_HASH = @"search/find/hash/";
+NSString *const RI_API_CATALOG_BRAND = @"search/find/brand/";
+NSString *const RI_API_CATALOG_SELLER = @"search/find/seller/";
+NSString *const RI_API_CAMPAIGN_PAGE = @"campaign/get/slug/";
+NSString *const RI_API_STATIC_PAGE = @"main/getstatic/key/";
+NSString *const RI_API_FORMS_GET = @"forms/";
+NSString *const RI_API_FORMS_ADDRESS_EDIT = @"addressedit/id/";
+
+NSString *const RI_API_RICH_RELEVANCE = @"richrelevance/request/req/";
+NSString *const RI_API_RICH_RELEVANCE_CLICK = @"req/";
+
+NSString *const RI_API_MULTISTEP_GET_ADDRESSES = @"multistep/getstepaddresses/";
+NSString *const RI_API_MULTISTEP_SUBMIT_ADDRESSES = @"multistep/addresses/";
+NSString *const RI_API_MULTISTEP_GET_SHIPPING = @"multistep/getstepshipping/";
+NSString *const RI_API_MULTISTEP_SUBMIT_SHIPPING = @"multistep/shippingmethod/";
+NSString *const RI_API_MULTISTEP_GET_PAYMENT = @"multistep/getsteppayment/";
+NSString *const RI_API_MULTISTEP_SUBMIT_PAYMENT = @"multistep/paymentmethod/";
+NSString *const RI_API_MULTISTEP_GET_FINISH = @"multistep/getstepfinish/";
+NSString *const RI_API_MULTISTEP_SUBMIT_FINISH = @"multistep/finish/";
+NSString *const RI_API_GET_FAQ_AND_TERMS = @"/main/getfaqandterms/";
+NSString *const RI_API_GET_PHONE_PREFIXES = @"/main/getphoneprefixes/";

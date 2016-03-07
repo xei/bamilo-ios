@@ -53,6 +53,13 @@ typedef NS_ENUM(NSInteger, RIApiResponse) {
     RIApiResponseKickoutView            = 8
 };
 
+typedef NS_ENUM(NSInteger, HttpResponse) {
+    HttpResponsePost                    = 0,
+    HttpResponseGet                     = 1,
+    HttpResponsePut                     = 2,
+    HttpResponseDelete                  = 3
+};
+
 #ifndef UIColorFromRGB
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #endif

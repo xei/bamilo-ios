@@ -12,8 +12,13 @@
 
 @interface JATeaserPageView : UIView
 
-@property (nonatomic, strong)NSArray* teaserGroupings;
+@property (nonatomic, strong) NSDictionary* teaserGroupings;
+
+// Newsletter
+@property (nonatomic, strong) RIForm *newsletterForm;
+@property (nonatomic, strong) id genderPickerDelegate;
 
 - (void)loadTeasersForFrame:(CGRect)frame;
+- (void)addTeaserGrouping:(NSString*)type;
 
 @end

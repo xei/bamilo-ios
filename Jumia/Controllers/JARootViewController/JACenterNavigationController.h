@@ -7,12 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JANavigationBarView.h"
+#import "JACustomNavigationBarView.h"
 #import "JATabBarView.h"
 
 @interface JACenterNavigationController : UINavigationController
 
-@property (strong, nonatomic) JANavigationBarView *navigationBarView;
+@property (strong, nonatomic) JACustomNavigationBarView *navigationBarView;
 @property (strong, nonatomic) JATabBarView *tabBarView;
+
+@property (nonatomic, assign)BOOL searchViewAlwaysHidden;
+
++ (instancetype)sharedInstance;
+
+- (void)openTarget:(NSString *)targetString;
+- (void)showSearchView;
 
 @end

@@ -50,6 +50,11 @@
  */
 - (IBAction)doneClicked:(id)sender;
 
+
+- (void)dynamicFormChangedHeight;
+
+- (void)screenRadioWasPressedWithTargetString:(NSString*)targetString;
+
 @end
 
 @interface JADynamicForm : NSObject <UITextFieldDelegate>
@@ -66,7 +71,10 @@
 
 -(id)initWithForm:(RIForm*)form values:(NSDictionary*)values startingPosition:(CGFloat)startingY hasFieldNavigation:(BOOL)hasFieldNavigation;
 
--(void)validateFields:(NSDictionary*)errors;
+-(void)validateFieldsWithErrorArray:(NSArray*)errorsArray
+                        finishBlock:(void (^)(NSString*))finishBlock;
+-(void)validateFieldWithErrorDictionary:(NSDictionary*)errorDictionary
+                            finishBlock:(void (^)(NSString*))finishBlock;
 
 -(BOOL)checkErrors;
 
@@ -83,5 +91,7 @@
 -(void)resignResponder;
 
 - (NSString*)getFieldNameForKey:(NSString*)key;
+
+- (void)unsubscribedNewsletters;
 
 @end
