@@ -100,7 +100,7 @@
     if (ISEMPTY(self.brandLabel)) {
         self.brandLabel = [UILabel new];
         self.brandLabel.textColor = JABlackColor;
-        self.brandLabel.font = JAList1Font;
+        self.brandLabel.font = JADisplay3Font;
         [self.topView addSubview:self.brandLabel];
     }
     self.brandLabel.text = self.product.brand;

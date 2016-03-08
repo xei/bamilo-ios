@@ -33,7 +33,7 @@
 {
     if (!VALID_NOTEMPTY(_textField, UITextField)) {
         _textField = [[UITextField alloc] initWithFrame:CGRectMake(0, self.height - 28, self.width, 20)];
-        [_textField setFont:JAList2Font];
+        [_textField setFont:JADisplay3Font];
         [_textField setTextColor:JABlackColor];
         [_textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
         [self addSubview:_textField];

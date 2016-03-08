@@ -62,7 +62,7 @@
 {
     if (!VALID_NOTEMPTY(_nameLabel, UILabel)) {
         _nameLabel = [[UILabel alloc] init];
-        [_nameLabel setFont:JABody1Font];
+        [_nameLabel setFont:JABodyFont];
         [_nameLabel setText:@"NameLabel"];
         _nameLabel.textColor = UIColorFromRGB(0x000000);
     }
@@ -101,7 +101,7 @@
     if (!VALID_NOTEMPTY(_recentProductBadgeLabel, UILabel)) {
         _recentProductBadgeLabelRect = CGRectMake(0, 10, 200, 16);
         _recentProductBadgeLabel = [[UILabel alloc] initWithFrame:_recentProductBadgeLabelRect];
-        [_recentProductBadgeLabel setFont:JABadgeFont];
+        [_recentProductBadgeLabel setFont:JABADGEFont];
         [_recentProductBadgeLabel setBackgroundColor:JABlack700Color];
         [_recentProductBadgeLabel setTextColor:[UIColor whiteColor]];
         [_recentProductBadgeLabel setTextAlignment:NSTextAlignmentCenter];

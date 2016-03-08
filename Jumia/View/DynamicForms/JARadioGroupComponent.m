@@ -114,7 +114,7 @@
         UILabel* optionLabel = [[UILabel alloc] initWithFrame:self.labelBaseRect];
         [optionLabel setNumberOfLines:2];
         [optionLabel setTextColor:JABlackColor];
-        [optionLabel setFont:JABody3Font];
+        [optionLabel setFont:JABodyFont];
         optionLabel.textAlignment = NSTextAlignmentLeft;
         if (RI_IS_RTL) {
             optionLabel.textAlignment = NSTextAlignmentRight;

@@ -112,7 +112,7 @@
 -(UILabel *)emptyListLabel {
     if (!VALID_NOTEMPTY(_emptyListLabel, UILabel)) {
         _emptyListLabel = [UILabel new];
-        _emptyListLabel.font = JABody3Font;
+        _emptyListLabel.font = JABodyFont;
         _emptyListLabel.textColor = JABlack800Color;
         _emptyListLabel.text = STRING_FAVOURITES_NO_SAVED_ITEMS_DESCRIPTION;
         [_emptyListLabel sizeToFit];

@@ -64,7 +64,7 @@
 {
     if (!VALID(_nameLabel, UILabel)) {
         _nameLabel = [[UILabel alloc] init];
-        [_nameLabel setFont:JABody3Font];
+        [_nameLabel setFont:JABodyFont];
         _nameLabel.textColor = UIColorFromRGB(0x000000);
         [self addSubview:_nameLabel];
     }
@@ -133,7 +133,7 @@
     if (!VALID(_reorderButton, UIButton)) {
         _reorderButton = [UIButton buttonWithType:UIButtonTypeSystem];
         [_reorderButton setTitle:[STRING_REORDER uppercaseString] forState:UIControlStateNormal];
-        [_reorderButton.titleLabel setFont:JABody1Font];
+        [_reorderButton.titleLabel setFont:JABodyFont];
         [_reorderButton setTintColor:JAOrange1Color];
         [self addSubview:_reorderButton];
     }

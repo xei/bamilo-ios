@@ -39,7 +39,7 @@
                                       14.0f,
                                       self.width - 76.0f - 16.0f,
                                       20.0f);
-        [_labelText setFont:JABody3Font];
+        [_labelText setFont:JABodyFont];
         [_labelText setTextColor:JABlackColor];
         [_labelText setTextAlignment:NSTextAlignmentLeft];
         [self addSubview:_labelText];
@@ -193,7 +193,7 @@
             UILabel* optionLabel = [[UILabel alloc] initWithFrame:self.labelBaseRect];
             [optionLabel setNumberOfLines:2];
             [optionLabel setTextColor:JABlackColor];
-            [optionLabel setFont:JABody3Font];
+            [optionLabel setFont:JABodyFont];
             optionLabel.text = relatedField.label;
             optionLabel.textAlignment = NSTextAlignmentLeft;
             if (RI_IS_RTL) {

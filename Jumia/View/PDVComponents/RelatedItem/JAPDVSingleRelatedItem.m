@@ -48,7 +48,7 @@
 {
     if (!VALID_NOTEMPTY(_labelName, UILabel)) {
         _labelName = [[UILabel alloc] initWithFrame:CGRectZero];
-        [_labelName setFont:JABody3Font];
+        [_labelName setFont:JABodyFont];
         [_labelName setTextColor:JABlackColor];
         [_labelBrand setTextAlignment:NSTextAlignmentLeft];
         [self addSubview:_labelName];

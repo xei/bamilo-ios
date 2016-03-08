@@ -84,7 +84,7 @@
 {
     if (!VALID(_itemsNumberLabel, UILabel)) {
         _itemsNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, kTopMargin, self.resumeOrderView.width-2*kLateralMargin, 15.f)];
-        [_itemsNumberLabel setFont:JABody1Font];
+        [_itemsNumberLabel setFont:JABodyFont];
         [_itemsNumberLabel setTextColor:JABlackColor];
     }
     return _itemsNumberLabel;
@@ -127,7 +127,7 @@
 {
     if (!VALID(_paymentType, UILabel)) {
         _paymentType = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.paymentTitle.frame), self.paymentView.width-2*kLateralMargin, 15.f)];
-        [_paymentType setFont:JABody2Font];
+        [_paymentType setFont:JABodyFont];
         [_paymentType setTextColor:JABlackColor];
     }
     return _paymentType;
@@ -173,7 +173,7 @@
 {
     if (!VALID(_shippingName, UILabel)) {
         _shippingName = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.shippingTitle.frame), self.shippingView.width-2*kLateralMargin, 15.f)];
-        [_shippingName setFont:JABody2Font];
+        [_shippingName setFont:JABodyFont];
         [_shippingName setTextColor:JABlackColor];
     }
     return _shippingName;
@@ -240,7 +240,7 @@
 {
     if (!VALID(_billingName, UILabel)) {
         _billingName = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.billingTitle.frame), self.billingView.width-2*kLateralMargin, 15.f)];
-        [_billingName setFont:JABody2Font];
+        [_billingName setFont:JABodyFont];
         [_billingName setTextColor:JABlackColor];
     }
     return _billingName;

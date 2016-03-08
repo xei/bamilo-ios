@@ -37,7 +37,7 @@
     if (!VALID_NOTEMPTY(_titleLabel, UILabel)) {
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(16.0f, 10.0f, 230.0f, 20.0f)];
         [_titleLabel setTextColor:JABlackColor];
-        [_titleLabel setFont:JABody2Font];
+        [_titleLabel setFont:JABodyFont];
         [self.clickableView addSubview:_titleLabel];
     }
     return _titleLabel;
@@ -49,7 +49,7 @@
         _subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(16.0f, 30.0f, 230.0f, 40.0f)];
         [_subTitleLabel setNumberOfLines:2];
         [_subTitleLabel setTextColor:JABlack800Color];
-        [_subTitleLabel setFont:JABody3Font];
+        [_subTitleLabel setFont:JABodyFont];
         [self.clickableView addSubview:_subTitleLabel];
     }
     return _subTitleLabel;

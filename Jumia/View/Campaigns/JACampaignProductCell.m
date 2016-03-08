@@ -87,7 +87,7 @@
 {
     if (!VALID_NOTEMPTY(_titleLabel, UILabel)) {
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.titleBrandLabel.frame) + 10, self.width - 2*16, 15)];
-        _titleLabel.font = JABody1Font;
+        _titleLabel.font = JABodyFont;
         _titleLabel.textColor = JABlackColor;
     }
     return _titleLabel;
@@ -120,7 +120,7 @@
 {
     if (!VALID_NOTEMPTY(_endLabel, UILabel)) {
         _endLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.timerView.width, 15)];
-        [_endLabel setFont:JABody2Font];
+        [_endLabel setFont:JABodyFont];
         [_endLabel setText:[STRING_CAMPAIGN_TIMER_END uppercaseString]];
         [_endLabel sizeToFit];
     }
@@ -131,7 +131,7 @@
 {
     if (!VALID_NOTEMPTY(_timerLabel, UILabel)) {
         _timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.endLabel.frame) + 2.f, 0, self.timerView.width, 15)];
-        [_timerLabel setFont:JABody2Font];
+        [_timerLabel setFont:JABodyFont];
         [_timerLabel setTextColor:[UIColor redColor]];
     }
     return _timerLabel;
@@ -152,7 +152,7 @@
     if (!VALID_NOTEMPTY(_offerEndedLabel, UILabel)) {
         _offerEndedLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, self.imageView.y + self.imageView.height/2 - 20, self.width - 2*kLateralMargin, 20)];
         [_offerEndedLabel setBackgroundColor:[UIColor whiteColor]];
-        [_offerEndedLabel setFont:JABody2Font];
+        [_offerEndedLabel setFont:JABodyFont];
         [_offerEndedLabel setText:[STRING_CAMPAIGN_OFFER_ENDED uppercaseString]];
         [_offerEndedLabel sizeToFit];
         _offerEndedLabel.width += 2*8.f;
@@ -203,7 +203,7 @@
 {
     if (!VALID_NOTEMPTY(_savingMoneyLabel, UILabel)) {
         _savingMoneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.savingLabel.frame) + 6.f, self.savingLabel.y, self.savingView.width, kProductInfoSingleLineHeight)];
-        [_savingMoneyLabel setFont:JABody2Font];
+        [_savingMoneyLabel setFont:JABodyFont];
         [_savingMoneyLabel setTextColor:[UIColor greenColor]];
     }
     return _savingMoneyLabel;

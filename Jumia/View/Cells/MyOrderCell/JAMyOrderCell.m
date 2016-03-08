@@ -70,7 +70,7 @@
 - (UILabel *)orderNumberLabel {
     if (!VALID_NOTEMPTY(_orderNumberLabel, UILabel)) {
         _orderNumberLabel = [UILabel new];
-        [_orderNumberLabel setFont:JACaption2Font];
+        [_orderNumberLabel setFont:JACaptionFont];
         [_orderNumberLabel setTextColor:JABlackColor];
         [self.clickableView addSubview:_orderNumberLabel];
     }

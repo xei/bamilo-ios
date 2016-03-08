@@ -37,7 +37,7 @@
     if (!VALID_NOTEMPTY(_titleButton, UIButton)) {
         _titleButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_titleButton setFrame:frame];
-        [_titleButton.titleLabel setFont:JABody3Font];
+        [_titleButton.titleLabel setFont:JABodyFont];
         [_titleButton setTitleColor:JABlack800Color forState:UIControlStateNormal];
         [_titleButton setTitleColor:JABlackColor forState:UIControlStateHighlighted];
         [_titleButton setTitleColor:JABlackColor forState:UIControlStateSelected];

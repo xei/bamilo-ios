@@ -17,7 +17,7 @@
 -(UILabel *)title {
     if (!VALID_NOTEMPTY(_title, UILabel)) {
         _title = [UILabel new];
-        [_title setFont:JAList1Font];
+        [_title setFont:JADisplay3Font];
         [_title setTextColor:JABlackColor];
 
         [self addSubview:_title];

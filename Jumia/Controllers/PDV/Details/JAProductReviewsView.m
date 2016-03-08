@@ -146,7 +146,7 @@
     CGRect frame = CGRectMake(_ratingsView.width * kLeftSidePercentage - 150, 0, 150, 30);
     if (!VALID_NOTEMPTY(_averageTitleLabel, UIView)) {
         _averageTitleLabel = [[UILabel alloc] initWithFrame:frame];
-        [_averageTitleLabel setFont:JABody2Font];
+        [_averageTitleLabel setFont:JABodyFont];
         [_averageTitleLabel setTextColor:JABlackColor];
         [_averageTitleLabel setTextAlignment:NSTextAlignmentCenter];
         [_averageTitleLabel setText:STRING_AVERAGE_RATING];
@@ -259,7 +259,7 @@
     CGRect frame = CGRectMake(0, 10, _writeReviewView.width/2, _writeReviewView.height);
     if (!VALID_NOTEMPTY(_writeReviewLabel, UILabel)) {
         _writeReviewLabel = [[UILabel alloc] initWithFrame:frame];
-        [_writeReviewLabel setFont:JABody3Font];
+        [_writeReviewLabel setFont:JABodyFont];
         [_writeReviewLabel setTextColor:JABlack800Color];
         [_writeReviewLabel setTextAlignment:NSTextAlignmentCenter];
         [_writeReviewLabel setNumberOfLines:2];

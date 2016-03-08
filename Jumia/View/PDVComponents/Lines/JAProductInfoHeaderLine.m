@@ -40,7 +40,7 @@
 
 - (UILabel *)label
 {
-    [super.label setFont:JACaption2Font];
+    [super.label setFont:JACaptionFont];
     return super.label;
 }
 

@@ -59,7 +59,7 @@
 {
     if (!VALID_NOTEMPTY(_sellerNameLabel, UILabel)) {
         _sellerNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, 16, self.width-32, 20)];
-        [_sellerNameLabel setFont:JABody1Font];
+        [_sellerNameLabel setFont:JABodyFont];
         [_sellerNameLabel setTextColor:JABlack900Color];
         [self.clickableView addSubview:_sellerNameLabel];
     }
@@ -70,7 +70,7 @@
 {
     if (!VALID_NOTEMPTY(_sellerDeliveryLabel, UILabel)) {
         _sellerDeliveryLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, CGRectGetMaxY(self.sellerNameLabel.frame) + 8.f, self.width-32, 20)];
-        [_sellerDeliveryLabel setFont:JABody3Font];
+        [_sellerDeliveryLabel setFont:JABodyFont];
         [_sellerDeliveryLabel setTextColor:JABlack800Color];
         [self.clickableView addSubview:_sellerDeliveryLabel];
     }
@@ -156,7 +156,7 @@
     if (!VALID_NOTEMPTY(_sellerWarrantyLabel, UILabel)) {
         _sellerWarrantyLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, CGRectGetMaxY(self.sellerDeliveryLabel.frame) + 8.f, self.width-32, 20)];
         [_sellerWarrantyLabel setNumberOfLines:2];
-        [_sellerWarrantyLabel setFont:JABody3Font];
+        [_sellerWarrantyLabel setFont:JABodyFont];
         [_sellerWarrantyLabel setTextColor:JABlack800Color];
         [self.clickableView addSubview:_sellerWarrantyLabel];
     }
@@ -189,7 +189,7 @@
     [self checkIsShopFirst];
     
     [self.sellerDeliveryLabel setText:seller.deliveryTime];
-    [self.sellerDeliveryLabel setFont:JACaption2Font];
+    [self.sellerDeliveryLabel setFont:JACaptionFont];
     [self.sellerDeliveryLabel setTextColor:JABlackColor];
     [self.sellerDeliveryLabel sizeToFit];
     
@@ -231,7 +231,7 @@
     }
     if (seller.warranty != NULL) {
         [self.sellerWarrantyLabel setText:[NSString stringWithFormat:@"%@: %@", STRING_SELLER_INFO_WARRANTY, seller.warranty]];
-        [self.sellerWarrantyLabel setFont:JACaption2Font];
+        [self.sellerWarrantyLabel setFont:JACaptionFont];
         [self.sellerWarrantyLabel setTextColor:JABlackColor];
         [self.sellerWarrantyLabel setFrame:CGRectMake(CGRectGetMaxX(self.warrantyIcon.frame) + 12.f, CGRectGetMidY(self.warrantyIcon.frame) - 7.f, self.width - (CGRectGetMaxX(self.warrantyIcon.frame) + 12.f + 16.f), self.sellerWarrantyLabel.height)];
         [self.sellerWarrantyLabel setHeight:[self.sellerWarrantyLabel sizeThatFits:CGSizeMake(self.sellerWarrantyLabel.width, CGFLOAT_MAX)].height];

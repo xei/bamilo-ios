@@ -38,7 +38,7 @@
 {
     if (!VALID(_titleLabel, UILabel)) {
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 0, self.width-90, self.height)];
-        _titleLabel.font = JABody2Font;
+        _titleLabel.font = JABodyFont;
         _titleLabel.textColor = [UIColor whiteColor];
         _titleLabel.numberOfLines = 0;
         [_titleLabel setTextAlignment:NSTextAlignmentCenter];

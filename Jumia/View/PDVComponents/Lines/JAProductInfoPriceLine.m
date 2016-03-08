@@ -56,10 +56,10 @@
             return JACaptionFont;
             
         case kPriceSizeMedium:
-            return JAList1Font;
+            return JADisplay3Font;
             
         default:
-            return JAList1Font;
+            return JADisplay3Font;
     }
 }
 
@@ -87,7 +87,7 @@
     if (!VALID_NOTEMPTY(_oldPriceLabel, UILabel)) {
         _oldPriceLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.label.frame) + 10.f, self.label.y, 60, 30)];
         [_oldPriceLabel setTextColor:JABlack800Color];
-        [_oldPriceLabel setFont:JAList2Font];
+        [_oldPriceLabel setFont:JADisplay3Font];
         [self addSubview:_oldPriceLabel];
     }
     return _oldPriceLabel;

@@ -56,7 +56,7 @@
 - (UILabel *)getNewRatingCategoryLabel
 {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 20)];
-    [label setFont:JABody3Font];
+    [label setFont:JABodyFont];
     [label setTextColor:JABlack800Color];
     return label;
 }
@@ -84,7 +84,7 @@
 {
     if (!VALID_NOTEMPTY(_dateLabel, UILabel)) {
         _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(kXOffset, 18, self.width - 32, 20)];
-        [_dateLabel setFont:JABody3Font];
+        [_dateLabel setFont:JABodyFont];
         [_dateLabel setTextColor:JABlack800Color];
         [self.clickableArea addSubview:_dateLabel];
     }
@@ -96,7 +96,7 @@
     CGRect frame = CGRectMake(kXOffset, CGRectGetMaxY(self.ratingsView.frame) + 10.f, self.width - 32, 20);
     if (!VALID_NOTEMPTY(_titleLabel, UILabel)) {
         _titleLabel = [[UILabel alloc] initWithFrame:frame];
-        [_titleLabel setFont:JAList1Font];
+        [_titleLabel setFont:JADisplay3Font];
         [_titleLabel setTextColor:JABlack900Color];
         [self.clickableArea addSubview:_titleLabel];
     }else if (CGRectEqualToRect(frame, _titleLabel.frame))
@@ -112,7 +112,7 @@
     CGRect frame = CGRectMake(kXOffset, CGRectGetMaxY(self.titleLabel.frame), self.width - 32, 20);
     if (!VALID_NOTEMPTY(_authorLabel, UILabel)) {
         _authorLabel = [[UILabel alloc] initWithFrame:frame];
-        [_authorLabel setFont:JABody3Font];
+        [_authorLabel setFont:JABodyFont];
         [_authorLabel setTextColor:JABlack800Color];
         [self.clickableArea addSubview:_authorLabel];
     }else if (CGRectEqualToRect(frame, _authorLabel.frame)) {
@@ -126,7 +126,7 @@
 {
     if (!VALID_NOTEMPTY(_descriptionLabel, UILabel)) {
         _descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(kXOffset, CGRectGetMaxY(self.authorLabel.frame) + 16, self.width - 32, 20)];
-        [_descriptionLabel setFont:JABody3Font];
+        [_descriptionLabel setFont:JABodyFont];
         [_descriptionLabel setTextColor:JABlack800Color];
         [_descriptionLabel setNumberOfLines:0];
         [self.clickableArea addSubview:_descriptionLabel];

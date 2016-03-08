@@ -83,7 +83,7 @@
     if (!VALID_NOTEMPTY(_facebookButton, UIButton)) {
         _facebookButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_facebookButton setFrame:CGRectMake((self.view.width - kWidth)/2, CGRectGetMaxY(self.topMessageLabel.frame) + kTopMess2FacebookButton, kWidth, 50)];
-        [_facebookButton.titleLabel setFont:JABody2Font];
+        [_facebookButton.titleLabel setFont:JABodyFont];
         [_facebookButton setTitle:[STRING_LOGIN_WITH_FACEBOOK uppercaseString] forState:UIControlStateNormal];
         [_facebookButton addTarget:self action:@selector(facebookLoginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
