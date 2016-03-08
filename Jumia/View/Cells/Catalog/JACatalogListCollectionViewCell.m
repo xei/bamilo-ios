@@ -177,11 +177,11 @@
         [self setForRTL:self.selectorButton];
     }
     
-    CGFloat recentlyViewedX = self.discountLabel.superview.width - self.discountLabel.frame.size.width - distXImage;
+    CGFloat recentlyViewedX = self.recentProductBadgeLabel.superview.width - self.recentProductBadgeLabel.frame.size.width - distXImage;
     if (self.hideRating) {
         recentlyViewedX = priceLineRect.origin.x;
     }
-    CGRect recentProductBadgeRect = CGRectMake(recentlyViewedX, CGRectGetMaxY(discountLabelRect) + 10.0f, self.discountLabel.frame.size.width, self.discountLabel.frame.size.height);
+    CGRect recentProductBadgeRect = CGRectMake(recentlyViewedX, CGRectGetMaxY(discountLabelRect) + 10.0f, self.recentProductBadgeLabel.frame.size.width, self.recentProductBadgeLabel.frame.size.height);
     if (!CGRectEqualToRect(recentProductBadgeRect, self.recentProductBadgeLabel.frame)) {
         [self.recentProductBadgeLabel setFrame:recentProductBadgeRect];
     }

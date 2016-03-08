@@ -256,7 +256,8 @@
         _discountLabel.hidden = YES;
     }
     _discountLabel.font = JACaptionFont;
-    _discountLabel.frame = CGRectMake(0.0f, 0.0f, 30.0f, 16.0f);
+    [_discountLabel sizeToFit];
+    _discountLabel.frame = CGRectMake(0.0f, 0.0f, _discountLabel.width+8, 16.0f);
     
 
     if (!self.hideRating) {
