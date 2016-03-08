@@ -62,7 +62,7 @@
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [button setTitle:[name uppercaseString] forState:UIControlStateNormal];
-    [button.titleLabel setFont:JAButtonFont];
+    [button.titleLabel setFont:JABUTTONFont];
     [button setBackgroundColor:JAOrange1Color];
     [button setTintColor:[UIColor whiteColor]];
     [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];

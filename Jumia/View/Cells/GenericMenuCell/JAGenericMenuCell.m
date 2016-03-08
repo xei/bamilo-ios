@@ -72,7 +72,7 @@
     CGFloat textTopOffset = 0.0f;
     CGFloat leftMargin = kLeftAndRightMargin;
     CGFloat rightMargin = kLeftAndRightMargin;
-    UIFont* font = JAList2Font;
+    UIFont* font = JADisplay3Font;
     UIColor* textColor = [UIColor blackColor];
     NSString* text = cellText;
     
@@ -103,7 +103,7 @@
         textTopOffset = 2.0f;
         
         text = [cellText uppercaseString];
-        font = JACaption2Font;
+        font = JACaptionFont;
         
         accessoryImageWidth = accessoryImageMargin = iconImageWidth = iconImageRightMargin = separatorHeight = 0.0f;
         

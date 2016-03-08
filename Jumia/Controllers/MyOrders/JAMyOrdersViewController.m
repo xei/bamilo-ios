@@ -104,7 +104,7 @@ UICollectionViewDelegateFlowLayout>
 -(UILabel *)emptyOrderHistoryLabel {
     if (!VALID_NOTEMPTY(_emptyOrderHistoryLabel, UILabel)) {
         _emptyOrderHistoryLabel = [UILabel new];
-        [_emptyOrderHistoryLabel setFont:JABody3Font];
+        [_emptyOrderHistoryLabel setFont:JABodyFont];
         [_emptyOrderHistoryLabel setTextColor:JABlack800Color];
         [_emptyOrderHistoryLabel setText:STRING_NO_ORDERS];
         [_emptyOrderHistoryLabel sizeToFit];

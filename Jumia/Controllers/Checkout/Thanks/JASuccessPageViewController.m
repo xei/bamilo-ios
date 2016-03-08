@@ -68,7 +68,7 @@
         _thankYouLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.topImageView.frame) + 16.f, viewWidth-2*kLateralMargin, 20)];
         [_thankYouLabel setText:STRING_THANK_YOU_ORDER_TITLE];
         [_thankYouLabel setTextAlignment:NSTextAlignmentCenter];
-        [_thankYouLabel setFont:JADisplay1NewFont];
+        [_thankYouLabel setFont:JADisplay1Font];
         [_thankYouLabel setTextColor:JAGreen1Color];
         [_thankYouLabel setHeight:[_thankYouLabel sizeThatFits:CGSizeMake(viewWidth, CGFLOAT_MAX)].height];
     }

@@ -90,7 +90,7 @@
 {
     if (!VALID_NOTEMPTY(_bottomMessageLabel, UILabel)) {
         _bottomMessageLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.imageView.frame) + kBetweenMargin, kButtonWidth, 200)];
-        [_bottomMessageLabel setFont:JABody3Font];
+        [_bottomMessageLabel setFont:JABodyFont];
         [_bottomMessageLabel setTextColor:JABlack800Color];
         [_bottomMessageLabel setTextAlignment:NSTextAlignmentCenter];
         [_bottomMessageLabel setNumberOfLines:0];

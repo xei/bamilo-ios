@@ -73,7 +73,7 @@
         _messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.filterImageView.frame) + kImageBottomMargin, self.width - 2*kLateralMargin, 100)];
         [_messageLabel setNumberOfLines:0];
         [_messageLabel setTextAlignment:NSTextAlignmentCenter];
-        [_messageLabel setFont:JABody2Font];
+        [_messageLabel setFont:JABodyFont];
         [_messageLabel setTextColor:JABlack800Color];
         [_messageLabel setText:STRING_FILTER_NO_RESULTS_TIP];
         [_messageLabel sizeToFit];

@@ -65,19 +65,19 @@
     [self.addToCartButton setBackgroundColor:JAOrange1Color];
     [self.addToCartButton setXRightAligned:16.f];
     [self.addToCartButton setYCenterAligned];
-    self.addToCartButton.titleLabel.font = JABody2Font;
+    self.addToCartButton.titleLabel.font = JABodyFont;
     [self.addToCartButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.addToCartButton setTitle:STRING_BUY_NOW forState:UIControlStateNormal];
     
     [self.priceLabel setWidth:self.addToCartButton.x - 20];
     [self.priceLabel setX:10.f];
-    self.priceLabel.font = JABody3Font;
+    self.priceLabel.font = JABodyFont;
     self.priceLabel.textColor = JABlackColor;
     [self.priceLabel setHidden:YES];
     
     [self.sellerLabel setX:10.f];
     [self.sellerLabel setWidth:self.addToCartButton.x - 20];
-    self.sellerLabel.font = JABody1Font;
+    self.sellerLabel.font = JABodyFont;
     self.sellerLabel.textColor = JABlackColor;
     self.sellerLabel.numberOfLines = 1;
     self.sellerLabel.text = productOffer.seller.name;
@@ -139,7 +139,7 @@
     if ([self.productOfferSeller.productSimples count] > 1) {
         [self.sizeButton setWidth:self.width-10-self.addToCartButton.x];
         [self.sizeButton setX:10.f];
-        self.sizeButton.titleLabel.font = JABody3Font;
+        self.sizeButton.titleLabel.font = JABodyFont;
         [self.sizeButton setTitle:[NSString stringWithFormat:STRING_SIZE_WITH_VALUE,productSimple.variation]
                          forState:UIControlStateNormal];
         [self.sizeButton sizeToFit];
