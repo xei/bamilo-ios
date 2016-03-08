@@ -254,14 +254,7 @@
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     if(VALID_NOTEMPTY(productsToAdd, NSArray))
     {
-        for (int i = 0; i < [productsToAdd count]; i++)
-        {
-            NSString *simpleSku = [productsToAdd objectAtIndex:i];
-            if(VALID_NOTEMPTY(simpleSku, NSString))
-            {
-                [parameters setValue:simpleSku forKey:[NSString stringWithFormat:@"productList[%d]", i]];
-            }
-        }
+        [parameters setValue:productsToAdd forKey:[NSString stringWithFormat:@"product_list[]"]];
     }
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_ADD_MULTIPLE_ORDER]]

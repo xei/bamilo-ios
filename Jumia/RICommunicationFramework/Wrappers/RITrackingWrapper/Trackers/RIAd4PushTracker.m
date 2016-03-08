@@ -793,7 +793,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
             {
                 // Cart
                 [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCartNotification
-                                                                    object:nil];
+                                                                    object:arguments];
             }
             else if ([key isEqualToString:@"w"])
             {

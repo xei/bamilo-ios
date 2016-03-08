@@ -244,7 +244,7 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(openCart)
+                                             selector:@selector(openCart:)
                                                  name:kOpenCartNotification
                                                object:nil];
     
@@ -1957,24 +1957,38 @@
     [self showSearchView];
 }
 
-- (void)openCart
+- (void)openCart:(NSNotification*) notification
 {
     if ([[self topViewController] isKindOfClass:[JALoadCountryViewController class]]) {
         //inore the notification
         return;
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
-                                                        object:nil];
-    
-    if (![[self topViewController] isKindOfClass:[JACartViewController class]])
-    {
-        JACartViewController *cartViewController = [[JACartViewController alloc] init];
-        [cartViewController setCart:self.cart];
+    typedef void (^GoToCartBlock)(void);
+    GoToCartBlock goToCartBlock = ^void{
         
-        [self popToRootViewControllerAnimated:NO];
-        [self.tabBarView selectButtonAtIndex:2];
-        [self pushViewController:cartViewController animated:NO];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
+                                                            object:nil];
+        
+        if (![[self topViewController] isKindOfClass:[JACartViewController class]])
+        {
+            JACartViewController *cartViewController = [[JACartViewController alloc] init];
+            [cartViewController setCart:self.cart];
+            
+            [self popToRootViewControllerAnimated:NO];
+            [self.tabBarView selectButtonAtIndex:2];
+            [self pushViewController:cartViewController animated:NO];
+        }
+    };
+    
+    if (VALID_NOTEMPTY(notification.object, NSString)) {
+        [RICart addMultipleProducts:[notification.object componentsSeparatedByString:@"_"] withSuccessBlock:^(RICart *cart, NSArray *productsNotAdded) {
+            goToCartBlock();
+        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock) {
+            goToCartBlock();
+        }];
+    }else{
+        goToCartBlock();
     }
     
 }
