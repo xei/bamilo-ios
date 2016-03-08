@@ -38,10 +38,10 @@
     _selected = selected;
     if (selected) {
         [self.imageView setImage:self.highlightedImage];
-        [self.label setTextColor:kLabelHighlightedTextColor];
+        [self.label setTextColor:JAOrange1Color];
     } else {
         [self.imageView setImage:self.normalImage];
-        [self.label setTextColor:kLabelNormalTextColor];
+        [self.label setTextColor:JABlackColor];
     }
 }
 
@@ -53,11 +53,11 @@
     // Adjust variables accordingly.
     CGFloat labelBottomMargin = kLabelBottomMargin;
     CGFloat imageOffset = kImageTopMargin;
-    UIFont *numberLabelFont = [UIFont fontWithName:kFontRegularName size:8.f];
+    UIFont *numberLabelFont = JACaptionFont;
     if ([@"Zawgyi-One" isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:kFontRegularNameKey]]) {
         labelBottomMargin = kShopLabelBottomMargin;
         imageOffset = kShopImageTopMargin;
-        numberLabelFont = [UIFont fontWithName:@"HelveticaNeue" size:8.f];
+        numberLabelFont = [UIFont fontWithName:@"HelveticaNeue" size:numberLabelFont.pointSize];
     }
     
     if (ISEMPTY(self.clickableView)) {
@@ -69,7 +69,7 @@
     
     if (ISEMPTY(self.separatorView)) {
         self.separatorView = [UIView new];
-        self.separatorView.backgroundColor = JABlack700Color;
+        self.separatorView.backgroundColor = JABlack400Color;
         self.separatorView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
         [self.clickableView addSubview:self.separatorView];
     }
@@ -96,7 +96,7 @@
         self.numberLabel = [UILabel new];
         self.numberLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
         self.numberLabel.font = numberLabelFont;
-        self.numberLabel.textColor = [UIColor whiteColor];
+        self.numberLabel.textColor = JAWhiteColor;
         self.numberLabel.adjustsFontSizeToFitWidth = YES;
         self.numberLabel.textAlignment = NSTextAlignmentCenter;
         [self.numberLabel setBackgroundColor:[UIColor redColor]];
@@ -106,7 +106,7 @@
     if (ISEMPTY(self.label)) {
         self.label = [UILabel new];
         self.label.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
-        self.label.font = [UIFont fontWithName:kFontRegularName size:10.0f];
+        self.label.font = JACaptionFont;
         self.label.textAlignment = NSTextAlignmentCenter;
         [self.clickableView addSubview:self.label];
     }
@@ -124,10 +124,10 @@
 
 - (void)setNumber:(NSInteger)number
 {
-    CGRect frame = CGRectMake(self.imageView.bounds.size.width / 2 + 2.f,
+    CGRect frame = CGRectMake(self.imageView.bounds.size.width / 2 + 1.f,
                               0.f,
-                              10.f,
-                              10.f);
+                              11.f,
+                              11.f);
     [self.numberLabel setFrame:frame];
     self.numberLabel.text = [NSString stringWithFormat:@"%ld", (long)number];
     self.numberLabel.layer.masksToBounds = YES;
