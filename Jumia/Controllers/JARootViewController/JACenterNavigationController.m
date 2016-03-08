@@ -1839,7 +1839,7 @@
     [self.navigationBar setShadowImage:[UIImage new]];
     
     [self.navigationBarView.cartButton addTarget:self
-                                          action:@selector(openCart)
+                                          action:@selector(openCart:)
                                 forControlEvents:UIControlEventTouchUpInside];
     [self.navigationBarView.leftButton addTarget:self
                                           action:@selector(openMenu)
