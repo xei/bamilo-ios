@@ -1826,7 +1826,7 @@
     [self.navigationItem setHidesBackButton:YES
                                    animated:NO];
     
-    self.navigationBarView = [[JACustomNavigationBarView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    self.navigationBarView = [[JACustomNavigationBarView alloc] initWithFrame:CGRectMake(0, 0, 320, kNavigationBarHeight)];
     [self.navigationBarView initialSetup];
 
     
@@ -1981,7 +1981,7 @@
         }
     };
     
-    if (VALID_NOTEMPTY(notification.object, NSString)) {
+    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.object, NSString)) {
         [RICart addMultipleProducts:[notification.object componentsSeparatedByString:@"_"] withSuccessBlock:^(RICart *cart, NSArray *productsNotAdded) {
             goToCartBlock();
         } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock) {
