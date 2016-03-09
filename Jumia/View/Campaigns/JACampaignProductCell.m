@@ -323,6 +323,8 @@
     [self.titleLabel setText:campaignProduct.name];
     
     self.discountLabel.text = [NSString stringWithFormat:STRING_FORMAT_OFF,[campaignProduct.maxSavingPercentage integerValue]];
+    [self.discountLabel sizeToFit];
+    self.discountLabel.width += 8.f;
     self.discountLabel.hidden = ![campaignProduct.maxSavingPercentage boolValue];
     
     if (VALID_NOTEMPTY(self.campaignProduct.remainingTime, NSNumber)) {
@@ -400,7 +402,9 @@
     [self.titleLabel setWidth:self.width - 2*kLateralMargin];
     [self setForRTL:self.titleLabel];
     
-    CGRect discountLabelRect = CGRectMake(self.discountLabel.superview.width - 60 - kLateralMargin, kTopMargin, 60, 19);
+    [self.discountLabel sizeToFit];
+    
+    CGRect discountLabelRect = CGRectMake(self.discountLabel.superview.width - self.discountLabel.width-8.f - kLateralMargin, kTopMargin, self.discountLabel.width+8.f, 19);
     if (!CGRectEqualToRect(discountLabelRect, self.discountLabel.frame)) {
         [self.discountLabel setFrame:discountLabelRect];
         [self setForRTL:self.discountLabel];
