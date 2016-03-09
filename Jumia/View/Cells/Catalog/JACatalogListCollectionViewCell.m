@@ -26,9 +26,9 @@
 {
     if (!VALID_NOTEMPTY(_selectorButton, UIButton)) {
         _selectorButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_selectorButton setImage:[UIImage imageNamed:@"check_empty"] forState:UIControlStateNormal];
-        [_selectorButton setImage:[UIImage imageNamed:@"check"] forState:UIControlStateSelected];
-        [_selectorButton setImage:[UIImage imageNamed:@"check"] forState:UIControlStateHighlighted];
+        [_selectorButton setImage:[UIImage imageNamed:@"noSelectionCheckmark"] forState:UIControlStateNormal];
+        [_selectorButton setImage:[UIImage imageNamed:@"selectionCheckmark"] forState:UIControlStateSelected];
+        [_selectorButton setImage:[UIImage imageNamed:@"selectionCheckmark"] forState:UIControlStateHighlighted];
         [_selectorButton setFrame:CGRectMake(self.favoriteButton.x, 8, 30, 30)];
         if (RI_IS_RTL) {
             [_selectorButton flipViewImage];
