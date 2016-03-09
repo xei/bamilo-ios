@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define kNavigationBarHeight 44
+
 @interface JACustomNavigationBarView : UIView
 
 @property (nonatomic) UIImageView *logoImageView;

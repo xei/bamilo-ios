@@ -9,9 +9,6 @@
 #import "JACustomNavigationBarView.h"
 
 @interface JACustomNavigationBarView ()
-{
-    CGFloat _fontSize;
-}
 
 @end
 
@@ -41,7 +38,7 @@
         [_backButton setImage:[UIImage imageNamed:@"btn_back_pressed"] forState:UIControlStateSelected];
         [_backButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
         [_backButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
-        [_backButton.titleLabel setFont:[UIFont fontWithName:kFontLightName size:_fontSize]];
+        [self setLabelFont:_backButton.titleLabel withFont:[UIFont fontWithName:kFontLightName size:17]];
     }
     return _backButton;
 }
@@ -78,7 +75,7 @@
         _cartCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(288, 6, 25, 15)];
         [_cartCountLabel setTextAlignment:NSTextAlignmentCenter];
         [_cartCountLabel setTextColor:JAOrange1Color];
-        [_cartCountLabel setFont:[UIFont fontWithName:kFontRegularName size:9]];
+        [self setLabelFont:_cartCountLabel withFont:[UIFont fontWithName:kFontRegularName size:9]];
     }
     return _cartCountLabel;
 }
@@ -98,9 +95,9 @@
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 0, 230, 44)];
         [_titleLabel setLineBreakMode:NSLineBreakByTruncatingMiddle];
         [_titleLabel setTextAlignment:NSTextAlignmentCenter];
-        [_titleLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
-        [_titleLabel setTintColor:JABlack800Color];
-        [_titleLabel setFont:[UIFont fontWithName:kFontRegularName size:_fontSize]];
+        [_titleLabel setTextColor:JABlackColor];
+        [_titleLabel setTintColor:JABlackColor];
+        [self setLabelFont:_titleLabel withFont:JADisplay3Font];
     }
     return _titleLabel;
 }
@@ -111,8 +108,8 @@
         _topTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 0, 230, 24)];
         [_topTitleLabel setLineBreakMode:NSLineBreakByTruncatingMiddle];
         [_topTitleLabel setTextAlignment:NSTextAlignmentCenter];
-        [_topTitleLabel setTintColor:JABlack800Color];
-        [_topTitleLabel setFont:[UIFont fontWithName:kFontRegularName size:14.0f]];
+        [_topTitleLabel setTintColor:JABlackColor];
+        [self setLabelFont:_topTitleLabel withFont:[UIFont fontWithName:kFontRegularName size:14.0f]];
     }
     return _topTitleLabel;
 }
@@ -123,8 +120,8 @@
         _bottomTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 24, 230, 20)];
         [_bottomTitleLabel setLineBreakMode:NSLineBreakByTruncatingMiddle];
         [_bottomTitleLabel setTextAlignment:NSTextAlignmentCenter];
-        [_bottomTitleLabel setTintColor:JABlack800Color];
-        [_bottomTitleLabel setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
+        [_bottomTitleLabel setTintColor:JABlackColor];
+        [self setLabelFont:_bottomTitleLabel withFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
     }
     return _bottomTitleLabel;
 }
@@ -133,11 +130,11 @@
 {
     if (!_editButton) {
         _editButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_editButton setFrame:CGRectMake(0, 8, 106, 34)];
+        [_editButton setFrame:CGRectMake(0, 0, 106, 44)];
         [_editButton setTitle:@"Edit" forState:UIControlStateNormal];
-        [_editButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+        [_editButton setTitleColor:JASysBlueColor forState:UIControlStateNormal];
         [_editButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
-        [_editButton.titleLabel setFont:[UIFont fontWithName:kFontLightName size:_fontSize]];
+        [self setLabelFont:_editButton.titleLabel withFont:JABodyFont];
     }
     return _editButton;
 }
@@ -146,13 +143,21 @@
 {
     if (!_doneButton) {
         _doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_doneButton setFrame:CGRectMake(214, 8, 106, 34)];
+        [_doneButton setFrame:CGRectMake(214, 0, 106, 44)];
         [_doneButton setTitle:@"Done" forState:UIControlStateNormal];
-        [_doneButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+        [_doneButton setTitleColor:JASysBlueColor forState:UIControlStateNormal];
         [_doneButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
-        [_doneButton.titleLabel setFont:[UIFont fontWithName:kFontLightName size:_fontSize]];
+        [self setLabelFont:_doneButton.titleLabel withFont:JABodyFont];
     }
     return _doneButton;
+}
+
+- (void)setLabelFont:(UILabel *)label withFont:(UIFont *)font
+{
+    [label setFont:font];
+    if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"]) {
+        [label setFont:[UIFont fontWithName:font.fontName size:font.pointSize-2]];
+    }
 }
 
 - (void)setFrame:(CGRect)frame
@@ -186,11 +191,6 @@
                                              selector:@selector(orientationChanged:)
                                                  name:UIDeviceOrientationDidChangeNotification
                                                object:nil];
-    
-    _fontSize = 17.0f;
-    if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"]) {
-        _fontSize = 14.0f;
-    }
     
     [self addSubview:self.leftButton];
     [self addSubview:self.backButton];
@@ -349,13 +349,12 @@
     CGFloat width = self.width;
     
     CGFloat leftMargin = 0.0f;
-    CGFloat backButtonLeftMargin = 4.0f;
+    CGFloat backButtonLeftInset = 10.0f;
     CGFloat editButtonLeftMargin = 7.0f;
     
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {
         leftMargin = 6.0f;
-        backButtonLeftMargin = 16.0f;
         editButtonLeftMargin = 16.0f;
     }
     
@@ -434,7 +433,16 @@
                 backButtonFinalWidth = 6.0f + backButtonMaxWidth + 11.0f;
             }
         }
-        [self.backButton setX:backButtonLeftMargin];
+        if (RI_IS_RTL) {
+            UIEdgeInsets insets = self.backButton.imageEdgeInsets;
+            insets.right = backButtonLeftInset;
+            [self.backButton setImageEdgeInsets:insets];
+        }else{
+            UIEdgeInsets insets = self.backButton.imageEdgeInsets;
+            insets.left = backButtonLeftInset;
+            [self.backButton setImageEdgeInsets:insets];
+        }
+        [self.backButton setX:leftMargin];
         leftItemFrame = self.backButton.frame;
     }
     else if(!self.leftButton.hidden)
