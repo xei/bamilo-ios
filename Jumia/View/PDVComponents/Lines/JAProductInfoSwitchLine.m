@@ -13,7 +13,7 @@
 - (UISwitch *)lineSwitch
 {
     if (!VALID(_lineSwitch, UISwitch)) {
-        _lineSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(self.width - 100, 0, 100, self.height)];
+        _lineSwitch = [[UISwitch alloc] init];
         [self addSubview:_lineSwitch];
     }
     return _lineSwitch;
