@@ -54,6 +54,7 @@
                                              collectionViewLayout:self.collectionViewFlowLayout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
+        _collectionView.scrollEnabled = NO;
         [_collectionView setBackgroundColor:[UIColor whiteColor]];
         [_collectionView registerClass:[JAOrderItemCollectionViewCell class] forCellWithReuseIdentifier:@"CellWithLines"];
     }
@@ -92,6 +93,20 @@
     }
     [self.myOrderResumeView setOrder:order];
     [self.collectionView reloadData];
+    
+    [self.collectionView setFrame:CGRectMake(self.collectionView.frame.origin.x,
+                                             self.collectionView.frame.origin.y,
+                                             self.collectionView.frame.size.width,
+                                             [self totalHeightForCollectionView])];
+    
+    [self setFrame:CGRectMake(0.0f, 0.0f, self.frame.size.width, CGRectGetMaxY(self.collectionView.frame))];
+}
+
+- (CGFloat)totalHeightForCollectionView
+{
+    CGFloat totalHeight = [self collectionView:self.collectionView layout:self.collectionViewFlowLayout sizeForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]].height * [self collectionView:self.collectionView numberOfItemsInSection:0];
+    
+    return totalHeight;
 }
 
 #pragma mark - collectionView

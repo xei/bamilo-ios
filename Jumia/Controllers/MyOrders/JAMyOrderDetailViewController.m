@@ -52,7 +52,7 @@
     [super viewDidLoad];
 
     self.navBarLayout.showLogo = NO;
-    self.navBarLayout.title = STRING_MY_ORDERS;
+    self.navBarLayout.title = STRING_ORDER_STATUS;
     self.navBarLayout.showBackButton = YES;
     
     self.apiResponse = RIApiResponseSuccess;
@@ -106,6 +106,8 @@
 -(void)setupViews {
     [self.orderDetailsView setupWithOrder:self.trackingOrder frame:self.viewBounds];
     [self.orderDetailsView setHidden:NO];
+    
+    [self.orderDetailsScrollView setContentSize:CGSizeMake(self.orderDetailsView.frame.size.width, self.orderDetailsView.frame.size.height)];
 }
 
 - (void)onOrientationChanged
