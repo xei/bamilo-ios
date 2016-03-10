@@ -318,6 +318,9 @@
     [self.view addSubview:self.searchBarBackground];
     
     CGFloat horizontalMargin = 3.0f; //adjustment to native searchbar margin
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        horizontalMargin = 10.0f;
+    }
     CGFloat verticalMargin = 2.0f;
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(self.searchBarBackground.bounds.origin.x + horizontalMargin,
                                                                    self.searchBarBackground.bounds.origin.y + verticalMargin,
@@ -364,6 +367,9 @@
                                                 self.view.bounds.size.width,
                                                 kSearchViewBarHeight);
     CGFloat horizontalMargin = 3.0f; //adjustment to native searchbar margin
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        horizontalMargin = 10.0f;
+    }
     CGFloat verticalMargin = 2.0f;
     self.searchBar.frame = CGRectMake(self.searchBarBackground.bounds.origin.x + horizontalMargin,
                                       self.searchBarBackground.bounds.origin.y + verticalMargin,
