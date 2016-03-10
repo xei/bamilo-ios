@@ -27,6 +27,7 @@
     [super viewDidLoad];
     
     self.navBarLayout.showCartButton = NO;
+    self.navBarLayout.showSeparatorView = NO;
     self.tabBarIsVisible = YES;
     self.searchBarIsVisible = YES;
     

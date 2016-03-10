@@ -20,6 +20,7 @@
         self.showCartButton=YES;
         self.showSearchButton=YES;
         self.showLogo=YES;
+        self.showSeparatorView=YES;
     }
     return self;
 }

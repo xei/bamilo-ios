@@ -14,6 +14,16 @@
 
 @implementation JACustomNavigationBarView
 
+- (UIView *)separatorView
+{
+    if (!_separatorView) {
+        _separatorView = [UIView new];
+        [_separatorView setBackgroundColor:JABlack400Color];
+        [_separatorView setFrame:CGRectMake(0.0f, 43.0f, 320.0f, 1.0f)];
+    }
+    return _separatorView;
+}
+
 - (UIButton *)leftButton
 {
     if (!_leftButton) {
@@ -183,6 +193,10 @@
                               self.frame.origin.y,
                               initialWidth,
                               self.frame.size.height)];
+    [self.separatorView setFrame:CGRectMake(self.bounds.origin.x,
+                                            self.bounds.size.height - self.separatorView.frame.size.height,
+                                            self.bounds.size.width,
+                                            self.separatorView.frame.size.height)];
     
     self.backgroundColor = JANavBarBackgroundGrey;
     
@@ -203,6 +217,7 @@
     [self addSubview:self.bottomTitleLabel];
     [self addSubview:self.editButton];
     [self addSubview:self.doneButton];
+    [self addSubview:self.separatorView];
     
     if (RI_IS_RTL) {
         [self.editButton flipViewAlignment];
@@ -230,6 +245,7 @@
     }
     if (self.width != width) {
         self.width = width;
+        self.separatorView.width = width;
         [self adjustTitleFrame];
     }
 }
@@ -242,6 +258,8 @@
 
 - (void)setupWithNavigationBarLayout:(JANavigationBarLayout*)layout
 {
+    self.separatorView.hidden = !layout.showSeparatorView;
+    
     //left side
     if (layout.showBackButton) {
         [self showBackButtonWithTitle:layout.backButtonTitle];

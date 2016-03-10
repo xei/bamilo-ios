@@ -23,6 +23,7 @@
 @property (nonatomic) UIButton *editButton;
 @property (nonatomic) UIButton *doneButton;
 @property (nonatomic) UIButton *searchButton;
+@property (nonatomic) UIView *separatorView;
 
 - (void)initialSetup;
 - (void)setupWithNavigationBarLayout:(JANavigationBarLayout*)layout;
