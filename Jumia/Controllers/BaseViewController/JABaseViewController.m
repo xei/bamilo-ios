@@ -317,8 +317,8 @@
     self.searchBarBackground.backgroundColor = JANavBarBackgroundGrey;
     [self.view addSubview:self.searchBarBackground];
     
-    CGFloat horizontalMargin = 12.0f; //value by design
-    CGFloat verticalMargin = 3.0f; //value by design
+    CGFloat horizontalMargin = 3.0f; //adjustment to native searchbar margin
+    CGFloat verticalMargin = 2.0f;
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(self.searchBarBackground.bounds.origin.x + horizontalMargin,
                                                                    self.searchBarBackground.bounds.origin.y + verticalMargin,
                                                                    self.searchBarBackground.bounds.size.width - horizontalMargin * 2,
@@ -363,14 +363,14 @@
                                                 self.view.bounds.origin.y,
                                                 self.view.bounds.size.width,
                                                 kSearchViewBarHeight);
-    CGFloat horizontalMargin = 12.0f; //value by design
-    CGFloat verticalMargin = 2.0f; //value by design
+    CGFloat horizontalMargin = 3.0f; //adjustment to native searchbar margin
+    CGFloat verticalMargin = 2.0f;
     self.searchBar.frame = CGRectMake(self.searchBarBackground.bounds.origin.x + horizontalMargin,
                                       self.searchBarBackground.bounds.origin.y + verticalMargin,
                                       self.searchBarBackground.bounds.size.width - horizontalMargin * 2,
                                       self.searchBarBackground.bounds.size.height - verticalMargin * 2);
     
-    self.searchIconImageView.frame = CGRectMake(self.searchBar.frame.size.width - horizontalMargin - self.searchIconImageView.frame.size.width,
+    self.searchIconImageView.frame = CGRectMake(self.searchBar.frame.size.width - 12.0 - self.searchIconImageView.frame.size.width,
                                                 (self.searchBar.frame.size.height - self.searchIconImageView.frame.size.height) / 2,
                                                 self.searchIconImageView.frame.size.width,
                                                 self.searchIconImageView.frame.size.height);
