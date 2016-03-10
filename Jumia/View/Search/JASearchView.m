@@ -85,7 +85,7 @@
                 
         UITextField *textFieldSearch = [self.searchBar valueForKey:@"_searchField"];
         textFieldSearch.font = [UIFont fontWithName:kFontRegularName size:textFieldSearch.font.pointSize];
-        textFieldSearch.backgroundColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0f];
+        textFieldSearch.backgroundColor = JAWhiteColor;
         
         [self addSubview:self.searchBar];
         
