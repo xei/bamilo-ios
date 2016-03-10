@@ -172,9 +172,9 @@
 
 
 #warning colors to remove (they were replaced for weird colors for a quick detection)
-#define JANavBarBackgroundGrey UIColorFromRGB(0xff00ff)     // old 0xeaeaea
-#define JABackgroundGrey UIColorFromRGB(0xff00ff)           // old 0xc8c8c8
-#define JAHomePageBackgroundGrey UIColorFromRGB(0xff00ff)   // old 0xf9f9f9
-#define JAButtonOrange UIColorFromRGB(0xff00ff)             // old 0xfaa41a
-#define JAButtonTextOrange UIColorFromRGB(0xff00ff)         // old 0x4e4e4e
-#define JALabelGrey UIColorFromRGB(0xff00ff)                // old 0xf0f0f0
+#define JANavBarBackgroundGrey JABlack300Color              // old 0xeaeaea
+#define JABackgroundGrey JAWhiteColor                       // old 0xc8c8c8
+#define JAHomePageBackgroundGrey JABlack200Color            // old 0xf9f9f9
+#define JAButtonOrange JAOrange1Color                       // old 0xfaa41a
+#define JAButtonTextOrange JAOrange2Color                   // old 0x4e4e4e
+#define JALabelGrey JABlack400Color                         // old 0xf0f0f0

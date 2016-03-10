@@ -38,7 +38,7 @@
 
 - (UIImageView *)arrow
 {
-    CGRect frame = CGRectMake(self.width - 16, self.height/2 - 6, 8, 12);
+    CGRect frame = CGRectMake(self.width - 8 - 16, self.height/2 - 6, 8, 12);
     if (!VALID_NOTEMPTY(_arrow, UIImageView)) {
         _arrow = [[UIImageView alloc] initWithFrame:frame];
         [_arrow setImage:[UIImage imageNamed:@"arrow_moreinfo"]];

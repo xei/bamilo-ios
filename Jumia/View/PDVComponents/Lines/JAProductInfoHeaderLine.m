@@ -18,7 +18,7 @@
 {
     self = [super init];
     if (self) {
-        [self setFrame:CGRectMake(0, 0, 320, 80)];
+        [self setFrame:CGRectMake(0, 0, 320, kProductInfoHeaderLineHeight)];
         [self setDefaults];
     }
     return self;
@@ -35,12 +35,12 @@
 
 - (void)setDefaults
 {
-    [self setBackgroundColor:UIColorFromRGB(0xf0f0f0)];
+    [self setBackgroundColor:JABlack300Color];
 }
 
 - (UILabel *)label
 {
-    [super.label setFont:JACaptionFont];
+    [super.label setFont:JAHEADLINEFont];
     return super.label;
 }
 
