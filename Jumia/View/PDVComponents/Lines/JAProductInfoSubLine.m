@@ -48,7 +48,7 @@
 
 - (UILabel *)label
 {
-    [super.label setFont:JADisplay3Font];
+    [super.label setFont:JAListFont];
     return super.label;
 }
 

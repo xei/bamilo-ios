@@ -50,7 +50,7 @@
 {
     if (!VALID(_titleLineLabel, UILabel)) {
         _titleLineLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.lineContentXOffset, kTopMargin, self.width, 16.f)];
-        [_titleLineLabel setFont:JADisplay3Font];
+        [_titleLineLabel setFont:JAListFont];
         [_titleLineLabel setTextColor:JABlackColor];
         [self addSubview:_titleLineLabel];
     }
@@ -60,8 +60,8 @@
 - (UILabel *)subTitleLineLabel
 {
     if (!VALID(_subTitleLineLabel, UILabel)) {
-        _subTitleLineLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.lineContentXOffset, CGRectGetMaxY(self.titleLineLabel.frame), self.width, 16.f)];
-        [_subTitleLineLabel setFont:JACaptionFont];
+        _subTitleLineLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.lineContentXOffset, CGRectGetMaxY(self.titleLineLabel.frame) + 6.f, self.width, 16.f)];
+        [_subTitleLineLabel setFont:JABodyFont];
         [_subTitleLineLabel setTextColor:JABlack800Color];
         [self addSubview:_subTitleLineLabel];
     }
