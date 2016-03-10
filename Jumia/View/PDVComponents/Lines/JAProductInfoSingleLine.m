@@ -17,7 +17,7 @@
 -(UILabel *)lineLabel {
     if(!VALID_NOTEMPTY(_lineLabel, UILabel)) {
         _lineLabel = [UILabel new];
-        [_lineLabel setFont:JADisplay3Font];
+        [_lineLabel setFont:JAListFont];
         [_lineLabel setTextColor:JABlackColor];
         [_lineLabel setFrame:CGRectMake(self.lineContentXOffset, 0.f,
                                         self.width - self.lineContentXOffset, self.height)];
