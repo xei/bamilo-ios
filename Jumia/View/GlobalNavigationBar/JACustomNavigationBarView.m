@@ -89,9 +89,9 @@
         }
         
         _cartCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(301,
-                                                                    10,
-                                                                    11.f,
-                                                                    11.f)];
+                                                                    6,
+                                                                    18.f,
+                                                                    18.f)];
         _cartCountLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
         _cartCountLabel.font = font;
         _cartCountLabel.textColor = JAWhiteColor;
@@ -574,9 +574,9 @@
 - (void)updateCartProductCount:(NSNumber*)cartNumber
 {
     CGRect frame = CGRectMake(301,
-                              10,
-                              11.f,
-                              11.f);
+                              8,
+                              15.f,
+                              15.f);
     self.cartCountLabel.frame = frame;
     [self.cartCountLabel setText:[NSString stringWithFormat:@"%lld", [cartNumber longLongValue]]];
     self.cartCountLabel.layer.masksToBounds = YES;
