@@ -100,7 +100,7 @@
         self.numberLabel.adjustsFontSizeToFitWidth = YES;
         self.numberLabel.textAlignment = NSTextAlignmentCenter;
         [self.numberLabel setBackgroundColor:[UIColor redColor]];
-        [self.imageView addSubview:self.numberLabel];
+        [self addSubview:self.numberLabel];
     }
     
     if (ISEMPTY(self.label)) {
@@ -124,10 +124,10 @@
 
 - (void)setNumber:(NSInteger)number
 {
-    CGRect frame = CGRectMake(self.imageView.bounds.size.width / 2 + 1.f,
-                              0.f,
-                              11.f,
-                              11.f);
+    CGRect frame = CGRectMake(self.bounds.size.width / 2 + 1.f,
+                              8.f,
+                              15.f,
+                              15.f);
     [self.numberLabel setFrame:frame];
     self.numberLabel.text = [NSString stringWithFormat:@"%ld", (long)number];
     self.numberLabel.layer.masksToBounds = YES;
