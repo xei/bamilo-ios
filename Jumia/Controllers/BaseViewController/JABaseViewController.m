@@ -16,7 +16,7 @@
 #import "JAAuthenticationViewController.h"
 #import "JACenterNavigationController.h"
 
-#define kSearchViewBarHeight 32.0f
+#define kSearchViewBarHeight 44.0f
 
 @interface JABaseViewController () {
     CGRect _noConnectionViewFrame;
@@ -317,15 +317,23 @@
     self.searchBarBackground.backgroundColor = JANavBarBackgroundGrey;
     [self.view addSubview:self.searchBarBackground];
     
+    UIView* separatorView = [UIView new];
+    [separatorView setBackgroundColor:JABlack400Color];
+    [separatorView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    [separatorView setFrame:CGRectMake(self.searchBarBackground.bounds.origin.x,
+                                       self.searchBarBackground.bounds.size.height - 1.0f,
+                                       self.searchBarBackground.bounds.size.width,
+                                       1.0f)];
+    [self.searchBarBackground addSubview:separatorView];
+    
     CGFloat horizontalMargin = 3.0f; //adjustment to native searchbar margin
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         horizontalMargin = 10.0f;
     }
-    CGFloat verticalMargin = 2.0f;
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(self.searchBarBackground.bounds.origin.x + horizontalMargin,
-                                                                   self.searchBarBackground.bounds.origin.y + verticalMargin,
+                                                                   self.searchBarBackground.bounds.origin.y,
                                                                    self.searchBarBackground.bounds.size.width - horizontalMargin * 2,
-                                                                   self.searchBarBackground.bounds.size.height - verticalMargin * 2)];
+                                                                   self.searchBarBackground.bounds.size.height - 1.0f)];
     self.searchBar.delegate = self;
     self.searchBar.barTintColor = JANavBarBackgroundGrey;
     self.searchBar.placeholder = STRING_SEARCH_PLACEHOLDER;
@@ -336,7 +344,7 @@
     
     UITextField *textFieldSearch = [self.searchBar valueForKey:@"_searchField"];
     textFieldSearch.font = [UIFont fontWithName:kFontRegularName size:textFieldSearch.font.pointSize];
-    textFieldSearch.backgroundColor = [UIColor colorWithRed:242.0 / 255.0 green:242.0 / 255.0 blue:242.0 / 255.0 alpha:1.0f];
+    textFieldSearch.backgroundColor = JAWhiteColor;
     //remove magnifying lens
     [textFieldSearch setLeftViewMode:UITextFieldViewModeNever];
     
@@ -370,11 +378,10 @@
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         horizontalMargin = 10.0f;
     }
-    CGFloat verticalMargin = 2.0f;
     self.searchBar.frame = CGRectMake(self.searchBarBackground.bounds.origin.x + horizontalMargin,
-                                      self.searchBarBackground.bounds.origin.y + verticalMargin,
+                                      self.searchBarBackground.bounds.origin.y,
                                       self.searchBarBackground.bounds.size.width - horizontalMargin * 2,
-                                      self.searchBarBackground.bounds.size.height - verticalMargin * 2);
+                                      self.searchBarBackground.bounds.size.height - 1.0f);
     
     self.searchIconImageView.frame = CGRectMake(self.searchBar.frame.size.width - 12.0 - self.searchIconImageView.frame.size.width,
                                                 (self.searchBar.frame.size.height - self.searchIconImageView.frame.size.height) / 2,

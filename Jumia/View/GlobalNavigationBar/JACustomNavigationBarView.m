@@ -14,6 +14,16 @@
 
 @implementation JACustomNavigationBarView
 
+- (UIView *)separatorView
+{
+    if (!_separatorView) {
+        _separatorView = [UIView new];
+        [_separatorView setBackgroundColor:JABlack400Color];
+        [_separatorView setFrame:CGRectMake(0.0f, 43.0f, 320.0f, 1.0f)];
+    }
+    return _separatorView;
+}
+
 - (UIButton *)leftButton
 {
     if (!_leftButton) {
@@ -49,9 +59,9 @@
         _cartButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_cartButton setFrame:CGRectMake(275, 0, 45, 44)];
         [_cartButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
-        [_cartButton setImage:[UIImage imageNamed:@"btn_cart"] forState:UIControlStateNormal];
-        [_cartButton setImage:[UIImage imageNamed:@"btn_cart_pressed"] forState:UIControlStateHighlighted];
-        [_cartButton setImage:[UIImage imageNamed:@"btn_cart_pressed"] forState:UIControlStateSelected];
+        [_cartButton setImage:[UIImage imageNamed:@"tabbar_button_cart"] forState:UIControlStateNormal];
+        [_cartButton setImage:[UIImage imageNamed:@"tabbar_button_cart_highlighted"] forState:UIControlStateHighlighted];
+        [_cartButton setImage:[UIImage imageNamed:@"tabbar_button_cart_highlighted"] forState:UIControlStateSelected];
     }
     return _cartButton;
 }
@@ -72,10 +82,23 @@
 - (UILabel *)cartCountLabel
 {
     if (!_cartCountLabel) {
-        _cartCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(288, 6, 25, 15)];
-        [_cartCountLabel setTextAlignment:NSTextAlignmentCenter];
-        [_cartCountLabel setTextColor:JAOrange1Color];
-        [self setLabelFont:_cartCountLabel withFont:[UIFont fontWithName:kFontRegularName size:9]];
+        
+        UIFont *font = JACaptionFont;
+        if ([@"Zawgyi-One" isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:kFontRegularNameKey]]) {
+            font = [UIFont fontWithName:@"HelveticaNeue" size:font.pointSize];
+        }
+        
+        _cartCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(301,
+                                                                    10,
+                                                                    11.f,
+                                                                    11.f)];
+        _cartCountLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
+        _cartCountLabel.font = font;
+        _cartCountLabel.textColor = JAWhiteColor;
+        _cartCountLabel.adjustsFontSizeToFitWidth = YES;
+        _cartCountLabel.textAlignment = NSTextAlignmentCenter;
+        [_cartCountLabel setBackgroundColor:[UIColor redColor]];
+        [self updateCartProductCount:[NSNumber numberWithInt:0]];
     }
     return _cartCountLabel;
 }
@@ -183,6 +206,10 @@
                               self.frame.origin.y,
                               initialWidth,
                               self.frame.size.height)];
+    [self.separatorView setFrame:CGRectMake(self.bounds.origin.x,
+                                            self.bounds.size.height - self.separatorView.frame.size.height,
+                                            self.bounds.size.width,
+                                            self.separatorView.frame.size.height)];
     
     self.backgroundColor = JANavBarBackgroundGrey;
     
@@ -203,6 +230,7 @@
     [self addSubview:self.bottomTitleLabel];
     [self addSubview:self.editButton];
     [self addSubview:self.doneButton];
+    [self addSubview:self.separatorView];
     
     if (RI_IS_RTL) {
         [self.editButton flipViewAlignment];
@@ -230,6 +258,7 @@
     }
     if (self.width != width) {
         self.width = width;
+        self.separatorView.width = width;
         [self adjustTitleFrame];
     }
 }
@@ -242,6 +271,8 @@
 
 - (void)setupWithNavigationBarLayout:(JANavigationBarLayout*)layout
 {
+    self.separatorView.hidden = !layout.showSeparatorView;
+    
     //left side
     if (layout.showBackButton) {
         [self showBackButtonWithTitle:layout.backButtonTitle];
@@ -542,14 +573,14 @@
 
 - (void)updateCartProductCount:(NSNumber*)cartNumber
 {
-    if(0 == [cartNumber integerValue])
-    {
-        [self.cartCountLabel setText:@""];
-    }
-    else
-    {
-        [self.cartCountLabel setText:[cartNumber stringValue]];
-    }
+    CGRect frame = CGRectMake(301,
+                              10,
+                              11.f,
+                              11.f);
+    self.cartCountLabel.frame = frame;
+    [self.cartCountLabel setText:[NSString stringWithFormat:@"%lld", [cartNumber longLongValue]]];
+    self.cartCountLabel.layer.masksToBounds = YES;
+    self.cartCountLabel.layer.cornerRadius = frame.size.width / 2;
 }
 
 @end
