@@ -314,7 +314,7 @@
                                                                         self.view.bounds.origin.y,
                                                                         self.view.bounds.size.width,
                                                                         kSearchViewBarHeight)];
-    self.searchBarBackground.backgroundColor = JANavBarBackgroundGrey;
+    self.searchBarBackground.backgroundColor = JABlack300Color;
     [self.view addSubview:self.searchBarBackground];
     
     UIView* separatorView = [UIView new];
@@ -335,7 +335,7 @@
                                                                    self.searchBarBackground.bounds.size.width - horizontalMargin * 2,
                                                                    self.searchBarBackground.bounds.size.height - 1.0f)];
     self.searchBar.delegate = self;
-    self.searchBar.barTintColor = JANavBarBackgroundGrey;
+    self.searchBar.barTintColor = JABlack300Color;
     self.searchBar.placeholder = STRING_SEARCH_PLACEHOLDER;
     self.searchBar.showsCancelButton = NO;
     
@@ -349,7 +349,7 @@
     [textFieldSearch setLeftViewMode:UITextFieldViewModeNever];
     
     self.searchBar.layer.borderWidth = 1;
-    self.searchBar.layer.borderColor = [JANavBarBackgroundGrey CGColor];
+    self.searchBar.layer.borderColor = [JABlack300Color CGColor];
     
     [self.searchBarBackground addSubview:self.searchBar];
     UIImage *searchIcon = [UIImage imageNamed:@"searchIcon"];

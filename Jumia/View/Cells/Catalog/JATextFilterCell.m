@@ -47,8 +47,8 @@
 -(UILabel *)nameLabel {
     if (!VALID(_nameLabel, UILabel)) {
         _nameLabel = [UILabel new];
-        _nameLabel.font = [UIFont fontWithName:kFontRegularName size:16.0f];
-        _nameLabel.textColor = UIColorFromRGB(0x4e4e4e);
+        _nameLabel.font = JADisplay3Font;
+        _nameLabel.textColor = JAButtonTextOrange;
         _nameLabel.textAlignment = NSTextAlignmentLeft;
         [self.clickableView addSubview:_nameLabel];
     }
@@ -58,8 +58,8 @@
 -(UILabel *)quantityLabel {
     if (!VALID(_quantityLabel, UILabel)) {
         _quantityLabel = [UILabel new];
-        _quantityLabel.font = [UIFont fontWithName:kFontRegularName size:16.0f];
-        _quantityLabel.textColor = UIColorFromRGB(0x4e4e4e);
+        _quantityLabel.font = JADisplay3Font;
+        _quantityLabel.textColor = JAButtonTextOrange;
         _quantityLabel.textAlignment = NSTextAlignmentRight;
         [self.clickableView addSubview:_quantityLabel];
     }

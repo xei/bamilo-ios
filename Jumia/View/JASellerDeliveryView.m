@@ -37,13 +37,13 @@
     self.title = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, 0.0f, width, 26.0f)];
     self.title.textAlignment = NSTextAlignmentLeft;
     [self.title setText:[NSString stringWithFormat:STRING_SHIPMENT_OF,(long)index,(long)max]];
-    [self.title setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
-    [self.title setTextColor:UIColorFromRGB(0x808080)];
+    [self.title setFont:JABodyFont];
+    [self.title setTextColor:JABlack800Color];
     [self.contentView addSubview:self.title];
     
     //seperator
     self.separator = [[UIView alloc]initWithFrame:CGRectMake(0, currenty, width ,1.0f)];
-    [self.separator setBackgroundColor:UIColorFromRGB(0xcccccc)];
+    [self.separator setBackgroundColor:JATextFieldColor];
     [self.contentView addSubview:self.separator];
     currenty += 1.0f;
     
@@ -54,7 +54,7 @@
         UILabel *qty = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, currenty, width, 12.0f)];
         [qty setText:[NSString stringWithFormat:@"%@ %@ ",STRING_ORDER_QUANTITY,prod.quantity]];
         [qty setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
-        [qty setTextColor:UIColorFromRGB(0x666666)];
+        [qty setTextColor:JAGreyColor];
         [qty sizeToFit];
         [self.contentView addSubview:qty];
         [self.quantity addObject:qty];
@@ -66,7 +66,7 @@
         [name setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
         [name setNumberOfLines:0];
         [name setLineBreakMode:NSLineBreakByWordWrapping];
-        [name setTextColor:UIColorFromRGB(0x666666)];
+        [name setTextColor:JAGreyColor];
         [name sizeToFit];
         [name setWidth:width-name.frame.origin.x*2];
         [self.contentView addSubview:name];
@@ -81,8 +81,8 @@
     self.name = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, currenty, width, 12.0f)];
     self.name.textAlignment = NSTextAlignmentLeft;
     [self.name setText:[NSString stringWithFormat:@"%@ %@ ",STRING_FULFILLED,sellerDelivery.name]];
-    [self.name setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
-    [self.name setTextColor:UIColorFromRGB(0x666666)];
+    [self.name setFont:JABodyFont];
+    [self.name setTextColor:JAGreyColor];
     [self.name sizeToFit];
     [self.contentView addSubview:self.name];
     currenty += self.name.frame.size.height;
@@ -92,7 +92,7 @@
     self.delivery.textAlignment = NSTextAlignmentLeft;
     [self.delivery setText:[NSString stringWithFormat:@"%@ ",sellerDelivery.deliveryTime]];
     [self.delivery setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
-    [self.delivery setTextColor:UIColorFromRGB(0x666666)];
+    [self.delivery setTextColor:JAGreyColor];
     [self.delivery sizeToFit];
     [self.contentView addSubview:self.delivery];
     currenty += self.delivery.frame.size.height;
@@ -100,14 +100,14 @@
     if ( sellerDelivery.shippingGlobal != nil) {
         currenty += 24.0f;
         [self.delivery setFrame:CGRectMake(12.0f, currenty - self.delivery.frame.size.height, width, 12.0f)];
-        [self.delivery setTextColor:UIColorFromRGB(0xf68b1e)];
+        [self.delivery setTextColor:JAOrange1Color];
 
         //shipping global
         self.shipping = [[UILabel alloc] initWithFrame:CGRectMake(24.0f, currenty, width, 42.0f)];
         self.shipping.textAlignment = NSTextAlignmentLeft;
         [self.shipping setText:[NSString stringWithFormat:@"%@ ",sellerDelivery.shippingGlobal]];
         [self.shipping setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
-        [self.shipping setTextColor:UIColorFromRGB(0xf68b1e)];
+        [self.shipping setTextColor:JAOrange1Color];
         [self.shipping setLineBreakMode:NSLineBreakByWordWrapping];
         [self.shipping setNumberOfLines:0];
         [self.shipping sizeToFit];

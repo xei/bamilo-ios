@@ -59,7 +59,7 @@
                                                                                 26.0f)];
         productsTitleLabel.text = STRING_PRODUCTS;
         productsTitleLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-        productsTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
+        productsTitleLabel.textColor = JAButtonTextOrange;
         [self.cartView addSubview:productsTitleLabel];
         
         currentY += productsTitleLabel.frame.size.height + 10.0f;
@@ -248,9 +248,9 @@
         UIFont *editFont = [UIFont fontWithName:kFontLightName size:10.0f];
         UIButton* editButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [editButton setTitle:STRING_EDIT forState:UIControlStateNormal];
-        [editButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
-        [editButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
-        [editButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateSelected];
+        [editButton setTitleColor:JABlue1Color forState:UIControlStateNormal];
+        [editButton setTitleColor:JAOrange1Color forState:UIControlStateHighlighted];
+        [editButton setTitleColor:JAOrange1Color forState:UIControlStateSelected];
         [editButton.titleLabel setFont:editFont];
         [editButton addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
         [editButton sizeToFit];
@@ -272,7 +272,7 @@
                                                                     26.0f)];
     titleLabel.text = title;
     titleLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
-    titleLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    titleLabel.textColor = JAButtonTextOrange;
     [view addSubview:titleLabel];
     
     currentY += titleLabel.frame.size.height;
@@ -281,7 +281,7 @@
                                                                 view.bounds.origin.y + titleLabel.frame.size.height,
                                                                 view.bounds.size.width,
                                                                 1.0f)];
-    lineView.backgroundColor = UIColorFromRGB(0xfaa41a);
+    lineView.backgroundColor = JAOrange1Color;
     [view addSubview:lineView];
     currentY += lineView.frame.size.height;
     
@@ -299,7 +299,7 @@
                                                                    self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
                                                                    1.0f)];
     nameLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-    nameLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    nameLabel.textColor = JAButtonTextOrange;
     nameLabel.text = name;
     nameLabel.numberOfLines = -1;
     [nameLabel sizeToFit];
@@ -312,7 +312,7 @@
                                                                        self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
                                                                        1.0f)];
     quantityLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-    quantityLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    quantityLabel.textColor = JAButtonTextOrange;
     quantityLabel.numberOfLines = -1;
     quantityLabel.text = [NSString stringWithFormat:@"%ld x %@", (long)quantity, price];
     [quantityLabel sizeToFit];
@@ -337,7 +337,7 @@
                                                                        self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
                                                                        1.0f)];
     subtotalLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-    subtotalLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    subtotalLabel.textColor = JAButtonTextOrange;
     subtotalLabel.text = STRING_SUBTOTAL;
     [subtotalLabel sizeToFit];
     [self.cartView addSubview:subtotalLabel];
@@ -347,7 +347,7 @@
                                                                             self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
                                                                             subtotalLabel.frame.size.height)];
     subtotalValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-    subtotalValueLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    subtotalValueLabel.textColor = JAButtonTextOrange;
     subtotalValueLabel.text = subtotal;
     subtotalValueLabel.textAlignment = NSTextAlignmentRight;
     [self.cartView addSubview:subtotalValueLabel];
@@ -364,7 +364,7 @@
                                                                                   self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
                                                                                   1.0f)];
             priceRuleLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-            priceRuleLabel.textColor = UIColorFromRGB(0x4e4e4e);
+            priceRuleLabel.textColor = JAButtonTextOrange;
             priceRuleLabel.text = ruleKey;
             [priceRuleLabel sizeToFit];
             [self.cartView addSubview:priceRuleLabel];
@@ -374,7 +374,7 @@
                                                                                        self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
                                                                                        priceRuleLabel.frame.size.height)];
             priceRuleValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-            priceRuleValueLabel.textColor = UIColorFromRGB(0x4e4e4e);
+            priceRuleValueLabel.textColor = JAButtonTextOrange;
             priceRuleValueLabel.text = ruleValue;
             priceRuleValueLabel.textAlignment = NSTextAlignmentRight;
             [self.cartView addSubview:priceRuleValueLabel];
@@ -391,7 +391,7 @@
                                                                               self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
                                                                               1.0f)];
         shippingFeeLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-        shippingFeeLabel.textColor = UIColorFromRGB(0x4e4e4e);
+        shippingFeeLabel.textColor = JAButtonTextOrange;
         shippingFeeLabel.text = STRING_SHIPPING_FEE;
         [shippingFeeLabel sizeToFit];
         [self.cartView addSubview:shippingFeeLabel];
@@ -401,7 +401,7 @@
                                                                                    self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
                                                                                    shippingFeeLabel.frame.size.height)];
         shippingFeeValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-        shippingFeeValueLabel.textColor = UIColorFromRGB(0x4e4e4e);
+        shippingFeeValueLabel.textColor = JAButtonTextOrange;
         shippingFeeValueLabel.text = shippingFee;
         shippingFeeValueLabel.textAlignment = NSTextAlignmentRight;
         [self.cartView addSubview:shippingFeeValueLabel];
@@ -421,7 +421,7 @@
                                                                         self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
                                                                         1.0f)];
         extraLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-        extraLabel.textColor = UIColorFromRGB(0x4e4e4e);
+        extraLabel.textColor = JAButtonTextOrange;
         extraLabel.text = STRING_EXTRA_COSTS;
         [extraLabel sizeToFit];
         [self.cartView addSubview:extraLabel];
@@ -431,7 +431,7 @@
                                                                              self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
                                                                              extraLabel.frame.size.height)];
         extraValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-        extraValueLabel.textColor = UIColorFromRGB(0x4e4e4e);
+        extraValueLabel.textColor = JAButtonTextOrange;
         extraValueLabel.text = extra;
         extraValueLabel.textAlignment = NSTextAlignmentRight;
         
@@ -447,7 +447,7 @@
                                                                         self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
                                                                         1.0f)];
         voucherLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-        voucherLabel.textColor = UIColorFromRGB(0x3aaa35);
+        voucherLabel.textColor = JACouponLabelColor;
         voucherLabel.text = STRING_VOUCHER;
         [voucherLabel sizeToFit];
         [self.cartView addSubview:voucherLabel];
@@ -457,7 +457,7 @@
                                                                              self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
                                                                              voucherLabel.frame.size.height)];
         voucherValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-        voucherValueLabel.textColor = UIColorFromRGB(0x3aaa35);
+        voucherValueLabel.textColor = JACouponLabelColor;
         voucherValueLabel.text = [NSString stringWithFormat:@"- %@", voucher];
         voucherValueLabel.textAlignment = NSTextAlignmentRight;
         currentY += voucherLabel.frame.size.height + 7.0f;
@@ -565,7 +565,7 @@
                                                                       0.0f)];
     addressLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     addressLabel.numberOfLines = 0;
-    addressLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    addressLabel.textColor = JAButtonTextOrange;
     addressLabel.text = text;
     [addressLabel sizeToFit];
     [view addSubview:addressLabel];

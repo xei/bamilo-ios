@@ -61,7 +61,7 @@
         NSString* title = [review.ratingTitles objectAtIndex:i];
         
         UILabel* titleLabel = [UILabel new];
-        [titleLabel setTextColor:UIColorFromRGB(0x666666)];
+        [titleLabel setTextColor:JAGreyColor];
         [titleLabel setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
         [titleLabel setText:title];
         [titleLabel sizeToFit];
@@ -149,7 +149,7 @@
 {
     [self.titleLabel removeFromSuperview];
     self.titleLabel = [UILabel new];
-    [self.titleLabel setTextColor:UIColorFromRGB(0x666666)];
+    [self.titleLabel setTextColor:JAGreyColor];
     [self.titleLabel setFont:[UIFont fontWithName:kFontMediumName size:12.0f]];
     [self.titleLabel setText:title];
     [self.titleLabel sizeToFit];
@@ -166,7 +166,7 @@
                                                    CGRectGetMaxY(self.titleLabel.frame) + 10.0f,
                                                    width - (kJAReviewCellHorizontalMargins*2),
                                                    self.descriptionLabel.frame.size.height + 20.f)];
-    [self.descriptionLabel setTextColor:UIColorFromRGB(0x666666)];
+    [self.descriptionLabel setTextColor:JAGreyColor];
     [self.descriptionLabel setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
     [self.descriptionLabel setText:comment];
     [self.descriptionLabel setNumberOfLines:0];
@@ -182,7 +182,7 @@
     
     [self.authorDateLabel removeFromSuperview];
     self.authorDateLabel = [UILabel new];
-    [self.authorDateLabel setTextColor:UIColorFromRGB(0x666666)];
+    [self.authorDateLabel setTextColor:JAGreyColor];
     [self.authorDateLabel setFont:[UIFont fontWithName:kFontLightName size:10.0f]];
     NSString* authorDateString;
     if (userName.length > 0) {
@@ -211,7 +211,7 @@
                                                                   CGRectGetMaxY(self.authorDateLabel.frame) + 10.0f,
                                                                   width,
                                                                   1)];
-        [self.separator setBackgroundColor:UIColorFromRGB(0xcccccc)];
+        [self.separator setBackgroundColor:JATextFieldColor];
         [self addSubview:self.separator];
     }
 }
@@ -221,7 +221,7 @@
 {
     
     UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(kJAReviewCellHorizontalMargins, 0, width - 2*kJAReviewCellHorizontalMargins, 500)];
-    [descriptionLabel setTextColor:UIColorFromRGB(0x666666)];
+    [descriptionLabel setTextColor:JAGreyColor];
     [descriptionLabel setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
     [descriptionLabel setText:review.comment];
     [descriptionLabel setNumberOfLines:0];
@@ -261,7 +261,7 @@
     totalHeight += titleLabel.frame.size.height + 10;
     
     UILabel* descriptionLabel = [UILabel new];
-    [descriptionLabel setTextColor:UIColorFromRGB(0x666666)];
+    [descriptionLabel setTextColor:JAGreyColor];
     [descriptionLabel setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
     [descriptionLabel setText:comment];
     [descriptionLabel setNumberOfLines:0];
@@ -274,7 +274,7 @@
     totalHeight += descriptionLabel.frame.size.height + 10;
     
     UILabel* authorDateLabel = [UILabel new];
-    [authorDateLabel setTextColor:UIColorFromRGB(0x666666)];
+    [authorDateLabel setTextColor:JAGreyColor];
     [authorDateLabel setFont:[UIFont fontWithName:kFontLightName size:10.0f]];
     [authorDateLabel setText:@"A"];
     [authorDateLabel setFrame:CGRectMake(0.0f,

@@ -129,11 +129,11 @@
     
     [self checkSession];
     
-    [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0xeaeaea)];
+    [[UINavigationBar appearance] setBarTintColor:JABlack300Color];
     
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]
      setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                             UIColorFromRGB(0xc8c8c8), NSForegroundColorAttributeName,
+                             JABackgroundGrey, NSForegroundColorAttributeName,
                              [UIFont fontWithName:kFontLightName size:18.0f], NSFontAttributeName,nil] forState:UIControlStateNormal];
     
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]

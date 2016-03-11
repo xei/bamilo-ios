@@ -105,8 +105,8 @@
         [_forgotPasswordButton.titleLabel setFont:JACaptionFont];
         [_forgotPasswordButton setTitle:STRING_FORGOT_YOUR_PASSWORD forState:UIControlStateNormal];
         [_forgotPasswordButton setTitleColor:JABlue1Color forState:UIControlStateNormal];
-        /*[self.forgotPasswordButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
-         [self.forgotPasswordButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateSelected];*/
+        /*[self.forgotPasswordButton setTitleColor:JAButtonOrange forState:UIControlStateHighlighted];
+         [self.forgotPasswordButton setTitleColor:JAButtonOrange forState:UIControlStateSelected];*/
         [_forgotPasswordButton addTarget:self action:@selector(forgotPasswordButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [_forgotPasswordButton sizeToFit];
         [_forgotPasswordButton setX:self.mainScrollView.width - self.forgotPasswordButton.width - kSideMargin];

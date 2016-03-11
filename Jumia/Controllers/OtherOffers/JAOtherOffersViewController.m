@@ -131,7 +131,7 @@
     
     if (ISEMPTY(self.separatorView)) {
         self.separatorView = [UIView new];
-        self.separatorView.backgroundColor = UIColorFromRGB(0xcccccc);
+        self.separatorView.backgroundColor = JATextFieldColor;
         [self.topView addSubview:self.separatorView];
     }
     self.separatorView.frame = CGRectMake(0.0f,

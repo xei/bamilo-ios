@@ -205,7 +205,7 @@ UICollectionViewDelegateFlowLayout
                                                                              self.scrollView.frame.size.width - 12.0f,
                                                                              27.0f) collectionViewLayout:collectionViewFlowLayout];
     self.collectionView.layer.cornerRadius = 5.0f;
-    [self.collectionView setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.collectionView setBackgroundColor:JAWhiteColor];
     [self.collectionView registerNib:shippingListHeaderNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"shippingListHeader"];
     [self.collectionView registerNib:shippingListCellNib forCellWithReuseIdentifier:@"shippingListCell"];
     [self.collectionView registerNib:shippingInfoCellNib forCellWithReuseIdentifier:@"shippingInfoCell"];

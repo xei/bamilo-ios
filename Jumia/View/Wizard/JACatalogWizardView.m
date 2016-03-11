@@ -51,7 +51,7 @@
         self.wizardPage1Label.textAlignment = NSTextAlignmentCenter;
         self.wizardPage1Label.numberOfLines = -1;
         self.wizardPage1Label.font = kJAWizardFont;
-        self.wizardPage1Label.textColor = kJAWizardFontColor;
+        self.wizardPage1Label.textColor = JABlack700Color;
         self.wizardPage1Label.text = STRING_WIZARD_CATALOG_FAVORITE;
         
         CGRect wizardLabe2ect = [STRING_WIZARD_CATALOG_FAVORITE boundingRectWithSize:CGSizeMake(self.wizardPage1.bounds.size.width - kJAWizardCatalog2TextHorizontalMargin*2, 1000.0f)
@@ -91,7 +91,7 @@
         self.wizardPage2Label.textAlignment = NSTextAlignmentCenter;
         self.wizardPage2Label.numberOfLines = -1;
         self.wizardPage2Label.font = kJAWizardFont;
-        self.wizardPage2Label.textColor = kJAWizardFontColor;
+        self.wizardPage2Label.textColor = JABlack700Color;
         self.wizardPage2Label.text = STRING_WIZARD_BACK_TOP;
         
         CGRect wizardLabe2Rect = [STRING_WIZARD_BACK_TOP boundingRectWithSize:CGSizeMake(self.wizardPage1.bounds.size.width - kJAWizardPDV2TextHorizontalMargin*2, 1000.0f)

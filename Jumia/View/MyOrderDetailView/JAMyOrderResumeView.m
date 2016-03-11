@@ -61,7 +61,7 @@
 {
     if (!VALID(_orderDate, UILabel)) {
         _orderDate = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, 0, self.width-2*kLateralMargin, self.orderNumberHeader.height)];
-        [_orderDate setFont:[UIFont fontWithName:kFontRegularName size:10]];
+        [_orderDate setFont:JACaptionFont];
         [_orderDate setTextColor:JABlackColor];
     }
     return _orderDate;

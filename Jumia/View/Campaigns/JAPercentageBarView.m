@@ -18,7 +18,7 @@
 
 - (void)loadWithPercentage:(NSInteger)percentage;
 {
-    self.backgroundColor = UIColorFromRGB(0xdadada);
+    self.backgroundColor = JABlack400Color;
     
     if(VALID_NOTEMPTY(self.percentageBar, UIView)){
         [self.percentageBar removeFromSuperview];

@@ -120,7 +120,7 @@
                                                              style:UITableViewStyleGrouped];
         self.resultsTableOriginalFrame = self.resultsTableView.frame;
         
-        self.resultsTableView.backgroundColor = UIColorFromRGB(0xffffff);
+        self.resultsTableView.backgroundColor = JAWhiteColor;
         self.resultsTableView.delegate = self;
         self.resultsTableView.dataSource = self;
         self.resultsTableView.contentInset = UIEdgeInsetsMake(-35.0f, 0.f, 0.f, 0.f);
@@ -360,10 +360,7 @@
         NSString *value = sugestion.item;
         NSString *label;
         UIColor *highlightColor = JABlue1Color;;
-        
-        UIFont *highlightFont = [UIFont fontWithName:kFontLightName size:17.0f];
-        UIFont *queryFont = [UIFont fontWithName:kFontMediumName size:17.0f];
-        UIColor *stringTextColor = UIColorFromRGB(0x4e4e4e);
+        UIColor *stringTextColor = JAButtonTextOrange;
         
         if ([RITarget parseTarget:sugestion.targetString].targetType == SHOP_IN_SHOP) {
             value = [value stringByReplacingCharactersInRange:NSMakeRange(0,1)
@@ -378,13 +375,13 @@
         
         NSRange blueRange = [[label lowercaseString] rangeOfString:[value lowercaseString]];
         NSRange blackRange = [[label lowercaseString] rangeOfString:[self.searchBar.text lowercaseString]];
-        NSMutableAttributedString *stringText = [[NSMutableAttributedString alloc] initWithString:label attributes:@{NSFontAttributeName: highlightFont, NSForegroundColorAttributeName: stringTextColor}];
+        NSMutableAttributedString *stringText = [[NSMutableAttributedString alloc] initWithString:label attributes:@{NSFontAttributeName: JASearchViewHighlightFont, NSForegroundColorAttributeName: stringTextColor}];
         
         [stringText addAttribute:NSForegroundColorAttributeName
                            value:highlightColor
                            range:blueRange];
         [stringText addAttribute:NSFontAttributeName
-                           value:queryFont
+                           value:JASearchViewQueryFont
                            range:blackRange];
         
         customTextLabel.attributedText = stringText;

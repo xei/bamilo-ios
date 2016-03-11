@@ -30,7 +30,7 @@
         [self.separator removeFromSuperview];
     }
     self.separator = [[UIView alloc] init];
-    [self.separator setBackgroundColor:UIColorFromRGB(0xcccccc)];
+    [self.separator setBackgroundColor:JATextFieldColor];
     [self addSubview:self.separator];
     
     self.paymentMethodDetailsView = paymentMethodView;
@@ -107,7 +107,7 @@
         [self.separator removeFromSuperview];
     }
     self.separator = [[UIView alloc] init];
-    [self.separator setBackgroundColor:UIColorFromRGB(0xcccccc)];
+    [self.separator setBackgroundColor:JATextFieldColor];
     [self addSubview:self.separator];
     
     self.paymentMethodDetailsView = paymentMethodView;

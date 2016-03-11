@@ -96,7 +96,7 @@
 
     self.A4SViewControllerAlias = @"SUBCATEGORY";
 
-    self.view.backgroundColor = JANavBarBackgroundGrey;
+    self.view.backgroundColor = JABlack300Color;
     
     // notify the InAppNotification SDK that this the active view controller
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];

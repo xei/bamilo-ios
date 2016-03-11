@@ -9,8 +9,7 @@
 #import "JAPickerScrollView.h"
 #import "JAGradientLayer.h"
 
-#define JAPickerScrollViewBackgroundColor UIColorFromRGB(0xe3e3e3)
-#define JAPickerScrollViewTextColor UIColorFromRGB(0x4e4e4e)
+#define JAPickerScrollViewTextColor JAButtonTextOrange
 #define JAPickerScrollViewTextSize 13.0f
 #define JAPickerScrollViewNormalFont [UIFont fontWithName:kFontLightName size:JAPickerScrollViewTextSize]
 #define JAPickerScrollViewSelectedFont [UIFont fontWithName:kFontRegularName size:JAPickerScrollViewTextSize]
@@ -49,7 +48,7 @@
     self.disableDelagation = NO;
     self.maxWidth = 0.0f;
     
-    self.backgroundColor = JAPickerScrollViewBackgroundColor;
+    self.backgroundColor = JABlack400Color;
     
     for(NSString *option in self.optionStrings)
     {
@@ -120,7 +119,7 @@
                                                                  JAPickerScrollViewFadeWidth,
                                                                  self.frame.size.height)];
     self.leftFadeView.backgroundColor = [UIColor clearColor];
-    [self.leftFadeView.layer insertSublayer:[JAGradientLayer alphaGradient:JAPickerScrollViewBackgroundColor bounds:self.leftFadeView.bounds leftToRight:YES] atIndex:0];
+    [self.leftFadeView.layer insertSublayer:[JAGradientLayer alphaGradient:JABlack400Color bounds:self.leftFadeView.bounds leftToRight:YES] atIndex:0];
     [self addSubview:self.leftFadeView];
     
     self.rightFadeView = [[UIView alloc] initWithFrame:CGRectMake(self.frame.size.width - JAPickerScrollViewFadeWidth,
@@ -128,7 +127,7 @@
                                                                   JAPickerScrollViewFadeWidth,
                                                                   self.frame.size.height)];
     self.rightFadeView.backgroundColor = [UIColor clearColor];
-    [self.rightFadeView.layer insertSublayer:[JAGradientLayer alphaGradient:JAPickerScrollViewBackgroundColor bounds:self.rightFadeView.bounds leftToRight:NO] atIndex:0];
+    [self.rightFadeView.layer insertSublayer:[JAGradientLayer alphaGradient:JABlack400Color bounds:self.rightFadeView.bounds leftToRight:NO] atIndex:0];
     [self addSubview:self.rightFadeView];
     
     //$$$ HOTFIX

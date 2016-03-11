@@ -72,7 +72,7 @@
                     [descriptionLabel setFont:[UIFont fontWithName:kFontLightName size:13.0f]];
                     [descriptionLabel setNumberOfLines:0];
                     [descriptionLabel setLineBreakMode:NSLineBreakByWordWrapping];
-                    [descriptionLabel setTextColor:UIColorFromRGB(0x666666)];
+                    [descriptionLabel setTextColor:JAGreyColor];
                     [descriptionLabel setText:paymentMethod.text];
                     [descriptionLabel setTextAlignment:NSTextAlignmentLeft];
                     [descriptionLabel sizeToFit];
@@ -103,7 +103,7 @@
         [descriptionLabel setFont:[UIFont fontWithName:kFontLightName size:descriptionLabel.font.pointSize]];
         [descriptionLabel setNumberOfLines:0];
         [descriptionLabel setLineBreakMode:NSLineBreakByWordWrapping];
-        [descriptionLabel setTextColor:UIColorFromRGB(0x666666)];
+        [descriptionLabel setTextColor:JAGreyColor];
         [descriptionLabel setText:((RIPaymentMethodFormField*)[paymentMethodForm.fields firstObject]).label];
         [descriptionLabel setTextAlignment:NSTextAlignmentCenter];
         [descriptionLabel sizeToFit];

@@ -53,7 +53,7 @@
         _brandLabel = [[UILabel alloc] init];
         [_brandLabel setFont:JACaptionFont];
         [_brandLabel setText:@"BrandLabel"];
-        _brandLabel.textColor = UIColorFromRGB(0x808080);
+        _brandLabel.textColor = JABlack800Color;
     }
     return _brandLabel;
 }
@@ -64,7 +64,7 @@
         _nameLabel = [[UILabel alloc] init];
         [_nameLabel setFont:JABodyFont];
         [_nameLabel setText:@"NameLabel"];
-        _nameLabel.textColor = UIColorFromRGB(0x000000);
+        _nameLabel.textColor = JABlackColor;
     }
     return _nameLabel;
 }

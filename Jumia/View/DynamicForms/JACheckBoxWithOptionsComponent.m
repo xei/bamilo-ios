@@ -23,8 +23,8 @@
     self.values = [[NSMutableDictionary alloc] init];
     
     self.title = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, self.frame.size.width - 12.0f, 25.0f)];
-    [self.title setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
-    [self.title setTextColor:UIColorFromRGB(0x666666)];
+    [self.title setFont:JACheckBoxTitle];
+    [self.title setTextColor:JAGreyColor];
     [self addSubview:self.title];
     
     if(VALID_NOTEMPTY(field.label, NSString))
@@ -33,7 +33,7 @@
     }
     
     self.separator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 25.0f, self.frame.size.width, 1.0f)];
-    [self.separator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+    [self.separator setBackgroundColor:JAOrange1Color];
     [self addSubview:self.separator];
     
     CGFloat startingY = 26.0f;

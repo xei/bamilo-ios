@@ -148,33 +148,3 @@
 #define kSessionDate @"session_date"
 #define kChangeNotificationsOptions @"change_notifications_option"
 #define kChangeSoundOptions @"change_sound_option"
-
-// Colors
-
-#define JABlackColor UIColorFromRGB(0x000000)
-#define JABlack900Color UIColorFromRGB(0x202020)
-#define JABlack800Color UIColorFromRGB(0x808080)
-#define JABlack700Color UIColorFromRGB(0xC5C5C5)
-#define JABlack400Color UIColorFromRGB(0xE2E2E2)
-#define JABlack300Color UIColorFromRGB(0xF0F0F0)
-#define JABlack200Color UIColorFromRGB(0xF5F5F5)
-#define JAWhiteColor UIColorFromRGB(0xFFFFFF)
-#define JAOrange1Color UIColorFromRGB(0xf68b1e)
-#define JAOrange2Color UIColorFromRGB(0xf17e0a)
-#define JABlue1Color UIColorFromRGB(0x416998)
-#define JABlue2Color UIColorFromRGB(0x235693)
-#define JARed1Color UIColorFromRGB(0xCC0000)
-#define JARed2Color UIColorFromRGB(0xAD0000)
-#define JAGreen1Color UIColorFromRGB(0xa3cf62)
-#define JAYellow1Color UIColorFromRGB(0xFFDC2D)
-#define JASysBlueColor UIColorFromRGB(0x007aff)
-
-
-
-#warning colors to remove (they were replaced for weird colors for a quick detection)
-#define JANavBarBackgroundGrey JABlack300Color              // old 0xeaeaea
-#define JABackgroundGrey JAWhiteColor                       // old 0xc8c8c8
-#define JAHomePageBackgroundGrey JABlack200Color            // old 0xf9f9f9
-#define JAButtonOrange JAOrange1Color                       // old 0xfaa41a
-#define JAButtonTextOrange JAOrange2Color                   // old 0x4e4e4e
-#define JALabelGrey JABlack400Color                         // old 0xf0f0f0

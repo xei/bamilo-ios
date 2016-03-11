@@ -345,7 +345,7 @@ UIAlertViewDelegate
                                                                     16.0f)];
         self.fixedLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
         self.fixedLabel.text = STRING_RATE_PRODUCT;
-        self.fixedLabel.textColor = UIColorFromRGB(0x666666);
+        self.fixedLabel.textColor = JAGreyColor;
         [self.centerView addSubview:self.fixedLabel];
     }else{
         [self.fixedLabel setFrame:CGRectMake(dynamicFormHorizontalMargin,
@@ -470,7 +470,7 @@ UIAlertViewDelegate
         
         if (!VALID_NOTEMPTY(self.writeReviewLabel, UILabel)) {
             self.writeReviewLabel = [UILabel new];
-            self.writeReviewLabel.textColor = UIColorFromRGB(0x666666);
+            self.writeReviewLabel.textColor = JAGreyColor;
             self.writeReviewLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
             self.writeReviewLabel.numberOfLines = 2;
             self.writeReviewLabel.text = STRING_WRITE_FULL_REVIEW;
@@ -536,9 +536,9 @@ UIAlertViewDelegate
                                                                            buttonImageNormal.size.height)];
         [self.sendReviewButton setTitle:STRING_SEND_REVIEW
                                forState:UIControlStateNormal];
-        [self.sendReviewButton setTitleColor:UIColorFromRGB(0x4e4e4e)
+        [self.sendReviewButton setTitleColor:JAButtonTextOrange
                                     forState:UIControlStateNormal];
-        self.sendReviewButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:16.0f];
+        self.sendReviewButton.titleLabel.font = JADisplay3Font;
         [self.sendReviewButton setBackgroundImage:buttonImageNormal forState:UIControlStateNormal];
         [self.sendReviewButton setBackgroundImage:buttonImageHighlighted forState:UIControlStateHighlighted];
         [self.sendReviewButton setBackgroundImage:buttonImageHighlighted forState:UIControlStateSelected];

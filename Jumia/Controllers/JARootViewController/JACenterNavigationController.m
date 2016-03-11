@@ -21,7 +21,6 @@
 #import "JASignInViewController.h"
 #import "JARegisterViewController.h"
 #import "JAForgotPasswordViewController.h"
-#import "JALoginViewController.h"
 #import "JAAddressesViewController.h"
 #import "JAAddNewAddressViewController.h"
 #import "JAEditAddressViewController.h"
@@ -32,7 +31,6 @@
 #import "JAPDVViewController.h"
 #import "JACartViewController.h"
 #import "JAForgotPasswordViewController.h"
-#import "JALoginViewController.h"
 #import "JAExternalPaymentsViewController.h"
 #import "JASuccessPageViewController.h"
 #import "RIProduct.h"
@@ -41,7 +39,6 @@
 #import "RICustomer.h"
 #import "JACampaignsViewController.h"
 #import "JATabNavigationViewController.h"
-#import "JARatingsViewController.h"
 #import "JANewRatingViewController.h"
 #import "RICart.h"
 #import "JASizeGuideViewController.h"
@@ -321,11 +318,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showProductSpecificationScreen:)
                                                  name:kShowProductSpecificationScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showRatingsScreen:)
-                                                 name:kShowRatingsScreenNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -984,25 +976,6 @@
     }
 }
 
-#pragma mark Checkout Login Screen
-- (void)showCheckoutLoginScreen
-{
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JALoginViewController class]] && ![RICustomer checkIfUserIsLogged])
-    {
-        JALoginViewController *loginVC = [[JALoginViewController alloc] initWithNibName:@"JALoginViewController" bundle:nil];
-        
-        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        {
-            loginVC = [[JALoginViewController alloc] initWithNibName:@"JALoginViewController~iPad" bundle:nil];
-        }
-        
-        loginVC.cart = self.cart;
-        
-        [self pushViewController:loginVC animated:NO];
-    }
-}
-
 #pragma mark Checkout Forgot Password Screen
 - (void)showCheckoutForgotPasswordScreen
 {
@@ -1050,10 +1023,6 @@
         } else {
             [addressesVC.navBarLayout setShowBackButton:YES];
             addressesVC.navBarLayout.showLogo = NO;
-        }
-        
-        if ([topViewController isKindOfClass:[JALoginViewController class]]) {
-            [self popViewControllerAnimated:NO];
         }
         
         [self pushViewController:addressesVC animated:NO];
@@ -1353,47 +1322,6 @@
         }
         
         [self pushViewController:productDetailsViewController animated:YES];
-    }
-}
-
-
-//- (void)showProductSpecificationScreen:(NSNotification*)notification
-//{
-//    UIViewController *topViewController = [self topViewController];
-//    if (![topViewController isKindOfClass:[JAProductDetailsViewController class]])
-//    {
-//        JAProductDetailsViewController *productDetailsViewController = [[JAProductDetailsViewController alloc] initWithNibName:@"JAProductDetailsViewController" bundle:nil];
-//        
-//        if ([notification.userInfo objectForKey:@"product"]) {
-//            productDetailsViewController.product = [notification.userInfo objectForKey:@"product"];
-//        }
-//        
-//        [self pushViewController:productDetailsViewController animated:YES];
-//    }
-//}
-
-- (void)showRatingsScreen:(NSNotification*)notification
-{
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JARatingsViewController class]])
-    {
-        JARatingsViewController *ratingsViewController = [[JARatingsViewController alloc] initWithNibName:@"JARatingsViewController" bundle:nil];
-        
-        if ([notification.userInfo objectForKey:@"product"]) {
-            ratingsViewController.product = [notification.userInfo objectForKey:@"product"];
-        }
-        
-        if ([notification.userInfo objectForKey:@"productRatings"]) {
-            ratingsViewController.productRatings = [notification.userInfo objectForKey:@"productRatings"];
-        }
-        
-        BOOL animated = YES;
-        if([notification.userInfo objectForKey:@"animated"] && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber))
-        {
-            animated = [[notification.userInfo objectForKey:@"animated"] boolValue];
-        }
-        
-        [self pushViewController:ratingsViewController animated:animated];
     }
 }
 

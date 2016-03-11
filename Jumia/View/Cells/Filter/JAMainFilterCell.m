@@ -40,13 +40,13 @@
     [self addSubview:self.clickView];
     
     UILabel* mainLabel = [UILabel new];
-    mainLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
-    mainLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    mainLabel.font = JAListFont;
+    mainLabel.textColor = JAButtonTextOrange;
     [self.clickView addSubview:mainLabel];
     
     UILabel* subLabel = [UILabel new];
-    subLabel.font = [UIFont fontWithName:kFontLightName size:14.0f];
-    subLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    subLabel.font = JAFilterCellCategoryTitle;
+    subLabel.textColor = JAButtonTextOrange;
     [self.clickView addSubview:subLabel];
     
     UIImage* accessoryImage = [UIImage imageNamed:@"arrow_gotoarea"];
@@ -75,7 +75,7 @@
                                                               self.clickView.frame.size.height - 1,
                                                               self.clickView.frame.size.width,
                                                               1.0f)];
-    self.separator.backgroundColor = UIColorFromRGB(0xcccccc);
+    self.separator.backgroundColor = JATextFieldColor;
     [self.clickView addSubview:self.separator];
     
     

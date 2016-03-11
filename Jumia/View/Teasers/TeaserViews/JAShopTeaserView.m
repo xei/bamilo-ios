@@ -50,7 +50,7 @@
             CGFloat textMarginX = 4.0;
             CGFloat textMarginY = 6.0;
             UILabel* titleLabel = [UILabel new];
-            titleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
+            titleLabel.font = JAShopTeaserTitle;
             titleLabel.textColor = [UIColor blackColor];
             titleLabel.text = component.title;
             [titleLabel sizeToFit];
@@ -61,15 +61,15 @@
             [clickableView addSubview:titleLabel];
             
             UILabel* subTitleLabel = [UILabel new];
-            subTitleLabel.font = [UIFont fontWithName:kFontLightName size:9.0f];
+            subTitleLabel.font = JAShopTeaserSubTitle;
             CGFloat subtitleYOffset = 0.0f;
             if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
             {
                 //SHOP font adjustment
                 subtitleYOffset = -2.0f;
-                subTitleLabel.font = [UIFont fontWithName:kFontLightName size:8.0f];
+                subTitleLabel.font = [UIFont fontWithName:kFontLightName size:subTitleLabel.font.pointSize-1];
             }
-            subTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
+            subTitleLabel.textColor = JAButtonTextOrange;
             subTitleLabel.text = component.subTitle;
             [subTitleLabel sizeToFit];
             [subTitleLabel setFrame:CGRectMake(clickableView.bounds.origin.x + textMarginX,
@@ -102,7 +102,7 @@
         if (i != numberOfComponents-1) {
             //not the last one, so add a separator
             UIView* separator = [UIView new];
-            separator.backgroundColor = UIColorFromRGB(0xd8d8d8);
+            separator.backgroundColor = JABlack400Color;
             [separator setFrame:CGRectMake(currentX - 1,
                                            clickableView.frame.origin.y,
                                            1,

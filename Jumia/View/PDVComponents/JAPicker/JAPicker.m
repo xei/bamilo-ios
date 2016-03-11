@@ -69,7 +69,7 @@ UIPickerViewDelegate
         [self addSubview:self.pickerView];
     }
     
-    [self.pickerView setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.pickerView setBackgroundColor:JAWhiteColor];
     [self.pickerView setAlpha:0.9];
     [self.pickerView setDataSource:self];
     [self.pickerView setDelegate:self];
@@ -80,7 +80,7 @@ UIPickerViewDelegate
     
     if (!VALID_NOTEMPTY(self.buttonBackgroundView, UIToolbar)) {
         self.buttonBackgroundView = [[UIToolbar alloc] initWithFrame:CGRectZero];
-        [self.buttonBackgroundView setBackgroundColor:UIColorFromRGB(0xffffff)];
+        [self.buttonBackgroundView setBackgroundColor:JAWhiteColor];
         [self.buttonBackgroundView setAlpha:0.9];
         [self addSubview:self.buttonBackgroundView];
     }
@@ -94,10 +94,10 @@ UIPickerViewDelegate
     
     if (!VALID_NOTEMPTY(self.doneButton, UIButton)) {
         self.doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.doneButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
+        [self.doneButton.titleLabel setFont:JAPickerDoneLabel];
         [self.doneButton setTitle:STRING_DONE forState:UIControlStateNormal];
-        [self.doneButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-        [self.doneButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+        [self.doneButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
+        [self.doneButton setTitleColor:JAOrange1Color forState:UIControlStateHighlighted];
         [self.doneButton addTarget:self action:@selector(doneButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         [self.buttonBackgroundView addSubview:self.doneButton];
     }
@@ -110,9 +110,9 @@ UIPickerViewDelegate
     
     if (!VALID_NOTEMPTY(self.leftButton, UIButton)) {
         self.leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.leftButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
-        [self.leftButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-        [self.leftButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+        [self.leftButton.titleLabel setFont:JAPickerDoneLabel];
+        [self.leftButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
+        [self.leftButton setTitleColor:JAOrange1Color forState:UIControlStateHighlighted];
         [self.leftButton addTarget:self action:@selector(leftButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         [self.buttonBackgroundView addSubview:self.leftButton];
         self.leftButton.hidden = YES;
@@ -226,7 +226,7 @@ UIPickerViewDelegate
     if (!tView)
     {
         tView = [[UILabel alloc] init];
-        [tView setFont:[UIFont fontWithName:kFontLightName size:22.0f]];
+        [tView setFont:JAPickerAttLabel];
         [tView setTextAlignment:NSTextAlignmentCenter];
     }
     // Fill the label text here

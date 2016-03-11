@@ -51,10 +51,10 @@
         }
     }
     
-    UIFont* labelFont = [UIFont fontWithName:kFontRegularName size:16.0f];
+    UIFont* labelFont = JADisplay3Font;
     NSString* cellText = [NSString stringWithFormat:@"%@",filter.name];
     if (0 < numberOfSelectedOptions) {
-        labelFont = [UIFont fontWithName:kFontBoldName size:16.0f];
+        labelFont = JAFilterCellCategoryTitle;
         cellText = [NSString stringWithFormat:@"%@ (%ld)",filter.name, (long)numberOfSelectedOptions];
     }
     UILabel* mainLabel = [UILabel new];

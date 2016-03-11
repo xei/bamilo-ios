@@ -21,7 +21,7 @@
                               width,
                               27.0f)];
     
-    [self setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self setBackgroundColor:JAWhiteColor];
     
     self.title.frame = CGRectMake(6.0f,
                                   self.title.frame.origin.y,
@@ -30,13 +30,13 @@
     self.title.font = [UIFont fontWithName:kFontRegularName size:self.title.font.pointSize];
     self.title.textAlignment = NSTextAlignmentLeft;
     [self.title setText:text];
-    [self.title setTextColor:UIColorFromRGB(0x4e4e4e)];
+    [self.title setTextColor:JAButtonTextOrange];
     
     self.separator.frame = CGRectMake(0.0f,
                                       self.separator.frame.origin.y,
                                       width,
                                       1.0f);
-    [self.separator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+    [self.separator setBackgroundColor:JAOrange1Color];
     
     if (RI_IS_RTL) {
         [self flipAllSubviews];

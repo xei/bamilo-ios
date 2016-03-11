@@ -85,7 +85,7 @@
     CGFloat halfWidth = mainClickableView.bounds.size.width/2;
     
     UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, halfWidth, 50)];
-    titleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
+    titleLabel.font = JATeaserCampaignsTitle;
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [titleLabel setLineBreakMode:NSLineBreakByTruncatingTail];
@@ -100,11 +100,11 @@
     [self.clockLabel removeFromSuperview];
     self.clockLabel = [UILabel new];
     if (VALID_NOTEMPTY(mainCampaign.endingDate, NSDate)) {
-        self.clockLabel.font = [UIFont fontWithName:kFontMediumName size:25.0f];
+        self.clockLabel.font = JATeaserCampaignsClockLabelActive;
     } else {
-        self.clockLabel.font = [UIFont fontWithName:kFontMediumName size:18.0f];
+        self.clockLabel.font = JATeaserCampaignsClockLabelInactive;
     }
-    self.clockLabel.textColor = UIColorFromRGB(0xcc0000);
+    self.clockLabel.textColor = JARed1Color;
     self.clockLabel.textAlignment = NSTextAlignmentCenter;
     [self.clockLabel sizeToFit];
     [clockView addSubview:self.clockLabel];
@@ -131,7 +131,7 @@
     }
     
     UILabel* subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, halfWidth, 50)];
-    subTitleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
+    subTitleLabel.font = JATeaserCampaignsSubTitle;
     subTitleLabel.textColor = [UIColor blackColor];
     subTitleLabel.textAlignment = NSTextAlignmentCenter;
     subTitleLabel.numberOfLines=2;
@@ -185,8 +185,8 @@
         CGFloat moreLabelMaxWidth = moreView.frame.size.width - arrowImage.size.width - marginBetweenLabelAndImage;
         
         UILabel* moreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, moreLabelMaxWidth, 1)];
-        moreLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
-        moreLabel.textColor = UIColorFromRGB(0x06739e);
+        moreLabel.font = JATeaserCampaignsMoreLabel;
+        moreLabel.textColor = JACampaignsTeaserMoreLabelColor;
         moreLabel.numberOfLines=2;
         moreLabel.text = STRING_SEE_MORE_OFFERS;
         [moreLabel sizeToFit];
@@ -245,7 +245,7 @@
     CGFloat labelTopMargin = 6.0f;
     
     UILabel* titleLabel = [UILabel new];
-    titleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
+    titleLabel.font = JATeaserCampaignsTitle;
     titleLabel.textColor = [UIColor blackColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.numberOfLines=2;
@@ -256,11 +256,11 @@
     [self.clockLabel removeFromSuperview];
     self.clockLabel = [UILabel new];
     if (VALID_NOTEMPTY(mainCampaign.endingDate, NSDate)) {
-        self.clockLabel.font = [UIFont fontWithName:kFontMediumName size:25.0f];
+        self.clockLabel.font = JATeaserCampaignsClockLabelActive;
     } else {
-        self.clockLabel.font = [UIFont fontWithName:kFontMediumName size:18.0f];
+        self.clockLabel.font = JATeaserCampaignsClockLabelInactive;
     }
-    self.clockLabel.textColor = UIColorFromRGB(0xcc0000);
+    self.clockLabel.textColor = JARed1Color;
     self.clockLabel.textAlignment = NSTextAlignmentCenter;
     [self.clockLabel sizeToFit];
     [clockView addSubview:self.clockLabel];
@@ -276,7 +276,7 @@
     
     CGFloat imageViewWidth = 153.0f; //value by design
     UILabel* subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, imageViewWidth, 1)];
-    subTitleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
+    subTitleLabel.font = JATeaserCampaignsSubTitle;
     subTitleLabel.textColor = [UIColor blackColor];
     subTitleLabel.textAlignment = NSTextAlignmentCenter;
     subTitleLabel.numberOfLines=2;
@@ -359,8 +359,8 @@
         CGFloat moreLabelMaxWidth = moreView.frame.size.width - arrowImage.size.width - marginBetweenLabelAndImage;
         
         UILabel* moreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, moreLabelMaxWidth, 1)];
-        moreLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
-        moreLabel.textColor = UIColorFromRGB(0x06739e);
+        moreLabel.font = JATeaserCampaignsMoreLabel;
+        moreLabel.textColor = JACampaignsTeaserMoreLabelColor;
         moreLabel.numberOfLines=-1;
         moreLabel.text = STRING_SEE_MORE_OFFERS;
         [moreLabel sizeToFit];

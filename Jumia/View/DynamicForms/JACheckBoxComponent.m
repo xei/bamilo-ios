@@ -41,7 +41,7 @@
     self.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.labelText.font = [UIFont fontWithName:kFontRegularName size:self.labelText.font.pointSize];
-    [self.labelText setTextColor:UIColorFromRGB(0x666666)];
+    [self.labelText setTextColor:JAGreyColor];
     self.labelText.adjustsFontSizeToFitWidth = YES;
     
     self.storedValue = @"";
@@ -69,7 +69,7 @@
             attributedText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", field.label, field.linkText]
                                                                     attributes:attributes];
             NSDictionary* linkAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                            UIColorFromRGB(0x55a1ff), NSForegroundColorAttributeName, nil];
+                                            JABlue1Color, NSForegroundColorAttributeName, nil];
             linkRange = NSMakeRange(field.label.length, field.linkText.length);
             [attributedText setAttributes:linkAttributes
                                       range:linkRange];

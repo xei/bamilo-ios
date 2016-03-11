@@ -16,16 +16,8 @@
 #import "JAProductInfoRatingLine.h"
 #import "JADropdownControl.h"
 
-#define JACatalogCellContentCornerRadius 3.0f
-#define JACatalogCellNormalFont [UIFont fontWithName:kFontRegularName size:10.0f]
-#define JACatalogCellLightFont [UIFont fontWithName:kFontLightName size:9.0f]
-#define JACatalogCellRedFontColor UIColorFromRGB(0xcc0000)
-#define JACatalogCellGrayFontColor UIColorFromRGB(0xcccccc)
-#define JACatalogCellPriceLabelOffsetY 2.0f
 #define JACatalogCellPriceLabelOffsetX 7.0f
 #define JACatalogCellPriceLabelOffsetX_ipad 6.0f
-#define JACatalogCellRatingsViewOffsetY 0.0f
-#define JACatalogCellRatingsViewOffsetX 7.0f
 
 typedef NS_ENUM(NSUInteger, JACatalogCollectionViewCellType) {
     JACatalogCollectionViewListCell = 0,
