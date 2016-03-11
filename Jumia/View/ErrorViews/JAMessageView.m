@@ -87,10 +87,10 @@
     [self.titleLabel setText:title];
     
     if (success) {
-        self.messageView.backgroundColor = UIColorFromRGB(0x7dcb7d);
+        self.messageView.backgroundColor = JAMessageViewSuccessColor;
         [self.errorImageView setHidden:YES];
     }else{
-        self.messageView.backgroundColor = UIColorFromRGB(0xe77979);
+        self.messageView.backgroundColor = JAMessageViewErrorColor;
         [self.errorImageView setHidden:NO];
     }
     

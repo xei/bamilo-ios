@@ -37,8 +37,8 @@
     self.doneClickableView.layer.cornerRadius = 5.0f;
     self.doneClickableView.backgroundColor = [UIColor whiteColor];
     [self.doneClickableView setTitle:STRING_CANCEL forState:UIControlStateNormal];
-    [self.doneClickableView setFont:[UIFont fontWithName:kFontRegularName size:17.0f]];
-    [self.doneClickableView setTitleColor:UIColorFromRGB(0x06739e) forState:UIControlStateNormal];
+    [self.doneClickableView setFont:JASystemTitleFont];
+    [self.doneClickableView setTitleColor:JASysBlueColor forState:UIControlStateNormal];
     [self.doneClickableView addTarget:self action:@selector(animateOut) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.doneClickableView];
     
@@ -161,14 +161,14 @@
                                                                  self.tableView.frame.size.width,
                                                                  1)];
     separator.tag = -1;
-    separator.backgroundColor = JALabelGrey;
+    separator.backgroundColor = JABlack300Color;
     [cell addSubview:separator];
 
     
     if (0 == indexPath.row) {
         [clickView setTitle:[STRING_SORT_BY uppercaseString] forState:UIControlStateNormal];
-        [clickView setTitleColor:UIColorFromRGB(0x666666) forState:UIControlStateNormal];
-        [clickView setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
+        [clickView setTitleColor:JAGreyColor forState:UIControlStateNormal];
+        [clickView setFont:JASortingViewSortByLabel];
         clickView.userInteractionEnabled = NO;
         
         return cell;
@@ -180,8 +180,8 @@
     
     NSString* option = [kJASORTINGVIEW_OPTIONS_ARRAY objectAtIndex:realIndex];
     [clickView setTitle:option forState:UIControlStateNormal];
-    [clickView setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    [clickView setFont:[UIFont fontWithName:kFontLightName size:17.0f]];
+    [clickView setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
+    [clickView setFont:JASortingViewSortAttLabel];
     
     if (realIndex == self.selectedIndex) {
         UIImage* checkImage = [UIImage imageNamed:@"selectionCheckmark"];

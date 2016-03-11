@@ -32,7 +32,6 @@
 #import "RITarget.h"
 
 #define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
-#define JACatalogViewControllerButtonColor UIColorFromRGB(0xe3e3e3);
 #define JACatalogViewControllerMaxProducts 36
 #define JACatalogViewControllerMaxProducts_ipad 46
 

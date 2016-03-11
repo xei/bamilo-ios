@@ -28,10 +28,10 @@
     self.priceFilterOption = priceFilterOption;
     
     self.backgroundColor = [UIColor whiteColor];
-    self.priceRangeLabel.font = [UIFont fontWithName:kFontRegularName size:16.0f];
-    self.priceRangeLabel.textColor = UIColorFromRGB(0x4e4e4e);
-    self.discountLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
-    self.discountLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.priceRangeLabel.font = JADisplay3Font;
+    self.priceRangeLabel.textColor = JAButtonTextOrange;
+    self.discountLabel.font = JAListFont;
+    self.discountLabel.textColor = JAButtonTextOrange;
     
     self.priceRangeSlider.stepValue = self.priceFilterOption.interval;
     

@@ -54,7 +54,7 @@
     if (!VALID(_brandLabel, UILabel)) {
         _brandLabel = [[UILabel alloc] init];
         [_brandLabel setFont:JACaptionFont];
-        _brandLabel.textColor = UIColorFromRGB(0x808080);
+        _brandLabel.textColor = JABlack800Color;
         [self addSubview:_brandLabel];
     }
     return _brandLabel;
@@ -65,7 +65,7 @@
     if (!VALID(_nameLabel, UILabel)) {
         _nameLabel = [[UILabel alloc] init];
         [_nameLabel setFont:JABodyFont];
-        _nameLabel.textColor = UIColorFromRGB(0x000000);
+        _nameLabel.textColor = JABlackColor;
         [self addSubview:_nameLabel];
     }
     return _nameLabel;
@@ -76,7 +76,7 @@
     if (!VALID(_qtyLabel, UILabel)) {
         _qtyLabel = [[UILabel alloc] init];
         [_qtyLabel setFont:JACaptionFont];
-        _qtyLabel.textColor = UIColorFromRGB(0x808080);
+        _qtyLabel.textColor = JABlack800Color;
         [self addSubview:_qtyLabel];
     }
     return _qtyLabel;
@@ -109,8 +109,8 @@
 {
     if (!VALID(_estimateDeliveryLabel, UILabel)) {
         _estimateDeliveryLabel = [[UILabel alloc] init];
-        [_estimateDeliveryLabel setFont:[UIFont fontWithName:kFontRegularName size:10]];
-        _estimateDeliveryLabel.textColor = UIColorFromRGB(0x808080);
+        [_estimateDeliveryLabel setFont:JACaptionFont];
+        _estimateDeliveryLabel.textColor = JABlack800Color;
         [self addSubview:_estimateDeliveryLabel];
     }
     return _estimateDeliveryLabel;
@@ -120,7 +120,7 @@
 {
     if (!VALID(_deliveredLabel, UILabel)) {
         _deliveredLabel = [UILabel new];
-        [_deliveredLabel setFont:[UIFont fontWithName:kFontRegularName size:10]];
+        [_deliveredLabel setFont:JACaptionFont];
         [_deliveredLabel setTextColor:JABlackColor];
         [_deliveredLabel setNumberOfLines:2];
         [self addSubview:_deliveredLabel];

@@ -198,7 +198,7 @@ UITextFieldDelegate>
                                                                              self.scrollView.frame.size.width - 12.0f,
                                                                              27.0f) collectionViewLayout:collectionViewFlowLayout];
     self.collectionView.layer.cornerRadius = 5.0f;
-    [self.collectionView setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.collectionView setBackgroundColor:JAWhiteColor];
     [self.collectionView registerNib:paymentListHeaderNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"paymentListHeader"];
     [self.collectionView registerNib:paymentListCellNib forCellWithReuseIdentifier:@"paymentListCell"];
     [self.collectionView registerNib:paymentListCellNib forCellWithReuseIdentifier:@"paymentListCell_Empty"];
@@ -213,7 +213,7 @@ UITextFieldDelegate>
                                                                CGRectGetMaxY(self.collectionView.frame) + 6.0f,
                                                                self.scrollView.frame.size.width - 12.0f,
                                                                86.0f)];
-    [self.couponView setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.couponView setBackgroundColor:JAWhiteColor];
     self.couponView.layer.cornerRadius = 5.0f;
     
     self.couponTitle = [[UILabel alloc] initWithFrame:CGRectMake(6.0f,
@@ -221,7 +221,7 @@ UITextFieldDelegate>
                                                                  self.couponView.frame.size.width - 12.0f,
                                                                  26.0f)];
     [self.couponTitle setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
-    [self.couponTitle setTextColor:UIColorFromRGB(0x4e4e4e)];
+    [self.couponTitle setTextColor:JAButtonTextOrange];
     [self.couponTitle setText:STRING_COUPON];
     [self.couponTitle setBackgroundColor:[UIColor clearColor]];
     [self.couponView addSubview:self.couponTitle];
@@ -230,15 +230,15 @@ UITextFieldDelegate>
                                                                          CGRectGetMaxY(self.couponTitle.frame),
                                                                          self.couponView.frame.size.width,
                                                                          1.0f)];
-    [self.couponTitleSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+    [self.couponTitleSeparator setBackgroundColor:JAOrange1Color];
     [self.couponView addSubview:self.couponTitleSeparator];
     
     UIImage *useCouponImageNormal = [UIImage imageNamed:@"useCoupon_normal"];
     
     self.couponTextField = [[UITextField alloc] init];
     [self.couponTextField setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
-    [self.couponTextField setTextColor:UIColorFromRGB(0x666666)];
-    [self.couponTextField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
+    [self.couponTextField setTextColor:JAGreyColor];
+    [self.couponTextField setValue:JATextFieldColor forKeyPath:@"_placeholderLabel.textColor"];
     [self.couponTextField setPlaceholder:STRING_ENTER_COUPON];
     [self.couponTextField setDelegate:self];
     [self.couponView addSubview:self.couponTextField];
@@ -250,7 +250,7 @@ UITextFieldDelegate>
     [self.useCouponButton setBackgroundImage:[UIImage imageNamed:@"useCoupon_highlighted"] forState:UIControlStateSelected];
     [self.useCouponButton setBackgroundImage:[UIImage imageNamed:@"useCoupon_disabled"] forState:UIControlStateDisabled];
     [self.useCouponButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
-    [self.useCouponButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [self.useCouponButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
     [self.useCouponButton addTarget:self action:@selector(useCouponButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.useCouponButton setFrame:CGRectMake(CGRectGetMaxX(self.couponTextField.frame) + 5.0f,
                                               CGRectGetMaxY(self.couponTitleSeparator.frame) + 17.0f,
@@ -404,8 +404,8 @@ UITextFieldDelegate>
     [self.couponTextField removeFromSuperview];
     self.couponTextField = [[UITextField alloc] init];
     [self.couponTextField setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
-    [self.couponTextField setTextColor:UIColorFromRGB(0x666666)];
-    [self.couponTextField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
+    [self.couponTextField setTextColor:JAGreyColor];
+    [self.couponTextField setValue:JATextFieldColor forKeyPath:@"_placeholderLabel.textColor"];
     [self.couponTextField setPlaceholder:STRING_ENTER_COUPON];
     [self.couponTextField setDelegate:self];
     [self.couponView addSubview:self.couponTextField];
@@ -532,7 +532,7 @@ UITextFieldDelegate>
 {
     [self.couponTextField resignFirstResponder];
     
-    [self.couponTextField setTextColor:UIColorFromRGB(0x666666)];
+    [self.couponTextField setTextColor:JAGreyColor];
     
     [self showLoading];
     NSString *voucherCode = [self.couponTextField text];
@@ -556,7 +556,7 @@ UITextFieldDelegate>
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
             
-            [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
+            [self.couponTextField setTextColor:JARed1Color];
         }];
     }
     else
@@ -577,7 +577,7 @@ UITextFieldDelegate>
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self hideLoading];
             
-            [self.couponTextField setTextColor:UIColorFromRGB(0xcc0000)];
+            [self.couponTextField setTextColor:JARed1Color];
         }];
     }
 }
@@ -801,7 +801,7 @@ UITextFieldDelegate>
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    [self.couponTextField setTextColor:UIColorFromRGB(0x666666)];
+    [self.couponTextField setTextColor:JAGreyColor];
 }
 
 #pragma mark Observers

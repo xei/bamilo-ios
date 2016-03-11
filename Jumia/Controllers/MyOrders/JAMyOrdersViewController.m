@@ -138,7 +138,7 @@ UICollectionViewDelegateFlowLayout>
                                                                                    self.viewBounds.size.width,
                                                                                    self.viewBounds.size.height - CGRectGetMaxY(self.ordersHistoryHeader.frame))
                                                    collectionViewLayout: ordersCollectionViewFlowLayout];
-        [_ordersCollectionView setBackgroundColor:UIColorFromRGB(0xffffff)];
+        [_ordersCollectionView setBackgroundColor:JAWhiteColor];
         
 
         [_ordersCollectionView setDataSource:self];

@@ -41,7 +41,7 @@
     
     self.clearAllView = [[JAClickableView alloc] init];
     self.clearAllView.backgroundColor = [UIColor whiteColor];
-    [self.clearAllView setFont:[UIFont fontWithName:kFontRegularName size:14.0f]];
+    [self.clearAllView setFont:JAListFont];
     [self.clearAllView setTitle:STRING_CLEAR_ALL forState:UIControlStateNormal];
     [self.clearAllView setTitleColor:JASysBlueColor forState:UIControlStateNormal];
     [self.clearAllView addTarget:self action:@selector(clearAllFilters) forControlEvents:UIControlEventTouchUpInside];

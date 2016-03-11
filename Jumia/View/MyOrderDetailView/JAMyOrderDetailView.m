@@ -12,9 +12,6 @@
 #import "JAOrderItemCollectionViewCell.h"
 #import "JAMyOrderResumeView.h"
 
-#define kNormalFont [UIFont fontWithName:kFontLightName size:13]
-#define kHighlightedFont [UIFont fontWithName:kFontRegularName size:13]
-
 @interface JAMyOrderDetailView () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic) JAMyOrderResumeView *myOrderResumeView;

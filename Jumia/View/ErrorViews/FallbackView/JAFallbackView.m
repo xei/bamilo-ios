@@ -159,13 +159,13 @@
         
         self.secondSloganLabel1 = [[UILabel alloc] init];
         self.secondSloganLabel1.textColor = [UIColor whiteColor];
-        self.secondSloganLabel1.font = [UIFont fontWithName:kFontRegularName size:10.0f];
+        self.secondSloganLabel1.font = JACaptionFont;
         self.secondSloganLabel1.text = STRING_WIDEST_CHOICE;
         [self.secondSloganLabel1 sizeToFit];
         
         self.secondSloganLabel2 = [[UILabel alloc] init];
         self.secondSloganLabel2.textColor = [UIColor blackColor];
-        self.secondSloganLabel2.font = [UIFont fontWithName:kFontRegularName size:10.0f];
+        self.secondSloganLabel2.font = JACaptionFont;
         self.secondSloganLabel2.text = [NSString stringWithFormat:@" %@", STRING_AT_YOUR_DOORSTEP];
         [self.secondSloganLabel2 sizeToFit];
         
@@ -255,7 +255,7 @@
             
             UILabel* categoryLabel = [[UILabel alloc] init];
             categoryLabel.textColor = [UIColor blackColor];
-            categoryLabel.font = [UIFont fontWithName:kFontRegularName size:12.0f];
+            categoryLabel.font = JABodyFont;
             categoryLabel.text = [leftColumnCategoriesArray objectAtIndex:i];
             [categoryLabel sizeToFit];
             [categoryLabel setFrame:CGRectMake(CGRectGetMaxX(checkboxImageView.frame) + 6.0f,
@@ -298,7 +298,7 @@
             
             UILabel* categoryLabel = [[UILabel alloc] init];
             categoryLabel.textColor = [UIColor blackColor];
-            categoryLabel.font = [UIFont fontWithName:kFontRegularName size:12.0f];
+            categoryLabel.font = JABodyFont;
             categoryLabel.text = [rightColumnCategoriesArray objectAtIndex:i];
             [categoryLabel sizeToFit];
             [categoryLabel setFrame:CGRectMake(CGRectGetMaxX(checkboxImageView.frame) + 6.0f,

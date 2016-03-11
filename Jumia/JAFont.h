@@ -19,16 +19,59 @@
 #define kFontBoldName [[NSUserDefaults standardUserDefaults] objectForKey:kFontBoldNameKey]
 #define kFontMediumName [[NSUserDefaults standardUserDefaults] objectForKey:kFontMediumNameKey]
 
-#define JADisplay1Font [UIFont fontWithName:kFontRegularName size:30]
-#define JADisplay2Font [UIFont fontWithName:kFontRegularName size:20]
-#define JADisplay3Font [UIFont fontWithName:kFontRegularName size:16]
-#define JATitleFont [UIFont fontWithName:kFontMediumName size:14]
-#define JAListFont [UIFont fontWithName:kFontRegularName size:14]
-#define JAHEADLINEFont [UIFont fontWithName:kFontBoldName size:12]
-#define JABodyFont [UIFont fontWithName:kFontRegularName size:12]
-#define JACaptionFont [UIFont fontWithName:kFontRegularName size:10]
-#define JABADGEFont [UIFont fontWithName:kFontMediumName size:10]
-#define JABUTTONFont [UIFont fontWithName:kFontBoldName size:14]
-#define JASystemTitleFont [UIFont fontWithName:kFontRegularName size:17]
+#define JADisplay1Font      [UIFont fontWithName:kFontRegularName size:30]
+#define JADisplay2Font      [UIFont fontWithName:kFontRegularName size:20]
+#define JASystemTitleFont   [UIFont fontWithName:kFontRegularName size:17]
+#define JADisplay3Font      [UIFont fontWithName:kFontRegularName size:16]
+#define JATitleFont         [UIFont fontWithName:kFontMediumName size:14]
+#define JAListFont          [UIFont fontWithName:kFontRegularName size:14]
+#define JAHEADLINEFont      [UIFont fontWithName:kFontBoldName size:12]
+#define JABodyFont          [UIFont fontWithName:kFontRegularName size:12]
+#define JACaptionFont       [UIFont fontWithName:kFontRegularName size:10]
+#define JABADGEFont         [UIFont fontWithName:kFontMediumName size:10]
+#define JABUTTONFont        [UIFont fontWithName:kFontBoldName size:14]
+
+
+#warning out of styleguide fonts
+
+#define JATeaserFeatureStoreItemSubTitle    [UIFont fontWithName:kFontLightName size:9.0f]
+#define JATeaserFeatureStoreItemTitle       [UIFont fontWithName:kFontLightName size:12.0f]
+
+#define JAShopTeaserSubTitle                [UIFont fontWithName:kFontLightName size:9.0f]
+#define JAShopTeaserTitle                   [UIFont fontWithName:kFontLightName size:12.0f]
+
+#define JASmallTeaserSubTitle               [UIFont fontWithName:kFontLightName size:9.0f]
+#define JASmallTeaserTitle                  [UIFont fontWithName:kFontLightName size:12.0f]
+
+#define JATopSellersTeaserTitle             [UIFont fontWithName:kFontLightName size:12.0f]
+
+#define JATeaserCampaignsMoreLabel          [UIFont fontWithName:kFontLightName size:12.0f]
+#define JATeaserCampaignsSubTitle           [UIFont fontWithName:kFontLightName size:12.0f]
+#define JATeaserCampaignsTitle              [UIFont fontWithName:kFontLightName size:12.0f]
+#define JATeaserCampaignsClockLabelInactive [UIFont fontWithName:kFontMediumName size:18.0f]
+#define JATeaserCampaignsClockLabelActive   [UIFont fontWithName:kFontMediumName size:25.0f]
+
+#define JACheckBoxTitle                     [UIFont fontWithName:kFontRegularName size:13.0f]
+
+#define JAPickerDoneLabel                   [UIFont fontWithName:kFontRegularName size:13.0f]
+#define JAPickerAttLabel                    [UIFont fontWithName:kFontLightName size:22.0f]
+
+#define JAMainFilterCellSubLabel            [UIFont fontWithName:kFontLightName size:14.0f]
+#define JAFilterCellCategoryTitle           [UIFont fontWithName:kFontBoldName size:16.0f]
+
+#define JAOtherOffersFromLabel              [UIFont fontWithName:kFontRegularName size:9.0f]
+#define JAOtherOffersMinPriceLabel          [UIFont fontWithName:kFontRegularName size:9.0f]
+
+#define JASearchViewHighlightFont           [UIFont fontWithName:kFontLightName size:17.0f]
+#define JASearchViewQueryFont               [UIFont fontWithName:kFontMediumName size:17.0f]
+
+#define JASortingViewSortByLabel            [UIFont fontWithName:kFontLightName size:12.0f]
+#define JASortingViewSortAttLabel           [UIFont fontWithName:kFontLightName size:17.0f]
+
+#define JAUndefinedSearchNoResultsLabel     [UIFont fontWithName:kFontLightName size:14.0f]
+#define JAUndefinedSearchQueryLabel         [UIFont fontWithName:kFontBoldName size:14.0f]
+#define JAUndefinedTipsLabel                [UIFont fontWithName:kFontLightName size:13.0f]
+#define JAUndefinedBrandLabel               [UIFont fontWithName:kFontLightName size:13.0f]
+#define JAUndefinedTopTitles                [UIFont fontWithName:kFontRegularName size:11.0f]
 
 #endif

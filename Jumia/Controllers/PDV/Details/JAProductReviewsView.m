@@ -101,7 +101,7 @@
         [layout setSectionInset:UIEdgeInsetsMake(0.f, 0.0, 10.0, 0.0)];
         layout.scrollDirection = UICollectionViewScrollDirectionVertical;
         _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
-        [_collectionView setBackgroundColor:UIColorFromRGB(0xf0f0f0)];
+        [_collectionView setBackgroundColor:JABlack300Color];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         [_collectionView registerClass:[JAReviewCollectionCell class] forCellWithReuseIdentifier:@"JAReviewCollectionCell"];

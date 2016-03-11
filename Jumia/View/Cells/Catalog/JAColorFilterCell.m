@@ -14,8 +14,8 @@
 -(UILabel *)colorTitleLabel {
     if(!VALID(_colorTitleLabel, UILabel)) {
         _colorTitleLabel = [[UILabel alloc] init];
-        _colorTitleLabel.font = [UIFont fontWithName:kFontRegularName size:16.0f];
-        _colorTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
+        _colorTitleLabel.font = JADisplay3Font;
+        _colorTitleLabel.textColor = JAButtonTextOrange;
         [self addSubview:_colorTitleLabel];
     }
     return _colorTitleLabel;

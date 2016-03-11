@@ -48,7 +48,7 @@
         self.label.textAlignment = NSTextAlignmentCenter;
         self.label.numberOfLines = 0;
         self.label.font = kJAWizardFont;
-        self.label.textColor = kJAWizardFontColor;
+        self.label.textColor = JABlack700Color;
         self.label.text = STRING_WIZARD_SIZE_GUIDE_PINCH;
         [self.label sizeToFit];
         

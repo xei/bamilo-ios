@@ -90,21 +90,18 @@
                                                                     10.0f)];
     self.labelNoResults.textAlignment = NSTextAlignmentCenter;
     self.labelNoResults.numberOfLines = -1;
-    self.labelNoResults.font = [UIFont fontWithName:kFontLightName size:14.0f];
-    self.labelNoResults.textColor = UIColorFromRGB(0x666666);
+    self.labelNoResults.font = JAUndefinedSearchNoResultsLabel;
+    self.labelNoResults.textColor = JAGreyColor;
     
     NSString *text = searchResult.errorMessage;
     
     NSMutableAttributedString *stringText = [[NSMutableAttributedString alloc] initWithString:text];
     NSInteger stringTextLenght = text.length;
-    
-    UIFont *stringTextFont = [UIFont fontWithName:kFontLightName size:14.0f];
-    UIFont *subStringTextFont = [UIFont fontWithName:kFontBoldName size:14.0f];
-    UIColor *stringTextColor = UIColorFromRGB(0X666666);
+    UIColor *stringTextColor = JAGreyColor;
     
     
     [stringText addAttribute:NSFontAttributeName
-                       value:stringTextFont
+                       value:JAUndefinedSearchNoResultsLabel
                        range:NSMakeRange(0, stringTextLenght)];
     
     [stringText addAttribute:NSStrokeColorAttributeName
@@ -115,7 +112,7 @@
         NSRange range = [text rangeOfString:searchText];
         
         [stringText addAttribute:NSFontAttributeName
-                           value:subStringTextFont
+                           value:JAUndefinedSearchQueryLabel
                            range:range];
         
         self.labelNoResults.attributedText = stringText;
@@ -133,7 +130,7 @@
                                                                   CGRectGetMaxY(self.labelNoResults.frame) + 10.0f,
                                                                   self.topView.frame.size.width,
                                                                   1)];
-    self.separatorView.backgroundColor = UIColorFromRGB(0xcccccc);
+    self.separatorView.backgroundColor = JATextFieldColor;
     [self.topView addSubview:self.separatorView];
     
     CGFloat labelY = CGRectGetMaxY(self.separatorView.frame) + 15.0f;
@@ -145,8 +142,8 @@
                                                                               self.topView.frame.size.width - 6.0f*2,
                                                                               10.0f)];
         self.searchTipsTitleLabel.numberOfLines = -1;
-        self.searchTipsTitleLabel.textColor = UIColorFromRGB(0x666666);
-        self.searchTipsTitleLabel.font = [UIFont fontWithName:kFontRegularName size:14.0f];
+        self.searchTipsTitleLabel.textColor = JAGreyColor;
+        self.searchTipsTitleLabel.font = JAListFont;
         self.searchTipsTitleLabel.text = searchType.title;
         [self.searchTipsTitleLabel sizeToFit];
         
@@ -159,8 +156,8 @@
                                                                          self.topView.frame.size.width - self.leftMargin*2,
                                                                          10.0f)];
     self.searchTipsTextLabel.numberOfLines = -1;
-    self.searchTipsTextLabel.textColor = UIColorFromRGB(0x666666);
-    self.searchTipsTextLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
+    self.searchTipsTextLabel.textColor = JAGreyColor;
+    self.searchTipsTextLabel.font = JAUndefinedTipsLabel;
     self.searchTipsTextLabel.text = searchType.text;
     [self.searchTipsTextLabel sizeToFit];
     
@@ -189,15 +186,15 @@
                                                                              self.topSellersView.bounds.size.width - 6.0f*2,
                                                                              26.0f)];
         topSellersTitle.text = STRING_TOP_SELLERS;
-        topSellersTitle.font = [UIFont fontWithName:kFontRegularName size:11.0f];
-        topSellersTitle.textColor = UIColorFromRGB(0x4e4e4e);
+        topSellersTitle.font = JAUndefinedTopTitles;
+        topSellersTitle.textColor = JAButtonTextOrange;
         [self.topSellersView addSubview:topSellersTitle];
         
         UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(self.topSellersView.bounds.origin.x,
                                                                     CGRectGetMaxY(topSellersTitle.frame),
                                                                     self.topSellersView.bounds.size.width,
                                                                     1.0f)];
-        lineView.backgroundColor = UIColorFromRGB(0xfaa41a);
+        lineView.backgroundColor = JAOrange1Color;
         [self.topSellersView addSubview:lineView];
         
         UIScrollView* productScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.topSellersView.bounds.origin.x,
@@ -263,15 +260,15 @@
                                                                             self.topBrandsView.bounds.size.width - 6.0f*2,
                                                                             26.0f)];
         topBrandsTitle.text = STRING_TOP_BRANDS;
-        topBrandsTitle.font = [UIFont fontWithName:kFontRegularName size:11.0f];
-        topBrandsTitle.textColor = UIColorFromRGB(0x4e4e4e);
+        topBrandsTitle.font = JAUndefinedTopTitles;
+        topBrandsTitle.textColor = JAButtonTextOrange;
         [self.topBrandsView addSubview:topBrandsTitle];
         
         UIView* brandsLineView = [[UIView alloc] initWithFrame:CGRectMake(self.topBrandsView.bounds.origin.x,
                                                                           CGRectGetMaxY(topBrandsTitle.frame),
                                                                           self.topBrandsView.bounds.size.width,
                                                                           1.0f)];
-        brandsLineView.backgroundColor = UIColorFromRGB(0xfaa41a);
+        brandsLineView.backgroundColor = JAOrange1Color;
         [self.topBrandsView addSubview:brandsLineView];
         
         UIScrollView* brandsScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.topBrandsView.bounds.origin.x,
@@ -319,9 +316,8 @@
                 
                 UILabel *brandLabel = [[UILabel alloc] initWithFrame:CGRectMake(3, 80, 104, 20)];
                 brandLabel.textAlignment = NSTextAlignmentCenter;
-                brandLabel.font = [UIFont fontWithName:kFontLightName
-                                                  size:13.0f];
-                brandLabel.textColor = UIColorFromRGB(0x666666);
+                brandLabel.font = JAUndefinedBrandLabel;
+                brandLabel.textColor = JAGreyColor;
                 brandLabel.text = brand.name;
                 
                 [brandView addSubview:brandLabel];
@@ -357,8 +353,8 @@
                                                                      self.noticeView.bounds.size.width - self.leftMargin*2,
                                                                      10.0f)];
     noticeLabel.numberOfLines = -1;
-    noticeLabel.textColor = UIColorFromRGB(0x666666);
-    noticeLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
+    noticeLabel.textColor = JAGreyColor;
+    noticeLabel.font = JAUndefinedTipsLabel;
     noticeLabel.text = searchResult.noticeMessage;
     [noticeLabel sizeToFit];
     [self.noticeView addSubview:noticeLabel];

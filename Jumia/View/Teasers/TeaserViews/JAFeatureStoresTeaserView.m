@@ -21,7 +21,7 @@
         CGFloat groupingTitleLabelMargin = 16.0f;
         CGFloat groupingTitleLabelHeight = 50.0f; //value by design
         UILabel* groupingTitleLabel = [UILabel new];
-        groupingTitleLabel.font = [UIFont fontWithName:kFontMediumName size:14.0f];
+        groupingTitleLabel.font = JATitleFont;
         groupingTitleLabel.textColor = [UIColor blackColor];
         groupingTitleLabel.text = STRING_FEATURED_STORES;
         groupingTitleLabel.textAlignment = NSTextAlignmentLeft;
@@ -84,7 +84,7 @@
             CGFloat textMarginX = 6.0;
             CGFloat textMarginY = 5.0;
             UILabel* titleLabel = [UILabel new];
-            titleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
+            titleLabel.font = JATeaserFeatureStoreItemTitle;
             titleLabel.textColor = [UIColor blackColor];
             titleLabel.text = component.title;
             [titleLabel sizeToFit];
@@ -95,8 +95,8 @@
             [clickableView addSubview:titleLabel];
             
             UILabel* subTitleLabel = [UILabel new];
-            subTitleLabel.font = [UIFont fontWithName:kFontLightName size:9.0f];
-            subTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
+            subTitleLabel.font = JATeaserFeatureStoreItemSubTitle;
+            subTitleLabel.textColor = JAButtonTextOrange;
             subTitleLabel.text = component.subTitle;
             [subTitleLabel sizeToFit];
             [subTitleLabel setFrame:CGRectMake(clickableView.bounds.origin.x + textMarginX,

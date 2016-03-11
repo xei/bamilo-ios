@@ -53,10 +53,10 @@
 {
     CGFloat width = frame.size.width - 12.0f;
     
-    [self.separator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+    [self.separator setBackgroundColor:JAOrange1Color];
     [self.separator setWidth:width];
     self.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.titleLabel.font.pointSize];
-    [self.titleLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
+    [self.titleLabel setTextColor:JAButtonTextOrange];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {

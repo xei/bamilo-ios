@@ -110,7 +110,7 @@
         [self.genericDetailLabel setXCenterAligned];
     }
     
-    self.backgroundColor = UIColorFromRGB(0xc8c8c8);
+    self.backgroundColor = JANoConnectionBackground;
     self.noNetworkView.layer.cornerRadius = 5.0f;
     [self.noNetworkView setX:6.f];
     [self.noNetworkView setWidth:self.width - 2*6.f];
@@ -121,25 +121,25 @@
 
     self.retryButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.retryButton.titleLabel.font.pointSize];
     [self.retryButton setTitle:STRING_TRY_AGAIN forState:UIControlStateNormal];
-    [self.retryButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [self.retryButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
     [self.retryButton setXCenterAligned];
     
     [self.genericImageView setXCenterAligned];
     [self.noInternetImageView setXCenterAligned];
     
     self.textLabel.font = [UIFont fontWithName:kFontRegularName size:self.textLabel.font.pointSize];
-    self.textLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.textLabel.textColor = JAButtonTextOrange;
     
     self.noConnectionDetailsLabel.font = [UIFont fontWithName:kFontRegularName size:self.noConnectionDetailsLabel.font.pointSize];
-    self.noConnectionDetailsLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.noConnectionDetailsLabel.textColor = JAButtonTextOrange;
     [self.noConnectionDetailsLabel setWidth:self.width-2*6.f];
     [self.noConnectionDetailsLabel sizeToFit];
     [self.noConnectionDetailsLabel setXCenterAligned];
     self.genericErrorLabel.font = [UIFont fontWithName:kFontRegularName size:self.genericErrorLabel.font.pointSize];
-    self.genericErrorLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.genericErrorLabel.textColor = JAButtonTextOrange;
     [self.genericErrorLabel setXCenterAligned];
     self.genericDetailLabel.font = [UIFont fontWithName:kFontRegularName size:self.genericDetailLabel.font.pointSize];
-    self.genericDetailLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.genericDetailLabel.textColor = JAButtonTextOrange;
     [self.genericDetailLabel setXCenterAligned];
     
     CGRect buttonTextLabelRect = [self.textLabel.text boundingRectWithSize: CGSizeMake(self.retryButton.frame.size.width, self.retryButton.frame.size.height)

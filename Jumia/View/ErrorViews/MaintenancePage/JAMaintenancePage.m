@@ -128,7 +128,7 @@ void(^retryBock)(BOOL dismiss);
     
     self.maintenanceLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     [self.maintenanceLabel setFont:[UIFont fontWithName:kFontRegularName size:18.0f]];
-    [self.maintenanceLabel setTextColor:UIColorFromRGB(0xffffff)];
+    [self.maintenanceLabel setTextColor:JAWhiteColor];
     [self.maintenanceLabel setText:STRING_MAINTENANCE];
     [self.maintenanceLabel sizeToFit];
     [self.maintenanceLabel setFrame:CGRectMake((frame.size.width - self.maintenanceLabel.frame.size.width) / 2,
@@ -141,7 +141,7 @@ void(^retryBock)(BOOL dismiss);
                                                                               CGRectGetMaxY(self.maintenanceLabel.frame) + 10.0f,
                                                                               self.maintenanceLabel.frame.size.width,
                                                                               1.0f)];
-    [self.maintenanceLabelSeparator setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.maintenanceLabelSeparator setBackgroundColor:JAWhiteColor];
     [self addSubview:self.maintenanceLabelSeparator];
     
     CGFloat logoViewWidth = 0.0f;
@@ -160,7 +160,7 @@ void(^retryBock)(BOOL dismiss);
     [self.countryNameLabel setFont:countryNameLabelFont];
     [self.countryNameLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [self.countryNameLabel setNumberOfLines:0];
-    [self.countryNameLabel setTextColor:UIColorFromRGB(0x000000)];
+    [self.countryNameLabel setTextColor:JABlackColor];
     [self.countryNameLabel setText:countryName];
     [self.countryNameLabel sizeToFit];
     
@@ -204,7 +204,7 @@ void(^retryBock)(BOOL dismiss);
         }
     }
     
-    UIFont *bestShoppingExperienceFont = [UIFont fontWithName:kFontRegularName size:14.0f];
+    UIFont *bestShoppingExperienceFont = JAListFont;
     CGRect bestShoppingExperienceLabelRect = [bestShoppingExperienceString boundingRectWithSize:CGSizeMake(self.frame.size.width - 20.0f, self.frame.size.height)
                                                                                         options:NSStringDrawingUsesLineFragmentOrigin
                                                                                      attributes:@{NSFontAttributeName:bestShoppingExperienceFont} context:nil];
@@ -213,7 +213,7 @@ void(^retryBock)(BOOL dismiss);
     [self.bestShoppingExperienceLabel setFont:bestShoppingExperienceFont];
     [self.bestShoppingExperienceLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [self.bestShoppingExperienceLabel setNumberOfLines:0];
-    [self.bestShoppingExperienceLabel setTextColor:UIColorFromRGB(0x000000)];
+    [self.bestShoppingExperienceLabel setTextColor:JABlackColor];
     [self.bestShoppingExperienceLabel setText:bestShoppingExperienceString];
     [self.bestShoppingExperienceLabel sizeToFit];
     [self.bestShoppingExperienceLabel setFrame:CGRectMake((self.frame.size.width - bestShoppingExperienceLabelRect.size.width) / 2,
@@ -230,7 +230,7 @@ void(^retryBock)(BOOL dismiss);
         NSMutableAttributedString *widestChoiceAttributedString = [[NSMutableAttributedString alloc] initWithString:widestChoicedString];
         
         UIFont *doorStepTextFont = [UIFont fontWithName:kFontLightName size:10.0f];
-        UIColor *doorStepTextColor = UIColorFromRGB(0x000000);
+        UIColor *doorStepTextColor = JABlackColor;
         
         [widestChoiceAttributedString addAttribute:NSFontAttributeName
                                              value:doorStepTextFont
@@ -248,7 +248,7 @@ void(^retryBock)(BOOL dismiss);
         [self.widestChoiceLabel setFont:widestChoiceAttributedFont];
         [self.widestChoiceLabel setLineBreakMode:NSLineBreakByWordWrapping];
         [self.widestChoiceLabel setNumberOfLines:0];
-        [self.widestChoiceLabel setTextColor:UIColorFromRGB(0xffffff)];
+        [self.widestChoiceLabel setTextColor:JAWhiteColor];
         [self.widestChoiceLabel setAttributedText:widestChoiceAttributedString];
         [self.widestChoiceLabel sizeToFit];
         [self.widestChoiceLabel setFrame:CGRectMake((self.frame.size.width - widestChoiceLabelRect.size.width) / 2,
@@ -269,9 +269,9 @@ void(^retryBock)(BOOL dismiss);
         [self.changeCountryButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"highlighted"]]forState:UIControlStateSelected];
         [self.changeCountryButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:greyButtonName, @"disabled"]]forState:UIControlStateDisabled];
         [self.changeCountryButton setTitle:STRING_CHOOSE_COUNTRY forState:UIControlStateNormal];
-        [self.changeCountryButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+        [self.changeCountryButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
         [self.changeCountryButton addTarget:self action:@selector(changeCountryButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        [self.changeCountryButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
+        [self.changeCountryButton.titleLabel setFont:JADisplay3Font];
         [self addSubview:self.changeCountryButton];
         nextButtonPosition = CGRectGetMinY(self.changeCountryButton.frame) - 44.0f - 6.0f;
     }
@@ -283,9 +283,9 @@ void(^retryBock)(BOOL dismiss);
     [self.retryButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]]forState:UIControlStateSelected];
     [self.retryButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"disabled"]]forState:UIControlStateDisabled];
     [self.retryButton setTitle:STRING_TRY_AGAIN forState:UIControlStateNormal];
-    [self.retryButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [self.retryButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
     [self.retryButton addTarget:self action:@selector(retryConnectionButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.retryButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
+    [self.retryButton.titleLabel setFont:JADisplay3Font];
     [self addSubview:self.retryButton];
     
     if(NO == [[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
@@ -300,7 +300,7 @@ void(^retryBock)(BOOL dismiss);
         [self.tryToBeBriefLabel setLineBreakMode:NSLineBreakByWordWrapping];
         [self.tryToBeBriefLabel setTextAlignment:NSTextAlignmentCenter];
         [self.tryToBeBriefLabel setNumberOfLines:0];
-        [self.tryToBeBriefLabel setTextColor:UIColorFromRGB(0x000000)];
+        [self.tryToBeBriefLabel setTextColor:JABlackColor];
         [self.tryToBeBriefLabel setText:STRING_TRY_TO_BE_BRIEF];
         [self.tryToBeBriefLabel sizeToFit];
         [self.tryToBeBriefLabel setFrame:CGRectMake((self.frame.size.width - tryToBeBriefLabelRect.size.width) / 2,
@@ -338,9 +338,9 @@ void(^retryBock)(BOOL dismiss);
     [self.currentlyMaintenanceLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [self.currentlyMaintenanceLabel setTextAlignment:NSTextAlignmentCenter];
     [self.currentlyMaintenanceLabel setNumberOfLines:0];
-    [self.currentlyMaintenanceLabel setTextColor:UIColorFromRGB(0x000000)];
+    [self.currentlyMaintenanceLabel setTextColor:JABlackColor];
     if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
-        [self.currentlyMaintenanceLabel setTextColor:UIColorFromRGB(0xFFFFFF)];
+        [self.currentlyMaintenanceLabel setTextColor:JAWhiteColor];
     }
     [self.currentlyMaintenanceLabel setAttributedText:currentlyMaintenanceAttributedString];
     [self.currentlyMaintenanceLabel sizeToFit];

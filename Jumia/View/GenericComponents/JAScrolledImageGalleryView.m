@@ -226,7 +226,7 @@
         smallImage.tag = i;
         clickView.tag = i;
         [smallImage.layer setBorderWidth:.5];
-        [smallImage.layer setBorderColor:UIColorFromRGB(0x202020).CGColor];
+        [smallImage.layer setBorderColor:JABlack900Color.CGColor];
         [smallImage setUserInteractionEnabled:YES];
         UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapSmallImage:)];
         [smallImage addGestureRecognizer:recognizer];
@@ -258,9 +258,9 @@
             [UIView animateWithDuration:.2 animations:^{
                 [_pageComponentView setContentOffset:CGPointMake(scrollOffset, _pageComponentView.contentOffset.y)];
             }];
-            [view.layer setBorderColor:UIColorFromRGB(0xf68b1e).CGColor];
+            [view.layer setBorderColor:JAOrange1Color.CGColor];
         }else
-            [view.layer setBorderColor:UIColorFromRGB(0x202020).CGColor];
+            [view.layer setBorderColor:JABlack900Color.CGColor];
     }
 }
 

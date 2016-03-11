@@ -8,8 +8,6 @@
 
 #import "JAProductInfoSubLine.h"
 
-#define kProductInfoSubLineHeight 40
-
 @interface JAProductInfoSwitchLine : JAProductInfoSubLine
 
 @property (nonatomic, strong) UISwitch *lineSwitch;

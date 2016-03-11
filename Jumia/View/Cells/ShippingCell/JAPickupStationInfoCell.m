@@ -59,7 +59,7 @@
                                     _infoView.frame.size.height)];
     [_cityLabel setNumberOfLines:0];
     [_cityLabel setLineBreakMode:NSLineBreakByCharWrapping];
-    [_cityLabel setTextColor:UIColorFromRGB(0x666666)];
+    [_cityLabel setTextColor:JAGreyColor];
     
     NSString *cityLabelString = STRING_CITY;
     NSString *trimmedCityString = [pickupStation.city stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -83,7 +83,7 @@
                                        _infoView.frame.size.height)];
     [_addressLabel setNumberOfLines:0];
     [_addressLabel setLineBreakMode:NSLineBreakByWordWrapping];
-    [_addressLabel setTextColor:UIColorFromRGB(0x666666)];
+    [_addressLabel setTextColor:JAGreyColor];
 
     NSString *addressLabelString = STRING_ADDRESS;
     NSString *trimmedAddressString = [pickupStation.address stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -107,7 +107,7 @@
                                        _infoView.frame.size.height)];
     [_openingHours setNumberOfLines:0];
     [_openingHours setLineBreakMode:NSLineBreakByWordWrapping];
-    [_openingHours setTextColor:UIColorFromRGB(0x666666)];
+    [_openingHours setTextColor:JAGreyColor];
     
     NSString *openingHoursString = STRING_OPENING_HOURS;
     NSString *trimmedOpeningHoursString = [pickupStation.openingHours stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -128,7 +128,7 @@
     [_shippingFeeLabel setFrame:CGRectMake(0, CGRectGetMaxY(_openingHours.frame), infoViewWidth, 20)];
     [_shippingFeeLabel setNumberOfLines:0];
     [_shippingFeeLabel setLineBreakMode:NSLineBreakByWordWrapping];
-    [_shippingFeeLabel setTextColor:UIColorFromRGB(0x666666)];
+    [_shippingFeeLabel setTextColor:JAGreyColor];
     NSString *shippingFeeString = STRING_SHIPPING_FEE;
     NSString *shippingFeeValue = [RICountryConfiguration formatPrice:pickupStation.shippingFee country:[RICountryConfiguration getCurrentConfiguration]];
     if ([pickupStation.shippingFee isEqualToNumber:[NSNumber numberWithInteger:0]]) {
@@ -149,7 +149,7 @@
     
     [_shippingFeeAlertLabel setFrame:CGRectMake(0, CGRectGetMaxY(_shippingFeeLabel.frame) + 4, _infoView.width, 20)];
     [_shippingFeeAlertLabel setText:STRING_SHIPPING_FEE_INFO];
-    [_shippingFeeAlertLabel setTextColor:UIColorFromRGB(0x666666)];
+    [_shippingFeeAlertLabel setTextColor:JAGreyColor];
     [_shippingFeeAlertLabel sizeToFit];
     
     if ([pickupStation.shippingFee isEqualToNumber:[NSNumber numberWithInteger:0]]) {
@@ -169,7 +169,7 @@
                                         self.width,
                                         1.0f)];
     
-    [_separator setBackgroundColor:UIColorFromRGB(0xcccccc)];
+    [_separator setBackgroundColor:JATextFieldColor];
     
     [_infoView setFrame:self.bounds];
     _infoView.y += 16;
@@ -211,7 +211,7 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, infoViewWidth, 10000.0f)];
     [label setNumberOfLines:0];
     [label setLineBreakMode:NSLineBreakByWordWrapping];
-    [label setTextColor:UIColorFromRGB(0x666666)];
+    [label setTextColor:JAGreyColor];
     
     NSString *cityLabelString = STRING_CITY;
     NSString *trimmedCityString = [pickupStation.city stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -255,7 +255,7 @@
     [shippingFeeLabel setFrame:CGRectMake(0, 0, infoViewWidth, 20)];
     [shippingFeeLabel setNumberOfLines:0];
     [shippingFeeLabel setLineBreakMode:NSLineBreakByWordWrapping];
-    [shippingFeeLabel setTextColor:UIColorFromRGB(0x666666)];
+    [shippingFeeLabel setTextColor:JAGreyColor];
     NSString *shippingFeeString = STRING_SHIPPING_FEE;
     NSString *shippingFeeValue = [RICountryConfiguration formatPrice:pickupStation.shippingFee country:[RICountryConfiguration getCurrentConfiguration]];
     if ([pickupStation.shippingFee isEqualToNumber:[NSNumber numberWithInteger:0]]) {
@@ -276,7 +276,7 @@
         
         [shippingFeeAlertLabel setFrame:CGRectMake(0, 0, infoViewWidth, 20)];
         [shippingFeeAlertLabel setText:STRING_SHIPPING_FEE_INFO];
-        [shippingFeeAlertLabel setTextColor:UIColorFromRGB(0x666666)];
+        [shippingFeeAlertLabel setTextColor:JAGreyColor];
         [shippingFeeAlertLabel sizeToFit];
         
         totalHeight += shippingFeeAlertLabel.height + 4;

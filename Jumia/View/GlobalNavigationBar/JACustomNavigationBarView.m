@@ -36,8 +36,8 @@
         [_backButton setImage:[UIImage imageNamed:@"btn_back"] forState:UIControlStateNormal];
         [_backButton setImage:[UIImage imageNamed:@"btn_back_pressed"] forState:UIControlStateHighlighted];
         [_backButton setImage:[UIImage imageNamed:@"btn_back_pressed"] forState:UIControlStateSelected];
-        [_backButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-        [_backButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+        [_backButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
+        [_backButton setTitleColor:JAOrange1Color forState:UIControlStateHighlighted];
         [self setLabelFont:_backButton.titleLabel withFont:[UIFont fontWithName:kFontLightName size:17]];
     }
     return _backButton;
@@ -75,7 +75,7 @@
         _cartCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(288, 6, 25, 15)];
         [_cartCountLabel setTextAlignment:NSTextAlignmentCenter];
         [_cartCountLabel setTextColor:JAOrange1Color];
-        [self setLabelFont:_cartCountLabel withFont:[UIFont fontWithName:kFontRegularName size:9]];
+        [self setLabelFont:_cartCountLabel withFont:JACaptionFont];
     }
     return _cartCountLabel;
 }
@@ -109,7 +109,7 @@
         [_topTitleLabel setLineBreakMode:NSLineBreakByTruncatingMiddle];
         [_topTitleLabel setTextAlignment:NSTextAlignmentCenter];
         [_topTitleLabel setTintColor:JABlackColor];
-        [self setLabelFont:_topTitleLabel withFont:[UIFont fontWithName:kFontRegularName size:14.0f]];
+        [self setLabelFont:_topTitleLabel withFont:JAListFont];
     }
     return _topTitleLabel;
 }
@@ -121,7 +121,7 @@
         [_bottomTitleLabel setLineBreakMode:NSLineBreakByTruncatingMiddle];
         [_bottomTitleLabel setTextAlignment:NSTextAlignmentCenter];
         [_bottomTitleLabel setTintColor:JABlackColor];
-        [self setLabelFont:_bottomTitleLabel withFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
+        [self setLabelFont:_bottomTitleLabel withFont:JABodyFont];
     }
     return _bottomTitleLabel;
 }
@@ -133,7 +133,7 @@
         [_editButton setFrame:CGRectMake(0, 0, 106, 44)];
         [_editButton setTitle:@"Edit" forState:UIControlStateNormal];
         [_editButton setTitleColor:JASysBlueColor forState:UIControlStateNormal];
-        [_editButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+        [_editButton setTitleColor:JAOrange1Color forState:UIControlStateHighlighted];
         [self setLabelFont:_editButton.titleLabel withFont:JABodyFont];
     }
     return _editButton;
@@ -146,7 +146,7 @@
         [_doneButton setFrame:CGRectMake(214, 0, 106, 44)];
         [_doneButton setTitle:@"Done" forState:UIControlStateNormal];
         [_doneButton setTitleColor:JASysBlueColor forState:UIControlStateNormal];
-        [_doneButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+        [_doneButton setTitleColor:JAOrange1Color forState:UIControlStateHighlighted];
         [self setLabelFont:_doneButton.titleLabel withFont:JABodyFont];
     }
     return _doneButton;
@@ -184,7 +184,7 @@
                               initialWidth,
                               self.frame.size.height)];
     
-    self.backgroundColor = JANavBarBackgroundGrey;
+    self.backgroundColor = JABlack300Color;
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -367,7 +367,7 @@
     if(!self.doneButton.hidden)
     {
         NSString *doneButtonText = self.doneButton.titleLabel.text;
-        NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:kFontRegularName size:17]};
+        NSDictionary *attributes = @{NSFontAttributeName: JASystemTitleFont};
         CGSize doneButtonTextSize = [doneButtonText sizeWithAttributes:attributes];
         CGFloat doneButtonWidth = 6.0f + doneButtonTextSize.width;
         
@@ -409,7 +409,7 @@
     if(!self.backButton.hidden)
     {
         NSString *backButtonText = self.backButton.titleLabel.text;
-        NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:kFontRegularName size:17]};
+        NSDictionary *attributes = @{NSFontAttributeName: JASystemTitleFont};
         CGSize backButtonTextSize = [backButtonText sizeWithAttributes:attributes];
         
         CGFloat backButtonMaxWidth = backButtonTextSize.width;
@@ -473,7 +473,7 @@
     titleLabelWidth = width - (2 * titleLabelSideMargin);
     
     NSString *titleLabelText = self.titleLabel.text;
-    NSDictionary *titleLabelAttributes = @{NSFontAttributeName: [UIFont fontWithName:kFontRegularName size:17]};
+    NSDictionary *titleLabelAttributes = @{NSFontAttributeName: JASystemTitleFont};
     CGSize titleLabelTextSize = [titleLabelText sizeWithAttributes:titleLabelAttributes];
     if (titleLabelTextSize.width > titleLabelWidth)
     {

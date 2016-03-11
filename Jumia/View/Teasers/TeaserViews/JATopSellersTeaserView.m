@@ -36,7 +36,7 @@
         CGFloat groupingTitleLabelMargin = 16.0f;
         CGFloat groupingTitleLabelHeight = 50.0f; //value by design
         UILabel* groupingTitleLabel = [UILabel new];
-        groupingTitleLabel.font = [UIFont fontWithName:kFontMediumName size:14.0f];
+        groupingTitleLabel.font = JATitleFont;
         groupingTitleLabel.textColor = [UIColor blackColor];
         groupingTitleLabel.text = title;
         groupingTitleLabel.textAlignment = NSTextAlignmentLeft;
@@ -98,7 +98,7 @@
             CGFloat textMarginX = 6.0f;
             CGFloat textMarginY = 0.0f;
             UILabel* nameLabel = [UILabel new];
-            nameLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
+            nameLabel.font = JATopSellersTeaserTitle;
             nameLabel.textColor = [UIColor blackColor];
             nameLabel.textAlignment = NSTextAlignmentCenter;
             
@@ -116,13 +116,13 @@
             [clickableView addSubview:nameLabel];
             
             UILabel* priceLabel = [UILabel new];
-            priceLabel.font = [UIFont fontWithName:kFontRegularName size:10.0f];
+            priceLabel.font = JACaptionFont;
             if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
             {
                 //SHOP font adjustment
-                priceLabel.font = [UIFont fontWithName:kFontLightName size:8.0f];
+                priceLabel.font = [UIFont fontWithName:kFontLightName size:priceLabel.font.pointSize-2];
             }
-            priceLabel.textColor = UIColorFromRGB(0xcc0000);
+            priceLabel.textColor = JARed1Color;
             priceLabel.textAlignment = NSTextAlignmentCenter;
             priceLabel.text = priceToPresent;
             [priceLabel sizeToFit];
@@ -137,7 +137,7 @@
             if (i+1 != teaserComponents.count) {
                 //not the last one, so add a separator
                 UIView* separator = [UIView new];
-                separator.backgroundColor = UIColorFromRGB(0xd8d8d8);
+                separator.backgroundColor = JABlack400Color;
                 [separator setFrame:CGRectMake(currentX - 1,
                                                clickableView.frame.origin.y + imageTopMargin,
                                                1,

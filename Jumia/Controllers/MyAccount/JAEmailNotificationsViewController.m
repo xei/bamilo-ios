@@ -48,7 +48,7 @@ JADynamicFormDelegate
     
     self.notificationsView = [[UIView alloc] initWithFrame:CGRectZero];
     self.notificationsView.layer.cornerRadius = 5.0f;
-    [self.notificationsView setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.notificationsView setBackgroundColor:JAWhiteColor];
     
     [self.scrollView addSubview:self.notificationsView];
     [self.view addSubview:self.scrollView];
@@ -208,7 +208,7 @@ JADynamicFormDelegate
     
     self.notificationsView = [[UIView alloc] initWithFrame:CGRectZero];
     self.notificationsView.layer.cornerRadius = 5.0f;
-    [self.notificationsView setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.notificationsView setBackgroundColor:JAWhiteColor];
     
     [self.scrollView addSubview:self.notificationsView];
     [self.view addSubview:self.scrollView];
@@ -247,9 +247,9 @@ JADynamicFormDelegate
     [self.saveButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"highlighted"]]forState:UIControlStateSelected];
     [self.saveButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:orangeButtonName, @"disabled"]]forState:UIControlStateDisabled];
     [self.saveButton setTitle:STRING_SAVE_LABEL forState:UIControlStateNormal];
-    [self.saveButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [self.saveButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
     [self.saveButton addTarget:self action:@selector(continueUpdatePreferences) forControlEvents:UIControlEventTouchUpInside];
-    [self.saveButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:16.0f]];
+    [self.saveButton.titleLabel setFont:JADisplay3Font];
     [self.scrollView addSubview:self.saveButton];
     
     [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, CGRectGetMaxY(self.saveButton.frame) + 6.0f)];
