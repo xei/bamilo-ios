@@ -7,7 +7,8 @@
 //
 
 #import "JAMoreMenuViewController.h"
-#import "JAGenericMenuCell.h"
+#import "JAProductInfoHeaderLine.h"
+#import "JAProductInfoSubLine.h"
 #import "RICustomer.h"
 #import "JAUtils.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
@@ -17,11 +18,56 @@
 
 @interface JAMoreMenuViewController ()
 
-@property (nonatomic, strong) UITableView* tableView;
+@property (strong, nonatomic) JAProductInfoHeaderLine *moreHeaderLine;
+@property (strong, nonatomic) JAProductInfoSubLine *loginSubLine;
+@property (strong, nonatomic) JAProductInfoSubLine *recentlyViewedSubLine;
+@property (strong, nonatomic) JAProductInfoSubLine *trackMyOrderSubLine;
 
 @end
 
 @implementation JAMoreMenuViewController
+
+
+- (JAProductInfoHeaderLine *)moreHeaderLine
+{
+    if (!VALID(_moreHeaderLine, JAProductInfoHeaderLine)) {
+        _moreHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, self.viewBounds.origin.y, self.view.width, kProductInfoHeaderLineHeight)];
+        [_moreHeaderLine setTitle:[STRING_MORE uppercaseString]];
+    }
+    return _moreHeaderLine;
+}
+
+- (JAProductInfoSubLine *)loginSubLine
+{
+    if (!VALID(_loginSubLine, JAProductInfoSubLine)) {
+        _loginSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.moreHeaderLine.frame), self.view.width, kProductInfoSubLineHeight)];
+        [_loginSubLine setTopSeparatorVisibility:NO];
+        [_loginSubLine setTitle:STRING_LOGIN];
+        [_loginSubLine addTarget:self action:@selector(loginSelection) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _loginSubLine;
+}
+
+- (JAProductInfoSubLine *)recentlyViewedSubLine
+{
+    if (!VALID(_recentlyViewedSubLine, JAProductInfoSubLine)) {
+        _recentlyViewedSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.loginSubLine.frame), self.view.width, kProductInfoSubLineHeight)];
+        [_recentlyViewedSubLine setTitle:STRING_RECENTLY_VIEWED];
+        [_recentlyViewedSubLine addTarget:self action:@selector(recentlyViewedSelection) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _recentlyViewedSubLine;
+}
+
+- (JAProductInfoSubLine *)trackMyOrderSubLine
+{
+    if (!VALID(_trackMyOrderSubLine, JAProductInfoSubLine)) {
+        _trackMyOrderSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.recentlyViewedSubLine.frame), self.view.width, kProductInfoSubLineHeight)];
+        [_trackMyOrderSubLine setBottomSeparatorVisibility:YES];
+        [_trackMyOrderSubLine setTitle:STRING_TRACK_MY_ORDER];
+        [_trackMyOrderSubLine addTarget:self action:@selector(trackMyOrdersSelection) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _trackMyOrderSubLine;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -33,105 +79,45 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.tableView = [UITableView new];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    [self.view addSubview:self.tableView];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    [self.tableView setFrame:[self viewBounds]];
-    [self.tableView reloadData];
+    [self.view addSubview:self.moreHeaderLine];
+    [self.view addSubview:self.loginSubLine];
+    [self.view addSubview:self.recentlyViewedSubLine];
+    [self.view addSubview:self.trackMyOrderSubLine];
 }
 
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-    
-    [self.tableView setFrame:[self viewBounds]];
-    [self.tableView reloadData];
-}
-
-#pragma UITableView
-
-- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    return [UIView new];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return kCellTextArray.count;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
-{
-    JAGenericMenuCellStyle style = JAGenericMenuCellStyleDefault;
-    if (0 == indexPath.row) {
-        style = JAGenericMenuCellStyleHeader;
-    }
-    return [JAGenericMenuCell heightForStyle:style];
-}
-
-- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString *cellIdentifier = @"cell";
-    
-    JAGenericMenuCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (ISEMPTY(cell)) {
-        cell = [[JAGenericMenuCell alloc] initWithReuseIdentifier:cellIdentifier];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell.backgroundClickableView addTarget:self action:@selector(cellWasClicked:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    
-    NSString* text = [kCellTextArray objectAtIndex:indexPath.row];
-    JAGenericMenuCellStyle style = JAGenericMenuCellStyleDefault;
-    BOOL hasSeparator = YES;
-    if (0 == indexPath.row) {
-        style = JAGenericMenuCellStyleHeader;
-        hasSeparator = NO;
-    } else if (1 == indexPath.row && [RICustomer checkIfUserIsLogged]) {
-        text = STRING_LOGOUT;
-    }
-    
-    [cell setupWithStyle:style
-                   width:self.view.frame.size.width
-                cellText:text
-            iconImageURL:nil
-      accessoryImageName:@"sideMenuCell_arrow"
-            hasSeparator:hasSeparator];
-    cell.backgroundClickableView.tag = indexPath.row;
-    
-    return cell;
-}
-
-- (void)cellWasClicked:(UIControl*)sender
-{
-    NSInteger index = sender.tag;
-    switch (index) {
-        case 1:
-        {
-            if ([RICustomer checkIfUserIsLogged]) {
-                [self logout];
-            } else {
-                NSDictionary* userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"from_side_menu"];
-                [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification object:nil userInfo:userInfo];
-            }
-            break;
+    BOOL changed = NO;
+    for (UIView *subView in self.view.subviews) {
+        if (!CGRectEqualToRect(subView.frame, self.viewBounds)) {
+            changed = YES;
+            [subView setWidth:self.view.width];
         }
-        case 2:
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowRecentlyViewedScreenNotification object:nil];
-            break;
-        case 3:
-            [[NSNotificationCenter defaultCenter] postNotificationName:kShowMyOrdersScreenNotification object:nil];
-            break;
-        default:
-            break;
     }
+    if (changed && RI_IS_RTL) {
+        [self.view flipAllSubviews];
+    }
+}
+
+- (void)loginSelection
+{
+    if ([RICustomer checkIfUserIsLogged]) {
+        [self logout];
+    } else {
+        NSDictionary* userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"from_side_menu"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowAuthenticationScreenNotification object:nil userInfo:userInfo];
+    }
+}
+
+- (void)recentlyViewedSelection
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowRecentlyViewedScreenNotification object:nil];
+}
+
+- (void)trackMyOrdersSelection
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowMyOrdersScreenNotification object:nil];
 }
 
 - (void)logout
