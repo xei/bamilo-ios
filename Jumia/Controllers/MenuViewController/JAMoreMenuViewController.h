@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JAMoreMenuViewController : JABaseViewController <UITableViewDelegate, UITableViewDataSource>
+@interface JAMoreMenuViewController : JABaseViewController
 
 @end
