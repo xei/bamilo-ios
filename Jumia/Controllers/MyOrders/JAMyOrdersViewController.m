@@ -258,10 +258,6 @@ UICollectionViewDelegateFlowLayout>
                           [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                           [self hideLoading];
                           
-                          if (!((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) && _selectedCellIndex >=0) {
-                              [self gotoDetails:_selectedCellIndex];
-                          }
-                          
                       } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
                           self.apiResponse = apiResponse;
                           self.trackingOrder = nil;
