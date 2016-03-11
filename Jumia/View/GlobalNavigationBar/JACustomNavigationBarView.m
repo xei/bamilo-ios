@@ -573,8 +573,8 @@
 
 - (void)updateCartProductCount:(NSNumber*)cartNumber
 {
-    CGRect frame = CGRectMake(301,
-                              10,
+    CGRect frame = CGRectMake(self.cartCountLabel.frame.origin.x,
+                              self.cartCountLabel.frame.origin.y,
                               11.f,
                               11.f);
     self.cartCountLabel.frame = frame;
