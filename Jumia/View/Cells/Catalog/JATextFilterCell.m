@@ -33,8 +33,9 @@
 
 -(UIImageView *)customAccessoryView {
     if (!VALID(_customAccessoryView, UIImageView)) {
-        UIImage* customAccessoryIcon = [UIImage imageNamed:@"selectionCheckmark"];
+        UIImage* customAccessoryIcon = [UIImage imageNamed:@"noSelectionCheckMark"];
         _customAccessoryView = [[UIImageView alloc] initWithImage:customAccessoryIcon];
+        _customAccessoryView.highlightedImage = [UIImage imageNamed:@"selectionCheckmark"];
         _customAccessoryView.frame = CGRectMake(self.clickableView.frame.size.width - customAccessoryIcon.size.width,
                                                (self.clickableView.frame.size.height - customAccessoryIcon.size.height) / 2,
                                                customAccessoryIcon.size.width,
@@ -120,7 +121,7 @@
 -(void)setFilterOption:(RIFilterOption *)filterOption {
     self.nameLabel.text = filterOption.name;
     self.quantityLabel.text = [NSString stringWithFormat:@"(%ld)",[filterOption.totalProducts longValue]];
-    [self.customAccessoryView setHidden:!filterOption.selected];
+    [self.customAccessoryView setHighlighted:filterOption.selected];
 }
 
 @end

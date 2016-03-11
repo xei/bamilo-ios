@@ -26,7 +26,7 @@
 {
     if (!VALID_NOTEMPTY(_selectorButton, UIButton)) {
         _selectorButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_selectorButton setImage:[UIImage imageNamed:@"noSelectionCheckmark"] forState:UIControlStateNormal];
+        [_selectorButton setImage:[UIImage imageNamed:@"noSelectionCheckMark"] forState:UIControlStateNormal];
         [_selectorButton setImage:[UIImage imageNamed:@"selectionCheckmark"] forState:UIControlStateSelected];
         [_selectorButton setImage:[UIImage imageNamed:@"selectionCheckmark"] forState:UIControlStateHighlighted];
         [_selectorButton setFrame:CGRectMake(self.favoriteButton.x, 8, 30, 30)];

@@ -31,9 +31,14 @@
 
 -(UIImageView *)customAccessoryView {
     if (!VALID(_customAccessoryView, UIImageView)) {
-        UIImage* customAccessoryIcon = [UIImage imageNamed:@"selectionCheckmark"];
+        UIImage* customAccessoryIcon = [UIImage imageNamed:@"noSelectionCheckMark"];
+        
         _customAccessoryView = [[UIImageView alloc] initWithImage:customAccessoryIcon];
-        _customAccessoryView.hidden = YES;
+        _customAccessoryView.highlightedImage = [UIImage imageNamed:@"selectionCheckmark"];
+        _customAccessoryView.frame = CGRectMake(self.clickableView.frame.size.width - customAccessoryIcon.size.width,
+                                                (self.clickableView.frame.size.height - customAccessoryIcon.size.height) / 2,
+                                                customAccessoryIcon.size.width,
+                                                customAccessoryIcon.size.height);
         [self addSubview:_customAccessoryView];
     }
     return _customAccessoryView;
@@ -87,9 +92,6 @@
                                             self.frame.size.width - 50.0f,
                                             self.colorTitleLabel.frame.size.height);
 
-    
-    
-    UIImage* customAccessoryIcon = [UIImage imageNamed:@"selectionCheckmark"];
     [self.customAccessoryView setX:(self.frame.size.width - 12.0f - self.customAccessoryView.width)];
     
     self.separator.frame = CGRectMake(0.0f,
