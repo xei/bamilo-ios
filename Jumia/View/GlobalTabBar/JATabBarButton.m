@@ -104,6 +104,14 @@
         self.numberLabel.textAlignment = NSTextAlignmentCenter;
         [self.numberLabel setBackgroundColor:[UIColor redColor]];
         [self addSubview:self.numberLabel];
+        CGRect frame = CGRectMake(self.bounds.size.width / 2 + 1.f,
+                                  8.f,
+                                  15.f,
+                                  15.f);
+        [self.numberLabel setFrame:frame];
+        self.numberLabel.layer.masksToBounds = YES;
+        self.numberLabel.layer.cornerRadius = frame.size.width / 2;
+        [self.numberLabel setHidden:YES];
     }
     
     if (ISEMPTY(self.label)) {
@@ -127,14 +135,8 @@
 
 - (void)setNumber:(NSInteger)number
 {
-    CGRect frame = CGRectMake(self.bounds.size.width / 2 + 1.f,
-                              8.f,
-                              15.f,
-                              15.f);
-    [self.numberLabel setFrame:frame];
     self.numberLabel.text = [NSString stringWithFormat:@"%ld", (long)number];
-    self.numberLabel.layer.masksToBounds = YES;
-    self.numberLabel.layer.cornerRadius = frame.size.width / 2;
+    [self.numberLabel setHidden:NO];
 }
 
 @end
