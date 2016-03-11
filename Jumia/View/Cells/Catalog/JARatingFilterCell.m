@@ -68,7 +68,7 @@
     self.ratingLine.imageRatingSize = kImageRatingSizeSmall;
     self.ratingLine.bottomSeparatorVisibility = YES;
     
-    [self.customAccessoryView setHidden:!filterOption.selected];
+    [self.customAccessoryView setHighlighted:filterOption.selected];
     
 }
 @end
