@@ -29,8 +29,8 @@
         [self.view addSubview:_orderDetailsScrollView];
     }
     
-    [_orderDetailsScrollView setFrame:CGRectMake(self.viewBounds.origin.x, self.viewBounds.origin.y + 1.f,
-                                           self.viewBounds.size.width, self.viewBounds.size.height - 1.f)];
+    [_orderDetailsScrollView setFrame:CGRectMake(self.viewBounds.origin.x, self.viewBounds.origin.y,
+                                           self.viewBounds.size.width, self.viewBounds.size.height)];
     return _orderDetailsScrollView;
 }
 
