@@ -360,6 +360,7 @@ UICollectionViewDelegateFlowLayout>
                 frame.size.width = self.viewBounds.size.width/2;
                 [self.orderDetailsView setupWithOrder:self.trackingOrder frame:frame];
                 [self.orderDetailsView setHidden:NO];
+                [self.orderDetailsScrollView setContentSize:self.orderDetailsView.frame.size];
             }
         }
     } else {

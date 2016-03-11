@@ -10,6 +10,8 @@
 
 @interface JANavigationBarLayout : NSObject
 
+@property (nonatomic, assign)BOOL showSeparatorView;
+
 @property (nonatomic, assign)BOOL showBackButton;
 @property (nonatomic, strong)NSString* backButtonTitle;
 @property (nonatomic, assign)BOOL showEditButton;
