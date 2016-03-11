@@ -242,6 +242,8 @@ JAPickerDelegate
         cell.checkImage.hidden = YES;
     }
     
+    [cell setSeparatorInset:UIEdgeInsetsMake(0, 42, 0, 0)];
+    
     return cell;
 }
 
