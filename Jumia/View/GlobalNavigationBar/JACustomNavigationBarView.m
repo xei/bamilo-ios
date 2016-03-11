@@ -59,9 +59,9 @@
         _cartButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_cartButton setFrame:CGRectMake(275, 0, 45, 44)];
         [_cartButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
-        [_cartButton setImage:[UIImage imageNamed:@"btn_cart"] forState:UIControlStateNormal];
-        [_cartButton setImage:[UIImage imageNamed:@"btn_cart_pressed"] forState:UIControlStateHighlighted];
-        [_cartButton setImage:[UIImage imageNamed:@"btn_cart_pressed"] forState:UIControlStateSelected];
+        [_cartButton setImage:[UIImage imageNamed:@"tabbar_button_cart"] forState:UIControlStateNormal];
+        [_cartButton setImage:[UIImage imageNamed:@"tabbar_button_cart_highlighted"] forState:UIControlStateHighlighted];
+        [_cartButton setImage:[UIImage imageNamed:@"tabbar_button_cart_highlighted"] forState:UIControlStateSelected];
     }
     return _cartButton;
 }
@@ -82,10 +82,23 @@
 - (UILabel *)cartCountLabel
 {
     if (!_cartCountLabel) {
-        _cartCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(288, 6, 25, 15)];
-        [_cartCountLabel setTextAlignment:NSTextAlignmentCenter];
-        [_cartCountLabel setTextColor:JAOrange1Color];
-        [self setLabelFont:_cartCountLabel withFont:[UIFont fontWithName:kFontRegularName size:9]];
+        
+        UIFont *font = JACaptionFont;
+        if ([@"Zawgyi-One" isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:kFontRegularNameKey]]) {
+            font = [UIFont fontWithName:@"HelveticaNeue" size:font.pointSize];
+        }
+        
+        _cartCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(301,
+                                                                    10,
+                                                                    11.f,
+                                                                    11.f)];
+        _cartCountLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
+        _cartCountLabel.font = font;
+        _cartCountLabel.textColor = JAWhiteColor;
+        _cartCountLabel.adjustsFontSizeToFitWidth = YES;
+        _cartCountLabel.textAlignment = NSTextAlignmentCenter;
+        [_cartCountLabel setBackgroundColor:[UIColor redColor]];
+        [self updateCartProductCount:[NSNumber numberWithInt:0]];
     }
     return _cartCountLabel;
 }
@@ -560,14 +573,14 @@
 
 - (void)updateCartProductCount:(NSNumber*)cartNumber
 {
-    if(0 == [cartNumber integerValue])
-    {
-        [self.cartCountLabel setText:@""];
-    }
-    else
-    {
-        [self.cartCountLabel setText:[cartNumber stringValue]];
-    }
+    CGRect frame = CGRectMake(301,
+                              10,
+                              11.f,
+                              11.f);
+    self.cartCountLabel.frame = frame;
+    [self.cartCountLabel setText:[NSString stringWithFormat:@"%lld", [cartNumber longLongValue]]];
+    self.cartCountLabel.layer.masksToBounds = YES;
+    self.cartCountLabel.layer.cornerRadius = frame.size.width / 2;
 }
 
 @end
