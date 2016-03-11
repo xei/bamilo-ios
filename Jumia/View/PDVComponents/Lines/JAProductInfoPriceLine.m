@@ -116,12 +116,8 @@
     self.priceOffLabel.height = rect.size.height;
     [self.priceOffLabel setY:rect.origin.y];
     
-    UIColor *priceOffColor = JAOrange1Color;
-    if (self.fashion) {
-        priceOffColor = JABlack800Color;
-    }
-    [self.priceOffLabel setTextColor:priceOffColor];
-    [self.priceOffLabel.layer setBorderColor:priceOffColor.CGColor];
+    [self.priceOffLabel setTextColor:JAOrange1Color];
+    [self.priceOffLabel.layer setBorderColor:JAOrange1Color.CGColor];
 }
 
 - (void)setOldPrice:(NSString *)oldPrice

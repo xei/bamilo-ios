@@ -108,7 +108,7 @@
         [_recentProductBadgeLabel setText:[STRING_NEW uppercaseString]];
         [_recentProductBadgeLabel sizeToFit];
         [_recentProductBadgeLabel setWidth:_recentProductBadgeLabel.width + 8];
-        [_recentProductBadgeLabel setHeight:_recentProductBadgeLabel.height + 8];
+        [_recentProductBadgeLabel setHeight:_recentProductBadgeLabel.height + 3];
     }
     return _recentProductBadgeLabel;
 }
