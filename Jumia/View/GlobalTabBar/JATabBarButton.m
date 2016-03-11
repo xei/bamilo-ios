@@ -43,6 +43,9 @@
         [self.imageView setImage:self.normalImage];
         [self.label setTextColor:JABlackColor];
     }
+    if (RI_IS_RTL) {
+        [self.imageView flipViewImage];
+    }
 }
 
 - (void)setupWithImageName:(NSString*)imageName

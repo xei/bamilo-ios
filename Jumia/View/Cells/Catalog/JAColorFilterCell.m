@@ -107,7 +107,12 @@
 }
 
 - (void)setFilterOption:(RIFilterOption*)filterOption {
-    self.colorTitleLabel.text = [NSString stringWithFormat:@"%@ (%ld)",filterOption.name, [filterOption.totalProducts longValue]];
+    
+    if (RI_IS_RTL) {
+        self.colorTitleLabel.text = [NSString stringWithFormat:@"(%ld) %@", [filterOption.totalProducts longValue],filterOption.name];
+    }else{
+        self.colorTitleLabel.text = [NSString stringWithFormat:@"%@ (%ld)",filterOption.name, [filterOption.totalProducts longValue]];
+    }
     
     if (filterOption.colorHexValue) {
         [self.colorView setColorWithHexString:filterOption.colorHexValue];
