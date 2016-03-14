@@ -44,4 +44,9 @@
     return super.label;
 }
 
+- (void)setTitle:(NSString *)title
+{
+    [super setTitle:[title uppercaseString]];
+}
+
 @end
