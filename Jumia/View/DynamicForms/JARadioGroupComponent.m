@@ -135,13 +135,16 @@
             [checkboxImageView setHidden:YES];
         }
         
-        UIView* separatorView = [[UIView alloc] initWithFrame:CGRectMake(self.labelBaseRect.origin.x,
-                                                                         contentView.frame.size.height - 1.0f,
-                                                                         contentView.frame.size.width - 16.0f,
-                                                                         1.0f)];
-        [separatorView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-        [separatorView setBackgroundColor:JABlack400Color];
-        [contentView addSubview:separatorView];
+        if (i != field.options.count-1)
+        {
+            UIView* separatorView = [[UIView alloc] initWithFrame:CGRectMake(self.labelBaseRect.origin.x,
+                                                                             contentView.frame.size.height - 1.0f,
+                                                                             contentView.frame.size.width - 16.0f,
+                                                                             1.0f)];
+            [separatorView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+            [separatorView setBackgroundColor:JABlack400Color];
+            [contentView addSubview:separatorView];
+        }
         
         currentY += contentView.frame.size.height;
     }
