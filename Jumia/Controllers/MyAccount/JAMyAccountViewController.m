@@ -197,7 +197,7 @@
         [_appVersionSubLine setTopSeparatorVisibility:NO];
         if([self isLastVersion])
         {
-            [_appVersionSubLine setHeight:kProductInfoSubLineHeight];
+            [_appVersionSubLine setRightSubTitle:STRING_UP_TO_DATE];
         }else{
             [_appVersionSubLine addTarget:self action:@selector(openAppStore) forControlEvents:UIControlEventTouchUpInside];
             [_appVersionSubLine setRightSubTitle:STRING_UPDATE_NOW];
