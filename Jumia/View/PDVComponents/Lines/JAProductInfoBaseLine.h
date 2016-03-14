@@ -11,6 +11,7 @@
 
 @interface JAProductInfoBaseLine : JAClickableView
 
+@property (nonatomic) UIImageView *arrow;
 @property (nonatomic, readonly) UILabel *label;
 @property (nonatomic) BOOL topSeparatorVisibility;
 @property (nonatomic) BOOL bottomSeparatorVisibility;

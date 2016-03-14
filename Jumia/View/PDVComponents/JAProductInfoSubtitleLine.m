@@ -71,7 +71,10 @@
 - (UIImageView *)rightImageView
 {
     if (!VALID(_rightImageView, UIImageView)) {
-        _rightImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.width-51-16.f-self.lineContentXOffset, 0, 51, 36)];
+        _rightImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.width - 43.f - 10.f - self.arrow.frame.size.width - self.lineContentXOffset,
+                                                                        0.f,
+                                                                        43.f,
+                                                                        28.f)];
         [self addSubview:_rightImageView];
     }
     return _rightImageView;
@@ -86,7 +89,7 @@
 {
     [self.rightImageView setImageWithURL:[NSURL URLWithString:URL]];
     [self.rightImageView setYCenterAligned];
-    [self.rightImageView setX:self.width-self.rightImageView.width-16.f-self.lineContentXOffset];
+    [self.rightImageView setX:self.width - 43.f - 10.f - self.arrow.frame.size.width - self.lineContentXOffset];
 }
 
 - (void)setTitle:(NSString *)title
