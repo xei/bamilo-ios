@@ -10,14 +10,14 @@
 #import "RIForm.h"
 #import "JADynamicForm.h"
 #import "JANewsletterSubscriptionViewController.h"
-#import "JAClickableView.h"
+#import "JAButton.h"
 
 @interface JANewsletterViewController () <JADynamicFormDelegate, JANewsletterSubscriptionDelegate>
 
 @property (nonatomic, strong)RIForm* newsletterPreferencesForm;
 @property (nonatomic, strong)JADynamicForm* dynamicForm;
 @property (nonatomic, strong)UIScrollView* scrollView;
-@property (nonatomic, strong)JAClickableView* saveClickableView;
+@property (nonatomic, strong)JAButton* saveButton;
 @property (nonatomic, strong)UIView* saveContentView;
 
 @end
@@ -33,16 +33,14 @@
     return _scrollView;
 }
 
--(JAClickableView*)saveClickableView
+-(JAButton*)saveButton
 {
-    if (!VALID_NOTEMPTY(_saveClickableView, JAClickableView)) {
-        _saveClickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(16.0f, 10.0f, self.saveContentView.frame.size.width - 16.0f*2, 50.0f)];
-        _saveClickableView.backgroundColor = JAOrange1Color;
-        [_saveClickableView setTitle:[STRING_SAVE_LABEL uppercaseString] forState:UIControlStateNormal];
-        [_saveClickableView setFont:JABUTTONFont];
-        [self.saveContentView addSubview:_saveClickableView];
+    if (!VALID_NOTEMPTY(_saveButton, JAButton)) {
+        _saveButton = [[JAButton alloc] initButtonWithTitle:[STRING_SAVE_LABEL uppercaseString]];
+        [_saveButton setFrame:CGRectMake(16.0f, 10.0f, self.saveContentView.frame.size.width - 16.0f*2, 50.0f)];
+        [self.saveContentView addSubview:_saveButton];
     }
-    return _saveClickableView;
+    return _saveButton;
 }
 
 -(UIView*)saveContentView
@@ -93,8 +91,8 @@
 - (void)setupViews
 {
     [self.scrollView setFrame:CGRectMake(0.0f, 0.0f, [self viewBounds].size.width, [self viewBounds].size.height - 70.0f)];
-    [self.saveContentView setFrame:CGRectMake(0.0f, [self viewBounds].size.height - 70.0f, self.view.frame.size.width, 70.0f)];
-    [self.saveClickableView setFrame:CGRectMake(16.0f, 10.0f, self.saveContentView.frame.size.width - 16.0f*2, 50.0f)];
+    [self.saveContentView setFrame:CGRectMake(0.0f, [self viewBounds].size.height - 70.0f, [self viewBounds].size.width, 70.0f)];
+    [self.saveButton setFrame:CGRectMake(16.0f, 10.0f, self.saveContentView.frame.size.width - 16.0f*2, 50.0f)];
     
     if (VALID_NOTEMPTY(self.newsletterPreferencesForm, RIForm)) {
         
@@ -111,7 +109,7 @@
         
         [self dynamicFormChangedHeight];
         
-        [self.saveClickableView addTarget:self action:@selector(saveClickableViewPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self.saveButton addTarget:self action:@selector(saveClickableViewPressed) forControlEvents:UIControlEventTouchUpInside];
     }
 }
 
