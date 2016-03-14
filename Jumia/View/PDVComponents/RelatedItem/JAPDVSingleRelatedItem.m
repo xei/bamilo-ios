@@ -37,7 +37,7 @@
     if (!VALID_NOTEMPTY(_labelBrand, UILabel)) {
         _labelBrand = [[UILabel alloc] initWithFrame:CGRectZero];
         [_labelBrand setTextColor:JABlack800Color];
-        [_labelBrand setFont:JACaptionFont];
+        [_labelBrand setFont:JABodyFont];
         [_labelBrand setTextAlignment:NSTextAlignmentLeft];
         [self addSubview:_labelBrand];
     }
@@ -48,7 +48,7 @@
 {
     if (!VALID_NOTEMPTY(_labelName, UILabel)) {
         _labelName = [[UILabel alloc] initWithFrame:CGRectZero];
-        [_labelName setFont:JABodyFont];
+        [_labelName setFont:JATitleFont];
         [_labelName setTextColor:JABlackColor];
         [_labelBrand setTextAlignment:NSTextAlignmentLeft];
         [self addSubview:_labelName];
@@ -60,7 +60,7 @@
 {
     if (!VALID_NOTEMPTY(_labelPrice, UILabel)) {
         _labelPrice = [[UILabel alloc] initWithFrame:CGRectZero];
-        [_labelPrice setFont:JACaptionFont];
+        [_labelPrice setFont:JABodyFont];
         [_labelPrice setTextColor:JABlackColor];
         [self addSubview:_labelPrice];
     }
@@ -86,6 +86,20 @@
         [self addSubview:_favoriteImage];
     }
     return _favoriteImage;
+}
+
+- (void)setTeaserComponent:(RITeaserComponent *)teaserComponent
+{
+    RIProduct *product = [[RIProduct alloc] init];
+    product.sku = teaserComponent.sku;
+    product.name = teaserComponent.name;
+    product.brand = teaserComponent.brand;
+    RIImage *image = [RIImage parseImage:@{@"url" : teaserComponent.imagePortraitUrl}];
+    product.images = @[image];
+    product.specialPrice = teaserComponent.specialPrice;
+    product.priceFormatted = teaserComponent.priceFormatted;
+    product.specialPriceFormatted = teaserComponent.specialPriceFormatted;
+    [self setProduct:product];
 }
 
 - (void)setProduct:(RIProduct *)product
@@ -117,7 +131,7 @@
     } else {
         self.labelPrice.text = product.specialPriceFormatted;
     }
-    [self.labelPrice setYBottomAligned:0];
+    [self.labelPrice setYBottomAligned:10];
     [self.labelPrice setTextAlignment:NSTextAlignmentLeft];
     
     [self.labelName setX:6];

@@ -10,10 +10,12 @@
 #import "JAClickableView.h"
 #import "RIProduct.h"
 #import "RISearchSuggestion.h"
+#import "RITeaserComponent.h"
 
 @interface JAPDVSingleRelatedItem : JAClickableView
 
 @property (strong, nonatomic) RIProduct *product;
+@property (strong, nonatomic) RITeaserComponent *teaserComponent;
 @property (strong, nonatomic) RISearchTypeProduct *searchTypeProduct;
 @property (strong, nonatomic) NSString *productUrl;
 
