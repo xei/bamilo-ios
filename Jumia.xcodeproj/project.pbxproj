@@ -970,6 +970,11 @@
 		9AB488881B727B2D00886A44 /* UIImage+WithColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372E1B679740004905B4 /* UIImage+WithColor.m */; };
 		9AB488891B727B2D00886A44 /* UIImage+WithColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372E1B679740004905B4 /* UIImage+WithColor.m */; };
 		9AB4CFCA1BA9C7D1007326C7 /* RICatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */; };
+		9AB517A21C934342007E1327 /* JAButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB517A11C934342007E1327 /* JAButton.m */; };
+		9AB517A31C934342007E1327 /* JAButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB517A11C934342007E1327 /* JAButton.m */; };
+		9AB517A41C934342007E1327 /* JAButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB517A11C934342007E1327 /* JAButton.m */; };
+		9AB517A51C934342007E1327 /* JAButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB517A11C934342007E1327 /* JAButton.m */; };
+		9AB517A61C934342007E1327 /* JAButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB517A11C934342007E1327 /* JAButton.m */; };
 		9ABCAEEE1B0F6A2C00A69271 /* UIView+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ABCAEED1B0F6A2C00A69271 /* UIView+Mirror.m */; };
 		9ABCAEF81B0F8FEE00A69271 /* UIView+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ABCAEED1B0F6A2C00A69271 /* UIView+Mirror.m */; };
 		9ABCAEF91B0F8FEE00A69271 /* UIView+Mirror.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ABCAEED1B0F6A2C00A69271 /* UIView+Mirror.m */; };
@@ -3050,6 +3055,8 @@
 		9AB4CFC81BA9C7D1007326C7 /* RICatalog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICatalog.h; sourceTree = "<group>"; };
 		9AB4CFC91BA9C7D1007326C7 /* RICatalog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICatalog.m; sourceTree = "<group>"; };
 		9AB5179F1C91D068007E1327 /* JAColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAColors.h; sourceTree = "<group>"; };
+		9AB517A01C934342007E1327 /* JAButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAButton.h; sourceTree = "<group>"; };
+		9AB517A11C934342007E1327 /* JAButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAButton.m; sourceTree = "<group>"; };
 		9ABCAEEC1B0F6A2C00A69271 /* UIView+Mirror.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Mirror.h"; path = "Categories/UIView+Mirror.h"; sourceTree = "<group>"; };
 		9ABCAEED1B0F6A2C00A69271 /* UIView+Mirror.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Mirror.m"; path = "Categories/UIView+Mirror.m"; sourceTree = "<group>"; };
 		9AC0B9AF1BBC4C4A001F4ADE /* JAPDVProductInfoSellerInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVProductInfoSellerInfo.h; sourceTree = "<group>"; };
@@ -5084,6 +5091,8 @@
 				B59DCA6919B8521A00DE7960 /* JAButtonWithBlur.m */,
 				9A55A6851BBE9E06008EF4A6 /* JABottomBar.h */,
 				9A55A6861BBE9E07008EF4A6 /* JABottomBar.m */,
+				9AB517A01C934342007E1327 /* JAButton.h */,
+				9AB517A11C934342007E1327 /* JAButton.m */,
 			);
 			name = Buttons;
 			sourceTree = "<group>";
@@ -7745,6 +7754,7 @@
 				09a540fd5e97a0761054d14c /* SDWebImageDecoder.m in Sources */,
 				692fece832938452dbf8505a /* JATeaserPageView.m in Sources */,
 				9A189E7A1BB449CC0039BC14 /* JAProductInfoPriceLine.m in Sources */,
+				9AB517A31C934342007E1327 /* JAButton.m in Sources */,
 				361729cf70d97eaad6ee214b /* JACountryCell.m in Sources */,
 				74acae0cc3cb94fc8c207de4 /* Reachability.m in Sources */,
 				9AED08071C6DFBE000B5FDF0 /* AFHTTPRequestOperationManager.m in Sources */,
@@ -7954,6 +7964,7 @@
 				B5B79B401A3F4A2A00639F9E /* RIShippingMethod.m in Sources */,
 				4AE730BB198F8AD6000CA1DD /* JAPDVVariations.m in Sources */,
 				CE3AF90E19DBF68400D8C51B /* RICampaign.m in Sources */,
+				9AB517A21C934342007E1327 /* JAButton.m in Sources */,
 				CE55A4E71993672600EE75DE /* JARatingsView.m in Sources */,
 				CEA86D9E1A3756C2000032AD /* JASizeGuideViewController.m in Sources */,
 				CE97D2EE19AE1ED50090D01C /* JANavigationBarLayout.m in Sources */,
@@ -8283,6 +8294,7 @@
 				CE9ADBB11AB34C4600D56481 /* JAPDVVariations.m in Sources */,
 				CE9ADBB21AB34C4600D56481 /* RICampaign.m in Sources */,
 				CE9ADBB41AB34C4600D56481 /* JARatingsView.m in Sources */,
+				9AB517A41C934342007E1327 /* JAButton.m in Sources */,
 				CE9ADBB51AB34C4600D56481 /* JASizeGuideViewController.m in Sources */,
 				9A55A68F1BC2E892008EF4A6 /* JAPDVVariationsViewController.m in Sources */,
 				CE9ADBB71AB34C4600D56481 /* JANavigationBarLayout.m in Sources */,
@@ -8602,6 +8614,7 @@
 				CE9ADDAB1AB6D6E900D56481 /* JAPDVVariations.m in Sources */,
 				CE9ADDAC1AB6D6E900D56481 /* RICampaign.m in Sources */,
 				CE9ADDAE1AB6D6E900D56481 /* JARatingsView.m in Sources */,
+				9AB517A51C934342007E1327 /* JAButton.m in Sources */,
 				CE9ADDAF1AB6D6E900D56481 /* JASizeGuideViewController.m in Sources */,
 				9A55A6901BC2E893008EF4A6 /* JAPDVVariationsViewController.m in Sources */,
 				CE9ADDB11AB6D6E900D56481 /* JANavigationBarLayout.m in Sources */,
@@ -8921,6 +8934,7 @@
 				CE9ADFA61AB6D78200D56481 /* RICampaign.m in Sources */,
 				CE9ADFA81AB6D78200D56481 /* JARatingsView.m in Sources */,
 				CE9ADFA91AB6D78200D56481 /* JASizeGuideViewController.m in Sources */,
+				9AB517A61C934342007E1327 /* JAButton.m in Sources */,
 				9A55A6911BC2E894008EF4A6 /* JAPDVVariationsViewController.m in Sources */,
 				CE9ADFAB1AB6D78200D56481 /* JANavigationBarLayout.m in Sources */,
 				9A7EE97F1B5546A0004E2505 /* ADJDeviceInfo.m in Sources */,

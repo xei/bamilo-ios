@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define kBottomDefaultHeight 49
+#define kBottomDefaultHeight 48
 
 @interface JABottomBar : UIView
 

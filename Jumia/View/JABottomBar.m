@@ -7,6 +7,7 @@
 //
 
 #import "JABottomBar.h"
+#import "JAButton.h"
 
 #define kSmallButtonWidth 60
 
@@ -60,12 +61,7 @@
 
 - (UIButton *)addButton:(NSString *)name target:(id)target action:(SEL)action
 {
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [button setTitle:[name uppercaseString] forState:UIControlStateNormal];
-    [button.titleLabel setFont:JABUTTONFont];
-    [button setBackgroundColor:JAOrange1Color];
-    [button setTintColor:[UIColor whiteColor]];
-    [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    UIButton *button = [[JAButton alloc] initButtonWithTitle:name target:target action:action];
     [self addSubview:button];
     [self.buttonsArray addObject:button];
     [self reloadFrame:self.frame];
