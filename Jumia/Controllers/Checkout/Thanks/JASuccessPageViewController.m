@@ -126,8 +126,8 @@
 {
     if (!VALID(_rrHeaderLine, JAProductInfoHeaderLine)) {
         _rrHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, 0, self.rrView.width, kProductInfoHeaderLineHeight)];
-        [_rrHeaderLine setTopSeparatorVisibility:YES];
-        [_rrHeaderLine setBottomSeparatorVisibility:YES];
+        [_rrHeaderLine setTopSeparatorVisibility:NO];
+        [_rrHeaderLine setBottomSeparatorVisibility:NO];
     }
     return _rrHeaderLine;
 }
@@ -488,7 +488,7 @@
     if (VALID_NOTEMPTY(self.rrProducts, NSSet) && 0 < self.rrProducts.count)
     {
         CGFloat relatedItemX = 6.f;
-        CGFloat relatedItemY = 10.f;
+        CGFloat relatedItemY = 0.f;
         
         NSArray* relatedProducts = [self.rrProducts allObjects];
         
@@ -513,7 +513,7 @@
             [self.rrScrollView addSubview:singleItem];
             relatedItemX += singleItem.frame.size.width+6.f;
         }
-        [self.rrScrollView setHeight:itemSize.height+20];
+        [self.rrScrollView setHeight:itemSize.height+10];
         [self.rrView setHeight:CGRectGetMaxY(self.rrScrollView.frame)];
         
         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
