@@ -806,14 +806,14 @@ JAActivityViewControllerDelegate
         
         NSArray* relatedProducts = [self.product.relatedProducts allObjects];
         
-        CGFloat singleItemHeight = 230;
+        CGFloat singleItemHeight = 235;
         NSInteger numberOfCols = 2;
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             if (!isiPadInLandscape) {
                 numberOfCols = 4;
-                singleItemHeight = 280;
+                singleItemHeight = 285;
             }else{
-                singleItemHeight = 350;
+                singleItemHeight = 355;
             }
         }
         
