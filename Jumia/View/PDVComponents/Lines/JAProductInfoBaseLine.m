@@ -10,7 +10,6 @@
 
 @interface JAProductInfoBaseLine ()
 
-@property (nonatomic) UIImageView *arrow;
 @property (nonatomic) UIView *topSeparator;
 @property (nonatomic) UIView *bottomSeparator;
 
