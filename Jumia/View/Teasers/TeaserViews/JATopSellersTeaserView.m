@@ -36,9 +36,9 @@
         CGFloat groupingTitleLabelMargin = 16.0f;
         CGFloat groupingTitleLabelHeight = 50.0f; //value by design
         UILabel* groupingTitleLabel = [UILabel new];
-        groupingTitleLabel.font = JATitleFont;
+        groupingTitleLabel.font = JAHEADLINEFont;
         groupingTitleLabel.textColor = [UIColor blackColor];
-        groupingTitleLabel.text = title;
+        groupingTitleLabel.text = [title uppercaseString];
         groupingTitleLabel.textAlignment = NSTextAlignmentLeft;
         [groupingTitleLabel sizeToFit];
         [groupingTitleLabel setFrame:CGRectMake(groupingTitleLabelMargin,
