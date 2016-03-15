@@ -35,7 +35,7 @@
     self = [[JAButton alloc] initButtonWithTitle:title];
     if (self) {
         [self setBackgroundColor:JAWhiteColor];
-        [self setTintColor:JABlack800Color];
+        [self setTitleColor:JABlack800Color forState:UIControlStateNormal];
         [self.layer setBorderColor:JABlack400Color.CGColor];
         [self.layer setBorderWidth:1.f];
         [self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
@@ -49,6 +49,7 @@
     if (self) {
         [self setBackgroundColor:JAOrange1Color];
         [self setTintColor:JAWhiteColor];
+        [self setTitleColor:JAWhiteColor forState:UIControlStateNormal];
         [self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
@@ -61,7 +62,7 @@
         [[self imageView] setContentMode:UIViewContentModeCenter];
         [self setImage:image forState:UIControlStateNormal];
         [self setBackgroundColor:JABlack900Color];
-        [self setTintColor:[UIColor whiteColor]];
+        [self setTitleColor:JAWhiteColor forState:UIControlStateNormal];
         [self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
