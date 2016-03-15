@@ -8,7 +8,7 @@
 
 #import "JABundlesViewController.h"
 #import "JACatalogListCollectionViewCell.h"
-#import "JABottomBar.h"
+#import "JAButton.h"
 #import "JAProductInfoSubLine.h"
 #import "RICart.h"
 #import "JAPicker.h"
@@ -32,7 +32,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 }
 
 @property (nonatomic) UICollectionView *collectionView;
-@property (nonatomic) JABottomBar *bottomBar;
+@property (nonatomic) JAButton *bottomBar;
 @property (nonatomic) JAProductInfoSubLine *totalSubLine;
 @property (nonatomic) JAPicker *picker;
 
@@ -105,17 +105,16 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     return _collectionView;
 }
 
-- (JABottomBar *)bottomBar
+- (JAButton *)bottomBar
 {
     CGRect frame = CGRectMake(0, CGRectGetMaxY(_collectionView.frame) + kBottomDefaultHeight, self.view.width, kBottomDefaultHeight);
     if ([self isLandscape]) {
         frame.origin.x = self.view.width/2;
         frame.size.width = self.view.width/2;
     }
-    if (!VALID_NOTEMPTY(_bottomBar, JABottomBar)) {
-        _bottomBar = [[JABottomBar alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_collectionView.frame) - kBottomDefaultHeight, self.view.width, kBottomDefaultHeight)];
-        [_bottomBar setBackgroundColor:[UIColor whiteColor]];
-        [_bottomBar addButton:@"Buy Combo" target:self action:@selector(addComboToCart)];
+    if (!VALID_NOTEMPTY(_bottomBar, JAButton)) {
+        _bottomBar = [[JAButton alloc] initButtonWithTitle:[STRING_BUY_COMBO uppercaseString] target:self action:@selector(addComboToCart)];
+        [_bottomBar setFrame:CGRectMake(0, CGRectGetMaxY(_collectionView.frame) - kBottomDefaultHeight, self.view.width, kBottomDefaultHeight)];
         [self.view addSubview:_bottomBar];
     }
     else {
