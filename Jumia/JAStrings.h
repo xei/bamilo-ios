@@ -203,6 +203,7 @@
 #define STRING_NOTIFICATIONS RILocalizedString(@"notifications", nil)
 #define STRING_PUSH_NOTIFICATIONS RILocalizedString(@"push_notifications", nil)
 #define STRING_UPDATE_NOW RILocalizedString(@"update_now", nil)
+#define STRING_UP_TO_DATE RILocalizedString(@"up_to_date", nil)
 #define STRING_APP_VERSION RILocalizedString(@"app_version", nil)
 #define STRING_HELP_CENTER RILocalizedString(@"help_center", nil)
 #define STRING_TERMS_AND_CONDITIONS RILocalizedString(@"terms_and_conditions", nil)
