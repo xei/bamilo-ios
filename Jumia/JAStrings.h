@@ -346,6 +346,7 @@
 #define STRING_BUNDLE_TOTAL_PRICE RILocalizedString(@"bundle_total_price", nil)
 #define STRING_BUY_NOW RILocalizedString(@"buy_now", nil)
 #define STRING_BUY RILocalizedString(@"buy", nil)
+#define STRING_BUY_COMBO RILocalizedString(@"buy_combo", nil)
 
 #define STRING_OTHER_SELLERS RILocalizedString(@"other_sellers", nil)
 #define STRING_SAME_PRODUCT_FROM_OTHER_SELLERS RILocalizedString(@"same_product_from_other_sellers", nil)

@@ -46,8 +46,7 @@
 @property (nonatomic, strong) UILabel *savingMoneyLabel;
 
 @property (nonatomic, strong) JAPercentageBarView* percentageBarView;
-@property (nonatomic, strong) JABottomBar *bottonBar;
-@property (nonatomic, strong) UIButton *buyButton;
+@property (nonatomic, strong) JAButton *buyButton;
 
 @property (nonatomic, strong) UIView *remainingStockView;
 @property (nonatomic, strong) UILabel *remainingStockLabel;
@@ -234,22 +233,20 @@
     if (!VALID_NOTEMPTY(_bottomContentView, UIView)) {
         _bottomContentView = [[UIView alloc] initWithFrame:CGRectMake(kLateralMargin, self.height - kTopMargin - 48, (self.width - 2*kLateralMargin), kBottomDefaultHeight)];
         [_bottomContentView setBackgroundColor:JABlack300Color];
-        [_bottomContentView addSubview:self.bottonBar];
+        [_bottomContentView addSubview:self.buyButton];
         [_bottomContentView addSubview:self.percentageBarView];
         [_bottomContentView addSubview:self.remainingStockView];
     }
     return _bottomContentView;
 }
 
-- (JABottomBar *)bottonBar
+- (JAButton *)buyButton
 {
-    if (!VALID_NOTEMPTY(_bottonBar, JABottomBar)) {
-        _bottonBar = [[JABottomBar alloc] initWithFrame:CGRectMake(self.bottomContentView.width/2, 0, self.bottomContentView.width/2, self.bottomContentView.height)];
-        self.buyButton = [_bottonBar addButton:[STRING_BUY uppercaseString] target:self action:@selector(buyButtonPressed)];
-        [self.buyButton setBackgroundImage:[UIImage imageWithColor:[UIColor grayColor]] forState:UIControlStateDisabled];
-        [self.buyButton setBackgroundImage:[UIImage imageWithColor:JAOrange1Color] forState:UIControlStateNormal];
+    if (!VALID_NOTEMPTY(_buyButton, JAButton)) {
+        _buyButton = [[JAButton alloc] initButtonWithTitle:[STRING_BUY uppercaseString] target:self action:@selector(buyButtonPressed)];
+        [_buyButton setFrame:CGRectMake(self.bottomContentView.width/2, 0, self.bottomContentView.width/2, self.bottomContentView.height)];
     }
-    return _bottonBar;
+    return _buyButton;
 }
 
 - (JAPercentageBarView *)percentageBarView
@@ -438,8 +435,8 @@
     CGFloat bottomContentViewWidth = self.width - 2*kLateralMargin;
     if (bottomContentViewWidth != self.bottomContentView.width) {
         [self.bottomContentView setWidth:bottomContentViewWidth];
-        [self.bottonBar setWidth:self.bottomContentView.width/2];
-        [self.bottonBar setX:self.bottomContentView.width/2];
+        [self.buyButton setWidth:self.bottomContentView.width/2];
+        [self.buyButton setX:self.bottomContentView.width/2];
     }
     
     [self.percentageBarView setX:10.f];
@@ -455,7 +452,7 @@
     [self.remainingStockLabel setY:0.f];
 
     
-    [self.bottonBar setXRightAligned:0.f];
+    [self.buyButton setXRightAligned:0.f];
     
     [self.bottomContentView setXCenterAligned];
     [self.bottomContentView setYBottomOf:self.sizeLine at:16.f];

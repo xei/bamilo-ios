@@ -7,7 +7,6 @@
 //
 
 #import "JAAuthenticationViewController.h"
-#import "JABottomBar.h"
 #import "JAButton.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
