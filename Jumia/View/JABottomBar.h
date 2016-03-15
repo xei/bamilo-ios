@@ -7,12 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
-#define kBottomDefaultHeight 48
+#import "JAButton.h"
 
 @interface JABottomBar : UIView
 
 - (UIButton *)addSmallButton:(UIImage *)image target:(id)target action:(SEL)action;
-- (UIButton *)addButton:(NSString*)name target:(id)target action:(SEL)action;
+- (JAButton *)addButton:(NSString*)name target:(id)target action:(SEL)action;
 
 @end
