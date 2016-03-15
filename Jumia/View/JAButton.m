@@ -11,16 +11,34 @@
 
 @implementation JAButton
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
+
 - (instancetype)initButtonWithTitle:(NSString *)title
 {
-    self = (JAButton *)[JAButton buttonWithType:UIButtonTypeRoundedRect];
+    self = [super init];
     if (self) {
         [self setTitle:[title uppercaseString] forState:UIControlStateNormal];
         [self.titleLabel setFont:JABUTTONFont];
-        [self setBackgroundImage:[UIImage imageWithColor:JAOrange1Color] forState:UIControlStateNormal];
-        [self setBackgroundImage:[UIImage imageWithColor:JABlack700Color] forState:UIControlStateDisabled];
-        [self setBackgroundColor:JAOrange2Color];
-        [self setTintColor:JAWhiteColor];
+    }
+    return self;
+}
+
+- (instancetype)initAlternativeButtonWithTitle:(NSString *)title target:(id)target action:(SEL)action
+{
+    self = [[JAButton alloc] initButtonWithTitle:title];
+    if (self) {
+        [self setBackgroundColor:JAWhiteColor];
+        [self setTitleColor:JABlack800Color forState:UIControlStateNormal];
+        [self.layer setBorderColor:JABlack400Color.CGColor];
+        [self.layer setBorderWidth:1.f];
+        [self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
 }
@@ -29,7 +47,35 @@
 {
     self = [[JAButton alloc] initButtonWithTitle:title];
     if (self) {
+        [self setBackgroundColor:JAOrange1Color];
+        [self setTintColor:JAWhiteColor];
+        [self setTitleColor:JAWhiteColor forState:UIControlStateNormal];
         [self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    }
+    return self;
+}
+
+- (instancetype)initSmallButtonWithImage:(UIImage *)image target:(id)target action:(SEL)action
+{
+    self = [super init];
+    if (self) {
+        [[self imageView] setContentMode:UIViewContentModeCenter];
+        [self setImage:image forState:UIControlStateNormal];
+        [self setBackgroundColor:JABlack900Color];
+        [self setTitleColor:JAWhiteColor forState:UIControlStateNormal];
+        [self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    }
+    return self;
+}
+
+- (instancetype)initFacebookButtonWithTitle:(NSString *)title target:(id)target action:(SEL)action
+{
+    self = [[JAButton alloc] initButtonWithTitle:title];
+    if (self) {
+        [self setBackgroundColor:[UIColor clearColor]];
+        [self setTitleColor:JAWhiteColor forState:UIControlStateNormal];
+        [self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+        [self setBackgroundImage:[UIImage imageNamed:@"facebookMedium_normal"]];
     }
     return self;
 }
