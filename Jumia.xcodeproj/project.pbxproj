@@ -2627,6 +2627,11 @@
 		FFB0A3841C529E9900EF9FE5 /* RIVariation.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB0A37C1C529E9900EF9FE5 /* RIVariation.m */; };
 		FFB0A3851C529E9900EF9FE5 /* RIVariation.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB0A37C1C529E9900EF9FE5 /* RIVariation.m */; };
 		FFB0A3861C529E9900EF9FE5 /* RIVariation.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB0A37C1C529E9900EF9FE5 /* RIVariation.m */; };
+		FFC9C0C31C984E7900DD5851 /* JATopTabsView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC9C0C21C984E7900DD5851 /* JATopTabsView.m */; };
+		FFC9C0C41C984E7900DD5851 /* JATopTabsView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC9C0C21C984E7900DD5851 /* JATopTabsView.m */; };
+		FFC9C0C51C984E7900DD5851 /* JATopTabsView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC9C0C21C984E7900DD5851 /* JATopTabsView.m */; };
+		FFC9C0C61C984E7900DD5851 /* JATopTabsView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC9C0C21C984E7900DD5851 /* JATopTabsView.m */; };
+		FFC9C0C71C984E7900DD5851 /* JATopTabsView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC9C0C21C984E7900DD5851 /* JATopTabsView.m */; };
 		FFF900671C6A31A700DDF538 /* JANewsletterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF900661C6A31A700DDF538 /* JANewsletterViewController.m */; };
 		FFF900681C6A31A700DDF538 /* JANewsletterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF900661C6A31A700DDF538 /* JANewsletterViewController.m */; };
 		FFF900691C6A31A700DDF538 /* JANewsletterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF900661C6A31A700DDF538 /* JANewsletterViewController.m */; };
@@ -3659,6 +3664,8 @@
 		FFB0A37A1C529E9900EF9FE5 /* RIImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIImage.m; sourceTree = "<group>"; };
 		FFB0A37B1C529E9900EF9FE5 /* RIVariation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIVariation.h; sourceTree = "<group>"; };
 		FFB0A37C1C529E9900EF9FE5 /* RIVariation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIVariation.m; sourceTree = "<group>"; };
+		FFC9C0C11C984E7900DD5851 /* JATopTabsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JATopTabsView.h; path = TopTabsView/JATopTabsView.h; sourceTree = "<group>"; };
+		FFC9C0C21C984E7900DD5851 /* JATopTabsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JATopTabsView.m; path = TopTabsView/JATopTabsView.m; sourceTree = "<group>"; };
 		FFF900651C6A31A700DDF538 /* JANewsletterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANewsletterViewController.h; sourceTree = "<group>"; };
 		FFF900661C6A31A700DDF538 /* JANewsletterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANewsletterViewController.m; sourceTree = "<group>"; };
 		FFF9006C1C6A5CC700DDF538 /* JATextFieldComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATextFieldComponent.h; sourceTree = "<group>"; };
@@ -4057,6 +4064,7 @@
 		4AE242DB198655D900E37C90 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FFC9C0C01C984B1A00DD5851 /* TopTabsView */,
 				9A4ADF651C2AF0BD0019F439 /* CustomControls */,
 				CE06FCB41A88C374002FCD25 /* Catalog */,
 				CEA86DF31A49D247000032AD /* Campaigns */,
@@ -6251,6 +6259,15 @@
 			path = MetalTheme;
 			sourceTree = "<group>";
 		};
+		FFC9C0C01C984B1A00DD5851 /* TopTabsView */ = {
+			isa = PBXGroup;
+			children = (
+				FFC9C0C11C984E7900DD5851 /* JATopTabsView.h */,
+				FFC9C0C21C984E7900DD5851 /* JATopTabsView.m */,
+			);
+			name = TopTabsView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -7551,6 +7568,7 @@
 				9AED07E21C6DEA8800B5FDF0 /* ASRemoteIndex.m in Sources */,
 				CED9B5C11B5810ED0097EB30 /* RIHtmlShop.m in Sources */,
 				abfbf9f4e3ea7badd0389cb2 /* JACatalogViewController.m in Sources */,
+				FFC9C0C41C984E7900DD5851 /* JATopTabsView.m in Sources */,
 				c0e941af43b887c904d319ec /* JAPickupStationInfoCell.m in Sources */,
 				CE8C92961B86164000C77706 /* RISpecificationAttribute.m in Sources */,
 				9A0F9BC01B5EAD9700569DF2 /* AQSFacebookMessengerActivity.m in Sources */,
@@ -7956,6 +7974,7 @@
 				CEA106FD1BD78CE500EF88B1 /* JATabBarView.m in Sources */,
 				9A7EE9761B5546A0004E2505 /* ADJConfig.m in Sources */,
 				CE28A7A61BDE987400B1FADA /* JATabBarButton.m in Sources */,
+				FFC9C0C31C984E7900DD5851 /* JATopTabsView.m in Sources */,
 				CE283E681A714D4900F3E92D /* JAOtherOffersView.m in Sources */,
 				6C40A88D1AD7E647001BFA16 /* RIBanner.m in Sources */,
 				CE3AF90019DBF4FB00D8C51B /* JACampaignsViewController.m in Sources */,
@@ -8286,6 +8305,7 @@
 				9A7EE9781B5546A0004E2505 /* ADJConfig.m in Sources */,
 				CE28A7A81BDE987400B1FADA /* JATabBarButton.m in Sources */,
 				CE9ADBAA1AB34C4600D56481 /* JAOtherOffersView.m in Sources */,
+				FFC9C0C51C984E7900DD5851 /* JATopTabsView.m in Sources */,
 				6C40A88E1AD7E647001BFA16 /* RIBanner.m in Sources */,
 				CE9ADBAB1AB34C4600D56481 /* JACampaignsViewController.m in Sources */,
 				CE9ADBAD1AB34C4600D56481 /* JACatalogWizardView.m in Sources */,
@@ -8606,6 +8626,7 @@
 				9A7EE9791B5546A0004E2505 /* ADJConfig.m in Sources */,
 				CE28A7A91BDE987400B1FADA /* JATabBarButton.m in Sources */,
 				CE9ADDA41AB6D6E900D56481 /* JAOtherOffersView.m in Sources */,
+				FFC9C0C61C984E7900DD5851 /* JATopTabsView.m in Sources */,
 				6C40A88F1AD7E647001BFA16 /* RIBanner.m in Sources */,
 				CE9ADDA51AB6D6E900D56481 /* JACampaignsViewController.m in Sources */,
 				CE9ADDA71AB6D6E900D56481 /* JACatalogWizardView.m in Sources */,
@@ -8926,6 +8947,7 @@
 				CE9ADF9E1AB6D78200D56481 /* JAOtherOffersView.m in Sources */,
 				6C40A8901AD7E647001BFA16 /* RIBanner.m in Sources */,
 				CE9ADF9F1AB6D78200D56481 /* JACampaignsViewController.m in Sources */,
+				FFC9C0C71C984E7900DD5851 /* JATopTabsView.m in Sources */,
 				CEF0C48F1BE8EE5F005B5B12 /* RISellerDelivery.m in Sources */,
 				CE9ADFA11AB6D78200D56481 /* JACatalogWizardView.m in Sources */,
 				CE9ADFA31AB6D78200D56481 /* JAExternalPaymentsViewController.m in Sources */,

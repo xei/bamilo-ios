@@ -18,7 +18,7 @@
 
 - (UIView *)selectionView
 {
-    CGRect frame = CGRectMake(0, self.height - 4, self.width, 3);
+    CGRect frame = CGRectMake(0, self.height - 3, self.width, 3);
     if (!VALID_NOTEMPTY(_selectionView, UIView)) {
         _selectionView = [[UIView alloc] initWithFrame:frame];
         [_selectionView setBackgroundColor:JAOrange1Color];

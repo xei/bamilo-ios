@@ -17,7 +17,7 @@
 @interface JACampaignsViewController ()
 
 @property (nonatomic, strong)NSMutableArray* campaignPages;
-@property (nonatomic, strong)JAPickerScrollView* pickerScrollView;
+@property (nonatomic, strong)JATopTabsView* topTabsView;
 @property (nonatomic, strong)UIScrollView* scrollView;
 
 // size picker view
@@ -60,12 +60,12 @@
     self.pickerNamesAlreadySet = NO;
     
     CGRect bounds = [self viewBounds];
-    self.pickerScrollView = [[JAPickerScrollView alloc] initWithFrame:CGRectMake(bounds.origin.x,
-                                                                                 bounds.origin.y,
-                                                                                 bounds.size.width,
-                                                                                 44.0f)];
-    self.pickerScrollView.delegate = self;
-    [self.view addSubview:self.pickerScrollView];
+    self.topTabsView = [[JATopTabsView alloc] initWithFrame:CGRectMake(bounds.origin.x,
+                                                                       bounds.origin.y,
+                                                                       bounds.size.width,
+                                                                       44.0f)];
+    self.topTabsView.delegate = self;
+    [self.view addSubview:self.topTabsView];
     
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     self.scrollView.pagingEnabled = YES;
@@ -120,7 +120,7 @@
     [self showLoading];
     
     [self closePicker];
-    [self.pickerScrollView setHidden:YES];
+    [self.topTabsView setHidden:YES];
     [self.scrollView setHidden:YES];
     
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
@@ -130,7 +130,7 @@
 {
     [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
     
-    [self.pickerScrollView setHidden:NO];
+    [self.topTabsView setHidden:NO];
     [self.scrollView setHidden:NO];
     
     [self hideLoading];    
@@ -142,18 +142,18 @@
 {
     if(VALID_NOTEMPTY(self.campaignPages, NSMutableArray) && 1 < [self.campaignPages count] && -1 < self.campaignIndex)
     {
-        self.pickerScrollView.startingIndex = self.campaignIndex;
+        self.topTabsView.startingIndex = self.campaignIndex;
     }
     CGRect bounds = [self viewBounds];
-    [self.pickerScrollView setFrame:CGRectMake(bounds.origin.x,
-                                               bounds.origin.y,
-                                               width,
-                                               self.pickerScrollView.frame.size.height)];
+    [self.topTabsView setFrame:CGRectMake(bounds.origin.x,
+                                          bounds.origin.y,
+                                          width,
+                                          self.topTabsView.frame.size.height)];
     
     [self.scrollView setFrame:CGRectMake(bounds.origin.x,
-                                         CGRectGetMaxY(self.pickerScrollView.frame),
+                                         CGRectGetMaxY(self.topTabsView.frame),
                                          width,
-                                         height - self.pickerScrollView.frame.size.height )];
+                                         height - self.topTabsView.frame.size.height )];
     
     if(VALID_NOTEMPTY(self.campaignPages, NSMutableArray))
     {
@@ -178,12 +178,13 @@
     self.campaignPages = [NSMutableArray new];
     
     CGFloat currentX = 0.0f;
-    NSInteger startingIndex = 0;
+    NSInteger startingIndex = RI_IS_RTL?self.teaserGrouping.teaserComponents.count-1:0;
     NSMutableArray* optionList = [NSMutableArray new];
     
     if(VALID_NOTEMPTY(self.campaignId, NSString))
     {
         [self createCampaignPageAtX:currentX];
+        [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
     }
     else if (VALID_NOTEMPTY(self.teaserGrouping, RITeaserGrouping) && VALID_NOTEMPTY(self.teaserGrouping.teaserComponents, NSOrderedSet))
     {
@@ -215,25 +216,26 @@
                         [[RITrackingWrapper sharedInstance]trackScreenWithName:component.title];
                         
                         if ([component.title isEqualToString:self.startingTitle]) {
-                            startingIndex = i;
+                            startingIndex = RI_IS_RTL?(self.teaserGrouping.teaserComponents.count-1)-i:i;
                         }
                     }
                 }
             }
         }
+        
+        [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
+        
         //this will trigger load methods
-        [self.pickerScrollView setOptions:optionList];
+        self.topTabsView.startingIndex = startingIndex;
+        [self.topTabsView setupWithTabNames:optionList];
         self.pickerNamesAlreadySet = YES;
-        self.pickerScrollView.startingIndex = startingIndex;
     }
     else if (VALID_NOTEMPTY(self.campaignTargetString, NSString)) {
         [self createCampaignPageAtX:currentX];
+        [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
     }
     
     self.isLoaded = YES;
-    
-    [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
-    
 }
 
 - (JACampaignPageView*)createCampaignPageAtX:(CGFloat)xPosition
@@ -282,8 +284,8 @@ withCampaignTargetString:(NSString*)campaignTargetString
     }
     self.apiResponse = RIApiResponseSuccess;
     [RICampaign getCampaignWithTargetString:campaignTargetString successBlock:^(RICampaign *campaign) {
-        if (VALID_NOTEMPTY(self.pickerScrollView, JAPickerScrollView) && 0 == self.pickerScrollView.optionLabels.count) {
-            [self.pickerScrollView setOptions:[NSArray arrayWithObject:campaign.name]];
+        if (VALID_NOTEMPTY(self.topTabsView, JATopTabsView) && NO == [self.topTabsView isLoaded]) {
+            [self.topTabsView setupWithTabNames:[NSArray arrayWithObject:campaign.name]];
         }
         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         [campaignPage loadWithCampaign:campaign];
@@ -294,8 +296,8 @@ withCampaignTargetString:(NSString*)campaignTargetString
             for (NSDictionary *error in errors) {
                 if (VALID([error objectForKey:@"reason"], NSString)) {
                     if ([[error objectForKey:@"reason"] isEqualToString:@"CAMPAIGN_NOT_EXIST"]) {
-                        if (VALID_NOTEMPTY(self.pickerScrollView, JAPickerScrollView) && 0 == self.pickerScrollView.optionLabels.count) {
-                            [self.pickerScrollView setOptions:[NSArray arrayWithObject:STRING_NOT_AVAILABLE]];
+                        if (VALID_NOTEMPTY(self.topTabsView, JATopTabsView) && NO == [self.topTabsView isLoaded]) {
+                            [self.topTabsView setupWithTabNames:[NSArray arrayWithObject:STRING_NOT_AVAILABLE]];
                         }
                         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                         [campaignPage loadWithCampaign:nil];
@@ -323,8 +325,8 @@ withCampaignTargetString:(NSString*)campaignTargetString
             for (NSDictionary *error in error) {
                 if (VALID([error objectForKey:@"reason"], NSString)) {
                     if ([[error objectForKey:@"reason"] isEqualToString:@"CAMPAIGN_NOT_EXIST"]) {
-                        if (VALID_NOTEMPTY(self.pickerScrollView, JAPickerScrollView) && 0 == self.pickerScrollView.optionLabels.count) {
-                            [self.pickerScrollView setOptions:[NSArray arrayWithObject:STRING_NOT_AVAILABLE]];
+                        if (VALID_NOTEMPTY(self.topTabsView, JATopTabsView) && NO == [self.topTabsView isLoaded]) {
+                            [self.topTabsView setupWithTabNames:[NSArray arrayWithObject:STRING_NOT_AVAILABLE]];
                         }
                         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                         [campaignPage loadWithCampaign:nil];
@@ -344,7 +346,7 @@ withCampaignTargetString:(NSString*)campaignTargetString
     if (NO == self.pickerNamesAlreadySet) {
         NSArray *optionList = [NSArray arrayWithObject:name];
         //this will trigger load methods
-        [self.pickerScrollView setOptions:optionList];
+        [self.topTabsView setupWithTabNames:optionList];
     }
     [self hideLoading];
 }
@@ -373,13 +375,13 @@ withCampaignTargetString:(NSString*)campaignTargetString
 - (IBAction)swipeLeft:(id)sender
 {
     self.shouldPerformButtonActions = NO;
-    [self.pickerScrollView scrollLeftAnimated:YES];
+    [self.topTabsView scrollLeft];
 }
 
 - (IBAction)swipeRight:(id)sender
 {
     self.shouldPerformButtonActions = NO;
-    [self.pickerScrollView scrollRightAnimated:YES];
+    [self.topTabsView scrollRight];
 }
 
 #pragma mark - JACampaignPageViewDelegate
