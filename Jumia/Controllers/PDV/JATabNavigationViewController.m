@@ -7,19 +7,16 @@
 //
 
 #import "JATabNavigationViewController.h"
-#import "JATabButton.h"
 #import "JAProductDescriptionView.h"
 #import "JAProductSpecificationView.h"
 #import "JAProductReviewsView.h"
+#import "JATopTabsView.h"
 
-@interface JATabNavigationViewController () <UIScrollViewDelegate>
+@interface JATabNavigationViewController () <UIScrollViewDelegate, JATopTabsViewDelegate>
 
-@property (nonatomic, strong) UIView *tabBarView;
 @property (nonatomic, strong) UIScrollView *contentScrollView;
 
-@property (nonatomic) JATabButton *descriptionTabButton;
-@property (nonatomic) JATabButton *spectificationTabButton;
-@property (nonatomic) JATabButton *reviewsTabButton;
+@property (nonatomic, strong) JATopTabsView* topTabsView;
 
 @property (nonatomic) JAProductDescriptionView *descriptionView;
 @property (nonatomic) JAProductSpecificationView *spectificationView;
@@ -29,40 +26,35 @@
 
 @implementation JATabNavigationViewController
 
-@synthesize tabScreenEnum = _tabScreenEnum;
-
-- (UIView *)tabBarView
+- (JATopTabsView *)topTabsView
 {
     CGRect frame = CGRectMake(0, 0, self.view.width, kTabsHeight);
-    if (!VALID_NOTEMPTY(_tabBarView, UIView)) {
-        _tabBarView = [[UIView alloc] initWithFrame:frame];
-        [_tabBarView addSubview:self.descriptionTabButton];
-        [_tabBarView addSubview:self.spectificationTabButton];
-        [_tabBarView addSubview:self.reviewsTabButton];
-        UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, _tabBarView.height-1, _tabBarView.width, 1)];
-        [separator setBackgroundColor:JABlack300Color];
-        [_tabBarView addSubview:separator];
+    if (!VALID_NOTEMPTY(_topTabsView, JATopTabsView)) {
+        _topTabsView = [[JATopTabsView alloc] initWithFrame:frame];
+        _topTabsView.delegate = self;
+        
+        NSArray* content;
         if (RI_IS_RTL) {
-            [self.reviewsTabButton setSelected:YES];
+            content = @[STRING_REVIEWS_RATINGS, STRING_SPECIFICATIONS, STRING_DESCRIPTION];
+        } else {
+            content = @[STRING_DESCRIPTION, STRING_SPECIFICATIONS, STRING_REVIEWS_RATINGS];
         }
-        else{
-            [self.descriptionTabButton setSelected:YES];
-        }
+        
+        _topTabsView.startingIndex = RI_IS_RTL?self.tabScreenEnum-2:self.tabScreenEnum;
+        [_topTabsView setupWithTabNames:content];
+
     }else{
-        if (!CGRectEqualToRect(frame, _tabBarView.frame)) {
-            [_tabBarView setFrame:frame];
-            [self descriptionTabButton];
-            [self spectificationTabButton];
-            [self reviewsTabButton];
+        if (!CGRectEqualToRect(frame, _topTabsView.frame)) {
+            [_topTabsView setFrame:frame];
         }
     }
 
-    return _tabBarView;
+    return _topTabsView;
 }
 
 - (UIScrollView *)contentScrollView
 {
-    CGRect frame = CGRectMake(0, CGRectGetMaxY(self.tabBarView.frame), self.view.width, self.view.height - CGRectGetMaxY(self.tabBarView.frame));
+    CGRect frame = CGRectMake(0, CGRectGetMaxY(self.topTabsView.frame), self.view.width, self.view.height - CGRectGetMaxY(self.topTabsView.frame));
     if (!VALID_NOTEMPTY(_contentScrollView, UIScrollView)) {
         _contentScrollView = [[UIScrollView alloc] initWithFrame:frame];
         [_contentScrollView setDelegate:self];
@@ -80,68 +72,12 @@
             [self spectificationView];
             [self reviewsView];
             [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.width*3, self.contentScrollView.height)];
-            [self scrollToTabScreen:self.tabScreenEnum];
+            [self selectedIndex:self.topTabsView.selectedIndex];
         }
     }
     return _contentScrollView;
 }
 
-- (JATabButton *)descriptionTabButton
-{
-    CGRect frame;
-    if(RI_IS_RTL){
-        frame = CGRectMake(2*self.view.width/3, 0, self.view.width/3, kTabsHeight);
-    }
-    else{
-        frame = CGRectMake(0, 0, self.view.width/3, kTabsHeight);
-    }
-    if (!VALID_NOTEMPTY(_descriptionTabButton, JATabButton)) {
-        _descriptionTabButton = [[JATabButton alloc] initWithFrame:frame];
-        [_descriptionTabButton.titleButton setTitle:STRING_DESCRIPTION forState:UIControlStateNormal];
-        [_descriptionTabButton.titleButton addTarget:self action:@selector(goToDescription) forControlEvents:UIControlEventTouchUpInside];
-    }else{
-        if (!CGRectEqualToRect(frame, _descriptionTabButton.frame)) {
-            [_descriptionTabButton setFrame:frame];
-        }
-    }
-    return _descriptionTabButton;
-}
-
-- (JATabButton *)spectificationTabButton
-{
-    CGRect frame = CGRectMake(self.view.width/3, 0, self.view.width/3, kTabsHeight);
-    if (!VALID_NOTEMPTY(_spectificationTabButton, JATabButton)) {
-        _spectificationTabButton = [[JATabButton alloc] initWithFrame:frame];
-        [_spectificationTabButton.titleButton setTitle:STRING_SPECIFICATIONS forState:UIControlStateNormal];
-        [_spectificationTabButton.titleButton addTarget:self action:@selector(goToSpecifications) forControlEvents:UIControlEventTouchUpInside];
-    }else{
-        if (!CGRectEqualToRect(frame, _spectificationTabButton.frame)) {
-            [_spectificationTabButton setFrame:frame];
-        }
-    }
-    return _spectificationTabButton;
-}
-
-- (JATabButton *)reviewsTabButton
-{
-    CGRect frame;
-    if (RI_IS_RTL) {
-        frame = CGRectMake(0, 0, self.view.width/3, kTabsHeight);
-    }
-    else{
-        frame = CGRectMake(2*self.view.width/3, 0, self.view.width/3, kTabsHeight);
-    }
-    if (!VALID_NOTEMPTY(_reviewsTabButton, JATabButton)) {
-        _reviewsTabButton = [[JATabButton alloc] initWithFrame:frame];
-        [_reviewsTabButton.titleButton setTitle:STRING_REVIEWS_RATINGS forState:UIControlStateNormal];
-        [_reviewsTabButton.titleButton addTarget:self action:@selector(goToReviews) forControlEvents:UIControlEventTouchUpInside];
-    }else{
-        if (!CGRectEqualToRect(frame, _reviewsTabButton.frame)) {
-            [_reviewsTabButton setFrame:frame];
-        }
-    }
-    return _reviewsTabButton;
-}
 
 - (JAProductDescriptionView *)descriptionView
 {
@@ -213,38 +149,8 @@
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.title = self.product.brand;
     
-    [self.view addSubview:self.tabBarView];
+    [self.view addSubview:self.topTabsView];
     [self.view addSubview:self.contentScrollView];
-    
-    if (self.tabScreenEnum) {
-        [self scrollToTabScreen:self.tabScreenEnum];
-    }
-}
-
-- (void)goToDescription
-{
-    [self scrollToX:self.descriptionView.x];
-}
-
-- (void)goToSpecifications
-{
-    [self scrollToX:self.spectificationView.x];
-}
-
-- (void)goToReviews
-{
-    [self scrollToX:self.reviewsView.x];
-}
-
-- (void)scrollToTabScreen:(JATabScreenEnum)tabScreen
-{
-    if (tabScreen == kTabScreenDescription) {
-        [self scrollToX:self.descriptionView.x];
-    }else if (tabScreen == kTabScreenSpecifications) {
-        [self scrollToX:self.spectificationView.x];
-    }else if (tabScreen == kTabScreenReviews) {
-        [self scrollToX:self.reviewsView.x];
-    }
 }
 
 - (void)scrollToX:(CGFloat)x
@@ -254,39 +160,28 @@
     }
     [UIView animateWithDuration:.3 animations:^{
         [self.contentScrollView setContentOffset:CGPointMake(x, 0)];
-        [self reloadTabs];
     }];
-}
-
-- (void)reloadTabs
-{
-    BOOL desc = NO, spec = NO, rev = NO;
-    if (self.contentScrollView.contentOffset.x == self.descriptionView.x) {
-        desc = YES;
-        [self setTabScreenEnum:kTabScreenDescription];
-    }else if (self.contentScrollView.contentOffset.x == self.spectificationView.x) {
-        spec = YES;
-        [self setTabScreenEnum:kTabScreenSpecifications];
-    }else if (self.contentScrollView.contentOffset.x == self.reviewsView.x) {
-        rev = YES;
-        [self setTabScreenEnum:kTabScreenReviews];
-    }
-    [self.descriptionTabButton setSelected:desc];
-    [self.spectificationTabButton setSelected:spec];
-    [self.reviewsTabButton setSelected:rev];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    [self reloadTabs];
+    NSInteger index = scrollView.contentOffset.x / self.view.frame.size.width;
+    self.topTabsView.selectedIndex = index;
 }
 
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
     
-    [self tabBarView];
+    [self topTabsView];
     [self contentScrollView];
+}
+
+#pragma mark JATopTabsViewDelegate
+
+- (void)selectedIndex:(NSInteger)index;
+{
+    [self scrollToX:index*self.view.frame.size.width];
 }
 
 @end
