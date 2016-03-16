@@ -20,6 +20,7 @@
 @property (nonatomic, readonly)UILabel* titleLabel;
 
 - (UIImage*)imageForState:(UIControlState)controlState;
+- (void)setBackgroundImage:(UIImage*)image;
 - (void)setImage:(UIImage*)image forState:(UIControlState)state;
 - (void)setImageWithURL:(NSURL*)url placeholderImage:(UIImage*)image;
 - (void)setTitle:(NSString*)title forState:(UIControlState)state;

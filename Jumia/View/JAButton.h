@@ -7,10 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JAClickableView.h"
 
-@interface JAButton : UIButton
+#define kBottomDefaultHeight 48
+
+@interface JAButton : JAClickableView
 
 - (instancetype)initButtonWithTitle:(NSString *)title;
 - (instancetype)initButtonWithTitle:(NSString *)title target:(id)target action:(SEL)action;
+- (instancetype)initAlternativeButtonWithTitle:(NSString *)title target:(id)target action:(SEL)action;
+- (instancetype)initSmallButtonWithImage:(UIImage *)image target:(id)target action:(SEL)action;
+- (instancetype)initFacebookButtonWithTitle:(NSString *)title target:(id)target action:(SEL)action;
 
 @end

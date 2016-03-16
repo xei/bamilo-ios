@@ -141,6 +141,11 @@
     [self bringSubviewToFront:self.overlayButton];
 }
 
+- (void)setBackgroundImage:(UIImage*)image
+{
+    [self addSubview:[[UIImageView alloc] initWithImage:image]];
+}
+
 - (void)setImage:(UIImage*)image forState:(UIControlState)state;
 {
     [self.overlayButton setImage:image forState:state];

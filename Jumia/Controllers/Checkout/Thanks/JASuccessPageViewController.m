@@ -14,7 +14,7 @@
 #import "RICartItem.h"
 #import <FBSDKCoreKit/FBSDKAppEvents.h>
 #import "RIProduct.h"
-#import "JABottomBar.h"
+#import "JAButton.h"
 #import "JAProductInfoHeaderLine.h"
 #import "JAPDVSingleRelatedItem.h"
 
@@ -27,10 +27,8 @@
 @property (nonatomic, strong) UIImageView *topImageView;
 @property (nonatomic, strong) UILabel *thankYouLabel;
 @property (nonatomic, strong) UILabel *successMessageLabel;
-@property (nonatomic, strong) UIButton *orderDetailsButton;
-@property (nonatomic, strong) UIButton *continueShoppingButton;
-@property (nonatomic, strong) JABottomBar *orderDetailsButtonBar;
-@property (nonatomic, strong) JABottomBar *continueShoppingButtonBar;
+@property (nonatomic, strong) JAButton *orderDetailsButton;
+@property (nonatomic, strong) JAButton *continueShoppingButton;
 
 @property (nonatomic, strong) UIView *rrView;
 @property (nonatomic, strong) JAProductInfoHeaderLine *rrHeaderLine;
@@ -90,28 +88,24 @@
     return _successMessageLabel;
 }
 
-- (JABottomBar *)orderDetailsButtonBar
+- (JAButton *)orderDetailsButton
 {
-    if (!VALID(_orderDetailsButtonBar, JABottomBar)) {
+    if (!VALID(_orderDetailsButton, JAButton)) {
         CGFloat viewWidth = self.topScrollView.width;
-        _orderDetailsButtonBar = [[JABottomBar alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.successMessageLabel.frame)+16.f, viewWidth-2*kLateralMargin, kBottomDefaultHeight)];
-        self.orderDetailsButton = [_orderDetailsButtonBar addButton:STRING_ORDER_DETAILS target:self action:@selector(goToTrackOrders)];
-        [self.orderDetailsButton setBackgroundColor:[UIColor whiteColor]];
-        [self.orderDetailsButton.layer setBorderColor:JABlack300Color.CGColor];
-        [self.orderDetailsButton.layer setBorderWidth:1];
-        [self.orderDetailsButton setTintColor:JABlack800Color];
+        _orderDetailsButton = [[JAButton alloc] initAlternativeButtonWithTitle:STRING_ORDER_DETAILS target:self action:@selector(goToTrackOrders)];
+        [_orderDetailsButton setFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.successMessageLabel.frame)+16.f, viewWidth-2*kLateralMargin, kBottomDefaultHeight)];
     }
-    return _orderDetailsButtonBar;
+    return _orderDetailsButton;
 }
 
-- (JABottomBar *)continueShoppingButtonBar
+- (JAButton *)continueShoppingButton
 {
-    if (!VALID(_continueShoppingButtonBar, JABottomBar)) {
+    if (!VALID(_continueShoppingButton, JAButton)) {
         CGFloat viewWidth = self.topScrollView.width;
-        _continueShoppingButtonBar = [[JABottomBar alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.orderDetailsButtonBar.frame)+16.f, viewWidth-2*kLateralMargin, kBottomDefaultHeight)];
-        self.continueShoppingButton = [_continueShoppingButtonBar addButton:STRING_CONTINUE_SHOPPING target:self action:@selector(goToHomeScreen)];
+        _continueShoppingButton = [[JAButton alloc] initButtonWithTitle:STRING_CONTINUE_SHOPPING target:self action:@selector(goToHomeScreen)];
+        [_continueShoppingButton setFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.orderDetailsButton.frame)+16.f, viewWidth-2*kLateralMargin, kBottomDefaultHeight)];
     }
-    return _continueShoppingButtonBar;
+    return _continueShoppingButton;
 }
 
 - (UIView *)rrView
@@ -157,8 +151,8 @@
     [self.topScrollView addSubview:self.topImageView];
     [self.topScrollView addSubview:self.thankYouLabel];
     [self.topScrollView addSubview:self.successMessageLabel];
-    [self.topScrollView addSubview:self.orderDetailsButtonBar];
-    [self.topScrollView addSubview:self.continueShoppingButtonBar];
+    [self.topScrollView addSubview:self.orderDetailsButton];
+    [self.topScrollView addSubview:self.continueShoppingButton];
     [self.rrView addSubview:self.rrHeaderLine];
     [self.rrView addSubview:self.rrScrollView];
     
@@ -527,7 +521,7 @@
             if (!VALID(self.rrView.superview, UIView)) {
                 [self.topScrollView addSubview:self.rrView];
             }
-            [self.rrView setY:CGRectGetMaxY(self.continueShoppingButtonBar.frame)+16.f];
+            [self.rrView setY:CGRectGetMaxY(self.continueShoppingButton.frame)+16.f];
             [self.rrView setWidth:self.rrView.superview.width];
             [self.topScrollView setContentSize:CGSizeMake(self.topScrollView.width, CGRectGetMaxY(self.rrView.frame))];
         }

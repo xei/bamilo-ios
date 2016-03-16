@@ -127,7 +127,6 @@
 {
     if (!VALID_NOTEMPTY(_ratingLine, JAProductInfoRatingLine)) {
         _ratingLine = [[JAProductInfoRatingLine alloc] initWithFrame:CGRectZero];
-        _ratingLine.fashion = NO;
         _ratingLine.imageRatingSize = kImageRatingSizeSmall;
         _ratingLine.lineContentXOffset = 0.f;
         _ratingLine.topSeparatorVisibility = NO;

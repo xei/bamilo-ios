@@ -7,7 +7,7 @@
 //
 
 #import "JAAuthenticationViewController.h"
-#import "JABottomBar.h"
+#import "JAButton.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "JATextFieldComponent.h"
@@ -32,10 +32,10 @@
 @property (nonatomic) UIScrollView *mainScrollView;
 @property (nonatomic) UIImageView *userIcon;
 @property (nonatomic) UILabel *topMessageLabel;
-@property (nonatomic) UIButton *facebookButton;
+@property (nonatomic) JAButton *facebookButton;
 @property (nonatomic) UIView *orView;
-@property (nonatomic) UIButton *continueWithoutLoginButton;
-@property (nonatomic) JABottomBar *continueToLoginButton;
+@property (nonatomic) JAButton *continueWithoutLoginButton;
+@property (nonatomic) JAButton *continueToLoginButton;
 @property (nonatomic) JATextFieldComponent *emailTextField;
 
 @property (strong, nonatomic) UIButton *facebookLoginButton;
@@ -78,14 +78,11 @@
     return _topMessageLabel;
 }
 
-- (UIButton *)facebookButton
+- (JAButton *)facebookButton
 {
-    if (!VALID_NOTEMPTY(_facebookButton, UIButton)) {
-        _facebookButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    if (!VALID_NOTEMPTY(_facebookButton, JAButton)) {
+        _facebookButton = [[JAButton alloc] initFacebookButtonWithTitle:[STRING_LOGIN_WITH_FACEBOOK uppercaseString] target:self action:@selector(facebookLoginButtonPressed:)];
         [_facebookButton setFrame:CGRectMake((self.view.width - kWidth)/2, CGRectGetMaxY(self.topMessageLabel.frame) + kTopMess2FacebookButton, kWidth, 50)];
-        [_facebookButton.titleLabel setFont:JABodyFont];
-        [_facebookButton setTitle:[STRING_LOGIN_WITH_FACEBOOK uppercaseString] forState:UIControlStateNormal];
-        [_facebookButton addTarget:self action:@selector(facebookLoginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _facebookButton;
 }
@@ -138,15 +135,11 @@
     return _emailTextField;
 }
 
-- (UIButton *)continueWithoutLoginButton
+- (JAButton *)continueWithoutLoginButton
 {
-    if (!VALID_NOTEMPTY(_continueWithoutLoginButton, UIButton)) {
-        _continueWithoutLoginButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_continueWithoutLoginButton setFrame:CGRectMake((self.view.width - kWidth)/2, CGRectGetMaxY(self.emailTextField.frame) + kEmail2ContinueWithout, kWidth, 30)];
-        [_continueWithoutLoginButton.titleLabel setFont:JACaptionFont];
-        [_continueWithoutLoginButton setTitle:STRING_CONTINUE_WITHOUT_LOGIN forState:UIControlStateNormal];
-        [_continueWithoutLoginButton setTitleColor:JABlack800Color forState:UIControlStateNormal];
-        [_continueWithoutLoginButton addTarget:self action:@selector(continueWithoutLogin) forControlEvents:UIControlEventTouchUpInside];
+    if (!VALID_NOTEMPTY(_continueWithoutLoginButton, JAButton)) {
+        _continueWithoutLoginButton = [[JAButton alloc] initAlternativeButtonWithTitle:STRING_CONTINUE_WITHOUT_LOGIN target:self action:@selector(continueWithoutLogin)];
+        [_continueWithoutLoginButton setFrame:CGRectMake((self.view.width - kWidth)/2, CGRectGetMaxY(self.emailTextField.frame) + kEmail2ContinueWithout, kWidth, kBottomDefaultHeight)];
         if (self.checkout)
         {
             [_continueWithoutLoginButton setHidden:NO];
@@ -157,15 +150,15 @@
     return _continueWithoutLoginButton;
 }
 
-- (JABottomBar *)continueToLoginButton
+- (JAButton *)continueToLoginButton
 {
-    if (!VALID_NOTEMPTY(_continueToLoginButton, JABottomBar)) {
+    if (!VALID_NOTEMPTY(_continueToLoginButton, JAButton)) {
         CGFloat yOffset = CGRectGetMaxY(self.continueWithoutLoginButton.frame) + kContinueWithout2ContinueLogin;
         if (!self.checkout) {
             yOffset = CGRectGetMaxY(self.emailTextField.frame) + kContinueWithout2ContinueLogin;
         }
-        _continueToLoginButton = [[JABottomBar alloc] initWithFrame:CGRectMake((self.view.width - kWidth)/2, yOffset, kWidth, kBottomDefaultHeight)];
-        [_continueToLoginButton addButton:[STRING_CONTINUE uppercaseString] target:self action:@selector(checkEmail)];
+        _continueToLoginButton = [[JAButton alloc] initButtonWithTitle:[STRING_CONTINUE uppercaseString] target:self action:@selector(checkEmail)];
+        [_continueToLoginButton setFrame:CGRectMake((self.view.width - kWidth)/2, yOffset, kWidth, kBottomDefaultHeight)];
     }
     return _continueToLoginButton;
 }
@@ -195,14 +188,6 @@
     [self.mainScrollView addSubview:self.continueWithoutLoginButton];
     [self.mainScrollView addSubview:self.continueToLoginButton];
     [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, CGRectGetMaxY(self.continueToLoginButton.frame))];
-    
-    
-    NSString *facebookImageNameFormatter = @"facebookMedium_%@";
-    UIImage *facebookNormalImage = [UIImage imageNamed:[NSString stringWithFormat:facebookImageNameFormatter, @"normal"]];
-    UIImage *facebookHighlightImage = [UIImage imageNamed:[NSString stringWithFormat:facebookImageNameFormatter, @"highlighted"]];
-    [self.facebookButton setBackgroundImage:facebookNormalImage forState:UIControlStateNormal];
-    [self.facebookButton setBackgroundImage:facebookHighlightImage forState:UIControlStateHighlighted];
-    [self.facebookButton setBackgroundImage:facebookHighlightImage forState:UIControlStateSelected];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
