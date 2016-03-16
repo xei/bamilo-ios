@@ -93,6 +93,8 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, retain) NSString *brandTarget;
 @property (nonatomic, retain) NSString *brandUrlKey;
 
+@property (nonatomic) BOOL hasStock;
+
 /**
  *  Method to load a product and all its details given his sku. This method uses getCompleteProductWithUrl:successBlock:andFailureBlock:
  *

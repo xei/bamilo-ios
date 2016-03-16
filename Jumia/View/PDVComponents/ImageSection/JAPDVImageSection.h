@@ -23,6 +23,7 @@
 @property (nonatomic) UIView *separatorImageView;
 @property (nonatomic) UILabel *productNameLabel;
 @property (nonatomic) UILabel *productDescriptionLabel;
+@property (nonatomic) BOOL outOfStock;
 
 @property (nonatomic, assign) id<JAPDVImageSectionDelegate> delegate;
 

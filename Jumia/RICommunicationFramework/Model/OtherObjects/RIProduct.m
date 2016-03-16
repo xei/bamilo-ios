@@ -115,6 +115,8 @@
 @synthesize brandTarget;
 @synthesize brandUrlKey;
 
+@synthesize hasStock;
+
 + (NSString *)getCompleteProductWithSku:(NSString*)sku
                            successBlock:(void (^)(id product))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
@@ -1111,6 +1113,16 @@
         }
         recentlyViewedProductSku.numberOfTimesSeen = [NSNumber numberWithInt:([recentlyViewedProductSku.numberOfTimesSeen intValue] + 1)];
     }
+}
+
+- (BOOL)hasStock
+{
+    for (RIProductSimple *simple in self.productSimples) {
+        if (![simple.quantity isEqualToString:@"0"]) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 @end

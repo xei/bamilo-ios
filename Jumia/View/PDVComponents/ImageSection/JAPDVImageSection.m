@@ -29,6 +29,8 @@
 @property (nonatomic, strong) UIButton *globalButton;
 @property (nonatomic, strong) RIProduct* product;
 @property (nonatomic, strong) JAScrolledImageGalleryView *imagesPagedView;
+@property (nonatomic, strong) UIView *outOfStockView;
+@property (nonatomic, strong) UILabel *outOfStockLabel;
 
 @end
 
@@ -81,14 +83,14 @@
 
 - (UILabel *)productNameLabel
 {
-    CGRect frame = CGRectMake(16.f, 32.f, self.width - 16.f*2, 20);
+    CGRect frame = CGRectMake(16.f, 16.f, self.width - 16.f*2, 20);
     if (self.product.seller.isGlobal) {
         frame.size.width = self.globalButton.x - frame.origin.x;
     }
     if (!_productNameLabel) {
         _productNameLabel = [[UILabel alloc] initWithFrame:frame];
-        _productNameLabel.font = JAListFont;
-        _productNameLabel.textColor = JABlackColor;
+        _productNameLabel.font = JABodyFont;
+        _productNameLabel.textColor = JABlack800Color;
         [_productNameLabel setTextAlignment:NSTextAlignmentLeft];
         [self addSubview:_productNameLabel];
     }else if (_productNameLabel.width != frame.size.width) {
@@ -109,8 +111,8 @@
         CGRect frame = CGRectMake(xFavOffset, CGRectGetMaxY(self.productNameLabel.frame), width, 60);
         
         _productDescriptionLabel = [[UILabel alloc] initWithFrame:frame];
-        _productDescriptionLabel.font = JACaptionFont;
-        [_productDescriptionLabel setTextColor:JABlack800Color];
+        _productDescriptionLabel.font = JATitleFont;
+        [_productDescriptionLabel setTextColor:JABlackColor];
         _productDescriptionLabel.numberOfLines = 2;
         [_productDescriptionLabel setLineBreakMode:NSLineBreakByTruncatingTail];
         [self addSubview:_productDescriptionLabel];
@@ -136,6 +138,41 @@
         }
     }
     return _globalButton;
+}
+
+- (void)setOutOfStock:(BOOL)outOfStock
+{
+    [self.outOfStockView setHidden:outOfStock];
+    [self.outOfStockLabel setHidden:outOfStock];
+}
+
+- (UIView *)outOfStockView
+{
+    if (!VALID(_outOfStockView, UIView)) {
+        _outOfStockView = [[UIView alloc] initWithFrame:CGRectMake(self.imagesPagedView.x, self.imagesPagedView.y, self.imagesPagedView.width, self.imagesPagedView.height - 60)];
+        [_outOfStockView setBackgroundColor:JAWhiteColor];
+        [_outOfStockView setHidden:YES];
+        [_outOfStockView setAlpha:.7f];
+        [self addSubview:_outOfStockView];
+    }
+    return _outOfStockView;
+}
+
+- (UILabel *)outOfStockLabel
+{
+    if (!VALID(_outOfStockLabel, UILabel)) {
+        _outOfStockLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (self.outOfStockView.height - 38.f)/2, self.outOfStockView.width, 38)];
+        [_outOfStockLabel.layer setBorderWidth:1.f];
+        [_outOfStockLabel.layer setBorderColor:JABlack400Color.CGColor];
+        [_outOfStockLabel setBackgroundColor:JAWhiteColor];
+        [_outOfStockLabel setHidden:YES];
+        [_outOfStockLabel setFont:JATitleFont];
+        [_outOfStockLabel setTextColor:JABlackColor];
+        [_outOfStockLabel setTextAlignment:NSTextAlignmentCenter];
+        [_outOfStockLabel setText:[STRING_PRODUCT_OUT_OF_STOCK uppercaseString]];
+        [self addSubview:_outOfStockLabel];
+    }
+    return _outOfStockLabel;
 }
 
 - (void)setupWithFrame:(CGRect)frame product:(RIProduct*)product preSelectedSize:(NSString*)preSelectedSize
@@ -190,28 +227,24 @@
     [self.productNameLabel setTextAlignment:NSTextAlignmentLeft];
     [self.productDescriptionLabel setTextAlignment:NSTextAlignmentLeft];
     
-    if (self.product.fashion) {
-        if ([self.product.seller isGlobal]) {
-            [_imagesPagedView setYBottomOf:self.globalButton at:yFavOffset];
-        } else {
-            [_imagesPagedView setY:yFavOffset];
-        }
-        [self.wishListButton setY:self.imagesPagedView.y];
-        [_productNameLabel setYBottomOf:_imagesPagedView at:16.f];
-        [_productDescriptionLabel setYBottomOf:_productNameLabel at:0.f];
-        [self setHeight:CGRectGetMaxY(_productDescriptionLabel.frame) + 16.f];
-    }else{
-        [_productNameLabel setY:14.f];
-        [_productDescriptionLabel setYBottomOf:_productNameLabel at:0.f];
-        if ([self.product.seller isGlobal]) {
-            [_imagesPagedView setYBottomOf:self.globalButton at:yFavOffset];
-            [self.wishListButton setYBottomOf:self.globalButton at:yFavOffset];
-        } else {
-            [_imagesPagedView setYBottomOf:_productDescriptionLabel at:yFavOffset];
-            [self.wishListButton setY:yFavOffset];
-        }
-        [self setHeight:CGRectGetMaxY(_imagesPagedView.frame)];
+    [_productNameLabel setY:16.f];
+    [_productDescriptionLabel setYBottomOf:_productNameLabel at:0.f];
+    if ([self.product.seller isGlobal]) {
+        [_imagesPagedView setYBottomOf:self.globalButton at:yFavOffset];
+        [self.wishListButton setYBottomOf:self.globalButton at:yFavOffset];
+    } else {
+        [_imagesPagedView setYBottomOf:_productDescriptionLabel at:yFavOffset];
+        [self.wishListButton setY:yFavOffset];
     }
+    [self setHeight:CGRectGetMaxY(_imagesPagedView.frame)];
+    
+    [self.outOfStockView setFrame:CGRectMake(self.imagesPagedView.x, self.imagesPagedView.y, self.imagesPagedView.width, self.imagesPagedView.height - 60)];
+    [self.outOfStockLabel sizeToFit];
+    CGFloat outOfStockLabelWidth = self.outOfStockLabel.width + 60;
+    CGFloat outOfStockLabelHeight = 38;
+    CGFloat outOfStockLabelX = (self.outOfStockView.width - outOfStockLabelWidth)/2;
+    CGFloat outOfStockLabelY = (self.outOfStockView.height - outOfStockLabelHeight)/2;
+    [self.outOfStockLabel setFrame:CGRectMake(outOfStockLabelX, outOfStockLabelY, outOfStockLabelWidth, outOfStockLabelHeight)];
 }
 
 - (void)loadWithImages:(NSArray *)imagesArray
