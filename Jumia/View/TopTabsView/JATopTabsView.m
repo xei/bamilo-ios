@@ -29,15 +29,34 @@
     _selectedIndex = selectedIndex;
     for (int i = 0; i < self.tabButtonsArray.count; i++) {
         JATabButton* tabButton = [self.tabButtonsArray objectAtIndex:i];
-        if (selectedIndex == i) {
+        if (_selectedIndex == i) {
             [tabButton setSelected:YES];
+            [self.scrollView scrollRectToVisible:tabButton.frame animated:YES];
         } else {
             [tabButton setSelected:NO];
         }
     }
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(selectedIndex:)]) {
-        [self.delegate selectedIndex:selectedIndex];
+        [self.delegate selectedIndex:_selectedIndex];
+    }
+}
+
+- (void)setSelectedIndexWithStartingIndex
+{
+    _selectedIndex = self.startingIndex;
+    for (int i = 0; i < self.tabButtonsArray.count; i++) {
+        JATabButton* tabButton = [self.tabButtonsArray objectAtIndex:i];
+        if (_selectedIndex == i) {
+            [tabButton setSelected:YES];
+            [self.scrollView scrollRectToVisible:tabButton.frame animated:NO]; //DON'T ANIMATE
+        } else {
+            [tabButton setSelected:NO];
+        }
+    }
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(selectedIndex:)]) {
+        [self.delegate selectedIndex:_selectedIndex];
     }
 }
 
@@ -68,7 +87,7 @@
         [label setFont:tabButton.titleButton.titleLabel.font];
         [label setText:tabName];
         [label sizeToFit];
-        CGFloat minLabel = MAX(label.frame.size.width, 100.0f);
+        CGFloat minLabel = MAX(label.frame.size.width + 10.0f, 106.0f);
         [tabButton setFrame:CGRectMake(currentX, 0.0f, minLabel, self.frame.size.height)];
         
         tabButton.titleButton.tag = i;
@@ -84,7 +103,7 @@
     
     self.tabButtonsArray = [tabButtonsMutableArray copy];
     
-    self.selectedIndex = self.startingIndex;
+    [self setSelectedIndexWithStartingIndex];
 }
 
 
