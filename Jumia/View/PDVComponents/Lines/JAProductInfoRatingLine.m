@@ -107,11 +107,11 @@
 
 - (UILabel *)ratingSumLabel
 {
-    CGRect frame = CGRectMake(CGRectGetMaxX(self.star5.frame) + 6.f, (_viewBounds.height-self.imageHeight)/2, _viewBounds.width - (CGRectGetMaxX(self.star5.frame) + 2*6.f), self.imageHeight);
+    CGRect frame = CGRectMake(CGRectGetMaxX(self.star5.frame) + 10.f, (_viewBounds.height-self.imageHeight)/2, _viewBounds.width - (CGRectGetMaxX(self.star5.frame) + 2*10.f), self.imageHeight);
     if (!VALID_NOTEMPTY(_ratingSumLabel, UILabel)) {
         _ratingSumLabel = [[UILabel alloc] initWithFrame:frame];
-        [_ratingSumLabel setTextColor:[UIColor darkGrayColor]];
-        [_ratingSumLabel setFont:JACaptionFont];
+        [_ratingSumLabel setTextColor:JABlack800Color];
+        [_ratingSumLabel setFont:JABodyFont];
         [_ratingSumLabel setText:@"(0)"];
         [_ratingSumLabel sizeToFit];
         [_ratingSumLabel setTextAlignment:NSTextAlignmentLeft];

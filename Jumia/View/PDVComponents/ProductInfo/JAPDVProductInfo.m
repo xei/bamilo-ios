@@ -96,6 +96,7 @@
     JAProductInfoRatingLine *ratingLine = [[JAProductInfoRatingLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
     [ratingLine setTopSeparatorVisibility:YES];
     [ratingLine setBottomSeparatorVisibility:NO];
+    [ratingLine setImageRatingSize:kImageRatingSizeBig];
     [ratingLine setRatingAverage:product.avr];
     [ratingLine setRatingSum:product.sum];
     [ratingLine addTarget:self action:@selector(tapReviewsLine) forControlEvents:UIControlEventTouchUpInside];
