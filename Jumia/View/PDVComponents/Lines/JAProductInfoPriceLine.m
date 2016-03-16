@@ -56,10 +56,10 @@
             return JACaptionFont;
             
         case kPriceSizeMedium:
-            return JAListFont;
+            return JADisplay3Font;
             
         default:
-            return JAListFont;
+            return JADisplay3Font;
     }
 }
 
