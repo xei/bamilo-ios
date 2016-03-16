@@ -178,12 +178,13 @@
     self.campaignPages = [NSMutableArray new];
     
     CGFloat currentX = 0.0f;
-    NSInteger startingIndex = 0;
+    NSInteger startingIndex = RI_IS_RTL?self.teaserGrouping.teaserComponents.count-1:0;
     NSMutableArray* optionList = [NSMutableArray new];
     
     if(VALID_NOTEMPTY(self.campaignId, NSString))
     {
         [self createCampaignPageAtX:currentX];
+        [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
     }
     else if (VALID_NOTEMPTY(self.teaserGrouping, RITeaserGrouping) && VALID_NOTEMPTY(self.teaserGrouping.teaserComponents, NSOrderedSet))
     {
@@ -215,25 +216,26 @@
                         [[RITrackingWrapper sharedInstance]trackScreenWithName:component.title];
                         
                         if ([component.title isEqualToString:self.startingTitle]) {
-                            startingIndex = i;
+                            startingIndex = RI_IS_RTL?(self.teaserGrouping.teaserComponents.count-1)-i:i;
                         }
                     }
                 }
             }
         }
+        
+        [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
+        
         //this will trigger load methods
+        self.topTabsView.startingIndex = startingIndex;
         [self.topTabsView setupWithTabNames:optionList];
         self.pickerNamesAlreadySet = YES;
-        self.topTabsView.startingIndex = startingIndex;
     }
     else if (VALID_NOTEMPTY(self.campaignTargetString, NSString)) {
         [self createCampaignPageAtX:currentX];
+        [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
     }
     
     self.isLoaded = YES;
-    
-    [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
-    
 }
 
 - (JACampaignPageView*)createCampaignPageAtX:(CGFloat)xPosition
