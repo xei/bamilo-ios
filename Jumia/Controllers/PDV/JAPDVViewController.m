@@ -859,6 +859,12 @@ JAActivityViewControllerDelegate
     self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.frame.size.width, scrollViewY);
     self.landscapeScrollView.contentSize = CGSizeMake(self.landscapeScrollView.frame.size.width, landscapeScrollViewY);
     
+    if (!self.product.hasStock || (VALID(self.currentSimple, RIProductSimple) && [self.currentSimple.quantity isEqualToString:@"0"])) {
+        [self.productImageSection setOutOfStock:NO];
+    }else{
+        [self.productImageSection setOutOfStock:YES];
+    }
+    
     //make sure wizard is in front
     //$WIZ$
     //    [self.view bringSubviewToFront:self.wizardView];

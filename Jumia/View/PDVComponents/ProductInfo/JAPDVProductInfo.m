@@ -81,8 +81,6 @@
         [_priceLine setTopSeparatorVisibility:YES];
     }
     
-    [_priceLine setFashion:product.fashion];
-    
     if (VALID_NOTEMPTY(product.priceRange, NSString)) {
         [_priceLine setPrice:product.priceRange];
     } else {
@@ -98,7 +96,6 @@
     JAProductInfoRatingLine *ratingLine = [[JAProductInfoRatingLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
     [ratingLine setTopSeparatorVisibility:YES];
     [ratingLine setBottomSeparatorVisibility:NO];
-    [ratingLine setFashion:product.fashion];
     [ratingLine setRatingAverage:product.avr];
     [ratingLine setRatingSum:product.sum];
     [ratingLine addTarget:self action:@selector(tapReviewsLine) forControlEvents:UIControlEventTouchUpInside];
@@ -111,7 +108,7 @@
      */
     
     CGFloat preSpecificationOffset = yOffset;
-    if (VALID_NOTEMPTY(product.specifications, NSSet) && !product.fashion) {
+    if (VALID_NOTEMPTY(product.specifications, NSSet)) {
         JAProductInfoHeaderLine *headerSpecifications = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoHeaderLineHeight)];
         [headerSpecifications setTitle:[STRING_SPECIFICATIONS uppercaseString]];
         
