@@ -174,7 +174,6 @@
 
 - (void)setRatingAverage:(NSNumber *)ratingAverage
 {
-    ratingAverage = @4.7;
     double doubleNumber = ratingAverage.doubleValue;
     [self setStarImage:self.star1 forValue:doubleNumber];
     [self setStarImage:self.star2 forValue:doubleNumber-1];
