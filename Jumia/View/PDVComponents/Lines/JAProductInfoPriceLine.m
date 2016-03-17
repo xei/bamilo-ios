@@ -103,12 +103,12 @@
     
     if (VALID_NOTEMPTY(self.oldPrice, NSString)) {
         rect = CGRectMake(CGRectGetMaxX(self.oldPriceLabel.frame)+10.f,
-                          self.oldPriceLabel.frame.origin.y,
-                          8.f, self.oldPriceLabel.frame.size.height);
+                          self.oldPriceLabel.frame.origin.y + 2.0f,
+                          8.f, 16.0f);
     } else {
         rect = CGRectMake(CGRectGetMaxX(self.label.frame)+10.f,
-                          self.label.frame.origin.y,
-                          8.f, self.label.frame.size.height);
+                          self.label.frame.origin.y + 2.0f,
+                          8.f, 16.0f);
         
     }
     [self.priceOffLabel setX:rect.origin.x];
