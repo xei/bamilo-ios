@@ -26,25 +26,32 @@
 
 @implementation JAProductInfoRatingLine
 
-- (UIImage *)getEmptyStar
+- (NSString *)getEmptyStarAssetName
 {
-    return [UIImage imageNamed:[NSString stringWithFormat:@"img_rating_star_%@_empty", self.imageSize]];
+    NSString *assetName = [NSString stringWithFormat:@"img_rating_star_%@_empty", self.imageSize];
+    return assetName;
 }
 
-- (UIImage *)getFilledStar
+- (NSString *)getHalfStarAssetName
 {
+    NSString *assetName = [NSString stringWithFormat:@"img_rating_star_%@_half", self.imageSize];
+    return assetName;
+}
+
+- (NSString *)getFilledStarAssetName
+{
+    NSString *assetName = [NSString stringWithFormat:@"img_rating_star_%@_full", self.imageSize];
     if (self.fashion) {
-        return [UIImage imageNamed:[NSString stringWithFormat:@"img_rating_star_fashion_%@_full", self.imageSize]];
-    }else{
-        return [UIImage imageNamed:[NSString stringWithFormat:@"img_rating_star_%@_full", self.imageSize]];
+        assetName = [NSString stringWithFormat:@"img_rating_star_fashion_%@_full", self.imageSize];
     }
+    return assetName;
 }
 
 - (UIImageView *)star1
 {
     CGRect frame = CGRectMake(self.lineContentXOffset, self.height/2-self.imageHeight/2, self.imageHeight, self.imageHeight);
     if (!VALID_NOTEMPTY(_star1, UIImageView)) {
-        _star1 = [[UIImageView alloc] initWithImage:[self getEmptyStar]];
+        _star1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[self getEmptyStarAssetName]]];
         [_star1 setFrame:frame];
         [self addSubview:_star1];
     }else if (!CGRectEqualToRect(_star1.frame, frame)) {
@@ -57,7 +64,7 @@
 {
     CGRect frame = CGRectMake(CGRectGetMaxX(self.star1.frame) + 2.f, self.height/2-self.imageHeight/2, self.imageHeight, self.imageHeight);
     if (!VALID_NOTEMPTY(_star2, UIImageView)) {
-        _star2 = [[UIImageView alloc] initWithImage:[self getEmptyStar]];
+        _star2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[self getEmptyStarAssetName]]];
         [_star2 setFrame:frame];
         [self addSubview:_star2];
     }else if (!CGRectEqualToRect(_star2.frame, frame)) {
@@ -70,7 +77,7 @@
 {
     CGRect frame = CGRectMake(CGRectGetMaxX(self.star2.frame) + 2.f, self.height/2-self.imageHeight/2, self.imageHeight, self.imageHeight);
     if (!VALID_NOTEMPTY(_star3, UIImageView)) {
-        _star3 = [[UIImageView alloc] initWithImage:[self getEmptyStar]];
+        _star3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[self getEmptyStarAssetName]]];
         [_star3 setFrame:frame];
         [self addSubview:_star3];
     }else if (!CGRectEqualToRect(_star3.frame, frame)) {
@@ -83,7 +90,7 @@
 {
     CGRect frame = CGRectMake(CGRectGetMaxX(self.star3.frame) + 2.f, self.height/2-self.imageHeight/2, self.imageHeight, self.imageHeight);
     if (!VALID_NOTEMPTY(_star4, UIImageView)) {
-        _star4 = [[UIImageView alloc] initWithImage:[self getEmptyStar]];
+        _star4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[self getEmptyStarAssetName]]];
         [_star4 setFrame:frame];
         [self addSubview:_star4];
     }else if (!CGRectEqualToRect(_star4.frame, frame)) {
@@ -96,7 +103,7 @@
 {
     CGRect frame = CGRectMake(CGRectGetMaxX(self.star4.frame) + 2.f, self.height/2-self.imageHeight/2, self.imageHeight, self.imageHeight);
     if (!VALID_NOTEMPTY(_star5, UIImageView)) {
-        _star5 = [[UIImageView alloc] initWithImage:[self getEmptyStar]];
+        _star5 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[self getEmptyStarAssetName]]];
         [_star5 setFrame:frame];
         [self addSubview:_star5];
     }else if (!CGRectEqualToRect(_star5.frame, frame)) {
@@ -160,36 +167,53 @@
     }
 }
 
+- (void)setImageRatingSize:(JAImageRatingSize)imageRatingSize
+{
+    _imageRatingSize = imageRatingSize;
+}
+
 - (void)setRatingAverage:(NSNumber *)ratingAverage
 {
-    self.star1.image = ratingAverage.integerValue < 1 ?
-    [self getEmptyStar] :
-    [self getFilledStar];
-    
-    self.star2.image = ratingAverage.integerValue < 2 ?
-    [self getEmptyStar] :
-    [self getFilledStar];
-    
-    self.star3.image = ratingAverage.integerValue < 3 ?
-    [self getEmptyStar] :
-    [self getFilledStar];
-    
-    self.star4.image = ratingAverage.integerValue < 4 ?
-    [self getEmptyStar] :
-    [self getFilledStar];
-    
-    self.star5.image = ratingAverage.integerValue < 5 ?
-    [self getEmptyStar] :
-    [self getFilledStar];
+    ratingAverage = @4.7;
+    double doubleNumber = ratingAverage.doubleValue;
+    [self setStarImage:self.star1 forValue:doubleNumber];
+    [self setStarImage:self.star2 forValue:doubleNumber-1];
+    [self setStarImage:self.star3 forValue:doubleNumber-2];
+    [self setStarImage:self.star4 forValue:doubleNumber-3];
+    [self setStarImage:self.star5 forValue:doubleNumber-4];
+}
+
+- (void)setStarImage:(UIImageView *)imageView forValue:(double)number
+{
+    if (number < .25f) {
+        imageView.image = [UIImage imageNamed:[self getEmptyStarAssetName]];
+    }else if (number < .75f) {
+        imageView.image = [UIImage imageNamed:[self getHalfStarAssetName]];
+    }else {
+        imageView.image = [UIImage imageNamed:[self getFilledStarAssetName]];
+    }
 }
 
 - (void)setRatingSum:(NSNumber *)ratingSum
 {
+    [self setRatingSum:ratingSum shortVersion:YES];
+}
+
+- (void)setRatingSum:(NSNumber *)ratingSum shortVersion:(BOOL)shortVersion
+{
     _ratingSum = ratingSum;
     if (ratingSum.integerValue == 0) {
         [self.ratingSumLabel setText:STRING_BE_THE_FIRST_TO_RATE];
-    }else
+    }else if (shortVersion) {
         [self.ratingSumLabel setText:[NSString stringWithFormat:@"(%@)", ratingSum]];
+    }else{
+        [self.ratingSumLabel setText:[ratingSum isEqualToNumber:@1]?STRING_RATING:[NSString stringWithFormat:STRING_RATINGS, ratingSum.integerValue]];
+    }
+    
+    if (!shortVersion) {
+        [self.ratingSumLabel setTextColor:JABlue1Color];
+    }
+    
     [_ratingSumLabel sizeToFit];
     [self ratingSumLabel];
 }
