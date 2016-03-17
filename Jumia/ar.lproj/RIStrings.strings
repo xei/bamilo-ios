@@ -416,7 +416,7 @@
 
 "campaign_is_over_resume" = "مع ذلك ، لدينا الكثير من العروض الاخرى الرائعة في انتظاركم .";
 
-"string_format_off_label" = "-%d%%";
+"string_format_off_label" = "-‎%d‎%%";
 
 "campaigns_label" = "العروض";
 
@@ -699,4 +699,3 @@
 "newsletter_label" = "رسالة جوميا الإخبارية";
 
 "newsletter_preferences" = "تفضيلات الرسالة الإخبارية";
-
