@@ -187,7 +187,7 @@
     [self.mainScrollView addSubview:self.emailTextField];
     [self.mainScrollView addSubview:self.continueWithoutLoginButton];
     [self.mainScrollView addSubview:self.continueToLoginButton];
-    [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, CGRectGetMaxY(self.continueToLoginButton.frame))];
+    [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, CGRectGetMaxY(self.continueToLoginButton.frame) + kContinueWithout2ContinueLogin)];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -210,6 +210,7 @@
 - (void)viewWillLayoutSubviews
 {
     [self.mainScrollView setXCenterAligned];
+    [self.mainScrollView setFrame:CGRectMake(self.mainScrollView.x, self.viewBounds.origin.y, self.mainScrollView.width, self.viewBounds.size.height)];
 }
 
 #pragma mark - Keyboard events
