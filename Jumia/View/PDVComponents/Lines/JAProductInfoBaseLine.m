@@ -57,6 +57,7 @@
     CGRect frame = CGRectMake(self.lineContentXOffset, 6, self.width-32, self.height-12);
     if (!VALID_NOTEMPTY(_label, UILabel)) {
         _label = [[UILabel alloc] initWithFrame:frame];
+        [_label setTextAlignment:NSTextAlignmentLeft];
         [_label setTextColor:JABlackColor];
         [_label setText:@""];
         [_label sizeToFit];
