@@ -191,6 +191,9 @@
     }else {
         imageView.image = [UIImage imageNamed:[self getFilledStarAssetName]];
     }
+    if (RI_IS_RTL) {
+        [imageView flipViewImage];
+    }
 }
 
 - (void)setRatingSum:(NSNumber *)ratingSum
