@@ -84,9 +84,9 @@
 
 "string_size" = "المقاس";
 
-"string_rating" = "تقييم 1";
+"string_rating" = "1 تقييم";
 
-"string_ratings" = "تقييمات ‪%d‪";
+"string_ratings" = "%d تقييمات";
 
 "string_nratings" = "تعليقات / التقييمات (‎%d‎)";
 
@@ -416,7 +416,7 @@
 
 "campaign_is_over_resume" = "مع ذلك ، لدينا الكثير من العروض الاخرى الرائعة في انتظاركم .";
 
-"string_format_off_label" = "-‎%d‎blabla%%";
+"string_format_off_label" = "‎%d%%-";
 
 "campaigns_label" = "العروض";
 
