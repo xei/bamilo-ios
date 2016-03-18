@@ -20,6 +20,7 @@
 #import "RISpecificationAttribute.h"
 #import "JAPDVProductInfoSellerInfo.h"
 #import "JAProductInfoSISLine.h"
+#import "JAProductInfoSizeLine.h"
 
 @interface JAPDVProductInfo() {
     UILabel *_sizesLabel;
@@ -182,10 +183,10 @@
                 i++;
             }
         }
-        JAProductInfoSingleLine *singleSizes = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
+        JAProductInfoSizeLine *singleSizes = [[JAProductInfoSizeLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
         [singleSizes setTopSeparatorVisibility:YES];
-        [singleSizes setText:sizesText];
-        _sizesLabel = singleSizes.lineLabel;
+        [singleSizes setTitle:sizesText];
+        _sizesLabel = singleSizes.label;
         [singleSizes addTarget:self action:@selector(tapSizeLine) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:singleSizes];
         yOffset = CGRectGetMaxY(singleSizes.frame);
