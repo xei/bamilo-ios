@@ -161,6 +161,7 @@
                 [subSpecificationReadMore setTopSeparatorVisibility:YES];
                 [subSpecificationReadMore setTitle:STRING_READ_MORE];
                 [subSpecificationReadMore addTarget:self action:@selector(tapSpecificationsLine) forControlEvents:UIControlEventTouchUpInside];
+                [subSpecificationReadMore.label setTextColor:JABlue1Color];
                 [self addSubview:subSpecificationReadMore];
                 yOffset = CGRectGetMaxY(subSpecificationReadMore.frame);
             }
@@ -205,6 +206,7 @@
             [singleVariations setTitle:STRING_SEE_OTHER_VARIATIONS];
         }
         [singleVariations addTarget:self action:@selector(tapVariationsLine) forControlEvents:UIControlEventTouchUpInside];
+        [singleVariations.label setTextColor:JABlue1Color];
         [self addSubview:singleVariations];
         yOffset = CGRectGetMaxY(singleVariations.frame);
     }
@@ -263,6 +265,7 @@
         [otherOffers setTitle:[NSString stringWithFormat:STRING_OTHER_SELLERS_STARTING_FROM, product.offersMinPriceFormatted]];
         [otherOffers.label setYCenterAligned];
         [otherOffers addTarget:self action:@selector(tapOffersLine) forControlEvents:UIControlEventTouchUpInside];
+        [otherOffers.label setTextColor:JABlue1Color];
         [self addSubview:otherOffers];
         
         yOffset = CGRectGetMaxY(otherOffers.frame);
@@ -291,6 +294,7 @@
         [singleDescriptionReadMore setTopSeparatorVisibility:YES];
         [singleDescriptionReadMore setTitle:STRING_READ_MORE];
         [singleDescriptionReadMore addTarget:self action:@selector(tapDescriptionLine) forControlEvents:UIControlEventTouchUpInside];
+        [singleDescriptionReadMore.label setTextColor:JABlue1Color];
         [self addSubview:singleDescriptionReadMore];
         yOffset = CGRectGetMaxY(singleDescriptionReadMore.frame);
     }

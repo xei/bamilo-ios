@@ -24,6 +24,9 @@
 {
     self = [super init];
     if (self) {
+        [self setBackgroundColor:JAOrange1Color];
+        [self setTintColor:JAWhiteColor];
+        [self setTitleColor:JAWhiteColor forState:UIControlStateNormal];
         [self setTitle:[title uppercaseString] forState:UIControlStateNormal];
         [self.titleLabel setFont:JABUTTONFont];
     }

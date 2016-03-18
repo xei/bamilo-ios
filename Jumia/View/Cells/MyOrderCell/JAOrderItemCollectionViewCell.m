@@ -134,7 +134,7 @@
         _reorderButton = [UIButton buttonWithType:UIButtonTypeSystem];
         [_reorderButton setTitle:[STRING_REORDER uppercaseString] forState:UIControlStateNormal];
         [_reorderButton.titleLabel setFont:JABodyFont];
-        [_reorderButton setTintColor:JAOrange1Color];
+        [_reorderButton setTintColor:JABlue1Color];
         [self addSubview:_reorderButton];
     }
     return _reorderButton;
