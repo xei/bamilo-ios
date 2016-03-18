@@ -10,6 +10,7 @@
 
 @interface JAProductInfoRatingLine () {
     CGSize _viewBounds;
+    BOOL _shortVersion;
 }
 
 @property (nonatomic) UIImageView *star1;
@@ -114,17 +115,30 @@
 
 - (UILabel *)ratingSumLabel
 {
-    CGRect frame = CGRectMake(CGRectGetMaxX(self.star5.frame) + 10.f, (_viewBounds.height-self.imageHeight)/2, _viewBounds.width - (CGRectGetMaxX(self.star5.frame) + 2*10.f), self.imageHeight);
+    CGFloat xPosition = CGRectGetMaxX(self.star5.frame) + 10.f;
+    if (_shortVersion) {
+        xPosition =  CGRectGetMaxX(self.star5.frame) + 6.f;
+    }
+    UIColor* color = JABlue1Color;
+    UIFont* font = JABodyFont;
+    if (_shortVersion) {
+        color = JABlack800Color;
+        font = JACaptionFont;
+    }
+
+    CGRect frame = CGRectMake(xPosition, (_viewBounds.height-self.imageHeight)/2, _viewBounds.width - (CGRectGetMaxX(self.star5.frame) + 2*10.f), self.imageHeight);
     if (!VALID_NOTEMPTY(_ratingSumLabel, UILabel)) {
         _ratingSumLabel = [[UILabel alloc] initWithFrame:frame];
-        [_ratingSumLabel setTextColor:JABlack800Color];
-        [_ratingSumLabel setFont:JABodyFont];
+        [_ratingSumLabel setTextColor:color];
+        [_ratingSumLabel setFont:font];
         [_ratingSumLabel setText:@"(0)"];
         [_ratingSumLabel sizeToFit];
         [_ratingSumLabel setTextAlignment:NSTextAlignmentLeft];
         [_ratingSumLabel setY:self.height/2-_ratingSumLabel.height/2];
         [self addSubview:_ratingSumLabel];
     }else if (!CGRectEqualToRect(_ratingSumLabel.frame, frame)) {
+        [_ratingSumLabel setTextColor:color];
+        [_ratingSumLabel setFont:font];
         [_ratingSumLabel setFrame:frame];
         [_ratingSumLabel setTextAlignment:NSTextAlignmentLeft];
     }
@@ -204,6 +218,7 @@
 - (void)setRatingSum:(NSNumber *)ratingSum shortVersion:(BOOL)shortVersion
 {
     _ratingSum = ratingSum;
+    _shortVersion = shortVersion;
     if (ratingSum.integerValue == 0) {
         [self.ratingSumLabel setText:STRING_BE_THE_FIRST_TO_RATE];
     }else if (shortVersion) {
@@ -212,11 +227,6 @@
         [self.ratingSumLabel setText:[ratingSum isEqualToNumber:@1]?STRING_RATING:[NSString stringWithFormat:STRING_RATINGS, ratingSum.integerValue]];
     }
     
-    if (!shortVersion) {
-        [self.ratingSumLabel setTextColor:JABlue1Color];
-    }
-    
-    [_ratingSumLabel sizeToFit];
     [self ratingSumLabel];
 }
 
