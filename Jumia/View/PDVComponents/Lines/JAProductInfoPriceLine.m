@@ -128,7 +128,7 @@
     [self.oldPriceLabel sizeToFit];
     CGFloat margin = 0.0f;
     if (VALID_NOTEMPTY(_price, NSString)) {
-        margin = 10.0f;
+        margin = 6.0f;
     }
     [self.oldPriceLabel setX:CGRectGetMaxX(self.priceLabel.frame) + margin];
     [self.oldPriceLabel setY:self.height/2 - self.oldPriceLabel.height/2];

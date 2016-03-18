@@ -65,7 +65,10 @@
     CGFloat brandYOffset = imageSize.height + imageY + 10.0f;
     CGFloat distXRecent = 16.f;
     
-    CGFloat textWidth = self.width - xOffset*2 - self.discountLabel.frame.size.width;
+    CGFloat textWidth = self.width - xOffset*2;
+    if (NO == self.discountLabel.hidden) {
+        textWidth -= self.discountLabel.frame.size.width;
+    }
     
     CGRect productImageViewRect = CGRectMake(self.width/2 - imageSize.width/2, imageY, imageSize.width, imageSize.height);
     if (!CGRectEqualToRect(productImageViewRect, self.productImageView.frame)) {
