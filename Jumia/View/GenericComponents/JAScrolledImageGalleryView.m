@@ -78,11 +78,12 @@
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
-        _imageWidth = 322;
-        _imageHeight = 402;
+        _imageWidth = 350;
+        _imageHeight = 437.5;
+        
     }else{
-        _imageWidth = 272;
-        _imageHeight = 340;
+        _imageWidth = 228;
+        _imageHeight = 285;
     }
 }
 
@@ -133,7 +134,11 @@
         if (error || ((NSHTTPURLResponse *) response).statusCode != 200) {
             return;
         }
-        [imageView setImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
+        UIImage *image = [UIImage imageWithData:data];
+        [imageView setContentHorizontalAlignment:UIControlContentHorizontalAlignmentFill];
+        [imageView setContentVerticalAlignment:UIControlContentVerticalAlignmentFill];
+        [imageView setContentMode:UIViewContentModeScaleAspectFit];
+        [imageView setImage:image forState:UIControlStateNormal];
     }];
     return imageView;
 }
@@ -213,7 +218,8 @@
         [_pageComponentView setX:self.width/2-_pageComponentView.width/2];
     }
     [self addSubview:_pageComponentView];
-    [_pageComponentView setYBottomAligned:10];
+    [_pageComponentView setY:CGRectGetMaxY(self.scrollView.frame)+16.f];
+    [self setHeight:CGRectGetMaxY(_pageComponentView.frame) + 16.f];
     
     int j= _infinite?1:0;
     for (; RI_IS_RTL?i>=_infinite?1:0:i<=numberOfViews-1; RI_IS_RTL?i--:i++) {

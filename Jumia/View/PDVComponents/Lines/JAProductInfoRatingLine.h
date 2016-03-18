@@ -27,4 +27,6 @@ typedef NS_ENUM(NSInteger, JAImageRatingSize) {
 
 @property (nonatomic) BOOL hiddenSum;
 
+- (void)setRatingSum:(NSNumber *)ratingSum shortVersion:(BOOL)shortVersion;
+
 @end

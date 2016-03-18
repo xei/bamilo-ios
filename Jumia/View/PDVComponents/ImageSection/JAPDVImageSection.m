@@ -20,7 +20,7 @@
 
 // as of https://jira.rocket-internet.de/browse/NAFAMZ-14582
 #define xFavOffset 16.f
-#define yFavOffset 20.f
+#define yFavOffset 16.f
 
 @interface JAPDVImageSection () {
     
@@ -43,7 +43,6 @@
         
         CGRect imagePageFrame = CGRectMake(0, CGRectGetMaxY(self.productDescriptionLabel.frame), self.width, 365);
         _imagesPagedView = [[JAScrolledImageGalleryView alloc] initWithFrame:imagePageFrame];
-        
         [_imagesPagedView setInfinite:YES];
         [self addSubview:_imagesPagedView];
     }else if (_imagesPagedView.width != width) {
@@ -109,7 +108,6 @@
 
     if (!_productDescriptionLabel) {
         CGRect frame = CGRectMake(xFavOffset, CGRectGetMaxY(self.productNameLabel.frame), width, 60);
-        
         _productDescriptionLabel = [[UILabel alloc] initWithFrame:frame];
         _productDescriptionLabel.font = JATitleFont;
         [_productDescriptionLabel setTextColor:JABlackColor];
@@ -229,14 +227,9 @@
     
     [_productNameLabel setY:16.f];
     [_productDescriptionLabel setYBottomOf:_productNameLabel at:0.f];
-    if ([self.product.seller isGlobal]) {
-        [_imagesPagedView setYBottomOf:self.globalButton at:yFavOffset];
-        [self.wishListButton setYBottomOf:self.globalButton at:yFavOffset];
-    } else {
-        [_imagesPagedView setYBottomOf:_productDescriptionLabel at:yFavOffset];
-        [self.wishListButton setY:yFavOffset];
-    }
-    [self setHeight:CGRectGetMaxY(_imagesPagedView.frame)];
+    [self.imagesPagedView setYBottomOf:_productDescriptionLabel at:yFavOffset];
+    [self.wishListButton setY:self.imagesPagedView.y];
+    [self setHeight:CGRectGetMaxY(self.imagesPagedView.frame)];
     
     [self.outOfStockView setFrame:CGRectMake(self.imagesPagedView.x, self.imagesPagedView.y, self.imagesPagedView.width, self.imagesPagedView.height - 60)];
     [self.outOfStockLabel sizeToFit];

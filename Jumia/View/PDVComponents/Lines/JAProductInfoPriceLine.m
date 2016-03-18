@@ -103,12 +103,12 @@
     
     if (VALID_NOTEMPTY(self.oldPrice, NSString)) {
         rect = CGRectMake(CGRectGetMaxX(self.oldPriceLabel.frame)+10.f,
-                          self.oldPriceLabel.frame.origin.y,
-                          8.f, self.oldPriceLabel.frame.size.height);
+                          self.oldPriceLabel.frame.origin.y + 2.0f,
+                          8.f, 16.0f);
     } else {
         rect = CGRectMake(CGRectGetMaxX(self.label.frame)+10.f,
-                          self.label.frame.origin.y,
-                          8.f, self.label.frame.size.height);
+                          self.label.frame.origin.y + 2.0f,
+                          8.f, 16.0f);
         
     }
     [self.priceOffLabel setX:rect.origin.x];
@@ -146,7 +146,7 @@
 {
     if (!VALID_NOTEMPTY(_oldPriceLine, UIView)) {
         _oldPriceLine = [[UIView alloc] initWithFrame:CGRectMake(0, self.height/2, 0, 1)];
-        [_oldPriceLine setBackgroundColor:[UIColor lightGrayColor]];
+        [_oldPriceLine setBackgroundColor:JABlack800Color];
         [self addSubview:_oldPriceLine];
     }
     return _oldPriceLine;
@@ -158,6 +158,7 @@
     [self.priceLabel sizeToFit];
     [self.priceLabel setFrame:CGRectMake(self.lineContentXOffset, self.height/2 - self.priceLabel.height/2,
                                          self.priceLabel.width, self.priceLabel.height)];
+    [self setOldPrice:self.oldPrice];
 }
 
 -(UILabel *)priceLabel {
