@@ -570,6 +570,8 @@
 
 "buy" = "شراء";
 
+"buy_combo" = "شراء المجموعة معًا";
+
 "other_sellers" = "بائعين آخرين";
 
 "same_product_from_other_sellers" = "نفس المنتج لبائعين مختلفين";
@@ -699,3 +701,4 @@
 "newsletter_label" = "رسالة جوميا الإخبارية";
 
 "newsletter_preferences" = "تفضيلات الرسالة الإخبارية";
+
