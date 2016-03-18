@@ -652,7 +652,7 @@
 
 "average_rating" = "Moyenne des avis";
 
-"be_the_first_to_rate" = "Soyez le premier à noter ce produit";
+"be_the_first_to_rate" = "Soyez le premier à noter";
 
 "by_someone" = "Posté par %@";
 
@@ -699,4 +699,3 @@
 "newsletter_label" = "Newsletter";
 
 "newsletter_preferences" = "Abonnement à la newsletter";
-
