@@ -127,8 +127,9 @@
     if (!_globalButton) {
         _globalButton = [UIButton buttonWithType:UIButtonTypeCustom];
         UIImage *plane = [UIImage imageNamed:@"plane_corner"];
+        CGSize planeSize = CGSizeMake(65.f, 65.f);
         [_globalButton setImage:plane forState:UIControlStateNormal];
-        [_globalButton setFrame:CGRectMake(self.width - plane.size.width, 0, plane.size.width, plane.size.height)];
+        [_globalButton setFrame:CGRectMake(self.width - planeSize.width, 0, planeSize.width, planeSize.height)];
         [self addSubview:_globalButton];
         if (RI_IS_RTL)
         {
@@ -147,11 +148,12 @@
 - (UIView *)outOfStockView
 {
     if (!VALID(_outOfStockView, UIView)) {
-        _outOfStockView = [[UIView alloc] initWithFrame:CGRectMake(self.imagesPagedView.x, self.imagesPagedView.y, self.imagesPagedView.width, self.imagesPagedView.height - 60)];
+        _outOfStockView = [[UIView alloc] initWithFrame:CGRectMake(self.imagesPagedView.x, self.imagesPagedView.y, self.imagesPagedView.width, self.imagesPagedView.height)];
         [_outOfStockView setBackgroundColor:JAWhiteColor];
         [_outOfStockView setHidden:YES];
         [_outOfStockView setAlpha:.7f];
         [self addSubview:_outOfStockView];
+        [self bringSubviewToFront:self.wishListButton];
     }
     return _outOfStockView;
 }
@@ -159,7 +161,7 @@
 - (UILabel *)outOfStockLabel
 {
     if (!VALID(_outOfStockLabel, UILabel)) {
-        _outOfStockLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (self.outOfStockView.height - 38.f)/2, self.outOfStockView.width, 38)];
+        _outOfStockLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.imagesPagedView.x, self.outOfStockView.y+(self.outOfStockView.height - 38.f)/2, self.outOfStockView.width, 38)];
         [_outOfStockLabel.layer setBorderWidth:1.f];
         [_outOfStockLabel.layer setBorderColor:JABlack400Color.CGColor];
         [_outOfStockLabel setBackgroundColor:JAWhiteColor];
@@ -231,12 +233,12 @@
     [self.wishListButton setY:self.imagesPagedView.y];
     [self setHeight:CGRectGetMaxY(self.imagesPagedView.frame)];
     
-    [self.outOfStockView setFrame:CGRectMake(self.imagesPagedView.x, self.imagesPagedView.y, self.imagesPagedView.width, self.imagesPagedView.height - 60)];
+    [self.outOfStockView setFrame:CGRectMake(self.imagesPagedView.x, self.imagesPagedView.y, self.imagesPagedView.width, self.imagesPagedView.height - 80)];
     [self.outOfStockLabel sizeToFit];
     CGFloat outOfStockLabelWidth = self.outOfStockLabel.width + 60;
     CGFloat outOfStockLabelHeight = 38;
     CGFloat outOfStockLabelX = (self.outOfStockView.width - outOfStockLabelWidth)/2;
-    CGFloat outOfStockLabelY = (self.outOfStockView.height - outOfStockLabelHeight)/2;
+    CGFloat outOfStockLabelY = self.outOfStockView.y+(self.outOfStockView.height - outOfStockLabelHeight)/2;
     [self.outOfStockLabel setFrame:CGRectMake(outOfStockLabelX, outOfStockLabelY, outOfStockLabelWidth, outOfStockLabelHeight)];
 }
 
