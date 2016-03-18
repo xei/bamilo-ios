@@ -11,6 +11,7 @@
 
 @interface JATopTabsView ()
 
+@property (nonatomic, strong) UIView* separatorView;
 @property (nonatomic, strong) UIScrollView* scrollView;
 @property (nonatomic, strong) NSArray* tabButtonsArray;
 
@@ -66,11 +67,22 @@
         _scrollView = [UIScrollView new];
         [_scrollView setShowsHorizontalScrollIndicator:NO];
         [_scrollView setBackgroundColor:JAWhiteColor];
+        [_scrollView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
         [_scrollView setFrame:self.bounds];
-        [self addSubview:_scrollView];
     }
     
     return _scrollView;
+}
+
+- (UIView*)separatorView
+{
+    if (!VALID_NOTEMPTY(_separatorView, UIView)) {
+        _separatorView = [UIView new];
+        _separatorView.backgroundColor = JABlack400Color;
+        _separatorView.frame = CGRectMake(self.bounds.origin.x, self.bounds.size.height - 1.0f, self.bounds.size.width, 1.0f);
+    }
+    
+    return _separatorView;
 }
 
 - (void)setupWithTabNames:(NSArray*)tabNamesArray
@@ -100,6 +112,9 @@
     }
     
     [self.scrollView setContentSize:CGSizeMake(currentX, self.scrollView.frame.size.height)];
+    [self addSubview:self.scrollView];
+    
+    [self addSubview:self.separatorView];
     
     self.tabButtonsArray = [tabButtonsMutableArray copy];
     

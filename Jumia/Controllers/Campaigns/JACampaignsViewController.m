@@ -63,7 +63,7 @@
     self.topTabsView = [[JATopTabsView alloc] initWithFrame:CGRectMake(bounds.origin.x,
                                                                        bounds.origin.y,
                                                                        bounds.size.width,
-                                                                       44.0f)];
+                                                                       49.0f)];
     self.topTabsView.delegate = self;
     [self.view addSubview:self.topTabsView];
     
