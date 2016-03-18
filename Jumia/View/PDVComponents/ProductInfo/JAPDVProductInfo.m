@@ -98,7 +98,7 @@
     [ratingLine setBottomSeparatorVisibility:NO];
     [ratingLine setImageRatingSize:kImageRatingSizeBig];
     [ratingLine setRatingAverage:product.avr];
-    [ratingLine setRatingSum:product.sum];
+    [ratingLine setRatingSum:product.sum shortVersion:NO];
     [ratingLine addTarget:self action:@selector(tapReviewsLine) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:ratingLine];
     
