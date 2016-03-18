@@ -107,8 +107,8 @@
         [_recentProductBadgeLabel setTextAlignment:NSTextAlignmentCenter];
         [_recentProductBadgeLabel setText:[STRING_NEW uppercaseString]];
         [_recentProductBadgeLabel sizeToFit];
-        [_recentProductBadgeLabel setWidth:_recentProductBadgeLabel.width + 8];
-        [_recentProductBadgeLabel setHeight:_recentProductBadgeLabel.height + 3];
+        [_recentProductBadgeLabel setWidth:_recentProductBadgeLabel.width + 4];
+        [_recentProductBadgeLabel setHeight:_recentProductBadgeLabel.height + 2];
     }
     return _recentProductBadgeLabel;
 }
