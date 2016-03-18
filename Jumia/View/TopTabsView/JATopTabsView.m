@@ -27,37 +27,24 @@
 
 - (void)setSelectedIndex:(NSInteger)selectedIndex
 {
+    [self setSelectedIndex:selectedIndex animated:YES];
+}
+
+- (void)setSelectedIndex:(NSInteger)selectedIndex animated:(BOOL)animated
+{
     _selectedIndex = selectedIndex;
     for (int i = 0; i < self.tabButtonsArray.count; i++) {
         JATabButton* tabButton = [self.tabButtonsArray objectAtIndex:i];
         if (_selectedIndex == i) {
             [tabButton setSelected:YES];
-            [self.scrollView scrollRectToVisible:tabButton.frame animated:YES];
+            [self.scrollView scrollRectToVisible:tabButton.frame animated:animated];
         } else {
             [tabButton setSelected:NO];
         }
     }
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(selectedIndex:)]) {
-        [self.delegate selectedIndex:_selectedIndex];
-    }
-}
-
-- (void)setSelectedIndexWithStartingIndex
-{
-    _selectedIndex = self.startingIndex;
-    for (int i = 0; i < self.tabButtonsArray.count; i++) {
-        JATabButton* tabButton = [self.tabButtonsArray objectAtIndex:i];
-        if (_selectedIndex == i) {
-            [tabButton setSelected:YES];
-            [self.scrollView scrollRectToVisible:tabButton.frame animated:NO]; //DON'T ANIMATE
-        } else {
-            [tabButton setSelected:NO];
-        }
-    }
-    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(selectedIndex:)]) {
-        [self.delegate selectedIndex:_selectedIndex];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(selectedIndex:animated:)]) {
+        [self.delegate selectedIndex:_selectedIndex animated:animated];
     }
 }
 
@@ -118,7 +105,7 @@
     
     self.tabButtonsArray = [tabButtonsMutableArray copy];
     
-    [self setSelectedIndexWithStartingIndex];
+    [self setSelectedIndex:self.startingIndex animated:NO];
 }
 
 

@@ -10,7 +10,7 @@
 
 @protocol JATopTabsViewDelegate <NSObject>
 
-- (void)selectedIndex:(NSInteger)index;
+- (void)selectedIndex:(NSInteger)index animated:(BOOL)animated;
 
 @end
 
@@ -21,6 +21,7 @@
 @property (nonatomic, readonly) BOOL isLoaded;
 @property (nonatomic, assign)id<JATopTabsViewDelegate>delegate;
 
+- (void)setSelectedIndex:(NSInteger)selectedIndex animated:(BOOL)animated;
 - (void)setupWithTabNames:(NSArray*)tabNamesArray;
 - (void)scrollLeft;
 - (void)scrollRight;
