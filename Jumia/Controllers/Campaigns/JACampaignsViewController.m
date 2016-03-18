@@ -63,7 +63,7 @@
     self.topTabsView = [[JATopTabsView alloc] initWithFrame:CGRectMake(bounds.origin.x,
                                                                        bounds.origin.y,
                                                                        bounds.size.width,
-                                                                       44.0f)];
+                                                                       49.0f)];
     self.topTabsView.delegate = self;
     [self.view addSubview:self.topTabsView];
     
@@ -142,7 +142,7 @@
 {
     if(VALID_NOTEMPTY(self.campaignPages, NSMutableArray) && 1 < [self.campaignPages count] && -1 < self.campaignIndex)
     {
-        self.topTabsView.startingIndex = self.campaignIndex;
+        [self.topTabsView setSelectedIndex:self.campaignIndex animated:NO];
     }
     CGRect bounds = [self viewBounds];
     [self.topTabsView setFrame:CGRectMake(bounds.origin.x,
@@ -360,13 +360,13 @@ withCampaignTargetString:(NSString*)campaignTargetString
 }
 
 
-#pragma mark - JAPickerScrollViewDelegate
+#pragma mark - JATopTabViewDelegate
 
-- (void)selectedIndex:(NSInteger)index
+- (void)selectedIndex:(NSInteger)index animated:(BOOL)animated
 {
     self.campaignIndex = index;
     JACampaignPageView* campaignPageView = [self.campaignPages objectAtIndex:index];
-    [self.scrollView scrollRectToVisible:campaignPageView.frame animated:YES];
+    [self.scrollView scrollRectToVisible:campaignPageView.frame animated:animated];
     if (NO == campaignPageView.isLoaded) {
         [self loadCampaignPageAtIndex:[NSNumber numberWithLong:index]];
     }

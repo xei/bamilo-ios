@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "RIProduct.h"
 
-#define kTabsHeight 48
+#define kTabsHeight 49
 
 typedef NS_ENUM(NSUInteger, JATabScreenEnum) {
     kTabScreenDescription = 0,

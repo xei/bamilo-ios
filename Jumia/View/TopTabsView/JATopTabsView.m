@@ -11,6 +11,7 @@
 
 @interface JATopTabsView ()
 
+@property (nonatomic, strong) UIView* separatorView;
 @property (nonatomic, strong) UIScrollView* scrollView;
 @property (nonatomic, strong) NSArray* tabButtonsArray;
 
@@ -26,37 +27,24 @@
 
 - (void)setSelectedIndex:(NSInteger)selectedIndex
 {
+    [self setSelectedIndex:selectedIndex animated:YES];
+}
+
+- (void)setSelectedIndex:(NSInteger)selectedIndex animated:(BOOL)animated
+{
     _selectedIndex = selectedIndex;
     for (int i = 0; i < self.tabButtonsArray.count; i++) {
         JATabButton* tabButton = [self.tabButtonsArray objectAtIndex:i];
         if (_selectedIndex == i) {
             [tabButton setSelected:YES];
-            [self.scrollView scrollRectToVisible:tabButton.frame animated:YES];
+            [self.scrollView scrollRectToVisible:tabButton.frame animated:animated];
         } else {
             [tabButton setSelected:NO];
         }
     }
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(selectedIndex:)]) {
-        [self.delegate selectedIndex:_selectedIndex];
-    }
-}
-
-- (void)setSelectedIndexWithStartingIndex
-{
-    _selectedIndex = self.startingIndex;
-    for (int i = 0; i < self.tabButtonsArray.count; i++) {
-        JATabButton* tabButton = [self.tabButtonsArray objectAtIndex:i];
-        if (_selectedIndex == i) {
-            [tabButton setSelected:YES];
-            [self.scrollView scrollRectToVisible:tabButton.frame animated:NO]; //DON'T ANIMATE
-        } else {
-            [tabButton setSelected:NO];
-        }
-    }
-    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(selectedIndex:)]) {
-        [self.delegate selectedIndex:_selectedIndex];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(selectedIndex:animated:)]) {
+        [self.delegate selectedIndex:_selectedIndex animated:animated];
     }
 }
 
@@ -66,11 +54,22 @@
         _scrollView = [UIScrollView new];
         [_scrollView setShowsHorizontalScrollIndicator:NO];
         [_scrollView setBackgroundColor:JAWhiteColor];
+        [_scrollView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
         [_scrollView setFrame:self.bounds];
-        [self addSubview:_scrollView];
     }
     
     return _scrollView;
+}
+
+- (UIView*)separatorView
+{
+    if (!VALID_NOTEMPTY(_separatorView, UIView)) {
+        _separatorView = [UIView new];
+        _separatorView.backgroundColor = JABlack400Color;
+        _separatorView.frame = CGRectMake(self.bounds.origin.x, self.bounds.size.height - 1.0f, self.bounds.size.width, 1.0f);
+    }
+    
+    return _separatorView;
 }
 
 - (void)setupWithTabNames:(NSArray*)tabNamesArray
@@ -100,10 +99,13 @@
     }
     
     [self.scrollView setContentSize:CGSizeMake(currentX, self.scrollView.frame.size.height)];
+    [self addSubview:self.scrollView];
+    
+    [self addSubview:self.separatorView];
     
     self.tabButtonsArray = [tabButtonsMutableArray copy];
     
-    [self setSelectedIndexWithStartingIndex];
+    [self setSelectedIndex:self.startingIndex animated:NO];
 }
 
 
