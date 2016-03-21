@@ -481,12 +481,13 @@
     
     if (VALID_NOTEMPTY(self.rrProducts, NSSet) && 0 < self.rrProducts.count)
     {
-        CGFloat relatedItemX = 6.f;
+        CGFloat margin = 1.0f; //value by design
+        CGFloat relatedItemX = margin;
         CGFloat relatedItemY = 0.f;
         
         NSArray* relatedProducts = [self.rrProducts allObjects];
         
-        CGSize itemSize = CGSizeMake(128, 230);
+        CGSize itemSize = CGSizeMake(134, 200);
         
         for (int i = 0; i < relatedProducts.count; i++) {
             RIProduct* product = [relatedProducts objectAtIndex:i];
@@ -505,7 +506,7 @@
             singleItem.product = product;
             
             [self.rrScrollView addSubview:singleItem];
-            relatedItemX += singleItem.frame.size.width+6.f;
+            relatedItemX += singleItem.frame.size.width+margin;
         }
         [self.rrScrollView setHeight:itemSize.height+10];
         [self.rrView setHeight:CGRectGetMaxY(self.rrScrollView.frame)];
