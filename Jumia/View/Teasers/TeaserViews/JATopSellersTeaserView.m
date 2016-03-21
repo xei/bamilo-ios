@@ -49,7 +49,7 @@
         
         [self addSubview:groupingTitleLabel];
         
-        CGFloat margin = 6.0f; //value by design
+        CGFloat margin = 1.0f; //value by design
         CGFloat componentHeight = 230.0f; //value by design
         self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
                                                                          self.bounds.origin.y + groupingTitleLabelHeight,
@@ -66,7 +66,7 @@
         
         
         CGFloat relatedItemY = 0.f;
-        CGSize itemSize = CGSizeMake(128, 230);
+        CGSize itemSize = CGSizeMake(134, 200);
         
         for (int i = 0; i < teaserComponents.count; i++) {
             RITeaserComponent* component = [teaserComponents objectAtIndex:i];
@@ -85,7 +85,7 @@
             [singleItem setTeaserComponent:component];
             
             [self.scrollView addSubview:singleItem];
-            currentX += singleItem.frame.size.width+6.f;
+            currentX += singleItem.frame.size.width+margin;
         }
         
         if (currentX < self.scrollView.width) {

@@ -107,9 +107,9 @@
     _product = product;
     
     UIImage *placeHolderImage = [UIImage imageNamed:@"placeholder_scrollable"];
-    [self.imageViewItem setY:6.f];
+    [self.imageViewItem setY:10.f];
     CGFloat ratio = placeHolderImage.size.height/placeHolderImage.size.width;
-    self.imageViewItem.width = self.width - 30;
+    self.imageViewItem.width = self.width - 36;
     self.imageViewItem.height = self.imageViewItem.width*ratio;
     [self.imageViewItem setXCenterAligned];
     
@@ -123,30 +123,33 @@
         [self.imageViewItem setImage:placeHolderImage];
     }
     
-    [self.labelPrice setX:6];
-    [self.labelPrice setHeight:20];
-    [self.labelPrice setWidth:self.width - 12];
+    self.labelBrand.text = product.brand;
+    [self.labelBrand setTextAlignment:NSTextAlignmentLeft];
+    [self.labelBrand setX:6];
+    [self.labelBrand setYBottomOf:self.imageViewItem at:10];
+    [self.labelBrand setHeight:20];
+    [self.labelBrand sizeToFit];
+    [self.labelBrand setWidth:self.width - 12];
+    
+    self.labelName.text = product.name;
+    [self.labelName setTextAlignment:NSTextAlignmentLeft];
+    [self.labelName setX:6];
+    [self.labelName setYBottomOf:self.labelBrand at:1];
+    [self.labelName setHeight:20];
+    [self.labelName sizeToFit];
+    [self.labelName setWidth:self.width - 12];
+    
     if (!VALID_NOTEMPTY(product.specialPrice, NSNumber) || 0.0f == [product.specialPrice floatValue]) {
         self.labelPrice.text = product.priceFormatted;
     } else {
         self.labelPrice.text = product.specialPriceFormatted;
     }
-    [self.labelPrice setYBottomAligned:10];
+    [self.labelPrice setYBottomOf:self.labelName at:1];
     [self.labelPrice setTextAlignment:NSTextAlignmentLeft];
-    
-    [self.labelName setX:6];
-    [self.labelName setYTopOf:self.labelPrice at:20];
-    [self.labelName setWidth:self.width - 12];
-    [self.labelName setHeight:20];
-    self.labelName.text = product.name;
-    [self.labelName setTextAlignment:NSTextAlignmentLeft];
-    
-    [self.labelBrand setX:6];
-    [self.labelBrand setYTopOf:self.labelName at:20];
-    [self.labelBrand setWidth:self.width - 12];
-    [self.labelBrand setHeight:20];
-    self.labelBrand.text = product.brand;
-    [self.labelBrand setTextAlignment:NSTextAlignmentLeft];
+    [self.labelPrice setX:6];
+    [self.labelPrice setHeight:20];
+    [self.labelPrice sizeToFit];
+    [self.labelPrice setWidth:self.width - 12];
     
     [self.favoriteImage setFrame:CGRectMake(self.width - 28, 10, 22, 22)];
     [self setFavorite:VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate)];
