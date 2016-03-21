@@ -72,7 +72,7 @@
             [self spectificationView];
             [self reviewsView];
             [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.width*3, self.contentScrollView.height)];
-            [self selectedIndex:self.topTabsView.selectedIndex];
+            [self selectedIndex:self.topTabsView.selectedIndex animated:YES];
         }
     }
     return _contentScrollView;
@@ -179,7 +179,7 @@
 
 #pragma mark JATopTabsViewDelegate
 
-- (void)selectedIndex:(NSInteger)index;
+- (void)selectedIndex:(NSInteger)index animated:(BOOL)animated;
 {
     [self scrollToX:index*self.view.frame.size.width];
 }
