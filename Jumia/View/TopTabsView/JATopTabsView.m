@@ -20,6 +20,29 @@
 
 @implementation JATopTabsView
 
+- (void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    
+    [self resizeScrollViewInRTL];
+}
+
+- (void)resizeScrollViewInRTL
+{
+    if (VALID_NOTEMPTY(self.scrollView, UIScrollView)) {
+        if (0 < self.scrollView.contentSize.width) {
+            if (self.scrollView.contentSize.width < self.width) {
+                if (RI_IS_RTL) {
+                    self.scrollView.frame = CGRectMake(self.width - self.scrollView.contentSize.width,
+                                                       self.scrollView.frame.origin.y,
+                                                       self.scrollView.contentSize.width,
+                                                       self.scrollView.frame.size.height);
+                }
+            }
+        }
+    }
+}
+
 - (BOOL)isLoaded
 {
     return VALID_NOTEMPTY(self.tabButtonsArray, NSArray);
@@ -67,6 +90,7 @@
         _separatorView = [UIView new];
         _separatorView.backgroundColor = JABlack400Color;
         _separatorView.frame = CGRectMake(self.bounds.origin.x, self.bounds.size.height - 1.0f, self.bounds.size.width, 1.0f);
+        [_separatorView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     }
     
     return _separatorView;
@@ -74,6 +98,8 @@
 
 - (void)setupWithTabNames:(NSArray*)tabNamesArray
 {
+    self.backgroundColor = JAWhiteColor;
+    
     CGFloat currentX = 0.0f;
     
     NSMutableArray* tabButtonsMutableArray = [NSMutableArray new];
@@ -100,6 +126,8 @@
     
     [self.scrollView setContentSize:CGSizeMake(currentX, self.scrollView.frame.size.height)];
     [self addSubview:self.scrollView];
+    
+    [self resizeScrollViewInRTL];
     
     [self addSubview:self.separatorView];
     
