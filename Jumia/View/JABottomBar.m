@@ -68,6 +68,15 @@
     return button;
 }
 
+- (JAButton *)addAlternativeButton:(NSString*)name target:(id)target action:(SEL)action
+{
+    JAButton *button = [[JAButton alloc] initAlternativeButtonWithTitle:name target:target action:action];
+    [self addSubview:button];
+    [self.buttonsArray addObject:button];
+    [self reloadFrame:self.frame];
+    return button;
+}
+
 - (JAButton *)addSmallButton:(UIImage *)image target:(id)target action:(SEL)action
 {
     JAButton *smallButton = [[JAButton alloc] initSmallButtonWithImage:image target:target action:action];

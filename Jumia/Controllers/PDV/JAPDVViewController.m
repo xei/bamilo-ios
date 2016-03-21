@@ -97,7 +97,7 @@ JAActivityViewControllerDelegate
         _productImageSection = [[JAPDVImageSection alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 500)];
         _productImageSection.delegate = self;
         [_productImageSection.wishListButton addTarget:self
-                                                action:@selector(addToFavoritesPressed:)
+                                                action:@selector(wishListButtonPressed:)
                                       forControlEvents:UIControlEventTouchUpInside];
     }
     _productImageSection.wishListButton.selected = VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate);
@@ -546,11 +546,14 @@ JAActivityViewControllerDelegate
         [self.ctaView addSmallButton:[UIImage imageNamed:@"ic_calltoorder"] target:self action:@selector(callToOrder)];
     }
     
-    NSString *buttonText = STRING_BUY_NOW;
     if (self.product.preOrder) {
-        buttonText = STRING_PRE_ORDER;
+        [self.ctaView addButton:STRING_PRE_ORDER target:self action:@selector(addToCart)];
+    }else if (!self.product.hasStock)
+    {
+        [self.ctaView addAlternativeButton:STRING_SAVE_ITEM target:self action:@selector(addToWishList)];
+    }else{
+        [self.ctaView addButton:STRING_BUY_NOW target:self action:@selector(addToCart)];
     }
-    [self.ctaView addButton:buttonText target:self action:@selector(addToCart)];
     
     //make sure wizard and picker are in front
     //$WIZ$
@@ -1085,6 +1088,11 @@ JAActivityViewControllerDelegate
     }
 }
 
+- (void)addToWishList
+{
+    [self addToWishList:self.productImageSection.wishListButton];
+}
+
 - (void)addToCart
 {
     if(VALID_NOTEMPTY(self.product.productSimples, NSArray) && self.product.productSimples.count > 1 && !VALID_NOTEMPTY(self.currentSimple, RIProductSimple))
@@ -1357,11 +1365,11 @@ JAActivityViewControllerDelegate
     }];
 }
 
-- (void)addToFavoritesPressed:(UIButton*)button
+- (void)wishListButtonPressed:(UIButton*)button
 {
     if (!self.productImageSection.wishListButton.selected && !VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate))
     {
-        [self addToFavorites:button];
+        [self addToWishList:button];
     }else if (self.productImageSection.wishListButton.selected && VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate))
     {
         [self removeFromFavorites:button];
@@ -1383,7 +1391,7 @@ JAActivityViewControllerDelegate
     return YES;
 }
 
-- (void)addToFavorites:(UIButton *)button
+- (void)addToWishList:(UIButton *)button
 {
     [self showLoading];
     
@@ -1394,7 +1402,7 @@ JAActivityViewControllerDelegate
         if(![RICustomer checkIfUserIsLogged]) {
             return;
         }else{
-            [weakSelf addToFavorites:button];
+            [weakSelf addToWishList:button];
         }
     }];
     
@@ -1425,7 +1433,7 @@ JAActivityViewControllerDelegate
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             
-            [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(addToFavorites:) objects:@[button]];
+            [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(addToWishList:) objects:@[button]];
             [self hideLoading];
         }];
     }else{
