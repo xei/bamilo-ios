@@ -83,6 +83,7 @@
     if (!VALID_NOTEMPTY(_facebookButton, JAButton)) {
         _facebookButton = [[JAButton alloc] initFacebookButtonWithTitle:[STRING_LOGIN_WITH_FACEBOOK uppercaseString] target:self action:@selector(facebookLoginButtonPressed:)];
         [_facebookButton setFrame:CGRectMake((self.view.width - kWidth)/2, CGRectGetMaxY(self.topMessageLabel.frame) + kTopMess2FacebookButton, kWidth, 50)];
+        [_facebookButton setTitleEdgeInsets:UIEdgeInsetsMake(_facebookButton.titleEdgeInsets.top, 40, _facebookButton.titleEdgeInsets.bottom, 10)];
     }
     return _facebookButton;
 }
