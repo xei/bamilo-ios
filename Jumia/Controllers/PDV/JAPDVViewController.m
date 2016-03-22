@@ -693,8 +693,12 @@ JAActivityViewControllerDelegate
             
             bundleSingleItem.selectedProduct.tag = i;
             
+            NSString* checkmarkImageName = @"selectionCheckmark";
+            if (0 == i) {
+                checkmarkImageName = @"selectionCheckmarkDisabled";
+            }
             [bundleSingleItem.selectedProduct setImage:[UIImage imageNamed:@"noSelectionCheckMark"] forState:UIControlStateNormal];
-            [bundleSingleItem.selectedProduct setImage:[UIImage imageNamed:@"selectionCheckmark"] forState:UIControlStateSelected];
+            [bundleSingleItem.selectedProduct setImage:[UIImage imageNamed:checkmarkImageName] forState:UIControlStateSelected];
             
             [self.bundleSingleItemsArray addObject:bundleSingleItem];
             

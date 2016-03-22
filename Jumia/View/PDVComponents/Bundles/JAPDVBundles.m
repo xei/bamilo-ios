@@ -62,12 +62,13 @@
 - (JAProductInfoSingleLine *)buyBundleLine
 {
     if (!VALID_NOTEMPTY(_buyBundleLine, JAProductInfoSingleLine)) {
-        _buyBundleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, 0, self.width, kProductInfoSingleLineHeight)];
+        _buyBundleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, 0, self.width, 38.0f)];
         [_buyBundleLine setTopSeparatorVisibility:YES];
         [_buyBundleLine setTopSeparatorXOffset:0.f];
         [_buyBundleLine setBottomSeparatorVisibility:NO];
-        [_buyBundleLine.label setTextColor:JAOrange1Color];
-        [_buyBundleLine setBackgroundColor:[UIColor whiteColor]];
+        [_buyBundleLine.label setTextColor:JABlue1Color];
+        [_buyBundleLine.label setFont:JABodyFont];
+        [_buyBundleLine setBackgroundColor:JAWhiteColor];
         [self.buyBundleLine addTarget:self action:@selector(buyBundleCombo) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_buyBundleLine];
     }
@@ -79,10 +80,10 @@
     UIView *_plusView = [[UIView alloc] initWithFrame:frame];
 //        _plusView = [[UIView alloc] initWithFrame:CGRectMake(self.width/2 - 5, self.productImageView.height/2, 10, 10)];
     UIView *horizontalLine = [[UIView alloc] initWithFrame:CGRectMake(0, _plusView.height/2-1, _plusView.width, 2)];
-    [horizontalLine setBackgroundColor:JABlack400Color];
+    [horizontalLine setBackgroundColor:JABlue1Color];
     [_plusView addSubview:horizontalLine];
     UIView *verticalLine = [[UIView alloc] initWithFrame:CGRectMake(_plusView.width/2-1, 0, 2, _plusView.height)];
-    [verticalLine setBackgroundColor:JABlack400Color];
+    [verticalLine setBackgroundColor:JABlue1Color];
     [_plusView addSubview:verticalLine];
     [self addSubview:_plusView];
     return _plusView;
@@ -108,7 +109,7 @@
     [self.bundlesScrollView setContentSize:CGSizeMake(CGRectGetMaxX(itemView.frame), itemView.height)];
     if (_bundlesArray.count != 0) {
         CGFloat plusSize = 15;
-        [self.bundlesScrollView addSubview:[self plusViewWithFrame:CGRectMake(itemView.x - plusSize/2 - 2.5, itemView.height/2, plusSize, plusSize)]];
+        [self.bundlesScrollView addSubview:[self plusViewWithFrame:CGRectMake(itemView.x - plusSize/2 - 7.5, 46.0f, plusSize, plusSize)]];
     }
     if (self.bundlesScrollView.height < itemView.height) {
         self.bundlesScrollView.height = itemView.height;
