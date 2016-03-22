@@ -55,7 +55,7 @@
 
 - (void)setSelectedIndex:(NSInteger)selectedIndex animated:(BOOL)animated
 {
-    _selectedIndex = selectedIndex;
+    _selectedIndex = ABS(selectedIndex);
     for (int i = 0; i < self.tabButtonsArray.count; i++) {
         JATabButton* tabButton = [self.tabButtonsArray objectAtIndex:i];
         if (_selectedIndex == i) {
