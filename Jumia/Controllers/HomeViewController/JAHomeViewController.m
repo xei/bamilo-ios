@@ -43,7 +43,6 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     self.navBarLayout.showCartButton = NO;
     self.navBarLayout.showSeparatorView = NO;
-    //has to be done before calling super
     self.searchBarIsVisible = YES;
     self.tabBarIsVisible = YES;
     

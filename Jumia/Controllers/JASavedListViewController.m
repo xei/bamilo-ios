@@ -142,7 +142,7 @@
 
 - (UICollectionView *)collectionView
 {
-    CGRect frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.viewBounds.size.height - self.bottomView.height);
+    CGRect frame = CGRectMake(self.viewBounds.origin.x, self.viewBounds.origin.y, self.view.frame.size.width, self.viewBounds.size.height - self.bottomView.height);
     if (!VALID_NOTEMPTY(_collectionView, UICollectionView)) {
         _collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:self.flowLayout];
         _collectionView.delegate = self;
@@ -193,6 +193,8 @@
     self.A4SViewControllerAlias = @"MYFAVOURITES";
     self.navBarLayout.title = STRING_MY_FAVOURITES;
     self.navBarLayout.showCartButton = NO;
+    self.navBarLayout.showSeparatorView = NO;
+    self.searchBarIsVisible = YES;
     self.tabBarIsVisible = YES;
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     [self.collectionView registerClass:[JARecentlyViewedCell class] forCellWithReuseIdentifier:@"CellWithLines"];

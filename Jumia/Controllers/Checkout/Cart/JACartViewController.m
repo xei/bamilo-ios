@@ -104,9 +104,7 @@
     
     self.navBarLayout.title = STRING_CART;
     self.navBarLayout.showCartButton = NO;
-    self.navBarLayout.showSeparatorView = NO;
     self.tabBarIsVisible = YES;
-    self.searchBarIsVisible = YES;
     
     self.view.backgroundColor = JABackgroundGrey;
     
