@@ -80,7 +80,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
 @property (nonatomic, strong) NSString* categoryUrlKey;
 @property (nonatomic, retain) NSArray *categoryIds;
 @property (nonatomic, retain) NSSet *relatedProducts;
-@property (nonatomic, retain) NSSet *specifications;
+@property (nonatomic, retain) NSOrderedSet *specifications;
 @property (nonatomic, retain) RISeller *seller;
 @property (nonatomic, retain) NSString *shareUrl;
 @property (nonatomic, retain) NSString *priceRange;

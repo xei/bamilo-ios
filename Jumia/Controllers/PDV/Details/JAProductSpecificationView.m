@@ -42,7 +42,7 @@
     [self addSubview:self.contentScrollView];
 }
 
-- (UIView *)getKeyValueLineWithKey:(NSString *)key andValue:(NSString *)value
+- (UIView *)getKeyValueLineWithKey:(NSString *)key andValue:(NSString *)value enableSeparator:(BOOL)enableSeparator
 {
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(16, 0, self.contentScrollView.width - 32, 30)];
     UILabel *keyLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 8, lineView.width/2 - 8, lineView.height)];
@@ -65,7 +65,9 @@
     
     UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, lineView.height-1, lineView.width, 1)];
     [separator setBackgroundColor:JABlack300Color];
-    [lineView addSubview:separator];
+    if (enableSeparator) {
+        [lineView addSubview:separator];
+    }
     return lineView;
 }
 
@@ -79,11 +81,14 @@
         [spectHeaderLine setTitle:[spec.headLabel uppercaseString]];
         [self.contentScrollView addSubview:spectHeaderLine];
         yOffset = CGRectGetMaxY(spectHeaderLine.frame);
+        long i = 0;
+        long last = spec.specificationAttributes.count-1;
         for (RISpecificationAttribute *attr in spec.specificationAttributes) {
-            UIView *line = [self getKeyValueLineWithKey:attr.key andValue:attr.value];
+            UIView *line = [self getKeyValueLineWithKey:attr.key andValue:attr.value enableSeparator:i!=last];
             [line setY:yOffset];
             [self.contentScrollView addSubview:line];
             yOffset = CGRectGetMaxY(line.frame);
+            i++;
         }
     }
     

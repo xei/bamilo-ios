@@ -627,7 +627,7 @@
         if([dataDic objectForKey:@"specifications"]){
             NSArray* specificationsJSON = [dataDic objectForKey:@"specifications"];
 
-            NSMutableSet* newSpecifications = [NSMutableSet new];
+            NSMutableOrderedSet* newSpecifications = [NSMutableOrderedSet new];
             for (NSDictionary *specifJSON in specificationsJSON){
                 if(VALID_NOTEMPTY(specifJSON, NSDictionary)){
                     
