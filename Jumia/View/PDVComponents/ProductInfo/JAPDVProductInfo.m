@@ -110,7 +110,7 @@
      */
     
     CGFloat preSpecificationOffset = yOffset;
-    if (VALID_NOTEMPTY(product.specifications, NSSet)) {
+    if (VALID_NOTEMPTY(product.specifications, NSOrderedSet)) {
         JAProductInfoHeaderLine *headerSpecifications = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoHeaderLineHeight)];
         [headerSpecifications setTitle:[STRING_SPECIFICATIONS uppercaseString]];
         
