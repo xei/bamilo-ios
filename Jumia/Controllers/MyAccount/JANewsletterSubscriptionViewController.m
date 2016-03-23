@@ -36,7 +36,6 @@
     
     self.navBarLayout.title = STRING_NEWSLETTER_PREFERENCES;
     self.navBarLayout.showBackButton = YES;
-    self.tabBarIsVisible = YES;
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self loadForms];

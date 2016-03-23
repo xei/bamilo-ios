@@ -251,6 +251,8 @@
     
     self.navBarLayout.title = STRING_MY_ACCOUNT;
     self.navBarLayout.showCartButton = NO;
+    self.navBarLayout.showSeparatorView = NO;
+    self.searchBarIsVisible = YES;
     self.tabBarIsVisible = YES;
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
