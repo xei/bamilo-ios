@@ -546,12 +546,13 @@ JAActivityViewControllerDelegate
         [self.ctaView addSmallButton:[UIImage imageNamed:@"ic_calltoorder"] target:self action:@selector(callToOrder)];
     }
     
-    if (self.product.preOrder) {
-        [self.ctaView addButton:STRING_PRE_ORDER target:self action:@selector(addToCart)];
-    }else if (!self.product.hasStock)
+    if (!self.product.hasStock)
     {
-        [self.ctaView addAlternativeButton:STRING_SAVE_ITEM target:self action:@selector(addToWishList)];
-    }else{
+        JAButton *saveButton = [self.ctaView addAlternativeButton:STRING_SAVE_ITEM target:self action:@selector(addToWishList)];
+        [saveButton setTitleColor:JAOrange1Color forState:UIControlStateNormal];
+    }else if (self.product.preOrder) {
+        [self.ctaView addButton:STRING_PRE_ORDER target:self action:@selector(addToCart)];
+    }else {
         [self.ctaView addButton:STRING_BUY_NOW target:self action:@selector(addToCart)];
     }
     
