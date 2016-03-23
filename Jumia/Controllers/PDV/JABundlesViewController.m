@@ -204,7 +204,11 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     RIProduct *bundleProduct = [self.bundles objectAtIndex:indexPath.row];
     
     JACatalogListCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"CellWithLines" forIndexPath:indexPath];
-    [cell setShowSelector:YES];
+    BOOL enabled = YES;
+    if (0 == indexPath.row) {
+        enabled = NO;
+    }
+    [cell setShowSelector:YES enabled:enabled];
     [cell setHideRating:YES];
     [cell setHideShopFirstLogo:YES];
     [cell loadWithProduct:bundleProduct];

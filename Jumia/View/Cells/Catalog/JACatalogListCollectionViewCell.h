@@ -26,7 +26,7 @@
 
 @interface JACatalogListCollectionViewCell : JACatalogCollectionViewCell
 
-@property (nonatomic) BOOL showSelector;
 @property (nonatomic) UIButton *selectorButton;
+- (void)setShowSelector:(BOOL)showSelector enabled:(BOOL)enabled;
 
 @end
