@@ -42,7 +42,8 @@
 
 - (UIView *)ratingsView
 {
-    CGRect frame = CGRectMake(0, 18, self.width - self.dateLabel.width, self.dateLabel.height);
+    
+    CGRect frame = CGRectMake(kXOffset, 10, self.width - self.dateLabel.width, self.dateLabel.height);
     if (!VALID_NOTEMPTY(_ratingsView, UIView)) {
         _ratingsView = [[UIView alloc] initWithFrame:frame];
         [self.clickableArea addSubview:_ratingsView];
@@ -83,8 +84,8 @@
 - (UILabel *)dateLabel
 {
     if (!VALID_NOTEMPTY(_dateLabel, UILabel)) {
-        _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(kXOffset, 18, self.width - 32, 20)];
-        [_dateLabel setFont:JABodyFont];
+        _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(kXOffset, 10, self.width - 32, 20)];
+        [_dateLabel setFont:JACaptionFont];
         [_dateLabel setTextColor:JABlack800Color];
         [self.clickableArea addSubview:_dateLabel];
     }
@@ -93,11 +94,11 @@
 
 - (UILabel *)titleLabel
 {
-    CGRect frame = CGRectMake(kXOffset, CGRectGetMaxY(self.ratingsView.frame) + 10.f, self.width - 32, 20);
+    CGRect frame = CGRectMake(kXOffset, CGRectGetMaxY(self.ratingsView.frame) + 6.f, self.width - 32, 20);
     if (!VALID_NOTEMPTY(_titleLabel, UILabel)) {
         _titleLabel = [[UILabel alloc] initWithFrame:frame];
-        [_titleLabel setFont:JADisplay3Font];
-        [_titleLabel setTextColor:JABlack900Color];
+        [_titleLabel setFont:JABodyFont];
+        [_titleLabel setTextColor:JABlackColor];
         [self.clickableArea addSubview:_titleLabel];
     }else if (CGRectEqualToRect(frame, _titleLabel.frame))
     {
@@ -109,7 +110,7 @@
 
 - (UILabel *)authorLabel
 {
-    CGRect frame = CGRectMake(kXOffset, CGRectGetMaxY(self.titleLabel.frame), self.width - 32, 20);
+    CGRect frame = CGRectMake(kXOffset, CGRectGetMaxY(self.titleLabel.frame) + 10.f, self.width - 32, 20);
     if (!VALID_NOTEMPTY(_authorLabel, UILabel)) {
         _authorLabel = [[UILabel alloc] initWithFrame:frame];
         [_authorLabel setFont:JABodyFont];
@@ -156,7 +157,7 @@
     if (ratingStarViews.count == 1) {
         NSNumber *number = [ratingStarViews firstObject];
         JAProductInfoRatingLine *line = [self getNewRatingLine];
-        [line setX:kXOffset];
+        [line setX:0];
         [line setRatingAverage:number];
         [line setHiddenSum:YES];
         [self.ratingsView setHeight:CGRectGetMaxY(line.frame)];
@@ -205,7 +206,7 @@
     [self.descriptionLabel setText:review.comment];
     [self.descriptionLabel sizeToFit];
     
-    [self setHeight:CGRectGetMaxY(self.descriptionLabel.frame) + 18];
+    [self setHeight:CGRectGetMaxY(self.descriptionLabel.frame) + 10];
     
     [self.clickableArea setFrame:self.bounds];
     
