@@ -97,7 +97,7 @@
         _cartCountLabel.textColor = JAWhiteColor;
         _cartCountLabel.adjustsFontSizeToFitWidth = YES;
         _cartCountLabel.textAlignment = NSTextAlignmentCenter;
-        [_cartCountLabel setBackgroundColor:[UIColor redColor]];
+        [_cartCountLabel setBackgroundColor:JARed1Color];
         [self updateCartProductCount:[NSNumber numberWithInt:0]];
     }
     return _cartCountLabel;

@@ -102,7 +102,7 @@
         self.numberLabel.textColor = JAWhiteColor;
         self.numberLabel.adjustsFontSizeToFitWidth = YES;
         self.numberLabel.textAlignment = NSTextAlignmentCenter;
-        [self.numberLabel setBackgroundColor:[UIColor redColor]];
+        [self.numberLabel setBackgroundColor:JARed1Color];
         [self addSubview:self.numberLabel];
         CGRect frame = CGRectMake(self.bounds.size.width / 2 + 1.f,
                                   8.f,
