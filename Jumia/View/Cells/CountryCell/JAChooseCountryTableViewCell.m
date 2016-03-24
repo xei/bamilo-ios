@@ -28,6 +28,7 @@
         CGSize countryImageSize = CGSizeMake(25, 25);
         [_countryImage setFrame:CGRectMake(16, (kCountryCellHeight - countryImageSize.height)/2, countryImageSize.width, countryImageSize.height)];
         _countryImage.layer.cornerRadius = _countryImage.frame.size.height /2;
+        _countryImage.contentMode = UIViewContentModeScaleAspectFill;
         _countryImage.layer.masksToBounds = YES;
         _countryImage.layer.borderWidth = 0;
         [self addSubview:_countryImage];
