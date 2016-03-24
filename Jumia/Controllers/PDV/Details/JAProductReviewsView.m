@@ -416,6 +416,7 @@
     [self.viewControllerEvents showLoading];
     [RIProductRatings getRatingsForProductWithSku:self.product.sku allowRating:1 pageNumber:(VALID_NOTEMPTY(self.productRatings, RIProductRatings)?self.productRatings.currentPage.intValue+1:1) successBlock:^(RIProductRatings *ratings) {
         self.productRatings = ratings;
+        [self.reviewsHeaderLine setTitle:[NSString stringWithFormat:@"%@ (%ld)", [STRING_USER_REVIEWS uppercaseString], (long)ratings.reviews.count]];
         [self.reviewsArray addObjectsFromArray:[self.productRatings.reviews mutableCopy]];
         _currentPage = self.productRatings.currentPage.integerValue;
         [self.collectionView reloadData];
