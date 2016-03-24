@@ -148,9 +148,10 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
         }
     }
     
-    if( RI_IS_RTL && [self isLandscape])
+    if(RI_IS_RTL)
     {
         [_totalSubLine flipViewPositionInsideSuperview];
+        [_totalSubLine flipAllSubviews];
     }
     return _totalSubLine;
 }
