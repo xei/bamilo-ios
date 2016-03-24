@@ -131,7 +131,7 @@
     if (!VALID_NOTEMPTY(_timerLabel, UILabel)) {
         _timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.endLabel.frame) + 2.f, 0, self.timerView.width, 15)];
         [_timerLabel setFont:JABodyFont];
-        [_timerLabel setTextColor:[UIColor redColor]];
+        [_timerLabel setTextColor:JARed1Color];
     }
     return _timerLabel;
 }
@@ -172,7 +172,7 @@
         _priceLine = [[JAProductInfoPriceLine alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.imageView.frame) + 10.f, self.width - 2*kLateralMargin, 20.f)];
         [_priceLine setPriceSize:kPriceSizeSmall];
         [_priceLine setLineContentXOffset:0.f];
-        [_priceLine.titleLabel setTextColor:[UIColor redColor]];
+        [_priceLine.titleLabel setTextColor:JARed1Color];
     }
     return _priceLine;
 }
@@ -203,7 +203,7 @@
     if (!VALID_NOTEMPTY(_savingMoneyLabel, UILabel)) {
         _savingMoneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.savingLabel.frame) + 6.f, self.savingLabel.y, self.savingView.width, kProductInfoSingleLineHeight)];
         [_savingMoneyLabel setFont:JABodyFont];
-        [_savingMoneyLabel setTextColor:[UIColor greenColor]];
+        [_savingMoneyLabel setTextColor:JAGreen1Color];
     }
     return _savingMoneyLabel;
 }
