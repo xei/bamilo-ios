@@ -473,7 +473,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAChooseCountryViewController class]])
     {
-        JAChooseCountryViewController *country = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"chooseCountryViewController"];
+        JAChooseCountryViewController *country = [JAChooseCountryViewController new];
         
         country.navBarLayout.showMenuButton = NO;
         if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.object, NSDictionary))
