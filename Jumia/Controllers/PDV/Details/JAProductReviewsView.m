@@ -398,7 +398,7 @@
     [self.viewControllerEvents showLoading];
     [RIProductRatings getRatingsDetails:_product.sku successBlock:^(NSDictionary *ratingsDictionary) {
         _ratingsDictionary = ratingsDictionary;
-        [self fillGraphics];
+        [self layoutSubviews];
         [self.viewControllerEvents onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         [self.viewControllerEvents hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
