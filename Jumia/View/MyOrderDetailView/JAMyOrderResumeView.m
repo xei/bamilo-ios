@@ -11,6 +11,7 @@
 #import "JAProductInfoPriceLine.h"
 
 #define kTopMargin 16.f
+#define kVerticalMargin 10.f
 #define kLateralMargin 16.f
 
 @interface JAMyOrderResumeView ()
@@ -61,8 +62,8 @@
 {
     if (!VALID(_orderDate, UILabel)) {
         _orderDate = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, 0, self.width-2*kLateralMargin, self.orderNumberHeader.height)];
-        [_orderDate setFont:JACaptionFont];
-        [_orderDate setTextColor:JABlackColor];
+        [_orderDate setFont:JABodyFont];
+        [_orderDate setTextColor:JABlack800Color];
     }
     return _orderDate;
 }
@@ -117,8 +118,8 @@
 {
     if (!VALID(_paymentTitle, UILabel)) {
         _paymentTitle = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, kTopMargin, self.paymentView.width-2*kLateralMargin, 15.f)];
-        [_paymentTitle setFont:JACaptionFont];
-        [_paymentTitle setTextColor:JABlack800Color];
+        [_paymentTitle setFont:JABodyFont];
+        [_paymentTitle setTextColor:JABlackColor];
     }
     return _paymentTitle;
 }
@@ -128,7 +129,7 @@
     if (!VALID(_paymentType, UILabel)) {
         _paymentType = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.paymentTitle.frame), self.paymentView.width-2*kLateralMargin, 15.f)];
         [_paymentType setFont:JABodyFont];
-        [_paymentType setTextColor:JABlackColor];
+        [_paymentType setTextColor:JABlack800Color];
     }
     return _paymentType;
 }
@@ -137,8 +138,8 @@
 {
     if (!VALID(_paymentDescrition, UILabel)) {
         _paymentDescrition = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.paymentType.frame), self.paymentView.width-2*kLateralMargin, 15.f)];
-        [_paymentDescrition setFont:JACaptionFont];
-        [_paymentDescrition setTextColor:JABlackColor];
+        [_paymentDescrition setFont:JABodyFont];
+        [_paymentDescrition setTextColor:JABlack800Color];
     }
     return _paymentDescrition;
 }
@@ -162,9 +163,9 @@
 - (UILabel *)shippingTitle
 {
     if (!VALID(_shippingTitle, UILabel)) {
-        _shippingTitle = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, kTopMargin, self.shippingView.width-2*kLateralMargin, 15.f)];
-        [_shippingTitle setFont:JACaptionFont];
-        [_shippingTitle setTextColor:JABlack800Color];
+        _shippingTitle = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, kVerticalMargin, self.shippingView.width-2*kLateralMargin, 15.f)];
+        [_shippingTitle setFont:JABodyFont];
+        [_shippingTitle setTextColor:JABlackColor];
     }
     return _shippingTitle;
 }
@@ -174,7 +175,7 @@
     if (!VALID(_shippingName, UILabel)) {
         _shippingName = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.shippingTitle.frame), self.shippingView.width-2*kLateralMargin, 15.f)];
         [_shippingName setFont:JABodyFont];
-        [_shippingName setTextColor:JABlackColor];
+        [_shippingName setTextColor:JABlack800Color];
     }
     return _shippingName;
 }
@@ -183,8 +184,8 @@
 {
     if (!VALID(_shippingAddress, UILabel)) {
         _shippingAddress = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.shippingName.frame), self.shippingView.width-2*kLateralMargin, 15.f)];
-        [_shippingAddress setFont:JACaptionFont];
-        [_shippingAddress setTextColor:JABlackColor];
+        [_shippingAddress setFont:JABodyFont];
+        [_shippingAddress setTextColor:JABlack800Color];
         [_shippingAddress setNumberOfLines:2];
     }
     return _shippingAddress;
@@ -194,8 +195,8 @@
 {
     if (!VALID(_shippingCity, UILabel)) {
         _shippingCity = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.shippingAddress.frame), self.shippingView.width-2*kLateralMargin, 15.f)];
-        [_shippingCity setFont:JACaptionFont];
-        [_shippingCity setTextColor:JABlackColor];
+        [_shippingCity setFont:JABodyFont];
+        [_shippingCity setTextColor:JABlack800Color];
     }
     return _shippingCity;
 }
@@ -204,8 +205,8 @@
 {
     if (!VALID(_shippingPhone, UILabel)) {
         _shippingPhone = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.shippingCity.frame), self.shippingView.width-2*kLateralMargin, 15.f)];
-        [_shippingPhone setFont:JACaptionFont];
-        [_shippingPhone setTextColor:JABlackColor];
+        [_shippingPhone setFont:JABodyFont];
+        [_shippingPhone setTextColor:JABlack800Color];
     }
     return _shippingPhone;
 }
@@ -229,9 +230,9 @@
 - (UILabel *)billingTitle
 {
     if (!VALID(_billingTitle, UILabel)) {
-        _billingTitle = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, kTopMargin, self.billingView.width-2*kLateralMargin, 15.f)];
-        [_billingTitle setFont:JACaptionFont];
-        [_billingTitle setTextColor:JABlack800Color];
+        _billingTitle = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, kVerticalMargin, self.billingView.width-2*kLateralMargin, 15.f)];
+        [_billingTitle setFont:JABodyFont];
+        [_billingTitle setTextColor:JABlackColor];
     }
     return _billingTitle;
 }
@@ -241,7 +242,7 @@
     if (!VALID(_billingName, UILabel)) {
         _billingName = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.billingTitle.frame), self.billingView.width-2*kLateralMargin, 15.f)];
         [_billingName setFont:JABodyFont];
-        [_billingName setTextColor:JABlackColor];
+        [_billingName setTextColor:JABlack800Color];
     }
     return _billingName;
 }
@@ -250,8 +251,8 @@
 {
     if (!VALID(_billingAddress, UILabel)) {
         _billingAddress = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.billingName.frame), self.billingView.width-2*kLateralMargin, 15.f)];
-        [_billingAddress setFont:JACaptionFont];
-        [_billingAddress setTextColor:JABlackColor];
+        [_billingAddress setFont:JABodyFont];
+        [_billingAddress setTextColor:JABlack800Color];
         [_billingAddress setNumberOfLines:2];
     }
     return _billingAddress;
@@ -261,8 +262,8 @@
 {
     if (!VALID(_billingCity, UILabel)) {
         _billingCity = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.billingAddress.frame), self.billingView.width-2*kLateralMargin, 15.f)];
-        [_billingCity setFont:JACaptionFont];
-        [_billingCity setTextColor:JABlackColor];
+        [_billingCity setFont:JABodyFont];
+        [_billingCity setTextColor:JABlack800Color];
     }
     return _billingCity;
 }
@@ -271,8 +272,8 @@
 {
     if (!VALID(_billingPhone, UILabel)) {
         _billingPhone = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.billingCity.frame), self.billingView.width-2*kLateralMargin, 15.f)];
-        [_billingPhone setFont:JACaptionFont];
-        [_billingPhone setTextColor:JABlackColor];
+        [_billingPhone setFont:JABodyFont];
+        [_billingPhone setTextColor:JABlack800Color];
     }
     return _billingPhone;
 }
@@ -320,6 +321,8 @@
     [self.itemsNumberLabel setText:[NSString stringWithFormat:STRING_ITEMS_CART, order.itemCollection.count]];
     [self.priceLine setPrice:order.totalFormatted];
     
+    [self.paymentView setHeight:CGRectGetMaxY(self.priceLine.frame) + kVerticalMargin];
+    [self.resumeOrderView setHeight:CGRectGetMaxY(self.priceLine.frame) + kVerticalMargin];
     
     
     if (!VALID(self.paymentView.superview, UIView)) {
@@ -330,9 +333,11 @@
     
     [self.paymentTitle setText:STRING_PAYMENT];
     [self.paymentType setText:order.paymentMethod];
-    [self.paymentDescrition setText:order.paymentDescription];
-    [self.paymentView setHeight:CGRectGetMaxY(self.paymentDescrition.frame) + 16.f];
-    [self.resumeOrderView setHeight:CGRectGetMaxY(self.paymentDescrition.frame) + 16.f];
+    if (VALID_NOTEMPTY(order.paymentDescription, NSString)) {
+        [self.paymentDescrition setText:order.paymentDescription];
+        [self.paymentView setHeight:CGRectGetMaxY(self.paymentDescrition.frame) + kVerticalMargin];
+        [self.resumeOrderView setHeight:CGRectGetMaxY(self.paymentDescrition.frame) + kVerticalMargin];
+    }
     
     
     if (!VALID(self.shippingView.superview, UIView)) {
@@ -372,12 +377,24 @@
     }
     size = [self.billingAddress sizeThatFits:CGSizeMake(self.billingAddress.width, CGFLOAT_MAX)];
     [self.billingAddress setHeight:size.height];
+    if (!VALID_NOTEMPTY(order.billingAddress.city, NSString)) {
+        [self.billingCity setHeight:0.f];
+    }else{
+        [self.billingCity setText:order.billingAddress.city];
+    }
     [self.billingCity setYBottomOf:self.billingAddress at:0.f];
-    [self.billingCity setText:order.billingAddress.city];
+    if (!VALID_NOTEMPTY(order.billingAddress.phone, NSString)) {
+        [self.billingPhone setHeight:0.f];
+    }else{
+        [self.billingPhone setText:order.billingAddress.phone];
+    }
     [self.billingPhone setYBottomOf:self.billingCity at:0.f];
-    [self.billingPhone setText:order.billingAddress.phone];
-    
-    
+
+    CGFloat maxY = CGRectGetMaxY(self.billingPhone.frame)>CGRectGetMaxY(self.shippingPhone.frame)?CGRectGetMaxY(self.billingPhone.frame):CGRectGetMaxY(self.shippingPhone.frame);
+    [self.billingView setHeight:maxY + kVerticalMargin];
+    [self.shippingView setHeight:maxY + kVerticalMargin];
+    [self setHeight:CGRectGetMaxY(self.shippingView.frame)];
+    [self.verticalCrossView setFrame:CGRectMake(self.width/2-1, CGRectGetMaxY(self.orderNumberHeader.frame), 1, self.height - CGRectGetMaxY(self.orderNumberHeader.frame))];
     
     if (!VALID(self.horizontalCrossView.superview, UIView)) {
         [self addSubview:self.horizontalCrossView];
