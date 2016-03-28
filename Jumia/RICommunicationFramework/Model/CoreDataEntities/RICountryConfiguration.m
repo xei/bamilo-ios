@@ -168,7 +168,7 @@
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     [formatter setMaximumFractionDigits:[[country noDecimals] integerValue]];
     [formatter setMinimumFractionDigits:[[country noDecimals] integerValue]];
-    [formatter setRoundingMode: NSNumberFormatterRoundHalfEven];
+    [formatter setRoundingMode: NSNumberFormatterRoundHalfUp];
     [formatter setDecimalSeparator:[country decimalsSep]];
     [formatter setGroupingSeparator:[country thousandsSep]];
     [formatter setUsesGroupingSeparator:YES];
