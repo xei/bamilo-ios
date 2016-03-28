@@ -10,6 +10,7 @@
 #import "ADJActivityHandler.h"
 #import "ADJAdjustFactory.h"
 #import "ADJLogger.h"
+#import "ADJUtil.h"
 
 #if !__has_feature(objc_arc)
 #error Adjust requires ARC
@@ -62,6 +63,14 @@ NSString * const ADJEnvironmentProduction   = @"production";
 
 + (void)setOfflineMode:(BOOL)enabled {
     [[Adjust getInstance] setOfflineMode:enabled];
+}
+
++ (NSString*)idfa {
+    return [[Adjust getInstance] idfa];
+}
+
++ (NSURL*)convertUniversalLink:(NSURL *)url scheme:(NSString *)scheme {
+    return [[Adjust getInstance] convertUniversalLink:url scheme:scheme];
 }
 
 + (id)getInstance {
@@ -131,6 +140,14 @@ NSString * const ADJEnvironmentProduction   = @"production";
 - (void)setOfflineMode:(BOOL)enabled {
     if (![self checkActivityHandler]) return;
     [self.activityHandler setOfflineMode:enabled];
+}
+
+- (NSString*)idfa {
+    return [ADJUtil idfa];
+}
+
+- (NSURL*)convertUniversalLink:(NSURL *)url scheme:(NSString *)scheme {
+    return [ADJUtil convertUniversalLink:url scheme:scheme];
 }
 
 #pragma mark - private
