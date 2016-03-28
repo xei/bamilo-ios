@@ -42,7 +42,7 @@
     if (!VALID(_loginSubLine, JAProductInfoSubLine)) {
         _loginSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.moreHeaderLine.frame), self.view.width, kProductInfoSubLineHeight)];
         [_loginSubLine setTopSeparatorVisibility:NO];
-        [_loginSubLine setTitle:STRING_LOGIN];
+        [_loginSubLine setTitle:[RICustomer checkIfUserIsLogged]?STRING_LOGOUT:STRING_LOGIN];
         [_loginSubLine addTarget:self action:@selector(loginSelection) forControlEvents:UIControlEventTouchUpInside];
     }
     return _loginSubLine;
@@ -88,6 +88,7 @@
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
+    [self.loginSubLine setTitle:[RICustomer checkIfUserIsLogged]?STRING_LOGOUT:STRING_LOGIN];
     BOOL changed = NO;
     for (UIView *subView in self.view.subviews) {
         if (!CGRectEqualToRect(subView.frame, self.viewBounds)) {
@@ -155,7 +156,8 @@
 
 - (void)userDidLogout
 {
-    [RICommunicationWrapper deleteSessionCookie];    
+    [self.loginSubLine setTitle:[RICustomer checkIfUserIsLogged]?STRING_LOGOUT:STRING_LOGIN];
+    [RICommunicationWrapper deleteSessionCookie];
     [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedOutNotification object:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
