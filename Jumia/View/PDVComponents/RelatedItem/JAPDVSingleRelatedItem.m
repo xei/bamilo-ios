@@ -182,7 +182,7 @@
         [self.labelPrice setX:6];
         [self.labelPrice setY:self.height - 13];
         [self.labelPrice setTextAlignment:NSTextAlignmentCenter];
-        [self.labelPrice setTextColor:[UIColor redColor]];
+        [self.labelPrice setTextColor:JARed1Color];
         [self.labelPrice setHeight:10];
         [self.labelPrice setWidth:self.width - 12];
     }

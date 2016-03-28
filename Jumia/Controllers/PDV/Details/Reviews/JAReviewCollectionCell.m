@@ -102,6 +102,7 @@
         [self.clickableArea addSubview:_titleLabel];
     }else if (CGRectEqualToRect(frame, _titleLabel.frame))
     {
+        frame.size.height = [_titleLabel sizeThatFits:CGSizeMake(self.width - 32, CGFLOAT_MAX)].height;
         [_titleLabel setTextAlignment:NSTextAlignmentLeft];
         [_titleLabel setFrame:frame];
     }
@@ -117,6 +118,7 @@
         [_authorLabel setTextColor:JABlack800Color];
         [self.clickableArea addSubview:_authorLabel];
     }else if (CGRectEqualToRect(frame, _authorLabel.frame)) {
+        frame.size.height = [_authorLabel sizeThatFits:CGSizeMake(self.width - 32, CGFLOAT_MAX)].height;
         [_authorLabel setTextAlignment:NSTextAlignmentLeft];
         [_authorLabel setFrame:frame];
     }

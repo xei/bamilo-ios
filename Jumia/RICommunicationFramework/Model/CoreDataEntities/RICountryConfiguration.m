@@ -165,79 +165,22 @@
 
 + (NSString*)formatPrice:(NSNumber*)price country:(RICountryConfiguration*)country
 {
-    NSDecimalNumber* decimalNumber = [NSDecimalNumber decimalNumberWithDecimal:[price decimalValue]];
-    NSString* formattedPrice = [decimalNumber stringValue];
-    
-    NSString* noFraction = @"";
-    NSString* fraction = @"";
-    if(NSNotFound != [formattedPrice rangeOfString:@"."].location)
-    {
-        NSArray *formattedPriceComponents = [formattedPrice componentsSeparatedByString:@"."];
-        if(1 < [formattedPriceComponents count])
-        {
-            noFraction = [formattedPriceComponents objectAtIndex:0];
-            fraction = [formattedPriceComponents objectAtIndex:1];
-        }
-    }
-    else
-    {
-        noFraction = formattedPrice;
-    }
-    
-    if(3 < [noFraction length])
-    {
-        NSString *thousands = [noFraction substringWithRange:NSMakeRange([noFraction length] - 3, 3)];
-        NSString *other = [noFraction substringWithRange:NSMakeRange(0, [noFraction length] - 3)];
-        NSString *millions = @"";
-      
-        if(0 == [[country noDecimals] integerValue])
-        {
-            formattedPrice = [NSString stringWithFormat:@"%@%@%@", other, [country thousandsSep], thousands];
-            if(6 <[noFraction length])
-            {
-                thousands = [noFraction substringWithRange:NSMakeRange([noFraction length] - 3, 3)];
-                other = [noFraction substringWithRange:NSMakeRange([noFraction length] - 6, 3)];
-                millions = [noFraction substringWithRange:NSMakeRange(0, [noFraction length]- 6)];
-                formattedPrice = [NSString stringWithFormat:@"%@%@%@%@%@",millions, [country thousandsSep], other, [country thousandsSep], thousands];
-            }
-        }
-        else
-        {
-            while([[country noDecimals] integerValue] > [fraction length])
-            {
-                fraction = [NSString stringWithFormat:@"%@0",fraction];
-            }
-            
-            formattedPrice = [NSString stringWithFormat:@"%@%@%@%@%@", other, [country thousandsSep], thousands, [country decimalsSep], fraction];
-        }
-    }
-    else
-    {
-        if(0 == [[country noDecimals] integerValue])
-        {
-            formattedPrice = noFraction;
-        }
-        else
-        {
-            while([[country noDecimals] integerValue] > [fraction length])
-            {
-                fraction = [NSString stringWithFormat:@"%@0",fraction];
-            }
-            
-            formattedPrice = [NSString stringWithFormat:@"%@%@%@", noFraction, [country decimalsSep], fraction];
-        }
-    }
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    [formatter setMaximumFractionDigits:[[country noDecimals] integerValue]];
+    [formatter setMinimumFractionDigits:[[country noDecimals] integerValue]];
+    [formatter setRoundingMode: NSNumberFormatterRoundHalfEven];
+    [formatter setDecimalSeparator:[country decimalsSep]];
+    [formatter setGroupingSeparator:[country thousandsSep]];
+    [formatter setUsesGroupingSeparator:YES];
     
     if(!VALID_NOTEMPTY([country currencyPosition], NSNumber) || ![[country currencyPosition] boolValue])
     {
-        formattedPrice = [NSString stringWithFormat:@"%@ %@", [country currencySymbol], formattedPrice];
+        return [NSString stringWithFormat:@"%@ %@", [country currencySymbol], [formatter stringFromNumber:price]];
     }
     else
     {
-        formattedPrice = [NSString stringWithFormat:@"%@ %@", formattedPrice, [country currencySymbol]];
+        return [NSString stringWithFormat:@"%@ %@", [formatter stringFromNumber:price], [country currencySymbol]];
     }
-    
-    return formattedPrice;
 }
 
 + (void)saveConfiguration:(RICountryConfiguration *)configuration andContext:(BOOL)save

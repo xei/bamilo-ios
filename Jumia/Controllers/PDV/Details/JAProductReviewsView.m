@@ -398,7 +398,7 @@
     [self.viewControllerEvents showLoading];
     [RIProductRatings getRatingsDetails:_product.sku successBlock:^(NSDictionary *ratingsDictionary) {
         _ratingsDictionary = ratingsDictionary;
-        [self fillGraphics];
+        [self layoutSubviews];
         [self.viewControllerEvents onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         [self.viewControllerEvents hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
@@ -416,6 +416,7 @@
     [self.viewControllerEvents showLoading];
     [RIProductRatings getRatingsForProductWithSku:self.product.sku allowRating:1 pageNumber:(VALID_NOTEMPTY(self.productRatings, RIProductRatings)?self.productRatings.currentPage.intValue+1:1) successBlock:^(RIProductRatings *ratings) {
         self.productRatings = ratings;
+        [self.reviewsHeaderLine setTitle:[NSString stringWithFormat:@"%@ (%ld)", [STRING_USER_REVIEWS uppercaseString], (long)ratings.reviews.count]];
         [self.reviewsArray addObjectsFromArray:[self.productRatings.reviews mutableCopy]];
         _currentPage = self.productRatings.currentPage.integerValue;
         [self.collectionView reloadData];

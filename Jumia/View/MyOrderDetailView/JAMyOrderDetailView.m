@@ -89,10 +89,11 @@
         [self addSubview:self.collectionView];
     }
     [self.myOrderResumeView setOrder:order];
+    [self.itemsHeader setY:CGRectGetMaxY(self.myOrderResumeView.frame)];
     [self.collectionView reloadData];
     
     [self.collectionView setFrame:CGRectMake(self.collectionView.frame.origin.x,
-                                             self.collectionView.frame.origin.y,
+                                             CGRectGetMaxY(self.itemsHeader.frame),
                                              self.collectionView.frame.size.width,
                                              [self totalHeightForCollectionView])];
     
