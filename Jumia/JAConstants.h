@@ -142,6 +142,12 @@
 #define kAppStoreIdShop @"979214282"
 #define kAppStoreIdBamilo @"979950698"
 
+#define kAppStoreIdInteger 925015459
+#define kAppStoreIdDarazInteger 978058048
+#define kAppStoreIdShopInteger 979214282
+#define kAppStoreIdBamiloInteger 979950698
+
+
 // Preferences
 #define kDidFirstBuyKey @"did_first_buy"
 #define kNumberOfSessions @"amount_sessions"

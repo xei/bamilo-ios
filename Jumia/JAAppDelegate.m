@@ -125,6 +125,24 @@
                                                                             delegate:self];
 #endif
     
+    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
+    {
+        [[GSDAppIndexing sharedInstance] registerApp:kAppStoreIdInteger];
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
+    {
+        [[GSDAppIndexing sharedInstance] registerApp:kAppStoreIdDarazInteger];
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+    {
+        [[GSDAppIndexing sharedInstance] registerApp:kAppStoreIdShopInteger];
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
+    {
+        [[GSDAppIndexing sharedInstance] registerApp:kAppStoreIdBamiloInteger];
+    }
+
+    
     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
     
     [self checkSession];
@@ -181,6 +199,20 @@
     completionHandler();
 }
 #endif
+
+- (BOOL)application:(UIApplication *)application continueUserActivity:(nonnull NSUserActivity *)userActivity restorationHandler:(nonnull void (^)(NSArray * _Nullable))restorationHandler
+{
+    if ([[userActivity activityType] isEqualToString:NSUserActivityTypeBrowsingWeb]) {
+        [Adjust appWillOpenUrl:[userActivity webpageURL]];
+        
+        NSString *myUrl = [userActivity.webpageURL absoluteString];
+        
+        // Your code goes here
+        //NSURL * deeplink = [Adjust convertUniversalLink:[userActivity webpageURL] scheme:@"example"];
+        
+    }
+    return YES;
+}
 
 - (void)checkSession
 {
