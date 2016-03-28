@@ -180,25 +180,21 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         {
             
             if(IS_IOS_8_OR_LATER) {
-                UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: (UIRemoteNotificationTypeBadge
-                                                                                                      |UIRemoteNotificationTypeSound
-                                                                                                      |UIRemoteNotificationTypeAlert) categories:categories];
+                UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: (UIUserNotificationTypeSound
+                                                                                                      |UIUserNotificationTypeAlert) categories:categories];
                 [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
             } else {
-                [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
-                                                                                        UIRemoteNotificationTypeSound |
-                                                                                        UIRemoteNotificationTypeAlert )];
+                [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIUserNotificationTypeSound |
+                                                                                        UIUserNotificationTypeAlert )];
             }
         }
         else if(checkNotificationsSwitch && !checkNotificationsSwitch)
         {
             if(IS_IOS_8_OR_LATER) {
-                UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: (UIRemoteNotificationTypeBadge
-                                                                                                      |UIRemoteNotificationTypeSound) categories:categories];
+                UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: (UIUserNotificationTypeSound) categories:categories];
                 [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
             } else {
-                [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
-                                                                                        UIRemoteNotificationTypeAlert )];
+                [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert)];
             }
         }
         else{
