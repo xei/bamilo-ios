@@ -205,10 +205,11 @@
     if ([[userActivity activityType] isEqualToString:NSUserActivityTypeBrowsingWeb]) {
         [Adjust appWillOpenUrl:[userActivity webpageURL]];
         
-        NSString *myUrl = [userActivity.webpageURL absoluteString];
+        NSURL * deeplink = [Adjust convertUniversalLink:[userActivity webpageURL] scheme:@"jumia"];
         
-        // Your code goes here
-        //NSURL * deeplink = [Adjust convertUniversalLink:[userActivity webpageURL] scheme:@"example"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self handlePushNotificationURL:deeplink];
+        });
         
     }
     return YES;
