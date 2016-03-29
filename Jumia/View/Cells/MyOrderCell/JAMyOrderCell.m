@@ -9,10 +9,10 @@
 
 #import "JAMyOrderCell.h"
 
-#define kMyOrderHeight 58.0f
+#define kMyOrderHeight 48.0f
+#define KTopPadding 8.f
 #define KPadding 16.f
-#define KIPADPadding 24.f
-#define KPricePadding 20.f
+#define KPricePadding 10.f
 #define KSeperatorHeight 1.f
 
 @interface JAMyOrderCell ()
@@ -32,15 +32,12 @@
 
 - (void)setupWithOrder:(RITrackOrder*)order {
     
-    if ((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)) {
-        padding = KIPADPadding;
-    } else
-        padding = KPadding;
+    padding = KPadding;
     
     [self.priceLabel setText:order.totalFormatted];
     [self.priceLabel sizeToFit];
     
-    [self.orderNumberLabel setText:[NSString stringWithFormat:@"%@ %@",STRING_ORDER_NUMBER,order.orderId]];
+    [self.orderNumberLabel setText:order.orderId];
     [self.orderNumberLabel sizeToFit];
     
     [self.dateLabel setText:order.creationDate];
@@ -70,22 +67,22 @@
 - (UILabel *)orderNumberLabel {
     if (!VALID_NOTEMPTY(_orderNumberLabel, UILabel)) {
         _orderNumberLabel = [UILabel new];
-        [_orderNumberLabel setFont:JACaptionFont];
+        [_orderNumberLabel setFont:JAListFont];
         [_orderNumberLabel setTextColor:JABlackColor];
         [self.clickableView addSubview:_orderNumberLabel];
     }
-    [_orderNumberLabel setFrame:CGRectMake(padding, KPadding, _orderNumberLabel.width, _orderNumberLabel.height)];
+    [_orderNumberLabel setFrame:CGRectMake(padding, KTopPadding, _orderNumberLabel.width, _orderNumberLabel.height)];
     return _orderNumberLabel;
 }
 
 -(UILabel *)dateLabel {
     if (!VALID_NOTEMPTY(_dateLabel, UILabel)) {
         _dateLabel = [UILabel new];
-        [_dateLabel setFont:JACaptionFont];
-        [_dateLabel setTextColor:JABlackColor];
+        [_dateLabel setFont:JABodyFont];
+        [_dateLabel setTextColor:JABlack800Color];
         [self.clickableView addSubview:_dateLabel];
     }
-    [_dateLabel setFrame:CGRectMake(padding, kMyOrderHeight - _dateLabel.height - KPadding,
+    [_dateLabel setFrame:CGRectMake(padding, kMyOrderHeight - _dateLabel.height - KTopPadding,
                                     _dateLabel.width, _dateLabel.height)];
     return _dateLabel;
 }
@@ -93,7 +90,7 @@
 -(UILabel *)priceLabel {
     if (!VALID_NOTEMPTY(_priceLabel, UILabel)) {
         _priceLabel = [UILabel new];
-        [_priceLabel setFont:JACaptionFont];
+        [_priceLabel setFont:JABodyFont];
         [_priceLabel setTextColor:JABlackColor];
         [self.clickableView addSubview:_priceLabel];
     }
@@ -105,7 +102,7 @@
 -(UIView *)seperator {
     if (!VALID_NOTEMPTY(_seperator, UIView)) {
         _seperator = [UIView new];
-        [_seperator setBackgroundColor:JABlack300Color];
+        [_seperator setBackgroundColor:JABlack400Color];
         [self.clickableView addSubview:_seperator];
     }
     [_seperator setFrame:CGRectMake(0, self.height - KSeperatorHeight,
