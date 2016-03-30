@@ -47,10 +47,6 @@
     
     [self.scrollView setFrame:[self viewBounds]];
     [self.scrollView setBackgroundColor:[UIColor whiteColor]];
-    [self.webView setFrame:CGRectMake(self.scrollView.bounds.origin.x,
-                                      self.scrollView.bounds.origin.y,
-                                      self.scrollView.bounds.size.width,
-                                      1.0f)];
     
     if (NO == self.isLoaded) {
         [self showLoading];
@@ -159,10 +155,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 {
     [self hideLoading];
     [self.scrollView setFrame:[self viewBounds]];
-    [self.webView setFrame:CGRectMake(self.scrollView.bounds.origin.x,
-                                      self.scrollView.bounds.origin.y,
-                                      self.scrollView.bounds.size.width,
-                                      1.0f)];
+    [self.webView setFrame:self.scrollView.bounds];
     [self loadViews];
 }
 
