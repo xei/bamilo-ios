@@ -16,10 +16,7 @@
 {
     [super load];
     
-    CGFloat totalHeight = 129.0f; //value by design
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        totalHeight = 150.0f; //value by design
-    }
+    CGFloat totalHeight = 146.0f; //value by design
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
                               self.frame.size.width,
@@ -47,11 +44,11 @@
             
             RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
             
-            CGFloat textMarginX = 4.0;
-            CGFloat textMarginY = 6.0;
+            CGFloat textMarginX = 6.0;
+            CGFloat textMarginY = 4.0;
             UILabel* titleLabel = [UILabel new];
-            titleLabel.font = JAShopTeaserTitle;
-            titleLabel.textColor = [UIColor blackColor];
+            titleLabel.font = JATitleFont;
+            titleLabel.textColor = JABlackColor;
             titleLabel.text = component.title;
             [titleLabel sizeToFit];
             [titleLabel setFrame:CGRectMake(clickableView.bounds.origin.x + textMarginX,
@@ -61,7 +58,7 @@
             [clickableView addSubview:titleLabel];
             
             UILabel* subTitleLabel = [UILabel new];
-            subTitleLabel.font = JAShopTeaserSubTitle;
+            subTitleLabel.font = JACaptionFont;
             CGFloat subtitleYOffset = 0.0f;
             if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
             {
@@ -69,7 +66,7 @@
                 subtitleYOffset = -2.0f;
                 subTitleLabel.font = [UIFont fontWithName:kFontLightName size:subTitleLabel.font.pointSize-1];
             }
-            subTitleLabel.textColor = JAButtonTextOrange;
+            subTitleLabel.textColor = JABlack800Color;
             subTitleLabel.text = component.subTitle;
             [subTitleLabel sizeToFit];
             [subTitleLabel setFrame:CGRectMake(clickableView.bounds.origin.x + textMarginX,
@@ -84,11 +81,10 @@
             if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
                 titleLabel.textAlignment = NSTextAlignmentCenter;
                 subTitleLabel.textAlignment = NSTextAlignmentCenter;
-                imageBottomMargin = 12.0f;
             }
             NSString* imageUrl = component.imagePortraitUrl;
-            CGFloat imageHeight = 96; //value by design
-            CGFloat imageWidth = imageHeight;
+            CGFloat imageHeight = 112; //value by design
+            CGFloat imageWidth = 96; //value by design
             UIImageView* imageView = [UIImageView new];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];

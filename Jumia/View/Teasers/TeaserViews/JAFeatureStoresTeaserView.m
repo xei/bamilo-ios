@@ -35,10 +35,9 @@
         CGFloat currentY = groupingTitleLabel.frame.size.height;
         CGFloat marginX = 6.0f; //value by design
         CGFloat marginY = 6.0f; //value by design
-        CGFloat componentHeight = 44; //value by design
+        CGFloat componentHeight = 52; //value by design
         NSInteger numberOfComponentsForLine = 2;
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            componentHeight = 68.0f;
             numberOfComponentsForLine = self.teaserGrouping.teaserComponents.count / 2;
         }
         NSInteger numberOfMargins = numberOfComponentsForLine + 1;
@@ -71,7 +70,7 @@
             if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
                 imageMargin = 6.0f;
             }
-            CGFloat imageSide = 40.0f; //value by design
+            CGFloat imageSide = 48.0f; //value by design
             UIImageView* imageView = [UIImageView new];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
@@ -84,8 +83,8 @@
             CGFloat textMarginX = 6.0;
             CGFloat textMarginY = 5.0;
             UILabel* titleLabel = [UILabel new];
-            titleLabel.font = JATeaserFeatureStoreItemTitle;
-            titleLabel.textColor = [UIColor blackColor];
+            titleLabel.font = JATitleFont;
+            titleLabel.textColor = JABlackColor;
             titleLabel.text = component.title;
             [titleLabel sizeToFit];
             [titleLabel setFrame:CGRectMake(clickableView.bounds.origin.x + textMarginX,
@@ -95,8 +94,8 @@
             [clickableView addSubview:titleLabel];
             
             UILabel* subTitleLabel = [UILabel new];
-            subTitleLabel.font = JATeaserFeatureStoreItemSubTitle;
-            subTitleLabel.textColor = JAButtonTextOrange;
+            subTitleLabel.font = JACaptionFont;
+            subTitleLabel.textColor = JABlack800Color;
             subTitleLabel.text = component.subTitle;
             [subTitleLabel sizeToFit];
             [subTitleLabel setFrame:CGRectMake(clickableView.bounds.origin.x + textMarginX,
