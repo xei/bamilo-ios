@@ -225,15 +225,16 @@
         
         [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
         
-        //this will trigger load methods
-        self.topTabsView.startingIndex = startingIndex;
-        [self.topTabsView setupWithTabNames:optionList];
         self.pickerNamesAlreadySet = YES;
     }
     else if (VALID_NOTEMPTY(self.campaignTargetString, NSString)) {
         [self createCampaignPageAtX:currentX];
         [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
     }
+    
+    //this will trigger load methods
+    self.topTabsView.startingIndex = startingIndex;
+    [self.topTabsView setupWithTabNames:optionList];
     
     self.isLoaded = YES;
 }
