@@ -64,7 +64,7 @@
         CGFloat textMarginX = 6.0;
         CGFloat textMarginY = 4.0;
         UILabel* titleLabel = [UILabel new];
-        titleLabel.font = JASmallTeaserTitle;
+        titleLabel.font = JATitleFont;
         titleLabel.textColor = JABlackColor;
         titleLabel.text = component.title;
         [titleLabel sizeToFit];

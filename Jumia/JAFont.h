@@ -34,23 +34,6 @@
 
 #warning out of styleguide fonts
 
-#define JATeaserFeatureStoreItemSubTitle    [UIFont fontWithName:kFontLightName size:9.0f]
-#define JATeaserFeatureStoreItemTitle       [UIFont fontWithName:kFontLightName size:12.0f]
-
-#define JAShopTeaserSubTitle                [UIFont fontWithName:kFontLightName size:9.0f]
-#define JAShopTeaserTitle                   [UIFont fontWithName:kFontLightName size:12.0f]
-
-#define JASmallTeaserSubTitle               [UIFont fontWithName:kFontLightName size:9.0f]
-#define JASmallTeaserTitle                  [UIFont fontWithName:kFontLightName size:12.0f]
-
-#define JATopSellersTeaserTitle             [UIFont fontWithName:kFontLightName size:12.0f]
-
-#define JATeaserCampaignsMoreLabel          [UIFont fontWithName:kFontLightName size:12.0f]
-#define JATeaserCampaignsSubTitle           [UIFont fontWithName:kFontLightName size:12.0f]
-#define JATeaserCampaignsTitle              [UIFont fontWithName:kFontLightName size:12.0f]
-#define JATeaserCampaignsClockLabelInactive [UIFont fontWithName:kFontMediumName size:18.0f]
-#define JATeaserCampaignsClockLabelActive   [UIFont fontWithName:kFontMediumName size:25.0f]
-
 #define JACheckBoxTitle                     [UIFont fontWithName:kFontRegularName size:13.0f]
 
 #define JAPickerDoneLabel                   [UIFont fontWithName:kFontRegularName size:13.0f]
