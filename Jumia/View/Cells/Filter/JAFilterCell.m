@@ -36,9 +36,9 @@
     [self addSubview:self.clickView];
     
     if (cellIsSelected) {
-        self.clickView.backgroundColor = [UIColor whiteColor];
-    } else {
         self.clickView.backgroundColor = JABlack300Color;
+    } else {
+        self.clickView.backgroundColor = JAWhiteColor;
     }
     
     //find number of selected options
