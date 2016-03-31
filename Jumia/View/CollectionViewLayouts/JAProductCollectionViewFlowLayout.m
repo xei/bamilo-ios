@@ -52,7 +52,7 @@
     }
     
     for (int i = (int)init; i <= (int)last; i++) {
-        if (countOfItems == i+1 || ((i+1) % numberOfItemsPerLine != 0)) {
+        if (numberOfItemsPerLine > 1 && (countOfItems == i+1 || ((i+1) % numberOfItemsPerLine != 0))) {
             UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForDecorationViewOfKind:@"verticalSeparator" atIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
             [decorationAttributes addObject:attributes];
         }
