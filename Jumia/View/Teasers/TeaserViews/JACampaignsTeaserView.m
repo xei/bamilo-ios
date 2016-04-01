@@ -173,18 +173,7 @@
         [moreView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:moreView];
         
-        CGFloat marginBetweenLabelAndImage = 12.0f;
-        
-        UIImage* arrowImage = [UIImage imageNamed:@"campaignTeaserMoreArrow"];
-        UIImageView* arrowImageView = [[UIImageView alloc] initWithImage:arrowImage];
-        [moreView addSubview:arrowImageView];
-        if (RI_IS_RTL) {
-            [arrowImageView flipViewImage];
-        }
-        
-        CGFloat moreLabelMaxWidth = moreView.frame.size.width - arrowImage.size.width - marginBetweenLabelAndImage;
-        
-        UILabel* moreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, moreLabelMaxWidth, 1)];
+        UILabel* moreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, moreView.frame.size.width, 1)];
         moreLabel.font = JABodyFont;
         moreLabel.textColor = JABlue1Color;
         moreLabel.numberOfLines=2;
@@ -192,18 +181,10 @@
         [moreLabel sizeToFit];
         [moreView addSubview:moreLabel];
         
-        CGFloat labelPlusImageWidth = moreLabel.frame.size.width + arrowImage.size.width + marginBetweenLabelAndImage;
-        
-        [moreLabel setFrame:CGRectMake((moreView.frame.size.width - labelPlusImageWidth) / 2,
+        [moreLabel setFrame:CGRectMake((moreView.frame.size.width - moreLabel.frame.size.width) / 2,
                                        moreView.bounds.origin.y,
                                        moreLabel.bounds.size.width,
-                                       moreView.bounds.size.height)];
-        
-        [arrowImageView setFrame:CGRectMake(CGRectGetMaxX(moreLabel.frame) + marginBetweenLabelAndImage,
-                                            (moreView.frame.size.height - arrowImage.size.height) / 2,
-                                            arrowImage.size.width,
-                                            arrowImage.size.height)];
-        
+                                       moreView.bounds.size.height)];           
     }
     
     if (RI_IS_RTL) {
@@ -347,18 +328,7 @@
         [moreView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:moreView];
         
-        CGFloat marginBetweenLabelAndImage = 12.0f;
-        
-        UIImage* arrowImage = [UIImage imageNamed:@"campaignTeaserMoreArrow"];
-        UIImageView* arrowImageView = [[UIImageView alloc] initWithImage:arrowImage];
-        [moreView addSubview:arrowImageView];
-        if (RI_IS_RTL) {
-            [arrowImageView flipViewImage];
-        }
-        
-        CGFloat moreLabelMaxWidth = moreView.frame.size.width - arrowImage.size.width - marginBetweenLabelAndImage;
-        
-        UILabel* moreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, moreLabelMaxWidth, 1)];
+        UILabel* moreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, moreView.frame.size.width, 1)];
         moreLabel.font = JABodyFont;
         moreLabel.textColor = JABlue1Color;
         moreLabel.numberOfLines=-1;
@@ -366,17 +336,10 @@
         [moreLabel sizeToFit];
         [moreView addSubview:moreLabel];
         
-        CGFloat labelPlusImageWidth = moreLabel.frame.size.width + arrowImage.size.width + marginBetweenLabelAndImage;
-        
-        [moreLabel setFrame:CGRectMake((moreView.frame.size.width - labelPlusImageWidth) / 2,
+        [moreLabel setFrame:CGRectMake((moreView.frame.size.width - moreLabel.frame.size.width) / 2,
                                        moreView.bounds.origin.y,
                                        moreLabel.bounds.size.width,
                                        moreView.bounds.size.height)];
-        
-        [arrowImageView setFrame:CGRectMake(CGRectGetMaxX(moreLabel.frame) + marginBetweenLabelAndImage,
-                                            (moreView.frame.size.height - arrowImage.size.height) / 2,
-                                            arrowImage.size.width,
-                                            arrowImage.size.height)];
         
     }
     

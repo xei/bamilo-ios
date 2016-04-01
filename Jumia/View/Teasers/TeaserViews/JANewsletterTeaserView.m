@@ -75,7 +75,7 @@
         _submitButton = [UIButton buttonWithType:UIButtonTypeSystem];
         [_submitButton.titleLabel setFont:JABUTTONFont];
         [_submitButton setTitle:[STRING_SUBMIT uppercaseString] forState:UIControlStateNormal];
-        [_submitButton setTintColor:JAOrange1Color];
+        [_submitButton setTintColor:JABlue1Color];
         [_submitButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
         [_submitButton sizeToFit];
         [_submitButton setFrame:CGRectMake(kLateralMargin, kTopMargin, _submitButton.width, 20)];
