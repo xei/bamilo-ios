@@ -205,7 +205,13 @@
     if ([[userActivity activityType] isEqualToString:NSUserActivityTypeBrowsingWeb]) {
         [Adjust appWillOpenUrl:[userActivity webpageURL]];
         
-        NSURL * deeplink = [Adjust convertUniversalLink:[userActivity webpageURL] scheme:@"jumia"];
+        NSString* appName = [APP_NAME lowercaseString];
+        if ([appName isEqualToString:@"بامیلو"]) {
+            appName = @"bamilo";
+        } else if ([appName isEqualToString:@"shop.com.mm"]) {
+            appName = @"shop";
+        }
+        NSURL * deeplink = [Adjust convertUniversalLink:[userActivity webpageURL] scheme:appName];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [self handlePushNotificationURL:deeplink];
