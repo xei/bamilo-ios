@@ -420,7 +420,7 @@ UICollectionViewDelegateFlowLayout>
             
             [myOrderCell.clickableView setTag:indexPath.row];
             [myOrderCell.clickableView addTarget:self action:@selector(selectedOrder:) forControlEvents:UIControlEventTouchUpInside];
-            if (_selectedCellIndex == indexPath.row && (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+            if ((_selectedCellIndex<0?0:_selectedCellIndex) == indexPath.row && (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
                 [myOrderCell.clickableView setSelected:YES];
             }else{
                 [myOrderCell.clickableView setSelected:NO];
