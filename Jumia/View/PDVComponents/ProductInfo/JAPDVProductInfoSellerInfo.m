@@ -71,6 +71,8 @@
 {
     if (!VALID_NOTEMPTY(_sellerDeliveryLabel, UILabel)) {
         _sellerDeliveryLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, CGRectGetMaxY(self.sellerNameLabel.frame) + 8.f, self.width-32, 20)];
+        [_sellerDeliveryLabel setNumberOfLines:0];
+        [_sellerDeliveryLabel setTextAlignment:NSTextAlignmentLeft];
         [_sellerDeliveryLabel setFont:JABodyFont];
         [_sellerDeliveryLabel setTextColor:JABlackColor];
         [self.clickableView addSubview:_sellerDeliveryLabel];
@@ -210,7 +212,9 @@
     if (VALID_NOTEMPTY(seller.deliveryTime, NSString)) {
         
         [self.sellerDeliveryLabel setText:[seller.deliveryTime uppercaseString]];
-        [self.sellerDeliveryLabel sizeToFit];
+        CGFloat sellerDeliveryLabelWidth = self.width - self.sellerDeliveryLabel.x - (self.width - self.arrow.x);
+        [self.sellerDeliveryLabel setWidth:sellerDeliveryLabelWidth];
+        [self.sellerDeliveryLabel setHeight:[self.sellerDeliveryLabel sizeThatFits:CGSizeMake(sellerDeliveryLabelWidth, CGFLOAT_MAX)].height];
         [self setHeight:CGRectGetMaxY(self.sellerDeliveryLabel.frame) + 16.f];
         [self.clickableView setHeight:CGRectGetMaxY(self.sellerDeliveryLabel.frame) + 16.f];
         [self.sellerDeliveryTimeLabel setY:CGRectGetMaxY(self.sellerDeliveryLabel.frame) + 16.f];
@@ -218,6 +222,9 @@
     
     if (seller.isGlobal) {
         [self.sellerDeliveryLabel setX:self.shippingGlobalLabel.x];
+        CGFloat sellerDeliveryLabelWidth = self.width - self.sellerDeliveryLabel.x - (self.width - self.arrow.x);
+        [self.sellerDeliveryLabel setWidth:sellerDeliveryLabelWidth];
+        [self.sellerDeliveryLabel setHeight:[self.sellerDeliveryLabel sizeThatFits:CGSizeMake(sellerDeliveryLabelWidth, CGFLOAT_MAX)].height];
 
         [self.sellerDeliveryTimeLabel setText:[seller.cmsInfo uppercaseString]];
         [self.sellerDeliveryTimeLabel setX:self.shippingGlobalLabel.x];
