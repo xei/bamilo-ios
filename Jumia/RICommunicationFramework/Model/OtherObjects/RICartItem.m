@@ -95,6 +95,12 @@
         cartItem.specialPriceEuroConverted = [info objectForKey:@"special_price_converted"];
     }
     
+    if ([info objectForKey:@"free_shipping_possible"]) {
+        cartItem.freeShippingPossible = [[info objectForKey:@"free_shipping_possible"] boolValue];
+    } else {
+        cartItem.freeShippingPossible = NO;
+    }
+    
     return cartItem;
 }
 

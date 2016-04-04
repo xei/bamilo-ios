@@ -116,6 +116,7 @@
 @synthesize brandUrlKey;
 
 @synthesize hasStock;
+@synthesize freeShippingPossible;
 
 + (NSString *)getCompleteProductWithSku:(NSString*)sku
                            successBlock:(void (^)(id product))successBlock
@@ -541,6 +542,12 @@
         
         if ([dataDic objectForKey:@"max_saving_percentage"]) {
             newProduct.maxSavingPercentage = [NSString stringWithFormat:@"%@", [dataDic objectForKey:@"max_saving_percentage"]];
+        }
+        
+        if ([dataDic objectForKey:@"free_shipping_possible"]) {
+            newProduct.freeShippingPossible = [[dataDic objectForKey:@"free_shipping_possible"] boolValue];
+        } else {
+            newProduct.freeShippingPossible = NO;
         }
         
         if ([dataDic objectForKey:@"rating_reviews_summary"]) {

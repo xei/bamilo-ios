@@ -417,4 +417,7 @@
 #define STRING_VISIT_THE_OFFICIAL_BRAND_STORE RILocalizedString(@"visit_the_official_brand_store", nil)
 #define STRING_NEWSLETTER RILocalizedString(@"newsletter_label", nil)
 #define STRING_NEWSLETTER_PREFERENCES RILocalizedString(@"newsletter_preferences", nil)
+
+#define STRING_FREE_SHIPPING_POSSIBLE RILocalizedString(@"free_shipping_possible", nil)
+
 #endif
