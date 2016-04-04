@@ -268,6 +268,9 @@
             self.languageSubtitleLine.subTitle = language.langName;
         }
     }
+    if ([RICountryConfiguration getCurrentConfiguration].languages.count == 1) {
+        [self.languageSubtitleLine setHidden:YES];
+    }
     
     [self.countrySubtitleLine setSubTitle:[RIApi getCountryNameInUse]];
     
@@ -319,16 +322,50 @@
     [self.notificationSettingsHeaderLine setWidth:self.mainScrollView.width];
     [self.pushNotificationsSwitchLine setWidth:self.mainScrollView.width];
     [self.emailNotificationsSubLine setWidth:self.mainScrollView.width];
+    
+    CGFloat lastYOffset = CGRectGetMaxY(self.emailNotificationsSubLine.frame);
+    
     [self.shopSettingsHeaderLine setWidth:self.mainScrollView.width];
+    
+    RICountry* uniqueCountry = [RICountry getUniqueCountry];
+    if (VALID_NOTEMPTY(uniqueCountry, RICountry)) {
+        [self.shopSettingsHeaderLine setHidden:YES];
+        [self.countrySubtitleLine setHidden:YES];
+    }else{
+        lastYOffset = CGRectGetMaxY(self.countrySubtitleLine.frame);
+    }
+    
     [self.countrySubtitleLine setWidth:self.mainScrollView.width];
     [self.languageSubtitleLine setWidth:self.mainScrollView.width];
-    [self.moreSettingsHeaderLine setWidth:self.mainScrollView.width];
-    for (UIView *view in self.moreSettingsLines) {
-        [view setWidth:self.mainScrollView.width];
+    
+    if ([RICountryConfiguration getCurrentConfiguration].languages.count == 1) {
+        [self.languageSubtitleLine setHidden:YES];
+    }else{
+        if (self.shopSettingsHeaderLine.hidden) {
+            [self.shopSettingsHeaderLine setHidden:NO];
+            [self.languageSubtitleLine setY:CGRectGetMaxY(self.shopSettingsHeaderLine.frame)];
+            [self.languageSubtitleLine setTopSeparatorVisibility:NO];
+        }else{
+            [self.languageSubtitleLine setY:CGRectGetMaxY(self.countrySubtitleLine.frame)];
+        }
+        lastYOffset = CGRectGetMaxY(self.languageSubtitleLine.frame);
     }
+    [self.moreSettingsHeaderLine setY:lastYOffset];
+    [self.moreSettingsHeaderLine setWidth:self.mainScrollView.width];
+    lastYOffset = CGRectGetMaxY(self.moreSettingsHeaderLine.frame);
+    for (UIView *view in self.moreSettingsLines) {
+        [view setY:lastYOffset];
+        [view setWidth:self.mainScrollView.width];
+        lastYOffset = CGRectGetMaxY(view.frame);
+    }
+    [self.appSocialHeaderLine setY:lastYOffset];
     [self.appSocialHeaderLine setWidth:self.mainScrollView.width];
+    lastYOffset = CGRectGetMaxY(self.appSocialHeaderLine.frame);
+    [self.shareTheAppSubLine setY:lastYOffset];
     [self.shareTheAppSubLine setWidth:self.mainScrollView.width];
+    lastYOffset = CGRectGetMaxY(self.shareTheAppSubLine.frame);
     [self.rateTheAppSubLine setWidth:self.mainScrollView.width];
+    [self.rateTheAppSubLine setY:lastYOffset];
     
     if (RI_IS_RTL)
     {
