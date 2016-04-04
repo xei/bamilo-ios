@@ -48,6 +48,11 @@
     return UNKNOWN;
 }
 
+- (NSString *)targetString
+{
+    return [NSString stringWithFormat:@"%@::%@", self.type, self.node];
+}
+
 + (RITarget*)parseTarget:(NSString*)targetString;
 {
     RITarget* newTarget = [[RITarget alloc] init];

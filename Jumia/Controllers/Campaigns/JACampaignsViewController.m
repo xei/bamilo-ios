@@ -227,7 +227,7 @@
         
         self.pickerNamesAlreadySet = YES;
     }
-    else if (VALID_NOTEMPTY(self.campaignTargetString, NSString)) {
+    else if (VALID_NOTEMPTY(self.targetString, NSString)) {
         [self createCampaignPageAtX:currentX];
         [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
     }
@@ -269,8 +269,8 @@
                 if (VALID_NOTEMPTY(component, RITeaserComponent) && VALID_NOTEMPTY(component.targetString, NSString)) {
                     [self loadPage:campaignPageView withCampaignTargetString:component.targetString];
                 }
-            } else if (VALID_NOTEMPTY(self.campaignTargetString, NSString)) {
-                [self loadPage:campaignPageView withCampaignTargetString:self.campaignTargetString];
+            } else if (VALID_NOTEMPTY(self.targetString, NSString)) {
+                [self loadPage:campaignPageView withCampaignTargetString:self.targetString];
             }
         }
     }

@@ -10,6 +10,7 @@
 #import "JANavigationBarLayout.h"
 #import "JATabBarView.h"
 #import "BMA4SViewController.h"
+#import "JAScreenTarget.h"
 
 @interface JABaseViewController : BMA4SViewController <UISearchBarDelegate>
 
@@ -20,6 +21,8 @@
 @property (nonatomic, assign)BOOL firstLoading;
 @property (nonatomic, assign)BOOL searchBarIsVisible;
 @property (nonatomic, assign)BOOL tabBarIsVisible;
+
+@property (nonatomic, strong) NSString *targetString;
 
 /**
  * This method returns the correct bounds to be used, taking the searchBar positioning into account

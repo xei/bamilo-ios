@@ -160,8 +160,8 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
     [RICart resetCartWithSuccessBlock:^{} andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {}];
     
-    if (VALID_NOTEMPTY(self.rrTargetString, NSString)) {
-        [RIProduct getRichRelevanceRecommendationFromTarget:self.rrTargetString successBlock:^(NSSet *recommendationProducts, NSString *title) {
+    if (VALID_NOTEMPTY(self.targetString, NSString)) {
+        [RIProduct getRichRelevanceRecommendationFromTarget:self.targetString successBlock:^(NSSet *recommendationProducts, NSString *title) {
             [self.rrHeaderLine setTitle:[title uppercaseString]];
             [self setRrProducts:recommendationProducts];
         } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {

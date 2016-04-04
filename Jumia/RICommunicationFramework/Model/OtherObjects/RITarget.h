@@ -31,6 +31,7 @@ typedef enum {
 @property (nonatomic) TargetType targetType;
 @property (nonatomic, strong) NSString* node;
 @property (nonatomic, strong) NSString* urlString;
+@property (nonatomic, strong) NSString* targetString;
 
 + (RITarget *)parseTarget:(NSString*)targetString;
 + (NSString *)getURLStringforTargetString:(NSString*)targetString;

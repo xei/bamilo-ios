@@ -213,7 +213,7 @@
                                       isRecentSearch:YES
                                           andContext:YES];
     }
-    [[JACenterNavigationController sharedInstance] openTarget:suggestion.targetString];
+    [[JACenterNavigationController sharedInstance] openTargetString:suggestion.targetString];
     [self setHidden:YES];
 }
 

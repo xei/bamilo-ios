@@ -29,7 +29,7 @@
 #import "RIAddress.h"
 #import "JACatalogPictureCollectionViewCell.h"
 #import "JACollectionSeparator.h"
-#import "RITarget.h"
+#import "JACenterNavigationController.h"
 
 #define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
 #define JACatalogViewControllerMaxProducts 36
@@ -204,7 +204,7 @@ typedef void (^ProcessActionBlock)(void);
         self.categoryUrlKey = self.category.urlKey;
     }else if (VALID_NOTEMPTY(self.categoryUrlKey, NSString))
     {
-        self.catalogTargetString = [RITarget getTargetString:CATALOG_CATEGORY node:self.categoryUrlKey];
+        self.targetString = [RITarget getTargetString:CATALOG_CATEGORY node:self.categoryUrlKey];
     }
     
     self.apiResponse = RIApiResponseSuccess;
@@ -238,7 +238,7 @@ typedef void (^ProcessActionBlock)(void);
     
     [self setupViews];
     
-    if (VALID_NOTEMPTY(self.searchString, NSString) || VALID_NOTEMPTY(self.category, RICategory) || VALID_NOTEMPTY(self.catalogTargetString, NSString))
+    if (VALID_NOTEMPTY(self.searchString, NSString) || VALID_NOTEMPTY(self.category, RICategory) || VALID_NOTEMPTY(self.targetString, NSString))
     {
         [self loadMoreProducts];
     }
@@ -519,7 +519,7 @@ typedef void (^ProcessActionBlock)(void);
                 
                 self.isLoadingMoreProducts =YES;
                 
-                NSString* urlToUse = [RITarget getURLStringforTargetString:self.catalogTargetString];
+                NSString* urlToUse = [RITarget getURLStringforTargetString:self.targetString];
                 if (VALID_NOTEMPTY(self.categoryName, NSString)) {
                     urlToUse = [NSString stringWithFormat:@"%@%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_CATALOG_CATEGORY, self.categoryName];
                 }else if (VALID_NOTEMPTY(self.category, RICategory) && VALID_NOTEMPTY(self.category.targetString, NSString)) {
@@ -919,41 +919,12 @@ typedef void (^ProcessActionBlock)(void);
 -(void)clickableBannerPressed
 {
     if(VALID_NOTEMPTY(self.banner, RIBanner)) {
-        
-        NSMutableDictionary* userInfo = [NSMutableDictionary new];
-        [userInfo setObject:STRING_BACK forKey:@"show_back_button_title"];
+        RITarget *target = [RITarget parseTarget:self.banner.targetString];
+        JAScreenTarget *screenTarget = [[JAScreenTarget alloc] initWithTarget:target];
         if (VALID_NOTEMPTY(self.banner.title, NSString)) {
-            [userInfo setObject:self.banner.title forKey:@"title"];
+            [screenTarget.navBarLayout setTitle:self.banner.title];
         }
-        
-        NSString* notificationName;
-        
-        RITarget* target = [RITarget parseTarget:self.banner.targetString];
-        
-        if ([target.type isEqualToString:[RITarget getTargetKey:CATALOG_HASH]]) {
-            
-            notificationName = kDidSelectTeaserWithCatalogUrlNofication;
-            
-        } else if ([target.type isEqualToString:[RITarget getTargetKey:PRODUCT_DETAIL]]) {
-            
-            notificationName = kDidSelectTeaserWithPDVUrlNofication;
-            
-        } else if ([target.type isEqualToString:[RITarget getTargetKey:STATIC_PAGE]]) {
-            
-            notificationName = kDidSelectTeaserWithShopUrlNofication;
-            
-        } else if ([target.type isEqualToString:[RITarget getTargetKey:CAMPAIGN]]) {
-            
-            notificationName = kDidSelectCampaignNofication;
-
-        }
-        
-        if (VALID_NOTEMPTY(self.banner.targetString, NSString)) {
-            [userInfo setObject:self.banner.targetString forKey:@"targetString"];
-            [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
-                                                                object:nil
-                                                              userInfo:userInfo];
-        }
+        [[JACenterNavigationController sharedInstance] openScreenTarget:screenTarget];
     }
 }
 
@@ -1452,7 +1423,7 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)trackingEventFilter:(NSMutableDictionary *)trackingDictionary
 {
-    NSString* url = [RITarget getURLStringforTargetString:self.catalogTargetString];
+    NSString* url = [RITarget getURLStringforTargetString:self.targetString];
     [trackingDictionary setValue:url forKey:kRIEventLabelKey];
     [trackingDictionary setValue:STRING_FILTERS forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
