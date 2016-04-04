@@ -37,17 +37,20 @@
         [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontLightNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontBoldNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontMediumNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontItalicNameKey];
     } else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontRegularNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontLightNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontBoldNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontMediumNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontItalicNameKey];
     } else {
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontRegularNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue-Light" forKey:kFontLightNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue-Bold" forKey:kFontBoldNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue-Medium" forKey:kFontMediumNameKey];
-    }    
+        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue-Italic" forKey:kFontItalicNameKey];
+    }
     
 #if defined(DEBUG) && DEBUG
     

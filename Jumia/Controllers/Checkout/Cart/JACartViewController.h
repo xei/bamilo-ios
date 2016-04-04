@@ -61,6 +61,8 @@ JAPickerDelegate
 @property (strong, nonatomic) UILabel *couponValue;
 @property (strong, nonatomic) UILabel *totalLabel;
 @property (strong, nonatomic) UILabel *totalValue;
+@property (strong, nonatomic) UILabel *freeShippingLabel;
+@property (strong, nonatomic) UIImageView *freeShippingImageView;
 @property (strong, nonatomic) NSLayoutConstraint *subtotalViewConstrain;
 
 @property (strong, nonatomic) UIButton *checkoutButton;

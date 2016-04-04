@@ -829,6 +829,47 @@
     
     [self.subtotalView setHeight:CGRectGetMaxY(self.totalValue.frame) + 10.0f];
     
+    BOOL freeShippingPossible = NO;
+    for (RICartItem* cartItem in self.cart.cartItems) {
+        if (cartItem.freeShippingPossible) {
+            freeShippingPossible = YES;
+            break;
+        }
+    }
+    
+    if (freeShippingPossible) {
+        if (!self.freeShippingLabel) {
+            self.freeShippingLabel = [UILabel new];
+            [self.freeShippingLabel setFont:JACaptionItalicFont];
+            [self.freeShippingLabel setTextColor:JABlack800Color];
+            [self.freeShippingLabel setText:STRING_FREE_SHIPPING_POSSIBLE];
+            [self.freeShippingLabel sizeToFit];
+        }
+        
+        [self.subtotalView addSubview:self.freeShippingLabel];
+        [self.freeShippingLabel setFrame:CGRectMake(self.subtotalView.frame.size.width - self.freeShippingLabel.frame.size.width - 4.0f,
+                                                    CGRectGetMaxY(self.totalLabel.frame) + 8.0f,
+                                                    self.freeShippingLabel.frame.size.width,
+                                                    self.freeShippingLabel.frame.size.height)];
+        
+        UIImage* freeShippingImage = [UIImage imageNamed:@"freeShipping"];
+        if (!self.freeShippingImageView) {
+            self.freeShippingImageView = [[UIImageView alloc] initWithImage:freeShippingImage];
+        }
+        
+        [self.subtotalView addSubview:self.freeShippingImageView];
+        [self.freeShippingImageView setFrame:CGRectMake(self.freeShippingLabel.frame.origin.x - freeShippingImage.size.width - 4.0f,
+                                                        self.freeShippingLabel.frame.origin.y,
+                                                        freeShippingImage.size.width,
+                                                        freeShippingImage.size.height)];
+        
+        [self.subtotalView setHeight:CGRectGetMaxY(self.freeShippingLabel.frame) + 10.0f];
+    } else {
+    
+        [self.freeShippingLabel removeFromSuperview];
+        [self.freeShippingImageView removeFromSuperview];
+    }
+    
     NSString *greyButtonName = @"greyBig_%@";
     NSString *orangeButtonName = @"orangeBig_%@";
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
