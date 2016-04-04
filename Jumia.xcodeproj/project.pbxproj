@@ -908,6 +908,11 @@
 		9AE03A951C0CB224003CBEF1 /* JAAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE03A8A1C076CE1003CBEF1 /* JAAuthenticationViewController.m */; };
 		9AE03A961C0CB224003CBEF1 /* JAAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE03A8A1C076CE1003CBEF1 /* JAAuthenticationViewController.m */; };
 		9AE03A971C0CB225003CBEF1 /* JAAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE03A8A1C076CE1003CBEF1 /* JAAuthenticationViewController.m */; };
+		9AE766951CAEE1E000B63D8E /* JAScreenTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766941CAEE1E000B63D8E /* JAScreenTarget.m */; };
+		9AE766961CAEE1E000B63D8E /* JAScreenTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766941CAEE1E000B63D8E /* JAScreenTarget.m */; };
+		9AE766971CAEE1E000B63D8E /* JAScreenTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766941CAEE1E000B63D8E /* JAScreenTarget.m */; };
+		9AE766981CAEE1E000B63D8E /* JAScreenTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766941CAEE1E000B63D8E /* JAScreenTarget.m */; };
+		9AE766991CAEE1E000B63D8E /* JAScreenTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766941CAEE1E000B63D8E /* JAScreenTarget.m */; };
 		9AEA3B261B15D4AC00771EEA /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEA3B251B15D4AC00771EEA /* UIView+Frame.m */; };
 		9AEA3B271B15DD9B00771EEA /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEA3B251B15D4AC00771EEA /* UIView+Frame.m */; };
 		9AEA3B281B15DD9C00771EEA /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEA3B251B15D4AC00771EEA /* UIView+Frame.m */; };
@@ -3053,6 +3058,8 @@
 		9ADEA09A1C9C0E6D00B2A605 /* JAProductInfoSizeLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAProductInfoSizeLine.m; sourceTree = "<group>"; };
 		9AE03A891C076CE1003CBEF1 /* JAAuthenticationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAAuthenticationViewController.h; path = Authentication/JAAuthenticationViewController.h; sourceTree = "<group>"; };
 		9AE03A8A1C076CE1003CBEF1 /* JAAuthenticationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAAuthenticationViewController.m; path = Authentication/JAAuthenticationViewController.m; sourceTree = "<group>"; };
+		9AE766931CAEE1E000B63D8E /* JAScreenTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAScreenTarget.h; sourceTree = "<group>"; };
+		9AE766941CAEE1E000B63D8E /* JAScreenTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAScreenTarget.m; sourceTree = "<group>"; };
 		9AEA3B241B15D4AC00771EEA /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Frame.h"; path = "Categories/UIView+Frame.h"; sourceTree = "<group>"; };
 		9AEA3B251B15D4AC00771EEA /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Frame.m"; path = "Categories/UIView+Frame.m"; sourceTree = "<group>"; };
 		9AEADDC71C0DEA450074034A /* JARegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JARegisterViewController.h; path = Authentication/JARegisterViewController.h; sourceTree = "<group>"; };
@@ -4131,6 +4138,8 @@
 		4AE242DD1986567800E37C90 /* JARootViewController */ = {
 			isa = PBXGroup;
 			children = (
+				9AE766931CAEE1E000B63D8E /* JAScreenTarget.h */,
+				9AE766941CAEE1E000B63D8E /* JAScreenTarget.m */,
 				4AE242DE1986569000E37C90 /* JARootViewController.h */,
 				4AE242DF1986569000E37C90 /* JARootViewController.m */,
 				4A7F747F198A4EDA00621C0D /* JACenterNavigationController.h */,
@@ -7692,6 +7701,7 @@
 				FF4383E01C6CD4AC003BA957 /* JASwitchRadioComponent.m in Sources */,
 				9AC4D6A41B4A926700036F1C /* JACatalogGridCollectionViewCell.m in Sources */,
 				0422832b3e819cb8751b64ec /* JARatingsView.m in Sources */,
+				9AE766961CAEE1E000B63D8E /* JAScreenTarget.m in Sources */,
 				9AC4D6961B45A51900036F1C /* JACatalogListCollectionViewCell.m in Sources */,
 				CE166FA51BBC3C8B0084B334 /* RILocale.m in Sources */,
 				8467290c94785ccd3ea64ce6 /* JANavigationBarLayout.m in Sources */,
@@ -8165,6 +8175,7 @@
 				CED9B5CC1B590F2C0097EB30 /* RIFeaturedBoxTeaserGrouping.m in Sources */,
 				9A4F91141B3D5C3E00E34C0B /* JAPDVWizardView.m in Sources */,
 				B5A302DC19811E9200F71726 /* RIDataBaseWrapper.m in Sources */,
+				9AE766951CAEE1E000B63D8E /* JAScreenTarget.m in Sources */,
 				4AE242E01986569000E37C90 /* JARootViewController.m in Sources */,
 				B5C682F81986C41D0094C92C /* RIShippingMethodPickupStationOption.m in Sources */,
 			);
@@ -8502,6 +8513,7 @@
 				CED9B5CE1B590F2C0097EB30 /* RIFeaturedBoxTeaserGrouping.m in Sources */,
 				9A4F91161B3D5E7100E34C0B /* JAPDVWizardView.m in Sources */,
 				CE9ADC201AB34C4600D56481 /* RIDataBaseWrapper.m in Sources */,
+				9AE766971CAEE1E000B63D8E /* JAScreenTarget.m in Sources */,
 				CE9ADC211AB34C4600D56481 /* JARootViewController.m in Sources */,
 				CE9ADC221AB34C4600D56481 /* RIShippingMethodPickupStationOption.m in Sources */,
 			);
@@ -8829,6 +8841,7 @@
 				CED9B5CF1B590F2C0097EB30 /* RIFeaturedBoxTeaserGrouping.m in Sources */,
 				9A4F91171B3D5E7100E34C0B /* JAPDVWizardView.m in Sources */,
 				CE9ADE1A1AB6D6E900D56481 /* RIDataBaseWrapper.m in Sources */,
+				9AE766981CAEE1E000B63D8E /* JAScreenTarget.m in Sources */,
 				CE9ADE1B1AB6D6E900D56481 /* JARootViewController.m in Sources */,
 				CE9ADE1C1AB6D6E900D56481 /* RIShippingMethodPickupStationOption.m in Sources */,
 			);
@@ -9156,6 +9169,7 @@
 				CE9AE0141AB6D78200D56481 /* RIDataBaseWrapper.m in Sources */,
 				CEF0C48D1BE8EE44005B5B12 /* JAReviewCollectionCell.m in Sources */,
 				CE9AE0151AB6D78200D56481 /* JARootViewController.m in Sources */,
+				9AE766991CAEE1E000B63D8E /* JAScreenTarget.m in Sources */,
 				CEF0C48E1BE8EE56005B5B12 /* JASellerDeliveryView.m in Sources */,
 				CE9AE0161AB6D78200D56481 /* RIShippingMethodPickupStationOption.m in Sources */,
 			);

@@ -835,7 +835,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
             }
             else if ([key isEqualToString:@"camp"] && VALID_NOTEMPTY(arguments, NSString))
             {
-                [[JACenterNavigationController sharedInstance] openTarget:[RITarget getTargetString:CAMPAIGN node:arguments]];
+                [[JACenterNavigationController sharedInstance] openTargetString:[RITarget getTargetString:CAMPAIGN node:arguments]];
             }
             else if ([key isEqualToString:@"ss"])
             {
@@ -843,7 +843,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 {
                     NSString* shopID = [urlComponents objectAtIndex:2];
                     if (VALID_NOTEMPTY(shopID, NSString)) {
-                        [[JACenterNavigationController sharedInstance] openTarget:[RITarget getTargetString:STATIC_PAGE node:shopID]];
+                        [[JACenterNavigationController sharedInstance] openTargetString:[RITarget getTargetString:STATIC_PAGE node:shopID]];
                     }
                 }
             }

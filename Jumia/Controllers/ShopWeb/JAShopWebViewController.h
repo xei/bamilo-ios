@@ -10,8 +10,6 @@
 
 @interface JAShopWebViewController : JABaseViewController <UIWebViewDelegate>
 
-@property (nonatomic, strong)NSString* targetString;
-
 @property (nonatomic, strong) NSString* teaserTrackingInfo;
 
 @end

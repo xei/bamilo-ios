@@ -10,7 +10,8 @@
 #import "RIHtmlShop.h"
 #import "RIFeaturedBoxTeaserGrouping.h"
 #import "JATopSellersTeaserView.h"
-#import "RITarget.h"
+#import "JAScreenTarget.h"
+#import "JACenterNavigationController.h"
 
 @interface JAShopWebViewController ()
 
@@ -109,46 +110,10 @@
 - (BOOL)webView:(UIWebView *)webView
 shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType
-{    
-    NSString* targetString = [request.URL absoluteString];
-
-    RITarget* target = [RITarget parseTarget:targetString];
-    if (VALID_NOTEMPTY(target.type, NSString)) {
-        NSString* notificationName;
-        
-        if ([target.type isEqualToString:[RITarget getTargetKey:CATALOG_HASH]]) {
-            
-            notificationName = kDidSelectTeaserWithCatalogUrlNofication;
-            
-        } else if ([target.type isEqualToString:[RITarget getTargetKey:PRODUCT_DETAIL]]) {
-            
-            notificationName = kDidSelectTeaserWithPDVUrlNofication;
-            
-        } else if ([target.type isEqualToString:[RITarget getTargetKey:STATIC_PAGE]]) {
-            
-            notificationName = kDidSelectTeaserWithShopUrlNofication;
-            
-        } else if ([target.type isEqualToString:[RITarget getTargetKey:CAMPAIGN]]) {
-            
-            notificationName = kDidSelectCampaignNofication;
-            
-        }
-        
-        NSMutableDictionary* userInfo = [NSMutableDictionary new];
-        [userInfo setObject:STRING_BACK forKey:@"show_back_button_title"];
-        
-        if (self.teaserTrackingInfo) {
-            [userInfo setObject:self.teaserTrackingInfo forKey:@"teaserTrackingInfo"];
-        }
-        [userInfo setObject:targetString forKey:@"targetString"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
-                                                            object:nil
-                                                          userInfo:userInfo];
-        
-        return NO;
-    }
-    
-    return YES;
+{
+    RITarget *target = [RITarget parseTarget:[request.URL absoluteString]];
+    JAScreenTarget *screenTarget = [[JAScreenTarget alloc] initWithTarget:target];
+    return ![[JACenterNavigationController sharedInstance] openScreenTarget:screenTarget];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView

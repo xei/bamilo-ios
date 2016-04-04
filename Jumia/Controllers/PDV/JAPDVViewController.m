@@ -164,7 +164,7 @@ JAActivityViewControllerDelegate
     }
     else
     {
-        if (VALID_NOTEMPTY(self.productTargetString, NSString) || VALID_NOTEMPTY(self.productSku, NSString))
+        if (VALID_NOTEMPTY(self.targetString, NSString) || VALID_NOTEMPTY(self.productSku, NSString))
         {
             [self loadCompleteProduct];
         }
@@ -394,8 +394,8 @@ JAActivityViewControllerDelegate
     } else
         richParameter = nil;
     
-    if (VALID_NOTEMPTY(self.productTargetString, NSString)) {
-        [RIProduct getCompleteProductWithTargetString:self.productTargetString
+    if (VALID_NOTEMPTY(self.targetString, NSString)) {
+        [RIProduct getCompleteProductWithTargetString:self.targetString
                                     withRichParameter:richParameter
                                          successBlock:^(id product) {
                                              _needRefreshProduct = NO;
@@ -1031,7 +1031,7 @@ JAActivityViewControllerDelegate
 
 - (void)goToSisScreen
 {
-    [[JACenterNavigationController sharedInstance] openTarget:self.product.brandTarget];
+    [[JACenterNavigationController sharedInstance] openTargetString:self.product.brandTarget];
 }
 
 - (void)goToOtherSellersScreen

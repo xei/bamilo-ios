@@ -12,6 +12,5 @@
 @interface JASuccessPageViewController : JABaseViewController
 
 @property (strong, nonatomic) RICart *cart;
-@property (strong, nonatomic) NSString *rrTargetString;
 
 @end

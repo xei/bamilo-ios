@@ -53,7 +53,6 @@
 #import "JAFiltersViewController.h"
 #import "JANewsletterViewController.h"
 #import "JANewsletterSubscriptionViewController.h"
-#import "RITarget.h"
 
 #import "JAAuthenticationViewController.h"
 #import "JASearchView.h"
@@ -390,57 +389,73 @@
     [self customizeTabBar];
 }
 
-- (void)openTarget:(NSString *)targetString
+
+- (void)openTargetString:(NSString *)targetString
 {
-    RITarget *target = [RITarget parseTarget:targetString];
-    
-    switch (target.targetType) {
+    JAScreenTarget *screenTarget = [JAScreenTarget new];
+    screenTarget.target = [RITarget parseTarget:targetString];
+    [self openScreenTarget:screenTarget];
+}
+
+- (BOOL)openScreenTarget:(JAScreenTarget *)screenTarget
+{
+    switch (screenTarget.target.targetType) {
         case PRODUCT_DETAIL: {
-            JAPDVViewController *pdv = [JAPDVViewController new];
-            [pdv setProductTargetString:targetString];
-            [self pushViewController:pdv animated:YES];
-            break;
+            JAPDVViewController *viewController = [JAPDVViewController new];
+            [self loadScreenTarget:screenTarget forBaseViewController:viewController];
+            [self pushViewController:viewController animated:screenTarget.pushAnimation];
+            return YES;
         }
         case CATALOG_SEARCH: {
-            JACatalogViewController *catalog = [JACatalogViewController new];
-            [catalog setSearchString:[RITarget parseTarget:targetString].node];
-            [self pushViewController:catalog animated:YES];
-            break;
+            JACatalogViewController *viewController = [JACatalogViewController new];
+            [self loadScreenTarget:screenTarget forBaseViewController:viewController];
+            [viewController setSearchString:screenTarget.target.node];
+            [self pushViewController:viewController animated:screenTarget.pushAnimation];
+            return YES;
         }
         case CATALOG_HASH:
         case CATALOG_CATEGORY: {
-            JACatalogViewController *catalog = [JACatalogViewController new];
-            [catalog setCatalogTargetString:targetString];
-            [self pushViewController:catalog animated:YES];
-            break;
+            JACatalogViewController *viewController = [JACatalogViewController new];
+            [self loadScreenTarget:screenTarget forBaseViewController:viewController];
+            [self pushViewController:viewController animated:screenTarget.pushAnimation];
+            return YES;
         }
         case SHOP_IN_SHOP:
         case STATIC_PAGE: {
             JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
-            
+            [self loadScreenTarget:screenTarget forBaseViewController:viewController];
             [viewController.navBarLayout setShowBackButton:YES];
-            [viewController.navBarLayout setTitle:[RITarget parseTarget:targetString].node];
-                
-            [viewController setTargetString:targetString];
-            [self pushViewController:viewController animated:YES];
-            break;
+            if (!VALID(screenTarget.navBarLayout, JANavigationBarLayout)) {
+                viewController.navBarLayout = [JANavigationBarLayout new];
+                [viewController.navBarLayout setTitle:screenTarget.target.node];
+            }
+            [self pushViewController:viewController animated:screenTarget.pushAnimation];
+            return YES;
         }
         case CATALOG_BRAND: {
-            JACatalogViewController *catalog = [JACatalogViewController new];
-            [catalog setCatalogTargetString:targetString];
-            [self pushViewController:catalog animated:YES];
-            break;
+            JACatalogViewController *viewController = [JACatalogViewController new];
+            [self loadScreenTarget:screenTarget forBaseViewController:viewController];
+            [self pushViewController:viewController animated:screenTarget.pushAnimation];
+            return YES;
         }
         case CAMPAIGN: {
-            JACampaignsViewController *campaign = [JACampaignsViewController new];
-            [campaign setCampaignTargetString:targetString];
-            [self pushViewController:campaign animated:YES];
-            break;
+            JACampaignsViewController *viewController = [JACampaignsViewController new];
+            [self loadScreenTarget:screenTarget forBaseViewController:viewController];
+            [self pushViewController:viewController animated:screenTarget.pushAnimation];
+            return YES;
         }
             
         default:
-            break;
+            return NO;
     }
+}
+
+- (void)loadScreenTarget:(JAScreenTarget *)screenTarget forBaseViewController:(JABaseViewController *)viewController
+{
+    if (VALID(screenTarget.navBarLayout, JANavigationBarLayout)) {
+        [viewController setNavBarLayout:screenTarget.navBarLayout];
+    }
+    [viewController setTargetString:screenTarget.target.targetString];
 }
 
 #pragma mark Home Screen
@@ -1196,7 +1211,7 @@
         JASuccessPageViewController *thanksVC = [[JASuccessPageViewController alloc] init];
         
         thanksVC.cart = [notification.userInfo objectForKey:@"cart"];
-        thanksVC.rrTargetString = [notification.userInfo objectForKey:@"rrTargetString"];
+        thanksVC.targetString = [notification.userInfo objectForKey:@"rrTargetString"];
         
         [self pushViewController:thanksVC animated:YES];
     }
@@ -1222,7 +1237,7 @@
                                               andBrandName:(NSString *)brandName
 {
     JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
-    catalog.catalogTargetString = brandTargetString;
+    catalog.targetString = brandTargetString;
     catalog.forceShowBackButton = YES;
     
     catalog.navBarLayout.title = brandName;
@@ -1274,7 +1289,7 @@
     {
         JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         
-        catalog.catalogTargetString = targetString;
+        catalog.targetString = targetString;
         catalog.filterPush = filterPush;
         catalog.sortingMethodFromPush = sorting;
         
@@ -1482,7 +1497,7 @@
     if(VALID_NOTEMPTY(targetString, NSString))
     {
         JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
-        catalog.catalogTargetString = targetString;
+        catalog.targetString = targetString;
         catalog.navBarLayout.title = title;
         catalog.navBarLayout.showBackButton = YES;
         
@@ -1503,7 +1518,7 @@
         
         JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         
-        catalog.catalogTargetString = targetString;
+        catalog.targetString = targetString;
         catalog.navBarLayout.title = title;
         
         if ([notification.userInfo objectForKey:@"show_back_button_title"]) {
@@ -1561,7 +1576,7 @@
     } else if (VALID_NOTEMPTY(campaignTargetString, NSString)) {
         JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
         
-        campaignsVC.campaignTargetString = campaignTargetString;
+        campaignsVC.targetString = campaignTargetString;
         campaignsVC.teaserTrackingInfo = cameFromTeasers;
         
         [self pushViewController:campaignsVC animated:YES];
@@ -1579,7 +1594,7 @@
     if (VALID_NOTEMPTY(targetString, NSString) || VALID_NOTEMPTY(productSku, NSString))
     {
         JAPDVViewController *pdv = [JAPDVViewController new];
-        pdv.productTargetString = targetString;
+        pdv.targetString = targetString;
         pdv.productSku = productSku;
         
         if ([notification.userInfo objectForKey:@"richRelevance"]) {

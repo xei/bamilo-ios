@@ -28,7 +28,6 @@
 @property (nonatomic, strong)NSString* categoryUrlKey;
 @property (nonatomic, strong)NSString* categoryId;
 @property (nonatomic, strong)NSString* categoryName;
-@property (nonatomic, strong)NSString* catalogTargetString;
 @property (nonatomic, strong)NSString* searchString;
 @property (nonatomic, strong)NSString* filterPush;
 @property (nonatomic, strong)NSNumber* sortingMethodFromPush;
