@@ -40,8 +40,9 @@ JADatePickerDelegate
 
 @property (strong, nonatomic) UIScrollView *mainScrollView;
 @property (nonatomic) UILabel *headerLabel;
-@property (nonatomic) UILabel *topMessageLabel;
+@property (nonatomic) UILabel *casSubtitleLabel;
 @property (nonatomic) JAAccountServicesView *casAccountServicesImagesView;
+@property (nonatomic) UILabel *topMessageLabel;
 @property (strong, nonatomic) JABottomBar *registerButton;
 @property (strong, nonatomic) JADynamicForm *dynamicForm;
 
@@ -95,6 +96,42 @@ JADatePickerDelegate
     return _headerLabel;
 }
 
+- (UILabel *)casSubtitleLabel
+{
+    if (!VALID_NOTEMPTY(_casSubtitleLabel, UILabel)) {
+        _casSubtitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.headerLabel.frame) + kHeaderToTopMess, self.mainScrollView.width, 200)];
+        [_casSubtitleLabel setNumberOfLines:0];
+        [_casSubtitleLabel setTextAlignment:NSTextAlignmentCenter];
+        [_casSubtitleLabel setFont:JABodyFont];
+        [_casSubtitleLabel setTextColor:JABlack800Color];
+        [_casSubtitleLabel setWidth:self.view.width - 2*kLateralMargin];
+        [_casSubtitleLabel setHidden:YES];
+        
+        if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue && VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casSubtitle, NSString)) {
+            [_casSubtitleLabel setHidden:NO];
+            [_casSubtitleLabel setText:[RICountryConfiguration getCurrentConfiguration].casSubtitle];
+        }
+        [_casSubtitleLabel setHeight:[_casSubtitleLabel sizeThatFits:CGSizeMake(_casSubtitleLabel.width, CGFLOAT_MAX)].height];
+    }
+    return _casSubtitleLabel;
+}
+
+- (JAAccountServicesView *)casAccountServicesImagesView
+{
+    if (!VALID_NOTEMPTY(_casAccountServicesImagesView, JAAccountServicesView)) {
+        _casAccountServicesImagesView = [[JAAccountServicesView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.topMessageLabel.frame) + kTopMessToAccountServices, self.mainScrollView.width, kAccountServicesViewHeight)];
+        [_casAccountServicesImagesView setHidden:YES];
+        if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue && VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casImages, NSArray)) {
+            [_casAccountServicesImagesView setHidden:NO];
+            [_casAccountServicesImagesView setAccountServicesArray:[RICountryConfiguration getCurrentConfiguration].casImages];
+            if(VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casSubtitle, NSString)) {
+                [_casAccountServicesImagesView setY:CGRectGetMaxY(self.casSubtitleLabel.frame) + kTopMessToAccountServices];
+            }
+        }
+    }
+    return _casAccountServicesImagesView;
+}
+
 - (UILabel *)topMessageLabel
 {
     if (!VALID_NOTEMPTY(_topMessageLabel, UILabel)) {
@@ -105,30 +142,18 @@ JADatePickerDelegate
         [_topMessageLabel setTextColor:JABlack800Color];
         [_topMessageLabel setText:STRING_NEW_TO_JUMIA];
         [_topMessageLabel setWidth:self.view.width - 2*kLateralMargin];
+        [_topMessageLabel setHeight:[_topMessageLabel sizeThatFits:CGSizeMake(_topMessageLabel.width, CGFLOAT_MAX)].height];
         
         if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue) {
-            if (VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casSubtitle, NSString)) {
-                [_topMessageLabel setText:[RICountryConfiguration getCurrentConfiguration].casSubtitle];
+            if(VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casSubtitle, NSString)) {
+                [_topMessageLabel setY:CGRectGetMaxY(self.casSubtitleLabel.frame) + kTopMessToDynamicForm];
+            }
+            if(VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casImages, NSArray)) {
+                [_topMessageLabel setY:CGRectGetMaxY(self.casAccountServicesImagesView.frame) + kTopMessToDynamicForm];
             }
         }
-        [_topMessageLabel setHeight:[_topMessageLabel sizeThatFits:CGSizeMake(_topMessageLabel.width, CGFLOAT_MAX)].height];
     }
     return _topMessageLabel;
-}
-
-- (JAAccountServicesView *)casAccountServicesImagesView
-{
-    if (!VALID_NOTEMPTY(_casAccountServicesImagesView, JAAccountServicesView)) {
-        _casAccountServicesImagesView = [[JAAccountServicesView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.topMessageLabel.frame) + kTopMessToAccountServices, self.mainScrollView.width, kAccountServicesViewHeight)];
-        [_casAccountServicesImagesView setHidden:YES];
-        if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue) {
-            if (VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casImages, NSArray)) {
-                [_casAccountServicesImagesView setHidden:NO];
-                [_casAccountServicesImagesView setAccountServicesArray:[RICountryConfiguration getCurrentConfiguration].casImages];
-            }
-        }
-    }
-    return _casAccountServicesImagesView;
 }
 
 - (JACheckBoxComponent *)checkBoxComponent
@@ -178,6 +203,7 @@ JADatePickerDelegate
     
     [self.view addSubview:self.mainScrollView];
     [self.mainScrollView addSubview:self.headerLabel];
+    [self.mainScrollView addSubview:self.casSubtitleLabel];
     [self.mainScrollView addSubview:self.topMessageLabel];
     [self.mainScrollView addSubview:self.casAccountServicesImagesView];
     [self.mainScrollView addSubview:self.checkBoxComponent];
@@ -204,11 +230,7 @@ JADatePickerDelegate
        successBlock:^(RIForm *form) {
            [self hideLoading];
            
-           CGFloat yOffset = CGRectGetMaxY(self.topMessageLabel.frame) + kTopMessToDynamicForm;
-           
-           if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue && VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casImages, NSArray)) {
-               yOffset = CGRectGetMaxY(self.casAccountServicesImagesView.frame) + kTopMessToDynamicForm;
-           }
+           CGFloat yOffset = CGRectGetMaxY(self.topMessageLabel.frame) + kHeaderToTopMess;
            
            self.dynamicForm = [[JADynamicForm alloc] initWithForm:form values:@{@"email" : self.authenticationEmail} startingPosition:yOffset  hasFieldNavigation:YES];
            [self.dynamicForm setDelegate:self];
@@ -233,8 +255,9 @@ JADatePickerDelegate
     CGFloat y = self.mainScrollView.contentOffset.y;
     [self.mainScrollView setWidth:self.viewBounds.size.width - 2*kLateralMargin];
     [self.headerLabel setWidth:self.mainScrollView.width];
-    [self.topMessageLabel setWidth:self.mainScrollView.width];
+    [self.casSubtitleLabel setWidth:self.mainScrollView.width];
     [self.casAccountServicesImagesView setWidth:self.mainScrollView.width];
+    [self.topMessageLabel setWidth:self.mainScrollView.width];
     CGFloat xOffset = 40;
     CGFloat imageSpace = 30;
     for(JADynamicField *view in self.dynamicForm.formViews)
