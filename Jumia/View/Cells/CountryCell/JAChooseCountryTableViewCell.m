@@ -59,9 +59,6 @@
         [_checkImage setFrame:CGRectMake(self.width - checkImageSize.width - 16.f, (kCountryCellHeight - checkImageSize.height)/2, checkImageSize.width, checkImageSize.height)];
         [_checkImage setHidden:YES];
         [self addSubview:_checkImage];
-        if (RI_IS_RTL) {
-            [_checkImage flipViewImage];
-        }
     }
     return _checkImage;
 }
