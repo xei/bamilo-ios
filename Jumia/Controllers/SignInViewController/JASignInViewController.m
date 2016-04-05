@@ -20,7 +20,7 @@
 #define kSubTitleMargin 20
 #define kBeforeDynamicFormMargin 30
 #define kForgotPasswordMargin 16
-#define kLoginButtonMargin 48
+#define kLoginButtonMargin 20
 
 #define kIPadWidth 288
 
@@ -34,6 +34,7 @@
 @property (strong, nonatomic) UILabel *titleLabel;
 @property (strong, nonatomic) UILabel *subTitleLabel;
 @property (strong, nonatomic) JAAccountServicesView *casAccountServicesImagesView;
+@property (strong, nonatomic) UILabel *casSubtitleLabel;
 @property (strong, nonatomic) JADynamicForm *dynamicForm;
 @property (strong, nonatomic) UIButton *forgotPasswordButton;
 @property (strong, nonatomic) JABottomBar *loginButton;
@@ -80,12 +81,45 @@
     return _titleLabel;
 }
 
+- (UILabel *)casSubtitleLabel
+{
+    if (!VALID_NOTEMPTY(_casSubtitleLabel, UILabel)) {
+        _casSubtitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(kSideMargin, CGRectGetMaxY(self.titleLabel.frame) + kSubTitleMargin, _elementsWidth, kAccountServicesViewHeight)];
+        [_casSubtitleLabel setTextAlignment:NSTextAlignmentCenter];
+        [_casSubtitleLabel setNumberOfLines:0];
+        [_casSubtitleLabel setFont:JABodyFont];
+        [_casSubtitleLabel setTextColor:JABlack800Color];
+        [_casSubtitleLabel setHidden:YES];
+        if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue && VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casSubtitle, NSString)) {
+            [_casSubtitleLabel setHidden:NO];
+            [_casSubtitleLabel setText:[RICountryConfiguration getCurrentConfiguration].casSubtitle];
+        }
+    }
+    return _casSubtitleLabel;
+}
+
+- (JAAccountServicesView *)casAccountServicesImagesView
+{
+    if (!VALID_NOTEMPTY(_casAccountServicesImagesView, JAAccountServicesView)) {
+        _casAccountServicesImagesView = [[JAAccountServicesView alloc] initWithFrame:CGRectMake(kSideMargin, CGRectGetMaxY(self.titleLabel.frame) + kSubTitleMargin, _elementsWidth, kAccountServicesViewHeight)];
+        [_casAccountServicesImagesView setHidden:YES];
+        if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue && VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casImages, NSArray)) {
+            [_casAccountServicesImagesView setHidden:NO];
+            [_casAccountServicesImagesView setAccountServicesArray:[RICountryConfiguration getCurrentConfiguration].casImages];
+            if (VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casSubtitle, NSString)) {
+                [_casAccountServicesImagesView setY:CGRectGetMaxY(self.casSubtitleLabel.frame) + kSubTitleMargin];
+            }
+        }
+    }
+    return _casAccountServicesImagesView;
+}
+
 - (UILabel *)subTitleLabel
 {
     if (!VALID_NOTEMPTY(_subTitleLabel, UILabel)) {
         _subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(
                                                                    kSideMargin,
-                                                                   CGRectGetMaxY(self.titleLabel.frame) + kSubTitleMargin,
+                                                                   CGRectGetMaxY(self.titleLabel.frame) + kBeforeDynamicFormMargin,
                                                                    _elementsWidth,
                                                                    60)];
         [_subTitleLabel setTextAlignment:NSTextAlignmentCenter];
@@ -96,27 +130,15 @@
         
         if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue) {
             if (VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casSubtitle, NSString)) {
-                [_subTitleLabel setText:[RICountryConfiguration getCurrentConfiguration].casSubtitle];
+                [_subTitleLabel setY:CGRectGetMaxY(self.casSubtitleLabel.frame) + kBeforeDynamicFormMargin];
+            }
+            if (VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casImages, NSArray)) {
+                [_subTitleLabel setY:CGRectGetMaxY(self.casAccountServicesImagesView.frame) + kBeforeDynamicFormMargin];
             }
         }
         [_subTitleLabel setHeight:[_subTitleLabel sizeThatFits:CGSizeMake(_subTitleLabel.width, CGFLOAT_MAX)].height];
     }
     return _subTitleLabel;
-}
-
-- (JAAccountServicesView *)casAccountServicesImagesView
-{
-    if (!VALID_NOTEMPTY(_casAccountServicesImagesView, JAAccountServicesView)) {
-        _casAccountServicesImagesView = [[JAAccountServicesView alloc] initWithFrame:CGRectMake(kSideMargin, CGRectGetMaxY(self.subTitleLabel.frame) + kSubTitleMargin, _elementsWidth, kAccountServicesViewHeight)];
-        [_casAccountServicesImagesView setHidden:YES];
-        if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue) {
-            if (VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casImages, NSArray)) {
-                [_casAccountServicesImagesView setHidden:NO];
-                [_casAccountServicesImagesView setAccountServicesArray:[RICountryConfiguration getCurrentConfiguration].casImages];
-            }
-        }
-    }
-    return _casAccountServicesImagesView;
 }
 
 - (UIButton *)forgotPasswordButton
@@ -187,8 +209,9 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:self.mainScrollView];
     [self.mainScrollView addSubview:self.titleLabel];
-    [self.mainScrollView addSubview:self.subTitleLabel];
+    [self.mainScrollView addSubview:self.casSubtitleLabel];
     [self.mainScrollView addSubview:self.casAccountServicesImagesView];
+    [self.mainScrollView addSubview:self.subTitleLabel];
     [self.mainScrollView addSubview:self.forgotPasswordButton];
     [self.mainScrollView addSubview:self.loginButton];
     
@@ -236,11 +259,7 @@
     [RIForm getForm:@"login"
        successBlock:^(RIForm *form)
      {
-         CGFloat yOffset = CGRectGetMaxY(self.subTitleLabel.frame) + kBeforeDynamicFormMargin;
-         
-         if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue && VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casImages, NSArray)) {
-             yOffset = CGRectGetMaxY(self.casAccountServicesImagesView.frame) + kBeforeDynamicFormMargin;
-         }
+         CGFloat yOffset = CGRectGetMaxY(self.subTitleLabel.frame) + kSubTitleMargin;
          
          self.dynamicForm = [[JADynamicForm alloc] initWithForm:form values:@{@"email" : self.authenticationEmail} startingPosition:yOffset hasFieldNavigation:YES];
          [self.dynamicForm setDelegate:self];
