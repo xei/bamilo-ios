@@ -13,15 +13,17 @@
 #import "JATextFieldComponent.h"
 #import "RICustomer.h"
 #import "JAUtils.h"
+#import "JAAccountServicesView.h"
 
-#define kTopMargin 36
 #define kLateralMargin 16
-#define kUserIcon2TopMess 6
-#define kTopMess2FacebookButton 26
-#define kFacebookMess2Or 28
-#define kOr2Email 22
-#define kEmail2ContinueWithout 16
-#define kContinueWithout2ContinueLogin 16
+#define kTopMargin 30
+#define kUserIcon2TopMess 20
+#define kTopMess2AccountServices 20
+#define kAccountServices2Email 30
+#define kEmail2ContinueLogin 20
+#define kContinueLogin2OrMess 20
+#define kOrMess2FacebookButton 20
+#define kFacebookButton2ContinueWithout 20
 #define kWidth 288
 
 @interface JAAuthenticationViewController () <UITextFieldDelegate>
@@ -31,12 +33,15 @@
 
 @property (nonatomic) UIScrollView *mainScrollView;
 @property (nonatomic) UIImageView *userIcon;
+@property (nonatomic) UILabel *casTitleLabel;
 @property (nonatomic) UILabel *topMessageLabel;
 @property (nonatomic) JAButton *facebookButton;
 @property (nonatomic) UIView *orView;
 @property (nonatomic) JAButton *continueWithoutLoginButton;
 @property (nonatomic) JAButton *continueToLoginButton;
 @property (nonatomic) JATextFieldComponent *emailTextField;
+
+@property (nonatomic) JAAccountServicesView *casAccountServicesImagesView;
 
 @property (strong, nonatomic) UIButton *facebookLoginButton;
 
@@ -62,27 +67,70 @@
     return _userIcon;
 }
 
+- (UILabel *)casTitleLabel
+{
+    if (!VALID_NOTEMPTY(_casTitleLabel, UILabel)) {
+        _casTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.view.width - kWidth)/2, kTopMargin, kWidth, 50)];
+        [_casTitleLabel setTextAlignment:NSTextAlignmentCenter];
+        [_casTitleLabel setFont:JADisplay2Font];
+        [_casTitleLabel setTextColor:JABlackColor];
+        [_casTitleLabel setHidden:YES];
+        if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue) {
+            if (VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casTitle, NSString)) {
+                [_casTitleLabel setText:[RICountryConfiguration getCurrentConfiguration].casTitle];
+                [_casTitleLabel setHidden:NO];
+                [self.userIcon setHidden:YES];
+            }
+        }
+        [_casTitleLabel setHeight:[_casTitleLabel sizeThatFits:CGSizeMake(_casTitleLabel.width, CGFLOAT_MAX)].height];
+    }
+    return _casTitleLabel;
+}
+
 - (UILabel *)topMessageLabel
 {
     if (!VALID_NOTEMPTY(_topMessageLabel, UILabel)) {
         _topMessageLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.view.width - kWidth)/2, CGRectGetMaxY(self.userIcon.frame) + kUserIcon2TopMess, kWidth, 50)];
         [_topMessageLabel setTextAlignment:NSTextAlignmentCenter];
         [_topMessageLabel setNumberOfLines:0];
-        [_topMessageLabel setFont:JACaptionFont];
+        [_topMessageLabel setFont:JABodyFont];
         [_topMessageLabel setTextColor:JABlack800Color];
         [_topMessageLabel setText:STRING_LOGIN_LONG_MESSAGE];
-        CGFloat width = _topMessageLabel.width;
-        [_topMessageLabel sizeToFit];
-        [_topMessageLabel setWidth:width];
+        if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue) {
+            if (VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casSubtitle, NSString)) {
+                if (VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casTitle, NSString)) {
+                    [_topMessageLabel setY:CGRectGetMaxY(self.casTitleLabel.frame) + kUserIcon2TopMess];
+                }else{
+                    [_topMessageLabel setY:CGRectGetMaxY(self.userIcon.frame) + kUserIcon2TopMess];
+                }
+                [_topMessageLabel setText:[RICountryConfiguration getCurrentConfiguration].casSubtitle];
+            }
+        }
+        [_topMessageLabel setHeight:[_topMessageLabel sizeThatFits:CGSizeMake(_topMessageLabel.width, CGFLOAT_MAX)].height];
     }
     return _topMessageLabel;
+}
+
+- (JAAccountServicesView *)casAccountServicesImagesView
+{
+    if (!VALID_NOTEMPTY(_casAccountServicesImagesView, JAAccountServicesView)) {
+        _casAccountServicesImagesView = [[JAAccountServicesView alloc] initWithFrame:CGRectMake((self.view.width - kWidth)/2, CGRectGetMaxY(self.topMessageLabel.frame) + kTopMess2AccountServices, kWidth, kAccountServicesViewHeight)];
+        [_casAccountServicesImagesView setHidden:YES];
+        if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue) {
+            if (VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casImages, NSArray)) {
+                [_casAccountServicesImagesView setHidden:NO];
+                [_casAccountServicesImagesView setAccountServicesArray:[RICountryConfiguration getCurrentConfiguration].casImages];
+            }
+        }
+    }
+    return _casAccountServicesImagesView;
 }
 
 - (JAButton *)facebookButton
 {
     if (!VALID_NOTEMPTY(_facebookButton, JAButton)) {
         _facebookButton = [[JAButton alloc] initFacebookButtonWithTitle:[STRING_LOGIN_WITH_FACEBOOK uppercaseString] target:self action:@selector(facebookLoginButtonPressed:)];
-        [_facebookButton setFrame:CGRectMake((self.view.width - kWidth)/2, CGRectGetMaxY(self.topMessageLabel.frame) + kTopMess2FacebookButton, kWidth, 50)];
+        [_facebookButton setFrame:CGRectMake((self.view.width - kWidth)/2, CGRectGetMaxY(self.orView.frame) + kOrMess2FacebookButton, kWidth, 50)];
         [_facebookButton setTitleEdgeInsets:UIEdgeInsetsMake(_facebookButton.titleEdgeInsets.top, 40, _facebookButton.titleEdgeInsets.bottom, 10)];
     }
     return _facebookButton;
@@ -92,13 +140,13 @@
 {
     if (!VALID_NOTEMPTY(_orView, UIView)) {
         
-        CGRect frame = CGRectMake((self.view.width - kWidth)/2, CGRectGetMaxY(self.facebookButton.frame) + kTopMess2FacebookButton, kWidth, 30);
+        CGRect frame = CGRectMake((self.view.width - kWidth)/2, CGRectGetMaxY(self.continueToLoginButton.frame) + kContinueLogin2OrMess, kWidth, 30);
         _orView = [[UIView alloc] initWithFrame:frame];
         
         UILabel *orLabel = [[UILabel alloc] initWithFrame:CGRectMake(frame.size.width/2 - 25, (frame.size.height-30)/2, 100, 30)];
         [orLabel setTextAlignment:NSTextAlignmentCenter];
         [orLabel setTextColor:JABlack800Color];
-        [orLabel setFont:JACaptionFont];
+        [orLabel setFont:JABodyFont];
         [orLabel setText:STRING_OR];
         [orLabel sizeToFit];
         [_orView addSubview:orLabel];
@@ -109,11 +157,11 @@
         [orLabel setYCenterAligned];
         
         UIView *leftLine = [[UIView alloc] initWithFrame:CGRectMake(0, frame.size.height/2, frame.size.width/2 - textWidth/2, 1)];
-        [leftLine setBackgroundColor:JABlack800Color];
+        [leftLine setBackgroundColor:JABlack400Color];
         [_orView addSubview:leftLine];
         
         UIView *rightLine = [[UIView alloc] initWithFrame:CGRectMake(frame.size.width/2 + textWidth/2, frame.size.height/2, frame.size.width/2 - textWidth/2, 1)];
-        [rightLine setBackgroundColor:JABlack800Color];
+        [rightLine setBackgroundColor:JABlack400Color];
         [_orView addSubview:rightLine];
     }
     return _orView;
@@ -122,9 +170,12 @@
 - (JATextFieldComponent *)emailTextField
 {
     if (!VALID_NOTEMPTY(_emailTextField, JATextFieldComponent)) {
-        CGFloat yOffset = CGRectGetMaxY(self.topMessageLabel.frame) + kTopMess2FacebookButton;
-        if ([[RICountryConfiguration getCurrentConfiguration].facebookAvailable boolValue]){
-            yOffset = CGRectGetMaxY(self.orView.frame) + kOr2Email;
+        CGFloat yOffset = CGRectGetMaxY(self.topMessageLabel.frame) + kAccountServices2Email;
+        
+        if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue) {
+            if (VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casImages, NSArray)) {
+                yOffset = CGRectGetMaxY(self.casAccountServicesImagesView.frame) + kAccountServices2Email;
+            }
         }
         _emailTextField = [[JATextFieldComponent alloc] init];
         [_emailTextField setFrame:CGRectMake((self.view.width - kWidth)/2, yOffset, kWidth, _emailTextField.height)];
@@ -140,7 +191,11 @@
 {
     if (!VALID_NOTEMPTY(_continueWithoutLoginButton, JAButton)) {
         _continueWithoutLoginButton = [[JAButton alloc] initAlternativeButtonWithTitle:STRING_CONTINUE_WITHOUT_LOGIN target:self action:@selector(continueWithoutLogin)];
-        [_continueWithoutLoginButton setFrame:CGRectMake((self.view.width - kWidth)/2, CGRectGetMaxY(self.emailTextField.frame) + kEmail2ContinueWithout, kWidth, kBottomDefaultHeight)];
+        CGFloat yOffset = CGRectGetMaxY(self.continueToLoginButton.frame) + kContinueLogin2OrMess;
+        if ([[RICountryConfiguration getCurrentConfiguration].facebookAvailable boolValue]){
+            yOffset = CGRectGetMaxY(self.facebookButton.frame) + kFacebookButton2ContinueWithout;
+        }
+        [_continueWithoutLoginButton setFrame:CGRectMake((self.view.width - kWidth)/2, yOffset, kWidth, kBottomDefaultHeight)];
         if (self.checkout)
         {
             [_continueWithoutLoginButton setHidden:NO];
@@ -154,10 +209,7 @@
 - (JAButton *)continueToLoginButton
 {
     if (!VALID_NOTEMPTY(_continueToLoginButton, JAButton)) {
-        CGFloat yOffset = CGRectGetMaxY(self.continueWithoutLoginButton.frame) + kContinueWithout2ContinueLogin;
-        if (!self.checkout) {
-            yOffset = CGRectGetMaxY(self.emailTextField.frame) + kContinueWithout2ContinueLogin;
-        }
+        CGFloat yOffset = CGRectGetMaxY(self.emailTextField.frame) + kEmail2ContinueLogin;
         _continueToLoginButton = [[JAButton alloc] initButtonWithTitle:[STRING_CONTINUE uppercaseString] target:self action:@selector(checkEmail)];
         [_continueToLoginButton setFrame:CGRectMake((self.view.width - kWidth)/2, yOffset, kWidth, kBottomDefaultHeight)];
     }
@@ -178,17 +230,27 @@
     
     [self.view addSubview:self.mainScrollView];
     [self.mainScrollView addSubview:self.userIcon];
+    [self.mainScrollView addSubview:self.casTitleLabel];
     [self.mainScrollView addSubview:self.topMessageLabel];
+    [self.mainScrollView addSubview:self.casAccountServicesImagesView];
+    
+    [self.mainScrollView addSubview:self.emailTextField];
+    [self.mainScrollView addSubview:self.continueToLoginButton];
     
     if ([[RICountryConfiguration getCurrentConfiguration].facebookAvailable boolValue]){
         [self.mainScrollView addSubview:self.facebookButton];
         [self.mainScrollView addSubview:self.orView];
     }
-    
-    [self.mainScrollView addSubview:self.emailTextField];
     [self.mainScrollView addSubview:self.continueWithoutLoginButton];
-    [self.mainScrollView addSubview:self.continueToLoginButton];
-    [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, CGRectGetMaxY(self.continueToLoginButton.frame) + kContinueWithout2ContinueLogin)];
+    
+    CGFloat height = CGRectGetMaxY(self.continueToLoginButton.frame) + kContinueLogin2OrMess;
+    if (!self.facebookButton.hidden) {
+        height = CGRectGetMaxY(self.facebookButton.frame) + kFacebookButton2ContinueWithout;
+    }
+    if (self.checkout) {
+        height = CGRectGetMaxY(self.continueWithoutLoginButton.frame) + kContinueLogin2OrMess;
+    }
+    [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, height)];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)

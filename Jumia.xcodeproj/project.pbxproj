@@ -913,6 +913,11 @@
 		9AE766971CAEE1E000B63D8E /* JAScreenTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766941CAEE1E000B63D8E /* JAScreenTarget.m */; };
 		9AE766981CAEE1E000B63D8E /* JAScreenTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766941CAEE1E000B63D8E /* JAScreenTarget.m */; };
 		9AE766991CAEE1E000B63D8E /* JAScreenTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766941CAEE1E000B63D8E /* JAScreenTarget.m */; };
+		9AE7669E1CB3CF5300B63D8E /* JAAccountServicesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE7669D1CB3CF5300B63D8E /* JAAccountServicesView.m */; };
+		9AE7669F1CB3CF5300B63D8E /* JAAccountServicesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE7669D1CB3CF5300B63D8E /* JAAccountServicesView.m */; };
+		9AE766A01CB3CF5300B63D8E /* JAAccountServicesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE7669D1CB3CF5300B63D8E /* JAAccountServicesView.m */; };
+		9AE766A11CB3CF5300B63D8E /* JAAccountServicesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE7669D1CB3CF5300B63D8E /* JAAccountServicesView.m */; };
+		9AE766A21CB3CF5300B63D8E /* JAAccountServicesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE7669D1CB3CF5300B63D8E /* JAAccountServicesView.m */; };
 		9AEA3B261B15D4AC00771EEA /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEA3B251B15D4AC00771EEA /* UIView+Frame.m */; };
 		9AEA3B271B15DD9B00771EEA /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEA3B251B15D4AC00771EEA /* UIView+Frame.m */; };
 		9AEA3B281B15DD9C00771EEA /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEA3B251B15D4AC00771EEA /* UIView+Frame.m */; };
@@ -3060,6 +3065,9 @@
 		9AE03A8A1C076CE1003CBEF1 /* JAAuthenticationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAAuthenticationViewController.m; path = Authentication/JAAuthenticationViewController.m; sourceTree = "<group>"; };
 		9AE766931CAEE1E000B63D8E /* JAScreenTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAScreenTarget.h; sourceTree = "<group>"; };
 		9AE766941CAEE1E000B63D8E /* JAScreenTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAScreenTarget.m; sourceTree = "<group>"; };
+		9AE7669A1CB2B22100B63D8E /* Model_1.13.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.13.xcdatamodel; sourceTree = "<group>"; };
+		9AE7669C1CB3CF5300B63D8E /* JAAccountServicesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAAccountServicesView.h; sourceTree = "<group>"; };
+		9AE7669D1CB3CF5300B63D8E /* JAAccountServicesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAAccountServicesView.m; sourceTree = "<group>"; };
 		9AEA3B241B15D4AC00771EEA /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Frame.h"; path = "Categories/UIView+Frame.h"; sourceTree = "<group>"; };
 		9AEA3B251B15D4AC00771EEA /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Frame.m"; path = "Categories/UIView+Frame.m"; sourceTree = "<group>"; };
 		9AEADDC71C0DEA450074034A /* JARegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JARegisterViewController.h; path = Authentication/JARegisterViewController.h; sourceTree = "<group>"; };
@@ -4095,6 +4103,7 @@
 		4AE242DB198655D900E37C90 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				9AE7669B1CB3CF2300B63D8E /* Authentication */,
 				FFC9C0C01C984B1A00DD5851 /* TopTabsView */,
 				9A4ADF651C2AF0BD0019F439 /* CustomControls */,
 				CE06FCB41A88C374002FCD25 /* Catalog */,
@@ -4823,6 +4832,15 @@
 				9AE03A8A1C076CE1003CBEF1 /* JAAuthenticationViewController.m */,
 				9AEADDC71C0DEA450074034A /* JARegisterViewController.h */,
 				9AEADDC81C0DEA450074034A /* JARegisterViewController.m */,
+			);
+			name = Authentication;
+			sourceTree = "<group>";
+		};
+		9AE7669B1CB3CF2300B63D8E /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				9AE7669C1CB3CF5300B63D8E /* JAAccountServicesView.h */,
+				9AE7669D1CB3CF5300B63D8E /* JAAccountServicesView.m */,
 			);
 			name = Authentication;
 			sourceTree = "<group>";
@@ -7706,6 +7724,7 @@
 				CE166FA51BBC3C8B0084B334 /* RILocale.m in Sources */,
 				8467290c94785ccd3ea64ce6 /* JANavigationBarLayout.m in Sources */,
 				FF4B433C1C56735D0074241E /* RIRecentlyViewedProductSku.m in Sources */,
+				9AE7669F1CB3CF5300B63D8E /* JAAccountServicesView.m in Sources */,
 				d085cc95773f8a9e25e9ac1c /* RIPaymentMethodFormField.m in Sources */,
 				7e3a5f0e6afc1561038dbd8c /* Model.xcdatamodeld in Sources */,
 				9cbdf4e3cedc6bf19d69072d /* RICommunicationWrapper.m in Sources */,
@@ -7994,6 +8013,7 @@
 				CE0F130D1AF277F700F99356 /* JAKickoutView.m in Sources */,
 				CEE558621AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */,
 				FF0464931CA96E9000B82FD2 /* ADJActivityPackage.m in Sources */,
+				9AE7669E1CB3CF5300B63D8E /* JAAccountServicesView.m in Sources */,
 				9AED07E11C6DEA8800B5FDF0 /* ASRemoteIndex.m in Sources */,
 				9A3D217D1CA3041A00FE41B6 /* JAChooseCountryViewController.m in Sources */,
 				9DBD0C1D1C7F1CBB00F60374 /* JAProductInfoSISLine.m in Sources */,
@@ -8332,6 +8352,7 @@
 				CE0F130F1AF277F700F99356 /* JAKickoutView.m in Sources */,
 				CEE558641AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */,
 				FF0464951CA96E9000B82FD2 /* ADJActivityPackage.m in Sources */,
+				9AE766A01CB3CF5300B63D8E /* JAAccountServicesView.m in Sources */,
 				FFB0A37F1C529E9900EF9FE5 /* RIImage.m in Sources */,
 				9A3D217F1CA3041A00FE41B6 /* JAChooseCountryViewController.m in Sources */,
 				9DBD0C1F1C7F1CBB00F60374 /* JAProductInfoSISLine.m in Sources */,
@@ -8660,6 +8681,7 @@
 				CE0F13101AF277F700F99356 /* JAKickoutView.m in Sources */,
 				CEE558651AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */,
 				FF0464961CA96E9000B82FD2 /* ADJActivityPackage.m in Sources */,
+				9AE766A11CB3CF5300B63D8E /* JAAccountServicesView.m in Sources */,
 				FFB0A3801C529E9900EF9FE5 /* RIImage.m in Sources */,
 				9A3D21801CA3041A00FE41B6 /* JAChooseCountryViewController.m in Sources */,
 				9DBD0C201C7F1CBB00F60374 /* JAProductInfoSISLine.m in Sources */,
@@ -8988,6 +9010,7 @@
 				CE9ADF941AB6D78200D56481 /* JAPicker.m in Sources */,
 				CE9ADF971AB6D78200D56481 /* JAFallbackView.m in Sources */,
 				FF0464971CA96E9000B82FD2 /* ADJActivityPackage.m in Sources */,
+				9AE766A21CB3CF5300B63D8E /* JAAccountServicesView.m in Sources */,
 				9A3D21811CA3041A00FE41B6 /* JAChooseCountryViewController.m in Sources */,
 				9DBD0C211C7F1CBB00F60374 /* JAProductInfoSISLine.m in Sources */,
 				9AED07E51C6DEA8800B5FDF0 /* ASRemoteIndex.m in Sources */,
@@ -10409,6 +10432,7 @@
 		B5A3028F19811E9200F71726 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				9AE7669A1CB2B22100B63D8E /* Model_1.13.xcdatamodel */,
 				FF7A88F31C88C42E00E40625 /* Model_1.12.xcdatamodel */,
 				9A17D1A01C63C29A00851D6E /* Model_1.11.xcdatamodel */,
 				9D39EA2D1BFFA32D00C3F6E9 /* Model_1.10.xcdatamodel */,
@@ -10423,7 +10447,7 @@
 				CE73D4FF19E5866D0074F7F3 /* Model_1.1.xcdatamodel */,
 				B5A3029019811E9200F71726 /* Model.xcdatamodel */,
 			);
-			currentVersion = FF7A88F31C88C42E00E40625 /* Model_1.12.xcdatamodel */;
+			currentVersion = 9AE7669A1CB2B22100B63D8E /* Model_1.13.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
