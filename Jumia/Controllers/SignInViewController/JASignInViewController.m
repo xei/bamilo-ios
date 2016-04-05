@@ -13,12 +13,12 @@
 #import "JAUtils.h"
 #import "JABottomBar.h"
 #import "JAAuthenticationViewController.h"
+#import "JAAccountServicesView.h"
 
 #define kSideMargin 16
-#define kTopMargin 36
-#define kSubTitleMargin 6
-#define kBeforeDynamicFormMargin 4
-#define kDynamicFormMargin 28
+#define kTopMargin 30
+#define kSubTitleMargin 20
+#define kBeforeDynamicFormMargin 30
 #define kForgotPasswordMargin 16
 #define kLoginButtonMargin 48
 
@@ -33,6 +33,7 @@
 @property (strong, nonatomic) UIScrollView *mainScrollView;
 @property (strong, nonatomic) UILabel *titleLabel;
 @property (strong, nonatomic) UILabel *subTitleLabel;
+@property (strong, nonatomic) JAAccountServicesView *casAccountServicesImagesView;
 @property (strong, nonatomic) JADynamicForm *dynamicForm;
 @property (strong, nonatomic) UIButton *forgotPasswordButton;
 @property (strong, nonatomic) JABottomBar *loginButton;
@@ -68,8 +69,13 @@
         [_titleLabel setFont:JADisplay2Font];
         [_titleLabel setTextColor:JABlackColor];
         [_titleLabel setText:STRING_LOGIN_WELCOME_BACK];
-        [_titleLabel sizeToFit];
-        [_titleLabel setWidth:_elementsWidth];
+        
+        if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue) {
+            if (VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casTitle, NSString)) {
+                [_titleLabel setText:[RICountryConfiguration getCurrentConfiguration].casTitle];
+            }
+        }
+        [_titleLabel setHeight:[_titleLabel sizeThatFits:CGSizeMake(_titleLabel.width, CGFLOAT_MAX)].height];
     }
     return _titleLabel;
 }
@@ -84,13 +90,33 @@
                                                                    60)];
         [_subTitleLabel setTextAlignment:NSTextAlignmentCenter];
         [_subTitleLabel setNumberOfLines:0];
-        [_subTitleLabel setFont:JACaptionFont];
+        [_subTitleLabel setFont:JABodyFont];
         [_subTitleLabel setTextColor:JABlack800Color];
         [_subTitleLabel setText:STRING_LOGIN_ENTER_PASSWORD_TO_CONTINUE];
-        [_subTitleLabel sizeToFit];
-        [_subTitleLabel setWidth:_elementsWidth];
+        
+        if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue) {
+            if (VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casSubtitle, NSString)) {
+                [_subTitleLabel setText:[RICountryConfiguration getCurrentConfiguration].casSubtitle];
+            }
+        }
+        [_subTitleLabel setHeight:[_subTitleLabel sizeThatFits:CGSizeMake(_subTitleLabel.width, CGFLOAT_MAX)].height];
     }
     return _subTitleLabel;
+}
+
+- (JAAccountServicesView *)casAccountServicesImagesView
+{
+    if (!VALID_NOTEMPTY(_casAccountServicesImagesView, JAAccountServicesView)) {
+        _casAccountServicesImagesView = [[JAAccountServicesView alloc] initWithFrame:CGRectMake(kSideMargin, CGRectGetMaxY(self.subTitleLabel.frame) + kSubTitleMargin, _elementsWidth, kAccountServicesViewHeight)];
+        [_casAccountServicesImagesView setHidden:YES];
+        if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue) {
+            if (VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casImages, NSArray)) {
+                [_casAccountServicesImagesView setHidden:NO];
+                [_casAccountServicesImagesView setAccountServicesArray:[RICountryConfiguration getCurrentConfiguration].casImages];
+            }
+        }
+    }
+    return _casAccountServicesImagesView;
 }
 
 - (UIButton *)forgotPasswordButton
@@ -102,11 +128,9 @@
                                                    CGRectGetMaxY(self.subTitleLabel.frame) + kForgotPasswordMargin,
                                                    _elementsWidth,
                                                    _forgotPasswordButton.height)];
-        [_forgotPasswordButton.titleLabel setFont:JACaptionFont];
+        [_forgotPasswordButton.titleLabel setFont:JABodyFont];
         [_forgotPasswordButton setTitle:STRING_FORGOT_YOUR_PASSWORD forState:UIControlStateNormal];
         [_forgotPasswordButton setTitleColor:JABlue1Color forState:UIControlStateNormal];
-        /*[self.forgotPasswordButton setTitleColor:JAButtonOrange forState:UIControlStateHighlighted];
-         [self.forgotPasswordButton setTitleColor:JAButtonOrange forState:UIControlStateSelected];*/
         [_forgotPasswordButton addTarget:self action:@selector(forgotPasswordButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [_forgotPasswordButton sizeToFit];
         [_forgotPasswordButton setX:self.mainScrollView.width - self.forgotPasswordButton.width - kSideMargin];
@@ -164,6 +188,7 @@
     [self.view addSubview:self.mainScrollView];
     [self.mainScrollView addSubview:self.titleLabel];
     [self.mainScrollView addSubview:self.subTitleLabel];
+    [self.mainScrollView addSubview:self.casAccountServicesImagesView];
     [self.mainScrollView addSubview:self.forgotPasswordButton];
     [self.mainScrollView addSubview:self.loginButton];
     
@@ -211,7 +236,13 @@
     [RIForm getForm:@"login"
        successBlock:^(RIForm *form)
      {
-         self.dynamicForm = [[JADynamicForm alloc] initWithForm:form values:@{@"email" : self.authenticationEmail} startingPosition:0.0f hasFieldNavigation:YES];
+         CGFloat yOffset = CGRectGetMaxY(self.subTitleLabel.frame) + kBeforeDynamicFormMargin;
+         
+         if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue && VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casImages, NSArray)) {
+             yOffset = CGRectGetMaxY(self.casAccountServicesImagesView.frame) + kBeforeDynamicFormMargin;
+         }
+         
+         self.dynamicForm = [[JADynamicForm alloc] initWithForm:form values:@{@"email" : self.authenticationEmail} startingPosition:yOffset hasFieldNavigation:YES];
          [self.dynamicForm setDelegate:self];
          
          for(UIView *view in self.dynamicForm.formViews)
@@ -240,10 +271,9 @@
 #pragma mark - Action
 - (void)setupViewsVertically
 {
-    CGFloat dynamicFormCurrentY = CGRectGetMaxY(self.subTitleLabel.frame) + kBeforeDynamicFormMargin;
+    CGFloat dynamicFormCurrentY = 0.f;
     for (UIView *view in self.dynamicForm.formViews) {
         [view setX:kSideMargin];
-        [view setY:dynamicFormCurrentY + kDynamicFormMargin];
         dynamicFormCurrentY = CGRectGetMaxY(view.frame);
     }
     

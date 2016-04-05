@@ -34,6 +34,11 @@
 @dynamic algoliaNamespacePrefix;
 @dynamic algoliaApiKey;
 
+@dynamic casIsActive;
+@dynamic casTitle;
+@dynamic casSubtitle;
+@dynamic casImages;
+
 @synthesize suggesterProviderEnum;
 
 + (RICountryConfiguration *)parseCountryConfiguration:(NSDictionary *)json
@@ -146,6 +151,14 @@
         newConfig.algoliaAppId = VALID_VALUE([algolia objectForKey:@"application_id"], NSString);
         newConfig.algoliaNamespacePrefix = VALID_VALUE([algolia objectForKey:@"namespace_prefix"], NSString);
         newConfig.algoliaApiKey = VALID_VALUE([algolia objectForKey:@"suggester_api_key"], NSString);
+    }
+    
+    if (VALID_NOTEMPTY([json objectForKey:@"auth_info"], NSDictionary)) {
+        NSDictionary *casDictionary = [json objectForKey:@"auth_info"];
+        newConfig.casIsActive = @YES;
+        newConfig.casTitle = [casDictionary objectForKey:@"title"];
+        newConfig.casSubtitle = [casDictionary objectForKey:@"sub_title"];
+        newConfig.casImages = VALID_NOTEMPTY([casDictionary objectForKey:@"image_list"], NSArray)?[[casDictionary objectForKey:@"image_list"] valueForKey:@"url"]:nil;
     }
     
     [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICountryConfiguration class])];
