@@ -2779,8 +2779,8 @@
 		4A39212C19891F6D00B70A9C /* JARecentSearchesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARecentSearchesViewController.m; sourceTree = "<group>"; };
 		4A454F39199CBF1400B44821 /* RIAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAddress.h; sourceTree = "<group>"; };
 		4A454F3A199CBF1400B44821 /* RIAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIAddress.m; sourceTree = "<group>"; };
-		4A454F48199CE67500B44821 /* JAForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAForgotPasswordViewController.h; sourceTree = "<group>"; };
-		4A454F49199CE67500B44821 /* JAForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAForgotPasswordViewController.m; sourceTree = "<group>"; };
+		4A454F48199CE67500B44821 /* JAForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAForgotPasswordViewController.h; path = SignInViewController/JAForgotPasswordViewController.h; sourceTree = "<group>"; };
+		4A454F49199CE67500B44821 /* JAForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAForgotPasswordViewController.m; path = SignInViewController/JAForgotPasswordViewController.m; sourceTree = "<group>"; };
 		4A4ABF0D198B9DE600342D92 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4A7F747F198A4EDA00621C0D /* JACenterNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACenterNavigationController.h; sourceTree = "<group>"; };
 		4A7F7480198A4EDA00621C0D /* JACenterNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACenterNavigationController.m; sourceTree = "<group>"; };
@@ -2803,8 +2803,8 @@
 		4AE730C6198F8B05000CA1DD /* JAPDVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVViewController.m; sourceTree = "<group>"; };
 		4AE865BE19C9D7F100406159 /* JAEmailNotificationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAEmailNotificationsViewController.h; sourceTree = "<group>"; };
 		4AE865BF19C9D7F100406159 /* JAEmailNotificationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAEmailNotificationsViewController.m; sourceTree = "<group>"; };
-		4AFC7F8F199BC0BE007D67F4 /* JASignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASignInViewController.h; sourceTree = "<group>"; };
-		4AFC7F90199BC0BE007D67F4 /* JASignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASignInViewController.m; sourceTree = "<group>"; };
+		4AFC7F8F199BC0BE007D67F4 /* JASignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JASignInViewController.h; path = SignInViewController/JASignInViewController.h; sourceTree = "<group>"; };
+		4AFC7F90199BC0BE007D67F4 /* JASignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JASignInViewController.m; path = SignInViewController/JASignInViewController.m; sourceTree = "<group>"; };
 		520A37C61A4444CC0046C8B1 /* JAFilteredNoResultsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAFilteredNoResultsView.h; sourceTree = "<group>"; };
 		520A37C71A4444CC0046C8B1 /* JAFilteredNoResultsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAFilteredNoResultsView.m; sourceTree = "<group>"; };
 		520A37CB1A48904B0046C8B1 /* JAMyOrdersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMyOrdersViewController.h; sourceTree = "<group>"; };
@@ -4029,8 +4029,7 @@
 				4A39212C19891F6D00B70A9C /* JARecentSearchesViewController.m */,
 				CEE5F4DF1B1CB6B500556150 /* JARecentSearchesViewController.xib */,
 			);
-			name = RecentSearches;
-			path = ../RecentSearches;
+			path = RecentSearches;
 			sourceTree = "<group>";
 		};
 		4A39213B198921A100B70A9C /* GlobalNavigationBar */ = {
@@ -4258,11 +4257,6 @@
 		4AFC7F8E199BC0B2007D67F4 /* SignInViewController */ = {
 			isa = PBXGroup;
 			children = (
-				4A39211E19891F1500B70A9C /* RecentSearches */,
-				4AFC7F8F199BC0BE007D67F4 /* JASignInViewController.h */,
-				4AFC7F90199BC0BE007D67F4 /* JASignInViewController.m */,
-				4A454F48199CE67500B44821 /* JAForgotPasswordViewController.h */,
-				4A454F49199CE67500B44821 /* JAForgotPasswordViewController.m */,
 			);
 			path = SignInViewController;
 			sourceTree = "<group>";
@@ -4832,6 +4826,10 @@
 				9AE03A8A1C076CE1003CBEF1 /* JAAuthenticationViewController.m */,
 				9AEADDC71C0DEA450074034A /* JARegisterViewController.h */,
 				9AEADDC81C0DEA450074034A /* JARegisterViewController.m */,
+				4AFC7F8F199BC0BE007D67F4 /* JASignInViewController.h */,
+				4AFC7F90199BC0BE007D67F4 /* JASignInViewController.m */,
+				4A454F48199CE67500B44821 /* JAForgotPasswordViewController.h */,
+				4A454F49199CE67500B44821 /* JAForgotPasswordViewController.m */,
 			);
 			name = Authentication;
 			sourceTree = "<group>";
@@ -5630,6 +5628,7 @@
 				4AE730AF198F88CB000CA1DD /* PDV */,
 				4A944FF2199273E000C02734 /* Ratings */,
 				4A39211D19891F1500B70A9C /* RecentlyViewed */,
+				4A39211E19891F1500B70A9C /* RecentSearches */,
 				4AFC7F8E199BC0B2007D67F4 /* SignInViewController */,
 				CEA86D9B1A3756A6000032AD /* SizeGuide */,
 			);
