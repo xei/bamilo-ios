@@ -173,7 +173,7 @@
     if (!_shopFirstLogo) {
         _shopFirstLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shop_first_logo"]];
         [_shopFirstLogo sizeToFit];
-        [_shopFirstLogo setX:CGRectGetMaxX(self.sellerNameLabel.frame) + 10.f];
+        [_shopFirstLogo setXRightAligned:10.f];
         [_shopFirstLogo setY:self.sellerNameLabel.y];
         [_shopFirstLogo setUserInteractionEnabled:YES];
         UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -189,7 +189,8 @@
 {
     _seller = seller;
     [self.sellerNameLabel setText:seller.name];
-    [self.sellerNameLabel sizeToFit];
+
+    [self.sellerNameLabel sizeHeightToFit];
     
     [self checkIsShopFirst];
     
@@ -266,9 +267,9 @@
 - (void)checkIsShopFirst
 {
     if ([self.isShopFirst boolValue]) {
-        if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad && self.sellerNameLabel.width > 180.f) {
-            [self.sellerNameLabel setWidth:190.f];
-        }
+        [self.shopFirstLogo setXRightAligned:10.f];
+        CGFloat width = self.shopFirstLogo.x - self.sellerNameLabel.x - 10.f;
+        [self.sellerNameLabel setWidth:width];
         [self.shopFirstLogo setHidden:NO];
     } else {
         [self.shopFirstLogo setHidden:YES];

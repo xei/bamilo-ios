@@ -137,4 +137,9 @@
     }
 }
 
+- (void)sizeHeightToFit
+{
+    [self setHeight:[self sizeThatFits:CGSizeMake(self.width, CGFLOAT_MAX)].height];
+}
+
 @end
