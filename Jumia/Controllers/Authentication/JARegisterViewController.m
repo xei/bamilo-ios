@@ -30,7 +30,8 @@
 <
 JADynamicFormDelegate,
 JAPickerDelegate,
-JADatePickerDelegate
+JADatePickerDelegate,
+JAAccountServicesProtocol
 >
 {
     UIView *_firstResponder;
@@ -91,7 +92,7 @@ JADatePickerDelegate
                 [_headerLabel setText:[RICountryConfiguration getCurrentConfiguration].casTitle];
             }
         }
-        [_headerLabel setHeight:[_headerLabel sizeThatFits:CGSizeMake(_headerLabel.width, CGFLOAT_MAX)].height];
+        [_headerLabel sizeHeightToFit];
     }
     return _headerLabel;
 }
@@ -111,7 +112,7 @@ JADatePickerDelegate
             [_casSubtitleLabel setHidden:NO];
             [_casSubtitleLabel setText:[RICountryConfiguration getCurrentConfiguration].casSubtitle];
         }
-        [_casSubtitleLabel setHeight:[_casSubtitleLabel sizeThatFits:CGSizeMake(_casSubtitleLabel.width, CGFLOAT_MAX)].height];
+        [_casSubtitleLabel sizeHeightToFit];
     }
     return _casSubtitleLabel;
 }
@@ -119,11 +120,12 @@ JADatePickerDelegate
 - (JAAccountServicesView *)casAccountServicesImagesView
 {
     if (!VALID_NOTEMPTY(_casAccountServicesImagesView, JAAccountServicesView)) {
-        _casAccountServicesImagesView = [[JAAccountServicesView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.topMessageLabel.frame) + kTopMessToAccountServices, self.mainScrollView.width, kAccountServicesViewHeight)];
+        _casAccountServicesImagesView = [[JAAccountServicesView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.topMessageLabel.frame) + kTopMessToAccountServices, self.mainScrollView.width, kAccountServicesLineHeight)];
         [_casAccountServicesImagesView setHidden:YES];
         if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue && VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casImages, NSArray)) {
             [_casAccountServicesImagesView setHidden:NO];
             [_casAccountServicesImagesView setAccountServicesArray:[RICountryConfiguration getCurrentConfiguration].casImages];
+            [_casAccountServicesImagesView setDelegate:self];
             if(VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casSubtitle, NSString)) {
                 [_casAccountServicesImagesView setY:CGRectGetMaxY(self.casSubtitleLabel.frame) + kTopMessToAccountServices];
             }
@@ -710,6 +712,12 @@ JADatePickerDelegate
         }];
         
     }
+}
+
+- (void)accountServicesViewChange
+{
+    [self.topMessageLabel setYBottomOf:self.casAccountServicesImagesView at:kHeaderToTopMess];
+    [self setupViews];
 }
 
 @end
