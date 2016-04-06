@@ -77,6 +77,7 @@
         self.searchBar.delegate = self;
         self.searchBar.barTintColor = JABlack300Color;
         self.searchBar.placeholder = STRING_SEARCH;
+        [self.searchBar setValue:STRING_CANCEL forKey:@"_cancelButtonText"];
         self.searchBar.showsCancelButton = YES;
         [self.searchBar setSearchBarStyle:UISearchBarStyleDefault];
         
@@ -493,6 +494,14 @@
 - (void)updateCountry:(NSNotification *)notification
 {
     [self refreshData];
+    for (UIView *subView in self.searchBar.subviews[0].subviews) {
+        if ([subView isKindOfClass:NSClassFromString(@"UINavigationButton")]) {
+            UIButton *cancelButton = (UIButton*)subView;
+            [cancelButton setTitle:STRING_CANCEL forState:UIControlStateNormal];
+        }
+    }
+    self.searchBar.placeholder = STRING_SEARCH;
+    [self.searchBar setNeedsLayout];
 }
 
 @end
