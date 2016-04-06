@@ -25,6 +25,7 @@
 @interface JAPDVProductInfo() {
     UILabel *_sizesLabel;
     JAProductInfoPriceLine *_priceLine;
+    JAProductInfoBaseLine *_priceBackgroundLine;
     CGFloat _sellerYPosition;
 }
 
@@ -77,18 +78,51 @@
     /*
      *  PRICE
      */
-    _priceLine = [[JAProductInfoPriceLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
-    if (!isiPadInLandscape) {
-        [_priceLine setTopSeparatorVisibility:YES];
+    CGFloat priceBackgroundLineHeight = kProductInfoSingleLineHeight + 1.0f;
+    if (product.freeShippingPossible) {
+        priceBackgroundLineHeight += 20.0f;
     }
+    _priceBackgroundLine = [[JAProductInfoBaseLine alloc] initWithFrame:CGRectMake(0.0f, yOffset, frame.size.width, priceBackgroundLineHeight)];
+    if (!isiPadInLandscape) {
+        [_priceBackgroundLine setTopSeparatorVisibility:YES];
+    }
+    [self addSubview:_priceBackgroundLine];
     
+    _priceLine = [[JAProductInfoPriceLine alloc] initWithFrame:CGRectMake(0.0f, 1.0f, frame.size.width, kProductInfoSingleLineHeight)];
+
     if (VALID_NOTEMPTY(product.priceRange, NSString)) {
         [_priceLine setPrice:product.priceRange];
     } else {
         [self setSpecialPrice:product.specialPriceFormatted andPrice:product.priceFormatted andMaxSavingPercentage:product.maxSavingPercentage shouldForceFlip:NO];
     }
-    [self addSubview:_priceLine];
-    yOffset = CGRectGetMaxY(_priceLine.frame);
+    [_priceBackgroundLine addSubview:_priceLine];
+
+    if (product.freeShippingPossible) {
+        
+        UIImage* freeShippingImage = [UIImage imageNamed:@"freeShipping"];
+        UIImageView* freeShippingImageView = [[UIImageView alloc] initWithImage:freeShippingImage];
+        [_priceBackgroundLine addSubview:freeShippingImageView];
+        [freeShippingImageView setFrame:CGRectMake(17.0f,
+                                                   CGRectGetMaxY(_priceLine.frame) - 6.0f,
+                                                   freeShippingImage.size.width,
+                                                   freeShippingImage.size.height)];
+        
+        
+        UILabel* freeShippingLabel = [UILabel new];
+        [freeShippingLabel setFont:JACaptionItalicFont];
+        [freeShippingLabel setTextColor:JABlack800Color];
+        [freeShippingLabel setText:STRING_FREE_SHIPPING_POSSIBLE];
+        [freeShippingLabel sizeToFit];
+        
+        [_priceBackgroundLine addSubview:freeShippingLabel];
+        [freeShippingLabel setFrame:CGRectMake(CGRectGetMaxX(freeShippingImageView.frame) + 4.0f,
+                                               freeShippingImageView.frame.origin.y,
+                                               freeShippingLabel.frame.size.width,
+                                               freeShippingLabel.frame.size.height)];
+        
+    }
+    
+    yOffset = CGRectGetMaxY(_priceBackgroundLine.frame);
     
     /*
      *  RATINGS

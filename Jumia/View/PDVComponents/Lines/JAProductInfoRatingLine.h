@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JAProductInfoBaseLine.h"
 
-#define kProductInfoSingleLineHeight 48
+#define kProductInfoSingleLineHeight 47
 
 typedef NS_ENUM(NSInteger, JAImageRatingSize) {
     kImageRatingSizeMedium = 0,
