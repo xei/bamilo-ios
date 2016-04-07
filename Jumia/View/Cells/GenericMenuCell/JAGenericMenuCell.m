@@ -72,7 +72,7 @@
     CGFloat textTopOffset = 0.0f;
     CGFloat leftMargin = kLeftAndRightMargin;
     CGFloat rightMargin = kLeftAndRightMargin;
-    UIFont* font = JADisplay3Font;
+    UIFont* font = JAListFont;
     UIColor* textColor = [UIColor blackColor];
     NSString* text = cellText;
     
