@@ -24,7 +24,6 @@
                                            (kProductInfoSISLineHeight/2) - (kImageHeight/2),
                                            0.f,
                                            kImageHeight)];
-        [_sisImageView setBackgroundColor:[UIColor blueColor]];
         [self addSubview:_sisImageView];
     }
     return _sisImageView;
@@ -42,6 +41,8 @@
 - (void)setDefaults
 {
     [self setTopSeparatorVisibility:YES];
+    [self.label setFont:JABodyFont];
+    [self.label setTextColor:JABlue1Color];
 }
 
 - (void)setFrame:(CGRect)frame
