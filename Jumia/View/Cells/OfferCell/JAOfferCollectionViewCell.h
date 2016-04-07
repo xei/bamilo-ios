@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "RIProductOffer.h"
 #import "RIProductSimple.h"
+#import "JAClickableView.h"
 
 @interface JAOfferCollectionViewCell : UICollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UIButton *addToCartButton;
-@property (weak, nonatomic) IBOutlet UIButton *sizeButton;
+@property (nonatomic, strong) JAClickableView *addToCartClicableView;
+@property (nonatomic, strong) JAClickableView *sizeClickableView;
 
 - (void)loadWithProductOffer:(RIProductOffer*)productOffer withProductSimple:(RIProductSimple* )productSimple;
 - (void)setProductSimple:(RIProductSimple*)productSimple;
