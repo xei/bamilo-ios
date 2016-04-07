@@ -48,7 +48,7 @@
         _headerTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, kTopMargin, _formWidth - 2*kLateralMargin, 20)];
         [_headerTitleLabel setNumberOfLines:0];
         [_headerTitleLabel setTextAlignment:NSTextAlignmentLeft];
-        [_headerTitleLabel setFont:JADisplay3Font];
+        [_headerTitleLabel setFont:JAListFont];
         [_headerTitleLabel setText:STRING_SIGNUP_NEWSLETTER];
         [_headerTitleLabel setHeight:[_headerTitleLabel sizeThatFits:CGSizeMake(_headerTitleLabel.width, CGFLOAT_MAX)].height];
     }
