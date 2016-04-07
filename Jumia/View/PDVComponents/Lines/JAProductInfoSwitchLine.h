@@ -6,9 +6,9 @@
 //  Copyright © 2015 Rocket Internet. All rights reserved.
 //
 
-#import "JAProductInfoSubLine.h"
+#import "JAProductInfoSingleLine.h"
 
-@interface JAProductInfoSwitchLine : JAProductInfoSubLine
+@interface JAProductInfoSwitchLine : JAProductInfoSingleLine
 
 @property (nonatomic, strong) UISwitch *lineSwitch;
 

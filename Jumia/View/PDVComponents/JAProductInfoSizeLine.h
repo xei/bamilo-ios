@@ -6,8 +6,8 @@
 //  Copyright © 2016 Rocket Internet. All rights reserved.
 //
 
-#import "JAProductInfoSingleLine.h"
+#import "JAProductInfoSubLine.h"
 
-@interface JAProductInfoSizeLine : JAProductInfoSingleLine
+@interface JAProductInfoSizeLine : JAProductInfoSubLine
 
 @end

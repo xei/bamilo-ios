@@ -8,7 +8,7 @@
 
 #import "JAMoreMenuViewController.h"
 #import "JAProductInfoHeaderLine.h"
-#import "JAProductInfoSubLine.h"
+#import "JAProductInfoSingleLine.h"
 #import "RICustomer.h"
 #import "JAUtils.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
@@ -19,9 +19,9 @@
 @interface JAMoreMenuViewController ()
 
 @property (strong, nonatomic) JAProductInfoHeaderLine *moreHeaderLine;
-@property (strong, nonatomic) JAProductInfoSubLine *loginSubLine;
-@property (strong, nonatomic) JAProductInfoSubLine *recentlyViewedSubLine;
-@property (strong, nonatomic) JAProductInfoSubLine *trackMyOrderSubLine;
+@property (strong, nonatomic) JAProductInfoSingleLine *loginSingleLine;
+@property (strong, nonatomic) JAProductInfoSingleLine *recentlyViewedSingleLine;
+@property (strong, nonatomic) JAProductInfoSingleLine *trackMyOrderSingleLine;
 
 @end
 
@@ -37,36 +37,36 @@
     return _moreHeaderLine;
 }
 
-- (JAProductInfoSubLine *)loginSubLine
+- (JAProductInfoSingleLine *)loginSingleLine
 {
-    if (!VALID(_loginSubLine, JAProductInfoSubLine)) {
-        _loginSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.moreHeaderLine.frame), self.view.width, kProductInfoSubLineHeight)];
-        [_loginSubLine setTopSeparatorVisibility:NO];
-        [_loginSubLine setTitle:[RICustomer checkIfUserIsLogged]?STRING_LOGOUT:STRING_LOGIN];
-        [_loginSubLine addTarget:self action:@selector(loginSelection) forControlEvents:UIControlEventTouchUpInside];
+    if (!VALID(_loginSingleLine, JAProductInfoSingleLine)) {
+        _loginSingleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.moreHeaderLine.frame), self.view.width, kProductInfoSingleLineHeight)];
+        [_loginSingleLine setTopSeparatorVisibility:NO];
+        [_loginSingleLine setTitle:[RICustomer checkIfUserIsLogged]?STRING_LOGOUT:STRING_LOGIN];
+        [_loginSingleLine addTarget:self action:@selector(loginSelection) forControlEvents:UIControlEventTouchUpInside];
     }
-    return _loginSubLine;
+    return _loginSingleLine;
 }
 
-- (JAProductInfoSubLine *)recentlyViewedSubLine
+- (JAProductInfoSingleLine *)recentlyViewedSingleLine
 {
-    if (!VALID(_recentlyViewedSubLine, JAProductInfoSubLine)) {
-        _recentlyViewedSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.loginSubLine.frame), self.view.width, kProductInfoSubLineHeight)];
-        [_recentlyViewedSubLine setTitle:STRING_RECENTLY_VIEWED];
-        [_recentlyViewedSubLine addTarget:self action:@selector(recentlyViewedSelection) forControlEvents:UIControlEventTouchUpInside];
+    if (!VALID(_recentlyViewedSingleLine, JAProductInfoSingleLine)) {
+        _recentlyViewedSingleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.loginSingleLine.frame), self.view.width, kProductInfoSingleLineHeight)];
+        [_recentlyViewedSingleLine setTitle:STRING_RECENTLY_VIEWED];
+        [_recentlyViewedSingleLine addTarget:self action:@selector(recentlyViewedSelection) forControlEvents:UIControlEventTouchUpInside];
     }
-    return _recentlyViewedSubLine;
+    return _recentlyViewedSingleLine;
 }
 
-- (JAProductInfoSubLine *)trackMyOrderSubLine
+- (JAProductInfoSingleLine *)trackMyOrderSingleLine
 {
-    if (!VALID(_trackMyOrderSubLine, JAProductInfoSubLine)) {
-        _trackMyOrderSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.recentlyViewedSubLine.frame), self.view.width, kProductInfoSubLineHeight)];
-        [_trackMyOrderSubLine setBottomSeparatorVisibility:YES];
-        [_trackMyOrderSubLine setTitle:STRING_TRACK_MY_ORDER];
-        [_trackMyOrderSubLine addTarget:self action:@selector(trackMyOrdersSelection) forControlEvents:UIControlEventTouchUpInside];
+    if (!VALID(_trackMyOrderSingleLine, JAProductInfoSingleLine)) {
+        _trackMyOrderSingleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.recentlyViewedSingleLine.frame), self.view.width, kProductInfoSingleLineHeight)];
+        [_trackMyOrderSingleLine setBottomSeparatorVisibility:YES];
+        [_trackMyOrderSingleLine setTitle:STRING_TRACK_MY_ORDER];
+        [_trackMyOrderSingleLine addTarget:self action:@selector(trackMyOrdersSelection) forControlEvents:UIControlEventTouchUpInside];
     }
-    return _trackMyOrderSubLine;
+    return _trackMyOrderSingleLine;
 }
 
 - (void)viewDidLoad {
@@ -80,15 +80,15 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self.view addSubview:self.moreHeaderLine];
-    [self.view addSubview:self.loginSubLine];
-    [self.view addSubview:self.recentlyViewedSubLine];
-    [self.view addSubview:self.trackMyOrderSubLine];
+    [self.view addSubview:self.loginSingleLine];
+    [self.view addSubview:self.recentlyViewedSingleLine];
+    [self.view addSubview:self.trackMyOrderSingleLine];
 }
 
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-    [self.loginSubLine setTitle:[RICustomer checkIfUserIsLogged]?STRING_LOGOUT:STRING_LOGIN];
+    [self.loginSingleLine setTitle:[RICustomer checkIfUserIsLogged]?STRING_LOGOUT:STRING_LOGIN];
     BOOL changed = NO;
     for (UIView *subView in self.view.subviews) {
         if (!CGRectEqualToRect(subView.frame, self.viewBounds)) {
@@ -156,7 +156,7 @@
 
 - (void)userDidLogout
 {
-    [self.loginSubLine setTitle:[RICustomer checkIfUserIsLogged]?STRING_LOGOUT:STRING_LOGIN];
+    [self.loginSingleLine setTitle:[RICustomer checkIfUserIsLogged]?STRING_LOGOUT:STRING_LOGIN];
     [RICommunicationWrapper deleteSessionCookie];
     [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoggedOutNotification object:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
