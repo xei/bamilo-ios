@@ -24,7 +24,7 @@
 
 #define kIPadWidth 288
 
-@interface JASignInViewController() <JADynamicFormDelegate>
+@interface JASignInViewController() <JADynamicFormDelegate, JAAccountServicesProtocol>
 {
     CGFloat _elementsWidth;
     UIView *_firstResponder;
@@ -76,7 +76,7 @@
                 [_titleLabel setText:[RICountryConfiguration getCurrentConfiguration].casTitle];
             }
         }
-        [_titleLabel setHeight:[_titleLabel sizeThatFits:CGSizeMake(_titleLabel.width, CGFLOAT_MAX)].height];
+        [_titleLabel sizeHeightToFit];
     }
     return _titleLabel;
 }
@@ -84,7 +84,7 @@
 - (UILabel *)casSubtitleLabel
 {
     if (!VALID_NOTEMPTY(_casSubtitleLabel, UILabel)) {
-        _casSubtitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(kSideMargin, CGRectGetMaxY(self.titleLabel.frame) + kSubTitleMargin, _elementsWidth, kAccountServicesViewHeight)];
+        _casSubtitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(kSideMargin, CGRectGetMaxY(self.titleLabel.frame) + kSubTitleMargin, _elementsWidth, 30)];
         [_casSubtitleLabel setTextAlignment:NSTextAlignmentCenter];
         [_casSubtitleLabel setNumberOfLines:0];
         [_casSubtitleLabel setFont:JABodyFont];
@@ -94,6 +94,7 @@
             [_casSubtitleLabel setHidden:NO];
             [_casSubtitleLabel setText:[RICountryConfiguration getCurrentConfiguration].casSubtitle];
         }
+        [_casSubtitleLabel sizeHeightToFit];
     }
     return _casSubtitleLabel;
 }
@@ -101,11 +102,12 @@
 - (JAAccountServicesView *)casAccountServicesImagesView
 {
     if (!VALID_NOTEMPTY(_casAccountServicesImagesView, JAAccountServicesView)) {
-        _casAccountServicesImagesView = [[JAAccountServicesView alloc] initWithFrame:CGRectMake(kSideMargin, CGRectGetMaxY(self.titleLabel.frame) + kSubTitleMargin, _elementsWidth, kAccountServicesViewHeight)];
+        _casAccountServicesImagesView = [[JAAccountServicesView alloc] initWithFrame:CGRectMake(kSideMargin, CGRectGetMaxY(self.titleLabel.frame) + kSubTitleMargin, _elementsWidth, kAccountServicesLineHeight)];
         [_casAccountServicesImagesView setHidden:YES];
         if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue && VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casImages, NSArray)) {
             [_casAccountServicesImagesView setHidden:NO];
             [_casAccountServicesImagesView setAccountServicesArray:[RICountryConfiguration getCurrentConfiguration].casImages];
+            [_casAccountServicesImagesView setDelegate:self];
             if (VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casSubtitle, NSString)) {
                 [_casAccountServicesImagesView setY:CGRectGetMaxY(self.casSubtitleLabel.frame) + kSubTitleMargin];
             }
@@ -136,7 +138,7 @@
                 [_subTitleLabel setY:CGRectGetMaxY(self.casAccountServicesImagesView.frame) + kBeforeDynamicFormMargin];
             }
         }
-        [_subTitleLabel setHeight:[_subTitleLabel sizeThatFits:CGSizeMake(_subTitleLabel.width, CGFLOAT_MAX)].height];
+        [_subTitleLabel sizeHeightToFit];
     }
     return _subTitleLabel;
 }
@@ -205,6 +207,9 @@
     self.navBarLayout.showSearchButton = YES;
     
     _elementsWidth = self.viewBounds.size.width - (kSideMargin * 2);
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        _elementsWidth = kIPadWidth;
+    }
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:self.mainScrollView];
@@ -307,44 +312,19 @@
 
 - (void)setupViewsHorizontally
 {
-    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        CGFloat middleX = (self.mainScrollView.width / 2);
-        
-        [self.titleLabel setWidth:kIPadWidth];
-        [self.titleLabel setX:middleX - (self.titleLabel.width / 2)];
-        
-        [self.subTitleLabel setWidth:kIPadWidth];
-        [self.subTitleLabel setX:middleX - (self.subTitleLabel.width / 2)];
-        
-        for(UIView *view in self.dynamicForm.formViews)
-        {
-            [view setWidth:kIPadWidth];
-            [view setX:middleX - (view.width / 2)];
-        }
-        
-        [self.forgotPasswordButton setX:middleX + (kIPadWidth / 2) - self.forgotPasswordButton.width];
-        
-        [self.loginButton setWidth:kIPadWidth];
-        [self.loginButton setX:middleX - (self.loginButton.width / 2)];
-        
-    } else {
-        [self.titleLabel setWidth:_elementsWidth];
-        [self.titleLabel setX:kSideMargin];
-        
-        [self.subTitleLabel setWidth:_elementsWidth];
-        [self.subTitleLabel setX:kSideMargin];
-        
-        for(UIView *view in self.dynamicForm.formViews)
-        {
-            [view setWidth:_elementsWidth];
-            [view setX:kSideMargin];
-        }
-        
-        [self.forgotPasswordButton setX:self.mainScrollView.width - self.forgotPasswordButton.width - kSideMargin];
-        
-        [self.loginButton setWidth:_elementsWidth];
-        [self.loginButton setX:kSideMargin];
+    [self.titleLabel setXCenterAligned];
+    [self.casSubtitleLabel setXCenterAligned];
+    [self.casAccountServicesImagesView setXCenterAligned];
+    [self.subTitleLabel setXCenterAligned];
+    
+    for(UIView *view in self.dynamicForm.formViews)
+    {
+        [view setXCenterAligned];
     }
+    
+    [self.loginButton setWidth:_elementsWidth];
+    [self.loginButton setXCenterAligned];
+    [self.forgotPasswordButton setX:CGRectGetMaxX(self.loginButton.frame) - self.forgotPasswordButton.width];
     
     if(self.firstLoading)
     {
@@ -547,6 +527,12 @@
     }
     
     return height;
+}
+
+- (void)accountServicesViewChange
+{
+    [self.subTitleLabel setYBottomOf:self.casAccountServicesImagesView at:kBeforeDynamicFormMargin];
+    [self setupViewsVertically];
 }
 
 @end

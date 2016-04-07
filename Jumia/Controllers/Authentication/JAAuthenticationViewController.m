@@ -22,11 +22,11 @@
 #define kAccountServices2Email 30
 #define kEmail2ContinueLogin 20
 #define kContinueLogin2OrMess 20
-#define kOrMess2FacebookButton 20
+#define kOrMess2FacebookButton 10 // reducing 10px to get button bigger and clickable
 #define kFacebookButton2ContinueWithout 20
 #define kWidth 288
 
-@interface JAAuthenticationViewController () <UITextFieldDelegate>
+@interface JAAuthenticationViewController () <UITextFieldDelegate, JAAccountServicesProtocol>
 {
     CGFloat _offset;
 }
@@ -72,6 +72,7 @@
     if (!VALID_NOTEMPTY(_casTitleLabel, UILabel)) {
         _casTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.view.width - kWidth)/2, kTopMargin, kWidth, 50)];
         [_casTitleLabel setTextAlignment:NSTextAlignmentCenter];
+        [_casTitleLabel setNumberOfLines:0];
         [_casTitleLabel setFont:JADisplay2Font];
         [_casTitleLabel setTextColor:JABlackColor];
         [_casTitleLabel setHidden:YES];
@@ -82,7 +83,7 @@
                 [self.userIcon setHidden:YES];
             }
         }
-        [_casTitleLabel setHeight:[_casTitleLabel sizeThatFits:CGSizeMake(_casTitleLabel.width, CGFLOAT_MAX)].height];
+        [_casTitleLabel sizeHeightToFit];
     }
     return _casTitleLabel;
 }
@@ -106,7 +107,7 @@
                 [_topMessageLabel setText:[RICountryConfiguration getCurrentConfiguration].casSubtitle];
             }
         }
-        [_topMessageLabel setHeight:[_topMessageLabel sizeThatFits:CGSizeMake(_topMessageLabel.width, CGFLOAT_MAX)].height];
+        [_topMessageLabel sizeHeightToFit];
     }
     return _topMessageLabel;
 }
@@ -114,12 +115,13 @@
 - (JAAccountServicesView *)casAccountServicesImagesView
 {
     if (!VALID_NOTEMPTY(_casAccountServicesImagesView, JAAccountServicesView)) {
-        _casAccountServicesImagesView = [[JAAccountServicesView alloc] initWithFrame:CGRectMake((self.view.width - kWidth)/2, CGRectGetMaxY(self.topMessageLabel.frame) + kTopMess2AccountServices, kWidth, kAccountServicesViewHeight)];
+        _casAccountServicesImagesView = [[JAAccountServicesView alloc] initWithFrame:CGRectMake((self.view.width - kWidth)/2, CGRectGetMaxY(self.topMessageLabel.frame) + kTopMess2AccountServices, kWidth, kAccountServicesLineHeight)];
         [_casAccountServicesImagesView setHidden:YES];
         if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue) {
             if (VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casImages, NSArray)) {
                 [_casAccountServicesImagesView setHidden:NO];
                 [_casAccountServicesImagesView setAccountServicesArray:[RICountryConfiguration getCurrentConfiguration].casImages];
+                _casAccountServicesImagesView.delegate = self;
             }
         }
     }
@@ -129,9 +131,9 @@
 - (JAButton *)facebookButton
 {
     if (!VALID_NOTEMPTY(_facebookButton, JAButton)) {
-        _facebookButton = [[JAButton alloc] initFacebookButtonWithTitle:[STRING_LOGIN_WITH_FACEBOOK uppercaseString] target:self action:@selector(facebookLoginButtonPressed:)];
-        [_facebookButton setFrame:CGRectMake((self.view.width - kWidth)/2, CGRectGetMaxY(self.orView.frame) + kOrMess2FacebookButton, kWidth, 50)];
-        [_facebookButton setTitleEdgeInsets:UIEdgeInsetsMake(_facebookButton.titleEdgeInsets.top, 40, _facebookButton.titleEdgeInsets.bottom, 10)];
+        _facebookButton = [[JAButton alloc] initFacebookButtonWithTitle:STRING_LOGIN_WITH_FACEBOOK target:self action:@selector(facebookLoginButtonPressed:)];
+        [_facebookButton setFrame:CGRectMake((self.view.width - kWidth)/2, CGRectGetMaxY(self.orView.frame) + kOrMess2FacebookButton, kWidth, 45)];
+        [_facebookButton setTitleEdgeInsets:UIEdgeInsetsMake(_facebookButton.titleEdgeInsets.top, 30, _facebookButton.titleEdgeInsets.bottom, 10)];
     }
     return _facebookButton;
 }
@@ -636,6 +638,15 @@
         [self.emailTextField cleanError];
     }
     return YES;
+}
+
+- (void)accountServicesViewChange
+{
+    [self.emailTextField setYBottomOf:self.casAccountServicesImagesView at:kAccountServices2Email];
+    [self.continueToLoginButton setYBottomOf:self.emailTextField at:kEmail2ContinueLogin];
+    [self.orView setYBottomOf:self.continueToLoginButton at:kContinueLogin2OrMess];
+    [self.facebookButton setYBottomOf:self.orView at:kOrMess2FacebookButton];
+    [self.continueWithoutLoginButton setYBottomOf:self.facebookButton at:kFacebookButton2ContinueWithout];
 }
 
 @end

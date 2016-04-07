@@ -8,10 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+#define kAccountServicesLineHeight 18.f
+
+@protocol JAAccountServicesProtocol <NSObject>
+
+- (void)accountServicesViewChange;
+
+@end
+
 @interface JAAccountServicesView : UIView
 
-#define kAccountServicesViewHeight 18.f
-
 @property (nonatomic, strong) NSArray *accountServicesArray;
+@property (nonatomic, assign) id<JAAccountServicesProtocol> delegate;
 
 @end

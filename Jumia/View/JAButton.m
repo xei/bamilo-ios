@@ -73,12 +73,14 @@
 
 - (instancetype)initFacebookButtonWithTitle:(NSString *)title target:(id)target action:(SEL)action
 {
-    self = [[JAButton alloc] initButtonWithTitle:title];
+    self = [super init];
     if (self) {
+        [self setTitle:title forState:UIControlStateNormal];
+        [self.titleLabel setFont:JABodyFont];
         [self setBackgroundColor:[UIColor clearColor]];
-        [self setTitleColor:JAWhiteColor forState:UIControlStateNormal];
+        [self setTitleColor:JABlue1Color forState:UIControlStateNormal];
         [self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-        [self setBackgroundImage:[UIImage imageNamed:@"facebookMedium_normal"]];
+        [self setImage:[UIImage imageNamed:@"facebook_icon"] forState:UIControlStateNormal];
     }
     return self;
 }
