@@ -25,6 +25,8 @@
 @property (nonatomic, strong) NSNumber* shopFirst;
 @property (nonatomic, strong) RISeller* seller;
 
+@property (nonatomic) BOOL freeShippingPossible;
+
 + (NSString*)getProductOffersForProductWithSku:(NSString*)sku
                                   successBlock:(void (^)(NSArray *productOffers))successBlock
                                andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock;
