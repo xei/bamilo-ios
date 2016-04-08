@@ -120,7 +120,7 @@ JAAccountServicesProtocol
 - (JAAccountServicesView *)casAccountServicesImagesView
 {
     if (!VALID_NOTEMPTY(_casAccountServicesImagesView, JAAccountServicesView)) {
-        _casAccountServicesImagesView = [[JAAccountServicesView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.topMessageLabel.frame) + kTopMessToAccountServices, self.mainScrollView.width, kAccountServicesLineHeight)];
+        _casAccountServicesImagesView = [[JAAccountServicesView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.topMessageLabel.frame) + kTopMessToAccountServices, self.mainScrollView.width, 0.f)]; // view will define its height
         [_casAccountServicesImagesView setHidden:YES];
         if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue && VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casImages, NSArray)) {
             [_casAccountServicesImagesView setHidden:NO];

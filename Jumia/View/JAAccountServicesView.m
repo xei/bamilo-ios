@@ -9,6 +9,7 @@
 #import "JAAccountServicesView.h"
 #import "UIImageView+WebCache.h"
 
+#define kAccountServicesLineHeight 18.f
 #define kPadding 12
 
 @interface JAAccountServicesView ()
