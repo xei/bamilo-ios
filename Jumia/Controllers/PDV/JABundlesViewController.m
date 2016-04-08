@@ -9,7 +9,7 @@
 #import "JABundlesViewController.h"
 #import "JACatalogListCollectionViewCell.h"
 #import "JAButton.h"
-#import "JAProductInfoSubLine.h"
+#import "JAProductInfoSingleLine.h"
 #import "RICart.h"
 #import "JAPicker.h"
 #import "RIProductSimple.h"
@@ -33,7 +33,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 
 @property (nonatomic) UICollectionView *collectionView;
 @property (nonatomic) JAButton *bottomBar;
-@property (nonatomic) JAProductInfoSubLine *totalSubLine;
+@property (nonatomic) JAProductInfoSingleLine *totalSingleLine;
 @property (nonatomic) JAPicker *picker;
 
 @property (nonatomic) NSMutableDictionary* sizeButtonDictionary;
@@ -44,7 +44,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 
 @implementation JABundlesViewController
 
-@synthesize bundles = _bundles, totalSubLine = _totalSubLine, selectButtonFrame = _selectButtonFrame;
+@synthesize bundles = _bundles, totalSingleLine = _totalSingleLine, selectButtonFrame = _selectButtonFrame;
 
 - (NSArray *)bundles
 {
@@ -85,13 +85,13 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 {
     CGRect frame = self.view.bounds;
     frame.size.height-=kBottomDefaultHeight;
-    frame.size.height-=kProductInfoSubLineHeight;
+    frame.size.height-=kProductInfoSingleLineHeight;
     if (!VALID_NOTEMPTY(_collectionView, UICollectionView)) {
         _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:self.flowLayout];
         [_collectionView setBackgroundColor:[UIColor whiteColor]];
         _collectionView.height -= 64;
         _collectionView.height -= self.bottomBar.height;
-        _collectionView.height -= self.totalSubLine.height;
+        _collectionView.height -= self.totalSingleLine.height;
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         [self.view addSubview:_collectionView];
@@ -130,30 +130,30 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     return _bottomBar;
 }
 
-- (JAProductInfoSubLine *)totalSubLine
+- (JAProductInfoSingleLine *)totalSingleLine
 {
-    CGRect frame = CGRectMake(0, CGRectGetMaxY(_collectionView.frame), self.view.width, kProductInfoSubLineHeight);
+    CGRect frame = CGRectMake(0, CGRectGetMaxY(_collectionView.frame), self.view.width, kProductInfoSingleLineHeight);
     if ([self isLandscape]) {
         frame.origin.y = self.view.height - frame.size.height;
         frame.size.width = self.view.width/2;
     }
-    if (!VALID_NOTEMPTY(_totalSubLine, JAProductInfoSubLine)) {
-        _totalSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_collectionView.frame) - kProductInfoSubLineHeight, self.view.width, kProductInfoSubLineHeight)];
-        [_totalSubLine setTopSeparatorVisibility:YES];
-        [self.view addSubview:_totalSubLine];
+    if (!VALID_NOTEMPTY(_totalSingleLine, JAProductInfoSingleLine)) {
+        _totalSingleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_collectionView.frame) - kProductInfoSingleLineHeight, self.view.width, kProductInfoSingleLineHeight)];
+        [_totalSingleLine setTopSeparatorVisibility:YES];
+        [self.view addSubview:_totalSingleLine];
     }
     else {
-        if (!CGRectEqualToRect(frame, _totalSubLine.frame)) {
-            [_totalSubLine setFrame:frame];
+        if (!CGRectEqualToRect(frame, _totalSingleLine.frame)) {
+            [_totalSingleLine setFrame:frame];
         }
     }
     
     if(RI_IS_RTL)
     {
-        [_totalSubLine flipViewPositionInsideSuperview];
-        [_totalSubLine flipAllSubviews];
+        [_totalSingleLine flipViewPositionInsideSuperview];
+        [_totalSingleLine flipAllSubviews];
     }
-    return _totalSubLine;
+    return _totalSingleLine;
 }
 
 - (JAPicker *)picker
@@ -185,7 +185,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     [self collectionView];
-    [self totalSubLine];
+    [self totalSingleLine];
     [self bottomBar];
 }
 
@@ -382,9 +382,9 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
         else
             totalPrice += bundleSimple.price.integerValue;
     }
-    [self.totalSubLine setTitle:[NSString stringWithFormat:@"%@: %@",STRING_TOTAL, [RICountryConfiguration formatPrice:[NSNumber numberWithInteger:totalPrice] country:[RICountryConfiguration getCurrentConfiguration]]]];
-    [self.totalSubLine.label sizeToFit];
-    [self.totalSubLine.label setYCenterAligned];
+    [self.totalSingleLine setTitle:[NSString stringWithFormat:@"%@: %@",STRING_TOTAL, [RICountryConfiguration formatPrice:[NSNumber numberWithInteger:totalPrice] country:[RICountryConfiguration getCurrentConfiguration]]]];
+    [self.totalSingleLine.label sizeToFit];
+    [self.totalSingleLine.label setYCenterAligned];
 }
 
 - (void)onBundleSelectionChanged:(void(^)(NSMutableDictionary *selectedSkus))changes

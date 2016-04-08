@@ -12,7 +12,6 @@
 #import "RIProductSimple.h"
 #import "RISeller.h"
 #import "JAProductInfoHeaderLine.h"
-#import "JAProductInfoSingleLine.h"
 #import "JAProductInfoSubLine.h"
 #import "JAProductInfoPriceLine.h"
 #import "JAProductInfoRatingLine.h"
@@ -163,7 +162,7 @@
                     needMoreSpecifications = YES;
                     UILabel *retLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, yOffset, frame.size.width - 32, 0)];
                     [retLabel setTextColor:JABlackColor];
-                    [retLabel setFont:JACaptionFont];
+                    [retLabel setFont:JABodyFont];
                     retLabel.numberOfLines = 0;
                     [retLabel setText:[NSString stringWithFormat:@"..."]];
                     [retLabel sizeToFit];
@@ -173,7 +172,7 @@
                 }
                 UILabel *specificationsContentLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, yOffset, frame.size.width - 32, 0)];
                 [specificationsContentLabel setTextColor:JABlackColor];
-                [specificationsContentLabel setFont:JACaptionFont];
+                [specificationsContentLabel setFont:JABodyFont];
                 specificationsContentLabel.numberOfLines = 0;
                 [specificationsContentLabel setText:[NSString stringWithFormat:@"- %@: %@", attribute.key, attribute.value]];
                 [specificationsContentLabel sizeToFit];
@@ -232,7 +231,7 @@
      */
     
     if (VALID_NOTEMPTY(product.variations, NSArray)) {
-        JAProductInfoSingleLine *singleVariations = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
+        JAProductInfoSubLine *singleVariations = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSubLineHeight)];
         [singleVariations setTopSeparatorVisibility:YES];
         if (product.fashion) {
             [singleVariations setTitle:STRING_SEE_OTHER_COLORS];
@@ -317,7 +316,7 @@
         
         UILabel *descriptionContentLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, yOffset, frame.size.width - 32, 0)];
         [descriptionContentLabel setTextColor:JABlackColor];
-        [descriptionContentLabel setFont:JACaptionFont];
+        [descriptionContentLabel setFont:JABodyFont];
         descriptionContentLabel.numberOfLines = 5;
         [descriptionContentLabel setText:product.summary];
         [descriptionContentLabel sizeToFit];
