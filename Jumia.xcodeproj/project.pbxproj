@@ -918,6 +918,11 @@
 		9AE766A01CB3CF5300B63D8E /* JAAccountServicesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE7669D1CB3CF5300B63D8E /* JAAccountServicesView.m */; };
 		9AE766A11CB3CF5300B63D8E /* JAAccountServicesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE7669D1CB3CF5300B63D8E /* JAAccountServicesView.m */; };
 		9AE766A21CB3CF5300B63D8E /* JAAccountServicesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE7669D1CB3CF5300B63D8E /* JAAccountServicesView.m */; };
+		9AE766A61CB7B23B00B63D8E /* NSURL+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766A51CB7B23A00B63D8E /* NSURL+Extensions.m */; };
+		9AE766A71CB7B23B00B63D8E /* NSURL+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766A51CB7B23A00B63D8E /* NSURL+Extensions.m */; };
+		9AE766A81CB7B23B00B63D8E /* NSURL+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766A51CB7B23A00B63D8E /* NSURL+Extensions.m */; };
+		9AE766A91CB7B23B00B63D8E /* NSURL+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766A51CB7B23A00B63D8E /* NSURL+Extensions.m */; };
+		9AE766AA1CB7B23B00B63D8E /* NSURL+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766A51CB7B23A00B63D8E /* NSURL+Extensions.m */; };
 		9AEA3B261B15D4AC00771EEA /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEA3B251B15D4AC00771EEA /* UIView+Frame.m */; };
 		9AEA3B271B15DD9B00771EEA /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEA3B251B15D4AC00771EEA /* UIView+Frame.m */; };
 		9AEA3B281B15DD9C00771EEA /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEA3B251B15D4AC00771EEA /* UIView+Frame.m */; };
@@ -3053,6 +3058,8 @@
 		9AE7669A1CB2B22100B63D8E /* Model_1.13.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.13.xcdatamodel; sourceTree = "<group>"; };
 		9AE7669C1CB3CF5300B63D8E /* JAAccountServicesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAAccountServicesView.h; sourceTree = "<group>"; };
 		9AE7669D1CB3CF5300B63D8E /* JAAccountServicesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAAccountServicesView.m; sourceTree = "<group>"; };
+		9AE766A41CB7B23A00B63D8E /* NSURL+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+Extensions.h"; sourceTree = "<group>"; };
+		9AE766A51CB7B23A00B63D8E /* NSURL+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+Extensions.m"; sourceTree = "<group>"; };
 		9AEA3B241B15D4AC00771EEA /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Frame.h"; path = "Categories/UIView+Frame.h"; sourceTree = "<group>"; };
 		9AEA3B251B15D4AC00771EEA /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Frame.m"; path = "Categories/UIView+Frame.m"; sourceTree = "<group>"; };
 		9AEADDC71C0DEA450074034A /* JARegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JARegisterViewController.h; path = Authentication/JARegisterViewController.h; sourceTree = "<group>"; };
@@ -5641,6 +5648,8 @@
 				9A7EE9C41B5557C9004E2505 /* UIButton+Extensions.m */,
 				9A17372D1B679740004905B4 /* UIImage+WithColor.h */,
 				9A17372E1B679740004905B4 /* UIImage+WithColor.m */,
+				9AE766A41CB7B23A00B63D8E /* NSURL+Extensions.h */,
+				9AE766A51CB7B23A00B63D8E /* NSURL+Extensions.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -7810,6 +7819,7 @@
 				9AEADDCA1C0EF9350074034A /* JARegisterViewController.m in Sources */,
 				CE4848981A162803003C3D53 /* JAFiltersView.m in Sources */,
 				460503d31c163545ffffa862 /* RIBugSenseTracker.m in Sources */,
+				9AE766A71CB7B23B00B63D8E /* NSURL+Extensions.m in Sources */,
 				1fab3dec6fadd712d6a2a8c0 /* RIOpenURLHandler.m in Sources */,
 				89FB32561BCD41C5002A6FC2 /* RISellerDelivery.m in Sources */,
 				e827050642f7bb99bff26f98 /* RICartItem.m in Sources */,
@@ -7949,6 +7959,7 @@
 				B58DBF3919C0AF9600D4678A /* JAPaymentCell.m in Sources */,
 				CEED47301A7B973B006D9CE7 /* JAPDVBundleSingleItem.m in Sources */,
 				B5A302BF19811E9200F71726 /* RIApi.m in Sources */,
+				9AE766A61CB7B23B00B63D8E /* NSURL+Extensions.m in Sources */,
 				FF0465071CA96EAC00B82FD2 /* NSString+ADJAdditions.m in Sources */,
 				B5C61BC019B0BB7F00840E93 /* RIFieldOption.m in Sources */,
 				9A6BC07F1C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */,
@@ -8288,6 +8299,7 @@
 				CE9ADB801AB34C4600D56481 /* JAPDVBundleSingleItem.m in Sources */,
 				CE9ADB811AB34C4600D56481 /* RIApi.m in Sources */,
 				CE9ADB821AB34C4600D56481 /* RIFieldOption.m in Sources */,
+				9AE766A81CB7B23B00B63D8E /* NSURL+Extensions.m in Sources */,
 				FF0465091CA96EAC00B82FD2 /* NSString+ADJAdditions.m in Sources */,
 				CE9ADB841AB34C4600D56481 /* RIShippingMethodFormField.m in Sources */,
 				9A6BC0811C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */,
@@ -8617,6 +8629,7 @@
 				CE9ADD7A1AB6D6E900D56481 /* JAPDVBundleSingleItem.m in Sources */,
 				CE9ADD7B1AB6D6E900D56481 /* RIApi.m in Sources */,
 				CE9ADD7C1AB6D6E900D56481 /* RIFieldOption.m in Sources */,
+				9AE766A91CB7B23B00B63D8E /* NSURL+Extensions.m in Sources */,
 				FF04650A1CA96EAC00B82FD2 /* NSString+ADJAdditions.m in Sources */,
 				CE9ADD7E1AB6D6E900D56481 /* RIShippingMethodFormField.m in Sources */,
 				9A6BC0821C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */,
@@ -8946,6 +8959,7 @@
 				CE9ADF761AB6D78200D56481 /* RIFieldOption.m in Sources */,
 				CE9ADF781AB6D78200D56481 /* RIShippingMethodFormField.m in Sources */,
 				CE9ADF791AB6D78200D56481 /* RIPaymentMethodFormOption.m in Sources */,
+				9AE766AA1CB7B23B00B63D8E /* NSURL+Extensions.m in Sources */,
 				FF04650B1CA96EAC00B82FD2 /* NSString+ADJAdditions.m in Sources */,
 				CE9ADF7A1AB6D78200D56481 /* JAPercentageBarView.m in Sources */,
 				9A6BC0831C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */,

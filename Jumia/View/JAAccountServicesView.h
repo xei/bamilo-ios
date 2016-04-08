@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#define kAccountServicesLineHeight 18.f
-
 @protocol JAAccountServicesProtocol <NSObject>
 
 - (void)accountServicesViewChange;
