@@ -16,7 +16,6 @@
     NSLock *_lock;
 }
 
-@property (nonatomic, strong) UIView *actualContentView;
 @property (nonatomic, strong) NSMutableArray *contentViewsArray;
 @property (nonatomic, strong) NSMutableArray *imageViewArray;
 
@@ -60,6 +59,8 @@
     for (UIImageView *imageView in self.imageViewArray) {
         if (VALID_NOTEMPTY(imageView.image, UIImage)) {
             [imageView setX:i*kPadding + xOffset];
+            CGSize newSize = CGSizeMake(imageView.image.size.width*kAccountServicesLineHeight/imageView.image.size.height, kAccountServicesLineHeight);
+            [imageView setWidth:newSize.width];
             if (CGRectGetMaxX(imageView.frame) > self.width) {
                 xOffset = 0.f;
                 [imageView setX:xOffset];
@@ -71,18 +72,14 @@
                     [self.delegate accountServicesViewChange];
                 }
             }
-            CGSize newSize = CGSizeMake(imageView.image.size.width*kAccountServicesLineHeight/imageView.image.size.height, kAccountServicesLineHeight);
-            [imageView setWidth:newSize.width];
             xOffset += newSize.width;
             if (!VALID_NOTEMPTY(imageView.superview, UIView)) {
                 if (self.contentViewsArray.count < l+1) {
-                    self.contentViewsArray[l] = [self getNewContentView];
-                    self.actualContentView = self.contentViewsArray[l];
+                    [self.contentViewsArray addObject:[self getNewContentView]];
                     CGFloat yOffset = l*(kAccountServicesLineHeight+3.f);
-                    [self.actualContentView setY:yOffset];
+                    [(UIView *)[self.contentViewsArray lastObject] setY:yOffset];
                 }
-                self.actualContentView = self.contentViewsArray[l];
-                [self.actualContentView addSubview:imageView];
+                [(UIView *)[self.contentViewsArray lastObject] addSubview:imageView];
             }
             i++;
         }
