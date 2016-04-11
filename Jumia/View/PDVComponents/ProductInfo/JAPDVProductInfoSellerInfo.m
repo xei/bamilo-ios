@@ -62,6 +62,7 @@
         _sellerNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, 16, self.width-32, 20)];
         [_sellerNameLabel setFont:JATitleFont];
         [_sellerNameLabel setTextColor:JABlackColor];
+        [_sellerNameLabel setTextAlignment:NSTextAlignmentLeft];
         [self.clickableView addSubview:_sellerNameLabel];
     }
     return _sellerNameLabel;
@@ -189,8 +190,7 @@
 {
     _seller = seller;
     [self.sellerNameLabel setText:seller.name];
-
-    [self.sellerNameLabel sizeHeightToFit];
+    [self.sellerNameLabel sizeToFit];
     
     [self checkIsShopFirst];
     
@@ -267,9 +267,7 @@
 - (void)checkIsShopFirst
 {
     if ([self.isShopFirst boolValue]) {
-        [self.shopFirstLogo setXRightAligned:10.f];
-        CGFloat width = self.shopFirstLogo.x - self.sellerNameLabel.x - 10.f;
-        [self.sellerNameLabel setWidth:width];
+        [self.shopFirstLogo setXRightOf:self.sellerNameLabel at:10.f];
         [self.shopFirstLogo setHidden:NO];
     } else {
         [self.shopFirstLogo setHidden:YES];
