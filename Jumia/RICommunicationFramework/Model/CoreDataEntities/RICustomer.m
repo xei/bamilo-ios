@@ -38,9 +38,13 @@
                successBlock:(void (^)(id object))successBlock
             andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, @"customer/createsignup"]]
-                                                            parameters:@{@"email": email}
-                                                            httpMethod:HttpResponsePost
+    NSString* urlEnding;
+    if (VALID_NOTEMPTY(email, NSString)) {
+        urlEnding = [NSString stringWithFormat:@"customer/createsignup/?email=%@", email];
+    }
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, urlEnding]]
+                                                            parameters:nil
+                                                            httpMethod:HttpResponseGet
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
@@ -79,13 +83,17 @@
                                                           }];
 }
 
-+ (NSString *)checkEmailWithParameters:(NSDictionary *)parameters
-                          successBlock:(void (^)(BOOL knownEmail, RICustomer *customerAlreadyLoggedIn))successBlock
-                       andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock
++ (NSString *)checkEmail:(NSString *)email
+            successBlock:(void (^)(BOOL knownEmail, RICustomer *customerAlreadyLoggedIn))successBlock
+         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, @"customer/emailcheck/"]]
-                                                            parameters:parameters
-                                                            httpMethod:HttpResponsePost
+    NSString* urlEnding;
+    if (VALID_NOTEMPTY(email, NSString)) {
+        urlEnding = [NSString stringWithFormat:@"customer/emailcheck/?email=%@", email];
+    }
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, urlEnding]]
+                                                            parameters:nil
+                                                            httpMethod:HttpResponseGet
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]

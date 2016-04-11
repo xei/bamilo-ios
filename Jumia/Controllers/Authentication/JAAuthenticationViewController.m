@@ -492,7 +492,7 @@
         return;
     }
     [self showLoading];
-    [RICustomer checkEmailWithParameters:[NSDictionary dictionaryWithObject:self.emailTextField.textField.text forKey:@"email"] successBlock:^(BOOL knownEmail, RICustomer *customerAlreadyLoggedIn) {
+    [RICustomer checkEmail:self.emailTextField.textField.text successBlock:^(BOOL knownEmail, RICustomer *customerAlreadyLoggedIn) {
         
         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         
