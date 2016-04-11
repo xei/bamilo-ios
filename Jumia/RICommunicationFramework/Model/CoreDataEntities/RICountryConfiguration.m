@@ -158,7 +158,20 @@
         newConfig.casIsActive = @YES;
         newConfig.casTitle = [casDictionary objectForKey:@"title"];
         newConfig.casSubtitle = [casDictionary objectForKey:@"sub_title"];
-        newConfig.casImages = VALID_NOTEMPTY([casDictionary objectForKey:@"image_list"], NSArray)?[[casDictionary objectForKey:@"image_list"] valueForKey:@"url"]:nil;
+        
+        NSMutableArray* urlMutableArray = [NSMutableArray new];
+        NSArray* imageList = [casDictionary objectForKey:@"image_list"];
+        if (VALID_NOTEMPTY(imageList, NSArray)) {
+            for (NSDictionary* urlDic in imageList) {
+                if (VALID_NOTEMPTY(urlDic, NSDictionary)) {
+                    NSString* urlString = [urlDic objectForKey:@"url"];
+                    if (VALID_NOTEMPTY(urlString, NSString)) {
+                        [urlMutableArray addObject:[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
+                    }
+                }
+            }
+        }
+        newConfig.casImages = [urlMutableArray copy];
     }
     
     [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICountryConfiguration class])];

@@ -32,9 +32,9 @@
                successBlock:(void (^)(id object))successBlock
             andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
 
-+ (NSString *)checkEmailWithParameters:(NSDictionary *)parameters
-                          successBlock:(void (^)(BOOL knownEmail, RICustomer *customerAlreadyLoggedIn))successBlock
-                       andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
++ (NSString *)checkEmail:(NSString *)email
+            successBlock:(void (^)(BOOL knownEmail, RICustomer *customerAlreadyLoggedIn))successBlock
+         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
 
 + (NSString*)autoLogin:(void (^)(BOOL success, NSDictionary *entities, NSString *loginMethod))returnBlock;
 
