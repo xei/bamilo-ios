@@ -12,6 +12,8 @@
 #import "RIField.h"
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
+#define kUserIsGuestFlagKey [NSString stringWithFormat:@"%@_user_is_guest", [RIApi getCountryIsoInUse]]
+
 @interface RICustomer ()
 
 @property (strong, nonatomic) NSString* costumerRequestID;
@@ -58,6 +60,7 @@
                                                                       if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                                       {
                                                                           NSDictionary* entities = [RIForm parseEntities:metadata plainPassword:nil loginMethod:@"guest"];
+                                                                          [RICustomer setCustomerAsGuest];
                                                                           successBlock(entities);
                                                                       }
                                                                   } else {
@@ -189,6 +192,7 @@
                         [RIForm sendForm:form parameters:parameters
                             successBlock:^(id jsonObject, NSArray* successMessages)
                          {
+                             [RICustomer resetCustomerAsGuest];
                              dispatch_async(dispatch_get_main_queue(), ^{
                                  returnBlock(YES, jsonObject, customerObject.loginMethod);
                              });
@@ -460,23 +464,19 @@
     }
 }
 
++ (void)setCustomerAsGuest
+{
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUserIsGuestFlagKey];
+}
+
++ (void)resetCustomerAsGuest
+{
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserIsGuestFlagKey];
+}
+
 + (BOOL)checkIfUserIsLoggedAsGuest
 {
-    NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
-    
-    if (VALID_NOTEMPTY(customers, NSArray))
-    {
-        RICustomer* customer = [customers firstObject];
-        
-        if ([customer.loginMethod isEqualToString:@"guest"]) {
-            return YES;
-        } else
-            return NO;
-    }
-    else
-    {
-        return NO;
-    }
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kUserIsGuestFlagKey];
 }
 
 
