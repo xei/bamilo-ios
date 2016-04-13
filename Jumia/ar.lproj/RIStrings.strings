@@ -346,6 +346,8 @@
 
 "update_now" = "تحديث الآن";
 
+"up_to_date" = "تحديث";
+
 "app_version" = "إصدار التطبيق";
 
 "help_center" = "مركز المساعدة";
@@ -399,6 +401,8 @@
 "error_add_to_cart_failed_for_1_product" = "لم تنجح إضافة منتج 1 إلى عربة التسوق";
 
 "save_label" = "حفظ";
+
+"save_item" = "حفظ المنتج";
 
 "string_campaign_ramaining_stock" = "المخزون المتبقي: %d%%";
 
@@ -701,4 +705,6 @@
 "newsletter_label" = "رسالة جوميا الإخبارية";
 
 "newsletter_preferences" = "تفضيلات الرسالة الإخبارية";
+
+"free_shipping_possible" = "إمكانية الشحن المجاني";
 
