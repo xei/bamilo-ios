@@ -57,7 +57,7 @@
                                                                       NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                                       if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                                       {
-                                                                          NSDictionary* entities = [RIForm parseEntities:metadata plainPassword:nil];
+                                                                          NSDictionary* entities = [RIForm parseEntities:metadata plainPassword:nil loginMethod:@"guest"];
                                                                           successBlock(entities);
                                                                       }
                                                                   } else {
@@ -573,11 +573,7 @@
     
     if(VALID_NOTEMPTY(loginMethod, NSString))
     {
-        if (!VALID_NOTEMPTY(plainPassword, NSString) && [loginMethod isEqualToString:@"normal"] && [customer.firstName isEqualToString:@"Guest"] && [customer.lastName isEqualToString:@"Guest"]) {
-            customer.loginMethod = @"guest";
-        } else {
-            customer.loginMethod = loginMethod;
-        }
+        customer.loginMethod = loginMethod;
     }
     
     customer.plainPassword = nil;
