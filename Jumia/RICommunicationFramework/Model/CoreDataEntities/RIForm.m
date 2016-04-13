@@ -290,7 +290,7 @@
                                                               BOOL responseProcessed = NO;
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                               {
-                                                                  NSDictionary* entities = [RIForm parseEntities:metadata plainPassword:password];
+                                                                  NSDictionary* entities = [RIForm parseEntities:metadata plainPassword:password loginMethod:@"normal"];
                                                                   
                                                                   successBlock(entities, [messagesArray copy]);
                                                                   responseProcessed = YES;
@@ -337,12 +337,12 @@
 
 + (NSDictionary*)parseEntities:(NSDictionary*)entitiesJSON
                  plainPassword:(NSString*)plainPassword
+                   loginMethod:(NSString*)loginMethod
 {
     NSMutableDictionary* newEntities = [NSMutableDictionary new];
     
     if ([entitiesJSON objectForKey:@"customer_entity"]) {
         
-        NSString* loginMethod = @"normal";
         RICustomer *newCustomer = [RICustomer parseCustomerWithJson:[entitiesJSON objectForKey:@"customer_entity"]
                                                       plainPassword:plainPassword
                                                         loginMethod:loginMethod];
