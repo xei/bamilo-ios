@@ -363,6 +363,7 @@
           parameters:[self.dynamicForm getValues]
         successBlock:^(id object, NSArray* successMessages)
      {
+         [RICustomer resetCustomerAsGuest];
          [self.dynamicForm resetValues];
          
          if ([object isKindOfClass:[NSDictionary class]]) {
