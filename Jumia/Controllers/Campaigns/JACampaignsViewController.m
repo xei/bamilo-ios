@@ -178,7 +178,8 @@
     self.campaignPages = [NSMutableArray new];
     
     CGFloat currentX = 0.0f;
-    NSInteger startingIndex = RI_IS_RTL?self.teaserGrouping.teaserComponents.count-1:0;
+    
+    NSInteger startingIndex = 0;
     NSMutableArray* optionList = [NSMutableArray new];
     
     if(VALID_NOTEMPTY(self.campaignId, NSString))
@@ -188,6 +189,7 @@
     }
     else if (VALID_NOTEMPTY(self.teaserGrouping, RITeaserGrouping) && VALID_NOTEMPTY(self.teaserGrouping.teaserComponents, NSOrderedSet))
     {
+        startingIndex = 0;RI_IS_RTL?self.teaserGrouping.teaserComponents.count-1:0;
         self.activeCampaignComponents = [NSMutableArray new];
         for (int i = RI_IS_RTL?(int)self.teaserGrouping.teaserComponents.count-1:0;
              RI_IS_RTL?i>=0:i < self.teaserGrouping.teaserComponents.count; RI_IS_RTL?i--:i++)
