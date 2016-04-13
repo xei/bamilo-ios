@@ -573,7 +573,11 @@
     
     if(VALID_NOTEMPTY(loginMethod, NSString))
     {
-        customer.loginMethod = loginMethod;
+        if (!VALID_NOTEMPTY(plainPassword, NSString) && [loginMethod isEqualToString:@"normal"] && [customer.firstName isEqualToString:@"Guest"] && [customer.lastName isEqualToString:@"Guest"]) {
+            customer.loginMethod = @"guest";
+        } else {
+            customer.loginMethod = loginMethod;
+        }
     }
     
     customer.plainPassword = nil;
