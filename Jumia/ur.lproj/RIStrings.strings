@@ -346,6 +346,8 @@
 
 "update_now" = "ابہی جدید بنایں";
 
+"up_to_date" = "تاریخ کے مطابق";
+
 "app_version" = "ایپ ورژن";
 
 "help_center" = "مدد کا مرکز";
@@ -399,6 +401,8 @@
 "error_add_to_cart_failed_for_1_product" = "ٹوکری میں 1 چیز شامل کرنے میں ناکامی";
 
 "save_label" = "محفوظ کریں";
+
+"save_item" = "محفوظ کریں";
 
 "string_campaign_ramaining_stock" = "بقیہ سٹاک: ‎%d‎%%ا";
 
@@ -570,6 +574,8 @@
 
 "buy" = "خریدیے";
 
+"buy_combo" = "کومبو خریدیں";
+
 "other_sellers" = "دوسرے فروخت کنندگان";
 
 "same_product_from_other_sellers" = "کسی دوسرے فروخت کنندہ کے پاس موجود یہی شے";
@@ -699,4 +705,6 @@
 "newsletter_label" = "نیوز لیٹر";
 
 "newsletter_preferences" = "نیوز لیٹر کی ترجیحات";
+
+"free_shipping_possible" = "مفت شِپنگ ممکن ہے";
 

@@ -346,6 +346,8 @@
 
 "update_now" = "به روز رسانی";
 
+"up_to_date" = "بروزرسانی";
+
 "app_version" = "نسخه نرم افزار";
 
 "help_center" = "مرکز پشتیبانی";
@@ -399,6 +401,8 @@
 "error_add_to_cart_failed_for_1_product" = "اضافه کردن به سبد خرید برای یک کالا دچار خطا شده است.";
 
 "save_label" = "ذخیره";
+
+"save_item" = "ذخیره";
 
 "string_campaign_ramaining_stock" = "موجودی باقیمانده: %d%%";
 
@@ -570,6 +574,8 @@
 
 "buy" = "خرید کنید";
 
+"buy_combo" = "خرید مجموعه";
+
 "other_sellers" = "سایر تامین کنندگان";
 
 "same_product_from_other_sellers" = "کالای مشابه از سایر تامین کنندگان";
@@ -699,4 +705,6 @@
 "newsletter_label" = "خبرنامه";
 
 "newsletter_preferences" = "تنظیمات خبرنامه";
+
+"free_shipping_possible" = "می توانید از ارسال رایگان بهره مند شوید";
 
