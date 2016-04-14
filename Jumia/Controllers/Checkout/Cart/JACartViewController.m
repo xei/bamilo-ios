@@ -273,6 +273,7 @@
     if(VALID([[self cart] couponMoneyValue], NSNumber))
     {
         [RICart removeVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
+            [self.resumeView removeVoucher];
             self.cart = cart;
             
             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
@@ -283,7 +284,6 @@
             [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
                                                       data:[trackingDictionary copy]];
-            [self.resumeView removeVoucher];
             [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
             [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
@@ -294,6 +294,7 @@
     else
     {
         [RICart addVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
+            [self.resumeView setCouponValid:YES];
             self.cart = cart;
             
             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
@@ -304,7 +305,6 @@
             [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
                                                       data:[trackingDictionary copy]];
-            [self.resumeView setCouponValid:YES];
             [self hideLoading];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
             [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:@selector(useCoupon) objects:nil];

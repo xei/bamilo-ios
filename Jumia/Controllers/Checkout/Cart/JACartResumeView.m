@@ -339,6 +339,8 @@
     [self.couponTextField setText:@""];
     [self.couponTextField setEnabled:YES];
     [self.couponButton setTitle:[STRING_USE uppercaseString] forState:UIControlStateNormal];
+    [self.couponTextField setWidth:_textfieldPlaceholderWidth];
+    [self.couponButton sizeToFit];
 }
 
 - (void)setCouponValid:(BOOL)valid
@@ -352,6 +354,8 @@
         [self.couponTextField setEnabled:YES];
         [self.couponButton setTitle:[STRING_USE uppercaseString] forState:UIControlStateNormal];
     }
+    [self.couponTextField setWidth:_textfieldPlaceholderWidth];
+    [self.couponButton sizeToFit];
 }
 
 - (void)layoutSubviews
