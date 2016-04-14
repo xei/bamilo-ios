@@ -346,6 +346,8 @@
 
 "update_now" = "Update ျပဳလုပ္ရန္";
 
+"up_to_date" = "ေနာက္ဆံုးဗားရွင္း";
+
 "app_version" = "App ဗားရွင္း";
 
 "help_center" = "အကူအညီ";
@@ -399,6 +401,8 @@
 "error_add_to_cart_failed_for_1_product" = "ကုန္ပစၥည္း 1 ခုမွာ ေစ်း၀ယ္လွည္းအတြင္း ထည္႕သြင္း၍ မရပါ";
 
 "save_label" = "သိမ္းဆည္းရန္";
+
+"save_item" = "သိမ္းဆည္းရန္";
 
 "string_campaign_ramaining_stock" = "ကုန္ပစၥည္းလက္က်န္: %d%%";
 
@@ -570,6 +574,8 @@
 
 "buy" = "၀ယ္ရန္";
 
+"buy_combo" = "အစံုလုိက္ ၀ယ္ယူရန္";
+
 "other_sellers" = "အျခား ေရာင္းခ်သူမ်ား";
 
 "same_product_from_other_sellers" = "အျခားေရာင္းခ်သူမ်ား ထံမွ တူညီေသာ ကုန္ပစၥည္း";
@@ -699,4 +705,6 @@
 "newsletter_label" = "သတင္းလႊာ";
 
 "newsletter_preferences" = "ရယူလိုေသာသတင္းလႊာအမ်ိဳးအစား";
+
+"free_shipping_possible" = "ပို႕ေဆာင္ခ အခမဲ့ ရရွိႏုိင္သည္";
 

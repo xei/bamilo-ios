@@ -101,6 +101,8 @@ UICollectionViewDelegateFlowLayout
     self.stepLabel.font = [UIFont fontWithName:kFontBoldName size:self.stepLabel.font.pointSize];
     [self.stepLabel setText:STRING_CHECKOUT_SHIPPING];
     
+    self.sellerDeliveryViews = [NSMutableArray new];
+    
     [self initViews];
 }
 
@@ -109,8 +111,6 @@ UICollectionViewDelegateFlowLayout
     [super viewWillAppear:animated];
 
     self.apiResponse = RIApiResponseSuccess;
-    
-    self.sellerDeliveryViews = [[NSMutableArray alloc]init];
 
     [self continueLoading];
 }

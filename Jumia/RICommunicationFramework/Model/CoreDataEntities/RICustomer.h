@@ -142,6 +142,8 @@
  * @return success case user is logged as guest
  */
 + (BOOL)checkIfUserIsLoggedAsGuest;
++ (void)setCustomerAsGuest;
++ (void)resetCustomerAsGuest;
 
 /**
  * Method to check if the user has any addresses stored
