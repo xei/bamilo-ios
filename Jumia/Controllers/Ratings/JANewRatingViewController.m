@@ -276,7 +276,7 @@ UIAlertViewDelegate
                                                                               CGRectGetMaxY(self.nameLabel.frame) + 4.0f,
                                                                               self.topView.frame.size.width - 24.0f,
                                                                               15)];
-    [self.priceLine setPriceSize:kPriceSizeSmall];
+    [self.priceLine setPriceSize:JAPriceSizeSmall];
     [self.priceLine setLineContentXOffset:0.f];
     
     [self.topView addSubview:self.priceLine];

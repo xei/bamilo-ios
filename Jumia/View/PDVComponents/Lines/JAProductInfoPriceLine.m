@@ -52,11 +52,14 @@
 - (UIFont *)priceSizeFont
 {
     switch (_priceSize) {
-        case kPriceSizeSmall:
-            return JACaptionFont;
+        case JAPriceSizeSmall:
+            return JABodyFont;
             
-        case kPriceSizeMedium:
+        case JAPriceSizeMedium:
             return JAListFont;
+            
+        case JAPriceSizeTitle:
+            return JATitleFont;
             
         default:
             return JAListFont;

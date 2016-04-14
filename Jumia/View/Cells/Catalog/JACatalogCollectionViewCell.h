@@ -7,14 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RIProduct.h"
+#import "UIButton+Extensions.h"
+
 #import "JAPriceView.h"
 #import "JAClickableView.h"
-#import "UIButton+Extensions.h"
-#import "RIVariation.h"
 #import "JAProductInfoPriceLine.h"
 #import "JAProductInfoRatingLine.h"
 #import "JADropdownControl.h"
+
+#import "RIProduct.h"
+#import "RIVariation.h"
+#import "RICartItem.h"
 
 #define JACatalogCellPriceLabelOffsetX 7.0f
 #define JACatalogCellPriceLabelOffsetX_ipad 6.0f
@@ -41,13 +44,12 @@ typedef NS_ENUM(NSUInteger, JACatalogCollectionViewCellType) {
 
 @property (nonatomic) RIProduct *product;
 @property (nonatomic) RIVariation *variation;
+@property (nonatomic) RICartItem *cartItem;
 @property (nonatomic) BOOL hideShopFirstLogo;
 @property (nonatomic) BOOL hideRating;
 
 - (void)initViews;
 - (void)reloadViews;
-- (void)loadWithProduct:(RIProduct*)product;
-- (void)loadWithVariation:(RIVariation*)variation;
 
 - (void)setSimplePrice:(NSString *)price andOldPrice:(NSString *)oldPrice;
 

@@ -86,7 +86,7 @@
 {
     if (!VALID(_priceLine, JAProductInfoPriceLine)) {
         _priceLine = [[JAProductInfoPriceLine alloc] init];
-        [_priceLine setPriceSize:kPriceSizeSmall];
+        [_priceLine setPriceSize:JAPriceSizeSmall];
         [_priceLine setLineContentXOffset:0.f];
         [self addSubview:_priceLine];
     }

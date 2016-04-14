@@ -60,7 +60,7 @@
 {
     if (!VALID_NOTEMPTY(_secondPriceLine, JAProductInfoPriceLine)) {
         _secondPriceLine = [[JAProductInfoPriceLine alloc] initWithFrame:CGRectMake(0, 0, self.width, 15)];
-        [_secondPriceLine setPriceSize:kPriceSizeSmall];
+        [_secondPriceLine setPriceSize:JAPriceSizeSmall];
         [_secondPriceLine setLineContentXOffset:0.f];
     }
     return _secondPriceLine;
@@ -178,9 +178,9 @@
     [super prepareForReuse];
 }
 
-- (void)loadWithProduct:(RIProduct*)product
+- (void)setProduct:(RIProduct*)product
 {
-    [super loadWithProduct:product];
+    [super setProduct:product];
     
 //    if (_lastWidth != self.width) {
         [self reloadViews];

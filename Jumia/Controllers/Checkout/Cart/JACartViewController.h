@@ -2,70 +2,15 @@
 //  JACartViewController.h
 //  Jumia
 //
-//  Created by Pedro Lopes on 30/07/14.
-//  Copyright (c) 2014 Rocket Internet. All rights reserved.
+//  Created by Jose Mota on 11/04/16.
+//  Copyright © 2016 Rocket Internet. All rights reserved.
 //
 
 #import "JABaseViewController.h"
-#import "JAPicker.h"
-#import "JABottomBar.h"
-
-@class JAProductInfoPriceLine;
-@class RICart;
-@class RICartItem;
+#import "RICart.h"
 
 @interface JACartViewController : JABaseViewController
-<
-UICollectionViewDataSource,
-UICollectionViewDelegate,
-UITextFieldDelegate,
-JAPickerDelegate
->
 
 @property (strong, nonatomic) RICart *cart;
-@property (strong, nonatomic) RICartItem *currentItem;
-
-// Empty cart views
-@property (strong, nonatomic) UIView *emptyCartView;
-@property (strong, nonatomic) UILabel *emptyCartLabel;
-@property (strong, nonatomic) JABottomBar *continueShoppingButton;
-@property (strong, nonatomic) UIImageView *emptyCartImageView;
-
-// Cart views
-@property (strong, nonatomic) UIScrollView *cartScrollView;
-@property (strong, nonatomic) UIScrollView *productsScrollView;
-
-// Products
-@property (strong, nonatomic) UICollectionView *productCollectionView;
-
-// Coupon
-@property (strong, nonatomic) UIView *couponView;
-@property (strong, nonatomic) UILabel *couponTitle;
-@property (strong, nonatomic) UIView *couponTitleSeparator;
-@property (strong, nonatomic) UITextField *couponTextField;
-@property (strong, nonatomic) UIButton *useCouponButton;
-
-// Subtotal
-@property (strong, nonatomic) UIView *subtotalView;
-@property (strong, nonatomic) UILabel *subtotalTitle;
-@property (strong, nonatomic) UIView *subtotalTitleSeparator;
-@property (strong, nonatomic) UILabel *articlesCount;
-@property (strong, nonatomic) JAProductInfoPriceLine *totalPriceLine;
-@property (strong, nonatomic) UILabel *priceRulesLabel;
-@property (strong, nonatomic) UILabel *priceRulesValue;
-@property (strong, nonatomic) UILabel *cartVatLabel;
-@property (strong, nonatomic) UILabel *cartVatValue;
-@property (strong, nonatomic) UILabel *extraCostsLabel;
-@property (strong, nonatomic) UILabel *extraCostsValue;
-@property (strong, nonatomic) UILabel *couponLabel;
-@property (strong, nonatomic) UILabel *couponValue;
-@property (strong, nonatomic) UILabel *totalLabel;
-@property (strong, nonatomic) UILabel *totalValue;
-@property (strong, nonatomic) UILabel *freeShippingLabel;
-@property (strong, nonatomic) UIImageView *freeShippingImageView;
-@property (strong, nonatomic) NSLayoutConstraint *subtotalViewConstrain;
-
-@property (strong, nonatomic) UIButton *checkoutButton;
-@property (strong, nonatomic) UIButton *callToOrderButton;
 
 @end

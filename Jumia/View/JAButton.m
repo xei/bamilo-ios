@@ -33,6 +33,18 @@
     return self;
 }
 
+- (instancetype)initAlternativeButtonWithTitle:(NSString *)title
+{
+    self = [[JAButton alloc] initButtonWithTitle:title];
+    if (self) {
+        [self setBackgroundColor:JAWhiteColor];
+        [self setTitleColor:JABlack800Color forState:UIControlStateNormal];
+        [self.layer setBorderColor:JABlack400Color.CGColor];
+        [self.layer setBorderWidth:1.f];
+    }
+    return self;
+}
+
 - (instancetype)initAlternativeButtonWithTitle:(NSString *)title target:(id)target action:(SEL)action
 {
     self = [[JAButton alloc] initButtonWithTitle:title];

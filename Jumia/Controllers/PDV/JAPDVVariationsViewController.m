@@ -96,7 +96,7 @@
         [cell setHideShopFirstLogo:NO];
     }
     
-    [cell loadWithVariation:variationProduct];
+    [cell setVariation:variationProduct];
     cell.favoriteButton.tag = indexPath.row;
     [cell.favoriteButton addTarget:self
                             action:@selector(addToFavoritesPressed:)

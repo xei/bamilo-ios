@@ -212,17 +212,24 @@
     [super prepareForReuse];
 }
 
-- (void)loadWithProduct:(RIProduct*)product
+- (void)setProduct:(RIProduct*)product
 {
-    [super loadWithProduct:product];
+    [super setProduct:product];
     
     [self reloadViews];
 }
 
-- (void)loadWithVariation:(RIVariation *)variation
+- (void)setVariation:(RIVariation *)variation
 {
-    [super loadWithVariation:variation];
+    [super setVariation:variation];
     self.sizeButton.hidden = YES;
+    [self reloadViews];
+}
+
+- (void)setCartItem:(RICartItem *)cartItem
+{
+    [super setCartItem:cartItem];
+//    self.sizeButton.hidden = YES;
     [self reloadViews];
 }
 

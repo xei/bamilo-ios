@@ -145,9 +145,9 @@
     [super prepareForReuse];
 }
 
-- (void)loadWithProduct:(RIProduct*)product
+- (void)setProduct:(RIProduct*)product
 {
-    [super loadWithProduct:product];
+    [super setProduct:product];
     [self.priceLine setX:16];
     
     [self reloadViews];
