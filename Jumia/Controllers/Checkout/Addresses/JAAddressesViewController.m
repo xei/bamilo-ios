@@ -10,7 +10,6 @@
 #import "JACartListHeaderView.h"
 #import "JAAddressCell.h"
 #import "JASwitchCell.h"
-#import "JAAddNewAddressCell.h"
 #import "JAUtils.h"
 #import "RIAddress.h"
 #import "RIForm.h"
@@ -22,11 +21,11 @@
 #import "UIImage+Mirror.h"
 #import "UIView+Mirror.h"
 #import "JACheckoutBottomView.h"
+#import "JAProductInfoHeaderLine.h"
 
 @interface JAAddressesViewController ()
-<UICollectionViewDataSource,
-UICollectionViewDelegate,
-UICollectionViewDelegateFlowLayout>
+<UITableViewDataSource,
+UITableViewDelegate>
 {
     // Bottom view
     JACheckoutBottomView *_bottomView;
@@ -44,20 +43,16 @@ UICollectionViewDelegateFlowLayout>
 @property (strong, nonatomic) RIAddress *shippingAddress;
 @property (strong, nonatomic) RIAddress *billingAddress;
 
-@property (strong, nonatomic) UICollectionView *shippingAddressCollectionView;
-@property (strong, nonatomic) UICollectionView *billingAddressCollectionView;
-@property (strong, nonatomic) UICollectionView *otherAddressesCollectionView;
+@property (strong, nonatomic) UITableView *shippingAddressTableView;
+@property (strong, nonatomic) UITableView *billingAddressTableView;
+@property (strong, nonatomic) UITableView *otherAddressesTableView;
 
 @property (nonatomic, assign) BOOL useSameAddressAsBillingAndShipping;
-
-@property (strong, nonatomic) UICollectionViewFlowLayout *flowLayout;
-
 
 
 // Order summary
 @property (strong, nonatomic) JAOrderSummaryView *orderSummary;
 
-@property (assign, nonatomic) BOOL firstLoading;
 @property (assign, nonatomic) BOOL shouldForceAddAddress;
 
 @property (assign, nonatomic) RIApiResponse apiResponse;
@@ -101,62 +96,24 @@ UICollectionViewDelegateFlowLayout>
     [self.contentScrollView setShowsHorizontalScrollIndicator:NO];
     [self.contentScrollView setShowsVerticalScrollIndicator:NO];
     
-    self.flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [self.flowLayout setMinimumLineSpacing:0.0f];
-    [self.flowLayout setMinimumInteritemSpacing:0.0f];
-    [self.flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-    [self.flowLayout setItemSize:CGSizeZero];
-    [self.flowLayout setHeaderReferenceSize:CGSizeZero];
     
-    UINib *addressListHeaderNib = [UINib nibWithNibName:@"JACartListHeaderView" bundle:nil];
-    UINib *addressListCellNib = [UINib nibWithNibName:@"JAAddressCell" bundle:nil];
-    UINib *addAddressListCellNib = [UINib nibWithNibName:@"JAAddNewAddressCell" bundle:nil];
-    UINib *switchListCellNib = [UINib nibWithNibName:@"JASwitchCell" bundle:nil];
+    self.shippingAddressTableView = [UITableView new];
+    [self.shippingAddressTableView setScrollEnabled:NO];
+    [self.shippingAddressTableView setDelegate:self];
+    [self.shippingAddressTableView setDataSource:self];
+    [self.contentScrollView addSubview:self.shippingAddressTableView];
     
-    self.shippingAddressCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.flowLayout];
-    [self.shippingAddressCollectionView registerNib:addressListHeaderNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cartListHeader"];
-    [self.shippingAddressCollectionView registerNib:addressListCellNib forCellWithReuseIdentifier:@"addressListCell"];
-    [self.shippingAddressCollectionView registerNib:addAddressListCellNib forCellWithReuseIdentifier:@"addAddressListCell"];
-    [self.shippingAddressCollectionView registerNib:switchListCellNib forCellWithReuseIdentifier:@"switchListCell"];
-    [self.shippingAddressCollectionView setScrollEnabled:NO];
-    self.shippingAddressCollectionView.layer.cornerRadius = 5.0f;
-    [self.shippingAddressCollectionView setDataSource:self];
-    [self.shippingAddressCollectionView setDelegate:self];
-    [self.contentScrollView addSubview:self.shippingAddressCollectionView];
+    self.billingAddressTableView = [UITableView new];
+    [self.billingAddressTableView setScrollEnabled:NO];
+    [self.billingAddressTableView setDelegate:self];
+    [self.billingAddressTableView setDataSource:self];
+    [self.contentScrollView addSubview:self.billingAddressTableView];
     
-    UICollectionViewFlowLayout* billingAddressCollectionViewFlowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [billingAddressCollectionViewFlowLayout setMinimumLineSpacing:0.0f];
-    [billingAddressCollectionViewFlowLayout setMinimumInteritemSpacing:0.0f];
-    [billingAddressCollectionViewFlowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-    [billingAddressCollectionViewFlowLayout setItemSize:CGSizeZero];
-    [billingAddressCollectionViewFlowLayout setHeaderReferenceSize:CGSizeZero];
-    
-    self.billingAddressCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:billingAddressCollectionViewFlowLayout];
-    [self.billingAddressCollectionView setScrollEnabled:NO];
-    self.billingAddressCollectionView.layer.cornerRadius = 5.0f;
-    [self.billingAddressCollectionView registerNib:addressListHeaderNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cartListHeader"];
-    [self.billingAddressCollectionView registerNib:addressListCellNib forCellWithReuseIdentifier:@"addressListCell"];
-    [self.billingAddressCollectionView registerNib:addAddressListCellNib forCellWithReuseIdentifier:@"addAddressListCell"];
-    [self.billingAddressCollectionView setDataSource:self];
-    [self.billingAddressCollectionView setDelegate:self];
-    [self.contentScrollView addSubview:self.billingAddressCollectionView];
-    
-    UICollectionViewFlowLayout* otherAddressCollectionViewFlowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [otherAddressCollectionViewFlowLayout setMinimumLineSpacing:0.0f];
-    [otherAddressCollectionViewFlowLayout setMinimumInteritemSpacing:0.0f];
-    [otherAddressCollectionViewFlowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-    [otherAddressCollectionViewFlowLayout setItemSize:CGSizeZero];
-    [otherAddressCollectionViewFlowLayout setHeaderReferenceSize:CGSizeZero];
-    
-    self.otherAddressesCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:otherAddressCollectionViewFlowLayout];
-    [self.otherAddressesCollectionView setScrollEnabled:NO];
-    self.otherAddressesCollectionView.layer.cornerRadius = 5.0f;
-    [self.otherAddressesCollectionView registerNib:addressListHeaderNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cartListHeader"];
-    [self.otherAddressesCollectionView registerNib:addressListCellNib forCellWithReuseIdentifier:@"addressListCell"];
-    [self.otherAddressesCollectionView registerNib:addAddressListCellNib forCellWithReuseIdentifier:@"addAddressListCell"];
-    [self.otherAddressesCollectionView setDataSource:self];
-    [self.otherAddressesCollectionView setDelegate:self];
-    [self.contentScrollView addSubview:self.otherAddressesCollectionView];
+    self.otherAddressesTableView = [UITableView new];
+    [self.otherAddressesTableView setScrollEnabled:NO];
+    [self.otherAddressesTableView setDelegate:self];
+    [self.otherAddressesTableView setDataSource:self];
+    [self.contentScrollView addSubview:self.otherAddressesTableView];
     
     
     [self.view addSubview:self.contentScrollView];
@@ -300,9 +257,9 @@ UICollectionViewDelegateFlowLayout>
     
     [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
     
-    [self.shippingAddressCollectionView reloadData];
-    [self.billingAddressCollectionView reloadData];
-    [self.otherAddressesCollectionView reloadData];
+    [self.shippingAddressTableView reloadData];
+    [self.billingAddressTableView reloadData];
+    [self.otherAddressesTableView reloadData];
     
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
@@ -404,32 +361,38 @@ UICollectionViewDelegateFlowLayout>
                                                 width,
                                                 self.view.frame.size.height - scrollViewStartY)];
     
-    CGFloat cellHeight = [self collectionView:self.shippingAddressCollectionView layout:self.flowLayout sizeForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]].height;
-    CGFloat totalShippingCollectionViewHeight = 27.0f + cellHeight + 44.0f;
-    [self.shippingAddressCollectionView setFrame:CGRectMake(6.0f,
-                                                           6.0f,
-                                                           self.contentScrollView.frame.size.width - 12.0f,
-                                                           totalShippingCollectionViewHeight)];
+    CGFloat cellHeight = [self tableView:self.shippingAddressTableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    CGFloat headerHeight = [self tableView:self.shippingAddressTableView heightForHeaderInSection:0];
+    CGFloat footerHeight = [self tableView:self.shippingAddressTableView heightForFooterInSection:0];
+    CGFloat totalShippingCollectionViewHeight = headerHeight + cellHeight + footerHeight;
+    [self.shippingAddressTableView setFrame:CGRectMake(0.0f,
+                                                       0.0f,
+                                                       self.contentScrollView.frame.size.width,
+                                                       totalShippingCollectionViewHeight)];
     
     CGFloat totalBillingCollectionViewHeight = totalShippingCollectionViewHeight;
     if (self.useSameAddressAsBillingAndShipping) {
         totalBillingCollectionViewHeight = 0.0f;
     }
-    [self.billingAddressCollectionView setFrame:CGRectMake(6.0f,
-                                                            CGRectGetMaxY(self.shippingAddressCollectionView.frame) + 5.0f,
-                                                            self.contentScrollView.frame.size.width - 12.0f,
-                                                            totalBillingCollectionViewHeight)];
-    
+    [self.billingAddressTableView setFrame:CGRectMake(0.0f,
+                                                      CGRectGetMaxY(self.shippingAddressTableView.frame),
+                                                      self.contentScrollView.frame.size.width,
+                                                      totalBillingCollectionViewHeight)];
+
     NSArray* otherAddresses = [self.addresses objectForKey:@"other"];
-    [self.otherAddressesCollectionView setFrame:CGRectMake(6.0f,
-                                                           CGRectGetMaxY(self.billingAddressCollectionView.frame) + 5.0f,
-                                                           self.contentScrollView.frame.size.width - 12.0f,
-                                                           otherAddresses.count * cellHeight + 27.0f + 44.0f)];
+    CGFloat totalOtherAddressesTableHeight = headerHeight + cellHeight * otherAddresses.count + footerHeight;
+    if (0 == otherAddresses.count) {
+        totalOtherAddressesTableHeight = 0.0f;
+    }
+    [self.otherAddressesTableView setFrame:CGRectMake(0.0f,
+                                                      CGRectGetMaxY(self.billingAddressTableView.frame),
+                                                      self.contentScrollView.frame.size.width,
+                                                      totalOtherAddressesTableHeight)];
     
     
-    [self.shippingAddressCollectionView reloadData];
-    [self.billingAddressCollectionView reloadData];
-    [self.otherAddressesCollectionView reloadData];
+    [self.shippingAddressTableView reloadData];
+    [self.billingAddressTableView reloadData];
+    [self.otherAddressesTableView reloadData];
     
     [_bottomView setFrame:CGRectMake(0.0f,
                                             self.view.frame.size.height - _bottomView.frame.size.height,
@@ -447,7 +410,7 @@ UICollectionViewDelegateFlowLayout>
     }
     
     
-    [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, CGRectGetMaxY(self.otherAddressesCollectionView.frame) + _bottomView.frame.size.height + 5.0f)];
+    [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, CGRectGetMaxY(self.otherAddressesTableView.frame) + _bottomView.frame.size.height + 5.0f)];
     
     [self.contentScrollView setHidden:NO];
     
@@ -490,180 +453,152 @@ UICollectionViewDelegateFlowLayout>
     return checkIfAddressIsAdded;
 }
 
--(void)editAddressButtonPressed:(UIButton*)sender
+- (void)editShippingAddressPressed
 {
-    NSInteger tag = sender.tag;
+    [self editAddressPressedForAddress:self.shippingAddress];
+}
+
+- (void)editBillingAddressPressed
+{
+    [self editAddressPressedForAddress:self.billingAddress];
+}
+
+- (void)editOtherAddressPressed:(UIControl*)sender
+{
+    NSInteger index = sender.tag;
     
-    UIView *view = [sender superview];
-    if(VALID_NOTEMPTY(view, UIView))
+    NSArray* otherAddresses = [self.addresses objectForKey:@"other"];
+    RIAddress* address = [otherAddresses objectAtIndex:index];
+    
+    [self editAddressPressedForAddress:address];
+}
+
+- (void)editAddressPressedForAddress:(RIAddress*)address
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutEditAddressScreenNotification
+                                                        object:nil
+                                                      userInfo:[NSDictionary dictionaryWithObjects:@[address, [NSNumber numberWithBool:self.fromCheckout]] forKeys:@[@"address_to_edit", @"from_checkout"]]];
+}
+
+#pragma mark UITableView delegate and datasource
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return kProductInfoHeaderLineHeight;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return kAddressCellHeight;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 38.0f;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    CGFloat totalNumberOfAddressesInTableView = 1;
+    
+    if(tableView == self.otherAddressesTableView)
     {
-        UIView *cellView = [view superview];
-        if(VALID_NOTEMPTY(cellView, UIView))
-        {
-            UIView *collectionView = [cellView superview];
-            if(VALID_NOTEMPTY(collectionView, UIView))
-            {
-                RIAddress *addressToEdit = nil;
-                if(self.shippingAddressCollectionView == [[[sender superview] superview] superview])
-                {
-                    addressToEdit = self.shippingAddress;
-                }
-                else if(self.billingAddressCollectionView == [[[sender superview] superview] superview])
-                {
-                    addressToEdit = self.billingAddress;
-                }
-                else if (self.otherAddressesCollectionView == [[[sender superview] superview] superview])
-                {
-                    NSArray* otherAddresses = [self.addresses objectForKey:@"other"];
-                    addressToEdit = [otherAddresses objectAtIndex:tag];
-                }
-                
-                if(VALID_NOTEMPTY(addressToEdit, RIAddress))
-                {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutEditAddressScreenNotification
-                                                                        object:nil
-                                                                      userInfo:[NSDictionary dictionaryWithObjects:@[addressToEdit, [NSNumber numberWithBool:self.fromCheckout]] forKeys:@[@"address_to_edit", @"from_checkout"]]];
-                }
-            }
+        NSArray* otherAddresses = [self.addresses objectForKey:@"other"];
+        totalNumberOfAddressesInTableView = [otherAddresses count] + 1;
+    }
+    
+    return totalNumberOfAddressesInTableView;
+}
+
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    NSString* title;
+    if(tableView == self.shippingAddressTableView)
+    {
+        if(self.useSameAddressAsBillingAndShipping) {
+            title = STRING_SHIPPING_BILLING_ADDRESS;
+        } else {
+            title = STRING_SHIPPING_ADDRESSES;
         }
     }
-}
-
-#pragma mark UICollectionViewDelegateFlowLayout
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    CGSize sizeForItemAtIndexPath = CGSizeZero;
-    
-    CGFloat totalNumberOfAddressesInCollectionView = 0;
-    
-    if(collectionView == self.shippingAddressCollectionView || collectionView == self.billingAddressCollectionView)
+    else if(tableView == self.billingAddressTableView)
     {
-        totalNumberOfAddressesInCollectionView = 1;
+        title = STRING_BILLING_ADDRESSES;
+    } else if(tableView == self.otherAddressesTableView) {
+        title = STRING_OTHER_ADDRESSES;
     }
-    else if(collectionView == self.otherAddressesCollectionView)
-    {
-        NSArray* otherAddresses = [self.addresses objectForKey:@"other"];
-        totalNumberOfAddressesInCollectionView = [otherAddresses count];
-    }
-
-    if (indexPath.row < totalNumberOfAddressesInCollectionView) {
-        // Address
-        sizeForItemAtIndexPath = CGSizeMake(self.shippingAddressCollectionView.frame.size.width, 100.0f);
-    } else if(indexPath.row == totalNumberOfAddressesInCollectionView) {
-        // Add new address
-        sizeForItemAtIndexPath = CGSizeMake(self.shippingAddressCollectionView.frame.size.width, 44.0f);
+    JAProductInfoHeaderLine* headerLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0.0f, 0.0f, tableView.frame.size.width, kProductInfoHeaderLineHeight)];
+    [headerLine setTitle:title];
+    
+    if (RI_IS_RTL) {
+        [headerLine flipAllSubviews];
     }
     
-    return sizeForItemAtIndexPath;
+    return headerLine;
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
+- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    return CGSizeMake(collectionView.frame.size.width, 27.0f);
-}
-
-#pragma mark UICollectionViewDataSource
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    return 1;
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    CGFloat totalNumberOfAddressesInCollectionView = 0;
+    JAClickableView* footerView = [JAClickableView new];
+    [footerView setBackgroundColor:JAWhiteColor];
+    [footerView setFrame:CGRectMake(0.0f, 0.0f, tableView.frame.size.width, 38.0f)];
     
-    if(collectionView == self.shippingAddressCollectionView || collectionView == self.billingAddressCollectionView)
-    {
-        totalNumberOfAddressesInCollectionView = 2;
-    }
-    else if(collectionView == self.otherAddressesCollectionView)
-    {
-        NSArray* otherAddresses = [self.addresses objectForKey:@"other"];
-        totalNumberOfAddressesInCollectionView = [otherAddresses count] + 1;
+    UILabel* addNewAddressLabel = [UILabel new];
+    [addNewAddressLabel setFont:JABUTTON2Font];
+    [addNewAddressLabel setTextColor:JABlue1Color];
+    [addNewAddressLabel setTextAlignment:NSTextAlignmentRight];
+    [addNewAddressLabel setText:[STRING_ADD_NEW_ADDRESS uppercaseString]];
+    [addNewAddressLabel sizeToFit];
+    [addNewAddressLabel setFrame:CGRectMake(16.0f,
+                                            9.0f,
+                                            self.view.frame.size.width - 16.0f*2,
+                                            addNewAddressLabel.frame.size.height)];
+    [footerView addSubview:addNewAddressLabel];
+
+    if (RI_IS_RTL) {
+        [footerView flipAllSubviews];
     }
     
-    return totalNumberOfAddressesInCollectionView;
+    [footerView addTarget:self action:@selector(addAddressCellPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    return footerView;
 }
 
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = nil;
+    NSString *cellIdentifier = @"cell";
+    
+    JAAddressCell* cell = (JAAddressCell*)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (ISEMPTY(cell)) {
+        cell = [[JAAddressCell alloc] init];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    }
     
     RIAddress* address;
+    SEL clickMethod;
     
-    if(collectionView == self.shippingAddressCollectionView) {
+    if(tableView == self.shippingAddressTableView) {
         if (0 == indexPath.row) {
             address = self.shippingAddress;
+            clickMethod = @selector(editShippingAddressPressed);
         }
-    } else if(collectionView == self.billingAddressCollectionView) {
+    } else if(tableView == self.billingAddressTableView) {
         if (0 == indexPath.row) {
             address = self.billingAddress;
+            clickMethod = @selector(editBillingAddressPressed);
         }
     } else {
         NSArray* otherAddresses = [self.addresses objectForKey:@"other"];
         if (indexPath.row < [otherAddresses count]) {
             address = [otherAddresses objectAtIndex:indexPath.row];
         }
+        clickMethod = @selector(editOtherAddressPressed:);
     }
     
-    if (VALID_NOTEMPTY(address, RIAddress)) {
-        NSString *cellIdentifier = @"addressListCell";
-        JAAddressCell *addressCell = (JAAddressCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-        [addressCell loadWithAddress:address];
-        [addressCell.editAddressButton setTag:indexPath.row];
-        [addressCell.editAddressButton addTarget:self action:@selector(editAddressButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        addressCell.clickableView.tag = indexPath.row;
-        
-        cell = addressCell;
-        
-    } else {
-
-        // Add new address
-        NSString *cellIdentifier = @"addAddressListCell";
-        JAAddNewAddressCell *addAddressCell = (JAAddNewAddressCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-        [addAddressCell loadWithText:STRING_ADD_NEW_ADDRESS];
-        addAddressCell.clickableView.tag = indexPath.row;
-        [addAddressCell.clickableView addTarget:self action:@selector(addAddressCellPressed:) forControlEvents:UIControlEventTouchUpInside];
-        
-        cell = addAddressCell;
-    
-    }
-    
+    [cell loadWithWidth:self.contentScrollView.frame.size.width address:address];
+    [cell.editAddressButton setTag:indexPath.row];
+    [cell.editAddressButton addTarget:self action:clickMethod forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
-}
-
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-{
-    UICollectionReusableView *reusableview = [[UICollectionReusableView alloc] init];
-    
-    if (kind == UICollectionElementKindSectionHeader) {
-        JACartListHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"cartListHeader" forIndexPath:indexPath];
-        
-        if(collectionView == self.shippingAddressCollectionView)
-        {
-            if(self.useSameAddressAsBillingAndShipping)
-            {
-                [headerView loadHeaderWithText:STRING_SHIPPING_BILLING_ADDRESS width:self.contentScrollView.frame.size.width - 12.0f];
-            }
-            else
-            {
-                [headerView loadHeaderWithText:STRING_SHIPPING_ADDRESSES width:self.contentScrollView.frame.size.width - 12.0f];
-            }
-        }
-        else if(collectionView == self.billingAddressCollectionView)
-        {
-            [headerView loadHeaderWithText:STRING_BILLING_ADDRESSES width:self.contentScrollView.frame.size.width - 12.0f];
-        } else if(collectionView == self.otherAddressesCollectionView)
-        {
-            [headerView loadHeaderWithText:STRING_OTHER_ADDRESSES width:self.contentScrollView.frame.size.width - 12.0f];
-        }
-        
-        reusableview = headerView;
-    }
-    
-    return reusableview;
 }
 
 #pragma mark UICollectionViewDelegate
