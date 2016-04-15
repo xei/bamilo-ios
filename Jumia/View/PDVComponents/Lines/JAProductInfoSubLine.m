@@ -38,6 +38,7 @@
 {
     [self setTopSeparatorVisibility:YES];
     [self setTopSeparatorXOffset:self.label.x];
+    [super.label setFont:JABodyFont];
 }
 
 - (void)setFrame:(CGRect)frame
@@ -48,7 +49,6 @@
 
 - (UILabel *)label
 {
-    [super.label setFont:JABodyFont];
     return super.label;
 }
 

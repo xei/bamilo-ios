@@ -43,7 +43,7 @@
     if (!self.priceLine) {
         self.priceLine = [[JAProductInfoPriceLine alloc]initWithFrame:CGRectMake(10.f, 10.f, self.width-10.f, 15.f)];
         [self.priceLine setLineContentXOffset:0.f];
-        self.priceLine.priceSize = kPriceSizeSmall;
+        self.priceLine.priceSize = JAPriceSizeSmall;
         [self.clickableView addSubview:self.priceLine];
     }
     self.priceLine.frame = CGRectMake(10.f, 10.f, self.width-10.f, 15.f);

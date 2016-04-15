@@ -212,7 +212,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     [cell setShowSelector:YES enabled:enabled];
     [cell setHideRating:YES];
     [cell setHideShopFirstLogo:YES];
-    [cell loadWithProduct:bundleProduct];
+    [cell setProduct:bundleProduct];
     
     if (![self.product.sku isEqualToString:bundleProduct.sku]) {
         [cell.selectorButton addTarget:self action:@selector(itemSelection:) forControlEvents:UIControlEventTouchUpInside ];

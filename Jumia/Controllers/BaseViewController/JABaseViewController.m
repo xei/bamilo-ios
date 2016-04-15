@@ -715,4 +715,22 @@
     }
 }
 
+- (BOOL)isIpad
+{
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
+    {
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL)isIpadLandscape
+{
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    {
+        return YES;
+    }
+    return NO;
+}
+
 @end
