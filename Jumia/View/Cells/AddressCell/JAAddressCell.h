@@ -9,17 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "JAClickableView.h"
 
+#define kAddressCellHeight 80.0f
+
 @class RIAddress;
 
-@interface JAAddressCell : UICollectionViewCell
+@interface JAAddressCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIButton *editAddressButton;
-@property (weak, nonatomic) IBOutlet JAClickableView *clickableView;
+@property (strong, nonatomic) UIButton *editAddressButton;
 
--(void)loadWithAddress:(RIAddress*)address;
-
--(void)selectAddress;
-
--(void)deselectAddress;
+-(void)loadWithWidth:(CGFloat)width
+             address:(RIAddress*)address;
 
 @end

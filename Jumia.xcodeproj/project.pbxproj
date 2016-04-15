@@ -55,7 +55,6 @@
 		34a536cae01afe5c3273576f /* JAShippingInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B55CF28D19BE072800A6C6B6 /* JAShippingInfoCell.xib */; };
 		34f9314ba505cc312e1f839a /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302F519811F1500F71726 /* ImageIO.framework */; };
 		36d44c903225b19fe74884ab /* JAColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C26199CBF0E00C67F4B /* JAColorView.m */; };
-		37a7d0b54c205bb3a0c500c0 /* JAAddNewAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA7D19B88DDB00DE7960 /* JAAddNewAddressCell.xib */; };
 		395a0f6c8e310c347aa9c00c /* slider-default7-trackBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9A1199BA8FA0022BAB5 /* slider-default7-trackBackground@2x.png */; };
 		39d64ebd01d50db348ddca2c /* RINewRelicTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FE9FBB19A204F1006F7D63 /* RINewRelicTracker.m */; };
 		3ab4ceb662e18c84bc722d71 /* slider-default-trackCrossedOver.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB998199BA8FA0022BAB5 /* slider-default-trackCrossedOver.png */; };
@@ -1086,11 +1085,8 @@
 		B59DCA6619B710DA00DE7960 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA6519B710DA00DE7960 /* FXBlurView.m */; };
 		B59DCA6A19B8521A00DE7960 /* JAButtonWithBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA6919B8521A00DE7960 /* JAButtonWithBlur.m */; };
 		B59DCA6F19B8712500DE7960 /* JAAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA6D19B8712500DE7960 /* JAAddressCell.m */; };
-		B59DCA7019B8712500DE7960 /* JAAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA6E19B8712500DE7960 /* JAAddressCell.xib */; };
 		B59DCA7619B88DAD00DE7960 /* JASwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA7419B88DAD00DE7960 /* JASwitchCell.m */; };
 		B59DCA7719B88DAD00DE7960 /* JASwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA7519B88DAD00DE7960 /* JASwitchCell.xib */; };
-		B59DCA7E19B88DDB00DE7960 /* JAAddNewAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA7C19B88DDB00DE7960 /* JAAddNewAddressCell.m */; };
-		B59DCA7F19B88DDB00DE7960 /* JAAddNewAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA7D19B88DDB00DE7960 /* JAAddNewAddressCell.xib */; };
 		B5A0059019D5A1EE0069C0A9 /* RIGTMTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A0058F19D5A1EE0069C0A9 /* RIGTMTracker.m */; };
 		B5A301AE19811D0700F71726 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301AD19811D0700F71726 /* main.m */; };
 		B5A301B119811D0700F71726 /* JAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A301B019811D0700F71726 /* JAAppDelegate.m */; };
@@ -1489,7 +1485,6 @@
 		CE9ADBBB1AB34C4600D56481 /* RICommunicationWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029F19811E9200F71726 /* RICommunicationWrapper.m */; };
 		CE9ADBBD1AB34C4600D56481 /* JAUndefinedSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3719BC19C05F52002D4199 /* JAUndefinedSearchView.m */; };
 		CE9ADBBE1AB34C4600D56481 /* RISellerReviewInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E951A77981900F3E92D /* RISellerReviewInfo.m */; };
-		CE9ADBC11AB34C4600D56481 /* JAAddNewAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA7C19B88DDB00DE7960 /* JAAddNewAddressCell.m */; };
 		CE9ADBC41AB34C4600D56481 /* JATeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44586F198BD21A00CE7E8D /* JATeaserView.m */; };
 		CE9ADBC61AB34C4600D56481 /* JAUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B50B03AA198A8861002046DF /* JAUtils.m */; };
 		CE9ADBC71AB34C4600D56481 /* JAPDVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE730C6198F8B05000CA1DD /* JAPDVViewController.m */; };
@@ -1620,7 +1615,6 @@
 		CE9ADC801AB34C4600D56481 /* 20_cart.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CD719E45799004271B2 /* 20_cart.feature */; };
 		CE9ADC811AB34C4600D56481 /* JAFallbackView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE9193BE19F5040E00F89840 /* JAFallbackView.xib */; };
 		CE9ADC851AB34C4600D56481 /* 05_user_data.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459919DC56BF003F0CA7 /* 05_user_data.feature */; };
-		CE9ADC861AB34C4600D56481 /* JAAddNewAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA7D19B88DDB00DE7960 /* JAAddNewAddressCell.xib */; };
 		CE9ADC881AB34C4600D56481 /* 16_recent_searches.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CC819E42E9A004271B2 /* 16_recent_searches.feature */; };
 		CE9ADC891AB34C4600D56481 /* touch.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A319DC56BF003F0CA7 /* touch.rb */; };
 		CE9ADC8A1AB34C4600D56481 /* slider-metal-trackBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9AB199BA8FA0022BAB5 /* slider-metal-trackBackground.png */; };
@@ -1673,7 +1667,6 @@
 		CE9ADCF01AB34C4600D56481 /* 01_login.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459519DC56BF003F0CA7 /* 01_login.feature */; };
 		CE9ADCF51AB34C4600D56481 /* slider-default7-track.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB99E199BA8FA0022BAB5 /* slider-default7-track.png */; };
 		CE9ADCF61AB34C4600D56481 /* JARatingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE55A4E819936B6300EE75DE /* JARatingsView.xib */; };
-		CE9ADCF91AB34C4600D56481 /* JAAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA6E19B8712500DE7960 /* JAAddressCell.xib */; };
 		CE9ADCFB1AB34C4600D56481 /* JARatingsViewMedium.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CBFF651A10B33D0050C553 /* JARatingsViewMedium.xib */; };
 		CE9ADD001AB34C4600D56481 /* assert.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459C19DC56BF003F0CA7 /* assert.rb */; };
 		CE9ADD021AB34C4600D56481 /* JACartListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B56BBF3219A60D5400F4B1A3 /* JACartListCell.xib */; };
@@ -1782,7 +1775,6 @@
 		CE9ADDB51AB6D6E900D56481 /* RICommunicationWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029F19811E9200F71726 /* RICommunicationWrapper.m */; };
 		CE9ADDB71AB6D6E900D56481 /* JAUndefinedSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3719BC19C05F52002D4199 /* JAUndefinedSearchView.m */; };
 		CE9ADDB81AB6D6E900D56481 /* RISellerReviewInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E951A77981900F3E92D /* RISellerReviewInfo.m */; };
-		CE9ADDBB1AB6D6E900D56481 /* JAAddNewAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA7C19B88DDB00DE7960 /* JAAddNewAddressCell.m */; };
 		CE9ADDBE1AB6D6E900D56481 /* JATeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44586F198BD21A00CE7E8D /* JATeaserView.m */; };
 		CE9ADDC01AB6D6E900D56481 /* JAUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B50B03AA198A8861002046DF /* JAUtils.m */; };
 		CE9ADDC11AB6D6E900D56481 /* JAPDVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE730C6198F8B05000CA1DD /* JAPDVViewController.m */; };
@@ -1913,7 +1905,6 @@
 		CE9ADE7A1AB6D6E900D56481 /* 20_cart.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CD719E45799004271B2 /* 20_cart.feature */; };
 		CE9ADE7B1AB6D6E900D56481 /* JAFallbackView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE9193BE19F5040E00F89840 /* JAFallbackView.xib */; };
 		CE9ADE7F1AB6D6E900D56481 /* 05_user_data.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459919DC56BF003F0CA7 /* 05_user_data.feature */; };
-		CE9ADE801AB6D6E900D56481 /* JAAddNewAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA7D19B88DDB00DE7960 /* JAAddNewAddressCell.xib */; };
 		CE9ADE821AB6D6E900D56481 /* 16_recent_searches.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CC819E42E9A004271B2 /* 16_recent_searches.feature */; };
 		CE9ADE831AB6D6E900D56481 /* touch.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A319DC56BF003F0CA7 /* touch.rb */; };
 		CE9ADE841AB6D6E900D56481 /* slider-metal-trackBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9AB199BA8FA0022BAB5 /* slider-metal-trackBackground.png */; };
@@ -1966,7 +1957,6 @@
 		CE9ADEEA1AB6D6E900D56481 /* 01_login.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459519DC56BF003F0CA7 /* 01_login.feature */; };
 		CE9ADEEF1AB6D6E900D56481 /* slider-default7-track.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB99E199BA8FA0022BAB5 /* slider-default7-track.png */; };
 		CE9ADEF01AB6D6E900D56481 /* JARatingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE55A4E819936B6300EE75DE /* JARatingsView.xib */; };
-		CE9ADEF31AB6D6E900D56481 /* JAAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA6E19B8712500DE7960 /* JAAddressCell.xib */; };
 		CE9ADEF51AB6D6E900D56481 /* JARatingsViewMedium.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CBFF651A10B33D0050C553 /* JARatingsViewMedium.xib */; };
 		CE9ADEFA1AB6D6E900D56481 /* assert.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459C19DC56BF003F0CA7 /* assert.rb */; };
 		CE9ADEFC1AB6D6E900D56481 /* JACartListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B56BBF3219A60D5400F4B1A3 /* JACartListCell.xib */; };
@@ -2075,7 +2065,6 @@
 		CE9ADFAF1AB6D78200D56481 /* RICommunicationWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029F19811E9200F71726 /* RICommunicationWrapper.m */; };
 		CE9ADFB11AB6D78200D56481 /* JAUndefinedSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3719BC19C05F52002D4199 /* JAUndefinedSearchView.m */; };
 		CE9ADFB21AB6D78200D56481 /* RISellerReviewInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E951A77981900F3E92D /* RISellerReviewInfo.m */; };
-		CE9ADFB51AB6D78200D56481 /* JAAddNewAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA7C19B88DDB00DE7960 /* JAAddNewAddressCell.m */; };
 		CE9ADFB81AB6D78200D56481 /* JATeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44586F198BD21A00CE7E8D /* JATeaserView.m */; };
 		CE9ADFBA1AB6D78200D56481 /* JAUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B50B03AA198A8861002046DF /* JAUtils.m */; };
 		CE9ADFBB1AB6D78200D56481 /* JAPDVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE730C6198F8B05000CA1DD /* JAPDVViewController.m */; };
@@ -2206,7 +2195,6 @@
 		CE9AE0741AB6D78200D56481 /* 20_cart.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CD719E45799004271B2 /* 20_cart.feature */; };
 		CE9AE0751AB6D78200D56481 /* JAFallbackView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE9193BE19F5040E00F89840 /* JAFallbackView.xib */; };
 		CE9AE0791AB6D78200D56481 /* 05_user_data.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459919DC56BF003F0CA7 /* 05_user_data.feature */; };
-		CE9AE07A1AB6D78200D56481 /* JAAddNewAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA7D19B88DDB00DE7960 /* JAAddNewAddressCell.xib */; };
 		CE9AE07C1AB6D78200D56481 /* 16_recent_searches.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBBA4CC819E42E9A004271B2 /* 16_recent_searches.feature */; };
 		CE9AE07D1AB6D78200D56481 /* touch.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA145A319DC56BF003F0CA7 /* touch.rb */; };
 		CE9AE07E1AB6D78200D56481 /* slider-metal-trackBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9AB199BA8FA0022BAB5 /* slider-metal-trackBackground.png */; };
@@ -2259,7 +2247,6 @@
 		CE9AE0E41AB6D78200D56481 /* 01_login.feature in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459519DC56BF003F0CA7 /* 01_login.feature */; };
 		CE9AE0E91AB6D78200D56481 /* slider-default7-track.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB99E199BA8FA0022BAB5 /* slider-default7-track.png */; };
 		CE9AE0EA1AB6D78200D56481 /* JARatingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE55A4E819936B6300EE75DE /* JARatingsView.xib */; };
-		CE9AE0ED1AB6D78200D56481 /* JAAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA6E19B8712500DE7960 /* JAAddressCell.xib */; };
 		CE9AE0EF1AB6D78200D56481 /* JARatingsViewMedium.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5CBFF651A10B33D0050C553 /* JARatingsViewMedium.xib */; };
 		CE9AE0F41AB6D78200D56481 /* assert.rb in Resources */ = {isa = PBXBuildFile; fileRef = BBA1459C19DC56BF003F0CA7 /* assert.rb */; };
 		CE9AE0F61AB6D78200D56481 /* JACartListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B56BBF3219A60D5400F4B1A3 /* JACartListCell.xib */; };
@@ -2668,7 +2655,6 @@
 		a2b50e1f14acaf67564f97c8 /* slider-default7-track@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB99F199BA8FA0022BAB5 /* slider-default7-track@2x.png */; };
 		a7574c4a13ff4d48c84304ab /* slider-default7-handle.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB99C199BA8FA0022BAB5 /* slider-default7-handle.png */; };
 		a7db6ed31621c11e28c044a6 /* JACheckoutForms.m in Sources */ = {isa = PBXBuildFile; fileRef = B530D57019C1998B0052FEDA /* JACheckoutForms.m */; };
-		a8f78471bcd05366bede322a /* JAAddNewAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA7C19B88DDB00DE7960 /* JAAddNewAddressCell.m */; };
 		abfbf9f4e3ea7badd0389cb2 /* JACatalogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3FC5AD1990E25C003B4A27 /* JACatalogViewController.m */; };
 		ac85e34a006abcf5bb6f9bc2 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302E719811EBF00F71726 /* CFNetwork.framework */; };
 		b30c4e6be5c0c8eee6b4a94c /* RIURLCacheWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A302BC19811E9200F71726 /* RIURLCacheWrapper.m */; };
@@ -2710,7 +2696,6 @@
 		e8cdf19ae478212bba2a64b2 /* JAOrangeButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3F71B19A5FDDA00DE12F6 /* JAOrangeButtonCell.xib */; };
 		ea1aa2216afe07e1a408922b /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302E919811ECB00F71726 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		ecc9deac3f4a367450e9394f /* JAEditAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B57DC97D19B90AB10080C818 /* JAEditAddressViewController.m */; };
-		ecded10b920d22a200c85616 /* JAAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA6E19B8712500DE7960 /* JAAddressCell.xib */; };
 		ed304145f21e8a21401fd967 /* JAAddressesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B50B039F198A5434002046DF /* JAAddressesViewController.m */; };
 		ed3e1db94221143eef46fba7 /* slider-metal-trackBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEDEB9AC199BA8FA0022BAB5 /* slider-metal-trackBackground@2x.png */; };
 		ed678b1c1c88881ed466339e /* JACenterNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7F7480198A4EDA00621C0D /* JACenterNavigationController.m */; };
@@ -3193,13 +3178,9 @@
 		B59DCA6919B8521A00DE7960 /* JAButtonWithBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAButtonWithBlur.m; path = Buttons/JAButtonWithBlur.m; sourceTree = "<group>"; };
 		B59DCA6C19B8712500DE7960 /* JAAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAAddressCell.h; path = AddressCell/JAAddressCell.h; sourceTree = "<group>"; };
 		B59DCA6D19B8712500DE7960 /* JAAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAAddressCell.m; path = AddressCell/JAAddressCell.m; sourceTree = "<group>"; };
-		B59DCA6E19B8712500DE7960 /* JAAddressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAAddressCell.xib; path = AddressCell/JAAddressCell.xib; sourceTree = "<group>"; };
 		B59DCA7319B88DAD00DE7960 /* JASwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JASwitchCell.h; path = SwitchCell/JASwitchCell.h; sourceTree = "<group>"; };
 		B59DCA7419B88DAD00DE7960 /* JASwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JASwitchCell.m; path = SwitchCell/JASwitchCell.m; sourceTree = "<group>"; };
 		B59DCA7519B88DAD00DE7960 /* JASwitchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JASwitchCell.xib; path = SwitchCell/JASwitchCell.xib; sourceTree = "<group>"; };
-		B59DCA7B19B88DDB00DE7960 /* JAAddNewAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAAddNewAddressCell.h; path = AddressCell/JAAddNewAddressCell.h; sourceTree = "<group>"; };
-		B59DCA7C19B88DDB00DE7960 /* JAAddNewAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAAddNewAddressCell.m; path = AddressCell/JAAddNewAddressCell.m; sourceTree = "<group>"; };
-		B59DCA7D19B88DDB00DE7960 /* JAAddNewAddressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAAddNewAddressCell.xib; path = AddressCell/JAAddNewAddressCell.xib; sourceTree = "<group>"; };
 		B5A0058E19D5A1EE0069C0A9 /* RIGTMTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIGTMTracker.h; sourceTree = "<group>"; };
 		B5A0058F19D5A1EE0069C0A9 /* RIGTMTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIGTMTracker.m; sourceTree = "<group>"; };
 		B5A301A819811D0700F71726 /* Jumia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jumia.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -5150,10 +5131,6 @@
 			children = (
 				B59DCA6C19B8712500DE7960 /* JAAddressCell.h */,
 				B59DCA6D19B8712500DE7960 /* JAAddressCell.m */,
-				B59DCA6E19B8712500DE7960 /* JAAddressCell.xib */,
-				B59DCA7B19B88DDB00DE7960 /* JAAddNewAddressCell.h */,
-				B59DCA7C19B88DDB00DE7960 /* JAAddNewAddressCell.m */,
-				B59DCA7D19B88DDB00DE7960 /* JAAddNewAddressCell.xib */,
 			);
 			name = AddressCell;
 			sourceTree = "<group>";
@@ -6528,7 +6505,6 @@
 				9A2036E71B25D45500F36F55 /* JANewRatingViewController.xib in Resources */,
 				9AF49A391B1DB6C10028105D /* JACatalogListCell_ipad_landscape.xib in Resources */,
 				9A17D0D71C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib in Resources */,
-				37a7d0b54c205bb3a0c500c0 /* JAAddNewAddressCell.xib in Resources */,
 				9A007C6A1C2027BA007D99FC /* JACatalogViewController.xib in Resources */,
 				9A17D1721C5F775900851D6E /* BMA4SiPhoneTextNotifView-nobuttons-iPad.xib in Resources */,
 				0ae503a9046dc0361e776798 /* RITracking_JUMIA.plist in Resources */,
@@ -6625,7 +6601,6 @@
 				BBBA4CCA19E42E9A004271B2 /* 16_recent_searches.feature in Resources */,
 				30c5e0f2e56744fd766c5c8c /* JARatingsView.xib in Resources */,
 				9A17D0BE1C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewNotifView-iPad.xib in Resources */,
-				ecded10b920d22a200c85616 /* JAAddressCell.xib in Resources */,
 				9A17D0E11C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */,
 				9A17D0F51C5F775900851D6E /* BMA4SRichPushWebViewWithToolBar.xib in Resources */,
 				9A17D1451C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons.xib in Resources */,
@@ -6725,7 +6700,6 @@
 				BBA145AE19DC56BF003F0CA7 /* 05_user_data.feature in Resources */,
 				9A17D0E01C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */,
 				9A17D1941C5F775900851D6E /* BMA4SiPhoneWebViewNotifView-nobuttons.xib in Resources */,
-				B59DCA7F19B88DDB00DE7960 /* JAAddNewAddressCell.xib in Resources */,
 				B5FE9FB519A1FCD9006F7D63 /* RITracking_JUMIA.plist in Resources */,
 				6CCE08BB1B1F176A004311E2 /* JAShippingViewController.xib in Resources */,
 				BBBA4CC919E42E9A004271B2 /* 16_recent_searches.feature in Resources */,
@@ -6830,7 +6804,6 @@
 				9A17D18F1C5F775900851D6E /* BMA4SiPhoneWebViewNotifView-nobuttons-landscape.xib in Resources */,
 				9A007C691C2027BA007D99FC /* JACatalogViewController.xib in Resources */,
 				9A007C6E1C2027BA007D99FC /* JACatalogViewController~ipad.xib in Resources */,
-				B59DCA7019B8712500DE7960 /* JAAddressCell.xib in Resources */,
 				B5CBFF681A10B33D0050C553 /* JARatingsViewMedium.xib in Resources */,
 				6CCE08CD1B1F3960004311E2 /* JAPaymentViewController~iPad.xib in Resources */,
 				BBA145B019DC56BF003F0CA7 /* assert.rb in Resources */,
@@ -6928,7 +6901,6 @@
 				9A17D1231C5F775900851D6E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-iPad.xib in Resources */,
 				CE9ADC851AB34C4600D56481 /* 05_user_data.feature in Resources */,
 				9A17D0F61C5F775900851D6E /* BMA4SRichPushWebViewWithToolBar.xib in Resources */,
-				CE9ADC861AB34C4600D56481 /* JAAddNewAddressCell.xib in Resources */,
 				CE9ADC881AB34C4600D56481 /* 16_recent_searches.feature in Resources */,
 				CE9ADC891AB34C4600D56481 /* touch.rb in Resources */,
 				CE9ADC8A1AB34C4600D56481 /* slider-metal-trackBackground.png in Resources */,
@@ -7029,7 +7001,6 @@
 				CEDBF8901B0DF5D00073971A /* JANewsletterComponent_RTL.xib in Resources */,
 				CE9ADCF51AB34C4600D56481 /* slider-default7-track.png in Resources */,
 				CE9ADCF61AB34C4600D56481 /* JARatingsView.xib in Resources */,
-				CE9ADCF91AB34C4600D56481 /* JAAddressCell.xib in Resources */,
 				6CCE089F1B1EF8A0004311E2 /* JAAddressesViewController~iPad.xib in Resources */,
 				9A17D10A1C5F775900851D6E /* BMA4SiPhoneTextNotifView.xib in Resources */,
 				9A17D1551C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape.xib in Resources */,
@@ -7126,7 +7097,6 @@
 				9A17D0E31C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */,
 				9A17D1971C5F775900851D6E /* BMA4SiPhoneWebViewNotifView-nobuttons.xib in Resources */,
 				CE9ADE7F1AB6D6E900D56481 /* 05_user_data.feature in Resources */,
-				CE9ADE801AB6D6E900D56481 /* JAAddNewAddressCell.xib in Resources */,
 				CE9ADE821AB6D6E900D56481 /* 16_recent_searches.feature in Resources */,
 				CEDE870E1B25FEE2006D18EA /* JANoConnectionView.xib in Resources */,
 				6CCE08BE1B1F176A004311E2 /* JAShippingViewController.xib in Resources */,
@@ -7226,7 +7196,6 @@
 				CE9ADEEF1AB6D6E900D56481 /* slider-default7-track.png in Resources */,
 				CE9ADEF01AB6D6E900D56481 /* JARatingsView.xib in Resources */,
 				9A17D0D91C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape-iPad.xib in Resources */,
-				CE9ADEF31AB6D6E900D56481 /* JAAddressCell.xib in Resources */,
 				9A17D1921C5F775900851D6E /* BMA4SiPhoneWebViewNotifView-nobuttons-landscape.xib in Resources */,
 				CE9ADEF51AB6D6E900D56481 /* JARatingsViewMedium.xib in Resources */,
 				6CCE08D01B1F3960004311E2 /* JAPaymentViewController~iPad.xib in Resources */,
@@ -7319,7 +7288,6 @@
 				CE9AE0751AB6D78200D56481 /* JAFallbackView.xib in Resources */,
 				CE9AE0791AB6D78200D56481 /* 05_user_data.feature in Resources */,
 				9A17D1251C5F775900851D6E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-iPad.xib in Resources */,
-				CE9AE07A1AB6D78200D56481 /* JAAddNewAddressCell.xib in Resources */,
 				9A17D0F81C5F775900851D6E /* BMA4SRichPushWebViewWithToolBar.xib in Resources */,
 				CE9AE07C1AB6D78200D56481 /* 16_recent_searches.feature in Resources */,
 				CE9AE07D1AB6D78200D56481 /* touch.rb in Resources */,
@@ -7426,7 +7394,6 @@
 				6CCE08A11B1EF8A0004311E2 /* JAAddressesViewController~iPad.xib in Resources */,
 				9A17D10C1C5F775900851D6E /* BMA4SiPhoneTextNotifView.xib in Resources */,
 				9A17D1571C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape.xib in Resources */,
-				CE9AE0ED1AB6D78200D56481 /* JAAddressCell.xib in Resources */,
 				CE9AE0EF1AB6D78200D56481 /* JARatingsViewMedium.xib in Resources */,
 				CE9AE0F41AB6D78200D56481 /* assert.rb in Resources */,
 				CE9AE0F61AB6D78200D56481 /* JACartListCell.xib in Resources */,
@@ -7692,7 +7659,6 @@
 				7e3a5f0e6afc1561038dbd8c /* Model.xcdatamodeld in Sources */,
 				9cbdf4e3cedc6bf19d69072d /* RICommunicationWrapper.m in Sources */,
 				13aa921041b3d74e73c372da /* JAUndefinedSearchView.m in Sources */,
-				a8f78471bcd05366bede322a /* JAAddNewAddressCell.m in Sources */,
 				9A6BC0801C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */,
 				B5C9C7051A1A6CB30065AFD4 /* JADatePicker.m in Sources */,
 				e50648146d628861d4e0bc0f /* JATeaserView.m in Sources */,
@@ -8014,7 +7980,6 @@
 				9AED08301C74CA0E00B5FDF0 /* JASuccessPageViewController.m in Sources */,
 				4A3719BD19C05F52002D4199 /* JAUndefinedSearchView.m in Sources */,
 				CE283E961A77981900F3E92D /* RISellerReviewInfo.m in Sources */,
-				B59DCA7E19B88DDB00DE7960 /* JAAddNewAddressCell.m in Sources */,
 				CEA106F51BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */,
 				9A0F9BBF1B5EAD9700569DF2 /* AQSFacebookMessengerActivity.m in Sources */,
 				CE445870198BD21A00CE7E8D /* JATeaserView.m in Sources */,
@@ -8352,7 +8317,6 @@
 				CE9ADBBD1AB34C4600D56481 /* JAUndefinedSearchView.m in Sources */,
 				CE9ADBBE1AB34C4600D56481 /* RISellerReviewInfo.m in Sources */,
 				9AED08321C74CA0E00B5FDF0 /* JASuccessPageViewController.m in Sources */,
-				CE9ADBC11AB34C4600D56481 /* JAAddNewAddressCell.m in Sources */,
 				CEA106F71BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */,
 				9A0F9BC11B5EAD9700569DF2 /* AQSFacebookMessengerActivity.m in Sources */,
 				CE9ADBC41AB34C4600D56481 /* JATeaserView.m in Sources */,
@@ -8681,7 +8645,6 @@
 				CE9ADDB71AB6D6E900D56481 /* JAUndefinedSearchView.m in Sources */,
 				CE9ADDB81AB6D6E900D56481 /* RISellerReviewInfo.m in Sources */,
 				9AED08331C74CA0E00B5FDF0 /* JASuccessPageViewController.m in Sources */,
-				CE9ADDBB1AB6D6E900D56481 /* JAAddNewAddressCell.m in Sources */,
 				CEA106F81BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */,
 				9A0F9BC21B5EAD9700569DF2 /* AQSFacebookMessengerActivity.m in Sources */,
 				CE9ADDBE1AB6D6E900D56481 /* JATeaserView.m in Sources */,
@@ -9012,7 +8975,6 @@
 				9AED08341C74CA0E00B5FDF0 /* JASuccessPageViewController.m in Sources */,
 				CEA106F91BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */,
 				CE7CC0921BE38B47006F4A56 /* JASearchView.m in Sources */,
-				CE9ADFB51AB6D78200D56481 /* JAAddNewAddressCell.m in Sources */,
 				9A0F9BC31B5EAD9700569DF2 /* AQSFacebookMessengerActivity.m in Sources */,
 				CE9ADFB81AB6D78200D56481 /* JATeaserView.m in Sources */,
 				9A3C76171C285D9300EB0B11 /* JARecentlyViewedCell.m in Sources */,
