@@ -14,6 +14,5 @@
 @property (nonatomic) JAPriceSize size;
 
 - (void)setPrice:(NSString *)price andOldPrice:(NSString *)oldPrice;
-- (void)setPromotionalPrice:(NSString *)price;
 
 @end

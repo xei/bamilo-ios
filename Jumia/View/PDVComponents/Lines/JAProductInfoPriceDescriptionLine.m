@@ -10,11 +10,28 @@
 
 @interface JAProductInfoPriceDescriptionLine ()
 
+@property (nonatomic, strong) UILabel *descriptionLabel;
 @property (nonatomic, strong) JAProductInfoPriceLine *priceLine;
 
 @end
 
 @implementation JAProductInfoPriceDescriptionLine
+
+- (UILabel *)descriptionLabel
+{
+    CGRect frame = CGRectMake(self.lineContentXOffset, 6, self.width-32, self.height-12);
+    if (!VALID_NOTEMPTY(_descriptionLabel, UILabel)) {
+        _descriptionLabel = [[UILabel alloc] initWithFrame:frame];
+        [_descriptionLabel setFont:JABodyFont];
+        [_descriptionLabel setTextAlignment:NSTextAlignmentLeft];
+        [_descriptionLabel setTextColor:JABlackColor];
+        [_descriptionLabel setText:@""];
+        [_descriptionLabel sizeToFit];
+        [_descriptionLabel setY:self.height/2-_descriptionLabel.height/2];
+        [self addSubview:_descriptionLabel];
+    }
+    return _descriptionLabel;
+}
 
 - (JAProductInfoPriceLine *)priceLine
 {
@@ -26,11 +43,18 @@
     return _priceLine;
 }
 
+- (void)setTitle:(NSString *)title
+{
+    [self.descriptionLabel setText:title];
+    [self reload];
+}
+
 - (void)setSize:(JAPriceSize)size
 {
     _size = size;
     [self.priceLine setPriceSize:size];
-    [self label];
+    [self.descriptionLabel setFont:[self priceSizeFont]];
+    [self reload];
 }
 
 - (void)setPrice:(NSString *)price andOldPrice:(NSString *)oldPrice
@@ -39,27 +63,18 @@
     if (VALID(oldPrice, NSString)) {
         [self.priceLine setOldPrice:oldPrice];
     }
-    [self.priceLine sizeHeightToFit];
-    [self.priceLine flipAllSubviews];
+    [self reload];
 }
 
-- (void)setPromotionalPrice:(NSString *)price
+- (void)reload
 {
-    [self.priceLine setPrice:price];
-    [self.priceLine sizeHeightToFit];
-    [self.priceLine.label setTextColor:JAGreen1Color];
+    [self.priceLine sizeToFit];
+    [self.priceLine setYCenterAligned];
+    [self.priceLine setXRightAligned:0.f];
     [self.priceLine flipAllSubviews];
-}
-
-- (UILabel *)label
-{
-    UILabel *label = super.label;
-    if (self.size) {
-        [label setFont:[self priceSizeFont]];
-    }else{
-        [label setFont:JABodyFont];
-    }
-    return label;
+    [self.descriptionLabel sizeToFit];
+    [self.descriptionLabel setYCenterAligned];
+    [self.descriptionLabel setWidth:self.priceLine.x - self.descriptionLabel.x - 10.f];
 }
 
 - (UIFont *)priceSizeFont

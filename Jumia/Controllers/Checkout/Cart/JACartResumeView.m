@@ -266,7 +266,7 @@
         [couponValueLine setTopSeparatorVisibility:NO];
         [couponValueLine setY:heigth];
         [couponValueLine setTitle:STRING_VOUCHER];
-        [couponValueLine setPromotionalPrice:[NSString stringWithFormat:@"- %@", [[self cart] couponMoneyValueFormatted]]];
+        [couponValueLine setPrice:[NSString stringWithFormat:@"- %@", [[self cart] couponMoneyValueFormatted]] andOldPrice:nil];
         [self.subtotalView addSubview:couponValueLine];
         heigth = CGRectGetMaxY(couponValueLine.frame);
     }
