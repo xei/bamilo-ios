@@ -191,6 +191,9 @@
     _seller = seller;
     [self.sellerNameLabel setText:seller.name];
     [self.sellerNameLabel sizeToFit];
+    if (CGRectGetMaxX(self.sellerNameLabel.frame) > self.width - self.sellerNameLabel.x) {
+        [self.sellerNameLabel setWidth:self.width - 2*self.sellerNameLabel.x];
+    }
     
     [self checkIsShopFirst];
     
@@ -267,6 +270,9 @@
 - (void)checkIsShopFirst
 {
     if ([self.isShopFirst boolValue]) {
+        if (self.sellerNameLabel.width > self.width-2*self.sellerNameLabel.x-self.shopFirstLogo.width-10.f) {
+            [self.sellerNameLabel setWidth:self.width-2*self.sellerNameLabel.x-self.shopFirstLogo.width-10.f];
+        }
         [self.shopFirstLogo setXRightOf:self.sellerNameLabel at:10.f];
         [self.shopFirstLogo setHidden:NO];
     } else {
