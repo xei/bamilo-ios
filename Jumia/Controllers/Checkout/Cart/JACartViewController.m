@@ -218,7 +218,7 @@
                                                                   userInfo:nil];
                 [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckoutAddress"];
             } else {
-                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button", @"from_checkout"]];
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES]] forKeys:@[@"show_back_button", @"from_checkout"]];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                                     object:nil

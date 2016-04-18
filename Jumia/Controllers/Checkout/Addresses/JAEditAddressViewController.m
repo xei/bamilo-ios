@@ -16,6 +16,8 @@
 #import "UIImage+Mirror.h"
 #import "RIAddress.h"
 #import "RIForm.h"
+#import "JAProductInfoHeaderLine.h"
+#import "JAButton.h"
 
 @interface JAEditAddressViewController ()
 <JADynamicFormDelegate,
@@ -33,8 +35,7 @@ JAPickerDelegate>
 @property (assign, nonatomic) CGFloat orderSummaryOriginalHeight;
 
 @property (strong, nonatomic) UIView *contentView;
-@property (strong, nonatomic) UILabel *headerLabel;
-@property (strong, nonatomic) UIView *headerSeparator;
+@property (strong, nonatomic) JAProductInfoHeaderLine* headerLine;
 @property (strong, nonatomic) JADynamicForm *dynamicForm;
 @property (assign, nonatomic) CGFloat addressViewCurrentY;
 @property (strong, nonatomic) RILocale *selectedRegion;
@@ -50,7 +51,7 @@ JAPickerDelegate>
 @property (strong, nonatomic) JAPicker *picker;
 
 // Create Address Button
-@property (strong, nonatomic) JAButtonWithBlur *bottomView;
+@property (strong, nonatomic) JAButton *bottomButton;
 
 @property (assign, nonatomic) BOOL hasErrors;
 
@@ -192,6 +193,7 @@ JAPickerDelegate>
     }
     
     self.contentScrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
+    self.contentScrollView.backgroundColor = JAWhiteColor;
     [self.contentScrollView setShowsHorizontalScrollIndicator:NO];
     [self.contentScrollView setShowsVerticalScrollIndicator:NO];
     
@@ -199,14 +201,19 @@ JAPickerDelegate>
     
     [self.view addSubview:self.contentScrollView];
     
-    self.bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectZero
-                                                  orientation:UIInterfaceOrientationPortrait];
-    
-    [self.bottomView setFrame:CGRectMake(0.0f,
-                                         self.view.frame.size.height - self.bottomView.frame.size.height,
-                                         self.view.frame.size.width,
-                                         self.bottomView.frame.size.height)];
-    [self.view addSubview:self.bottomView];
+    NSString* buttonText = STRING_SAVE_CHANGES;
+    SEL buttonAction = @selector(saveChangesButtonPressed);
+    if(self.fromCheckout)
+    {
+        buttonText = STRING_CANCEL;
+        buttonAction = @selector(cancelButtonPressed);
+    }
+    self.bottomButton = [[JAButton alloc] initButtonWithTitle:buttonText target:self action:buttonAction];
+    [self.bottomButton setFrame:CGRectMake(0.0f,
+                                           self.view.frame.size.height - 48.0f,
+                                           self.view.frame.size.width,
+                                           48.0f)];
+    [self.view addSubview:self.bottomButton];
 }
 
 - (void) setupStepView:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
@@ -284,13 +291,18 @@ JAPickerDelegate>
         scrollViewStartY = self.stepBackground.frame.size.height;
     }
     
+    [self.bottomButton setFrame:CGRectMake(0.0f,
+                                           self.view.frame.size.height - 48.0f,
+                                           self.view.frame.size.width,
+                                           48.0f)];
+    
     [self.contentScrollView setFrame:CGRectMake(0.0f,
                                                 scrollViewStartY,
                                                 width,
-                                                self.view.frame.size.height - scrollViewStartY)];
+                                                self.view.frame.size.height - scrollViewStartY - self.bottomButton.frame.size.height)];
     self.contentScrollOriginalHeight = self.contentScrollView.frame.size.height;
     
-    self.addressViewCurrentY = CGRectGetMaxY(self.headerSeparator.frame) + 6.0f;
+    self.addressViewCurrentY = 0.0f;
     
     if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
     {
@@ -309,44 +321,32 @@ JAPickerDelegate>
         self.orderSummaryOriginalHeight = self.orderSummary.frame.size.height;
     }
     
-    [self.contentView setFrame:CGRectMake(6.0f,
-                                          6.0f,
-                                          self.contentScrollView.frame.size.width - 12.0f,
+    [self.headerLine setFrame:CGRectMake(0.0f, 0.0f, self.contentScrollView.frame.size.width, 48.0f)];
+    
+    [self.contentView setFrame:CGRectMake(0.0f,
+                                          CGRectGetMaxY(self.headerLine.frame),
+                                          self.contentScrollView.frame.size.width,
                                           self.contentView.frame.size.height)];
     
     for(UIView *view in self.dynamicForm.formViews)
     {
-        [view setFrame:CGRectMake(view.frame.origin.x,
+        [view setFrame:CGRectMake(16.0f,
                                   self.addressViewCurrentY,
-                                  self.contentView.frame.size.width,
+                                  self.contentView.frame.size.width - 32.0f,
                                   view.frame.size.height)];
         self.addressViewCurrentY += view.frame.size.height;
     }
     
     self.addressViewCurrentY += 6.0f;
     
-    [self.contentView setFrame:CGRectMake(6.0f,
-                                          6.0f,
-                                          self.contentScrollView.frame.size.width - 12.0f,
+    [self.contentView setFrame:CGRectMake(0.0f,
+                                          CGRectGetMaxY(self.headerLine.frame),
+                                          self.contentScrollView.frame.size.width,
                                           self.addressViewCurrentY)];
     [self.contentView setHidden:NO];
     
-    self.headerLabel.textAlignment = NSTextAlignmentLeft;
-    [self.headerLabel setFrame:CGRectMake(6.0f, 0.0f, self.contentView.frame.size.width - 12.0f, 26.0f)];
-    [self.headerSeparator setFrame:CGRectMake(0.0f, CGRectGetMaxY(self.headerLabel.frame), self.contentView.frame.size.width, 1.0f)];
-    
     [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width,
-                                                      self.contentView.frame.origin.y + self.contentView.frame.size.height + self.bottomView.frame.size.height)];
-    
-    [self.bottomView reloadFrame:CGRectMake(0.0f,
-                                            self.view.frame.size.height - self.bottomView.frame.size.height,
-                                            width,
-                                            self.bottomView.frame.size.height)];
-    if(self.fromCheckout)
-    {
-        [self.bottomView addButton:STRING_CANCEL target:self action:@selector(cancelButtonPressed)];
-    }
-    [self.bottomView addButton:STRING_SAVE_CHANGES target:self action:@selector(saveChangesButtonPressed)];
+                                                      self.contentView.frame.origin.y + self.contentView.frame.size.height)];
     
     if (RI_IS_RTL) {
         [self.view flipAllSubviews];
@@ -397,22 +397,13 @@ JAPickerDelegate>
 
 -(void)setupAddressView
 {
-    self.contentView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, 27.0f)];
+    self.headerLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.contentScrollView.frame.size.width, 38.0f)];
+    [self.headerLine.label setText:[STRING_EDIT_ADDRESS uppercaseString]];
+    [self.contentScrollView addSubview:self.headerLine];
+    
+    self.contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.headerLine.frame), self.contentScrollView.frame.size.width, 27.0f)];
     [self.contentView setHidden:YES];
     [self.contentView setBackgroundColor:JAWhiteColor];
-    self.contentView.layer.cornerRadius = 5.0f;
-    
-    self.headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, self.contentView.frame.size.width, 26.0f)];
-    [self.headerLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
-    [self.headerLabel setTextColor:JAButtonTextOrange];
-    [self.headerLabel setText:STRING_EDIT_ADDRESS];
-    [self.headerLabel setBackgroundColor:[UIColor clearColor]];
-    [self.contentView addSubview:self.headerLabel];
-    
-    self.headerSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.headerLabel.frame), self.contentView.frame.size.width, 1.0f)];
-    [self.headerSeparator setBackgroundColor:JAOrange1Color];
-    [self.contentView addSubview:self.headerSeparator];
-    
     [self.contentScrollView addSubview:self.contentView];
 }
 

@@ -1065,17 +1065,13 @@
             addAddressVC = [[JAAddNewAddressViewController alloc]initWithNibName:@"JAAddNewAddressViewController~iPad" bundle:nil];
         }
         
-        NSNumber* isBillingAddress = [notification.userInfo objectForKey:@"is_billing_address"];
-        NSNumber* isShippingAddress = [notification.userInfo objectForKey:@"is_shipping_address"];
         NSNumber* showBackButton = [notification.userInfo objectForKey:@"show_back_button"];
         NSNumber* fromCheckout = [notification.userInfo objectForKey:@"from_checkout"];
         NSNumber *animated = @YES;
         if ([notification.userInfo objectForKey:@"animated"]) {
             animated = [notification.userInfo objectForKey:@"animated"];
         }
-        
-        addAddressVC.isBillingAddress = [isBillingAddress boolValue];
-        addAddressVC.isShippingAddress = [isShippingAddress boolValue];
+
         addAddressVC.fromCheckout = [fromCheckout boolValue];
         addAddressVC.cart = self.cart;
 

@@ -190,7 +190,7 @@ UITableViewDelegate>
                 // shouldForceAddAddress should be setted to NO otherwise, everytime that the user goes back in add address screen the screen will reopen
                 self.shouldForceAddAddress = NO;
                 
-                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], [NSNumber numberWithBool:NO], [NSNumber numberWithBool:self.fromCheckout]] forKeys:@[@"is_billing_address", @"is_shipping_address", @"show_back_button", @"from_checkout"]];
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:NO], [NSNumber numberWithBool:self.fromCheckout]] forKeys:@[@"show_back_button", @"from_checkout"]];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
                                                                     object:nil
