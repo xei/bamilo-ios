@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "RICart.h"
+#import "JATextField.h"
 
 @interface JACartResumeView : UIView
 
 @property (strong, nonatomic) RICart *cart;
-@property (nonatomic, strong) UITextField *couponTextField;
+@property (nonatomic, strong) JATextField *couponTextField;
 
 - (void)addProceedTarget:(id)target action:(SEL)action;
 - (void)addCallTarget:(id)target action:(SEL)action;

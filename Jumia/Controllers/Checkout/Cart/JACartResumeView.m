@@ -22,13 +22,11 @@
 
 @property (nonatomic, strong) JAProductInfoHeaderLine *couponHeaderLine;
 @property (nonatomic, strong) UIView *couponView;
-@property (nonatomic, strong) UIView *bottomLayer;
 @property (nonatomic, strong) UIButton *couponButton;
 @property (nonatomic, strong) JAProductInfoHeaderLine *subtotalHeaderLine;
 @property (nonatomic, strong) UIView *subtotalView;
 @property (nonatomic, strong) UIImageView *freeShippingImageView;
 @property (nonatomic, strong) UILabel *freeShippingLabel;
-//@property (nonatomic, strong) JAProductInfoPriceDescriptionLine *priceDescriptionLine;
 @property (nonatomic, strong) JAButton *proceedToCheckoutButton;
 @property (nonatomic, strong) JAButton *callToOrderButton;
 
@@ -53,32 +51,22 @@
         [self addSubview:_couponView];
         [_couponView addSubview:self.couponTextField];
         [_couponView addSubview:self.couponButton];
-        [_couponView addSubview:self.bottomLayer];
     }
     return _couponView;
 }
 
-- (UITextField *)couponTextField
+- (JATextField *)couponTextField
 {
-    if (!VALID(_couponTextField, UITextField)) {
-        _couponTextField = [[UITextField alloc] initWithFrame:CGRectMake(kLateralMargin, 0, kCouponTextFieldWidth, 30)];
+    if (!VALID(_couponTextField, JATextField)) {
+        _couponTextField = [[JATextField alloc] initWithFrame:CGRectMake(kLateralMargin, 0, kCouponTextFieldWidth, 30)];
         [_couponTextField setFont:JAListFont];
-        [_couponTextField setTextColor:JABlack700Color];
+        [_couponTextField setTextColor:JABlackColor];
         [_couponTextField setPlaceholder:STRING_ENTER_COUPON];
         [_couponTextField setDelegate:self];
         [_couponTextField sizeToFit];
         _textfieldPlaceholderWidth = _couponTextField.width;
     }
     return _couponTextField;
-}
-
-- (UIView *)bottomLayer
-{
-    if (!VALID(_bottomLayer, UIView)) {
-        _bottomLayer = [[UIView alloc] initWithFrame:CGRectMake(0.f, self.couponTextField.height-1, self.couponTextField.width, 1.f)];
-        [_bottomLayer setBackgroundColor:JABlack400Color];
-    }
-    return _bottomLayer;
 }
 
 - (UIButton *)couponButton
@@ -92,11 +80,6 @@
         [_couponButton setTitle:[STRING_USE uppercaseString] forState:UIControlStateNormal];
         [_couponButton setFrame:CGRectMake(CGRectGetMaxY(self.couponTextField.frame) + 16.f, 0.f, 50.f, 30.f)];
         [_couponButton sizeToFit];
-        if (RI_IS_RTL) {
-            [_couponButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
-        }else{
-            [_couponButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-        }
     }
     return _couponButton;
 }
@@ -269,6 +252,8 @@
         [couponValueLine setPrice:[NSString stringWithFormat:@"- %@", [[self cart] couponMoneyValueFormatted]] andOldPrice:nil];
         [self.subtotalView addSubview:couponValueLine];
         heigth = CGRectGetMaxY(couponValueLine.frame);
+        [self.couponTextField setText:[self.cart couponCode]];
+        [self setCouponValid:YES];
     }
     
     /*
@@ -330,7 +315,7 @@
 
 - (void)useCoupon
 {
-    [self.couponTextField setTextColor:JABlack700Color];
+    [self.couponTextField setTextColor:JABlackColor];
     [self.couponTextField resignFirstResponder];
 }
 
@@ -346,7 +331,7 @@
 - (void)setCouponValid:(BOOL)valid
 {
     if (valid) {
-        [self.couponTextField setTextColor:JABlack700Color];
+        [self.couponTextField setTextColor:JABlackColor];
         [self.couponTextField setEnabled:NO];
         [self.couponButton setTitle:[STRING_REMOVE uppercaseString] forState:UIControlStateNormal];
     }else{
@@ -356,6 +341,7 @@
     }
     [self.couponTextField setWidth:_textfieldPlaceholderWidth];
     [self.couponButton sizeToFit];
+    [self setupCouponLayout];
 }
 
 - (void)layoutSubviews
@@ -385,8 +371,6 @@
     
     [self.couponTextField setFrame:CGRectMake(kLateralMargin, 5.f, self.couponTextField.width, 20)];
     [self.couponTextField setYCenterAligned];
-    [self.couponTextField setTextAlignment:NSTextAlignmentLeft];
-    [self.bottomLayer setFrame:CGRectMake(self.couponTextField.x, CGRectGetMaxY(self.couponTextField.frame), self.couponTextField.width, 1.f)];
     
     CGFloat buttonX = CGRectGetMaxX(self.couponTextField.frame) + kLateralMargin;
     [self.couponButton setFrame:CGRectMake(buttonX, 5.f, self.couponButton.width, 20.f)];
@@ -404,9 +388,35 @@
     [self setHeight:height + 10.f];
     
     if (RI_IS_RTL) {
-        [self.couponTextField setTextAlignment:NSTextAlignmentRight];
         [self flipAllSubviews];
     }
+}
+
+- (void)setupCouponLayout
+{
+    CGFloat maxWidth = self.width - 2*kLateralMargin - self.couponButton.width - kLateralMargin;
+    if (_textfieldPlaceholderWidth < kCouponTextFieldWidth) {
+        self.couponTextField.width = kCouponTextFieldWidth;
+    }
+    if (_textfieldPlaceholderWidth > maxWidth && maxWidth > 0) {
+        self.couponTextField.width = maxWidth;
+    }
+    
+    [self.couponTextField setFrame:CGRectMake(kLateralMargin, 5.f, self.couponTextField.width, 20)];
+    [self.couponTextField setYCenterAligned];
+    
+    CGFloat buttonX = CGRectGetMaxX(self.couponTextField.frame) + kLateralMargin;
+    [self.couponButton setFrame:CGRectMake(buttonX, 5.f, self.couponButton.width, 20.f)];
+    [self.couponButton setYCenterAligned];
+    [self.couponButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    if (RI_IS_RTL) {
+        [self.couponView flipAllSubviews];
+    }
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [self.couponTextField setTextColor:JABlackColor];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
