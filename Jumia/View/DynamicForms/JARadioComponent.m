@@ -37,7 +37,7 @@
 - (UILabel *)requiredSymbol
 {
     if (!VALID_NOTEMPTY(_requiredSymbol, UILabel)) {
-        _requiredSymbol = [[UILabel alloc] initWithFrame:CGRectMake(self.width - 10, self.height - 28, 10, 20)];
+        _requiredSymbol = [[UILabel alloc] initWithFrame:CGRectMake(self.width - 20, self.height - 28, 10, 20)];
         [_requiredSymbol setTextAlignment:NSTextAlignmentCenter];
         [_requiredSymbol setText:@"*"];
         [_requiredSymbol setTextColor:JAOrange1Color];
@@ -62,7 +62,7 @@
     if (!VALID(_dropdownImageView, UIImageView)) {
         UIImage *image = [UIImage imageNamed:@"ic_dropdown"];
         _dropdownImageView = [[UIImageView alloc] initWithImage:image];
-        [_dropdownImageView setXLeftOf:self.requiredSymbol at:0];
+        [_dropdownImageView setXLeftOf:self.requiredSymbol at:3];
         [_dropdownImageView setY:self.textField.y];
         [self addSubview:_dropdownImageView];
     }
@@ -87,9 +87,9 @@
     frame.size.width = width;
     [super setFrame:frame];
     [self.underLineView setFrame:CGRectMake(0, self.height-5, width, 1.f)];
-    [self.requiredSymbol setFrame:CGRectMake(self.width - 10, self.height - 28, 10, 20)];
+    [self.requiredSymbol setFrame:CGRectMake(self.width - 20, self.height - 28, 10, 20)];
     [self.textField setFrame:CGRectMake(0, self.height - 28, width - self.dropdownImageView.width - self.requiredSymbol.width, 20)];
-    [self.dropdownImageView setXLeftOf:self.requiredSymbol at:0];
+    [self.dropdownImageView setXLeftOf:self.requiredSymbol at:3];
     [self.dropdownImageView setY:self.textField.y + (self.textField.height - self.dropdownImageView.height)/2];
 //    [self.titleLabel setFrame:CGRectMake(0, 0, self.width, 20)];
     if (self.iconImageView) {
