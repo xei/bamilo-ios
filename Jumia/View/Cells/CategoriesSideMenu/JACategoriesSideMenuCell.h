@@ -8,26 +8,28 @@
 
 #import <UIKit/UIKit.h>
 #import "JAGenericMenuCell.h"
+#import "RIExternalCategory.h"
 
 @class RICategory, JAClickableView;
 
 @protocol JACategoriesSideMenuCellDelegate <NSObject>
 
 @optional
-- (void)categoryWasSelected:(RICategory*)category;
+- (void)categoryWasSelected:(id)category;
 
 @end
 
 @interface JACategoriesSideMenuCell : JAGenericMenuCell
 
-@property (nonatomic, strong) RICategory* category;
+@property (nonatomic, strong) id category;
+//@property (nonatomic, strong) RIExternalCategory *externalCategory;
 @property (nonatomic, assign) id<JACategoriesSideMenuCellDelegate> delegate;
 
-- (void)setupWithCategory:(RICategory*)category
+- (void)setupWithCategory:(id)category
                     width:(CGFloat)width
              hasSeparator:(BOOL)hasSeparator
                    isOpen:(BOOL)isOpen;
 
-+ (CGFloat)heightForCategory:(RICategory*)category;
++ (CGFloat)heightForCategory:(id)category;
 
 @end

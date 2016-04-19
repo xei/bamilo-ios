@@ -9,6 +9,7 @@
 #import "RIApi.h"
 #import "RISection.h"
 #import "RICategory.h"
+#import "RIExternalCategory.h"
 #import "RIFormIndex.h"
 //#import "RITeaserCategory.h"
 #import "RITeaserGrouping.h"
@@ -442,6 +443,18 @@ countryUserAgentInjection:(NSString*)countryUserAgentInjection
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
+        }];
+    }
+    else if ([section.name isEqualToString:@"externallinks"])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
+        [RIExternalCategory loadExternalCategoryWithSuccessBlock:^(RIExternalCategory *externalCategory) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSideMenuShouldReload object:nil];
+            successBlock();
+        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
+            failureBlock(apiResponse, errorMessage);
         }];
     }
 }

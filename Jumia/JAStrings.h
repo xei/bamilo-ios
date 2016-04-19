@@ -420,4 +420,6 @@
 
 #define STRING_FREE_SHIPPING_POSSIBLE RILocalizedString(@"free_shipping_possible", nil)
 
+#define STRING_TOUCH_TO_RETRY RILocalizedString(@"touch_to_retry", nil)
+
 #endif

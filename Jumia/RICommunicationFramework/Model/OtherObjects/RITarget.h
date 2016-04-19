@@ -24,7 +24,8 @@ typedef enum {
     FORM_SUBMIT,
     FORM_GET,
     RR_RECOMENDATION,
-    RR_CLICK
+    RR_CLICK,
+    EXTERNAL_LINK
 } TargetType;
 
 @property (nonatomic, strong) NSString* type;
