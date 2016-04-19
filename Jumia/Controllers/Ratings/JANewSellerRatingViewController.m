@@ -329,7 +329,7 @@ UIAlertViewDelegate
                                                                 16.0f)];
     self.fixedLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
     self.fixedLabel.text = STRING_REVIEW_THIS_SELLER;
-    self.fixedLabel.textColor = UIColorFromRGB(0x666666);
+    self.fixedLabel.textColor = JAGreyColor;
     
     [self.centerView addSubview:self.fixedLabel];
     
@@ -392,9 +392,9 @@ UIAlertViewDelegate
                                                                        buttonImageNormal.size.height)];
     [self.sendReviewButton setTitle:STRING_SEND_REVIEW
                            forState:UIControlStateNormal];
-    [self.sendReviewButton setTitleColor:UIColorFromRGB(0x4e4e4e)
+    [self.sendReviewButton setTitleColor:JAButtonTextOrange
                                 forState:UIControlStateNormal];
-    self.sendReviewButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:16.0f];
+    self.sendReviewButton.titleLabel.font = JADisplay3Font;
     [self.sendReviewButton setBackgroundImage:buttonImageNormal forState:UIControlStateNormal];
     [self.sendReviewButton setBackgroundImage:buttonImageHighlighted forState:UIControlStateHighlighted];
     [self.sendReviewButton setBackgroundImage:buttonImageHighlighted forState:UIControlStateSelected];

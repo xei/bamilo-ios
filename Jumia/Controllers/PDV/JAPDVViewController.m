@@ -20,7 +20,6 @@
 #import "JAPicker.h"
 #import "JAPDVGallery.h"
 #import "RIProductRatings.h"
-#import "JARatingsViewController.h"
 #import "JANewRatingViewController.h"
 #import "JAAppDelegate.h"
 #import "JAActivityViewController.h"
@@ -98,7 +97,7 @@ JAActivityViewControllerDelegate
         _productImageSection = [[JAPDVImageSection alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 500)];
         _productImageSection.delegate = self;
         [_productImageSection.wishListButton addTarget:self
-                                                action:@selector(addToFavoritesPressed:)
+                                                action:@selector(wishListButtonPressed:)
                                       forControlEvents:UIControlEventTouchUpInside];
     }
     _productImageSection.wishListButton.selected = VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate);
@@ -165,7 +164,7 @@ JAActivityViewControllerDelegate
     }
     else
     {
-        if (VALID_NOTEMPTY(self.productTargetString, NSString) || VALID_NOTEMPTY(self.productSku, NSString))
+        if (VALID_NOTEMPTY(self.targetString, NSString) || VALID_NOTEMPTY(self.productSku, NSString))
         {
             [self loadCompleteProduct];
         }
@@ -395,8 +394,8 @@ JAActivityViewControllerDelegate
     } else
         richParameter = nil;
     
-    if (VALID_NOTEMPTY(self.productTargetString, NSString)) {
-        [RIProduct getCompleteProductWithTargetString:self.productTargetString
+    if (VALID_NOTEMPTY(self.targetString, NSString)) {
+        [RIProduct getCompleteProductWithTargetString:self.targetString
                                     withRichParameter:richParameter
                                          successBlock:^(id product) {
                                              _needRefreshProduct = NO;
@@ -547,11 +546,15 @@ JAActivityViewControllerDelegate
         [self.ctaView addSmallButton:[UIImage imageNamed:@"ic_calltoorder"] target:self action:@selector(callToOrder)];
     }
     
-    NSString *buttonText = STRING_BUY_NOW;
-    if (self.product.preOrder) {
-        buttonText = STRING_PRE_ORDER;
+    if (!self.product.hasStock)
+    {
+        JAButton *saveButton = [self.ctaView addAlternativeButton:STRING_SAVE_ITEM target:self action:@selector(addToWishList)];
+        [saveButton setTitleColor:JAOrange1Color forState:UIControlStateNormal];
+    }else if (self.product.preOrder) {
+        [self.ctaView addButton:STRING_PRE_ORDER target:self action:@selector(addToCart)];
+    }else {
+        [self.ctaView addButton:STRING_BUY_NOW target:self action:@selector(addToCart)];
     }
-    [self.ctaView addButton:buttonText target:self action:@selector(addToCart)];
     
     //make sure wizard and picker are in front
     //$WIZ$
@@ -691,8 +694,12 @@ JAActivityViewControllerDelegate
             
             bundleSingleItem.selectedProduct.tag = i;
             
-            [bundleSingleItem.selectedProduct setImage:[UIImage imageNamed:@"check_empty"] forState:UIControlStateNormal];
-            [bundleSingleItem.selectedProduct setImage:[UIImage imageNamed:@"check"] forState:UIControlStateSelected];
+            NSString* checkmarkImageName = @"selectionCheckmark";
+            if (0 == i) {
+                checkmarkImageName = @"selectionCheckmarkDisabled";
+            }
+            [bundleSingleItem.selectedProduct setImage:[UIImage imageNamed:@"noSelectionCheckMark"] forState:UIControlStateNormal];
+            [bundleSingleItem.selectedProduct setImage:[UIImage imageNamed:checkmarkImageName] forState:UIControlStateSelected];
             
             [self.bundleSingleItemsArray addObject:bundleSingleItem];
             
@@ -807,14 +814,14 @@ JAActivityViewControllerDelegate
         
         NSArray* relatedProducts = [self.product.relatedProducts allObjects];
         
-        CGFloat singleItemHeight = 230;
+        CGFloat singleItemHeight = 235;
         NSInteger numberOfCols = 2;
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             if (!isiPadInLandscape) {
                 numberOfCols = 4;
-                singleItemHeight = 280;
+                singleItemHeight = 285;
             }else{
-                singleItemHeight = 350;
+                singleItemHeight = 355;
             }
         }
         
@@ -859,6 +866,12 @@ JAActivityViewControllerDelegate
     
     self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.frame.size.width, scrollViewY);
     self.landscapeScrollView.contentSize = CGSizeMake(self.landscapeScrollView.frame.size.width, landscapeScrollViewY);
+    
+    if (!self.product.hasStock || (VALID(self.currentSimple, RIProductSimple) && [self.currentSimple.quantity isEqualToString:@"0"])) {
+        [self.productImageSection setOutOfStock:NO];
+    }else{
+        [self.productImageSection setOutOfStock:YES];
+    }
     
     //make sure wizard is in front
     //$WIZ$
@@ -1018,7 +1031,7 @@ JAActivityViewControllerDelegate
 
 - (void)goToSisScreen
 {
-    [[JACenterNavigationController sharedInstance] openTarget:self.product.brandTarget];
+    [[JACenterNavigationController sharedInstance] openTargetString:self.product.brandTarget];
 }
 
 - (void)goToOtherSellersScreen
@@ -1078,6 +1091,11 @@ JAActivityViewControllerDelegate
     {
         [self presentViewController:activityController animated:YES completion:nil];
     }
+}
+
+- (void)addToWishList
+{
+    [self addToWishList:self.productImageSection.wishListButton];
 }
 
 - (void)addToCart
@@ -1352,11 +1370,11 @@ JAActivityViewControllerDelegate
     }];
 }
 
-- (void)addToFavoritesPressed:(UIButton*)button
+- (void)wishListButtonPressed:(UIButton*)button
 {
     if (!self.productImageSection.wishListButton.selected && !VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate))
     {
-        [self addToFavorites:button];
+        [self addToWishList:button];
     }else if (self.productImageSection.wishListButton.selected && VALID_NOTEMPTY(self.product.favoriteAddDate, NSDate))
     {
         [self removeFromFavorites:button];
@@ -1378,7 +1396,7 @@ JAActivityViewControllerDelegate
     return YES;
 }
 
-- (void)addToFavorites:(UIButton *)button
+- (void)addToWishList:(UIButton *)button
 {
     [self showLoading];
     
@@ -1389,7 +1407,7 @@ JAActivityViewControllerDelegate
         if(![RICustomer checkIfUserIsLogged]) {
             return;
         }else{
-            [weakSelf addToFavorites:button];
+            [weakSelf addToWishList:button];
         }
     }];
     
@@ -1420,7 +1438,7 @@ JAActivityViewControllerDelegate
             
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
             
-            [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(addToFavorites:) objects:@[button]];
+            [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(addToWishList:) objects:@[button]];
             [self hideLoading];
         }];
     }else{

@@ -12,9 +12,6 @@
 #import "JAOrderItemCollectionViewCell.h"
 #import "JAMyOrderResumeView.h"
 
-#define kNormalFont [UIFont fontWithName:kFontLightName size:13]
-#define kHighlightedFont [UIFont fontWithName:kFontRegularName size:13]
-
 @interface JAMyOrderDetailView () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic) JAMyOrderResumeView *myOrderResumeView;
@@ -54,6 +51,7 @@
                                              collectionViewLayout:self.collectionViewFlowLayout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
+        _collectionView.scrollEnabled = NO;
         [_collectionView setBackgroundColor:[UIColor whiteColor]];
         [_collectionView registerClass:[JAOrderItemCollectionViewCell class] forCellWithReuseIdentifier:@"CellWithLines"];
     }
@@ -91,7 +89,22 @@
         [self addSubview:self.collectionView];
     }
     [self.myOrderResumeView setOrder:order];
+    [self.itemsHeader setY:CGRectGetMaxY(self.myOrderResumeView.frame)];
     [self.collectionView reloadData];
+    
+    [self.collectionView setFrame:CGRectMake(self.collectionView.frame.origin.x,
+                                             CGRectGetMaxY(self.itemsHeader.frame),
+                                             self.collectionView.frame.size.width,
+                                             [self totalHeightForCollectionView])];
+    
+    [self setFrame:CGRectMake(0.0f, 0.0f, self.frame.size.width, CGRectGetMaxY(self.collectionView.frame))];
+}
+
+- (CGFloat)totalHeightForCollectionView
+{
+    CGFloat totalHeight = [self collectionView:self.collectionView layout:self.collectionViewFlowLayout sizeForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]].height * [self collectionView:self.collectionView numberOfItemsInSection:0];
+    
+    return totalHeight;
 }
 
 #pragma mark - collectionView

@@ -77,7 +77,7 @@
     }
         
     self.addToCartButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.addToCartButton.titleLabel.font.pointSize];
-    [self.addToCartButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [self.addToCartButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
     [self.addToCartButton setTitle:STRING_ADD_TO_SHOPPING_CART forState:UIControlStateNormal];
     
     if (self.addToCartButton) {
@@ -101,8 +101,8 @@
     NSString *stringQuantity = [NSString stringWithFormat:STRING_QUANTITY, [[cartItem quantity] stringValue]];
     self.quantityButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.quantityButton.titleLabel.font.pointSize];
     [self.quantityButton setBackgroundColor:[UIColor clearColor]];
-    [self.quantityButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
-    [self.quantityButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+    [self.quantityButton setTitleColor:JABlue1Color forState:UIControlStateNormal];
+    [self.quantityButton setTitleColor:JAOrange1Color forState:UIControlStateHighlighted];
     [self.quantityButton setTitle:stringQuantity forState:UIControlStateNormal];
     [self.quantityButton sizeToFit];
     [self.quantityButton setX:self.width-self.quantityButton.width-6.f];

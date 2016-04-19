@@ -53,7 +53,7 @@
         _brandLabel = [[UILabel alloc] init];
         [_brandLabel setFont:JACaptionFont];
         [_brandLabel setText:@"BrandLabel"];
-        _brandLabel.textColor = UIColorFromRGB(0x808080);
+        _brandLabel.textColor = JABlack800Color;
     }
     return _brandLabel;
 }
@@ -62,9 +62,9 @@
 {
     if (!VALID_NOTEMPTY(_nameLabel, UILabel)) {
         _nameLabel = [[UILabel alloc] init];
-        [_nameLabel setFont:JABody1Font];
+        [_nameLabel setFont:JABodyFont];
         [_nameLabel setText:@"NameLabel"];
-        _nameLabel.textColor = UIColorFromRGB(0x000000);
+        _nameLabel.textColor = JABlackColor;
     }
     return _nameLabel;
 }
@@ -101,14 +101,14 @@
     if (!VALID_NOTEMPTY(_recentProductBadgeLabel, UILabel)) {
         _recentProductBadgeLabelRect = CGRectMake(0, 10, 200, 16);
         _recentProductBadgeLabel = [[UILabel alloc] initWithFrame:_recentProductBadgeLabelRect];
-        [_recentProductBadgeLabel setFont:JABadgeFont];
+        [_recentProductBadgeLabel setFont:JABADGEFont];
         [_recentProductBadgeLabel setBackgroundColor:JABlack700Color];
         [_recentProductBadgeLabel setTextColor:[UIColor whiteColor]];
         [_recentProductBadgeLabel setTextAlignment:NSTextAlignmentCenter];
         [_recentProductBadgeLabel setText:[STRING_NEW uppercaseString]];
         [_recentProductBadgeLabel sizeToFit];
-        [_recentProductBadgeLabel setWidth:_recentProductBadgeLabel.width + 8];
-        [_recentProductBadgeLabel setHeight:_recentProductBadgeLabel.height + 8];
+        [_recentProductBadgeLabel setWidth:_recentProductBadgeLabel.width + 4];
+        [_recentProductBadgeLabel setHeight:_recentProductBadgeLabel.height + 2];
     }
     return _recentProductBadgeLabel;
 }
@@ -127,7 +127,6 @@
 {
     if (!VALID_NOTEMPTY(_ratingLine, JAProductInfoRatingLine)) {
         _ratingLine = [[JAProductInfoRatingLine alloc] initWithFrame:CGRectZero];
-        _ratingLine.fashion = NO;
         _ratingLine.imageRatingSize = kImageRatingSizeSmall;
         _ratingLine.lineContentXOffset = 0.f;
         _ratingLine.topSeparatorVisibility = NO;
@@ -256,7 +255,8 @@
         _discountLabel.hidden = YES;
     }
     _discountLabel.font = JACaptionFont;
-    _discountLabel.frame = CGRectMake(0.0f, 0.0f, 30.0f, 16.0f);
+    [_discountLabel sizeToFit];
+    _discountLabel.frame = CGRectMake(0.0f, 0.0f, _discountLabel.width+8, 16.0f);
     
 
     if (!self.hideRating) {

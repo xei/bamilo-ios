@@ -19,6 +19,7 @@
 }
 
 @property (nonatomic, strong)UIView* backView;
+@property (nonatomic, strong)UIView* separatorView;
 @property (nonatomic, strong)UISearchBar* searchBar;
 @property (nonatomic, strong)UITableView* resultsTableView;
 @property (nonatomic, assign)CGRect resultsTableOriginalFrame;
@@ -74,35 +75,53 @@
                                        frame.size.width,
                                        44.0f);
         self.searchBar.delegate = self;
-        self.searchBar.barTintColor = [UIColor whiteColor];
+        self.searchBar.barTintColor = JABlack300Color;
         self.searchBar.placeholder = STRING_SEARCH;
+        [self.searchBar setValue:STRING_CANCEL forKey:@"_cancelButtonText"];
         self.searchBar.showsCancelButton = YES;
         [self.searchBar setSearchBarStyle:UISearchBarStyleDefault];
         
-        [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor orangeColor]];
-        
+        self.searchBar.layer.borderWidth = 1;
+        self.searchBar.layer.borderColor = [JABlack300Color CGColor];
+                
         UITextField *textFieldSearch = [self.searchBar valueForKey:@"_searchField"];
         textFieldSearch.font = [UIFont fontWithName:kFontRegularName size:textFieldSearch.font.pointSize];
-        textFieldSearch.backgroundColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0f];
-        
-        self.searchBar.layer.borderWidth = 1;
-        self.searchBar.layer.borderColor = [[UIColor whiteColor] CGColor];
+        textFieldSearch.backgroundColor = JAWhiteColor;
         
         [self addSubview:self.searchBar];
         
+        [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                                      JASysBlueColor,
+                                                                                                      NSForegroundColorAttributeName,
+                                                                                                      JABodyFont,
+                                                                                                      NSFontAttributeName,
+                                                                                                      nil]
+                                                                                            forState:UIControlStateNormal];
+
+        
+        self.separatorView = [[UIView alloc] initWithFrame:CGRectMake(self.searchBar.frame.origin.x,
+                                                                      44.0f,
+                                                                      self.searchBar.frame.size.width,
+                                                                      1.0f)];
+        self.separatorView.backgroundColor = JABlack400Color;
+        [self.separatorView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+        [self.backView addSubview:self.separatorView];
+        
+        
         [UIView animateWithDuration:0.3f animations:^{
-            self.backView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:1.f];
+            self.backView.backgroundColor = JABlack300Color;
+            self.backView.alpha = 1.0f;
             [self.searchBar setFrame:finalFrame];
         }];
         
         self.resultsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                              CGRectGetMaxY(self.searchBar.frame),
+                                                                              CGRectGetMaxY(self.searchBar.frame) + self.separatorView.frame.size.height,
                                                                               self.frame.size.width,
-                                                                              self.frame.size.height - CGRectGetMaxY(self.searchBar.frame))
+                                                                              self.frame.size.height - CGRectGetMaxY(self.searchBar.frame) - self.separatorView.frame.size.height)
                                                              style:UITableViewStyleGrouped];
         self.resultsTableOriginalFrame = self.resultsTableView.frame;
         
-        self.resultsTableView.backgroundColor = UIColorFromRGB(0xffffff);
+        self.resultsTableView.backgroundColor = JAWhiteColor;
         self.resultsTableView.delegate = self;
         self.resultsTableView.dataSource = self;
         self.resultsTableView.contentInset = UIEdgeInsetsMake(-35.0f, 0.f, 0.f, 0.f);
@@ -132,14 +151,15 @@
                                       44.0f);
     
     self.resultsTableView.frame = CGRectMake(0.0f,
-                                             CGRectGetMaxY(self.searchBar.frame),
+                                             CGRectGetMaxY(self.searchBar.frame) + self.separatorView.frame.size.height,
                                              self.frame.size.width,
-                                             self.frame.size.height - CGRectGetMaxY(self.searchBar.frame));
+                                             self.frame.size.height - CGRectGetMaxY(self.searchBar.frame) - self.separatorView.frame.size.height);
     [self refreshData];
     
     CGFloat duration = 0.3f;
     [UIView animateWithDuration:duration animations:^{
-        self.backView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:1.f];
+        self.backView.backgroundColor = JABlack300Color;
+        self.backView.alpha = 1.0f;
     }];
 }
 
@@ -167,7 +187,7 @@
     
     CGFloat duration = animated?0.3f:0.0f;
     [UIView animateWithDuration:duration animations:^{
-        self.backView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
+        self.backView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.0f];
         [self.searchBar setFrame:CGRectMake(0.0f,
                                             0.0f - 64.0f,
                                             self.searchBar.frame.size.width,
@@ -194,7 +214,7 @@
                                       isRecentSearch:YES
                                           andContext:YES];
     }
-    [[JACenterNavigationController sharedInstance] openTarget:suggestion.targetString];
+    [[JACenterNavigationController sharedInstance] openTargetString:suggestion.targetString];
     [self setHidden:YES];
 }
 
@@ -249,7 +269,7 @@
         self.resultsTableView.hidden = NO;
         
         CGRect finalFrame = CGRectMake(self.resultsTableOriginalFrame.origin.x,
-                                       CGRectGetMaxY(self.searchBar.frame),
+                                       CGRectGetMaxY(self.searchBar.frame) + self.separatorView.frame.size.height,
                                        self.resultsTableOriginalFrame.size.width,
                                        self.resultsTableOriginalFrame.size.height - self.keyboardHeight);
         
@@ -268,7 +288,7 @@
 {
     if (NO == self.resultsTableView.hidden) {
         CGRect startFrame = CGRectMake(self.resultsTableOriginalFrame.origin.x,
-                                       CGRectGetMaxY(self.searchBar.frame),
+                                       CGRectGetMaxY(self.searchBar.frame) + self.separatorView.frame.size.height,
                                        self.resultsTableOriginalFrame.size.width,
                                        self.resultsTableOriginalFrame.size.height - self.keyboardHeight);
         
@@ -341,10 +361,7 @@
         NSString *value = sugestion.item;
         NSString *label;
         UIColor *highlightColor = JABlue1Color;;
-        
-        UIFont *highlightFont = [UIFont fontWithName:kFontLightName size:17.0f];
-        UIFont *queryFont = [UIFont fontWithName:kFontMediumName size:17.0f];
-        UIColor *stringTextColor = UIColorFromRGB(0x4e4e4e);
+        UIColor *stringTextColor = JAButtonTextOrange;
         
         if ([RITarget parseTarget:sugestion.targetString].targetType == SHOP_IN_SHOP) {
             value = [value stringByReplacingCharactersInRange:NSMakeRange(0,1)
@@ -359,13 +376,13 @@
         
         NSRange blueRange = [[label lowercaseString] rangeOfString:[value lowercaseString]];
         NSRange blackRange = [[label lowercaseString] rangeOfString:[self.searchBar.text lowercaseString]];
-        NSMutableAttributedString *stringText = [[NSMutableAttributedString alloc] initWithString:label attributes:@{NSFontAttributeName: highlightFont, NSForegroundColorAttributeName: stringTextColor}];
+        NSMutableAttributedString *stringText = [[NSMutableAttributedString alloc] initWithString:label attributes:@{NSFontAttributeName: JASearchViewHighlightFont, NSForegroundColorAttributeName: stringTextColor}];
         
         [stringText addAttribute:NSForegroundColorAttributeName
                            value:highlightColor
                            range:blueRange];
         [stringText addAttribute:NSFontAttributeName
-                           value:queryFont
+                           value:JASearchViewQueryFont
                            range:blackRange];
         
         customTextLabel.attributedText = stringText;
@@ -477,6 +494,14 @@
 - (void)updateCountry:(NSNotification *)notification
 {
     [self refreshData];
+    for (UIView *subView in self.searchBar.subviews[0].subviews) {
+        if ([subView isKindOfClass:NSClassFromString(@"UINavigationButton")]) {
+            UIButton *cancelButton = (UIButton*)subView;
+            [cancelButton setTitle:STRING_CANCEL forState:UIControlStateNormal];
+        }
+    }
+    self.searchBar.placeholder = STRING_SEARCH;
+    [self.searchBar setNeedsLayout];
 }
 
 @end

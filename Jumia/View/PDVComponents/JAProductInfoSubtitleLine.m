@@ -50,7 +50,7 @@
 {
     if (!VALID(_titleLineLabel, UILabel)) {
         _titleLineLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.lineContentXOffset, kTopMargin, self.width, 16.f)];
-        [_titleLineLabel setFont:JAList2Font];
+        [_titleLineLabel setFont:JAListFont];
         [_titleLineLabel setTextColor:JABlackColor];
         [self addSubview:_titleLineLabel];
     }
@@ -60,8 +60,8 @@
 - (UILabel *)subTitleLineLabel
 {
     if (!VALID(_subTitleLineLabel, UILabel)) {
-        _subTitleLineLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.lineContentXOffset, CGRectGetMaxY(self.titleLineLabel.frame), self.width, 16.f)];
-        [_subTitleLineLabel setFont:JACaptionFont];
+        _subTitleLineLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.lineContentXOffset, CGRectGetMaxY(self.titleLineLabel.frame) + 6.f, self.width, 16.f)];
+        [_subTitleLineLabel setFont:JABodyFont];
         [_subTitleLineLabel setTextColor:JABlack800Color];
         [self addSubview:_subTitleLineLabel];
     }
@@ -71,7 +71,10 @@
 - (UIImageView *)rightImageView
 {
     if (!VALID(_rightImageView, UIImageView)) {
-        _rightImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.width-51-16.f-self.lineContentXOffset, 0, 51, 36)];
+        _rightImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.width - 43.f - 10.f - self.arrow.frame.size.width - self.lineContentXOffset,
+                                                                        0.f,
+                                                                        43.f,
+                                                                        28.f)];
         [self addSubview:_rightImageView];
     }
     return _rightImageView;
@@ -86,7 +89,7 @@
 {
     [self.rightImageView setImageWithURL:[NSURL URLWithString:URL]];
     [self.rightImageView setYCenterAligned];
-    [self.rightImageView setX:self.width-self.rightImageView.width-16.f-self.lineContentXOffset];
+    [self.rightImageView setX:self.width - 43.f - 10.f - self.arrow.frame.size.width - self.lineContentXOffset];
 }
 
 - (void)setTitle:(NSString *)title

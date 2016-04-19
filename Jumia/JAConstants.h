@@ -142,37 +142,15 @@
 #define kAppStoreIdShop @"979214282"
 #define kAppStoreIdBamilo @"979950698"
 
+#define kAppStoreIdInteger 925015459
+#define kAppStoreIdDarazInteger 978058048
+#define kAppStoreIdShopInteger 979214282
+#define kAppStoreIdBamiloInteger 979950698
+
+
 // Preferences
 #define kDidFirstBuyKey @"did_first_buy"
 #define kNumberOfSessions @"amount_sessions"
 #define kSessionDate @"session_date"
 #define kChangeNotificationsOptions @"change_notifications_option"
 #define kChangeSoundOptions @"change_sound_option"
-
-// Colors
-
-// Colors - Backgrounds
-#define JANavBarBackgroundGrey UIColorFromRGB(0xeaeaea)
-#define JABackgroundGrey UIColorFromRGB(0xc8c8c8)
-#define JAHomePageBackgroundGrey UIColorFromRGB(0xf9f9f9)
-
-// Colors - Buttons
-#define JAButtonOrange UIColorFromRGB(0xfaa41a)
-#define JAButtonTextOrange UIColorFromRGB(0x4e4e4e)
-#define JAFeedbackGrey UIColorFromRGB(0xf0f0f0)
-
-// Colors - Text
-#define JALabelGrey UIColorFromRGB(0xcccccc)
-
-
-#define JABlackColor UIColorFromRGB(0x000000)
-#define JABlack900Color UIColorFromRGB(0x202020)
-#define JABlack800Color UIColorFromRGB(0x808080)
-#define JABlack700Color UIColorFromRGB(0xC5C5C5)
-#define JABlack400Color UIColorFromRGB(0xE2E2E2)
-#define JABlack300Color UIColorFromRGB(0xF0F0F0)
-#define JABlack200Color UIColorFromRGB(0xF5F5F5)
-#define JAOrange1Color UIColorFromRGB(0xf68b1e)
-#define JAGreen1Color UIColorFromRGB(0xa3cf62)
-#define JABlue1Color UIColorFromRGB(0x416998)
-#define JASysBlueColor UIColorFromRGB(0x007aff)

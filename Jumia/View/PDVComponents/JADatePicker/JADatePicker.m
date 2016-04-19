@@ -56,7 +56,7 @@
     
     self.datePicker = [[UIDatePicker alloc] initWithFrame:CGRectZero];
     [self.datePicker setDatePickerMode:UIDatePickerModeDate];
-    [self.datePicker setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.datePicker setBackgroundColor:JAWhiteColor];
     [self.datePicker setAlpha:0.9];
     [self.datePicker setFrame:CGRectMake(0.0f,
                                          (self.backgroundView.frame.size.height - self.datePicker.frame.size.height),
@@ -65,7 +65,7 @@
     [self addSubview:self.datePicker];
     
     self.buttonBackgroundView = [[UIToolbar alloc] initWithFrame:CGRectZero];
-    [self.buttonBackgroundView setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.buttonBackgroundView setBackgroundColor:JAWhiteColor];
     [self.buttonBackgroundView setAlpha:0.9];
     [self.buttonBackgroundView setFrame:CGRectMake(0.0f,
                                                    CGRectGetMinY(self.datePicker.frame) - 44.0f,
@@ -78,10 +78,10 @@
                                          0.0f,
                                          doneButtonWidth,
                                          44.0f)];
-    [self.doneButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
+    [self.doneButton.titleLabel setFont:JAPickerDoneLabel];
     [self.doneButton setTitle:STRING_DONE forState:UIControlStateNormal];
-    [self.doneButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    [self.doneButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+    [self.doneButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
+    [self.doneButton setTitleColor:JAOrange1Color forState:UIControlStateHighlighted];
     [self.doneButton addTarget:self action:@selector(doneButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.buttonBackgroundView addSubview:self.doneButton];
     [self addSubview:self.buttonBackgroundView];
@@ -131,16 +131,13 @@
 - (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     NSString *object = [self.dataSource objectAtIndex:row];
-    UIColor *color = UIColorFromRGB(0x4e4e4e);
+    UIColor *color = JAButtonTextOrange;
     
     NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:object
                                                                                   attributes:@{NSForegroundColorAttributeName:color}];
     
-    UIFont *font = [UIFont fontWithName:kFontLightName
-                                   size:22.0];
-    
     [attString addAttribute:NSFontAttributeName
-                      value:font
+                      value:JAPickerAttLabel
                       range:NSMakeRange(0, object.length)];
     
     return attString;

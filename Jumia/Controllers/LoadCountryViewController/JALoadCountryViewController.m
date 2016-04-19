@@ -192,7 +192,6 @@
                                  }
                              }
                              [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-                             [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCountryNotification object:nil userInfo:self.pushNotification];
                              //show loading has to be added here, in case the no connection error view was shown
                              // and the loading was removed because of that
 //                             [self showLoading];
@@ -342,6 +341,8 @@
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventChangeCountry]
                                               data:[trackingDictionary copy]];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCountryNotification object:nil userInfo:self.pushNotification];
     
 //    [self hideLoading];
     

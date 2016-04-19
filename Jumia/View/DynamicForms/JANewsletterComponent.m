@@ -45,8 +45,8 @@
     self.translatesAutoresizingMaskIntoConstraints = YES;
     
     self.labelText.font = [UIFont fontWithName:kFontRegularName size:self.labelText.font.pointSize];
-    [self.labelText setTextColor:UIColorFromRGB(0x666666)];
-    self.separator.backgroundColor = UIColorFromRGB(0xcccccc);
+    [self.labelText setTextColor:JAGreyColor];
+    self.separator.backgroundColor = JATextFieldColor;
     
     self.storedValue = @"";
 }

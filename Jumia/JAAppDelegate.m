@@ -37,17 +37,20 @@
         [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontLightNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontBoldNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontMediumNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontItalicNameKey];
     } else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontRegularNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontLightNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontBoldNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontMediumNameKey];
+        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontItalicNameKey];
     } else {
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontRegularNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue-Light" forKey:kFontLightNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue-Bold" forKey:kFontBoldNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue-Medium" forKey:kFontMediumNameKey];
-    }    
+        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue-Italic" forKey:kFontItalicNameKey];
+    }
     
 #if defined(DEBUG) && DEBUG
     
@@ -125,15 +128,33 @@
                                                                             delegate:self];
 #endif
     
+    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
+    {
+        [[GSDAppIndexing sharedInstance] registerApp:kAppStoreIdInteger];
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
+    {
+        [[GSDAppIndexing sharedInstance] registerApp:kAppStoreIdDarazInteger];
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+    {
+        [[GSDAppIndexing sharedInstance] registerApp:kAppStoreIdShopInteger];
+    }
+    else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
+    {
+        [[GSDAppIndexing sharedInstance] registerApp:kAppStoreIdBamiloInteger];
+    }
+
+    
     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
     
     [self checkSession];
     
-    [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0xeaeaea)];
+    [[UINavigationBar appearance] setBarTintColor:JABlack300Color];
     
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]
      setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                             UIColorFromRGB(0xc8c8c8), NSForegroundColorAttributeName,
+                             JABackgroundGrey, NSForegroundColorAttributeName,
                              [UIFont fontWithName:kFontLightName size:18.0f], NSFontAttributeName,nil] forState:UIControlStateNormal];
     
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]
@@ -181,6 +202,27 @@
     completionHandler();
 }
 #endif
+
+- (BOOL)application:(UIApplication *)application continueUserActivity:(nonnull NSUserActivity *)userActivity restorationHandler:(nonnull void (^)(NSArray * _Nullable))restorationHandler
+{
+    if ([[userActivity activityType] isEqualToString:NSUserActivityTypeBrowsingWeb]) {
+        [Adjust appWillOpenUrl:[userActivity webpageURL]];
+        
+        NSString* appName = [APP_NAME lowercaseString];
+        if ([appName isEqualToString:@"بامیلو"]) {
+            appName = @"bamilo";
+        } else if ([appName isEqualToString:@"shop.com.mm"]) {
+            appName = @"shop";
+        }
+        NSURL * deeplink = [Adjust convertUniversalLink:[userActivity webpageURL] scheme:appName];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self handlePushNotificationURL:deeplink];
+        });
+        
+    }
+    return YES;
+}
 
 - (void)checkSession
 {

@@ -84,7 +84,7 @@
                                                                      self.couponButton.frame.origin.y,
                                                                      self.couponButton.frame.size.width,
                                                                      self.couponButton.frame.size.height)];
-    self.couponCodeLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.couponCodeLabel.textColor = JAButtonTextOrange;
     self.couponCodeLabel.font = [UIFont fontWithName:kFontBoldName size:13.0f];
     self.couponCodeLabel.textAlignment = NSTextAlignmentCenter;
     self.couponCodeLabel.text = promotion.couponCode;
@@ -95,7 +95,7 @@
     self.couponEndDateLabel.textAlignment = NSTextAlignmentCenter;
     self.couponEndDateLabel.numberOfLines = -1;
     self.couponEndDateLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
-    self.couponEndDateLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.couponEndDateLabel.textColor = JAButtonTextOrange;
     self.couponEndDateLabel.text = [NSString stringWithFormat:@"%@. %@ %@",STRING_PROMOTION_TIP_TAP, STRING_CAMPAIGN_TIMER_END, promotion.endDate];
     [self.couponEndDateLabel sizeToFit];
     [self.couponEndDateLabel setFrame:CGRectMake(genericRect.origin.x,
@@ -115,7 +115,7 @@
     [self.shopNowButton setBackgroundImage:shopButtonImageHighlighted forState:UIControlStateHighlighted];
     [self.shopNowButton setTitle:STRING_GO_SHOP forState:UIControlStateNormal];
     [self.shopNowButton.titleLabel setFont:[UIFont fontWithName:kFontLightName size:11.0f]];
-    [self.shopNowButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+    [self.shopNowButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
     [self.shopNowButton addTarget:self action:@selector(dismissView) forControlEvents:UIControlEventTouchUpInside];
     [self.containerView addSubview:self.shopNowButton];
     
@@ -156,7 +156,7 @@
     NSMutableAttributedString* finalString;
     NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [UIFont fontWithName:fontName size:fontSize], NSFontAttributeName,
-                                UIColorFromRGB(0x4e4e4e), NSForegroundColorAttributeName, nil];
+                                JAButtonTextOrange, NSForegroundColorAttributeName, nil];
     
     if (NSNotFound != boldTextRange.location) {
         NSString* boldText = [text substringWithRange:boldTextRange];

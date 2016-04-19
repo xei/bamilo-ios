@@ -39,8 +39,13 @@ typedef enum {
 @property (nonatomic, retain) NSString *algoliaAppId;
 @property (nonatomic, retain) NSString *algoliaNamespacePrefix;
 @property (nonatomic, retain) NSString *algoliaApiKey;
-
 @property (nonatomic) SuggesterProvider suggesterProviderEnum;
+
+@property (nonatomic, retain) NSNumber *casIsActive;
+@property (nonatomic, retain) NSString *casTitle;
+@property (nonatomic, retain) NSString *casSubtitle;
+@property (nonatomic, retain) NSArray *casImages;
+
 
 /**
  *  Method to parse an RICountryConfiguration given a JSON object

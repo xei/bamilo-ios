@@ -224,7 +224,7 @@
 
 "facebook_signup_button_text" = "Sign up with Facebook";
 
-"facebook_login_button_text" = "Continue with Facebook";
+"facebook_login_button_text" = "login with Facebook";
 
 "login_incomplete" = "Both email and birthday are required to login";
 
@@ -346,6 +346,8 @@
 
 "update_now" = "Update Now";
 
+"up_to_date" = "Up to date";
+
 "app_version" = "App Version";
 
 "help_center" = "Help Center";
@@ -399,6 +401,8 @@
 "error_add_to_cart_failed_for_1_product" = "Adding to cart failed for 1 product";
 
 "save_label" = "Save";
+
+"save_item" = "Save Item";
 
 "string_campaign_ramaining_stock" = "Remaining Stock: %d%%";
 
@@ -494,7 +498,7 @@
 
 "welcome" = "Welcome";
 
-"new_to_jumia" = "Looks like you're new to Jumia.\n We need just a bit more details to create your account.";
+"new_to_jumia" = "We need just a bit more details to create your account.";
 
 "reviews" = "Reviews";
 
@@ -569,6 +573,8 @@
 "buy_now" = "Buy Now";
 
 "buy" = "Buy";
+
+"buy_combo" = "Buy Combo";
 
 "other_sellers" = "Other Sellers";
 
@@ -699,3 +705,6 @@
 "newsletter_label" = "Newsletter";
 
 "newsletter_preferences" = "Newsletter Preferences";
+
+"free_shipping_possible" = "Free Shipping Possible";
+

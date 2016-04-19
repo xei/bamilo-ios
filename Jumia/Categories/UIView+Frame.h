@@ -23,5 +23,6 @@
 - (void)setYBottomOf:(UIView *)view at:(CGFloat)distance;
 - (void)setXCenterAligned;
 - (void)setYCenterAligned;
+- (void)sizeHeightToFit;
 
 @end

@@ -115,6 +115,9 @@
 @synthesize brandTarget;
 @synthesize brandUrlKey;
 
+@synthesize hasStock;
+@synthesize freeShippingPossible;
+
 + (NSString *)getCompleteProductWithSku:(NSString*)sku
                            successBlock:(void (^)(id product))successBlock
                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
@@ -541,6 +544,12 @@
             newProduct.maxSavingPercentage = [NSString stringWithFormat:@"%@", [dataDic objectForKey:@"max_saving_percentage"]];
         }
         
+        if ([dataDic objectForKey:@"free_shipping_possible"]) {
+            newProduct.freeShippingPossible = [[dataDic objectForKey:@"free_shipping_possible"] boolValue];
+        } else {
+            newProduct.freeShippingPossible = NO;
+        }
+        
         if ([dataDic objectForKey:@"rating_reviews_summary"]) {
             NSDictionary *ratingsDic = [dataDic objectForKey:@"rating_reviews_summary"];
             if (VALID_NOTEMPTY(ratingsDic, NSDictionary)) {
@@ -625,7 +634,7 @@
         if([dataDic objectForKey:@"specifications"]){
             NSArray* specificationsJSON = [dataDic objectForKey:@"specifications"];
 
-            NSMutableSet* newSpecifications = [NSMutableSet new];
+            NSMutableOrderedSet* newSpecifications = [NSMutableOrderedSet new];
             for (NSDictionary *specifJSON in specificationsJSON){
                 if(VALID_NOTEMPTY(specifJSON, NSDictionary)){
                     
@@ -1111,6 +1120,16 @@
         }
         recentlyViewedProductSku.numberOfTimesSeen = [NSNumber numberWithInt:([recentlyViewedProductSku.numberOfTimesSeen intValue] + 1)];
     }
+}
+
+- (BOOL)hasStock
+{
+    for (RIProductSimple *simple in self.productSimples) {
+        if (![simple.quantity isEqualToString:@"0"]) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 @end

@@ -53,7 +53,7 @@
         _wizardPage1Label.textAlignment = NSTextAlignmentCenter;
         _wizardPage1Label.numberOfLines = -1;
         _wizardPage1Label.font = kJAWizardFont;
-        _wizardPage1Label.textColor = kJAWizardFontColor;
+        _wizardPage1Label.textColor = JABlack700Color;
         NSString* label1Text = STRING_WIZARD_PDV_SWIPE;
         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
             label1Text = [label1Text stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
@@ -88,7 +88,7 @@
         _wizardPage2Label.textAlignment = NSTextAlignmentCenter;
         _wizardPage2Label.numberOfLines = -1;
         _wizardPage2Label.font = kJAWizardFont;
-        _wizardPage2Label.textColor = kJAWizardFontColor;
+        _wizardPage2Label.textColor = JABlack700Color;
         _wizardPage2Label.text = STRING_WIZARD_PDV_TAP;
         
         CGRect wizardLabe2Rect = [STRING_WIZARD_PDV_TAP boundingRectWithSize:CGSizeMake(_wizardPage1.bounds.size.width - kJAWizardPDV2TextHorizontalMargin*2, 1000.0f)
@@ -122,7 +122,7 @@
         _wizardPage3Label.textAlignment = NSTextAlignmentCenter;
         _wizardPage3Label.numberOfLines = -1;
         _wizardPage3Label.font = kJAWizardFont;
-        _wizardPage3Label.textColor = kJAWizardFontColor;
+        _wizardPage3Label.textColor = JABlack700Color;
         _wizardPage3Label.text = STRING_WIZARD_CATALOG_FAVORITE;
         
         CGRect wizardLabe3Rect = [STRING_WIZARD_CATALOG_FAVORITE boundingRectWithSize:CGSizeMake(_wizardPage1.bounds.size.width - kJAWizardPDV3TextHorizontalMargin*2, 1000.0f)
@@ -153,7 +153,7 @@
         _wizardPage4Label.textAlignment = NSTextAlignmentCenter;
         _wizardPage4Label.numberOfLines = -1;
         _wizardPage4Label.font = kJAWizardFont;
-        _wizardPage4Label.textColor = kJAWizardFontColor;
+        _wizardPage4Label.textColor = JABlack700Color;
         _wizardPage4Label.text = STRING_WIZARD_PDV_SHARE;
         
         CGRect wizardLabe4Rect = [STRING_WIZARD_PDV_SHARE boundingRectWithSize:CGSizeMake(_wizardPage1.bounds.size.width - kJAWizardPDV4TextHorizontalMargin*2, 1000.0f)

@@ -24,7 +24,7 @@
     
     CGFloat marginX= 6.0f; //value by design
     CGFloat marginY= 10.0f; //value by design
-    CGFloat heightWithoutMargins = 120; //value by design
+    CGFloat heightWithoutMargins = 146; //value by design
     CGFloat totalHeight = heightWithoutMargins + marginY*2;
     [self setFrame:CGRectMake(self.frame.origin.x,
                               self.frame.origin.y,
@@ -38,7 +38,7 @@
     self.scrollView.showsHorizontalScrollIndicator = NO;
     [self addSubview:self.scrollView];
     
-    CGFloat componentWidth = 108; //value by design
+    CGFloat componentWidth = 112; //value by design
     CGFloat currentX = marginX;
     
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
@@ -61,11 +61,11 @@
         [clickableView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.scrollView addSubview:clickableView];
         
-        CGFloat textMarginX = 4.0;
-        CGFloat textMarginY = 6.0;
+        CGFloat textMarginX = 6.0;
+        CGFloat textMarginY = 4.0;
         UILabel* titleLabel = [UILabel new];
-        titleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
-        titleLabel.textColor = [UIColor blackColor];
+        titleLabel.font = JATitleFont;
+        titleLabel.textColor = JABlackColor;
         titleLabel.text = component.title;
         [titleLabel sizeToFit];
         [titleLabel setFrame:CGRectMake(clickableView.bounds.origin.x + textMarginX,
@@ -75,15 +75,15 @@
         [clickableView addSubview:titleLabel];
         
         UILabel* subTitleLabel = [UILabel new];
-        subTitleLabel.font = [UIFont fontWithName:kFontLightName size:9.0f];
+        subTitleLabel.font = JACaptionFont;
         CGFloat subtitleYOffset = 0.0f;
         if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
         {
             //SHOP font adjustment
             subtitleYOffset = -2.0f;
-            subTitleLabel.font = [UIFont fontWithName:kFontLightName size:8.0f];
+            subTitleLabel.font = [UIFont fontWithName:kFontLightName size:subTitleLabel.font.pointSize-1];
         }
-        subTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
+        subTitleLabel.textColor = JABlack800Color;
         subTitleLabel.text = component.subTitle;
         [subTitleLabel sizeToFit];
         [subTitleLabel setFrame:CGRectMake(clickableView.bounds.origin.x + textMarginX,
@@ -100,10 +100,10 @@
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             titleLabel.textAlignment = NSTextAlignmentCenter;
             subTitleLabel.textAlignment = NSTextAlignmentCenter;
-            imageWidth = 108; //value by design
+            imageWidth = 112; //value by design
         }
         
-        CGFloat imageHeight = 85; //value by design
+        CGFloat imageHeight = 112; //value by design
         NSString* imageUrl = component.imagePortraitUrl;
         UIImageView* imageView = [UIImageView new];
         imageView.contentMode = UIViewContentModeScaleAspectFit;

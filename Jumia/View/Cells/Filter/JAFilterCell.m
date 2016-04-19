@@ -36,9 +36,9 @@
     [self addSubview:self.clickView];
     
     if (cellIsSelected) {
-        self.clickView.backgroundColor = [UIColor whiteColor];
-    } else {
         self.clickView.backgroundColor = JABlack300Color;
+    } else {
+        self.clickView.backgroundColor = JAWhiteColor;
     }
     
     //find number of selected options
@@ -51,10 +51,10 @@
         }
     }
     
-    UIFont* labelFont = [UIFont fontWithName:kFontRegularName size:16.0f];
+    UIFont* labelFont = JADisplay3Font;
     NSString* cellText = [NSString stringWithFormat:@"%@",filter.name];
     if (0 < numberOfSelectedOptions) {
-        labelFont = [UIFont fontWithName:kFontBoldName size:16.0f];
+        labelFont = JAFilterCellCategoryTitle;
         cellText = [NSString stringWithFormat:@"%@ (%ld)",filter.name, (long)numberOfSelectedOptions];
     }
     UILabel* mainLabel = [UILabel new];

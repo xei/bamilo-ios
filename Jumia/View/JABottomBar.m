@@ -7,6 +7,7 @@
 //
 
 #import "JABottomBar.h"
+#import "JAButton.h"
 
 #define kSmallButtonWidth 60
 
@@ -58,28 +59,27 @@
     }
 }
 
-- (UIButton *)addButton:(NSString *)name target:(id)target action:(SEL)action
+- (JAButton *)addButton:(NSString *)name target:(id)target action:(SEL)action
 {
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [button setTitle:[name uppercaseString] forState:UIControlStateNormal];
-    [button.titleLabel setFont:JAButtonFont];
-    [button setBackgroundColor:JAOrange1Color];
-    [button setTintColor:[UIColor whiteColor]];
-    [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    JAButton *button = [[JAButton alloc] initButtonWithTitle:name target:target action:action];
     [self addSubview:button];
     [self.buttonsArray addObject:button];
     [self reloadFrame:self.frame];
     return button;
 }
 
-- (UIButton *)addSmallButton:(UIImage *)image target:(id)target action:(SEL)action
+- (JAButton *)addAlternativeButton:(NSString*)name target:(id)target action:(SEL)action
 {
-    UIButton *smallButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [[smallButton imageView] setContentMode:UIViewContentModeCenter];
-    [smallButton setImage:image forState:UIControlStateNormal];
-    [smallButton setBackgroundColor:JABlack900Color];
-    [smallButton setTintColor:[UIColor whiteColor]];
-    [smallButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    JAButton *button = [[JAButton alloc] initAlternativeButtonWithTitle:name target:target action:action];
+    [self addSubview:button];
+    [self.buttonsArray addObject:button];
+    [self reloadFrame:self.frame];
+    return button;
+}
+
+- (JAButton *)addSmallButton:(UIImage *)image target:(id)target action:(SEL)action
+{
+    JAButton *smallButton = [[JAButton alloc] initSmallButtonWithImage:image target:target action:action];
     [self addSubview:smallButton];
     [self.smallButtonsArray addObject:smallButton];
     [self reloadFrame:self.frame];

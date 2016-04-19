@@ -224,7 +224,7 @@
                                                           self.width - KLineContentXOffset - CGRectGetMaxX(self.starButton5.frame),
                                                           self.height)];
         _label.font = JACaptionFont;
-        [_label setTextColor:UIColorFromRGB(0x666666)];
+        [_label setTextColor:JAGreyColor];
         [_label setTextAlignment:NSTextAlignmentRight];
         [self addSubview:_label];
     }

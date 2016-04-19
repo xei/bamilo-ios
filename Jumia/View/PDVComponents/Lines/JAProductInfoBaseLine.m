@@ -10,7 +10,6 @@
 
 @interface JAProductInfoBaseLine ()
 
-@property (nonatomic) UIImageView *arrow;
 @property (nonatomic) UIView *topSeparator;
 @property (nonatomic) UIView *bottomSeparator;
 
@@ -58,6 +57,7 @@
     CGRect frame = CGRectMake(self.lineContentXOffset, 6, self.width-32, self.height-12);
     if (!VALID_NOTEMPTY(_label, UILabel)) {
         _label = [[UILabel alloc] initWithFrame:frame];
+        [_label setTextAlignment:NSTextAlignmentLeft];
         [_label setTextColor:JABlackColor];
         [_label setText:@""];
         [_label sizeToFit];
@@ -106,7 +106,7 @@
 
 - (UIImageView *)arrow
 {
-    CGRect frame = CGRectMake(self.width - 16, self.height/2 - 6, 8, 12);
+    CGRect frame = CGRectMake(self.width - 8 - 16, self.height/2 - 6, 8, 12);
     if (!VALID_NOTEMPTY(_arrow, UIImageView)) {
         _arrow = [[UIImageView alloc] initWithFrame:frame];
         [_arrow setImage:[UIImage imageNamed:@"arrow_moreinfo"]];

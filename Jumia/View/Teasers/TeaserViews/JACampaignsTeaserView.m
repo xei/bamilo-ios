@@ -85,8 +85,8 @@
     CGFloat halfWidth = mainClickableView.bounds.size.width/2;
     
     UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, halfWidth, 50)];
-    titleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
-    titleLabel.textColor = [UIColor blackColor];
+    titleLabel.font = JATitleFont;
+    titleLabel.textColor = JABlackColor;
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [titleLabel setLineBreakMode:NSLineBreakByTruncatingTail];
     titleLabel.numberOfLines=2;
@@ -100,11 +100,11 @@
     [self.clockLabel removeFromSuperview];
     self.clockLabel = [UILabel new];
     if (VALID_NOTEMPTY(mainCampaign.endingDate, NSDate)) {
-        self.clockLabel.font = [UIFont fontWithName:kFontMediumName size:25.0f];
+        self.clockLabel.font = JADisplay1Font;
     } else {
-        self.clockLabel.font = [UIFont fontWithName:kFontMediumName size:18.0f];
+        self.clockLabel.font = JADisplay2Font;
     }
-    self.clockLabel.textColor = UIColorFromRGB(0xcc0000);
+    self.clockLabel.textColor = JARed1Color;
     self.clockLabel.textAlignment = NSTextAlignmentCenter;
     [self.clockLabel sizeToFit];
     [clockView addSubview:self.clockLabel];
@@ -131,7 +131,7 @@
     }
     
     UILabel* subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, halfWidth, 50)];
-    subTitleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
+    subTitleLabel.font = JACaptionFont;
     subTitleLabel.textColor = [UIColor blackColor];
     subTitleLabel.textAlignment = NSTextAlignmentCenter;
     subTitleLabel.numberOfLines=2;
@@ -173,37 +173,18 @@
         [moreView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:moreView];
         
-        CGFloat marginBetweenLabelAndImage = 12.0f;
-        
-        UIImage* arrowImage = [UIImage imageNamed:@"campaignTeaserMoreArrow"];
-        UIImageView* arrowImageView = [[UIImageView alloc] initWithImage:arrowImage];
-        [moreView addSubview:arrowImageView];
-        if (RI_IS_RTL) {
-            [arrowImageView flipViewImage];
-        }
-        
-        CGFloat moreLabelMaxWidth = moreView.frame.size.width - arrowImage.size.width - marginBetweenLabelAndImage;
-        
-        UILabel* moreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, moreLabelMaxWidth, 1)];
-        moreLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
-        moreLabel.textColor = UIColorFromRGB(0x06739e);
+        UILabel* moreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, moreView.frame.size.width, 1)];
+        moreLabel.font = JABodyFont;
+        moreLabel.textColor = JABlue1Color;
         moreLabel.numberOfLines=2;
         moreLabel.text = STRING_SEE_MORE_OFFERS;
         [moreLabel sizeToFit];
         [moreView addSubview:moreLabel];
         
-        CGFloat labelPlusImageWidth = moreLabel.frame.size.width + arrowImage.size.width + marginBetweenLabelAndImage;
-        
-        [moreLabel setFrame:CGRectMake((moreView.frame.size.width - labelPlusImageWidth) / 2,
+        [moreLabel setFrame:CGRectMake((moreView.frame.size.width - moreLabel.frame.size.width) / 2,
                                        moreView.bounds.origin.y,
                                        moreLabel.bounds.size.width,
-                                       moreView.bounds.size.height)];
-        
-        [arrowImageView setFrame:CGRectMake(CGRectGetMaxX(moreLabel.frame) + marginBetweenLabelAndImage,
-                                            (moreView.frame.size.height - arrowImage.size.height) / 2,
-                                            arrowImage.size.width,
-                                            arrowImage.size.height)];
-        
+                                       moreView.bounds.size.height)];           
     }
     
     if (RI_IS_RTL) {
@@ -245,8 +226,8 @@
     CGFloat labelTopMargin = 6.0f;
     
     UILabel* titleLabel = [UILabel new];
-    titleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
-    titleLabel.textColor = [UIColor blackColor];
+    titleLabel.font = JATitleFont;
+    titleLabel.textColor = JABlackColor;
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.numberOfLines=2;
     titleLabel.text = mainCampaign.title;
@@ -256,11 +237,11 @@
     [self.clockLabel removeFromSuperview];
     self.clockLabel = [UILabel new];
     if (VALID_NOTEMPTY(mainCampaign.endingDate, NSDate)) {
-        self.clockLabel.font = [UIFont fontWithName:kFontMediumName size:25.0f];
+        self.clockLabel.font = JADisplay1Font;
     } else {
-        self.clockLabel.font = [UIFont fontWithName:kFontMediumName size:18.0f];
+        self.clockLabel.font = JADisplay2Font;
     }
-    self.clockLabel.textColor = UIColorFromRGB(0xcc0000);
+    self.clockLabel.textColor = JARed1Color;
     self.clockLabel.textAlignment = NSTextAlignmentCenter;
     [self.clockLabel sizeToFit];
     [clockView addSubview:self.clockLabel];
@@ -276,8 +257,8 @@
     
     CGFloat imageViewWidth = 153.0f; //value by design
     UILabel* subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, imageViewWidth, 1)];
-    subTitleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
-    subTitleLabel.textColor = [UIColor blackColor];
+    subTitleLabel.font = JACaptionFont;
+    subTitleLabel.textColor = JABlackColor;
     subTitleLabel.textAlignment = NSTextAlignmentCenter;
     subTitleLabel.numberOfLines=2;
     subTitleLabel.text = mainCampaign.subTitle;
@@ -347,36 +328,18 @@
         [moreView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:moreView];
         
-        CGFloat marginBetweenLabelAndImage = 12.0f;
-        
-        UIImage* arrowImage = [UIImage imageNamed:@"campaignTeaserMoreArrow"];
-        UIImageView* arrowImageView = [[UIImageView alloc] initWithImage:arrowImage];
-        [moreView addSubview:arrowImageView];
-        if (RI_IS_RTL) {
-            [arrowImageView flipViewImage];
-        }
-        
-        CGFloat moreLabelMaxWidth = moreView.frame.size.width - arrowImage.size.width - marginBetweenLabelAndImage;
-        
-        UILabel* moreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, moreLabelMaxWidth, 1)];
-        moreLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
-        moreLabel.textColor = UIColorFromRGB(0x06739e);
+        UILabel* moreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, moreView.frame.size.width, 1)];
+        moreLabel.font = JABodyFont;
+        moreLabel.textColor = JABlue1Color;
         moreLabel.numberOfLines=-1;
         moreLabel.text = STRING_SEE_MORE_OFFERS;
         [moreLabel sizeToFit];
         [moreView addSubview:moreLabel];
         
-        CGFloat labelPlusImageWidth = moreLabel.frame.size.width + arrowImage.size.width + marginBetweenLabelAndImage;
-        
-        [moreLabel setFrame:CGRectMake((moreView.frame.size.width - labelPlusImageWidth) / 2,
+        [moreLabel setFrame:CGRectMake((moreView.frame.size.width - moreLabel.frame.size.width) / 2,
                                        moreView.bounds.origin.y,
                                        moreLabel.bounds.size.width,
                                        moreView.bounds.size.height)];
-        
-        [arrowImageView setFrame:CGRectMake(CGRectGetMaxX(moreLabel.frame) + marginBetweenLabelAndImage,
-                                            (moreView.frame.size.height - arrowImage.size.height) / 2,
-                                            arrowImage.size.width,
-                                            arrowImage.size.height)];
         
     }
     

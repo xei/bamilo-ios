@@ -180,25 +180,21 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
         {
             
             if(IS_IOS_8_OR_LATER) {
-                UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: (UIRemoteNotificationTypeBadge
-                                                                                                      |UIRemoteNotificationTypeSound
-                                                                                                      |UIRemoteNotificationTypeAlert) categories:categories];
+                UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: (UIUserNotificationTypeSound
+                                                                                                      |UIUserNotificationTypeAlert) categories:categories];
                 [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
             } else {
-                [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
-                                                                                        UIRemoteNotificationTypeSound |
-                                                                                        UIRemoteNotificationTypeAlert )];
+                [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIUserNotificationTypeSound |
+                                                                                        UIUserNotificationTypeAlert )];
             }
         }
         else if(checkNotificationsSwitch && !checkNotificationsSwitch)
         {
             if(IS_IOS_8_OR_LATER) {
-                UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: (UIRemoteNotificationTypeBadge
-                                                                                                      |UIRemoteNotificationTypeSound) categories:categories];
+                UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: (UIUserNotificationTypeSound) categories:categories];
                 [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
             } else {
-                [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge |
-                                                                                        UIRemoteNotificationTypeAlert )];
+                [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert)];
             }
         }
         else{
@@ -793,7 +789,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
             {
                 // Cart
                 [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCartNotification
-                                                                    object:nil];
+                                                                    object:arguments];
             }
             else if ([key isEqualToString:@"w"])
             {
@@ -839,7 +835,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
             }
             else if ([key isEqualToString:@"camp"] && VALID_NOTEMPTY(arguments, NSString))
             {
-                [[JACenterNavigationController sharedInstance] openTarget:[RITarget getTargetString:CAMPAIGN node:arguments]];
+                [[JACenterNavigationController sharedInstance] openTargetString:[RITarget getTargetString:CAMPAIGN node:arguments]];
             }
             else if ([key isEqualToString:@"ss"])
             {
@@ -847,7 +843,7 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 {
                     NSString* shopID = [urlComponents objectAtIndex:2];
                     if (VALID_NOTEMPTY(shopID, NSString)) {
-                        [[JACenterNavigationController sharedInstance] openTarget:[RITarget getTargetString:STATIC_PAGE node:shopID]];
+                        [[JACenterNavigationController sharedInstance] openTargetString:[RITarget getTargetString:STATIC_PAGE node:shopID]];
                     }
                 }
             }

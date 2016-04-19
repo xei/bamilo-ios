@@ -21,7 +21,6 @@
 #import "JASignInViewController.h"
 #import "JARegisterViewController.h"
 #import "JAForgotPasswordViewController.h"
-#import "JALoginViewController.h"
 #import "JAAddressesViewController.h"
 #import "JAAddNewAddressViewController.h"
 #import "JAEditAddressViewController.h"
@@ -32,7 +31,6 @@
 #import "JAPDVViewController.h"
 #import "JACartViewController.h"
 #import "JAForgotPasswordViewController.h"
-#import "JALoginViewController.h"
 #import "JAExternalPaymentsViewController.h"
 #import "JASuccessPageViewController.h"
 #import "RIProduct.h"
@@ -41,7 +39,6 @@
 #import "RICustomer.h"
 #import "JACampaignsViewController.h"
 #import "JATabNavigationViewController.h"
-#import "JARatingsViewController.h"
 #import "JANewRatingViewController.h"
 #import "RICart.h"
 #import "JASizeGuideViewController.h"
@@ -56,7 +53,6 @@
 #import "JAFiltersViewController.h"
 #import "JANewsletterViewController.h"
 #import "JANewsletterSubscriptionViewController.h"
-#import "RITarget.h"
 
 #import "JAAuthenticationViewController.h"
 #import "JASearchView.h"
@@ -244,7 +240,7 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(openCart)
+                                             selector:@selector(openCart:)
                                                  name:kOpenCartNotification
                                                object:nil];
     
@@ -324,11 +320,6 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showRatingsScreen:)
-                                                 name:kShowRatingsScreenNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showNewRatingScreen:)
                                                  name:kShowNewRatingScreenNotification
                                                object:nil];
@@ -398,57 +389,73 @@
     [self customizeTabBar];
 }
 
-- (void)openTarget:(NSString *)targetString
+
+- (void)openTargetString:(NSString *)targetString
 {
-    RITarget *target = [RITarget parseTarget:targetString];
-    
-    switch (target.targetType) {
+    JAScreenTarget *screenTarget = [JAScreenTarget new];
+    screenTarget.target = [RITarget parseTarget:targetString];
+    [self openScreenTarget:screenTarget];
+}
+
+- (BOOL)openScreenTarget:(JAScreenTarget *)screenTarget
+{
+    switch (screenTarget.target.targetType) {
         case PRODUCT_DETAIL: {
-            JAPDVViewController *pdv = [JAPDVViewController new];
-            [pdv setProductTargetString:targetString];
-            [self pushViewController:pdv animated:YES];
-            break;
+            JAPDVViewController *viewController = [JAPDVViewController new];
+            [self loadScreenTarget:screenTarget forBaseViewController:viewController];
+            [self pushViewController:viewController animated:screenTarget.pushAnimation];
+            return YES;
         }
         case CATALOG_SEARCH: {
-            JACatalogViewController *catalog = [JACatalogViewController new];
-            [catalog setSearchString:[RITarget parseTarget:targetString].node];
-            [self pushViewController:catalog animated:YES];
-            break;
+            JACatalogViewController *viewController = [JACatalogViewController new];
+            [self loadScreenTarget:screenTarget forBaseViewController:viewController];
+            [viewController setSearchString:screenTarget.target.node];
+            [self pushViewController:viewController animated:screenTarget.pushAnimation];
+            return YES;
         }
         case CATALOG_HASH:
         case CATALOG_CATEGORY: {
-            JACatalogViewController *catalog = [JACatalogViewController new];
-            [catalog setCatalogTargetString:targetString];
-            [self pushViewController:catalog animated:YES];
-            break;
+            JACatalogViewController *viewController = [JACatalogViewController new];
+            [self loadScreenTarget:screenTarget forBaseViewController:viewController];
+            [self pushViewController:viewController animated:screenTarget.pushAnimation];
+            return YES;
         }
         case SHOP_IN_SHOP:
         case STATIC_PAGE: {
             JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
-            
+            [self loadScreenTarget:screenTarget forBaseViewController:viewController];
             [viewController.navBarLayout setShowBackButton:YES];
-            [viewController.navBarLayout setTitle:[RITarget parseTarget:targetString].node];
-                
-            [viewController setTargetString:targetString];
-            [self pushViewController:viewController animated:YES];
-            break;
+            if (!VALID(screenTarget.navBarLayout, JANavigationBarLayout)) {
+                viewController.navBarLayout = [JANavigationBarLayout new];
+                [viewController.navBarLayout setTitle:screenTarget.target.node];
+            }
+            [self pushViewController:viewController animated:screenTarget.pushAnimation];
+            return YES;
         }
         case CATALOG_BRAND: {
-            JACatalogViewController *catalog = [JACatalogViewController new];
-            [catalog setCatalogTargetString:targetString];
-            [self pushViewController:catalog animated:YES];
-            break;
+            JACatalogViewController *viewController = [JACatalogViewController new];
+            [self loadScreenTarget:screenTarget forBaseViewController:viewController];
+            [self pushViewController:viewController animated:screenTarget.pushAnimation];
+            return YES;
         }
         case CAMPAIGN: {
-            JACampaignsViewController *campaign = [JACampaignsViewController new];
-            [campaign setCampaignTargetString:targetString];
-            [self pushViewController:campaign animated:YES];
-            break;
+            JACampaignsViewController *viewController = [JACampaignsViewController new];
+            [self loadScreenTarget:screenTarget forBaseViewController:viewController];
+            [self pushViewController:viewController animated:screenTarget.pushAnimation];
+            return YES;
         }
             
         default:
-            break;
+            return NO;
     }
+}
+
+- (void)loadScreenTarget:(JAScreenTarget *)screenTarget forBaseViewController:(JABaseViewController *)viewController
+{
+    if (VALID(screenTarget.navBarLayout, JANavigationBarLayout)) {
+        [viewController setNavBarLayout:screenTarget.navBarLayout];
+    }
+    [viewController setTargetString:screenTarget.target.targetString];
 }
 
 #pragma mark Home Screen
@@ -481,7 +488,7 @@
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAChooseCountryViewController class]])
     {
-        JAChooseCountryViewController *country = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"chooseCountryViewController"];
+        JAChooseCountryViewController *country = [JAChooseCountryViewController new];
         
         country.navBarLayout.showMenuButton = NO;
         if(VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.object, NSDictionary))
@@ -984,25 +991,6 @@
     }
 }
 
-#pragma mark Checkout Login Screen
-- (void)showCheckoutLoginScreen
-{
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JALoginViewController class]] && ![RICustomer checkIfUserIsLogged])
-    {
-        JALoginViewController *loginVC = [[JALoginViewController alloc] initWithNibName:@"JALoginViewController" bundle:nil];
-        
-        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        {
-            loginVC = [[JALoginViewController alloc] initWithNibName:@"JALoginViewController~iPad" bundle:nil];
-        }
-        
-        loginVC.cart = self.cart;
-        
-        [self pushViewController:loginVC animated:NO];
-    }
-}
-
 #pragma mark Checkout Forgot Password Screen
 - (void)showCheckoutForgotPasswordScreen
 {
@@ -1050,10 +1038,6 @@
         } else {
             [addressesVC.navBarLayout setShowBackButton:YES];
             addressesVC.navBarLayout.showLogo = NO;
-        }
-        
-        if ([topViewController isKindOfClass:[JALoginViewController class]]) {
-            [self popViewControllerAnimated:NO];
         }
         
         [self pushViewController:addressesVC animated:NO];
@@ -1227,7 +1211,7 @@
         JASuccessPageViewController *thanksVC = [[JASuccessPageViewController alloc] init];
         
         thanksVC.cart = [notification.userInfo objectForKey:@"cart"];
-        thanksVC.rrTargetString = [notification.userInfo objectForKey:@"rrTargetString"];
+        thanksVC.targetString = [notification.userInfo objectForKey:@"rrTargetString"];
         
         [self pushViewController:thanksVC animated:YES];
     }
@@ -1253,7 +1237,7 @@
                                               andBrandName:(NSString *)brandName
 {
     JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
-    catalog.catalogTargetString = brandTargetString;
+    catalog.targetString = brandTargetString;
     catalog.forceShowBackButton = YES;
     
     catalog.navBarLayout.title = brandName;
@@ -1305,7 +1289,7 @@
     {
         JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         
-        catalog.catalogTargetString = targetString;
+        catalog.targetString = targetString;
         catalog.filterPush = filterPush;
         catalog.sortingMethodFromPush = sorting;
         
@@ -1353,47 +1337,6 @@
         }
         
         [self pushViewController:productDetailsViewController animated:YES];
-    }
-}
-
-
-//- (void)showProductSpecificationScreen:(NSNotification*)notification
-//{
-//    UIViewController *topViewController = [self topViewController];
-//    if (![topViewController isKindOfClass:[JAProductDetailsViewController class]])
-//    {
-//        JAProductDetailsViewController *productDetailsViewController = [[JAProductDetailsViewController alloc] initWithNibName:@"JAProductDetailsViewController" bundle:nil];
-//        
-//        if ([notification.userInfo objectForKey:@"product"]) {
-//            productDetailsViewController.product = [notification.userInfo objectForKey:@"product"];
-//        }
-//        
-//        [self pushViewController:productDetailsViewController animated:YES];
-//    }
-//}
-
-- (void)showRatingsScreen:(NSNotification*)notification
-{
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JARatingsViewController class]])
-    {
-        JARatingsViewController *ratingsViewController = [[JARatingsViewController alloc] initWithNibName:@"JARatingsViewController" bundle:nil];
-        
-        if ([notification.userInfo objectForKey:@"product"]) {
-            ratingsViewController.product = [notification.userInfo objectForKey:@"product"];
-        }
-        
-        if ([notification.userInfo objectForKey:@"productRatings"]) {
-            ratingsViewController.productRatings = [notification.userInfo objectForKey:@"productRatings"];
-        }
-        
-        BOOL animated = YES;
-        if([notification.userInfo objectForKey:@"animated"] && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber))
-        {
-            animated = [[notification.userInfo objectForKey:@"animated"] boolValue];
-        }
-        
-        [self pushViewController:ratingsViewController animated:animated];
     }
 }
 
@@ -1554,7 +1497,7 @@
     if(VALID_NOTEMPTY(targetString, NSString))
     {
         JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
-        catalog.catalogTargetString = targetString;
+        catalog.targetString = targetString;
         catalog.navBarLayout.title = title;
         catalog.navBarLayout.showBackButton = YES;
         
@@ -1575,7 +1518,7 @@
         
         JACatalogViewController *catalog = [[JACatalogViewController alloc] initWithNibName:@"JACatalogViewController" bundle:nil];
         
-        catalog.catalogTargetString = targetString;
+        catalog.targetString = targetString;
         catalog.navBarLayout.title = title;
         
         if ([notification.userInfo objectForKey:@"show_back_button_title"]) {
@@ -1633,7 +1576,7 @@
     } else if (VALID_NOTEMPTY(campaignTargetString, NSString)) {
         JACampaignsViewController* campaignsVC = [JACampaignsViewController new];
         
-        campaignsVC.campaignTargetString = campaignTargetString;
+        campaignsVC.targetString = campaignTargetString;
         campaignsVC.teaserTrackingInfo = cameFromTeasers;
         
         [self pushViewController:campaignsVC animated:YES];
@@ -1651,7 +1594,7 @@
     if (VALID_NOTEMPTY(targetString, NSString) || VALID_NOTEMPTY(productSku, NSString))
     {
         JAPDVViewController *pdv = [JAPDVViewController new];
-        pdv.productTargetString = targetString;
+        pdv.targetString = targetString;
         pdv.productSku = productSku;
         
         if ([notification.userInfo objectForKey:@"richRelevance"]) {
@@ -1826,7 +1769,7 @@
     [self.navigationItem setHidesBackButton:YES
                                    animated:NO];
     
-    self.navigationBarView = [[JACustomNavigationBarView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    self.navigationBarView = [[JACustomNavigationBarView alloc] initWithFrame:CGRectMake(0, 0, 320, kNavigationBarHeight)];
     [self.navigationBarView initialSetup];
 
     
@@ -1839,7 +1782,7 @@
     [self.navigationBar setShadowImage:[UIImage new]];
     
     [self.navigationBarView.cartButton addTarget:self
-                                          action:@selector(openCart)
+                                          action:@selector(openCart:)
                                 forControlEvents:UIControlEventTouchUpInside];
     [self.navigationBarView.leftButton addTarget:self
                                           action:@selector(openMenu)
@@ -1957,24 +1900,38 @@
     [self showSearchView];
 }
 
-- (void)openCart
+- (void)openCart:(NSNotification*) notification
 {
     if ([[self topViewController] isKindOfClass:[JALoadCountryViewController class]]) {
         //inore the notification
         return;
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
-                                                        object:nil];
-    
-    if (![[self topViewController] isKindOfClass:[JACartViewController class]])
-    {
-        JACartViewController *cartViewController = [[JACartViewController alloc] init];
-        [cartViewController setCart:self.cart];
+    typedef void (^GoToCartBlock)(void);
+    GoToCartBlock goToCartBlock = ^void{
         
-        [self popToRootViewControllerAnimated:NO];
-        [self.tabBarView selectButtonAtIndex:2];
-        [self pushViewController:cartViewController animated:NO];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kOpenCenterPanelNotification
+                                                            object:nil];
+        
+        if (![[self topViewController] isKindOfClass:[JACartViewController class]])
+        {
+            JACartViewController *cartViewController = [[JACartViewController alloc] init];
+            [cartViewController setCart:self.cart];
+            
+            [self popToRootViewControllerAnimated:NO];
+            [self.tabBarView selectButtonAtIndex:2];
+            [self pushViewController:cartViewController animated:NO];
+        }
+    };
+    
+    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.object, NSString)) {
+        [RICart addMultipleProducts:[notification.object componentsSeparatedByString:@"_"] withSuccessBlock:^(RICart *cart, NSArray *productsNotAdded) {
+            goToCartBlock();
+        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages, BOOL outOfStock) {
+            goToCartBlock();
+        }];
+    }else{
+        goToCartBlock();
     }
     
 }

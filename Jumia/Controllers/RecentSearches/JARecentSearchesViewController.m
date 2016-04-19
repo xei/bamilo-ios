@@ -55,11 +55,8 @@
         
         self.button = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        UIFont *font = [UIFont fontWithName:kFontRegularName
-                                       size:16.0];
-        
-        self.button.titleLabel.font = font;
-        [self.button setTitleColor:UIColorFromRGB(0x4e4e4e)
+        self.button.titleLabel.font = JADisplay3Font;
+        [self.button setTitleColor:JAButtonTextOrange
                           forState:UIControlStateNormal];
 
         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
@@ -267,7 +264,7 @@
     
     if (indexPath.row < self.recentSearches.count-1) {
         UIView* separator = [UIView new];
-        separator.backgroundColor = JALabelGrey;
+        separator.backgroundColor = JABlack300Color;
         separator.frame = CGRectMake(0.0f,
                                      clickableView.frame.size.height - 1,
                                      clickableView.frame.size.width,

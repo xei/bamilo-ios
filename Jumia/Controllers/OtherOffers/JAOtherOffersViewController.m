@@ -46,7 +46,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.view setBackgroundColor:[UIColor whiteColor]];
+    [self.view setBackgroundColor:JAWhiteColor];
     self.navBarLayout.showBackButton = YES;
     
     self.navBarLayout.title = STRING_OTHER_SELLERS;
@@ -64,7 +64,7 @@
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     
-    [self.collectionView registerNib:[UINib nibWithNibName:@"JAOfferCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"offerCell"];
+    [self.collectionView registerClass:[JAOfferCollectionViewCell class] forCellWithReuseIdentifier:@"offerCell"];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -95,12 +95,12 @@
                                       1)];
     
     CGFloat currentY = 10.0f;
-    CGFloat horizontalMargin = 16.0f;
+    CGFloat horizontalMargin = 10.0f;
     
     if (ISEMPTY(self.brandLabel)) {
         self.brandLabel = [UILabel new];
         self.brandLabel.textColor = JABlackColor;
-        self.brandLabel.font = JAList1Font;
+        self.brandLabel.font = JAListFont;
         [self.topView addSubview:self.brandLabel];
     }
     self.brandLabel.text = self.product.brand;
@@ -131,7 +131,7 @@
     
     if (ISEMPTY(self.separatorView)) {
         self.separatorView = [UIView new];
-        self.separatorView.backgroundColor = UIColorFromRGB(0xcccccc);
+        self.separatorView.backgroundColor = JATextFieldColor;
         [self.topView addSubview:self.separatorView];
     }
     self.separatorView.frame = CGRectMake(0.0f,
@@ -148,9 +148,9 @@
     
     //ADJUST COLLECTIONVIEW ACCORDINGLY
     
-    [self.collectionView setFrame:CGRectMake(6.0f,
+    [self.collectionView setFrame:CGRectMake(0.0f,
                                              CGRectGetMaxY(self.topView.frame),
-                                             self.view.frame.size.width - 12.0f,
+                                             self.view.frame.size.width,
                                              [self viewBounds].size.height  - CGRectGetMaxY(self.topView.frame))];
     
     if (RI_IS_RTL) {
@@ -255,7 +255,12 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(self.collectionView.width, 104.f);
+    CGFloat cellHeight = 114.0f;
+    RIProductOffer* offer = [self.productOffers objectAtIndex:indexPath.row];
+    if (offer.freeShippingPossible) {
+        cellHeight += 20.0f;
+    }
+    return CGSizeMake(self.collectionView.width, cellHeight);
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -265,12 +270,12 @@
     JAOfferCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:self.cellIdentifier forIndexPath:indexPath];
     
     [cell loadWithProductOffer:offer withProductSimple:[self.selectedProductSimple objectForKey:offer.productSku]];
-    cell.addToCartButton.tag = indexPath.row;
-    [cell.addToCartButton addTarget:self
+    cell.addToCartClicableView.tag = indexPath.row;
+    [cell.addToCartClicableView addTarget:self
                              action:@selector(addToCartButtonPressed:)
                    forControlEvents:UIControlEventTouchUpInside];
-    cell.sizeButton.tag = indexPath.row;
-    [cell.sizeButton addTarget:self
+    cell.sizeClickableView.tag = indexPath.row;
+    [cell.sizeClickableView addTarget:self
                              action:@selector(sizeButtonPressed:)
                    forControlEvents:UIControlEventTouchUpInside];
     

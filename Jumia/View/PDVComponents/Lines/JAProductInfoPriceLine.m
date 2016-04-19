@@ -56,10 +56,10 @@
             return JACaptionFont;
             
         case kPriceSizeMedium:
-            return JAList1Font;
+            return JAListFont;
             
         default:
-            return JAList1Font;
+            return JAListFont;
     }
 }
 
@@ -87,7 +87,7 @@
     if (!VALID_NOTEMPTY(_oldPriceLabel, UILabel)) {
         _oldPriceLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.label.frame) + 10.f, self.label.y, 60, 30)];
         [_oldPriceLabel setTextColor:JABlack800Color];
-        [_oldPriceLabel setFont:JAList2Font];
+        [_oldPriceLabel setFont:JADisplay3Font];
         [self addSubview:_oldPriceLabel];
     }
     return _oldPriceLabel;
@@ -103,12 +103,12 @@
     
     if (VALID_NOTEMPTY(self.oldPrice, NSString)) {
         rect = CGRectMake(CGRectGetMaxX(self.oldPriceLabel.frame)+10.f,
-                          self.oldPriceLabel.frame.origin.y,
-                          6.f, self.oldPriceLabel.frame.size.height);
+                          self.oldPriceLabel.frame.origin.y + 2.0f,
+                          8.f, 16.0f);
     } else {
         rect = CGRectMake(CGRectGetMaxX(self.label.frame)+10.f,
-                          self.label.frame.origin.y,
-                          6.f, self.label.frame.size.height);
+                          self.label.frame.origin.y + 2.0f,
+                          8.f, 16.0f);
         
     }
     [self.priceOffLabel setX:rect.origin.x];
@@ -116,12 +116,8 @@
     self.priceOffLabel.height = rect.size.height;
     [self.priceOffLabel setY:rect.origin.y];
     
-    UIColor *priceOffColor = JAOrange1Color;
-    if (self.fashion) {
-        priceOffColor = JABlack800Color;
-    }
-    [self.priceOffLabel setTextColor:priceOffColor];
-    [self.priceOffLabel.layer setBorderColor:priceOffColor.CGColor];
+    [self.priceOffLabel setTextColor:JAOrange1Color];
+    [self.priceOffLabel.layer setBorderColor:JAOrange1Color.CGColor];
 }
 
 - (void)setOldPrice:(NSString *)oldPrice
@@ -132,7 +128,7 @@
     [self.oldPriceLabel sizeToFit];
     CGFloat margin = 0.0f;
     if (VALID_NOTEMPTY(_price, NSString)) {
-        margin = 10.0f;
+        margin = 6.0f;
     }
     [self.oldPriceLabel setX:CGRectGetMaxX(self.priceLabel.frame) + margin];
     [self.oldPriceLabel setY:self.height/2 - self.oldPriceLabel.height/2];
@@ -150,7 +146,7 @@
 {
     if (!VALID_NOTEMPTY(_oldPriceLine, UIView)) {
         _oldPriceLine = [[UIView alloc] initWithFrame:CGRectMake(0, self.height/2, 0, 1)];
-        [_oldPriceLine setBackgroundColor:[UIColor lightGrayColor]];
+        [_oldPriceLine setBackgroundColor:JABlack800Color];
         [self addSubview:_oldPriceLine];
     }
     return _oldPriceLine;
@@ -162,6 +158,7 @@
     [self.priceLabel sizeToFit];
     [self.priceLabel setFrame:CGRectMake(self.lineContentXOffset, self.height/2 - self.priceLabel.height/2,
                                          self.priceLabel.width, self.priceLabel.height)];
+    [self setOldPrice:self.oldPrice];
 }
 
 -(UILabel *)priceLabel {

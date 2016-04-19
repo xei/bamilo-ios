@@ -56,10 +56,10 @@
     _filterSelected=filterSelected;
     if (filterSelected) {
         [self.filterButton setImage:[UIImage imageNamed:@"filterIcon_highlighted"] forState:UIControlStateNormal];
-        [self.filterButton setTitleColor:UIColorFromRGB(0xffa200) forState:UIControlStateNormal];
+        [self.filterButton setTitleColor:JAOrange1Color forState:UIControlStateNormal];
     } else {
         [self.filterButton setImage:[UIImage imageNamed:@"filterIcon_normal"] forState:UIControlStateNormal];
-        [self.filterButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
+        [self.filterButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
     }
 }
 
@@ -97,20 +97,20 @@
     [self.sortingButton setImage:[UIImage imageNamed:@"sortingIcon_normal"] forState:UIControlStateNormal];
     [self.sortingButton setImage:[UIImage imageNamed:@"sortingIcon_highlighted"] forState:UIControlStateSelected];
     [self.sortingButton setImage:[UIImage imageNamed:@"sortingIcon_highlighted"] forState:UIControlStateHighlighted];
-    [self.sortingButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    [self.sortingButton setTitleColor:UIColorFromRGB(0xffa200) forState:UIControlStateSelected];
-    [self.sortingButton setTitleColor:UIColorFromRGB(0xffa200) forState:UIControlStateHighlighted];
-    [self.sortingButton setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
+    [self.sortingButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
+    [self.sortingButton setTitleColor:JAOrange1Color forState:UIControlStateSelected];
+    [self.sortingButton setTitleColor:JAOrange1Color forState:UIControlStateHighlighted];
+    [self.sortingButton setFont:JABodyFont];
     [self.sortingButton addTarget:self action:@selector(sortingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.filterButton setImage:[UIImage imageNamed:@"filterIcon_normal"] forState:UIControlStateNormal];
     [self.filterButton setImage:[UIImage imageNamed:@"filterIcon_highlighted"] forState:UIControlStateSelected];
     [self.filterButton setImage:[UIImage imageNamed:@"filterIcon_highlighted"] forState:UIControlStateHighlighted];
     [self.filterButton setTitle:[NSString stringWithFormat:@" %@", STRING_FILTERS] forState:UIControlStateNormal];
-    [self.filterButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-    [self.filterButton setTitleColor:UIColorFromRGB(0xffa200) forState:UIControlStateSelected];
-    [self.filterButton setTitleColor:UIColorFromRGB(0xffa200) forState:UIControlStateHighlighted];
-    [self.filterButton setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
+    [self.filterButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
+    [self.filterButton setTitleColor:JAOrange1Color forState:UIControlStateSelected];
+    [self.filterButton setTitleColor:JAOrange1Color forState:UIControlStateHighlighted];
+    [self.filterButton setFont:JABodyFont];
     [self.filterButton addTarget:self action:@selector(filterButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.viewModeButton addTarget:self action:@selector(viewModeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];

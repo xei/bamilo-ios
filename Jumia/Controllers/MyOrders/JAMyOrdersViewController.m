@@ -104,7 +104,7 @@ UICollectionViewDelegateFlowLayout>
 -(UILabel *)emptyOrderHistoryLabel {
     if (!VALID_NOTEMPTY(_emptyOrderHistoryLabel, UILabel)) {
         _emptyOrderHistoryLabel = [UILabel new];
-        [_emptyOrderHistoryLabel setFont:JABody3Font];
+        [_emptyOrderHistoryLabel setFont:JABodyFont];
         [_emptyOrderHistoryLabel setTextColor:JABlack800Color];
         [_emptyOrderHistoryLabel setText:STRING_NO_ORDERS];
         [_emptyOrderHistoryLabel sizeToFit];
@@ -138,7 +138,7 @@ UICollectionViewDelegateFlowLayout>
                                                                                    self.viewBounds.size.width,
                                                                                    self.viewBounds.size.height - CGRectGetMaxY(self.ordersHistoryHeader.frame))
                                                    collectionViewLayout: ordersCollectionViewFlowLayout];
-        [_ordersCollectionView setBackgroundColor:UIColorFromRGB(0xffffff)];
+        [_ordersCollectionView setBackgroundColor:JAWhiteColor];
         
 
         [_ordersCollectionView setDataSource:self];
@@ -175,7 +175,7 @@ UICollectionViewDelegateFlowLayout>
 -(void)viewDidLoad {
     
     [super viewDidLoad];
-    _selectedCellIndex = 0;
+    _selectedCellIndex = -1;
     self.apiResponse = RIApiResponseSuccess;
     self.currentOrdersPage = 0;
     self.orders = [[NSMutableArray alloc] init];
@@ -360,6 +360,7 @@ UICollectionViewDelegateFlowLayout>
                 frame.size.width = self.viewBounds.size.width/2;
                 [self.orderDetailsView setupWithOrder:self.trackingOrder frame:frame];
                 [self.orderDetailsView setHidden:NO];
+                [self.orderDetailsScrollView setContentSize:self.orderDetailsView.frame.size];
             }
         }
     } else {
@@ -419,7 +420,7 @@ UICollectionViewDelegateFlowLayout>
             
             [myOrderCell.clickableView setTag:indexPath.row];
             [myOrderCell.clickableView addTarget:self action:@selector(selectedOrder:) forControlEvents:UIControlEventTouchUpInside];
-            if (_selectedCellIndex == indexPath.row && (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+            if ((_selectedCellIndex<0?0:_selectedCellIndex) == indexPath.row && (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
                 [myOrderCell.clickableView setSelected:YES];
             }else{
                 [myOrderCell.clickableView setSelected:NO];

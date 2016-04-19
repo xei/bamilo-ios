@@ -14,8 +14,8 @@
 -(UILabel *)colorTitleLabel {
     if(!VALID(_colorTitleLabel, UILabel)) {
         _colorTitleLabel = [[UILabel alloc] init];
-        _colorTitleLabel.font = [UIFont fontWithName:kFontRegularName size:16.0f];
-        _colorTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
+        _colorTitleLabel.font = JADisplay3Font;
+        _colorTitleLabel.textColor = JAButtonTextOrange;
         [self addSubview:_colorTitleLabel];
     }
     return _colorTitleLabel;
@@ -31,9 +31,14 @@
 
 -(UIImageView *)customAccessoryView {
     if (!VALID(_customAccessoryView, UIImageView)) {
-        UIImage* customAccessoryIcon = [UIImage imageNamed:@"selectionCheckmark"];
+        UIImage* customAccessoryIcon = [UIImage imageNamed:@"noSelectionCheckMark"];
+        
         _customAccessoryView = [[UIImageView alloc] initWithImage:customAccessoryIcon];
-        _customAccessoryView.hidden = YES;
+        _customAccessoryView.highlightedImage = [UIImage imageNamed:@"selectionCheckmark"];
+        _customAccessoryView.frame = CGRectMake(self.clickableView.frame.size.width - customAccessoryIcon.size.width,
+                                                (self.clickableView.frame.size.height - customAccessoryIcon.size.height) / 2,
+                                                customAccessoryIcon.size.width,
+                                                customAccessoryIcon.size.height);
         [self addSubview:_customAccessoryView];
     }
     return _customAccessoryView;
@@ -87,9 +92,6 @@
                                             self.frame.size.width - 50.0f,
                                             self.colorTitleLabel.frame.size.height);
 
-    
-    
-    UIImage* customAccessoryIcon = [UIImage imageNamed:@"selectionCheckmark"];
     [self.customAccessoryView setX:(self.frame.size.width - 12.0f - self.customAccessoryView.width)];
     
     self.separator.frame = CGRectMake(0.0f,
@@ -105,7 +107,12 @@
 }
 
 - (void)setFilterOption:(RIFilterOption*)filterOption {
-    self.colorTitleLabel.text = [NSString stringWithFormat:@"%@ (%ld)",filterOption.name, [filterOption.totalProducts longValue]];
+    
+    if (RI_IS_RTL) {
+        self.colorTitleLabel.text = [NSString stringWithFormat:@"(%ld) %@", [filterOption.totalProducts longValue],filterOption.name];
+    }else{
+        self.colorTitleLabel.text = [NSString stringWithFormat:@"%@ (%ld)",filterOption.name, [filterOption.totalProducts longValue]];
+    }
     
     if (filterOption.colorHexValue) {
         [self.colorView setColorWithHexString:filterOption.colorHexValue];

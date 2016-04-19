@@ -203,6 +203,7 @@
 #define STRING_NOTIFICATIONS RILocalizedString(@"notifications", nil)
 #define STRING_PUSH_NOTIFICATIONS RILocalizedString(@"push_notifications", nil)
 #define STRING_UPDATE_NOW RILocalizedString(@"update_now", nil)
+#define STRING_UP_TO_DATE RILocalizedString(@"up_to_date", nil)
 #define STRING_APP_VERSION RILocalizedString(@"app_version", nil)
 #define STRING_HELP_CENTER RILocalizedString(@"help_center", nil)
 #define STRING_TERMS_AND_CONDITIONS RILocalizedString(@"terms_and_conditions", nil)
@@ -235,6 +236,7 @@
 #define STRING_ERROR_ADD_TO_CART_FAILED_FOR_1_PRODUCT RILocalizedString(@"error_add_to_cart_failed_for_1_product", nil)
 
 #define STRING_SAVE_LABEL RILocalizedString(@"save_label", nil)
+#define STRING_SAVE_ITEM RILocalizedString(@"save_item", nil)
 #define STRING_SPECIFICATIONS RILocalizedString(@"product_specifications", nil)
 
 #define STRING_CAMPAIGN_REMAINING_STOCK RILocalizedString(@"string_campaign_ramaining_stock_without_value", nil)
@@ -315,7 +317,7 @@
 #define STRING_INSTALL_APP RILocalizedString(@"install_app_ios", nil)
 
 #define STRING_DELIVERY_TIME RILocalizedString(@"delivery_time", nil)
-#define STRING_PRODCUT_OUT_OF_STOCK RILocalizedString(@"product_outof_stock", nil)
+#define STRING_PRODUCT_OUT_OF_STOCK RILocalizedString(@"product_outof_stock", nil)
 #define STRING_PRODCUTS_OUT_OF_STOCK RILocalizedString(@"products_outof_stock", nil)
 
 
@@ -345,6 +347,7 @@
 #define STRING_BUNDLE_TOTAL_PRICE RILocalizedString(@"bundle_total_price", nil)
 #define STRING_BUY_NOW RILocalizedString(@"buy_now", nil)
 #define STRING_BUY RILocalizedString(@"buy", nil)
+#define STRING_BUY_COMBO RILocalizedString(@"buy_combo", nil)
 
 #define STRING_OTHER_SELLERS RILocalizedString(@"other_sellers", nil)
 #define STRING_SAME_PRODUCT_FROM_OTHER_SELLERS RILocalizedString(@"same_product_from_other_sellers", nil)
@@ -414,4 +417,7 @@
 #define STRING_VISIT_THE_OFFICIAL_BRAND_STORE RILocalizedString(@"visit_the_official_brand_store", nil)
 #define STRING_NEWSLETTER RILocalizedString(@"newsletter_label", nil)
 #define STRING_NEWSLETTER_PREFERENCES RILocalizedString(@"newsletter_preferences", nil)
+
+#define STRING_FREE_SHIPPING_POSSIBLE RILocalizedString(@"free_shipping_possible", nil)
+
 #endif

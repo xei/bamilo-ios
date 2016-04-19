@@ -58,11 +58,11 @@
     self.brandLabel.font = [UIFont fontWithName:kFontRegularName size:self.brandLabel.font.pointSize];
     self.brandLabel.text = product.brand;
     [self.brandLabel setTextAlignment:NSTextAlignmentLeft];
-    self.brandLabel.textColor = UIColorFromRGB(0x666666);
+    self.brandLabel.textColor = JAGreyColor;
     
     self.nameLabel.font = [UIFont fontWithName:kFontLightName size:self.nameLabel.font.pointSize];
     self.nameLabel.text = product.name;
-    self.nameLabel.textColor = UIColorFromRGB(0x666666);
+    self.nameLabel.textColor = JAGreyColor;
     [self.nameLabel setTextAlignment:NSTextAlignmentLeft];
     
     CGFloat priceXOffset = JACatalogCellPriceLabelOffsetX;
@@ -102,8 +102,8 @@
     }
     self.sizeButton.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.sizeButton.titleLabel.font.pointSize];
     [self.sizeButton setTitle:STRING_SIZE forState:UIControlStateNormal];
-    [self.sizeButton setTitleColor:UIColorFromRGB(0x55a1ff) forState:UIControlStateNormal];
-    [self.sizeButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
+    [self.sizeButton setTitleColor:JABlue1Color forState:UIControlStateNormal];
+    [self.sizeButton setTitleColor:JAOrange1Color forState:UIControlStateHighlighted];
     [self.sizeButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     [self.sizeButton setFrame:CGRectMake(80.0f,
                                          self.sizeButton.frame.origin.y,
@@ -126,7 +126,7 @@
     [self.nameLabel setNumberOfLines:1];
     self.nameLabel.font = [UIFont fontWithName:kFontLightName size:self.nameLabel.font.pointSize];
     self.nameLabel.text = cartItem.name;
-    self.nameLabel.textColor = UIColorFromRGB(0x666666);
+    self.nameLabel.textColor = JAGreyColor;
     
     
     [self.priceLine removeFromSuperview];

@@ -346,6 +346,8 @@
 
 "update_now" = "Mettre à jour";
 
+"up_to_date" = "À jour";
+
 "app_version" = "Version application";
 
 "help_center" = "Centre d'Aide";
@@ -399,6 +401,8 @@
 "error_add_to_cart_failed_for_1_product" = "Erreur dans l'ajout au panier pour un produit";
 
 "save_label" = "Enregistrer";
+
+"save_item" = "Enregistrer l’élément";
 
 "string_campaign_ramaining_stock" = "Stock Restant: %d%%";
 
@@ -570,6 +574,8 @@
 
 "buy" = "Achète";
 
+"buy_combo" = "Produits fréquemment achetés ensemble";
+
 "other_sellers" = "Autres Vendeurs";
 
 "same_product_from_other_sellers" = "Même produit provenant d'un autre vendeur";
@@ -652,7 +658,7 @@
 
 "average_rating" = "Moyenne des avis";
 
-"be_the_first_to_rate" = "Soyez le premier à noter ce produit";
+"be_the_first_to_rate" = "Soyez le premier à noter";
 
 "by_someone" = "Posté par %@";
 
@@ -699,3 +705,6 @@
 "newsletter_label" = "Newsletter";
 
 "newsletter_preferences" = "Abonnement à la newsletter";
+
+"free_shipping_possible" = "Livraison Gratuite Possible";
+

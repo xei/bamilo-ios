@@ -6,11 +6,11 @@
 //  Copyright © 2015 Rocket Internet. All rights reserved.
 //
 
-#import "JAProductInfoSubLine.h"
+#import "JAProductInfoSingleLine.h"
 
 #define kProductInfoRightSubtitleLineHeight 64
 
-@interface JAProductInfoRightSubtitleLine : JAProductInfoSubLine
+@interface JAProductInfoRightSubtitleLine : JAProductInfoSingleLine
 
 @property (nonatomic, strong) NSString *rightTitle;
 @property (nonatomic, strong) NSString *rightSubTitle;

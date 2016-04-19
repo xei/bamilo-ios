@@ -65,18 +65,14 @@
             
             JAPDVBundleSingleItem* real = (JAPDVBundleSingleItem* )obj;
             
-//            real.productTypeLabel.font = JACaptionFont;
+            real.productTypeLabel.font = JABodyFont;
             [real.productTypeLabel setTextColor:JABlack800Color];
             
-//            real.productNameLabel.font = JABody3Font;
+            real.productNameLabel.font = JATitleFont;
             [real.productNameLabel setTextColor:JABlackColor];
             
-//            real.productPriceLabel.font = JACaptionFont;
-            [real.productPriceLabel setTextColor:JABlack800Color];
-            
-            
-//            real.totalPriceLabel.font = JACaptionFont;
-//            [real.totalPriceLabel setTextColor:JAOrange1Color];
+            real.productPriceLabel.font = JABodyFont;
+            [real.productPriceLabel setTextColor:JABlackColor];
             
             return real;
         }

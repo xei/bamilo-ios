@@ -32,9 +32,9 @@
                successBlock:(void (^)(id object))successBlock
             andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
 
-+ (NSString *)checkEmailWithParameters:(NSDictionary *)parameters
-                          successBlock:(void (^)(BOOL knownEmail, RICustomer *customerAlreadyLoggedIn))successBlock
-                       andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
++ (NSString *)checkEmail:(NSString *)email
+            successBlock:(void (^)(BOOL knownEmail, RICustomer *customerAlreadyLoggedIn))successBlock
+         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
 
 + (NSString*)autoLogin:(void (^)(BOOL success, NSDictionary *entities, NSString *loginMethod))returnBlock;
 
@@ -142,6 +142,8 @@
  * @return success case user is logged as guest
  */
 + (BOOL)checkIfUserIsLoggedAsGuest;
++ (void)setCustomerAsGuest;
++ (void)resetCustomerAsGuest;
 
 /**
  * Method to check if the user has any addresses stored

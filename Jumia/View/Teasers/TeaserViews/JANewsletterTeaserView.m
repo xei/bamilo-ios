@@ -48,7 +48,7 @@
         _headerTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, kTopMargin, _formWidth - 2*kLateralMargin, 20)];
         [_headerTitleLabel setNumberOfLines:0];
         [_headerTitleLabel setTextAlignment:NSTextAlignmentLeft];
-        [_headerTitleLabel setFont:JAList2Font];
+        [_headerTitleLabel setFont:JAListFont];
         [_headerTitleLabel setText:STRING_SIGNUP_NEWSLETTER];
         [_headerTitleLabel setHeight:[_headerTitleLabel sizeThatFits:CGSizeMake(_headerTitleLabel.width, CGFLOAT_MAX)].height];
     }
@@ -61,7 +61,7 @@
         _headerBodyLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.headerTitleLabel.frame) + kTopMargin, _formWidth - 2*kLateralMargin, 30)];
         [_headerBodyLabel setNumberOfLines:0];
         [_headerBodyLabel setTextAlignment:NSTextAlignmentLeft];
-        [_headerBodyLabel setFont:JABody3Font];
+        [_headerBodyLabel setFont:JABodyFont];
         [_headerBodyLabel setTextColor:JABlack800Color];
         [_headerBodyLabel setText:STRING_SIGNUP_NEWSLETTER_BODY];
         [_headerBodyLabel setHeight:[_headerBodyLabel sizeThatFits:CGSizeMake(_headerBodyLabel.width, CGFLOAT_MAX)].height];
@@ -73,9 +73,9 @@
 {
     if (!VALID(_submitButton, UIButton)) {
         _submitButton = [UIButton buttonWithType:UIButtonTypeSystem];
-        [_submitButton.titleLabel setFont:JAButtonFont];
+        [_submitButton.titleLabel setFont:JABUTTONFont];
         [_submitButton setTitle:[STRING_SUBMIT uppercaseString] forState:UIControlStateNormal];
-        [_submitButton setTintColor:JAOrange1Color];
+        [_submitButton setTintColor:JABlue1Color];
         [_submitButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
         [_submitButton sizeToFit];
         [_submitButton setFrame:CGRectMake(kLateralMargin, kTopMargin, _submitButton.width, 20)];

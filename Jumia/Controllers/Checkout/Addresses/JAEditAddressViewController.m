@@ -399,18 +399,18 @@ JAPickerDelegate>
 {
     self.contentView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, 6.0f, self.contentScrollView.frame.size.width - 12.0f, 27.0f)];
     [self.contentView setHidden:YES];
-    [self.contentView setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.contentView setBackgroundColor:JAWhiteColor];
     self.contentView.layer.cornerRadius = 5.0f;
     
     self.headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 0.0f, self.contentView.frame.size.width, 26.0f)];
     [self.headerLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
-    [self.headerLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
+    [self.headerLabel setTextColor:JAButtonTextOrange];
     [self.headerLabel setText:STRING_EDIT_ADDRESS];
     [self.headerLabel setBackgroundColor:[UIColor clearColor]];
     [self.contentView addSubview:self.headerLabel];
     
     self.headerSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(self.headerLabel.frame), self.contentView.frame.size.width, 1.0f)];
-    [self.headerSeparator setBackgroundColor:UIColorFromRGB(0xfaa41a)];
+    [self.headerSeparator setBackgroundColor:JAOrange1Color];
     [self.contentView addSubview:self.headerSeparator];
     
     [self.contentScrollView addSubview:self.contentView];

@@ -119,7 +119,7 @@
 
 -(void)setPickupStationRegion:(NSString*)pickupStationRegion
 {
-    [self.label setTextColor:UIColorFromRGB(0x666666)];
+    [self.label setTextColor:JAGreyColor];
     [self.label setText:pickupStationRegion];
 }
 

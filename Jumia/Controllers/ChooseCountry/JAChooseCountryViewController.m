@@ -2,18 +2,13 @@
 //  JAChooseCountryViewController.m
 //  Jumia
 //
-//  Created by Miguel Chaves on 30/Jul/14.
-//  Copyright (c) 2014 Rocket Internet. All rights reserved.
+//  Created by Jose Mota on 23/03/16.
+//  Copyright © 2016 Rocket Internet. All rights reserved.
 //
 
-#import <QuartzCore/QuartzCore.h>
 #import "JAChooseCountryViewController.h"
-#import "UIImageView+WebCache.h"
-#import "RICountry.h"
-#import "JACountryCell.h"
-#import "RIApi.h"
 #import "JAPicker.h"
-#import "RILanguage.h"
+#import "JAChooseCountryTableViewCell.h"
 
 @interface JAChooseCountryViewController ()
 <
@@ -24,7 +19,7 @@ JAPickerDelegate
 
 @property (strong, nonatomic) NSArray *countriesArray;
 @property (strong, nonatomic) NSString *requestId;
-@property (weak, nonatomic) IBOutlet UITableView *tableViewContries;
+@property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) NSIndexPath *selectedIndex;
 @property (assign, nonatomic) RIApiResponse apiResponse;
 
@@ -35,7 +30,20 @@ JAPickerDelegate
 
 @implementation JAChooseCountryViewController
 
+
 #pragma mark - View Lifecycle
+
+- (UITableView *)tableView
+{
+    if (!VALID(_tableView, UITableView)) {
+        _tableView = [[UITableView alloc] initWithFrame:self.viewBounds];
+        [_tableView setDataSource:self];
+        [_tableView setDelegate:self];
+        [_tableView registerClass:[JAChooseCountryTableViewCell class] forCellReuseIdentifier:@"countryCell"];
+        [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    }
+    return _tableView;
+}
 
 - (void)viewDidLoad
 {
@@ -46,17 +54,12 @@ JAPickerDelegate
     self.navBarLayout.title = STRING_CHOOSE_COUNTRY;
     self.navBarLayout.doneButtonTitle = STRING_APPLY;
     
+    [self.view addSubview:self.tableView];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applyButtonPressed)
                                                  name:kDidPressDoneNotification
                                                object:nil];
-    
-    self.tableViewContries.layer.cornerRadius = 5.0f;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
 }
 
 - (void)dealloc
@@ -67,13 +70,13 @@ JAPickerDelegate
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
+    
     if(!VALID_NOTEMPTY([RIApi getCountryUrlInUse], NSString))
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOffMenuSwipePanelNotification
                                                             object:nil];
     }
-
+    
     [self loadData];
 }
 
@@ -86,7 +89,26 @@ JAPickerDelegate
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
     [self hideLoading];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    if(VALID(self.languagePicker, JAPicker))
+    {
+        [self.languagePicker removeFromSuperview];
+    }
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+- (void)viewWillLayoutSubviews
+{
+    if (!CGRectEqualToRect(self.tableView.frame, self.viewBounds)) {
+        [self.tableView setFrame:self.viewBounds];
+        [self.tableView reloadData];
+    }
+    [super viewWillLayoutSubviews];
 }
 
 #pragma mark - Load data
@@ -136,13 +158,7 @@ JAPickerDelegate
             self.selectedIndex = tempIndex;
         }
         
-        [self.tableViewContries reloadData];
-        
-        CGFloat finalHeight = MIN(self.tableViewContries.frame.size.height, self.tableViewContries.contentSize.height - 20.0f);
-        [self.tableViewContries setFrame:CGRectMake(self.tableViewContries.frame.origin.x,
-                                                    self.tableViewContries.frame.origin.y,
-                                                    self.tableViewContries.frame.size.width,
-                                                    finalHeight)];
+        [self.tableView reloadData];
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
         self.apiResponse = apiResponse;
@@ -162,34 +178,6 @@ JAPickerDelegate
     }];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    if(VALID(self.languagePicker, JAPicker))
-    {
-        [self.languagePicker removeFromSuperview];
-    }
-    
-    [self showLoading];
-    
-    self.tableViewContries.hidden = YES;
-    
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    
-    [self hideLoading];
-
-    CGFloat finalHeight = MIN(self.tableViewContries.frame.size.height, self.tableViewContries.contentSize.height - 20.0f);
-    [self.tableViewContries setFrame:CGRectMake(self.tableViewContries.frame.origin.x,
-                                                self.tableViewContries.frame.origin.y,
-                                                self.tableViewContries.frame.size.width,
-                                                finalHeight)];
-    self.tableViewContries.hidden = NO;
-}
-
 #pragma mark - Selected apply
 
 - (void)applyButtonPressed
@@ -204,16 +192,12 @@ JAPickerDelegate
     }
 }
 
+
 #pragma mark - Tableview delegates
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 44.0f;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    return [[UIView alloc] initWithFrame:CGRectZero];
+    return kCountryCellHeight;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -223,24 +207,12 @@ JAPickerDelegate
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    JACountryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"countryCell"];
-    
     RICountry *country = [self.countriesArray objectAtIndex:indexPath.row];
     
-    cell.countryName.text = country.name;
+    JAChooseCountryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"countryCell"];
     
-    [cell.countryImage setImageWithURL:[NSURL URLWithString:country.flag]];
-    
-    cell.countryImage.layer.cornerRadius = cell.countryImage.frame.size.height /2;
-    cell.countryImage.layer.masksToBounds = YES;
-    cell.countryImage.layer.borderWidth = 0;
-    
-    
-    if (VALID_NOTEMPTY(self.selectedIndex, NSIndexPath) && self.selectedIndex.row == indexPath.row) {
-        cell.checkImage.hidden = NO;
-    } else {
-        cell.checkImage.hidden = YES;
-    }
+    [cell setCountry:country];
+    [cell setSelectedCountry:VALID_NOTEMPTY(self.selectedIndex, NSIndexPath) && self.selectedIndex.row == indexPath.row];
     
     return cell;
 }
@@ -258,28 +230,9 @@ JAPickerDelegate
 
 - (void)selectCellAtIndexPath:(NSIndexPath*)indexPath
 {
-    if (self.selectedIndex)
-    {
-        JACountryCell *previousCell = (JACountryCell *)[self.tableViewContries cellForRowAtIndexPath:self.selectedIndex];
-        previousCell.checkImage.hidden = YES;
-        
-        JACountryCell *cell = (JACountryCell *)[self.tableViewContries cellForRowAtIndexPath:indexPath];
-        cell.checkImage.hidden = NO;
-        
-        self.selectedIndex = indexPath;
-    }
-    else
-    {
-        JACountryCell *cell = (JACountryCell *)[self.tableViewContries cellForRowAtIndexPath:indexPath];
-        cell.checkImage.hidden = NO;
-        
-        self.selectedIndex = indexPath;
-    }
-    
+    self.selectedIndex = indexPath;
+    [self.tableView reloadData];
     [[NSNotificationCenter defaultCenter] postNotificationName:kDoneShouldChangeStateNotification object:nil userInfo:@{@"enabled":[NSNumber numberWithBool:YES]}];
-    
-    [self.tableViewContries deselectRowAtIndexPath:indexPath
-                                          animated:YES];
 }
 
 
@@ -348,8 +301,6 @@ JAPickerDelegate
     
     [self removePickerView];
 }
-
-
 
 
 @end

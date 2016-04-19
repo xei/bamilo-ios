@@ -42,7 +42,7 @@
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"newsletter_subscribed"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     self.navBarLayout.showCartButton = NO;
-    //has to be done before calling super
+    self.navBarLayout.showSeparatorView = NO;
     self.searchBarIsVisible = YES;
     self.tabBarIsVisible = YES;
     

@@ -96,7 +96,7 @@
 
     self.A4SViewControllerAlias = @"SUBCATEGORY";
 
-    self.view.backgroundColor = JANavBarBackgroundGrey;
+    self.view.backgroundColor = JABlack300Color;
     
     // notify the InAppNotification SDK that this the active view controller
     [[NSNotificationCenter defaultCenter] postNotificationName:A4S_INAPP_NOTIF_VIEW_DID_APPEAR object:self];
@@ -107,6 +107,7 @@
     self.tableView.dataSource = self;
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.view addSubview:self.tableView];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCategories) name:kSideMenuShouldReload object:nil];
     
@@ -163,24 +164,17 @@
     [super viewWillAppear:animated];
     
     //manually add the status bar height into the calculations
-    CGFloat statusBarHeight = 0.0f;
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0")) {
-        statusBarHeight = 20.0f;
-    }
+    CGFloat statusBarHeight = 20.0f;
     [self.tableView setFrame:CGRectMake(self.view.bounds.origin.x,
                                         self.view.bounds.origin.y + statusBarHeight,
                                         self.view.bounds.size.width,
                                         self.view.bounds.size.height - statusBarHeight)];
-    
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     //manually add the status bar height into the calculations
-    CGFloat statusBarHeight = 0.0f;
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0")) {
-        statusBarHeight = 20.0f;
-    }
+    CGFloat statusBarHeight = 20.0f;
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     [self.tableView setFrame:CGRectMake(self.view.bounds.origin.x,
                                         self.view.bounds.origin.y + statusBarHeight,

@@ -20,7 +20,7 @@
 
 -(void)loadWithText:(NSString*)text isLastRow:(BOOL)isLastRow
 {
-    self.backgroundColor = UIColorFromRGB(0xffffff);
+    self.backgroundColor = JAWhiteColor;
     
     self.containerView.translatesAutoresizingMaskIntoConstraints = YES;
     self.containerView.frame = self.bounds;

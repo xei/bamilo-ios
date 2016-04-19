@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JACustomNavigationBarView.h"
 #import "JATabBarView.h"
+#import "JAScreenTarget.h"
 
 @interface JACenterNavigationController : UINavigationController
 
@@ -19,7 +20,8 @@
 
 + (instancetype)sharedInstance;
 
-- (void)openTarget:(NSString *)targetString;
+- (void)openTargetString:(NSString *)targetString;
+- (BOOL)openScreenTarget:(JAScreenTarget *)target;
 - (void)showSearchView;
 
 @end

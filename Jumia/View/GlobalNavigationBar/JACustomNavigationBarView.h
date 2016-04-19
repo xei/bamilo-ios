@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define kNavigationBarHeight 44
+
 @interface JACustomNavigationBarView : UIView
 
 @property (nonatomic) UIImageView *logoImageView;
@@ -21,6 +23,7 @@
 @property (nonatomic) UIButton *editButton;
 @property (nonatomic) UIButton *doneButton;
 @property (nonatomic) UIButton *searchButton;
+@property (nonatomic) UIView *separatorView;
 
 - (void)initialSetup;
 - (void)setupWithNavigationBarLayout:(JANavigationBarLayout*)layout;

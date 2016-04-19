@@ -14,7 +14,7 @@
 #import "RICartItem.h"
 #import <FBSDKCoreKit/FBSDKAppEvents.h>
 #import "RIProduct.h"
-#import "JABottomBar.h"
+#import "JAButton.h"
 #import "JAProductInfoHeaderLine.h"
 #import "JAPDVSingleRelatedItem.h"
 
@@ -27,10 +27,8 @@
 @property (nonatomic, strong) UIImageView *topImageView;
 @property (nonatomic, strong) UILabel *thankYouLabel;
 @property (nonatomic, strong) UILabel *successMessageLabel;
-@property (nonatomic, strong) UIButton *orderDetailsButton;
-@property (nonatomic, strong) UIButton *continueShoppingButton;
-@property (nonatomic, strong) JABottomBar *orderDetailsButtonBar;
-@property (nonatomic, strong) JABottomBar *continueShoppingButtonBar;
+@property (nonatomic, strong) JAButton *orderDetailsButton;
+@property (nonatomic, strong) JAButton *continueShoppingButton;
 
 @property (nonatomic, strong) UIView *rrView;
 @property (nonatomic, strong) JAProductInfoHeaderLine *rrHeaderLine;
@@ -68,7 +66,7 @@
         _thankYouLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.topImageView.frame) + 16.f, viewWidth-2*kLateralMargin, 20)];
         [_thankYouLabel setText:STRING_THANK_YOU_ORDER_TITLE];
         [_thankYouLabel setTextAlignment:NSTextAlignmentCenter];
-        [_thankYouLabel setFont:JADisplay1NewFont];
+        [_thankYouLabel setFont:JADisplay1Font];
         [_thankYouLabel setTextColor:JAGreen1Color];
         [_thankYouLabel setHeight:[_thankYouLabel sizeThatFits:CGSizeMake(viewWidth, CGFLOAT_MAX)].height];
     }
@@ -90,28 +88,24 @@
     return _successMessageLabel;
 }
 
-- (JABottomBar *)orderDetailsButtonBar
+- (JAButton *)orderDetailsButton
 {
-    if (!VALID(_orderDetailsButtonBar, JABottomBar)) {
+    if (!VALID(_orderDetailsButton, JAButton)) {
         CGFloat viewWidth = self.topScrollView.width;
-        _orderDetailsButtonBar = [[JABottomBar alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.successMessageLabel.frame)+16.f, viewWidth-2*kLateralMargin, kBottomDefaultHeight)];
-        self.orderDetailsButton = [_orderDetailsButtonBar addButton:STRING_ORDER_DETAILS target:self action:@selector(goToTrackOrders)];
-        [self.orderDetailsButton setBackgroundColor:[UIColor whiteColor]];
-        [self.orderDetailsButton.layer setBorderColor:JABlack300Color.CGColor];
-        [self.orderDetailsButton.layer setBorderWidth:1];
-        [self.orderDetailsButton setTintColor:JABlack800Color];
+        _orderDetailsButton = [[JAButton alloc] initAlternativeButtonWithTitle:STRING_ORDER_DETAILS target:self action:@selector(goToTrackOrders)];
+        [_orderDetailsButton setFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.successMessageLabel.frame)+16.f, viewWidth-2*kLateralMargin, kBottomDefaultHeight)];
     }
-    return _orderDetailsButtonBar;
+    return _orderDetailsButton;
 }
 
-- (JABottomBar *)continueShoppingButtonBar
+- (JAButton *)continueShoppingButton
 {
-    if (!VALID(_continueShoppingButtonBar, JABottomBar)) {
+    if (!VALID(_continueShoppingButton, JAButton)) {
         CGFloat viewWidth = self.topScrollView.width;
-        _continueShoppingButtonBar = [[JABottomBar alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.orderDetailsButtonBar.frame)+16.f, viewWidth-2*kLateralMargin, kBottomDefaultHeight)];
-        self.continueShoppingButton = [_continueShoppingButtonBar addButton:STRING_CONTINUE_SHOPPING target:self action:@selector(goToHomeScreen)];
+        _continueShoppingButton = [[JAButton alloc] initButtonWithTitle:STRING_CONTINUE_SHOPPING target:self action:@selector(goToHomeScreen)];
+        [_continueShoppingButton setFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.orderDetailsButton.frame)+16.f, viewWidth-2*kLateralMargin, kBottomDefaultHeight)];
     }
-    return _continueShoppingButtonBar;
+    return _continueShoppingButton;
 }
 
 - (UIView *)rrView
@@ -126,9 +120,8 @@
 {
     if (!VALID(_rrHeaderLine, JAProductInfoHeaderLine)) {
         _rrHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, 0, self.rrView.width, kProductInfoHeaderLineHeight)];
-        [_rrHeaderLine setTopSeparatorVisibility:YES];
-        [_rrHeaderLine setBottomSeparatorVisibility:YES];
-        [_rrHeaderLine setBackgroundColor:[UIColor whiteColor]];
+        [_rrHeaderLine setTopSeparatorVisibility:NO];
+        [_rrHeaderLine setBottomSeparatorVisibility:NO];
     }
     return _rrHeaderLine;
 }
@@ -158,8 +151,8 @@
     [self.topScrollView addSubview:self.topImageView];
     [self.topScrollView addSubview:self.thankYouLabel];
     [self.topScrollView addSubview:self.successMessageLabel];
-    [self.topScrollView addSubview:self.orderDetailsButtonBar];
-    [self.topScrollView addSubview:self.continueShoppingButtonBar];
+    [self.topScrollView addSubview:self.orderDetailsButton];
+    [self.topScrollView addSubview:self.continueShoppingButton];
     [self.rrView addSubview:self.rrHeaderLine];
     [self.rrView addSubview:self.rrScrollView];
     
@@ -167,8 +160,8 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:nil];
     [RICart resetCartWithSuccessBlock:^{} andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {}];
     
-    if (VALID_NOTEMPTY(self.rrTargetString, NSString)) {
-        [RIProduct getRichRelevanceRecommendationFromTarget:self.rrTargetString successBlock:^(NSSet *recommendationProducts, NSString *title) {
+    if (VALID_NOTEMPTY(self.targetString, NSString)) {
+        [RIProduct getRichRelevanceRecommendationFromTarget:self.targetString successBlock:^(NSSet *recommendationProducts, NSString *title) {
             [self.rrHeaderLine setTitle:[title uppercaseString]];
             [self setRrProducts:recommendationProducts];
         } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
@@ -488,12 +481,13 @@
     
     if (VALID_NOTEMPTY(self.rrProducts, NSSet) && 0 < self.rrProducts.count)
     {
-        CGFloat relatedItemX = 6.f;
-        CGFloat relatedItemY = 10.f;
+        CGFloat margin = 1.0f; //value by design
+        CGFloat relatedItemX = margin;
+        CGFloat relatedItemY = 0.f;
         
         NSArray* relatedProducts = [self.rrProducts allObjects];
         
-        CGSize itemSize = CGSizeMake(128, 230);
+        CGSize itemSize = CGSizeMake(134, 200);
         
         for (int i = 0; i < relatedProducts.count; i++) {
             RIProduct* product = [relatedProducts objectAtIndex:i];
@@ -512,9 +506,9 @@
             singleItem.product = product;
             
             [self.rrScrollView addSubview:singleItem];
-            relatedItemX += singleItem.frame.size.width+6.f;
+            relatedItemX += singleItem.frame.size.width+margin;
         }
-        [self.rrScrollView setHeight:itemSize.height+20];
+        [self.rrScrollView setHeight:itemSize.height+10];
         [self.rrView setHeight:CGRectGetMaxY(self.rrScrollView.frame)];
         
         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
@@ -528,7 +522,7 @@
             if (!VALID(self.rrView.superview, UIView)) {
                 [self.topScrollView addSubview:self.rrView];
             }
-            [self.rrView setY:CGRectGetMaxY(self.continueShoppingButtonBar.frame)+16.f];
+            [self.rrView setY:CGRectGetMaxY(self.continueShoppingButton.frame)+16.f];
             [self.rrView setWidth:self.rrView.superview.width];
             [self.topScrollView setContentSize:CGSizeMake(self.topScrollView.width, CGRectGetMaxY(self.rrView.frame))];
         }

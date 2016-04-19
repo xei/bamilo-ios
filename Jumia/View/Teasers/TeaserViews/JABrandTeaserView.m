@@ -35,9 +35,9 @@
     
     CGFloat groupingTitleLabelMargin = 16.0f;
     UILabel* groupingTitleLabel = [UILabel new];
-    groupingTitleLabel.font = [UIFont fontWithName:kFontMediumName size:14.0f];
+    groupingTitleLabel.font = JAHEADLINEFont;
     groupingTitleLabel.textColor = [UIColor blackColor];
-    groupingTitleLabel.text = STRING_SHOPS_OF_THE_WEEK;
+    groupingTitleLabel.text = [STRING_SHOPS_OF_THE_WEEK uppercaseString];
     groupingTitleLabel.textAlignment = NSTextAlignmentLeft;
     [groupingTitleLabel sizeToFit];
     [groupingTitleLabel setFrame:CGRectMake(groupingTitleLabelMargin,

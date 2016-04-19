@@ -38,7 +38,7 @@
 {
     if (!VALID(_titleLabel, UILabel)) {
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 0, self.width-90, self.height)];
-        _titleLabel.font = JABody2Font;
+        _titleLabel.font = JABodyFont;
         _titleLabel.textColor = [UIColor whiteColor];
         _titleLabel.numberOfLines = 0;
         [_titleLabel setTextAlignment:NSTextAlignmentCenter];
@@ -87,10 +87,10 @@
     [self.titleLabel setText:title];
     
     if (success) {
-        self.messageView.backgroundColor = UIColorFromRGB(0x7dcb7d);
+        self.messageView.backgroundColor = JAMessageViewSuccessColor;
         [self.errorImageView setHidden:YES];
     }else{
-        self.messageView.backgroundColor = UIColorFromRGB(0xe77979);
+        self.messageView.backgroundColor = JAMessageViewErrorColor;
         [self.errorImageView setHidden:NO];
     }
     

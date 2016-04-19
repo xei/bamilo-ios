@@ -101,6 +101,8 @@ UICollectionViewDelegateFlowLayout
     self.stepLabel.font = [UIFont fontWithName:kFontBoldName size:self.stepLabel.font.pointSize];
     [self.stepLabel setText:STRING_CHECKOUT_SHIPPING];
     
+    self.sellerDeliveryViews = [NSMutableArray new];
+    
     [self initViews];
 }
 
@@ -109,8 +111,6 @@ UICollectionViewDelegateFlowLayout
     [super viewWillAppear:animated];
 
     self.apiResponse = RIApiResponseSuccess;
-    
-    self.sellerDeliveryViews = [[NSMutableArray alloc]init];
 
     [self continueLoading];
 }
@@ -205,7 +205,7 @@ UICollectionViewDelegateFlowLayout
                                                                              self.scrollView.frame.size.width - 12.0f,
                                                                              27.0f) collectionViewLayout:collectionViewFlowLayout];
     self.collectionView.layer.cornerRadius = 5.0f;
-    [self.collectionView setBackgroundColor:UIColorFromRGB(0xffffff)];
+    [self.collectionView setBackgroundColor:JAWhiteColor];
     [self.collectionView registerNib:shippingListHeaderNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"shippingListHeader"];
     [self.collectionView registerNib:shippingListCellNib forCellWithReuseIdentifier:@"shippingListCell"];
     [self.collectionView registerNib:shippingInfoCellNib forCellWithReuseIdentifier:@"shippingInfoCell"];

@@ -16,6 +16,7 @@
 @interface JACatalogListCollectionViewCell () {
     CGFloat _lastWidth;
     BOOL _ratingRefresh;
+    BOOL _showSelector;
 }
 
 @end
@@ -26,22 +27,27 @@
 {
     if (!VALID_NOTEMPTY(_selectorButton, UIButton)) {
         _selectorButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_selectorButton setImage:[UIImage imageNamed:@"check_empty"] forState:UIControlStateNormal];
-        [_selectorButton setImage:[UIImage imageNamed:@"check"] forState:UIControlStateSelected];
-        [_selectorButton setImage:[UIImage imageNamed:@"check"] forState:UIControlStateHighlighted];
-        [_selectorButton setFrame:CGRectMake(self.favoriteButton.x, 8, 30, 30)];
-        if (RI_IS_RTL) {
-            [_selectorButton flipViewImage];
-        }
+        [_selectorButton setImage:[UIImage imageNamed:@"noSelectionCheckMark"] forState:UIControlStateNormal];
+        [_selectorButton setImage:[UIImage imageNamed:@"selectionCheckmark"] forState:UIControlStateSelected];
+        [_selectorButton setImage:[UIImage imageNamed:@"selectionCheckmark"] forState:UIControlStateHighlighted];
+        [_selectorButton setFrame:CGRectMake(0.f, 0.f, 30, 30)];
     }
     return _selectorButton;
 }
 
-- (void)setShowSelector:(BOOL)showSelector
+- (void)setShowSelector:(BOOL)showSelector enabled:(BOOL)enabled
 {
     _showSelector = showSelector;
     [self.favoriteButton setHidden:YES];
     [self addSubview:self.selectorButton];
+    UIImage* image;
+    if (NO == enabled) {
+        image = [UIImage imageNamed:@"selectionCheckmarkDisabled"];
+    } else {
+        image = [UIImage imageNamed:@"selectionCheckmark"];
+    }
+    [self.selectorButton setImage:image forState:UIControlStateSelected];
+    [self.selectorButton setImage:image forState:UIControlStateHighlighted];
 }
 
 - (instancetype)init
@@ -100,12 +106,6 @@
     CGFloat distXAfterImage = JACatalogListCellImageSize.width + distXImage + marginAfterImage;
     CGFloat brandTextWidth = self.width - distXAfterImage - maxTextWidth;
     CGFloat textWidth = self.width - distXAfterImage - distXImage;
-
-    
-    if (self.showSelector) {
-        brandTextWidth -= 10;
-        textWidth = brandTextWidth;
-    }
     
     CGRect brandLabelRect = CGRectMake(distXAfterImage, 16, brandTextWidth, 15);
     if (!CGRectEqualToRect(brandLabelRect, self.brandLabel.frame)) {
@@ -171,17 +171,20 @@
         [self setForRTL:self.favoriteButton];
     }
     
-    CGFloat selX = self.width - self.selectorButton.width - distXImage;
-    if (self.selectorButton.x != selX) {
-        [self.selectorButton setX:selX];
+    CGRect selRect = CGRectMake(priceLineRect.origin.x - 4.0f,
+                                self.height - 10.0f - self.selectorButton.frame.size.height,
+                                self.selectorButton.frame.size.width,
+                                self.selectorButton.frame.size.height);
+    if (!CGRectEqualToRect(selRect, self.selectorButton.frame)) {
+        [self.selectorButton setFrame:selRect];
         [self setForRTL:self.selectorButton];
     }
     
-    CGFloat recentlyViewedX = self.discountLabel.superview.width - self.discountLabel.frame.size.width - distXImage;
+    CGFloat recentlyViewedX = self.recentProductBadgeLabel.superview.width - self.recentProductBadgeLabel.frame.size.width - distXImage;
     if (self.hideRating) {
         recentlyViewedX = priceLineRect.origin.x;
     }
-    CGRect recentProductBadgeRect = CGRectMake(recentlyViewedX, CGRectGetMaxY(discountLabelRect) + 10.0f, self.discountLabel.frame.size.width, self.discountLabel.frame.size.height);
+    CGRect recentProductBadgeRect = CGRectMake(recentlyViewedX, CGRectGetMaxY(discountLabelRect) + 10.0f, self.recentProductBadgeLabel.frame.size.width, self.recentProductBadgeLabel.frame.size.height);
     if (!CGRectEqualToRect(recentProductBadgeRect, self.recentProductBadgeLabel.frame)) {
         [self.recentProductBadgeLabel setFrame:recentProductBadgeRect];
     }

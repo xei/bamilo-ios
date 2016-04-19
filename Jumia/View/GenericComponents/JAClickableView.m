@@ -43,9 +43,20 @@
 {
     self.overlayButton.contentHorizontalAlignment = contentHorizontalAlignment;
 }
+
 - (UIControlContentHorizontalAlignment)contentHorizontalAlignment
 {
     return self.overlayButton.contentHorizontalAlignment;
+}
+
+- (void)setContentVerticalAlignment:(UIControlContentVerticalAlignment)contentVerticalAlignment
+{
+    [self.overlayButton setContentVerticalAlignment:contentVerticalAlignment];
+}
+
+- (UIControlContentVerticalAlignment)contentVerticalAlignment
+{
+    return self.overlayButton.contentVerticalAlignment;
 }
 
 - (void)setSelected:(BOOL)selected
@@ -141,6 +152,16 @@
     [self bringSubviewToFront:self.overlayButton];
 }
 
+- (void)setBackgroundImage:(UIImage*)image
+{
+    [self addSubview:[[UIImageView alloc] initWithImage:image]];
+}
+
+- (void)setImageContentMode:(UIViewContentMode)contentMode
+{
+    [[self.overlayButton imageView] setContentMode:contentMode];
+}
+
 - (void)setImage:(UIImage*)image forState:(UIControlState)state;
 {
     [self.overlayButton setImage:image forState:state];
@@ -173,5 +194,6 @@ forControlEvents:(UIControlEvents)controlEvents
 {
     return [self.overlayButton imageForState:controlState];
 }
+
 
 @end

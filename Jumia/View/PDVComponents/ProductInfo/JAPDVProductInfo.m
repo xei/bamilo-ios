@@ -12,7 +12,6 @@
 #import "RIProductSimple.h"
 #import "RISeller.h"
 #import "JAProductInfoHeaderLine.h"
-#import "JAProductInfoSingleLine.h"
 #import "JAProductInfoSubLine.h"
 #import "JAProductInfoPriceLine.h"
 #import "JAProductInfoRatingLine.h"
@@ -20,10 +19,12 @@
 #import "RISpecificationAttribute.h"
 #import "JAPDVProductInfoSellerInfo.h"
 #import "JAProductInfoSISLine.h"
+#import "JAProductInfoSizeLine.h"
 
 @interface JAPDVProductInfo() {
     UILabel *_sizesLabel;
     JAProductInfoPriceLine *_priceLine;
+    JAProductInfoBaseLine *_priceBackgroundLine;
     CGFloat _sellerYPosition;
 }
 
@@ -76,20 +77,51 @@
     /*
      *  PRICE
      */
-    _priceLine = [[JAProductInfoPriceLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
-    if (!isiPadInLandscape) {
-        [_priceLine setTopSeparatorVisibility:YES];
+    CGFloat priceBackgroundLineHeight = kProductInfoSingleLineHeight + 1.0f;
+    if (product.freeShippingPossible) {
+        priceBackgroundLineHeight += 20.0f;
     }
+    _priceBackgroundLine = [[JAProductInfoBaseLine alloc] initWithFrame:CGRectMake(0.0f, yOffset, frame.size.width, priceBackgroundLineHeight)];
+    if (!isiPadInLandscape) {
+        [_priceBackgroundLine setTopSeparatorVisibility:YES];
+    }
+    [self addSubview:_priceBackgroundLine];
     
-    [_priceLine setFashion:product.fashion];
-    
+    _priceLine = [[JAProductInfoPriceLine alloc] initWithFrame:CGRectMake(0.0f, 1.0f, frame.size.width, kProductInfoSingleLineHeight)];
+
     if (VALID_NOTEMPTY(product.priceRange, NSString)) {
         [_priceLine setPrice:product.priceRange];
     } else {
         [self setSpecialPrice:product.specialPriceFormatted andPrice:product.priceFormatted andMaxSavingPercentage:product.maxSavingPercentage shouldForceFlip:NO];
     }
-    [self addSubview:_priceLine];
-    yOffset = CGRectGetMaxY(_priceLine.frame);
+    [_priceBackgroundLine addSubview:_priceLine];
+
+    if (product.freeShippingPossible) {
+        
+        UIImage* freeShippingImage = [UIImage imageNamed:@"freeShipping"];
+        UIImageView* freeShippingImageView = [[UIImageView alloc] initWithImage:freeShippingImage];
+        [_priceBackgroundLine addSubview:freeShippingImageView];
+        [freeShippingImageView setFrame:CGRectMake(17.0f,
+                                                   CGRectGetMaxY(_priceLine.frame) - 6.0f,
+                                                   freeShippingImage.size.width,
+                                                   freeShippingImage.size.height)];
+        
+        
+        UILabel* freeShippingLabel = [UILabel new];
+        [freeShippingLabel setFont:JACaptionItalicFont];
+        [freeShippingLabel setTextColor:JABlack800Color];
+        [freeShippingLabel setText:STRING_FREE_SHIPPING_POSSIBLE];
+        [freeShippingLabel sizeToFit];
+        
+        [_priceBackgroundLine addSubview:freeShippingLabel];
+        [freeShippingLabel setFrame:CGRectMake(CGRectGetMaxX(freeShippingImageView.frame) + 4.0f,
+                                               freeShippingImageView.frame.origin.y,
+                                               freeShippingLabel.frame.size.width,
+                                               freeShippingLabel.frame.size.height)];
+        
+    }
+    
+    yOffset = CGRectGetMaxY(_priceBackgroundLine.frame);
     
     /*
      *  RATINGS
@@ -98,9 +130,9 @@
     JAProductInfoRatingLine *ratingLine = [[JAProductInfoRatingLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
     [ratingLine setTopSeparatorVisibility:YES];
     [ratingLine setBottomSeparatorVisibility:NO];
-    [ratingLine setFashion:product.fashion];
+    [ratingLine setImageRatingSize:kImageRatingSizeBig];
     [ratingLine setRatingAverage:product.avr];
-    [ratingLine setRatingSum:product.sum];
+    [ratingLine setRatingSum:product.sum shortVersion:NO];
     [ratingLine addTarget:self action:@selector(tapReviewsLine) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:ratingLine];
     
@@ -111,7 +143,7 @@
      */
     
     CGFloat preSpecificationOffset = yOffset;
-    if (VALID_NOTEMPTY(product.specifications, NSSet) && !product.fashion) {
+    if (VALID_NOTEMPTY(product.specifications, NSOrderedSet)) {
         JAProductInfoHeaderLine *headerSpecifications = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoHeaderLineHeight)];
         [headerSpecifications setTitle:[STRING_SPECIFICATIONS uppercaseString]];
         
@@ -130,7 +162,7 @@
                     needMoreSpecifications = YES;
                     UILabel *retLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, yOffset, frame.size.width - 32, 0)];
                     [retLabel setTextColor:JABlackColor];
-                    [retLabel setFont:JACaptionFont];
+                    [retLabel setFont:JABodyFont];
                     retLabel.numberOfLines = 0;
                     [retLabel setText:[NSString stringWithFormat:@"..."]];
                     [retLabel sizeToFit];
@@ -140,7 +172,7 @@
                 }
                 UILabel *specificationsContentLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, yOffset, frame.size.width - 32, 0)];
                 [specificationsContentLabel setTextColor:JABlackColor];
-                [specificationsContentLabel setFont:JACaptionFont];
+                [specificationsContentLabel setFont:JABodyFont];
                 specificationsContentLabel.numberOfLines = 0;
                 [specificationsContentLabel setText:[NSString stringWithFormat:@"- %@: %@", attribute.key, attribute.value]];
                 [specificationsContentLabel sizeToFit];
@@ -162,6 +194,7 @@
                 [subSpecificationReadMore setTopSeparatorVisibility:YES];
                 [subSpecificationReadMore setTitle:STRING_READ_MORE];
                 [subSpecificationReadMore addTarget:self action:@selector(tapSpecificationsLine) forControlEvents:UIControlEventTouchUpInside];
+                [subSpecificationReadMore.label setTextColor:JABlue1Color];
                 [self addSubview:subSpecificationReadMore];
                 yOffset = CGRectGetMaxY(subSpecificationReadMore.frame);
             }
@@ -184,10 +217,10 @@
                 i++;
             }
         }
-        JAProductInfoSingleLine *singleSizes = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
+        JAProductInfoSizeLine *singleSizes = [[JAProductInfoSizeLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
         [singleSizes setTopSeparatorVisibility:YES];
-        [singleSizes setText:sizesText];
-        _sizesLabel = singleSizes.lineLabel;
+        [singleSizes setTitle:sizesText];
+        _sizesLabel = singleSizes.label;
         [singleSizes addTarget:self action:@selector(tapSizeLine) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:singleSizes];
         yOffset = CGRectGetMaxY(singleSizes.frame);
@@ -198,7 +231,7 @@
      */
     
     if (VALID_NOTEMPTY(product.variations, NSArray)) {
-        JAProductInfoSingleLine *singleVariations = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSingleLineHeight)];
+        JAProductInfoSubLine *singleVariations = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoSubLineHeight)];
         [singleVariations setTopSeparatorVisibility:YES];
         if (product.fashion) {
             [singleVariations setTitle:STRING_SEE_OTHER_COLORS];
@@ -206,6 +239,7 @@
             [singleVariations setTitle:STRING_SEE_OTHER_VARIATIONS];
         }
         [singleVariations addTarget:self action:@selector(tapVariationsLine) forControlEvents:UIControlEventTouchUpInside];
+        [singleVariations.label setTextColor:JABlue1Color];
         [self addSubview:singleVariations];
         yOffset = CGRectGetMaxY(singleVariations.frame);
     }
@@ -264,6 +298,7 @@
         [otherOffers setTitle:[NSString stringWithFormat:STRING_OTHER_SELLERS_STARTING_FROM, product.offersMinPriceFormatted]];
         [otherOffers.label setYCenterAligned];
         [otherOffers addTarget:self action:@selector(tapOffersLine) forControlEvents:UIControlEventTouchUpInside];
+        [otherOffers.label setTextColor:JABlue1Color];
         [self addSubview:otherOffers];
         
         yOffset = CGRectGetMaxY(otherOffers.frame);
@@ -281,7 +316,7 @@
         
         UILabel *descriptionContentLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, yOffset, frame.size.width - 32, 0)];
         [descriptionContentLabel setTextColor:JABlackColor];
-        [descriptionContentLabel setFont:JACaptionFont];
+        [descriptionContentLabel setFont:JABodyFont];
         descriptionContentLabel.numberOfLines = 5;
         [descriptionContentLabel setText:product.summary];
         [descriptionContentLabel sizeToFit];
@@ -292,6 +327,7 @@
         [singleDescriptionReadMore setTopSeparatorVisibility:YES];
         [singleDescriptionReadMore setTitle:STRING_READ_MORE];
         [singleDescriptionReadMore addTarget:self action:@selector(tapDescriptionLine) forControlEvents:UIControlEventTouchUpInside];
+        [singleDescriptionReadMore.label setTextColor:JABlue1Color];
         [self addSubview:singleDescriptionReadMore];
         yOffset = CGRectGetMaxY(singleDescriptionReadMore.frame);
     }

@@ -9,13 +9,20 @@
 #import "JACustomNavigationBarView.h"
 
 @interface JACustomNavigationBarView ()
-{
-    CGFloat _fontSize;
-}
 
 @end
 
 @implementation JACustomNavigationBarView
+
+- (UIView *)separatorView
+{
+    if (!_separatorView) {
+        _separatorView = [UIView new];
+        [_separatorView setBackgroundColor:JABlack400Color];
+        [_separatorView setFrame:CGRectMake(0.0f, 43.0f, 320.0f, 1.0f)];
+    }
+    return _separatorView;
+}
 
 - (UIButton *)leftButton
 {
@@ -39,9 +46,9 @@
         [_backButton setImage:[UIImage imageNamed:@"btn_back"] forState:UIControlStateNormal];
         [_backButton setImage:[UIImage imageNamed:@"btn_back_pressed"] forState:UIControlStateHighlighted];
         [_backButton setImage:[UIImage imageNamed:@"btn_back_pressed"] forState:UIControlStateSelected];
-        [_backButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-        [_backButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
-        [_backButton.titleLabel setFont:[UIFont fontWithName:kFontLightName size:_fontSize]];
+        [_backButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
+        [_backButton setTitleColor:JAOrange1Color forState:UIControlStateHighlighted];
+        [self setLabelFont:_backButton.titleLabel withFont:[UIFont fontWithName:kFontLightName size:17]];
     }
     return _backButton;
 }
@@ -52,9 +59,9 @@
         _cartButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_cartButton setFrame:CGRectMake(275, 0, 45, 44)];
         [_cartButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
-        [_cartButton setImage:[UIImage imageNamed:@"btn_cart"] forState:UIControlStateNormal];
-        [_cartButton setImage:[UIImage imageNamed:@"btn_cart_pressed"] forState:UIControlStateHighlighted];
-        [_cartButton setImage:[UIImage imageNamed:@"btn_cart_pressed"] forState:UIControlStateSelected];
+        [_cartButton setImage:[UIImage imageNamed:@"tabbar_button_cart"] forState:UIControlStateNormal];
+        [_cartButton setImage:[UIImage imageNamed:@"tabbar_button_cart_highlighted"] forState:UIControlStateHighlighted];
+        [_cartButton setImage:[UIImage imageNamed:@"tabbar_button_cart_highlighted"] forState:UIControlStateSelected];
     }
     return _cartButton;
 }
@@ -75,10 +82,23 @@
 - (UILabel *)cartCountLabel
 {
     if (!_cartCountLabel) {
-        _cartCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(288, 6, 25, 15)];
-        [_cartCountLabel setTextAlignment:NSTextAlignmentCenter];
-        [_cartCountLabel setTextColor:JAOrange1Color];
-        [_cartCountLabel setFont:[UIFont fontWithName:kFontRegularName size:9]];
+        
+        UIFont *font = JACaptionFont;
+        if ([@"Zawgyi-One" isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:kFontRegularNameKey]]) {
+            font = [UIFont fontWithName:@"HelveticaNeue" size:font.pointSize];
+        }
+        
+        _cartCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(301,
+                                                                    8,
+                                                                    18.f,
+                                                                    18.f)];
+        _cartCountLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
+        _cartCountLabel.font = font;
+        _cartCountLabel.textColor = JAWhiteColor;
+        _cartCountLabel.adjustsFontSizeToFitWidth = YES;
+        _cartCountLabel.textAlignment = NSTextAlignmentCenter;
+        [_cartCountLabel setBackgroundColor:JARed1Color];
+        [self updateCartProductCount:[NSNumber numberWithInt:0]];
     }
     return _cartCountLabel;
 }
@@ -98,9 +118,9 @@
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 0, 230, 44)];
         [_titleLabel setLineBreakMode:NSLineBreakByTruncatingMiddle];
         [_titleLabel setTextAlignment:NSTextAlignmentCenter];
-        [_titleLabel setTextColor:UIColorFromRGB(0x4e4e4e)];
-        [_titleLabel setTintColor:JABlack800Color];
-        [_titleLabel setFont:[UIFont fontWithName:kFontRegularName size:_fontSize]];
+        [_titleLabel setTextColor:JABlackColor];
+        [_titleLabel setTintColor:JABlackColor];
+        [self setLabelFont:_titleLabel withFont:JADisplay3Font];
     }
     return _titleLabel;
 }
@@ -111,8 +131,8 @@
         _topTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 0, 230, 24)];
         [_topTitleLabel setLineBreakMode:NSLineBreakByTruncatingMiddle];
         [_topTitleLabel setTextAlignment:NSTextAlignmentCenter];
-        [_topTitleLabel setTintColor:JABlack800Color];
-        [_topTitleLabel setFont:[UIFont fontWithName:kFontRegularName size:14.0f]];
+        [_topTitleLabel setTintColor:JABlackColor];
+        [self setLabelFont:_topTitleLabel withFont:JAListFont];
     }
     return _topTitleLabel;
 }
@@ -123,8 +143,8 @@
         _bottomTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 24, 230, 20)];
         [_bottomTitleLabel setLineBreakMode:NSLineBreakByTruncatingMiddle];
         [_bottomTitleLabel setTextAlignment:NSTextAlignmentCenter];
-        [_bottomTitleLabel setTintColor:JABlack800Color];
-        [_bottomTitleLabel setFont:[UIFont fontWithName:kFontRegularName size:12.0f]];
+        [_bottomTitleLabel setTintColor:JABlackColor];
+        [self setLabelFont:_bottomTitleLabel withFont:JABodyFont];
     }
     return _bottomTitleLabel;
 }
@@ -133,11 +153,11 @@
 {
     if (!_editButton) {
         _editButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_editButton setFrame:CGRectMake(0, 8, 106, 34)];
+        [_editButton setFrame:CGRectMake(0, 0, 106, 44)];
         [_editButton setTitle:@"Edit" forState:UIControlStateNormal];
-        [_editButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-        [_editButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
-        [_editButton.titleLabel setFont:[UIFont fontWithName:kFontLightName size:_fontSize]];
+        [_editButton setTitleColor:JASysBlueColor forState:UIControlStateNormal];
+        [_editButton setTitleColor:JAOrange1Color forState:UIControlStateHighlighted];
+        [self setLabelFont:_editButton.titleLabel withFont:JABodyFont];
     }
     return _editButton;
 }
@@ -146,13 +166,21 @@
 {
     if (!_doneButton) {
         _doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_doneButton setFrame:CGRectMake(214, 8, 106, 34)];
+        [_doneButton setFrame:CGRectMake(214, 0, 106, 44)];
         [_doneButton setTitle:@"Done" forState:UIControlStateNormal];
-        [_doneButton setTitleColor:UIColorFromRGB(0x4e4e4e) forState:UIControlStateNormal];
-        [_doneButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
-        [_doneButton.titleLabel setFont:[UIFont fontWithName:kFontLightName size:_fontSize]];
+        [_doneButton setTitleColor:JASysBlueColor forState:UIControlStateNormal];
+        [_doneButton setTitleColor:JAOrange1Color forState:UIControlStateHighlighted];
+        [self setLabelFont:_doneButton.titleLabel withFont:JABodyFont];
     }
     return _doneButton;
+}
+
+- (void)setLabelFont:(UILabel *)label withFont:(UIFont *)font
+{
+    [label setFont:font];
+    if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"]) {
+        [label setFont:[UIFont fontWithName:font.fontName size:font.pointSize-2]];
+    }
 }
 
 - (void)setFrame:(CGRect)frame
@@ -178,19 +206,18 @@
                               self.frame.origin.y,
                               initialWidth,
                               self.frame.size.height)];
+    [self.separatorView setFrame:CGRectMake(self.bounds.origin.x,
+                                            self.bounds.size.height - self.separatorView.frame.size.height,
+                                            self.bounds.size.width,
+                                            self.separatorView.frame.size.height)];
     
-    self.backgroundColor = JANavBarBackgroundGrey;
+    self.backgroundColor = JABlack300Color;
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(orientationChanged:)
                                                  name:UIDeviceOrientationDidChangeNotification
                                                object:nil];
-    
-    _fontSize = 17.0f;
-    if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"]) {
-        _fontSize = 14.0f;
-    }
     
     [self addSubview:self.leftButton];
     [self addSubview:self.backButton];
@@ -203,6 +230,7 @@
     [self addSubview:self.bottomTitleLabel];
     [self addSubview:self.editButton];
     [self addSubview:self.doneButton];
+    [self addSubview:self.separatorView];
     
     if (RI_IS_RTL) {
         [self.editButton flipViewAlignment];
@@ -230,6 +258,7 @@
     }
     if (self.width != width) {
         self.width = width;
+        self.separatorView.width = width;
         [self adjustTitleFrame];
     }
 }
@@ -242,6 +271,8 @@
 
 - (void)setupWithNavigationBarLayout:(JANavigationBarLayout*)layout
 {
+    self.separatorView.hidden = !layout.showSeparatorView;
+    
     //left side
     if (layout.showBackButton) {
         [self showBackButtonWithTitle:layout.backButtonTitle];
@@ -349,13 +380,12 @@
     CGFloat width = self.width;
     
     CGFloat leftMargin = 0.0f;
-    CGFloat backButtonLeftMargin = 4.0f;
+    CGFloat backButtonLeftInset = 10.0f;
     CGFloat editButtonLeftMargin = 7.0f;
     
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {
         leftMargin = 6.0f;
-        backButtonLeftMargin = 16.0f;
         editButtonLeftMargin = 16.0f;
     }
     
@@ -368,7 +398,7 @@
     if(!self.doneButton.hidden)
     {
         NSString *doneButtonText = self.doneButton.titleLabel.text;
-        NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:kFontRegularName size:17]};
+        NSDictionary *attributes = @{NSFontAttributeName: JASystemTitleFont};
         CGSize doneButtonTextSize = [doneButtonText sizeWithAttributes:attributes];
         CGFloat doneButtonWidth = 6.0f + doneButtonTextSize.width;
         
@@ -410,7 +440,7 @@
     if(!self.backButton.hidden)
     {
         NSString *backButtonText = self.backButton.titleLabel.text;
-        NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:kFontRegularName size:17]};
+        NSDictionary *attributes = @{NSFontAttributeName: JASystemTitleFont};
         CGSize backButtonTextSize = [backButtonText sizeWithAttributes:attributes];
         
         CGFloat backButtonMaxWidth = backButtonTextSize.width;
@@ -434,7 +464,16 @@
                 backButtonFinalWidth = 6.0f + backButtonMaxWidth + 11.0f;
             }
         }
-        [self.backButton setX:backButtonLeftMargin];
+        if (RI_IS_RTL) {
+            UIEdgeInsets insets = self.backButton.imageEdgeInsets;
+            insets.right = backButtonLeftInset;
+            [self.backButton setImageEdgeInsets:insets];
+        }else{
+            UIEdgeInsets insets = self.backButton.imageEdgeInsets;
+            insets.left = backButtonLeftInset;
+            [self.backButton setImageEdgeInsets:insets];
+        }
+        [self.backButton setX:leftMargin];
         leftItemFrame = self.backButton.frame;
     }
     else if(!self.leftButton.hidden)
@@ -465,7 +504,7 @@
     titleLabelWidth = width - (2 * titleLabelSideMargin);
     
     NSString *titleLabelText = self.titleLabel.text;
-    NSDictionary *titleLabelAttributes = @{NSFontAttributeName: [UIFont fontWithName:kFontRegularName size:17]};
+    NSDictionary *titleLabelAttributes = @{NSFontAttributeName: JASystemTitleFont};
     CGSize titleLabelTextSize = [titleLabelText sizeWithAttributes:titleLabelAttributes];
     if (titleLabelTextSize.width > titleLabelWidth)
     {
@@ -534,14 +573,14 @@
 
 - (void)updateCartProductCount:(NSNumber*)cartNumber
 {
-    if(0 == [cartNumber integerValue])
-    {
-        [self.cartCountLabel setText:@""];
-    }
-    else
-    {
-        [self.cartCountLabel setText:[cartNumber stringValue]];
-    }
+    CGRect frame = CGRectMake(self.cartCountLabel.frame.origin.x,
+                              self.cartCountLabel.frame.origin.y,
+                              15.f,
+                              15.f);
+    self.cartCountLabel.frame = frame;
+    [self.cartCountLabel setText:[NSString stringWithFormat:@"%lld", [cartNumber longLongValue]]];
+    self.cartCountLabel.layer.masksToBounds = YES;
+    self.cartCountLabel.layer.cornerRadius = frame.size.width / 2;
 }
 
 @end

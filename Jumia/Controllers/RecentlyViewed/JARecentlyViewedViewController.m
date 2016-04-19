@@ -105,7 +105,7 @@
 -(UILabel *)emptyListLabel {
     if (!VALID_NOTEMPTY(_emptyListLabel, UILabel)) {
         _emptyListLabel = [UILabel new];
-        _emptyListLabel.font = JABody3Font;
+        _emptyListLabel.font = JABodyFont;
         _emptyListLabel.textColor = JABlack800Color;
         _emptyListLabel.text = STRING_NO_RECENTLY_VIEWED_PRODUCTS;
         [_emptyListLabel sizeToFit];

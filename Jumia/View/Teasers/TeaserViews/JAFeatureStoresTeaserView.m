@@ -21,9 +21,9 @@
         CGFloat groupingTitleLabelMargin = 16.0f;
         CGFloat groupingTitleLabelHeight = 50.0f; //value by design
         UILabel* groupingTitleLabel = [UILabel new];
-        groupingTitleLabel.font = [UIFont fontWithName:kFontMediumName size:14.0f];
+        groupingTitleLabel.font = JAHEADLINEFont;
         groupingTitleLabel.textColor = [UIColor blackColor];
-        groupingTitleLabel.text = STRING_FEATURED_STORES;
+        groupingTitleLabel.text = [STRING_FEATURED_STORES uppercaseString];
         groupingTitleLabel.textAlignment = NSTextAlignmentLeft;
         [groupingTitleLabel sizeToFit];
         [groupingTitleLabel setFrame:CGRectMake(groupingTitleLabelMargin,
@@ -35,10 +35,9 @@
         CGFloat currentY = groupingTitleLabel.frame.size.height;
         CGFloat marginX = 6.0f; //value by design
         CGFloat marginY = 6.0f; //value by design
-        CGFloat componentHeight = 44; //value by design
+        CGFloat componentHeight = 52; //value by design
         NSInteger numberOfComponentsForLine = 2;
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            componentHeight = 68.0f;
             numberOfComponentsForLine = self.teaserGrouping.teaserComponents.count / 2;
         }
         NSInteger numberOfMargins = numberOfComponentsForLine + 1;
@@ -71,7 +70,7 @@
             if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
                 imageMargin = 6.0f;
             }
-            CGFloat imageSide = 40.0f; //value by design
+            CGFloat imageSide = 48.0f; //value by design
             UIImageView* imageView = [UIImageView new];
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             [imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
@@ -84,8 +83,8 @@
             CGFloat textMarginX = 6.0;
             CGFloat textMarginY = 5.0;
             UILabel* titleLabel = [UILabel new];
-            titleLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
-            titleLabel.textColor = [UIColor blackColor];
+            titleLabel.font = JATitleFont;
+            titleLabel.textColor = JABlackColor;
             titleLabel.text = component.title;
             [titleLabel sizeToFit];
             [titleLabel setFrame:CGRectMake(clickableView.bounds.origin.x + textMarginX,
@@ -95,8 +94,8 @@
             [clickableView addSubview:titleLabel];
             
             UILabel* subTitleLabel = [UILabel new];
-            subTitleLabel.font = [UIFont fontWithName:kFontLightName size:9.0f];
-            subTitleLabel.textColor = UIColorFromRGB(0x4e4e4e);
+            subTitleLabel.font = JACaptionFont;
+            subTitleLabel.textColor = JABlack800Color;
             subTitleLabel.text = component.subTitle;
             [subTitleLabel sizeToFit];
             [subTitleLabel setFrame:CGRectMake(clickableView.bounds.origin.x + textMarginX,

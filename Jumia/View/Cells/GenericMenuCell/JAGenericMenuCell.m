@@ -72,13 +72,15 @@
     CGFloat textTopOffset = 0.0f;
     CGFloat leftMargin = kLeftAndRightMargin;
     CGFloat rightMargin = kLeftAndRightMargin;
-    UIFont* font = JAList2Font;
+    UIFont* font = JAListFont;
     UIColor* textColor = [UIColor blackColor];
     NSString* text = cellText;
     
     CGFloat accessoryImageWidth = kAcessoryImageWidthAndHeight;
     CGFloat accessoryImageMargin = kLeftAndRightMargin;
-    [self.accessoryImageView setImage:[UIImage imageNamed:accessoryImageName]];
+    if (VALID_NOTEMPTY(accessoryImageName, NSString)) {
+        [self.accessoryImageView setImage:[UIImage imageNamed:accessoryImageName]];
+    }
     
     CGFloat iconImageWidth = 0.0f;
     CGFloat iconImageRightMargin = 0.0f;
@@ -103,7 +105,7 @@
         textTopOffset = 2.0f;
         
         text = [cellText uppercaseString];
-        font = JACaption2Font;
+        font = JAHEADLINEFont;
         
         accessoryImageWidth = accessoryImageMargin = iconImageWidth = iconImageRightMargin = separatorHeight = 0.0f;
         

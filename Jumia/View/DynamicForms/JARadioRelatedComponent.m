@@ -23,7 +23,7 @@
     if (!VALID_NOTEMPTY(_labelText, UILabel)) {
         _labelText = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.switchComponent.frame) + 16.f, 0,
                                                               self.width, self.height)];
-        [_labelText setFont:JABody3Font];
+        [_labelText setFont:JABodyFont];
         [_labelText setTextColor:JABlack900Color];
         [_labelText setTextAlignment:NSTextAlignmentLeft];
         [self addSubview:_labelText];

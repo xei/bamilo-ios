@@ -35,7 +35,6 @@
 #define kJAWizardPDV4ViewTextVerticalMargin 72.0f
 
 #define kJAWizardFont [UIFont fontWithName:kFontRegularName size:18.0f]
-#define kJAWizardFontColor UIColorFromRGB(0xc3c3c3)
 
 #define kJAWizardButtonBottomMargin 10.0f
 #define kJAWizardButtonBottomMargin_ipad_portrait 100.0f

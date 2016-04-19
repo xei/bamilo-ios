@@ -139,6 +139,12 @@
         if ([productJSON objectForKey:@"max_delivery_time"]) {
             newProductOffer.maxDeliveryTime = [productJSON objectForKey:@"max_delivery_time"];
         }
+        
+        if ([productJSON objectForKey:@"free_shipping_possible"]) {
+            newProductOffer.freeShippingPossible = [[productJSON objectForKey:@"free_shipping_possible"] boolValue];
+        } else {
+            newProductOffer.freeShippingPossible = NO;
+        }
     }
     
     NSDictionary* sellerJSON = [productOfferJSON objectForKey:@"seller_entity"];

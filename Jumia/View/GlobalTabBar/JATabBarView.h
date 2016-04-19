@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define kTabBarHeight 52.0f
+#define kTabBarHeight 53.0f
 
 @interface JATabBarView : UIView
 

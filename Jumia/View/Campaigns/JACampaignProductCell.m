@@ -46,8 +46,7 @@
 @property (nonatomic, strong) UILabel *savingMoneyLabel;
 
 @property (nonatomic, strong) JAPercentageBarView* percentageBarView;
-@property (nonatomic, strong) JABottomBar *bottonBar;
-@property (nonatomic, strong) UIButton *buyButton;
+@property (nonatomic, strong) JAButton *buyButton;
 
 @property (nonatomic, strong) UIView *remainingStockView;
 @property (nonatomic, strong) UILabel *remainingStockLabel;
@@ -87,7 +86,7 @@
 {
     if (!VALID_NOTEMPTY(_titleLabel, UILabel)) {
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.titleBrandLabel.frame) + 10, self.width - 2*16, 15)];
-        _titleLabel.font = JABody1Font;
+        _titleLabel.font = JABodyFont;
         _titleLabel.textColor = JABlackColor;
     }
     return _titleLabel;
@@ -120,7 +119,7 @@
 {
     if (!VALID_NOTEMPTY(_endLabel, UILabel)) {
         _endLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.timerView.width, 15)];
-        [_endLabel setFont:JABody2Font];
+        [_endLabel setFont:JABodyFont];
         [_endLabel setText:[STRING_CAMPAIGN_TIMER_END uppercaseString]];
         [_endLabel sizeToFit];
     }
@@ -131,8 +130,8 @@
 {
     if (!VALID_NOTEMPTY(_timerLabel, UILabel)) {
         _timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.endLabel.frame) + 2.f, 0, self.timerView.width, 15)];
-        [_timerLabel setFont:JABody2Font];
-        [_timerLabel setTextColor:[UIColor redColor]];
+        [_timerLabel setFont:JABodyFont];
+        [_timerLabel setTextColor:JARed1Color];
     }
     return _timerLabel;
 }
@@ -152,7 +151,7 @@
     if (!VALID_NOTEMPTY(_offerEndedLabel, UILabel)) {
         _offerEndedLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, self.imageView.y + self.imageView.height/2 - 20, self.width - 2*kLateralMargin, 20)];
         [_offerEndedLabel setBackgroundColor:[UIColor whiteColor]];
-        [_offerEndedLabel setFont:JABody2Font];
+        [_offerEndedLabel setFont:JABodyFont];
         [_offerEndedLabel setText:[STRING_CAMPAIGN_OFFER_ENDED uppercaseString]];
         [_offerEndedLabel sizeToFit];
         _offerEndedLabel.width += 2*8.f;
@@ -173,7 +172,7 @@
         _priceLine = [[JAProductInfoPriceLine alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.imageView.frame) + 10.f, self.width - 2*kLateralMargin, 20.f)];
         [_priceLine setPriceSize:kPriceSizeSmall];
         [_priceLine setLineContentXOffset:0.f];
-        [_priceLine.titleLabel setTextColor:[UIColor redColor]];
+        [_priceLine.titleLabel setTextColor:JARed1Color];
     }
     return _priceLine;
 }
@@ -203,8 +202,8 @@
 {
     if (!VALID_NOTEMPTY(_savingMoneyLabel, UILabel)) {
         _savingMoneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.savingLabel.frame) + 6.f, self.savingLabel.y, self.savingView.width, kProductInfoSingleLineHeight)];
-        [_savingMoneyLabel setFont:JABody2Font];
-        [_savingMoneyLabel setTextColor:[UIColor greenColor]];
+        [_savingMoneyLabel setFont:JABodyFont];
+        [_savingMoneyLabel setTextColor:JAGreen1Color];
     }
     return _savingMoneyLabel;
 }
@@ -234,22 +233,20 @@
     if (!VALID_NOTEMPTY(_bottomContentView, UIView)) {
         _bottomContentView = [[UIView alloc] initWithFrame:CGRectMake(kLateralMargin, self.height - kTopMargin - 48, (self.width - 2*kLateralMargin), kBottomDefaultHeight)];
         [_bottomContentView setBackgroundColor:JABlack300Color];
-        [_bottomContentView addSubview:self.bottonBar];
+        [_bottomContentView addSubview:self.buyButton];
         [_bottomContentView addSubview:self.percentageBarView];
         [_bottomContentView addSubview:self.remainingStockView];
     }
     return _bottomContentView;
 }
 
-- (JABottomBar *)bottonBar
+- (JAButton *)buyButton
 {
-    if (!VALID_NOTEMPTY(_bottonBar, JABottomBar)) {
-        _bottonBar = [[JABottomBar alloc] initWithFrame:CGRectMake(self.bottomContentView.width/2, 0, self.bottomContentView.width/2, self.bottomContentView.height)];
-        self.buyButton = [_bottonBar addButton:[STRING_BUY uppercaseString] target:self action:@selector(buyButtonPressed)];
-        [self.buyButton setBackgroundImage:[UIImage imageWithColor:[UIColor grayColor]] forState:UIControlStateDisabled];
-        [self.buyButton setBackgroundImage:[UIImage imageWithColor:JAOrange1Color] forState:UIControlStateNormal];
+    if (!VALID_NOTEMPTY(_buyButton, JAButton)) {
+        _buyButton = [[JAButton alloc] initButtonWithTitle:[STRING_BUY uppercaseString] target:self action:@selector(buyButtonPressed)];
+        [_buyButton setFrame:CGRectMake(self.bottomContentView.width/2, 0, self.bottomContentView.width/2, self.bottomContentView.height)];
     }
-    return _bottonBar;
+    return _buyButton;
 }
 
 - (JAPercentageBarView *)percentageBarView
@@ -323,6 +320,8 @@
     [self.titleLabel setText:campaignProduct.name];
     
     self.discountLabel.text = [NSString stringWithFormat:STRING_FORMAT_OFF,[campaignProduct.maxSavingPercentage integerValue]];
+    [self.discountLabel sizeToFit];
+    self.discountLabel.width += 8.f;
     self.discountLabel.hidden = ![campaignProduct.maxSavingPercentage boolValue];
     
     if (VALID_NOTEMPTY(self.campaignProduct.remainingTime, NSNumber)) {
@@ -400,7 +399,9 @@
     [self.titleLabel setWidth:self.width - 2*kLateralMargin];
     [self setForRTL:self.titleLabel];
     
-    CGRect discountLabelRect = CGRectMake(self.discountLabel.superview.width - 60 - kLateralMargin, kTopMargin, 60, 19);
+    [self.discountLabel sizeToFit];
+    
+    CGRect discountLabelRect = CGRectMake(self.discountLabel.superview.width - self.discountLabel.width-8.f - kLateralMargin, kTopMargin, self.discountLabel.width+8.f, 19);
     if (!CGRectEqualToRect(discountLabelRect, self.discountLabel.frame)) {
         [self.discountLabel setFrame:discountLabelRect];
         [self setForRTL:self.discountLabel];
@@ -434,8 +435,8 @@
     CGFloat bottomContentViewWidth = self.width - 2*kLateralMargin;
     if (bottomContentViewWidth != self.bottomContentView.width) {
         [self.bottomContentView setWidth:bottomContentViewWidth];
-        [self.bottonBar setWidth:self.bottomContentView.width/2];
-        [self.bottonBar setX:self.bottomContentView.width/2];
+        [self.buyButton setWidth:self.bottomContentView.width/2];
+        [self.buyButton setX:self.bottomContentView.width/2];
     }
     
     [self.percentageBarView setX:10.f];
@@ -451,7 +452,7 @@
     [self.remainingStockLabel setY:0.f];
 
     
-    [self.bottonBar setXRightAligned:0.f];
+    [self.buyButton setXRightAligned:0.f];
     
     [self.bottomContentView setXCenterAligned];
     [self.bottomContentView setYBottomOf:self.sizeLine at:16.f];

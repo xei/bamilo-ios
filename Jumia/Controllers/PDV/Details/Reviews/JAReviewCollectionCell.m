@@ -42,7 +42,8 @@
 
 - (UIView *)ratingsView
 {
-    CGRect frame = CGRectMake(0, 18, self.width - self.dateLabel.width, self.dateLabel.height);
+    
+    CGRect frame = CGRectMake(kXOffset, 10, self.width - self.dateLabel.width, self.dateLabel.height);
     if (!VALID_NOTEMPTY(_ratingsView, UIView)) {
         _ratingsView = [[UIView alloc] initWithFrame:frame];
         [self.clickableArea addSubview:_ratingsView];
@@ -56,7 +57,7 @@
 - (UILabel *)getNewRatingCategoryLabel
 {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 20)];
-    [label setFont:JABody3Font];
+    [label setFont:JABodyFont];
     [label setTextColor:JABlack800Color];
     return label;
 }
@@ -83,8 +84,8 @@
 - (UILabel *)dateLabel
 {
     if (!VALID_NOTEMPTY(_dateLabel, UILabel)) {
-        _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(kXOffset, 18, self.width - 32, 20)];
-        [_dateLabel setFont:JABody3Font];
+        _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(kXOffset, 10, self.width - 32, 20)];
+        [_dateLabel setFont:JACaptionFont];
         [_dateLabel setTextColor:JABlack800Color];
         [self.clickableArea addSubview:_dateLabel];
     }
@@ -93,14 +94,15 @@
 
 - (UILabel *)titleLabel
 {
-    CGRect frame = CGRectMake(kXOffset, CGRectGetMaxY(self.ratingsView.frame) + 10.f, self.width - 32, 20);
+    CGRect frame = CGRectMake(kXOffset, CGRectGetMaxY(self.ratingsView.frame) + 6.f, self.width - 32, 20);
     if (!VALID_NOTEMPTY(_titleLabel, UILabel)) {
         _titleLabel = [[UILabel alloc] initWithFrame:frame];
-        [_titleLabel setFont:JAList1Font];
-        [_titleLabel setTextColor:JABlack900Color];
+        [_titleLabel setFont:JABodyFont];
+        [_titleLabel setTextColor:JABlackColor];
         [self.clickableArea addSubview:_titleLabel];
     }else if (CGRectEqualToRect(frame, _titleLabel.frame))
     {
+        frame.size.height = [_titleLabel sizeThatFits:CGSizeMake(self.width - 32, CGFLOAT_MAX)].height;
         [_titleLabel setTextAlignment:NSTextAlignmentLeft];
         [_titleLabel setFrame:frame];
     }
@@ -109,13 +111,14 @@
 
 - (UILabel *)authorLabel
 {
-    CGRect frame = CGRectMake(kXOffset, CGRectGetMaxY(self.titleLabel.frame), self.width - 32, 20);
+    CGRect frame = CGRectMake(kXOffset, CGRectGetMaxY(self.titleLabel.frame) + 10.f, self.width - 32, 20);
     if (!VALID_NOTEMPTY(_authorLabel, UILabel)) {
         _authorLabel = [[UILabel alloc] initWithFrame:frame];
-        [_authorLabel setFont:JABody3Font];
+        [_authorLabel setFont:JABodyFont];
         [_authorLabel setTextColor:JABlack800Color];
         [self.clickableArea addSubview:_authorLabel];
     }else if (CGRectEqualToRect(frame, _authorLabel.frame)) {
+        frame.size.height = [_authorLabel sizeThatFits:CGSizeMake(self.width - 32, CGFLOAT_MAX)].height;
         [_authorLabel setTextAlignment:NSTextAlignmentLeft];
         [_authorLabel setFrame:frame];
     }
@@ -126,7 +129,7 @@
 {
     if (!VALID_NOTEMPTY(_descriptionLabel, UILabel)) {
         _descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(kXOffset, CGRectGetMaxY(self.authorLabel.frame) + 16, self.width - 32, 20)];
-        [_descriptionLabel setFont:JABody3Font];
+        [_descriptionLabel setFont:JABodyFont];
         [_descriptionLabel setTextColor:JABlack800Color];
         [_descriptionLabel setNumberOfLines:0];
         [self.clickableArea addSubview:_descriptionLabel];
@@ -156,7 +159,7 @@
     if (ratingStarViews.count == 1) {
         NSNumber *number = [ratingStarViews firstObject];
         JAProductInfoRatingLine *line = [self getNewRatingLine];
-        [line setX:kXOffset];
+        [line setX:0];
         [line setRatingAverage:number];
         [line setHiddenSum:YES];
         [self.ratingsView setHeight:CGRectGetMaxY(line.frame)];
@@ -205,7 +208,7 @@
     [self.descriptionLabel setText:review.comment];
     [self.descriptionLabel sizeToFit];
     
-    [self setHeight:CGRectGetMaxY(self.descriptionLabel.frame) + 18];
+    [self setHeight:CGRectGetMaxY(self.descriptionLabel.frame) + 10];
     
     [self.clickableArea setFrame:self.bounds];
     

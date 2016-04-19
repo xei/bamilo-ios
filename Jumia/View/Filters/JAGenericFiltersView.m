@@ -106,7 +106,7 @@
         
         
         [(JAColorFilterCell*)cell setFilterOption:[self.filter.options objectAtIndex:indexPath.row]];
-        [(JAColorFilterCell*)cell customAccessoryView].hidden = ![selected boolValue];
+        [(JAColorFilterCell*)cell customAccessoryView].highlighted = [selected boolValue];
         
         [(JAColorFilterCell*)cell clickableView].tag = indexPath.row;
         [[(JAColorFilterCell*)cell clickableView] addTarget:self action:@selector(cellWasPressed:) forControlEvents:UIControlEventTouchUpInside];

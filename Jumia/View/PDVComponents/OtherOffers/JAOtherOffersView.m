@@ -54,7 +54,7 @@
                               width,
                               self.frame.size.height)];
     
-    [self.otherOffersLabel setTextColor:UIColorFromRGB(0x666666)];
+    [self.otherOffersLabel setTextColor:JAGreyColor];
 
     [self.titleLabel setX:6.f];
     self.titleLabel.font = [UIFont fontWithName:kFontRegularName size:self.titleLabel.font.pointSize];
@@ -96,8 +96,8 @@
         [self.otherOffersClickableView addTarget:self action:@selector(pressedOtherOffers) forControlEvents:UIControlEventTouchUpInside];
         
         self.fromLabel = [UILabel new];
-        [self.fromLabel setTextColor:UIColorFromRGB(0x666666)];
-        [self.fromLabel setFont:[UIFont fontWithName:kFontRegularName size:9.0f]];
+        [self.fromLabel setTextColor:JAGreyColor];
+        [self.fromLabel setFont:JAOtherOffersFromLabel];
         self.fromLabel.text = [NSString stringWithFormat:@"%@ ", STRING_FROM];
         [self.fromLabel sizeToFit];
         [self.fromLabel setFrame:CGRectMake(self.otherOffersLabel.frame.origin.x,
@@ -107,8 +107,8 @@
         [self.otherOffersClickableView addSubview:self.fromLabel];
         
         self.offerMinPriceLabel = [UILabel new];
-        [self.offerMinPriceLabel setTextColor:UIColorFromRGB(0xcc0000)];
-        [self.offerMinPriceLabel setFont:[UIFont fontWithName:kFontRegularName size:9.0f]];
+        [self.offerMinPriceLabel setTextColor:JARed1Color];
+        [self.offerMinPriceLabel setFont:JAOtherOffersMinPriceLabel];
         self.offerMinPriceLabel.text = product.offersMinPriceFormatted;
         [self.offerMinPriceLabel sizeToFit];
         [self.offerMinPriceLabel setFrame:CGRectMake(CGRectGetMaxX(self.fromLabel.frame),

@@ -84,9 +84,9 @@
 
 "string_size" = "المقاس";
 
-"string_rating" = "تقييم 1";
+"string_rating" = "1 تقييم";
 
-"string_ratings" = "تقييمات ‪%d‪";
+"string_ratings" = "%d تقييمات";
 
 "string_nratings" = "تعليقات / التقييمات (‎%d‎)";
 
@@ -346,6 +346,8 @@
 
 "update_now" = "تحديث الآن";
 
+"up_to_date" = "تحديث";
+
 "app_version" = "إصدار التطبيق";
 
 "help_center" = "مركز المساعدة";
@@ -400,6 +402,8 @@
 
 "save_label" = "حفظ";
 
+"save_item" = "حفظ المنتج";
+
 "string_campaign_ramaining_stock" = "المخزون المتبقي: %d%%";
 
 "string_campaign_ramaining_stock_without_value" = "المخزون المتبقي";
@@ -416,7 +420,7 @@
 
 "campaign_is_over_resume" = "مع ذلك ، لدينا الكثير من العروض الاخرى الرائعة في انتظاركم .";
 
-"string_format_off_label" = "-%d%%";
+"string_format_off_label" = "‎%d%%-";
 
 "campaigns_label" = "العروض";
 
@@ -570,6 +574,8 @@
 
 "buy" = "شراء";
 
+"buy_combo" = "شراء المجموعة معًا";
+
 "other_sellers" = "بائعين آخرين";
 
 "same_product_from_other_sellers" = "نفس المنتج لبائعين مختلفين";
@@ -699,4 +705,6 @@
 "newsletter_label" = "رسالة جوميا الإخبارية";
 
 "newsletter_preferences" = "تفضيلات الرسالة الإخبارية";
+
+"free_shipping_possible" = "إمكانية الشحن المجاني";
 

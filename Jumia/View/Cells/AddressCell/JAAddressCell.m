@@ -22,7 +22,7 @@
 
 -(void)loadWithAddress:(RIAddress*)address
 {
-    self.backgroundColor = UIColorFromRGB(0xffffff);
+    self.backgroundColor = JAWhiteColor;
     
     self.clickableView.translatesAutoresizingMaskIntoConstraints = YES;
     self.clickableView.frame = self.bounds;

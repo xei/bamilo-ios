@@ -11,13 +11,13 @@
 
 @interface JAReviewCollectionCell : UICollectionViewCell
 
-- (void)setupWithReview:(RIReview *)review
+- (void)setupWithReview:(nonnull RIReview *)review
                   width:(CGFloat)width
           showSeparator:(BOOL)showSeparator;
 
-+ (CGFloat)cellHeightWithReview:(RIReview*)review
++ (CGFloat)cellHeightWithReview:(nonnull RIReview*)review
                           width:(CGFloat)width;
 
-- (void)addTarget:(id)target action:(nonnull SEL)action forControlEvents:(UIControlEvents)controlEvents;
+- (void)addTarget:(nonnull id)target action:(nonnull SEL)action forControlEvents:(UIControlEvents)controlEvents;
 
 @end

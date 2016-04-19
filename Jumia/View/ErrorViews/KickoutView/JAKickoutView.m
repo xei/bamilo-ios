@@ -136,7 +136,7 @@ void(^retryBock)(BOOL dismiss);
     self.firstMessageLabel.numberOfLines = -1;
     self.firstMessageLabel.textAlignment = NSTextAlignmentCenter;
     self.firstMessageLabel.font = [UIFont fontWithName:kFontMediumName size:15.0f];
-    self.firstMessageLabel.textColor = UIColorFromRGB(0xffa200);
+    self.firstMessageLabel.textColor = JAOrange1Color;
     self.firstMessageLabel.text = [STRING_KICKOUT_MESSAGE_1 uppercaseString];
     [self.firstMessageLabel sizeToFit];
     [self.firstMessageLabel setFrame:CGRectMake(self.firstMessageLabel.frame.origin.x,
@@ -154,7 +154,7 @@ void(^retryBock)(BOOL dismiss);
     self.secondMessageLabel.numberOfLines = -1;
     self.secondMessageLabel.textAlignment = NSTextAlignmentCenter;
     self.secondMessageLabel.font = [UIFont fontWithName:kFontLightName size:12.0f];
-    self.secondMessageLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.secondMessageLabel.textColor = JAButtonTextOrange;
     self.secondMessageLabel.text = STRING_KICKOUT_MESSAGE_2;
     [self.secondMessageLabel sizeToFit];
     [self.secondMessageLabel setFrame:CGRectMake(self.secondMessageLabel.frame.origin.x,
@@ -172,7 +172,7 @@ void(^retryBock)(BOOL dismiss);
     self.thirdMessageLabel.numberOfLines = -1;
     self.thirdMessageLabel.textAlignment = NSTextAlignmentCenter;
     self.thirdMessageLabel.font = [UIFont fontWithName:kFontMediumName size:12.0f];
-    self.thirdMessageLabel.textColor = UIColorFromRGB(0x4e4e4e);
+    self.thirdMessageLabel.textColor = JAButtonTextOrange;
     self.thirdMessageLabel.text = STRING_KICKOUT_MESSAGE_3;
     [self.thirdMessageLabel sizeToFit];
     [self.thirdMessageLabel setFrame:CGRectMake(self.thirdMessageLabel.frame.origin.x,

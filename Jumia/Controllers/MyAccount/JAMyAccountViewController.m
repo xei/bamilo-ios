@@ -8,7 +8,7 @@
 
 #import "JAMyAccountViewController.h"
 #import "JAProductInfoHeaderLine.h"
-#import "JAProductInfoSubLine.h"
+#import "JAProductInfoSingleLine.h"
 #import "JAProductInfoSubtitleLine.h"
 #import "JAProductInfoSwitchLine.h"
 #import "JAProductInfoRightSubtitleLine.h"
@@ -27,25 +27,25 @@
 @property (strong, nonatomic) UIScrollView* mainScrollView;
 
 @property (strong, nonatomic) JAProductInfoHeaderLine *accountSettingsHeaderLine;
-@property (strong, nonatomic) JAProductInfoSubLine *profileSubLine;
-@property (strong, nonatomic) JAProductInfoSubLine *myAddressesSubLine;
+@property (strong, nonatomic) JAProductInfoSingleLine *profileSingleLine;
+@property (strong, nonatomic) JAProductInfoSingleLine *myAddressesSingleLine;
 
 @property (strong, nonatomic) JAProductInfoHeaderLine *notificationSettingsHeaderLine;
 @property (strong, nonatomic) JAProductInfoSwitchLine *pushNotificationsSwitchLine;
-@property (strong, nonatomic) JAProductInfoSubLine *emailNotificationsSubLine;
+@property (strong, nonatomic) JAProductInfoSingleLine *emailNotificationsSingleLine;
 
 @property (strong, nonatomic) JAProductInfoHeaderLine *shopSettingsHeaderLine;
 @property (strong, nonatomic) JAProductInfoSubtitleLine *countrySubtitleLine;
 @property (strong, nonatomic) JAProductInfoSubtitleLine *languageSubtitleLine;
 
 @property (strong, nonatomic) JAProductInfoHeaderLine *moreSettingsHeaderLine;
-@property (strong, nonatomic) JAProductInfoRightSubtitleLine *appVersionSubLine;
+@property (strong, nonatomic) JAProductInfoRightSubtitleLine *appVersionSubtitleLine;
 @property (strong, nonatomic) NSMutableArray *moreSettingsLines;
 @property (strong, nonatomic) NSArray *moreFaqAndTermsItems;
 
 @property (strong, nonatomic) JAProductInfoHeaderLine *appSocialHeaderLine;
-@property (strong, nonatomic) JAProductInfoSubLine *shareTheAppSubLine;
-@property (strong, nonatomic) JAProductInfoSubLine *rateTheAppSubLine;
+@property (strong, nonatomic) JAProductInfoSingleLine *shareTheAppSingleLine;
+@property (strong, nonatomic) JAProductInfoSingleLine *rateTheAppSingleLine;
 
 @property (strong, nonatomic) UIPopoverController *currentPopoverController;
 
@@ -61,20 +61,20 @@
         _mainScrollView = [[UIScrollView alloc] initWithFrame:self.viewBounds];
         [self.view addSubview:_mainScrollView];
         [_mainScrollView addSubview:self.accountSettingsHeaderLine];
-        [_mainScrollView addSubview:self.profileSubLine];
-        [_mainScrollView addSubview:self.myAddressesSubLine];
+        [_mainScrollView addSubview:self.profileSingleLine];
+        [_mainScrollView addSubview:self.myAddressesSingleLine];
         [_mainScrollView addSubview:self.notificationSettingsHeaderLine];
         [_mainScrollView addSubview:self.pushNotificationsSwitchLine];
-        [_mainScrollView addSubview:self.emailNotificationsSubLine];
+        [_mainScrollView addSubview:self.emailNotificationsSingleLine];
         [_mainScrollView addSubview:self.shopSettingsHeaderLine];
         [_mainScrollView addSubview:self.countrySubtitleLine];
         [_mainScrollView addSubview:self.languageSubtitleLine];
         [_mainScrollView addSubview:self.moreSettingsHeaderLine];
-        [_mainScrollView addSubview:self.appVersionSubLine];
+        [_mainScrollView addSubview:self.appVersionSubtitleLine];
         [self getFaqAndTerms];
         [_mainScrollView addSubview:self.appSocialHeaderLine];
-        [_mainScrollView addSubview:self.shareTheAppSubLine];
-        [_mainScrollView addSubview:self.rateTheAppSubLine];
+        [_mainScrollView addSubview:self.shareTheAppSingleLine];
+        [_mainScrollView addSubview:self.rateTheAppSingleLine];
     }
 
     return _mainScrollView;
@@ -89,31 +89,31 @@
     return _accountSettingsHeaderLine;
 }
 
-- (JAProductInfoSubLine *)profileSubLine
+- (JAProductInfoSingleLine *)profileSingleLine
 {
-    if (!VALID(_profileSubLine, JAProductInfoSubLine)) {
-        _profileSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.accountSettingsHeaderLine.frame), self.mainScrollView.width, kProductInfoSubLineHeight)];
-        [_profileSubLine setTopSeparatorVisibility:NO];
-        [_profileSubLine setTitle:STRING_PROFILE];
-        [_profileSubLine addTarget:self action:@selector(profileSelection) forControlEvents:UIControlEventTouchUpInside];
+    if (!VALID(_profileSingleLine, JAProductInfoSingleLine)) {
+        _profileSingleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.accountSettingsHeaderLine.frame), self.mainScrollView.width, kProductInfoSingleLineHeight)];
+        [_profileSingleLine setTopSeparatorVisibility:NO];
+        [_profileSingleLine setTitle:STRING_PROFILE];
+        [_profileSingleLine addTarget:self action:@selector(profileSelection) forControlEvents:UIControlEventTouchUpInside];
     }
-    return _profileSubLine;
+    return _profileSingleLine;
 }
 
-- (JAProductInfoSubLine *)myAddressesSubLine
+- (JAProductInfoSingleLine *)myAddressesSingleLine
 {
-    if (!VALID(_myAddressesSubLine, JAProductInfoSubLine)) {
-        _myAddressesSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.profileSubLine.frame), self.mainScrollView.width, kProductInfoSubLineHeight)];
-        [_myAddressesSubLine setTitle:STRING_MY_ADDRESSES];
-        [_myAddressesSubLine addTarget:self action:@selector(myAddressesSelection) forControlEvents:UIControlEventTouchUpInside];
+    if (!VALID(_myAddressesSingleLine, JAProductInfoSingleLine)) {
+        _myAddressesSingleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.profileSingleLine.frame), self.mainScrollView.width, kProductInfoSingleLineHeight)];
+        [_myAddressesSingleLine setTitle:STRING_MY_ADDRESSES];
+        [_myAddressesSingleLine addTarget:self action:@selector(myAddressesSelection) forControlEvents:UIControlEventTouchUpInside];
     }
-    return _myAddressesSubLine;
+    return _myAddressesSingleLine;
 }
 
 - (JAProductInfoHeaderLine *)notificationSettingsHeaderLine
 {
     if (!VALID(_notificationSettingsHeaderLine, JAProductInfoHeaderLine)) {
-        _notificationSettingsHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.myAddressesSubLine.frame), self.mainScrollView.width, kProductInfoHeaderLineHeight)];
+        _notificationSettingsHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.myAddressesSingleLine.frame), self.mainScrollView.width, kProductInfoHeaderLineHeight)];
         [_notificationSettingsHeaderLine setTitle:[STRING_NOTIFICATIONS_SETTINGS uppercaseString]];
     }
     return _notificationSettingsHeaderLine;
@@ -122,7 +122,7 @@
 - (JAProductInfoSwitchLine *)pushNotificationsSwitchLine
 {
     if (!VALID(_pushNotificationsSwitchLine, JAProductInfoSwitchLine)) {
-        _pushNotificationsSwitchLine = [[JAProductInfoSwitchLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.notificationSettingsHeaderLine.frame), self.mainScrollView.width, kProductInfoSubLineHeight)];
+        _pushNotificationsSwitchLine = [[JAProductInfoSwitchLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.notificationSettingsHeaderLine.frame), self.mainScrollView.width, kProductInfoSingleLineHeight)];
         [_pushNotificationsSwitchLine setTopSeparatorVisibility:NO];
         [_pushNotificationsSwitchLine setTitle:STRING_PUSH_NOTIFICATIONS];
         [_pushNotificationsSwitchLine.lineSwitch setAccessibilityLabel:STRING_NOTIFICATIONS];
@@ -131,20 +131,20 @@
     return _pushNotificationsSwitchLine;
 }
 
-- (JAProductInfoSubLine *)emailNotificationsSubLine
+- (JAProductInfoSingleLine *)emailNotificationsSingleLine
 {
-    if (!VALID(_emailNotificationsSubLine, JAProductInfoSubLine)) {
-        _emailNotificationsSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.pushNotificationsSwitchLine.frame), self.mainScrollView.width, kProductInfoSubLineHeight)];
-        [_emailNotificationsSubLine setTitle:STRING_NEWSLETTER];
-        [_emailNotificationsSubLine addTarget:self action:@selector(emailNotificationSelection) forControlEvents:UIControlEventTouchUpInside];
+    if (!VALID(_emailNotificationsSingleLine, JAProductInfoSingleLine)) {
+        _emailNotificationsSingleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.pushNotificationsSwitchLine.frame), self.mainScrollView.width, kProductInfoSingleLineHeight)];
+        [_emailNotificationsSingleLine setTitle:STRING_NEWSLETTER];
+        [_emailNotificationsSingleLine addTarget:self action:@selector(emailNotificationSelection) forControlEvents:UIControlEventTouchUpInside];
     }
-    return _emailNotificationsSubLine;
+    return _emailNotificationsSingleLine;
 }
 
 - (JAProductInfoHeaderLine *)shopSettingsHeaderLine
 {
     if (!VALID(_shopSettingsHeaderLine, JAProductInfoHeaderLine)) {
-        _shopSettingsHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.emailNotificationsSubLine.frame), self.mainScrollView.width, kProductInfoHeaderLineHeight)];
+        _shopSettingsHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.emailNotificationsSingleLine.frame), self.mainScrollView.width, kProductInfoHeaderLineHeight)];
         [_shopSettingsHeaderLine setTitle:[STRING_SHOP_SETTINGS uppercaseString]];
     }
     return _shopSettingsHeaderLine;
@@ -190,26 +190,26 @@
     return _moreSettingsHeaderLine;
 }
 
-- (JAProductInfoRightSubtitleLine *)appVersionSubLine
+- (JAProductInfoRightSubtitleLine *)appVersionSubtitleLine
 {
-    if (!VALID(_appVersionSubLine, JAProductInfoRightSubtitleLine)) {
-        _appVersionSubLine = [[JAProductInfoRightSubtitleLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.moreSettingsHeaderLine.frame), self.mainScrollView.width, kProductInfoRightSubtitleLineHeight)];
-        [_appVersionSubLine setTopSeparatorVisibility:NO];
+    if (!VALID(_appVersionSubtitleLine, JAProductInfoRightSubtitleLine)) {
+        _appVersionSubtitleLine = [[JAProductInfoRightSubtitleLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.moreSettingsHeaderLine.frame), self.mainScrollView.width, kProductInfoRightSubtitleLineHeight)];
+        [_appVersionSubtitleLine setTopSeparatorVisibility:NO];
         if([self isLastVersion])
         {
-            [_appVersionSubLine setHeight:kProductInfoSubLineHeight];
+            [_appVersionSubtitleLine setRightSubTitle:STRING_UP_TO_DATE];
         }else{
-            [_appVersionSubLine addTarget:self action:@selector(openAppStore) forControlEvents:UIControlEventTouchUpInside];
-            [_appVersionSubLine setRightSubTitle:STRING_UPDATE_NOW];
+            [_appVersionSubtitleLine addTarget:self action:@selector(openAppStore) forControlEvents:UIControlEventTouchUpInside];
+            [_appVersionSubtitleLine setRightSubTitle:STRING_UPDATE_NOW];
         }
 //        version
-        [_appVersionSubLine setRightTitle:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
+        [_appVersionSubtitleLine setRightTitle:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
 //        build
-//        [_appVersionSubLine setRightTitle:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
-        [_appVersionSubLine setTitle:STRING_APP_VERSION];
-        self.moreSettingsLines = [[NSMutableArray alloc] initWithObjects:_appVersionSubLine, nil];
+//        [_appVersionSubtitleLine setRightTitle:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
+        [_appVersionSubtitleLine setTitle:STRING_APP_VERSION];
+        self.moreSettingsLines = [[NSMutableArray alloc] initWithObjects:_appVersionSubtitleLine, nil];
     }
-    return _appVersionSubLine;
+    return _appVersionSubtitleLine;
 }
 
 - (JAProductInfoHeaderLine *)appSocialHeaderLine
@@ -221,25 +221,25 @@
     return _appSocialHeaderLine;
 }
 
-- (JAProductInfoSubLine *)shareTheAppSubLine
+- (JAProductInfoSingleLine *)shareTheAppSingleLine
 {
-    if (!VALID(_shareTheAppSubLine, JAProductInfoSubLine)) {
-        _shareTheAppSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.appSocialHeaderLine.frame), self.mainScrollView.width, kProductInfoSubLineHeight)];
-        [_shareTheAppSubLine setTopSeparatorVisibility:NO];
-        [_shareTheAppSubLine setTitle:STRING_SHARE_THE_APP];
-        [_shareTheAppSubLine addTarget:self action:@selector(shareTheAppSelection) forControlEvents:UIControlEventTouchUpInside];
+    if (!VALID(_shareTheAppSingleLine, JAProductInfoSingleLine)) {
+        _shareTheAppSingleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.appSocialHeaderLine.frame), self.mainScrollView.width, kProductInfoSingleLineHeight)];
+        [_shareTheAppSingleLine setTopSeparatorVisibility:NO];
+        [_shareTheAppSingleLine setTitle:STRING_SHARE_THE_APP];
+        [_shareTheAppSingleLine addTarget:self action:@selector(shareTheAppSelection) forControlEvents:UIControlEventTouchUpInside];
     }
-    return _shareTheAppSubLine;
+    return _shareTheAppSingleLine;
 }
 
-- (JAProductInfoSubLine *)rateTheAppSubLine
+- (JAProductInfoSingleLine *)rateTheAppSingleLine
 {
-    if (!VALID(_rateTheAppSubLine, JAProductInfoSubLine)) {
-        _rateTheAppSubLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.shareTheAppSubLine.frame), self.mainScrollView.width, kProductInfoSubLineHeight)];
-        [_rateTheAppSubLine setTitle:STRING_RATE_THE_APP];
-        [_rateTheAppSubLine addTarget:self action:@selector(rateTheAppSelection) forControlEvents:UIControlEventTouchUpInside];
+    if (!VALID(_rateTheAppSingleLine, JAProductInfoSingleLine)) {
+        _rateTheAppSingleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.shareTheAppSingleLine.frame), self.mainScrollView.width, kProductInfoSingleLineHeight)];
+        [_rateTheAppSingleLine setTitle:STRING_RATE_THE_APP];
+        [_rateTheAppSingleLine addTarget:self action:@selector(rateTheAppSelection) forControlEvents:UIControlEventTouchUpInside];
     }
-    return _rateTheAppSubLine;
+    return _rateTheAppSingleLine;
 }
 
 #pragma mark - View life cycle
@@ -251,6 +251,8 @@
     
     self.navBarLayout.title = STRING_MY_ACCOUNT;
     self.navBarLayout.showCartButton = NO;
+    self.navBarLayout.showSeparatorView = NO;
+    self.searchBarIsVisible = YES;
     self.tabBarIsVisible = YES;
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
@@ -265,6 +267,9 @@
             //found it
             self.languageSubtitleLine.subTitle = language.langName;
         }
+    }
+    if ([RICountryConfiguration getCurrentConfiguration].languages.count == 1) {
+        [self.languageSubtitleLine setHidden:YES];
     }
     
     [self.countrySubtitleLine setSubTitle:[RIApi getCountryNameInUse]];
@@ -309,24 +314,58 @@
 {
     [_reloadLock lock];
     [self.mainScrollView setFrame:self.viewBounds];
-    [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, CGRectGetMaxY(self.rateTheAppSubLine.frame))];
+    [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, CGRectGetMaxY(self.rateTheAppSingleLine.frame))];
     
     [self.accountSettingsHeaderLine setWidth:self.mainScrollView.width];
-    [self.profileSubLine setWidth:self.mainScrollView.width];
-    [self.myAddressesSubLine setWidth:self.mainScrollView.width];
+    [self.profileSingleLine setWidth:self.mainScrollView.width];
+    [self.myAddressesSingleLine setWidth:self.mainScrollView.width];
     [self.notificationSettingsHeaderLine setWidth:self.mainScrollView.width];
     [self.pushNotificationsSwitchLine setWidth:self.mainScrollView.width];
-    [self.emailNotificationsSubLine setWidth:self.mainScrollView.width];
+    [self.emailNotificationsSingleLine setWidth:self.mainScrollView.width];
+    
+    CGFloat lastYOffset = CGRectGetMaxY(self.emailNotificationsSingleLine.frame);
+    
     [self.shopSettingsHeaderLine setWidth:self.mainScrollView.width];
+    
+    RICountry* uniqueCountry = [RICountry getUniqueCountry];
+    if (VALID_NOTEMPTY(uniqueCountry, RICountry)) {
+        [self.shopSettingsHeaderLine setHidden:YES];
+        [self.countrySubtitleLine setHidden:YES];
+    }else{
+        lastYOffset = CGRectGetMaxY(self.countrySubtitleLine.frame);
+    }
+    
     [self.countrySubtitleLine setWidth:self.mainScrollView.width];
     [self.languageSubtitleLine setWidth:self.mainScrollView.width];
-    [self.moreSettingsHeaderLine setWidth:self.mainScrollView.width];
-    for (UIView *view in self.moreSettingsLines) {
-        [view setWidth:self.mainScrollView.width];
+    
+    if ([RICountryConfiguration getCurrentConfiguration].languages.count == 1) {
+        [self.languageSubtitleLine setHidden:YES];
+    }else{
+        if (self.shopSettingsHeaderLine.hidden) {
+            [self.shopSettingsHeaderLine setHidden:NO];
+            [self.languageSubtitleLine setY:CGRectGetMaxY(self.shopSettingsHeaderLine.frame)];
+            [self.languageSubtitleLine setTopSeparatorVisibility:NO];
+        }else{
+            [self.languageSubtitleLine setY:CGRectGetMaxY(self.countrySubtitleLine.frame)];
+        }
+        lastYOffset = CGRectGetMaxY(self.languageSubtitleLine.frame);
     }
+    [self.moreSettingsHeaderLine setY:lastYOffset];
+    [self.moreSettingsHeaderLine setWidth:self.mainScrollView.width];
+    lastYOffset = CGRectGetMaxY(self.moreSettingsHeaderLine.frame);
+    for (UIView *view in self.moreSettingsLines) {
+        [view setY:lastYOffset];
+        [view setWidth:self.mainScrollView.width];
+        lastYOffset = CGRectGetMaxY(view.frame);
+    }
+    [self.appSocialHeaderLine setY:lastYOffset];
     [self.appSocialHeaderLine setWidth:self.mainScrollView.width];
-    [self.shareTheAppSubLine setWidth:self.mainScrollView.width];
-    [self.rateTheAppSubLine setWidth:self.mainScrollView.width];
+    lastYOffset = CGRectGetMaxY(self.appSocialHeaderLine.frame);
+    [self.shareTheAppSingleLine setY:lastYOffset];
+    [self.shareTheAppSingleLine setWidth:self.mainScrollView.width];
+    lastYOffset = CGRectGetMaxY(self.shareTheAppSingleLine.frame);
+    [self.rateTheAppSingleLine setWidth:self.mainScrollView.width];
+    [self.rateTheAppSingleLine setY:lastYOffset];
     
     if (RI_IS_RTL)
     {
@@ -338,9 +377,9 @@
 - (void)adjustViews
 {
     [self.appSocialHeaderLine setYBottomOf:[self.moreSettingsLines lastObject] at:0.f];
-    [self.shareTheAppSubLine setYBottomOf:self.appSocialHeaderLine at:0.f];
-    [self.rateTheAppSubLine setYBottomOf:self.shareTheAppSubLine at:0.f];
-    [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, CGRectGetMaxY(self.rateTheAppSubLine.frame))];
+    [self.shareTheAppSingleLine setYBottomOf:self.appSocialHeaderLine at:0.f];
+    [self.rateTheAppSingleLine setYBottomOf:self.shareTheAppSingleLine at:0.f];
+    [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, CGRectGetMaxY(self.rateTheAppSingleLine.frame))];
 }
 
 #pragma mark - Data
@@ -356,7 +395,7 @@
         for (id object in faqAndTerms) {
             NSString *label = [object objectForKey:@"label"];
             if (VALID_NOTEMPTY([object objectForKey:@"label"], NSString)) {
-                JAProductInfoSubLine *moreItemLine = [[JAProductInfoSubLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY([(JAProductInfoBaseLine *)[self.moreSettingsLines lastObject] frame]), self.mainScrollView.width, kProductInfoSubLineHeight)];
+                JAProductInfoSingleLine *moreItemLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY([(JAProductInfoBaseLine *)[self.moreSettingsLines lastObject] frame]), self.mainScrollView.width, kProductInfoSingleLineHeight)];
                 [moreItemLine setTitle:label];
                 [moreItemLine addTarget:self action:@selector(moreSelection:) forControlEvents:UIControlEventTouchUpInside];
                 [moreItemLine setTag:i];
@@ -482,14 +521,14 @@
     
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
     {
-        CGRect sharePopoverRect = CGRectMake(self.shareTheAppSubLine.frame.size.width / 2,
-                                             self.shareTheAppSubLine.frame.size.height - 6.0f,
+        CGRect sharePopoverRect = CGRectMake(self.shareTheAppSingleLine.frame.size.width / 2,
+                                             self.shareTheAppSingleLine.frame.size.height - 6.0f,
                                              0.0f,
                                              0.0f);
         
         UIPopoverController* popoverController =
         [[UIPopoverController alloc] initWithContentViewController:activityController];
-        [popoverController presentPopoverFromRect:sharePopoverRect inView:self.shareTheAppSubLine permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+        [popoverController presentPopoverFromRect:sharePopoverRect inView:self.shareTheAppSingleLine permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
         popoverController.passthroughViews = nil;
         self.currentPopoverController = popoverController;
     }

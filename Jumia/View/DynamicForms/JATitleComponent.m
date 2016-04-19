@@ -22,7 +22,7 @@
     if (!VALID_NOTEMPTY(_titleLabel, UILabel)) {
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(16.0f, 0.0f, self.width - 16.0*2, 20.0f)];
         [_titleLabel setTextColor:JABlackColor];
-        [_titleLabel setFont:JACaption2Font];
+        [_titleLabel setFont:JAHEADLINEFont];
         [self addSubview:_titleLabel];
     }
     return _titleLabel;

@@ -36,9 +36,9 @@
 {
     if (!VALID_NOTEMPTY(_textField, UITextField)) {
         _textField = [[UITextField alloc] initWithFrame:CGRectMake(0, self.height - 28, self.width, 20)];
-        [_textField setFont:JAList2Font];
+        [_textField setFont:JAListFont];
         [_textField setTextColor:JABlackColor];
-        [_textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
+        [_textField setValue:JATextFieldColor forKeyPath:@"_placeholderLabel.textColor"];
         [self addSubview:_textField];
     }
     return _textField;
@@ -195,8 +195,8 @@
 -(void)setError:(NSString*)error
 {
     self.textField.font = [UIFont fontWithName:kFontRegularName size:self.textField.font.pointSize];
-    [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
-    [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];
+    [self.textField setTextColor:JARed1Color];
+    [self.textField setValue:JARed1Color forKeyPath:@"_placeholderLabel.textColor"];
     
     if(ISEMPTY(self.textField.text))
     {
@@ -208,8 +208,8 @@
 -(void)cleanError
 {
     self.textField.font = [UIFont fontWithName:kFontRegularName size:self.textField.font.pointSize];
-    [self.textField setTextColor:UIColorFromRGB(0x000000)];
-    [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
+    [self.textField setTextColor:JABlackColor];
+    [self.textField setValue:JATextFieldColor forKeyPath:@"_placeholderLabel.textColor"];
     if (NO == self.textField.enabled) {
         [self.textField setTextColor:JABlack700Color];
     }
@@ -226,19 +226,19 @@
     self.textField.font = [UIFont fontWithName:kFontRegularName size:self.textField.font.pointSize];
     if (([self.field.required boolValue]) && (self.textField.text.length == 0))
     {
-        [self.textField setTextColor:UIColorFromRGB(0xcc0000)];
-        [self.textField setValue:UIColorFromRGB(0xcc0000) forKeyPath:@"_placeholderLabel.textColor"];
+        [self.textField setTextColor:JARed1Color];
+        [self.textField setValue:JARed1Color forKeyPath:@"_placeholderLabel.textColor"];
         self.currentErrorMessage = self.field.requiredMessage;
         
         return NO;
     }
     
     self.currentErrorMessage = nil;
-    [self.textField setTextColor:UIColorFromRGB(0x000000)];
+    [self.textField setTextColor:JABlackColor];
     if (NO == self.textField.enabled) {
         [self.textField setTextColor:JABlack700Color];
     }
-    [self.textField setValue:UIColorFromRGB(0xcccccc) forKeyPath:@"_placeholderLabel.textColor"];
+    [self.textField setValue:JATextFieldColor forKeyPath:@"_placeholderLabel.textColor"];
     
     return YES;
 }

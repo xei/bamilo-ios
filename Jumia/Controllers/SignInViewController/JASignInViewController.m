@@ -13,18 +13,18 @@
 #import "JAUtils.h"
 #import "JABottomBar.h"
 #import "JAAuthenticationViewController.h"
+#import "JAAccountServicesView.h"
 
 #define kSideMargin 16
-#define kTopMargin 36
-#define kSubTitleMargin 6
-#define kBeforeDynamicFormMargin 4
-#define kDynamicFormMargin 28
+#define kTopMargin 30
+#define kSubTitleMargin 20
+#define kBeforeDynamicFormMargin 30
 #define kForgotPasswordMargin 16
-#define kLoginButtonMargin 48
+#define kLoginButtonMargin 20
 
 #define kIPadWidth 288
 
-@interface JASignInViewController() <JADynamicFormDelegate>
+@interface JASignInViewController() <JADynamicFormDelegate, JAAccountServicesProtocol>
 {
     CGFloat _elementsWidth;
     UIView *_firstResponder;
@@ -33,6 +33,8 @@
 @property (strong, nonatomic) UIScrollView *mainScrollView;
 @property (strong, nonatomic) UILabel *titleLabel;
 @property (strong, nonatomic) UILabel *subTitleLabel;
+@property (strong, nonatomic) JAAccountServicesView *casAccountServicesImagesView;
+@property (strong, nonatomic) UILabel *casSubtitleLabel;
 @property (strong, nonatomic) JADynamicForm *dynamicForm;
 @property (strong, nonatomic) UIButton *forgotPasswordButton;
 @property (strong, nonatomic) JABottomBar *loginButton;
@@ -68,10 +70,50 @@
         [_titleLabel setFont:JADisplay2Font];
         [_titleLabel setTextColor:JABlackColor];
         [_titleLabel setText:STRING_LOGIN_WELCOME_BACK];
-        [_titleLabel sizeToFit];
-        [_titleLabel setWidth:_elementsWidth];
+        
+        if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue) {
+            if (VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casTitle, NSString)) {
+                [_titleLabel setText:[RICountryConfiguration getCurrentConfiguration].casTitle];
+            }
+        }
+        [_titleLabel sizeHeightToFit];
     }
     return _titleLabel;
+}
+
+- (UILabel *)casSubtitleLabel
+{
+    if (!VALID_NOTEMPTY(_casSubtitleLabel, UILabel)) {
+        _casSubtitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(kSideMargin, CGRectGetMaxY(self.titleLabel.frame) + kSubTitleMargin, _elementsWidth, 30)];
+        [_casSubtitleLabel setTextAlignment:NSTextAlignmentCenter];
+        [_casSubtitleLabel setNumberOfLines:0];
+        [_casSubtitleLabel setFont:JABodyFont];
+        [_casSubtitleLabel setTextColor:JABlack800Color];
+        [_casSubtitleLabel setHidden:YES];
+        if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue && VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casSubtitle, NSString)) {
+            [_casSubtitleLabel setHidden:NO];
+            [_casSubtitleLabel setText:[RICountryConfiguration getCurrentConfiguration].casSubtitle];
+        }
+        [_casSubtitleLabel sizeHeightToFit];
+    }
+    return _casSubtitleLabel;
+}
+
+- (JAAccountServicesView *)casAccountServicesImagesView
+{
+    if (!VALID_NOTEMPTY(_casAccountServicesImagesView, JAAccountServicesView)) {
+        _casAccountServicesImagesView = [[JAAccountServicesView alloc] initWithFrame:CGRectMake(kSideMargin, CGRectGetMaxY(self.titleLabel.frame) + kSubTitleMargin, _elementsWidth, 0.f)]; // view will define its height
+        [_casAccountServicesImagesView setHidden:YES];
+        if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue && VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casImages, NSArray)) {
+            [_casAccountServicesImagesView setHidden:NO];
+            [_casAccountServicesImagesView setAccountServicesArray:[RICountryConfiguration getCurrentConfiguration].casImages];
+            [_casAccountServicesImagesView setDelegate:self];
+            if (VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casSubtitle, NSString)) {
+                [_casAccountServicesImagesView setY:CGRectGetMaxY(self.casSubtitleLabel.frame) + kSubTitleMargin];
+            }
+        }
+    }
+    return _casAccountServicesImagesView;
 }
 
 - (UILabel *)subTitleLabel
@@ -79,16 +121,24 @@
     if (!VALID_NOTEMPTY(_subTitleLabel, UILabel)) {
         _subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(
                                                                    kSideMargin,
-                                                                   CGRectGetMaxY(self.titleLabel.frame) + kSubTitleMargin,
+                                                                   CGRectGetMaxY(self.titleLabel.frame) + kBeforeDynamicFormMargin,
                                                                    _elementsWidth,
                                                                    60)];
         [_subTitleLabel setTextAlignment:NSTextAlignmentCenter];
         [_subTitleLabel setNumberOfLines:0];
-        [_subTitleLabel setFont:JACaptionFont];
+        [_subTitleLabel setFont:JABodyFont];
         [_subTitleLabel setTextColor:JABlack800Color];
         [_subTitleLabel setText:STRING_LOGIN_ENTER_PASSWORD_TO_CONTINUE];
-        [_subTitleLabel sizeToFit];
-        [_subTitleLabel setWidth:_elementsWidth];
+        
+        if ([RICountryConfiguration getCurrentConfiguration].casIsActive.boolValue) {
+            if (VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casSubtitle, NSString)) {
+                [_subTitleLabel setY:CGRectGetMaxY(self.casSubtitleLabel.frame) + kBeforeDynamicFormMargin];
+            }
+            if (VALID_NOTEMPTY([RICountryConfiguration getCurrentConfiguration].casImages, NSArray)) {
+                [_subTitleLabel setY:CGRectGetMaxY(self.casAccountServicesImagesView.frame) + kBeforeDynamicFormMargin];
+            }
+        }
+        [_subTitleLabel sizeHeightToFit];
     }
     return _subTitleLabel;
 }
@@ -102,11 +152,9 @@
                                                    CGRectGetMaxY(self.subTitleLabel.frame) + kForgotPasswordMargin,
                                                    _elementsWidth,
                                                    _forgotPasswordButton.height)];
-        [_forgotPasswordButton.titleLabel setFont:JACaptionFont];
+        [_forgotPasswordButton.titleLabel setFont:JABodyFont];
         [_forgotPasswordButton setTitle:STRING_FORGOT_YOUR_PASSWORD forState:UIControlStateNormal];
         [_forgotPasswordButton setTitleColor:JABlue1Color forState:UIControlStateNormal];
-        /*[self.forgotPasswordButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateHighlighted];
-         [self.forgotPasswordButton setTitleColor:UIColorFromRGB(0xfaa41a) forState:UIControlStateSelected];*/
         [_forgotPasswordButton addTarget:self action:@selector(forgotPasswordButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [_forgotPasswordButton sizeToFit];
         [_forgotPasswordButton setX:self.mainScrollView.width - self.forgotPasswordButton.width - kSideMargin];
@@ -159,10 +207,15 @@
     self.navBarLayout.showSearchButton = YES;
     
     _elementsWidth = self.viewBounds.size.width - (kSideMargin * 2);
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        _elementsWidth = kIPadWidth;
+    }
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:self.mainScrollView];
     [self.mainScrollView addSubview:self.titleLabel];
+    [self.mainScrollView addSubview:self.casSubtitleLabel];
+    [self.mainScrollView addSubview:self.casAccountServicesImagesView];
     [self.mainScrollView addSubview:self.subTitleLabel];
     [self.mainScrollView addSubview:self.forgotPasswordButton];
     [self.mainScrollView addSubview:self.loginButton];
@@ -211,7 +264,9 @@
     [RIForm getForm:@"login"
        successBlock:^(RIForm *form)
      {
-         self.dynamicForm = [[JADynamicForm alloc] initWithForm:form values:@{@"email" : self.authenticationEmail} startingPosition:0.0f hasFieldNavigation:YES];
+         CGFloat yOffset = CGRectGetMaxY(self.subTitleLabel.frame) + kSubTitleMargin;
+         
+         self.dynamicForm = [[JADynamicForm alloc] initWithForm:form values:@{@"email" : self.authenticationEmail} startingPosition:yOffset hasFieldNavigation:YES];
          [self.dynamicForm setDelegate:self];
          
          for(UIView *view in self.dynamicForm.formViews)
@@ -240,10 +295,9 @@
 #pragma mark - Action
 - (void)setupViewsVertically
 {
-    CGFloat dynamicFormCurrentY = CGRectGetMaxY(self.subTitleLabel.frame) + kBeforeDynamicFormMargin;
+    CGFloat dynamicFormCurrentY = 0.f;
     for (UIView *view in self.dynamicForm.formViews) {
         [view setX:kSideMargin];
-        [view setY:dynamicFormCurrentY + kDynamicFormMargin];
         dynamicFormCurrentY = CGRectGetMaxY(view.frame);
     }
     
@@ -258,44 +312,19 @@
 
 - (void)setupViewsHorizontally
 {
-    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        CGFloat middleX = (self.mainScrollView.width / 2);
-        
-        [self.titleLabel setWidth:kIPadWidth];
-        [self.titleLabel setX:middleX - (self.titleLabel.width / 2)];
-        
-        [self.subTitleLabel setWidth:kIPadWidth];
-        [self.subTitleLabel setX:middleX - (self.subTitleLabel.width / 2)];
-        
-        for(UIView *view in self.dynamicForm.formViews)
-        {
-            [view setWidth:kIPadWidth];
-            [view setX:middleX - (view.width / 2)];
-        }
-        
-        [self.forgotPasswordButton setX:middleX + (kIPadWidth / 2) - self.forgotPasswordButton.width];
-        
-        [self.loginButton setWidth:kIPadWidth];
-        [self.loginButton setX:middleX - (self.loginButton.width / 2)];
-        
-    } else {
-        [self.titleLabel setWidth:_elementsWidth];
-        [self.titleLabel setX:kSideMargin];
-        
-        [self.subTitleLabel setWidth:_elementsWidth];
-        [self.subTitleLabel setX:kSideMargin];
-        
-        for(UIView *view in self.dynamicForm.formViews)
-        {
-            [view setWidth:_elementsWidth];
-            [view setX:kSideMargin];
-        }
-        
-        [self.forgotPasswordButton setX:self.mainScrollView.width - self.forgotPasswordButton.width - kSideMargin];
-        
-        [self.loginButton setWidth:_elementsWidth];
-        [self.loginButton setX:kSideMargin];
+    [self.titleLabel setXCenterAligned];
+    [self.casSubtitleLabel setXCenterAligned];
+    [self.casAccountServicesImagesView setXCenterAligned];
+    [self.subTitleLabel setXCenterAligned];
+    
+    for(UIView *view in self.dynamicForm.formViews)
+    {
+        [view setXCenterAligned];
     }
+    
+    [self.loginButton setWidth:_elementsWidth];
+    [self.loginButton setXCenterAligned];
+    [self.forgotPasswordButton setX:CGRectGetMaxX(self.loginButton.frame) - self.forgotPasswordButton.width];
     
     if(self.firstLoading)
     {
@@ -334,6 +363,7 @@
           parameters:[self.dynamicForm getValues]
         successBlock:^(id object, NSArray* successMessages)
      {
+         [RICustomer resetCustomerAsGuest];
          [self.dynamicForm resetValues];
          
          if ([object isKindOfClass:[NSDictionary class]]) {
@@ -498,6 +528,12 @@
     }
     
     return height;
+}
+
+- (void)accountServicesViewChange
+{
+    [self.subTitleLabel setYBottomOf:self.casAccountServicesImagesView at:kBeforeDynamicFormMargin];
+    [self setupViewsVertically];
 }
 
 @end

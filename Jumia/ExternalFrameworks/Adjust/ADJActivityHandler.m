@@ -17,11 +17,15 @@
 #import "UIDevice+ADJAdditions.h"
 #import "ADJAdjustFactory.h"
 #import "ADJAttributionHandler.h"
+#import "NSString+ADJAdditions.h"
 
 static NSString   * const kActivityStateFilename = @"AdjustIoActivityState";
 static NSString   * const kAttributionFilename   = @"AdjustIoAttribution";
 static NSString   * const kAdjustPrefix          = @"adjust_";
 static const char * const kInternalQueueName     = "io.adjust.ActivityQueue";
+// number of tries
+static const int kTryIadV3                       = 2;
+static const uint64_t kDelayRetryIad   =  2 * NSEC_PER_SEC; // 1 second
 
 #pragma mark -
 @interface ADJActivityHandler()
@@ -32,7 +36,7 @@ static const char * const kInternalQueueName     = "io.adjust.ActivityQueue";
 @property (nonatomic, retain) ADJActivityState *activityState;
 @property (nonatomic, retain) ADJTimerCycle *timer;
 @property (nonatomic, retain) id<ADJLogger> logger;
-@property (nonatomic, weak) NSObject<AdjustDelegate> *delegate;
+@property (nonatomic, weak) NSObject<AdjustDelegate> *adjustDelegate;
 @property (nonatomic, copy) ADJAttribution *attribution;
 @property (nonatomic, copy) ADJConfig *adjustConfig;
 
@@ -42,6 +46,12 @@ static const char * const kInternalQueueName     = "io.adjust.ActivityQueue";
 @property (nonatomic, copy) ADJDeviceInfo* deviceInfo;
 
 @end
+
+// copy from ADClientError
+typedef NS_ENUM(NSInteger, AdjADClientError) {
+    AdjADClientErrorUnknown = 0,
+    AdjADClientErrorLimitAdTracking = 1,
+};
 
 #pragma mark -
 @implementation ADJActivityHandler
@@ -66,7 +76,7 @@ static const char * const kInternalQueueName     = "io.adjust.ActivityQueue";
     }
 
     self.adjustConfig = adjustConfig;
-    self.delegate = adjustConfig.delegate;
+    self.adjustDelegate = adjustConfig.delegate;
 
     self.logger = ADJAdjustFactory.logger;
     [self addNotificationObserver];
@@ -99,22 +109,42 @@ static const char * const kInternalQueueName     = "io.adjust.ActivityQueue";
     });
 }
 
-- (void)finishedTracking:(NSDictionary *)jsonDict{
-    if ([ADJUtil isNull:jsonDict]) return;
+- (void)finishedTracking:(ADJResponseData *)responseData {
+    // redirect session responses to attribution handler to check for attribution information
+    if ([responseData isKindOfClass:[ADJSessionResponseData class]]) {
+        [self.attributionHandler checkSessionResponse:(ADJSessionResponseData*)responseData];
+        return;
+    }
 
-    [self launchDeepLink:jsonDict];
-    [self.attributionHandler checkAttribution:jsonDict];
+    // check if it's an event response
+    if ([responseData isKindOfClass:[ADJEventResponseData class]]) {
+        [self launchEventResponseTasks:(ADJEventResponseData*)responseData];
+        return;
+    }
 }
 
-- (void)launchDeepLink:(NSDictionary *)jsonDict{
-    if ([ADJUtil isNull:jsonDict]) return;
+- (void)launchEventResponseTasks:(ADJEventResponseData *)eventResponseData {
+    dispatch_async(self.internalQueue, ^{
+        [self launchEventResponseTasksInternal:eventResponseData];
+    });
+}
 
-    NSString *deepLink = [jsonDict objectForKey:@"deeplink"];
+- (void)launchSessionResponseTasks:(ADJSessionResponseData *)sessionResponseData {
+    dispatch_async(self.internalQueue, ^{
+        [self launchSessionResponseTasksInternal:sessionResponseData];
+    });
+}
+
+- (void)launchAttributionResponseTasks:(ADJAttributionResponseData *)attributionResponseData {
+    dispatch_async(self.internalQueue, ^{
+        [self launchAttributionResponseTasksInternal:attributionResponseData];
+    });
+}
+
+- (void)launchDeepLink:(NSString *)deepLink{
     if (deepLink == nil) return;
 
     NSURL* deepLinkUrl = [NSURL URLWithString:deepLink];
-
-    [self.logger info:@"Open deep link (%@)", deepLink];
 
     BOOL success = [[UIApplication sharedApplication] openURL:deepLinkUrl];
 
@@ -220,6 +250,50 @@ remainsPausedMessage:(NSString *)remainsPausedMessage
 
 - (void)setIadDate:(NSDate *)iAdImpressionDate withPurchaseDate:(NSDate *)appPurchaseDate {
     if (iAdImpressionDate == nil) {
+        [self.logger debug:@"iAdImpressionDate not received"];
+        return;
+    }
+
+    [self.logger debug:@"iAdImpressionDate received: %@", iAdImpressionDate];
+
+
+    double now = [NSDate.date timeIntervalSince1970];
+    ADJPackageBuilder *clickBuilder = [[ADJPackageBuilder alloc]
+                                       initWithDeviceInfo:self.deviceInfo
+                                       activityState:self.activityState
+                                       config:self.adjustConfig
+                                       createdAt:now];
+
+    clickBuilder.purchaseTime = appPurchaseDate;
+    clickBuilder.clickTime = iAdImpressionDate;
+
+    ADJActivityPackage *clickPackage = [clickBuilder buildClickPackage:@"iad"];
+    [self.packageHandler addPackage:clickPackage];
+    [self.packageHandler sendFirstPackage];
+}
+
+- (void)setIadDetails:(NSDictionary *)attributionDetails
+                error:(NSError *)error
+          retriesLeft:(int)retriesLeft
+{
+    if (![ADJUtil isNull:error]) {
+        [self.logger warn:@"Unable to read iAd details"];
+
+        if (retriesLeft < 0) {
+            [self.logger warn:@"Limit number of retry for iAd v3 surpassed"];
+            return;
+        }
+
+        if (error.code == AdjADClientErrorUnknown) {
+            dispatch_time_t retryTime = dispatch_time(DISPATCH_TIME_NOW, kDelayRetryIad);
+            dispatch_after(retryTime, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [[UIDevice currentDevice] adjSetIad:self triesV3Left:retriesLeft];
+            });
+        }
+        return;
+    }
+
+    if ([ADJUtil isNull:attributionDetails]) {
         return;
     }
 
@@ -230,36 +304,11 @@ remainsPausedMessage:(NSString *)remainsPausedMessage
                                        config:self.adjustConfig
                                        createdAt:now];
 
-    [clickBuilder setPurchaseTime:appPurchaseDate];
+    clickBuilder.iadDetails = attributionDetails;
 
-    ADJActivityPackage *clickPackage = [clickBuilder buildClickPackage:@"iad" clickTime:iAdImpressionDate];
+    ADJActivityPackage *clickPackage = [clickBuilder buildClickPackage:@"iad3"];
     [self.packageHandler addPackage:clickPackage];
-}
-
-- (BOOL)updateAttribution:(ADJAttribution *)attribution {
-    if (attribution == nil) {
-        return NO;
-    }
-    if ([attribution isEqual:self.attribution]) {
-        return NO;
-    }
-    self.attribution = attribution;
-    [self writeAttribution];
-
-    [self launchAttributionDelegate];
-
-    return YES;
-}
-
-- (void)launchAttributionDelegate{
-    if (self.delegate == nil) {
-        return;
-    }
-    if (![self.delegate respondsToSelector:@selector(adjustAttributionChanged:)]) {
-        return;
-    }
-    [self.delegate performSelectorOnMainThread:@selector(adjustAttributionChanged:)
-                                    withObject:self.attribution waitUntilDone:NO];
+    [self.packageHandler sendFirstPackage];
 }
 
 - (void)setAskingAttribution:(BOOL)askingAttribution {
@@ -281,10 +330,6 @@ remainsPausedMessage:(NSString *)remainsPausedMessage
         [self.logger setLogLevel:ADJLogLevelAssert];
     } else {
         [self.logger setLogLevel:self.adjustConfig.logLevel];
-    }
-
-    if (!self.adjustConfig.macMd5TrackingEnabled) {
-        [self.logger info:@"Tracking of macMd5 is disabled"];
     }
 
     if (self.adjustConfig.eventBufferingEnabled)  {
@@ -311,14 +356,13 @@ remainsPausedMessage:(NSString *)remainsPausedMessage
     self.attributionHandler = [ADJAdjustFactory attributionHandlerForActivityHandler:self
                                                               withAttributionPackage:attributionPackage
                                                                          startPaused:[self paused]
-                                                                         hasDelegate:(self.delegate != nil)];
+                                                                         hasAttributionChangedDelegate:self.adjustConfig.hasAttributionChangedDelegate];
 
     self.timer = [ADJTimerCycle timerWithBlock:^{ [self timerFiredInternal]; }
                                     queue:self.internalQueue
                                 startTime:ADJAdjustFactory.timerStart
                              intervalTime:ADJAdjustFactory.timerInterval];
-
-    [[UIDevice currentDevice] adjSetIad:self];
+    [[UIDevice currentDevice] adjSetIad:self triesV3Left:kTryIadV3];
 
     [self startInternal];
 }
@@ -437,6 +481,108 @@ remainsPausedMessage:(NSString *)remainsPausedMessage
     [self writeActivityState];
 }
 
+- (void) launchEventResponseTasksInternal:(ADJEventResponseData *)eventResponseData {
+    // event success callback
+    if (eventResponseData.success
+        && [self.adjustDelegate respondsToSelector:@selector(adjustEventTrackingSucceeded:)])
+    {
+        [self.logger debug:@"Launching success event tracking delegate"];
+        [self.adjustDelegate performSelectorOnMainThread:@selector(adjustEventTrackingSucceeded:)
+                                              withObject:[eventResponseData successResponseData]
+                                           waitUntilDone:NO]; // non-blocking
+        return;
+    }
+    // event failure callback
+    if (!eventResponseData.success
+        && [self.adjustDelegate respondsToSelector:@selector(adjustEventTrackingFailed:)])
+    {
+        [self.logger debug:@"Launching failed event tracking delegate"];
+        [self.adjustDelegate performSelectorOnMainThread:@selector(adjustEventTrackingFailed:)
+                                              withObject:[eventResponseData failureResponseData]
+                                           waitUntilDone:NO]; // non-blocking
+        return;
+    }
+}
+
+- (void) launchSessionResponseTasksInternal:(ADJSessionResponseData *)sessionResponseData {
+    BOOL toLaunchAttributionDelegate = [self updateAttribution:sessionResponseData.attribution];
+
+    // session success callback
+    if (sessionResponseData.success
+        && [self.adjustDelegate respondsToSelector:@selector(adjustSessionTrackingSucceeded:)])
+    {
+        [self.logger debug:@"Launching success session tracking delegate"];
+        [self.adjustDelegate performSelectorOnMainThread:@selector(adjustSessionTrackingSucceeded:)
+                                              withObject:[sessionResponseData successResponseData]
+                                           waitUntilDone:NO]; // non-blocking
+    }
+    // session failure callback
+    if (!sessionResponseData.success
+        && [self.adjustDelegate respondsToSelector:@selector(adjustSessionTrackingFailed:)])
+    {
+        [self.logger debug:@"Launching failed session tracking delegate"];
+        [self.adjustDelegate performSelectorOnMainThread:@selector(adjustSessionTrackingFailed:)
+                                              withObject:[sessionResponseData failureResponseData]
+                                           waitUntilDone:NO]; // non-blocking
+    }
+
+    // try to update and launch the attribution changed delegate blocking
+    if (toLaunchAttributionDelegate) {
+        [self.logger debug:@"Launching attribution changed delegate"];
+        [self.adjustDelegate performSelectorOnMainThread:@selector(adjustAttributionChanged:)
+                                              withObject:sessionResponseData.attribution
+                                           waitUntilDone:NO]; // non-blocking
+    }
+
+    if ([ADJUtil isNull:sessionResponseData.jsonResponse]) {
+        return;
+    }
+
+    NSString *deepLink = [sessionResponseData.jsonResponse objectForKey:@"deeplink"];
+    if (deepLink == nil) {
+        return;
+    }
+
+    [self.logger info:@"Trying to open deep link (%@)", deepLink];
+
+    [self performSelectorOnMainThread:@selector(launchDeepLink:)
+                           withObject:deepLink
+                        waitUntilDone:NO]; // non-blocking
+}
+
+- (void) launchAttributionResponseTasksInternal:(ADJAttributionResponseData *)attributionResponseData {
+    BOOL toLaunchAttributionDelegate = [self updateAttribution:attributionResponseData.attribution];
+
+    // try to update and launch the attribution changed delegate non-blocking
+    if (toLaunchAttributionDelegate) {
+        [self.logger debug:@"Launching attribution changed delegate"];
+        [self.adjustDelegate performSelectorOnMainThread:@selector(adjustAttributionChanged:)
+                                              withObject:attributionResponseData.attribution
+                                           waitUntilDone:NO]; // non-blocking
+    }
+}
+
+- (BOOL)updateAttribution:(ADJAttribution *)attribution {
+    if (attribution == nil) {
+        return NO;
+    }
+    if ([attribution isEqual:self.attribution]) {
+        return NO;
+    }
+    self.attribution = attribution;
+    [self writeAttribution];
+
+    if (self.adjustDelegate == nil) {
+        return NO;
+    }
+
+    if (![self.adjustDelegate respondsToSelector:@selector(adjustAttributionChanged:)]) {
+        return NO;
+    }
+
+    return YES;
+}
+
 - (void) appWillOpenUrlInternal:(NSURL *)url {
     if ([ADJUtil isNull:url]) {
         return;
@@ -469,9 +615,11 @@ remainsPausedMessage:(NSString *)remainsPausedMessage
                                        createdAt:now];
     clickBuilder.deeplinkParameters = adjustDeepLinks;
     clickBuilder.attribution = deeplinkAttribution;
+    clickBuilder.clickTime = [NSDate date];
 
-    ADJActivityPackage *clickPackage = [clickBuilder buildClickPackage:@"deeplink" clickTime:[NSDate date]];
+    ADJActivityPackage *clickPackage = [clickBuilder buildClickPackage:@"deeplink"];
     [self.packageHandler addPackage:clickPackage];
+    [self.packageHandler sendFirstPackage];
 }
 
 - (BOOL) readDeeplinkQueryString:(NSString *)queryString
@@ -484,14 +632,18 @@ remainsPausedMessage:(NSString *)remainsPausedMessage
     NSString* key = [pairComponents objectAtIndex:0];
     if (![key hasPrefix:kAdjustPrefix]) return NO;
 
+    NSString* keyDecoded = [key adjUrlDecode];
+
     NSString* value = [pairComponents objectAtIndex:1];
     if (value.length == 0) return NO;
 
-    NSString* keyWOutPrefix = [key substringFromIndex:kAdjustPrefix.length];
+    NSString* valueDecoded = [value adjUrlDecode];
+
+    NSString* keyWOutPrefix = [keyDecoded substringFromIndex:kAdjustPrefix.length];
     if (keyWOutPrefix.length == 0) return NO;
 
-    if (![self trySetAttributionDeeplink:deeplinkAttribution withKey:keyWOutPrefix withValue:value]) {
-        [adjustDeepLinks setObject:value forKey:keyWOutPrefix];
+    if (![self trySetAttributionDeeplink:deeplinkAttribution withKey:keyWOutPrefix withValue:valueDecoded]) {
+        [adjustDeepLinks setObject:valueDecoded forKey:keyWOutPrefix];
     }
 
     return YES;

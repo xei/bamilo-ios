@@ -12,6 +12,8 @@
 #import "RIField.h"
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
+#define kUserIsGuestFlagKey [NSString stringWithFormat:@"%@_user_is_guest", [RIApi getCountryIsoInUse]]
+
 @interface RICustomer ()
 
 @property (strong, nonatomic) NSString* costumerRequestID;
@@ -38,9 +40,13 @@
                successBlock:(void (^)(id object))successBlock
             andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, @"customer/createsignup"]]
-                                                            parameters:@{@"email": email}
-                                                            httpMethod:HttpResponsePost
+    NSString* urlEnding;
+    if (VALID_NOTEMPTY(email, NSString)) {
+        urlEnding = [NSString stringWithFormat:@"customer/createsignup/?email=%@", email];
+    }
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, urlEnding]]
+                                                            parameters:nil
+                                                            httpMethod:HttpResponseGet
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
@@ -53,7 +59,8 @@
                                                                       NSDictionary* metadata = [jsonObject objectForKey:@"metadata"];
                                                                       if (VALID_NOTEMPTY(metadata, NSDictionary))
                                                                       {
-                                                                          NSDictionary* entities = [RIForm parseEntities:metadata plainPassword:nil];
+                                                                          NSDictionary* entities = [RIForm parseEntities:metadata plainPassword:nil loginMethod:@"guest"];
+                                                                          [RICustomer setCustomerAsGuest];
                                                                           successBlock(entities);
                                                                       }
                                                                   } else {
@@ -79,13 +86,17 @@
                                                           }];
 }
 
-+ (NSString *)checkEmailWithParameters:(NSDictionary *)parameters
-                          successBlock:(void (^)(BOOL knownEmail, RICustomer *customerAlreadyLoggedIn))successBlock
-                       andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock
++ (NSString *)checkEmail:(NSString *)email
+            successBlock:(void (^)(BOOL knownEmail, RICustomer *customerAlreadyLoggedIn))successBlock
+         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, @"customer/emailcheck/"]]
-                                                            parameters:parameters
-                                                            httpMethod:HttpResponsePost
+    NSString* urlEnding;
+    if (VALID_NOTEMPTY(email, NSString)) {
+        urlEnding = [NSString stringWithFormat:@"customer/emailcheck/?email=%@", email];
+    }
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, urlEnding]]
+                                                            parameters:nil
+                                                            httpMethod:HttpResponseGet
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]
@@ -181,6 +192,7 @@
                         [RIForm sendForm:form parameters:parameters
                             successBlock:^(id jsonObject, NSArray* successMessages)
                          {
+                             [RICustomer resetCustomerAsGuest];
                              dispatch_async(dispatch_get_main_queue(), ^{
                                  returnBlock(YES, jsonObject, customerObject.loginMethod);
                              });
@@ -452,23 +464,19 @@
     }
 }
 
++ (void)setCustomerAsGuest
+{
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUserIsGuestFlagKey];
+}
+
++ (void)resetCustomerAsGuest
+{
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserIsGuestFlagKey];
+}
+
 + (BOOL)checkIfUserIsLoggedAsGuest
 {
-    NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
-    
-    if (VALID_NOTEMPTY(customers, NSArray))
-    {
-        RICustomer* customer = [customers firstObject];
-        
-        if ([customer.loginMethod isEqualToString:@"guest"]) {
-            return YES;
-        } else
-            return NO;
-    }
-    else
-    {
-        return NO;
-    }
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kUserIsGuestFlagKey];
 }
 
 
