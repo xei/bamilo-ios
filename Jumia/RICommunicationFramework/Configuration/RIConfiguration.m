@@ -132,3 +132,5 @@ NSString *const RI_API_MULTISTEP_GET_FINISH = @"multistep/getstepfinish/";
 NSString *const RI_API_MULTISTEP_SUBMIT_FINISH = @"multistep/finish/";
 NSString *const RI_API_GET_FAQ_AND_TERMS = @"/main/getfaqandterms/";
 NSString *const RI_API_GET_PHONE_PREFIXES = @"/main/getphoneprefixes/";
+
+NSString *const RI_API_EXTERNAL_LINKS = @"main/getexternallinks/";
