@@ -294,15 +294,8 @@ JAPickerDelegate>
     [self initAddressView];
     
     [self.view addSubview:self.contentScrollView];
-    
-    NSString* buttonText = STRING_SAVE_LABEL;
-    SEL buttonAction = @selector(createAddressButtonPressed);
-    if(self.fromCheckout)
-    {
-        buttonText = STRING_NEXT;
-        buttonAction = @selector(createAddressButtonPressed);
-    }
-    self.bottomButton = [[JAButton alloc] initButtonWithTitle:buttonText target:self action:buttonAction];
+
+    self.bottomButton = [[JAButton alloc] initButtonWithTitle:STRING_SAVE_LABEL target:self action:@selector(createAddressButtonPressed)];
     [self.bottomButton setFrame:CGRectMake(0.0f,
                                            self.view.frame.size.height - 48.0f,
                                            self.view.frame.size.width,
