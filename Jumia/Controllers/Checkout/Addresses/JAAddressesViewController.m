@@ -75,6 +75,8 @@ UITableViewDelegate>
     
     self.screenName = @"Address";
     
+    self.view.backgroundColor = JAWhiteColor;
+    
     if(self.fromCheckout)
     {
         self.stepBackground.translatesAutoresizingMaskIntoConstraints = YES;
@@ -526,14 +528,20 @@ UITableViewDelegate>
     } else if(tableView == self.otherAddressesTableView) {
         title = STRING_OTHER_ADDRESSES;
     }
-    JAProductInfoHeaderLine* headerLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0.0f, 0.0f, tableView.frame.size.width, kProductInfoHeaderLineHeight)];
+    
+    UIView* content = [UIView new];
+    [content setFrame:CGRectMake(0.0f, 0.0f, tableView.frame.size.width, kProductInfoHeaderLineHeight)];
+    
+    JAProductInfoHeaderLine* headerLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0.0f, 0.0f, content.frame.size.width, kProductInfoHeaderLineHeight)];
     [headerLine setTitle:title];
     
     if (RI_IS_RTL) {
         [headerLine flipAllSubviews];
     }
     
-    return headerLine;
+    [content addSubview:headerLine];
+    
+    return content;
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
@@ -550,7 +558,7 @@ UITableViewDelegate>
     [addNewAddressLabel sizeToFit];
     [addNewAddressLabel setFrame:CGRectMake(16.0f,
                                             10.0f,
-                                            self.view.frame.size.width - 16.0f*2,
+                                            tableView.frame.size.width - 16.0f*2,
                                             addNewAddressLabel.frame.size.height)];
     [footerView addSubview:addNewAddressLabel];
 

@@ -144,7 +144,7 @@
         }
     }
     
-    [self.addressLabel setText:nameText];
+    [self.addressLabel setText:addressText];
     [self.addressLabel sizeToFit];
     [self.addressLabel setFrame:CGRectMake(16.0f,
                                            CGRectGetMaxY(self.nameLabel.frame) + 4.0f,
