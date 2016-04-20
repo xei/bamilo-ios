@@ -23,7 +23,10 @@
 + (void)getExternalCategoryWithSuccessBlock:(void (^)(RIExternalCategory *externalCategory))successBlock
                                             andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 
-+ (NSString *)loadExternalCategoryWithSuccessBlock:(void (^)(RIExternalCategory *externalCategory))successBlock
+
++ (NSString *)loadExternalCategoryIntoDatabaseForCountry:(NSString *)countryUrl
+                               countryUserAgentInjection:(NSString *)countryUserAgentInjection
+                                        withSuccessBlock:(void (^)(RIExternalCategory *externalCategory))successBlock
                                    andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock;
 @end
 

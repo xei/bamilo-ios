@@ -27,19 +27,25 @@
     if (databaseParentCategories.count > 0) {
         successBlock([databaseParentCategories firstObject]);
     }else{
-        [self loadExternalCategoryWithSuccessBlock:successBlock andFailureBlock:failureBlock];
+        [self loadExternalCategoryIntoDatabaseForCountry:[RIApi getCountryUrlInUse]
+                               countryUserAgentInjection:[RIApi getCountryUserAgentInjection]
+                                        withSuccessBlock:successBlock andFailureBlock:failureBlock];
     }
 }
 
-+ (NSString *)loadExternalCategoryWithSuccessBlock:(void (^)(RIExternalCategory *externalCategory))successBlock
-                                  andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
++ (NSString *)loadExternalCategoryIntoDatabaseForCountry:(NSString *)countryUrl
+                               countryUserAgentInjection:(NSString *)countryUserAgentInjection
+                                        withSuccessBlock:(void (^)(RIExternalCategory *externalCategory))successBlock
+                                         andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessage))failureBlock
 {
-    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_EXTERNAL_LINKS]]
+    return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", countryUrl, RI_API_VERSION, RI_API_EXTERNAL_LINKS]]
                                                             parameters:nil httpMethod:HttpResponsePost
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheDefaultTime
-                                                    userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                    userAgentInjection:countryUserAgentInjection
                                                           successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                              
+                                                              [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RIExternalCategory class])];
                                                               
                                                               NSDictionary *metadata = VALID_NOTEMPTY_VALUE([jsonObject objectForKey:@"metadata"], NSDictionary);
                                                               
@@ -75,7 +81,7 @@
     {
         [newExternalCategory setLevel:@0];
         for (NSDictionary *externalLinkJSON in [externalCategoryJSON objectForKey:@"external_links"]) {
-            RIExternalCategory *child = [RIExternalCategory parseExternalCategory:externalLinkJSON andPersist:YES];
+            RIExternalCategory *child = [RIExternalCategory parseExternalCategory:externalLinkJSON andPersist:persist];
             [child setParent:newExternalCategory];
         }
     }else{
@@ -85,10 +91,6 @@
             [newExternalCategory setTargetString:[RITarget getTargetString:EXTERNAL_LINK node:targetString]];
         }
         [newExternalCategory setImageUrl:VALID_NOTEMPTY_VALUE([externalCategoryJSON objectForKey:@"image"], NSString)];
-    }
-    
-    if (persist) {
-        [[RIDataBaseWrapper sharedInstance] saveContext];
     }
     
     return newExternalCategory;
