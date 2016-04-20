@@ -448,7 +448,7 @@ countryUserAgentInjection:(NSString*)countryUserAgentInjection
     else if ([section.name isEqualToString:@"externallinks"])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
-        [RIExternalCategory loadExternalCategoryWithSuccessBlock:^(RIExternalCategory *externalCategory) {
+        [RIExternalCategory loadExternalCategoryIntoDatabaseForCountry:url countryUserAgentInjection:countryUserAgentInjection  withSuccessBlock:^(RIExternalCategory *externalCategory) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:kSideMenuShouldReload object:nil];
             successBlock();
