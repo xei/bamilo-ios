@@ -29,6 +29,7 @@ RIOpenURLTracking,
 RIEventTracking,
 RILaunchEventTracker,
 RIEcommerceEventTracking,
+RINotificationTracking,
 AdjustDelegate
 >
 
