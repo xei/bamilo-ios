@@ -120,6 +120,7 @@
 #define STRING_FREE RILocalizedString(@"free_label", nil)
 #define STRING_EXTRA_COSTS RILocalizedString(@"extra_costs_label", nil)
 #define STRING_VOUCHER RILocalizedString(@"my_order_voucher_label", nil)
+#define STRING_VOUCHER_ERROR RILocalizedString(@"voucher_error_message", nil)
 #define STRING_TOTAL RILocalizedString(@"my_order_total_label", nil)
 #define STRING_PROCEED_TO_CHECKOUT RILocalizedString(@"checkout_button_text", nil)
 #define STRING_SUBTOTAL RILocalizedString(@"sub_total_title", nil)

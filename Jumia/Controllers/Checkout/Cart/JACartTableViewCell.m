@@ -61,6 +61,10 @@
         
         UIImage *shopFirstImage = [UIImage imageNamed:@"shop_first_logo"];
         _shopFirstImageView = [[UIImageView alloc] initWithImage:shopFirstImage];
+        [_shopFirstImageView setUserInteractionEnabled:YES];
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                    action:@selector(shopFirstLogoTapped:)];
+        [_shopFirstImageView addGestureRecognizer:singleTap];
     }
     return _shopFirstImageView;
 }
@@ -320,6 +324,16 @@
     
     [self.shopFirstImageView setHidden:!cartItem.shopFirst.boolValue];
     [self reloadViews];
+}
+
+- (void)shopFirstLogoTapped:(UIGestureRecognizer *)gestureRecognizer
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
+                                                    message:self.cartItem.shopFirstOverlayText
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
 }
 
 @end

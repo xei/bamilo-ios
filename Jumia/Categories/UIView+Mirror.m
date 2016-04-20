@@ -15,6 +15,7 @@
 #import "JAScrolledImageGalleryView.h"
 #import "JAPicker.h"
 #import "JAPriceView.h"
+#import "JATextField.h"
 
 @implementation UIView (Mirror)
 
@@ -197,6 +198,9 @@
             }
         }
         [view flipViewPositionInsideSuperview];
+        if ([view isKindOfClass:[JATextField class]]) {
+            continue;
+        }
         [view flipViewAlignment];
         if ([view isKindOfClass:[UITableView class]] || [view isKindOfClass:[UICollectionView class]] ) {
 //            [view flipViewPositionInsideSuperview];
