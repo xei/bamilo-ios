@@ -915,11 +915,6 @@
 		9AE766A01CB3CF5300B63D8E /* JAAccountServicesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE7669D1CB3CF5300B63D8E /* JAAccountServicesView.m */; };
 		9AE766A11CB3CF5300B63D8E /* JAAccountServicesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE7669D1CB3CF5300B63D8E /* JAAccountServicesView.m */; };
 		9AE766A21CB3CF5300B63D8E /* JAAccountServicesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE7669D1CB3CF5300B63D8E /* JAAccountServicesView.m */; };
-		9AE766A61CB7B23B00B63D8E /* NSURL+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766A51CB7B23A00B63D8E /* NSURL+Extensions.m */; };
-		9AE766A71CB7B23B00B63D8E /* NSURL+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766A51CB7B23A00B63D8E /* NSURL+Extensions.m */; };
-		9AE766A81CB7B23B00B63D8E /* NSURL+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766A51CB7B23A00B63D8E /* NSURL+Extensions.m */; };
-		9AE766A91CB7B23B00B63D8E /* NSURL+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766A51CB7B23A00B63D8E /* NSURL+Extensions.m */; };
-		9AE766AA1CB7B23B00B63D8E /* NSURL+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766A51CB7B23A00B63D8E /* NSURL+Extensions.m */; };
 		9AE766AD1CBBB28E00B63D8E /* JACartProductsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766AC1CBBB28E00B63D8E /* JACartProductsView.m */; };
 		9AE766AE1CBBB28E00B63D8E /* JACartProductsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766AC1CBBB28E00B63D8E /* JACartProductsView.m */; };
 		9AE766AF1CBBB28E00B63D8E /* JACartProductsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766AC1CBBB28E00B63D8E /* JACartProductsView.m */; };
@@ -3020,8 +3015,6 @@
 		9AE7669A1CB2B22100B63D8E /* Model_1.13.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.13.xcdatamodel; sourceTree = "<group>"; };
 		9AE7669C1CB3CF5300B63D8E /* JAAccountServicesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAAccountServicesView.h; sourceTree = "<group>"; };
 		9AE7669D1CB3CF5300B63D8E /* JAAccountServicesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAAccountServicesView.m; sourceTree = "<group>"; };
-		9AE766A41CB7B23A00B63D8E /* NSURL+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+Extensions.h"; sourceTree = "<group>"; };
-		9AE766A51CB7B23A00B63D8E /* NSURL+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+Extensions.m"; sourceTree = "<group>"; };
 		9AE766AB1CBBB28E00B63D8E /* JACartProductsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACartProductsView.h; path = ../Controllers/Checkout/Cart/JACartProductsView.h; sourceTree = "<group>"; };
 		9AE766AC1CBBB28E00B63D8E /* JACartProductsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACartProductsView.m; path = ../Controllers/Checkout/Cart/JACartProductsView.m; sourceTree = "<group>"; };
 		9AE766B21CBBB9AF00B63D8E /* JACartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACartViewController.h; sourceTree = "<group>"; };

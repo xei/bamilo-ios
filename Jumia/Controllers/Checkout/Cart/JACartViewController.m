@@ -265,6 +265,7 @@
 {
     NSString *voucherCode = self.resumeView.couponTextField.text;
     if (!VALID_NOTEMPTY(voucherCode, NSString)) {
+        [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_VOUCHER_ERROR] showAsMessage:YES target:nil selector:nil objects:nil];
         return;
     }
     
@@ -294,7 +295,6 @@
     else
     {
         [RICart addVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
-            [self.resumeView setCouponValid:YES];
             self.cart = cart;
             
             NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
