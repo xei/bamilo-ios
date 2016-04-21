@@ -821,7 +821,7 @@ JAPickerDelegate>
         [self.contentScrollView setFrame:CGRectMake(self.contentScrollView.frame.origin.x,
                                                     self.contentScrollView.frame.origin.y,
                                                     self.contentScrollView.frame.size.width,
-                                                    self.contentScrollOriginalHeight - height)];
+                                                    self.contentScrollOriginalHeight + self.headerLine.frame.size.height - height)];
         
         if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
         {
