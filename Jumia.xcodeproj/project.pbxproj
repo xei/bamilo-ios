@@ -336,6 +336,11 @@
 		9A08B0FB1CC4EFAF003282CB /* RIExternalCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A08B0F31CC4EFAF003282CB /* RIExternalCategory.m */; };
 		9A08B0FC1CC4EFAF003282CB /* RIExternalCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A08B0F31CC4EFAF003282CB /* RIExternalCategory.m */; };
 		9A08B0FD1CC4EFAF003282CB /* RIExternalCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A08B0F31CC4EFAF003282CB /* RIExternalCategory.m */; };
+		9A08B10F1CC7C377003282CB /* JAActionWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A08B10E1CC7C377003282CB /* JAActionWebViewController.m */; };
+		9A08B1101CC7C377003282CB /* JAActionWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A08B10E1CC7C377003282CB /* JAActionWebViewController.m */; };
+		9A08B1111CC7C377003282CB /* JAActionWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A08B10E1CC7C377003282CB /* JAActionWebViewController.m */; };
+		9A08B1121CC7C377003282CB /* JAActionWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A08B10E1CC7C377003282CB /* JAActionWebViewController.m */; };
+		9A08B1131CC7C377003282CB /* JAActionWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A08B10E1CC7C377003282CB /* JAActionWebViewController.m */; };
 		9A0BBE921BFE2480007D35CE /* JACustomNavigationBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1B7C411BFCF849000111D7 /* JACustomNavigationBarView.m */; };
 		9A0BBE931BFE2480007D35CE /* JACustomNavigationBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1B7C411BFCF849000111D7 /* JACustomNavigationBarView.m */; };
 		9A0BBE941BFE2481007D35CE /* JACustomNavigationBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1B7C411BFCF849000111D7 /* JACustomNavigationBarView.m */; };
@@ -2872,6 +2877,8 @@
 		9A08B0EF1CC4EC17003282CB /* Model_1.14.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.14.xcdatamodel; sourceTree = "<group>"; };
 		9A08B0F21CC4EFAF003282CB /* RIExternalCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIExternalCategory.h; sourceTree = "<group>"; };
 		9A08B0F31CC4EFAF003282CB /* RIExternalCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIExternalCategory.m; sourceTree = "<group>"; };
+		9A08B10D1CC7C377003282CB /* JAActionWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAActionWebViewController.h; sourceTree = "<group>"; };
+		9A08B10E1CC7C377003282CB /* JAActionWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAActionWebViewController.m; sourceTree = "<group>"; };
 		9A0F9B611B5E58E900569DF2 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = FacebookSDK/Bolts.framework; sourceTree = "<group>"; };
 		9A0F9B621B5E58E900569DF2 /* FacebookSDKStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKStrings.bundle; path = FacebookSDK/FacebookSDKStrings.bundle; sourceTree = "<group>"; };
 		9A0F9B631B5E58E900569DF2 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = FacebookSDK/FBAudienceNetwork.framework; sourceTree = "<group>"; };
@@ -5602,7 +5609,7 @@
 			isa = PBXGroup;
 			children = (
 				9AE03A881C076CB3003CBEF1 /* Authentication */,
-				CEBE2A7D1A9E31E800F457FA /* ShopWeb */,
+				CEBE2A7D1A9E31E800F457FA /* Web */,
 				CE283E6E1A7296AE00F3E92D /* OtherOffers */,
 				B5A303001981218E00F71726 /* BaseViewController */,
 				CE3AF8FD19DBF4FB00D8C51B /* Campaigns */,
@@ -6184,12 +6191,15 @@
 			path = GTM;
 			sourceTree = "<group>";
 		};
-		CEBE2A7D1A9E31E800F457FA /* ShopWeb */ = {
+		CEBE2A7D1A9E31E800F457FA /* Web */ = {
 			isa = PBXGroup;
 			children = (
 				9AB4887E1B72748500886A44 /* JAShopWebViewController.h */,
 				9AB4887F1B72748500886A44 /* JAShopWebViewController.m */,
+				9A08B10D1CC7C377003282CB /* JAActionWebViewController.h */,
+				9A08B10E1CC7C377003282CB /* JAActionWebViewController.m */,
 			);
+			name = Web;
 			path = ShopWeb;
 			sourceTree = "<group>";
 		};
@@ -7795,6 +7805,7 @@
 				c0a7b46a0bf48c7a4a4b0950 /* JAShippingInfoCell.m in Sources */,
 				0a7dd54e89ecf32139d07fd4 /* JASidePanelController.m in Sources */,
 				FF0464AD1CA96E9000B82FD2 /* ADJConfig.m in Sources */,
+				9A08B1101CC7C377003282CB /* JAActionWebViewController.m in Sources */,
 				9071405acbc614db8a470148 /* NMRangeSlider.m in Sources */,
 				d765de058e273cba2b2628fd /* RICustomer.m in Sources */,
 				09a540fd5e97a0761054d14c /* SDWebImageDecoder.m in Sources */,
@@ -7850,6 +7861,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A08B10F1CC7C377003282CB /* JAActionWebViewController.m in Sources */,
 				9AB4CFCA1BA9C7D1007326C7 /* RICatalog.m in Sources */,
 				FF0464981CA96E9000B82FD2 /* ADJActivityState.m in Sources */,
 				9A6BC0861C4907BA00DD9492 /* JAMessageView.m in Sources */,
@@ -8190,6 +8202,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A08B1111CC7C377003282CB /* JAActionWebViewController.m in Sources */,
 				9A189E461BB190030039BC14 /* RICatalog.m in Sources */,
 				FF04649A1CA96E9000B82FD2 /* ADJActivityState.m in Sources */,
 				9A189E5F1BB31AC70039BC14 /* JAProductInfoHeaderLine.m in Sources */,
@@ -8520,6 +8533,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A08B1121CC7C377003282CB /* JAActionWebViewController.m in Sources */,
 				9A189E451BB190020039BC14 /* RICatalog.m in Sources */,
 				FF04649B1CA96E9000B82FD2 /* ADJActivityState.m in Sources */,
 				9A189E601BB31AC70039BC14 /* JAProductInfoHeaderLine.m in Sources */,
@@ -8850,6 +8864,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A08B1131CC7C377003282CB /* JAActionWebViewController.m in Sources */,
 				9A189E441BB190020039BC14 /* RICatalog.m in Sources */,
 				FF04649C1CA96E9000B82FD2 /* ADJActivityState.m in Sources */,
 				9A189E611BB31AC70039BC14 /* JAProductInfoHeaderLine.m in Sources */,

@@ -46,6 +46,9 @@ typedef enum {
 @property (nonatomic, retain) NSString *casSubtitle;
 @property (nonatomic, retain) NSArray *casImages;
 
+@property (nonatomic, retain) NSString *redirectHtml;
+@property (nonatomic, retain) NSString *redirectStringTarget;
+
 
 /**
  *  Method to parse an RICountryConfiguration given a JSON object

@@ -269,7 +269,7 @@
         if (!tableViewCell) {
             tableViewCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"retryCell"];
         }
-        JAButton *retryButton = [[JAButton alloc] initAlternativeButtonWithTitle:STRING_TOUCH_TO_RETRY target:self action:@selector(reloadCategories)];
+        JAButton *retryButton = [[JAButton alloc] initAlternativeButtonWithTitle:STRING_TRY_AGAIN target:self action:@selector(reloadCategories)];
         [retryButton setFrame:CGRectMake(0.f, 0.f, tableView.width, tableViewCell.height)];
         [tableViewCell addSubview:retryButton];
         return tableViewCell;
