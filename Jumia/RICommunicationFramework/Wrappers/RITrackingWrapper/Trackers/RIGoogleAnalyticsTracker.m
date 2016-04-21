@@ -92,6 +92,7 @@ static RIGoogleAnalyticsTracker *sharedInstance;
         [events addObject:[NSNumber numberWithInt:RIEventViewCampaigns]];
         [events addObject:[NSNumber numberWithInt:RIEventTeaserClick]];
         [events addObject:[NSNumber numberWithInt:RIEventTeaserPurchase]];
+        [events addObject:[NSNumber numberWithInt:RIEventCategoryExternalLink]];
 
         self.registeredEvents = [events copy];
     }
