@@ -24,9 +24,7 @@
 @interface JAAddNewAddressViewController ()
 <JADynamicFormDelegate,
 JAPickerDelegate>
-{
-    CGFloat _genderRadioHeight;
-}
+{}
 
 // Steps
 @property (weak, nonatomic) IBOutlet UIImageView *stepBackground;
@@ -136,18 +134,8 @@ JAPickerDelegate>
         
         [self getLocales];
         
-        _genderRadioHeight = 0;
-        CGFloat offset = 0;
         for(UIView *view in self.dynamicForm.formViews)
         {
-            if ([view isKindOfClass:[JARadioComponent class]]) {
-                if([(JARadioComponent *)view isComponentWithKey:@"gender"])
-                {
-                    _genderRadioHeight += offset;
-                    continue;
-                }
-            }
-            offset = view.height;
             [self.contentView addSubview:view];
         }
         
@@ -864,7 +852,7 @@ JAPickerDelegate>
         [self.contentScrollView setFrame:CGRectMake(self.contentScrollView.frame.origin.x,
                                                     self.contentScrollView.frame.origin.y,
                                                     self.contentScrollView.frame.size.width,
-                                                    self.contentScrollOriginalHeight - height)];
+                                                    self.contentScrollOriginalHeight + self.headerLine.frame.size.height - height)];
         
         if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
         {
