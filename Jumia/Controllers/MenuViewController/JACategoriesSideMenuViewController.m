@@ -137,8 +137,14 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCategories) name:kSideMenuShouldReload object:nil];
     
-    [self reloadCategories];
+    [self reloadData];
 
+}
+
+- (void)reloadData
+{
+    [self reloadCategories];
+    [self reloadExternalLinks];
 }
 
 - (void)reloadCategories
@@ -148,13 +154,17 @@
         self.categoriesLoadingError = NO;
         self.categoriesArray = [NSArray arrayWithArray:(NSArray *)categories];
         [self categoriesLoaded];
-        
+        [self hideLoading];
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
         self.categoriesLoadingError = YES;
         [self categoriesLoaded];
         [self hideLoading];
     }];
-    
+}
+
+- (void)reloadExternalLinks
+{
+    [self showLoading];
     [RIExternalCategory getExternalCategoryWithSuccessBlock:^(RIExternalCategory *externalCategory) {
         self.externalCategory = externalCategory;
         [self categoriesLoaded];
@@ -321,7 +331,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.categoriesLoadingError && indexPath.row > self.tableViewCategoriesArray.count-1) {
-        [self reloadCategories];
+        [self reloadData];
     }
 }
 
