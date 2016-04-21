@@ -174,6 +174,7 @@
                                                                       }
                                                                       
                                                                   }
+                                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kCheckRedirectInfoNotification object:nil];
                                                                   
                                                                   successBlock(newApi, hasUpdate, isUpdateMandatory);
                                                                   return;
