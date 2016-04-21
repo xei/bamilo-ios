@@ -203,11 +203,6 @@ JAPickerDelegate>
     
     NSString* buttonText = STRING_SAVE_CHANGES;
     SEL buttonAction = @selector(saveChangesButtonPressed);
-    if(self.fromCheckout)
-    {
-        buttonText = STRING_CANCEL;
-        buttonAction = @selector(cancelButtonPressed);
-    }
     self.bottomButton = [[JAButton alloc] initButtonWithTitle:buttonText target:self action:buttonAction];
     [self.bottomButton setFrame:CGRectMake(0.0f,
                                            self.view.frame.size.height - 48.0f,
@@ -472,13 +467,6 @@ JAPickerDelegate>
          self.hasErrors = NO;
          [self hideLoading];
      }];
-}
-
--(void)cancelButtonPressed
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
-                                                        object:nil
-                                                      userInfo:nil];
 }
 
 -(void)removePickerView
