@@ -24,9 +24,7 @@
 @interface JAAddNewAddressViewController ()
 <JADynamicFormDelegate,
 JAPickerDelegate>
-{
-    CGFloat _genderRadioHeight;
-}
+{}
 
 // Steps
 @property (weak, nonatomic) IBOutlet UIImageView *stepBackground;
@@ -136,18 +134,8 @@ JAPickerDelegate>
         
         [self getLocales];
         
-        _genderRadioHeight = 0;
-        CGFloat offset = 0;
         for(UIView *view in self.dynamicForm.formViews)
         {
-            if ([view isKindOfClass:[JARadioComponent class]]) {
-                if([(JARadioComponent *)view isComponentWithKey:@"gender"])
-                {
-                    _genderRadioHeight += offset;
-                    continue;
-                }
-            }
-            offset = view.height;
             [self.contentView addSubview:view];
         }
         
