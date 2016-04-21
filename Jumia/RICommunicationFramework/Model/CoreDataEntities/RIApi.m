@@ -450,7 +450,6 @@ countryUserAgentInjection:(NSString*)countryUserAgentInjection
         [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
         [RIExternalCategory loadExternalCategoryIntoDatabaseForCountry:url countryUserAgentInjection:countryUserAgentInjection  withSuccessBlock:^(RIExternalCategory *externalCategory) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kSideMenuShouldReload object:nil];
             successBlock();
         } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
