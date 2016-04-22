@@ -44,6 +44,7 @@
     [super viewDidLoad];
     [self.view addSubview:self.webView];
     [self.view addSubview:self.button];
+    [[UIDevice currentDevice] setValue:[NSNumber numberWithInt:UIInterfaceOrientationPortrait] forKey:@"orientation"];
     
     self.isLoaded = NO;
 }
@@ -84,6 +85,11 @@
 - (void)go
 {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[RITarget getURLStringforTargetString:self.targetString]]];
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 @end

@@ -444,7 +444,7 @@
         case EXTERNAL_LINK: {
             JAActionWebViewController* viewController = [[JAActionWebViewController alloc] init];
             [self loadScreenTarget:screenTarget forBaseViewController:viewController];
-            [(JAActionWebViewController *)viewController setHtmlString:VALID_NOTEMPTY_VALUE([screenTarget.screenInfo objectForKey:@"html"], NSString)];
+            [viewController setHtmlString:VALID_NOTEMPTY_VALUE([screenTarget.screenInfo objectForKey:@"html"], NSString)];
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
         }

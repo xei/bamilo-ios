@@ -53,7 +53,6 @@
         if (VALID_NOTEMPTY([redirectInfo objectForKey:@"ios_link"], NSString) && VALID_NOTEMPTY([redirectInfo objectForKey:@"html"], NSString)) {
             [newConfig setRedirectHtml:[redirectInfo objectForKey:@"html"]];
             [newConfig setRedirectStringTarget:[RITarget getTargetString:EXTERNAL_LINK node:[redirectInfo objectForKey:@"ios_link"]]];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kCheckRedirectInfoNotification object:nil];
         }
     }
     
@@ -189,6 +188,8 @@
     [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICountryConfiguration class])];
     
     [RICountryConfiguration saveConfiguration:newConfig andContext:YES];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kCheckRedirectInfoNotification object:nil];
     
     return newConfig;
 }
