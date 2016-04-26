@@ -195,13 +195,21 @@
     if (!VALID(_appVersionSubtitleLine, JAProductInfoRightSubtitleLine)) {
         _appVersionSubtitleLine = [[JAProductInfoRightSubtitleLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.moreSettingsHeaderLine.frame), self.mainScrollView.width, kProductInfoRightSubtitleLineHeight)];
         [_appVersionSubtitleLine setTopSeparatorVisibility:NO];
-        if([self isLastVersion])
-        {
-            [_appVersionSubtitleLine setRightSubTitle:STRING_UP_TO_DATE];
-        }else{
-            [_appVersionSubtitleLine addTarget:self action:@selector(openAppStore) forControlEvents:UIControlEventTouchUpInside];
-            [_appVersionSubtitleLine setRightSubTitle:STRING_UPDATE_NOW];
+        NSNumber* lastVersion = [self isLastVersion];
+        if (VALID_NOTEMPTY(lastVersion, NSNumber)) {
+            [_appVersionSubtitleLine setHidden:NO];
+            if(YES == [lastVersion boolValue])
+            {
+                [_appVersionSubtitleLine setRightSubTitle:STRING_UP_TO_DATE];
+            }else{
+                [_appVersionSubtitleLine addTarget:self action:@selector(openAppStore) forControlEvents:UIControlEventTouchUpInside];
+                [_appVersionSubtitleLine setRightSubTitle:STRING_UPDATE_NOW];
+            }
+        } else {
+            [_appVersionSubtitleLine setHidden:YES];
+            [_appVersionSubtitleLine setHeight:0.0f];
         }
+
 //        version
         [_appVersionSubtitleLine setRightTitle:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
 //        build
@@ -414,15 +422,19 @@
     }];
 }
 
-- (BOOL)isLastVersion
+- (NSNumber*)isLastVersion
 {
     NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
     f.numberStyle = NSNumberFormatterDecimalStyle;
     NSNumber *myNumber = [f numberFromString:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
-    if ([myNumber compare:[RIApi getApiInformation].curVersion] == NSOrderedAscending) {
-        return NO;
-    }else{
-        return YES;
+    if (VALID_NOTEMPTY(myNumber, NSNumber) && VALID_NOTEMPTY([RIApi getApiInformation].curVersion, NSNumber)) {
+        if ([myNumber compare:[RIApi getApiInformation].curVersion] == NSOrderedAscending) {
+            return [NSNumber numberWithBool:NO];
+        }else{
+            return [NSNumber numberWithBool:YES];
+        }
+    } else {
+        return nil;
     }
 }
 
