@@ -87,6 +87,15 @@
                                                               
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary)) {
                                                                   
+                                                                  NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                                                                  NSString *installedVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
+//                                                                  NSString *installedBundleShortVersion = [infoDictionary valueForKey:@"CFBundleShortVersionString"];
+                                                                  NSString *lastAppVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"appVersion"];
+                                                                  if (!VALID(lastAppVersion, NSString) || ![installedVersion isEqualToString:lastAppVersion]) {
+                                                                      [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RIApi class])];
+                                                                      [[NSUserDefaults standardUserDefaults] setObject:installedVersion forKey:@"appVersion"];
+                                                                  }
+                                                                  
                                                                   // insert the country url
                                                                   [metadata addEntriesFromDictionary:@{ @"countryUrl" : url }];
                                                                   
@@ -99,8 +108,6 @@
                                                                   BOOL hasUpdate = NO;
                                                                   BOOL isUpdateMandatory = NO;
                                                                   
-                                                                  NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-                                                                  NSString *installedVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
                                                                   if(VALID_NOTEMPTY(installedVersion, NSString))
                                                                   {
                                                                       CGFloat installedVersionNumber = [installedVersion floatValue];
