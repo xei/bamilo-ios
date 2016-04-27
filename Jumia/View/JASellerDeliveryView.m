@@ -8,14 +8,14 @@
 
 #import "JASellerDeliveryView.h"
 #import "RICartItem.h"
+#import "JAProductInfoHeaderLine.h"
 
 @interface JASellerDeliveryView ()
 
-@property (strong, nonatomic) UIView* contentView;
-@property (strong, nonatomic) UIView* separator;
-@property (strong, nonatomic) UILabel *title;
+@property (nonatomic, strong) JAProductInfoBaseLine* headerLine;
 @property (strong, nonatomic) NSMutableArray *quantity;
 @property (strong, nonatomic) NSMutableArray *prodName;
+@property (strong, nonatomic) NSMutableArray *separators;
 @property (strong, nonatomic) UILabel *name;
 @property (strong, nonatomic) UILabel *delivery;
 @property (strong, nonatomic) UILabel *shipping;
@@ -26,125 +26,125 @@
 
 -(void) setupWithSellerDelivery:(RISellerDelivery*)sellerDelivery index:(NSInteger)index ofMax:(NSInteger)max width:(CGFloat)width{
     
-    width -= 12.0f;
+    self.backgroundColor = JAWhiteColor;
     
-    self.contentView = [[UIView alloc]initWithFrame:CGRectMake(6.0f, 3.0f, width, 26.0f)];
-    [self.contentView setBackgroundColor:[UIColor whiteColor]];
-    self.contentView.layer.cornerRadius = 5.0f;
+    self.quantity = [NSMutableArray new];
+    self.prodName = [NSMutableArray new];
+    self.separators = [NSMutableArray new];
     
-    NSInteger currenty = 26;
+    CGFloat startingX = 16.0f;
+    CGFloat currentY = 0.0f;
     
-    self.title = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, 0.0f, width, 26.0f)];
-    self.title.textAlignment = NSTextAlignmentLeft;
-    [self.title setText:[NSString stringWithFormat:STRING_SHIPMENT_OF,(long)index,(long)max]];
-    [self.title setFont:JABodyFont];
-    [self.title setTextColor:JABlack800Color];
-    [self.contentView addSubview:self.title];
+    self.headerLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0.0f, currentY, self.frame.size.width, kProductInfoHeaderLineHeight)];
+    [self.headerLine setTitle:[NSString stringWithFormat:STRING_SHIPMENT_OF,(long)index,(long)max]];
+    [self addSubview:self.headerLine];
     
-    //seperator
-    self.separator = [[UIView alloc]initWithFrame:CGRectMake(0, currenty, width ,1.0f)];
-    [self.separator setBackgroundColor:JATextFieldColor];
-    [self.contentView addSubview:self.separator];
-    currenty += 1.0f;
-    
+    currentY += self.headerLine.frame.size.height;
     
     for (RICartItem *prod in sellerDelivery.products) {
-        //qty
-        currenty += 24.0f;
-        UILabel *qty = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, currenty, width, 12.0f)];
-        [qty setText:[NSString stringWithFormat:@"%@ %@ ",STRING_ORDER_QUANTITY,prod.quantity]];
-        [qty setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
-        [qty setTextColor:JAGreyColor];
-        [qty sizeToFit];
-        [self.contentView addSubview:qty];
-        [self.quantity addObject:qty];
-        
         //name
-        currenty += qty.frame.size.height;
-        UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, currenty, width-24.f, 12.0f)];
+        currentY += 12.0f;
+        UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(startingX, currentY, width-startingX*2, 16.0f)];
+        [name setTextAlignment:NSTextAlignmentLeft];
         [name setText:[NSString stringWithFormat:@"%@ ",prod.name]];
-        [name setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
+        [name setFont:JABodyFont];
         [name setNumberOfLines:0];
         [name setLineBreakMode:NSLineBreakByWordWrapping];
-        [name setTextColor:JAGreyColor];
+        [name setTextColor:JABlackColor];
         [name sizeToFit];
         [name setWidth:width-name.frame.origin.x*2];
-        [self.contentView addSubview:name];
+        [self addSubview:name];
         [self.prodName addObject:name];
         
-        currenty += qty.frame.size.height;
+        //qty
+        currentY += name.frame.size.height + 3.0f;
+        UILabel *qty = [[UILabel alloc] initWithFrame:CGRectMake(startingX, currentY, width-startingX*2, 16.0f)];
+        [qty setTextAlignment:NSTextAlignmentLeft];
+        [qty setText:[NSString stringWithFormat:@"%@ %@ ",STRING_ORDER_QUANTITY,prod.quantity]];
+        [qty setFont:JACaptionFont];
+        [qty setTextColor:JABlack800Color];
+        [qty sizeToFit];
+        [self addSubview:qty];
+        [self.quantity addObject:qty];
+        
+        //separator
+        currentY += qty.frame.size.height + 12.0f;
+        UIView* separator = [[UIView alloc] init];
+        separator.backgroundColor = JABlack400Color;
+        [self addSubview:separator];
+        [self.separators addObject:separator];
+        separator.frame = CGRectMake(startingX,
+                                     currentY,
+                                     width-startingX,
+                                     1.0f);
+        currentY += 1.0f;
     }
     
-    currenty += 24.0f;
+    currentY += 6.0f;
     
     //name
-    self.name = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, currenty, width, 12.0f)];
+    self.name = [[UILabel alloc] initWithFrame:CGRectMake(startingX, currentY, width, 16.0f)];
     self.name.textAlignment = NSTextAlignmentLeft;
     [self.name setText:[NSString stringWithFormat:@"%@ %@ ",STRING_FULFILLED,sellerDelivery.name]];
     [self.name setFont:JABodyFont];
-    [self.name setTextColor:JAGreyColor];
+    [self.name setTextColor:JABlackColor];
     [self.name sizeToFit];
-    [self.contentView addSubview:self.name];
-    currenty += self.name.frame.size.height;
+    [self addSubview:self.name];
+    currentY += self.name.frame.size.height;
     
     //shipping local
-    self.delivery = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, currenty, width, 12.0f)];
+    self.delivery = [[UILabel alloc] initWithFrame:CGRectMake(startingX, currentY, width, 16.0f)];
     self.delivery.textAlignment = NSTextAlignmentLeft;
     [self.delivery setText:[NSString stringWithFormat:@"%@ ",sellerDelivery.deliveryTime]];
-    [self.delivery setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
-    [self.delivery setTextColor:JAGreyColor];
+    [self.delivery setFont:JABodyFont];
+    [self.delivery setTextColor:JABlackColor];
     [self.delivery sizeToFit];
-    [self.contentView addSubview:self.delivery];
-    currenty += self.delivery.frame.size.height;
+    [self addSubview:self.delivery];
+    
+    currentY += self.delivery.frame.size.height;
     
     if ( sellerDelivery.shippingGlobal != nil) {
-        currenty += 24.0f;
-        [self.delivery setFrame:CGRectMake(12.0f, currenty - self.delivery.frame.size.height, width, 12.0f)];
+        [self.delivery setFrame:CGRectMake(startingX, currentY - self.delivery.frame.size.height, width, 16.0f)];
         [self.delivery setTextColor:JAOrange1Color];
 
         //shipping global
-        self.shipping = [[UILabel alloc] initWithFrame:CGRectMake(24.0f, currenty, width, 42.0f)];
+        self.shipping = [[UILabel alloc] initWithFrame:CGRectMake(24.0f, currentY, width, 42.0f)];
         self.shipping.textAlignment = NSTextAlignmentLeft;
         [self.shipping setText:[NSString stringWithFormat:@"%@ ",sellerDelivery.shippingGlobal]];
-        [self.shipping setFont:[UIFont fontWithName:kFontLightName size:12.0f]];
+        [self.shipping setFont:JABodyFont];
         [self.shipping setTextColor:JAOrange1Color];
         [self.shipping setLineBreakMode:NSLineBreakByWordWrapping];
         [self.shipping setNumberOfLines:0];
         [self.shipping sizeToFit];
         
-        [self.contentView addSubview:self.shipping];
-        currenty += self.shipping.frame.size.height;
+        [self addSubview:self.shipping];
+        currentY += self.shipping.frame.size.height;
     }
-    
-    
-    [self.contentView setFrame:CGRectMake(self.contentView.frame.origin.x, self.contentView.frame.origin.y, self.contentView.frame.size.width, currenty+24.0f)];
-    [self addSubview:self.contentView];
-    [self setFrame:CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height + 12.0f)];
+
+    [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, currentY+12.0f)];
 }
 
--(void)updateWidth:(CGFloat)width {
-    
-    NSInteger widthDiff = width - 12.0f;
-    
-    [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, widthDiff, self.frame.size.height)];
-    
-    [self.contentView setFrame:CGRectMake(self.contentView.frame.origin.x, self.contentView.frame.origin.y, widthDiff, self.contentView.frame.size.height)];
-    [self.separator setFrame:CGRectMake(self.separator.frame.origin.x, self.separator.frame.origin.y, widthDiff, self.separator.frame.size.height)];
-    [self.title setFrame:CGRectMake(self.title.frame.origin.x, self.title.frame.origin.y, widthDiff, self.title.frame.size.height)];
+-(void)updateWidth:(CGFloat)width
+{
+    [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, width, self.frame.size.height)];
+
+    [self.headerLine setFrame:CGRectMake(self.headerLine.frame.origin.x, self.headerLine.frame.origin.y, width, self.headerLine.frame.size.height)];
     
     for (UILabel* qty in self.quantity) {
-        [qty setFrame:CGRectMake(qty.frame.origin.x, qty.frame.origin.y, widthDiff, qty.frame.size.height)];
+        [qty setFrame:CGRectMake(qty.frame.origin.x, qty.frame.origin.y, width, qty.frame.size.height)];
     }
     
     for (UILabel* prod in self.prodName) {
-        [prod setFrame:CGRectMake(prod.frame.origin.x, prod.frame.origin.y, widthDiff, prod.frame.size.height)];
+        [prod setFrame:CGRectMake(prod.frame.origin.x, prod.frame.origin.y, width, prod.frame.size.height)];
     }
     
-    [self.name setFrame:CGRectMake(self.name.frame.origin.x, self.name.frame.origin.y, widthDiff, self.name.frame.size.height)];
-    [self.delivery setFrame:CGRectMake(self.delivery.frame.origin.x, self.delivery.frame.origin.y, widthDiff, self.delivery.frame.size.height)];
-    [self.shipping setFrame:CGRectMake(self.shipping.frame.origin.x, self.shipping.frame.origin.y, widthDiff, self.shipping.frame.size.height)];
+    for (UIView* separator in self.separators) {
+        [separator setFrame:CGRectMake(separator.frame.origin.x, separator.frame.origin.y, width, separator.frame.size.height)];
+    }
     
-    
+    [self.name setFrame:CGRectMake(self.name.frame.origin.x, self.name.frame.origin.y, width, self.name.frame.size.height)];
+    [self.delivery setFrame:CGRectMake(self.delivery.frame.origin.x, self.delivery.frame.origin.y, width, self.delivery.frame.size.height)];
+    [self.shipping setFrame:CGRectMake(self.shipping.frame.origin.x, self.shipping.frame.origin.y, width, self.shipping.frame.size.height)];
 }
 
 @end
