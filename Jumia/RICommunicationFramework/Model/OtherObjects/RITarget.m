@@ -44,6 +44,8 @@
         return RR_RECOMENDATION;
     }else if ([self.type isEqualToString:[RITarget getTargetKey:RR_CLICK]]) {
         return RR_CLICK;
+    }else if ([self.type isEqualToString:[RITarget getTargetKey:EXTERNAL_LINK]]) {
+        return EXTERNAL_LINK;
     }
     return UNKNOWN;
 }
@@ -128,6 +130,8 @@
             urlString = [urlString stringByAppendingString:RI_API_RICH_RELEVANCE];
         } else if ([type isEqualToString:[self getTargetKey:RR_CLICK]]) {
             urlString = RI_API_RICH_RELEVANCE_CLICK;
+        } else if ([type isEqualToString:[self getTargetKey:EXTERNAL_LINK]]) {
+            urlString = [NSString new];
         }
     }
     if (VALID_NOTEMPTY(node, NSString)) {
@@ -174,6 +178,8 @@
             return @"rr_recommendation";
         case RR_CLICK:
             return @"rr_click";
+        case EXTERNAL_LINK:
+            return @"external_link";
             
         default:
             return nil;

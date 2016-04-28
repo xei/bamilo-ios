@@ -10,6 +10,8 @@
 
 // Notifications
 
+#define kCheckRedirectInfoNotification @"NOTIFICATION_CHECK_REDIRECT_INFO"
+
 //************ app action notifications
 #define kSelectedCountryNotification @"NOTIFICATION_SELECTED_COUNTRY"
 #define kUpdateCountryNotification @"NOTIFICATION_UPDATE_COUNTRY"

@@ -327,7 +327,8 @@ typedef NS_ENUM(NSInteger, RIEventType) {
     RIEventLastAddedToCart = 74,
     RIEventMostViewedBrand = 75,
     RIEventUserInfoChanged = 76,
-    RIEventFacebookAddToCart = 77
+    RIEventFacebookAddToCart = 77,
+    RIEventCategoryExternalLink = 78
 };
 
 /**

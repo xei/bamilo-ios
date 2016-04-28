@@ -326,6 +326,16 @@
 		9A007C8C1C2095A9007D99FC /* JAProductInfoRightSubtitleLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A007C891C2095A9007D99FC /* JAProductInfoRightSubtitleLine.m */; };
 		9A007C8D1C2095A9007D99FC /* JAProductInfoRightSubtitleLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A007C891C2095A9007D99FC /* JAProductInfoRightSubtitleLine.m */; };
 		9A007C8E1C2095A9007D99FC /* JAProductInfoRightSubtitleLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A007C891C2095A9007D99FC /* JAProductInfoRightSubtitleLine.m */; };
+		9A08B0F91CC4EFAF003282CB /* RIExternalCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A08B0F31CC4EFAF003282CB /* RIExternalCategory.m */; };
+		9A08B0FA1CC4EFAF003282CB /* RIExternalCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A08B0F31CC4EFAF003282CB /* RIExternalCategory.m */; };
+		9A08B0FB1CC4EFAF003282CB /* RIExternalCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A08B0F31CC4EFAF003282CB /* RIExternalCategory.m */; };
+		9A08B0FC1CC4EFAF003282CB /* RIExternalCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A08B0F31CC4EFAF003282CB /* RIExternalCategory.m */; };
+		9A08B0FD1CC4EFAF003282CB /* RIExternalCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A08B0F31CC4EFAF003282CB /* RIExternalCategory.m */; };
+		9A08B10F1CC7C377003282CB /* JAActionWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A08B10E1CC7C377003282CB /* JAActionWebViewController.m */; };
+		9A08B1101CC7C377003282CB /* JAActionWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A08B10E1CC7C377003282CB /* JAActionWebViewController.m */; };
+		9A08B1111CC7C377003282CB /* JAActionWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A08B10E1CC7C377003282CB /* JAActionWebViewController.m */; };
+		9A08B1121CC7C377003282CB /* JAActionWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A08B10E1CC7C377003282CB /* JAActionWebViewController.m */; };
+		9A08B1131CC7C377003282CB /* JAActionWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A08B10E1CC7C377003282CB /* JAActionWebViewController.m */; };
 		9A0BBE921BFE2480007D35CE /* JACustomNavigationBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1B7C411BFCF849000111D7 /* JACustomNavigationBarView.m */; };
 		9A0BBE931BFE2480007D35CE /* JACustomNavigationBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1B7C411BFCF849000111D7 /* JACustomNavigationBarView.m */; };
 		9A0BBE941BFE2481007D35CE /* JACustomNavigationBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1B7C411BFCF849000111D7 /* JACustomNavigationBarView.m */; };
@@ -2806,6 +2816,11 @@
 		9A007C821C206DE4007D99FC /* JAProductInfoSubtitleLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAProductInfoSubtitleLine.m; sourceTree = "<group>"; };
 		9A007C881C2095A9007D99FC /* JAProductInfoRightSubtitleLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAProductInfoRightSubtitleLine.h; path = Lines/JAProductInfoRightSubtitleLine.h; sourceTree = "<group>"; };
 		9A007C891C2095A9007D99FC /* JAProductInfoRightSubtitleLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAProductInfoRightSubtitleLine.m; path = Lines/JAProductInfoRightSubtitleLine.m; sourceTree = "<group>"; };
+		9A08B0EF1CC4EC17003282CB /* Model_1.14.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.14.xcdatamodel; sourceTree = "<group>"; };
+		9A08B0F21CC4EFAF003282CB /* RIExternalCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIExternalCategory.h; sourceTree = "<group>"; };
+		9A08B0F31CC4EFAF003282CB /* RIExternalCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIExternalCategory.m; sourceTree = "<group>"; };
+		9A08B10D1CC7C377003282CB /* JAActionWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAActionWebViewController.h; sourceTree = "<group>"; };
+		9A08B10E1CC7C377003282CB /* JAActionWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAActionWebViewController.m; sourceTree = "<group>"; };
 		9A0F9B611B5E58E900569DF2 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = FacebookSDK/Bolts.framework; sourceTree = "<group>"; };
 		9A0F9B621B5E58E900569DF2 /* FacebookSDKStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKStrings.bundle; path = FacebookSDK/FacebookSDKStrings.bundle; sourceTree = "<group>"; };
 		9A0F9B631B5E58E900569DF2 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = FacebookSDK/FBAudienceNetwork.framework; sourceTree = "<group>"; };
@@ -3597,6 +3612,7 @@
 		FF0464FF1CA96EAC00B82FD2 /* NSString+ADJAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+ADJAdditions.m"; path = "Jumia/ExternalFrameworks/Adjust/ADJAdditions/NSString+ADJAdditions.m"; sourceTree = SOURCE_ROOT; };
 		FF0465001CA96EAC00B82FD2 /* UIDevice+ADJAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIDevice+ADJAdditions.h"; path = "Jumia/ExternalFrameworks/Adjust/ADJAdditions/UIDevice+ADJAdditions.h"; sourceTree = SOURCE_ROOT; };
 		FF0465011CA96EAC00B82FD2 /* UIDevice+ADJAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIDevice+ADJAdditions.m"; path = "Jumia/ExternalFrameworks/Adjust/ADJAdditions/UIDevice+ADJAdditions.m"; sourceTree = SOURCE_ROOT; };
+		FF09B2BA1CD2505C00DF5C59 /* Jumia.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Jumia.entitlements; sourceTree = "<group>"; };
 		FF4383DD1C6CD4AC003BA957 /* JASwitchRadioComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASwitchRadioComponent.h; sourceTree = "<group>"; };
 		FF4383DE1C6CD4AC003BA957 /* JASwitchRadioComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASwitchRadioComponent.m; sourceTree = "<group>"; };
 		FF4383E41C6E1F49003BA957 /* JAScreenRadioComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAScreenRadioComponent.h; sourceTree = "<group>"; };
@@ -5157,6 +5173,7 @@
 		B5A301AA19811D0700F71726 /* Jumia */ = {
 			isa = PBXGroup;
 			children = (
+				FF09B2BA1CD2505C00DF5C59 /* Jumia.entitlements */,
 				4AE242DC198655D900E37C90 /* Storyboard */,
 				B5C1E33419BA1E3D009C422C /* Categories */,
 				B50B03A8198A883D002046DF /* Utils */,
@@ -5326,6 +5343,8 @@
 		B5A3026419811E9200F71726 /* CoreDataEntities */ = {
 			isa = PBXGroup;
 			children = (
+				9A08B0F21CC4EFAF003282CB /* RIExternalCategory.h */,
+				9A08B0F31CC4EFAF003282CB /* RIExternalCategory.m */,
 				CECD05A11ADFF2DC00EC51E3 /* RITeaserGrouping.h */,
 				CECD05A21ADFF2DC00EC51E3 /* RITeaserGrouping.m */,
 				CECD059A1ADFF2DB00EC51E3 /* RITeaserComponent.h */,
@@ -5554,7 +5573,7 @@
 			isa = PBXGroup;
 			children = (
 				9AE03A881C076CB3003CBEF1 /* Authentication */,
-				CEBE2A7D1A9E31E800F457FA /* ShopWeb */,
+				CEBE2A7D1A9E31E800F457FA /* Web */,
 				CE283E6E1A7296AE00F3E92D /* OtherOffers */,
 				B5A303001981218E00F71726 /* BaseViewController */,
 				CE3AF8FD19DBF4FB00D8C51B /* Campaigns */,
@@ -6118,12 +6137,15 @@
 			path = GTM;
 			sourceTree = "<group>";
 		};
-		CEBE2A7D1A9E31E800F457FA /* ShopWeb */ = {
+		CEBE2A7D1A9E31E800F457FA /* Web */ = {
 			isa = PBXGroup;
 			children = (
 				9AB4887E1B72748500886A44 /* JAShopWebViewController.h */,
 				9AB4887F1B72748500886A44 /* JAShopWebViewController.m */,
+				9A08B10D1CC7C377003282CB /* JAActionWebViewController.h */,
+				9A08B10E1CC7C377003282CB /* JAActionWebViewController.m */,
 			);
+			name = Web;
 			path = ShopWeb;
 			sourceTree = "<group>";
 		};
@@ -6375,6 +6397,9 @@
 						DevelopmentTeam = PYN25BXZ9L;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.SafariKeychain = {
 								enabled = 1;
 							};
 						};
@@ -7441,6 +7466,7 @@
 				1e6713adaced26b8b8ad2c86 /* JAShippingViewController.m in Sources */,
 				eff7e3b1020d2863ebc2e153 /* JACheckBoxComponent.m in Sources */,
 				8fa71f605339cbdc38488d92 /* RIPaymentInformation.m in Sources */,
+				9A08B0FA1CC4EFAF003282CB /* RIExternalCategory.m in Sources */,
 				0b1e813172ab4ac5baf4294c /* RIAddress.m in Sources */,
 				c4a111d276094b3ae6890461 /* JAPDVSingleRelatedItem.m in Sources */,
 				74ae21885fff40a8bed5b863 /* RIShippingMethodForm.m in Sources */,
@@ -7666,6 +7692,7 @@
 				c0a7b46a0bf48c7a4a4b0950 /* JAShippingInfoCell.m in Sources */,
 				0a7dd54e89ecf32139d07fd4 /* JASidePanelController.m in Sources */,
 				FF0464AD1CA96E9000B82FD2 /* ADJConfig.m in Sources */,
+				9A08B1101CC7C377003282CB /* JAActionWebViewController.m in Sources */,
 				9071405acbc614db8a470148 /* NMRangeSlider.m in Sources */,
 				d765de058e273cba2b2628fd /* RICustomer.m in Sources */,
 				09a540fd5e97a0761054d14c /* SDWebImageDecoder.m in Sources */,
@@ -7721,6 +7748,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A08B10F1CC7C377003282CB /* JAActionWebViewController.m in Sources */,
 				9AB4CFCA1BA9C7D1007326C7 /* RICatalog.m in Sources */,
 				FF0464981CA96E9000B82FD2 /* ADJActivityState.m in Sources */,
 				9A6BC0861C4907BA00DD9492 /* JAMessageView.m in Sources */,
@@ -8006,6 +8034,7 @@
 				9A7A772E1B2F0A9D002F530F /* JAPDVGallery.m in Sources */,
 				9A3C76131C285D9300EB0B11 /* JARecentlyViewedCell.m in Sources */,
 				CE3AF91A19DD8BC400D8C51B /* RIPromotion.m in Sources */,
+				9A08B0F91CC4EFAF003282CB /* RIExternalCategory.m in Sources */,
 				9AE03A8B1C076CE1003CBEF1 /* JAAuthenticationViewController.m in Sources */,
 				CEDBF8611B0A01B60073971A /* UIImage+Mirror.m in Sources */,
 				9A86F8061C281F8F001A91D5 /* JARecentlyViewedViewController.m in Sources */,
@@ -8061,6 +8090,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A08B1111CC7C377003282CB /* JAActionWebViewController.m in Sources */,
 				9A189E461BB190030039BC14 /* RICatalog.m in Sources */,
 				FF04649A1CA96E9000B82FD2 /* ADJActivityState.m in Sources */,
 				9A189E5F1BB31AC70039BC14 /* JAProductInfoHeaderLine.m in Sources */,
@@ -8346,6 +8376,7 @@
 				8968FE711C3AE33D00B28207 /* JAUserDataViewController.m in Sources */,
 				CE9ADC071AB34C4600D56481 /* SDWebImageDecoder.m in Sources */,
 				9A007C771C203355007D99FC /* JAMyAccountViewController.m in Sources */,
+				9A08B0FB1CC4EFAF003282CB /* RIExternalCategory.m in Sources */,
 				9A7A77301B2F182D002F530F /* JAPDVGallery.m in Sources */,
 				CE9ADC081AB34C4600D56481 /* RIPromotion.m in Sources */,
 				CEDBF8631B0A01B60073971A /* UIImage+Mirror.m in Sources */,
@@ -8391,6 +8422,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A08B1121CC7C377003282CB /* JAActionWebViewController.m in Sources */,
 				9A189E451BB190020039BC14 /* RICatalog.m in Sources */,
 				FF04649B1CA96E9000B82FD2 /* ADJActivityState.m in Sources */,
 				9A189E601BB31AC70039BC14 /* JAProductInfoHeaderLine.m in Sources */,
@@ -8676,6 +8708,7 @@
 				8968FE721C3AE33E00B28207 /* JAUserDataViewController.m in Sources */,
 				CE9ADE011AB6D6E900D56481 /* SDWebImageDecoder.m in Sources */,
 				9A007C781C203355007D99FC /* JAMyAccountViewController.m in Sources */,
+				9A08B0FC1CC4EFAF003282CB /* RIExternalCategory.m in Sources */,
 				9A7A77311B2F182E002F530F /* JAPDVGallery.m in Sources */,
 				CE9ADE021AB6D6E900D56481 /* RIPromotion.m in Sources */,
 				CEDBF8641B0A01B60073971A /* UIImage+Mirror.m in Sources */,
@@ -8721,6 +8754,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A08B1131CC7C377003282CB /* JAActionWebViewController.m in Sources */,
 				9A189E441BB190020039BC14 /* RICatalog.m in Sources */,
 				FF04649C1CA96E9000B82FD2 /* ADJActivityState.m in Sources */,
 				9A189E611BB31AC70039BC14 /* JAProductInfoHeaderLine.m in Sources */,
@@ -9006,6 +9040,7 @@
 				9A7A77321B2F182E002F530F /* JAPDVGallery.m in Sources */,
 				8968FE731C3AE33E00B28207 /* JAUserDataViewController.m in Sources */,
 				CE9ADFFC1AB6D78200D56481 /* RIPromotion.m in Sources */,
+				9A08B0FD1CC4EFAF003282CB /* RIExternalCategory.m in Sources */,
 				9A007C791C203355007D99FC /* JAMyAccountViewController.m in Sources */,
 				CEDBF8651B0A01B60073971A /* UIImage+Mirror.m in Sources */,
 				9A55A6991BC2E8AA008EF4A6 /* JABundlesViewController.m in Sources */,
@@ -9190,7 +9225,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Jumia/Jumia.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9300,7 +9337,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Jumia/Jumia.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9497,7 +9536,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Jumia/Jumia.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9536,7 +9577,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Jumia/Jumia.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -10281,6 +10324,7 @@
 		B5A3028F19811E9200F71726 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				9A08B0EF1CC4EC17003282CB /* Model_1.14.xcdatamodel */,
 				9AE7669A1CB2B22100B63D8E /* Model_1.13.xcdatamodel */,
 				FF7A88F31C88C42E00E40625 /* Model_1.12.xcdatamodel */,
 				9A17D1A01C63C29A00851D6E /* Model_1.11.xcdatamodel */,
@@ -10296,7 +10340,7 @@
 				CE73D4FF19E5866D0074F7F3 /* Model_1.1.xcdatamodel */,
 				B5A3029019811E9200F71726 /* Model.xcdatamodel */,
 			);
-			currentVersion = 9AE7669A1CB2B22100B63D8E /* Model_1.13.xcdatamodel */;
+			currentVersion = 9A08B0EF1CC4EC17003282CB /* Model_1.14.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

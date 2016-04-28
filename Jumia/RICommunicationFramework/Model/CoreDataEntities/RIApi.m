@@ -9,6 +9,7 @@
 #import "RIApi.h"
 #import "RISection.h"
 #import "RICategory.h"
+#import "RIExternalCategory.h"
 #import "RIFormIndex.h"
 //#import "RITeaserCategory.h"
 #import "RITeaserGrouping.h"
@@ -86,6 +87,15 @@
                                                               
                                                               if (VALID_NOTEMPTY(metadata, NSDictionary)) {
                                                                   
+                                                                  NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                                                                  NSString *installedVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
+//                                                                  NSString *installedBundleShortVersion = [infoDictionary valueForKey:@"CFBundleShortVersionString"];
+                                                                  NSString *lastAppVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"appVersion"];
+                                                                  if (!VALID(lastAppVersion, NSString) || ![installedVersion isEqualToString:lastAppVersion]) {
+                                                                      [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RIApi class])];
+                                                                      [[NSUserDefaults standardUserDefaults] setObject:installedVersion forKey:@"appVersion"];
+                                                                  }
+                                                                  
                                                                   // insert the country url
                                                                   [metadata addEntriesFromDictionary:@{ @"countryUrl" : url }];
                                                                   
@@ -98,8 +108,6 @@
                                                                   BOOL hasUpdate = NO;
                                                                   BOOL isUpdateMandatory = NO;
                                                                   
-                                                                  NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-                                                                  NSString *installedVersion = [infoDictionary valueForKey:@"CFBundleVersion"];
                                                                   if(VALID_NOTEMPTY(installedVersion, NSString))
                                                                   {
                                                                       CGFloat installedVersionNumber = [installedVersion floatValue];
@@ -173,6 +181,7 @@
                                                                       }
                                                                       
                                                                   }
+                                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kCheckRedirectInfoNotification object:nil];
                                                                   
                                                                   successBlock(newApi, hasUpdate, isUpdateMandatory);
                                                                   return;
@@ -442,6 +451,17 @@ countryUserAgentInjection:(NSString*)countryUserAgentInjection
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
         } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
+        }];
+    }
+    else if ([section.name isEqualToString:@"externallinks"])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestStartedNotificationName object:nil];
+        [RIExternalCategory loadExternalCategoryIntoDatabaseForCountry:url countryUserAgentInjection:countryUserAgentInjection  withSuccessBlock:^(RIExternalCategory *externalCategory) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
+            successBlock();
+        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RISectionRequestEndedNotificationName object:nil];
+            failureBlock(apiResponse, errorMessage);
         }];
     }
 }
