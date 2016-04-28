@@ -11,9 +11,9 @@
 
 @class RIShippingMethodPickupStationOption;
 
-@interface JAPickupStationInfoCell : UICollectionViewCell
+@interface JAPickupStationInfoCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet JAClickableView *clickableView;
+@property (strong, nonatomic) JAClickableView *clickableView;
 @property (strong, nonatomic) UIView *separator;
 @property (strong, nonatomic) UIView *lastSeparator;
 

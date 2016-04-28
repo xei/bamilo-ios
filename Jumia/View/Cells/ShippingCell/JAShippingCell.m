@@ -10,8 +10,8 @@
 
 @interface JAShippingCell ()
 
-@property (weak, nonatomic) IBOutlet UILabel *label;
-@property (weak, nonatomic) IBOutlet UIImageView *checkMark;
+@property (strong, nonatomic) UILabel *label;
+@property (strong, nonatomic) UIImageView *checkMarkImageView;
 
 @end
 
@@ -19,31 +19,33 @@
 
 -(void)loadWithShippingMethod:(RIShippingMethod *)shippingMethod
 {
+    if (!self.clickableView) {
+        self.clickableView = [[JAClickableView alloc] init];
+        [self addSubview:self.clickableView];
+    }
     self.clickableView.frame = self.bounds;
     
-    self.checkMark.translatesAutoresizingMaskIntoConstraints = YES;
-    self.checkMark.frame = CGRectMake(self.clickableView.frame.size.width - 14.0f - self.checkMark.frame.size.width,
-                                      (self.clickableView.frame.size.height - self.checkMark.frame.size.height) / 2,
-                                      self.checkMark.frame.size.width,
-                                      self.checkMark.frame.size.height);
+    UIImage* checkMarkImage = [UIImage imageNamed:@"round_checkbox_deselected"];
+    if (!self.checkMarkImageView) {
+        self.checkMarkImageView = [[UIImageView alloc] initWithImage:checkMarkImage];
+        [self.clickableView addSubview:self.checkMarkImageView];
+    }
+    self.checkMarkImageView.frame = CGRectMake(16.0f,
+                                               (self.clickableView.frame.size.height - checkMarkImage.size.height) / 2,
+                                               checkMarkImage.size.width,
+                                               checkMarkImage.size.height);
     
-    
-    // this triggers the constraints error output
-    self.label.translatesAutoresizingMaskIntoConstraints = YES;
-    
-    self.label.font = [UIFont fontWithName:kFontLightName size:self.label.font.pointSize];
-    self.label.textAlignment = NSTextAlignmentLeft;
+    if (!self.label) {
+        self.label = [UILabel new];
+        [self.clickableView addSubview:self.label];
+        self.label.font = JAListFont;
+        self.label.textAlignment = NSTextAlignmentLeft;
+    }
     [self.label setText:[shippingMethod label]];
-    self.label.frame = CGRectMake(17.0f,
+    self.label.frame = CGRectMake(CGRectGetMaxX(self.checkMarkImageView.frame) + 8.0f,
                                   0.0f,
-                                  self.clickableView.frame.size.width - 14*2 - self.checkMark.frame.size.width,
+                                  self.clickableView.frame.size.width - self.checkMarkImageView.frame.size.width - 16.0f*2 - 8.0f,
                                   self.clickableView.frame.size.height);
-    
-    self.separator.translatesAutoresizingMaskIntoConstraints = YES;
-    self.separator.frame = CGRectMake(0.0f,
-                                      self.clickableView.frame.size.height - 1.0f,
-                                      self.clickableView.frame.size.width,
-                                      1.0f);
     
     if (RI_IS_RTL) {
         [self flipAllSubviews];
@@ -53,14 +55,14 @@
 
 -(void)selectShippingMethod
 {
-    [self.checkMark setHidden:NO];
-    [self.separator setHidden:YES];
+    UIImage* checkMarkImage = [UIImage imageNamed:@"round_checkbox_selected"];
+    [self.checkMarkImageView setImage:checkMarkImage];
 }
 
 -(void)deselectShippingMethod
 {
-    [self.checkMark setHidden:YES];
-    [self.separator setHidden:NO];
+    UIImage* checkMarkImage = [UIImage imageNamed:@"round_checkbox_deselected"];
+    [self.checkMarkImageView setImage:checkMarkImage];
 }
 
 @end
