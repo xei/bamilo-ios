@@ -39,11 +39,22 @@
 @dynamic casSubtitle;
 @dynamic casImages;
 
+@dynamic redirectHtml;
+@dynamic redirectStringTarget;
+
 @synthesize suggesterProviderEnum;
 
 + (RICountryConfiguration *)parseCountryConfiguration:(NSDictionary *)json
 {
     RICountryConfiguration *newConfig = (RICountryConfiguration*)[[RIDataBaseWrapper sharedInstance] temporaryManagedObjectOfType:NSStringFromClass([RICountryConfiguration class])];
+    
+    if (VALID_NOTEMPTY([json objectForKey:@"redirect_info"], NSDictionary)) {
+        NSDictionary *redirectInfo = [json objectForKey:@"redirect_info"];
+        if (VALID_NOTEMPTY([redirectInfo objectForKey:@"ios_link"], NSString) && VALID_NOTEMPTY([redirectInfo objectForKey:@"html"], NSString)) {
+            [newConfig setRedirectHtml:[redirectInfo objectForKey:@"html"]];
+            [newConfig setRedirectStringTarget:[RITarget getTargetString:EXTERNAL_LINK node:[redirectInfo objectForKey:@"ios_link"]]];
+        }
+    }
     
     if ([json objectForKey:@"currency_iso"]) {
         newConfig.currencyIso = [json objectForKey:@"currency_iso"];
@@ -177,6 +188,8 @@
     [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RICountryConfiguration class])];
     
     [RICountryConfiguration saveConfiguration:newConfig andContext:YES];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kCheckRedirectInfoNotification object:nil];
     
     return newConfig;
 }
