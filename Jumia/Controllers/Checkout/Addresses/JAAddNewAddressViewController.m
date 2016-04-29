@@ -74,6 +74,10 @@ JAPickerDelegate>
     
     self.navBarLayout.showBackButton = YES;
     
+    if (self.fromCheckout) {
+        self.navBarLayout.showCartButton = NO;
+    }
+    
     self.hasErrors = NO;
     
     self.extraParameters = nil;

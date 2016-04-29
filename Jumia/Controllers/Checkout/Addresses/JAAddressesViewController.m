@@ -67,6 +67,10 @@ UITableViewDelegate>
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.title = STRING_MY_ADDRESSES;
     
+    if (self.fromCheckout) {
+        self.navBarLayout.showCartButton = NO;
+    }
+    
     self.screenName = @"Address";
     
     self.view.backgroundColor = JAWhiteColor;
