@@ -8,14 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JAShippingInfoCell : UICollectionViewCell
-
-@property (weak, nonatomic) IBOutlet UIView *separator;
+@interface JAShippingInfoCell : UITableViewCell
 
 -(void)loadWithShippingFee:(NSString *)shippingFee
               deliveryTime:(NSString *)deliveryTime;
 
--(void)loadWithPickupStation;
+-(void)loadWithPickupStationWidth:(CGFloat)width;
 
 -(void)setPickupStationRegion:(NSString*)pickupStationRegion;
 

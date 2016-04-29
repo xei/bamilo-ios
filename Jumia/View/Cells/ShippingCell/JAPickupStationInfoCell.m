@@ -11,18 +11,17 @@
 #import "UIImageView+JA.h"
 #import "RIShippingMethodPickupStationOption.h"
 
-@interface JAPickupStationInfoCell ()
-{
-    UILabel *_shippingFeeLabel;
-    UILabel *_shippingFeeAlertLabel;
-    UIView *_infoView;
-    UILabel *_cityLabel;
-    UILabel *_addressLabel;
-    UILabel *_openingHours;
-}
+@interface JAPickupStationInfoCell () {}
 
-@property (weak, nonatomic) IBOutlet UIImageView *image;
-@property (weak, nonatomic) IBOutlet UIImageView *checkMark;
+@property (strong, nonatomic) UIImageView *image;
+@property (strong, nonatomic) UIImageView *checkMarkImageView;
+
+@property (strong, nonatomic) UILabel *shippingFeeLabel;
+@property (strong, nonatomic) UILabel *shippingFeeAlertLabel;
+@property (strong, nonatomic) UIView *infoView;
+@property (strong, nonatomic) UILabel *cityLabel;
+@property (strong, nonatomic) UILabel *addressLabel;
+@property (strong, nonatomic) UILabel *openingHours;
 
 @end
 
@@ -43,23 +42,45 @@
         infoViewWidth = 624.0f;
     }
     
-    if (!_infoView) {
-        _infoView = [[UIView alloc] initWithFrame:CGRectZero];
-        [self addSubview:_infoView];
+    UIImage* checkMarkImage = [UIImage imageNamed:@"round_checkbox_deselected"];
+    if (!self.checkMarkImageView) {
+        self.checkMarkImageView = [[UIImageView alloc] initWithImage:checkMarkImage];
+        [self addSubview:self.checkMarkImageView];
+    }
+    self.checkMarkImageView.frame = CGRectMake(16.0f,
+                                               16.0f,
+                                               checkMarkImage.size.width,
+                                               checkMarkImage.size.height);
+    
+    if (!self.image) {
+        self.image = [[UIImageView alloc] init];
+        [self addSubview:self.image];
+    }
+    self.image.frame = CGRectMake(CGRectGetMaxX(self.checkMarkImageView.frame)+5.0f,
+                                  16.0f,
+                                  80.0f,
+                                  60.0f);
+    [self.image setImageWithURL:[NSURL URLWithString:pickupStation.image]
+               placeholderImage:[UIImage imageNamed:@"placeholder_variations"]];
+    [self.image changeImageHeight:0.0f andWidth:60.0f];
+    
+    if (!self.infoView) {
+        self.infoView = [[UIView alloc] initWithFrame:CGRectZero];
+        [self addSubview:self.infoView];
     }
     
-    if (!_cityLabel) {
-        _cityLabel = [[UILabel alloc] init];
-        [_infoView addSubview:_cityLabel];
+    if (!self.cityLabel) {
+        self.cityLabel = [[UILabel alloc] init];
+        [self.infoView addSubview:self.cityLabel];
     }
     
-    [_cityLabel setFrame:CGRectMake(0,
-                                   0,
-                                   infoViewWidth,
-                                    _infoView.frame.size.height)];
-    [_cityLabel setNumberOfLines:0];
-    [_cityLabel setLineBreakMode:NSLineBreakByCharWrapping];
-    [_cityLabel setTextColor:JAGreyColor];
+    [self.cityLabel setFrame:CGRectMake(0,
+                                        0,
+                                        infoViewWidth,
+                                        self.infoView.frame.size.height)];
+    [self.cityLabel setNumberOfLines:0];
+    [self.cityLabel setLineBreakMode:NSLineBreakByCharWrapping];
+    [self.cityLabel setTextColor:JAGreyColor];
     
     NSString *cityLabelString = STRING_CITY;
     NSString *trimmedCityString = [pickupStation.city stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -67,23 +88,23 @@
     NSMutableAttributedString *finalCityString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", cityLabelString, trimmedCityString] attributes:labelAttributes];
     [finalCityString setAttributes:valueAttributes
                              range:cityRange];
-    [_cityLabel setAttributedText:finalCityString];
-    [_cityLabel sizeToFit];
+    [self.cityLabel setAttributedText:finalCityString];
+    [self.cityLabel sizeToFit];
     
-    totalHeight += _cityLabel.frame.size.height;
+    totalHeight += self.cityLabel.frame.size.height;
     
-    if (!_addressLabel) {
-        _addressLabel = [[UILabel alloc] init];
-        [_infoView addSubview:_addressLabel];
+    if (!self.addressLabel) {
+        self.addressLabel = [[UILabel alloc] init];
+        [self.infoView addSubview:self.addressLabel];
     }
     
-    [_addressLabel setFrame:CGRectMake(0,
-                                      CGRectGetMaxY(_cityLabel.frame),
+    [self.addressLabel setFrame:CGRectMake(0,
+                                      CGRectGetMaxY(self.cityLabel.frame),
                                       infoViewWidth,
-                                       _infoView.frame.size.height)];
-    [_addressLabel setNumberOfLines:0];
-    [_addressLabel setLineBreakMode:NSLineBreakByWordWrapping];
-    [_addressLabel setTextColor:JAGreyColor];
+                                       self.infoView.frame.size.height)];
+    [self.addressLabel setNumberOfLines:0];
+    [self.addressLabel setLineBreakMode:NSLineBreakByWordWrapping];
+    [self.addressLabel setTextColor:JAGreyColor];
 
     NSString *addressLabelString = STRING_ADDRESS;
     NSString *trimmedAddressString = [pickupStation.address stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -91,23 +112,23 @@
     NSMutableAttributedString *finalAddressString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", addressLabelString,trimmedAddressString] attributes:labelAttributes];
     [finalAddressString setAttributes:valueAttributes
                                 range:addressRange];
-    [_addressLabel setAttributedText:finalAddressString];
-    [_addressLabel sizeToFit];
+    [self.addressLabel setAttributedText:finalAddressString];
+    [self.addressLabel sizeToFit];
     
-    totalHeight += _addressLabel.frame.size.height;
+    totalHeight += self.addressLabel.frame.size.height;
     
-    if (!_openingHours) {
-        _openingHours = [[UILabel alloc] init];
-        [_infoView addSubview:_openingHours];
+    if (!self.openingHours) {
+        self.openingHours = [[UILabel alloc] init];
+        [self.infoView addSubview:self.openingHours];
     }
     
-    [_openingHours setFrame:CGRectMake(0,
-                                      CGRectGetMaxY(_addressLabel.frame),
+    [self.openingHours setFrame:CGRectMake(0,
+                                      CGRectGetMaxY(self.addressLabel.frame),
                                       infoViewWidth,
-                                       _infoView.frame.size.height)];
-    [_openingHours setNumberOfLines:0];
-    [_openingHours setLineBreakMode:NSLineBreakByWordWrapping];
-    [_openingHours setTextColor:JAGreyColor];
+                                       self.infoView.frame.size.height)];
+    [self.openingHours setNumberOfLines:0];
+    [self.openingHours setLineBreakMode:NSLineBreakByWordWrapping];
+    [self.openingHours setTextColor:JAGreyColor];
     
     NSString *openingHoursString = STRING_OPENING_HOURS;
     NSString *trimmedOpeningHoursString = [pickupStation.openingHours stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -115,20 +136,20 @@
     NSMutableAttributedString *finalOpeningHoursString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", openingHoursString, trimmedOpeningHoursString] attributes:labelAttributes];
     [finalOpeningHoursString setAttributes:valueAttributes
                                      range:openingHoursRange];
-    [_openingHours setAttributedText:finalOpeningHoursString];
-    [_openingHours sizeToFit];
+    [self.openingHours setAttributedText:finalOpeningHoursString];
+    [self.openingHours sizeToFit];
     
-    totalHeight += _openingHours.frame.size.height;
+    totalHeight += self.openingHours.frame.size.height;
     
-    if (!_shippingFeeLabel) {
-        _shippingFeeLabel = [[UILabel alloc] init];
-        [_infoView addSubview:_shippingFeeLabel];
+    if (!self.shippingFeeLabel) {
+        self.shippingFeeLabel = [[UILabel alloc] init];
+        [self.infoView addSubview:self.shippingFeeLabel];
     }
     
-    [_shippingFeeLabel setFrame:CGRectMake(0, CGRectGetMaxY(_openingHours.frame), infoViewWidth, 20)];
-    [_shippingFeeLabel setNumberOfLines:0];
-    [_shippingFeeLabel setLineBreakMode:NSLineBreakByWordWrapping];
-    [_shippingFeeLabel setTextColor:JAGreyColor];
+    [self.shippingFeeLabel setFrame:CGRectMake(0, CGRectGetMaxY(self.openingHours.frame), infoViewWidth, 20)];
+    [self.shippingFeeLabel setNumberOfLines:0];
+    [self.shippingFeeLabel setLineBreakMode:NSLineBreakByWordWrapping];
+    [self.shippingFeeLabel setTextColor:JAGreyColor];
     NSString *shippingFeeString = STRING_SHIPPING_FEE;
     NSString *shippingFeeValue = [RICountryConfiguration formatPrice:pickupStation.shippingFee country:[RICountryConfiguration getCurrentConfiguration]];
     if ([pickupStation.shippingFee isEqualToNumber:[NSNumber numberWithInteger:0]]) {
@@ -138,60 +159,60 @@
     NSMutableAttributedString *finalShippingFeeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", shippingFeeString, shippingFeeValue] attributes:labelAttributes];
     [finalShippingFeeString setAttributes:valueAttributes
                                      range:shippingFeeRange];
-    [_shippingFeeLabel setAttributedText:finalShippingFeeString];
-    [_shippingFeeLabel sizeToFit];
+    [self.shippingFeeLabel setAttributedText:finalShippingFeeString];
+    [self.shippingFeeLabel sizeToFit];
     
-    if (!_shippingFeeAlertLabel) {
-        _shippingFeeAlertLabel = [[UILabel alloc] init];
-        [_infoView addSubview:_shippingFeeAlertLabel];
-        [_shippingFeeAlertLabel setFont:[UIFont fontWithName:kFontLightName size:11.0f]];
+    if (!self.shippingFeeAlertLabel) {
+        self.shippingFeeAlertLabel = [[UILabel alloc] init];
+        [self.infoView addSubview:self.shippingFeeAlertLabel];
+        [self.shippingFeeAlertLabel setFont:[UIFont fontWithName:kFontLightName size:11.0f]];
     }
     
-    [_shippingFeeAlertLabel setFrame:CGRectMake(0, CGRectGetMaxY(_shippingFeeLabel.frame) + 4, _infoView.width, 20)];
-    [_shippingFeeAlertLabel setText:STRING_SHIPPING_FEE_INFO];
-    [_shippingFeeAlertLabel setTextColor:JAGreyColor];
-    [_shippingFeeAlertLabel sizeToFit];
+    [self.shippingFeeAlertLabel setFrame:CGRectMake(0, CGRectGetMaxY(self.shippingFeeLabel.frame) + 4, self.infoView.width, 20)];
+    [self.shippingFeeAlertLabel setText:STRING_SHIPPING_FEE_INFO];
+    [self.shippingFeeAlertLabel setTextColor:JAGreyColor];
+    [self.shippingFeeAlertLabel sizeToFit];
     
     if ([pickupStation.shippingFee isEqualToNumber:[NSNumber numberWithInteger:0]]) {
-        [_shippingFeeAlertLabel setHidden:YES];
+        [self.shippingFeeAlertLabel setHidden:YES];
     }else{
-        [_shippingFeeAlertLabel setHidden:NO];
+        [self.shippingFeeAlertLabel setHidden:NO];
     }
     
-    if(!_separator)
+    self.infoView.frame = CGRectMake(CGRectGetMaxX(self.image.frame) + 10.0f,
+                                     16.0f,
+                                     self.frame.size.width - CGRectGetMaxX(self.image.frame) + 10.0f,
+                                     CGRectGetMaxY(self.shippingFeeAlertLabel.frame));
+    
+    if(!self.separator)
     {
-        _separator = [[UIView alloc] initWithFrame:CGRectZero];
-        [self addSubview:_separator];
+        self.separator = [[UIView alloc] initWithFrame:CGRectZero];
+        [self.separator setBackgroundColor:JABlack400Color];
+        [self addSubview:self.separator];
     }
-    
-    [_separator setFrame:CGRectMake(82,
-                                        self.height - 1.0f,
+    [self.separator setFrame:CGRectMake(16.0f,
+                                        CGRectGetMaxY(self.infoView.frame),
                                         self.width,
                                         1.0f)];
     
-    [_separator setBackgroundColor:JATextFieldColor];
+    self.clickableView.frame = self.bounds;
     
-    [_infoView setFrame:self.bounds];
-    _infoView.y += 16;
-    _infoView.x += 85;
-    _infoView.width -= 85;
-    
-    [_image setImageWithURL:[NSURL URLWithString:pickupStation.image]
-               placeholderImage:[UIImage imageNamed:@"placeholder_variations"]];
-    [_image changeImageHeight:0.0f andWidth:60.0f];
-    
-    _clickableView.frame = self.bounds;
+    if (RI_IS_RTL) {
+        [self flipAllSubviews];
+    }
 }
 
 -(void)selectPickupStation
 {
-    [self.checkMark setHidden:NO];
+    UIImage* checkMarkImage = [UIImage imageNamed:@"round_checkbox_selected"];
+    [self.checkMarkImageView setImage:checkMarkImage];
     self.clickableView.enabled = NO;
 }
 
 -(void)deselectPickupStation
 {
-    [self.checkMark setHidden:YES];
+    UIImage* checkMarkImage = [UIImage imageNamed:@"round_checkbox_deselected"];
+    [self.checkMarkImageView setImage:checkMarkImage];
     self.clickableView.enabled = YES;
 }
 

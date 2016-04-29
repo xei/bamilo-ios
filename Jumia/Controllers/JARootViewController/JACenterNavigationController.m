@@ -56,6 +56,7 @@
 
 #import "JAAuthenticationViewController.h"
 #import "JASearchView.h"
+#import "JAActionWebViewController.h"
 
 #import "JAStepByStepTabViewController.h"
 #import "JACheckoutStepByStepModel.h"
@@ -397,6 +398,11 @@
                                              selector:@selector(didLoggedOut)
                                                  name:kUserLoggedOutNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(checkRedirectInfo)
+                                                 name:kCheckRedirectInfoNotification
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -423,6 +429,9 @@
 
 - (BOOL)openScreenTarget:(JAScreenTarget *)screenTarget
 {
+    if ([[self topViewController] isKindOfClass:[JABaseViewController class]] && [[(JABaseViewController *)[self topViewController] targetString] isEqualToString:screenTarget.target.targetString]) {
+        return NO;
+    }
     switch (screenTarget.target.targetType) {
         case PRODUCT_DETAIL: {
             JAPDVViewController *viewController = [JAPDVViewController new];
@@ -453,6 +462,13 @@
                 viewController.navBarLayout = [JANavigationBarLayout new];
                 [viewController.navBarLayout setTitle:screenTarget.target.node];
             }
+            [self pushViewController:viewController animated:screenTarget.pushAnimation];
+            return YES;
+        }
+        case EXTERNAL_LINK: {
+            JAActionWebViewController* viewController = [[JAActionWebViewController alloc] init];
+            [self loadScreenTarget:screenTarget forBaseViewController:viewController];
+            [viewController setHtmlString:VALID_NOTEMPTY_VALUE([screenTarget.screenInfo objectForKey:@"html"], NSString)];
             [self pushViewController:viewController animated:screenTarget.pushAnimation];
             return YES;
         }
@@ -1785,6 +1801,24 @@
             animated = [[notification.userInfo objectForKey:@"animated"] boolValue];
         }
         [self popToViewController:thirdToLastViewController animated:YES];
+    }
+}
+
+- (void)checkRedirectInfo
+{
+    if ([RICountryConfiguration getCurrentConfiguration]) {
+        if (VALID([RICountryConfiguration getCurrentConfiguration].redirectStringTarget, NSString)) {
+            
+            JAScreenTarget *screenTarget = [[JAScreenTarget alloc] initWithTarget:[RITarget parseTarget:[RICountryConfiguration getCurrentConfiguration].redirectStringTarget]];
+            [screenTarget.screenInfo setObject:[RICountryConfiguration getCurrentConfiguration].redirectHtml forKey:@"html"];
+            [screenTarget.screenInfo setObject:[RICountryConfiguration getCurrentConfiguration].redirectStringTarget forKey:@"action"];
+            [screenTarget.navBarLayout setShowBackButton:NO];
+            [screenTarget.navBarLayout setShowMenuButton:NO];
+            [screenTarget.navBarLayout setShowCartButton:NO];
+            [screenTarget.navBarLayout setShowSearchButton:NO];
+            [[JACenterNavigationController sharedInstance] openScreenTarget:screenTarget];
+            return;
+        }
     }
 }
 

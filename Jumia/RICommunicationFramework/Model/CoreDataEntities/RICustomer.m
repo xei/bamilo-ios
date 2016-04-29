@@ -155,65 +155,78 @@
     if (customers.count > 0) {
         __block RICustomer *customerObject = [customers lastObject];
         
-        
-        if([@"facebook" isEqualToString:customerObject.loginMethod])
-        {
-            NSDictionary *parameters = @{ @"email": customerObject.email,
-                                          @"first_name": customerObject.firstName,
-                                          @"last_name": customerObject.lastName,
-                                          @"birthday":customerObject.birthday,
-                                          @"gender": customerObject.gender };
-            
-            [RICustomer loginCustomerByFacebookWithParameters:parameters
-                                                 successBlock:^(NSDictionary *entities, NSString* nextStep) {
-                                                     dispatch_async(dispatch_get_main_queue(), ^{
-                                                         returnBlock(YES, entities, customerObject.loginMethod);
-                                                     });
-                                                 } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
-                                                     dispatch_async(dispatch_get_main_queue(), ^{
-                                                         returnBlock(NO, nil, customerObject.loginMethod);
-                                                     });
-                                                 }];
-        }
-        else if([@"normal" isEqualToString:customerObject.loginMethod])
-        {
-            return [RIForm getForm:@"login" successBlock:^(RIForm *form)
-                    {
-                        NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-                        for (RIField *field in form.fields)
+        if (customerObject) {
+            if([@"facebook" isEqualToString:customerObject.loginMethod])
+            {
+                NSMutableDictionary *parameters = [NSMutableDictionary new];
+                
+                if (customerObject.email) {
+                    [parameters setObject:customerObject.email forKey:@"email"];
+                }
+                if (customerObject.firstName) {
+                    [parameters setObject:customerObject.firstName forKey:@"first_name"];
+                }
+                if (customerObject.lastName) {
+                    [parameters setObject:customerObject.lastName forKey:@"last_name"];
+                }
+                if (customerObject.birthday) {
+                    [parameters setObject:customerObject.birthday forKey:@"birthday"];
+                }
+                if (customerObject.gender) {
+                    [parameters setObject:customerObject.gender forKey:@"gender"];
+                }
+                
+                [RICustomer loginCustomerByFacebookWithParameters:[parameters copy]
+                                                     successBlock:^(NSDictionary *entities, NSString* nextStep) {
+                                                         dispatch_async(dispatch_get_main_queue(), ^{
+                                                             returnBlock(YES, entities, customerObject.loginMethod);
+                                                         });
+                                                     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorObject) {
+                                                         dispatch_async(dispatch_get_main_queue(), ^{
+                                                             returnBlock(NO, nil, customerObject.loginMethod);
+                                                         });
+                                                     }];
+            }
+            else if([@"normal" isEqualToString:customerObject.loginMethod])
+            {
+                return [RIForm getForm:@"login" successBlock:^(RIForm *form)
                         {
-                            if ([field.key isEqualToString:@"email"]) {
-                                [parameters setValue:customerObject.email forKey:field.name];
-                            }else
-                            if ([field.key isEqualToString:@"password"]) {
-                                [parameters setValue:customerObject.plainPassword forKey:field.name];
+                            NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+                            for (RIField *field in form.fields)
+                            {
+                                if ([field.key isEqualToString:@"email"]) {
+                                    [parameters setValue:customerObject.email forKey:field.name];
+                                }else
+                                    if ([field.key isEqualToString:@"password"]) {
+                                        [parameters setValue:customerObject.plainPassword forKey:field.name];
+                                    }
                             }
-                        }
-                        [RIForm sendForm:form parameters:parameters
-                            successBlock:^(id jsonObject, NSArray* successMessages)
-                         {
-                             [RICustomer resetCustomerAsGuest];
-                             dispatch_async(dispatch_get_main_queue(), ^{
-                                 returnBlock(YES, jsonObject, customerObject.loginMethod);
-                             });
-                         } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
-                         {
-                             dispatch_async(dispatch_get_main_queue(), ^{
-                                 returnBlock(NO, nil, customerObject.loginMethod);
-                             });
-                         }];
-                    } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
-                    {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            returnBlock(NO, nil, customerObject.loginMethod);
-                        });
-                    }];
-        }
-        else
-        {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                returnBlock(NO, nil, customerObject.loginMethod);
-            });
+                            [RIForm sendForm:form parameters:parameters
+                                successBlock:^(id jsonObject, NSArray* successMessages)
+                             {
+                                 [RICustomer resetCustomerAsGuest];
+                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                     returnBlock(YES, jsonObject, customerObject.loginMethod);
+                                 });
+                             } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
+                             {
+                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                     returnBlock(NO, nil, customerObject.loginMethod);
+                                 });
+                             }];
+                        } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage)
+                        {
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                returnBlock(NO, nil, customerObject.loginMethod);
+                            });
+                        }];
+            }
+            else
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    returnBlock(NO, nil, customerObject.loginMethod);
+                });
+            }
         }
     }
     else

@@ -10,22 +10,48 @@
 #import "RICategory.h"
 #import "JAClickableView.h"
 #import "JAAppDelegate.h"
+#import "RIExternalCategory.h"
+#import "JAButton.h"
 
 @interface JACategoriesSideMenuViewController ()
 
 @property (nonatomic, strong)NSArray* categoriesArray;
+@property (nonatomic, strong) RIExternalCategory *externalCategory;
 @property (nonatomic, strong)UITableView* tableView;
 @property (nonatomic, strong)NSMutableArray* tableViewCategoriesArray;
 
 @property (strong, nonatomic) UIView *loadingView;
 @property (nonatomic, strong) UIImageView *loadingAnimation;
 
+@property (nonatomic, strong) NSLock *reloadLock;
+
+@property (nonatomic) BOOL categoriesLoadingError;
+
+@property (nonatomic, strong) JAMessageView *messageView;
+
 @end
 
 @implementation JACategoriesSideMenuViewController
 
+- (JAMessageView *)messageView
+{
+    if (!VALID_NOTEMPTY(_messageView, JAMessageView)) {
+        _messageView = [[JAMessageView alloc] initWithFrame:CGRectMake(0, 64, self.view.bounds.size.width, kMessageViewHeight)];
+        [_messageView setupView];
+    }
+    return _messageView;
+}
+
 # pragma mark Loading View
 //THIS IS NOT A BASE VIEW CONTROLLER SO IT NEEDS ITS OWN LOADING VIEW
+
+- (NSLock *)reloadLock
+{
+    if (!VALID(_reloadLock, NSLock)) {
+        _reloadLock = [NSLock new];
+    }
+    return _reloadLock;
+}
 
 - (void)initLoading
 {
@@ -111,21 +137,39 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCategories) name:kSideMenuShouldReload object:nil];
     
-    [self reloadCategories];
+    [self reloadData];
 
+}
+
+- (void)reloadData
+{
+    [self reloadCategories];
+    [self reloadExternalLinks];
 }
 
 - (void)reloadCategories
 {
     [self showLoading];
     [RICategory getCategoriesWithSuccessBlock:^(id categories) {
-        
+        self.categoriesLoadingError = NO;
         self.categoriesArray = [NSArray arrayWithArray:(NSArray *)categories];
         [self categoriesLoaded];
-        
         [self hideLoading];
-        
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
+        self.categoriesLoadingError = YES;
+        [self categoriesLoaded];
+        [self hideLoading];
+    }];
+}
+
+- (void)reloadExternalLinks
+{
+    [self showLoading];
+    [RIExternalCategory getExternalCategoryWithSuccessBlock:^(RIExternalCategory *externalCategory) {
+        self.externalCategory = externalCategory;
+        [self categoriesLoaded];
+        [self hideLoading];
+    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessage) {
         
         [self hideLoading];
     }];
@@ -133,14 +177,40 @@
 
 - (void)categoriesLoaded
 {
+    [self.reloadLock lock];
+    NSInteger externalIndex = -1;
+    if (VALID_VALUE(self.externalCategory, RIExternalCategory)) {
+        externalIndex = self.externalCategory.position.integerValue;
+    }
+    
     self.tableViewCategoriesArray = [NSMutableArray new];
+    int j = 0;
     for (RICategory* category in self.categoriesArray) {
+        if (externalIndex == j) {
+            [self.tableViewCategoriesArray addObject:self.externalCategory];
+            for (RIExternalCategory *external in self.externalCategory.children) {
+                [self.tableViewCategoriesArray addObject:external];
+                externalIndex++;
+            }
+            externalIndex = -1;
+        }
         [self.tableViewCategoriesArray addObject:category];
+        if (category.level.integerValue == 0) {
+            j++;
+        }
         for (RICategory* levelOneCategory in category.children) {
             [self.tableViewCategoriesArray addObject:levelOneCategory];
         }
     }
+    if (externalIndex != -1) {
+        [self.tableViewCategoriesArray addObject:self.externalCategory];
+        for (RIExternalCategory *external in self.externalCategory.children) {
+            [self.tableViewCategoriesArray addObject:external];
+            externalIndex++;
+        }
+    }
     [self.tableView reloadData];
+    [self.reloadLock unlock];
 }
 
 - (void)popToRoot
@@ -186,17 +256,35 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    RICategory* category = [self.tableViewCategoriesArray objectAtIndex:indexPath.row];
+    if ((self.categoriesLoadingError && indexPath.row > self.tableViewCategoriesArray.count-1) || self.tableViewCategoriesArray.count == 0) {
+        return [JACategoriesSideMenuCell heightForCategory:nil];
+    }
+    id category = [self.tableViewCategoriesArray objectAtIndex:indexPath.row];
     return [JACategoriesSideMenuCell heightForCategory:category];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (self.categoriesLoadingError) {
+        return self.tableViewCategoriesArray.count+1;
+    }
     return self.tableViewCategoriesArray.count;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    if ((self.categoriesLoadingError && indexPath.row > self.tableViewCategoriesArray.count-1) || self.tableViewCategoriesArray.count == 0) {
+        UITableViewCell *tableViewCell = [tableView dequeueReusableCellWithIdentifier:@""];
+        if (!tableViewCell) {
+            tableViewCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"retryCell"];
+        }
+        JAButton *retryButton = [[JAButton alloc] initAlternativeButtonWithTitle:STRING_TRY_AGAIN target:self action:@selector(reloadCategories)];
+        [retryButton setFrame:CGRectMake(0.f, 0.f, tableView.width, tableViewCell.height)];
+        [tableViewCell addSubview:retryButton];
+        return tableViewCell;
+    }
+    
     NSString *cellIdentifier = @"cell";
     
     JACategoriesSideMenuCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -206,20 +294,33 @@
         cell.delegate = self;
     }
     
-    RICategory* category = [self.tableViewCategoriesArray objectAtIndex:indexPath.row];
+    id category = [self.tableViewCategoriesArray objectAtIndex:indexPath.row];
+    NSNumber *level = nil;
+    if ([category isKindOfClass:[RICategory class]]) {
+        level = [(RICategory *)category level];
+    }else if ([category isKindOfClass:[RIExternalCategory class]]) {
+        level = [(RIExternalCategory *)category level];
+    }
     
     BOOL isOpen = NO;
     BOOL hasSeparator = NO;
     if (self.tableViewCategoriesArray.count -1 != indexPath.row) {
         //not the last cell
         //check the next cell's category
-        RICategory* nextCategory = [self.tableViewCategoriesArray objectAtIndex:indexPath.row + 1];
-        if ([nextCategory.level integerValue] > [category.level integerValue]) {
+        id nextCategory = [self.tableViewCategoriesArray objectAtIndex:indexPath.row + 1];
+        NSNumber *nextLevel = nil;
+        if ([nextCategory isKindOfClass:[RICategory class]]) {
+            nextLevel = [(RICategory *)nextCategory level];
+        }else if ([category isKindOfClass:[RIExternalCategory class]]) {
+            nextLevel = [(RIExternalCategory *)nextCategory level];
+        }
+        if ([nextLevel integerValue] > [level integerValue]) {
             isOpen = YES;
         }
-        if (1 <= [nextCategory.level integerValue]) {
+        if (1 <= [nextLevel integerValue]) {
             hasSeparator = YES;
         }
+        
     }
     
     [cell setupWithCategory:category width:256.0f hasSeparator:hasSeparator isOpen:isOpen];
@@ -227,8 +328,28 @@
     return cell;
 }
 
-- (void)categoryWasSelected:(RICategory*)category;
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.categoriesLoadingError && indexPath.row > self.tableViewCategoriesArray.count-1) {
+        [self reloadData];
+    }
+}
+
+- (void)categoryWasSelected:(id)category;
+{
+    NSNumber *level = nil;
+    NSOrderedSet *children = nil;
+    
+    if ([category isKindOfClass:[RICategory class]]) {
+        level = [(RICategory *)category level];
+        children = [(RICategory *)category children];
+    }else if ([category isKindOfClass:[RIExternalCategory class]]) {
+        level = [(RIExternalCategory *)category level];
+        children = [(RIExternalCategory *)category children];
+    }else{
+        return;
+    }
+    
     UITableViewRowAnimation animationInsert = UITableViewRowAnimationLeft;
     UITableViewRowAnimation animationDelete = UITableViewRowAnimationRight;
     if (RI_IS_RTL) {
@@ -239,7 +360,7 @@
     //based on category, find the index
     NSInteger index = 0;
     for (int i = 0; i < self.tableViewCategoriesArray.count; i++) {
-        RICategory* tableCategory = [self.tableViewCategoriesArray objectAtIndex:i];
+        id tableCategory = [self.tableViewCategoriesArray objectAtIndex:i];
         if (tableCategory == category) {
             //found it
             index = i;
@@ -247,7 +368,7 @@
         }
     }
     
-    if (1 == [category.level integerValue] && VALID_NOTEMPTY(category.children, NSOrderedSet)) {
+    if (1 == [level integerValue] && VALID_NOTEMPTY(children, NSOrderedSet)) {
         
         //this level 1 has children, find out if we're supposed to open or close
         
@@ -255,8 +376,15 @@
         if (self.tableViewCategoriesArray.count -1 != index) {
             //not the last cell
             //check the next cell's category
-            RICategory* nextCategory = [self.tableViewCategoriesArray objectAtIndex:index + 1];
-            if ([nextCategory.level integerValue] > [category.level integerValue]) {
+            id nextCategory = [self.tableViewCategoriesArray objectAtIndex:index + 1];
+            NSNumber *nextLevel = nil;
+            
+            if ([nextCategory isKindOfClass:[RICategory class]]) {
+                nextLevel = [(RICategory *)nextCategory level];
+            }else if ([nextCategory isKindOfClass:[RIExternalCategory class]]) {
+                nextLevel = [(RIExternalCategory *)nextCategory level];
+            }
+            if ([nextLevel integerValue] > [level integerValue]) {
                 isOpen = YES;
             }
         }
@@ -264,7 +392,7 @@
         if (isOpen) {
             //close
             NSMutableArray* deleteIndexPaths = [NSMutableArray new];
-            for (NSInteger i = index+category.children.count; i > index; i--) {
+            for (NSInteger i = index+[children count]; i > index; i--) {
                 //this for goes backwards so that we can remove the items from the arrays without the index problems
                 
                 [self.tableViewCategoriesArray removeObjectAtIndex:i];
@@ -279,8 +407,8 @@
         } else {
             //open
             NSMutableArray* insertIndexPaths = [NSMutableArray new];
-            for (int i = 0; i < category.children.count; i++) {
-                RICategory* child = [category.children objectAtIndex:i];
+            for (int i = 0; i < [children count]; i++) {
+                id child = [children objectAtIndex:i];
                 
                 NSInteger newIndex = index + i + 1;
                 [self.tableViewCategoriesArray insertObject:child atIndex:newIndex];
@@ -293,11 +421,36 @@
             [self.tableView endUpdates];
         }
     } else {
-    
+        
         //not a level 1 with children means we just have to open the category
-        [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification
-                                                            object:@{@"category":category}];
+        if ([category isKindOfClass:[RICategory class]]) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification
+                                                                object:@{@"category":category}];
+        }else{
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[RITarget getURLStringforTargetString:[(RIExternalCategory *)category targetString]]]];
+            
+            NSMutableDictionary* externalLinkTrackingDictionary = [NSMutableDictionary new];
+            [externalLinkTrackingDictionary setValue:@"ExternalLink" forKey:kRIEventCategoryKey];
+            [externalLinkTrackingDictionary setValue:[(RIExternalCategory *)category label] forKey:kRIEventActionKey];
+            [externalLinkTrackingDictionary setValue:@"CategoriesTree" forKey:kRIEventLabelKey];
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCategoryExternalLink]
+                                                      data:[externalLinkTrackingDictionary copy]];
+        }
     }
+}
+
+
+- (void)showMessage:(NSString *)message success:(BOOL)success
+{
+    
+    if (!VALID(self.messageView.superview, JAMessageView)) {
+        UIViewController *rootViewController = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController;
+        [rootViewController.view addSubview:self.messageView];
+    }
+    [self.messageView setFrame:CGRectMake(0, 64, self.messageView.superview.width, kMessageViewHeight)];
+    
+    [self.messageView setTitle:message success:success];
 }
 
 @end
