@@ -1073,30 +1073,29 @@
         fromCheckout = [[notification.userInfo objectForKey:@"from_checkout"] boolValue];
     }
     
-        UIViewController *topViewController = [self topViewController];
-        if (![topViewController isKindOfClass:[JAAddressesViewController class]]) {
-            JAAddressesViewController *addressesVC = [[JAAddressesViewController alloc] init];
-            
-            addressesVC.cart = self.cart;
-            addressesVC.fromCheckout = fromCheckout;
-            [addressesVC.navBarLayout setShowBackButton:YES];
-            addressesVC.navBarLayout.showLogo = NO;
-            if (fromCheckout) {
-                addressesVC.navBarLayout.showCartButton = NO;
-                JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
-                if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[JACheckoutStepByStepModel class]])
-                {
-                    [stepByStepTabViewController goToViewController:addressesVC];
-                }else{
-                    self.checkoutStepByStepViewController = [self getNewCheckoutStepByStepViewController];
-                    NSInteger index = [self.checkoutStepByStepViewController.stepByStepModel getIndexForClass:[JAAddressesViewController class]];
-                    [self.checkoutStepByStepViewController setIndexInit:index];
-                    [self pushViewController:self.checkoutStepByStepViewController animated:animated];
-                }
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JAAddressesViewController class]]) {
+        JAAddressesViewController *addressesVC = [[JAAddressesViewController alloc] init];
+        
+        addressesVC.cart = self.cart;
+        addressesVC.fromCheckout = fromCheckout;
+        [addressesVC.navBarLayout setShowBackButton:YES];
+        addressesVC.navBarLayout.showLogo = NO;
+        if (fromCheckout) {
+            addressesVC.navBarLayout.showCartButton = NO;
+            JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
+            if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[JACheckoutStepByStepModel class]])
+            {
+                [stepByStepTabViewController goToViewController:addressesVC];
             }else{
-                [self pushViewController:addressesVC animated:NO];
+                self.checkoutStepByStepViewController = [self getNewCheckoutStepByStepViewController];
+                [self pushViewController:self.checkoutStepByStepViewController animated:animated];
+                [self.checkoutStepByStepViewController goToViewController:addressesVC];
             }
+        }else{
+            [self pushViewController:addressesVC animated:NO];
         }
+    }
 }
 
 #pragma mark Checkout Add Address Screen
@@ -1146,9 +1145,8 @@
                 [stepByStepTabViewController goToViewController:addAddressVC];
             }else{
                 self.checkoutStepByStepViewController = [self getNewCheckoutStepByStepViewController];
-                NSInteger index = [self.checkoutStepByStepViewController.stepByStepModel getIndexForClass:[JAAddNewAddressViewController class]];
-                [self.checkoutStepByStepViewController setIndexInit:index];
                 [self pushViewController:self.checkoutStepByStepViewController animated:animated];
+                [self.checkoutStepByStepViewController goToViewController:addAddressVC];
             }
         }
         else
@@ -1194,9 +1192,8 @@
                 [stepByStepTabViewController goToViewController:editAddressVC];
             }else{
                 self.checkoutStepByStepViewController = [self getNewCheckoutStepByStepViewController];
-                NSInteger index = [self.checkoutStepByStepViewController.stepByStepModel getIndexForClass:[JAEditAddressViewController class]];
-                [self.checkoutStepByStepViewController setIndexInit:index];
-                [self pushViewController:self.checkoutStepByStepViewController animated:@YES];
+                [self pushViewController:self.checkoutStepByStepViewController animated:YES];
+                [self.checkoutStepByStepViewController goToViewController:editAddressVC];
             }
         }else{
             [self pushViewController:editAddressVC animated:YES];
@@ -1215,9 +1212,8 @@
         [stepByStepTabViewController goToViewController:viewController];
     }else{
         self.checkoutStepByStepViewController = [self getNewCheckoutStepByStepViewController];
-        NSInteger index = [self.checkoutStepByStepViewController.stepByStepModel getIndexForClass:[JAShippingViewController class]];
-        [self.checkoutStepByStepViewController setIndexInit:index];
         [self pushViewController:self.checkoutStepByStepViewController animated:YES];
+        [self.checkoutStepByStepViewController goToViewController:viewController];
     }
 }
 
@@ -1232,9 +1228,8 @@
         [stepByStepTabViewController goToViewController:viewController];
     }else{
         self.checkoutStepByStepViewController = [self getNewCheckoutStepByStepViewController];
-        NSInteger index = [self.checkoutStepByStepViewController.stepByStepModel getIndexForClass:[JAPaymentViewController class]];
-        [self.checkoutStepByStepViewController setIndexInit:index];
         [self pushViewController:self.checkoutStepByStepViewController animated:YES];
+        [self.checkoutStepByStepViewController goToViewController:viewController];
     }
 }
 

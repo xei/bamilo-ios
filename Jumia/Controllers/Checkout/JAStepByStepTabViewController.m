@@ -142,7 +142,7 @@
         }
     }
     [UIView animateWithDuration:.2 animations:^{
-        [self.tabIndicatorView setX:button.x];
+        [self.tabIndicatorView setX:[self getButtonWithTag:button.tag].x];
     }];
 }
 
@@ -153,7 +153,9 @@
     }
     
     UIViewController *newViewController = [self getViewForIndex:index];
-    [self setViewController:newViewController forIndex:index];
+    if (VALID(newViewController, UIViewController)) {
+        [self setViewController:newViewController forIndex:index];
+    }
 }
 
 - (void)setViewController:(UIViewController *)newViewController forIndex:(NSInteger)index
@@ -195,7 +197,7 @@
             [self.viewControllersStackArray removeObject:viewController];
         }
     }
-    return VALID(viewControllerToReturn, UIView)?viewControllerToReturn:[self.stepByStepModel goToIndex:index];
+    return viewControllerToReturn;
 }
 
 - (void)setContentView:(UIViewController *)viewController

@@ -21,6 +21,6 @@
 - (UIImage *)getIconForIndex:(NSInteger)index;
 - (NSString *)getTitleForIndex:(NSInteger)index;
 
-- (UIViewController *)goToIndex:(NSInteger)index;
+- (void)goToIndex:(NSInteger)index;
 
 @end
