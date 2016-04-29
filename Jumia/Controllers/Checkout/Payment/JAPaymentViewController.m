@@ -29,12 +29,6 @@ UITextFieldDelegate>
     JACheckoutBottomView *_bottomView;
 }
 
-// Steps
-@property (weak, nonatomic) IBOutlet UIImageView *stepBackground;
-@property (weak, nonatomic) IBOutlet UIView *stepView;
-@property (weak, nonatomic) IBOutlet UIImageView *stepIcon;
-@property (weak, nonatomic) IBOutlet UILabel *stepLabel;
-
 // Payment methods
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UICollectionView *collectionView;
@@ -95,13 +89,6 @@ UITextFieldDelegate>
     self.navBarLayout.title = STRING_CHECKOUT;
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showCartButton = NO;
-    
-    self.stepBackground.translatesAutoresizingMaskIntoConstraints = YES;
-    self.stepView.translatesAutoresizingMaskIntoConstraints = YES;
-    self.stepIcon.translatesAutoresizingMaskIntoConstraints = YES;
-    self.stepLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    self.stepLabel.font = [UIFont fontWithName:kFontBoldName size:self.stepLabel.font.pointSize];
-    [self.stepLabel setText:STRING_CHECKOUT_PAYMENT];
     
     [self initViews];
 }
@@ -176,12 +163,10 @@ UITextFieldDelegate>
 
 - (void) initViews
 {
-    [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
-    
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                     self.stepBackground.frame.size.height,
+                                                                     0.f,
                                                                      self.view.frame.size.width,
-                                                                     self.view.frame.size.height - self.stepBackground.frame.size.height - 64.0f)];
+                                                                     self.view.frame.size.height - 64.0f)];
     
     UICollectionViewFlowLayout* collectionViewFlowLayout = [[UICollectionViewFlowLayout alloc] init];
     [collectionViewFlowLayout setMinimumLineSpacing:0.0f];
@@ -268,80 +253,12 @@ UITextFieldDelegate>
     [self.view addSubview:_bottomView];
 }
 
-- (void) setupStepView:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
-    CGFloat stepViewLeftMargin = 188.0f;
-    NSString *stepBackgroundImageName = @"headerCheckoutStep4";
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-    {
-        if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
-        {
-            stepViewLeftMargin =  563.0f;
-            stepBackgroundImageName = @"headerCheckoutStep4Landscape";
-        }
-        else
-        {
-            stepViewLeftMargin = 435.0f;
-            stepBackgroundImageName = @"headerCheckoutStep4Portrait";
-        }
-    }
-    UIImage *stepBackgroundImage = [UIImage imageNamed:stepBackgroundImageName];
-    
-    [self.stepBackground setImage:stepBackgroundImage];
-    [self.stepBackground setFrame:CGRectMake(self.stepBackground.frame.origin.x,
-                                             self.stepBackground.frame.origin.y,
-                                             stepBackgroundImage.size.width,
-                                             stepBackgroundImage.size.height)];
-    
-    [self.stepView setFrame:CGRectMake(stepViewLeftMargin,
-                                       (stepBackgroundImage.size.height - self.stepView.frame.size.height) / 2,
-                                       self.stepView.frame.size.width,
-                                       stepBackgroundImage.size.height)];
-    [self.stepLabel sizeToFit];
-    
-    CGFloat horizontalMargin = 6.0f;
-    CGFloat marginBetweenIconAndLabel = 5.0f;
-    CGFloat realWidth = self.stepIcon.frame.size.width + marginBetweenIconAndLabel + self.stepLabel.frame.size.width - (2 * horizontalMargin);
-    
-    if(self.stepView.frame.size.width >= realWidth)
-    {
-        CGFloat xStepIconValue = ((self.stepView.frame.size.width - realWidth) / 2) - horizontalMargin;
-        [self.stepIcon setFrame:CGRectMake(xStepIconValue,
-                                           ceilf(((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2) - 1.0f),
-                                           self.stepIcon.frame.size.width,
-                                           self.stepIcon.frame.size.height)];
-        
-        [self.stepLabel setFrame:CGRectMake(CGRectGetMaxX(self.stepIcon.frame) + marginBetweenIconAndLabel,
-                                            4.0f,
-                                            self.stepLabel.frame.size.width,
-                                            12.0f)];
-    }
-    else
-    {
-        [self.stepIcon setFrame:CGRectMake(horizontalMargin,
-                                           ceilf(((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2) - 1.0f),
-                                           self.stepIcon.frame.size.width,
-                                           self.stepIcon.frame.size.height)];
-        
-        [self.stepLabel setFrame:CGRectMake(CGRectGetMaxX(self.stepIcon.frame) + marginBetweenIconAndLabel,
-                                            4.0f,
-                                            (self.stepView.frame.size.width - self.stepIcon.frame.size.width - marginBetweenIconAndLabel - (2 * horizontalMargin)),
-                                            12.0f)];
-    }
-    
-    if(RI_IS_RTL){
-        [self.stepBackground setImage:[stepBackgroundImage flipImageWithOrientation:UIImageOrientationUpMirrored]];
-    }
-}
-
 - (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
-    [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
-    
     [self.scrollView setFrame:CGRectMake(0.0f,
-                                         self.stepBackground.frame.size.height,
+                                         0.f,
                                          width,
-                                         self.view.frame.size.height - self.stepBackground.frame.size.height)];
+                                         self.view.frame.size.height)];
     self.contentScrollOriginalHeight = self.scrollView.frame.size.height;
     
     if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
@@ -354,9 +271,9 @@ UITextFieldDelegate>
     {
         CGFloat orderSummaryRightMargin = 6.0f;
         self.orderSummary = [[JAOrderSummaryView alloc] initWithFrame:CGRectMake(width,
-                                                                                 self.stepBackground.frame.size.height,
+                                                                                 0.f,
                                                                                  self.view.frame.size.width - width - orderSummaryRightMargin,
-                                                                                 self.view.frame.size.height - self.stepBackground.frame.size.height)];
+                                                                                 self.view.frame.size.height)];
         [self.orderSummary loadWithCart:self.cart shippingMethod:YES];
         [self.view addSubview:self.orderSummary];
         self.orderSummaryOriginalHeight = self.orderSummary.frame.size.height;

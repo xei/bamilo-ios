@@ -31,12 +31,6 @@ UITableViewDelegate>
     JACheckoutBottomView *_bottomView;
 }
 
-// Steps
-@property (weak, nonatomic) IBOutlet UIImageView *stepBackground;
-@property (weak, nonatomic) IBOutlet UIView *stepView;
-@property (weak, nonatomic) IBOutlet UIImageView *stepIcon;
-@property (weak, nonatomic) IBOutlet UILabel *stepLabel;
-
 // Addresses
 @property (strong, nonatomic) UIScrollView *contentScrollView;
 @property (strong, nonatomic) NSDictionary *addresses;
@@ -77,23 +71,6 @@ UITableViewDelegate>
     
     self.view.backgroundColor = JAWhiteColor;
     
-    if(self.fromCheckout)
-    {
-        self.stepBackground.translatesAutoresizingMaskIntoConstraints = YES;
-        self.stepView.translatesAutoresizingMaskIntoConstraints = YES;
-        self.stepIcon.translatesAutoresizingMaskIntoConstraints = YES;
-        self.stepLabel.translatesAutoresizingMaskIntoConstraints = YES;
-        self.stepLabel.font = [UIFont fontWithName:kFontBoldName size:self.stepLabel.font.pointSize];
-        [self.stepLabel setText:STRING_CHECKOUT_ADDRESS];
-    }
-    else
-    {
-        [self.stepBackground removeFromSuperview];
-        [self.stepView removeFromSuperview];
-        [self.stepIcon removeFromSuperview];
-        [self.stepLabel removeFromSuperview];
-    }
-    
     self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     [self.contentScrollView setShowsHorizontalScrollIndicator:NO];
     [self.contentScrollView setShowsVerticalScrollIndicator:NO];
@@ -123,6 +100,7 @@ UITableViewDelegate>
     _bottomView = [[JACheckoutBottomView alloc] initWithFrame:CGRectMake(0.f, self.view.frame.size.height - 56, self.view.frame.size.width, 56) orientation:self.interfaceOrientation];
     [_bottomView setTotalValue:self.cart.cartValueFormatted];
     [self.view addSubview:_bottomView];
+    [self getAddressList];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -153,12 +131,6 @@ UITableViewDelegate>
         self.addresses = adressList;
         if(VALID_NOTEMPTY(self.addresses, NSDictionary))
         {
-            if(self.fromCheckout)
-            {
-                [self.stepBackground setHidden:NO];
-                [self.stepView setHidden:NO];
-            }
-            
             if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
             {
                 [self.orderSummary setHidden:NO];
@@ -218,12 +190,6 @@ UITableViewDelegate>
         [self.contentScrollView setHidden:YES];
         [_bottomView setHidden:YES];
         
-        if(self.fromCheckout)
-        {
-            [self.stepBackground setHidden:YES];
-            [self.stepView setHidden:YES];
-        }
-        
         if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
         {
             [self.orderSummary setHidden:YES];
@@ -266,80 +232,9 @@ UITableViewDelegate>
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
-- (void) setupStepView:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
-    CGFloat stepViewLeftMargin = 73.0f;
-    NSString *stepBackgroundImageName = @"headerCheckoutStep2";
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-    {
-        if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
-        {
-            stepViewLeftMargin =  389.0f;
-            stepBackgroundImageName = @"headerCheckoutStep2Landscape";
-        }
-        else
-        {
-            stepViewLeftMargin = 261.0f;
-            stepBackgroundImageName = @"headerCheckoutStep2Portrait";
-        }
-    }
-    UIImage *stepBackgroundImage = [UIImage imageNamed:stepBackgroundImageName];
-    
-    [self.stepBackground setImage:stepBackgroundImage];
-    [self.stepBackground setFrame:CGRectMake(self.stepBackground.frame.origin.x,
-                                             self.stepBackground.frame.origin.y,
-                                             stepBackgroundImage.size.width,
-                                             stepBackgroundImage.size.height)];
-    
-    [self.stepView setFrame:CGRectMake(stepViewLeftMargin,
-                                       (stepBackgroundImage.size.height - self.stepView.frame.size.height) / 2,
-                                       self.stepView.frame.size.width,
-                                       stepBackgroundImage.size.height)];
-    [self.stepLabel sizeToFit];
-    
-    CGFloat horizontalMargin = 6.0f;
-    CGFloat marginBetweenIconAndLabel = 5.0f;
-    CGFloat realWidth = self.stepIcon.frame.size.width + marginBetweenIconAndLabel + self.stepLabel.frame.size.width - (2 * horizontalMargin);
-    
-    if(self.stepView.frame.size.width >= realWidth)
-    {
-        CGFloat xStepIconValue = ((self.stepView.frame.size.width - realWidth) / 2) - horizontalMargin;
-        [self.stepIcon setFrame:CGRectMake(xStepIconValue,
-                                           ceilf(((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2) - 1.0f),
-                                           self.stepIcon.frame.size.width,
-                                           self.stepIcon.frame.size.height)];
-        
-        [self.stepLabel setFrame:CGRectMake(CGRectGetMaxX(self.stepIcon.frame) + marginBetweenIconAndLabel,
-                                            4.0f,
-                                            self.stepLabel.frame.size.width,
-                                            12.0f)];
-    }
-    else
-    {
-        [self.stepIcon setFrame:CGRectMake(horizontalMargin,
-                                           ceilf(((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2) - 1.0f),
-                                           self.stepIcon.frame.size.width,
-                                           self.stepIcon.frame.size.height)];
-        
-        [self.stepLabel setFrame:CGRectMake(CGRectGetMaxX(self.stepIcon.frame) + marginBetweenIconAndLabel,
-                                            4.0f,
-                                            (self.stepView.frame.size.width - self.stepIcon.frame.size.width - marginBetweenIconAndLabel - (2 * horizontalMargin)),
-                                            12.0f)];
-    }
-    
-    if(RI_IS_RTL){
-        [self.stepBackground setImage:[stepBackgroundImage flipImageWithOrientation:UIImageOrientationUpMirrored]];
-    }
-}
-
 - (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
     CGFloat scrollViewStartY = 0.0f;
-    if(self.fromCheckout)
-    {
-        [self setupStepView:width toInterfaceOrientation:toInterfaceOrientation];
-        scrollViewStartY = self.stepBackground.frame.size.height;
-    }
     
     if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
     {

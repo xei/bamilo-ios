@@ -36,12 +36,6 @@ UICollectionViewDelegateFlowLayout
     JACheckoutBottomView *_bottomView;
 }
 
-// Steps
-@property (weak, nonatomic) IBOutlet UIImageView *stepBackground;
-@property (weak, nonatomic) IBOutlet UIView *stepView;
-@property (weak, nonatomic) IBOutlet UIImageView *stepIcon;
-@property (weak, nonatomic) IBOutlet UILabel *stepLabel;
-
 // Shipping methods
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UICollectionView *collectionView;
@@ -93,13 +87,6 @@ UICollectionViewDelegateFlowLayout
     
     self.pickupStationsForRegion = [[NSMutableArray alloc] init];
     self.pickupStationHeightsForRegion = [[NSMutableArray alloc] init];
-    
-    self.stepBackground.translatesAutoresizingMaskIntoConstraints = YES;
-    self.stepView.translatesAutoresizingMaskIntoConstraints = YES;
-    self.stepIcon.translatesAutoresizingMaskIntoConstraints = YES;
-    self.stepLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    self.stepLabel.font = [UIFont fontWithName:kFontBoldName size:self.stepLabel.font.pointSize];
-    [self.stepLabel setText:STRING_CHECKOUT_SHIPPING];
     
     self.sellerDeliveryViews = [NSMutableArray new];
     
@@ -180,12 +167,10 @@ UICollectionViewDelegateFlowLayout
 
 - (void) initViews
 {
-    [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
-    
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                     self.stepBackground.frame.size.height,
+                                                                     0.f,
                                                                      self.view.frame.size.width,
-                                                                     self.view.frame.size.height - self.stepBackground.frame.size.height)];
+                                                                     self.view.frame.size.height)];
     
     UICollectionViewFlowLayout* collectionViewFlowLayout = [[UICollectionViewFlowLayout alloc] init];
     [collectionViewFlowLayout setMinimumLineSpacing:0.0f];
@@ -221,75 +206,6 @@ UICollectionViewDelegateFlowLayout
     _bottomView = [[JACheckoutBottomView alloc] initWithFrame:CGRectMake(0.f, self.view.frame.size.height - 56, self.view.frame.size.width, 56) orientation:self.interfaceOrientation];
     [_bottomView setTotalValue:self.cart.cartValueFormatted];
     [self.view addSubview:_bottomView];
-}
-
-- (void) setupStepView:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
-    CGFloat stepViewLeftMargin = 130.0f;
-    NSString *stepBackgroundImageName = @"headerCheckoutStep3";
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-    {
-        if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
-        {
-            stepViewLeftMargin =  477.0f;
-            stepBackgroundImageName = @"headerCheckoutStep3Landscape";
-        }
-        else
-        {
-            stepViewLeftMargin = 349.0f;
-            stepBackgroundImageName = @"headerCheckoutStep3Portrait";
-        }
-    }
-    UIImage *stepBackgroundImage = [UIImage imageNamed:stepBackgroundImageName];
-    
-    [self.stepBackground setImage:stepBackgroundImage];
-    [self.stepBackground setFrame:CGRectMake(self.stepBackground.frame.origin.x,
-                                             self.stepBackground.frame.origin.y,
-                                             stepBackgroundImage.size.width,
-                                             stepBackgroundImage.size.height)];
-    
-    [self.stepView setFrame:CGRectMake(stepViewLeftMargin,
-                                       (stepBackgroundImage.size.height - self.stepView.frame.size.height) / 2,
-                                       self.stepView.frame.size.width,
-                                       stepBackgroundImage.size.height)];
-    [self.stepLabel sizeToFit];
-    
-    CGFloat horizontalMargin = 6.0f;
-    CGFloat marginBetweenIconAndLabel = 5.0f;
-    CGFloat realWidth = self.stepIcon.frame.size.width + marginBetweenIconAndLabel + self.stepLabel.frame.size.width - (2 * horizontalMargin);
-    
-    self.stepIcon.image = [UIImage imageNamed:@"headerCheckoutStep3Icon"];
-    
-    if(self.stepView.frame.size.width >= realWidth)
-    {
-        CGFloat xStepIconValue = ((self.stepView.frame.size.width - realWidth) / 2) - horizontalMargin;
-        [self.stepIcon setFrame:CGRectMake(xStepIconValue,
-                                           ceilf(((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2) - 1.0f),
-                                           self.stepIcon.frame.size.width,
-                                           self.stepIcon.frame.size.height)];
-        
-        [self.stepLabel setFrame:CGRectMake(CGRectGetMaxX(self.stepIcon.frame) + marginBetweenIconAndLabel,
-                                            4.0f,
-                                            self.stepLabel.frame.size.width,
-                                            12.0f)];
-    }
-    else
-    {
-        [self.stepIcon setFrame:CGRectMake(horizontalMargin,
-                                           ceilf(((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2) - 1.0f),
-                                           self.stepIcon.frame.size.width,
-                                           self.stepIcon.frame.size.height)];
-        
-        [self.stepLabel setFrame:CGRectMake(CGRectGetMaxX(self.stepIcon.frame) + marginBetweenIconAndLabel,
-                                            4.0f,
-                                            (self.stepView.frame.size.width - self.stepIcon.frame.size.width - marginBetweenIconAndLabel - (2 * horizontalMargin)),
-                                            12.0f)];
-    }
-    
-    if(RI_IS_RTL){
-        [self.stepBackground setImage:[stepBackgroundImage flipImageWithOrientation:UIImageOrientationUpMirrored]];
-        [self.stepIcon flipViewImage];
-    }
 }
 
 -(void)finishedLoadingShippingMethods
@@ -372,9 +288,6 @@ UICollectionViewDelegateFlowLayout
 
 - (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
-    [self setupStepView:width toInterfaceOrientation:toInterfaceOrientation];
-    
-    
     if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
     {
         [self.orderSummary removeFromSuperview];
@@ -384,9 +297,9 @@ UICollectionViewDelegateFlowLayout
     {
         CGFloat orderSummaryRightMargin = 6.0f;
         self.orderSummary = [[JAOrderSummaryView alloc] initWithFrame:CGRectMake(width,
-                                                                                 self.stepBackground.frame.size.height,
+                                                                                 0.f,
                                                                                  self.view.frame.size.width - width - orderSummaryRightMargin,
-                                                                                 self.view.frame.size.height - self.stepBackground.frame.size.height)];
+                                                                                 self.view.frame.size.height)];
         [self.orderSummary loadWithCart:self.cart shippingMethod:NO];
         [self.view addSubview:self.orderSummary];
     }
@@ -399,9 +312,9 @@ UICollectionViewDelegateFlowLayout
     [_bottomView setTotalValue:self.cart.cartValueFormatted];
     
     [self.scrollView setFrame:CGRectMake(0.0f,
-                                         self.stepBackground.frame.size.height,
+                                         0.f,
                                          width,
-                                         self.view.frame.size.height - self.stepBackground.frame.size.height - _bottomView.frame.size.height)];
+                                         self.view.frame.size.height - _bottomView.frame.size.height)];
     
     [self.collectionView setFrame:CGRectMake(self.collectionView.frame.origin.x,
                                              self.collectionView.frame.origin.y,
