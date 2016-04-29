@@ -122,6 +122,8 @@
     [self showLoading];
     [self setCartEmpty:YES];
     [RICart getCartWithSuccessBlock:^(RICart *cartData) {
+        NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cartData forKey:kUpdateCartNotificationValue];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
         self.cart = cartData;
         if (VALID_NOTEMPTY(self.cart.cartItems, NSArray)) {
             [self setCartEmpty:NO];
