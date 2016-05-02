@@ -48,19 +48,19 @@
     [self addSubview:_totalView];
     
     _totalLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [_totalLabel setFont:JADisplay1Font];
+    [_totalLabel setFont:JADisplay3Font];
     [_totalLabel setTextColor:JABlackColor];
     [_totalLabel setFrame:CGRectMake(23, _totalView.height/2 - _totalLabel.height/2, _totalLabel.width, _totalLabel.height)];
     [_totalLabel setFont:[UIFont fontWithName:kFontRegularName size:_totalLabel.font.pointSize]];
     [_totalView addSubview:_totalLabel];
     
     _totalLabelValue = [[UILabel alloc] initWithFrame:CGRectZero];
-    [_totalLabelValue setFont:JADisplay1Font];
+    [_totalLabelValue setFont:JADisplay3Font];
     [_totalLabelValue setTextColor:JABlack800Color];
     [self setTotalValue:@""];
     [_totalView addSubview:_totalLabelValue];
     
-    _submitButton = [[JAButton alloc] initButtonWithTitle:STRING_NEXT];
+    _submitButton = [[JAButton alloc] initButtonWithTitle:[STRING_NEXT uppercaseString]];
     [_submitButton setFrame:CGRectMake(self.width/3*2, 0, self.width/3, self.height)];
     [self addSubview:_submitButton];
     
@@ -108,7 +108,7 @@
 
 - (void)setButtonText:(NSString *)text target:(id)target action:(SEL)selector
 {
-    [_submitButton setTitle:text forState:UIControlStateNormal];
+    [_submitButton setTitle:[text uppercaseString] forState:UIControlStateNormal];
     [_submitButton addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
 }
 
