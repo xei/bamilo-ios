@@ -22,5 +22,6 @@
 - (NSString *)getTitleForIndex:(NSInteger)index;
 
 - (void)goToIndex:(NSInteger)index;
+- (BOOL)ignoreStep:(NSInteger)index;
 
 @end

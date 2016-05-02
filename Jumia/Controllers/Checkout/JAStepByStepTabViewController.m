@@ -10,12 +10,12 @@
 #import "JACheckoutButton.h"
 
 #define kTabBarViewHeigh 50
-#define kTabBarButtonWidth 90
+#define kTabBarButtonWidth 80
 
 @interface JAStepByStepTabViewController ()
 
 @property (nonatomic, strong) UIView *tabBarView;
-@property (nonatomic, strong) UIView *subView;
+@property (nonatomic, strong) UIViewController *actualViewController;
 @property (nonatomic) NSLock *animationLock;
 @property (nonatomic, strong) NSMutableArray *viewControllersStackArray;
 @property (nonatomic) NSInteger index;
@@ -63,9 +63,9 @@
     _indexInit = indexInit;
     self.index = -1;
     self.viewControllersStackArray = [NSMutableArray new];
-    if (self.subView) {
-        [self.subView removeFromSuperview];
-        self.subView = nil;
+    if (self.actualViewController) {
+        [self.actualViewController.view removeFromSuperview];
+        self.actualViewController = nil;
     }
 }
 
@@ -87,22 +87,6 @@
     [self.view addSubview:self.tabBarView];
     self.index = -1;
     [self goToIndex:self.indexInit];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    for (UIViewController *viewController in self.viewControllersStackArray) {
-        [viewController viewWillAppear:animated];
-    }
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    for (UIViewController *viewController in self.viewControllersStackArray) {
-        [viewController viewDidAppear:animated];
-    }
 }
 
 - (void)viewWillLayoutSubviews
@@ -132,6 +116,9 @@
 
 - (void)goToView:(UIButton *)button
 {
+    if ([self.stepByStepModel ignoreStep:button.tag]) {
+        return;
+    }
     [self goToIndex:button.tag];
     [button setEnabled:NO];
     if (!self.stepByStepModel.freeToChoose) {
@@ -160,6 +147,7 @@
 
 - (void)setViewController:(UIViewController *)newViewController forIndex:(NSInteger)index
 {
+    [newViewController viewWillAppear:YES];
     CGFloat offset = self.view.width;
     if (index < self.index) { // rolling left
         offset *= -1;
@@ -171,17 +159,19 @@
     [UIView animateWithDuration:.2 animations:^{
         [newViewController.view setX:0.f];
     } completion:^(BOOL finished) {
-        if (!self.subView) {
+        if (!self.actualViewController) {
             [self setContentView:newViewController];
-            [self.subView setNeedsDisplay];
+            [self.actualViewController.view setNeedsDisplay];
         }
     }];
     
-    if (self.subView) {
+    if (self.actualViewController) {
+        [self.actualViewController viewWillDisappear:YES];
         [UIView animateWithDuration:.4 animations:^{
-            [self.subView setX:-1*offset];
+            [self.actualViewController.view setX:-1*offset];
         } completion:^(BOOL finished) {
-            [self.subView removeFromSuperview];
+            [self.actualViewController.view removeFromSuperview];
+            [self.actualViewController viewDidDisappear:YES];
             [self setContentView:newViewController];
         }];
     }
@@ -202,7 +192,7 @@
 
 - (void)setContentView:(UIViewController *)viewController
 {
-    self.subView = viewController.view;
+    self.actualViewController = viewController;
     [self.viewControllersStackArray addObject:viewController];
     if (!self.stepByStepModel.freeToChoose) {
         for (UIViewController *oneViewController in [self.viewControllersStackArray mutableCopy]) {
@@ -222,6 +212,7 @@
     [UIView animateWithDuration:.2 animations:^{
         [self.tabIndicatorView setX:[self getButtonWithTag:viewController.view.tag].x];
     }];
+    [viewController viewDidAppear:YES];
 }
 
 - (UIView *)getButtonWithTag:(NSInteger)tag

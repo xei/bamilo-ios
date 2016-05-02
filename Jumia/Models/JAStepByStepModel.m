@@ -59,4 +59,9 @@
 {
 }
 
+- (BOOL)ignoreStep:(NSInteger)index
+{
+    return NO;
+}
+
 @end

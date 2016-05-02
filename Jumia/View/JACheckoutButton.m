@@ -38,7 +38,8 @@
 {
     [self.titleLabel setFont:JABodyFont];
     [self setTitleColor:JABlackColor forState:UIControlStateNormal];
-    [self setTitleColor:JABlack800Color forState:UIControlStateDisabled];
+    // disable button color
+//    [self setTitleColor:JABlack800Color forState:UIControlStateDisabled];
     [self.titleLabel setTextColor:JABlackColor];
     [self setTintColor:JABlackColor];
 }
@@ -69,11 +70,12 @@
 - (void)setEnabled:(BOOL)enabled
 {
     [super setEnabled:enabled];
-    if (self.iconImageView) {
-        [UIView animateWithDuration:.2 animations:^{
-            [self.iconImageView setAlpha:enabled?1.f:.5f];
-        }];
-    }
+    // disable button color
+//    if (self.iconImageView) {
+//        [UIView animateWithDuration:.2 animations:^{
+//            [self.iconImageView setAlpha:enabled?1.f:.5f];
+//        }];
+//    }
 }
 
 @end

@@ -741,15 +741,29 @@
         animated = [animatedNumber boolValue];
     }
     
+    BOOL checkout = NO;
     if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"continue_button"], NSNumber)) {
-        authenticationViewController.checkout = [[notification.userInfo objectForKey:@"continue_button"] boolValue];
+        checkout = [[notification.userInfo objectForKey:@"continue_button"] boolValue];
     }
+    authenticationViewController.checkout = checkout;
     
     if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.userInfo, NSDictionary)) {
         [authenticationViewController setUserInfo:notification.userInfo];
     }
     
-    [self pushViewController:authenticationViewController animated:YES];
+    if (checkout) {
+        JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
+        if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[JACheckoutStepByStepModel class]])
+        {
+            [stepByStepTabViewController goToViewController:authenticationViewController];
+        }else{
+            self.checkoutStepByStepViewController = [self getNewCheckoutStepByStepViewController];
+            [self pushViewController:self.checkoutStepByStepViewController animated:animated];
+            [self.checkoutStepByStepViewController goToViewController:authenticationViewController];
+        }
+    }else{
+        [self pushViewController:authenticationViewController animated:YES];
+    }
 }
 
 - (void)runBlockAfterAuthentication:(NSNotification *)notification
@@ -757,24 +771,34 @@
     if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"from_side_menu"], NSNumber)) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
     } else {
-        NSInteger count = [self.viewControllers count];
-        if (count > 2)
+        JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
+        if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[JACheckoutStepByStepModel class]])
         {
-            UIViewController *viewController = [self.viewControllers objectAtIndex:count-2];
-            UIViewController *viewControllerToPop = [self.viewControllers objectAtIndex:count-3];
-            if ([viewController isKindOfClass:[JAAuthenticationViewController class]]) {
-                [self popToViewController:viewControllerToPop animated:NO];
+            if (VALID_NOTEMPTY(notification, NSNotification) && notification.object) {
+                typedef void (^NextStepBlock)(void);
+                NextStepBlock nextStepBlock = notification.object;
+                nextStepBlock();
+            }
+        }else{
+            NSInteger count = [self.viewControllers count];
+            if (count > 2)
+            {
+                UIViewController *viewController = [self.viewControllers objectAtIndex:count-2];
+                UIViewController *viewControllerToPop = [self.viewControllers objectAtIndex:count-3];
+                if ([viewController isKindOfClass:[JAAuthenticationViewController class]]) {
+                    [self popToViewController:viewControllerToPop animated:NO];
+                }else{
+                    [self popViewControllerAnimated:YES];
+                }
             }else{
                 [self popViewControllerAnimated:YES];
             }
-        }else{
-            [self popViewControllerAnimated:YES];
-        }
-        
-        if (VALID_NOTEMPTY(notification, NSNotification) && notification.object) {
-            typedef void (^NextStepBlock)(void);
-            NextStepBlock nextStepBlock = notification.object;
-            nextStepBlock();
+            
+            if (VALID_NOTEMPTY(notification, NSNotification) && notification.object) {
+                typedef void (^NextStepBlock)(void);
+                NextStepBlock nextStepBlock = notification.object;
+                nextStepBlock();
+            }
         }
     }
 }
@@ -815,7 +839,23 @@
         }
     }
     
-    [self pushViewController:signInVC animated:animated];
+    BOOL checkout = NO;
+    if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"checkout"], NSNumber)) {
+        checkout = [[notification.userInfo objectForKey:@"checkout"] boolValue];
+    }
+    if (checkout) {
+        JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
+        if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[JACheckoutStepByStepModel class]])
+        {
+            [stepByStepTabViewController goToViewController:signInVC];
+        }else{
+            self.checkoutStepByStepViewController = [self getNewCheckoutStepByStepViewController];
+            [self pushViewController:self.checkoutStepByStepViewController animated:animated];
+            [self.checkoutStepByStepViewController goToViewController:signInVC];
+        }
+    }else{
+        [self pushViewController:signInVC animated:YES];
+    }
 }
 
 #pragma mark Sign Up Screen
@@ -842,7 +882,23 @@
 //            [self popToRootViewControllerAnimated:NO];
         }
         
-        [self pushViewController:signUpVC animated:NO];
+        BOOL checkout = NO;
+        if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"checkout"], NSNumber)) {
+            checkout = [[notification.userInfo objectForKey:@"checkout"] boolValue];
+        }
+        if (checkout) {
+            JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
+            if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[JACheckoutStepByStepModel class]])
+            {
+                [stepByStepTabViewController goToViewController:signUpVC];
+            }else{
+                self.checkoutStepByStepViewController = [self getNewCheckoutStepByStepViewController];
+                [self pushViewController:self.checkoutStepByStepViewController animated:YES];
+                [self.checkoutStepByStepViewController goToViewController:signUpVC];
+            }
+        }else{
+            [self pushViewController:signUpVC animated:NO];
+        }
     }
 }
 
@@ -1086,6 +1142,7 @@
             JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
             if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[JACheckoutStepByStepModel class]])
             {
+                [stepByStepTabViewController setIndexInit:0];
                 [stepByStepTabViewController goToViewController:addressesVC];
             }else{
                 self.checkoutStepByStepViewController = [self getNewCheckoutStepByStepViewController];
@@ -1185,7 +1242,7 @@
             editAddressVC.navBarLayout.showLogo = NO;
         }
         
-        if (fromCheckout) {
+        if (fromCheckout.boolValue) {
             JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
             if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[JACheckoutStepByStepModel class]])
             {
