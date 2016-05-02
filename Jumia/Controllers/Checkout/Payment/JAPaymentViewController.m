@@ -19,10 +19,11 @@
 #import "UIImage+Mirror.h"
 #import "JACheckoutBottomView.h"
 #import "RIPaymentMethodForm.h"
+#import "JAProductInfoHeaderLine.h"
 
 @interface JAPaymentViewController ()
-<UICollectionViewDataSource,
-UICollectionViewDelegate,
+<UITableViewDelegate,
+UITableViewDataSource,
 UITextFieldDelegate>
 {
     // Bottom view
@@ -37,14 +38,13 @@ UITextFieldDelegate>
 
 // Payment methods
 @property (strong, nonatomic) UIScrollView *scrollView;
-@property (strong, nonatomic) UICollectionView *collectionView;
+@property (strong, nonatomic) UITableView *tableView;
 
 // Coupon
 @property (strong, nonatomic) UIView *couponView;
-@property (strong, nonatomic) UILabel *couponTitle;
-@property (strong, nonatomic) UIView *couponTitleSeparator;
+@property (strong, nonatomic) JAProductInfoHeaderLine* couponHeader;
 @property (strong, nonatomic) UITextField *couponTextField;
-@property (strong, nonatomic) UIButton *useCouponButton;
+@property (strong, nonatomic) JAClickableView *useCouponClickableView;
 
 
 // Order Summary
@@ -163,7 +163,7 @@ UITextFieldDelegate>
         // LIST OF AVAILABLE PAYMENT METHODS
         self.paymentMethods = [RIPaymentMethodForm getPaymentMethodsInForm:cart.paymentMethodForm];
         
-        self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:cart.paymentMethodForm width:(self.view.frame.size.width - 12.0f)];
+        self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:cart.paymentMethodForm width:(self.tableView.frame.size.width - [JAPaymentCell xPositionAfterCheckmark] - 6.0f)];
         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
         [self setupViews:self.view.width toInterfaceOrientation:self.interfaceOrientation];
         [self finishedLoadingPaymentMethods];
@@ -183,81 +183,47 @@ UITextFieldDelegate>
                                                                      self.view.frame.size.width,
                                                                      self.view.frame.size.height - self.stepBackground.frame.size.height - 64.0f)];
     
-    UICollectionViewFlowLayout* collectionViewFlowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [collectionViewFlowLayout setMinimumLineSpacing:0.0f];
-    [collectionViewFlowLayout setMinimumInteritemSpacing:0.0f];
-    [collectionViewFlowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-    [collectionViewFlowLayout setItemSize:CGSizeZero];
-    [collectionViewFlowLayout setHeaderReferenceSize:CGSizeZero];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                   0.0f,
+                                                                   self.scrollView.frame.size.width,
+                                                                   27.0f)];
+    [self.tableView setDelegate:self];
+    [self.tableView setDataSource:self];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [self.tableView setScrollEnabled:NO];
     
-    UINib *paymentListHeaderNib = [UINib nibWithNibName:@"JACartListHeaderView" bundle:nil];
-    UINib *paymentListCellNib = [UINib nibWithNibName:@"JAPaymentCell" bundle:nil];
-    
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(6.0f,
-                                                                             6.0f,
-                                                                             self.scrollView.frame.size.width - 12.0f,
-                                                                             27.0f) collectionViewLayout:collectionViewFlowLayout];
-    self.collectionView.layer.cornerRadius = 5.0f;
-    [self.collectionView setBackgroundColor:JAWhiteColor];
-    [self.collectionView registerNib:paymentListHeaderNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"paymentListHeader"];
-    [self.collectionView registerNib:paymentListCellNib forCellWithReuseIdentifier:@"paymentListCell"];
-    [self.collectionView registerNib:paymentListCellNib forCellWithReuseIdentifier:@"paymentListCell_Empty"];
-    [self.collectionView setDataSource:self];
-    [self.collectionView setDelegate:self];
-    [self.collectionView setScrollEnabled:NO];
-    
-    [self.scrollView addSubview:self.collectionView];
+    [self.scrollView addSubview:self.tableView];
     [self.view addSubview:self.scrollView];
     
-    self.couponView = [[UIView alloc] initWithFrame:CGRectMake(6.0f,
-                                                               CGRectGetMaxY(self.collectionView.frame) + 6.0f,
-                                                               self.scrollView.frame.size.width - 12.0f,
-                                                               86.0f)];
+    self.couponView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                               CGRectGetMaxY(self.tableView.frame),
+                                                               self.scrollView.frame.size.width,
+                                                               100.0f)];
     [self.couponView setBackgroundColor:JAWhiteColor];
-    self.couponView.layer.cornerRadius = 5.0f;
     
-    self.couponTitle = [[UILabel alloc] initWithFrame:CGRectMake(6.0f,
-                                                                 0.0f,
-                                                                 self.couponView.frame.size.width - 12.0f,
-                                                                 26.0f)];
-    [self.couponTitle setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
-    [self.couponTitle setTextColor:JAButtonTextOrange];
-    [self.couponTitle setText:STRING_COUPON];
-    [self.couponTitle setBackgroundColor:[UIColor clearColor]];
-    [self.couponView addSubview:self.couponTitle];
-    
-    self.couponTitleSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                         CGRectGetMaxY(self.couponTitle.frame),
-                                                                         self.couponView.frame.size.width,
-                                                                         1.0f)];
-    [self.couponTitleSeparator setBackgroundColor:JAOrange1Color];
-    [self.couponView addSubview:self.couponTitleSeparator];
-    
-    UIImage *useCouponImageNormal = [UIImage imageNamed:@"useCoupon_normal"];
+    self.couponHeader = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.couponView.frame.size.width, kProductInfoHeaderLineHeight)];
+    [self.couponHeader setTitle:STRING_COUPON];
+    [self.couponView addSubview:self.couponHeader];
     
     self.couponTextField = [[UITextField alloc] init];
-    [self.couponTextField setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
+    [self.couponTextField setFont:JABodyFont];
     [self.couponTextField setTextColor:JAGreyColor];
     [self.couponTextField setValue:JATextFieldColor forKeyPath:@"_placeholderLabel.textColor"];
     [self.couponTextField setPlaceholder:STRING_ENTER_COUPON];
     [self.couponTextField setDelegate:self];
     [self.couponView addSubview:self.couponTextField];
     
-    self.useCouponButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.useCouponButton setTitle:STRING_USE forState:UIControlStateNormal];
-    [self.useCouponButton setBackgroundImage:useCouponImageNormal forState:UIControlStateNormal];
-    [self.useCouponButton setBackgroundImage:[UIImage imageNamed:@"useCoupon_highlighted"] forState:UIControlStateHighlighted];
-    [self.useCouponButton setBackgroundImage:[UIImage imageNamed:@"useCoupon_highlighted"] forState:UIControlStateSelected];
-    [self.useCouponButton setBackgroundImage:[UIImage imageNamed:@"useCoupon_disabled"] forState:UIControlStateDisabled];
-    [self.useCouponButton.titleLabel setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
-    [self.useCouponButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
-    [self.useCouponButton addTarget:self action:@selector(useCouponButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self.useCouponButton setFrame:CGRectMake(CGRectGetMaxX(self.couponTextField.frame) + 5.0f,
-                                              CGRectGetMaxY(self.couponTitleSeparator.frame) + 17.0f,
-                                              useCouponImageNormal.size.width,
-                                              useCouponImageNormal.size.height)];
+    self.useCouponClickableView = [[JAClickableView alloc] init];
+    [self.useCouponClickableView setTitle:STRING_USE forState:UIControlStateNormal];
+    [self.useCouponClickableView setTitleColor:JABlue1Color forState:UIControlStateNormal];
+    [self.useCouponClickableView setFont:JABUTTONFont];
+    [self.useCouponClickableView addTarget:self action:@selector(useCouponButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    [self.useCouponClickableView setFrame:CGRectMake(self.couponView.frame.size.width - 6.0f - 80.0f,
+                                              CGRectGetMaxY(self.couponHeader.frame),
+                                              80.0f,
+                                              self.couponView.frame.size.height - self.couponHeader.frame.size.height)];
     
-    [self.couponView addSubview:self.useCouponButton];
+    [self.couponView addSubview:self.useCouponClickableView];
     [self.scrollView addSubview:self.couponView];
     
     _bottomView = [[JACheckoutBottomView alloc] initWithFrame:CGRectMake(0.0f,
@@ -362,10 +328,10 @@ UITextFieldDelegate>
         self.orderSummaryOriginalHeight = self.orderSummary.frame.size.height;
     }
     
-    [self.collectionView setFrame:CGRectMake(self.collectionView.frame.origin.x,
-                                             self.collectionView.frame.origin.y,
-                                             self.scrollView.frame.size.width - 12.0f,
-                                             self.collectionView.frame.size.height)];
+    [self.tableView setFrame:CGRectMake(self.tableView.frame.origin.x,
+                                        self.tableView.frame.origin.y,
+                                        self.scrollView.frame.size.width,
+                                        self.tableView.frame.size.height)];
     
     if(VALID_NOTEMPTY(self.checkoutFormForPaymentMethod, JACheckoutForms) && VALID_NOTEMPTY(self.checkoutFormForPaymentMethod.paymentMethodFormViews, NSMutableDictionary))
     {
@@ -380,59 +346,50 @@ UITextFieldDelegate>
         }
     }
     
-    self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:self.cart.paymentMethodForm width:self.collectionView.frame.size.width];
+    self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:self.cart.paymentMethodForm width:(self.tableView.frame.size.width - [JAPaymentCell xPositionAfterCheckmark] - 6.0f)];
     
     [self.couponView setFrame:CGRectMake(self.couponView.frame.origin.x,
-                                         CGRectGetMaxY(self.collectionView.frame) + 6.0f,
-                                         self.scrollView.frame.size.width - 12.0f,
+                                         CGRectGetMaxY(self.tableView.frame),
+                                         self.scrollView.frame.size.width,
                                          self.couponView.frame.size.height)];
-    
-    self.couponTitle.textAlignment = NSTextAlignmentLeft;
-    [self.couponTitle  setFrame:CGRectMake(self.couponTitle.frame.origin.x,
-                                           self.couponTitle.frame.origin.y,
-                                           self.couponView.frame.size.width - 12.0f,
-                                           self.couponTitle.frame.size.height)];
-    
-    [self.couponTitleSeparator setFrame:CGRectMake(self.couponTitleSeparator.frame.origin.x,
-                                                   CGRectGetMaxY(self.couponTitle.frame),
-                                                   self.couponView.frame.size.width,
-                                                   self.couponTitleSeparator.frame.size.height)];
+
+    [self.couponHeader setFrame:CGRectMake(0.0f, 0.0f, self.couponView.frame.size.width, kProductInfoHeaderLineHeight)];
     
     BOOL saveCouponTextFieldEnabled = self.couponTextField.enabled;
     UIColor* saveCouponTextFieldColor = self.couponTextField.textColor;
     NSString* saveCouponTextFieldText = self.couponTextField.text;
     [self.couponTextField removeFromSuperview];
     self.couponTextField = [[UITextField alloc] init];
-    [self.couponTextField setFont:[UIFont fontWithName:kFontRegularName size:11.0f]];
+    [self.couponTextField setFont:JABodyFont];
     [self.couponTextField setTextColor:JAGreyColor];
     [self.couponTextField setValue:JATextFieldColor forKeyPath:@"_placeholderLabel.textColor"];
     [self.couponTextField setPlaceholder:STRING_ENTER_COUPON];
     [self.couponTextField setDelegate:self];
     [self.couponView addSubview:self.couponTextField];
     self.couponTextField.textAlignment = NSTextAlignmentLeft;
-    self.couponTextField.frame = CGRectMake(6.0f,
-                                            CGRectGetMaxY(self.couponTitleSeparator.frame) + 17.0f,
-                                            self.couponView.frame.size.width - 12.0f - 5.0f - self.useCouponButton.frame.size.width,
+    self.couponTextField.frame = CGRectMake(16.0f,
+                                            CGRectGetMaxY(self.couponHeader.frame) + 10.0f,
+                                            self.couponView.frame.size.width - 16.0f - 5.0f - self.useCouponClickableView.frame.size.width,
                                             30.0f);
     self.couponTextField.enabled = saveCouponTextFieldEnabled;
     self.couponTextField.textColor = saveCouponTextFieldColor;
     self.couponTextField.text = saveCouponTextFieldText;
     
-    [self.useCouponButton setFrame:CGRectMake(CGRectGetMaxX(self.couponTextField.frame) + 5.0f,
-                                              CGRectGetMaxY(self.couponTitleSeparator.frame) + 17.0f,
-                                              self.useCouponButton.frame.size.width,
-                                              self.useCouponButton.frame.size.height)];
+    [self.useCouponClickableView setFrame:CGRectMake(self.couponView.frame.size.width - 6.0f - self.useCouponClickableView.frame.size.width,
+                                                     CGRectGetMaxY(self.couponHeader.frame),
+                                                     self.useCouponClickableView.frame.size.width,
+                                                     self.useCouponClickableView.frame.size.height)];
     
     if (VALID(self.cart.couponMoneyValue, NSNumber)) {
         self.couponTextField.text = self.cart.couponCode;
-        [self.useCouponButton setTitle:STRING_REMOVE forState:UIControlStateNormal];
+        [self.useCouponClickableView setTitle:STRING_REMOVE forState:UIControlStateNormal];
         [self.couponTextField setEnabled:NO];
-        [self.useCouponButton setEnabled:YES];
+        [self.useCouponClickableView setEnabled:YES];
     }
     
     [_bottomView setFrame:CGRectMake(0.0f,
-                                            self.view.frame.size.height - 56,
-                                            width,
+                                     self.view.frame.size.height - 56,
+                                     width,
                                      56)];
     [_bottomView setTotalValue:self.cart.cartValueFormatted];
     [_bottomView setButtonText:STRING_NEXT target:self action:@selector(nextStepButtonPressed)];
@@ -440,7 +397,7 @@ UITextFieldDelegate>
         [_bottomView disableButton];
     }
     
-    [self reloadCollectionView];
+    [self reloadTableView];
     
     if (RI_IS_RTL) {
         [self.view flipAllSubviews];
@@ -453,14 +410,14 @@ UITextFieldDelegate>
     {
         [self.couponTextField setText:self.cart.couponCode];
         [self.couponTextField setEnabled:NO];
-        [self.useCouponButton setTitle:STRING_REMOVE forState:UIControlStateNormal];
+        [self.useCouponClickableView setTitle:STRING_REMOVE forState:UIControlStateNormal];
     }
     else
     {
-        [self.useCouponButton setTitle:STRING_USE forState:UIControlStateNormal];
+        [self.useCouponClickableView setTitle:STRING_USE forState:UIControlStateNormal];
         if(!VALID_NOTEMPTY([self.couponTextField text], NSString))
         {
-            [self.useCouponButton setEnabled:NO];
+            [self.useCouponClickableView setEnabled:NO];
         }
     }
     
@@ -486,46 +443,42 @@ UITextFieldDelegate>
     [self hideLoading];
 }
 
--(void)reloadCollectionView
+-(void)reloadTableView
 {
     if (VALID_NOTEMPTY(self.checkoutFormForPaymentMethod.paymentMethodFormViews, NSMutableDictionary) || VALID_NOTEMPTY(self.paymentMethods, NSArray)) {
-        CGFloat collectionViewHeight = 27.0f;
+        CGFloat tableViewHeight = [self tableView:self.tableView heightForHeaderInSection:0];
         
         if(VALID_NOTEMPTY(self.paymentMethods, NSArray))
         {
-            collectionViewHeight += ([self.paymentMethods count] * 44.0f);
-            
-            if(VALID_NOTEMPTY(self.collectionViewIndexSelected, NSIndexPath))
-            {
-                RIPaymentMethodFormOption *paymentMethod = [self.paymentMethods objectAtIndex:self.collectionViewIndexSelected.row];
-                collectionViewHeight += [self.checkoutFormForPaymentMethod getPaymentMethodViewHeight:paymentMethod];
+            for (int i = 0; i < self.paymentMethods.count; i++) {
+                CGFloat height = [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+                tableViewHeight += height;
             }
-            
         } else {
             if ([self.checkoutFormForPaymentMethod getPaymentMethodViewHeight:nil]) {
-                collectionViewHeight += [self.checkoutFormForPaymentMethod getPaymentMethodViewHeight:nil];
+                tableViewHeight += [self.checkoutFormForPaymentMethod getPaymentMethodViewHeight:nil];
             } else
-                collectionViewHeight += 44.0f;
+                tableViewHeight += 44.0f;
         }
             
         [UIView animateWithDuration:0.5f
                          animations:^{
-                             [self.collectionView setFrame:CGRectMake(self.collectionView.frame.origin.x,
-                                                                      self.collectionView.frame.origin.y,
-                                                                      self.collectionView.frame.size.width,
-                                                                      collectionViewHeight)];
+                             [self.tableView setFrame:CGRectMake(self.tableView.frame.origin.x,
+                                                                 self.tableView.frame.origin.y,
+                                                                 self.tableView.frame.size.width,
+                                                                 tableViewHeight)];
                              
                              [self.couponView setFrame:CGRectMake(self.couponView.frame.origin.x,
-                                                                  CGRectGetMaxY(self.collectionView.frame) + 6.0f,
-                                                                  self.scrollView.frame.size.width - 12.0f,
+                                                                  CGRectGetMaxY(self.tableView.frame),
+                                                                  self.scrollView.frame.size.width,
                                                                   self.couponView.frame.size.height)];
                          }];
         
         [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
-                                                   self.collectionView.frame.origin.y + collectionViewHeight + 92.0f + _bottomView.frame.size.height + 6.0f)];
+                                                   CGRectGetMaxY(self.couponView.frame) + _bottomView.frame.size.height)];
     }
     
-    [self.collectionView reloadData];
+    [self.tableView reloadData];
 }
 
 - (void)useCouponButtonPressed
@@ -547,7 +500,7 @@ UITextFieldDelegate>
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
                                                       data:[trackingDictionary copy]];
             
-            [self.useCouponButton setTitle:STRING_USE forState:UIControlStateNormal];
+            [self.useCouponClickableView setTitle:STRING_USE forState:UIControlStateNormal];
             [self.couponTextField setEnabled: YES];
             [self.couponTextField setText:@""];
             
@@ -569,7 +522,7 @@ UITextFieldDelegate>
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
                                                       data:[trackingDictionary copy]];
             
-            [self.useCouponButton setTitle:STRING_REMOVE forState:UIControlStateNormal];
+            [self.useCouponClickableView setTitle:STRING_REMOVE forState:UIControlStateNormal];
             [self.couponTextField setEnabled:NO];
             
             [self continueLoading];
@@ -619,52 +572,36 @@ UITextFieldDelegate>
                    }];
 }
 
-#pragma mark UICollectionViewDelegateFlowLayout
+#pragma mark UITableView
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    CGSize sizeForItemAtIndexPath = CGSizeZero;
+    return kProductInfoHeaderLineHeight;
+}
+
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    NSString* title = STRING_PAYMENT;
     
-    if(collectionView == self.collectionView)
-    {
-        // Payment method cell
-        if(indexPath.row == self.collectionViewIndexSelected.row)
-        {
-            RIPaymentMethodFormOption *paymentMethod = [self.paymentMethods objectAtIndex:indexPath.row];
-            sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width,
-                                                44.0f +[self.checkoutFormForPaymentMethod getPaymentMethodViewHeight:paymentMethod]);
-        }
-        else
-        {
-            sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, 44.0f);
-        }
+    UIView* content = [UIView new];
+    [content setFrame:CGRectMake(0.0f, 0.0f, tableView.frame.size.width, kProductInfoHeaderLineHeight)];
+    
+    JAProductInfoHeaderLine* headerLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0.0f, 0.0f, content.frame.size.width, kProductInfoHeaderLineHeight)];
+    [headerLine setTitle:title];
+    
+    if (RI_IS_RTL) {
+        [headerLine flipAllSubviews];
     }
     
-    return sizeForItemAtIndexPath;
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
-{
-    CGSize referenceSizeForHeaderInSection = CGSizeZero;
-    if(collectionView == self.collectionView)
-    {
-        referenceSizeForHeaderInSection = CGSizeMake(self.collectionView.frame.size.width, 27.0f);
-    }
+    [content addSubview:headerLine];
     
-    return referenceSizeForHeaderInSection;
+    return content;
 }
 
-#pragma mark UICollectionViewDataSource
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    return 1;
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger numberOfItemsInSection = 0;
-    if(collectionView == self.collectionView){
+    if(tableView == self.tableView){
         if(VALID_NOTEMPTY(self.paymentMethods, NSArray))
         {
             numberOfItemsInSection = [self.paymentMethods count];
@@ -677,93 +614,87 @@ UITextFieldDelegate>
     return numberOfItemsInSection;
 }
 
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = nil;
+    CGFloat height = 44.0f;
+    if(indexPath.row == self.collectionViewIndexSelected.row)
+    {
+        RIPaymentMethodFormOption *paymentMethod = [self.paymentMethods objectAtIndex:indexPath.row];
+        height += [self.checkoutFormForPaymentMethod getPaymentMethodViewHeight:paymentMethod];
+    }
+    return height;
+}
+
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = nil;
     
-    if(collectionView == self.collectionView){
-        if(VALID_NOTEMPTY(self.paymentMethods, NSArray)) {
-            // Payment method title cell
+    if (VALID_NOTEMPTY(self.paymentMethods, NSArray)) {
+        
+        // Payment method title cell
+        
+        RIPaymentMethodFormOption *paymentMethod = [self.paymentMethods objectAtIndex:indexPath.row];
+        if(VALID_NOTEMPTY(paymentMethod, RIPaymentMethodFormOption))
+        {
+            NSString *cellIdentifier = @"paymentListCell";
+            JAPaymentCell *paymentListCell = (JAPaymentCell*) [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            if (ISEMPTY(paymentListCell)) {
+                paymentListCell = [[JAPaymentCell alloc] init];
+            }
+            
+            BOOL isSelected = NO;
+            if(VALID_NOTEMPTY(self.collectionViewIndexSelected, NSIndexPath) && indexPath.row == self.collectionViewIndexSelected.row)
+            {
+                isSelected = YES;
+            }
+            
+            [paymentListCell loadWithPaymentMethod:paymentMethod
+                                 paymentMethodView:[self.checkoutFormForPaymentMethod getPaymentMethodView:paymentMethod]
+                                        isSelected:isSelected
+                                             width:self.tableView.frame.size.width];
+            
+            paymentListCell.clickableView.tag = indexPath.row;
+            [paymentListCell.clickableView addTarget:self action:@selector(clickViewSelected:) forControlEvents:UIControlEventTouchUpInside];
+            
+            cell = paymentListCell;
+        }
+
+    } else {
+    
+        if (indexPath.row == 0 && VALID_NOTEMPTY(self.checkoutFormForPaymentMethod.paymentMethodFormViews, NSMutableDictionary)) {
+            
+            NSString *cellIdentifier = @"paymentListCell_Empty";
+            
+            JAPaymentCell *paymentListCell = (JAPaymentCell*) [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            if (ISEMPTY(paymentListCell)) {
+                paymentListCell = [[JAPaymentCell alloc] init];
+            }
             
             RIPaymentMethodFormOption *paymentMethod = [self.paymentMethods objectAtIndex:indexPath.row];
-            if(VALID_NOTEMPTY(paymentMethod, RIPaymentMethodFormOption))
-            {
-                NSString *cellIdentifier = @"paymentListCell";
-                
-                JAPaymentCell *paymentListCell = (JAPaymentCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-                
-                BOOL isSelected = NO;
-                if(VALID_NOTEMPTY(self.collectionViewIndexSelected, NSIndexPath) && indexPath.row == self.collectionViewIndexSelected.row)
-                {
-                    isSelected = YES;
-                }
-                
-                [paymentListCell loadWithPaymentMethod:paymentMethod
-                                     paymentMethodView:[self.checkoutFormForPaymentMethod getPaymentMethodView:paymentMethod]
-                                            isSelected:isSelected];
-                
-                paymentListCell.clickableView.tag = indexPath.row;
-                [paymentListCell.clickableView addTarget:self action:@selector(clickViewSelected:) forControlEvents:UIControlEventTouchUpInside];
-                
-                if(indexPath.row == ([self.paymentMethods count] - 1))
-                {
-                    [paymentListCell.separator setHidden:YES];
-                }
-                
-                cell = paymentListCell;
-            }
-        } else {
-            if (indexPath.row == 0 && VALID_NOTEMPTY(self.checkoutFormForPaymentMethod.paymentMethodFormViews, NSMutableDictionary)) {
-                
-                NSString *cellIdentifier = @"paymentListCell_Empty";
-                
-                JAPaymentCell *paymentListCell = (JAPaymentCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-                
-                RIPaymentMethodFormOption *paymentMethod = [self.paymentMethods objectAtIndex:indexPath.row];
-                
-                NSString * methodName = [(RIPaymentMethodFormField*)[self.paymentMethodForm.fields firstObject] value];
-                
-                [paymentListCell loadNoPaymentMethod:methodName paymentMethodView:[self.checkoutFormForPaymentMethod getPaymentMethodView:paymentMethod]];
-
-                [paymentListCell.separator setHidden:YES];
-
-                cell = paymentListCell;
-            }
+            
+            NSString * methodName = [(RIPaymentMethodFormField*)[self.paymentMethodForm.fields firstObject] value];
+            
+            [paymentListCell loadNoPaymentMethod:methodName paymentMethodView:[self.checkoutFormForPaymentMethod getPaymentMethodView:paymentMethod]];
+            
+            cell = paymentListCell;
         }
+    
     }
     
     return cell;
 }
 
+
 - (void)clickViewSelected:(UIControl*)sender
 {
-    [self collectionView:self.collectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
+    [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
 }
 
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-{
-    UICollectionReusableView *reusableview = [[UICollectionReusableView alloc] init];
-    
-    if (kind == UICollectionElementKindSectionHeader) {
-        JACartListHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"paymentListHeader" forIndexPath:indexPath];
-        
-        if(collectionView == self.collectionView)
-        {
-            [headerView loadHeaderWithText:STRING_PAYMENT width:self.collectionView.frame.size.width];
-        }
-        reusableview = headerView;
-    }
-    
-    return reusableview;
-}
-
-#pragma mark UICollectionViewDelegate
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
     [self.couponTextField resignFirstResponder];
     
-    if(collectionView == self.collectionView && VALID_NOTEMPTY(self.paymentMethods, NSArray))
+    if(tableView == self.tableView && VALID_NOTEMPTY(self.paymentMethods, NSArray))
     {
         if(indexPath.row != self.collectionViewIndexSelected.row && indexPath.row < [self.paymentMethods count])
         {
@@ -777,7 +708,7 @@ UITextFieldDelegate>
             
             self.collectionViewIndexSelected = indexPath;
             
-            [self reloadCollectionView];
+            [self reloadTableView];
         }
     }
 }
@@ -789,11 +720,11 @@ UITextFieldDelegate>
     NSRange textFieldRange = NSMakeRange(0, [textField.text length]);
     if (NSEqualRanges(range, textFieldRange) && [string length] == 0)
     {
-        [self.useCouponButton setEnabled:NO];
+        [self.useCouponClickableView setEnabled:NO];
     }
     else
     {
-        [self.useCouponButton setEnabled:YES];
+        [self.useCouponClickableView setEnabled:YES];
     }
     
     return YES;
