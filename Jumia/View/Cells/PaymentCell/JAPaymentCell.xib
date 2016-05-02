@@ -32,11 +32,6 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            <connections>
-                <outlet property="checkMark" destination="VWN-af-aPx" id="Lx5-Ku-Heq"/>
-                <outlet property="clickableView" destination="5BC-PZ-ZH4" id="ctO-3D-1ud"/>
-                <outlet property="label" destination="Cca-xh-saz" id="es8-ac-Web"/>
-            </connections>
         </collectionViewCell>
     </objects>
     <resources>
