@@ -9,6 +9,13 @@
 #import "JAButton.h"
 #import "UIImage+WithColor.h"
 
+@interface JAButton ()
+
+@property (nonatomic, strong) UIColor *enabledColor;
+@property (nonatomic, strong) UIColor *disabledColor;
+
+@end
+
 @implementation JAButton
 
 - (instancetype)init
@@ -25,6 +32,8 @@
     self = [super init];
     if (self) {
         [self setBackgroundColor:JAOrange1Color];
+        [self setEnabledColor:JAOrange1Color];
+        [self setDisabledColor:JABlack700Color];
         [self setTintColor:JAWhiteColor];
         [self setTitleColor:JAWhiteColor forState:UIControlStateNormal];
         [self setTitle:[title uppercaseString] forState:UIControlStateNormal];
@@ -63,6 +72,8 @@
     self = [[JAButton alloc] initButtonWithTitle:title];
     if (self) {
         [self setBackgroundColor:JAOrange1Color];
+        [self setEnabledColor:JAOrange1Color];
+        [self setDisabledColor:JABlack700Color];
         [self setTintColor:JAWhiteColor];
         [self setTitleColor:JAWhiteColor forState:UIControlStateNormal];
         [self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
@@ -95,6 +106,16 @@
         [self setImage:[UIImage imageNamed:@"facebook_icon"] forState:UIControlStateNormal];
     }
     return self;
+}
+
+- (void)setEnabled:(BOOL)enabled
+{
+    [super setEnabled:enabled];
+    if (enabled && VALID(self.enabledColor, UIColor)) {
+        [self setBackgroundColor:self.enabledColor];
+    } else if (!enabled && VALID(self.disabledColor, UIColor)) {
+        [self setBackgroundColor:self.disabledColor];
+    }
 }
 
 @end
