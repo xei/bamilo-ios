@@ -13,21 +13,7 @@
 #import "JAShippingViewController.h"
 #import "JAPaymentViewController.h"
 
-@interface JACheckoutStepByStepModel ()
-
-@property (nonatomic, strong) NSMutableDictionary *viewControllersInstancesDictionary;
-
-@end
-
 @implementation JACheckoutStepByStepModel
-
-- (NSMutableDictionary *)viewControllersInstancesDictionary
-{
-    if (!VALID_NOTEMPTY(_viewControllersInstancesDictionary, NSMutableDictionary)) {
-        _viewControllersInstancesDictionary = [NSMutableDictionary new];
-    }
-    return _viewControllersInstancesDictionary;
-}
 
 - (NSArray *)viewControllersArray
 {
@@ -74,37 +60,28 @@
     }
 }
 
-- (UIViewController *)goToIndex:(NSInteger)index
+- (void)goToIndex:(NSInteger)index
 {
-    if ([self.viewControllersInstancesDictionary objectForKey:[self.viewControllersArray objectAtIndex:index]]) {
-        return [self.viewControllersInstancesDictionary objectForKey:[self.viewControllersArray objectAtIndex:index]];
-    }
     switch (index) {
         case 0:{
-            JAAddressesViewController *viewController = [[JAAddressesViewController alloc] init];
-            [viewController setFromCheckout:YES];
-            [self.viewControllersInstancesDictionary setObject:viewController forKey:[self.viewControllersArray objectAtIndex:index]];
-            viewController.view.tag = 0;
-            return viewController;
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+                                                                object:@{@"animated":[NSNumber numberWithBool:YES]}
+                                                              userInfo:@{@"from_checkout":[NSNumber numberWithBool:YES]}];
         }
         case 1:{
-            JAShippingViewController *viewController = [[JAShippingViewController alloc] init];
-            [self.viewControllersInstancesDictionary setObject:viewController forKey:[self.viewControllersArray objectAtIndex:index]];
-            viewController.view.tag = 1;
-            return viewController;
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutShippingScreenNotification
+                                                                    object:nil
+                                                                  userInfo:nil]; //this screen loads the cart itself
         }
         case 2:{
-            JAPaymentViewController *viewController = [[JAPaymentViewController alloc] init];
-            [self.viewControllersInstancesDictionary setObject:viewController forKey:[self.viewControllersArray objectAtIndex:index]];
-            viewController.view.tag = 2;
-            return viewController;
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutPaymentScreenNotification
+                                                                object:nil
+                                                              userInfo:nil]; //this screen loads the cart itself
         }
         default:{
-            JAAddressesViewController *viewController = [[JAAddressesViewController alloc] init];
-            [viewController setFromCheckout:YES];
-            [self.viewControllersInstancesDictionary setObject:viewController forKey:[self.viewControllersArray objectAtIndex:index]];
-            viewController.view.tag = 0;
-            return viewController;
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+                                                                object:@{@"animated":[NSNumber numberWithBool:YES]}
+                                                              userInfo:@{@"from_checkout":[NSNumber numberWithBool:YES]}];
         }
     }
 }

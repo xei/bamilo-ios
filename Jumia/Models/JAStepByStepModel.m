@@ -55,9 +55,8 @@
     return -1;
 }
 
-- (UIView *)goToIndex:(NSInteger)index
+- (void)goToIndex:(NSInteger)index
 {
-    return nil;
 }
 
 @end
