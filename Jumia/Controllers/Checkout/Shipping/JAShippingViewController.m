@@ -202,29 +202,21 @@ UITableViewDelegate
 {
     if(VALID_NOTEMPTY(self.shippingMethods, NSArray))
     {
-        for (RIShippingMethodFormField *field in [self.shippingMethodForm fields])
-        {
-            if([@"shippingMethodForm[shipping_method]" isEqualToString:[field name]])
-            {
-                self.selectedShippingMethod = [field value];
-                break;
-            }
-        }
+        self.selectedShippingMethod = self.cart.shippingMethod;
         
         if(VALID_NOTEMPTY(self.selectedShippingMethod, NSString))
         {
             for(int i = 0; i < [self.shippingMethods count]; i++)
             {
                 NSDictionary *shippingMethod = [self.shippingMethods objectAtIndex:i];
-                NSArray *shippingMethodKeys = [shippingMethod allKeys];
-                if(VALID_NOTEMPTY(shippingMethodKeys, NSArray))
-                {
-                    if([self.selectedShippingMethod isEqualToString:[shippingMethodKeys objectAtIndex:0]])
-                    {
-                        self.tableViewIndexSelected = [NSIndexPath indexPathForItem:i inSection:0];
-                        break;
+                [shippingMethod enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+                    if ([obj isKindOfClass:[RIShippingMethod class]]) {
+                        RIShippingMethod* method = (RIShippingMethod*)obj;
+                        if (method.label == self.selectedShippingMethod) {
+                            self.tableViewIndexSelected = [NSIndexPath indexPathForItem:i inSection:0];
+                        }
                     }
-                }
+                }];
             }
         }
         
