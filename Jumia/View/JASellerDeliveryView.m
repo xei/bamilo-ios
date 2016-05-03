@@ -122,6 +122,10 @@
     }
 
     [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, currentY+12.0f)];
+    
+    if (RI_IS_RTL) {
+        [self.headerLine flipAllSubviews];
+    }
 }
 
 -(void)updateWidth:(CGFloat)width
@@ -145,6 +149,10 @@
     [self.name setFrame:CGRectMake(self.name.frame.origin.x, self.name.frame.origin.y, width, self.name.frame.size.height)];
     [self.delivery setFrame:CGRectMake(self.delivery.frame.origin.x, self.delivery.frame.origin.y, width, self.delivery.frame.size.height)];
     [self.shipping setFrame:CGRectMake(self.shipping.frame.origin.x, self.shipping.frame.origin.y, width, self.shipping.frame.size.height)];
+    
+    if (RI_IS_RTL) {
+        [self.headerLine flipAllSubviews];
+    }
 }
 
 @end

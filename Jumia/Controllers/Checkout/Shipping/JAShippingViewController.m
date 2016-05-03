@@ -462,7 +462,7 @@ UITableViewDelegate
             self.pickupStationHeightsForRegion = [[NSMutableArray alloc] init];
             for(RIShippingMethodPickupStationOption *pickupStation in self.pickupStationsForRegion)
             {
-                CGFloat size = [JAPickupStationInfoCell getHeightForPickupStation:pickupStation];
+                CGFloat size = [JAPickupStationInfoCell getHeightForPickupStation:pickupStation width:self.tableView.frame.size.width];
                 
                 [self.pickupStationHeightsForRegion addObject:[NSNumber numberWithFloat:size]];
             }
@@ -518,6 +518,20 @@ UITableViewDelegate
         {
             // JAShippingInfoCell Height
             height = 60.0f;
+            NSDictionary *shippingMethodDictionary = [self.shippingMethods objectAtIndex:self.tableViewIndexSelected.row];
+            
+            NSArray *shippingMethodKeys = [shippingMethodDictionary allKeys];
+            if(VALID_NOTEMPTY(shippingMethodKeys, NSArray))
+            {
+                NSString *shippingMethodKey = [shippingMethodKeys objectAtIndex:0];
+                RIShippingMethod *shippingMethod = [shippingMethodDictionary objectForKey:shippingMethodKey];
+                if(VALID_NOTEMPTY(shippingMethod, RIShippingMethod))
+                {
+                    if (ISEMPTY(shippingMethod.shippingFee) || [shippingMethod.shippingFee isEqualToNumber:[NSNumber numberWithInteger:0]]) {
+                        height = 40.0f;
+                    }
+                }
+            }
         }
     }
     else
@@ -526,7 +540,7 @@ UITableViewDelegate
         if([kPickupStationKey isEqualToString:[self.selectedShippingMethod lowercaseString]])
         {
             NSInteger index = indexPath.row - self.tableViewIndexSelected.row - 2;
-            CGFloat pickupStationInfoCellHeight = [JAPickupStationInfoCell getHeightForPickupStation:[self.pickupStationsForRegion objectAtIndex:index]];
+            CGFloat pickupStationInfoCellHeight = [JAPickupStationInfoCell getHeightForPickupStation:[self.pickupStationsForRegion objectAtIndex:index] width:self.tableView.frame.size.width];
             
             height = pickupStationInfoCellHeight;
         }
@@ -586,7 +600,7 @@ UITableViewDelegate
                 shippingCell = [[JAShippingCell alloc] init];
                 [shippingCell setSelectionStyle:UITableViewCellSelectionStyleNone];
             }
-            [shippingCell loadWithShippingMethod:[shippingMethod objectForKey:shippingMethodKey]];
+            [shippingCell loadWithShippingMethod:[shippingMethod objectForKey:shippingMethodKey] width:self.tableView.frame.size.width];
             
             [shippingCell deselectShippingMethod];
             if(VALID_NOTEMPTY(self.tableViewIndexSelected, NSIndexPath) && indexPath.row == self.tableViewIndexSelected.row)
@@ -633,11 +647,6 @@ UITableViewDelegate
                 shippingInfoCell = [[JAShippingInfoCell alloc] init];
                 [shippingInfoCell setSelectionStyle:UITableViewCellSelectionStyleNone];
             }
-            NSString *shippingFee = [self.cart shippingValueFormatted];
-            if(0 == [[self.cart shippingValue] integerValue])
-            {
-                shippingFee = STRING_FREE;
-            }
             
             NSDictionary *shippingMethodDictionary = [self.shippingMethods objectAtIndex:self.tableViewIndexSelected.row];
             
@@ -649,10 +658,10 @@ UITableViewDelegate
                 if(VALID_NOTEMPTY(shippingMethod, RIShippingMethod))
                 {
                     NSString *shippingFeeString = [RICountryConfiguration formatPrice:shippingMethod.shippingFee country:[RICountryConfiguration getCurrentConfiguration]];
-                    if ([shippingMethod.shippingFee isEqualToNumber:[NSNumber numberWithInteger:0]]) {
+                    if (ISEMPTY(shippingMethod.shippingFee) || [shippingMethod.shippingFee isEqualToNumber:[NSNumber numberWithInteger:0]]) {
                         shippingFeeString = STRING_FREE;
                     }
-                    [shippingInfoCell loadWithShippingFee:shippingFeeString deliveryTime:shippingMethod.deliveryTime];
+                    [shippingInfoCell loadWithShippingFee:shippingFeeString deliveryTime:shippingMethod.deliveryTime width:self.tableView.frame.size.width];
                 }
             }
             
@@ -672,7 +681,7 @@ UITableViewDelegate
             if(VALID_NOTEMPTY(self.pickupStationsForRegion, NSMutableArray))
             {
                 NSInteger index = indexPath.row - self.tableViewIndexSelected.row - 2;
-                [pickupStationInfoCell loadWithPickupStation:[self.pickupStationsForRegion objectAtIndex:index]];
+                [pickupStationInfoCell loadWithPickupStation:[self.pickupStationsForRegion objectAtIndex:index] width:self.tableView.frame.size.width];
                 
                 if(index == ([self.pickupStationsForRegion count] - 1))
                 {

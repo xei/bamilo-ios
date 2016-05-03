@@ -11,7 +11,8 @@
 @interface JAShippingInfoCell : UITableViewCell
 
 -(void)loadWithShippingFee:(NSString *)shippingFee
-              deliveryTime:(NSString *)deliveryTime;
+              deliveryTime:(NSString *)deliveryTime
+                     width:(CGFloat)width;
 
 -(void)loadWithPickupStationWidth:(CGFloat)width;
 
