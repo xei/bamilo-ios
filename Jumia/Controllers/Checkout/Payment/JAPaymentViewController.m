@@ -66,6 +66,8 @@ UITextFieldDelegate>
     
     self.screenName = @"Payment";
     
+    self.view.backgroundColor = JAWhiteColor;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
@@ -537,7 +539,7 @@ UITextFieldDelegate>
     if(indexPath.row == self.collectionViewIndexSelected.row)
     {
         RIPaymentMethodFormOption *paymentMethod = [self.paymentMethods objectAtIndex:indexPath.row];
-        height += [self.checkoutFormForPaymentMethod getPaymentMethodViewHeight:paymentMethod];
+        height += [self.checkoutFormForPaymentMethod getPaymentMethodViewHeight:paymentMethod] + 10.0f;
     }
     return height;
 }
@@ -557,6 +559,7 @@ UITextFieldDelegate>
             JAPaymentCell *paymentListCell = (JAPaymentCell*) [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             if (ISEMPTY(paymentListCell)) {
                 paymentListCell = [[JAPaymentCell alloc] init];
+                [paymentListCell setSelectionStyle:UITableViewCellSelectionStyleNone];
             }
             
             BOOL isSelected = NO;
@@ -585,6 +588,7 @@ UITextFieldDelegate>
             JAPaymentCell *paymentListCell = (JAPaymentCell*) [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             if (ISEMPTY(paymentListCell)) {
                 paymentListCell = [[JAPaymentCell alloc] init];
+                [paymentListCell setSelectionStyle:UITableViewCellSelectionStyleNone];
             }
             
             RIPaymentMethodFormOption *paymentMethod = [self.paymentMethods objectAtIndex:indexPath.row];
