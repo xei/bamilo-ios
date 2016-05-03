@@ -305,7 +305,11 @@ UITableViewDelegate
     [self reloadTableView];
     
     if (RI_IS_RTL) {
-        [self.view flipAllSubviews];
+        [_bottomView flipViewPositionInsideSuperview];
+        [_bottomView flipAllSubviews];
+        [self.orderSummary flipViewPositionInsideSuperview];
+        [self.orderSummary flipAllSubviews];
+        [self.scrollView flipViewPositionInsideSuperview];
     }
 }
 
