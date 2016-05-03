@@ -14,7 +14,7 @@
 
 @property (strong, nonatomic) JAClickableView *clickableView;
 
--(void)loadWithShippingMethod:(RIShippingMethod *)shippingMethod;
+-(void)loadWithShippingMethod:(RIShippingMethod *)shippingMethod width:(CGFloat)width;
 
 -(void)selectShippingMethod;
 

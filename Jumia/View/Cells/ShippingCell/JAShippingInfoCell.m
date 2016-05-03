@@ -10,6 +10,7 @@
 
 @interface JAShippingInfoCell () {}
 
+@property (strong, nonatomic) UIView* backgroundContentView;
 @property (strong, nonatomic) UILabel *deliveryTimeLabel;
 @property (strong, nonatomic) UILabel *label;
 @property (strong, nonatomic) UIView *labelSeparator;
@@ -25,11 +26,19 @@
 
 -(void)loadWithShippingFee:(NSString *)shippingFee
               deliveryTime:(NSString *)deliveryTime
+                     width:(CGFloat)width
 {
+    if (!self.backgroundContentView) {
+        self.backgroundContentView = [UIView new];
+        [self addSubview:self.backgroundContentView];
+    }
+    self.backgroundContentView.frame = self.bounds;
+    self.backgroundContentView.width = width;
+    
     if (!self.label) {
         self.label = [UILabel new];
         self.label.textAlignment = NSTextAlignmentLeft;
-        [self addSubview:self.label];
+        [self.backgroundContentView addSubview:self.label];
     }
     NSDictionary* shippingFeeLabelAttributes = [NSDictionary dictionaryWithObjectsAndKeys:JABodyFont, NSFontAttributeName, JABlackColor, NSForegroundColorAttributeName, nil];
     NSDictionary* shippingFeeAttributes = [NSDictionary dictionaryWithObjectsAndKeys:JABodyFont, NSFontAttributeName, JABlack800Color, NSForegroundColorAttributeName, nil];
@@ -44,20 +53,20 @@
     [self.label setAttributedText:finalshippingFeeString];
     self.label.frame = CGRectMake(48.0f,
                                   0.0f,
-                                  self.frame.size.width - 48.0f - 16.0f,
+                                  width - 48.0f - 16.0f,
                                   self.label.frame.size.height);
     [self.label sizeToFit];
     
     if (!self.shippingFeeAlert) {
         self.shippingFeeAlert = [[UILabel alloc] init];
-        [self addSubview:self.shippingFeeAlert];
+        [self.backgroundContentView addSubview:self.shippingFeeAlert];
         [self.shippingFeeAlert setTextColor:JABlack800Color];
         [self.shippingFeeAlert setFont:JABodyFont];
     }
     
     self.shippingFeeAlert.frame = CGRectMake(48.0f,
                                              CGRectGetMaxY(self.label.frame) + 4,
-                                             self.frame.size.width,
+                                             width,
                                              self.label.height);
     [self.shippingFeeAlert setText:STRING_SHIPPING_FEE_INFO];
     [self.shippingFeeAlert sizeToFit];
@@ -73,7 +82,7 @@
     if (!self.deliveryTimeLabel) {
         self.deliveryTimeLabel = [UILabel new];
         self.deliveryTimeLabel.textAlignment = NSTextAlignmentLeft;
-        [self addSubview:self.deliveryTimeLabel];
+        [self.backgroundContentView addSubview:self.deliveryTimeLabel];
     }
     
     NSDictionary* deliveryTimeLabelAttributes = [NSDictionary dictionaryWithObjectsAndKeys:JABodyFont, NSFontAttributeName, JABlackColor, NSForegroundColorAttributeName, nil];
@@ -91,20 +100,27 @@
     
     self.deliveryTimeLabel.frame = CGRectMake(48.0f,
                                               CGRectGetMaxY(_shippingFeeAlert.frame) + 4,
-                                              self.frame.size.width - 27.0f - 17.0f,
+                                              width - 27.0f - 17.0f,
                                               self.label.frame.size.height);
     
     if (RI_IS_RTL) {
-        [self flipAllSubviews];
+        [self.backgroundContentView flipAllSubviews];
     }
 }
 
 -(void)loadWithPickupStationWidth:(CGFloat)width
 {
+    if (!self.backgroundContentView) {
+        self.backgroundContentView = [UIView new];
+        [self addSubview:self.backgroundContentView];
+    }
+    self.backgroundContentView.frame = self.bounds;
+    self.backgroundContentView.width = width;
+    
     if (!self.label) {
         self.label = [UILabel new];
         self.label.textAlignment = NSTextAlignmentLeft;
-        [self addSubview:self.label];
+        [self.backgroundContentView addSubview:self.label];
     }
     self.label.font = JABodyFont;
     self.label.textColor = JABlack800Color;
@@ -118,7 +134,7 @@
     
     if (!self.separator) {
         self.separator = [UIView new];
-        [self addSubview:self.separator];
+        [self.backgroundContentView addSubview:self.separator];
         self.separator.backgroundColor = JABlack400Color;
     }
     self.separator.frame = CGRectMake(16.0f,
@@ -129,7 +145,7 @@
     UIImage* dropdownImage = [UIImage imageNamed:@"ic_dropdown"];
     if (!self.dropdownImageView) {
         self.dropdownImageView = [[UIImageView alloc] initWithImage:dropdownImage];
-        [self addSubview:self.dropdownImageView];
+        [self.backgroundContentView addSubview:self.dropdownImageView];
     }
     self.dropdownImageView.frame = CGRectMake(width - 16.0f - dropdownImage.size.width,
                                               30.0f,
@@ -140,7 +156,7 @@
         self.regionLabel = [[UILabel alloc] init];
         self.regionLabel.textColor = JABlackColor;
         self.regionLabel.font = JABodyFont;
-        [self addSubview:self.regionLabel];
+        [self.backgroundContentView addSubview:self.regionLabel];
     }
     self.regionLabel.textAlignment = NSTextAlignmentLeft;
     self.regionLabel.frame = CGRectMake(16.0f,
@@ -149,7 +165,7 @@
                                         20.0f);
     
     if (RI_IS_RTL) {
-        [self flipAllSubviews];
+        [self.backgroundContentView flipAllSubviews];
     }
 }
 

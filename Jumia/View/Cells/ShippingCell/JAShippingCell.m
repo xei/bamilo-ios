@@ -17,13 +17,14 @@
 
 @implementation JAShippingCell
 
--(void)loadWithShippingMethod:(RIShippingMethod *)shippingMethod
+-(void)loadWithShippingMethod:(RIShippingMethod *)shippingMethod width:(CGFloat)width
 {
     if (!self.clickableView) {
         self.clickableView = [[JAClickableView alloc] init];
         [self addSubview:self.clickableView];
     }
     self.clickableView.frame = self.bounds;
+    self.clickableView.width = width;
     
     UIImage* checkMarkImage = [UIImage imageNamed:@"round_checkbox_deselected"];
     if (!self.checkMarkImageView) {
@@ -48,7 +49,7 @@
                                   self.clickableView.frame.size.height);
     
     if (RI_IS_RTL) {
-        [self flipAllSubviews];
+        [self.clickableView flipAllSubviews];
     }
     
 }
