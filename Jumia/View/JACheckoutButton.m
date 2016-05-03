@@ -11,6 +11,8 @@
 @interface JACheckoutButton ()
 
 @property (nonatomic, strong) UIImageView *iconImageView;
+@property (nonatomic, strong) UIImage *iconImage;
+@property (nonatomic, strong) NSString *titleString;
 
 @end
 
@@ -55,11 +57,32 @@
 
 - (void)setImage:(UIImage *)image
 {
+    self.iconImage = image;
+    image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [self.iconImageView setImage:image];
+    [self.iconImageView setTintColor:JABlackColor];
     [self.iconImageView setWidth:image.size.width];
     [self.iconImageView setHeight:image.size.height];
     [self.iconImageView setXCenterAligned];
-    [self.iconImageView setY:0.f];
+    if (self.titleString) {
+        [self setContentVerticalAlignment:UIControlContentVerticalAlignmentBottom];
+        [self.iconImageView setY:0.f];
+    }else{
+        [self.iconImageView setYCenterAligned];
+    }
+}
+
+- (void)setTitle:(NSString *)title forState:(UIControlState)state
+{
+    self.titleString = title;
+    [super setTitle:title forState:state];
+    
+    if (self.iconImage) {
+        [self setContentVerticalAlignment:UIControlContentVerticalAlignmentBottom];
+        [self.iconImageView setY:0.f];
+    }else{
+        [self setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
+    }
 }
 
 - (void)setTag:(NSInteger)tag

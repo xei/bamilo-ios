@@ -1029,6 +1029,16 @@
 		9AEF741A1CD27C1400A5D574 /* JACheckoutButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF74171CD27C1400A5D574 /* JACheckoutButton.m */; };
 		9AEF741B1CD27C1400A5D574 /* JACheckoutButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF74171CD27C1400A5D574 /* JACheckoutButton.m */; };
 		9AEF741C1CD27C1400A5D574 /* JACheckoutButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF74171CD27C1400A5D574 /* JACheckoutButton.m */; };
+		9AEF74211CD8A86900A5D574 /* JAORConfirmConditionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF74201CD8A86900A5D574 /* JAORConfirmConditionsViewController.m */; };
+		9AEF74221CD8A86900A5D574 /* JAORConfirmConditionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF74201CD8A86900A5D574 /* JAORConfirmConditionsViewController.m */; };
+		9AEF74231CD8A86900A5D574 /* JAORConfirmConditionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF74201CD8A86900A5D574 /* JAORConfirmConditionsViewController.m */; };
+		9AEF74241CD8A86900A5D574 /* JAORConfirmConditionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF74201CD8A86900A5D574 /* JAORConfirmConditionsViewController.m */; };
+		9AEF74251CD8A86900A5D574 /* JAORConfirmConditionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF74201CD8A86900A5D574 /* JAORConfirmConditionsViewController.m */; };
+		9AEF74281CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF74271CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m */; };
+		9AEF74291CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF74271CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m */; };
+		9AEF742A1CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF74271CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m */; };
+		9AEF742B1CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF74271CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m */; };
+		9AEF742C1CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF74271CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m */; };
 		9AF49A491B1DE1FF0028105D /* JANoConnectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A471B1DE1FF0028105D /* JANoConnectionView.xib */; };
 		9AF49A4A1B1DE1FF0028105D /* JANoConnectionView~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A481B1DE1FF0028105D /* JANoConnectionView~iPad.xib */; };
 		9D4431EA1C242BA8005A8B4A /* JAUserDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4431E91C242BA8005A8B4A /* JAUserDataViewController.m */; };
@@ -3036,10 +3046,14 @@
 		9AEF73EF1CD20E1C00A5D574 /* JAStepByStepModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAStepByStepModel.m; path = Models/JAStepByStepModel.m; sourceTree = "<group>"; };
 		9AEF73FF1CD20E5700A5D574 /* JAScreenTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAScreenTarget.h; path = Models/JAScreenTarget.h; sourceTree = "<group>"; };
 		9AEF74001CD20E5700A5D574 /* JAScreenTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAScreenTarget.m; path = Models/JAScreenTarget.m; sourceTree = "<group>"; };
-		9AEF740F1CD20F0C00A5D574 /* JAStepByStepTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAStepByStepTabViewController.h; sourceTree = "<group>"; };
-		9AEF74101CD20F0C00A5D574 /* JAStepByStepTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAStepByStepTabViewController.m; sourceTree = "<group>"; };
+		9AEF740F1CD20F0C00A5D574 /* JAStepByStepTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAStepByStepTabViewController.h; path = Checkout/JAStepByStepTabViewController.h; sourceTree = "<group>"; };
+		9AEF74101CD20F0C00A5D574 /* JAStepByStepTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAStepByStepTabViewController.m; path = Checkout/JAStepByStepTabViewController.m; sourceTree = "<group>"; };
 		9AEF74161CD27C1400A5D574 /* JACheckoutButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACheckoutButton.h; sourceTree = "<group>"; };
 		9AEF74171CD27C1400A5D574 /* JACheckoutButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACheckoutButton.m; sourceTree = "<group>"; };
+		9AEF741F1CD8A86900A5D574 /* JAORConfirmConditionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORConfirmConditionsViewController.h; path = OnlineReturns/JAORConfirmConditionsViewController.h; sourceTree = "<group>"; };
+		9AEF74201CD8A86900A5D574 /* JAORConfirmConditionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAORConfirmConditionsViewController.m; path = OnlineReturns/JAORConfirmConditionsViewController.m; sourceTree = "<group>"; };
+		9AEF74261CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORConfirmationScreenViewController.h; path = OnlineReturns/JAORConfirmationScreenViewController.h; sourceTree = "<group>"; };
+		9AEF74271CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAORConfirmationScreenViewController.m; path = OnlineReturns/JAORConfirmationScreenViewController.m; sourceTree = "<group>"; };
 		9AF49A431B1DE1B80028105D /* JAUserDataViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JAUserDataViewController.xib; path = /Users/lucianoduarte/Desktop/JUMIAIOS/Jumia/Controllers/MyAccount/JAUserDataViewController.xib; sourceTree = "<absolute>"; };
 		9AF49A441B1DE1B80028105D /* JAUserDataViewController~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "JAUserDataViewController~iPad.xib"; path = "/Users/lucianoduarte/Desktop/JUMIAIOS/Jumia/Controllers/MyAccount/JAUserDataViewController~iPad.xib"; sourceTree = "<absolute>"; };
 		9AF49A471B1DE1FF0028105D /* JANoConnectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JANoConnectionView.xib; sourceTree = "<group>"; };
@@ -4857,6 +4871,26 @@
 			name = StepByStepModels;
 			sourceTree = "<group>";
 		};
+		9AEF741D1CD8A7FB00A5D574 /* StepByStep */ = {
+			isa = PBXGroup;
+			children = (
+				9AEF740F1CD20F0C00A5D574 /* JAStepByStepTabViewController.h */,
+				9AEF74101CD20F0C00A5D574 /* JAStepByStepTabViewController.m */,
+			);
+			name = StepByStep;
+			sourceTree = "<group>";
+		};
+		9AEF741E1CD8A81700A5D574 /* OnlineReturns */ = {
+			isa = PBXGroup;
+			children = (
+				9AEF741F1CD8A86900A5D574 /* JAORConfirmConditionsViewController.h */,
+				9AEF74201CD8A86900A5D574 /* JAORConfirmConditionsViewController.m */,
+				9AEF74261CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.h */,
+				9AEF74271CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m */,
+			);
+			name = OnlineReturns;
+			sourceTree = "<group>";
+		};
 		B5007ABD19A4E8EC0024035A /* HockeySDK.embeddedframework */ = {
 			isa = PBXGroup;
 			children = (
@@ -4949,8 +4983,6 @@
 				B59D195C19C33122004843C3 /* Order */,
 				B5225E2C1989475E00C18F1E /* Payment */,
 				B5225E2D1989475E00C18F1E /* Shipping */,
-				9AEF740F1CD20F0C00A5D574 /* JAStepByStepTabViewController.h */,
-				9AEF74101CD20F0C00A5D574 /* JAStepByStepTabViewController.m */,
 			);
 			path = Checkout;
 			sourceTree = "<group>";
@@ -5563,6 +5595,8 @@
 		B5A302FF1981218E00F71726 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				9AEF741E1CD8A81700A5D574 /* OnlineReturns */,
+				9AEF741D1CD8A7FB00A5D574 /* StepByStep */,
 				9AE03A881C076CB3003CBEF1 /* Authentication */,
 				CEBE2A7D1A9E31E800F457FA /* Web */,
 				CE283E6E1A7296AE00F3E92D /* OtherOffers */,
@@ -7521,6 +7555,7 @@
 				CEA86D9F1A3894C0000032AD /* JASizeGuideViewController.m in Sources */,
 				CEED472D1A7B973B006D9CE7 /* JAPDVBundles.m in Sources */,
 				CE28EE5B1A9397C6000A264C /* JBWhatsAppActivity.m in Sources */,
+				9AEF74291CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m in Sources */,
 				FF0464EE1CA96E9000B82FD2 /* ADJTimerOnce.m in Sources */,
 				7d1d33afb7c6d4f0efa0644b /* JAExternalPaymentsViewController.m in Sources */,
 				9A3C76141C285D9300EB0B11 /* JARecentlyViewedCell.m in Sources */,
@@ -7675,6 +7710,7 @@
 				FF0464D51CA96E9000B82FD2 /* ADJRequestHandler.m in Sources */,
 				976cc1afdb4c41be05ed1470 /* RIOrder.m in Sources */,
 				c7f7a3e79d1ad30af79a27c0 /* JABirthDateComponent.m in Sources */,
+				9AEF74221CD8A86900A5D574 /* JAORConfirmConditionsViewController.m in Sources */,
 				67f4a0b88343cac1bc885793 /* RIURLCache.m in Sources */,
 				9AED08201C6DFBE000B5FDF0 /* AFURLRequestSerialization.m in Sources */,
 				CE59BEF71AE7EF090057F4E2 /* JAShopTeaserView.m in Sources */,
@@ -7947,8 +7983,10 @@
 				CEBEEE781A8CF205001998E5 /* JASortingView.m in Sources */,
 				B5A302CB19811E9200F71726 /* RISection.m in Sources */,
 				B5C61BC319B0DAD600840E93 /* JACheckBoxWithOptionsComponent.m in Sources */,
+				9AEF74211CD8A86900A5D574 /* JAORConfirmConditionsViewController.m in Sources */,
 				6CF4AE851ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */,
 				B517FDF91982517300F65253 /* RICart.m in Sources */,
+				9AEF74281CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m in Sources */,
 				B5BDD98B19FFAAF000C2C2CC /* JANewsletterComponent.m in Sources */,
 				B5A302E119811E9200F71726 /* RITrackingConfiguration.m in Sources */,
 				CECD059C1ADFF2DB00EC51E3 /* RITeaserComponent.m in Sources */,
@@ -8294,8 +8332,10 @@
 				CE9ADBEF1AB34C4600D56481 /* JACheckBoxWithOptionsComponent.m in Sources */,
 				6CF4AE861ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */,
 				CE9ADBF01AB34C4600D56481 /* RICart.m in Sources */,
+				9AEF74231CD8A86900A5D574 /* JAORConfirmConditionsViewController.m in Sources */,
 				CE9ADBF11AB34C4600D56481 /* JANewsletterComponent.m in Sources */,
 				CE9ADBF31AB34C4600D56481 /* RITrackingConfiguration.m in Sources */,
+				9AEF742A1CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m in Sources */,
 				9A007C7E1C206920007D99FC /* JAProductInfoSwitchLine.m in Sources */,
 				CECD059E1ADFF2DB00EC51E3 /* RITeaserComponent.m in Sources */,
 				CE9ADBF41AB34C4600D56481 /* RIFormIndex.m in Sources */,
@@ -8631,8 +8671,10 @@
 				CE9ADDE91AB6D6E900D56481 /* JACheckBoxWithOptionsComponent.m in Sources */,
 				6CF4AE871ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */,
 				CE9ADDEA1AB6D6E900D56481 /* RICart.m in Sources */,
+				9AEF74241CD8A86900A5D574 /* JAORConfirmConditionsViewController.m in Sources */,
 				CE9ADDEB1AB6D6E900D56481 /* JANewsletterComponent.m in Sources */,
 				CE9ADDED1AB6D6E900D56481 /* RITrackingConfiguration.m in Sources */,
+				9AEF742B1CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m in Sources */,
 				9A007C7F1C206920007D99FC /* JAProductInfoSwitchLine.m in Sources */,
 				CECD059F1ADFF2DB00EC51E3 /* RITeaserComponent.m in Sources */,
 				CE9ADDEE1AB6D6E900D56481 /* RIFormIndex.m in Sources */,
@@ -8968,8 +9010,10 @@
 				CE9ADFE11AB6D78200D56481 /* JASortingView.m in Sources */,
 				CE9ADFE21AB6D78200D56481 /* RISection.m in Sources */,
 				CE9ADFE31AB6D78200D56481 /* JACheckBoxWithOptionsComponent.m in Sources */,
+				9AEF74251CD8A86900A5D574 /* JAORConfirmConditionsViewController.m in Sources */,
 				6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */,
 				CE9ADFE41AB6D78200D56481 /* RICart.m in Sources */,
+				9AEF742C1CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m in Sources */,
 				CE9ADFE51AB6D78200D56481 /* JANewsletterComponent.m in Sources */,
 				9A007C801C206920007D99FC /* JAProductInfoSwitchLine.m in Sources */,
 				CE9ADFE71AB6D78200D56481 /* RITrackingConfiguration.m in Sources */,

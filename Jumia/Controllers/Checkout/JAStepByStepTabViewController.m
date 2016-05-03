@@ -16,10 +16,10 @@
 
 @property (nonatomic, strong) UIView *tabBarView;
 @property (nonatomic, strong) UIViewController *actualViewController;
-@property (nonatomic) NSLock *animationLock;
 @property (nonatomic, strong) NSMutableArray *viewControllersStackArray;
 @property (nonatomic) NSInteger index;
 @property (nonatomic, strong) UIView *tabIndicatorView;
+@property (nonatomic) BOOL freeToMove;
 
 @end
 
@@ -37,7 +37,7 @@
             }
             if (VALID([self.stepByStepModel getIconForIndex:i], UIImage)) {
                 [button1 setImage:[self.stepByStepModel getIconForIndex:i]];
-                [button1 setContentVerticalAlignment:UIControlContentVerticalAlignmentBottom];
+                [button1 setTintColor:JABlackColor];
             }
             [button1 setTag:i];
             [button1 addTarget:self action:@selector(goToView:) forControlEvents:UIControlEventTouchUpInside];
@@ -62,6 +62,7 @@
 {
     _indexInit = indexInit;
     self.index = -1;
+    self.freeToMove = NO;
     self.viewControllersStackArray = [NSMutableArray new];
     if (self.actualViewController) {
         [self.actualViewController.view removeFromSuperview];
@@ -82,7 +83,6 @@
 {
     [super viewDidLoad];
     self.viewControllersStackArray = [NSMutableArray new];
-    self.animationLock = [NSLock new];
     [self.view setBackgroundColor:JAWhiteColor];
     [self.view addSubview:self.tabBarView];
     self.index = -1;
@@ -120,17 +120,6 @@
         return;
     }
     [self goToIndex:button.tag];
-    [button setEnabled:NO];
-    if (!self.stepByStepModel.freeToChoose) {
-        for (UIView *oneView in [self.tabBarView subviews]) {
-            if ([oneView isKindOfClass:[JACheckoutButton class]]) {
-                [(JACheckoutButton *)oneView setEnabled:oneView.tag < button.tag];
-            }
-        }
-    }
-    [UIView animateWithDuration:.2 animations:^{
-        [self.tabIndicatorView setX:[self getButtonWithTag:button.tag].x];
-    }];
 }
 
 - (void)goToIndex:(NSInteger)index
@@ -141,31 +130,39 @@
     
     UIViewController *newViewController = [self getViewForIndex:index];
     if (VALID(newViewController, UIViewController)) {
+        [UIView animateWithDuration:.2 animations:^{
+            [self.tabIndicatorView setX:[self getButtonWithTag:index].x];
+        }];
         [self setViewController:newViewController forIndex:index];
     }
 }
 
 - (void)setViewController:(UIViewController *)newViewController forIndex:(NSInteger)index
 {
+    [self showLoading];
     [newViewController viewWillAppear:YES];
     CGFloat offset = self.view.width;
     if (index < self.index) { // rolling left
         offset *= -1;
     }
+    
     [newViewController.view setX:offset];
     [newViewController.view setY:self.tabBarView.height];
     newViewController.view.height = self.view.height - self.tabBarView.height;
     [self.view addSubview:newViewController.view];
+    [newViewController.view.layer removeAllAnimations];
     [UIView animateWithDuration:.2 animations:^{
         [newViewController.view setX:0.f];
     } completion:^(BOOL finished) {
         if (!self.actualViewController) {
-            [self setContentView:newViewController];
-            [self.actualViewController.view setNeedsDisplay];
+            if (!self.actualViewController) {
+                [self setContentView:newViewController];
+            }
         }
     }];
     
     if (self.actualViewController) {
+        [self.actualViewController.view.layer removeAllAnimations];
         [self.actualViewController viewWillDisappear:YES];
         [UIView animateWithDuration:.4 animations:^{
             [self.actualViewController.view setX:-1*offset];
@@ -175,7 +172,40 @@
             [self setContentView:newViewController];
         }];
     }
+    
     self.index = index;
+}
+
+- (void)setContentView:(UIViewController *)viewController
+{
+    [self.viewControllersStackArray addObject:viewController];
+    if (!self.freeToMove) {
+        for (UIViewController *oneViewController in [self.viewControllersStackArray mutableCopy]) {
+            if (oneViewController.view.tag > viewController.view.tag) {
+                [self.viewControllersStackArray removeObject:oneViewController];
+            }
+        }
+    }
+    if([self.stepByStepModel isFreeToChoose:viewController])
+    {
+        self.freeToMove = YES;
+    }
+    
+    for (UIView *oneView in [self.tabBarView subviews]) {
+        if ([oneView isKindOfClass:[JACheckoutButton class]]) {
+            if (!self.freeToMove) {
+                [(JACheckoutButton *)oneView setEnabled:oneView.tag < viewController.view.tag];
+            }else{
+                [(JACheckoutButton *)oneView setEnabled:YES];
+            }
+        }
+    }
+    [UIView animateWithDuration:.2 animations:^{
+        [self.tabIndicatorView setX:[self getButtonWithTag:viewController.view.tag].x];
+    }];
+    [viewController viewDidAppear:YES];
+    self.actualViewController = viewController;
+    [self hideLoading];
 }
 
 - (UIViewController *)getViewForIndex:(NSInteger)index
@@ -188,31 +218,6 @@
         }
     }
     return viewControllerToReturn;
-}
-
-- (void)setContentView:(UIViewController *)viewController
-{
-    self.actualViewController = viewController;
-    [self.viewControllersStackArray addObject:viewController];
-    if (!self.stepByStepModel.freeToChoose) {
-        for (UIViewController *oneViewController in [self.viewControllersStackArray mutableCopy]) {
-            if (oneViewController.view.tag > viewController.view.tag) {
-                [self.viewControllersStackArray removeObject:oneViewController];
-            }
-        }
-    }
-    
-    if (!self.stepByStepModel.freeToChoose) {
-        for (UIView *oneView in [self.tabBarView subviews]) {
-            if ([oneView isKindOfClass:[JACheckoutButton class]]) {
-                [(JACheckoutButton *)oneView setEnabled:oneView.tag < viewController.view.tag];
-            }
-        }
-    }
-    [UIView animateWithDuration:.2 animations:^{
-        [self.tabIndicatorView setX:[self getButtonWithTag:viewController.view.tag].x];
-    }];
-    [viewController viewDidAppear:YES];
 }
 
 - (UIView *)getButtonWithTag:(NSInteger)tag

@@ -34,12 +34,9 @@
     return @[STRING_CHECKOUT_ABOUT_YOU, STRING_CHECKOUT_ADDRESS, STRING_CHECKOUT_SHIPPING, STRING_CHECKOUT_PAYMENT];
 }
 
-/*
- *  this method tells the model which viewController we are ATM
- */
-- (void)setup:(UIViewController *)viewController
+- (BOOL)isFreeToChoose:(UIViewController *)viewController
 {
-    [super setup:viewController];
+    return [super isFreeToChoose:viewController];
 }
 
 - (NSInteger)getIndexForViewController:(UIViewController *)viewController

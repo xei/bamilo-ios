@@ -13,9 +13,8 @@
 @property (nonatomic, strong) NSArray *viewControllersArray;
 @property (nonatomic, strong) NSArray *iconsArray;
 @property (nonatomic, strong) NSArray *titlesArray;
-@property (nonatomic) BOOL freeToChoose;
 
-- (void)setup:(UIViewController *)viewController;
+- (BOOL)isFreeToChoose:(UIViewController *)viewController;
 - (NSInteger)getIndexForViewController:(UIViewController *)viewController;
 - (NSInteger)getIndexForClass:(Class)classKind;
 - (UIImage *)getIconForIndex:(NSInteger)index;
