@@ -63,7 +63,7 @@
         [self setFrame:CGRectMake(self.frame.origin.x,
                                   self.frame.origin.y,
                                   width,
-                                  44.0f + self.paymentMethodDetailsView.frame.size.height)];
+                                  44.0f + self.paymentMethodDetailsView.frame.size.height + 10.0f)];
         
         [self.clickableView setFrame:self.bounds];
         self.clickableView.enabled = NO;
@@ -113,6 +113,7 @@
     [self.paymentMethodDetailsView removeFromSuperview];
     self.paymentMethodDetailsView = paymentMethodView;
     [self.paymentMethodDetailsView setY:11.f];
+    [self.paymentMethodDetailsView setX:16.0f];
     [self.paymentMethodDetailsView setHidden:NO];
     [self addSubview:self.paymentMethodDetailsView];
     
@@ -126,7 +127,7 @@
                               4004.0f)];
     
     [self.clickableView setFrame:self.bounds];
-    self.clickableView.enabled = YES;
+    self.clickableView.enabled = NO;
     
     if (RI_IS_RTL) {
         [self.clickableView flipAllSubviews];
