@@ -444,9 +444,13 @@ JAPickerDelegate>
     }
     else
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
-                                                            object:nil
-                                                          userInfo:nil];
+        if (self.fromCheckout) {
+            [JAUtils goToNextStep:self.cart.nextStep userInfo:nil];
+        }else{
+            [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification
+                                                                object:nil
+                                                              userInfo:nil];
+        }
     }
 }
 

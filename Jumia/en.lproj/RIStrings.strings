@@ -242,7 +242,7 @@
 
 "checkout_label" = "Checkout";
 
-"checkout_header_step_1" = "1. About you";
+"checkout_header_step_1" = "Login";
 
 "next_button" = "Next";
 
@@ -254,7 +254,7 @@
 
 "registration_text" = "Register";
 
-"checkout_header_step_2" = "2. Address";
+"checkout_header_step_2" = "Address";
 
 "action_label_add_address" = "Add New Address";
 
@@ -278,7 +278,7 @@
 
 "validation_errortext" = "There were errors on the data submited, please check your input fields.";
 
-"checkout_header_step_3" = "3. Shipping";
+"checkout_header_step_3" = "Shipping";
 
 "string_city" = "City: ";
 
@@ -290,7 +290,7 @@
 
 "order_summary_shipping_fee_label" = "Shipping Fee:";
 
-"checkout_header_step_4" = "4. Payment";
+"checkout_header_step_4" = "Payment";
 
 "payment" = "Payment";
 
