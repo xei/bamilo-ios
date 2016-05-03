@@ -7,45 +7,62 @@
 //
 
 #import "JAReturnStepByStepModel.h"
+#import "JACenterNavigationController.h"
+#import "JAORConfirmConditionsViewController.h"
+#import "JAORConfirmationScreenViewController.h"
 
 @implementation JAReturnStepByStepModel
 
 - (NSArray *)viewControllersArray
 {
-//    return @[[JAAddressesViewController class], [JAShippingViewController class], [JAPaymentViewController class]];
-    return @[];
+    return @[[JAORConfirmConditionsViewController class], [JAORConfirmationScreenViewController class]];
 }
 
-/*
- *  this method tells the model which viewController we are ATM
- */
-- (void)setup:(UIViewController *)viewController
+- (NSArray *)iconsArray
 {
-    [super setup:viewController];
-    // this can be a way to set freeToChoose parameter
-//    if ([[self.viewControllersArray lastObject] isKindOfClass:[viewController class]]) {
-//        self.freeToChoose = YES;
-//    }
+    return @[[UIImage imageNamed:@"step_by_step_1"], [UIImage imageNamed:@"step_by_step_2"]];
 }
 
-- (UIView *)goToIndex:(NSInteger)index
+- (BOOL)isFreeToChoose:(UIViewController *)viewController
 {
-    return nil;
-//    [self goToIndex:index];
-//    switch (index) {
-//        case 0:
-//            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification object:@{@"stepByStepModel" : self}];
-//            break;
-//        case 1:
-//            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutShippingScreenNotification object:@{@"stepByStepModel" : self}];
-//            break;
-//        case 2:
-//            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutPaymentScreenNotification object:@{@"stepByStepModel" : self}];
-//            break;
-//        default:
-//            [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification object:@{@"stepByStepModel" : self}];
-//            break;
-//    }
+    if (viewController.class == [self.viewControllersArray lastObject]) {
+        return YES;
+    }
+    return [super isFreeToChoose:viewController];
+}
+
+- (NSInteger)getIndexForViewController:(UIViewController *)viewController
+{
+    NSInteger index = [super getIndexForViewController:viewController];
+    if (index == -1) {
+        index = [self getIndexForClass:[viewController class]];
+    }
+    return index;
+}
+
+- (NSInteger)getIndexForClass:(Class)classKind
+{
+    NSInteger index = [self.viewControllersArray indexOfObject:classKind];
+    if (index != NSNotFound) {
+        return index;
+    }
+    return 0;
+}
+
+- (void)goToIndex:(NSInteger)index
+{
+    Class classKind = [self.viewControllersArray objectAtIndex:index];
+    
+    if (classKind == [JAORConfirmConditionsViewController class]) {
+        [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmConditions];
+    } else if (classKind == [JAORConfirmationScreenViewController class]) {
+        [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmScreen];
+    }
+}
+
+- (BOOL)ignoreStep:(NSInteger)index
+{
+    return [super ignoreStep:index];
 }
 
 @end

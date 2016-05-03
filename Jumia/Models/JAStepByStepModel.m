@@ -10,9 +10,9 @@
 
 @implementation JAStepByStepModel
 
-- (void)setup:(UIViewController *)viewController
+- (BOOL)isFreeToChoose:(UIViewController *)viewController
 {
-    
+    return NO;
 }
 
 - (UIImage *)getIconForIndex:(NSInteger)index

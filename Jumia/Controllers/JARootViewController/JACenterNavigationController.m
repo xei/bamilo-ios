@@ -60,6 +60,10 @@
 
 #import "JAStepByStepTabViewController.h"
 #import "JACheckoutStepByStepModel.h"
+#import "JAReturnStepByStepModel.h"
+
+#import "JAORConfirmConditionsViewController.h"
+#import "JAORConfirmationScreenViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -70,6 +74,7 @@
 @property (nonatomic, strong) JASearchView *searchView;
 
 @property (nonatomic, strong) JAStepByStepTabViewController *checkoutStepByStepViewController;
+@property (nonatomic, strong) JAStepByStepTabViewController *returnsStepByStepViewController;
 
 @end
 
@@ -101,6 +106,25 @@
     checkoutStepByStepViewController.navBarLayout.showLogo = NO;
     [checkoutStepByStepViewController setIndexInit:0];
     return checkoutStepByStepViewController;
+}
+
+- (JAStepByStepTabViewController *)returnsStepByStepViewController
+{
+    if (!VALID(_returnsStepByStepViewController, JAStepByStepTabViewController)) {
+        _returnsStepByStepViewController = [self getNewReturnsStepByStepViewController];
+    }
+    return _returnsStepByStepViewController;
+}
+
+- (JAStepByStepTabViewController *)getNewReturnsStepByStepViewController
+{
+    JAStepByStepTabViewController *returnsStepByStepViewController = [JAStepByStepTabViewController new];
+    [returnsStepByStepViewController setStepByStepModel:[JAReturnStepByStepModel new]];
+    returnsStepByStepViewController.navBarLayout.showCartButton = NO;
+    [returnsStepByStepViewController.navBarLayout setShowBackButton:YES];
+    returnsStepByStepViewController.navBarLayout.showLogo = NO;
+    [returnsStepByStepViewController setIndexInit:0];
+    return returnsStepByStepViewController;
 }
 
 #pragma mark - View Lifecycle
@@ -752,15 +776,7 @@
     }
     
     if (checkout) {
-        JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
-        if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[JACheckoutStepByStepModel class]])
-        {
-            [stepByStepTabViewController goToViewController:authenticationViewController];
-        }else{
-            self.checkoutStepByStepViewController = [self getNewCheckoutStepByStepViewController];
-            [self pushViewController:self.checkoutStepByStepViewController animated:animated];
-            [self.checkoutStepByStepViewController goToViewController:authenticationViewController];
-        }
+        [self goToStep:authenticationViewController forStepByStepViewController:self.checkoutStepByStepViewController];
     }else{
         [self pushViewController:authenticationViewController animated:YES];
     }
@@ -844,15 +860,7 @@
         checkout = [[notification.userInfo objectForKey:@"checkout"] boolValue];
     }
     if (checkout) {
-        JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
-        if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[JACheckoutStepByStepModel class]])
-        {
-            [stepByStepTabViewController goToViewController:signInVC];
-        }else{
-            self.checkoutStepByStepViewController = [self getNewCheckoutStepByStepViewController];
-            [self pushViewController:self.checkoutStepByStepViewController animated:animated];
-            [self.checkoutStepByStepViewController goToViewController:signInVC];
-        }
+        [self goToStep:signInVC forStepByStepViewController:self.checkoutStepByStepViewController];
     }else{
         [self pushViewController:signInVC animated:YES];
     }
@@ -887,15 +895,7 @@
             checkout = [[notification.userInfo objectForKey:@"checkout"] boolValue];
         }
         if (checkout) {
-            JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
-            if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[JACheckoutStepByStepModel class]])
-            {
-                [stepByStepTabViewController goToViewController:signUpVC];
-            }else{
-                self.checkoutStepByStepViewController = [self getNewCheckoutStepByStepViewController];
-                [self pushViewController:self.checkoutStepByStepViewController animated:YES];
-                [self.checkoutStepByStepViewController goToViewController:signUpVC];
-            }
+            [self goToStep:signUpVC forStepByStepViewController:self.checkoutStepByStepViewController];
         }else{
             [self pushViewController:signUpVC animated:NO];
         }
@@ -1139,16 +1139,7 @@
         addressesVC.navBarLayout.showLogo = NO;
         if (fromCheckout) {
             addressesVC.navBarLayout.showCartButton = NO;
-            JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
-            if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[JACheckoutStepByStepModel class]])
-            {
-                [stepByStepTabViewController setIndexInit:0];
-                [stepByStepTabViewController goToViewController:addressesVC];
-            }else{
-                self.checkoutStepByStepViewController = [self getNewCheckoutStepByStepViewController];
-                [self pushViewController:self.checkoutStepByStepViewController animated:animated];
-                [self.checkoutStepByStepViewController goToViewController:addressesVC];
-            }
+            [self goToStep:addressesVC forStepByStepViewController:self.checkoutStepByStepViewController];
         }else{
             [self pushViewController:addressesVC animated:NO];
         }
@@ -1196,15 +1187,7 @@
             {
                 addAddressVC.navBarLayout.title = STRING_CHECKOUT;
             }
-            JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
-            if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[JACheckoutStepByStepModel class]])
-            {
-                [stepByStepTabViewController goToViewController:addAddressVC];
-            }else{
-                self.checkoutStepByStepViewController = [self getNewCheckoutStepByStepViewController];
-                [self pushViewController:self.checkoutStepByStepViewController animated:animated];
-                [self.checkoutStepByStepViewController goToViewController:addAddressVC];
-            }
+            [self goToStep:addAddressVC forStepByStepViewController:self.checkoutStepByStepViewController];
         }
         else
         {
@@ -1243,15 +1226,7 @@
         }
         
         if (fromCheckout.boolValue) {
-            JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
-            if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[JACheckoutStepByStepModel class]])
-            {
-                [stepByStepTabViewController goToViewController:editAddressVC];
-            }else{
-                self.checkoutStepByStepViewController = [self getNewCheckoutStepByStepViewController];
-                [self pushViewController:self.checkoutStepByStepViewController animated:YES];
-                [self.checkoutStepByStepViewController goToViewController:editAddressVC];
-            }
+            [self goToStep:editAddressVC forStepByStepViewController:self.checkoutStepByStepViewController];
         }else{
             [self pushViewController:editAddressVC animated:YES];
         }
@@ -1262,32 +1237,14 @@
 - (void)showCheckoutShippingScreen
 {
     JAShippingViewController *viewController = [[JAShippingViewController alloc] init];
-    
-    JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
-    if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[JACheckoutStepByStepModel class]])
-    {
-        [stepByStepTabViewController goToViewController:viewController];
-    }else{
-        self.checkoutStepByStepViewController = [self getNewCheckoutStepByStepViewController];
-        [self pushViewController:self.checkoutStepByStepViewController animated:YES];
-        [self.checkoutStepByStepViewController goToViewController:viewController];
-    }
+    [self goToStep:viewController forStepByStepViewController:self.checkoutStepByStepViewController];
 }
 
 #pragma mark Checkout Payment Screen
 - (void)showCheckoutPaymentScreen
 {
     JAPaymentViewController *viewController = [[JAPaymentViewController alloc] init];
-    
-    JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
-    if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[JACheckoutStepByStepModel class]])
-    {
-        [stepByStepTabViewController goToViewController:viewController];
-    }else{
-        self.checkoutStepByStepViewController = [self getNewCheckoutStepByStepViewController];
-        [self pushViewController:self.checkoutStepByStepViewController animated:YES];
-        [self.checkoutStepByStepViewController goToViewController:viewController];
-    }
+    [self goToStep:viewController forStepByStepViewController:self.checkoutStepByStepViewController];
 }
 
 #pragma mark Checkout Finish Screen
@@ -1872,6 +1829,33 @@
             [[JACenterNavigationController sharedInstance] openScreenTarget:screenTarget];
             return;
         }
+    }
+}
+
+#pragma mark - OnlineReturns
+
+- (void)goToOnlineReturnsConfirmConditions
+{
+    JAORConfirmConditionsViewController *viewController = [[JAORConfirmConditionsViewController alloc] init];
+    [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
+}
+
+- (void)goToOnlineReturnsConfirmScreen
+{
+    JAORConfirmationScreenViewController *viewController = [[JAORConfirmationScreenViewController alloc] init];
+    [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
+}
+
+- (void)goToStep:(UIViewController *)viewController forStepByStepViewController:(JAStepByStepTabViewController *)stepByStepViewController
+{
+    JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
+    if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[stepByStepViewController.stepByStepModel class]])
+    {
+        [stepByStepTabViewController goToViewController:viewController];
+    }else{
+        [stepByStepViewController setIndexInit:0];
+        [self pushViewController:stepByStepViewController animated:YES];
+        [stepByStepViewController goToViewController:viewController];
     }
 }
 

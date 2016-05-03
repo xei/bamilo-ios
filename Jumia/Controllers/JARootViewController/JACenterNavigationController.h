@@ -24,4 +24,7 @@
 - (BOOL)openScreenTarget:(JAScreenTarget *)target;
 - (void)showSearchView;
 
+- (void)goToOnlineReturnsConfirmConditions;
+- (void)goToOnlineReturnsConfirmScreen;
+
 @end
