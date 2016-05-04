@@ -181,7 +181,7 @@
     [self.viewControllersStackArray addObject:viewController];
     if (!self.freeToMove) {
         for (UIViewController *oneViewController in [self.viewControllersStackArray mutableCopy]) {
-            if (oneViewController.view.tag > viewController.view.tag) {
+            if (oneViewController.view.tag > viewController.view.tag || (oneViewController.view.tag != viewController.view.tag && [self.stepByStepModel ignoreStep:oneViewController.view.tag])) {
                 [self.viewControllersStackArray removeObject:oneViewController];
             }
         }
@@ -205,6 +205,9 @@
     }];
     [viewController viewDidAppear:YES];
     self.actualViewController = viewController;
+    if ([viewController isKindOfClass:[JABaseViewController class]]) {
+        [self setNavBarLayout:[(JABaseViewController *)viewController navBarLayout]];
+    }
     [self hideLoading];
 }
 
@@ -231,6 +234,15 @@
 
 - (void)goToViewController:(UIViewController *)viewController
 {
+    for (UIViewController *viewControllerFromStack in [self.viewControllersStackArray mutableCopy]) {
+        if ([viewController class] == [viewControllerFromStack class]) {
+            if (self.actualViewController != viewControllerFromStack) {
+                [self.viewControllersStackArray removeObject:viewControllerFromStack];
+                [self setViewController:viewControllerFromStack forIndex:viewControllerFromStack.view.tag];
+            }
+            return;
+        }
+    }
     NSInteger index = [self.stepByStepModel getIndexForViewController:viewController];
     [viewController.view setTag:index];
     [self setViewController:viewController forIndex:index];

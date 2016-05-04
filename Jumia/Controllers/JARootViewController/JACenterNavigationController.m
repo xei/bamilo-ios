@@ -1852,6 +1852,10 @@
     if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[stepByStepViewController.stepByStepModel class]])
     {
         [stepByStepTabViewController goToViewController:viewController];
+    }else if ([self.viewControllers indexOfObject:stepByStepViewController] != NSNotFound)
+    {
+        [self popToViewController:stepByStepViewController animated:YES];
+        [stepByStepViewController goToViewController:viewController];
     }else{
         [stepByStepViewController setIndexInit:0];
         [self pushViewController:stepByStepViewController animated:YES];
