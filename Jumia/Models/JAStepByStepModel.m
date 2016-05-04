@@ -64,4 +64,9 @@
     return NO;
 }
 
+- (BOOL)isClassBase:(UIViewController *)viewController
+{
+    return [self.viewControllersArray indexOfObject:viewController.class] != NSNotFound;
+}
+
 @end

@@ -22,5 +22,6 @@
 
 - (void)goToIndex:(NSInteger)index;
 - (BOOL)ignoreStep:(NSInteger)index;
+- (BOOL)isClassBase:(UIViewController *)viewController;
 
 @end
