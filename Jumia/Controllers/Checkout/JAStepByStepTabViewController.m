@@ -29,26 +29,7 @@
 {
     if (!VALID(_tabBarView, UIView)) {
         _tabBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kTabBarViewHeigh)];
-        for (int i = 0; i < self.stepByStepModel.viewControllersArray.count; i++)
-        {
-            JACheckoutButton *button1 = [[JACheckoutButton alloc] initWithFrame:CGRectMake(i*kTabBarButtonWidth, 8, kTabBarButtonWidth, _tabBarView.height-16)];
-            if (VALID([self.stepByStepModel getTitleForIndex:i], NSString)) {
-                [button1 setTitle:[self.stepByStepModel getTitleForIndex:i] forState:UIControlStateNormal];
-            }
-            if (VALID([self.stepByStepModel getIconForIndex:i], UIImage)) {
-                [button1 setImage:[self.stepByStepModel getIconForIndex:i]];
-                [button1 setTintColor:JABlackColor];
-            }
-            [button1 setTag:i];
-            [button1 addTarget:self action:@selector(goToView:) forControlEvents:UIControlEventTouchUpInside];
-            [_tabBarView addSubview:button1];
-        }
-        [_tabBarView setWidth:CGRectGetMaxX([[_tabBarView subviews] lastObject].frame)];
-        [_tabBarView addSubview:self.tabIndicatorView];
-        [_tabBarView setXCenterAligned];
-        if (RI_IS_RTL) {
-            [_tabBarView flipAllSubviews];
-        }
+        [self addTabs];
     }
     return _tabBarView;
 }
@@ -87,6 +68,11 @@
     [self.view addSubview:self.tabBarView];
     self.index = -1;
     [self goToIndex:self.indexInit];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateCountry:)
+                                                 name:kUpdateCountryNotification
+                                               object:nil];
 }
 
 - (void)viewWillLayoutSubviews
@@ -244,6 +230,13 @@
         }
     }
     NSInteger index = [self.stepByStepModel getIndexForViewController:viewController];
+    if ([self.stepByStepModel isClassBase:viewController]) {
+        for (UIViewController *viewControllerFromStack in [self.viewControllersStackArray mutableCopy]) {
+            if (index == viewControllerFromStack.view.tag) {
+                [self.viewControllersStackArray removeObject:viewControllerFromStack];
+            }
+        }
+    }
     [viewController.view setTag:index];
     [self setViewController:viewController forIndex:index];
 }
@@ -254,6 +247,36 @@
     UIViewController *lastToReload = [self.viewControllersStackArray lastObject];
     [self.viewControllersStackArray removeObject:lastToReload];
     [self setViewController:lastToReload forIndex:self.viewControllersStackArray.count-1];
+}
+
+- (void)updateCountry:(NSNotification *)notification
+{
+    [[self.tabBarView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self addTabs];
+}
+
+- (void)addTabs
+{
+    for (int i = 0; i < self.stepByStepModel.viewControllersArray.count; i++)
+    {
+        JACheckoutButton *button1 = [[JACheckoutButton alloc] initWithFrame:CGRectMake(i*kTabBarButtonWidth, 8, kTabBarButtonWidth, _tabBarView.height-16)];
+        if (VALID([self.stepByStepModel getTitleForIndex:i], NSString)) {
+            [button1 setTitle:[self.stepByStepModel getTitleForIndex:i] forState:UIControlStateNormal];
+        }
+        if (VALID([self.stepByStepModel getIconForIndex:i], UIImage)) {
+            [button1 setImage:[self.stepByStepModel getIconForIndex:i]];
+            [button1 setTintColor:JABlackColor];
+        }
+        [button1 setTag:i];
+        [button1 addTarget:self action:@selector(goToView:) forControlEvents:UIControlEventTouchUpInside];
+        [_tabBarView addSubview:button1];
+    }
+    [_tabBarView setWidth:CGRectGetMaxX([[_tabBarView subviews] lastObject].frame)];
+    [_tabBarView addSubview:self.tabIndicatorView];
+    [_tabBarView setXCenterAligned];
+    if (RI_IS_RTL) {
+        [_tabBarView flipAllSubviews];
+    }
 }
 
 @end
