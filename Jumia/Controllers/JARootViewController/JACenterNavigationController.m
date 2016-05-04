@@ -40,7 +40,6 @@
 #import "JACampaignsViewController.h"
 #import "JATabNavigationViewController.h"
 #import "JANewRatingViewController.h"
-#import "RICart.h"
 #import "JASizeGuideViewController.h"
 #import "JAOtherOffersViewController.h"
 #import "JASellerRatingsViewController.h"
@@ -67,7 +66,6 @@
 
 @interface JACenterNavigationController ()
 
-@property (strong, nonatomic) RICart *cart;
 @property (assign, nonatomic) BOOL neeedsExternalPaymentMethod;
 @property (strong, nonatomic) UIStoryboard *mainStoryboard;
 

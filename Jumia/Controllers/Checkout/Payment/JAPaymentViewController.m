@@ -146,6 +146,8 @@ UITextFieldDelegate>
     
     [RICart getMultistepPaymentWithSuccessBlock:^(RICart *cart) {
         self.cart = cart;
+        NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
         
         self.paymentMethodForm = cart.paymentMethodForm;
         
@@ -413,6 +415,8 @@ UITextFieldDelegate>
     {
         [RICart removeVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;
+            NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
             NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
             [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
             [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];
@@ -435,6 +439,8 @@ UITextFieldDelegate>
     {
         [RICart addVoucherWithCode:voucherCode withSuccessBlock:^(RICart *cart) {
             self.cart = cart;
+            NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
             NSMutableDictionary *trackingDictionary = [NSMutableDictionary new];
             [trackingDictionary setValue:cart.cartValueEuroConverted forKey:kRIEventTotalCartKey];
             [trackingDictionary setValue:cart.cartCount forKey:kRIEventQuantityKey];

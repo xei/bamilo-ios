@@ -103,7 +103,7 @@ UITableViewDelegate
     [super viewWillAppear:animated];
 
     self.apiResponse = RIApiResponseSuccess;
-
+    self.isLoaded = NO;
     [self continueLoading];
 }
 
