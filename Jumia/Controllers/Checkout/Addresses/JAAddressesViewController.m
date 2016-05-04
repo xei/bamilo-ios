@@ -22,6 +22,7 @@
 #import "UIView+Mirror.h"
 #import "JACheckoutBottomView.h"
 #import "JAProductInfoHeaderLine.h"
+#import "JACenterNavigationController.h"
 
 @interface JAAddressesViewController ()
 <UITableViewDataSource,
@@ -112,8 +113,10 @@ UITableViewDelegate>
     [super viewWillAppear:animated];
     [self showLoading];
     
+    [self setCart:[JACenterNavigationController sharedInstance].cart];
     [self.contentScrollView setHidden:YES];
     [_bottomView setHidden:YES];
+    [_bottomView setTotalValue:self.cart.cartValueFormatted];
     
     [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:.3];
 }

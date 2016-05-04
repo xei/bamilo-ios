@@ -10,8 +10,11 @@
 #import "JACustomNavigationBarView.h"
 #import "JATabBarView.h"
 #import "JAScreenTarget.h"
+#import "RICart.h"
 
 @interface JACenterNavigationController : UINavigationController
+
+@property (strong, nonatomic) RICart *cart;
 
 @property (strong, nonatomic) JACustomNavigationBarView *navigationBarView;
 @property (strong, nonatomic) JATabBarView *tabBarView;
