@@ -220,6 +220,14 @@
 
 - (void)goToViewController:(UIViewController *)viewController
 {
+    NSInteger index = [self.stepByStepModel getIndexForViewController:viewController];
+    if ([self.stepByStepModel isClassBase:viewController]) {
+        for (UIViewController *viewControllerFromStack in [self.viewControllersStackArray mutableCopy]) {
+            if (index == viewControllerFromStack.view.tag) {
+                [self.viewControllersStackArray removeObject:viewControllerFromStack];
+            }
+        }
+    }
     for (UIViewController *viewControllerFromStack in [self.viewControllersStackArray mutableCopy]) {
         if ([viewController class] == [viewControllerFromStack class]) {
             if (self.actualViewController != viewControllerFromStack) {
@@ -227,14 +235,6 @@
                 [self setViewController:viewControllerFromStack forIndex:viewControllerFromStack.view.tag];
             }
             return;
-        }
-    }
-    NSInteger index = [self.stepByStepModel getIndexForViewController:viewController];
-    if ([self.stepByStepModel isClassBase:viewController]) {
-        for (UIViewController *viewControllerFromStack in [self.viewControllersStackArray mutableCopy]) {
-            if (index == viewControllerFromStack.view.tag) {
-                [self.viewControllersStackArray removeObject:viewControllerFromStack];
-            }
         }
     }
     [viewController.view setTag:index];
