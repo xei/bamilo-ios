@@ -38,6 +38,7 @@ UITextFieldDelegate>
 @property (strong, nonatomic) UIView *couponView;
 @property (strong, nonatomic) JAProductInfoHeaderLine* couponHeader;
 @property (strong, nonatomic) UITextField *couponTextField;
+@property (strong, nonatomic) UIView* couponUndeline;
 @property (strong, nonatomic) JAClickableView *useCouponClickableView;
 
 
@@ -55,6 +56,8 @@ UITextFieldDelegate>
 @property (assign, nonatomic) CGFloat orderSummaryOriginalHeight;
 
 @property (assign, nonatomic) RIApiResponse apiResponse;
+
+@property (nonatomic, assign) BOOL isLoaded;
 
 @end
 
@@ -92,49 +95,40 @@ UITextFieldDelegate>
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showCartButton = NO;
     
+    self.isLoaded = NO;
+    
     [self initViews];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewWillLayoutSubviews
 {
-    [super viewWillAppear:animated];
+    [super viewWillLayoutSubviews];
     
-    [self continueLoading];
+    if (NO == self.isLoaded) {
+        [self continueLoading];
+    } else {
+        CGFloat newWidth = self.view.frame.size.width;
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+        {
+            newWidth = self.view.frame.size.height + self.view.frame.origin.y;
+        }
+        
+        [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
+    }
+    
+    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+        [_bottomView setNoTotal:YES];
+    }else{
+        [_bottomView setNoTotal:NO];
+    }
 }
+
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
     [[RITrackingWrapper sharedInstance]trackScreenWithName:@"CheckoutPayment"];
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    [self showLoading];
-    
-    if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
-        [_bottomView setNoTotal:YES];
-    }else{
-        [_bottomView setNoTotal:NO];
-    }
-    
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-}
-
--(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    CGFloat newWidth = self.view.frame.size.width;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
-    {
-        newWidth = self.view.frame.size.height + self.view.frame.origin.y;
-    }
-    
-    [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
-    
-    [self hideLoading];
-    
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 -(void)continueLoading
@@ -145,6 +139,7 @@ UITextFieldDelegate>
     }
     
     [RICart getMultistepPaymentWithSuccessBlock:^(RICart *cart) {
+        self.isLoaded = YES;
         self.cart = cart;
         NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
         [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
@@ -195,15 +190,18 @@ UITextFieldDelegate>
     [self.couponView addSubview:self.couponHeader];
     
     self.couponTextField = [[UITextField alloc] init];
-    [self.couponTextField setFont:JABodyFont];
-    [self.couponTextField setTextColor:JAGreyColor];
-    [self.couponTextField setValue:JATextFieldColor forKeyPath:@"_placeholderLabel.textColor"];
+    [self.couponTextField setFont:JAListFont];
+    [self.couponTextField setTextColor:JABlackColor];
     [self.couponTextField setPlaceholder:STRING_ENTER_COUPON];
     [self.couponTextField setDelegate:self];
     [self.couponView addSubview:self.couponTextField];
     
+    self.couponUndeline = [[UIView alloc] init];
+    self.couponUndeline.backgroundColor = JABlack400Color;
+    [self.couponView addSubview:self.couponUndeline];
+    
     self.useCouponClickableView = [[JAClickableView alloc] init];
-    [self.useCouponClickableView setTitle:STRING_USE forState:UIControlStateNormal];
+    [self.useCouponClickableView setTitle:[STRING_USE uppercaseString] forState:UIControlStateNormal];
     [self.useCouponClickableView setTitleColor:JABlue1Color forState:UIControlStateNormal];
     [self.useCouponClickableView setFont:JABUTTONFont];
     [self.useCouponClickableView addTarget:self action:@selector(useCouponButtonPressed) forControlEvents:UIControlEventTouchUpInside];
@@ -296,6 +294,11 @@ UITextFieldDelegate>
     self.couponTextField.textColor = saveCouponTextFieldColor;
     self.couponTextField.text = saveCouponTextFieldText;
     
+    self.couponUndeline.frame = CGRectMake(self.couponTextField.frame.origin.x,
+                                           CGRectGetMaxY(self.couponTextField.frame),
+                                           self.couponTextField.frame.size.width,
+                                           1.0f);
+    
     [self.useCouponClickableView setFrame:CGRectMake(self.couponView.frame.size.width - 6.0f - self.useCouponClickableView.frame.size.width,
                                                      CGRectGetMaxY(self.couponHeader.frame),
                                                      self.useCouponClickableView.frame.size.width,
@@ -303,9 +306,8 @@ UITextFieldDelegate>
     
     if (VALID(self.cart.couponMoneyValue, NSNumber)) {
         self.couponTextField.text = self.cart.couponCode;
-        [self.useCouponClickableView setTitle:STRING_REMOVE forState:UIControlStateNormal];
+        [self.useCouponClickableView setTitle:[STRING_REMOVE uppercaseString] forState:UIControlStateNormal];
         [self.couponTextField setEnabled:NO];
-        [self.useCouponClickableView setEnabled:YES];
     }
     
     [_bottomView setFrame:CGRectMake(0.0f,
@@ -331,15 +333,11 @@ UITextFieldDelegate>
     {
         [self.couponTextField setText:self.cart.couponCode];
         [self.couponTextField setEnabled:NO];
-        [self.useCouponClickableView setTitle:STRING_REMOVE forState:UIControlStateNormal];
+        [self.useCouponClickableView setTitle:[STRING_REMOVE uppercaseString] forState:UIControlStateNormal];
     }
     else
     {
-        [self.useCouponClickableView setTitle:STRING_USE forState:UIControlStateNormal];
-        if(!VALID_NOTEMPTY([self.couponTextField text], NSString))
-        {
-            [self.useCouponClickableView setEnabled:NO];
-        }
+        [self.useCouponClickableView setTitle:[STRING_USE uppercaseString] forState:UIControlStateNormal];
     }
     
     self.collectionViewIndexSelected = [NSIndexPath indexPathForItem:[RIPaymentMethodForm getSelectedPaymentMethodsInForm:self.paymentMethodForm] inSection:0];
@@ -407,6 +405,11 @@ UITextFieldDelegate>
     [self.couponTextField resignFirstResponder];
     
     [self.couponTextField setTextColor:JAGreyColor];
+
+    if (!VALID_NOTEMPTY(self.couponTextField.text, NSString)) {
+        [self onErrorResponse:RIApiResponseUnknownError messages:@[STRING_VOUCHER_ERROR] showAsMessage:YES target:nil selector:nil objects:nil];
+        return;
+    }
     
     [self showLoading];
     NSString *voucherCode = [self.couponTextField text];
@@ -423,7 +426,7 @@ UITextFieldDelegate>
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
                                                       data:[trackingDictionary copy]];
             
-            [self.useCouponClickableView setTitle:STRING_USE forState:UIControlStateNormal];
+            [self.useCouponClickableView setTitle:[STRING_USE uppercaseString] forState:UIControlStateNormal];
             [self.couponTextField setEnabled: YES];
             [self.couponTextField setText:@""];
             
@@ -433,6 +436,8 @@ UITextFieldDelegate>
             [self hideLoading];
             
             [self.couponTextField setTextColor:JARed1Color];
+            
+            [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
         }];
     }
     else
@@ -447,7 +452,7 @@ UITextFieldDelegate>
             [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCart]
                                                       data:[trackingDictionary copy]];
             
-            [self.useCouponClickableView setTitle:STRING_REMOVE forState:UIControlStateNormal];
+            [self.useCouponClickableView setTitle:[STRING_REMOVE uppercaseString] forState:UIControlStateNormal];
             [self.couponTextField setEnabled:NO];
             
             [self continueLoading];
@@ -456,6 +461,8 @@ UITextFieldDelegate>
             [self hideLoading];
             
             [self.couponTextField setTextColor:JARed1Color];
+            
+            [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
         }];
     }
 }
@@ -641,21 +648,6 @@ UITextFieldDelegate>
 }
 
 #pragma mark UITextFieldDelegate
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    NSRange textFieldRange = NSMakeRange(0, [textField.text length]);
-    if (NSEqualRanges(range, textFieldRange) && [string length] == 0)
-    {
-        [self.useCouponClickableView setEnabled:NO];
-    }
-    else
-    {
-        [self.useCouponClickableView setEnabled:YES];
-    }
-    
-    return YES;
-}
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
