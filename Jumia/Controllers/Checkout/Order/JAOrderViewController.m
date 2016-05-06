@@ -918,6 +918,7 @@
                                            self.view.frame.size.width,
                                            48.0f)];
     [self.bottomButton setHidden:NO];
+    [self.view bringSubviewToFront:self.bottomButton];
 }
 
 #pragma mark - Content view auxiliary methods
