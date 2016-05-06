@@ -57,6 +57,8 @@ UITextFieldDelegate>
 
 @property (assign, nonatomic) RIApiResponse apiResponse;
 
+@property (nonatomic, assign) BOOL isLoaded;
+
 @end
 
 @implementation JAPaymentViewController
@@ -93,49 +95,40 @@ UITextFieldDelegate>
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showCartButton = NO;
     
+    self.isLoaded = NO;
+    
     [self initViews];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewWillLayoutSubviews
 {
-    [super viewWillAppear:animated];
+    [super viewWillLayoutSubviews];
     
-    [self continueLoading];
+    if (NO == self.isLoaded) {
+        [self continueLoading];
+    } else {
+        CGFloat newWidth = self.view.frame.size.width;
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+        {
+            newWidth = self.view.frame.size.height + self.view.frame.origin.y;
+        }
+        
+        [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
+    }
+    
+    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+        [_bottomView setNoTotal:YES];
+    }else{
+        [_bottomView setNoTotal:NO];
+    }
 }
+
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
     [[RITrackingWrapper sharedInstance]trackScreenWithName:@"CheckoutPayment"];
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    [self showLoading];
-    
-    if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
-        [_bottomView setNoTotal:YES];
-    }else{
-        [_bottomView setNoTotal:NO];
-    }
-    
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-}
-
--(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    CGFloat newWidth = self.view.frame.size.width;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
-    {
-        newWidth = self.view.frame.size.height + self.view.frame.origin.y;
-    }
-    
-    [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
-    
-    [self hideLoading];
-    
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 -(void)continueLoading
@@ -146,6 +139,7 @@ UITextFieldDelegate>
     }
     
     [RICart getMultistepPaymentWithSuccessBlock:^(RICart *cart) {
+        self.isLoaded = YES;
         self.cart = cart;
         NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
         [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
