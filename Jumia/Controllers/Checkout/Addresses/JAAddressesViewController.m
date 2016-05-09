@@ -87,18 +87,21 @@ UITableViewDelegate>
     [self.shippingAddressTableView setScrollEnabled:NO];
     [self.shippingAddressTableView setDelegate:self];
     [self.shippingAddressTableView setDataSource:self];
+    [self.shippingAddressTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.contentScrollView addSubview:self.shippingAddressTableView];
     
     self.billingAddressTableView = [UITableView new];
     [self.billingAddressTableView setScrollEnabled:NO];
     [self.billingAddressTableView setDelegate:self];
     [self.billingAddressTableView setDataSource:self];
+    [self.billingAddressTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.contentScrollView addSubview:self.billingAddressTableView];
     
     self.otherAddressesTableView = [UITableView new];
     [self.otherAddressesTableView setScrollEnabled:NO];
     [self.otherAddressesTableView setDelegate:self];
     [self.otherAddressesTableView setDataSource:self];
+    [self.otherAddressesTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.contentScrollView addSubview:self.otherAddressesTableView];
     
     
@@ -236,7 +239,7 @@ UITableViewDelegate>
     
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation)  && (width < self.view.frame.size.width) && self.fromCheckout)
     {
-        CGFloat orderSummaryRightMargin = 6.0f;
+        CGFloat orderSummaryRightMargin = 0.0f;
         self.orderSummary = [[JAOrderSummaryView alloc] initWithFrame:CGRectMake(width,
                                                                                  scrollViewStartY,
                                                                                  self.view.frame.size.width - width - orderSummaryRightMargin,

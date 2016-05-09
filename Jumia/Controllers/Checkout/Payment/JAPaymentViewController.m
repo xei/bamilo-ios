@@ -237,7 +237,7 @@ UITextFieldDelegate>
     
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation)  && (width < self.view.frame.size.width))
     {
-        CGFloat orderSummaryRightMargin = 6.0f;
+        CGFloat orderSummaryRightMargin = 0.0f;
         self.orderSummary = [[JAOrderSummaryView alloc] initWithFrame:CGRectMake(width,
                                                                                  0.f,
                                                                                  self.view.frame.size.width - width - orderSummaryRightMargin,
