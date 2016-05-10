@@ -114,6 +114,7 @@
         _estimateDeliveryLabel = [[UILabel alloc] init];
         [_estimateDeliveryLabel setFont:JACaptionFont];
         _estimateDeliveryLabel.textColor = JABlack800Color;
+        [_estimateDeliveryLabel setTextAlignment:NSTextAlignmentLeft];
         [self addSubview:_estimateDeliveryLabel];
     }
     return _estimateDeliveryLabel;
@@ -209,6 +210,7 @@
     [self.feedbackView setTag:tag];
     [self.reorderButton setTag:tag];
     [self.returnButton setTag:tag];
+    [self.checkToReturnButton setTag:tag];
 }
 
 - (void)setItem:(RIItemCollection *)item
@@ -243,6 +245,7 @@
     [self.qtyLabel setFrame:CGRectMake(_labelsLeftMargin, CGRectGetMaxY(self.nameLabel.frame), _labelsWidth, 15)];
     [self.priceLine setFrame:CGRectMake(_labelsLeftMargin, CGRectGetMaxY(self.qtyLabel.frame), _labelsWidth, 15)];
     [self.estimateDeliveryIcon setFrame:CGRectMake(_labelsLeftMargin, CGRectGetMaxY(self.priceLine.frame)+6.f, self.estimateDeliveryIcon.width, self.estimateDeliveryIcon.height)];
+    [self.estimateDeliveryLabel setTextAlignment:NSTextAlignmentLeft];
     [self.estimateDeliveryLabel setFrame:CGRectMake(CGRectGetMaxX(self.estimateDeliveryIcon.frame)+6.f, CGRectGetMaxY(self.priceLine.frame)+6.f, _labelsLeftMargin - self.estimateDeliveryIcon.width, self.estimateDeliveryIcon.height)];
     
     [self.brandLabel setText:item.brand];
@@ -302,12 +305,6 @@
     if (RI_IS_RTL) {
         [self flipAllSubviews];
     }
-}
-
-- (void)setSelectedToReturn:(BOOL)selectedToReturn
-{
-    _selectedToReturn = selectedToReturn;
-    [self.checkToReturnButton setHighlighted:selectedToReturn];
 }
 
 @end

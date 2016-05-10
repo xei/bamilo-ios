@@ -69,7 +69,7 @@
     [self.view addSubview:self.webView];
     [self.view addSubview:self.submitButton];
     
-    self.targetString = self.item.onlineReturnTargetString;
+    self.targetString = [(RIItemCollection *)[self.items firstObject] onlineReturnTargetString];
     
     [self showLoading];
     [RIHtmlShop getHtmlShopForTargetString:self.targetString successBlock:^(RIHtmlShop *htmlShop) {

@@ -17,7 +17,6 @@
 @property (nonatomic) RIItemCollection *item;
 @property (nonatomic) JAButton *reorderButton;
 @property (nonatomic) JAButton *returnButton;
-@property (nonatomic) BOOL selectedToReturn;
 @property (nonatomic) UIButton *checkToReturnButton;
 
 @end
