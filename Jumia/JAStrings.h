@@ -276,6 +276,7 @@
 #define STRING_AT_YOUR_DOORSTEP RILocalizedString(@"fallback_doorstep", nil)
 
 #define STRING_GOT_IT RILocalizedString(@"got_it", nil)
+#define STRING_OK_GOT_IT RILocalizedString(@"ok_got_it", nil)
 #define STRING_WIZARD_HOME RILocalizedString(@"home_tip_text", nil)
 #define STRING_WIZARD_CATALOG_SWIPE RILocalizedString(@"products_tip_swipe_text", nil)
 #define STRING_WIZARD_CATALOG_FAVORITE RILocalizedString(@"tip_favourite_text", nil)
@@ -423,6 +424,8 @@
 #define STRING_FREE_SHIPPING_POSSIBLE RILocalizedString(@"free_shipping_possible", nil)
 
 #define STRING_GO RILocalizedString(@"go", nil)
+
+#define STRING_ORDER_RETURN_CONDITIONS_TITLE RILocalizedString(@"order_return_conditions_title", nil)
 
 #define STRING_RETURN RILocalizedString(@"return_label", nil)
 

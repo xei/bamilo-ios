@@ -468,6 +468,8 @@
 
 "got_it" = "Got it";
 
+"ok_got_it" = "Ok, got it";
+
 "home_tip_text" = "Swipe left or right to change the category";
 
 "products_tip_swipe_text" = "Swipe left or right to change the sort type";
@@ -714,6 +716,7 @@
 
 "go" = "Go";
 
+"order_return_conditions_title" = "We are sorry that you are not fully satisfied with your product";
 "return_label" = "return";
 
 "returns_label" = "returns";
