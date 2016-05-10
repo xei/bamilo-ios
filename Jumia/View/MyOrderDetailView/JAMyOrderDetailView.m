@@ -11,6 +11,9 @@
 #import "JAProductCollectionViewFlowLayout.h"
 #import "JAOrderItemCollectionViewCell.h"
 #import "JAMyOrderResumeView.h"
+#import "JACenterNavigationController.h"
+#import "JAUtils.h"
+#import "RICustomer.h"
 
 @interface JAMyOrderDetailView () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
@@ -21,6 +24,7 @@
 @property (nonatomic) JAProductCollectionViewFlowLayout *collectionViewFlowLayout;
 
 @property (nonatomic) RITrackOrder *order;
+@property (nonatomic, strong) NSMutableArray *itemsToReturnArray;
 
 @end
 
@@ -75,6 +79,14 @@
     return _collectionViewFlowLayout;
 }
 
+- (NSMutableArray *)itemsToReturnArray
+{
+    if (!VALID(_itemsToReturnArray, NSMutableArray)) {
+        _itemsToReturnArray = [NSMutableArray new];
+    }
+    return _itemsToReturnArray;
+}
+
 - (void)setupWithOrder:(RITrackOrder*)order frame:(CGRect)frame
 {
     self.order = order;
@@ -102,8 +114,10 @@
 
 - (CGFloat)totalHeightForCollectionView
 {
-    CGFloat totalHeight = [self collectionView:self.collectionView layout:self.collectionViewFlowLayout sizeForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]].height * [self collectionView:self.collectionView numberOfItemsInSection:0];
-    
+    CGFloat totalHeight = 0.f;
+    for (int i = 0; i < [self collectionView:self.collectionView numberOfItemsInSection:0]; i++) {
+        totalHeight += [self collectionView:self.collectionView layout:self.collectionViewFlowLayout sizeForItemAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]].height;
+    }
     return totalHeight;
 }
 
@@ -111,7 +125,13 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGSize size = CGSizeMake(self.width, 117.f);
+    RIItemCollection *item = [self.order.itemCollection objectAtIndex:indexPath.row];
+    CGFloat extra = 0;
+    if (VALID(item, RIItemCollection) && VALID_NOTEMPTY(item.returns, NSArray)) {
+        int i = (int)item.returns.count;
+        extra = 6.f + 12.f + i * 12;
+    }
+    CGSize size = CGSizeMake(self.width, 197.f + extra);
     
     self.collectionViewFlowLayout.itemSize = size;
     return size;
@@ -123,7 +143,9 @@
     RIItemCollection *item = [self.order.itemCollection objectAtIndex:indexPath.row];
     [cell setTag:indexPath.row];
     [cell.reorderButton addTarget:self action:@selector(addToCart:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.returnButton addTarget:self action:@selector(returnItem:) forControlEvents:UIControlEventTouchUpInside];
     [cell.feedbackView addTarget:self action:@selector(itemClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.checkToReturnButton addTarget:self action:@selector(multipleCheckClicked:) forControlEvents:UIControlEventTouchUpInside];
     [cell setItem:item];
     return cell;
 }
@@ -174,6 +196,60 @@
                       [self.parent onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:@selector(addToCart:) objects:@[button]];
                       [self.parent hideLoading];
                   }];
+}
+
+- (void)multipleCheckClicked:(UIButton *)button
+{
+    RIItemCollection *item = [self.order.itemCollection objectAtIndex:button.tag];
+    if(VALID_NOTEMPTY(item.sku, NSString))
+    {
+        [button setSelected:!button.selected];
+        if (button.selected) {
+            if ([self.itemsToReturnArray indexOfObject:item] != NSNotFound) {
+                
+            }else{
+                
+            }
+        }
+    }
+}
+
+- (void)returnItem:(UIButton *)button
+{
+    RIItemCollection *item = [self.order.itemCollection objectAtIndex:button.tag];
+    if(VALID_NOTEMPTY(item.sku, NSString))
+    {
+        if (item.onlineReturn) {
+            [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmConditionsForItem:item];
+        }else if (item.callReturn){
+            [self callToReturn];
+        }
+    }
+}
+
+- (void)callToReturn
+{
+    [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+        
+        [self trackingEventCallToReturn];
+        
+        NSString *phoneNumber = [@"tel://" stringByAppendingString:configuration.phoneNumber];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+    }];
+}
+
+- (void)trackingEventCallToReturn
+{
+    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+    [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+    
+    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCallToOrder]
+                                              data:[trackingDictionary copy]];
 }
 
 @end

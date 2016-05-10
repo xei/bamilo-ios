@@ -54,7 +54,7 @@
     Class classKind = [self.viewControllersArray objectAtIndex:index];
     
     if (classKind == [JAORConfirmConditionsViewController class]) {
-        [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmConditions];
+//        [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmConditions];
     } else if (classKind == [JAORConfirmationScreenViewController class]) {
         [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmScreen];
     }

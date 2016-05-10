@@ -7,7 +7,10 @@
 //
 
 #import "JABaseViewController.h"
+#import "RIOrder.h"
 
 @interface JAORConfirmConditionsViewController : JABaseViewController
+
+@property (nonatomic, strong) RIItemCollection *item;
 
 @end

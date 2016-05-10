@@ -8,6 +8,7 @@
 
 #import "JAButton.h"
 #import "UIImage+WithColor.h"
+#import "NSString+Size.h"
 
 @interface JAButton ()
 
@@ -116,6 +117,11 @@
     } else if (!enabled && VALID(self.disabledColor, UIColor)) {
         [self setBackgroundColor:self.disabledColor];
     }
+}
+
+- (CGSize)sizeWithMaxWidth:(CGFloat)width
+{
+    return [self.titleLabel.text sizeForFont:self.titleLabel.font withMaxWidth:width];
 }
 
 @end

@@ -10,6 +10,7 @@
 #import "JACustomNavigationBarView.h"
 #import "JATabBarView.h"
 #import "JAScreenTarget.h"
+#import "RIOrder.h"
 #import "RICart.h"
 
 @interface JACenterNavigationController : UINavigationController
@@ -27,7 +28,7 @@
 - (BOOL)openScreenTarget:(JAScreenTarget *)target;
 - (void)showSearchView;
 
-- (void)goToOnlineReturnsConfirmConditions;
+- (void)goToOnlineReturnsConfirmConditionsForItem:(RIItemCollection *)item;
 - (void)goToOnlineReturnsConfirmScreen;
 
 @end
