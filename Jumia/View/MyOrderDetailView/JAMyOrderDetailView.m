@@ -169,7 +169,7 @@
         int i = (int)item.returns.count;
         extra = 6.f + 12.f + i * 12;
     }
-    CGSize size = CGSizeMake(self.width, 197.f + extra);
+    CGSize size = CGSizeMake(self.width, 193.f + extra);
     
     self.collectionViewFlowLayout.itemSize = size;
     return size;
