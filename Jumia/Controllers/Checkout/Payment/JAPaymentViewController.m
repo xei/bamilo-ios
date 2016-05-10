@@ -319,6 +319,7 @@ UITextFieldDelegate>
     
     if (RI_IS_RTL) {
         [self.view flipAllSubviews];
+        [_bottomView flipAllSubviews];
     }
 }
 
