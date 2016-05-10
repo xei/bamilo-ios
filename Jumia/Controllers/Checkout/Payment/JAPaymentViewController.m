@@ -274,25 +274,20 @@ UITextFieldDelegate>
 
     [self.couponHeader setFrame:CGRectMake(0.0f, 0.0f, self.couponView.frame.size.width, kProductInfoHeaderLineHeight)];
     
-    BOOL saveCouponTextFieldEnabled = self.couponTextField.enabled;
-    UIColor* saveCouponTextFieldColor = self.couponTextField.textColor;
-    NSString* saveCouponTextFieldText = self.couponTextField.text;
-    [self.couponTextField removeFromSuperview];
-    self.couponTextField = [[UITextField alloc] init];
-    [self.couponTextField setFont:JABodyFont];
-    [self.couponTextField setTextColor:JAGreyColor];
-    [self.couponTextField setValue:JATextFieldColor forKeyPath:@"_placeholderLabel.textColor"];
-    [self.couponTextField setPlaceholder:STRING_ENTER_COUPON];
-    [self.couponTextField setDelegate:self];
-    [self.couponView addSubview:self.couponTextField];
+    if (!self.couponTextField) {
+        self.couponTextField = [[UITextField alloc] init];
+        [self.couponTextField setFont:JABodyFont];
+        [self.couponTextField setTextColor:JAGreyColor];
+        [self.couponTextField setPlaceholder:STRING_ENTER_COUPON];
+        [self.couponTextField setDelegate:self];
+        [self.couponView addSubview:self.couponTextField];
+    }
     self.couponTextField.textAlignment = NSTextAlignmentLeft;
     self.couponTextField.frame = CGRectMake(16.0f,
                                             CGRectGetMaxY(self.couponHeader.frame) + 10.0f,
                                             self.couponView.frame.size.width - 16.0f - 5.0f - self.useCouponClickableView.frame.size.width,
                                             30.0f);
-    self.couponTextField.enabled = saveCouponTextFieldEnabled;
-    self.couponTextField.textColor = saveCouponTextFieldColor;
-    self.couponTextField.text = saveCouponTextFieldText;
+
     
     self.couponUndeline.frame = CGRectMake(self.couponTextField.frame.origin.x,
                                            CGRectGetMaxY(self.couponTextField.frame),
