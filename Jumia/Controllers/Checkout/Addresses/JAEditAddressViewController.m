@@ -215,7 +215,7 @@ JAPickerDelegate>
     
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation)  && (width < self.view.frame.size.width) && self.fromCheckout)
     {
-        CGFloat orderSummaryRightMargin = 6.0f;
+        CGFloat orderSummaryRightMargin = 0.0f;
         self.orderSummary = [[JAOrderSummaryView alloc] initWithFrame:CGRectMake(width,
                                                                                  scrollViewStartY,
                                                                                  self.view.frame.size.width - width - orderSummaryRightMargin,
@@ -224,6 +224,8 @@ JAPickerDelegate>
         [self.view addSubview:self.orderSummary];
         self.orderSummaryOriginalHeight = self.orderSummary.frame.size.height;
     }
+    
+    [self.view bringSubviewToFront:self.bottomButton];
     
     [self.headerLine setFrame:CGRectMake(0.0f, 0.0f, self.contentScrollView.frame.size.width, 48.0f)];
     

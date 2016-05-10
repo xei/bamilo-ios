@@ -64,6 +64,7 @@
                                                                                 currentY,
                                                                                 self.cartView.bounds.size.width - 2*startingX,
                                                                                 26.0f)];
+        productsTitleLabel.textAlignment = NSTextAlignmentLeft;
         productsTitleLabel.text = STRING_PRODUCTS;
         productsTitleLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         productsTitleLabel.textColor = JAButtonTextOrange;
