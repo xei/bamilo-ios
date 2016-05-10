@@ -14,6 +14,7 @@
 #import "JACenterNavigationController.h"
 #import "JAUtils.h"
 #import "RICustomer.h"
+#import "JAButton.h"
 
 @interface JAMyOrderDetailView () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
@@ -25,6 +26,9 @@
 
 @property (nonatomic) RITrackOrder *order;
 @property (nonatomic, strong) NSMutableArray *itemsToReturnArray;
+
+@property (nonatomic, strong) JAButton *returnMultipleItemsButton;
+@property (nonatomic) BOOL hasMultipleSelection;
 
 @end
 
@@ -87,10 +91,33 @@
     return _itemsToReturnArray;
 }
 
+- (JAButton *)returnMultipleItemsButton
+{
+    if (!VALID(_returnMultipleItemsButton, JAButton)) {
+        _returnMultipleItemsButton = [[JAButton alloc] initAlternativeButtonWithTitle:[@"Return selected items" uppercaseString] target:self action:@selector(returnMultipleItems)];
+        [_returnMultipleItemsButton setFrame:CGRectMake(0, 0, self.width, kBottomDefaultHeight)];
+        [_returnMultipleItemsButton setHidden:YES];
+    }
+    return _returnMultipleItemsButton;
+}
+
 - (void)setupWithOrder:(RITrackOrder*)order frame:(CGRect)frame
 {
     self.order = order;
     [self setFrame:frame];
+    
+    int i = 0;
+    for (RIItemCollection *item in self.order.itemCollection) {
+        if (item.onlineReturn) {
+            i++;
+        }
+    }
+    if (i>1) {
+        self.hasMultipleSelection = YES;
+    }else{
+        self.hasMultipleSelection = NO;
+    }
+    
     if (!VALID(self.myOrderResumeView.superview, JAMyOrderResumeView)) {
         [self addSubview:self.myOrderResumeView];
     }
@@ -109,7 +136,18 @@
                                              self.collectionView.frame.size.width,
                                              [self totalHeightForCollectionView])];
     
-    [self setFrame:CGRectMake(0.0f, 0.0f, self.frame.size.width, CGRectGetMaxY(self.collectionView.frame))];
+    if (!VALID(self.returnMultipleItemsButton.superview, UIView)) {
+        [self addSubview:self.returnMultipleItemsButton];
+    }
+    [self reloadFrame];
+}
+
+- (void)reloadFrame
+{
+    [self.returnMultipleItemsButton setHidden:!VALID_NOTEMPTY(self.itemsToReturnArray, NSMutableArray)];
+    [self.returnMultipleItemsButton setWidth:self.width];
+    [self.returnMultipleItemsButton setYBottomOf:self.collectionView at:6.f];
+    [self setFrame:CGRectMake(0.0f, 0.0f, self.frame.size.width, CGRectGetMaxY(self.returnMultipleItemsButton.frame))];
 }
 
 - (CGFloat)totalHeightForCollectionView
@@ -147,6 +185,12 @@
     [cell.feedbackView addTarget:self action:@selector(itemClicked:) forControlEvents:UIControlEventTouchUpInside];
     [cell.checkToReturnButton addTarget:self action:@selector(multipleCheckClicked:) forControlEvents:UIControlEventTouchUpInside];
     [cell setItem:item];
+//    if ([self.itemsToReturnArray indexOfObject:item] != NSNotFound) {
+//        [cell.checkToReturnButton setHidden:NO];
+//    }
+    if (!self.hasMultipleSelection) {
+        [cell.checkToReturnButton setHidden:YES];
+    }
     return cell;
 }
 
@@ -156,6 +200,14 @@
         return self.order.itemCollection.count;
     }
     return 0;
+}
+
+- (void)reloadMultipleChecks
+{
+    [self.returnMultipleItemsButton setHidden:!VALID_NOTEMPTY(self.itemsToReturnArray, NSMutableArray)];
+    [self.returnMultipleItemsButton setWidth:self.width];
+    [self.returnMultipleItemsButton setYBottomOf:self.collectionView at:6.f];
+    [self reloadFrame];
 }
 
 - (void)itemClicked:(UIButton *)button
@@ -205,13 +257,16 @@
     {
         [button setSelected:!button.selected];
         if (button.selected) {
+            if ([self.itemsToReturnArray indexOfObject:item] == NSNotFound) {
+                [self.itemsToReturnArray addObject:item];
+            }
+        }else{
             if ([self.itemsToReturnArray indexOfObject:item] != NSNotFound) {
-                
-            }else{
-                
+                [self.itemsToReturnArray removeObject:item];
             }
         }
     }
+    [self reloadMultipleChecks];
 }
 
 - (void)returnItem:(UIButton *)button
@@ -220,11 +275,16 @@
     if(VALID_NOTEMPTY(item.sku, NSString))
     {
         if (item.onlineReturn) {
-            [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmConditionsForItem:item];
+            [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmConditionsForItems:@[item]];
         }else if (item.callReturn){
             [self callToReturn];
         }
     }
+}
+
+- (void)returnMultipleItems
+{
+    [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmConditionsForItems:[self.itemsToReturnArray copy]];
 }
 
 - (void)callToReturn

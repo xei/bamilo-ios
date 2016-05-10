@@ -1832,10 +1832,10 @@
 
 #pragma mark - OnlineReturns
 
-- (void)goToOnlineReturnsConfirmConditionsForItem:(RIItemCollection *)item
+- (void)goToOnlineReturnsConfirmConditionsForItems:(NSArray *)items
 {
     JAORConfirmConditionsViewController *viewController = [[JAORConfirmConditionsViewController alloc] init];
-    [viewController setItem:item];
+    [viewController setItems:items];
     [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
 }
 

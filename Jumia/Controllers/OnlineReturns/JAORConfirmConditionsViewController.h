@@ -11,6 +11,6 @@
 
 @interface JAORConfirmConditionsViewController : JABaseViewController
 
-@property (nonatomic, strong) RIItemCollection *item;
+@property (nonatomic, strong) NSArray *items;
 
 @end
