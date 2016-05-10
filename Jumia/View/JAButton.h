@@ -20,4 +20,6 @@
 - (instancetype)initSmallButtonWithImage:(UIImage *)image target:(id)target action:(SEL)action;
 - (instancetype)initFacebookButtonWithTitle:(NSString *)title target:(id)target action:(SEL)action;
 
+- (CGSize)sizeWithMaxWidth:(CGFloat)width;
+
 @end
