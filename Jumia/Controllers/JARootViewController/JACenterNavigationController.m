@@ -1836,7 +1836,7 @@
 {
     JAORConfirmConditionsViewController *viewController = [[JAORConfirmConditionsViewController alloc] init];
     [viewController setItems:items];
-    [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
+    [self pushViewController:viewController animated:YES];
 }
 
 - (void)goToOnlineReturnsConfirmScreen
