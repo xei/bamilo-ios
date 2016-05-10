@@ -52,6 +52,8 @@ UITableViewDelegate>
 
 @property (assign, nonatomic) RIApiResponse apiResponse;
 
+@property (nonatomic, assign) BOOL isLoaded;
+
 @end
 
 @implementation JAAddressesViewController
@@ -85,18 +87,21 @@ UITableViewDelegate>
     [self.shippingAddressTableView setScrollEnabled:NO];
     [self.shippingAddressTableView setDelegate:self];
     [self.shippingAddressTableView setDataSource:self];
+    [self.shippingAddressTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.contentScrollView addSubview:self.shippingAddressTableView];
     
     self.billingAddressTableView = [UITableView new];
     [self.billingAddressTableView setScrollEnabled:NO];
     [self.billingAddressTableView setDelegate:self];
     [self.billingAddressTableView setDataSource:self];
+    [self.billingAddressTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.contentScrollView addSubview:self.billingAddressTableView];
     
     self.otherAddressesTableView = [UITableView new];
     [self.otherAddressesTableView setScrollEnabled:NO];
     [self.otherAddressesTableView setDelegate:self];
     [self.otherAddressesTableView setDataSource:self];
+    [self.otherAddressesTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.contentScrollView addSubview:self.otherAddressesTableView];
     
     
@@ -105,20 +110,36 @@ UITableViewDelegate>
     _bottomView = [[JACheckoutBottomView alloc] initWithFrame:CGRectMake(0.f, self.view.frame.size.height - 56, self.view.frame.size.width, 56) orientation:self.interfaceOrientation];
     [_bottomView setTotalValue:self.cart.cartValueFormatted];
     [self.view addSubview:_bottomView];
-    [self getAddressList];
+    
+    self.isLoaded = NO;
 }
 
-- (void) viewWillAppear:(BOOL)animated
+- (void)viewWillLayoutSubviews
 {
-    [super viewWillAppear:animated];
-    [self showLoading];
+    [super viewWillLayoutSubviews];
     
     [self setCart:[JACenterNavigationController sharedInstance].cart];
-    [self.contentScrollView setHidden:YES];
-    [_bottomView setHidden:YES];
     [_bottomView setTotalValue:self.cart.cartValueFormatted];
+    if (self.fromCheckout) {
+        if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+            [_bottomView setNoTotal:YES];
+        }else{
+            [_bottomView setNoTotal:NO];
+        }
+    }else{
+        [_bottomView setNoTotal:YES];
+    }
     
-    [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:.3];
+    CGFloat newWidth = self.view.frame.size.width;
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation) && self.fromCheckout)
+    {
+        newWidth = self.view.frame.size.height + self.view.frame.origin.y;
+    }
+    if (NO == self.isLoaded) {
+        [self getAddressList];
+    } else {
+        [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -126,14 +147,14 @@ UITableViewDelegate>
     [super viewDidAppear:animated];
     
     [[RITrackingWrapper sharedInstance]trackScreenWithName:@"AddressesList"];
-    
-    [self getAddressList];
 }
 
 - (void)getAddressList
 {
-    
+    [self showLoading];
     [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
+        self.isLoaded = YES;
+        
         
         self.addresses = adressList;
         if(VALID_NOTEMPTY(self.addresses, NSDictionary))
@@ -207,38 +228,6 @@ UITableViewDelegate>
     }];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    if (self.fromCheckout) {
-        if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
-            [_bottomView setNoTotal:YES];
-        }else{
-            [_bottomView setNoTotal:NO];
-        }
-    }else{
-        [_bottomView setNoTotal:YES];
-    }
-    
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    CGFloat newWidth = self.view.frame.size.width;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation) && self.fromCheckout)
-    {
-        newWidth = self.view.frame.size.height + self.view.frame.origin.y;
-    }
-    
-    [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
-    
-    [self.shippingAddressTableView reloadData];
-    [self.billingAddressTableView reloadData];
-    [self.otherAddressesTableView reloadData];
-    
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-}
-
 - (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
     CGFloat scrollViewStartY = 0.0f;
@@ -250,7 +239,7 @@ UITableViewDelegate>
     
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation)  && (width < self.view.frame.size.width) && self.fromCheckout)
     {
-        CGFloat orderSummaryRightMargin = 6.0f;
+        CGFloat orderSummaryRightMargin = 0.0f;
         self.orderSummary = [[JAOrderSummaryView alloc] initWithFrame:CGRectMake(width,
                                                                                  scrollViewStartY,
                                                                                  self.view.frame.size.width - width - orderSummaryRightMargin,

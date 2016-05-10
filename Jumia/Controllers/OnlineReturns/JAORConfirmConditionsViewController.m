@@ -70,6 +70,7 @@
     [self.view addSubview:self.submitButton];
     
 //    self.targetString = @"static_page::returns_mobile"; // still here for debug
+    self.targetString = self.item.onlineReturnTargetString;
     
     [self showLoading];
     [RIHtmlShop getHtmlShopForTargetString:self.targetString successBlock:^(RIHtmlShop *htmlShop) {

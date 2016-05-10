@@ -130,6 +130,8 @@
     self.contentBackgroundView.frame = self.bounds;
     self.contentBackgroundView.width = width;
     self.contentBackgroundView.height = currentY+12.0f;
+    self.width = self.contentBackgroundView.width;
+    self.height = self.contentBackgroundView.height;
     
     if (RI_IS_RTL) {
         [self.contentBackgroundView flipAllSubviews];

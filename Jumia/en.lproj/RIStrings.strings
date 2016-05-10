@@ -206,6 +206,8 @@
 
 "shipment_of" = "Shipment %ld of %ld";
 
+"shipment_label" = "shipment";
+
 "fulfilled_by" = "Fulfillment by";
 
 "free_label" = "Free";
@@ -715,3 +717,10 @@
 "go" = "Go";
 
 "order_return_conditions_title" = "We are sorry that you are not fully satisfied with your product";
+"return_label" = "return";
+
+"returns_label" = "returns";
+
+"x_items_returned_on" = "%ld items returned on %@";
+
+"call_return_label" = "Call to Return";

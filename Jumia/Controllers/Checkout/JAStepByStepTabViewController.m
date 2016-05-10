@@ -78,26 +78,20 @@
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-    for (UIViewController *viewController in self.viewControllersStackArray) {
-        [viewController viewWillLayoutSubviews];
-    }
+    [self.actualViewController viewWillLayoutSubviews];
     [self.tabBarView setXCenterAligned];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    for (UIViewController *viewController in self.viewControllersStackArray) {
-        [viewController didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    }
+    [self.actualViewController didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    for (UIViewController *viewController in self.viewControllersStackArray) {
-        [viewController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    }
+    [self.actualViewController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)goToView:(UIButton *)button
@@ -135,6 +129,7 @@
     [newViewController.view setX:offset];
     [newViewController.view setY:self.tabBarView.height];
     newViewController.view.height = self.view.height - self.tabBarView.height;
+    newViewController.view.width = self.view.width;
     [self.view addSubview:newViewController.view];
     [newViewController.view.layer removeAllAnimations];
     [UIView animateWithDuration:.2 animations:^{

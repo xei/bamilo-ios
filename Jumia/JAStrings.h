@@ -116,6 +116,7 @@
 #define STRING_ERROR_CHANGING_QUANTITY RILocalizedString(@"error_add_to_shopping_cart_quantity", nil)
 #define STRING_SHIPPING RILocalizedString(@"shipping", nil)
 #define STRING_SHIPMENT_OF RILocalizedString(@"shipment_of", nil)
+#define STRING_SHIPMENT RILocalizedString(@"shipment_label", nil)
 #define STRING_FULFILLED RILocalizedString(@"fulfilled_by", nil)
 #define STRING_FREE RILocalizedString(@"free_label", nil)
 #define STRING_EXTRA_COSTS RILocalizedString(@"extra_costs_label", nil)
@@ -425,5 +426,13 @@
 #define STRING_GO RILocalizedString(@"go", nil)
 
 #define STRING_ORDER_RETURN_CONDITIONS_TITLE RILocalizedString(@"order_return_conditions_title", nil)
+
+#define STRING_RETURN RILocalizedString(@"return_label", nil)
+
+#define STRING_RETURNS RILocalizedString(@"returns_label", nil)
+
+#define STRING_CALL_TO_RETURN RILocalizedString(@"call_return_label", nil)
+
+#define STRING_X_ITEMS_RETURNED_ON RILocalizedString(@"x_items_returned_on", nil)
 
 #endif

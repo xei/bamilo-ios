@@ -40,12 +40,30 @@
 @property (strong, nonatomic) NSString *statusLabel;
 @property (strong, nonatomic) NSString *statusDate;
 
+@property (strong, nonatomic) NSArray *returns;
+@property (assign, nonatomic) BOOL onlineReturn;
+@property (assign, nonatomic) BOOL callReturn;
+@property (strong, nonatomic) NSString *onlineReturnTargetString;
+@property (strong, nonatomic) NSNumber *returnableQty;
+@property (strong, nonatomic) NSString *callReturnTextBody1;
+@property (strong, nonatomic) NSString *callReturnTextBody2;
+@property (strong, nonatomic) NSString *callReturnTextTitle;
+
 @end
 
 @interface RIStatus : NSObject
 
 @property (nonatomic, strong) NSString *itemStatus;
 @property (nonatomic, strong) NSString *lastChangeStatus;
+
+@end
+
+@interface RIReturnAction : NSObject
+
+@property (nonatomic, strong) NSNumber *items;
+@property (nonatomic, strong) NSString *lastChangeStatus;
+
++ (RIReturnAction *)parseReturnAction:(NSDictionary *)json;
 
 @end
 
