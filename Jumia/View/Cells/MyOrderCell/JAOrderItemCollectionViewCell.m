@@ -10,7 +10,7 @@
 #import "UIImageView+WebCache.h"
 
 
-#define kImageSize CGSizeMake(68, 85)
+#define kImageSize CGSizeMake(82, 103)
 
 @interface JAOrderItemCollectionViewCell ()
 {
@@ -56,7 +56,7 @@
 {
     if (!VALID(_brandLabel, UILabel)) {
         _brandLabel = [[UILabel alloc] init];
-        [_brandLabel setFont:JACaptionFont];
+        [_brandLabel setFont:JABodyFont];
         _brandLabel.textColor = JABlack800Color;
         [self addSubview:_brandLabel];
     }
@@ -67,7 +67,7 @@
 {
     if (!VALID(_nameLabel, UILabel)) {
         _nameLabel = [[UILabel alloc] init];
-        [_nameLabel setFont:JABodyFont];
+        [_nameLabel setFont:JATitleFont];
         _nameLabel.textColor = JABlackColor;
         [self addSubview:_nameLabel];
     }
@@ -78,7 +78,7 @@
 {
     if (!VALID(_qtyLabel, UILabel)) {
         _qtyLabel = [[UILabel alloc] init];
-        [_qtyLabel setFont:JACaptionFont];
+        [_qtyLabel setFont:JABodyFont];
         _qtyLabel.textColor = JABlack800Color;
         [self addSubview:_qtyLabel];
     }
@@ -112,7 +112,7 @@
 {
     if (!VALID(_estimateDeliveryLabel, UILabel)) {
         _estimateDeliveryLabel = [[UILabel alloc] init];
-        [_estimateDeliveryLabel setFont:JACaptionFont];
+        [_estimateDeliveryLabel setFont:JABodyFont];
         _estimateDeliveryLabel.textColor = JABlack800Color;
         [_estimateDeliveryLabel setTextAlignment:NSTextAlignmentLeft];
         [self addSubview:_estimateDeliveryLabel];
@@ -124,7 +124,7 @@
 {
     if (!VALID(_shipmentTitleLabel, UILabel)) {
         _shipmentTitleLabel = [UILabel new];
-        [_shipmentTitleLabel setFont:JACaptionFont];
+        [_shipmentTitleLabel setFont:JABADGEFont];
         [_shipmentTitleLabel setTextColor:JABlackColor];
         [_shipmentTitleLabel setText:[STRING_SHIPMENT uppercaseString]];
         [self addSubview:_shipmentTitleLabel];
@@ -148,7 +148,7 @@
 {
     if (!VALID(_returnsTitleLabel, UILabel)) {
         _returnsTitleLabel = [UILabel new];
-        [_returnsTitleLabel setFont:JACaptionFont];
+        [_returnsTitleLabel setFont:JABADGEFont];
         [_returnsTitleLabel setTextColor:JABlackColor];
         [_returnsTitleLabel setText:[STRING_RETURNS uppercaseString]];
         [self addSubview:_returnsTitleLabel];
@@ -172,8 +172,9 @@
 {
     if (!VALID(_reorderButton, JAButton)) {
         _reorderButton = [[JAButton alloc] initButtonWithTitle:[STRING_REORDER uppercaseString]];
+        [_reorderButton.titleLabel setFont:JABUTTON2Font];
         [_reorderButton setWidth:120.f];
-        [_reorderButton setHeight:40];
+        [_reorderButton setHeight:36];
         [self addSubview:_reorderButton];
     }
     return _reorderButton;
@@ -183,8 +184,9 @@
 {
     if (!VALID(_returnButton, JAButton)) {
         _returnButton = [[JAButton alloc] initAlternativeButtonWithTitle:[STRING_RETURN uppercaseString]];
+        [_returnButton.titleLabel setFont:JABUTTON2Font];
         [_returnButton setWidth:120.f];
-        [_returnButton setHeight:40];
+        [_returnButton setHeight:36];
         [self addSubview:_returnButton];
     }
     return _returnButton;
@@ -219,7 +221,7 @@
     _labelsLeftMargin = self.productImageView.width + 2*6.f + 40;
     _labelsWidth = self.width - _labelsLeftMargin - 20;
     
-    [self.reorderButton setWidth:[self.reorderButton sizeWithMaxWidth:self.width/2].width + 12.f];
+    [self.reorderButton setWidth:[self.reorderButton sizeWithMaxWidth:self.width/2].width + 20.f];
     [self.reorderButton setYBottomAligned:10.f];
     [self.reorderButton setXRightAligned:16.f];
     [self.returnButton sizeToFit];
@@ -237,7 +239,7 @@
         [self.checkToReturnButton setHidden:YES];
         self.returnButton.hidden = YES;
     }
-    [self.returnButton setWidth:[self.returnButton sizeWithMaxWidth:self.width/2].width + 12.f];
+    [self.returnButton setWidth:[self.returnButton sizeWithMaxWidth:self.width/2].width + 20.f];
     
     [self.productImageView setFrame:CGRectMake(46.0f, 16.0f, kImageSize.width, kImageSize.height)];
     [self.brandLabel setFrame:CGRectMake(_labelsLeftMargin, 16.f, _labelsWidth - self.reorderButton.width, 20)];
