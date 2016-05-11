@@ -724,3 +724,5 @@
 "x_items_returned_on" = "%ld items returned on %@";
 
 "call_return_label" = "Call to Return";
+
+"call_now_label" = "call now";

@@ -36,6 +36,16 @@
     return self.superview.height - CGRectGetMaxY(self.frame);
 }
 
+- (CGSize)size
+{
+    return self.frame.size;
+}
+
+- (CGPoint)position
+{
+    return self.frame.origin;
+}
+
 - (void)setX:(CGFloat)x {
     CGRect frame = [self frame];
     if (frame.origin.x == x) {
@@ -140,6 +150,26 @@
 - (void)sizeHeightToFit
 {
     [self setHeight:[self sizeThatFits:CGSizeMake(self.width, CGFLOAT_MAX)].height];
+}
+
+- (void)setSize:(CGSize)size
+{
+    CGRect frame = [self frame];
+    if (CGSizeEqualToSize(frame.size, size)) {
+        return;
+    }
+    frame.size = size;
+    [self setFrame:frame];
+}
+
+- (void)setPosition:(CGPoint)position
+{
+    CGRect frame = [self frame];
+    if (CGPointEqualToPoint(frame.origin, position)) {
+        return;
+    }
+    frame.origin = position;
+    [self setFrame:frame];
 }
 
 @end

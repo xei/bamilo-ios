@@ -12,8 +12,6 @@
 #import "JAOrderItemCollectionViewCell.h"
 #import "JAMyOrderResumeView.h"
 #import "JACenterNavigationController.h"
-#import "JAUtils.h"
-#import "RICustomer.h"
 #import "JAButton.h"
 
 @interface JAMyOrderDetailView () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
@@ -277,7 +275,7 @@
         if (item.onlineReturn) {
             [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmConditionsForItems:@[item]];
         }else if (item.callReturn){
-            [self callToReturn];
+            [[JACenterNavigationController sharedInstance] goToOnlineReturnsCall:item fromOrderNumber:self.order.orderId];
         }
     }
 }
@@ -285,31 +283,6 @@
 - (void)returnMultipleItems
 {
     [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmConditionsForItems:[self.itemsToReturnArray copy]];
-}
-
-- (void)callToReturn
-{
-    [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-        
-        [self trackingEventCallToReturn];
-        
-        NSString *phoneNumber = [@"tel://" stringByAppendingString:configuration.phoneNumber];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
-    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-    }];
-}
-
-- (void)trackingEventCallToReturn
-{
-    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-    [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-    [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-    
-    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCallToOrder]
-                                              data:[trackingDictionary copy]];
 }
 
 @end

@@ -63,6 +63,7 @@
 
 #import "JAORConfirmConditionsViewController.h"
 #import "JAORConfirmationScreenViewController.h"
+#import "JAORCallToReturnViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -1831,6 +1832,14 @@
 }
 
 #pragma mark - OnlineReturns
+
+- (void)goToOnlineReturnsCall:(RIItemCollection *)item fromOrderNumber:(NSString *)orderNumber
+{
+    JAORCallToReturnViewController *viewController = [[JAORCallToReturnViewController alloc] init];
+    [viewController setItem:item];
+    [viewController setOrderNumber:orderNumber];
+    [self pushViewController:viewController animated:YES];
+}
 
 - (void)goToOnlineReturnsConfirmConditionsForItems:(NSArray *)items
 {
