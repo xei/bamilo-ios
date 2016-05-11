@@ -29,6 +29,7 @@
 - (void)showSearchView;
 
 - (void)goToOnlineReturnsConfirmConditionsForItems:(NSArray *)items;
+- (void)goToOnlineReturnsCall:(RIItemCollection *)item fromOrderNumber:(NSString *)orderNumber;
 - (void)goToOnlineReturnsConfirmScreen;
 
 @end

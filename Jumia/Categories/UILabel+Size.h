@@ -10,6 +10,6 @@
 
 @interface UILabel (Size)
 
-- (CGSize)sizeWithMaxWidth:(CGFloat)width;
+- (void)setSizeForcingMaxSize:(CGSize)maxSize;
 
 @end

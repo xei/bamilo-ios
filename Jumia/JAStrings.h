@@ -432,7 +432,7 @@
 #define STRING_RETURNS RILocalizedString(@"returns_label", nil)
 
 #define STRING_CALL_TO_RETURN RILocalizedString(@"call_return_label", nil)
-
+#define STRING_CALL_NOW RILocalizedString(@"call_now_label", nil)
 #define STRING_X_ITEMS_RETURNED_ON RILocalizedString(@"x_items_returned_on", nil)
 
 #endif

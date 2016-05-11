@@ -11,9 +11,16 @@
 
 @implementation UILabel (Size)
 
-- (CGSize)sizeWithMaxWidth:(CGFloat)width
+- (void)setSizeForcingMaxSize:(CGSize)maxSize
 {
-    return [self.text sizeForFont:self.font withMaxWidth:width];
+    CGSize size = [self sizeThatFits:maxSize];
+    if (size.width > maxSize.width) {
+        size.width = maxSize.width;
+    }
+    if (size.height > maxSize.height) {
+        size.height = maxSize.height;
+    }
+    [self setSize:size];
 }
 
 @end
