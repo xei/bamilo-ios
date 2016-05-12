@@ -64,6 +64,8 @@
 #import "JAORConfirmConditionsViewController.h"
 #import "JAORConfirmationScreenViewController.h"
 
+#import "JAORReasonsViewController.h"
+
 @interface JACenterNavigationController ()
 
 @property (assign, nonatomic) BOOL neeedsExternalPaymentMethod;
@@ -1833,10 +1835,21 @@
 #pragma mark - OnlineReturns
 
 - (void)goToOnlineReturnsConfirmConditionsForItems:(NSArray *)items
+                                             order:(RITrackOrder*)order
 {
     JAORConfirmConditionsViewController *viewController = [[JAORConfirmConditionsViewController alloc] init];
     [viewController setItems:items];
+    [viewController setOrder:order];
     [self pushViewController:viewController animated:YES];
+}
+
+- (void)goToOnlineReturnsReasonsScreenForItems:(NSArray *)items
+                                         order:(RITrackOrder*)order
+{
+    JAORReasonsViewController* viewController = [[JAORReasonsViewController alloc] init];
+    [viewController setItems:items];
+    [viewController setOrder:order];
+    [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
 }
 
 - (void)goToOnlineReturnsConfirmScreen

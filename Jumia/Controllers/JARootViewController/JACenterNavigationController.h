@@ -28,7 +28,11 @@
 - (BOOL)openScreenTarget:(JAScreenTarget *)target;
 - (void)showSearchView;
 
-- (void)goToOnlineReturnsConfirmConditionsForItems:(NSArray *)items;
+
+- (void)goToOnlineReturnsConfirmConditionsForItems:(NSArray *)items
+                                             order:(RITrackOrder*)order;
+- (void)goToOnlineReturnsReasonsScreenForItems:(NSArray *)items
+                                         order:(RITrackOrder*)order;
 - (void)goToOnlineReturnsConfirmScreen;
 
 @end

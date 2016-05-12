@@ -83,7 +83,7 @@
 
 - (void)goToNext
 {
-    [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmScreen];
+    [[JACenterNavigationController sharedInstance] goToOnlineReturnsReasonsScreenForItems:self.items order:self.order];
 }
 
 -(void)viewWillLayoutSubviews

@@ -121,7 +121,25 @@
         RIField *field = [fields objectAtIndex:i];
         NSInteger tag = [self.formViews count];
         
-        if ([@"screen_radio" isEqualToString:field.type]) {
+        if ([@"list_number" isEqualToString:field.type]) {
+            JAListNumberComponent *listNumberComponent = [[JAListNumberComponent alloc] init];
+            [listNumberComponent setupWithField:field];
+            [listNumberComponent.textField setDelegate:self];
+            [listNumberComponent.textField setReturnKeyType:returnKeyType];
+            
+            CGRect frame = listNumberComponent.frame;
+            frame.origin.y = startingY;
+            listNumberComponent.frame = frame;
+            startingY += listNumberComponent.frame.size.height;
+            
+            
+            [listNumberComponent.textField setTag:tag];
+            [listNumberComponent setTag:tag];
+            
+            lastTextFieldIndex = [self.formViews count];
+            [self.formViews addObject:listNumberComponent];
+            
+        } else if ([@"screen_radio" isEqualToString:field.type]) {
             JAScreenRadioComponent* screenRadio = [[JAScreenRadioComponent alloc] init];
             screenRadio.delegate = self;
             [screenRadio setupWithField:field];
@@ -652,7 +670,12 @@
     {
         for (UIView *view in self.formViews)
         {
-            if ([view isKindOfClass:[JASwitchRadioComponent class]]) {
+            if ([view isKindOfClass:[JAListNumberComponent class]]) {
+                JAListNumberComponent* listNumber = (JAListNumberComponent*) view;
+                if (VALID_NOTEMPTY([listNumber getValues], NSDictionary)) {
+                    [parameters addEntriesFromDictionary:[listNumber getValues]];
+                }
+            } else if ([view isKindOfClass:[JASwitchRadioComponent class]]) {
                 JASwitchRadioComponent* switchRadio = (JASwitchRadioComponent*) view;
                 if(VALID_NOTEMPTY([switchRadio getValues], NSDictionary))
                 {
@@ -961,6 +984,17 @@
             [self.delegate performSelector:@selector(openPicker:) withObject:[self viewWithTag:textField.tag]];
         }
     }
+    else if([view isKindOfClass:[JAListNumberComponent class]])
+    {
+        [self resignResponder];
+        
+        textFieldShouldBeginEditing = NO;
+        
+        if (self.delegate && [self.delegate respondsToSelector:@selector(openNumberPicker:)]) {
+            [self.delegate performSelector:@selector(openNumberPicker:) withObject:view];
+        }
+    }
+    
     
     self.currentTextField = textField;
     
