@@ -112,6 +112,10 @@
     [super viewDidLoad];
     [self.view setBackgroundColor:JAWhiteColor];
     self.navBarLayout.showBackButton = YES;
+    self.navBarLayout.showCartButton = NO;
+    [self.navBarLayout setTitle:STRING_CALL_TO_RETURN];
+    
+    [self.view setBackgroundColor:JAWhiteColor];
     
     if (VALID(self.item, RIItemCollection)) {
         [self.titleLabel setText:self.item.callReturnTextTitle];
@@ -166,6 +170,10 @@
     [self.backButton setWidth:bodyWidth];
     [self.backButton setYBottomOf:self.callButton at:16.f];
     [self.backButton setXCenterAligned];
+    
+    if (RI_IS_RTL) {
+        [self.view flipAllSubviews];
+    }
 }
 
 - (void)callToReturn
@@ -182,7 +190,7 @@
 
 - (void)goBack
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kCloseCurrentScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
 }
 
 - (void)trackingEventCallToReturn
