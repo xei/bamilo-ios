@@ -64,6 +64,7 @@
 #import "JAORConfirmConditionsViewController.h"
 #import "JAORConfirmationScreenViewController.h"
 #import "JAORCallToReturnViewController.h"
+#import "RIHtmlShop.h"
 
 @interface JACenterNavigationController ()
 
@@ -1843,9 +1844,17 @@
 
 - (void)goToOnlineReturnsConfirmConditionsForItems:(NSArray *)items
 {
-    JAORConfirmConditionsViewController *viewController = [[JAORConfirmConditionsViewController alloc] init];
-    [viewController setItems:items];
-    [self pushViewController:viewController animated:YES];
+    NSString *targetString = [(RIItemCollection *)[items firstObject] onlineReturnTargetString];
+    
+    [RIHtmlShop getHtmlShopForTargetString:targetString successBlock:^(RIHtmlShop *htmlShop) {
+        JAORConfirmConditionsViewController *viewController = [[JAORConfirmConditionsViewController alloc] init];
+        [viewController setHtml:htmlShop.html];
+        [viewController setItems:items];
+        [self pushViewController:viewController animated:YES];
+    } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+        [self goToOnlineReturnsConfirmScreen];
+    }];
+    
 }
 
 - (void)goToOnlineReturnsConfirmScreen
