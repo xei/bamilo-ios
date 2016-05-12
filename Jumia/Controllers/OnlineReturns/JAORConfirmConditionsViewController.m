@@ -10,7 +10,6 @@
 #import "JAProductInfoHeaderLine.h"
 #import "JACenterNavigationController.h"
 #import "JAButton.h"
-#import "RIHtmlShop.h"
 
 #define kLateralMargin 8.f
 #define kSpaceBetweenTitleAndBody 2.f
@@ -51,7 +50,7 @@
     if (!VALID(_submitButton, JAButton)) {
         _submitButton = [[JAButton alloc] initButtonWithTitle:[STRING_OK_GOT_IT uppercaseString]];
         [_submitButton addTarget:self action:@selector(goToNext) forControlEvents:UIControlEventTouchUpInside];
-        [_submitButton setFrame:CGRectMake(0, 0, self.view.width, kBottomDefaultHeight)];
+        [_submitButton setFrame:CGRectMake(kLateralMargin, 0, self.view.width-2*kLateralMargin, kBottomDefaultHeight)];
         [_submitButton setYBottomAligned:0.f];
     }
     return _submitButton;
@@ -62,6 +61,7 @@
     [super viewDidLoad];
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showCartButton = NO;
+    [self.navBarLayout setTitle:STRING_MY_ORDERS];
     
     [self.view setBackgroundColor:JAWhiteColor];
     
@@ -69,16 +69,8 @@
     [self.view addSubview:self.webView];
     [self.view addSubview:self.submitButton];
     
-    self.targetString = [(RIItemCollection *)[self.items firstObject] onlineReturnTargetString];
-    
     [self showLoading];
-    [RIHtmlShop getHtmlShopForTargetString:self.targetString successBlock:^(RIHtmlShop *htmlShop) {
-        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-        [self.webView loadHTMLString:htmlShop.html baseURL:[NSURL URLWithString:[RITarget getURLStringforTargetString:self.targetString]]];
-    } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-        
-        [self hideLoading];
-    }];
+    [self.webView loadHTMLString:self.html baseURL:[NSURL URLWithString:[RITarget getURLStringforTargetString:self.targetString]]];
 }
 
 - (void)goToNext
@@ -91,8 +83,10 @@
     [super viewWillLayoutSubviews];
     [self.titleHeaderView setWidth:self.view.width];
     [self.webView setWidth:self.view.width - 2*kLateralMargin];
-    [self.submitButton setWidth:self.view.width];
-    [self.submitButton setYBottomAligned:0.f];
+    [self.webView setHeight:self.viewBounds.size.height - self.titleHeaderView.height - kSpaceBetweenTitleAndBody - self.submitButton.height - 2*kLateralMargin];
+    [self.submitButton setX:kLateralMargin];
+    [self.submitButton setWidth:self.view.width-2*kLateralMargin];
+    [self.submitButton setYBottomAligned:kLateralMargin];
     
     if (RI_IS_RTL) {
         [self.view flipAllSubviews];
@@ -110,7 +104,7 @@
 {
     self.webView.scrollView.scrollEnabled = TRUE;
     [self.webView setWidth:self.view.width - 2*kLateralMargin];
-    [self.webView setHeight:self.viewBounds.size.height - self.titleHeaderView.height - kSpaceBetweenTitleAndBody - self.submitButton.height];
+    [self.webView setHeight:self.viewBounds.size.height - self.titleHeaderView.height - kSpaceBetweenTitleAndBody - self.submitButton.height - 2*kLateralMargin];
     [self hideLoading];
 }
 
