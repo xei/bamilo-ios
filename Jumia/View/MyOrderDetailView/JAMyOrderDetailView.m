@@ -103,6 +103,8 @@
 {
     self.order = order;
     [self setFrame:frame];
+    [self.itemsToReturnArray removeAllObjects];
+    [self.returnMultipleItemsButton setHidden:!VALID_NOTEMPTY(self.itemsToReturnArray, NSMutableArray)];
     
     int i = 0;
     for (RIItemCollection *item in self.order.itemCollection) {
@@ -127,6 +129,7 @@
     }
     [self.myOrderResumeView setOrder:order];
     [self.itemsHeader setY:CGRectGetMaxY(self.myOrderResumeView.frame)];
+    [self.itemsHeader setFrame:self.itemsHeader.frame];
     [self.collectionView reloadData];
     
     [self.collectionView setFrame:CGRectMake(self.collectionView.frame.origin.x,
@@ -146,6 +149,10 @@
     [self.returnMultipleItemsButton setWidth:self.width];
     [self.returnMultipleItemsButton setYBottomOf:self.collectionView at:6.f];
     [self setFrame:CGRectMake(0.0f, 0.0f, self.frame.size.width, CGRectGetMaxY(self.returnMultipleItemsButton.frame))];
+    
+    if (RI_IS_RTL) {
+        [self.itemsHeader flipAllSubviews];
+    }
 }
 
 - (CGFloat)totalHeightForCollectionView
@@ -182,10 +189,8 @@
     [cell.returnButton addTarget:self action:@selector(returnItem:) forControlEvents:UIControlEventTouchUpInside];
     [cell.feedbackView addTarget:self action:@selector(itemClicked:) forControlEvents:UIControlEventTouchUpInside];
     [cell.checkToReturnButton addTarget:self action:@selector(multipleCheckClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.checkToReturnButton setSelected:NO];
     [cell setItem:item];
-//    if ([self.itemsToReturnArray indexOfObject:item] != NSNotFound) {
-//        [cell.checkToReturnButton setHidden:NO];
-//    }
     if (!self.hasMultipleSelection) {
         [cell.checkToReturnButton setHidden:YES];
     }
