@@ -63,6 +63,8 @@
 
 #import "JAORConfirmConditionsViewController.h"
 #import "JAORConfirmationScreenViewController.h"
+#import "JAORCallToReturnViewController.h"
+#import "RIHtmlShop.h"
 
 #import "JAORReasonsViewController.h"
 
@@ -1834,14 +1836,6 @@
 
 #pragma mark - OnlineReturns
 
-- (void)goToOnlineReturnsConfirmConditionsForItems:(NSArray *)items
-                                             order:(RITrackOrder*)order
-{
-    JAORConfirmConditionsViewController *viewController = [[JAORConfirmConditionsViewController alloc] init];
-    [viewController setItems:items];
-    [viewController setOrder:order];
-    [self pushViewController:viewController animated:YES];
-}
 
 - (void)goToOnlineReturnsReasonsScreenForItems:(NSArray *)items
                                          order:(RITrackOrder*)order
@@ -1850,6 +1844,31 @@
     [viewController setItems:items];
     [viewController setOrder:order];
     [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
+}
+    
+- (void)goToOnlineReturnsCall:(RIItemCollection *)item
+              fromOrderNumber:(NSString *)orderNumber
+{
+    JAORCallToReturnViewController *viewController = [[JAORCallToReturnViewController alloc] init];
+    [viewController setItem:item];
+    [viewController setOrderNumber:orderNumber];
+    [self pushViewController:viewController animated:YES];
+}
+
+- (void)goToOnlineReturnsConfirmConditionsForItems:(NSArray *)items
+                                             order:(RITrackOrder*)order
+{
+    NSString *targetString = [(RIItemCollection *)[items firstObject] onlineReturnTargetString];
+    
+    [RIHtmlShop getHtmlShopForTargetString:targetString successBlock:^(RIHtmlShop *htmlShop) {
+        JAORConfirmConditionsViewController *viewController = [[JAORConfirmConditionsViewController alloc] init];
+        [viewController setHtml:htmlShop.html];
+        [viewController setItems:items];
+        [viewController setOrder:order];
+        [self pushViewController:viewController animated:YES];
+    } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+        [self goToOnlineReturnsConfirmScreen];
+    }];
 }
 
 - (void)goToOnlineReturnsConfirmScreen

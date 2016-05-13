@@ -100,9 +100,9 @@
             }
             if([actionType isEqualToString:@"call_return"]) {
                 item.callReturn = YES;
-                item.callReturnTextTitle = [json objectForKey:@"text_title"];
-                item.callReturnTextBody1 = [json objectForKey:@"text_body1"];
-                item.callReturnTextBody2 = [json objectForKey:@"text_body2"];
+                item.callReturnTextTitle = [action objectForKey:@"text_title"];
+                item.callReturnTextBody1 = [action objectForKey:@"text_body1"];
+                item.callReturnTextBody2 = [action objectForKey:@"text_body2"];
             }
         }
     }
