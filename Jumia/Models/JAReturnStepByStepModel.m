@@ -8,14 +8,14 @@
 
 #import "JAReturnStepByStepModel.h"
 #import "JACenterNavigationController.h"
-#import "JAORConfirmConditionsViewController.h"
 #import "JAORConfirmationScreenViewController.h"
+#import "JAORReasonsViewController.h"
 
 @implementation JAReturnStepByStepModel
 
 - (NSArray *)viewControllersArray
 {
-    return @[[JAORConfirmConditionsViewController class], [JAORConfirmationScreenViewController class]];
+    return @[[JAORReasonsViewController class], [JAORConfirmationScreenViewController class]];
 }
 
 - (NSArray *)iconsArray
@@ -53,8 +53,8 @@
 {
     Class classKind = [self.viewControllersArray objectAtIndex:index];
     
-    if (classKind == [JAORConfirmConditionsViewController class]) {
-//        [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmConditions];
+    if (classKind == [JAORReasonsViewController class]) {
+
     } else if (classKind == [JAORConfirmationScreenViewController class]) {
         [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmScreen];
     }
