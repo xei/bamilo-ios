@@ -750,6 +750,11 @@
 		9A4077381CE24DF800313D20 /* JAORCallToReturnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4077351CE24DF800313D20 /* JAORCallToReturnViewController.m */; };
 		9A4077391CE24DF800313D20 /* JAORCallToReturnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4077351CE24DF800313D20 /* JAORCallToReturnViewController.m */; };
 		9A40773A1CE24DF800313D20 /* JAORCallToReturnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4077351CE24DF800313D20 /* JAORCallToReturnViewController.m */; };
+		9A40773D1CE60E3300313D20 /* JABottomSubmitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A40773C1CE60E3300313D20 /* JABottomSubmitView.m */; };
+		9A40773E1CE60E3300313D20 /* JABottomSubmitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A40773C1CE60E3300313D20 /* JABottomSubmitView.m */; };
+		9A40773F1CE60E3300313D20 /* JABottomSubmitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A40773C1CE60E3300313D20 /* JABottomSubmitView.m */; };
+		9A4077401CE60E3300313D20 /* JABottomSubmitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A40773C1CE60E3300313D20 /* JABottomSubmitView.m */; };
+		9A4077411CE60E3300313D20 /* JABottomSubmitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A40773C1CE60E3300313D20 /* JABottomSubmitView.m */; };
 		9A4ADF681C2AF1010019F439 /* JADropdownControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ADF671C2AF1010019F439 /* JADropdownControl.m */; };
 		9A4ADF691C2AF1010019F439 /* JADropdownControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ADF671C2AF1010019F439 /* JADropdownControl.m */; };
 		9A4ADF6A1C2AF1010019F439 /* JADropdownControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ADF671C2AF1010019F439 /* JADropdownControl.m */; };
@@ -2963,6 +2968,8 @@
 		9A40772E1CE0CFD700313D20 /* UIButton+Size.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+Size.m"; path = "Categories/UIButton+Size.m"; sourceTree = "<group>"; };
 		9A4077341CE24DF800313D20 /* JAORCallToReturnViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORCallToReturnViewController.h; path = OnlineReturns/JAORCallToReturnViewController.h; sourceTree = "<group>"; };
 		9A4077351CE24DF800313D20 /* JAORCallToReturnViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAORCallToReturnViewController.m; path = OnlineReturns/JAORCallToReturnViewController.m; sourceTree = "<group>"; };
+		9A40773B1CE60E3300313D20 /* JABottomSubmitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JABottomSubmitView.h; sourceTree = "<group>"; };
+		9A40773C1CE60E3300313D20 /* JABottomSubmitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JABottomSubmitView.m; sourceTree = "<group>"; };
 		9A4ADF661C2AF1010019F439 /* JADropdownControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JADropdownControl.h; sourceTree = "<group>"; };
 		9A4ADF671C2AF1010019F439 /* JADropdownControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JADropdownControl.m; sourceTree = "<group>"; };
 		9A4F91121B3D5C3E00E34C0B /* JAPDVWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAPDVWizardView.h; path = Wizard/JAPDVWizardView.h; sourceTree = "<group>"; };
@@ -5193,6 +5200,8 @@
 				9A55A6861BBE9E07008EF4A6 /* JABottomBar.m */,
 				9AB517A01C934342007E1327 /* JAButton.h */,
 				9AB517A11C934342007E1327 /* JAButton.m */,
+				9A40773B1CE60E3300313D20 /* JABottomSubmitView.h */,
+				9A40773C1CE60E3300313D20 /* JABottomSubmitView.m */,
 			);
 			name = Buttons;
 			sourceTree = "<group>";
@@ -7782,6 +7791,7 @@
 				FFF9007D1C6A5D2000DDF538 /* JATitleComponent.m in Sources */,
 				FF0464CB1CA96E9000B82FD2 /* ADJPackageBuilder.m in Sources */,
 				FF4383F51C71EEEB003BA957 /* JAScreenTitleComponent.m in Sources */,
+				9A40773E1CE60E3300313D20 /* JABottomSubmitView.m in Sources */,
 				FFF900681C6A31A700DDF538 /* JANewsletterViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8014,6 +8024,7 @@
 				9D4431EA1C242BA8005A8B4A /* JAUserDataViewController.m in Sources */,
 				FFB0A36F1C529E0800EF9FE5 /* RIProduct.m in Sources */,
 				B5FE9FBC19A204F1006F7D63 /* RINewRelicTracker.m in Sources */,
+				9A40773D1CE60E3300313D20 /* JABottomSubmitView.m in Sources */,
 				B5A302E519811E9200F71726 /* RIGoogleAnalyticsTracker.m in Sources */,
 				FF4383DF1C6CD4AC003BA957 /* JASwitchRadioComponent.m in Sources */,
 				CE88F7BD1A23886100A3A586 /* JAOrderSummaryView.m in Sources */,
@@ -8369,6 +8380,7 @@
 				9AE03A951C0CB224003CBEF1 /* JAAuthenticationViewController.m in Sources */,
 				FFB0A3711C529E0800EF9FE5 /* RIProduct.m in Sources */,
 				CE9ADBDB1AB34C4600D56481 /* RINewRelicTracker.m in Sources */,
+				9A40773F1CE60E3300313D20 /* JABottomSubmitView.m in Sources */,
 				CE9ADBDC1AB34C4600D56481 /* RIGoogleAnalyticsTracker.m in Sources */,
 				FF4383E11C6CD4AC003BA957 /* JASwitchRadioComponent.m in Sources */,
 				9A189E7F1BB54C2C0039BC14 /* JAScrolledImageGalleryView.m in Sources */,
@@ -8714,6 +8726,7 @@
 				9AE03A961C0CB224003CBEF1 /* JAAuthenticationViewController.m in Sources */,
 				FFB0A3721C529E0800EF9FE5 /* RIProduct.m in Sources */,
 				CE9ADDD51AB6D6E900D56481 /* RINewRelicTracker.m in Sources */,
+				9A4077401CE60E3300313D20 /* JABottomSubmitView.m in Sources */,
 				CE9ADDD61AB6D6E900D56481 /* RIGoogleAnalyticsTracker.m in Sources */,
 				FF4383E21C6CD4AC003BA957 /* JASwitchRadioComponent.m in Sources */,
 				9A189E801BB54C2D0039BC14 /* JAScrolledImageGalleryView.m in Sources */,
@@ -9059,6 +9072,7 @@
 				9AC4D6A71B4A926800036F1C /* JACatalogGridCollectionViewCell.m in Sources */,
 				CE9ADFCD1AB6D78200D56481 /* RIPaymentMethodForm.m in Sources */,
 				9AE03A971C0CB225003CBEF1 /* JAAuthenticationViewController.m in Sources */,
+				9A4077411CE60E3300313D20 /* JABottomSubmitView.m in Sources */,
 				FFB0A3731C529E0800EF9FE5 /* RIProduct.m in Sources */,
 				FF4383E31C6CD4AC003BA957 /* JASwitchRadioComponent.m in Sources */,
 				9A189E811BB54C2D0039BC14 /* JAScrolledImageGalleryView.m in Sources */,
