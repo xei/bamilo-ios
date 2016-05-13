@@ -132,6 +132,25 @@
     [self.view addSubview:self.callButton];
     [self.view addSubview:self.backButton];
     [self setup];
+    
+    if([[UIDevice currentDevice].model isEqualToString:@"iPhone"])
+    {
+        if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tel:123456"]])
+        {
+            [self.callButton setEnabled:YES];
+            NSLog(@"Device can make call or send message");
+        }
+        else
+        {
+            [self.callButton setEnabled:NO];
+            NSLog(@"Device can not make call or send message");
+        }
+    }
+    else
+    {
+        [self.callButton setEnabled:NO];
+        NSLog(@"Device can not make call or send message");
+    }
 }
 
 - (void)onOrientationChanged
