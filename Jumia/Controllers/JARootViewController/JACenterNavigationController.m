@@ -67,6 +67,7 @@
 #import "RIHtmlShop.h"
 
 #import "JAORReasonsViewController.h"
+#import "JAORWaysViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -1836,6 +1837,15 @@
 
 #pragma mark - OnlineReturns
 
+
+- (void)goToOnlineReturnsWaysScreenForItems:(NSArray *)items
+                                      order:(RITrackOrder*)order
+{
+    JAORWaysViewController* viewController = [[JAORWaysViewController alloc] init];
+    [viewController setItems:items];
+    [viewController setOrder:order];
+    [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
+}
 
 - (void)goToOnlineReturnsReasonsScreenForItems:(NSArray *)items
                                          order:(RITrackOrder*)order

@@ -7,6 +7,7 @@
 //
 
 #import "JAORReasonsViewController.h"
+#import "JACenterNavigationController.h"
 #import "JAProductInfoHeaderLine.h"
 #import "UIImageView+WebCache.h"
 #import "RIForm.h"
@@ -307,6 +308,10 @@
         }
         
         [results setObject:[dynamicForm getValues] forKey:item.sku];
+    }
+    
+    if (VALID_NOTEMPTY(results, NSMutableDictionary)) {
+        [[JACenterNavigationController sharedInstance] goToOnlineReturnsWaysScreenForItems:self.items order:self.order];
     }
 }
 

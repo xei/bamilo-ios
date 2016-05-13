@@ -2613,6 +2613,11 @@
 		FFB0A3841C529E9900EF9FE5 /* RIVariation.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB0A37C1C529E9900EF9FE5 /* RIVariation.m */; };
 		FFB0A3851C529E9900EF9FE5 /* RIVariation.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB0A37C1C529E9900EF9FE5 /* RIVariation.m */; };
 		FFB0A3861C529E9900EF9FE5 /* RIVariation.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB0A37C1C529E9900EF9FE5 /* RIVariation.m */; };
+		FFB1B08A1CE5E163000F60AD /* JAORWaysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0891CE5E163000F60AD /* JAORWaysViewController.m */; };
+		FFB1B08B1CE5E163000F60AD /* JAORWaysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0891CE5E163000F60AD /* JAORWaysViewController.m */; };
+		FFB1B08C1CE5E163000F60AD /* JAORWaysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0891CE5E163000F60AD /* JAORWaysViewController.m */; };
+		FFB1B08D1CE5E163000F60AD /* JAORWaysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0891CE5E163000F60AD /* JAORWaysViewController.m */; };
+		FFB1B08E1CE5E163000F60AD /* JAORWaysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0891CE5E163000F60AD /* JAORWaysViewController.m */; };
 		FFC9C0C31C984E7900DD5851 /* JATopTabsView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC9C0C21C984E7900DD5851 /* JATopTabsView.m */; };
 		FFC9C0C41C984E7900DD5851 /* JATopTabsView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC9C0C21C984E7900DD5851 /* JATopTabsView.m */; };
 		FFC9C0C51C984E7900DD5851 /* JATopTabsView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC9C0C21C984E7900DD5851 /* JATopTabsView.m */; };
@@ -3663,6 +3668,8 @@
 		FFB0A37A1C529E9900EF9FE5 /* RIImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIImage.m; sourceTree = "<group>"; };
 		FFB0A37B1C529E9900EF9FE5 /* RIVariation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIVariation.h; sourceTree = "<group>"; };
 		FFB0A37C1C529E9900EF9FE5 /* RIVariation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIVariation.m; sourceTree = "<group>"; };
+		FFB1B0881CE5E163000F60AD /* JAORWaysViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORWaysViewController.h; path = OnlineReturns/JAORWaysViewController.h; sourceTree = "<group>"; };
+		FFB1B0891CE5E163000F60AD /* JAORWaysViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAORWaysViewController.m; path = OnlineReturns/JAORWaysViewController.m; sourceTree = "<group>"; };
 		FFC9C0C11C984E7900DD5851 /* JATopTabsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JATopTabsView.h; path = TopTabsView/JATopTabsView.h; sourceTree = "<group>"; };
 		FFC9C0C21C984E7900DD5851 /* JATopTabsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JATopTabsView.m; path = TopTabsView/JATopTabsView.m; sourceTree = "<group>"; };
 		FFF900651C6A31A700DDF538 /* JANewsletterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANewsletterViewController.h; sourceTree = "<group>"; };
@@ -4933,6 +4940,8 @@
 				FF6BDC9B1CE238F3002BFE11 /* JAORReasonsViewController.m */,
 				9A4077341CE24DF800313D20 /* JAORCallToReturnViewController.h */,
 				9A4077351CE24DF800313D20 /* JAORCallToReturnViewController.m */,
+				FFB1B0881CE5E163000F60AD /* JAORWaysViewController.h */,
+				FFB1B0891CE5E163000F60AD /* JAORWaysViewController.m */,
 			);
 			name = OnlineReturns;
 			sourceTree = "<group>";
@@ -7770,6 +7779,7 @@
 				FF0464D51CA96E9000B82FD2 /* ADJRequestHandler.m in Sources */,
 				976cc1afdb4c41be05ed1470 /* RIOrder.m in Sources */,
 				c7f7a3e79d1ad30af79a27c0 /* JABirthDateComponent.m in Sources */,
+				FFB1B08B1CE5E163000F60AD /* JAORWaysViewController.m in Sources */,
 				9AEF74221CD8A86900A5D574 /* JAORConfirmConditionsViewController.m in Sources */,
 				67f4a0b88343cac1bc885793 /* RIURLCache.m in Sources */,
 				9AED08201C6DFBE000B5FDF0 /* AFURLRequestSerialization.m in Sources */,
@@ -8008,6 +8018,7 @@
 				B5A302C019811E9200F71726 /* RICategory.m in Sources */,
 				B5CFE99A1A0CE3BC004CE545 /* JAAddRatingView.m in Sources */,
 				B5A302CA19811E9200F71726 /* RISearchSuggestion.m in Sources */,
+				FFB1B08A1CE5E163000F60AD /* JAORWaysViewController.m in Sources */,
 				9AC4D6A31B4A903100036F1C /* JACatalogGridCollectionViewCell.m in Sources */,
 				FF0464CA1CA96E9000B82FD2 /* ADJPackageBuilder.m in Sources */,
 				B5225E1D1989308300C18F1E /* RIPaymentMethodForm.m in Sources */,
@@ -8363,6 +8374,7 @@
 				CE9ADBD61AB34C4600D56481 /* RICategory.m in Sources */,
 				CE9ADBD71AB34C4600D56481 /* JAAddRatingView.m in Sources */,
 				CE9ADBD81AB34C4600D56481 /* RISearchSuggestion.m in Sources */,
+				FFB1B08C1CE5E163000F60AD /* JAORWaysViewController.m in Sources */,
 				9AC4D6A51B4A926700036F1C /* JACatalogGridCollectionViewCell.m in Sources */,
 				FF0464CC1CA96E9000B82FD2 /* ADJPackageBuilder.m in Sources */,
 				CE9ADBD91AB34C4600D56481 /* RIPaymentMethodForm.m in Sources */,
@@ -8708,6 +8720,7 @@
 				CE9ADDD01AB6D6E900D56481 /* RICategory.m in Sources */,
 				CE9ADDD11AB6D6E900D56481 /* JAAddRatingView.m in Sources */,
 				CE9ADDD21AB6D6E900D56481 /* RISearchSuggestion.m in Sources */,
+				FFB1B08D1CE5E163000F60AD /* JAORWaysViewController.m in Sources */,
 				9AC4D6A61B4A926800036F1C /* JACatalogGridCollectionViewCell.m in Sources */,
 				FF0464CD1CA96E9000B82FD2 /* ADJPackageBuilder.m in Sources */,
 				CE9ADDD31AB6D6E900D56481 /* RIPaymentMethodForm.m in Sources */,
@@ -9053,6 +9066,7 @@
 				FFF900721C6A5CC700DDF538 /* JATextFieldComponent.m in Sources */,
 				CE9ADFC71AB6D78200D56481 /* JAButtonWithBlur.m in Sources */,
 				CE9ADFCA1AB6D78200D56481 /* RICategory.m in Sources */,
+				FFB1B08E1CE5E163000F60AD /* JAORWaysViewController.m in Sources */,
 				CE9ADFCB1AB6D78200D56481 /* JAAddRatingView.m in Sources */,
 				FF0464CE1CA96E9000B82FD2 /* ADJPackageBuilder.m in Sources */,
 				CE9ADFCC1AB6D78200D56481 /* RISearchSuggestion.m in Sources */,
