@@ -11,6 +11,7 @@
 #import "JABirthDateComponent.h"
 #import "JACheckBoxComponent.h"
 #import "JARadioComponent.h"
+#import "JAListNumberComponent.h"
 #import "JACheckBoxWithOptionsComponent.h"
 
 @class RIForm;
@@ -39,6 +40,11 @@
  * Method that tells if a picker is needed
  */
 - (void)openPicker:(JARadioComponent *)radioComponent;
+
+/**
+ * Method that tells if a picker is needed
+ */
+- (void)openNumberPicker:(JAListNumberComponent *)listNumberComponent;
 
 /**
  * Method that tells if we need to download regions and cities

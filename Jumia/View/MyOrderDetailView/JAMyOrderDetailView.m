@@ -273,7 +273,7 @@
     if(VALID_NOTEMPTY(item.sku, NSString))
     {
         if (item.onlineReturn) {
-            [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmConditionsForItems:@[item]];
+            [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmConditionsForItems:@[item] order:self.order];
         }else if (item.callReturn){
             [[JACenterNavigationController sharedInstance] goToOnlineReturnsCall:item fromOrderNumber:self.order.orderId];
         }
@@ -282,7 +282,7 @@
 
 - (void)returnMultipleItems
 {
-    [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmConditionsForItems:[self.itemsToReturnArray copy]];
+    [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmConditionsForItems:[self.itemsToReturnArray copy] order:self.order];
 }
 
 @end

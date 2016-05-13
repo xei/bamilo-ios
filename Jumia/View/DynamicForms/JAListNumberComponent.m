@@ -1,26 +1,26 @@
 //
-//  JARadioComponent.m
+//  JAListNumberComponent.m
 //  Jumia
 //
-//  Created by Pedro Lopes on 25/08/14.
-//  Copyright (c) 2014 Rocket Internet. All rights reserved.
+//  Created by telmopinto on 11/05/16.
+//  Copyright © 2016 Rocket Internet. All rights reserved.
 //
 
-#import "JARadioComponent.h"
-#import "RIFieldOption.h"
-#import "RIFieldDataSetComponent.h"
+#import "JAListNumberComponent.h"
 #import "RILocale.h"
-#import "RITarget.h"
+#import "RIFieldDataSetComponent.h"
+#import "RIFieldOption.h"
 
-@interface JARadioComponent ()
+@interface JAListNumberComponent()
 
 @property (strong, nonatomic) id storedValue;
 @property (strong, nonatomic) UIView *underLineView;
 @property (strong, nonatomic) UIImageView *dropdownImageView;
+@property (strong, nonatomic) UILabel* descriptionLabel;
 
 @end
 
-@implementation JARadioComponent
+@implementation JAListNumberComponent
 
 - (UITextField *)textField
 {
@@ -69,6 +69,17 @@
     return _dropdownImageView;
 }
 
+- (UILabel*)descriptionLabel
+{
+    if (!VALID(_descriptionLabel, UILabel)) {
+        _descriptionLabel = [UILabel new];
+        _descriptionLabel.font = JACaptionFont;
+        _descriptionLabel.textColor = JABlackColor;
+        [self addSubview:_descriptionLabel];
+    }
+    return _descriptionLabel;
+}
+
 - (instancetype)init
 {
     self = [super init];
@@ -86,12 +97,14 @@
     }
     frame.size.width = width;
     [super setFrame:frame];
-    [self.underLineView setFrame:CGRectMake(0, self.height-5, width, 1.f)];
-    [self.requiredSymbol setFrame:CGRectMake(self.width - 20, self.height - 28, 10, 20)];
-    [self.textField setFrame:CGRectMake(0, self.height - 28, width - self.dropdownImageView.width - self.requiredSymbol.width, 20)];
-    [self.dropdownImageView setXLeftOf:self.requiredSymbol at:3];
+    [self.underLineView setFrame:CGRectMake(90, self.height-5, 20, 1.f)];
+    [self.textField setFrame:CGRectMake(90, self.height - 28, 20, 20)];
+    [self.dropdownImageView setX:CGRectGetMaxX(self.textField.frame) - 5.0f];
     [self.dropdownImageView setY:self.textField.y + (self.textField.height - self.dropdownImageView.height)/2];
-//    [self.titleLabel setFrame:CGRectMake(0, 0, self.width, 20)];
+    [self.requiredSymbol setFrame:CGRectMake(CGRectGetMaxX(self.dropdownImageView.frame), self.height - 28, 10, 20)];
+    self.descriptionLabel.textAlignment = NSTextAlignmentLeft;
+    [self.descriptionLabel setFrame:CGRectMake(CGRectGetMaxX(self.requiredSymbol.frame), self.textField.frame.origin.y, width - CGRectGetMaxX(self.requiredSymbol.frame), self.textField.frame.size.height)];
+    //    [self.titleLabel setFrame:CGRectMake(0, 0, self.width, 20)];
     if (self.iconImageView) {
         [self.iconImageView setY:self.y + self.textField.y + (self.textField.height - self.iconImageView.height)/2];
     }
@@ -108,6 +121,8 @@
         [self.textField flipViewPositionInsideSuperview];
         [self.textField flipViewAlignment];
         [self.dropdownImageView flipViewPositionInsideSuperview];
+        [self.descriptionLabel flipViewPositionInsideSuperview];
+        [self.descriptionLabel flipViewAlignment];
     }
 }
 
@@ -116,47 +131,13 @@
     self.storedValue = @"";
     self.hasError = NO;
     self.field = field;
-    [self.textField setPlaceholder:field.label];
-    
-    if([field.required boolValue])
-    {
-        [self.requiredSymbol setHidden:NO];
-    }
+    self.descriptionLabel.textAlignment = NSTextAlignmentLeft;
+    [self.descriptionLabel setText:field.label];
     
     if(VALID_NOTEMPTY(field.value, NSString))
     {
         self.storedValue = field.value;
-        if(![@"list" isEqualToString:field.type])
-        {
-            [self.textField setText:field.value];
-        }
-    }
-    
-    if(VALID_NOTEMPTY(field.dataSet, NSOrderedSet))
-    {
-        NSMutableArray *contentArray = [[NSMutableArray alloc] init];
-        for (RIFieldDataSetComponent *component in field.dataSet) {
-            [contentArray addObject:component.value];
-        }
-        self.dataset = [contentArray copy];
-    }
-    else if(VALID_NOTEMPTY(field.options, NSOrderedSet))
-    {
-        NSMutableArray *contentArray = [[NSMutableArray alloc] init];
-        NSMutableDictionary *contentDictionaty = [NSMutableDictionary new];
-        for (RIFieldOption *component in field.options) {
-            [contentArray addObject:component.value];
-            [contentDictionaty setObject:component.label forKey:component.value];
-        }
-        self.options = [contentArray copy];
-        self.optionsLabels = [contentDictionaty copy];
-    }
-    else if(VALID_NOTEMPTY(field.apiCallTarget, NSString))
-    {
-        self.apiCallTarget = field.apiCallTarget;
-        if (VALID_NOTEMPTY(field.apiCallParameters, NSDictionary)) {
-            self.apiCallParameters = field.apiCallParameters;
-        }
+        [self.textField setText:field.value];
     }
     
     UIImage *iconImage = [UIImage imageNamed:[NSString stringWithFormat:@"ic_%@_form", field.key]];
@@ -181,25 +162,8 @@
     self.storedValue = value;
     if ([value isKindOfClass:[NSNumber class]]) {
         [self.textField setText:[value stringValue]];
-    } else if ([value isKindOfClass:[RIFieldOption class]]) {
-        RIFieldOption* fieldOption = (RIFieldOption*)value;
-        [self.textField setText:fieldOption.label];
-    } else {
+    }else{
         [self.textField setText:value];
-    }
-}
-
--(void)setLocaleValue:(RILocale*)locale
-{
-    if(VALID_NOTEMPTY(locale, RILocale))
-    {
-        self.storedValue = locale.value;
-        [self.textField setText:locale.label];
-    }
-    else
-    {
-        self.storedValue = @"";
-        [self.textField setText:@""];
     }
 }
 
@@ -208,12 +172,7 @@
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     if([self.field.required boolValue] || NOT_NIL(self.storedValue))
     {
-        if ([self.storedValue isKindOfClass:[RIFieldOption class]]) {
-            RIFieldOption* fieldOption = (RIFieldOption*)self.storedValue;
-            [parameters setValue:fieldOption.value forKey:self.field.name];
-        } else {
-            [parameters setValue:self.storedValue forKey:self.field.name];
-        }
+        [parameters setValue:self.storedValue forKey:self.field.name];
     }
     return parameters;
 }
@@ -286,23 +245,6 @@
             [self.textField setText:self.field.value];
         }
     }
-}
-
--(NSString*)getApiCallUrl
-{
-    NSString *apiCallUrl = nil;
-    
-    if(VALID_NOTEMPTY(self.field, RIField) && [@"list" isEqualToString:[self.field type]] && VALID_NOTEMPTY([self.field apiCallTarget], NSString))
-    {
-        apiCallUrl = [RITarget getURLStringforTargetString:self.field.apiCallTarget];
-    }
-    
-    return apiCallUrl;
-}
-
-- (NSDictionary*)getApiCallParameters
-{
-    return self.field.apiCallParameters;
 }
 
 

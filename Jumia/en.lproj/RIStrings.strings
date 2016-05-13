@@ -725,4 +725,6 @@
 
 "call_return_label" = "Call to Return";
 
+"question_return_reasons" = "Why do you want to return this item?";
+
 "call_now_label" = "call now";

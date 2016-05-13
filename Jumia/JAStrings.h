@@ -435,4 +435,6 @@
 #define STRING_CALL_NOW RILocalizedString(@"call_now_label", nil)
 #define STRING_X_ITEMS_RETURNED_ON RILocalizedString(@"x_items_returned_on", nil)
 
+#define STRING_QUESTION_RETURN_REASONS RILocalizedString(@"question_return_reasons", nil)
+
 #endif

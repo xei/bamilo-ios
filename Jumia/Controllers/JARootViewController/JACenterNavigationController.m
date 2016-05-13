@@ -66,6 +66,8 @@
 #import "JAORCallToReturnViewController.h"
 #import "RIHtmlShop.h"
 
+#import "JAORReasonsViewController.h"
+
 @interface JACenterNavigationController ()
 
 @property (assign, nonatomic) BOOL neeedsExternalPaymentMethod;
@@ -1834,7 +1836,18 @@
 
 #pragma mark - OnlineReturns
 
-- (void)goToOnlineReturnsCall:(RIItemCollection *)item fromOrderNumber:(NSString *)orderNumber
+
+- (void)goToOnlineReturnsReasonsScreenForItems:(NSArray *)items
+                                         order:(RITrackOrder*)order
+{
+    JAORReasonsViewController* viewController = [[JAORReasonsViewController alloc] init];
+    [viewController setItems:items];
+    [viewController setOrder:order];
+    [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
+}
+    
+- (void)goToOnlineReturnsCall:(RIItemCollection *)item
+              fromOrderNumber:(NSString *)orderNumber
 {
     JAORCallToReturnViewController *viewController = [[JAORCallToReturnViewController alloc] init];
     [viewController setItem:item];
@@ -1843,6 +1856,7 @@
 }
 
 - (void)goToOnlineReturnsConfirmConditionsForItems:(NSArray *)items
+                                             order:(RITrackOrder*)order
 {
     NSString *targetString = [(RIItemCollection *)[items firstObject] onlineReturnTargetString];
     
@@ -1850,11 +1864,11 @@
         JAORConfirmConditionsViewController *viewController = [[JAORConfirmConditionsViewController alloc] init];
         [viewController setHtml:htmlShop.html];
         [viewController setItems:items];
+        [viewController setOrder:order];
         [self pushViewController:viewController animated:YES];
     } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
         [self goToOnlineReturnsConfirmScreen];
     }];
-    
 }
 
 - (void)goToOnlineReturnsConfirmScreen

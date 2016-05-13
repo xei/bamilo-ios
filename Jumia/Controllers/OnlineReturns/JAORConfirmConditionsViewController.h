@@ -11,6 +11,7 @@
 
 @interface JAORConfirmConditionsViewController : JABaseViewController
 
+@property (nonatomic, strong) RITrackOrder *order;
 @property (nonatomic, strong) NSString *html;
 @property (nonatomic, strong) NSArray *items;
 

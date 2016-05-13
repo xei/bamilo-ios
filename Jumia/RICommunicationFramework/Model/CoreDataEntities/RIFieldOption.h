@@ -19,6 +19,10 @@
 @property (nonatomic, retain) NSNumber * isUserSubscribed;
 @property (nonatomic, retain) RIField *field;
 
++ (NSString*)getFieldOptionsForApiCall:(NSString*)apiCall
+                          successBlock:(void (^)(NSArray *))successBlock
+                          failureBlock:(void (^)(RIApiResponse, NSArray *))failureBlock;
+
 + (RIFieldOption *)parseFieldOption:(NSDictionary *)fieldOptionObject;
 
 + (void)saveFieldOption:(RIFieldOption *)option andContext:(BOOL)save;
