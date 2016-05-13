@@ -9,7 +9,7 @@
 #import "JAORConfirmConditionsViewController.h"
 #import "JAProductInfoHeaderLine.h"
 #import "JACenterNavigationController.h"
-#import "JAButton.h"
+#import "JABottomSubmitView.h"
 
 #define kLateralMargin 8.f
 #define kSpaceBetweenTitleAndBody 2.f
@@ -17,7 +17,7 @@
 @interface JAORConfirmConditionsViewController () <UIWebViewDelegate>
 
 @property (nonatomic, strong) JAProductInfoHeaderLine *titleHeaderView;
-@property (nonatomic, strong) JAButton *submitButton;
+@property (nonatomic, strong) JABottomSubmitView *submitView;
 @property (nonatomic, strong) UIWebView* webView;
 
 @end
@@ -45,15 +45,16 @@
     return _webView;
 }
 
-- (JAButton *)submitButton
+- (JABottomSubmitView *)submitView
 {
-    if (!VALID(_submitButton, JAButton)) {
-        _submitButton = [[JAButton alloc] initButtonWithTitle:[STRING_OK_GOT_IT uppercaseString]];
-        [_submitButton addTarget:self action:@selector(goToNext) forControlEvents:UIControlEventTouchUpInside];
-        [_submitButton setFrame:CGRectMake(kLateralMargin, 0, self.view.width-2*kLateralMargin, kBottomDefaultHeight)];
-        [_submitButton setYBottomAligned:0.f];
+    if (!VALID(_submitView, JABottomSubmitView)) {
+        _submitView = [[JABottomSubmitView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, [JABottomSubmitView defaultHeight])];
+        
+        _submitView.button = [[JAButton alloc] initButtonWithTitle:[STRING_OK_GOT_IT uppercaseString]];
+        [_submitView.button addTarget:self action:@selector(goToNext) forControlEvents:UIControlEventTouchUpInside];
+        [_submitView setYBottomAligned:0.f];
     }
-    return _submitButton;
+    return _submitView;
 }
 
 - (void)viewDidLoad
@@ -67,7 +68,7 @@
     
     [self.view addSubview:self.titleHeaderView];
     [self.view addSubview:self.webView];
-    [self.view addSubview:self.submitButton];
+    [self.view addSubview:self.submitView];
     
     [self showLoading];
     [self.webView loadHTMLString:self.html baseURL:[NSURL URLWithString:[RITarget getURLStringforTargetString:self.targetString]]];
@@ -83,10 +84,10 @@
     [super viewWillLayoutSubviews];
     [self.titleHeaderView setWidth:self.view.width];
     [self.webView setWidth:self.view.width - 2*kLateralMargin];
-    [self.webView setHeight:self.viewBounds.size.height - self.titleHeaderView.height - kSpaceBetweenTitleAndBody - self.submitButton.height - 2*kLateralMargin];
-    [self.submitButton setX:kLateralMargin];
-    [self.submitButton setWidth:self.view.width-2*kLateralMargin];
-    [self.submitButton setYBottomAligned:kLateralMargin];
+    [self.webView setHeight:self.viewBounds.size.height - self.titleHeaderView.height - kSpaceBetweenTitleAndBody - self.submitView.height - kLateralMargin];
+    [self.submitView setX:0];
+    [self.submitView setWidth:self.view.width];
+    [self.submitView setYBottomAligned:0.f];
     
     if (RI_IS_RTL) {
         [self.view flipAllSubviews];
@@ -96,15 +97,15 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self.submitButton setWidth:self.view.width];
-    [self.submitButton setYBottomAligned:0.f];
+    [self.submitView setWidth:self.view.width];
+    [self.submitView setYBottomAligned:0.f];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     self.webView.scrollView.scrollEnabled = TRUE;
     [self.webView setWidth:self.view.width - 2*kLateralMargin];
-    [self.webView setHeight:self.viewBounds.size.height - self.titleHeaderView.height - kSpaceBetweenTitleAndBody - self.submitButton.height - 2*kLateralMargin];
+    [self.webView setHeight:self.viewBounds.size.height - self.titleHeaderView.height - kSpaceBetweenTitleAndBody - self.submitView.height - kLateralMargin];
     [self hideLoading];
 }
 
