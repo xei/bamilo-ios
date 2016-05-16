@@ -132,6 +132,22 @@
     [self.view addSubview:self.callButton];
     [self.view addSubview:self.backButton];
     [self setup];
+    
+    if([[UIDevice currentDevice].model isEqualToString:@"iPhone"])
+    {
+        if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tel:123456"]])
+        {
+            [self.callButton setEnabled:YES];
+        }
+        else
+        {
+            [self.callButton setEnabled:NO];
+        }
+    }
+    else
+    {
+        [self.callButton setEnabled:NO];
+    }
 }
 
 - (void)onOrientationChanged
