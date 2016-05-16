@@ -7,7 +7,11 @@
 //
 
 #import "JABaseViewController.h"
+#import "RIOrder.h"
 
 @interface JAORConfirmationScreenViewController : JABaseViewController
+
+@property (nonatomic, strong) RITrackOrder *order;
+@property (nonatomic, strong) NSArray *items;
 
 @end

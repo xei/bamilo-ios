@@ -1877,13 +1877,16 @@
         [viewController setOrder:order];
         [self pushViewController:viewController animated:YES];
     } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-        [self goToOnlineReturnsConfirmScreen];
+        [self goToOnlineReturnsReasonsScreenForItems:items order:order];
     }];
 }
 
-- (void)goToOnlineReturnsConfirmScreen
+- (void)goToOnlineReturnsConfirmScreenForItems:(NSArray *)items
+                                         order:(RITrackOrder*)order
 {
     JAORConfirmationScreenViewController *viewController = [[JAORConfirmationScreenViewController alloc] init];
+    [viewController setItems:items];
+    [viewController setOrder:order];
     [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
 }
 

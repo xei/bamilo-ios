@@ -59,7 +59,7 @@
     } else if (classKind == [JAORWaysViewController class]) {
 
     } else if (classKind == [JAORConfirmationScreenViewController class]) {
-        [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmScreen];
+//        [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmScreen];
     }
 }
 
