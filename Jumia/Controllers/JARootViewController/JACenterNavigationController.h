@@ -31,10 +31,14 @@
 
 - (void)goToOnlineReturnsReasonsScreenForItems:(NSArray *)items
                                          order:(RITrackOrder*)order;
+
 - (void)goToOnlineReturnsConfirmConditionsForItems:(NSArray *)items
                                              order:(RITrackOrder*)order;
+
 - (void)goToOnlineReturnsCall:(RIItemCollection *)item
               fromOrderNumber:(NSString *)orderNumber;
-- (void)goToOnlineReturnsConfirmScreen;
+
+- (void)goToOnlineReturnsConfirmScreenForItems:(NSArray *)items
+                                         order:(RITrackOrder *)order;
 
 @end
