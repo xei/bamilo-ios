@@ -14,6 +14,7 @@
 #import "JAPicker.h"
 #import "RIFieldOption.h"
 #import "JAButton.h"
+#import "JACenterNavigationController.h"
 
 @interface JAORReasonsViewController () <JADynamicFormDelegate, JAPickerDelegate>
 
@@ -308,6 +309,7 @@
         
         [results setObject:[dynamicForm getValues] forKey:item.sku];
     }
+    [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmScreenForItems:self.items order:self.order];
 }
 
 #pragma mark - PICKER

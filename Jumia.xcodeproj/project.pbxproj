@@ -755,6 +755,11 @@
 		9A40773F1CE60E3300313D20 /* JABottomSubmitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A40773C1CE60E3300313D20 /* JABottomSubmitView.m */; };
 		9A4077401CE60E3300313D20 /* JABottomSubmitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A40773C1CE60E3300313D20 /* JABottomSubmitView.m */; };
 		9A4077411CE60E3300313D20 /* JABottomSubmitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A40773C1CE60E3300313D20 /* JABottomSubmitView.m */; };
+		9A40774C1CE61D1300313D20 /* JAOptionResumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A40774B1CE61D1300313D20 /* JAOptionResumeView.m */; };
+		9A40774D1CE61D1300313D20 /* JAOptionResumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A40774B1CE61D1300313D20 /* JAOptionResumeView.m */; };
+		9A40774E1CE61D1300313D20 /* JAOptionResumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A40774B1CE61D1300313D20 /* JAOptionResumeView.m */; };
+		9A40774F1CE61D1300313D20 /* JAOptionResumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A40774B1CE61D1300313D20 /* JAOptionResumeView.m */; };
+		9A4077501CE61D1300313D20 /* JAOptionResumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A40774B1CE61D1300313D20 /* JAOptionResumeView.m */; };
 		9A4ADF681C2AF1010019F439 /* JADropdownControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ADF671C2AF1010019F439 /* JADropdownControl.m */; };
 		9A4ADF691C2AF1010019F439 /* JADropdownControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ADF671C2AF1010019F439 /* JADropdownControl.m */; };
 		9A4ADF6A1C2AF1010019F439 /* JADropdownControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ADF671C2AF1010019F439 /* JADropdownControl.m */; };
@@ -2970,6 +2975,8 @@
 		9A4077351CE24DF800313D20 /* JAORCallToReturnViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAORCallToReturnViewController.m; path = OnlineReturns/JAORCallToReturnViewController.m; sourceTree = "<group>"; };
 		9A40773B1CE60E3300313D20 /* JABottomSubmitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JABottomSubmitView.h; sourceTree = "<group>"; };
 		9A40773C1CE60E3300313D20 /* JABottomSubmitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JABottomSubmitView.m; sourceTree = "<group>"; };
+		9A40774A1CE61D1300313D20 /* JAOptionResumeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAOptionResumeView.h; sourceTree = "<group>"; };
+		9A40774B1CE61D1300313D20 /* JAOptionResumeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAOptionResumeView.m; sourceTree = "<group>"; };
 		9A4ADF661C2AF1010019F439 /* JADropdownControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JADropdownControl.h; sourceTree = "<group>"; };
 		9A4ADF671C2AF1010019F439 /* JADropdownControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JADropdownControl.m; sourceTree = "<group>"; };
 		9A4F91121B3D5C3E00E34C0B /* JAPDVWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAPDVWizardView.h; path = Wizard/JAPDVWizardView.h; sourceTree = "<group>"; };
@@ -4070,6 +4077,7 @@
 		4AE242DB198655D900E37C90 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				9A4077491CE61CF700313D20 /* OnlineReturns */,
 				9AE7669B1CB3CF2300B63D8E /* Authentication */,
 				FFC9C0C01C984B1A00DD5851 /* TopTabsView */,
 				9A4ADF651C2AF0BD0019F439 /* CustomControls */,
@@ -4740,6 +4748,15 @@
 				9A3876661BCD121A0088B186 /* JATabButton.m */,
 			);
 			name = "Details DescSpecReviews";
+			sourceTree = "<group>";
+		};
+		9A4077491CE61CF700313D20 /* OnlineReturns */ = {
+			isa = PBXGroup;
+			children = (
+				9A40774A1CE61D1300313D20 /* JAOptionResumeView.h */,
+				9A40774B1CE61D1300313D20 /* JAOptionResumeView.m */,
+			);
+			name = OnlineReturns;
 			sourceTree = "<group>";
 		};
 		9A4ADF651C2AF0BD0019F439 /* CustomControls */ = {
@@ -7746,6 +7763,7 @@
 				d765de058e273cba2b2628fd /* RICustomer.m in Sources */,
 				09a540fd5e97a0761054d14c /* SDWebImageDecoder.m in Sources */,
 				692fece832938452dbf8505a /* JATeaserPageView.m in Sources */,
+				9A40774D1CE61D1300313D20 /* JAOptionResumeView.m in Sources */,
 				9A189E7A1BB449CC0039BC14 /* JAProductInfoPriceLine.m in Sources */,
 				9AB517A31C934342007E1327 /* JAButton.m in Sources */,
 				FF04649E1CA96E9000B82FD2 /* ADJAdjustFactory.m in Sources */,
@@ -8127,6 +8145,7 @@
 				B517FDFC198265AD00F65253 /* RICartItem.m in Sources */,
 				CECD05A31ADFF2DC00EC51E3 /* RITeaserGrouping.m in Sources */,
 				CEC376DD19EFC1E800558B98 /* JAWizardView.m in Sources */,
+				9A40774C1CE61D1300313D20 /* JAOptionResumeView.m in Sources */,
 				B5A3025819811E8A00F71726 /* SDImageCache.m in Sources */,
 				CEA86E041A49D247000032AD /* JACampaignPageView.m in Sources */,
 				9A3876671BCD121A0088B186 /* JATabButton.m in Sources */,
@@ -8483,6 +8502,7 @@
 				CECD05A51ADFF2DC00EC51E3 /* RITeaserGrouping.m in Sources */,
 				CE9ADC181AB34C4600D56481 /* JAWizardView.m in Sources */,
 				CED620531BEA5EFC00FA8403 /* JAProductCollectionViewFlowLayout.m in Sources */,
+				9A40774E1CE61D1300313D20 /* JAOptionResumeView.m in Sources */,
 				CE9ADC191AB34C4600D56481 /* SDImageCache.m in Sources */,
 				9A3876691BCD121A0088B186 /* JATabButton.m in Sources */,
 				CE9ADC1A1AB34C4600D56481 /* JACampaignPageView.m in Sources */,
@@ -8829,6 +8849,7 @@
 				CECD05A61ADFF2DC00EC51E3 /* RITeaserGrouping.m in Sources */,
 				CE9ADE121AB6D6E900D56481 /* JAWizardView.m in Sources */,
 				CED620541BEA5EFC00FA8403 /* JAProductCollectionViewFlowLayout.m in Sources */,
+				9A40774F1CE61D1300313D20 /* JAOptionResumeView.m in Sources */,
 				CE9ADE131AB6D6E900D56481 /* SDImageCache.m in Sources */,
 				9A38766A1BCD121A0088B186 /* JATabButton.m in Sources */,
 				CE9ADE141AB6D6E900D56481 /* JACampaignPageView.m in Sources */,
@@ -9175,6 +9196,7 @@
 				CE9AE00C1AB6D78200D56481 /* JAWizardView.m in Sources */,
 				CE9AE00D1AB6D78200D56481 /* SDImageCache.m in Sources */,
 				9A38766B1BCD121A0088B186 /* JATabButton.m in Sources */,
+				9A4077501CE61D1300313D20 /* JAOptionResumeView.m in Sources */,
 				CED620551BEA5EFC00FA8403 /* JAProductCollectionViewFlowLayout.m in Sources */,
 				CE9AE00E1AB6D78200D56481 /* JACampaignPageView.m in Sources */,
 				CE9AE00F1AB6D78200D56481 /* RIOrder.m in Sources */,
