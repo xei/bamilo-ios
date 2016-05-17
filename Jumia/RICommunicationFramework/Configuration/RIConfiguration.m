@@ -43,7 +43,7 @@ NSString *const RI_HTTP_USER_AGENT_HEADER_IPAD_VALUE = @"iPad: Mozilla/5.0(iPad;
 NSString *const RI_HTTP_USER_LANGUAGE_HEADER_NAME = @"User-Language";
 
 NSString *const RI_COUNTRIES_URL_JUMIA = @"http://www.jumia.com/mobapi/availablecountries";
-NSString *const RI_COUNTRIES_URL_JUMIA_STAGING = @"http://pastie.org/pastes/10840871/download";
+NSString *const RI_COUNTRIES_URL_JUMIA_STAGING = @"http://shareptcmobile.eu.pn/jtmobapi/";
 NSString *const RI_COUNTRIES_URL_DARAZ = @"http://www.daraz.com/mobapi/availablecountries";
 NSString *const RI_COUNTRIES_URL_DARAZ_STAGING = @"http://shareptcmobile.eu.pn/dtmobapi/";
 
