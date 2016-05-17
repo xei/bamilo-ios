@@ -17,6 +17,7 @@
 #import "JAButton.h"
 #import "JACenterNavigationController.h"
 #import "JABottomSubmitView.h"
+#import "JAORProductView.h"
 
 @interface JAORReasonsViewController () <JADynamicFormDelegate, JAPickerDelegate>
 
@@ -67,76 +68,19 @@
         CGFloat itemY = kProductInfoHeaderLineHeight;
         for (int i = 0; i<self.items.count; i++) {
             RIItemCollection* item = [self.items objectAtIndex:i];
-            UIView* itemContent = [UIView new];
 
+            UIView* itemContent = [UIView new];
+            
             CGFloat currentY = 10.0f;
+
+            JAORProductView* productView = [[JAORProductView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                                             currentY,
+                                                                                             self.scrollView.frame.size.width,
+                                                                                             1.0f)];
+            [productView setupWithItemCollection:item order:self.order];
+            [itemContent addSubview:productView];
             
-            CGSize imageSize = CGSizeMake(68.0f, 85.0f);
-            
-            //details inside itemCell
-            UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(16.0f,
-                                                                                   currentY,
-                                                                                   imageSize.width,
-                                                                                   imageSize.height)];
-            
-            [imageView setImageWithURL:[NSURL URLWithString:item.imageURL]
-                      placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
-            
-            UILabel* brandLabel = [UILabel new];
-            brandLabel.font = JABodyFont;
-            brandLabel.textColor = JABlack800Color;
-            brandLabel.textAlignment = NSTextAlignmentLeft;
-            brandLabel.text = item.brand;
-            [brandLabel sizeToFit];
-            brandLabel.frame = CGRectMake(CGRectGetMaxX(imageView.frame) + 6.0f,
-                                          currentY,
-                                          self.view.frame.size.width - CGRectGetMaxX(imageView.frame) + 6.0f - 16.0f,
-                                          brandLabel.frame.size.height);
-            [itemContent addSubview:brandLabel];
-            
-            currentY = CGRectGetMaxY(brandLabel.frame);
-            
-            UILabel* nameLabel = [UILabel new];
-            nameLabel.font = JAHEADLINEFont;
-            nameLabel.textColor = JABlackColor;
-            nameLabel.textAlignment = NSTextAlignmentLeft;
-            nameLabel.text = item.name;
-            [nameLabel sizeToFit];
-            nameLabel.frame = CGRectMake(CGRectGetMaxX(imageView.frame) + 6.0f,
-                                         currentY,
-                                         self.view.frame.size.width - CGRectGetMaxX(imageView.frame) + 6.0f - 16.0f,
-                                         nameLabel.frame.size.height);
-            [itemContent addSubview:nameLabel];
-            
-            currentY = CGRectGetMaxY(nameLabel.frame);
-            
-            UILabel* quantityLabel = [UILabel new];
-            quantityLabel.font = JABodyFont;
-            quantityLabel.textColor = JABlack800Color;
-            quantityLabel.textAlignment = NSTextAlignmentLeft;
-            quantityLabel.text = [NSString stringWithFormat:STRING_QUANTITY, [item.quantity stringValue]];
-            [quantityLabel sizeToFit];
-            quantityLabel.frame = CGRectMake(CGRectGetMaxX(imageView.frame) + 6.0f,
-                                             currentY,
-                                             self.view.frame.size.width - CGRectGetMaxX(imageView.frame) + 6.0f - 16.0f,
-                                             quantityLabel.frame.size.height);
-            [itemContent addSubview:quantityLabel];
-            
-            currentY = CGRectGetMaxY(quantityLabel.frame);
-            
-            UILabel* orderNumberLabel = [UILabel new];
-            orderNumberLabel.font = JABodyFont;
-            orderNumberLabel.textColor = JABlackColor;
-            orderNumberLabel.text = [NSString stringWithFormat:STRING_ORDER_NO, self.order.orderId];
-            orderNumberLabel.textAlignment = NSTextAlignmentLeft;
-            [orderNumberLabel sizeToFit];
-            orderNumberLabel.frame = CGRectMake(CGRectGetMaxX(imageView.frame) + 6.0f,
-                                                currentY,
-                                                self.view.frame.size.width - CGRectGetMaxX(imageView.frame) + 6.0f - 16.0f,
-                                                orderNumberLabel.frame.size.height);
-            [itemContent addSubview:orderNumberLabel];
-            
-            currentY = CGRectGetMaxY(orderNumberLabel.frame);
+            currentY += productView.frame.size.height;
             
             if (VALID_NOTEMPTY(self.returnDetailForm, RIForm)) {
                 
@@ -157,9 +101,7 @@
             
             currentY += 20.0f;
             
-            [itemContent addSubview:imageView];
-            
-            CGFloat totalHeight = MAX(currentY, imageSize.height + 20.0f);
+            CGFloat totalHeight = MAX(currentY, productView.height + 20.0f);
             
             itemContent.frame = CGRectMake(0.0f,
                                            itemY,

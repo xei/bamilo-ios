@@ -13,6 +13,7 @@
 #import "UIImageView+WebCache.h"
 #import "JACenterNavigationController.h"
 #import "JABottomSubmitView.h"
+#import "JAORProductView.h"
 
 @interface JAORWaysViewController () <JADynamicFormDelegate>
 
@@ -63,101 +64,29 @@
         CGFloat itemY = 0.0f;
         for (int i = 0; i<self.items.count; i++) {
             RIItemCollection* item = [self.items objectAtIndex:i];
-            UIView* itemContent = [UIView new];
+
+            CGFloat currentY = 0.0f;
             
-            CGFloat currentY = 10.0f;
-            
-            CGSize imageSize = CGSizeMake(68.0f, 85.0f);
-            
-            //details inside itemCell
-            UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(16.0f,
-                                                                                   currentY,
-                                                                                   imageSize.width,
-                                                                                   imageSize.height)];
-            
-            [imageView setImageWithURL:[NSURL URLWithString:item.imageURL]
-                      placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
-            
-            UILabel* brandLabel = [UILabel new];
-            brandLabel.font = JABodyFont;
-            brandLabel.textColor = JABlack800Color;
-            brandLabel.textAlignment = NSTextAlignmentLeft;
-            brandLabel.text = item.brand;
-            [brandLabel sizeToFit];
-            brandLabel.frame = CGRectMake(CGRectGetMaxX(imageView.frame) + 6.0f,
-                                          currentY,
-                                          self.view.frame.size.width - CGRectGetMaxX(imageView.frame) + 6.0f - 16.0f,
-                                          brandLabel.frame.size.height);
-            [itemContent addSubview:brandLabel];
-            
-            currentY = CGRectGetMaxY(brandLabel.frame);
-            
-            UILabel* nameLabel = [UILabel new];
-            nameLabel.font = JAHEADLINEFont;
-            nameLabel.textColor = JABlackColor;
-            nameLabel.textAlignment = NSTextAlignmentLeft;
-            nameLabel.text = item.name;
-            [nameLabel sizeToFit];
-            nameLabel.frame = CGRectMake(CGRectGetMaxX(imageView.frame) + 6.0f,
-                                         currentY,
-                                         self.view.frame.size.width - CGRectGetMaxX(imageView.frame) + 6.0f - 16.0f,
-                                         nameLabel.frame.size.height);
-            [itemContent addSubview:nameLabel];
-            
-            currentY = CGRectGetMaxY(nameLabel.frame);
-            
-            UILabel* quantityLabel = [UILabel new];
-            quantityLabel.font = JABodyFont;
-            quantityLabel.textColor = JABlack800Color;
-            quantityLabel.textAlignment = NSTextAlignmentLeft;
-            quantityLabel.text = [NSString stringWithFormat:STRING_QUANTITY, [item.quantity stringValue]];
-            [quantityLabel sizeToFit];
-            quantityLabel.frame = CGRectMake(CGRectGetMaxX(imageView.frame) + 6.0f,
-                                             currentY,
-                                             self.view.frame.size.width - CGRectGetMaxX(imageView.frame) + 6.0f - 16.0f,
-                                             quantityLabel.frame.size.height);
-            [itemContent addSubview:quantityLabel];
-            
-            currentY = CGRectGetMaxY(quantityLabel.frame);
-            
-            UILabel* orderNumberLabel = [UILabel new];
-            orderNumberLabel.font = JABodyFont;
-            orderNumberLabel.textColor = JABlackColor;
-            orderNumberLabel.text = [NSString stringWithFormat:STRING_ORDER_NO, self.order.orderId];
-            orderNumberLabel.textAlignment = NSTextAlignmentLeft;
-            [orderNumberLabel sizeToFit];
-            orderNumberLabel.frame = CGRectMake(CGRectGetMaxX(imageView.frame) + 6.0f,
-                                                currentY,
-                                                self.view.frame.size.width - CGRectGetMaxX(imageView.frame) + 6.0f - 16.0f,
-                                                orderNumberLabel.frame.size.height);
-            [itemContent addSubview:orderNumberLabel];
-            
-            currentY = CGRectGetMaxY(orderNumberLabel.frame);
-            
-            [itemContent addSubview:imageView];
-            
-            CGFloat totalHeight = MAX(currentY, imageSize.height);
-            
-            totalHeight += 20;
-            
-            itemContent.frame = CGRectMake(0.0f,
-                                           itemY,
-                                           self.view.frame.size.width,
-                                           totalHeight);
+            JAORProductView* productView = [[JAORProductView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                                             currentY,
+                                                                                             self.scrollView.frame.size.width,
+                                                                                             1.0f)];
+            [productView setupWithItemCollection:item order:self.order];
+            currentY += productView.frame.size.height;
             
             if (i != self.items.count-1) {
                 //not last one
-                UIView* separatorView = [[UIView alloc] initWithFrame:CGRectMake(16.0f, totalHeight-1.0f, self.view.frame.size.width - 16.0f*2, 1.0f)];
+                UIView* separatorView = [[UIView alloc] initWithFrame:CGRectMake(16.0f, productView.frame.size.height-1.0f, self.view.frame.size.width - 16.0f*2, 1.0f)];
                 separatorView.backgroundColor = JABlack400Color;
-                [itemContent addSubview:separatorView];
+                [productView addSubview:separatorView];
             }
             
-            itemY += itemContent.frame.size.height;
+            itemY += productView.frame.size.height;
             
-            [mutableItemViewsArray addObject:itemContent];
+            [mutableItemViewsArray addObject:productView];
             
             [_itemViewsContentView setHeight:itemY];
-            [_itemViewsContentView addSubview:itemContent];
+            [_itemViewsContentView addSubview:productView];
         }
         [self.scrollView addSubview:_itemViewsContentView];
         

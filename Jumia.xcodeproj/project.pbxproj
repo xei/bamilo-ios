@@ -2588,6 +2588,11 @@
 		FF4383F61C71EEEB003BA957 /* JAScreenTitleComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4383F31C71EEEB003BA957 /* JAScreenTitleComponent.m */; };
 		FF4383F71C71EEEB003BA957 /* JAScreenTitleComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4383F31C71EEEB003BA957 /* JAScreenTitleComponent.m */; };
 		FF4383F81C71EEEB003BA957 /* JAScreenTitleComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4383F31C71EEEB003BA957 /* JAScreenTitleComponent.m */; };
+		FF4465171CEB4FD7003A65EA /* JAORProductView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4465161CEB4FD7003A65EA /* JAORProductView.m */; };
+		FF4465181CEB4FD7003A65EA /* JAORProductView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4465161CEB4FD7003A65EA /* JAORProductView.m */; };
+		FF4465191CEB4FD7003A65EA /* JAORProductView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4465161CEB4FD7003A65EA /* JAORProductView.m */; };
+		FF44651A1CEB4FD7003A65EA /* JAORProductView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4465161CEB4FD7003A65EA /* JAORProductView.m */; };
+		FF44651B1CEB4FD7003A65EA /* JAORProductView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4465161CEB4FD7003A65EA /* JAORProductView.m */; };
 		FF4B433B1C56735D0074241E /* RIRecentlyViewedProductSku.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4B43351C56735D0074241E /* RIRecentlyViewedProductSku.m */; };
 		FF4B433C1C56735D0074241E /* RIRecentlyViewedProductSku.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4B43351C56735D0074241E /* RIRecentlyViewedProductSku.m */; };
 		FF4B433D1C56735D0074241E /* RIRecentlyViewedProductSku.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4B43351C56735D0074241E /* RIRecentlyViewedProductSku.m */; };
@@ -3673,6 +3678,8 @@
 		FF4383F21C71EEEB003BA957 /* JAScreenTitleComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAScreenTitleComponent.h; sourceTree = "<group>"; };
 		FF4383F31C71EEEB003BA957 /* JAScreenTitleComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAScreenTitleComponent.m; sourceTree = "<group>"; };
 		FF4465131CEA0B23003A65EA /* Model_1.15.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.15.xcdatamodel; sourceTree = "<group>"; };
+		FF4465151CEB4FD7003A65EA /* JAORProductView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORProductView.h; path = ORProductView/JAORProductView.h; sourceTree = "<group>"; };
+		FF4465161CEB4FD7003A65EA /* JAORProductView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAORProductView.m; path = ORProductView/JAORProductView.m; sourceTree = "<group>"; };
 		FF4B43341C56735D0074241E /* RIRecentlyViewedProductSku.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIRecentlyViewedProductSku.h; sourceTree = "<group>"; };
 		FF4B43351C56735D0074241E /* RIRecentlyViewedProductSku.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIRecentlyViewedProductSku.m; sourceTree = "<group>"; };
 		FF6BDC9A1CE238F3002BFE11 /* JAORReasonsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORReasonsViewController.h; path = OnlineReturns/JAORReasonsViewController.h; sourceTree = "<group>"; };
@@ -4037,7 +4044,6 @@
 			children = (
 				9AE766E41CBFFDE200B63D8E /* Cart */,
 				CE28A79C1BDA307D00B1FADA /* GenericMenuCell */,
-				692CD2511BD7D50000DF6F49 /* PDVVariatons */,
 				CEA106F21BD003AC00EF88B1 /* CategoriesSideMenu */,
 				CE8C92A91B8B555600C77706 /* Filter */,
 				CE283E721A72B10800F3E92D /* OfferCell */,
@@ -4092,6 +4098,7 @@
 		4AE242DB198655D900E37C90 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FF4465141CEB4F59003A65EA /* ORProductView */,
 				9A4077491CE61CF700313D20 /* OnlineReturns */,
 				9AE7669B1CB3CF2300B63D8E /* Authentication */,
 				FFC9C0C01C984B1A00DD5851 /* TopTabsView */,
@@ -4277,13 +4284,6 @@
 				CE7CC08D1BE38B47006F4A56 /* JASearchView.m */,
 			);
 			path = Search;
-			sourceTree = "<group>";
-		};
-		692CD2511BD7D50000DF6F49 /* PDVVariatons */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = PDVVariatons;
 			sourceTree = "<group>";
 		};
 		6C9355941A6EC8E700167486 /* Bundles */ = {
@@ -6387,6 +6387,15 @@
 			path = MetalTheme;
 			sourceTree = "<group>";
 		};
+		FF4465141CEB4F59003A65EA /* ORProductView */ = {
+			isa = PBXGroup;
+			children = (
+				FF4465151CEB4FD7003A65EA /* JAORProductView.h */,
+				FF4465161CEB4FD7003A65EA /* JAORProductView.m */,
+			);
+			name = ORProductView;
+			sourceTree = "<group>";
+		};
 		FFC9C0C01C984B1A00DD5851 /* TopTabsView */ = {
 			isa = PBXGroup;
 			children = (
@@ -7541,6 +7550,7 @@
 				9A6BC0871C4907BB00DD9492 /* JAMessageView.m in Sources */,
 				1e6713adaced26b8b8ad2c86 /* JAShippingViewController.m in Sources */,
 				eff7e3b1020d2863ebc2e153 /* JACheckBoxComponent.m in Sources */,
+				FF4465181CEB4FD7003A65EA /* JAORProductView.m in Sources */,
 				8fa71f605339cbdc38488d92 /* RIPaymentInformation.m in Sources */,
 				9A08B0FA1CC4EFAF003282CB /* RIExternalCategory.m in Sources */,
 				0b1e813172ab4ac5baf4294c /* RIAddress.m in Sources */,
@@ -7858,6 +7868,7 @@
 				4A454F3B199CBF1400B44821 /* RIAddress.m in Sources */,
 				B578225A1A37516800B4DD8B /* JAGradientLayer.m in Sources */,
 				CEA2A1B31B25D20C00E5973F /* JADynamicField.m in Sources */,
+				FF4465171CEB4FD7003A65EA /* JAORProductView.m in Sources */,
 				4A2FD84619912BC500C65C1D /* JAPDVSingleRelatedItem.m in Sources */,
 				9AD15D481BE3F45400DD60DD /* JACollectionSeparator.m in Sources */,
 				CE87E9101C0376FA00DB0FEB /* RITarget.m in Sources */,
@@ -8217,6 +8228,7 @@
 				CE9ADB411AB34C4600D56481 /* RIAddress.m in Sources */,
 				CE9ADB421AB34C4600D56481 /* JAGradientLayer.m in Sources */,
 				CEA2A1B51B25D20C00E5973F /* JADynamicField.m in Sources */,
+				FF4465191CEB4FD7003A65EA /* JAORProductView.m in Sources */,
 				CE9ADB431AB34C4600D56481 /* JAPDVSingleRelatedItem.m in Sources */,
 				9A189E741BB31B1F0039BC14 /* JAProductInfoBaseLine.m in Sources */,
 				CE87E9121C0376FA00DB0FEB /* RITarget.m in Sources */,
@@ -8566,6 +8578,7 @@
 				CE9ADD3B1AB6D6E900D56481 /* RIAddress.m in Sources */,
 				CE9ADD3C1AB6D6E900D56481 /* JAGradientLayer.m in Sources */,
 				CEA2A1B61B25D20C00E5973F /* JADynamicField.m in Sources */,
+				FF44651A1CEB4FD7003A65EA /* JAORProductView.m in Sources */,
 				CE9ADD3D1AB6D6E900D56481 /* JAPDVSingleRelatedItem.m in Sources */,
 				9A189E751BB31B1F0039BC14 /* JAProductInfoBaseLine.m in Sources */,
 				CE87E9131C0376FA00DB0FEB /* RITarget.m in Sources */,
@@ -8915,6 +8928,7 @@
 				CE9ADF351AB6D78200D56481 /* RIAddress.m in Sources */,
 				CE9ADF361AB6D78200D56481 /* JAGradientLayer.m in Sources */,
 				CEA2A1B71B25D20C00E5973F /* JADynamicField.m in Sources */,
+				FF44651B1CEB4FD7003A65EA /* JAORProductView.m in Sources */,
 				CE9ADF371AB6D78200D56481 /* JAPDVSingleRelatedItem.m in Sources */,
 				9A189E761BB31B1F0039BC14 /* JAProductInfoBaseLine.m in Sources */,
 				CE87E9141C0376FA00DB0FEB /* RITarget.m in Sources */,
