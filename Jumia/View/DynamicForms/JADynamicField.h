@@ -14,4 +14,9 @@
 @property (strong, nonatomic) RIField *field;
 @property (strong, nonatomic) UIImageView *iconImageView;
 
+-(BOOL)isComponentWithKey:(NSString*)key;
+-(BOOL)isComponentWithName:(NSString*)name;
+-(void)setValue:(id)value;
+-(NSDictionary*)getValues;
+
 @end

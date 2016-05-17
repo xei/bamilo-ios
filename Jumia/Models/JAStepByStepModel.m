@@ -10,6 +10,14 @@
 
 @implementation JAStepByStepModel
 
+- (NSMutableDictionary *)stepByStepInfo
+{
+    if (!VALID(_stepByStepInfo, NSMutableDictionary)) {
+        _stepByStepInfo = [NSMutableDictionary new];
+    }
+    return _stepByStepInfo;
+}
+
 - (BOOL)isFreeToChoose:(UIViewController *)viewController
 {
     return NO;

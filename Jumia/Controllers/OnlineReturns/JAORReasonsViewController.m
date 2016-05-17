@@ -140,9 +140,10 @@
             currentY = CGRectGetMaxY(orderNumberLabel.frame);
             
             if (VALID_NOTEMPTY(self.returnDetailForm, RIForm)) {
+                
                 JADynamicForm* dynamicForm = [[JADynamicForm alloc] initWithForm:self.returnDetailForm startingPosition:currentY - 10.0f];
                 dynamicForm.delegate = self;
-                for (UIView* formView in dynamicForm.formViews) {
+                for (JADynamicField* formView in dynamicForm.formViews) {
                     [formView setWidth:self.scrollView.frame.size.width - 16.0f*2];
                     [formView setX:16.0f];
                     [itemContent addSubview:formView];
@@ -151,6 +152,7 @@
                         formView.tag = i;
                     }
                 }
+                [dynamicForm setValues:self.stateInfo replacePlaceHolder:@"__NAME__" forString:item.sku];
                 [mutableDynamicForms addObject:dynamicForm];
             }
             
@@ -290,7 +292,6 @@
 
 - (void)nextButtonPressed
 {
-    NSMutableDictionary* results = [NSMutableDictionary new];
     for (int i = 0; i<self.items.count; i++) {
         RIItemCollection* item = [self.items objectAtIndex:i];
         JADynamicForm* dynamicForm = [self.dynamicForms objectAtIndex:i];
@@ -304,11 +305,12 @@
             
             [self onErrorResponse:RIApiResponseSuccess messages:message showAsMessage:YES selector:@selector(nextButtonPressed) objects:nil];
             
-            results = nil;
-            break;
+            return;
         }
-        
-        [results setObject:[dynamicForm getValues] forKey:item.sku];
+        if (VALID(self.stateInfo, NSMutableDictionary))
+        {
+            [self.stateInfo addEntriesFromDictionary:[dynamicForm getValuesReplacingPlaceHolder:@"__NAME__" forString:item.sku]];
+        }
     }
     
     if (VALID_NOTEMPTY(results, NSMutableDictionary)) {

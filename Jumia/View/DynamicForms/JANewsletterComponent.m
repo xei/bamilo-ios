@@ -72,11 +72,6 @@
     }
 }
 
--(BOOL)isComponentWithKey:(NSString*)key
-{
-    return ([key isEqualToString:self.field.key]);
-}
-
 -(void)changedState:(id)sender
 {
     BOOL state = [sender isOn];

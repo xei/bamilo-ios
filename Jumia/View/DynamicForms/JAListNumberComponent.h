@@ -19,12 +19,6 @@
 
 -(void)setupWithField:(RIField*)field;
 
--(BOOL)isComponentWithKey:(NSString*)key;
-
--(void)setValue:(id)value;
-
--(NSDictionary*)getValues;
-
 -(NSString*)getSelectedValue;
 
 -(void)setError:(NSString*)error;

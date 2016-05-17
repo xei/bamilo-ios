@@ -17,12 +17,6 @@
 
 -(void)setupWithField:(RIField*)field;
 
--(BOOL)isComponentWithKey:(NSString*)key;
-
--(NSDictionary*)getValues;
-
--(void)setValue:(NSString*)value;
-
 -(BOOL)isCheckBoxOn;
 
 -(NSString*)getFieldName;

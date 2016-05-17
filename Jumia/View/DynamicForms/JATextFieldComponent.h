@@ -27,12 +27,6 @@
 
 -(void)setupWithLabel:(NSString*)label value:(NSString*)value mandatory:(BOOL)mandatory;
 
--(BOOL)isComponentWithKey:(NSString*)key;
-
--(void)setValue:(NSString*)value;
-
--(NSDictionary*)getValues;
-
 -(void)setError:(NSString*)error;
 
 -(void)cleanError;

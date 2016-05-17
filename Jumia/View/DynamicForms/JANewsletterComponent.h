@@ -22,13 +22,7 @@
 
 -(void)setupWithField:(RIField*)field;
 
--(BOOL)isComponentWithKey:(NSString*)key;
-
 -(void)resetValue;
-
--(NSDictionary*)getValues;
-
--(void)setValue:(NSString*)value;
 
 -(BOOL)isCheckBoxOn;
 

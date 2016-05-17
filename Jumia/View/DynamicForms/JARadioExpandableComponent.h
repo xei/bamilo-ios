@@ -17,8 +17,6 @@
 
 - (void)setupWithField:(RIField*)field;
 
-- (NSDictionary*)getValues;
-
 - (NSString*)getFieldName;
 
 @end
