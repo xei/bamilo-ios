@@ -312,10 +312,7 @@
             [self.stateInfo addEntriesFromDictionary:[dynamicForm getValuesReplacingPlaceHolder:@"__NAME__" forString:item.sku]];
         }
     }
-    
-    if (VALID_NOTEMPTY(results, NSMutableDictionary)) {
-        [[JACenterNavigationController sharedInstance] goToOnlineReturnsWaysScreenForItems:self.items order:self.order];
-    }
+    [[JACenterNavigationController sharedInstance] goToOnlineReturnsWaysScreenForItems:self.items order:self.order];
 }
 
 #pragma mark - PICKER
