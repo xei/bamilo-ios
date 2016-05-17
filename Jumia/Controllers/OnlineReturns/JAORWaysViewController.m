@@ -12,6 +12,7 @@
 #import "RIForm.h"
 #import "UIImageView+WebCache.h"
 #import "JACenterNavigationController.h"
+#import "JABottomSubmitView.h"
 
 @interface JAORWaysViewController () <JADynamicFormDelegate>
 
@@ -25,10 +26,7 @@
 
 @property (nonatomic, assign) BOOL isLoaded;
 
-@property (nonatomic, strong) UIView* bottomView;
-@property (nonatomic, strong) UIView* bottomSeparatorView;
-@property (nonatomic, strong) JAButton* bottomButtom;
-
+@property (nonatomic, strong) JABottomSubmitView *submitView;
 
 @end
 
@@ -192,37 +190,15 @@
     return _formContentView;
 }
 
-- (UIView*)bottomView
+- (JABottomSubmitView *)submitView
 {
-    if (!VALID(_bottomView, UIView)) {
-        CGFloat bottomViewHeight = 88.0f;
-        _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, self.view.frame.size.height - bottomViewHeight, self.view.frame.size.width, bottomViewHeight)];
-        [self.view addSubview:_bottomView];
+    if (!VALID(_submitView, JABottomSubmitView)) {
+        _submitView = [[JABottomSubmitView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, [JABottomSubmitView defaultHeight])];
+        _submitView.button = [[JAButton alloc] initButtonWithTitle:STRING_CONTINUE];
+        [_submitView.button addTarget:self action:@selector(nextButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:_submitView];
     }
-    return _bottomView;
-}
-
-- (UIView*)bottomSeparatorView
-{
-    if (!VALID(_bottomSeparatorView, UIView)) {
-        _bottomSeparatorView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                        0.0f,
-                                                                        self.bottomView.frame.size.width,
-                                                                        1.0f)];
-        _bottomSeparatorView.backgroundColor = JABlack400Color;
-        [self.bottomView addSubview:_bottomSeparatorView];
-    }
-    return _bottomSeparatorView;
-}
-
--(JAButton*)bottomButtom
-{
-    if (!VALID(_bottomButtom, JAButton)) {
-        _bottomButtom = [[JAButton alloc] initButtonWithTitle:STRING_CONTINUE target:self action:@selector(nextButtonPressed)];
-        [_bottomButtom setFrame:CGRectMake(16.0f, 20.0f, self.view.frame.size.width - 16.0f*2, 48.0f)];
-        [self.bottomView addSubview:_bottomButtom];
-    }
-    return _bottomButtom;
+    return _submitView;
 }
 
 
@@ -296,10 +272,8 @@
         }
     }
     
-    [self.bottomView setWidth:self.view.frame.size.width];
-    [self.bottomView setY:self.view.frame.size.height - self.bottomView.frame.size.height];
-    [self.bottomSeparatorView setWidth:self.bottomView.frame.size.width];
-    [self.bottomButtom setWidth:self.bottomView.frame.size.width];
+    [self.submitView setWidth:self.view.frame.size.width];
+    [self.submitView setYBottomAligned:0.f];
     
     if (RI_IS_RTL) {
         [self.titleHeaderView flipAllSubviews];
