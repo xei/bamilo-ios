@@ -11,6 +11,7 @@
 #import "JAButton.h"
 #import "RIForm.h"
 #import "UIImageView+WebCache.h"
+#import "JACenterNavigationController.h"
 
 @interface JAORWaysViewController () <JADynamicFormDelegate>
 
@@ -307,7 +308,6 @@
 
 - (void)nextButtonPressed
 {
-    NSMutableDictionary* results = [NSMutableDictionary new];
     for (int i = 0; i<self.items.count; i++) {
         RIItemCollection* item = [self.items objectAtIndex:i];
         
@@ -320,17 +320,17 @@
             
             [self onErrorResponse:RIApiResponseSuccess messages:message showAsMessage:YES selector:@selector(nextButtonPressed) objects:nil];
             
-            results = nil;
-            break;
+            return;
         }
         
-        [results setObject:[self.dynamicForm getValues] forKey:item.sku];
+        if (VALID(self.stateInfo, NSMutableDictionary))
+        {
+            [self.stateInfo addEntriesFromDictionary:[self.dynamicForm getValuesReplacingPlaceHolder:@"__NAME__" forString:item.sku]];
+        }
     }
-    
-    if (VALID_NOTEMPTY(results, NSMutableDictionary)) {
-
-    }
+    [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmScreenForItems:self.items order:self.order];
 }
+
 
 #pragma mark - JADynamicFormDelegate
 

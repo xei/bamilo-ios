@@ -11,6 +11,7 @@
 
 @interface JAORWaysViewController : JABaseViewController
 
+@property (nonatomic, strong) NSMutableDictionary* stateInfo;
 @property (nonatomic, strong) RITrackOrder *order;
 @property (nonatomic, strong) NSArray *items;
 
