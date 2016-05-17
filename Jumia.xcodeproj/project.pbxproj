@@ -2628,6 +2628,11 @@
 		FFB1B08C1CE5E163000F60AD /* JAORWaysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0891CE5E163000F60AD /* JAORWaysViewController.m */; };
 		FFB1B08D1CE5E163000F60AD /* JAORWaysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0891CE5E163000F60AD /* JAORWaysViewController.m */; };
 		FFB1B08E1CE5E163000F60AD /* JAORWaysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0891CE5E163000F60AD /* JAORWaysViewController.m */; };
+		FFB1B0911CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0901CE61D96000F60AD /* JARadioExpandableComponent.m */; };
+		FFB1B0921CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0901CE61D96000F60AD /* JARadioExpandableComponent.m */; };
+		FFB1B0931CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0901CE61D96000F60AD /* JARadioExpandableComponent.m */; };
+		FFB1B0941CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0901CE61D96000F60AD /* JARadioExpandableComponent.m */; };
+		FFB1B0951CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0901CE61D96000F60AD /* JARadioExpandableComponent.m */; };
 		FFC9C0C31C984E7900DD5851 /* JATopTabsView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC9C0C21C984E7900DD5851 /* JATopTabsView.m */; };
 		FFC9C0C41C984E7900DD5851 /* JATopTabsView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC9C0C21C984E7900DD5851 /* JATopTabsView.m */; };
 		FFC9C0C51C984E7900DD5851 /* JATopTabsView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC9C0C21C984E7900DD5851 /* JATopTabsView.m */; };
@@ -3667,6 +3672,7 @@
 		FF4383EC1C71DCE1003BA957 /* JANewsletterSubscriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANewsletterSubscriptionViewController.m; sourceTree = "<group>"; };
 		FF4383F21C71EEEB003BA957 /* JAScreenTitleComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAScreenTitleComponent.h; sourceTree = "<group>"; };
 		FF4383F31C71EEEB003BA957 /* JAScreenTitleComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAScreenTitleComponent.m; sourceTree = "<group>"; };
+		FF4465131CEA0B23003A65EA /* Model_1.15.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.15.xcdatamodel; sourceTree = "<group>"; };
 		FF4B43341C56735D0074241E /* RIRecentlyViewedProductSku.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIRecentlyViewedProductSku.h; sourceTree = "<group>"; };
 		FF4B43351C56735D0074241E /* RIRecentlyViewedProductSku.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIRecentlyViewedProductSku.m; sourceTree = "<group>"; };
 		FF6BDC9A1CE238F3002BFE11 /* JAORReasonsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORReasonsViewController.h; path = OnlineReturns/JAORReasonsViewController.h; sourceTree = "<group>"; };
@@ -3684,6 +3690,8 @@
 		FFB0A37C1C529E9900EF9FE5 /* RIVariation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIVariation.m; sourceTree = "<group>"; };
 		FFB1B0881CE5E163000F60AD /* JAORWaysViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORWaysViewController.h; path = OnlineReturns/JAORWaysViewController.h; sourceTree = "<group>"; };
 		FFB1B0891CE5E163000F60AD /* JAORWaysViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAORWaysViewController.m; path = OnlineReturns/JAORWaysViewController.m; sourceTree = "<group>"; };
+		FFB1B08F1CE61D96000F60AD /* JARadioExpandableComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARadioExpandableComponent.h; sourceTree = "<group>"; };
+		FFB1B0901CE61D96000F60AD /* JARadioExpandableComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARadioExpandableComponent.m; sourceTree = "<group>"; };
 		FFC9C0C11C984E7900DD5851 /* JATopTabsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JATopTabsView.h; path = TopTabsView/JATopTabsView.h; sourceTree = "<group>"; };
 		FFC9C0C21C984E7900DD5851 /* JATopTabsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JATopTabsView.m; path = TopTabsView/JATopTabsView.m; sourceTree = "<group>"; };
 		FFF900651C6A31A700DDF538 /* JANewsletterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANewsletterViewController.h; sourceTree = "<group>"; };
@@ -5037,6 +5045,8 @@
 				CEA2A1B21B25D20C00E5973F /* JADynamicField.m */,
 				FF6BDCA11CE34ACB002BFE11 /* JAListNumberComponent.h */,
 				FF6BDCA21CE34ACB002BFE11 /* JAListNumberComponent.m */,
+				FFB1B08F1CE61D96000F60AD /* JARadioExpandableComponent.h */,
+				FFB1B0901CE61D96000F60AD /* JARadioExpandableComponent.m */,
 			);
 			path = DynamicForms;
 			sourceTree = "<group>";
@@ -7716,6 +7726,7 @@
 				9A4077371CE24DF800313D20 /* JAORCallToReturnViewController.m in Sources */,
 				9AED07CE1C6DEA8800B5FDF0 /* ASBrowseIterator.m in Sources */,
 				c98a2364f0dc0bb39541a1e3 /* RIPaymentMethodForm.m in Sources */,
+				FFB1B0921CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */,
 				CEF0C48A1BE8EE42005B5B12 /* JAReviewCollectionCell.m in Sources */,
 				CECD059D1ADFF2DB00EC51E3 /* RITeaserComponent.m in Sources */,
 				39d64ebd01d50db348ddca2c /* RINewRelicTracker.m in Sources */,
@@ -8038,6 +8049,7 @@
 				9AEA3B261B15D4AC00771EEA /* UIView+Frame.m in Sources */,
 				9AE766D01CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m in Sources */,
 				9AE766AD1CBBB28E00B63D8E /* JACartProductsView.m in Sources */,
+				FFB1B0911CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */,
 				B5A302E619811E9200F71726 /* RIURLCacheWrapper.m in Sources */,
 				CE28A79F1BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */,
 				B59DCA6A19B8521A00DE7960 /* JAButtonWithBlur.m in Sources */,
@@ -8396,6 +8408,7 @@
 				9AEA3B271B15DD9B00771EEA /* UIView+Frame.m in Sources */,
 				9AE766D21CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m in Sources */,
 				9AE766AF1CBBB28E00B63D8E /* JACartProductsView.m in Sources */,
+				FFB1B0931CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */,
 				CE28A7A11BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */,
 				CE9ADBD21AB34C4600D56481 /* RIURLCacheWrapper.m in Sources */,
 				CE9ADBD31AB34C4600D56481 /* JAButtonWithBlur.m in Sources */,
@@ -8744,6 +8757,7 @@
 				9AEA3B281B15DD9C00771EEA /* UIView+Frame.m in Sources */,
 				9AE766D31CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m in Sources */,
 				9AE766B01CBBB28E00B63D8E /* JACartProductsView.m in Sources */,
+				FFB1B0941CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */,
 				CE28A7A21BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */,
 				CE9ADDCC1AB6D6E900D56481 /* RIURLCacheWrapper.m in Sources */,
 				CE9ADDCD1AB6D6E900D56481 /* JAButtonWithBlur.m in Sources */,
@@ -9092,6 +9106,7 @@
 				CE9ADFC31AB6D78200D56481 /* RIFieldDataSetComponent.m in Sources */,
 				9AE766D41CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m in Sources */,
 				9AE766B11CBBB28E00B63D8E /* JACartProductsView.m in Sources */,
+				FFB1B0951CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */,
 				CE28A7A31BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */,
 				CE9ADFC51AB6D78200D56481 /* RIImageResolution.m in Sources */,
 				9AEA3B291B15DD9C00771EEA /* UIView+Frame.m in Sources */,
@@ -10468,6 +10483,7 @@
 		B5A3028F19811E9200F71726 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				FF4465131CEA0B23003A65EA /* Model_1.15.xcdatamodel */,
 				9A08B0EF1CC4EC17003282CB /* Model_1.14.xcdatamodel */,
 				9AE7669A1CB2B22100B63D8E /* Model_1.13.xcdatamodel */,
 				FF7A88F31C88C42E00E40625 /* Model_1.12.xcdatamodel */,
@@ -10484,7 +10500,7 @@
 				CE73D4FF19E5866D0074F7F3 /* Model_1.1.xcdatamodel */,
 				B5A3029019811E9200F71726 /* Model.xcdatamodel */,
 			);
-			currentVersion = 9A08B0EF1CC4EC17003282CB /* Model_1.14.xcdatamodel */;
+			currentVersion = FF4465131CEA0B23003A65EA /* Model_1.15.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

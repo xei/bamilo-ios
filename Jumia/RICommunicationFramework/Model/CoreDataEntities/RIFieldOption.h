@@ -18,6 +18,10 @@
 @property (nonatomic, retain) NSString * value;
 @property (nonatomic, retain) NSNumber * isUserSubscribed;
 @property (nonatomic, retain) RIField *field;
+@property (nonatomic, retain) NSString * text;
+@property (nonatomic, retain) NSString * subtext;
+@property (nonatomic, retain) NSString * linkHTML;
+@property (nonatomic, retain) NSString * linkLabel;
 
 + (NSString*)getFieldOptionsForApiCall:(NSString*)apiCall
                           successBlock:(void (^)(NSArray *))successBlock

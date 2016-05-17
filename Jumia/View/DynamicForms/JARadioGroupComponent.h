@@ -12,6 +12,6 @@
 
 - (void)setupWithField:(RIField*)field;
 
-- (NSDictionary*)getValues;
+- (NSDictionary*)getValues; 
 
 @end
