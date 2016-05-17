@@ -10,4 +10,24 @@
 
 @implementation JADynamicField
 
+-(BOOL)isComponentWithKey:(NSString*)key
+{
+    return ([key isEqualToString:self.field.key]);
+}
+
+-(BOOL)isComponentWithName:(NSString*)name
+{
+    return ([name isEqualToString:self.field.name]);
+}
+
+- (void)setValue:(id)value
+{
+    
+}
+
+- (NSDictionary *)getValues
+{
+    return @{};
+}
+
 @end

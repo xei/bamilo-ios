@@ -11,6 +11,7 @@
 
 @interface JAORConfirmationScreenViewController : JABaseViewController
 
+@property (nonatomic) NSMutableDictionary *stateInfo;
 @property (nonatomic, strong) RITrackOrder *order;
 @property (nonatomic, strong) NSArray *items;
 

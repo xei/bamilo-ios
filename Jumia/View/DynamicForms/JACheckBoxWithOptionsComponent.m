@@ -12,6 +12,8 @@
 
 @interface JACheckBoxWithOptionsComponent ()
 
+@property (strong, nonatomic) NSMutableDictionary *values;
+
 @end
 
 @implementation JACheckBoxWithOptionsComponent
@@ -78,6 +80,11 @@
     }
     
     [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, startingY)];
+}
+
+- (NSDictionary *)getValues
+{
+    return [self.values copy];
 }
 
 -(void)changedState:(UISwitch*)sender
