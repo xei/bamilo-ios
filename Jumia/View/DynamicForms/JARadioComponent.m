@@ -166,11 +166,6 @@
     }
 }
 
--(BOOL)isComponentWithKey:(NSString*)key
-{
-    return ([key isEqualToString:self.field.key]);
-}
-
 -(NSString*)getFieldName
 {
     return self.field.name;

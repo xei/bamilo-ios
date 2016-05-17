@@ -15,7 +15,6 @@
 @property (strong, nonatomic) UIView *separator;
 
 @property (strong, nonatomic) RIField *field;
-@property (strong, nonatomic) NSMutableDictionary *values;
 
 -(void)setupWithField:(RIField*)field;
 

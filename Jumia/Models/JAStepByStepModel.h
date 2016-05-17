@@ -10,6 +10,7 @@
 
 @interface JAStepByStepModel : NSObject
 
+@property (nonatomic, strong) NSMutableDictionary *stepByStepInfo;
 @property (nonatomic, strong) NSArray *viewControllersArray;
 @property (nonatomic, strong) NSArray *iconsArray;
 @property (nonatomic, strong) NSArray *titlesArray;

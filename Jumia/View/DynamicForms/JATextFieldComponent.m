@@ -169,11 +169,6 @@
     [self addGestureRecognizer:tap];
 }
 
--(BOOL)isComponentWithKey:(NSString*)key
-{
-    return ([key isEqualToString:self.field.key]);
-}
-
 -(NSString*)getFieldName
 {
     return self.field.name;
@@ -181,6 +176,7 @@
 
 -(void)setValue:(NSString*)value
 {
+    [super setValue:value];
     self.storedValue = value;
     [self.textField setText:value];
 }

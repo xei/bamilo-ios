@@ -151,24 +151,20 @@
     [self addSubview:self.dropdownImageView];
 }
 
--(BOOL)isComponentWithKey:(NSString*)key
-{
-    return [key isEqualToString:self.field.key];
-}
-
 -(NSString*)getFieldName
 {
     return self.field.name;
 }
 
--(void)setValue:(NSDate*)date
+-(void)setValue:(id)value
 {
-    self.storedDate = date;
+    
+    self.storedDate = value;
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:self.field.dateFormat];
     
-    NSString *stringFromDate = [formatter stringFromDate:date];
+    NSString *stringFromDate = [formatter stringFromDate:(NSDate *)value];
     
     [self.textField setText:stringFromDate];
 }

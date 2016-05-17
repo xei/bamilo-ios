@@ -19,13 +19,7 @@
 
 -(void)setupWithField:(RIField*)field;
 
--(BOOL)isComponentWithKey:(NSString*)key;
-
--(void)setValue:(NSDate*)date;
-
 -(NSDate*)getDate;
-
--(NSMutableDictionary*)getValues;
 
 -(void)setError:(NSString*)error;
 

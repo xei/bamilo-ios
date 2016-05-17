@@ -126,7 +126,7 @@ JADynamicFormDelegate
          for (UIView *view in self.dynamicForm.formViews) {
              if ([view isKindOfClass:[JACheckBoxWithOptionsComponent class]])
              {
-                 NSMutableDictionary *values = [(JACheckBoxWithOptionsComponent*)view values];
+                 NSDictionary *values = [(JACheckBoxWithOptionsComponent*)view getValues];
                  if (VALID_NOTEMPTY(values, NSMutableDictionary))
                  {
                      NSArray *keys = [values allKeys];

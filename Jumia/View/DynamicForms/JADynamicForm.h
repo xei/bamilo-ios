@@ -84,7 +84,11 @@
 
 -(BOOL)checkErrors;
 
+-(NSDictionary*)getValuesReplacingPlaceHolder:(NSString *)placeHolder forString:(NSString *)replaceString;
 -(NSDictionary*)getValues;
+
+- (void)setValues:(NSDictionary *)values;
+- (void)setValues:(NSDictionary *)values replacePlaceHolder:(NSString *)placeHolder forString:(NSString *)replaceString;
 
 -(void)resetValues;
 
