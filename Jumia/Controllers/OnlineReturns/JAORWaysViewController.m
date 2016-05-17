@@ -172,6 +172,9 @@
     self.itemViewsContentView = nil;
     self.itemViewsArray = nil;
     
+    [self.formContentView removeFromSuperview];
+    self.formContentView = nil;
+    
     [self loadSubviews];
 }
 
