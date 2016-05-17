@@ -29,6 +29,8 @@
 - (void)showSearchView;
 
 
+- (void)goToOnlineReturnsWaysScreenForItems:(NSArray *)items
+                                      order:(RITrackOrder*)order;
 - (void)goToOnlineReturnsReasonsScreenForItems:(NSArray *)items
                                          order:(RITrackOrder*)order;
 

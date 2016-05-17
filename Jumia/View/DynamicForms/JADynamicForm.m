@@ -17,9 +17,10 @@
 #import "JARadioGroupComponent.h"
 #import "JASwitchRadioComponent.h"
 #import "JAScreenRadioComponent.h"
+#import "JARadioExpandableComponent.h"
 
 @interface JADynamicForm ()
-<UITextFieldDelegate, JASwitchRadioComponentDelegate, JAScreenRadioComponentDelegate>
+<UITextFieldDelegate, JASwitchRadioComponentDelegate, JAScreenRadioComponentDelegate, JARadioExpandableComponentDelegate>
 
 @property (nonatomic, strong) UITextField* currentTextField;
 
@@ -121,7 +122,19 @@
         RIField *field = [fields objectAtIndex:i];
         NSInteger tag = [self.formViews count];
         
-        if ([@"list_number" isEqualToString:field.type]) {
+        if ([@"radio_expandable" isEqualToString:field.type]) {
+            JARadioExpandableComponent* radioExpandable = [[JARadioExpandableComponent alloc] init];
+            [radioExpandable setupWithField:field];
+            radioExpandable.delegate = self;
+            
+            CGRect frame = radioExpandable.frame;
+            frame.origin.y = startingY;
+            radioExpandable.frame = frame;
+            startingY += radioExpandable.frame.size.height;
+            
+            [self.formViews addObject:radioExpandable];
+            
+        } else if ([@"list_number" isEqualToString:field.type]) {
             JAListNumberComponent *listNumberComponent = [[JAListNumberComponent alloc] init];
             [listNumberComponent setupWithField:field];
             [listNumberComponent.textField setDelegate:self];
@@ -640,7 +653,8 @@
             if ([obj isKindOfClass:[JATextFieldComponent class]] ||
                 [obj isKindOfClass:[JABirthDateComponent class]] ||
                 [obj isKindOfClass:[JARadioComponent class]] ||
-                [obj isKindOfClass:[JARadioRelatedComponent class]])
+                [obj isKindOfClass:[JARadioRelatedComponent class]] ||
+                [obj isKindOfClass:[JARadioExpandableComponent class]])
             {
                 //ignore gender as an error, can't evaluate it here because the billing address form has it but it isn't shown on screen.
                 if (NO == [[obj getFieldName] isEqualToString:genderFieldName]) {
@@ -1060,6 +1074,29 @@
         }else if ([field isKindOfClass:[JARadioComponent class]]  ) {
             [[(JARadioComponent *)field requiredSymbol] setHidden:YES];
         }
+    }
+}
+
+#pragma mark - JARadioExpandableComponent
+
+- (void)radioExpandableComponent:(JARadioExpandableComponent*)radioExpandableComponent
+                   changedHeight:(CGFloat)delta;
+{
+    BOOL belowRadioComponent = NO;
+    for (UIView* field in self.formViews) {
+        if (belowRadioComponent) {
+            [UIView animateWithDuration:0.3 animations:^{
+                field.y = field.y + delta;
+            }];
+        }
+        
+        if (field == radioExpandableComponent) {
+            belowRadioComponent = YES;
+        }
+    }
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(dynamicFormChangedHeight)]) {
+        [self.delegate dynamicFormChangedHeight];
     }
 }
 

@@ -2588,6 +2588,11 @@
 		FF4383F61C71EEEB003BA957 /* JAScreenTitleComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4383F31C71EEEB003BA957 /* JAScreenTitleComponent.m */; };
 		FF4383F71C71EEEB003BA957 /* JAScreenTitleComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4383F31C71EEEB003BA957 /* JAScreenTitleComponent.m */; };
 		FF4383F81C71EEEB003BA957 /* JAScreenTitleComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4383F31C71EEEB003BA957 /* JAScreenTitleComponent.m */; };
+		FF4465171CEB4FD7003A65EA /* JAORProductView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4465161CEB4FD7003A65EA /* JAORProductView.m */; };
+		FF4465181CEB4FD7003A65EA /* JAORProductView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4465161CEB4FD7003A65EA /* JAORProductView.m */; };
+		FF4465191CEB4FD7003A65EA /* JAORProductView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4465161CEB4FD7003A65EA /* JAORProductView.m */; };
+		FF44651A1CEB4FD7003A65EA /* JAORProductView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4465161CEB4FD7003A65EA /* JAORProductView.m */; };
+		FF44651B1CEB4FD7003A65EA /* JAORProductView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4465161CEB4FD7003A65EA /* JAORProductView.m */; };
 		FF4B433B1C56735D0074241E /* RIRecentlyViewedProductSku.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4B43351C56735D0074241E /* RIRecentlyViewedProductSku.m */; };
 		FF4B433C1C56735D0074241E /* RIRecentlyViewedProductSku.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4B43351C56735D0074241E /* RIRecentlyViewedProductSku.m */; };
 		FF4B433D1C56735D0074241E /* RIRecentlyViewedProductSku.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4B43351C56735D0074241E /* RIRecentlyViewedProductSku.m */; };
@@ -2623,6 +2628,16 @@
 		FFB0A3841C529E9900EF9FE5 /* RIVariation.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB0A37C1C529E9900EF9FE5 /* RIVariation.m */; };
 		FFB0A3851C529E9900EF9FE5 /* RIVariation.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB0A37C1C529E9900EF9FE5 /* RIVariation.m */; };
 		FFB0A3861C529E9900EF9FE5 /* RIVariation.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB0A37C1C529E9900EF9FE5 /* RIVariation.m */; };
+		FFB1B08A1CE5E163000F60AD /* JAORWaysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0891CE5E163000F60AD /* JAORWaysViewController.m */; };
+		FFB1B08B1CE5E163000F60AD /* JAORWaysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0891CE5E163000F60AD /* JAORWaysViewController.m */; };
+		FFB1B08C1CE5E163000F60AD /* JAORWaysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0891CE5E163000F60AD /* JAORWaysViewController.m */; };
+		FFB1B08D1CE5E163000F60AD /* JAORWaysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0891CE5E163000F60AD /* JAORWaysViewController.m */; };
+		FFB1B08E1CE5E163000F60AD /* JAORWaysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0891CE5E163000F60AD /* JAORWaysViewController.m */; };
+		FFB1B0911CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0901CE61D96000F60AD /* JARadioExpandableComponent.m */; };
+		FFB1B0921CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0901CE61D96000F60AD /* JARadioExpandableComponent.m */; };
+		FFB1B0931CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0901CE61D96000F60AD /* JARadioExpandableComponent.m */; };
+		FFB1B0941CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0901CE61D96000F60AD /* JARadioExpandableComponent.m */; };
+		FFB1B0951CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0901CE61D96000F60AD /* JARadioExpandableComponent.m */; };
 		FFC9C0C31C984E7900DD5851 /* JATopTabsView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC9C0C21C984E7900DD5851 /* JATopTabsView.m */; };
 		FFC9C0C41C984E7900DD5851 /* JATopTabsView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC9C0C21C984E7900DD5851 /* JATopTabsView.m */; };
 		FFC9C0C51C984E7900DD5851 /* JATopTabsView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC9C0C21C984E7900DD5851 /* JATopTabsView.m */; };
@@ -3662,6 +3677,9 @@
 		FF4383EC1C71DCE1003BA957 /* JANewsletterSubscriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANewsletterSubscriptionViewController.m; sourceTree = "<group>"; };
 		FF4383F21C71EEEB003BA957 /* JAScreenTitleComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAScreenTitleComponent.h; sourceTree = "<group>"; };
 		FF4383F31C71EEEB003BA957 /* JAScreenTitleComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAScreenTitleComponent.m; sourceTree = "<group>"; };
+		FF4465131CEA0B23003A65EA /* Model_1.15.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.15.xcdatamodel; sourceTree = "<group>"; };
+		FF4465151CEB4FD7003A65EA /* JAORProductView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORProductView.h; path = ORProductView/JAORProductView.h; sourceTree = "<group>"; };
+		FF4465161CEB4FD7003A65EA /* JAORProductView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAORProductView.m; path = ORProductView/JAORProductView.m; sourceTree = "<group>"; };
 		FF4B43341C56735D0074241E /* RIRecentlyViewedProductSku.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIRecentlyViewedProductSku.h; sourceTree = "<group>"; };
 		FF4B43351C56735D0074241E /* RIRecentlyViewedProductSku.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIRecentlyViewedProductSku.m; sourceTree = "<group>"; };
 		FF6BDC9A1CE238F3002BFE11 /* JAORReasonsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORReasonsViewController.h; path = OnlineReturns/JAORReasonsViewController.h; sourceTree = "<group>"; };
@@ -3677,6 +3695,10 @@
 		FFB0A37A1C529E9900EF9FE5 /* RIImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIImage.m; sourceTree = "<group>"; };
 		FFB0A37B1C529E9900EF9FE5 /* RIVariation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIVariation.h; sourceTree = "<group>"; };
 		FFB0A37C1C529E9900EF9FE5 /* RIVariation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIVariation.m; sourceTree = "<group>"; };
+		FFB1B0881CE5E163000F60AD /* JAORWaysViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORWaysViewController.h; path = OnlineReturns/JAORWaysViewController.h; sourceTree = "<group>"; };
+		FFB1B0891CE5E163000F60AD /* JAORWaysViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAORWaysViewController.m; path = OnlineReturns/JAORWaysViewController.m; sourceTree = "<group>"; };
+		FFB1B08F1CE61D96000F60AD /* JARadioExpandableComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARadioExpandableComponent.h; sourceTree = "<group>"; };
+		FFB1B0901CE61D96000F60AD /* JARadioExpandableComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARadioExpandableComponent.m; sourceTree = "<group>"; };
 		FFC9C0C11C984E7900DD5851 /* JATopTabsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JATopTabsView.h; path = TopTabsView/JATopTabsView.h; sourceTree = "<group>"; };
 		FFC9C0C21C984E7900DD5851 /* JATopTabsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JATopTabsView.m; path = TopTabsView/JATopTabsView.m; sourceTree = "<group>"; };
 		FFF900651C6A31A700DDF538 /* JANewsletterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANewsletterViewController.h; sourceTree = "<group>"; };
@@ -4022,7 +4044,6 @@
 			children = (
 				9AE766E41CBFFDE200B63D8E /* Cart */,
 				CE28A79C1BDA307D00B1FADA /* GenericMenuCell */,
-				692CD2511BD7D50000DF6F49 /* PDVVariatons */,
 				CEA106F21BD003AC00EF88B1 /* CategoriesSideMenu */,
 				CE8C92A91B8B555600C77706 /* Filter */,
 				CE283E721A72B10800F3E92D /* OfferCell */,
@@ -4077,6 +4098,7 @@
 		4AE242DB198655D900E37C90 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FF4465141CEB4F59003A65EA /* ORProductView */,
 				9A4077491CE61CF700313D20 /* OnlineReturns */,
 				9AE7669B1CB3CF2300B63D8E /* Authentication */,
 				FFC9C0C01C984B1A00DD5851 /* TopTabsView */,
@@ -4262,13 +4284,6 @@
 				CE7CC08D1BE38B47006F4A56 /* JASearchView.m */,
 			);
 			path = Search;
-			sourceTree = "<group>";
-		};
-		692CD2511BD7D50000DF6F49 /* PDVVariatons */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = PDVVariatons;
 			sourceTree = "<group>";
 		};
 		6C9355941A6EC8E700167486 /* Bundles */ = {
@@ -4957,6 +4972,8 @@
 				FF6BDC9B1CE238F3002BFE11 /* JAORReasonsViewController.m */,
 				9A4077341CE24DF800313D20 /* JAORCallToReturnViewController.h */,
 				9A4077351CE24DF800313D20 /* JAORCallToReturnViewController.m */,
+				FFB1B0881CE5E163000F60AD /* JAORWaysViewController.h */,
+				FFB1B0891CE5E163000F60AD /* JAORWaysViewController.m */,
 			);
 			name = OnlineReturns;
 			sourceTree = "<group>";
@@ -5028,6 +5045,8 @@
 				CEA2A1B21B25D20C00E5973F /* JADynamicField.m */,
 				FF6BDCA11CE34ACB002BFE11 /* JAListNumberComponent.h */,
 				FF6BDCA21CE34ACB002BFE11 /* JAListNumberComponent.m */,
+				FFB1B08F1CE61D96000F60AD /* JARadioExpandableComponent.h */,
+				FFB1B0901CE61D96000F60AD /* JARadioExpandableComponent.m */,
 			);
 			path = DynamicForms;
 			sourceTree = "<group>";
@@ -6368,6 +6387,15 @@
 			path = MetalTheme;
 			sourceTree = "<group>";
 		};
+		FF4465141CEB4F59003A65EA /* ORProductView */ = {
+			isa = PBXGroup;
+			children = (
+				FF4465151CEB4FD7003A65EA /* JAORProductView.h */,
+				FF4465161CEB4FD7003A65EA /* JAORProductView.m */,
+			);
+			name = ORProductView;
+			sourceTree = "<group>";
+		};
 		FFC9C0C01C984B1A00DD5851 /* TopTabsView */ = {
 			isa = PBXGroup;
 			children = (
@@ -7522,6 +7550,7 @@
 				9A6BC0871C4907BB00DD9492 /* JAMessageView.m in Sources */,
 				1e6713adaced26b8b8ad2c86 /* JAShippingViewController.m in Sources */,
 				eff7e3b1020d2863ebc2e153 /* JACheckBoxComponent.m in Sources */,
+				FF4465181CEB4FD7003A65EA /* JAORProductView.m in Sources */,
 				8fa71f605339cbdc38488d92 /* RIPaymentInformation.m in Sources */,
 				9A08B0FA1CC4EFAF003282CB /* RIExternalCategory.m in Sources */,
 				0b1e813172ab4ac5baf4294c /* RIAddress.m in Sources */,
@@ -7707,6 +7736,7 @@
 				9A4077371CE24DF800313D20 /* JAORCallToReturnViewController.m in Sources */,
 				9AED07CE1C6DEA8800B5FDF0 /* ASBrowseIterator.m in Sources */,
 				c98a2364f0dc0bb39541a1e3 /* RIPaymentMethodForm.m in Sources */,
+				FFB1B0921CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */,
 				CEF0C48A1BE8EE42005B5B12 /* JAReviewCollectionCell.m in Sources */,
 				CECD059D1ADFF2DB00EC51E3 /* RITeaserComponent.m in Sources */,
 				39d64ebd01d50db348ddca2c /* RINewRelicTracker.m in Sources */,
@@ -7797,6 +7827,7 @@
 				FF0464D51CA96E9000B82FD2 /* ADJRequestHandler.m in Sources */,
 				976cc1afdb4c41be05ed1470 /* RIOrder.m in Sources */,
 				c7f7a3e79d1ad30af79a27c0 /* JABirthDateComponent.m in Sources */,
+				FFB1B08B1CE5E163000F60AD /* JAORWaysViewController.m in Sources */,
 				9AEF74221CD8A86900A5D574 /* JAORConfirmConditionsViewController.m in Sources */,
 				67f4a0b88343cac1bc885793 /* RIURLCache.m in Sources */,
 				9AED08201C6DFBE000B5FDF0 /* AFURLRequestSerialization.m in Sources */,
@@ -7837,6 +7868,7 @@
 				4A454F3B199CBF1400B44821 /* RIAddress.m in Sources */,
 				B578225A1A37516800B4DD8B /* JAGradientLayer.m in Sources */,
 				CEA2A1B31B25D20C00E5973F /* JADynamicField.m in Sources */,
+				FF4465171CEB4FD7003A65EA /* JAORProductView.m in Sources */,
 				4A2FD84619912BC500C65C1D /* JAPDVSingleRelatedItem.m in Sources */,
 				9AD15D481BE3F45400DD60DD /* JACollectionSeparator.m in Sources */,
 				CE87E9101C0376FA00DB0FEB /* RITarget.m in Sources */,
@@ -8028,6 +8060,7 @@
 				9AEA3B261B15D4AC00771EEA /* UIView+Frame.m in Sources */,
 				9AE766D01CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m in Sources */,
 				9AE766AD1CBBB28E00B63D8E /* JACartProductsView.m in Sources */,
+				FFB1B0911CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */,
 				B5A302E619811E9200F71726 /* RIURLCacheWrapper.m in Sources */,
 				CE28A79F1BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */,
 				B59DCA6A19B8521A00DE7960 /* JAButtonWithBlur.m in Sources */,
@@ -8036,6 +8069,7 @@
 				B5A302C019811E9200F71726 /* RICategory.m in Sources */,
 				B5CFE99A1A0CE3BC004CE545 /* JAAddRatingView.m in Sources */,
 				B5A302CA19811E9200F71726 /* RISearchSuggestion.m in Sources */,
+				FFB1B08A1CE5E163000F60AD /* JAORWaysViewController.m in Sources */,
 				9AC4D6A31B4A903100036F1C /* JACatalogGridCollectionViewCell.m in Sources */,
 				FF0464CA1CA96E9000B82FD2 /* ADJPackageBuilder.m in Sources */,
 				B5225E1D1989308300C18F1E /* RIPaymentMethodForm.m in Sources */,
@@ -8194,6 +8228,7 @@
 				CE9ADB411AB34C4600D56481 /* RIAddress.m in Sources */,
 				CE9ADB421AB34C4600D56481 /* JAGradientLayer.m in Sources */,
 				CEA2A1B51B25D20C00E5973F /* JADynamicField.m in Sources */,
+				FF4465191CEB4FD7003A65EA /* JAORProductView.m in Sources */,
 				CE9ADB431AB34C4600D56481 /* JAPDVSingleRelatedItem.m in Sources */,
 				9A189E741BB31B1F0039BC14 /* JAProductInfoBaseLine.m in Sources */,
 				CE87E9121C0376FA00DB0FEB /* RITarget.m in Sources */,
@@ -8385,6 +8420,7 @@
 				9AEA3B271B15DD9B00771EEA /* UIView+Frame.m in Sources */,
 				9AE766D21CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m in Sources */,
 				9AE766AF1CBBB28E00B63D8E /* JACartProductsView.m in Sources */,
+				FFB1B0931CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */,
 				CE28A7A11BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */,
 				CE9ADBD21AB34C4600D56481 /* RIURLCacheWrapper.m in Sources */,
 				CE9ADBD31AB34C4600D56481 /* JAButtonWithBlur.m in Sources */,
@@ -8393,6 +8429,7 @@
 				CE9ADBD61AB34C4600D56481 /* RICategory.m in Sources */,
 				CE9ADBD71AB34C4600D56481 /* JAAddRatingView.m in Sources */,
 				CE9ADBD81AB34C4600D56481 /* RISearchSuggestion.m in Sources */,
+				FFB1B08C1CE5E163000F60AD /* JAORWaysViewController.m in Sources */,
 				9AC4D6A51B4A926700036F1C /* JACatalogGridCollectionViewCell.m in Sources */,
 				FF0464CC1CA96E9000B82FD2 /* ADJPackageBuilder.m in Sources */,
 				CE9ADBD91AB34C4600D56481 /* RIPaymentMethodForm.m in Sources */,
@@ -8541,6 +8578,7 @@
 				CE9ADD3B1AB6D6E900D56481 /* RIAddress.m in Sources */,
 				CE9ADD3C1AB6D6E900D56481 /* JAGradientLayer.m in Sources */,
 				CEA2A1B61B25D20C00E5973F /* JADynamicField.m in Sources */,
+				FF44651A1CEB4FD7003A65EA /* JAORProductView.m in Sources */,
 				CE9ADD3D1AB6D6E900D56481 /* JAPDVSingleRelatedItem.m in Sources */,
 				9A189E751BB31B1F0039BC14 /* JAProductInfoBaseLine.m in Sources */,
 				CE87E9131C0376FA00DB0FEB /* RITarget.m in Sources */,
@@ -8732,6 +8770,7 @@
 				9AEA3B281B15DD9C00771EEA /* UIView+Frame.m in Sources */,
 				9AE766D31CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m in Sources */,
 				9AE766B01CBBB28E00B63D8E /* JACartProductsView.m in Sources */,
+				FFB1B0941CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */,
 				CE28A7A21BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */,
 				CE9ADDCC1AB6D6E900D56481 /* RIURLCacheWrapper.m in Sources */,
 				CE9ADDCD1AB6D6E900D56481 /* JAButtonWithBlur.m in Sources */,
@@ -8740,6 +8779,7 @@
 				CE9ADDD01AB6D6E900D56481 /* RICategory.m in Sources */,
 				CE9ADDD11AB6D6E900D56481 /* JAAddRatingView.m in Sources */,
 				CE9ADDD21AB6D6E900D56481 /* RISearchSuggestion.m in Sources */,
+				FFB1B08D1CE5E163000F60AD /* JAORWaysViewController.m in Sources */,
 				9AC4D6A61B4A926800036F1C /* JACatalogGridCollectionViewCell.m in Sources */,
 				FF0464CD1CA96E9000B82FD2 /* ADJPackageBuilder.m in Sources */,
 				CE9ADDD31AB6D6E900D56481 /* RIPaymentMethodForm.m in Sources */,
@@ -8888,6 +8928,7 @@
 				CE9ADF351AB6D78200D56481 /* RIAddress.m in Sources */,
 				CE9ADF361AB6D78200D56481 /* JAGradientLayer.m in Sources */,
 				CEA2A1B71B25D20C00E5973F /* JADynamicField.m in Sources */,
+				FF44651B1CEB4FD7003A65EA /* JAORProductView.m in Sources */,
 				CE9ADF371AB6D78200D56481 /* JAPDVSingleRelatedItem.m in Sources */,
 				9A189E761BB31B1F0039BC14 /* JAProductInfoBaseLine.m in Sources */,
 				CE87E9141C0376FA00DB0FEB /* RITarget.m in Sources */,
@@ -9079,6 +9120,7 @@
 				CE9ADFC31AB6D78200D56481 /* RIFieldDataSetComponent.m in Sources */,
 				9AE766D41CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m in Sources */,
 				9AE766B11CBBB28E00B63D8E /* JACartProductsView.m in Sources */,
+				FFB1B0951CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */,
 				CE28A7A31BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */,
 				CE9ADFC51AB6D78200D56481 /* RIImageResolution.m in Sources */,
 				9AEA3B291B15DD9C00771EEA /* UIView+Frame.m in Sources */,
@@ -9087,6 +9129,7 @@
 				FFF900721C6A5CC700DDF538 /* JATextFieldComponent.m in Sources */,
 				CE9ADFC71AB6D78200D56481 /* JAButtonWithBlur.m in Sources */,
 				CE9ADFCA1AB6D78200D56481 /* RICategory.m in Sources */,
+				FFB1B08E1CE5E163000F60AD /* JAORWaysViewController.m in Sources */,
 				CE9ADFCB1AB6D78200D56481 /* JAAddRatingView.m in Sources */,
 				FF0464CE1CA96E9000B82FD2 /* ADJPackageBuilder.m in Sources */,
 				CE9ADFCC1AB6D78200D56481 /* RISearchSuggestion.m in Sources */,
@@ -10454,6 +10497,7 @@
 		B5A3028F19811E9200F71726 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				FF4465131CEA0B23003A65EA /* Model_1.15.xcdatamodel */,
 				9A08B0EF1CC4EC17003282CB /* Model_1.14.xcdatamodel */,
 				9AE7669A1CB2B22100B63D8E /* Model_1.13.xcdatamodel */,
 				FF7A88F31C88C42E00E40625 /* Model_1.12.xcdatamodel */,
@@ -10470,7 +10514,7 @@
 				CE73D4FF19E5866D0074F7F3 /* Model_1.1.xcdatamodel */,
 				B5A3029019811E9200F71726 /* Model.xcdatamodel */,
 			);
-			currentVersion = 9A08B0EF1CC4EC17003282CB /* Model_1.14.xcdatamodel */;
+			currentVersion = FF4465131CEA0B23003A65EA /* Model_1.15.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

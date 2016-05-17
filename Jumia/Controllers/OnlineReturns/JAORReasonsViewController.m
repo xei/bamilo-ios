@@ -7,6 +7,7 @@
 //
 
 #import "JAORReasonsViewController.h"
+#import "JACenterNavigationController.h"
 #import "JAProductInfoHeaderLine.h"
 #import "UIImageView+WebCache.h"
 #import "RIForm.h"
@@ -15,6 +16,8 @@
 #import "RIFieldOption.h"
 #import "JAButton.h"
 #import "JACenterNavigationController.h"
+#import "JABottomSubmitView.h"
+#import "JAORProductView.h"
 
 @interface JAORReasonsViewController () <JADynamicFormDelegate, JAPickerDelegate>
 
@@ -31,9 +34,7 @@
 @property (nonatomic, strong) JARadioComponent* currentRadioComponent;
 @property (nonatomic, strong) NSArray* currentRadioComponentDataset;
 
-@property (nonatomic, strong) UIView* bottomView;
-@property (nonatomic, strong) UIView* bottomSeparatorView;
-@property (nonatomic, strong) JAButton* bottomButtom;
+@property (nonatomic, strong) JABottomSubmitView *submitView;
 
 @end
 
@@ -67,76 +68,19 @@
         CGFloat itemY = kProductInfoHeaderLineHeight;
         for (int i = 0; i<self.items.count; i++) {
             RIItemCollection* item = [self.items objectAtIndex:i];
-            UIView* itemContent = [UIView new];
 
+            UIView* itemContent = [UIView new];
+            
             CGFloat currentY = 10.0f;
+
+            JAORProductView* productView = [[JAORProductView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                                             currentY,
+                                                                                             self.scrollView.frame.size.width,
+                                                                                             1.0f)];
+            [productView setupWithItemCollection:item order:self.order];
+            [itemContent addSubview:productView];
             
-            CGSize imageSize = CGSizeMake(68.0f, 85.0f);
-            
-            //details inside itemCell
-            UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(16.0f,
-                                                                                   currentY,
-                                                                                   imageSize.width,
-                                                                                   imageSize.height)];
-            
-            [imageView setImageWithURL:[NSURL URLWithString:item.imageURL]
-                      placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
-            
-            UILabel* brandLabel = [UILabel new];
-            brandLabel.font = JABodyFont;
-            brandLabel.textColor = JABlack800Color;
-            brandLabel.textAlignment = NSTextAlignmentLeft;
-            brandLabel.text = item.brand;
-            [brandLabel sizeToFit];
-            brandLabel.frame = CGRectMake(CGRectGetMaxX(imageView.frame) + 6.0f,
-                                          currentY,
-                                          self.view.frame.size.width - CGRectGetMaxX(imageView.frame) + 6.0f - 16.0f,
-                                          brandLabel.frame.size.height);
-            [itemContent addSubview:brandLabel];
-            
-            currentY = CGRectGetMaxY(brandLabel.frame);
-            
-            UILabel* nameLabel = [UILabel new];
-            nameLabel.font = JAHEADLINEFont;
-            nameLabel.textColor = JABlackColor;
-            nameLabel.textAlignment = NSTextAlignmentLeft;
-            nameLabel.text = item.name;
-            [nameLabel sizeToFit];
-            nameLabel.frame = CGRectMake(CGRectGetMaxX(imageView.frame) + 6.0f,
-                                         currentY,
-                                         self.view.frame.size.width - CGRectGetMaxX(imageView.frame) + 6.0f - 16.0f,
-                                         nameLabel.frame.size.height);
-            [itemContent addSubview:nameLabel];
-            
-            currentY = CGRectGetMaxY(nameLabel.frame);
-            
-            UILabel* quantityLabel = [UILabel new];
-            quantityLabel.font = JABodyFont;
-            quantityLabel.textColor = JABlack800Color;
-            quantityLabel.textAlignment = NSTextAlignmentLeft;
-            quantityLabel.text = [NSString stringWithFormat:STRING_QUANTITY, [item.quantity stringValue]];
-            [quantityLabel sizeToFit];
-            quantityLabel.frame = CGRectMake(CGRectGetMaxX(imageView.frame) + 6.0f,
-                                             currentY,
-                                             self.view.frame.size.width - CGRectGetMaxX(imageView.frame) + 6.0f - 16.0f,
-                                             quantityLabel.frame.size.height);
-            [itemContent addSubview:quantityLabel];
-            
-            currentY = CGRectGetMaxY(quantityLabel.frame);
-            
-            UILabel* orderNumberLabel = [UILabel new];
-            orderNumberLabel.font = JABodyFont;
-            orderNumberLabel.textColor = JABlackColor;
-            orderNumberLabel.text = [NSString stringWithFormat:STRING_ORDER_NO, self.order.orderId];
-            orderNumberLabel.textAlignment = NSTextAlignmentLeft;
-            [orderNumberLabel sizeToFit];
-            orderNumberLabel.frame = CGRectMake(CGRectGetMaxX(imageView.frame) + 6.0f,
-                                                currentY,
-                                                self.view.frame.size.width - CGRectGetMaxX(imageView.frame) + 6.0f - 16.0f,
-                                                orderNumberLabel.frame.size.height);
-            [itemContent addSubview:orderNumberLabel];
-            
-            currentY = CGRectGetMaxY(orderNumberLabel.frame);
+            currentY += productView.frame.size.height;
             
             if (VALID_NOTEMPTY(self.returnDetailForm, RIForm)) {
                 
@@ -157,9 +101,7 @@
             
             currentY += 20.0f;
             
-            [itemContent addSubview:imageView];
-            
-            CGFloat totalHeight = MAX(currentY, imageSize.height + 20.0f);
+            CGFloat totalHeight = MAX(currentY, productView.height + 20.0f);
             
             itemContent.frame = CGRectMake(0.0f,
                                            itemY,
@@ -188,37 +130,15 @@
     return _itemViewsArray;
 }
 
-- (UIView*)bottomView
+- (JABottomSubmitView *)submitView
 {
-    if (!VALID(_bottomView, UIView)) {
-        CGFloat bottomViewHeight = 88.0f;
-        _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, self.view.frame.size.height - bottomViewHeight, self.view.frame.size.width, bottomViewHeight)];
-        [self.view addSubview:_bottomView];
+    if (!VALID(_submitView, JABottomSubmitView)) {
+        _submitView = [[JABottomSubmitView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, [JABottomSubmitView defaultHeight])];
+        _submitView.button = [[JAButton alloc] initButtonWithTitle:STRING_CONTINUE];
+        [_submitView.button addTarget:self action:@selector(nextButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:_submitView];
     }
-    return _bottomView;
-}
-
-- (UIView*)bottomSeparatorView
-{
-    if (!VALID(_bottomSeparatorView, UIView)) {
-        _bottomSeparatorView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                        0.0f,
-                                                                        self.bottomView.frame.size.width,
-                                                                        1.0f)];
-        _bottomSeparatorView.backgroundColor = JABlack400Color;
-        [self.bottomView addSubview:_bottomSeparatorView];
-    }
-    return _bottomSeparatorView;
-}
-
--(JAButton*)bottomButtom
-{
-    if (!VALID(_bottomButtom, JAButton)) {
-        _bottomButtom = [[JAButton alloc] initButtonWithTitle:STRING_CONTINUE target:self action:@selector(nextButtonPressed)];
-        [_bottomButtom setFrame:CGRectMake(16.0f, 20.0f, self.view.frame.size.width - 16.0f*2, 48.0f)];
-        [self.bottomView addSubview:_bottomButtom];
-    }
-    return _bottomButtom;
+    return _submitView;
 }
 
 
@@ -279,10 +199,8 @@
         }
     }
     
-    [self.bottomView setWidth:self.view.frame.size.width];
-    [self.bottomView setY:self.view.frame.size.height - self.bottomView.frame.size.height];
-    [self.bottomSeparatorView setWidth:self.bottomView.frame.size.width];
-    [self.bottomButtom setWidth:self.bottomView.frame.size.width];
+    [self.submitView setWidth:self.view.frame.size.width];
+    [self.submitView setYBottomAligned:0.f];
     
     if (RI_IS_RTL) {
         [self.titleHeaderView flipAllSubviews];
@@ -311,7 +229,7 @@
             [self.stateInfo addEntriesFromDictionary:[dynamicForm getValuesReplacingPlaceHolder:@"__NAME__" forString:item.sku]];
         }
     }
-    [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmScreenForItems:self.items order:self.order];
+    [[JACenterNavigationController sharedInstance] goToOnlineReturnsWaysScreenForItems:self.items order:self.order];
 }
 
 #pragma mark - PICKER

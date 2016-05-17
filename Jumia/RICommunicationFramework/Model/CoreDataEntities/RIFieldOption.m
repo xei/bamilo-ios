@@ -17,6 +17,10 @@
 @dynamic value;
 @dynamic isUserSubscribed;
 @dynamic field;
+@dynamic text;
+@dynamic subtext;
+@dynamic linkHTML;
+@dynamic linkLabel;
 
 + (NSString*)getFieldOptionsForApiCall:(NSString*)apiCall
                           successBlock:(void (^)(NSArray *))successBlock
@@ -99,6 +103,36 @@
     if (VALID_NOTEMPTY([fieldOptionObject objectForKey:@"value"], NSString))
     {
         fieldOption.value = [fieldOptionObject objectForKey:@"value"];
+    } else if (VALID_NOTEMPTY([fieldOptionObject objectForKey:@"value"], NSNumber))
+    {
+        NSNumber* valueNumber = [fieldOptionObject objectForKey:@"value"];
+        fieldOption.value = [valueNumber stringValue];
+    }
+    
+    if (VALID_NOTEMPTY([fieldOptionObject objectForKey:@"text"], NSString))
+    {
+        fieldOption.text = [fieldOptionObject objectForKey:@"text"];
+    }
+    
+    if (VALID_NOTEMPTY([fieldOptionObject objectForKey:@"subtext"], NSString))
+    {
+        fieldOption.subtext = [fieldOptionObject objectForKey:@"subtext"];
+    }
+    
+    if (VALID_NOTEMPTY([fieldOptionObject objectForKey:@"link"], NSDictionary)) {
+        
+        NSDictionary* linkDictionary = [fieldOptionObject objectForKey:@"link"];
+        
+        if (VALID_NOTEMPTY([linkDictionary objectForKey:@"label"], NSString))
+        {
+            fieldOption.linkLabel = [linkDictionary objectForKey:@"label"];
+        }
+        
+        if (VALID_NOTEMPTY([linkDictionary objectForKey:@"html"], NSString))
+        {
+            fieldOption.linkHTML = [linkDictionary objectForKey:@"html"];
+        }
+        
     }
     
     if (VALID_NOTEMPTY([fieldOptionObject objectForKey:@"user_subscribed"], NSNumber))
