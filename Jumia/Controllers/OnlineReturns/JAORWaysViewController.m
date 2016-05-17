@@ -168,9 +168,8 @@
 {
     [super onOrientationChanged];
     
-    for (UIView* itemView in self.itemViewsArray) {
-        [itemView removeFromSuperview];
-    }
+    [self.itemViewsContentView removeFromSuperview];
+    self.itemViewsContentView = nil;
     self.itemViewsArray = nil;
     
     [self loadSubviews];
