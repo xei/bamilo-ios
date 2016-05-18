@@ -59,11 +59,12 @@
                                     self.contentBaseSize.width - self.checkboxBaseRect.size.width - checkboxMargins*2 - xOffset,
                                     labelHeight);
     
+    self.selectedLabel.x = CGRectGetMaxX(self.checkboxBaseRect) + checkboxMargins;
+    
     [self flipIfIsRTL];
     
     for (UIView* contentView in self.contentViewsArray) {
         contentView.width = self.contentBaseSize.width;
-        contentView.height = self.contentBaseSize.height;
     }
     
     for (UIView* checkbox in self.checkboxViewsArray) {
@@ -86,6 +87,7 @@
                                         self.labelBaseRect.origin.y,
                                         self.labelBaseRect.size.width,
                                         self.labelBaseRect.size.height);
+        [self.selectedLabel flipViewPositionInsideSuperview];
     }
 }
 
@@ -157,27 +159,28 @@
             [self.selectedLabel sizeToFit];
             [contentView addSubview:self.selectedLabel];
             
-            self.selectedSublabel = [[UILabel alloc] initWithFrame:CGRectMake(optionLabel.frame.origin.x,
-                                                                              CGRectGetMaxY(self.selectedLabel.frame) + 20.0f,
-                                                                              optionLabel.frame.size.width,
-                                                                              1.0f)];
-            self.selectedSublabel.textAlignment = NSTextAlignmentLeft;
-            self.selectedSublabel.textColor = JABlackColor;
-            self.selectedSublabel.font = JAListFont;
-            self.selectedSublabel.text = option.subtext;
-            [self.selectedSublabel sizeToFit];
-            //add to subview after background
-            
-            self.selectedSublabelBackground = [[UIView alloc] initWithFrame:CGRectMake(20.0f,
-                                                                                       self.selectedSublabel.frame.origin.y - 5.0f,
-                                                                                       contentView.frame.size.width - 20.0f*2,
-                                                                                       self.selectedSublabel.frame.size.height + 10.0f)];
+            self.selectedSublabelBackground = [[UIView alloc] initWithFrame:CGRectMake(13.0f,
+                                                                                       CGRectGetMaxY(self.selectedLabel.frame) + 15.0f,
+                                                                                       contentView.frame.size.width - 13.0f*2,
+                                                                                       1.0f)];
             self.selectedSublabelBackground.backgroundColor = JAYellow2Color;
             self.selectedSublabelBackground.layer.borderColor = [JAYellow1Color CGColor];
             self.selectedSublabelBackground.layer.borderWidth = 1.0f;
             [contentView addSubview:self.selectedSublabelBackground];
             
+            self.selectedSublabel = [[UILabel alloc] initWithFrame:CGRectMake(self.selectedSublabelBackground.frame.origin.x,
+                                                                              CGRectGetMaxY(self.selectedSublabelBackground.frame) + 5.0f,
+                                                                              self.selectedSublabelBackground.frame.size.width,
+                                                                              1.0f)];
+            self.selectedSublabel.textAlignment = NSTextAlignmentCenter;
+            self.selectedSublabel.textColor = JABlackColor;
+            self.selectedSublabel.font = JAListFont;
+            self.selectedSublabel.text = option.subtext;
+            [self.selectedSublabel sizeToFit];
             [contentView addSubview:self.selectedSublabel];
+
+            self.selectedSublabel.width = self.selectedSublabelBackground.frame.size.width;
+            self.selectedSublabelBackground.height = self.selectedSublabel.height + 10.0f;
             
             [contentView setHeight:CGRectGetMaxY(self.selectedSublabelBackground.frame) + 20.0f];
             

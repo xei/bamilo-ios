@@ -84,16 +84,13 @@
             
             if (VALID_NOTEMPTY(self.returnDetailForm, RIForm)) {
                 
-                JADynamicForm* dynamicForm = [[JADynamicForm alloc] initWithForm:self.returnDetailForm startingPosition:currentY - 10.0f];
+                JADynamicForm* dynamicForm = [[JADynamicForm alloc] initWithForm:self.returnDetailForm startingPosition:currentY - 50.0f];
                 dynamicForm.delegate = self;
                 for (JADynamicField* formView in dynamicForm.formViews) {
                     [formView setWidth:self.scrollView.frame.size.width - 16.0f*2];
                     [formView setX:16.0f];
                     [itemContent addSubview:formView];
                     currentY = CGRectGetMaxY(formView.frame);
-                    if ([formView isKindOfClass:[JAListNumberComponent class]]) {
-                        formView.tag = i;
-                    }
                 }
                 [dynamicForm setValues:self.stateInfo replacePlaceHolder:@"__NAME__" forString:item.sku];
                 [mutableDynamicForms addObject:dynamicForm];
@@ -189,7 +186,13 @@
 
 - (void)loadSubviews
 {
-    [self.scrollView setFrame:self.bounds];
+    [self.submitView setWidth:self.view.frame.size.width];
+    [self.submitView setYBottomAligned:0.f];
+    
+    [self.scrollView setFrame:CGRectMake(self.bounds.origin.x,
+                                         self.bounds.origin.y,
+                                         self.bounds.size.width,
+                                         self.bounds.size.height - self.submitView.frame.size.height)];
     
     [self.titleHeaderView setFrame:CGRectMake(0.0f, 0.0f, self.scrollView.frame.size.width, self.titleHeaderView.frame.size.height)];
     
@@ -198,9 +201,6 @@
             [itemView flipAllSubviews];
         }
     }
-    
-    [self.submitView setWidth:self.view.frame.size.width];
-    [self.submitView setYBottomAligned:0.f];
     
     if (RI_IS_RTL) {
         [self.titleHeaderView flipAllSubviews];
