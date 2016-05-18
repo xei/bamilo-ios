@@ -97,8 +97,8 @@
     }
     frame.size.width = width;
     [super setFrame:frame];
-    [self.underLineView setFrame:CGRectMake(90, self.height-5, 20, 1.f)];
-    [self.textField setFrame:CGRectMake(90, self.height - 28, 20, 20)];
+    [self.underLineView setFrame:CGRectMake(76, self.height-5, 20, 1.f)];
+    [self.textField setFrame:CGRectMake(76, self.height - 28, 20, 20)];
     [self.dropdownImageView setX:CGRectGetMaxX(self.textField.frame) - 5.0f];
     [self.dropdownImageView setY:self.textField.y + (self.textField.height - self.dropdownImageView.height)/2];
     [self.requiredSymbol setFrame:CGRectMake(CGRectGetMaxX(self.dropdownImageView.frame), self.height - 28, 10, 20)];

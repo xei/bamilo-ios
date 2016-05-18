@@ -14,7 +14,7 @@
 - (void)setupWithItemCollection:(RIItemCollection*)itemCollection
                           order:(RITrackOrder*)order;
 {
-    CGFloat currentY = 0.0f;
+    CGFloat currentY = 10.0f;
     
     CGSize imageSize = CGSizeMake(68.0f, 85.0f);
     
@@ -82,7 +82,9 @@
                                         orderNumberLabel.frame.size.height);
     [self addSubview:orderNumberLabel];
     
-    currentY = CGRectGetMaxY(orderNumberLabel.frame);
+    currentY = CGRectGetMaxY(orderNumberLabel.frame) + 20.0f;
+    
+    currentY = MAX(currentY, imageView.frame.size.height + 20.0f);
 
     self.frame = CGRectMake(self.frame.origin.x,
                             self.frame.origin.y,

@@ -84,7 +84,7 @@
             
             if (VALID_NOTEMPTY(self.returnDetailForm, RIForm)) {
                 
-                JADynamicForm* dynamicForm = [[JADynamicForm alloc] initWithForm:self.returnDetailForm startingPosition:currentY - 10.0f];
+                JADynamicForm* dynamicForm = [[JADynamicForm alloc] initWithForm:self.returnDetailForm startingPosition:currentY - 50.0f];
                 dynamicForm.delegate = self;
                 for (JADynamicField* formView in dynamicForm.formViews) {
                     [formView setWidth:self.scrollView.frame.size.width - 16.0f*2];

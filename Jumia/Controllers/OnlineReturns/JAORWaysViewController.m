@@ -65,7 +65,7 @@
         for (int i = 0; i<self.items.count; i++) {
             RIItemCollection* item = [self.items objectAtIndex:i];
 
-            CGFloat currentY = 0.0f;
+            CGFloat currentY = itemY;
             
             JAORProductView* productView = [[JAORProductView alloc] initWithFrame:CGRectMake(0.0f,
                                                                                              currentY,
