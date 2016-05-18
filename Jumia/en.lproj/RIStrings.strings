@@ -728,3 +728,5 @@
 "question_return_reasons" = "Why do you want to return this item?";
 
 "call_now_label" = "call now";
+
+"please_call_to" = "Please call to %@";
