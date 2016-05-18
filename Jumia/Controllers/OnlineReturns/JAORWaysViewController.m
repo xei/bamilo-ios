@@ -180,7 +180,13 @@
 
 - (void)loadSubviews
 {
-    [self.scrollView setFrame:self.bounds];
+    [self.submitView setWidth:self.view.frame.size.width];
+    [self.submitView setYBottomAligned:0.f];
+    
+    [self.scrollView setFrame:CGRectMake(self.bounds.origin.x,
+                                         self.bounds.origin.y,
+                                         self.bounds.size.width,
+                                         self.bounds.size.height - self.submitView.frame.size.height)];
     
     [self.titleHeaderView setFrame:CGRectMake(0.0f, 0.0f, self.scrollView.frame.size.width, self.titleHeaderView.frame.size.height)];
     
@@ -202,9 +208,6 @@
             [itemView flipAllSubviews];
         }
     }
-    
-    [self.submitView setWidth:self.view.frame.size.width];
-    [self.submitView setYBottomAligned:0.f];
     
     if (RI_IS_RTL) {
         [self.titleHeaderView flipAllSubviews];
