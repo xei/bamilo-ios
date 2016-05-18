@@ -91,9 +91,6 @@
                     [formView setX:16.0f];
                     [itemContent addSubview:formView];
                     currentY = CGRectGetMaxY(formView.frame);
-                    if ([formView isKindOfClass:[JAListNumberComponent class]]) {
-                        formView.tag = i;
-                    }
                 }
                 [dynamicForm setValues:self.stateInfo replacePlaceHolder:@"__NAME__" forString:item.sku];
                 [mutableDynamicForms addObject:dynamicForm];
