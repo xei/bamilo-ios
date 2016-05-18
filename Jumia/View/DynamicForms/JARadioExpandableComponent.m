@@ -60,6 +60,9 @@
                                     labelHeight);
     
     self.selectedLabel.x = CGRectGetMaxX(self.checkboxBaseRect) + checkboxMargins;
+    self.selectedLabel.width = self.labelBaseRect.size.width;
+    self.selectedSublabelBackground.width = frame.size.width - 13.0f*2;
+    self.selectedSublabel.width = self.selectedSublabelBackground.frame.size.width;
     
     [self flipIfIsRTL];
     
@@ -87,7 +90,8 @@
                                         self.labelBaseRect.origin.y,
                                         self.labelBaseRect.size.width,
                                         self.labelBaseRect.size.height);
-        [self.selectedLabel flipViewPositionInsideSuperview];
+        self.selectedLabel.x = self.labelBaseRect.origin.x;
+        self.selectedLabel.textAlignment = NSTextAlignmentRight;
     }
 }
 

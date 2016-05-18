@@ -71,6 +71,8 @@
 @property (assign, nonatomic) BOOL hasFieldNavigation;
 @property (nonatomic, strong) NSString* firstErrorInFields;
 
+- (void)setFormsY:(NSInteger)startingY;
+
 -(id)initWithForm:(RIForm*)form startingPosition:(CGFloat)startingY;
 
 -(id)initWithForm:(RIForm*)form startingPosition:(CGFloat)startingY widthSize:(CGFloat)widthComponent hasFieldNavigation:(BOOL)hasFieldNavigation;
