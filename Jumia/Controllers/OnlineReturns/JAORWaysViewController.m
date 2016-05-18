@@ -95,6 +95,19 @@
     return _itemViewsContentView;
 }
 
+- (JADynamicForm*)dynamicForm
+{
+    if (!VALID_NOTEMPTY(_dynamicForm, JADynamicForm)) {
+        if (VALID_NOTEMPTY(self.returnWayForm, RIForm)) {
+            for (int i = 0; i<self.items.count; i++) {
+                _dynamicForm = [[JADynamicForm alloc] initWithForm:self.returnWayForm startingPosition:0.0f];
+                _dynamicForm.delegate = self;
+            }
+        }
+    }
+    return _dynamicForm;
+}
+
 - (UIView*)formContentView
 {
     if (!VALID(_formContentView, UIView)) {
@@ -104,8 +117,6 @@
             
             CGFloat currentY = 0.0f;
             
-            self.dynamicForm = [[JADynamicForm alloc] initWithForm:self.returnWayForm startingPosition:0.0f];
-            self.dynamicForm.delegate = self;
             for (UIView* formView in self.dynamicForm.formViews) {
                 [formView setWidth:self.scrollView.frame.size.width - 16.0f*2];
                 [formView setX:16.0f];
@@ -246,6 +257,10 @@
 {
     UIView* lastView = [self.dynamicForm.formViews lastObject];
     self.formContentView.height = CGRectGetMaxY(lastView.frame);
+    
+    [self.itemViewsContentView removeFromSuperview];
+    self.itemViewsContentView = nil;
+    self.itemViewsArray = nil;
     
     [self loadSubviews];
 }

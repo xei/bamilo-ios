@@ -60,11 +60,26 @@
     return _scrollView;
 }
 
+- (NSArray*)dynamicForms
+{
+    if (!VALID_NOTEMPTY(_dynamicForms, NSArray)) {
+        NSMutableArray* dynamicFormsMutableArray = [NSMutableArray new];
+        if (VALID_NOTEMPTY(self.returnDetailForm, RIForm)) {
+            for (int i = 0; i<self.items.count; i++) {
+                JADynamicForm* dynamicForm = [[JADynamicForm alloc] initWithForm:self.returnDetailForm startingPosition:0.0f];
+                dynamicForm.delegate = self;
+                [dynamicFormsMutableArray addObject:dynamicForm];
+            }
+        }
+        _dynamicForms = [dynamicFormsMutableArray copy];
+    }
+    return _dynamicForms;
+}
+
 - (NSArray*)itemViewsArray
 {
     if (!VALID_NOTEMPTY(_itemViewsArray, NSArray)) {
         NSMutableArray* mutableItemViewsArray = [NSMutableArray new];
-        NSMutableArray* mutableDynamicForms = [NSMutableArray new];
         CGFloat itemY = kProductInfoHeaderLineHeight;
         for (int i = 0; i<self.items.count; i++) {
             RIItemCollection* item = [self.items objectAtIndex:i];
@@ -83,17 +98,15 @@
             currentY += productView.frame.size.height;
             
             if (VALID_NOTEMPTY(self.returnDetailForm, RIForm)) {
-                
-                JADynamicForm* dynamicForm = [[JADynamicForm alloc] initWithForm:self.returnDetailForm startingPosition:currentY - 50.0f];
-                dynamicForm.delegate = self;
+                JADynamicForm* dynamicForm = [self.dynamicForms objectAtIndex:i];
+                [dynamicForm setFormsY:currentY - 50.0f];
                 for (JADynamicField* formView in dynamicForm.formViews) {
-                    [formView setWidth:self.scrollView.frame.size.width - 16.0f*2];
                     [formView setX:16.0f];
+                    [formView setWidth:self.scrollView.frame.size.width - 16.0f*2];
                     [itemContent addSubview:formView];
                     currentY = CGRectGetMaxY(formView.frame);
                 }
                 [dynamicForm setValues:self.stateInfo replacePlaceHolder:@"__NAME__" forString:item.sku];
-                [mutableDynamicForms addObject:dynamicForm];
             }
             
             currentY += 20.0f;
@@ -122,7 +135,6 @@
                                                    itemY)];
         
         self.itemViewsArray = [mutableItemViewsArray copy];
-        self.dynamicForms = [mutableDynamicForms copy];
     }
     return _itemViewsArray;
 }
