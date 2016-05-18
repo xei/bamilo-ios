@@ -94,6 +94,14 @@
     }
 }
 
+- (void)setFormsY:(NSInteger)startingY
+{
+    for (UIView* formView in self.formViews) {
+        formView.y = startingY;
+        startingY += formView.height;
+    }
+}
+
 - (void)generateForm:(NSArray*)fields values:(NSDictionary*)values startingY:(CGFloat)startingY widthSize:(CGFloat)widthComponent
 {
     UIReturnKeyType returnKeyType = UIReturnKeyNext;
