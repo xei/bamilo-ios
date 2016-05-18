@@ -11,6 +11,8 @@
 
 @interface JAORProductView : UIView
 
+@property (nonatomic, strong) NSString *qtyToReturn;
+
 - (void)setupWithItemCollection:(RIItemCollection*)itemCollection
                           order:(RITrackOrder*)order;
 

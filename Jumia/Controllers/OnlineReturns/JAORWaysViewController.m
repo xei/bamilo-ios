@@ -29,6 +29,8 @@
 
 @property (nonatomic, strong) JABottomSubmitView *submitView;
 
+@property (nonatomic, strong) NSDictionary *values;
+
 @end
 
 @implementation JAORWaysViewController
@@ -72,6 +74,7 @@
                                                                                              self.scrollView.frame.size.width,
                                                                                              1.0f)];
             [productView setupWithItemCollection:item order:self.order];
+            [productView setQtyToReturn:[self.stateInfoLabels objectForKey:[NSString stringWithFormat:@"return_detail[%@][quantity]", item.sku]]];
             currentY += productView.frame.size.height;
             
             if (i != self.items.count-1) {
@@ -117,6 +120,7 @@
             
             CGFloat currentY = 0.0f;
             
+            [self.dynamicForm setValues:self.values];
             for (UIView* formView in self.dynamicForm.formViews) {
                 [formView setWidth:self.scrollView.frame.size.width - 16.0f*2];
                 [formView setX:16.0f];
@@ -158,6 +162,8 @@
 {
     [super viewWillAppear:animated];
     
+    self.values = [self.stateInfoValues copy];
+    
     if (self.isLoaded) {
         [self loadSubviews];
     } else {
@@ -178,6 +184,8 @@
 - (void)onOrientationChanged
 {
     [super onOrientationChanged];
+
+    self.values = [self.dynamicForm getValues];
     
     [self.itemViewsContentView removeFromSuperview];
     self.itemViewsContentView = nil;
@@ -242,9 +250,14 @@
             return;
         }
         
-        if (VALID(self.stateInfo, NSMutableDictionary))
+        NSDictionary *values = [self.dynamicForm getValuesReplacingPlaceHolder:@"__NAME__" forString:item.sku];
+        if (VALID(self.stateInfoValues, NSMutableDictionary))
         {
-            [self.stateInfo addEntriesFromDictionary:[self.dynamicForm getValuesReplacingPlaceHolder:@"__NAME__" forString:item.sku]];
+            [self.stateInfoValues addEntriesFromDictionary:values];
+        }
+        if (VALID(self.stateInfoLabels, NSMutableDictionary))
+        {
+            [self.stateInfoLabels addEntriesFromDictionary:[self.dynamicForm getFieldLabelsReplacePlaceHolder:@"__NAME__" forString:item.sku]];
         }
     }
     [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmScreenForItems:self.items order:self.order];

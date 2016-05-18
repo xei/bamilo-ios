@@ -10,12 +10,20 @@
 
 @implementation JAStepByStepModel
 
-- (NSMutableDictionary *)stepByStepInfo
+- (NSMutableDictionary *)stepByStepValues
 {
-    if (!VALID(_stepByStepInfo, NSMutableDictionary)) {
-        _stepByStepInfo = [NSMutableDictionary new];
+    if (!VALID(_stepByStepValues, NSMutableDictionary)) {
+        _stepByStepValues = [NSMutableDictionary new];
     }
-    return _stepByStepInfo;
+    return _stepByStepValues;
+}
+
+- (NSMutableDictionary *)stepByStepLabels
+{
+    if (!VALID(_stepByStepLabels, NSMutableDictionary)) {
+        _stepByStepLabels = [NSMutableDictionary new];
+    }
+    return _stepByStepLabels;
 }
 
 - (BOOL)isFreeToChoose:(UIViewController *)viewController

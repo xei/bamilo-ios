@@ -172,6 +172,16 @@
     return parameters;
 }
 
+- (NSDictionary *)getLabels
+{
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    if([self.field.required boolValue] || NOT_NIL(self.storedValue))
+    {
+        [parameters setValue:self.storedValue forKey:self.field.name];
+    }
+    return parameters;
+}
+
 -(NSString*)getSelectedValue
 {
     return self.storedValue;

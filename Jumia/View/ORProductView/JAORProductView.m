@@ -9,6 +9,12 @@
 #import "JAORProductView.h"
 #import "UIImageView+WebCache.h"
 
+@interface JAORProductView ()
+
+@property (nonatomic, strong) UILabel *quantityLabel;
+
+@end
+
 @implementation JAORProductView
 
 - (void)setupWithItemCollection:(RIItemCollection*)itemCollection
@@ -56,19 +62,19 @@
     
     currentY = CGRectGetMaxY(nameLabel.frame);
     
-    UILabel* quantityLabel = [UILabel new];
-    quantityLabel.font = JABodyFont;
-    quantityLabel.textColor = JABlack800Color;
-    quantityLabel.textAlignment = NSTextAlignmentLeft;
-    quantityLabel.text = [NSString stringWithFormat:STRING_QUANTITY, [itemCollection.quantity stringValue]];
-    [quantityLabel sizeToFit];
-    quantityLabel.frame = CGRectMake(CGRectGetMaxX(imageView.frame) + 6.0f,
+    self.quantityLabel = [UILabel new];
+    self.quantityLabel.font = JABodyFont;
+    self.quantityLabel.textColor = JABlack800Color;
+    self.quantityLabel.textAlignment = NSTextAlignmentLeft;
+    self.quantityLabel.text = [NSString stringWithFormat:STRING_QUANTITY, [itemCollection.quantity stringValue]];
+    [self.quantityLabel sizeToFit];
+    self.quantityLabel.frame = CGRectMake(CGRectGetMaxX(imageView.frame) + 6.0f,
                                      currentY,
                                      self.frame.size.width - CGRectGetMaxX(imageView.frame) + 6.0f - 16.0f,
-                                     quantityLabel.frame.size.height);
-    [self addSubview:quantityLabel];
+                                     self.quantityLabel.frame.size.height);
+    [self addSubview:self.quantityLabel];
     
-    currentY = CGRectGetMaxY(quantityLabel.frame);
+    currentY = CGRectGetMaxY(self.quantityLabel.frame);
     
     UILabel* orderNumberLabel = [UILabel new];
     orderNumberLabel.font = JABodyFont;
@@ -90,6 +96,12 @@
                             self.frame.origin.y,
                             self.frame.size.width,
                             currentY);
+}
+
+- (void)setQtyToReturn:(NSString *)qtyToReturn
+{
+    _qtyToReturn = qtyToReturn;
+    [self.quantityLabel setText:[NSString stringWithFormat:STRING_QUANTITY, qtyToReturn]];
 }
 
 @end
