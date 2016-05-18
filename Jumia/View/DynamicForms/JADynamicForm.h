@@ -102,6 +102,9 @@
 
 - (NSString*)getFieldNameForKey:(NSString*)key;
 
+- (NSDictionary *)getFieldLabels;
+- (NSDictionary *)getFieldLabelsReplacePlaceHolder:(NSString *)placeHolder forString:(NSString *)replaceString;
+
 - (void)unsubscribedNewsletters;
 
 @end

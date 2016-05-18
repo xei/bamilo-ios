@@ -989,6 +989,33 @@
     return fieldId;
 }
 
+- (NSDictionary *)getFieldLabels
+{
+    return [self getFieldLabelsReplacePlaceHolder:nil forString:nil];
+}
+
+- (NSDictionary *)getFieldLabelsReplacePlaceHolder:(NSString *)placeHolder forString:(NSString *)replaceString;
+{
+    NSMutableDictionary *fieldLabels = [NSMutableDictionary new];
+    if(VALID_NOTEMPTY(self.formViews, NSMutableArray))
+    {
+        for (JADynamicField *view in self.formViews)
+        {
+            NSMutableDictionary *newLabels = [NSMutableDictionary new];
+            NSDictionary *labels = [view getLabels];
+            for (NSString *key in [labels allKeys]) {
+                NSString *newString = key;
+                if (VALID_NOTEMPTY(placeHolder, NSString) && VALID_NOTEMPTY(replaceString, NSString)) {
+                    newString = [key stringByReplacingOccurrencesOfString:placeHolder withString:replaceString];
+                }
+                [newLabels setObject:[labels objectForKey:key] forKey:newString];
+            }
+            [fieldLabels addEntriesFromDictionary:newLabels];
+        }
+    }
+    return fieldLabels;
+}
+
 #pragma mark - JASwitchRadioComponentDelegate
 - (void)switchRadioComponent:(JASwitchRadioComponent*)switchRadioComponent
                changedHeight:(CGFloat)delta;

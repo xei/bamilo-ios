@@ -15,6 +15,7 @@
 @interface JARadioComponent ()
 
 @property (strong, nonatomic) id storedValue;
+@property (strong, nonatomic) id storedText;
 @property (strong, nonatomic) UIView *underLineView;
 @property (strong, nonatomic) UIImageView *dropdownImageView;
 
@@ -114,6 +115,7 @@
 -(void)setupWithField:(RIField*)field
 {
     self.storedValue = @"";
+    self.storedText = @"";
     self.hasError = NO;
     self.field = field;
     [self.textField setPlaceholder:field.label];
@@ -126,6 +128,7 @@
     if(VALID_NOTEMPTY(field.value, NSString))
     {
         self.storedValue = field.value;
+        self.storedText = field.value;
         if(![@"list" isEqualToString:field.type])
         {
             [self.textField setText:field.value];
@@ -176,11 +179,22 @@
     self.storedValue = value;
     if ([value isKindOfClass:[NSNumber class]]) {
         [self.textField setText:[value stringValue]];
+        self.storedText = [value stringValue];
     } else if ([value isKindOfClass:[RIFieldOption class]]) {
         RIFieldOption* fieldOption = (RIFieldOption*)value;
         [self.textField setText:fieldOption.label];
+        self.storedText = fieldOption.label;
     } else {
+        if (VALID_NOTEMPTY(self.field.options, NSOrderedSet)) {
+            for (RIFieldOption *option in self.field.options) {
+                if ([option.value isEqual:value]) {
+                    [self setValue:option];
+                    return;
+                }
+            }
+        }
         [self.textField setText:value];
+        self.storedText = value;
     }
 }
 
@@ -190,11 +204,13 @@
     {
         self.storedValue = locale.value;
         [self.textField setText:locale.label];
+        self.storedText = locale.label;
     }
     else
     {
         self.storedValue = @"";
         [self.textField setText:@""];
+        self.storedText = @"";
     }
 }
 
@@ -206,6 +222,21 @@
         if ([self.storedValue isKindOfClass:[RIFieldOption class]]) {
             RIFieldOption* fieldOption = (RIFieldOption*)self.storedValue;
             [parameters setValue:fieldOption.value forKey:self.field.name];
+        } else {
+            [parameters setValue:self.storedValue forKey:self.field.name];
+        }
+    }
+    return parameters;
+}
+
+- (NSDictionary *)getLabels
+{
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    if([self.field.required boolValue] || NOT_NIL(self.storedValue))
+    {
+        if ([self.storedValue isKindOfClass:[RIFieldOption class]]) {
+            RIFieldOption* fieldOption = (RIFieldOption*)self.storedValue;
+            [parameters setValue:fieldOption.label forKey:self.field.name];
         } else {
             [parameters setValue:self.storedValue forKey:self.field.name];
         }
@@ -279,6 +310,7 @@
         if(![@"list" isEqualToString:self.field.type])
         {
             [self.textField setText:self.field.value];
+            self.storedText = self.field.value;
         }
     }
 }

@@ -30,4 +30,9 @@
     return @{};
 }
 
+- (NSDictionary *)getLabels
+{
+    return @{};
+}
+
 @end

@@ -36,6 +36,8 @@
 
 @property (nonatomic, strong) JABottomSubmitView *submitView;
 
+@property (nonatomic, strong) NSDictionary *values;
+
 @end
 
 @implementation JAORReasonsViewController
@@ -92,7 +94,7 @@
                     [itemContent addSubview:formView];
                     currentY = CGRectGetMaxY(formView.frame);
                 }
-                [dynamicForm setValues:self.stateInfo replacePlaceHolder:@"__NAME__" forString:item.sku];
+                [dynamicForm setValues:self.values replacePlaceHolder:@"__NAME__" forString:item.sku];
                 [mutableDynamicForms addObject:dynamicForm];
             }
             
@@ -154,6 +156,8 @@
 {
     [super viewWillAppear:animated];
     
+    self.values = [self.stateInfoValues copy];
+    
     if (self.isLoaded) {
         [self loadSubviews];
     } else {
@@ -174,6 +178,11 @@
 - (void)onOrientationChanged
 {
     [super onOrientationChanged];
+    
+    for (int i = 0; i<self.items.count; i++) {
+        RIItemCollection* item = [self.items objectAtIndex:i];
+        self.values = [[self.dynamicForms objectAtIndex:i] getValuesReplacingPlaceHolder:@"__NAME__" forString:item.sku];
+    }
     
     [self removePickerView];
     for (UIView* itemView in self.itemViewsArray) {
@@ -224,9 +233,14 @@
             
             return;
         }
-        if (VALID(self.stateInfo, NSMutableDictionary))
+        NSDictionary *values = [dynamicForm getValuesReplacingPlaceHolder:@"__NAME__" forString:item.sku];
+        if (VALID(self.stateInfoValues, NSMutableDictionary))
         {
-            [self.stateInfo addEntriesFromDictionary:[dynamicForm getValuesReplacingPlaceHolder:@"__NAME__" forString:item.sku]];
+            [self.stateInfoValues addEntriesFromDictionary:values];
+        }
+        if (VALID(self.stateInfoLabels, NSMutableDictionary))
+        {
+            [self.stateInfoLabels addEntriesFromDictionary:[dynamicForm getFieldLabelsReplacePlaceHolder:@"__NAME__" forString:item.sku]];
         }
     }
     [[JACenterNavigationController sharedInstance] goToOnlineReturnsWaysScreenForItems:self.items order:self.order];
@@ -241,6 +255,7 @@
         [self hideLoading];
         
         self.currentRadioComponent = radioComponent;
+        [radioComponent.field setOptions:[NSOrderedSet orderedSetWithArray:fieldOptions]];
         
         NSMutableArray* dataset = [NSMutableArray new];
         

@@ -236,4 +236,27 @@
     return self.field.name;
 }
 
+- (NSDictionary *)getLabels
+{
+    NSMutableDictionary* labels = [NSMutableDictionary new];
+    
+    RIFieldOption* option = [self.field.options objectAtIndex:[self.selectedIndex integerValue]];
+    [labels setObject:option.label forKey:self.field.name];
+    
+    return [labels copy];
+}
+
+-(void)setValue:(id)value
+{
+    int i = 0;
+    for (RIFieldOption *option in self.field.options) {
+        if ([option.value isEqual:value]) {
+            self.selectedIndex = [NSNumber numberWithInt:i];
+            [self setupWithField:self.field];
+            return;
+        }
+        i++;
+    }
+}
+
 @end

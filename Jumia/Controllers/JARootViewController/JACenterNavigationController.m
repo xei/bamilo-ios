@@ -1893,12 +1893,17 @@
 - (void)goToStep:(UIViewController *)viewController forStepByStepViewController:(JAStepByStepTabViewController *)stepByStepViewController
 {
     if ([self.viewControllers indexOfObject:stepByStepViewController] == NSNotFound)
-    {        
-        [stepByStepViewController.stepByStepModel setStepByStepInfo:[NSMutableDictionary new]];
-    }
-    if ([viewController respondsToSelector:@selector(setStateInfo:)])
     {
-        [viewController performSelector:@selector(setStateInfo:) withObject:stepByStepViewController.stepByStepModel.stepByStepInfo];
+        [stepByStepViewController.stepByStepModel setStepByStepValues:[NSMutableDictionary new]];
+        [stepByStepViewController.stepByStepModel setStepByStepLabels:[NSMutableDictionary new]];
+    }
+    if ([viewController respondsToSelector:@selector(setStateInfoValues:)])
+    {
+        [viewController performSelector:@selector(setStateInfoValues:) withObject:stepByStepViewController.stepByStepModel.stepByStepValues];
+    }
+    if ([viewController respondsToSelector:@selector(setStateInfoLabels:)])
+    {
+        [viewController performSelector:@selector(setStateInfoLabels:) withObject:stepByStepViewController.stepByStepModel.stepByStepLabels];
     }
     JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
     if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[stepByStepViewController.stepByStepModel class]])

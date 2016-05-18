@@ -220,6 +220,8 @@
         for (UIViewController *viewControllerFromStack in [self.viewControllersStackArray mutableCopy]) {
             if (index == viewControllerFromStack.view.tag) {
                 [self.viewControllersStackArray removeObject:viewControllerFromStack];
+                [self setViewController:viewControllerFromStack forIndex:viewControllerFromStack.view.tag];
+                return;
             }
         }
     }

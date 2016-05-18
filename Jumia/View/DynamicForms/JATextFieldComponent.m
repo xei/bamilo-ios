@@ -195,6 +195,20 @@
     return parameters;
 }
 
+- (NSDictionary *)getLabels
+{
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    if([self.field.required boolValue] || VALID_NOTEMPTY(self.textField.text, NSString))
+    {
+        if(!self.hasError)
+        {
+            self.storedValue = self.textField.text;
+        }
+        [parameters setValue:self.storedValue forKey:self.field.name];
+    }
+    return parameters;
+}
+
 -(void)setError:(NSString*)error
 {
     self.textField.font = [UIFont fontWithName:kFontRegularName size:self.textField.font.pointSize];
