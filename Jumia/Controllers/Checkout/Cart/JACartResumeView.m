@@ -254,6 +254,8 @@
         heigth = CGRectGetMaxY(couponValueLine.frame);
         [self.couponTextField setText:[self.cart couponCode]];
         [self setCouponValid:YES];
+    }else{
+        [self.couponTextField setText:@""];
     }
     
     /*
