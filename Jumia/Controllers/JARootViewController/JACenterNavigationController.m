@@ -1894,8 +1894,11 @@
 {
     if ([self.viewControllers indexOfObject:stepByStepViewController] == NSNotFound)
     {
-        [stepByStepViewController.stepByStepModel setStepByStepValues:[NSMutableDictionary new]];
-        [stepByStepViewController.stepByStepModel setStepByStepLabels:[NSMutableDictionary new]];
+        if (stepByStepViewController == self.checkoutStepByStepViewController) {
+            stepByStepViewController = [self getNewCheckoutStepByStepViewController];
+        }else if (stepByStepViewController == self.returnsStepByStepViewController) {
+            stepByStepViewController = [self getNewReturnsStepByStepViewController];
+        }
     }
     if ([viewController respondsToSelector:@selector(setStateInfoValues:)])
     {
@@ -1909,12 +1912,7 @@
     if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[stepByStepViewController.stepByStepModel class]])
     {
         [stepByStepTabViewController goToViewController:viewController];
-    }else if ([self.viewControllers indexOfObject:stepByStepViewController] != NSNotFound)
-    {
-        [self popToViewController:stepByStepViewController animated:YES];
-        [stepByStepViewController goToViewController:viewController];
     }else{
-        [stepByStepViewController setIndexInit:0];
         [self pushViewController:stepByStepViewController animated:YES];
         [stepByStepViewController goToViewController:viewController];
     }

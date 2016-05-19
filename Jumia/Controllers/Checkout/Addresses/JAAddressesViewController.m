@@ -68,10 +68,12 @@ UITableViewDelegate>
     self.shouldForceAddAddress = YES;
     
     self.navBarLayout.showBackButton = YES;
-    self.navBarLayout.title = STRING_MY_ADDRESSES;
     
     if (self.fromCheckout) {
         self.navBarLayout.showCartButton = NO;
+        self.navBarLayout.title = STRING_CHECKOUT;
+    }else{
+        self.navBarLayout.title = STRING_MY_ADDRESSES;
     }
     
     self.screenName = @"Address";
