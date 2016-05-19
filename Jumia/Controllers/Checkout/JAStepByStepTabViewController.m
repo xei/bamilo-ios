@@ -186,6 +186,9 @@
             }else{
                 [(JACheckoutButton *)oneView setEnabled:YES];
             }
+            if ([self.stepByStepModel ignoreStep:oneView.tag]) {
+                [(JACheckoutButton *)oneView setEnabled:NO];
+            }
         }
     }
     [UIView animateWithDuration:.2 animations:^{
@@ -207,6 +210,9 @@
             viewControllerToReturn = viewController;
             [self.viewControllersStackArray removeObject:viewController];
         }
+    }
+    if (!VALID_NOTEMPTY(viewControllerToReturn, UIViewController)) {
+        [self.stepByStepModel goToIndex:index];
     }
     return viewControllerToReturn;
 }
