@@ -192,22 +192,23 @@
 {
     [super onOrientationChanged];
     
-    for (int i = 0; i<self.items.count; i++) {
-        RIItemCollection* item = [self.items objectAtIndex:i];
-        self.values = [[self.dynamicForms objectAtIndex:i] getValuesReplacingPlaceHolder:@"__NAME__" forString:item.sku];
-    }
-    
     [self removePickerView];
-    for (UIView* itemView in self.itemViewsArray) {
-        [itemView removeFromSuperview];
-    }
-    self.itemViewsArray = nil;
     
     [self loadSubviews];
 }
 
 - (void)loadSubviews
 {
+    for (UIView* itemView in self.itemViewsArray) {
+        [itemView removeFromSuperview];
+    }
+    self.itemViewsArray = nil;
+    
+    for (int i = 0; i<self.items.count; i++) {
+        RIItemCollection* item = [self.items objectAtIndex:i];
+        self.values = [[self.dynamicForms objectAtIndex:i] getValuesReplacingPlaceHolder:@"__NAME__" forString:item.sku];
+    }
+    
     [self.submitView setWidth:self.view.frame.size.width];
     [self.submitView setYBottomAligned:0.f];
     
