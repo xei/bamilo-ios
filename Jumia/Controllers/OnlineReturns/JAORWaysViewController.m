@@ -17,6 +17,7 @@
 
 @interface JAORWaysViewController () <JADynamicFormDelegate>
 
+@property (nonatomic, strong) NSString* titleString;
 @property (nonatomic, strong) JAProductInfoHeaderLine *titleHeaderView;
 @property (nonatomic, strong) UIScrollView* scrollView;
 @property (nonatomic, strong) UIView* itemViewsContentView;
@@ -40,7 +41,7 @@
     if (!VALID(_titleHeaderView, JAProductInfoHeaderLine)) {
         _titleHeaderView = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kProductInfoHeaderLineHeight)];
         [_titleHeaderView.label setNumberOfLines:2];
-        [_titleHeaderView setTitle:[STRING_QUESTION_RETURN_REASONS uppercaseString]];
+        [_titleHeaderView setTitle:self.titleString];
         [self.view addSubview:_titleHeaderView];
     }
     return _titleHeaderView;
@@ -151,6 +152,7 @@
     
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showCartButton = NO;
+    self.navBarLayout.title = STRING_MY_ORDERS;
     
     [self.view setBackgroundColor:JAWhiteColor];
     
@@ -173,6 +175,11 @@
             self.isLoaded = YES;
             
             self.returnWayForm = form;
+            
+            if (VALID_NOTEMPTY(form.fields, NSOrderedSet)) {
+                RIField* field = [form.fields firstObject];
+                self.titleString = field.label;
+            }
             
             [self loadSubviews];
         } failureBlock:^(RIApiResponse apiResponse, NSArray *errors) {

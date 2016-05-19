@@ -17,12 +17,13 @@
 
 @interface JAORPaymentViewController () <JADynamicFormDelegate>
 
+@property (nonatomic, strong) NSString* titleString;
 @property (nonatomic, strong) JAProductInfoHeaderLine *titleHeaderView;
 @property (nonatomic, strong) UIScrollView* scrollView;
 @property (nonatomic, strong) UIView* itemViewsContentView;
 @property (nonatomic, strong) NSArray* itemViewsArray;
 @property (nonatomic, strong) UIView* formContentView;
-@property (nonatomic, strong) RIForm* returnWayForm;
+@property (nonatomic, strong) RIForm* paymentForm;
 @property (nonatomic, strong) JADynamicForm* dynamicForm;
 
 @property (nonatomic, assign) BOOL isLoaded;
@@ -38,7 +39,7 @@
     if (!VALID(_titleHeaderView, JAProductInfoHeaderLine)) {
         _titleHeaderView = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kProductInfoHeaderLineHeight)];
         [_titleHeaderView.label setNumberOfLines:2];
-        [_titleHeaderView setTitle:[STRING_QUESTION_RETURN_REASONS uppercaseString]];
+        [_titleHeaderView setTitle:self.titleString];
         [self.view addSubview:_titleHeaderView];
     }
     return _titleHeaderView;
@@ -98,9 +99,9 @@
 - (JADynamicForm*)dynamicForm
 {
     if (!VALID_NOTEMPTY(_dynamicForm, JADynamicForm)) {
-        if (VALID_NOTEMPTY(self.returnWayForm, RIForm)) {
+        if (VALID_NOTEMPTY(self.paymentForm, RIForm)) {
             for (int i = 0; i<self.items.count; i++) {
-                _dynamicForm = [[JADynamicForm alloc] initWithForm:self.returnWayForm startingPosition:0.0f];
+                _dynamicForm = [[JADynamicForm alloc] initWithForm:self.paymentForm startingPosition:0.0f];
                 _dynamicForm.delegate = self;
             }
         }
@@ -111,7 +112,7 @@
 - (UIView*)formContentView
 {
     if (!VALID(_formContentView, UIView)) {
-        if (VALID_NOTEMPTY(self.returnWayForm, RIForm)) {
+        if (VALID_NOTEMPTY(self.paymentForm, RIForm)) {
             _formContentView = [UIView new];
             [self.scrollView addSubview:_formContentView];
             
@@ -147,6 +148,7 @@
     
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showCartButton = NO;
+    self.navBarLayout.title = STRING_MY_ORDERS;
     
     [self.view setBackgroundColor:JAWhiteColor];
     
@@ -166,7 +168,12 @@
             [self hideLoading];
             self.isLoaded = YES;
             
-            self.returnWayForm = form;
+            self.paymentForm = form;
+            
+            if (VALID_NOTEMPTY(form.fields, NSOrderedSet)) {
+                RIField* field = [form.fields firstObject];
+                self.titleString = field.label;
+            }
             
             [self loadSubviews];
         } failureBlock:^(RIApiResponse apiResponse, NSArray *errors) {
