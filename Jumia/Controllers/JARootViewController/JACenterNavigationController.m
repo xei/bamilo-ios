@@ -1907,8 +1907,10 @@
     {
         if (stepByStepViewController == self.checkoutStepByStepViewController) {
             stepByStepViewController = [self getNewCheckoutStepByStepViewController];
+            self.checkoutStepByStepViewController = stepByStepViewController;
         }else if (stepByStepViewController == self.returnsStepByStepViewController) {
             stepByStepViewController = [self getNewReturnsStepByStepViewController];
+            self.returnsStepByStepViewController = stepByStepViewController;
         }
     }
     if ([viewController respondsToSelector:@selector(setStateInfoValues:)])
