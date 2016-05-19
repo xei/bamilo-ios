@@ -108,6 +108,7 @@
     checkoutStepByStepViewController.navBarLayout.showCartButton = NO;
     [checkoutStepByStepViewController.navBarLayout setShowBackButton:YES];
     checkoutStepByStepViewController.navBarLayout.showLogo = NO;
+    [checkoutStepByStepViewController.navBarLayout setTitle:STRING_CHECKOUT];
     [checkoutStepByStepViewController setIndexInit:0];
     return checkoutStepByStepViewController;
 }
@@ -127,6 +128,7 @@
     returnsStepByStepViewController.navBarLayout.showCartButton = NO;
     [returnsStepByStepViewController.navBarLayout setShowBackButton:YES];
     returnsStepByStepViewController.navBarLayout.showLogo = NO;
+    [returnsStepByStepViewController.navBarLayout setTitle:STRING_MY_ORDERS];
     [returnsStepByStepViewController setIndexInit:0];
     return returnsStepByStepViewController;
 }
