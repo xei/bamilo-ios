@@ -242,7 +242,7 @@
     [self.returnButton setWidth:[self.returnButton sizeWithMaxWidth:self.width/2].width + 20.f];
     
     [self.productImageView setFrame:CGRectMake(46.0f, 16.0f, kImageSize.width, kImageSize.height)];
-    [self.brandLabel setFrame:CGRectMake(_labelsLeftMargin, 16.f, _labelsWidth - self.reorderButton.width, 20)];
+    [self.brandLabel setFrame:CGRectMake(_labelsLeftMargin, 16.f, _labelsWidth, 20)];
     [self.nameLabel setFrame:CGRectMake(_labelsLeftMargin, CGRectGetMaxY(self.brandLabel.frame), _labelsWidth, 20)];
     [self.qtyLabel setFrame:CGRectMake(_labelsLeftMargin, CGRectGetMaxY(self.nameLabel.frame), _labelsWidth, 15)];
     [self.priceLine setFrame:CGRectMake(_labelsLeftMargin, CGRectGetMaxY(self.qtyLabel.frame), _labelsWidth, 15)];

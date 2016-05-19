@@ -94,7 +94,7 @@
     if (!VALID(_returnMultipleItemsButton, JAButton)) {
         _returnMultipleItemsButton = [[JAButton alloc] initAlternativeButtonWithTitle:[@"Return selected items" uppercaseString] target:self action:@selector(returnMultipleItems)];
         [_returnMultipleItemsButton setFrame:CGRectMake(0, 0, self.width, kBottomDefaultHeight)];
-        [_returnMultipleItemsButton setHidden:YES];
+        [_returnMultipleItemsButton setEnabled:NO];
     }
     return _returnMultipleItemsButton;
 }
@@ -104,7 +104,7 @@
     self.order = order;
     [self setFrame:frame];
     [self.itemsToReturnArray removeAllObjects];
-    [self.returnMultipleItemsButton setHidden:!VALID_NOTEMPTY(self.itemsToReturnArray, NSMutableArray)];
+    [self.returnMultipleItemsButton setEnabled:VALID_NOTEMPTY(self.itemsToReturnArray, NSMutableArray)];
     
     int i = 0;
     for (RIItemCollection *item in self.order.itemCollection) {
@@ -138,18 +138,18 @@
                                              [self totalHeightForCollectionView])];
     
     if (!VALID(self.returnMultipleItemsButton.superview, UIView)) {
-        [self addSubview:self.returnMultipleItemsButton];
+        [self.superview.superview addSubview:self.returnMultipleItemsButton];
     }
     [self reloadFrame];
 }
 
 - (void)reloadFrame
 {
-    [self.returnMultipleItemsButton setHidden:!VALID_NOTEMPTY(self.itemsToReturnArray, NSMutableArray)];
+    [self.returnMultipleItemsButton setEnabled:VALID_NOTEMPTY(self.itemsToReturnArray, NSMutableArray)];
     [self.returnMultipleItemsButton setWidth:self.width];
-    [self.returnMultipleItemsButton setYBottomOf:self.collectionView at:6.f];
-    [self setFrame:CGRectMake(0.0f, 0.0f, self.frame.size.width, CGRectGetMaxY(self.returnMultipleItemsButton.frame))];
-    
+    [self.returnMultipleItemsButton setYBottomAligned:0.f];
+    [self setFrame:CGRectMake(0.0f, 0.0f, self.frame.size.width, CGRectGetMaxY(self.collectionView.frame) + self.returnMultipleItemsButton.height + 6.f)];
+    [self.itemsHeader setFrame:self.itemsHeader.frame];
     if (RI_IS_RTL) {
         [self.itemsHeader flipAllSubviews];
     }
@@ -207,9 +207,9 @@
 
 - (void)reloadMultipleChecks
 {
-    [self.returnMultipleItemsButton setHidden:!VALID_NOTEMPTY(self.itemsToReturnArray, NSMutableArray)];
+    [self.returnMultipleItemsButton setEnabled:VALID_NOTEMPTY(self.itemsToReturnArray, NSMutableArray)];
     [self.returnMultipleItemsButton setWidth:self.width];
-    [self.returnMultipleItemsButton setYBottomOf:self.collectionView at:6.f];
+    [self.returnMultipleItemsButton setYBottomAligned:0.f];
     [self reloadFrame];
 }
 
