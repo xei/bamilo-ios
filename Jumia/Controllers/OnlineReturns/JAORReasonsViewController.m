@@ -22,6 +22,7 @@
 @interface JAORReasonsViewController () <JADynamicFormDelegate, JAPickerDelegate>
 
 @property (nonatomic, strong) JAProductInfoHeaderLine *titleHeaderView;
+@property (assign, nonatomic) CGFloat scrollOriginalHeight;
 @property (nonatomic, strong) UIScrollView* scrollView;
 @property (nonatomic, strong) NSArray* itemViewsArray;
 @property (nonatomic, strong) RIForm* returnDetailForm;
@@ -162,6 +163,21 @@
     
     [self.view setBackgroundColor:JAWhiteColor];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(hideKeyboard)
+                                                 name:kOpenMenuNotification
+                                               object:nil];
+    
     self.isLoaded = NO;
 }
 
@@ -216,6 +232,7 @@
                                          self.bounds.origin.y,
                                          self.bounds.size.width,
                                          self.bounds.size.height - self.submitView.frame.size.height)];
+    self.scrollOriginalHeight = self.scrollView.frame.size.height;
     
     [self.titleHeaderView setFrame:CGRectMake(0.0f, 0.0f, self.scrollView.frame.size.width, self.titleHeaderView.frame.size.height)];
     
@@ -362,6 +379,46 @@
     self.currentRadioComponentDataset = nil;
     self.currentRadioComponent = nil;
     self.currentListNumberComponent = nil;
+}
+
+#pragma mark - Keyboard notifications
+
+- (void) keyboardWillShow:(NSNotification *)notification
+{
+    NSDictionary *userInfo = [notification userInfo];
+    CGSize kbSize = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    CGFloat height = kbSize.height;
+    
+    if(self.view.frame.size.width == kbSize.height)
+    {
+        height = kbSize.width;
+    }
+    
+    height -= self.submitView.frame.size.height;
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.scrollView setFrame:CGRectMake(self.scrollView.frame.origin.x,
+                                             self.scrollView.frame.origin.y,
+                                             self.scrollView.frame.size.width,
+                                             self.scrollOriginalHeight - height)];
+    }];
+}
+
+- (void) keyboardWillHide:(NSNotification *)notification
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.scrollView setFrame:CGRectMake(self.scrollView.frame.origin.x,
+                                             self.scrollView.frame.origin.y,
+                                             self.scrollView.frame.size.width,
+                                             self.scrollOriginalHeight)];
+    }];
+}
+
+- (void)hideKeyboard
+{
+    for (JADynamicForm* dynamicForm in self.dynamicForms) {
+        [dynamicForm resignResponder];
+    }
 }
 
 
