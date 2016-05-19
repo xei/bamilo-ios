@@ -63,7 +63,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.navBarLayout setTitle:STRING_CHECKOUT];
     self.viewControllersStackArray = [NSMutableArray new];
     [self.view setBackgroundColor:JAWhiteColor];
     [self.view addSubview:self.tabBarView];
