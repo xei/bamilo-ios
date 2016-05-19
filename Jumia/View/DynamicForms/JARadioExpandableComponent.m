@@ -200,6 +200,7 @@
                                                                                            subContentY,
                                                                                            subContentView.frame.size.width - 13.0f*2,
                                                                                            1.0f)];
+                self.selectedSublabelBackground.backgroundColor = JAYellow2Color;
                 self.selectedSublabelBackground.layer.borderColor = [JAYellow1Color CGColor];
                 self.selectedSublabelBackground.layer.borderWidth = 1.0f;
                 [subContentView addSubview:self.selectedSublabelBackground];

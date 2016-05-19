@@ -158,6 +158,7 @@
 
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showCartButton = NO;
+    self.navBarLayout.title = STRING_MY_ORDERS;
     
     [self.view setBackgroundColor:JAWhiteColor];
     
