@@ -24,6 +24,7 @@
 @property (nonatomic, strong) JAButton *callButton;
 @property (nonatomic, strong) JAButton *backButton;
 
+@property (nonatomic, strong) NSString *phoneNumber;
 @end
 
 @implementation JAORCallToReturnViewController
@@ -117,6 +118,30 @@
     
     [self.view setBackgroundColor:JAWhiteColor];
     
+    [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+        
+        if([[UIDevice currentDevice].model isEqualToString:@"iPhone"])
+        {
+            if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", configuration.phoneNumber]]])
+            {
+                [self.callButton setEnabled:YES];
+            }
+            else
+            {
+                [self.callButton setEnabled:NO];
+                [self.callButton setTitle:[[NSString stringWithFormat:STRING_PLEASE_CALL_TO, configuration.phoneNumber] uppercaseString] forState:UIControlStateNormal];
+            }
+        }
+        else
+        {
+            [self.callButton setEnabled:NO];
+            [self.callButton setTitle:[[NSString stringWithFormat:STRING_PLEASE_CALL_TO, configuration.phoneNumber] uppercaseString] forState:UIControlStateNormal];
+        }
+        
+    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+        
+    }];
+    
     if (VALID(self.item, RIItemCollection)) {
         [self.titleLabel setText:self.item.callReturnTextTitle];
         [self.body1Label setText:self.item.callReturnTextBody1];
@@ -132,22 +157,6 @@
     [self.view addSubview:self.callButton];
     [self.view addSubview:self.backButton];
     [self setup];
-    
-    if([[UIDevice currentDevice].model isEqualToString:@"iPhone"])
-    {
-        if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tel:123456"]])
-        {
-            [self.callButton setEnabled:YES];
-        }
-        else
-        {
-            [self.callButton setEnabled:NO];
-        }
-    }
-    else
-    {
-        [self.callButton setEnabled:NO];
-    }
 }
 
 - (void)onOrientationChanged
@@ -194,14 +203,12 @@
 
 - (void)callToReturn
 {
-    [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-        
+    if (VALID_NOTEMPTY(self.phoneNumber, NSString)) {
         [self trackingEventCallToReturn];
         
-        NSString *phoneNumber = [@"tel://" stringByAppendingString:configuration.phoneNumber];
+        NSString *phoneNumber = [@"tel://" stringByAppendingString:self.phoneNumber];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
-    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-    }];
+    }
 }
 
 - (void)goBack
