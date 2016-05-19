@@ -11,17 +11,18 @@
 #import "JAORConfirmationScreenViewController.h"
 #import "JAORReasonsViewController.h"
 #import "JAORWaysViewController.h"
+#import "JAORPaymentViewController.h"
 
 @implementation JAReturnStepByStepModel
 
 - (NSArray *)viewControllersArray
 {
-    return @[[JAORReasonsViewController class], [JAORWaysViewController class], [JAORConfirmationScreenViewController class]];
+    return @[[JAORReasonsViewController class], [JAORWaysViewController class], [JAORPaymentViewController class], [JAORConfirmationScreenViewController class]];
 }
 
 - (NSArray *)iconsArray
 {
-    return @[[UIImage imageNamed:@"step_by_step_1"], [UIImage imageNamed:@"step_by_step_2"], [UIImage imageNamed:@"step_by_step_3"]];
+    return @[[UIImage imageNamed:@"step_by_step_1"], [UIImage imageNamed:@"step_by_step_2"], [UIImage imageNamed:@"step_by_step_3"], [UIImage imageNamed:@"step_by_step_4"]];
 }
 
 - (BOOL)isFreeToChoose:(UIViewController *)viewController
@@ -58,6 +59,8 @@
 
     } else if (classKind == [JAORWaysViewController class]) {
 
+    } else if (classKind == [JAORPaymentViewController class]) {
+        
     } else if (classKind == [JAORConfirmationScreenViewController class]) {
 //        [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmScreen];
     }

@@ -28,7 +28,8 @@
 - (BOOL)openScreenTarget:(JAScreenTarget *)target;
 - (void)showSearchView;
 
-
+- (void)goToOnlineReturnsPaymentScreenForItems:(NSArray *)items
+                                         order:(RITrackOrder*)order;
 - (void)goToOnlineReturnsWaysScreenForItems:(NSArray *)items
                                       order:(RITrackOrder*)order;
 - (void)goToOnlineReturnsReasonsScreenForItems:(NSArray *)items

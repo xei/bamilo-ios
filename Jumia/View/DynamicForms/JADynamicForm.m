@@ -134,6 +134,7 @@
             JARadioExpandableComponent* radioExpandable = [[JARadioExpandableComponent alloc] init];
             [radioExpandable setupWithField:field];
             radioExpandable.delegate = self;
+            radioExpandable.textFieldDelegate = self;
             
             CGRect frame = radioExpandable.frame;
             frame.origin.y = startingY;
@@ -970,6 +971,12 @@
         if (self.delegate && [self.delegate respondsToSelector:@selector(openNumberPicker:)]) {
             [self.delegate performSelector:@selector(openNumberPicker:) withObject:view];
         }
+    }
+    else if ([view isKindOfClass:[JARadioExpandableComponent class]])
+    {
+        textFieldShouldBeginEditing = YES;
+        
+        [view performSelector:@selector(resetErrorFromTextField:) withObject:textField];
     }
     
     

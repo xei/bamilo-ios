@@ -2593,6 +2593,11 @@
 		FF4465191CEB4FD7003A65EA /* JAORProductView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4465161CEB4FD7003A65EA /* JAORProductView.m */; };
 		FF44651A1CEB4FD7003A65EA /* JAORProductView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4465161CEB4FD7003A65EA /* JAORProductView.m */; };
 		FF44651B1CEB4FD7003A65EA /* JAORProductView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4465161CEB4FD7003A65EA /* JAORProductView.m */; };
+		FF44651E1CECB806003A65EA /* JAORPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF44651D1CECB806003A65EA /* JAORPaymentViewController.m */; };
+		FF44651F1CECB806003A65EA /* JAORPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF44651D1CECB806003A65EA /* JAORPaymentViewController.m */; };
+		FF4465201CECB806003A65EA /* JAORPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF44651D1CECB806003A65EA /* JAORPaymentViewController.m */; };
+		FF4465211CECB806003A65EA /* JAORPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF44651D1CECB806003A65EA /* JAORPaymentViewController.m */; };
+		FF4465221CECB806003A65EA /* JAORPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF44651D1CECB806003A65EA /* JAORPaymentViewController.m */; };
 		FF4B433B1C56735D0074241E /* RIRecentlyViewedProductSku.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4B43351C56735D0074241E /* RIRecentlyViewedProductSku.m */; };
 		FF4B433C1C56735D0074241E /* RIRecentlyViewedProductSku.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4B43351C56735D0074241E /* RIRecentlyViewedProductSku.m */; };
 		FF4B433D1C56735D0074241E /* RIRecentlyViewedProductSku.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4B43351C56735D0074241E /* RIRecentlyViewedProductSku.m */; };
@@ -3680,6 +3685,8 @@
 		FF4465131CEA0B23003A65EA /* Model_1.15.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.15.xcdatamodel; sourceTree = "<group>"; };
 		FF4465151CEB4FD7003A65EA /* JAORProductView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORProductView.h; path = ORProductView/JAORProductView.h; sourceTree = "<group>"; };
 		FF4465161CEB4FD7003A65EA /* JAORProductView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAORProductView.m; path = ORProductView/JAORProductView.m; sourceTree = "<group>"; };
+		FF44651C1CECB806003A65EA /* JAORPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORPaymentViewController.h; path = OnlineReturns/JAORPaymentViewController.h; sourceTree = "<group>"; };
+		FF44651D1CECB806003A65EA /* JAORPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAORPaymentViewController.m; path = OnlineReturns/JAORPaymentViewController.m; sourceTree = "<group>"; };
 		FF4B43341C56735D0074241E /* RIRecentlyViewedProductSku.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIRecentlyViewedProductSku.h; sourceTree = "<group>"; };
 		FF4B43351C56735D0074241E /* RIRecentlyViewedProductSku.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIRecentlyViewedProductSku.m; sourceTree = "<group>"; };
 		FF6BDC9A1CE238F3002BFE11 /* JAORReasonsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORReasonsViewController.h; path = OnlineReturns/JAORReasonsViewController.h; sourceTree = "<group>"; };
@@ -4974,6 +4981,8 @@
 				9A4077351CE24DF800313D20 /* JAORCallToReturnViewController.m */,
 				FFB1B0881CE5E163000F60AD /* JAORWaysViewController.h */,
 				FFB1B0891CE5E163000F60AD /* JAORWaysViewController.m */,
+				FF44651C1CECB806003A65EA /* JAORPaymentViewController.h */,
+				FF44651D1CECB806003A65EA /* JAORPaymentViewController.m */,
 			);
 			name = OnlineReturns;
 			sourceTree = "<group>";
@@ -7839,6 +7848,7 @@
 				c9f69801c66118e53de177a7 /* RIShippingMethodPickupStationOption.m in Sources */,
 				FFF9007D1C6A5D2000DDF538 /* JATitleComponent.m in Sources */,
 				FF0464CB1CA96E9000B82FD2 /* ADJPackageBuilder.m in Sources */,
+				FF44651F1CECB806003A65EA /* JAORPaymentViewController.m in Sources */,
 				FF4383F51C71EEEB003BA957 /* JAScreenTitleComponent.m in Sources */,
 				9A40773E1CE60E3300313D20 /* JABottomSubmitView.m in Sources */,
 				FFF900681C6A31A700DDF538 /* JANewsletterViewController.m in Sources */,
@@ -8096,6 +8106,7 @@
 				CE3AF91219DD5D6700D8C51B /* JAPromotionPopUp.m in Sources */,
 				B5A0059019D5A1EE0069C0A9 /* RIGTMTracker.m in Sources */,
 				FF0464D41CA96E9000B82FD2 /* ADJRequestHandler.m in Sources */,
+				FF44651E1CECB806003A65EA /* JAORPaymentViewController.m in Sources */,
 				9A1B7C421BFCF849000111D7 /* JACustomNavigationBarView.m in Sources */,
 				B5A30303198121A400F71726 /* JABaseViewController.m in Sources */,
 				CE59BF041AE8057A0057F4E2 /* JAShopsWeekTeaserView.m in Sources */,
@@ -8456,6 +8467,7 @@
 				CE9ADBEA1AB34C4600D56481 /* JABaseViewController.m in Sources */,
 				9A55A6891BBECB08008EF4A6 /* JABottomBar.m in Sources */,
 				FF0464D61CA96E9000B82FD2 /* ADJRequestHandler.m in Sources */,
+				FF4465201CECB806003A65EA /* JAORPaymentViewController.m in Sources */,
 				9A0BBE931BFE2480007D35CE /* JACustomNavigationBarView.m in Sources */,
 				CE59BF061AE8057A0057F4E2 /* JAShopsWeekTeaserView.m in Sources */,
 				CE166FA61BBC3C8B0084B334 /* RILocale.m in Sources */,
@@ -8806,6 +8818,7 @@
 				CE9ADDE41AB6D6E900D56481 /* JABaseViewController.m in Sources */,
 				9A55A68A1BBECB08008EF4A6 /* JABottomBar.m in Sources */,
 				FF0464D71CA96E9000B82FD2 /* ADJRequestHandler.m in Sources */,
+				FF4465211CECB806003A65EA /* JAORPaymentViewController.m in Sources */,
 				9A0BBE941BFE2481007D35CE /* JACustomNavigationBarView.m in Sources */,
 				CE59BF071AE8057A0057F4E2 /* JAShopsWeekTeaserView.m in Sources */,
 				CE166FA71BBC3C8B0084B334 /* RILocale.m in Sources */,
@@ -9156,6 +9169,7 @@
 				CE9ADFD91AB6D78200D56481 /* JAPromotionPopUp.m in Sources */,
 				9A55A68B1BBECB09008EF4A6 /* JABottomBar.m in Sources */,
 				FF0464D81CA96E9000B82FD2 /* ADJRequestHandler.m in Sources */,
+				FF4465221CECB806003A65EA /* JAORPaymentViewController.m in Sources */,
 				CE9ADFDC1AB6D78200D56481 /* RIGTMTracker.m in Sources */,
 				9A0BBE951BFE2482007D35CE /* JACustomNavigationBarView.m in Sources */,
 				CE9ADFDE1AB6D78200D56481 /* JABaseViewController.m in Sources */,

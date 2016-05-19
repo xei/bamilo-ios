@@ -1,12 +1,12 @@
 //
-//  JAORWaysViewController.m
+//  JAORPaymentViewController.m
 //  Jumia
 //
-//  Created by telmopinto on 13/05/16.
+//  Created by telmopinto on 18/05/16.
 //  Copyright © 2016 Rocket Internet. All rights reserved.
 //
 
-#import "JAORWaysViewController.h"
+#import "JAORPaymentViewController.h"
 #import "JAProductInfoHeaderLine.h"
 #import "JAButton.h"
 #import "RIForm.h"
@@ -15,7 +15,7 @@
 #import "JABottomSubmitView.h"
 #import "JAORProductView.h"
 
-@interface JAORWaysViewController () <JADynamicFormDelegate>
+@interface JAORPaymentViewController () <JADynamicFormDelegate>
 
 @property (nonatomic, strong) JAProductInfoHeaderLine *titleHeaderView;
 @property (nonatomic, strong) UIScrollView* scrollView;
@@ -31,7 +31,7 @@
 
 @end
 
-@implementation JAORWaysViewController
+@implementation JAORPaymentViewController
 
 - (JAProductInfoHeaderLine *)titleHeaderView
 {
@@ -64,7 +64,7 @@
         CGFloat itemY = 0.0f;
         for (int i = 0; i<self.items.count; i++) {
             RIItemCollection* item = [self.items objectAtIndex:i];
-
+            
             CGFloat currentY = itemY;
             
             JAORProductView* productView = [[JAORProductView alloc] initWithFrame:CGRectMake(0.0f,
@@ -162,7 +162,7 @@
         [self loadSubviews];
     } else {
         [self showLoading];
-        [RIForm getForm:@"returnmethod" successBlock:^(RIForm *form) {
+        [RIForm getForm:@"refundmethod" successBlock:^(RIForm *form) {
             [self hideLoading];
             self.isLoaded = YES;
             
@@ -247,7 +247,7 @@
             [self.stateInfo addEntriesFromDictionary:[self.dynamicForm getValuesReplacingPlaceHolder:@"__NAME__" forString:item.sku]];
         }
     }
-    [[JACenterNavigationController sharedInstance] goToOnlineReturnsPaymentScreenForItems:self.items order:self.order];
+    [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmScreenForItems:self.items order:self.order];
 }
 
 
