@@ -9,6 +9,7 @@
 #import "JARadioExpandableComponent.h"
 #import "JAClickableView.h"
 #import "RIFieldOption.h"
+#import "RIForm.h"
 
 @interface JARadioExpandableComponent()
 
@@ -24,6 +25,9 @@
 @property (nonatomic, strong) UILabel *selectedLabel;
 @property (nonatomic, strong) UILabel *selectedSublabel;
 @property (nonatomic, strong) UIView *selectedSublabelBackground;
+
+@property (nonatomic, strong) NSArray* subFormTextFieldsArray;
+@property (nonatomic, strong) NSArray* subFormSeparatorsArray;
 
 @end
 
@@ -63,6 +67,21 @@
     self.selectedLabel.width = self.labelBaseRect.size.width;
     self.selectedSublabelBackground.width = frame.size.width - 13.0f*2;
     self.selectedSublabel.width = self.selectedSublabelBackground.frame.size.width;
+    
+    for (int i = 0; i<self.subFormTextFieldsArray.count; i++) {
+        UITextField* textField = [self.subFormTextFieldsArray objectAtIndex:i];
+        UIView* separator = [self.subFormSeparatorsArray objectAtIndex:i];
+        
+        if (RI_IS_RTL) {
+            textField.textAlignment = NSTextAlignmentRight;
+        } else {
+            textField.textAlignment = NSTextAlignmentLeft;
+        }
+        textField.x = xOffset;
+        textField.width = self.contentBaseSize.width - xOffset*2;
+        separator.x = xOffset;
+        separator.width = self.contentBaseSize.width - xOffset*2;
+    }
     
     [self flipIfIsRTL];
     
@@ -150,45 +169,101 @@
             }
         }
         if (i == selectedIndex) {
+            UIView* subContentView = [[UIView alloc] initWithFrame:CGRectMake(contentView.frame.origin.x,
+                                                                              currentY,
+                                                                              contentView.frame.size.width,
+                                                                              0.0f)];
+            [self addSubview:subContentView];
+            
             [checkboxImageView setImage:checkboxImage];
             
-            self.selectedLabel = [[UILabel alloc] initWithFrame:CGRectMake(optionLabel.frame.origin.x,
-                                                                           self.contentBaseSize.height,
-                                                                           optionLabel.frame.size.width,
-                                                                           1.0f)];
-            self.selectedLabel.textAlignment = NSTextAlignmentLeft;
-            self.selectedLabel.textColor = JABlack800Color;
-            self.selectedLabel.font = JAListFont;
-            self.selectedLabel.text = [NSString stringWithFormat:@"%@ %@",option.linkLabel, option.text];
-            [self.selectedLabel sizeToFit];
-            [contentView addSubview:self.selectedLabel];
+            CGFloat subContentY = 0.0f;
             
-            self.selectedSublabelBackground = [[UIView alloc] initWithFrame:CGRectMake(13.0f,
-                                                                                       CGRectGetMaxY(self.selectedLabel.frame) + 15.0f,
-                                                                                       contentView.frame.size.width - 13.0f*2,
-                                                                                       1.0f)];
-            self.selectedSublabelBackground.backgroundColor = JAYellow2Color;
-            self.selectedSublabelBackground.layer.borderColor = [JAYellow1Color CGColor];
-            self.selectedSublabelBackground.layer.borderWidth = 1.0f;
-            [contentView addSubview:self.selectedSublabelBackground];
+            if (VALID_NOTEMPTY(option.text, NSString)) {
+                
+                self.selectedLabel = [[UILabel alloc] initWithFrame:CGRectMake(optionLabel.frame.origin.x,
+                                                                               subContentY,
+                                                                               optionLabel.frame.size.width,
+                                                                               1.0f)];
+                self.selectedLabel.textAlignment = NSTextAlignmentLeft;
+                self.selectedLabel.textColor = JABlack800Color;
+                self.selectedLabel.font = JAListFont;
+                self.selectedLabel.text = [NSString stringWithFormat:@"%@ %@",option.linkLabel, option.text];
+                [self.selectedLabel sizeToFit];
+                [subContentView addSubview:self.selectedLabel];
+                
+                subContentY = CGRectGetMaxY(self.selectedLabel.frame) + 15.0f;
+            }
             
-            self.selectedSublabel = [[UILabel alloc] initWithFrame:CGRectMake(self.selectedSublabelBackground.frame.origin.x,
-                                                                              CGRectGetMaxY(self.selectedSublabelBackground.frame) + 5.0f,
-                                                                              self.selectedSublabelBackground.frame.size.width,
-                                                                              1.0f)];
-            self.selectedSublabel.textAlignment = NSTextAlignmentCenter;
-            self.selectedSublabel.textColor = JABlackColor;
-            self.selectedSublabel.font = JAListFont;
-            self.selectedSublabel.text = option.subtext;
-            [self.selectedSublabel sizeToFit];
-            [contentView addSubview:self.selectedSublabel];
-
-            self.selectedSublabel.width = self.selectedSublabelBackground.frame.size.width;
-            self.selectedSublabelBackground.height = self.selectedSublabel.height + 10.0f;
+            if (VALID_NOTEMPTY(option.subtext, NSString)) {
+                self.selectedSublabelBackground = [[UIView alloc] initWithFrame:CGRectMake(13.0f,
+                                                                                           subContentY,
+                                                                                           subContentView.frame.size.width - 13.0f*2,
+                                                                                           1.0f)];
+                self.selectedSublabelBackground.layer.borderColor = [JAYellow1Color CGColor];
+                self.selectedSublabelBackground.layer.borderWidth = 1.0f;
+                [subContentView addSubview:self.selectedSublabelBackground];
+                
+                self.selectedSublabel = [[UILabel alloc] initWithFrame:CGRectMake(self.selectedSublabelBackground.frame.origin.x,
+                                                                                  CGRectGetMaxY(self.selectedSublabelBackground.frame) + 5.0f,
+                                                                                  self.selectedSublabelBackground.frame.size.width,
+                                                                                  1.0f)];
+                self.selectedSublabel.textAlignment = NSTextAlignmentCenter;
+                self.selectedSublabel.textColor = JABlackColor;
+                self.selectedSublabel.font = JAListFont;
+                self.selectedSublabel.text = option.subtext;
+                [self.selectedSublabel sizeToFit];
+                [subContentView addSubview:self.selectedSublabel];
+                
+                self.selectedSublabel.width = self.selectedSublabelBackground.frame.size.width;
+                self.selectedSublabelBackground.height = self.selectedSublabel.height + 10.0f;
+                
+                subContentY = CGRectGetMaxY(self.selectedSublabelBackground.frame) + 20.0f;
+            }
             
-            [contentView setHeight:CGRectGetMaxY(self.selectedSublabelBackground.frame) + 20.0f];
+            if (VALID_NOTEMPTY(option.subForm, RIForm)) {
+                
+                subContentY += 5.0f;
+                
+                NSMutableArray* textFieldMutablerray = [NSMutableArray new];
+                NSMutableArray* separatorMutablerray = [NSMutableArray new];
+                for (RIField* field in option.subForm.fields) {
+                    
+                    subContentY += 15.0f;
+                    
+                    UITextField* textField = [[UITextField alloc] initWithFrame:CGRectMake(0.0f,
+                                                                                           subContentY,
+                                                                                           subContentView.frame.size.width,
+                                                                                           20.0f)];
+                    textField.tag = self.tag;
+                    textField.delegate = self.textFieldDelegate;
+                    textField.textAlignment = NSTextAlignmentLeft;
+                    [textField setFont:JAListFont];
+                    [textField setTextColor:JABlackColor];
+                    [textField setValue:JABlack800Color forKeyPath:@"_placeholderLabel.textColor"];
+                    [textField setPlaceholder:field.label];
+                    [subContentView addSubview:textField];
+                    [textFieldMutablerray addObject:textField];
+                    
+                    subContentY += textField.frame.size.height + 10.0f;
+                    
+                    UIView* separatorView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                                     subContentY,
+                                                                                     subContentView.frame.size.width,
+                                                                                     1.0f)];
+                    separatorView.backgroundColor = JABlack400Color;
+                    [subContentView addSubview:separatorView];
+                    [separatorMutablerray addObject:separatorView];
+                    
+                    subContentY += separatorView.frame.size.height;
+                }
+                self.subFormTextFieldsArray = [textFieldMutablerray copy];
+                self.subFormSeparatorsArray = [separatorMutablerray copy];
+            }
             
-            currentY = CGRectGetMaxY(contentView.frame);
+            subContentView.height = subContentY;
+            
+            currentY += subContentView.height;
             
         } else {
             [checkboxImageView setImage:checkboxImageDeselected];
@@ -222,6 +297,15 @@
     
     RIFieldOption* option = [self.field.options objectAtIndex:[self.selectedIndex integerValue]];
     [values setObject:option.value forKey:self.field.name];
+    if (VALID_NOTEMPTY(option.subForm, RIForm) && VALID_NOTEMPTY_VALUE(option.subForm.fields, NSOrderedSet)) {
+        for (int i = 0; i<self.subFormTextFieldsArray.count; i++) {
+            UITextField* textField = [self.subFormTextFieldsArray objectAtIndex:i];
+            NSString* value = textField.text;
+            RIField* field = [option.subForm.fields objectAtIndex:i];
+            
+            [values setObject:value forKey:field.name];
+        }
+    }
     
     return [values copy];
 }
@@ -230,9 +314,74 @@
 {
     BOOL valid = VALID_NOTEMPTY(self.selectedIndex, NSNumber);
     if (!valid) {
+    
+        //index wasn't even selected
         self.currentErrorMessage = self.field.requiredMessage;
+    
+    } else {
+    
+        //index was selected, let's check if there's a subForm inside
+        RIFieldOption* option = [self.field.options objectAtIndex:[self.selectedIndex integerValue]];
+        if (VALID_NOTEMPTY(option.subForm, RIForm) && VALID_NOTEMPTY_VALUE(option.subForm.fields, NSOrderedSet)) {
+            
+            //we know have to check each field for it's rules
+            for (int i = 0; i<self.subFormTextFieldsArray.count; i++) {
+                UITextField* textField = [self.subFormTextFieldsArray objectAtIndex:i];
+                RIField* field = [option.subForm.fields objectAtIndex:i];
+                
+                //first let's check if there's a value there and if the field is required
+                if ([field.required boolValue] && !VALID_NOTEMPTY(textField.text, NSString))
+                {
+                    [textField setTextColor:JARed1Color];
+                    [textField setValue:JARed1Color forKeyPath:@"_placeholderLabel.textColor"];
+                    self.currentErrorMessage = field.requiredMessage;
+                    
+                    return NO;
+                }
+                else
+                {
+                    NSString* pattern = field.pattern;
+                    //now let's check if the value is according to the rules
+                    if (VALID_NOTEMPTY(pattern, NSString)) {
+                        if (![self validateInputWithString:textField.text andRegularExpression:pattern])
+                        {
+                            [textField setTextColor:JARed1Color];
+                            [textField setValue:JARed1Color forKeyPath:@"_placeholderLabel.textColor"];
+                            self.currentErrorMessage = field.patternMessage;
+                            
+                            return NO;
+                        }
+                    }
+                }
+            }
+        }
     }
+    
     return valid;
+}
+
+- (BOOL)validateInputWithString:(NSString *)aString
+           andRegularExpression:(NSString *)patternExp
+{
+    NSString * const regularExpression = patternExp;
+    NSError *error = NULL;
+    NSRegularExpression *pattern = [NSRegularExpression regularExpressionWithPattern:regularExpression
+                                                                             options:NSRegularExpressionCaseInsensitive
+                                                                               error:&error];
+    if (error) {
+        NSLog(@"error %@", error);
+    }
+    
+    NSUInteger numberOfMatches = [pattern numberOfMatchesInString:aString
+                                                          options:0
+                                                            range:NSMakeRange(0, [aString length])];
+    return numberOfMatches > 0;
+}
+
+- (void)resetErrorFromTextField:(UITextField*)textField;
+{
+    [textField setTextColor:JABlackColor];
+    [textField setValue:JABlack800Color forKeyPath:@"_placeholderLabel.textColor"];
 }
 
 -(NSString*)getFieldName

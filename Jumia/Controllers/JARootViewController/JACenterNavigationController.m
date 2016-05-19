@@ -68,6 +68,7 @@
 
 #import "JAORReasonsViewController.h"
 #import "JAORWaysViewController.h"
+#import "JAORPaymentViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -1837,6 +1838,14 @@
 
 #pragma mark - OnlineReturns
 
+- (void)goToOnlineReturnsPaymentScreenForItems:(NSArray *)items
+                                         order:(RITrackOrder*)order
+{
+    JAORPaymentViewController* viewController = [[JAORPaymentViewController alloc] init];
+    [viewController setItems:items];
+    [viewController setOrder:order];
+    [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
+}
 
 - (void)goToOnlineReturnsWaysScreenForItems:(NSArray *)items
                                       order:(RITrackOrder*)order

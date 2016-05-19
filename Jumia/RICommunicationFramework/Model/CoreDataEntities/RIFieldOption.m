@@ -8,7 +8,7 @@
 
 #import "RIFieldOption.h"
 #import "RIField.h"
-
+#import "RIForm.h"
 
 @implementation RIFieldOption
 
@@ -21,6 +21,7 @@
 @dynamic subtext;
 @dynamic linkHTML;
 @dynamic linkLabel;
+@dynamic subForm;
 
 + (NSString*)getFieldOptionsForApiCall:(NSString*)apiCall
                           successBlock:(void (^)(NSArray *))successBlock
@@ -138,6 +139,14 @@
     if (VALID_NOTEMPTY([fieldOptionObject objectForKey:@"user_subscribed"], NSNumber))
     {
         fieldOption.isUserSubscribed = [fieldOptionObject objectForKey:@"user_subscribed"];
+    }
+    
+    if (VALID_NOTEMPTY([fieldOptionObject objectForKey:@"form_entity"], NSDictionary)) {
+        
+        NSDictionary* formJSON = [fieldOptionObject objectForKey:@"form_entity"];
+        RIForm* newForm = [RIForm parseForm:formJSON];
+        
+        fieldOption.subForm = newForm;
     }
     
     return fieldOption;
