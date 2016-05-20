@@ -730,3 +730,5 @@
 "call_now_label" = "call now";
 
 "please_call_to" = "Please call to %@";
+
+"quantity_to_return" = "Quantity to Return";

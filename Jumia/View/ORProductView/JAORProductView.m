@@ -101,7 +101,7 @@
 - (void)setQtyToReturn:(NSString *)qtyToReturn
 {
     _qtyToReturn = qtyToReturn;
-    [self.quantityLabel setText:[NSString stringWithFormat:STRING_QUANTITY, qtyToReturn]];
+    [self.quantityLabel setText:[NSString stringWithFormat:STRING_QUANTITY_TO_RETURN, qtyToReturn]];
 }
 
 @end
