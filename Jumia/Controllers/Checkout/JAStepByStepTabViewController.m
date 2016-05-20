@@ -126,7 +126,6 @@
 - (void)setViewController:(UIViewController *)newViewController forIndex:(NSInteger)index
 {
     [self showLoading];
-    [newViewController viewWillAppear:YES];
     CGFloat offset = self.view.width;
     if (index < self.index) { // rolling left
         offset *= -1;
@@ -136,6 +135,7 @@
     [newViewController.view setY:self.tabBarView.height];
     newViewController.view.height = self.view.height - self.tabBarView.height;
     newViewController.view.width = self.view.width;
+    [newViewController viewWillAppear:YES];
     [self.view addSubview:newViewController.view];
     [newViewController.view.layer removeAllAnimations];
     [UIView animateWithDuration:.2 animations:^{
