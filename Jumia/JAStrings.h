@@ -438,4 +438,14 @@
 
 #define STRING_QUESTION_RETURN_REASONS RILocalizedString(@"question_return_reasons", nil)
 
+#define STRING_RETURN_METHOD RILocalizedString(@"return_method", nil)
+
+#define STRING_RETURN_PAYMENT_METHOD RILocalizedString(@"return_payment_method", nil)
+
+#define STRING_RETURN_REASON RILocalizedString(@"return_reason", nil)
+
+#define STRING_RETURN_FINISH_TITLE RILocalizedString(@"order_return_finish_title", nil)
+
+#define STRING_IF_EVERYTHING_LOOKS_GOOD RILocalizedString(@"everything_looks_good", nil)
+
 #endif

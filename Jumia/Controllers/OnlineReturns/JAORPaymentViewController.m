@@ -73,6 +73,7 @@
                                                                                              self.scrollView.frame.size.width,
                                                                                              1.0f)];
             [productView setupWithItemCollection:item order:self.order];
+            [productView setQtyToReturn:[self.stateInfoLabels objectForKey:[NSString stringWithFormat:@"return_detail[%@][quantity]", item.sku]]];
             currentY += productView.frame.size.height;
             
             if (i != self.items.count-1) {
@@ -249,9 +250,14 @@
             return;
         }
         
-        if (VALID(self.stateInfo, NSMutableDictionary))
+        NSDictionary *values = [self.dynamicForm getValuesReplacingPlaceHolder:@"__NAME__" forString:item.sku];
+        if (VALID(self.stateInfoValues, NSMutableDictionary))
         {
-            [self.stateInfo addEntriesFromDictionary:[self.dynamicForm getValuesReplacingPlaceHolder:@"__NAME__" forString:item.sku]];
+            [self.stateInfoValues addEntriesFromDictionary:values];
+        }
+        if (VALID(self.stateInfoLabels, NSMutableDictionary))
+        {
+            [self.stateInfoLabels addEntriesFromDictionary:[self.dynamicForm getFieldLabelsReplacePlaceHolder:@"__NAME__" forString:item.sku]];
         }
     }
     [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmScreenForItems:self.items order:self.order];
