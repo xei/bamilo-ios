@@ -25,6 +25,8 @@
 @property (nonatomic, strong) UILabel *selectedLabel;
 @property (nonatomic, strong) UILabel *selectedSublabel;
 @property (nonatomic, strong) UIView *selectedSublabelBackground;
+@property (nonatomic, strong) JAClickableView *subClickableView;
+@property (nonatomic, strong) NSString* selectedOptionCMS;
 
 @property (nonatomic, strong) NSArray* subFormTextFieldsArray;
 @property (nonatomic, strong) NSArray* subFormSeparatorsArray;
@@ -67,6 +69,7 @@
     self.selectedLabel.width = self.labelBaseRect.size.width;
     self.selectedSublabelBackground.width = frame.size.width - 13.0f*2;
     self.selectedSublabel.width = self.selectedSublabelBackground.frame.size.width;
+    self.subClickableView.width = frame.size.width;
     
     for (int i = 0; i<self.subFormTextFieldsArray.count; i++) {
         UITextField* textField = [self.subFormTextFieldsArray objectAtIndex:i];
@@ -165,9 +168,9 @@
         } else {
             if ([field.value isEqualToString:option.value]) {
                 selectedIndex = i;
-                self.selectedIndex = [NSNumber numberWithInteger:selectedIndex];
             }
         }
+        self.selectedIndex = [NSNumber numberWithInteger:selectedIndex];
         if (i == selectedIndex) {
             UIView* subContentView = [[UIView alloc] initWithFrame:CGRectMake(contentView.frame.origin.x,
                                                                               currentY,
@@ -188,7 +191,18 @@
                 self.selectedLabel.textAlignment = NSTextAlignmentLeft;
                 self.selectedLabel.textColor = JABlack800Color;
                 self.selectedLabel.font = JAListFont;
-                self.selectedLabel.text = [NSString stringWithFormat:@"%@ %@",option.linkLabel, option.text];
+                self.selectedLabel.numberOfLines = 0;
+                if (VALID_NOTEMPTY(option.linkLabel, NSString)) {
+                    NSString* completeString = [NSString stringWithFormat:@"%@ %@",option.linkLabel, option.text];
+                    NSRange linkRange = [completeString rangeOfString:option.linkLabel];
+                    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:completeString];
+                    [attributedText addAttribute:NSForegroundColorAttributeName
+                                       value:JABlue1Color
+                                       range:linkRange];
+                    self.selectedLabel.attributedText = attributedText;
+                } else {
+                    self.selectedLabel.text = [NSString stringWithFormat:@"%@", option.text];
+                }
                 [self.selectedLabel sizeToFit];
                 [subContentView addSubview:self.selectedLabel];
                 
@@ -212,6 +226,7 @@
                 self.selectedSublabel.textAlignment = NSTextAlignmentCenter;
                 self.selectedSublabel.textColor = JABlackColor;
                 self.selectedSublabel.font = JAListFont;
+                self.selectedSublabel.numberOfLines = 0;
                 self.selectedSublabel.text = option.subtext;
                 [self.selectedSublabel sizeToFit];
                 [subContentView addSubview:self.selectedSublabel];
@@ -266,6 +281,18 @@
             
             currentY += subContentView.height;
             
+            //only do this if there is no form, and after we set the subcontent height
+            if (NO == VALID_NOTEMPTY(option.subForm, RIForm)) {
+                //check for html
+                if (VALID_NOTEMPTY(option.linkHTML, NSString)) {
+                    self.selectedOptionCMS = option.linkHTML;
+                    
+                    self.subClickableView = [[JAClickableView alloc] initWithFrame:subContentView.frame];
+                    [self.subClickableView addTarget:self action:@selector(openCMSBlock) forControlEvents:UIControlEventTouchUpInside];
+                    [self addSubview:self.subClickableView];
+                }
+            }
+            
         } else {
             [checkboxImageView setImage:checkboxImageDeselected];
         }
@@ -290,6 +317,15 @@
     self.selectedIndex = [NSNumber numberWithInteger:sender.tag];
     
     [self setupWithField:self.field];
+}
+
+- (void)openCMSBlock
+{
+    if (VALID_NOTEMPTY(self.selectedOptionCMS, NSString)) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(radioExpandableComponent:openCMSBlock:)]) {
+            [self.delegate radioExpandableComponent:self openCMSBlock:self.selectedOptionCMS];
+        }
+    }
 }
 
 - (NSDictionary*)getValues;

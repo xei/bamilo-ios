@@ -1142,4 +1142,12 @@
     }
 }
 
+- (void)radioExpandableComponent:(JARadioExpandableComponent *)radioExpandableComponent
+                    openCMSBlock:(NSString*)cmsBlock;
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(openCMSBlock:)]) {
+        [self.delegate openCMSBlock:cmsBlock];
+    }
+}
+
 @end

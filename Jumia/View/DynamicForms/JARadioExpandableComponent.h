@@ -29,4 +29,7 @@
 - (void)radioExpandableComponent:(JARadioExpandableComponent*)radioExpandableComponent
                    changedHeight:(CGFloat)delta;
 
+- (void)radioExpandableComponent:(JARadioExpandableComponent *)radioExpandableComponent
+                    openCMSBlock:(NSString*)cmsBlock;
+
 @end
