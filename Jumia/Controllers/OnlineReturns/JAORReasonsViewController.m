@@ -190,18 +190,24 @@
     if (self.isLoaded) {
         [self loadSubviews];
     } else {
-        [self showLoading];
-        [RIForm getForm:@"returndetail" successBlock:^(RIForm *form) {
-            [self hideLoading];
-            self.isLoaded = YES;
-            
-            self.returnDetailForm = form;
-            
-            [self loadSubviews];
-        } failureBlock:^(RIApiResponse apiResponse, NSArray *errors) {
-            [self hideLoading];
-        }];
+        [self requestForm];
     }
+}
+
+- (void)requestForm
+{
+    [self showLoading];
+    [RIForm getForm:@"returndetail" successBlock:^(RIForm *form) {
+        [self hideLoading];
+        self.isLoaded = YES;
+        
+        self.returnDetailForm = form;
+        
+        [self loadSubviews];
+    } failureBlock:^(RIApiResponse apiResponse, NSArray *errors) {
+        [self hideLoading];
+        [self onErrorResponse:apiResponse messages:errors showAsMessage:NO selector:@selector(requestForm) objects:nil];
+    }];
 }
 
 - (void)onOrientationChanged
