@@ -192,7 +192,13 @@
                 self.selectedLabel.textColor = JABlack800Color;
                 self.selectedLabel.font = JAListFont;
                 if (VALID_NOTEMPTY(option.linkLabel, NSString)) {
-                    self.selectedLabel.text = [NSString stringWithFormat:@"%@ %@",option.linkLabel, option.text];
+                    NSString* completeString = [NSString stringWithFormat:@"%@ %@",option.linkLabel, option.text];
+                    NSRange linkRange = [completeString rangeOfString:option.linkLabel];
+                    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:completeString];
+                    [attributedText addAttribute:NSForegroundColorAttributeName
+                                       value:JABlue1Color
+                                       range:linkRange];
+                    self.selectedLabel.attributedText = attributedText;
                 } else {
                     self.selectedLabel.text = [NSString stringWithFormat:@"%@", option.text];
                 }
