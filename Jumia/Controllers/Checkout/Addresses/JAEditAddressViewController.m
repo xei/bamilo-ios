@@ -693,7 +693,8 @@ JAPickerDelegate>
                     self.citiesDataset = nil;
                     
                     [self.dynamicForm setRegionValue:selectedObject];
-                    
+                    [self.dynamicForm setCityValue:nil];
+                    [self.dynamicForm setPostcodeValue:nil];
                 } else if ([self.radioComponent isComponentWithKey:@"city"] && ![selectedObject.value isEqualToString:self.selectedCity.value]) {
                     
                     self.selectedCity = selectedObject;
@@ -701,7 +702,7 @@ JAPickerDelegate>
                     self.postcodesDataset = nil;
                     
                     [self.dynamicForm setCityValue:selectedObject];
-                    
+                    [self.dynamicForm setPostcodeValue:nil];
                 } else if ([self.radioComponent isComponentWithKey:@"postcode"] && ![selectedObject.value isEqualToString:self.selectedPostcode.value])
                 {
                     self.selectedPostcode = selectedObject;
