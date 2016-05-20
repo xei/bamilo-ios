@@ -69,6 +69,7 @@
 #import "JAORReasonsViewController.h"
 #import "JAORWaysViewController.h"
 #import "JAORPaymentViewController.h"
+#import "JAORPickupStationWebViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -1839,6 +1840,13 @@
 }
 
 #pragma mark - OnlineReturns
+
+- (void)goToPickupStationWebViewControllerWithCMS:(NSString*)cmsBlock
+{
+    JAORPickupStationWebViewController* viewController = [[JAORPickupStationWebViewController alloc] init];
+    [viewController setCmsBlock:cmsBlock];
+    [self pushViewController:viewController animated:YES];
+}
 
 - (void)goToOnlineReturnsPaymentScreenForItems:(NSArray *)items
                                          order:(RITrackOrder*)order

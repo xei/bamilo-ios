@@ -2598,6 +2598,11 @@
 		FF4465201CECB806003A65EA /* JAORPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF44651D1CECB806003A65EA /* JAORPaymentViewController.m */; };
 		FF4465211CECB806003A65EA /* JAORPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF44651D1CECB806003A65EA /* JAORPaymentViewController.m */; };
 		FF4465221CECB806003A65EA /* JAORPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF44651D1CECB806003A65EA /* JAORPaymentViewController.m */; };
+		FF4465251CEF1376003A65EA /* JAORPickupStationWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4465241CEF1375003A65EA /* JAORPickupStationWebViewController.m */; };
+		FF4465261CEF1376003A65EA /* JAORPickupStationWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4465241CEF1375003A65EA /* JAORPickupStationWebViewController.m */; };
+		FF4465271CEF1376003A65EA /* JAORPickupStationWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4465241CEF1375003A65EA /* JAORPickupStationWebViewController.m */; };
+		FF4465281CEF1376003A65EA /* JAORPickupStationWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4465241CEF1375003A65EA /* JAORPickupStationWebViewController.m */; };
+		FF4465291CEF1376003A65EA /* JAORPickupStationWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4465241CEF1375003A65EA /* JAORPickupStationWebViewController.m */; };
 		FF4B433B1C56735D0074241E /* RIRecentlyViewedProductSku.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4B43351C56735D0074241E /* RIRecentlyViewedProductSku.m */; };
 		FF4B433C1C56735D0074241E /* RIRecentlyViewedProductSku.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4B43351C56735D0074241E /* RIRecentlyViewedProductSku.m */; };
 		FF4B433D1C56735D0074241E /* RIRecentlyViewedProductSku.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4B43351C56735D0074241E /* RIRecentlyViewedProductSku.m */; };
@@ -3687,6 +3692,8 @@
 		FF4465161CEB4FD7003A65EA /* JAORProductView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAORProductView.m; path = ORProductView/JAORProductView.m; sourceTree = "<group>"; };
 		FF44651C1CECB806003A65EA /* JAORPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORPaymentViewController.h; path = OnlineReturns/JAORPaymentViewController.h; sourceTree = "<group>"; };
 		FF44651D1CECB806003A65EA /* JAORPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAORPaymentViewController.m; path = OnlineReturns/JAORPaymentViewController.m; sourceTree = "<group>"; };
+		FF4465231CEF1375003A65EA /* JAORPickupStationWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORPickupStationWebViewController.h; path = OnlineReturns/JAORPickupStationWebViewController.h; sourceTree = "<group>"; };
+		FF4465241CEF1375003A65EA /* JAORPickupStationWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAORPickupStationWebViewController.m; path = OnlineReturns/JAORPickupStationWebViewController.m; sourceTree = "<group>"; };
 		FF4B43341C56735D0074241E /* RIRecentlyViewedProductSku.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIRecentlyViewedProductSku.h; sourceTree = "<group>"; };
 		FF4B43351C56735D0074241E /* RIRecentlyViewedProductSku.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIRecentlyViewedProductSku.m; sourceTree = "<group>"; };
 		FF6BDC9A1CE238F3002BFE11 /* JAORReasonsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORReasonsViewController.h; path = OnlineReturns/JAORReasonsViewController.h; sourceTree = "<group>"; };
@@ -4983,6 +4990,8 @@
 				FFB1B0891CE5E163000F60AD /* JAORWaysViewController.m */,
 				FF44651C1CECB806003A65EA /* JAORPaymentViewController.h */,
 				FF44651D1CECB806003A65EA /* JAORPaymentViewController.m */,
+				FF4465231CEF1375003A65EA /* JAORPickupStationWebViewController.h */,
+				FF4465241CEF1375003A65EA /* JAORPickupStationWebViewController.m */,
 			);
 			name = OnlineReturns;
 			sourceTree = "<group>";
@@ -7691,6 +7700,7 @@
 				CEA106EE1BCFF1EB00EF88B1 /* JACategoriesSideMenuViewController.m in Sources */,
 				FF4383E01C6CD4AC003BA957 /* JASwitchRadioComponent.m in Sources */,
 				9AC4D6A41B4A926700036F1C /* JACatalogGridCollectionViewCell.m in Sources */,
+				FF4465261CEF1376003A65EA /* JAORPickupStationWebViewController.m in Sources */,
 				0422832b3e819cb8751b64ec /* JARatingsView.m in Sources */,
 				9AC4D6961B45A51900036F1C /* JACatalogListCollectionViewCell.m in Sources */,
 				CE166FA51BBC3C8B0084B334 /* RILocale.m in Sources */,
@@ -8081,6 +8091,7 @@
 				B5A302CA19811E9200F71726 /* RISearchSuggestion.m in Sources */,
 				FFB1B08A1CE5E163000F60AD /* JAORWaysViewController.m in Sources */,
 				9AC4D6A31B4A903100036F1C /* JACatalogGridCollectionViewCell.m in Sources */,
+				FF4465251CEF1376003A65EA /* JAORPickupStationWebViewController.m in Sources */,
 				FF0464CA1CA96E9000B82FD2 /* ADJPackageBuilder.m in Sources */,
 				B5225E1D1989308300C18F1E /* RIPaymentMethodForm.m in Sources */,
 				9D4431EA1C242BA8005A8B4A /* JAUserDataViewController.m in Sources */,
@@ -8442,6 +8453,7 @@
 				CE9ADBD81AB34C4600D56481 /* RISearchSuggestion.m in Sources */,
 				FFB1B08C1CE5E163000F60AD /* JAORWaysViewController.m in Sources */,
 				9AC4D6A51B4A926700036F1C /* JACatalogGridCollectionViewCell.m in Sources */,
+				FF4465271CEF1376003A65EA /* JAORPickupStationWebViewController.m in Sources */,
 				FF0464CC1CA96E9000B82FD2 /* ADJPackageBuilder.m in Sources */,
 				CE9ADBD91AB34C4600D56481 /* RIPaymentMethodForm.m in Sources */,
 				9AE03A951C0CB224003CBEF1 /* JAAuthenticationViewController.m in Sources */,
@@ -8793,6 +8805,7 @@
 				CE9ADDD21AB6D6E900D56481 /* RISearchSuggestion.m in Sources */,
 				FFB1B08D1CE5E163000F60AD /* JAORWaysViewController.m in Sources */,
 				9AC4D6A61B4A926800036F1C /* JACatalogGridCollectionViewCell.m in Sources */,
+				FF4465281CEF1376003A65EA /* JAORPickupStationWebViewController.m in Sources */,
 				FF0464CD1CA96E9000B82FD2 /* ADJPackageBuilder.m in Sources */,
 				CE9ADDD31AB6D6E900D56481 /* RIPaymentMethodForm.m in Sources */,
 				9AE03A961C0CB224003CBEF1 /* JAAuthenticationViewController.m in Sources */,
@@ -9144,6 +9157,7 @@
 				CE9ADFCA1AB6D78200D56481 /* RICategory.m in Sources */,
 				FFB1B08E1CE5E163000F60AD /* JAORWaysViewController.m in Sources */,
 				CE9ADFCB1AB6D78200D56481 /* JAAddRatingView.m in Sources */,
+				FF4465291CEF1376003A65EA /* JAORPickupStationWebViewController.m in Sources */,
 				FF0464CE1CA96E9000B82FD2 /* ADJPackageBuilder.m in Sources */,
 				CE9ADFCC1AB6D78200D56481 /* RISearchSuggestion.m in Sources */,
 				9AC4D6A71B4A926800036F1C /* JACatalogGridCollectionViewCell.m in Sources */,

@@ -28,6 +28,8 @@
 - (BOOL)openScreenTarget:(JAScreenTarget *)target;
 - (void)showSearchView;
 
+- (void)goToPickupStationWebViewControllerWithCMS:(NSString*)cmsBlock;
+
 - (void)goToOnlineReturnsPaymentScreenForItems:(NSArray *)items
                                          order:(RITrackOrder*)order;
 - (void)goToOnlineReturnsWaysScreenForItems:(NSArray *)items

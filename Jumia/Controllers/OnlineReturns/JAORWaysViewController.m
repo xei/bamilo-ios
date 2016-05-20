@@ -285,4 +285,9 @@
     [self loadSubviews];
 }
 
+- (void)openCMSBlock:(NSString *)cmsBlock
+{
+    [[JACenterNavigationController sharedInstance] goToPickupStationWebViewControllerWithCMS:cmsBlock];
+}
+
 @end

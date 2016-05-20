@@ -61,6 +61,8 @@
 
 - (void)screenRadioWasPressedWithTargetString:(NSString*)targetString;
 
+- (void)openCMSBlock:(NSString*)cmsBlock;
+
 @end
 
 @interface JADynamicForm : NSObject <UITextFieldDelegate>
