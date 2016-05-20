@@ -32,6 +32,7 @@
 @property (strong, nonatomic) NSString *sku;
 @property (strong, nonatomic) NSString *brand;
 @property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSString *size;
 @property (strong, nonatomic) NSNumber *quantity;
 @property (strong, nonatomic) NSString *imageURL;
 @property (strong, nonatomic) NSNumber *total;

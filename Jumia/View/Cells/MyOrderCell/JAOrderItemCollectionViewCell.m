@@ -21,6 +21,7 @@
 @property (nonatomic) UIImageView *productImageView;
 @property (nonatomic) UILabel *brandLabel;
 @property (nonatomic) UILabel *nameLabel;
+@property (nonatomic) UILabel *sizeLabel;
 @property (nonatomic) UILabel *qtyLabel;
 @property (nonatomic) JAProductInfoPriceLine *priceLine;
 @property (nonatomic) UIImageView *estimateDeliveryIcon;
@@ -72,6 +73,17 @@
         [self addSubview:_nameLabel];
     }
     return _nameLabel;
+}
+
+- (UILabel *)sizeLabel
+{
+    if (!VALID(_sizeLabel, UILabel)) {
+        _sizeLabel = [[UILabel alloc] init];
+        [_sizeLabel setFont:JABodyFont];
+        _sizeLabel.textColor = JABlack800Color;
+        [self addSubview:_sizeLabel];
+    }
+    return _sizeLabel;
 }
 
 - (UILabel *)qtyLabel
@@ -244,7 +256,8 @@
     [self.productImageView setFrame:CGRectMake(46.0f, 16.0f, kImageSize.width, kImageSize.height)];
     [self.brandLabel setFrame:CGRectMake(_labelsLeftMargin, 16.f, _labelsWidth, 20)];
     [self.nameLabel setFrame:CGRectMake(_labelsLeftMargin, CGRectGetMaxY(self.brandLabel.frame), _labelsWidth, 20)];
-    [self.qtyLabel setFrame:CGRectMake(_labelsLeftMargin, CGRectGetMaxY(self.nameLabel.frame), _labelsWidth, 15)];
+    [self.sizeLabel setFrame:CGRectMake(_labelsLeftMargin, CGRectGetMaxY(self.nameLabel.frame), _labelsWidth, 15)];
+    [self.qtyLabel setFrame:CGRectMake(_labelsLeftMargin, CGRectGetMaxY(self.sizeLabel.frame), _labelsWidth, 15)];
     [self.priceLine setFrame:CGRectMake(_labelsLeftMargin, CGRectGetMaxY(self.qtyLabel.frame), _labelsWidth, 15)];
     [self.estimateDeliveryIcon setFrame:CGRectMake(_labelsLeftMargin, CGRectGetMaxY(self.priceLine.frame)+6.f, self.estimateDeliveryIcon.width, self.estimateDeliveryIcon.height)];
     [self.estimateDeliveryLabel setTextAlignment:NSTextAlignmentLeft];
@@ -254,6 +267,12 @@
     [self.brandLabel setTextAlignment:NSTextAlignmentLeft];
     [self.nameLabel setText:item.name];
     [self.nameLabel setTextAlignment:NSTextAlignmentLeft];
+    NSString *sizeString = @"";
+    if (VALID(item.size, NSString)) {
+        sizeString = [NSString stringWithFormat:STRING_SIZE_WITH_VALUE, item.size];
+    }
+    [self.sizeLabel setText:sizeString];
+    [self.sizeLabel setTextAlignment:NSTextAlignmentLeft];
     [self.qtyLabel setText:[NSString stringWithFormat:STRING_QUANTITY, item.quantity]];
     [self.qtyLabel setTextAlignment:NSTextAlignmentLeft];
     [self.priceLine setTitle:item.totalFormatted];

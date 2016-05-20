@@ -225,7 +225,7 @@ UICollectionViewDelegateFlowLayout>
                   self.selectedOrderIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
                   [self setupViews];
               }
-              if ((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && (ordersTotal > 0)) {
+              if ([self isIpadLandscape] && (ordersTotal > 0)) {
                   [self loadOrderDetails];
               }
               [self hideLoading];
