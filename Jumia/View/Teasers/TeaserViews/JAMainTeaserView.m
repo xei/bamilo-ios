@@ -77,16 +77,14 @@
     for (int i = 0; i < self.teaserGrouping.teaserComponents.count; i++) {
         RITeaserComponent* component = [self.teaserGrouping.teaserComponents objectAtIndex:i];
         
-        NSString* imageUrl;
+        NSString* imageUrl = @"";
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             imageUrl = component.imageLandscapeUrl;
         } else {
             imageUrl = component.imagePortraitUrl;
         }
         
-        if (VALID_NOTEMPTY(imageUrl, NSString)) {
-            [_teasersArray addObject:component];
-        }
+        [_teasersArray addObject:component];
     }
     
     self.validTeaserComponents = [_teasersArray copy];
@@ -101,38 +99,35 @@
          RI_IS_RTL? i-- : i++) {
         RITeaserComponent* component = [_teasersArray objectAtIndex:i];
         
-        NSString* imageUrl;
+        NSString* imageUrl = @"";
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             imageUrl = component.imageLandscapeUrl;
         } else {
             imageUrl = component.imagePortraitUrl;
         }
-        
-        if (VALID_NOTEMPTY(imageUrl, NSString)) {
             
-            JAClickableView* clickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
-                                                                                               self.scrollView.bounds.origin.y,
-                                                                                               self.scrollView.bounds.size.width,
-                                                                                               self.scrollView.bounds.size.height)];
-            NSInteger realIndex = i;
-            if (self.isInfinite && 1 < self.teaserGrouping.teaserComponents.count) {
-                if (0 == i) {
-                    //notice we are using self.teaserGrouping.teaserComponents.count-1 and not componentsArray.count-1
-                    //looking at the REAL array count, not the fake one's.
-                    realIndex = self.teaserGrouping.teaserComponents.count-1;
-                } else if (_teasersArray.count-1 == i){
-                    realIndex = 0;
-                } else {
-                    realIndex = i-1;
-                }
+        JAClickableView* clickableView = [[JAClickableView alloc] initWithFrame:CGRectMake(currentX,
+                                                                                           self.scrollView.bounds.origin.y,
+                                                                                           self.scrollView.bounds.size.width,
+                                                                                           self.scrollView.bounds.size.height)];
+        NSInteger realIndex = i;
+        if (self.isInfinite && 1 < self.teaserGrouping.teaserComponents.count) {
+            if (0 == i) {
+                //notice we are using self.teaserGrouping.teaserComponents.count-1 and not componentsArray.count-1
+                //looking at the REAL array count, not the fake one's.
+                realIndex = self.teaserGrouping.teaserComponents.count-1;
+            } else if (_teasersArray.count-1 == i){
+                realIndex = 0;
+            } else {
+                realIndex = i-1;
             }
-            clickableView.tag = realIndex;
-            [clickableView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
-            [clickableView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
-            [self.scrollView addSubview:clickableView];
-            
-            currentX += clickableView.frame.size.width;
         }
+        clickableView.tag = realIndex;
+        [clickableView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder_pdv"]];
+        [clickableView addTarget:self action:@selector(teaserPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [self.scrollView addSubview:clickableView];
+        
+        currentX += clickableView.frame.size.width;
     }
     
     [self.scrollView setContentSize:CGSizeMake(currentX,
