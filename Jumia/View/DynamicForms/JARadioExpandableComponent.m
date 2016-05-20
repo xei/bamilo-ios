@@ -191,6 +191,7 @@
                 self.selectedLabel.textAlignment = NSTextAlignmentLeft;
                 self.selectedLabel.textColor = JABlack800Color;
                 self.selectedLabel.font = JAListFont;
+                self.selectedLabel.numberOfLines = 0;
                 if (VALID_NOTEMPTY(option.linkLabel, NSString)) {
                     NSString* completeString = [NSString stringWithFormat:@"%@ %@",option.linkLabel, option.text];
                     NSRange linkRange = [completeString rangeOfString:option.linkLabel];
@@ -225,6 +226,7 @@
                 self.selectedSublabel.textAlignment = NSTextAlignmentCenter;
                 self.selectedSublabel.textColor = JABlackColor;
                 self.selectedSublabel.font = JAListFont;
+                self.selectedSublabel.numberOfLines = 0;
                 self.selectedSublabel.text = option.subtext;
                 [self.selectedSublabel sizeToFit];
                 [subContentView addSubview:self.selectedSublabel];

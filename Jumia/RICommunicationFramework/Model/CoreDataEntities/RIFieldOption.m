@@ -113,6 +113,8 @@
     if (VALID_NOTEMPTY([fieldOptionObject objectForKey:@"text"], NSString))
     {
         fieldOption.text = [fieldOptionObject objectForKey:@"text"];
+        //hammer this shit here because the api can't take care of it's own data integrity
+        fieldOption.text = [fieldOption.text stringByReplacingOccurrencesOfString:@"\\n" withString:@"\n"];
     }
     
     if (VALID_NOTEMPTY([fieldOptionObject objectForKey:@"subtext"], NSString))
