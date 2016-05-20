@@ -159,7 +159,7 @@
         
         currentY += contentView.frame.size.height;
         
-        NSInteger selectedIndex = -1;
+        NSInteger selectedIndex = 0;
         if (VALID_NOTEMPTY(self.selectedIndex, NSNumber)) {
             selectedIndex = [self.selectedIndex integerValue];
         } else {
