@@ -168,9 +168,9 @@
         } else {
             if ([field.value isEqualToString:option.value]) {
                 selectedIndex = i;
-                self.selectedIndex = [NSNumber numberWithInteger:selectedIndex];
             }
         }
+        self.selectedIndex = [NSNumber numberWithInteger:selectedIndex];
         if (i == selectedIndex) {
             UIView* subContentView = [[UIView alloc] initWithFrame:CGRectMake(contentView.frame.origin.x,
                                                                               currentY,
