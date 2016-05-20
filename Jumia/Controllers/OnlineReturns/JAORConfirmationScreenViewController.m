@@ -12,6 +12,8 @@
 #import "JAOptionResumeView.h"
 #import "JAProductInfoHeaderLine.h"
 #import "JAORProductView.h"
+#import "JAMyOrdersViewController.h"
+#import "JAMyOrderDetailViewController.h"
 
 #define kLateralMargin 16.f
 
@@ -185,6 +187,41 @@
 
 - (void)goToNext
 {
+    [self showLoading];
+    [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_RETURN_FINISH]]
+                                                     parameters:[self.stateInfoValues copy]
+                                                     httpMethod:HttpResponsePost
+                                                      cacheType:RIURLCacheNoCache
+                                                      cacheTime:RIURLCacheNoTime
+                                             userAgentInjection:[RIApi getCountryUserAgentInjection]
+                                                   successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
+                                                       NSArray *successMessage = @[];
+                                                       if (VALID_NOTEMPTY([jsonObject objectForKey:@"messages"], NSDictionary)) {
+                                                           NSDictionary *messages = [jsonObject objectForKey:@"messages"];
+                                                           if (VALID_NOTEMPTY([messages objectForKey:@"success"], NSArray)) {
+                                                               NSArray *success = [messages objectForKey:@"success"];
+                                                               if (VALID_NOTEMPTY([success valueForKey:@"message"], NSArray)) {
+                                                                   successMessage = [success valueForKey:@"message"];
+                                                               }
+                                                           }
+                                                       }
+                                                       [self onSuccessResponse:apiResponse messages:successMessage showMessage:YES];
+                                                       [self hideLoading];
+                                                       BOOL done = [[JACenterNavigationController sharedInstance] closeScreensToStackClass:[JAMyOrderDetailViewController class] animated:YES];
+                                                       if (!done) {
+                                                           done = [[JACenterNavigationController sharedInstance] closeScreensToStackClass:[JAMyOrdersViewController class] animated:YES];
+                                                       }
+                                                   } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
+                                                       NSArray *errorMessages = @[];
+                                                       if(NOTEMPTY(errorJsonObject))
+                                                       {
+                                                           errorMessages = [RIError getErrorMessages:errorJsonObject];
+                                                       } else if(NOTEMPTY(errorObject)) {
+                                                           errorMessages = [NSArray arrayWithObject:[errorObject localizedDescription]];
+                                                       }
+                                                       [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
+                                                       [self hideLoading];
+                                                   }];
 }
 
 - (void)goToReasonStep

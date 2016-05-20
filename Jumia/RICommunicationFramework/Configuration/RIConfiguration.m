@@ -134,3 +134,5 @@ NSString *const RI_API_GET_FAQ_AND_TERMS = @"main/getfaqandterms/";
 NSString *const RI_API_GET_PHONE_PREFIXES = @"main/getphoneprefixes/";
 
 NSString *const RI_API_EXTERNAL_LINKS = @"main/getexternallinks/";
+
+NSString *const RI_API_RETURN_FINISH = @"return/finishreturn/";

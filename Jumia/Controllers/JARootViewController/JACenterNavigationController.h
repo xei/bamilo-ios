@@ -46,4 +46,6 @@
 - (void)goToOnlineReturnsConfirmScreenForItems:(NSArray *)items
                                          order:(RITrackOrder *)order;
 
+- (BOOL)closeScreensToStackClass:(Class)classKind animated:(BOOL)animated;
+
 @end
