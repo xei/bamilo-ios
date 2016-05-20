@@ -1806,6 +1806,17 @@
     }
 }
 
+- (BOOL)closeScreensToStackClass:(Class)classKind animated:(BOOL)animated
+{
+    for (UIViewController *viewController in [[self.viewControllers reverseObjectEnumerator] allObjects]) {
+        if ([viewController isKindOfClass:classKind]) {
+            [self popToViewController:viewController animated:animated];
+            return YES;
+        }
+    }
+    return NO;
+}
+
 - (void) closeTopTwoScreensNotificaion:(NSNotification*)notification
 {
     NSInteger thirdToLastIndex = self.viewControllers.count-3;
