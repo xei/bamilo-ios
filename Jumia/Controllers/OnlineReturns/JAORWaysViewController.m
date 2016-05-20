@@ -166,6 +166,13 @@
     
     self.values = [self.stateInfoValues copy];
     
+    [self.itemViewsContentView removeFromSuperview];
+    self.itemViewsContentView = nil;
+    self.itemViewsArray = nil;
+    
+    [self.formContentView removeFromSuperview];
+    self.formContentView = nil;
+    
     if (self.isLoaded) {
         [self loadSubviews];
     } else {
