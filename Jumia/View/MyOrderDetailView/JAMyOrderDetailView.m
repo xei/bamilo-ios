@@ -95,8 +95,15 @@
         _returnMultipleItemsButton = [[JAButton alloc] initAlternativeButtonWithTitle:[@"Return selected items" uppercaseString] target:self action:@selector(returnMultipleItems)];
         [_returnMultipleItemsButton setFrame:CGRectMake(0, 0, self.width, kBottomDefaultHeight)];
         [_returnMultipleItemsButton setEnabled:NO];
+        [_returnMultipleItemsButton setHidden:YES];
     }
     return _returnMultipleItemsButton;
+}
+
+- (void)setHasMultipleSelection:(BOOL)hasMultipleSelection
+{
+    _hasMultipleSelection = hasMultipleSelection;
+    [self.returnMultipleItemsButton setHidden:!hasMultipleSelection];
 }
 
 - (void)setupWithOrder:(RITrackOrder*)order frame:(CGRect)frame
@@ -137,9 +144,11 @@
                                              self.collectionView.frame.size.width,
                                              [self totalHeightForCollectionView])];
     
+    [self.returnMultipleItemsButton setX:0.f];
     if (!VALID(self.returnMultipleItemsButton.superview, UIView)) {
         [self.superview.superview addSubview:self.returnMultipleItemsButton];
     }
+    [self.returnMultipleItemsButton setX:self.superview.x+ self.returnMultipleItemsButton.x];
     [self reloadFrame];
 }
 

@@ -56,14 +56,18 @@
     self.navBarLayout.showBackButton = YES;
     
     self.apiResponse = RIApiResponseSuccess;
+}
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
     if (VALID(self.trackingOrder, RITrackOrder)) {
         [self loadOrderDetails:self.trackingOrder.orderId];
     }else{
         [self loadOrderDetails:self.orderNumber];
     }
 }
-
 
 - (void)loadOrderDetails:(NSString *)orderNumber
 {
