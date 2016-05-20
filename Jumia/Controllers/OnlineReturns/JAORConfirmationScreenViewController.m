@@ -43,8 +43,7 @@
 {
     if (!VALID(_headerLine, JAProductInfoHeaderLine)) {
         _headerLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kProductInfoHeaderLineHeight)];
-#warning STRING TODO
-        [_headerLine setTitle:[@"Confirm your return request details" uppercaseString]];
+        [_headerLine setTitle:[STRING_RETURN_FINISH_TITLE uppercaseString]];
         [self.mainScrollView addSubview:_headerLine];
     }
     return _headerLine;
@@ -54,8 +53,7 @@
 {
     if (!VALID(_methodOptionView, JAOptionResumeView)) {
         _methodOptionView = [[JAOptionResumeView alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.headerLine.frame) + 16.f, self.view.width - 2*kLateralMargin, 0)];
-#warning STRING TODO
-        [_methodOptionView setTitle:[@"Return Method" uppercaseString]];
+        [_methodOptionView setTitle:[STRING_RETURN_METHOD uppercaseString]];
         [_methodOptionView.editButton addTarget:self action:@selector(goToMethodStep) forControlEvents:UIControlEventTouchUpInside];
         [self.mainScrollView addSubview:_methodOptionView];
     }
@@ -66,8 +64,7 @@
 {
     if (!VALID(_paymentMethodOptionView, JAOptionResumeView)) {
         _paymentMethodOptionView = [[JAOptionResumeView alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.methodOptionView.frame) + 10.f, self.view.width - 2*kLateralMargin, 0)];
-#warning STRING TODO
-        [_paymentMethodOptionView setTitle:[@"Return Payment Method" uppercaseString]];
+        [_paymentMethodOptionView setTitle:[STRING_RETURN_PAYMENT_METHOD uppercaseString]];
         [self.mainScrollView addSubview:_paymentMethodOptionView];
     }
     return _paymentMethodOptionView;
@@ -86,8 +83,7 @@
 {
     if (!VALID(_confirmationLabel, UILabel)) {
         _confirmationLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.productsView.frame) + 20.f, self.view.width - 2*kLateralMargin, 12)];
-#warning STRING TODO
-        [_confirmationLabel setText:@"If everything looks good, tap \"SEND\"."];
+        [_confirmationLabel setText:STRING_IF_EVERYTHING_LOOKS_GOOD];
         [_confirmationLabel setTextAlignment:NSTextAlignmentCenter];
         [_confirmationLabel setFont:JABodyFont];
         [_confirmationLabel setTextColor:JABlack800Color];
@@ -135,10 +131,8 @@
     [self.productsView setHeight:0];
     [self.productsView setWidth:self.mainScrollView.width];
     
-    
-#warning replace these content
     [self.methodOptionView setOption:[self.stateInfoLabels objectForKey:@"return_method[method]"]];
-    [self.paymentMethodOptionView setOption:@"Bank Deposit"];
+    [self.paymentMethodOptionView setOption:[self.stateInfoLabels objectForKey:@"refund_method[method]"]];
     
     for (RIItemCollection *item in self.items) {
         JAORProductView* productView = [[JAORProductView alloc] initWithFrame:CGRectMake(0.0f,
@@ -150,8 +144,7 @@
         [self.productsView addSubview:productView];
         
         JAOptionResumeView *reasonOptionView = [[JAOptionResumeView alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(productView.frame) + 10.f, self.productsView.width - 2*kLateralMargin, 0)];
-#warning STRING TODO
-        [reasonOptionView setTitle:[@"Return Reason" uppercaseString]];
+        [reasonOptionView setTitle:[STRING_RETURN_REASON uppercaseString]];
         [reasonOptionView setOption:[self.stateInfoLabels objectForKey:[NSString stringWithFormat:@"return_detail[%@][reason]", item.sku]]];
         [reasonOptionView.editButton addTarget:self action:@selector(goToReasonStep) forControlEvents:UIControlEventTouchUpInside];
         [self.productsView addSubview:reasonOptionView];

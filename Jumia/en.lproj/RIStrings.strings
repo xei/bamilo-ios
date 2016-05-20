@@ -732,3 +732,13 @@
 "please_call_to" = "Please call to %@";
 
 "quantity_to_return" = "Quantity to Return";
+
+"return_method" = "Return Method";
+
+"return_payment_method" = "Return Payment Method";
+
+"return_reason" = "Return Reason";
+
+"order_return_finish_title" = "Confirm your return request details";
+
+"everything_looks_good" = "If everything looks good, tap \"SEND\".";
