@@ -35,6 +35,7 @@
     
     if (!VALID([self.button superview], UIView))
     {
+        [self setBackgroundColor:JAWhiteColor];
         [self addSubview:self.button];
     }
     

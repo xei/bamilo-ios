@@ -49,6 +49,10 @@
         item.name = [json objectForKey:@"name"];
     }
     
+    if (VALID([json objectForKey:@"size"], NSString)) {
+        item.size = [json objectForKey:@"size"];
+    }
+    
     if (VALID([json objectForKey:@"quantity"], NSNumber)) {
         item.quantity = [json objectForKey:@"quantity"];
     }

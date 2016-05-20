@@ -12,7 +12,7 @@
 #import "JAOrderItemCollectionViewCell.h"
 #import "JAMyOrderResumeView.h"
 #import "JACenterNavigationController.h"
-#import "JAButton.h"
+#import "JABottomSubmitView.h"
 
 @interface JAMyOrderDetailView () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
@@ -25,7 +25,7 @@
 @property (nonatomic) RITrackOrder *order;
 @property (nonatomic, strong) NSMutableArray *itemsToReturnArray;
 
-@property (nonatomic, strong) JAButton *returnMultipleItemsButton;
+@property (nonatomic, strong) JABottomSubmitView *returnMultipleItemsButton;
 @property (nonatomic) BOOL hasMultipleSelection;
 
 @end
@@ -89,12 +89,12 @@
     return _itemsToReturnArray;
 }
 
-- (JAButton *)returnMultipleItemsButton
+- (JABottomSubmitView *)returnMultipleItemsButton
 {
-    if (!VALID(_returnMultipleItemsButton, JAButton)) {
-        _returnMultipleItemsButton = [[JAButton alloc] initAlternativeButtonWithTitle:[@"Return selected items" uppercaseString] target:self action:@selector(returnMultipleItems)];
-        [_returnMultipleItemsButton setFrame:CGRectMake(0, 0, self.width, kBottomDefaultHeight)];
-        [_returnMultipleItemsButton setEnabled:NO];
+    if (!VALID(_returnMultipleItemsButton, JABottomSubmitView)) {
+        _returnMultipleItemsButton = [[JABottomSubmitView alloc] initWithFrame:CGRectMake(0, 0, self.width, [JABottomSubmitView defaultHeight])];
+        _returnMultipleItemsButton.button = [[JAButton alloc] initAlternativeButtonWithTitle:[@"Return selected items" uppercaseString] target:self action:@selector(returnMultipleItems)];
+        [_returnMultipleItemsButton.button setEnabled:NO];
         [_returnMultipleItemsButton setHidden:YES];
     }
     return _returnMultipleItemsButton;
@@ -111,7 +111,7 @@
     self.order = order;
     [self setFrame:frame];
     [self.itemsToReturnArray removeAllObjects];
-    [self.returnMultipleItemsButton setEnabled:VALID_NOTEMPTY(self.itemsToReturnArray, NSMutableArray)];
+    [self.returnMultipleItemsButton.button setEnabled:VALID_NOTEMPTY(self.itemsToReturnArray, NSMutableArray)];
     
     int i = 0;
     for (RIItemCollection *item in self.order.itemCollection) {
@@ -154,13 +154,14 @@
 
 - (void)reloadFrame
 {
-    [self.returnMultipleItemsButton setEnabled:VALID_NOTEMPTY(self.itemsToReturnArray, NSMutableArray)];
+    [self.returnMultipleItemsButton.button setEnabled:VALID_NOTEMPTY(self.itemsToReturnArray, NSMutableArray)];
     [self.returnMultipleItemsButton setWidth:self.width];
     [self.returnMultipleItemsButton setYBottomAligned:0.f];
     [self setFrame:CGRectMake(0.0f, 0.0f, self.frame.size.width, CGRectGetMaxY(self.collectionView.frame) + self.returnMultipleItemsButton.height + 6.f)];
     [self.itemsHeader setFrame:self.itemsHeader.frame];
     if (RI_IS_RTL) {
         [self.itemsHeader flipAllSubviews];
+        [self.returnMultipleItemsButton flipViewPositionInsideSuperview];
     }
 }
 
@@ -183,7 +184,7 @@
         int i = (int)item.returns.count;
         extra = 6.f + 12.f + i * 12;
     }
-    CGSize size = CGSizeMake(self.width, 193.f + extra);
+    CGSize size = CGSizeMake(self.width, 208.f + extra);
     
     self.collectionViewFlowLayout.itemSize = size;
     return size;
@@ -216,7 +217,7 @@
 
 - (void)reloadMultipleChecks
 {
-    [self.returnMultipleItemsButton setEnabled:VALID_NOTEMPTY(self.itemsToReturnArray, NSMutableArray)];
+    [self.returnMultipleItemsButton.button setEnabled:VALID_NOTEMPTY(self.itemsToReturnArray, NSMutableArray)];
     [self.returnMultipleItemsButton setWidth:self.width];
     [self.returnMultipleItemsButton setYBottomAligned:0.f];
     [self reloadFrame];
