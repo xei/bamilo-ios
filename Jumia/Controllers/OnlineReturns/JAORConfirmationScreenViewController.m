@@ -65,6 +65,7 @@
     if (!VALID(_paymentMethodOptionView, JAOptionResumeView)) {
         _paymentMethodOptionView = [[JAOptionResumeView alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.methodOptionView.frame) + 10.f, self.view.width - 2*kLateralMargin, 0)];
         [_paymentMethodOptionView setTitle:[STRING_RETURN_PAYMENT_METHOD uppercaseString]];
+        [_paymentMethodOptionView.editButton addTarget:self action:@selector(goToPaymentMethodStep) forControlEvents:UIControlEventTouchUpInside];
         [self.mainScrollView addSubview:_paymentMethodOptionView];
     }
     return _paymentMethodOptionView;
@@ -155,6 +156,10 @@
     
     [self.confirmationLabel setYBottomOf:self.productsView at:20.f];
     [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, CGRectGetMaxY(self.confirmationLabel.frame))];
+    
+    if (RI_IS_RTL) {
+        [self.view flipAllSubviews];
+    }
 }
 
 - (void)reloadAll
@@ -190,6 +195,11 @@
 - (void)goToMethodStep
 {
     [[JACenterNavigationController sharedInstance] goToOnlineReturnsWaysScreenForItems:self.items order:self.order];
+}
+
+- (void)goToPaymentMethodStep
+{
+    [[JACenterNavigationController sharedInstance] goToOnlineReturnsPaymentScreenForItems:self.items order:self.order];
 }
 
 @end

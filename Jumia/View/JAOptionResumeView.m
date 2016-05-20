@@ -99,10 +99,16 @@
     
     [self.titleLabel setX:kLateralMargin];
     [self.titleLabel setWidth:self.editButton.x - 2*kLateralMargin];
+    [self.titleLabel setTextAlignment:NSTextAlignmentLeft];
     
     [self.optionLabel setX:kLateralMargin];
     [self.optionLabel setWidth:self.editButton.x - 2*kLateralMargin];
+    [self.optionLabel setTextAlignment:NSTextAlignmentLeft];
     [self.optionLabel setYBottomOf:self.titleLabel at:2.f];
+    
+    if (RI_IS_RTL) {
+        [self flipAllSubviews];
+    }
 }
 
 @end

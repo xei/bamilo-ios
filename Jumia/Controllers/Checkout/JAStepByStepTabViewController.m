@@ -193,7 +193,9 @@
     [UIView animateWithDuration:.2 animations:^{
         [self.tabIndicatorView setX:[self getButtonWithTag:viewController.view.tag].x];
     }];
-    [viewController viewDidAppear:YES];
+    // no need to trigger this! it's automatically triggered
+//    [viewController viewDidAppear:YES];
+    
     self.actualViewController = viewController;
     if ([viewController isKindOfClass:[JABaseViewController class]]) {
         [self setNavBarLayout:[(JABaseViewController *)viewController navBarLayout]];
