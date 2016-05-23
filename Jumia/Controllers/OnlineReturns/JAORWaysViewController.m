@@ -196,7 +196,9 @@
 {
     [self showLoading];
     [RIForm getForm:@"returnmethod" successBlock:^(RIForm *form) {
+        [self onSuccessResponse:0 messages:nil showMessage:NO];
         [self hideLoading];
+        
         self.isLoaded = YES;
         
         self.returnWayForm = form;
