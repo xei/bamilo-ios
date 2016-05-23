@@ -276,7 +276,6 @@ UITextFieldDelegate>
         [self.couponTextField setDelegate:self];
         [self.couponView addSubview:self.couponTextField];
     }
-    self.couponTextField.textAlignment = NSTextAlignmentLeft;
     self.couponTextField.frame = CGRectMake(16.0f,
                                             CGRectGetMaxY(self.couponHeader.frame) + 10.0f,
                                             self.couponView.frame.size.width - 16.0f - 5.0f - self.useCouponClickableView.frame.size.width,
@@ -313,6 +312,9 @@ UITextFieldDelegate>
     
     if (RI_IS_RTL) {
         [self.view flipAllSubviews];
+        self.couponTextField.textAlignment = NSTextAlignmentRight;
+    } else {
+        self.couponTextField.textAlignment = NSTextAlignmentLeft;
     }
 }
 
