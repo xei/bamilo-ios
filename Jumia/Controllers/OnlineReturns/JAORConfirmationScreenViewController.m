@@ -21,6 +21,7 @@
 
 @property (nonatomic, strong) UIScrollView *mainScrollView;
 @property (nonatomic, strong) JAProductInfoHeaderLine *headerLine;
+@property (nonatomic, strong) JAOptionResumeView *reasonOptionView;
 @property (nonatomic, strong) JAOptionResumeView *methodOptionView;
 @property (nonatomic, strong) JAOptionResumeView *paymentMethodOptionView;
 @property (nonatomic, strong) UIView *productsView;
@@ -49,6 +50,18 @@
         [self.mainScrollView addSubview:_headerLine];
     }
     return _headerLine;
+}
+
+- (JAOptionResumeView *)reasonOptionView
+{
+    if (!VALID(_reasonOptionView, JAOptionResumeView)) {
+        _reasonOptionView = [[JAOptionResumeView alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.headerLine.frame) + 16.f, self.view.width - 2*kLateralMargin, 0)];
+        [_reasonOptionView setHidden:YES];
+        [_reasonOptionView setTitle:[STRING_RETURN_REASON uppercaseString]];
+        [_reasonOptionView.editButton addTarget:self action:@selector(goToReasonStep) forControlEvents:UIControlEventTouchUpInside];
+        [self.mainScrollView addSubview:_reasonOptionView];
+    }
+    return _reasonOptionView;
 }
 
 - (JAOptionResumeView *)methodOptionView
@@ -146,6 +159,13 @@
         [productView setQtyToReturn:[self.stateInfoLabels objectForKey:[NSString stringWithFormat:@"return_detail[%@][quantity]", item.sku]]];
         [self.productsView addSubview:productView];
         
+        [self.productsView setHeight:CGRectGetMaxY(productView.frame)];
+        
+        if (self.items.count == 1) {
+            [self.reasonOptionView setOption:[self.stateInfoLabels objectForKey:[NSString stringWithFormat:@"return_detail[%@][reason]", item.sku]]];
+            break;
+        }
+        
         JAOptionResumeView *reasonOptionView = [[JAOptionResumeView alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(productView.frame) + 10.f, self.productsView.width - 2*kLateralMargin, 0)];
         [reasonOptionView setTitle:[STRING_RETURN_REASON uppercaseString]];
         [reasonOptionView setOption:[self.stateInfoLabels objectForKey:[NSString stringWithFormat:@"return_detail[%@][reason]", item.sku]]];
@@ -169,8 +189,15 @@
     [self.mainScrollView setWidth:self.view.width];
     [self.mainScrollView setY:0.f];
     [self.headerLine setWidth:self.mainScrollView.width];
-    //    [self.reasonOptionView setWidth:self.view.width - 2*kLateralMargin];
+    [self.reasonOptionView setWidth:self.mainScrollView.width - 2*kLateralMargin];
+    [self.reasonOptionView setYBottomOf:self.headerLine at:16.f];
     [self.methodOptionView setYBottomOf:self.headerLine at:16.f];
+    if (VALID_NOTEMPTY(self.items, NSArray) && self.items.count == 1) {
+        [self.reasonOptionView setHidden:NO];
+        [self.methodOptionView setYBottomOf:self.reasonOptionView at:16.f];
+    }else{
+        [self.reasonOptionView setHidden:YES];
+    }
     [self.methodOptionView setWidth:self.mainScrollView.width - 2*kLateralMargin];
     [self.paymentMethodOptionView setYBottomOf:self.methodOptionView at:10.f];
     [self.paymentMethodOptionView setWidth:self.mainScrollView.width - 2*kLateralMargin];
