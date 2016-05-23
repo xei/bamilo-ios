@@ -144,16 +144,24 @@
                                              self.collectionView.frame.size.width,
                                              [self totalHeightForCollectionView])];
     
-    [self.returnMultipleItemsButton setX:0.f];
-    if (!VALID(self.returnMultipleItemsButton.superview, UIView)) {
-        [self.superview.superview addSubview:self.returnMultipleItemsButton];
-    }
-    [self.returnMultipleItemsButton setX:self.superview.x+ self.returnMultipleItemsButton.x];
     [self reloadFrame];
+    if (RI_IS_RTL) {
+        [self.returnMultipleItemsButton flipViewPositionInsideSuperview];
+    }
 }
 
 - (void)reloadFrame
 {
+    /*
+     * workarround: this view is used by two viewcontrollers (JAMyOrdersViewController and JAMyOrderDetailViewController) and it's inside a different UIScrollView.
+     * returnMultipleItemsButton must be outside this view and outside the scrollview where this view is. So the button's parent depends on each viewController
+     */
+    [self.returnMultipleItemsButton setX:0.f];
+    if (!VALID(self.returnMultipleItemsButton.superview, UIView)) {
+        // self.superview is the scrollView where this view is. return's button will be inside the same superview as the scrollView
+        [self.superview.superview addSubview:self.returnMultipleItemsButton];
+    }
+    [self.returnMultipleItemsButton setX:self.superview.x+ self.returnMultipleItemsButton.x];
     [self.returnMultipleItemsButton.button setEnabled:VALID_NOTEMPTY(self.itemsToReturnArray, NSMutableArray)];
     [self.returnMultipleItemsButton setWidth:self.width];
     [self.returnMultipleItemsButton setYBottomAligned:0.f];
@@ -161,7 +169,6 @@
     [self.itemsHeader setFrame:self.itemsHeader.frame];
     if (RI_IS_RTL) {
         [self.itemsHeader flipAllSubviews];
-        [self.returnMultipleItemsButton flipViewPositionInsideSuperview];
     }
 }
 
