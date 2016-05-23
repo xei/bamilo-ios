@@ -63,8 +63,16 @@
                                                                          CGRectGetMaxY(self.formContentView.frame),
                                                                          self.scrollView.frame.size.width,
                                                                          1.0f)];
+        
+        CGFloat itemY = 20.0f;
+        UIView* topSeparator = [[UIView alloc] initWithFrame:CGRectMake(16.0f,
+                                                                        itemY - 1.0f,
+                                                                        _itemViewsContentView.frame.size.width - 16.0f*2,
+                                                                        1.0f)];
+        topSeparator.backgroundColor = JABlack400Color;
+        [_itemViewsContentView addSubview:topSeparator];
+        
         NSMutableArray* mutableItemViewsArray = [NSMutableArray new];
-        CGFloat itemY = 0.0f;
         for (int i = 0; i<self.items.count; i++) {
             RIItemCollection* item = [self.items objectAtIndex:i];
 
@@ -91,6 +99,10 @@
             
             [_itemViewsContentView setHeight:itemY];
             [_itemViewsContentView addSubview:productView];
+            
+            if (RI_IS_RTL) {
+                [_itemViewsContentView flipAllSubviews];
+            }
         }
         [self.scrollView addSubview:_itemViewsContentView];
         
@@ -241,12 +253,6 @@
     
     [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
                                                CGRectGetMaxY(self.itemViewsContentView.frame))];
-    
-    for (UIView* itemView in self.itemViewsArray) {
-        if (RI_IS_RTL) {
-            [itemView flipAllSubviews];
-        }
-    }
     
     if (RI_IS_RTL) {
         [self.titleHeaderView flipAllSubviews];
