@@ -206,7 +206,7 @@
 
 "shipment_of" = "Shipment %ld of %ld";
 
-"shipment_label" = "shipment";
+"shipment_label" = "STATUS:";
 
 "fulfilled_by" = "Fulfillment by";
 
@@ -314,7 +314,7 @@
 
 "string_order_status" = "Order Status";
 
-"order_no" = "ORDER N.º %@";
+"order_no" = "Order nº: %@";
 
 "string_loosing_order_title" = "Warning";
 
@@ -716,20 +716,20 @@
 
 "go" = "Go";
 
-"order_return_conditions_title" = "We are sorry that you are not fully satisfied with your product";
+"order_return_conditions_title" = "WE ARE SORRY THAT YOU ARE NOT FULLY SATISFIED WITH YOUR PURCHASE";
 "return_label" = "return";
 
-"returns_label" = "returns";
+"returns_label" = "RETURN:";
 
 "x_items_returned_on" = "%ld items returned on %@";
 
 "call_return_label" = "Call to Return";
 
-"question_return_reasons" = "Why do you want to return this item?";
+"question_return_reasons" = "WHY DO YOU WANT TO RETURN YOUR PURCHASE?";
 
 "call_now_label" = "call now";
 
-"please_call_to" = "Please call to %@";
+"please_call_to" = "CALL US AT %@";
 
 "quantity_to_return" = "Quantity to Return";
 
