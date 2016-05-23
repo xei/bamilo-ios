@@ -1929,6 +1929,14 @@
             self.checkoutStepByStepViewController = stepByStepViewController;
         }else if (stepByStepViewController == self.returnsStepByStepViewController) {
             stepByStepViewController = [self getNewReturnsStepByStepViewController];
+            if ([viewController respondsToSelector:@selector(items)])
+            {
+                [(JAReturnStepByStepModel *)stepByStepViewController.stepByStepModel setItems:[viewController performSelector:@selector(items) withObject:nil]];
+            }
+            if ([viewController respondsToSelector:@selector(order)])
+            {
+                [(JAReturnStepByStepModel *)stepByStepViewController.stepByStepModel setOrder:[viewController performSelector:@selector(order) withObject:nil]];
+            }
             self.returnsStepByStepViewController = stepByStepViewController;
         }
     }

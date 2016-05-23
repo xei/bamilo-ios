@@ -7,7 +7,11 @@
 //
 
 #import "JAStepByStepModel.h"
+#import "RIOrder.h"
 
 @interface JAReturnStepByStepModel : JAStepByStepModel
+
+@property (nonatomic, strong) RITrackOrder *order;
+@property (nonatomic, strong) NSArray *items;
 
 @end
