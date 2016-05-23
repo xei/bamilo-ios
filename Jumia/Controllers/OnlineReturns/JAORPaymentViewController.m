@@ -203,7 +203,9 @@
 {
     [self showLoading];
     [RIForm getForm:@"refundmethod" successBlock:^(RIForm *form) {
+        [self onSuccessResponse:0 messages:nil showMessage:NO];
         [self hideLoading];
+        
         self.isLoaded = YES;
         
         self.paymentForm = form;
