@@ -110,6 +110,8 @@
                     currentY = CGRectGetMaxY(formView.frame);
                     if ([formView isKindOfClass:[JAListNumberComponent class]]) {
                         JAListNumberComponent* listNumberComponent = (JAListNumberComponent*)formView;
+                        listNumberComponent.componentIdentifier = i; //cannot use tag here because we need it to identify the
+                        // component inside the dynamic form, so we need this new variable 'componentIdentifier'
                         if (1 >= [item.returnableQty integerValue]) {
                             listNumberComponent.dropdownImageView.hidden = YES;
                         }
@@ -318,7 +320,7 @@
 
 - (void)openNumberPicker:(JAListNumberComponent *)listNumberComponent
 {
-    NSInteger index = listNumberComponent.tag;
+    NSInteger index = listNumberComponent.componentIdentifier;
     if (index < self.items.count) {
         RIItemCollection* item = [self.items objectAtIndex:index];
         
