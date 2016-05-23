@@ -319,7 +319,7 @@
         RIItemCollection* item = [self.items objectAtIndex:index];
         
         NSMutableArray* dataSource = [NSMutableArray new];
-        for (int i = 1; i <= [item.quantity integerValue]; i++) {
+        for (int i = 1; i <= [item.returnableQty integerValue]; i++) {
             [dataSource addObject:[NSString stringWithFormat:@"%ld",(long)i]];
         }
         
