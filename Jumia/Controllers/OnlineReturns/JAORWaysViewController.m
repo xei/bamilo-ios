@@ -99,6 +99,10 @@
             
             [_itemViewsContentView setHeight:itemY];
             [_itemViewsContentView addSubview:productView];
+            
+            if (RI_IS_RTL) {
+                [_itemViewsContentView flipAllSubviews];
+            }
         }
         [self.scrollView addSubview:_itemViewsContentView];
         
@@ -249,12 +253,6 @@
     
     [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
                                                CGRectGetMaxY(self.itemViewsContentView.frame))];
-    
-    for (UIView* itemView in self.itemViewsArray) {
-        if (RI_IS_RTL) {
-            [itemView flipAllSubviews];
-        }
-    }
     
     if (RI_IS_RTL) {
         [self.titleHeaderView flipAllSubviews];
