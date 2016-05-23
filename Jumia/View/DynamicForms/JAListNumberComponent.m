@@ -15,7 +15,6 @@
 
 @property (strong, nonatomic) id storedValue;
 @property (strong, nonatomic) UIView *underLineView;
-@property (strong, nonatomic) UIImageView *dropdownImageView;
 @property (strong, nonatomic) UILabel* descriptionLabel;
 
 @end

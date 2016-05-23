@@ -14,6 +14,7 @@
 @property (strong, nonatomic) UITextField *textField;
 @property (strong, nonatomic) UILabel *requiredSymbol;
 @property (nonatomic, strong) NSString* currentErrorMessage;
+@property (strong, nonatomic) UIImageView *dropdownImageView;
 
 @property (nonatomic) CGFloat fixedWidth;
 

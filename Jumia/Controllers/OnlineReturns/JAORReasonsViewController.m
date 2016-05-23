@@ -108,6 +108,12 @@
                     [formView setWidth:self.scrollView.frame.size.width - 16.0f*2];
                     [itemContent addSubview:formView];
                     currentY = CGRectGetMaxY(formView.frame);
+                    if ([formView isKindOfClass:[JAListNumberComponent class]]) {
+                        JAListNumberComponent* listNumberComponent = (JAListNumberComponent*)formView;
+                        if (1 >= [item.returnableQty integerValue]) {
+                            listNumberComponent.dropdownImageView.hidden = YES;
+                        }
+                    }
                 }
                 [dynamicForm setValues:self.values replacePlaceHolder:@"__NAME__" forString:item.sku];
             }
@@ -314,14 +320,18 @@
 {
     NSInteger index = listNumberComponent.tag;
     if (index < self.items.count) {
-        self.currentListNumberComponent = listNumberComponent;
-        
         RIItemCollection* item = [self.items objectAtIndex:index];
         
         NSMutableArray* dataSource = [NSMutableArray new];
         for (int i = 1; i <= [item.returnableQty integerValue]; i++) {
             [dataSource addObject:[NSString stringWithFormat:@"%ld",(long)i]];
         }
+        
+        if (1 >= dataSource.count) {
+            return; //if there is only one option, don't open the picker
+        }
+        
+        self.currentListNumberComponent = listNumberComponent;
         
         NSDictionary* values = [listNumberComponent getValues];
         [self setupPickerView:dataSource selectedRow:[values objectForKey:listNumberComponent.field.name]];
