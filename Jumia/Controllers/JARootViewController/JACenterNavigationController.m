@@ -1800,10 +1800,11 @@
     JAStepByStepTabViewController *topViewController = (JAStepByStepTabViewController *)[self topViewController];
     if ([topViewController isKindOfClass:[JAStepByStepTabViewController class]] && !topViewController.stackIsEmpty)
     {
-        [topViewController sendBack];
-    }else{
-        [self popViewControllerAnimated:animated];
+        if ([topViewController sendBack]) {
+            return;
+        }
     }
+    [self popViewControllerAnimated:animated];
 }
 
 - (BOOL)closeScreensToStackClass:(Class)classKind animated:(BOOL)animated
@@ -2099,13 +2100,15 @@
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressBackNotification
                                                         object:nil];
+    
     JAStepByStepTabViewController *topViewController = (JAStepByStepTabViewController *)[self topViewController];
     if ([topViewController isKindOfClass:[JAStepByStepTabViewController class]] && !topViewController.stackIsEmpty)
     {
-        [topViewController sendBack];
-    }else{
-        [self popViewControllerAnimated:YES];
+        if ([topViewController sendBack]) {
+            return;
+        }
     }
+    [self popViewControllerAnimated:YES];
 }
 
 -(void)goTop

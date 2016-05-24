@@ -133,6 +133,8 @@
         offset *= -1;
     }
     
+    UIViewController *oldViewController = self.actualViewController;
+    
     [newViewController.view setX:offset];
     [newViewController.view setY:self.tabBarView.height];
     newViewController.view.height = self.view.height - self.tabBarView.height;
@@ -143,19 +145,19 @@
     [UIView animateWithDuration:.2 animations:^{
         [newViewController.view setX:0.f];
     } completion:^(BOOL finished) {
-        if (!self.actualViewController) {
+        if (!oldViewController) {
             [self setContentView:newViewController];
         }
     }];
-    
-    if (self.actualViewController) {
-        [self.actualViewController.view.layer removeAllAnimations];
-        [self.actualViewController viewWillDisappear:YES];
+
+    if (oldViewController) {
+        [oldViewController.view.layer removeAllAnimations];
+        [oldViewController viewWillDisappear:YES];
         [UIView animateWithDuration:.4 animations:^{
-            [self.actualViewController.view setX:-1*offset];
+            [oldViewController.view setX:-1*offset];
         } completion:^(BOOL finished) {
-            [self.actualViewController.view removeFromSuperview];
-            [self.actualViewController viewDidDisappear:YES];
+            [oldViewController.view removeFromSuperview];
+            [oldViewController viewDidDisappear:YES];
             [self setContentView:newViewController];
         }];
     }
@@ -230,11 +232,12 @@
 - (void)goToViewController:(UIViewController *)viewController
 {
     NSInteger index = [self.stepByStepModel getIndexForViewController:viewController];
+    [viewController.view setTag:index];
     if ([self.stepByStepModel isClassBase:viewController]) {
         for (UIViewController *viewControllerFromStack in [self.viewControllersStackArray mutableCopy]) {
             if (index == viewControllerFromStack.view.tag) {
                 [self.viewControllersStackArray removeObject:viewControllerFromStack];
-                [self setViewController:viewControllerFromStack forIndex:viewControllerFromStack.view.tag];
+                [self setViewController:viewController forIndex:viewControllerFromStack.view.tag];
                 return;
             }
         }
@@ -248,16 +251,19 @@
             return;
         }
     }
-    [viewController.view setTag:index];
     [self setViewController:viewController forIndex:index];
 }
 
-- (void)sendBack
+- (BOOL)sendBack
 {
     [self.viewControllersStackArray removeObject:[self.viewControllersStackArray lastObject]];
     UIViewController *lastToReload = [self.viewControllersStackArray lastObject];
-    [self.viewControllersStackArray removeObject:lastToReload];
-    [self setViewController:lastToReload forIndex:self.viewControllersStackArray.count-1];
+    if (VALID_NOTEMPTY(lastToReload, UIViewController)) {
+        [self.viewControllersStackArray removeObject:lastToReload];
+        [self setViewController:lastToReload forIndex:self.viewControllersStackArray.count-1];
+        return YES;
+    }
+    return NO;
 }
 
 - (void)updateCountry:(NSNotification *)notification
