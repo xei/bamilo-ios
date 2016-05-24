@@ -212,6 +212,8 @@ UICollectionViewDelegateFlowLayout>
     [RIOrder getOrdersPage:[NSNumber numberWithInteger:self.currentOrdersPage+1]
                   maxItems:[NSNumber numberWithInteger:kOrdersPerPage]
           withSuccessBlock:^(NSArray *orders, NSInteger ordersTotal) {
+              self.currentOrdersPage++;
+              
               [self.orders addObjectsFromArray:orders];
               
               NSInteger previousOrdersTotal = self.ordersTotal;
@@ -413,7 +415,6 @@ UICollectionViewDelegateFlowLayout>
     {
         if (!self.isLoadingOrders && [self.orders count] < self.ordersTotal && [self.orders count] - 5 <= indexPath.row)
         {
-            self.currentOrdersPage++;
             [self loadOrders];
         }
         
