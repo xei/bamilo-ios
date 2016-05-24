@@ -101,7 +101,7 @@
             [_itemViewsContentView addSubview:productView];
             
             if (RI_IS_RTL) {
-                [_itemViewsContentView flipAllSubviews];
+                [productView flipAllSubviews];
             }
         }
         [self.scrollView addSubview:_itemViewsContentView];
