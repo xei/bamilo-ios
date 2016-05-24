@@ -429,6 +429,8 @@
 
 #define STRING_RETURN RILocalizedString(@"return_label", nil)
 
+#define STRING_RETURNS RILocalizedString(@"returns_label", nil)
+
 #define STRING_CALL_TO_RETURN RILocalizedString(@"call_return_label", nil)
 #define STRING_CALL_NOW RILocalizedString(@"call_now_label", nil)
 #define STRING_PLEASE_CALL_TO RILocalizedString(@"please_call_to", nil)
