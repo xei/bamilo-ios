@@ -140,7 +140,10 @@ UITableViewDelegate>
     if (NO == self.isLoaded) {
         [self getAddressList];
     } else {
-        [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
+        if(VALID_NOTEMPTY(self.addresses, NSDictionary))
+        {
+            [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
+        }
     }
 }
 
@@ -161,10 +164,8 @@ UITableViewDelegate>
 - (void)getAddressList
 {
     [self showLoading];
+    self.isLoaded = YES;
     [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
-        self.isLoaded = YES;
-        
-        
         self.addresses = adressList;
         if(VALID_NOTEMPTY(self.addresses, NSDictionary))
         {
@@ -194,6 +195,7 @@ UITableViewDelegate>
         }
         else
         {
+            self.isLoaded = NO;
             [self hideLoading];
             
             if(self.shouldForceAddAddress)
