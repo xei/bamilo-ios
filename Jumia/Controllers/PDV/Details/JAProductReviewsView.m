@@ -346,6 +346,10 @@
     [self.reviewsHeaderLine setY:yOffset];
     [self.topView addSubview:self.reviewsHeaderLine];
     yOffset = CGRectGetMaxY(self.reviewsHeaderLine.frame);
+    
+    if (RI_IS_RTL) {
+        [self.reviewsHeaderLine flipAllSubviews];
+    }
 }
 
 - (void)setProductRatings:(RIProductRatings *)productRatings
