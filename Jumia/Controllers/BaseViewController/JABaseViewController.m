@@ -21,8 +21,6 @@
 @interface JABaseViewController () {
     CGRect _noConnectionViewFrame;
     NSString* _searchBarText;
-    BOOL rotation;
-    UIInterfaceOrientation _orientation;
 }
 
 @property (assign, nonatomic) int requestNumber;
@@ -36,6 +34,7 @@
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) UIImageView *searchIconImageView;
 @property (nonatomic, strong) UIButton *searchBarBackButton;
+@property (nonatomic) UIInterfaceOrientation orientation;
 
 @end
 
@@ -101,7 +100,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _orientation = self.interfaceOrientation;
+    self.orientation = self.interfaceOrientation;
     self.firstLoading = YES;
     
     self.screenName = @"";
@@ -161,9 +160,7 @@
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    
-    rotation = YES;
-    _orientation = toInterfaceOrientation;
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     [self changeLoadingFrame:[[UIScreen mainScreen] bounds] orientation:toInterfaceOrientation];
     
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
@@ -179,10 +176,12 @@
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-    if (rotation) {
+    if (self.interfaceOrientation != self.orientation) {
         [self onOrientationChanged];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC/2), dispatch_get_main_queue(), ^{
+            [self setOrientation:self.interfaceOrientation];
+        });
     }
-    rotation = NO;
 }
 
 - (void)onOrientationChanged
@@ -190,6 +189,7 @@
     if (self.searchBarIsVisible) {
         [self reloadSearchBar];
     }
+    self.orientation = self.interfaceOrientation;
 }
 
 - (void)changeLoadingFrame:(CGRect)frame orientation:(UIInterfaceOrientation)orientation {
@@ -253,10 +253,6 @@
     
     [self reloadNavBar];
     [self reloadTabBar];
-    
-    if (_orientation != self.interfaceOrientation) {
-        [self onOrientationChanged];
-    }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kTurnOnMenuSwipePanelNotification
                                                         object:nil];

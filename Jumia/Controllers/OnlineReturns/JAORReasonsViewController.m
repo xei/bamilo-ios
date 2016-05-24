@@ -108,6 +108,14 @@
                     [formView setWidth:self.scrollView.frame.size.width - 16.0f*2];
                     [itemContent addSubview:formView];
                     currentY = CGRectGetMaxY(formView.frame);
+                    if ([formView isKindOfClass:[JAListNumberComponent class]]) {
+                        JAListNumberComponent* listNumberComponent = (JAListNumberComponent*)formView;
+                        listNumberComponent.componentIdentifier = i; //cannot use tag here because we need it to identify the
+                        // component inside the dynamic form, so we need this new variable 'componentIdentifier'
+                        if (1 >= [item.returnableQty integerValue]) {
+                            listNumberComponent.dropdownImageView.hidden = YES;
+                        }
+                    }
                 }
                 [dynamicForm setValues:self.values replacePlaceHolder:@"__NAME__" forString:item.sku];
             }
@@ -198,7 +206,9 @@
 {
     [self showLoading];
     [RIForm getForm:@"returndetail" successBlock:^(RIForm *form) {
+        [self onSuccessResponse:0 messages:nil showMessage:NO];
         [self hideLoading];
+        
         self.isLoaded = YES;
         
         self.returnDetailForm = form;
@@ -312,16 +322,20 @@
 
 - (void)openNumberPicker:(JAListNumberComponent *)listNumberComponent
 {
-    NSInteger index = listNumberComponent.tag;
+    NSInteger index = listNumberComponent.componentIdentifier;
     if (index < self.items.count) {
-        self.currentListNumberComponent = listNumberComponent;
-        
         RIItemCollection* item = [self.items objectAtIndex:index];
         
         NSMutableArray* dataSource = [NSMutableArray new];
-        for (int i = 1; i <= [item.quantity integerValue]; i++) {
+        for (int i = 1; i <= [item.returnableQty integerValue]; i++) {
             [dataSource addObject:[NSString stringWithFormat:@"%ld",(long)i]];
         }
+        
+        if (1 >= dataSource.count) {
+            return; //if there is only one option, don't open the picker
+        }
+        
+        self.currentListNumberComponent = listNumberComponent;
         
         NSDictionary* values = [listNumberComponent getValues];
         [self setupPickerView:dataSource selectedRow:[values objectForKey:listNumberComponent.field.name]];

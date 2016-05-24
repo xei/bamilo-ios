@@ -108,6 +108,9 @@
 
 - (void)setupWithOrder:(RITrackOrder*)order frame:(CGRect)frame
 {
+    if (!CGRectEqualToRect(self.frame, frame)) {
+        [self.collectionViewFlowLayout resetSizes];
+    }
     self.order = order;
     [self setFrame:frame];
     [self.itemsToReturnArray removeAllObjects];
@@ -137,17 +140,17 @@
     [self.myOrderResumeView setOrder:order];
     [self.itemsHeader setY:CGRectGetMaxY(self.myOrderResumeView.frame)];
     [self.itemsHeader setFrame:self.itemsHeader.frame];
-    [self.collectionView reloadData];
     
     [self.collectionView setFrame:CGRectMake(self.collectionView.frame.origin.x,
                                              CGRectGetMaxY(self.itemsHeader.frame),
-                                             self.collectionView.frame.size.width,
+                                             self.width,
                                              [self totalHeightForCollectionView])];
     
     [self reloadFrame];
     if (RI_IS_RTL) {
         [self.returnMultipleItemsButton flipViewPositionInsideSuperview];
     }
+    [self.collectionView reloadData];
 }
 
 - (void)reloadFrame
@@ -192,7 +195,6 @@
         extra = 6.f + 12.f + i * 12;
     }
     CGSize size = CGSizeMake(self.width, 208.f + extra);
-    
     self.collectionViewFlowLayout.itemSize = size;
     return size;
 }

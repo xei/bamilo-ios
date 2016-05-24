@@ -10,10 +10,12 @@
 
 @interface JAListNumberComponent : JADynamicField
 
+@property (assign, nonatomic) NSInteger componentIdentifier;
 @property (assign, nonatomic) BOOL hasError;
 @property (strong, nonatomic) UITextField *textField;
 @property (strong, nonatomic) UILabel *requiredSymbol;
 @property (nonatomic, strong) NSString* currentErrorMessage;
+@property (strong, nonatomic) UIImageView *dropdownImageView;
 
 @property (nonatomic) CGFloat fixedWidth;
 
