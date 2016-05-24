@@ -435,7 +435,6 @@
 #define STRING_X_ITEMS_RETURNED_ON RILocalizedString(@"x_items_returned_on", nil)
 
 #define STRING_QUESTION_RETURN_REASONS RILocalizedString(@"question_return_reasons", nil)
-#define STRING_QUANTITY_TO_RETURN RILocalizedString(@"quantity_to_return", nil)
 
 #define STRING_RETURN_METHOD RILocalizedString(@"return_method", nil)
 
