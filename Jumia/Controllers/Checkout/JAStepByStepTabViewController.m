@@ -168,12 +168,12 @@
 - (void)setContentView:(UIViewController *)viewController
 {
     [self.viewControllersStackArray addObject:viewController];
-//    if (!self.freeToMove) {
+    if (!self.freeToMove) {
         for (UIViewController *oneViewController in [self.viewControllersStackArray mutableCopy]) {
             if (oneViewController.view.tag > viewController.view.tag || (oneViewController.view.tag != viewController.view.tag && [self.stepByStepModel ignoreStep:oneViewController.view.tag])) {
                 [self.viewControllersStackArray removeObject:oneViewController];
             }
-//        }
+        }
     }
     if([self.stepByStepModel isFreeToChoose:viewController])
     {
