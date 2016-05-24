@@ -191,55 +191,79 @@
 - (void)proceedToCheckout
 {
     [JAAuthenticationViewController goToCheckoutWithBlock:^{
-        [self showLoading];
+//        [self showLoading];
         
-        [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
-            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-            [trackingDictionary setValue:@"Started" forKey:kRIEventActionKey];
-            [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
-            
-            [trackingDictionary setValue:[NSNumber numberWithInteger:[[self.cart cartItems] count]] forKey:kRIEventQuantityKey];
-            [trackingDictionary setValue:[self.cart cartValueEuroConverted] forKey:kRIEventTotalCartKey];
-            
-            NSMutableString* attributeSetID = [NSMutableString new];
-            for (RICartItem* pd in [self.cart cartItems]) {
-                [attributeSetID appendFormat:@"%@;",[pd attributeSetID]];
-            }
-            [trackingDictionary setValue:[attributeSetID copy] forKey:kRIEventAttributeSetIDCartKey];
-            
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutStart]
-                                                      data:[trackingDictionary copy]];
-            
-            [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-            [self hideLoading];
-            
-            if (VALID_NOTEMPTY(adressList, NSDictionary)) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
-                                                                    object:nil
-                                                                  userInfo:nil];
-                [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckoutAddress"];
-            } else {
-                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES]] forKeys:@[@"show_back_button", @"from_checkout"]];
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
-                                                                    object:nil
-                                                                  userInfo:userInfo];
-                [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckoutAddress"];
-            }
-        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
-            [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];
-            [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
-            
-            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutError]
-                                                      data:[trackingDictionary copy]];
-            
-            [self hideLoading];
-            
-            [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:@selector(proceedToCheckout) objects:nil];
-        }];
+        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+        [trackingDictionary setValue:@"Started" forKey:kRIEventActionKey];
+        [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
+        
+        [trackingDictionary setValue:[NSNumber numberWithInteger:[[self.cart cartItems] count]] forKey:kRIEventQuantityKey];
+        [trackingDictionary setValue:[self.cart cartValueEuroConverted] forKey:kRIEventTotalCartKey];
+        
+        NSMutableString* attributeSetID = [NSMutableString new];
+        for (RICartItem* pd in [self.cart cartItems]) {
+            [attributeSetID appendFormat:@"%@;",[pd attributeSetID]];
+        }
+        [trackingDictionary setValue:[attributeSetID copy] forKey:kRIEventAttributeSetIDCartKey];
+        
+        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutStart]
+                                                  data:[trackingDictionary copy]];
+        
+        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+                                                            object:nil
+                                                          userInfo:nil];
+        [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckoutAddress"];
+        
+//        [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
+//            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+//            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+//            [trackingDictionary setValue:@"Started" forKey:kRIEventActionKey];
+//            [trackingDictionary setValue:@"Checkout" forKey:kRIEventCategoryKey];
+//            
+//            [trackingDictionary setValue:[NSNumber numberWithInteger:[[self.cart cartItems] count]] forKey:kRIEventQuantityKey];
+//            [trackingDictionary setValue:[self.cart cartValueEuroConverted] forKey:kRIEventTotalCartKey];
+//            
+//            NSMutableString* attributeSetID = [NSMutableString new];
+//            for (RICartItem* pd in [self.cart cartItems]) {
+//                [attributeSetID appendFormat:@"%@;",[pd attributeSetID]];
+//            }
+//            [trackingDictionary setValue:[attributeSetID copy] forKey:kRIEventAttributeSetIDCartKey];
+//            
+//            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutStart]
+//                                                      data:[trackingDictionary copy]];
+//            
+//            [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+//            [self hideLoading];
+//            
+////            if (VALID_NOTEMPTY(adressList, NSDictionary)) {
+//                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddressesScreenNotification
+//                                                                    object:nil
+//                                                                  userInfo:nil];
+//                [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckoutAddress"];
+////            } else {
+////                NSDictionary *userInfo = [NSDictionary dictionaryWithObjects:@[[NSNumber numberWithBool:NO], [NSNumber numberWithBool:YES]] forKeys:@[@"show_back_button", @"from_checkout"]];
+////                
+////                [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutAddAddressScreenNotification
+////                                                                    object:nil
+////                                                                  userInfo:userInfo];
+////                [[RITrackingWrapper sharedInstance] trackScreenWithName:@"CheckoutAddress"];
+////            }
+//        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+//            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+//            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventLabelKey];
+//            [trackingDictionary setValue:@"NativeCheckoutError" forKey:kRIEventActionKey];
+//            [trackingDictionary setValue:@"NativeCheckout" forKey:kRIEventCategoryKey];
+//            
+//            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutError]
+//                                                      data:[trackingDictionary copy]];
+//            
+//            [self hideLoading];
+//            
+//            [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:@selector(proceedToCheckout) objects:nil];
+//        }];
     }];
 }
 
