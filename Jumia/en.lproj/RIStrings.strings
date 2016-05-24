@@ -717,7 +717,10 @@
 "go" = "Let's Go!";
 
 "order_return_conditions_title" = "WE ARE SORRY THAT YOU ARE NOT FULLY SATISFIED WITH YOUR PURCHASE";
+
 "return_label" = "return";
+
+"returns_label" = "RETURN:";
 
 "x_items_returned_on" = "%ld item(s) returned on %@";
 
