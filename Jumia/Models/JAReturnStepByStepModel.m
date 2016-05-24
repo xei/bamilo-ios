@@ -56,13 +56,13 @@
     Class classKind = [self.viewControllersArray objectAtIndex:index];
     
     if (classKind == [JAORReasonsViewController class]) {
-
+        [[JACenterNavigationController sharedInstance] goToOnlineReturnsReasonsScreenForItems:self.items order:self.order];
     } else if (classKind == [JAORWaysViewController class]) {
-
+        [[JACenterNavigationController sharedInstance] goToOnlineReturnsWaysScreenForItems:self.items order:self.order];
     } else if (classKind == [JAORPaymentViewController class]) {
-        
+        [[JACenterNavigationController sharedInstance] goToOnlineReturnsPaymentScreenForItems:self.items order:self.order];
     } else if (classKind == [JAORConfirmationScreenViewController class]) {
-//        [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmScreen];
+        [[JACenterNavigationController sharedInstance] goToOnlineReturnsConfirmScreenForItems:self.items order:self.order];
     }
 }
 
