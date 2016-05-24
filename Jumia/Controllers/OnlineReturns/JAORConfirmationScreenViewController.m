@@ -89,7 +89,7 @@
 - (UIView *)productsView
 {
     if (!VALID(_productsView, UIView)) {
-        _productsView  = [[UIView alloc] initWithFrame:CGRectMake(0.f, CGRectGetMaxY(self.paymentMethodOptionView.frame) + 16.f, self.view.width, 1)];
+        _productsView  = [[UIView alloc] initWithFrame:CGRectMake(0.f, CGRectGetMaxY(self.paymentMethodOptionView.frame), self.view.width, 1)];
         [self.mainScrollView addSubview:_productsView];
     }
     return _productsView;
@@ -123,8 +123,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showCartButton = NO;
+    self.navBarLayout.title = STRING_MY_ORDERS;
     
     [self.view setBackgroundColor:JAWhiteColor];
 }
@@ -139,49 +141,6 @@
 {
     [super onOrientationChanged];
     [self reloadAll];
-}
-
-- (void)loadItems
-{
-    [self.productsView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [self.productsView setHeight:0];
-    [self.productsView setWidth:self.mainScrollView.width];
-    
-    [self.methodOptionView setOption:[self.stateInfoLabels objectForKey:@"return_method[method]"]];
-    [self.paymentMethodOptionView setOption:[self.stateInfoLabels objectForKey:@"refund_method[method]"]];
-    
-    for (RIItemCollection *item in self.items) {
-        JAORProductView* productView = [[JAORProductView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                                         self.productsView.height,
-                                                                                         self.productsView.width,
-                                                                                         1.0f)];
-        [productView setupWithItemCollection:item order:self.order];
-        [productView setQtyToReturn:[self.stateInfoLabels objectForKey:[NSString stringWithFormat:@"return_detail[%@][quantity]", item.sku]]];
-        [self.productsView addSubview:productView];
-        
-        [self.productsView setHeight:CGRectGetMaxY(productView.frame)];
-        
-        if (self.items.count == 1) {
-            [self.reasonOptionView setOption:[self.stateInfoLabels objectForKey:[NSString stringWithFormat:@"return_detail[%@][reason]", item.sku]]];
-            break;
-        }
-        
-        JAOptionResumeView *reasonOptionView = [[JAOptionResumeView alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(productView.frame) + 10.f, self.productsView.width - 2*kLateralMargin, 0)];
-        [reasonOptionView setTitle:[STRING_RETURN_REASON uppercaseString]];
-        [reasonOptionView setOption:[self.stateInfoLabels objectForKey:[NSString stringWithFormat:@"return_detail[%@][reason]", item.sku]]];
-        [reasonOptionView.editButton addTarget:self action:@selector(goToReasonStep) forControlEvents:UIControlEventTouchUpInside];
-        [self.productsView addSubview:reasonOptionView];
-        
-        [self.productsView setHeight:CGRectGetMaxY(reasonOptionView.frame)];
-    }
-    [self.mainScrollView addSubview:self.productsView];
-    
-    [self.confirmationLabel setYBottomOf:self.productsView at:20.f];
-    [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, CGRectGetMaxY(self.confirmationLabel.frame))];
-    
-    if (RI_IS_RTL) {
-        [self.view flipAllSubviews];
-    }
 }
 
 - (void)reloadAll
@@ -202,7 +161,7 @@
     [self.paymentMethodOptionView setYBottomOf:self.methodOptionView at:10.f];
     [self.paymentMethodOptionView setWidth:self.mainScrollView.width - 2*kLateralMargin];
     
-    [self.productsView setYBottomOf:self.paymentMethodOptionView at:16.f];
+    [self.productsView setYBottomOf:self.paymentMethodOptionView at:0.f];
     [self.productsView setWidth:self.mainScrollView.width - 2*kLateralMargin];
     [self.confirmationLabel setYBottomOf:self.productsView at:20.f];
     [self.confirmationLabel setWidth:self.mainScrollView.width - 2*kLateralMargin];
@@ -210,6 +169,54 @@
     [self.submitView setYBottomAligned:0.f];
     [self.mainScrollView setHeight:self.viewBounds.size.height - self.submitView.height];
     [self loadItems];
+}
+
+- (void)loadItems
+{
+    [self.productsView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self.productsView setHeight:0];
+    [self.productsView setWidth:self.mainScrollView.width];
+    
+    [self.methodOptionView setOption:[self.stateInfoLabels objectForKey:@"return_method[method]"]];
+    [self.paymentMethodOptionView setOption:[self.stateInfoLabels objectForKey:@"refund_method[method]"]];
+    
+    for (RIItemCollection *item in self.items) {
+        
+        UIView *sepatator = [[UIView alloc] initWithFrame:CGRectMake(kLateralMargin, self.productsView.height + 16.f, self.productsView.width - 2*kLateralMargin, 1.f)];
+        [sepatator setBackgroundColor:JABlack400Color];
+        [self.productsView addSubview:sepatator];
+        
+        JAORProductView* productView = [[JAORProductView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                                         self.productsView.height + 16,
+                                                                                         self.productsView.width,
+                                                                                         1.0f)];
+        [productView setupWithItemCollection:item order:self.order];
+        [productView setQtyToReturn:[self.stateInfoLabels objectForKey:[NSString stringWithFormat:@"return_detail[%@][quantity]", item.sku]]];
+        [self.productsView addSubview:productView];
+        
+        [self.productsView setHeight:CGRectGetMaxY(productView.frame)];
+        
+        if (self.items.count == 1) {
+            [self.reasonOptionView setOption:[self.stateInfoLabels objectForKey:[NSString stringWithFormat:@"return_detail[%@][reason]", item.sku]]];
+            break;
+        }
+        
+        JAOptionResumeView *reasonOptionView = [[JAOptionResumeView alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(productView.frame), self.productsView.width - 2*kLateralMargin, 0)];
+        [reasonOptionView setTitle:[STRING_RETURN_REASON uppercaseString]];
+        [reasonOptionView setOption:[self.stateInfoLabels objectForKey:[NSString stringWithFormat:@"return_detail[%@][reason]", item.sku]]];
+        [reasonOptionView.editButton addTarget:self action:@selector(goToReasonStep) forControlEvents:UIControlEventTouchUpInside];
+        [self.productsView addSubview:reasonOptionView];
+        
+        [self.productsView setHeight:CGRectGetMaxY(reasonOptionView.frame)];
+    }
+    [self.mainScrollView addSubview:self.productsView];
+    
+    [self.confirmationLabel setYBottomOf:self.productsView at:20.f];
+    [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, CGRectGetMaxY(self.confirmationLabel.frame) + 16.f)];
+    
+    if (RI_IS_RTL) {
+        [self.view flipAllSubviews];
+    }
 }
 
 - (void)goToNext
