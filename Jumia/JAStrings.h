@@ -429,15 +429,12 @@
 
 #define STRING_RETURN RILocalizedString(@"return_label", nil)
 
-#define STRING_RETURNS RILocalizedString(@"returns_label", nil)
-
 #define STRING_CALL_TO_RETURN RILocalizedString(@"call_return_label", nil)
 #define STRING_CALL_NOW RILocalizedString(@"call_now_label", nil)
 #define STRING_PLEASE_CALL_TO RILocalizedString(@"please_call_to", nil)
 #define STRING_X_ITEMS_RETURNED_ON RILocalizedString(@"x_items_returned_on", nil)
 
 #define STRING_QUESTION_RETURN_REASONS RILocalizedString(@"question_return_reasons", nil)
-#define STRING_QUANTITY_TO_RETURN RILocalizedString(@"quantity_to_return", nil)
 
 #define STRING_RETURN_METHOD RILocalizedString(@"return_method", nil)
 

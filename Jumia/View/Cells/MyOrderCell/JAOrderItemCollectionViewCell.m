@@ -162,7 +162,7 @@
         _returnsTitleLabel = [UILabel new];
         [_returnsTitleLabel setFont:JABADGEFont];
         [_returnsTitleLabel setTextColor:JABlackColor];
-        [_returnsTitleLabel setText:[STRING_RETURNS uppercaseString]];
+        [_returnsTitleLabel setText:[STRING_RETURN uppercaseString]];
         [self addSubview:_returnsTitleLabel];
     }
     return _returnsTitleLabel;
