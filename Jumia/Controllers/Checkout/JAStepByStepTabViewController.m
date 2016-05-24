@@ -67,7 +67,7 @@
     [self.view setBackgroundColor:JAWhiteColor];
     [self.view addSubview:self.tabBarView];
     self.index = -1;
-    [self goToIndex:self.indexInit];
+//    [self goToIndex:self.indexInit];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateCountry:)
@@ -144,9 +144,7 @@
         [newViewController.view setX:0.f];
     } completion:^(BOOL finished) {
         if (!self.actualViewController) {
-            if (!self.actualViewController) {
-                [self setContentView:newViewController];
-            }
+            [self setContentView:newViewController];
         }
     }];
     
