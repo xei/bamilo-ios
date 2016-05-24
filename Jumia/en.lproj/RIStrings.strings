@@ -188,7 +188,7 @@
 
 "voucher_message_hint" = "Enter your coupon code here";
 
-"voucher_error_message" = "Please input a valid Coupon Code";
+"voucher_error_message" = "Please enter a valid coupon code";
 
 "call_to_order" = "Call to Order";
 
@@ -206,7 +206,7 @@
 
 "shipment_of" = "Shipment %ld of %ld";
 
-"shipment_label" = "shipment";
+"shipment_label" = "Status";
 
 "fulfilled_by" = "Fulfillment by";
 
@@ -714,28 +714,27 @@
 
 "free_shipping_possible" = "Free Shipping Possible";
 
-"go" = "Go";
+"go" = "Let's Go!";
 
-"order_return_conditions_title" = "We are sorry that you are not fully satisfied with your product";
+"order_return_conditions_title" = "We are sorry that you are not fully satisfied with your purchase";
+
 "return_label" = "return";
 
-"returns_label" = "returns";
-
-"x_items_returned_on" = "%ld items returned on %@";
+"x_items_returned_on" = "%ld item(s) returned on %@";
 
 "call_return_label" = "Call to Return";
 
-"question_return_reasons" = "Why do you want to return this item?";
+"question_return_reasons" = "Why do you want to return your purchase?";
 
 "call_now_label" = "call now";
 
-"please_call_to" = "Please call to %@";
+"please_call_to" = "Call us at %@";
 
 "quantity_to_return" = "Quantity to Return";
 
 "return_method" = "Return Method";
 
-"return_payment_method" = "Return Payment Method";
+"return_payment_method" = "Refund Method";
 
 "return_reason" = "Return Reason";
 
