@@ -86,18 +86,12 @@
 {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     [self.actualViewController didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-//    for (UIViewController *viewController in self.viewControllersStackArray) {
-//        [viewController didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-//    }
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     [self.actualViewController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-//    for (UIViewController *viewController in self.viewControllersStackArray) {
-//        [viewController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-//    }
 }
 
 - (void)goToView:(UIButton *)button
@@ -121,6 +115,14 @@
         }];
         [self setViewController:newViewController forIndex:index];
     }
+}
+
+- (void)onOrientationChanged
+{
+    [super onOrientationChanged];
+    self.actualViewController.view.height = self.view.height - self.tabBarView.height;
+    self.actualViewController.view.width = self.view.width;
+    [(JABaseViewController *)self.actualViewController onOrientationChanged];
 }
 
 - (void)setViewController:(UIViewController *)newViewController forIndex:(NSInteger)index

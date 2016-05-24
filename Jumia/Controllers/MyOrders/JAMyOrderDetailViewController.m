@@ -58,9 +58,9 @@
     self.apiResponse = RIApiResponseSuccess;
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewDidAppear:animated];
     
     if (VALID(self.trackingOrder, RITrackOrder)) {
         [self loadOrderDetails:self.trackingOrder.orderId];
@@ -116,6 +116,7 @@
 
 - (void)onOrientationChanged
 {
+    [super onOrientationChanged];
     if ((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
         UIViewController *viewController = [[[self.navigationController.viewControllers reverseObjectEnumerator] allObjects] objectAtIndex:1];
         [self.navigationController popViewControllerAnimated:NO];
