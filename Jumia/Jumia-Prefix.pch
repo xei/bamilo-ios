@@ -66,4 +66,6 @@
     #import "UIView+Mirror.h"
     #import "UIImage+Mirror.h"
     #import "UIView+Frame.h"
+    #import "UILabel+Size.h"
+    #import "UIButton+Size.h"
 #endif

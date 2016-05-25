@@ -8,14 +8,22 @@
 
 #import "JATextField.h"
 
+@interface JATextField ()
+
+@property (nonatomic, strong) UIView *bottomLayer;
+
+@end
+
 @implementation JATextField
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
+- (UIView *)bottomLayer
+{
+    if (!VALID(_bottomLayer, UIView)) {
+        _bottomLayer = [[UIView alloc] initWithFrame:CGRectMake(0.f, self.height-1, self.width, 1.f)];
+        [_bottomLayer setBackgroundColor:JABlack400Color];
+        [self addSubview:_bottomLayer];
     }
-    return self;
+    return _bottomLayer;
 }
 
 - (CGRect)textRectForBounds:(CGRect)bounds
@@ -28,6 +36,20 @@
 {
     return CGRectMake(bounds.origin.x, bounds.origin.y - 3.0f,
                       bounds.size.width, bounds.size.height);
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    [self.bottomLayer setWidth:self.width];
+    [self.bottomLayer setYBottomAligned:1.f];
+    [self setTextAlignment:RI_IS_RTL?NSTextAlignmentRight:NSTextAlignmentLeft];
+}
+
+- (void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    [self setTextAlignment:RI_IS_RTL?NSTextAlignmentRight:NSTextAlignmentLeft];
 }
 
 @end

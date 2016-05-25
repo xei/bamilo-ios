@@ -16,6 +16,8 @@
 @property (nonatomic) CGFloat yBottomAligned;
 @property (nonatomic) CGFloat width;
 @property (nonatomic) CGFloat height;
+@property (nonatomic) CGSize size;
+@property (nonatomic) CGPoint position;
 
 - (void)setXLeftOf:(UIView *)view at:(CGFloat)distance;
 - (void)setXRightOf:(UIView *)view at:(CGFloat)distance;

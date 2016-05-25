@@ -40,7 +40,6 @@
 #import "JACampaignsViewController.h"
 #import "JATabNavigationViewController.h"
 #import "JANewRatingViewController.h"
-#import "RICart.h"
 #import "JASizeGuideViewController.h"
 #import "JAOtherOffersViewController.h"
 #import "JASellerRatingsViewController.h"
@@ -58,13 +57,29 @@
 #import "JASearchView.h"
 #import "JAActionWebViewController.h"
 
+#import "JAStepByStepTabViewController.h"
+#import "JACheckoutStepByStepModel.h"
+#import "JAReturnStepByStepModel.h"
+
+#import "JAORConfirmConditionsViewController.h"
+#import "JAORConfirmationScreenViewController.h"
+#import "JAORCallToReturnViewController.h"
+#import "RIHtmlShop.h"
+
+#import "JAORReasonsViewController.h"
+#import "JAORWaysViewController.h"
+#import "JAORPaymentViewController.h"
+#import "JAORPickupStationWebViewController.h"
+
 @interface JACenterNavigationController ()
 
-@property (strong, nonatomic) RICart *cart;
 @property (assign, nonatomic) BOOL neeedsExternalPaymentMethod;
 @property (strong, nonatomic) UIStoryboard *mainStoryboard;
 
 @property (nonatomic, strong) JASearchView *searchView;
+
+@property (nonatomic, strong) JAStepByStepTabViewController *checkoutStepByStepViewController;
+@property (nonatomic, strong) JAStepByStepTabViewController *returnsStepByStepViewController;
 
 @end
 
@@ -77,6 +92,46 @@
         defaultInstance = [self new];
     });
     return defaultInstance;
+}
+
+- (JAStepByStepTabViewController *)checkoutStepByStepViewController
+{
+    if (!VALID(_checkoutStepByStepViewController, JAStepByStepTabViewController)) {
+        _checkoutStepByStepViewController = [self getNewCheckoutStepByStepViewController];
+    }
+    return _checkoutStepByStepViewController;
+}
+
+- (JAStepByStepTabViewController *)getNewCheckoutStepByStepViewController
+{
+    JAStepByStepTabViewController *checkoutStepByStepViewController = [JAStepByStepTabViewController new];
+    [checkoutStepByStepViewController setStepByStepModel:[JACheckoutStepByStepModel new]];
+    checkoutStepByStepViewController.navBarLayout.showCartButton = NO;
+    [checkoutStepByStepViewController.navBarLayout setShowBackButton:YES];
+    checkoutStepByStepViewController.navBarLayout.showLogo = NO;
+    [checkoutStepByStepViewController.navBarLayout setTitle:STRING_CHECKOUT];
+    [checkoutStepByStepViewController setIndexInit:0];
+    return checkoutStepByStepViewController;
+}
+
+- (JAStepByStepTabViewController *)returnsStepByStepViewController
+{
+    if (!VALID(_returnsStepByStepViewController, JAStepByStepTabViewController)) {
+        _returnsStepByStepViewController = [self getNewReturnsStepByStepViewController];
+    }
+    return _returnsStepByStepViewController;
+}
+
+- (JAStepByStepTabViewController *)getNewReturnsStepByStepViewController
+{
+    JAStepByStepTabViewController *returnsStepByStepViewController = [JAStepByStepTabViewController new];
+    [returnsStepByStepViewController setStepByStepModel:[JAReturnStepByStepModel new]];
+    returnsStepByStepViewController.navBarLayout.showCartButton = NO;
+    [returnsStepByStepViewController.navBarLayout setShowBackButton:YES];
+    returnsStepByStepViewController.navBarLayout.showLogo = NO;
+    [returnsStepByStepViewController.navBarLayout setTitle:STRING_MY_ORDERS];
+    [returnsStepByStepViewController setIndexInit:0];
+    return returnsStepByStepViewController;
 }
 
 #pragma mark - View Lifecycle
@@ -717,15 +772,21 @@
         animated = [animatedNumber boolValue];
     }
     
+    BOOL checkout = NO;
     if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"continue_button"], NSNumber)) {
-        authenticationViewController.checkout = [[notification.userInfo objectForKey:@"continue_button"] boolValue];
+        checkout = [[notification.userInfo objectForKey:@"continue_button"] boolValue];
     }
+    authenticationViewController.checkout = checkout;
     
     if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.userInfo, NSDictionary)) {
         [authenticationViewController setUserInfo:notification.userInfo];
     }
     
-    [self pushViewController:authenticationViewController animated:YES];
+    if (checkout) {
+        [self goToStep:authenticationViewController forStepByStepViewController:self.checkoutStepByStepViewController];
+    }else{
+        [self pushViewController:authenticationViewController animated:YES];
+    }
 }
 
 - (void)runBlockAfterAuthentication:(NSNotification *)notification
@@ -733,24 +794,34 @@
     if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"from_side_menu"], NSNumber)) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowHomeScreenNotification object:nil];
     } else {
-        NSInteger count = [self.viewControllers count];
-        if (count > 2)
+        JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
+        if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[JACheckoutStepByStepModel class]])
         {
-            UIViewController *viewController = [self.viewControllers objectAtIndex:count-2];
-            UIViewController *viewControllerToPop = [self.viewControllers objectAtIndex:count-3];
-            if ([viewController isKindOfClass:[JAAuthenticationViewController class]]) {
-                [self popToViewController:viewControllerToPop animated:NO];
+            if (VALID_NOTEMPTY(notification, NSNotification) && notification.object) {
+                typedef void (^NextStepBlock)(void);
+                NextStepBlock nextStepBlock = notification.object;
+                nextStepBlock();
+            }
+        }else{
+            NSInteger count = [self.viewControllers count];
+            if (count > 2)
+            {
+                UIViewController *viewController = [self.viewControllers objectAtIndex:count-2];
+                UIViewController *viewControllerToPop = [self.viewControllers objectAtIndex:count-3];
+                if ([viewController isKindOfClass:[JAAuthenticationViewController class]]) {
+                    [self popToViewController:viewControllerToPop animated:NO];
+                }else{
+                    [self popViewControllerAnimated:YES];
+                }
             }else{
                 [self popViewControllerAnimated:YES];
             }
-        }else{
-            [self popViewControllerAnimated:YES];
-        }
-        
-        if (VALID_NOTEMPTY(notification, NSNotification) && notification.object) {
-            typedef void (^NextStepBlock)(void);
-            NextStepBlock nextStepBlock = notification.object;
-            nextStepBlock();
+            
+            if (VALID_NOTEMPTY(notification, NSNotification) && notification.object) {
+                typedef void (^NextStepBlock)(void);
+                NextStepBlock nextStepBlock = notification.object;
+                nextStepBlock();
+            }
         }
     }
 }
@@ -791,7 +862,15 @@
         }
     }
     
-    [self pushViewController:signInVC animated:animated];
+    BOOL checkout = NO;
+    if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"checkout"], NSNumber)) {
+        checkout = [[notification.userInfo objectForKey:@"checkout"] boolValue];
+    }
+    if (checkout) {
+        [self goToStep:signInVC forStepByStepViewController:self.checkoutStepByStepViewController];
+    }else{
+        [self pushViewController:signInVC animated:YES];
+    }
 }
 
 #pragma mark Sign Up Screen
@@ -818,7 +897,15 @@
 //            [self popToRootViewControllerAnimated:NO];
         }
         
-        [self pushViewController:signUpVC animated:NO];
+        BOOL checkout = NO;
+        if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"checkout"], NSNumber)) {
+            checkout = [[notification.userInfo objectForKey:@"checkout"] boolValue];
+        }
+        if (checkout) {
+            [self goToStep:signUpVC forStepByStepViewController:self.checkoutStepByStepViewController];
+        }else{
+            [self pushViewController:signUpVC animated:NO];
+        }
     }
 }
 
@@ -1025,6 +1112,18 @@
 #pragma mark Checkout Addresses Screen
 - (void)showCheckoutAddressesScreen:(NSNotification*)notification
 {
+    if (![RICustomer checkIfUserIsLogged])
+    {
+        JAAuthenticationViewController *auth = [[JAAuthenticationViewController alloc] init];
+        
+        auth.navBarLayout.showBackButton = YES;
+        auth.fromSideMenu = NO;
+        auth.nextStepBlock = ^{ [[NSNotificationCenter defaultCenter] postNotification:notification]; };
+        
+        [self pushViewController:auth animated:NO];
+        return;
+    }
+    
     BOOL animated = NO;
     if(VALID_NOTEMPTY(notification.object, NSDictionary) && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber))
     {
@@ -1038,26 +1137,27 @@
     }
     
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAAddressesViewController class]] && [RICustomer checkIfUserIsLogged]) {
-        JAAddressesViewController *addressesVC = [[JAAddressesViewController alloc] initWithNibName:@"JAAddressesViewController" bundle:nil];
-        
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            addressesVC = [[JAAddressesViewController alloc] initWithNibName:@"JAAddressesViewController~iPad" bundle:nil];
-        }
+    if (![topViewController isKindOfClass:[JAAddressesViewController class]]) {
+        JAAddressesViewController *addressesVC = [[JAAddressesViewController alloc] init];
         
         addressesVC.cart = self.cart;
         addressesVC.fromCheckout = fromCheckout;
-        
+        [addressesVC.navBarLayout setShowBackButton:YES];
+        addressesVC.navBarLayout.showLogo = NO;
         if (fromCheckout) {
             addressesVC.navBarLayout.showCartButton = NO;
-            addressesVC.navBarLayout.title = STRING_CHECKOUT;
-        } else {
-            [addressesVC.navBarLayout setShowBackButton:YES];
-            addressesVC.navBarLayout.showLogo = NO;
+            [self goToStep:addressesVC forStepByStepViewController:self.checkoutStepByStepViewController];
+        }else{
+            [self pushViewController:addressesVC animated:NO];
         }
-        
-        [self pushViewController:addressesVC animated:NO];
-    } else if (!fromCheckout && ![topViewController isKindOfClass:[JAAuthenticationViewController class]]) {
+    }
+}
+
+#pragma mark Checkout Add Address Screen
+- (void)showCheckoutAddAddressScreen:(NSNotification*)notification
+{
+    if (![RICustomer checkIfUserIsLogged])
+    {
         JAAuthenticationViewController *auth = [[JAAuthenticationViewController alloc] init];
         
         auth.navBarLayout.showBackButton = YES;
@@ -1065,36 +1165,23 @@
         auth.nextStepBlock = ^{ [[NSNotificationCenter defaultCenter] postNotification:notification]; };
         
         [self pushViewController:auth animated:NO];
+        return;
     }
-}
-
-#pragma mark Checkout Add Address Screen
-- (void)showCheckoutAddAddressScreen:(NSNotification*)notification
-{
+    
+    NSNumber* showBackButton = [notification.userInfo objectForKey:@"show_back_button"];
+    NSNumber* fromCheckout = [notification.userInfo objectForKey:@"from_checkout"];
+    NSNumber *animated = @YES;
+    if ([notification.userInfo objectForKey:@"animated"]) {
+        animated = [notification.userInfo objectForKey:@"animated"];
+    }
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAAddNewAddressViewController class]] && [RICustomer checkIfUserIsLogged])
+    if (![topViewController isKindOfClass:[JAAddNewAddressViewController class]])
     {
-        JAAddNewAddressViewController *addAddressVC = [[JAAddNewAddressViewController alloc]initWithNibName:@"JAAddNewAddressViewController" bundle:nil];
+        JAAddNewAddressViewController *addAddressVC = [[JAAddNewAddressViewController alloc] init];
         
-        if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad){
-            
-            addAddressVC = [[JAAddNewAddressViewController alloc]initWithNibName:@"JAAddNewAddressViewController~iPad" bundle:nil];
-        }
-        
-        NSNumber* isBillingAddress = [notification.userInfo objectForKey:@"is_billing_address"];
-        NSNumber* isShippingAddress = [notification.userInfo objectForKey:@"is_shipping_address"];
-        NSNumber* showBackButton = [notification.userInfo objectForKey:@"show_back_button"];
-        NSNumber* fromCheckout = [notification.userInfo objectForKey:@"from_checkout"];
-        NSNumber *animated = @YES;
-        if ([notification.userInfo objectForKey:@"animated"]) {
-            animated = [notification.userInfo objectForKey:@"animated"];
-        }
-        
-        addAddressVC.isBillingAddress = [isBillingAddress boolValue];
-        addAddressVC.isShippingAddress = [isShippingAddress boolValue];
         addAddressVC.fromCheckout = [fromCheckout boolValue];
         addAddressVC.cart = self.cart;
-
+        
         if([fromCheckout boolValue])
         {
             addAddressVC.navBarLayout.showCartButton = NO;
@@ -1107,31 +1194,27 @@
             {
                 addAddressVC.navBarLayout.title = STRING_CHECKOUT;
             }
+            [self goToStep:addAddressVC forStepByStepViewController:self.checkoutStepByStepViewController];
         }
         else
         {
             [addAddressVC.navBarLayout setShowBackButton:YES];
             addAddressVC.navBarLayout.showLogo = NO;
+            [self pushViewController:addAddressVC animated:animated.boolValue];
         }
         
-        [self pushViewController:addAddressVC animated:animated.boolValue];
     }
 }
 
 #pragma mark Checkout Edit Address Screen
 - (void)showCheckoutEditAddressScreen:(NSNotification*)notification
 {
+    NSNumber* fromCheckout = [notification.userInfo objectForKey:@"from_checkout"];
+    
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAEditAddressViewController class]] && [RICustomer checkIfUserIsLogged])
     {
-        JAEditAddressViewController *editAddressVC = [[JAEditAddressViewController alloc] initWithNibName:@"JAEditAddressViewController" bundle:nil];
-        
-        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        {
-            editAddressVC = [[JAEditAddressViewController alloc] initWithNibName:@"JAEditAddressesViewController~iPad" bundle:nil];
-        }
-        
-        NSNumber* fromCheckout = [notification.userInfo objectForKey:@"from_checkout"];
+        JAEditAddressViewController *editAddressVC = [[JAEditAddressViewController alloc] init];
         
         RIAddress* editAddress = [notification.userInfo objectForKey:@"address_to_edit"];
         editAddressVC.editAddress = editAddress;
@@ -1149,43 +1232,26 @@
             editAddressVC.navBarLayout.showLogo = NO;
         }
         
-        [self pushViewController:editAddressVC animated:YES];
+        if (fromCheckout.boolValue) {
+            [self goToStep:editAddressVC forStepByStepViewController:self.checkoutStepByStepViewController];
+        }else{
+            [self pushViewController:editAddressVC animated:YES];
+        }
     }
 }
 
 #pragma mark Checkout Shipping Screen
 - (void)showCheckoutShippingScreen
 {
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAShippingViewController class]] && [RICustomer checkIfUserIsLogged])
-    {
-        JAShippingViewController *shippingVC = [[JAShippingViewController alloc] initWithNibName:@"JAShippingViewController" bundle:nil];
-        
-        if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
-        {
-            shippingVC = [[JAShippingViewController alloc] initWithNibName:@"JAShippingViewController~iPad" bundle:nil];
-        }
-        
-        [self pushViewController:shippingVC animated:YES];
-    }
+    JAShippingViewController *viewController = [[JAShippingViewController alloc] init];
+    [self goToStep:viewController forStepByStepViewController:self.checkoutStepByStepViewController];
 }
 
 #pragma mark Checkout Payment Screen
 - (void)showCheckoutPaymentScreen
 {
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAPaymentViewController class]] && [RICustomer checkIfUserIsLogged])
-    {
-        JAPaymentViewController *paymentVC = [[JAPaymentViewController alloc] initWithNibName:@"JAPaymentViewController" bundle:nil];
-        
-        if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
-        {
-            paymentVC = [[JAPaymentViewController alloc] initWithNibName:@"JAPaymentViewController~iPad" bundle:nil];
-        
-        }
-        
-        [self pushViewController:paymentVC animated:YES];
-    }
+    JAPaymentViewController *viewController = [[JAPaymentViewController alloc] init];
+    [self goToStep:viewController forStepByStepViewController:self.checkoutStepByStepViewController];
 }
 
 #pragma mark Checkout Finish Screen
@@ -1731,7 +1797,25 @@
             return;
         }
     }
+    JAStepByStepTabViewController *topViewController = (JAStepByStepTabViewController *)[self topViewController];
+    if ([topViewController isKindOfClass:[JAStepByStepTabViewController class]] && !topViewController.stackIsEmpty)
+    {
+        if ([topViewController sendBack]) {
+            return;
+        }
+    }
     [self popViewControllerAnimated:animated];
+}
+
+- (BOOL)closeScreensToStackClass:(Class)classKind animated:(BOOL)animated
+{
+    for (UIViewController *viewController in [[self.viewControllers reverseObjectEnumerator] allObjects]) {
+        if ([viewController isKindOfClass:classKind]) {
+            [self popToViewController:viewController animated:animated];
+            return YES;
+        }
+    }
+    return NO;
 }
 
 - (void) closeTopTwoScreensNotificaion:(NSNotification*)notification
@@ -1764,6 +1848,114 @@
             [[JACenterNavigationController sharedInstance] openScreenTarget:screenTarget];
             return;
         }
+    }
+}
+
+#pragma mark - OnlineReturns
+
+- (void)goToPickupStationWebViewControllerWithCMS:(NSString*)cmsBlock
+{
+    JAORPickupStationWebViewController* viewController = [[JAORPickupStationWebViewController alloc] init];
+    [viewController setCmsBlock:cmsBlock];
+    [self pushViewController:viewController animated:YES];
+}
+
+- (void)goToOnlineReturnsPaymentScreenForItems:(NSArray *)items
+                                         order:(RITrackOrder*)order
+{
+    JAORPaymentViewController* viewController = [[JAORPaymentViewController alloc] init];
+    [viewController setItems:items];
+    [viewController setOrder:order];
+    [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
+}
+
+- (void)goToOnlineReturnsWaysScreenForItems:(NSArray *)items
+                                      order:(RITrackOrder*)order
+{
+    JAORWaysViewController* viewController = [[JAORWaysViewController alloc] init];
+    [viewController setItems:items];
+    [viewController setOrder:order];
+    [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
+}
+
+- (void)goToOnlineReturnsReasonsScreenForItems:(NSArray *)items
+                                         order:(RITrackOrder*)order
+{
+    JAORReasonsViewController* viewController = [[JAORReasonsViewController alloc] init];
+    [viewController setItems:items];
+    [viewController setOrder:order];
+    [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
+}
+    
+- (void)goToOnlineReturnsCall:(RIItemCollection *)item
+              fromOrderNumber:(NSString *)orderNumber
+{
+    JAORCallToReturnViewController *viewController = [[JAORCallToReturnViewController alloc] init];
+    [viewController setItem:item];
+    [viewController setOrderNumber:orderNumber];
+    [self pushViewController:viewController animated:YES];
+}
+
+- (void)goToOnlineReturnsConfirmConditionsForItems:(NSArray *)items
+                                             order:(RITrackOrder*)order
+{
+    NSString *targetString = [(RIItemCollection *)[items firstObject] onlineReturnTargetString];
+    
+    [RIHtmlShop getHtmlShopForTargetString:targetString successBlock:^(RIHtmlShop *htmlShop) {
+        JAORConfirmConditionsViewController *viewController = [[JAORConfirmConditionsViewController alloc] init];
+        [viewController setHtml:htmlShop.html];
+        [viewController setItems:items];
+        [viewController setOrder:order];
+        [self pushViewController:viewController animated:YES];
+    } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+        [self goToOnlineReturnsReasonsScreenForItems:items order:order];
+    }];
+}
+
+- (void)goToOnlineReturnsConfirmScreenForItems:(NSArray *)items
+                                         order:(RITrackOrder*)order
+{
+    JAORConfirmationScreenViewController *viewController = [[JAORConfirmationScreenViewController alloc] init];
+    [viewController setItems:items];
+    [viewController setOrder:order];
+    [self goToStep:viewController forStepByStepViewController:self.returnsStepByStepViewController];
+}
+
+- (void)goToStep:(UIViewController *)viewController forStepByStepViewController:(JAStepByStepTabViewController *)stepByStepViewController
+{
+    if ([self.viewControllers indexOfObject:stepByStepViewController] == NSNotFound)
+    {
+        if (stepByStepViewController == self.checkoutStepByStepViewController) {
+            stepByStepViewController = [self getNewCheckoutStepByStepViewController];
+            self.checkoutStepByStepViewController = stepByStepViewController;
+        }else if (stepByStepViewController == self.returnsStepByStepViewController) {
+            stepByStepViewController = [self getNewReturnsStepByStepViewController];
+            if ([viewController respondsToSelector:@selector(items)])
+            {
+                [(JAReturnStepByStepModel *)stepByStepViewController.stepByStepModel setItems:[viewController performSelector:@selector(items) withObject:nil]];
+            }
+            if ([viewController respondsToSelector:@selector(order)])
+            {
+                [(JAReturnStepByStepModel *)stepByStepViewController.stepByStepModel setOrder:[viewController performSelector:@selector(order) withObject:nil]];
+            }
+            self.returnsStepByStepViewController = stepByStepViewController;
+        }
+    }
+    if ([viewController respondsToSelector:@selector(setStateInfoValues:)])
+    {
+        [viewController performSelector:@selector(setStateInfoValues:) withObject:stepByStepViewController.stepByStepModel.stepByStepValues];
+    }
+    if ([viewController respondsToSelector:@selector(setStateInfoLabels:)])
+    {
+        [viewController performSelector:@selector(setStateInfoLabels:) withObject:stepByStepViewController.stepByStepModel.stepByStepLabels];
+    }
+    JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
+    if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[stepByStepViewController.stepByStepModel class]])
+    {
+        [stepByStepTabViewController goToViewController:viewController];
+    }else{
+        [self pushViewController:stepByStepViewController animated:YES];
+        [stepByStepViewController goToViewController:viewController];
     }
 }
 
@@ -1908,6 +2100,14 @@
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidPressBackNotification
                                                         object:nil];
+    
+    JAStepByStepTabViewController *topViewController = (JAStepByStepTabViewController *)[self topViewController];
+    if ([topViewController isKindOfClass:[JAStepByStepTabViewController class]] && !topViewController.stackIsEmpty)
+    {
+        if ([topViewController sendBack]) {
+            return;
+        }
+    }
     [self popViewControllerAnimated:YES];
 }
 

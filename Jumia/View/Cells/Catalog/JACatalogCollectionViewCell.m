@@ -117,7 +117,7 @@
 {
     if (!VALID_NOTEMPTY(_priceLine, JAProductInfoPriceLine)) {
         _priceLine = [[JAProductInfoPriceLine alloc] initWithFrame:CGRectMake(0, 0, self.width, 15)];
-        [_priceLine setPriceSize:kPriceSizeSmall];
+        [_priceLine setPriceSize:JAPriceSizeSmall];
         [_priceLine setLineContentXOffset:0.f];
     }
     return _priceLine;
@@ -208,7 +208,7 @@
     [self.sizeButton setTag:tag];
 }
 
-- (void)loadWithProduct:(RIProduct*)product
+- (void)setProduct:(RIProduct*)product
 {
     _product = product;
     [_brandLabel setText:product.brand];
@@ -281,7 +281,7 @@
     }
 }
 
-- (void)loadWithVariation:(RIVariation *)variation
+- (void)setVariation:(RIVariation *)variation
 {
     _variation = variation;
     [_brandLabel setText:variation.brand];
@@ -324,7 +324,7 @@
         [self.product setPriceFormatted:oldPrice];
         [self.product setSpecialPriceFormatted:price];
     }
-    [self loadWithProduct:self.product];
+    [self setProduct:self.product];
 }
 
 @end

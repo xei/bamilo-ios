@@ -27,6 +27,7 @@
 #define JARed2Color UIColorFromRGB(0xAD0000)
 #define JAGreen1Color UIColorFromRGB(0xa3cf62)
 #define JAYellow1Color UIColorFromRGB(0xFFDC2D)
+#define JAYellow2Color UIColorFromRGB(0xFFF8D8)
 #define JASysBlueColor UIColorFromRGB(0x007aff)
 
 

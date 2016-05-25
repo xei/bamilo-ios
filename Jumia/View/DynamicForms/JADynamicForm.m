@@ -17,9 +17,10 @@
 #import "JARadioGroupComponent.h"
 #import "JASwitchRadioComponent.h"
 #import "JAScreenRadioComponent.h"
+#import "JARadioExpandableComponent.h"
 
 @interface JADynamicForm ()
-<UITextFieldDelegate, JASwitchRadioComponentDelegate, JAScreenRadioComponentDelegate>
+<UITextFieldDelegate, JASwitchRadioComponentDelegate, JAScreenRadioComponentDelegate, JARadioExpandableComponentDelegate>
 
 @property (nonatomic, strong) UITextField* currentTextField;
 
@@ -93,6 +94,14 @@
     }
 }
 
+- (void)setFormsY:(NSInteger)startingY
+{
+    for (UIView* formView in self.formViews) {
+        formView.y = startingY;
+        startingY += formView.height;
+    }
+}
+
 - (void)generateForm:(NSArray*)fields values:(NSDictionary*)values startingY:(CGFloat)startingY widthSize:(CGFloat)widthComponent
 {
     UIReturnKeyType returnKeyType = UIReturnKeyNext;
@@ -121,7 +130,38 @@
         RIField *field = [fields objectAtIndex:i];
         NSInteger tag = [self.formViews count];
         
-        if ([@"screen_radio" isEqualToString:field.type]) {
+        if ([@"radio_expandable" isEqualToString:field.type]) {
+            JARadioExpandableComponent* radioExpandable = [[JARadioExpandableComponent alloc] init];
+            [radioExpandable setupWithField:field];
+            radioExpandable.delegate = self;
+            radioExpandable.textFieldDelegate = self;
+            
+            CGRect frame = radioExpandable.frame;
+            frame.origin.y = startingY;
+            radioExpandable.frame = frame;
+            startingY += radioExpandable.frame.size.height;
+            
+            [self.formViews addObject:radioExpandable];
+            
+        } else if ([@"list_number" isEqualToString:field.type]) {
+            JAListNumberComponent *listNumberComponent = [[JAListNumberComponent alloc] init];
+            [listNumberComponent setupWithField:field];
+            [listNumberComponent.textField setDelegate:self];
+            [listNumberComponent.textField setReturnKeyType:returnKeyType];
+            
+            CGRect frame = listNumberComponent.frame;
+            frame.origin.y = startingY;
+            listNumberComponent.frame = frame;
+            startingY += listNumberComponent.frame.size.height;
+            
+            
+            [listNumberComponent.textField setTag:tag];
+            [listNumberComponent setTag:tag];
+            
+            lastTextFieldIndex = [self.formViews count];
+            [self.formViews addObject:listNumberComponent];
+            
+        } else if ([@"screen_radio" isEqualToString:field.type]) {
             JAScreenRadioComponent* screenRadio = [[JAScreenRadioComponent alloc] init];
             screenRadio.delegate = self;
             [screenRadio setupWithField:field];
@@ -622,7 +662,8 @@
             if ([obj isKindOfClass:[JATextFieldComponent class]] ||
                 [obj isKindOfClass:[JABirthDateComponent class]] ||
                 [obj isKindOfClass:[JARadioComponent class]] ||
-                [obj isKindOfClass:[JARadioRelatedComponent class]])
+                [obj isKindOfClass:[JARadioRelatedComponent class]] ||
+                [obj isKindOfClass:[JARadioExpandableComponent class]])
             {
                 //ignore gender as an error, can't evaluate it here because the billing address form has it but it isn't shown on screen.
                 if (NO == [[obj getFieldName] isEqualToString:genderFieldName]) {
@@ -642,6 +683,17 @@
     return hasErrors;
 }
 
+-(NSDictionary*)getValuesReplacingPlaceHolder:(NSString *)placeHolder forString:(NSString *)replaceString
+{
+    NSDictionary *values = [self getValues];
+    NSMutableDictionary *valuesToSave = [NSMutableDictionary new];
+    for (NSString *key in [values allKeys]) {
+        NSString *newKey = [key stringByReplacingOccurrencesOfString:@"__NAME__" withString:replaceString];
+        [valuesToSave setObject:[values objectForKey:key] forKey:newKey];
+    }
+    return valuesToSave;
+}
+
 -(NSDictionary*)getValues
 {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
@@ -650,29 +702,9 @@
     
     if(VALID_NOTEMPTY(self.formViews, NSMutableArray))
     {
-        for (UIView *view in self.formViews)
+        for (JADynamicField *view in self.formViews)
         {
-            if ([view isKindOfClass:[JASwitchRadioComponent class]]) {
-                JASwitchRadioComponent* switchRadio = (JASwitchRadioComponent*) view;
-                if(VALID_NOTEMPTY([switchRadio getValues], NSDictionary))
-                {
-                    [parameters addEntriesFromDictionary:[switchRadio getValues]];
-                }
-            }
-            else if ([view isKindOfClass:[JARadioGroupComponent class]])
-            {
-                JARadioGroupComponent* radioGroup = (JARadioGroupComponent*) view;
-                if(VALID_NOTEMPTY([radioGroup getValues], NSDictionary))
-                {
-                    [parameters addEntriesFromDictionary:[radioGroup getValues]];
-                }
-            }
-            else if ([view isKindOfClass:[JABirthDateComponent class]])
-            {
-                JABirthDateComponent *birthdateComponent = (JABirthDateComponent*) view;
-                [parameters addEntriesFromDictionary:[birthdateComponent getValues]];
-            }
-            else if ([view isKindOfClass:[JARadioComponent class]])
+            if ([view isKindOfClass:[JARadioComponent class]])
             {
                 JARadioComponent *radioComponent = (JARadioComponent*) view;
                 if(([@"register" isEqualToString:[self.form type]]
@@ -681,18 +713,8 @@
                    && [radioComponent isComponentWithKey:@"gender"]) {
                     genderComponent = radioComponent;
                 }
-                
-                if(VALID_NOTEMPTY([radioComponent getValues], NSDictionary))
-                {
-                    [parameters addEntriesFromDictionary:[radioComponent getValues]];
-                }
-            } else if([view isKindOfClass:[JARadioRelatedComponent class]])
-            {
-                JARadioRelatedComponent* radioRelatedComponent = (JARadioRelatedComponent*) view;
-                
-                [parameters addEntriesFromDictionary:[radioRelatedComponent getValues]];
-            }
-            else if ([view isKindOfClass:[JACheckBoxComponent class]])
+                [parameters addEntriesFromDictionary:[view getValues]];
+            } else if ([view isKindOfClass:[JACheckBoxComponent class]])
             {
                 JACheckBoxComponent *checkBoxComponent = (JACheckBoxComponent*) view;
                 
@@ -700,33 +722,16 @@
                 {
                     categoriesNewsletterComponent = checkBoxComponent;
                 }
-                
-                NSDictionary *checkBoxParameters = [checkBoxComponent getValues];
-                if(VALID_NOTEMPTY(checkBoxParameters, NSDictionary))
-                {
-                    [parameters addEntriesFromDictionary:checkBoxParameters];
-                }
-            }
-            else if ([view isKindOfClass:[JACheckBoxWithOptionsComponent class]])
-            {
-                JACheckBoxWithOptionsComponent *checkBoxWithOptionsComponent = (JACheckBoxWithOptionsComponent*) view;
-                if(VALID_NOTEMPTY(checkBoxWithOptionsComponent.values, NSMutableDictionary))
-                {
-                    [parameters addEntriesFromDictionary:checkBoxWithOptionsComponent.values];
-                }
+                [parameters addEntriesFromDictionary:[view getValues]];
             }
             else if ([view isKindOfClass:[JATextFieldComponent class]])
             {
                 JATextFieldComponent *textFieldComponent = (JATextFieldComponent *) view;
-                
-                if(VALID_NOTEMPTY([textFieldComponent getValues], NSDictionary))
-                {
-                    [parameters addEntriesFromDictionary:[textFieldComponent getValues]];
-                }
                 if([@"address" isEqualToString:[self.form type]] && [textFieldComponent isComponentWithKey:@"city"])
                 {
                     [parameters setValue:textFieldComponent.textField.text forKey:[self getFieldNameForKey:@"city"]];
                 }
+                [parameters addEntriesFromDictionary:[view getValues]];
             }
             else if ([view isKindOfClass:[JAAddRatingView class]])
             {
@@ -736,6 +741,8 @@
                 NSString* rating = [NSString stringWithFormat:@"%ld",(long)addRatingView.rating];
                 [parameters addEntriesFromDictionary:@{key: rating}];
                 NSLog(@"%@",parameters);
+            }else{
+                [parameters addEntriesFromDictionary:[view getValues]];
             }
         }
     }
@@ -765,37 +772,31 @@
 
 - (void)setValues:(NSDictionary *)values
 {
+    [self setValues:values replacePlaceHolder:nil forString:nil];
+}
+
+- (void)setValues:(NSDictionary *)values replacePlaceHolder:(NSString *)placeHolder forString:(NSString *)replaceString
+{
     NSArray *valuesKeys = [values allKeys];
     if(VALID_NOTEMPTY(self.formViews, NSMutableArray))
     {
         for(NSString *key in valuesKeys)
         {
-            [self setValue:[values objectForKey:key] inFieldWithKey:key];
+            [self setValue:[values objectForKey:key] inFieldWithKey:key replacePlaceHolder:placeHolder forString:replaceString];
         }
     }
 }
 
--(void)setValue:(NSString*)value inFieldWithKey:(NSString*)key
+-(void)setValue:(NSString*)value inFieldWithKey:(NSString*)key replacePlaceHolder:(NSString *)placeHolder forString:(NSString *)replaceString
 {
-    for (id view in self.formViews)
+    for (JADynamicField *fieldView in self.formViews)
     {
-        if ([view isKindOfClass:[JATextFieldComponent class]])
+        NSString *replacedKey = VALID(placeHolder, NSString)?[fieldView.field.key stringByReplacingOccurrencesOfString:placeHolder withString:replaceString]:fieldView.field.key;
+        NSString *replacedName = VALID(placeHolder, NSString)?[fieldView.field.name stringByReplacingOccurrencesOfString:placeHolder withString:replaceString]:fieldView.field.name;
+        if([key isEqualToString:replacedKey] || [key isEqualToString:replacedName])
         {
-            JATextFieldComponent *textFieldView = (JATextFieldComponent *)view;
-            if([textFieldView isComponentWithKey:key])
-            {
-                [textFieldView setValue:value];
-                break;
-            }
-        }
-        else if ([view isKindOfClass:[JARadioComponent class]])
-        {
-            JARadioComponent *radioComponent = (JARadioComponent*)view;
-            if([radioComponent isComponentWithKey:key])
-            {
-                [radioComponent setValue:value];
-                break;
-            }
+            [fieldView setValue:value];
+            break;
         }
     }
 }
@@ -961,6 +962,23 @@
             [self.delegate performSelector:@selector(openPicker:) withObject:[self viewWithTag:textField.tag]];
         }
     }
+    else if([view isKindOfClass:[JAListNumberComponent class]])
+    {
+        [self resignResponder];
+        
+        textFieldShouldBeginEditing = NO;
+        
+        if (self.delegate && [self.delegate respondsToSelector:@selector(openNumberPicker:)]) {
+            [self.delegate performSelector:@selector(openNumberPicker:) withObject:view];
+        }
+    }
+    else if ([view isKindOfClass:[JARadioExpandableComponent class]])
+    {
+        textFieldShouldBeginEditing = YES;
+        
+        [view performSelector:@selector(resetErrorFromTextField:) withObject:textField];
+    }
+    
     
     self.currentTextField = textField;
     
@@ -984,6 +1002,33 @@
         }
     }
     return fieldId;
+}
+
+- (NSDictionary *)getFieldLabels
+{
+    return [self getFieldLabelsReplacePlaceHolder:nil forString:nil];
+}
+
+- (NSDictionary *)getFieldLabelsReplacePlaceHolder:(NSString *)placeHolder forString:(NSString *)replaceString;
+{
+    NSMutableDictionary *fieldLabels = [NSMutableDictionary new];
+    if(VALID_NOTEMPTY(self.formViews, NSMutableArray))
+    {
+        for (JADynamicField *view in self.formViews)
+        {
+            NSMutableDictionary *newLabels = [NSMutableDictionary new];
+            NSDictionary *labels = [view getLabels];
+            for (NSString *key in [labels allKeys]) {
+                NSString *newString = key;
+                if (VALID_NOTEMPTY(placeHolder, NSString) && VALID_NOTEMPTY(replaceString, NSString)) {
+                    newString = [key stringByReplacingOccurrencesOfString:placeHolder withString:replaceString];
+                }
+                [newLabels setObject:[labels objectForKey:key] forKey:newString];
+            }
+            [fieldLabels addEntriesFromDictionary:newLabels];
+        }
+    }
+    return fieldLabels;
 }
 
 #pragma mark - JASwitchRadioComponentDelegate
@@ -1071,6 +1116,37 @@
         }else if ([field isKindOfClass:[JARadioComponent class]]  ) {
             [[(JARadioComponent *)field requiredSymbol] setHidden:YES];
         }
+    }
+}
+
+#pragma mark - JARadioExpandableComponent
+
+- (void)radioExpandableComponent:(JARadioExpandableComponent*)radioExpandableComponent
+                   changedHeight:(CGFloat)delta;
+{
+    BOOL belowRadioComponent = NO;
+    for (UIView* field in self.formViews) {
+        if (belowRadioComponent) {
+            [UIView animateWithDuration:0.3 animations:^{
+                field.y = field.y + delta;
+            }];
+        }
+        
+        if (field == radioExpandableComponent) {
+            belowRadioComponent = YES;
+        }
+    }
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(dynamicFormChangedHeight)]) {
+        [self.delegate dynamicFormChangedHeight];
+    }
+}
+
+- (void)radioExpandableComponent:(JARadioExpandableComponent *)radioExpandableComponent
+                    openCMSBlock:(NSString*)cmsBlock;
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(openCMSBlock:)]) {
+        [self.delegate openCMSBlock:cmsBlock];
     }
 }
 

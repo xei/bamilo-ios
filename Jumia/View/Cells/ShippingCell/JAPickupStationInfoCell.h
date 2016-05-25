@@ -11,18 +11,18 @@
 
 @class RIShippingMethodPickupStationOption;
 
-@interface JAPickupStationInfoCell : UICollectionViewCell
+@interface JAPickupStationInfoCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet JAClickableView *clickableView;
+@property (strong, nonatomic) JAClickableView *clickableView;
 @property (strong, nonatomic) UIView *separator;
 @property (strong, nonatomic) UIView *lastSeparator;
 
--(void)loadWithPickupStation:(RIShippingMethodPickupStationOption*)pickupStation;
+-(void)loadWithPickupStation:(RIShippingMethodPickupStationOption*)pickupStation width:(CGFloat)width;
 
 -(void)selectPickupStation;
 
 -(void)deselectPickupStation;
 
-+(CGFloat)getHeightForPickupStation:(RIShippingMethodPickupStationOption*)pickupStation;
++(CGFloat)getHeightForPickupStation:(RIShippingMethodPickupStationOption*)pickupStation width:(CGFloat)width;
 
 @end

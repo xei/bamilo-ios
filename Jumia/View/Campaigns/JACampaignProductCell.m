@@ -170,7 +170,7 @@
 {
     if (!VALID_NOTEMPTY(_priceLine, JAProductInfoPriceLine)) {
         _priceLine = [[JAProductInfoPriceLine alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.imageView.frame) + 10.f, self.width - 2*kLateralMargin, 20.f)];
-        [_priceLine setPriceSize:kPriceSizeSmall];
+        [_priceLine setPriceSize:JAPriceSizeSmall];
         [_priceLine setLineContentXOffset:0.f];
         [_priceLine.titleLabel setTextColor:JARed1Color];
     }

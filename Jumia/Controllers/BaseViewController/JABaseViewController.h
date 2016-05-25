@@ -24,6 +24,9 @@
 
 @property (nonatomic, strong) NSString *targetString;
 
+@property (nonatomic) BOOL isIpad;
+@property (nonatomic) BOOL isIpadLandscape;
+
 /**
  * This method returns the correct bounds to be used, taking the searchBar positioning into account
  */

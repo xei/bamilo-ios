@@ -116,10 +116,12 @@
 #define STRING_ERROR_CHANGING_QUANTITY RILocalizedString(@"error_add_to_shopping_cart_quantity", nil)
 #define STRING_SHIPPING RILocalizedString(@"shipping", nil)
 #define STRING_SHIPMENT_OF RILocalizedString(@"shipment_of", nil)
+#define STRING_SHIPMENT RILocalizedString(@"shipment_label", nil)
 #define STRING_FULFILLED RILocalizedString(@"fulfilled_by", nil)
 #define STRING_FREE RILocalizedString(@"free_label", nil)
 #define STRING_EXTRA_COSTS RILocalizedString(@"extra_costs_label", nil)
 #define STRING_VOUCHER RILocalizedString(@"my_order_voucher_label", nil)
+#define STRING_VOUCHER_ERROR RILocalizedString(@"voucher_error_message", nil)
 #define STRING_TOTAL RILocalizedString(@"my_order_total_label", nil)
 #define STRING_PROCEED_TO_CHECKOUT RILocalizedString(@"checkout_button_text", nil)
 #define STRING_SUBTOTAL RILocalizedString(@"sub_total_title", nil)
@@ -274,6 +276,7 @@
 #define STRING_AT_YOUR_DOORSTEP RILocalizedString(@"fallback_doorstep", nil)
 
 #define STRING_GOT_IT RILocalizedString(@"got_it", nil)
+#define STRING_OK_GOT_IT RILocalizedString(@"ok_got_it", nil)
 #define STRING_WIZARD_HOME RILocalizedString(@"home_tip_text", nil)
 #define STRING_WIZARD_CATALOG_SWIPE RILocalizedString(@"products_tip_swipe_text", nil)
 #define STRING_WIZARD_CATALOG_FAVORITE RILocalizedString(@"tip_favourite_text", nil)
@@ -421,5 +424,28 @@
 #define STRING_FREE_SHIPPING_POSSIBLE RILocalizedString(@"free_shipping_possible", nil)
 
 #define STRING_GO RILocalizedString(@"go", nil)
+
+#define STRING_ORDER_RETURN_CONDITIONS_TITLE RILocalizedString(@"order_return_conditions_title", nil)
+
+#define STRING_RETURN RILocalizedString(@"return_label", nil)
+
+#define STRING_RETURNS RILocalizedString(@"returns_label", nil)
+
+#define STRING_CALL_TO_RETURN RILocalizedString(@"call_return_label", nil)
+#define STRING_CALL_NOW RILocalizedString(@"call_now_label", nil)
+#define STRING_PLEASE_CALL_TO RILocalizedString(@"please_call_to", nil)
+#define STRING_X_ITEMS_RETURNED_ON RILocalizedString(@"x_items_returned_on", nil)
+
+#define STRING_QUESTION_RETURN_REASONS RILocalizedString(@"question_return_reasons", nil)
+
+#define STRING_RETURN_METHOD RILocalizedString(@"return_method", nil)
+
+#define STRING_RETURN_PAYMENT_METHOD RILocalizedString(@"return_payment_method", nil)
+
+#define STRING_RETURN_REASON RILocalizedString(@"return_reason", nil)
+
+#define STRING_RETURN_FINISH_TITLE RILocalizedString(@"order_return_finish_title", nil)
+
+#define STRING_IF_EVERYTHING_LOOKS_GOOD RILocalizedString(@"everything_looks_good", nil)
 
 #endif

@@ -10,8 +10,12 @@
 #import "JACustomNavigationBarView.h"
 #import "JATabBarView.h"
 #import "JAScreenTarget.h"
+#import "RIOrder.h"
+#import "RICart.h"
 
 @interface JACenterNavigationController : UINavigationController
+
+@property (strong, nonatomic) RICart *cart;
 
 @property (strong, nonatomic) JACustomNavigationBarView *navigationBarView;
 @property (strong, nonatomic) JATabBarView *tabBarView;
@@ -23,5 +27,25 @@
 - (void)openTargetString:(NSString *)targetString;
 - (BOOL)openScreenTarget:(JAScreenTarget *)target;
 - (void)showSearchView;
+
+- (void)goToPickupStationWebViewControllerWithCMS:(NSString*)cmsBlock;
+
+- (void)goToOnlineReturnsPaymentScreenForItems:(NSArray *)items
+                                         order:(RITrackOrder*)order;
+- (void)goToOnlineReturnsWaysScreenForItems:(NSArray *)items
+                                      order:(RITrackOrder*)order;
+- (void)goToOnlineReturnsReasonsScreenForItems:(NSArray *)items
+                                         order:(RITrackOrder*)order;
+
+- (void)goToOnlineReturnsConfirmConditionsForItems:(NSArray *)items
+                                             order:(RITrackOrder*)order;
+
+- (void)goToOnlineReturnsCall:(RIItemCollection *)item
+              fromOrderNumber:(NSString *)orderNumber;
+
+- (void)goToOnlineReturnsConfirmScreenForItems:(NSArray *)items
+                                         order:(RITrackOrder *)order;
+
+- (BOOL)closeScreensToStackClass:(Class)classKind animated:(BOOL)animated;
 
 @end

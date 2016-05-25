@@ -57,33 +57,32 @@
                                                              width,
                                                              dynamicFormView.frame.size.height)];
                         [paymentMethodView addSubview:dynamicFormView];
-                        totalHeight = CGRectGetMaxY(dynamicFormView.frame);
+                        totalHeight = CGRectGetMaxY(dynamicFormView.frame) + 3.0f;
                     }
                 }
                 
-                totalHeight += 2.0f;
-                
                 if(VALID_NOTEMPTY(paymentMethod.text, NSString))
                 {
-                    UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(27.0f,
+                    UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f,
                                                                                           totalHeight,
-                                                                                          width - (27.0f * 2),
+                                                                                          width,
                                                                                           1000.0f)];
-                    [descriptionLabel setFont:[UIFont fontWithName:kFontLightName size:13.0f]];
+                    [descriptionLabel setFont:JABodyFont];
                     [descriptionLabel setNumberOfLines:0];
                     [descriptionLabel setLineBreakMode:NSLineBreakByWordWrapping];
-                    [descriptionLabel setTextColor:JAGreyColor];
+                    [descriptionLabel setTextColor:JABlack800Color];
                     [descriptionLabel setText:paymentMethod.text];
                     [descriptionLabel setTextAlignment:NSTextAlignmentLeft];
                     [descriptionLabel sizeToFit];
                     [paymentMethodView addSubview:descriptionLabel];
-                    totalHeight += descriptionLabel.frame.size.height + 13.0f;
+                    totalHeight += descriptionLabel.frame.size.height;
                 }
                 
                 [paymentMethodView setFrame:CGRectMake(0.0f,
                                                        0.0f,
                                                        width,
                                                        totalHeight)];
+                
                 if (RI_IS_RTL) {
                     [paymentMethodView flipAllSubviews];
                 }
@@ -96,18 +95,18 @@
         CGFloat totalHeight = 0.0f;
         
 
-            UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(27.0f,
+            UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f,
                                                                                   totalHeight,
-                                                                                  width - (27.0f * 2),
+                                                                                  width,
                                                                                   1000.0f)];
-        [descriptionLabel setFont:[UIFont fontWithName:kFontLightName size:descriptionLabel.font.pointSize]];
+        [descriptionLabel setFont:JABodyFont];
         [descriptionLabel setNumberOfLines:0];
         [descriptionLabel setLineBreakMode:NSLineBreakByWordWrapping];
-        [descriptionLabel setTextColor:JAGreyColor];
+        [descriptionLabel setTextColor:JABlack800Color];
         [descriptionLabel setText:((RIPaymentMethodFormField*)[paymentMethodForm.fields firstObject]).label];
         [descriptionLabel setTextAlignment:NSTextAlignmentCenter];
         [descriptionLabel sizeToFit];
-        [descriptionLabel setWidth:width - (27.0f * 2)];
+        [descriptionLabel setWidth:width];
         [paymentMethodView addSubview:descriptionLabel];
         totalHeight += descriptionLabel.frame.size.height + 23.0f;
         
@@ -136,7 +135,6 @@
             paymentMethodView = [self.paymentMethodFormViews objectForKey:@"0"];
         }
     }
-    
     return paymentMethodView;
 }
 

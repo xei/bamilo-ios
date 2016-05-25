@@ -516,6 +516,7 @@
         }
         
         [userInfo setObject:self.emailTextField.textField.text forKey:@"email"];
+        [userInfo setObject:[NSNumber numberWithBool:self.checkout] forKey:@"checkout"];
         
         if (knownEmail) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kShowSignInScreenNotification object:self.nextStepBlock userInfo:userInfo];

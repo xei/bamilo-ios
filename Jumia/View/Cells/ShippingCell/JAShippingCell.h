@@ -10,12 +10,11 @@
 #import "JAClickableView.h"
 #import "RIShippingMethod.h"
 
-@interface JAShippingCell : UICollectionViewCell
+@interface JAShippingCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIView *separator;
-@property (weak, nonatomic) IBOutlet JAClickableView *clickableView;
+@property (strong, nonatomic) JAClickableView *clickableView;
 
--(void)loadWithShippingMethod:(RIShippingMethod *)shippingMethod;
+-(void)loadWithShippingMethod:(RIShippingMethod *)shippingMethod width:(CGFloat)width;
 
 -(void)selectShippingMethod;
 

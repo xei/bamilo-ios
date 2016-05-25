@@ -887,7 +887,7 @@ typedef void (^ProcessActionBlock)(void);
                           action:@selector(clickableViewPressedInCell:)
                 forControlEvents:UIControlEventTouchUpInside];
     
-    [cell loadWithProduct:product];
+    [cell setProduct:product];
     
     [cell.sizeButton setHidden:YES];
     

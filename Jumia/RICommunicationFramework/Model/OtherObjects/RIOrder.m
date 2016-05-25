@@ -49,6 +49,10 @@
         item.name = [json objectForKey:@"name"];
     }
     
+    if (VALID([json objectForKey:@"size"], NSString)) {
+        item.size = [json objectForKey:@"size"];
+    }
+    
     if (VALID([json objectForKey:@"quantity"], NSNumber)) {
         item.quantity = [json objectForKey:@"quantity"];
     }
@@ -76,7 +80,56 @@
         item.totalFormatted = [RICountryConfiguration formatPrice:item.total country:country];
     }
     
+    if (VALID([json objectForKey:@"returns"], NSArray)) {
+        NSMutableArray *returns = [NSMutableArray new];
+        for (NSDictionary *dict in [json objectForKey:@"returns"]) {
+            RIReturnAction *returnAction = [RIReturnAction parseReturnAction:dict];
+            if (returnAction) {
+                [returns addObject:returnAction];
+            }
+        }
+        if (returns) {
+            item.returns = [returns copy];
+        }
+    }
+    
+    if (VALID_NOTEMPTY([json objectForKey:@"actions"], NSArray)) {
+        NSArray *actionsArray = [json objectForKey:@"actions"];
+        for (NSDictionary *action in actionsArray) {
+            NSString *actionType = [action objectForKey:@"type"];
+            item.returnableQty = [action objectForKey:@"returnable_quantity"];
+            if ([actionType isEqualToString:@"online_return"] && VALID_NOTEMPTY([action objectForKey:@"target"], NSString)) {
+                item.onlineReturn = YES;
+                item.onlineReturnTargetString = [action objectForKey:@"target"];
+            }
+            if([actionType isEqualToString:@"call_return"]) {
+                item.callReturn = YES;
+                item.callReturnTextTitle = [action objectForKey:@"text_title"];
+                item.callReturnTextBody1 = [action objectForKey:@"text_body1"];
+                item.callReturnTextBody2 = [action objectForKey:@"text_body2"];
+            }
+        }
+    }
+    
     return item;
+}
+
+@end
+
+@implementation RIReturnAction
+
++ (RIReturnAction *)parseReturnAction:(NSDictionary *)json
+{
+    RIReturnAction *returnAction = [RIReturnAction new];
+    
+    if (VALID([json objectForKey:@"quantity"], NSNumber)) {
+        returnAction.items = [json objectForKey:@"quantity"];
+    }
+    if (VALID([json objectForKey:@"date"], NSString)) {
+        returnAction.lastChangeStatus = [json objectForKey:@"date"];
+    }
+    
+    return returnAction;
 }
 
 @end

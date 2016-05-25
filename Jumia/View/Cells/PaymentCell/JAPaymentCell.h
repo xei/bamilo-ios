@@ -11,12 +11,13 @@
 
 @class RIPaymentMethodFormOption;
 
-@interface JAPaymentCell : UICollectionViewCell
+@interface JAPaymentCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet JAClickableView *clickableView;
-@property (strong, nonatomic) UIView *separator;
+@property (strong, nonatomic) JAClickableView *clickableView;
 
--(void)loadWithPaymentMethod:(RIPaymentMethodFormOption *)paymentMethod paymentMethodView:(UIView*)paymentMethodView isSelected:(BOOL)isSelected;
+-(void)loadWithPaymentMethod:(RIPaymentMethodFormOption *)paymentMethod paymentMethodView:(UIView*)paymentMethodView isSelected:(BOOL)isSelected width:(CGFloat)width;
 -(void)loadNoPaymentMethod:(NSString *)paymentMethod paymentMethodView:(UIView*)paymentMethodView;
+
++ (CGFloat)xPositionAfterCheckmark;
 
 @end

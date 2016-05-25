@@ -28,13 +28,9 @@
 
 -(void)setupWithField:(RIField*)field;
 
--(BOOL)isComponentWithKey:(NSString*)key;
-
 -(void)setValue:(id)value;
 
 -(void)setLocaleValue:(RILocale*)locale;
-
--(NSDictionary*)getValues;
 
 -(NSString*)getSelectedValue;
 

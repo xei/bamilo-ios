@@ -9,11 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "RIOrder.h"
 #import "JAProductInfoPriceLine.h"
+#import "JAButton.h"
 
 @interface JAOrderItemCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic) JAClickableView *feedbackView;
 @property (nonatomic) RIItemCollection *item;
-@property (nonatomic) UIButton *reorderButton;
+@property (nonatomic) JAButton *reorderButton;
+@property (nonatomic) JAButton *returnButton;
+@property (nonatomic) UIButton *checkToReturnButton;
 
 @end

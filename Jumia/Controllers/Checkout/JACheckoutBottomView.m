@@ -8,11 +8,12 @@
 
 #import "JACheckoutBottomView.h"
 #import "UIImage+WithColor.h"
+#import "JAButton.h"
 
 @interface JACheckoutBottomView () {
     UILabel *_totalLabel;
     UILabel *_totalLabelValue;
-    UIButton *_submitButton;
+    JAButton *_submitButton;
 //    JAButtonWithBlur *_submitButton;
     UIInterfaceOrientation _orientation;
     UIView *_totalView;
@@ -38,38 +39,29 @@
 - (void)initViews
 {
     _delimiter = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width, 1)];
-    [_delimiter setBackgroundColor:[UIColor colorWithRed:0.3059 green:0.3059 blue:0.3059 alpha:.5]];
+    [_delimiter setBackgroundColor:JABlack400Color];
     [self addSubview:_delimiter];
-    _totalBackgoundColor = JABackgroundGrey;
+    _totalBackgoundColor = JAWhiteColor;
     [self setBackgroundColor:_totalBackgoundColor];
     
     _totalView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width/2, self.height)];
     [self addSubview:_totalView];
     
     _totalLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [_totalLabel setFont:[UIFont systemFontOfSize:16]];
-    [_totalLabel setTextColor:[UIColor colorWithRed:0.3059 green:0.3059 blue:0.3059 alpha:1]];
+    [_totalLabel setFont:JADisplay3Font];
+    [_totalLabel setTextColor:JABlackColor];
     [_totalLabel setFrame:CGRectMake(23, _totalView.height/2 - _totalLabel.height/2, _totalLabel.width, _totalLabel.height)];
     [_totalLabel setFont:[UIFont fontWithName:kFontRegularName size:_totalLabel.font.pointSize]];
     [_totalView addSubview:_totalLabel];
     
     _totalLabelValue = [[UILabel alloc] initWithFrame:CGRectZero];
-    [_totalLabelValue setFont:[UIFont boldSystemFontOfSize:16]];
-    [_totalLabelValue setTextColor:[UIColor colorWithRed:.8f green:0 blue:0 alpha:1]];
+    [_totalLabelValue setFont:JADisplay3Font];
+    [_totalLabelValue setTextColor:JABlack800Color];
     [self setTotalValue:@""];
     [_totalView addSubview:_totalLabelValue];
     
-    _submitButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_submitButton.layer setCornerRadius:3.5f];
-    [_submitButton.layer setMasksToBounds:YES];
-    [_submitButton setFrame:CGRectMake(self.width/2 + 5, 5, self.width/2 - 10, self.height-10)];
-    [_submitButton.titleLabel setFont:JADisplay3Font];
-    [_submitButton setTitleColor:JAButtonTextOrange forState:UIControlStateNormal];
-    [_submitButton setTitleColor:JABlack800Color forState:UIControlStateDisabled];
-    [_submitButton setTitle:@"Next" forState:UIControlStateNormal];
-    [_submitButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithRed:.957 green:.67451 blue:.2392 alpha:1]] forState:UIControlStateNormal];
-    [_submitButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithRed:.907 green:.60451 blue:.2092 alpha:1]] forState:UIControlStateHighlighted];
-    [_submitButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithRed:.907 green:.60451 blue:.2092 alpha:1]] forState:UIControlStateSelected];
+    _submitButton = [[JAButton alloc] initButtonWithTitle:[STRING_NEXT uppercaseString]];
+    [_submitButton setFrame:CGRectMake(self.width/3*2, 0, self.width/3, self.height)];
     [self addSubview:_submitButton];
     
     if (UIInterfaceOrientationIsLandscape(_orientation)) {
@@ -81,22 +73,13 @@
 
 - (void)reloadViews
 {
-    if (_noTotal) {
-        [self setBackgroundColor:[UIColor clearColor]];
-        [_delimiter setHidden:YES];
-        [_totalView setHidden:YES];
-        [_submitButton setFrame:CGRectMake(5, 5, self.width - 10, self.height - 10)];
-    }else{
-        [self setBackgroundColor:_totalBackgoundColor];
-        [_delimiter setHidden:NO];
-        [_totalView setHidden:NO];
-        [_submitButton setFrame:CGRectMake(self.width/2 + 5, 5, self.width/2 - 10, self.height - 10)];
-        [_submitButton setX:self.width/2 + 5];
-        [_submitButton setWidth:self.width/2 - 10];
-        [_totalView setX:0];
-        [_totalLabel setTextAlignment:NSTextAlignmentLeft];
-        [_totalLabelValue setTextAlignment:NSTextAlignmentLeft];
-    }
+    [self setBackgroundColor:_totalBackgoundColor];
+    [_delimiter setHidden:NO];
+    [_totalView setHidden:NO];
+    [_submitButton setFrame:CGRectMake(self.width/3*2, 0, self.width/3, self.height)];
+    [_totalView setX:0];
+    [_totalLabel setTextAlignment:NSTextAlignmentLeft];
+    [_totalLabelValue setTextAlignment:NSTextAlignmentLeft];
 }
 
 - (void)setTotalValue:(NSString *)totalValue
@@ -125,7 +108,7 @@
 
 - (void)setButtonText:(NSString *)text target:(id)target action:(SEL)selector
 {
-    [_submitButton setTitle:text forState:UIControlStateNormal];
+    [_submitButton setTitle:[text uppercaseString] forState:UIControlStateNormal];
     [_submitButton addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
 }
 

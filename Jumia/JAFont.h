@@ -33,6 +33,7 @@
 #define JACaptionItalicFont [UIFont fontWithName:kFontItalicName size:10]
 #define JABADGEFont         [UIFont fontWithName:kFontMediumName size:10]
 #define JABUTTONFont        [UIFont fontWithName:kFontBoldName size:14]
+#define JABUTTON2Font       [UIFont fontWithName:kFontBoldName size:12]
 
 
 #warning out of styleguide fonts

@@ -14,6 +14,10 @@
 #import "RIAddress.h"
 #import "RIPaymentInformation.h"
 #import "JAUtils.h"
+#import "JAProductInfoHeaderLine.h"
+#import "JAProductInfoPriceDescriptionLine.h"
+#import "JAProductInfoPriceLine.h"
+#import "JAButton.h"
 
 #define kScrollViewTag 9999
 
@@ -28,7 +32,7 @@
 @property (assign, nonatomic) RIApiResponse apiResponse;
 
 // Bottom view
-@property (strong, nonatomic) JAButtonWithBlur *bottomView;
+@property (strong, nonatomic) JAButton *bottomButton;
 
 @property (nonatomic, assign) BOOL alreadyLoadedConfirmButton;
 
@@ -62,21 +66,6 @@
     return _secondScrollView;
 }
 
--(JAButtonWithBlur *)bottomView {
-    if (!VALID_NOTEMPTY(_bottomView, JAButtonWithBlur)) {
-        
-        
-        _bottomView = [[JAButtonWithBlur alloc] initWithFrame:CGRectMake(0.0f,
-                                                                             self.viewBounds.size.height - _bottomView.frame.size.height,
-                                                                             self.view.frame.size.width,
-                                                                             _bottomView.frame.size.height)
-                                                      orientation:UIInterfaceOrientationPortrait];
-        [_bottomView setHidden:YES];
-        [self.view addSubview:_bottomView];
-    }
-    return _bottomView;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -87,7 +76,7 @@
     self.navBarLayout.showCartButton = NO;
     self.navBarLayout.showBackButton = YES;
     
-    self.view.backgroundColor = JABackgroundGrey;
+    self.view.backgroundColor = JAWhiteColor;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -144,7 +133,7 @@
         [self.secondScrollView setHidden:YES];
     }
     
-    [self.bottomView setHidden:YES];
+    [self.bottomButton setHidden:YES];
     
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
@@ -190,7 +179,7 @@
     [self removeScrollViews];
     
     
-    CGFloat horizontalMargin = 6.0f;
+    CGFloat horizontalMargin = 0.0f;
     CGFloat viewsWidth = self.view.frame.size.width - (2 * horizontalMargin);
     CGFloat originY = 0.0f;
     
@@ -203,14 +192,14 @@
                                                    viewsWidth,
                                                    self.view.bounds.size.height)];
         
-        CGFloat secondScrollViewCurrentY = self.secondScrollView.frame.origin.y + 6.0f;
+        CGFloat secondScrollViewCurrentY = self.secondScrollView.frame.origin.y;
         secondScrollViewCurrentY += [self setupShippingAddressView:self.secondScrollView atYPostion:secondScrollViewCurrentY];
         secondScrollViewCurrentY += [self setupBillingAddressView:self.secondScrollView atYPostion:secondScrollViewCurrentY];
         secondScrollViewCurrentY += [self setupShippingMethodView:self.secondScrollView atYPostion:secondScrollViewCurrentY];
         secondScrollViewCurrentY += [self setupPaymentOptionsView:self.secondScrollView atYPostion:secondScrollViewCurrentY];
         
         [self.secondScrollView setContentSize:CGSizeMake(self.secondScrollView.frame.size.width,
-                                                         secondScrollViewCurrentY + self.bottomView.frame.size.height)];
+                                                         secondScrollViewCurrentY + self.bottomButton.frame.size.height)];
     }
     
     [self.scrollView setFrame:CGRectMake(horizontalMargin,
@@ -219,7 +208,7 @@
                                          self.view.bounds.size.height)];
     
     //relative to scroll
-    self.scrollViewCurrentY = self.scrollView.frame.origin.y + 6.0f;
+    self.scrollViewCurrentY = self.scrollView.frame.origin.y;
     self.scrollViewCurrentY += [self setupOrderView:self.scrollView atYPostion:self.scrollViewCurrentY];
     self.scrollViewCurrentY += [self setupSubtotalView:self.scrollView atYPostion:self.scrollViewCurrentY];
     
@@ -236,7 +225,7 @@
     
     [self.scrollView setHidden:NO];
     [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
-                                               self.scrollViewCurrentY + self.bottomView.frame.size.height)];
+                                               self.scrollViewCurrentY + self.bottomButton.frame.size.height)];
     [self hideLoading];
     
     if (RI_IS_RTL) {
@@ -256,68 +245,64 @@
         [self placeCartItemCell:cartItem inContentView:orderContentView];
     }
     
-    return orderContentView.frame.size.height + 5.0f;
+    return orderContentView.frame.size.height;
 }
 
 - (void)placeCartItemCell:(RICartItem*)cartItem
             inContentView:(UIView*)contentView
 {
-    UIView* itemCell = [[UIView alloc] initWithFrame:CGRectMake(contentView.bounds.origin.x,
-                                                                contentView.bounds.size.height,
-                                                                contentView.bounds.size.width,
-                                                                89)];
+    UIView* itemCell = [[UIView alloc] init];
     [contentView addSubview:itemCell];
     
-    contentView.frame = CGRectMake(contentView.frame.origin.x,
-                                   contentView.frame.origin.y,
-                                   contentView.frame.size.width,
-                                   contentView.frame.size.height + itemCell.frame.size.height);
+    CGSize imageSize = CGSizeMake(68.0f, 85.0f);
     
+    CGFloat currentY = 10.0f;
     
     //details inside itemCell
-    UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(itemCell.bounds.origin.x + 8.0f,
-                                                                           itemCell.bounds.origin.y + 2.0f,
-                                                                           68.0f,
-                                                                           85.0f)];
+    UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(16.0f,
+                                                                           currentY,
+                                                                           imageSize.width,
+                                                                           imageSize.height)];
     
     [imageView setImageWithURL:[NSURL URLWithString:cartItem.imageUrl]
               placeholderImage:[UIImage imageNamed:@"placeholder_list"]];
     [itemCell addSubview:imageView];
     
+    UILabel* brandLabel = [UILabel new];
+    brandLabel.textAlignment = NSTextAlignmentLeft;
+    brandLabel.font = JABodyFont;
+    brandLabel.textColor = JABlack800Color;
+    brandLabel.text = cartItem.brand;
+    [brandLabel sizeToFit];
+    brandLabel.frame = CGRectMake(CGRectGetMaxX(imageView.frame) + 8.0f,
+                                 currentY,
+                                 contentView.frame.size.width - imageView.frame.size.width - 8.0f*2,
+                                 brandLabel.frame.size.height);
+    [itemCell addSubview:brandLabel];
+    
+    currentY = CGRectGetMaxY(brandLabel.frame) + 3.0f;
+
+    
     UILabel* nameLabel = [UILabel new];
     nameLabel.textAlignment = NSTextAlignmentLeft;
-    nameLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-    nameLabel.textColor = JAGreyColor;
+    nameLabel.font = JATitleFont;
+    nameLabel.textColor = JABlackColor;
     nameLabel.text = cartItem.name;
     [nameLabel sizeToFit];
     nameLabel.frame = CGRectMake(CGRectGetMaxX(imageView.frame) + 8.0f,
-                                 itemCell.bounds.origin.y + 6.0f,
-                                 itemCell.frame.size.width - imageView.frame.size.width - 8.0f*2,
+                                 currentY,
+                                 contentView.frame.size.width - CGRectGetMaxX(imageView.frame) - 8.0f*2,
                                  nameLabel.frame.size.height);
     [itemCell addSubview:nameLabel];
     
-    UILabel* priceLabel = [UILabel new];
-    priceLabel.textAlignment = NSTextAlignmentLeft;
-    priceLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-    priceLabel.textColor = JAGreyColor;
-    priceLabel.text = cartItem.priceFormatted;
-    if (VALID_NOTEMPTY(cartItem.specialPriceFormatted, NSString)) {
-        priceLabel.text = cartItem.specialPriceFormatted;
-    }
-    [priceLabel sizeToFit];
-    priceLabel.frame = CGRectMake(nameLabel.frame.origin.x,
-                                  CGRectGetMaxY(nameLabel.frame),
-                                  nameLabel.frame.size.width,
-                                  priceLabel.frame.size.height);
-    [itemCell addSubview:priceLabel];
-    CGFloat sizeLabelY = CGRectGetMaxY(priceLabel.frame);
+    currentY = CGRectGetMaxY(nameLabel.frame) + 3.0f;
     
     if ([cartItem.shopFirst boolValue]){
         self.shopFirstOverlayText = cartItem.shopFirstOverlayText;
         UIImageView *shopFirstLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shop_first_logo"]];
         [shopFirstLogo sizeToFit];
-        [shopFirstLogo setX:priceLabel.frame.origin.x];
-        [shopFirstLogo setY:CGRectGetMaxY(priceLabel.frame) + 2.0f];
+        [shopFirstLogo setX:brandLabel.frame.origin.x];
+        [shopFirstLogo setY:currentY];
         [shopFirstLogo setHidden:NO];
         [shopFirstLogo setUserInteractionEnabled:YES];
         UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -325,30 +310,67 @@
         [shopFirstLogo addGestureRecognizer:singleTap];
         [itemCell addSubview:shopFirstLogo];
         [itemCell bringSubviewToFront:shopFirstLogo];
-        sizeLabelY = CGRectGetMaxY(shopFirstLogo.frame);
+        
+        currentY = CGRectGetMaxY(shopFirstLogo.frame) + 3.0f;
     }
-
-    UILabel* sizeLabel = [UILabel new];
-    sizeLabel.textAlignment = NSTextAlignmentLeft;
-    sizeLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-    sizeLabel.textColor = JAGreyColor;
-    sizeLabel.text = cartItem.variation;
-    [sizeLabel sizeToFit];
-    sizeLabel.frame = CGRectMake(nameLabel.frame.origin.x,
-                                 sizeLabelY,
-                                 nameLabel.frame.size.width,
-                                 sizeLabel.frame.size.height);
-    [itemCell addSubview:sizeLabel];
+    
+    if (VALID_NOTEMPTY(cartItem.variation, NSString)) {
+        UILabel* sizeLabel = [UILabel new];
+        sizeLabel.textAlignment = NSTextAlignmentLeft;
+        sizeLabel.font = JABodyFont;
+        sizeLabel.textColor = JABlack800Color;
+        sizeLabel.text = cartItem.variation;
+        [sizeLabel sizeToFit];
+        sizeLabel.frame = CGRectMake(nameLabel.frame.origin.x,
+                                     currentY,
+                                     nameLabel.frame.size.width,
+                                     sizeLabel.frame.size.height);
+        [itemCell addSubview:sizeLabel];
+        
+        currentY = CGRectGetMaxY(sizeLabel.frame) + 3.0f;
+    }
     
     UILabel* quantityLabel = [UILabel new];
     quantityLabel.textAlignment = NSTextAlignmentLeft;
-    quantityLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-    quantityLabel.textColor = JAGreyColor;
+    quantityLabel.font = JABodyFont;
+    quantityLabel.textColor = JABlack800Color;
     quantityLabel.text = [NSString stringWithFormat:STRING_QUANTITY, cartItem.quantity];
     [quantityLabel sizeToFit];
-    [quantityLabel setX:itemCell.bounds.size.width - quantityLabel.width - 8.0f];
-    [quantityLabel setY:CGRectGetMaxY(nameLabel.frame) + 45.0f];
+    [quantityLabel setX:brandLabel.frame.origin.x];
+    [quantityLabel setY:currentY];
     [itemCell addSubview:quantityLabel];
+    
+    currentY = CGRectGetMaxY(quantityLabel.frame) + 3.0f;
+    
+    JAProductInfoPriceLine* priceLine = [[JAProductInfoPriceLine alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x - 16.0f,
+                                                                                                 currentY,
+                                                                                                 nameLabel.frame.size.width,
+                                                                                                 20.0f)];
+    [priceLine setPriceSize:JAPriceSizeSmall];
+    [priceLine setPrice:cartItem.priceFormatted];
+    if (VALID_NOTEMPTY(cartItem.specialPriceFormatted, NSString)) {
+        [priceLine setPrice:cartItem.specialPriceFormatted];
+        [priceLine setOldPrice:cartItem.priceFormatted];
+    }
+    [itemCell addSubview:priceLine];
+    
+    currentY = CGRectGetMaxY(priceLine.frame) + 10.0f;
+    
+    //adjust having the image size in mind has a minimum
+    currentY = MAX(imageSize.height + 20.0f, currentY);
+    
+    //center image now that the height is known
+    imageView.y = (currentY - imageView.height) / 2;
+    
+    itemCell.frame = CGRectMake(contentView.bounds.origin.x,
+                                contentView.bounds.size.height,
+                                contentView.bounds.size.width,
+                                currentY);
+    
+    contentView.frame = CGRectMake(contentView.frame.origin.x,
+                                   contentView.frame.origin.y,
+                                   contentView.frame.size.width,
+                                   contentView.frame.size.height + itemCell.frame.size.height);
 }
 
 - (void)placeGreySeparatorInContentView:(UIView*)contentView
@@ -371,36 +393,23 @@
 {
     UIView* subtotalContentView = [self placeContentViewWithTitle:STRING_SUBTOTAL atYPosition:yPosition scrollView:scrollView];
     
-    UILabel* articlesLabel = [UILabel new];
-    articlesLabel.textAlignment = NSTextAlignmentLeft;
-    articlesLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-    articlesLabel.textColor = JAGreyColor;
-    articlesLabel.text = [NSString stringWithFormat:STRING_ITEMS_CART, [self.cart.cartCount integerValue]];
-    if (1 == [self.cart.cartCount integerValue]) {
-        articlesLabel.text = STRING_ITEM_CART;
+    JAProductInfoPriceDescriptionLine *priceDescriptionLine = [[JAProductInfoPriceDescriptionLine alloc] initWithFrame:CGRectMake(0.f,
+                                                                                                                                  subtotalContentView.frame.size.height,
+                                                                                                                                  scrollView.frame.size.width,
+                                                                                                                                  48.0f)];
+    [priceDescriptionLine setTopSeparatorVisibility:NO];
+    if ([[[self cart] cartCount] integerValue] == 1) {
+        [priceDescriptionLine setTitle:STRING_ITEM_CART];
+    }else{
+        [priceDescriptionLine setTitle:[NSString stringWithFormat:STRING_ITEMS_CART, [[[self cart] cartCount] integerValue]]];
     }
-    [articlesLabel sizeToFit];
-    articlesLabel.frame = CGRectMake(subtotalContentView.bounds.origin.x + 6.0f,
-                                     subtotalContentView.frame.size.height + 10.0f,
-                                     (subtotalContentView.frame.size.width / 2) - 6.0f,
-                                     articlesLabel.frame.size.height);
-    [subtotalContentView addSubview:articlesLabel];
     
-    CGRect articleNumberWidth = [articlesLabel.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)
-                                                                      options:NSStringDrawingUsesLineFragmentOrigin
-                                                                   attributes:@{NSFontAttributeName:articlesLabel.font} context:nil];
+    [priceDescriptionLine setPrice:[[self cart] subTotalFormatted] andOldPrice:[[self cart] cartUnreducedValueFormatted]];
+    [subtotalContentView addSubview:priceDescriptionLine];
     
-    UILabel* totalLabel = [UILabel new];
-    totalLabel.textAlignment = NSTextAlignmentRight;
-    totalLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-    totalLabel.textColor = JAGreyColor;
-    totalLabel.text = self.cart.subTotalFormatted;
-    [totalLabel sizeToFit];
-    totalLabel.frame = CGRectMake(CGRectGetMaxX(articlesLabel.frame),
-                                  articlesLabel.frame.origin.y,
-                                  (subtotalContentView.frame.size.width / 2) - 6.0f,
-                                  totalLabel.frame.size.height);
-    [subtotalContentView addSubview:totalLabel];
+    CGFloat startingX = 16.0f;
+    CGFloat labelWidth = (subtotalContentView.frame.size.width / 2) - startingX;
+    CGFloat endingX = subtotalContentView.frame.size.width - 16.0f;
     
     NSString *priceRuleKeysString = @"";
     NSString *priceRuleValuesString = @"";
@@ -425,31 +434,31 @@
     
     UILabel* vatLabel = [UILabel new];
     vatLabel.textAlignment = NSTextAlignmentLeft;
-    vatLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-    vatLabel.textColor = JAGreyColor;
+    vatLabel.font = JABodyFont;
+    vatLabel.textColor = JABlack800Color;
     [vatLabel setText:self.cart.vatLabel];
     [vatLabel sizeToFit];
-    vatLabel.frame = CGRectMake(articlesLabel.x,
-                                CGRectGetMaxY(articlesLabel.frame),
-                                articlesLabel.frame.size.width,
+    vatLabel.frame = CGRectMake(startingX,
+                                CGRectGetMaxY(priceDescriptionLine.frame) - 16.0f,
+                                labelWidth,
                                 vatLabel.frame.size.height);
     
     UILabel *cartVatValue = [[UILabel alloc] initWithFrame:CGRectZero];
     cartVatValue.textAlignment = NSTextAlignmentLeft;
-    [cartVatValue setFont:[UIFont fontWithName:kFontLightName size:13.0f]];
-    [cartVatValue setTextColor:JAGreyColor];
+    [cartVatValue setFont:JABodyFont];
+    [cartVatValue setTextColor:JABlack800Color];
     if ([[self.cart vatLabelEnabled] boolValue]) {
         [cartVatValue setText:[self.cart vatValueFormatted]];
         [subtotalContentView addSubview:cartVatValue];
     }
     [cartVatValue sizeToFit];
     [cartVatValue setBackgroundColor:[UIColor clearColor]];
-    [cartVatValue setFrame:CGRectMake(CGRectGetMaxX(totalLabel.frame) - cartVatValue.frame.size.width,
-                                           vatLabel.y,
-                                           cartVatValue.frame.size.width,
-                                           cartVatValue.frame.size.height)];
+    [cartVatValue setFrame:CGRectMake(endingX - cartVatValue.frame.size.width,
+                                      vatLabel.y,
+                                      cartVatValue.frame.size.width,
+                                      cartVatValue.frame.size.height)];
     
-    CGFloat nextYPos = CGRectGetMaxY(vatLabel.frame);
+    CGFloat nextYPos = CGRectGetMaxY(vatLabel.frame) + 10.0f;
     
     [subtotalContentView addSubview:vatLabel];
     
@@ -458,15 +467,15 @@
     {
         UILabel *priceRulesLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         priceRulesLabel.textAlignment = NSTextAlignmentLeft;
-        [priceRulesLabel setFont:[UIFont fontWithName:kFontLightName size:13.0f]];
-        [priceRulesLabel setTextColor:JAGreyColor];
+        [priceRulesLabel setFont:JABodyFont];
+        [priceRulesLabel setTextColor:JABlack800Color];
         [priceRulesLabel setText:priceRuleKeysString];
         [priceRulesLabel setNumberOfLines:0];
         [priceRulesLabel setBackgroundColor:[UIColor clearColor]];
         [priceRulesLabel sizeToFit];
-        [priceRulesLabel setFrame:CGRectMake(articlesLabel.frame.origin.x,
+        [priceRulesLabel setFrame:CGRectMake(startingX,
                                              CGRectGetMaxY(vatLabel.frame),
-                                             articlesLabel.frame.size.width,
+                                             labelWidth,
                                              priceRulesLabel.frame.size.height)];
         
         [subtotalContentView addSubview:priceRulesLabel];
@@ -475,130 +484,140 @@
         UILabel *priceRulesValue = [[UILabel alloc] initWithFrame:CGRectZero];
         priceRulesLabel.textAlignment = NSTextAlignmentLeft;
         [priceRulesValue setTextAlignment:NSTextAlignmentRight];
-        [priceRulesValue setFont:[UIFont fontWithName:kFontLightName size:13.0f]];
-        [priceRulesValue setTextColor:JAGreyColor];
+        [priceRulesValue setFont:JABodyFont];
+        [priceRulesValue setTextColor:JABlack800Color];
         [priceRulesValue setText:priceRuleValuesString];
         [priceRulesValue setNumberOfLines:0];
         [priceRulesValue setBackgroundColor:[UIColor clearColor]];
         [priceRulesValue sizeToFit];
-        [priceRulesValue setFrame:CGRectMake(CGRectGetMaxX(priceRulesLabel.frame),
+        [priceRulesValue setFrame:CGRectMake(endingX - priceRulesValue.frame.size.width,
                                              CGRectGetMaxY(vatLabel.frame),
-                                             totalLabel.frame.size.width,
+                                             priceRulesValue.frame.size.width,
                                              priceRulesValue.frame.size.height)];
         
         [subtotalContentView addSubview:priceRulesValue];
         
-        nextYPos = CGRectGetMaxY(priceRulesLabel.frame);
+        nextYPos = CGRectGetMaxY(priceRulesLabel.frame) + 10.0f;
         vatPositionY = CGRectGetMaxY(priceRulesLabel.frame);
     }
     
     if (self.cart.shippingValue.floatValue != 0) {
         UILabel* shippingLabel = [UILabel new];
         shippingLabel.textAlignment = NSTextAlignmentLeft;
-        shippingLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-        shippingLabel.textColor = JAGreyColor;
+        shippingLabel.font = JABodyFont;
+        shippingLabel.textColor = JABlackColor;
         shippingLabel.text = STRING_SHIPPING;
         [shippingLabel sizeToFit];
-        shippingLabel.frame = CGRectMake(articlesLabel.frame.origin.x,
+        shippingLabel.frame = CGRectMake(startingX,
                                          nextYPos,
-                                         articlesLabel.frame.size.width,
+                                         labelWidth,
                                          vatLabel.frame.size.height);
         [subtotalContentView addSubview:shippingLabel];
         
         UILabel* shippingValueLabel = [UILabel new];
         shippingValueLabel.textAlignment = NSTextAlignmentRight;
-        shippingValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-        shippingValueLabel.textColor = JAGreyColor;
+        shippingValueLabel.font = JABodyFont;
+        shippingValueLabel.textColor = JABlackColor;
         shippingValueLabel.text = self.cart.shippingValueFormatted;
         if (0 == [self.cart.shippingValue integerValue]) {
             shippingValueLabel.text = STRING_FREE;
         }
         [shippingValueLabel sizeToFit];
-        shippingValueLabel.frame = CGRectMake(CGRectGetMaxX(shippingLabel.frame),
+        shippingValueLabel.frame = CGRectMake(endingX - shippingValueLabel.frame.size.width,
                                               shippingLabel.frame.origin.y,
-                                              totalLabel.frame.size.width,
+                                              shippingValueLabel.frame.size.width,
                                               shippingValueLabel.frame.size.height);
         [subtotalContentView addSubview:shippingValueLabel];
-        nextYPos = CGRectGetMaxY(shippingLabel.frame);
+        nextYPos = CGRectGetMaxY(shippingLabel.frame) + 10.0f;
     }
     
     if (self.cart.extraCosts.floatValue != 0) {
         UILabel* extraCostsLabel = [UILabel new];
         extraCostsLabel.textAlignment = NSTextAlignmentLeft;
-        extraCostsLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-        extraCostsLabel.textColor = JAGreyColor;
+        extraCostsLabel.font = JABodyFont;
+        extraCostsLabel.textColor = JABlackColor;
         extraCostsLabel.text = STRING_EXTRA_COSTS;
         [extraCostsLabel sizeToFit];
-        extraCostsLabel.frame = CGRectMake(articlesLabel.frame.origin.x,
+        extraCostsLabel.frame = CGRectMake(startingX,
                                            nextYPos,
-                                           articlesLabel.frame.size.width,
+                                           labelWidth,
                                            extraCostsLabel.frame.size.height);
         [subtotalContentView addSubview:extraCostsLabel];
         
         UILabel* extraCostsValueLabel = [UILabel new];
         extraCostsValueLabel.textAlignment = NSTextAlignmentRight;
-        extraCostsValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-        extraCostsValueLabel.textColor = JAGreyColor;
+        extraCostsValueLabel.font = JABodyFont;
+        extraCostsValueLabel.textColor = JABlackColor;
         extraCostsValueLabel.text = self.cart.extraCostsFormatted;
         [extraCostsValueLabel sizeToFit];
-        extraCostsValueLabel.frame = CGRectMake(CGRectGetMaxX(extraCostsLabel.frame),
+        extraCostsValueLabel.frame = CGRectMake(endingX - extraCostsValueLabel.frame.size.width,
                                                 extraCostsLabel.frame.origin.y,
-                                                totalLabel.frame.size.width,
+                                                extraCostsValueLabel.frame.size.width,
                                                 extraCostsValueLabel.frame.size.height);
         [subtotalContentView addSubview:extraCostsValueLabel];
-        nextYPos = CGRectGetMaxY(extraCostsLabel.frame);
+        nextYPos = CGRectGetMaxY(extraCostsLabel.frame) + 10.0f;
     }
     
     if (self.cart.couponMoneyValue != nil) {
         UILabel *couponLabel = [UILabel new];
         couponLabel.textAlignment = NSTextAlignmentLeft;
-        [couponLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
-        [couponLabel setTextColor:JACouponLabelColor];
+        [couponLabel setFont:JABodyFont];
+        [couponLabel setTextColor:JABlackColor];
         [couponLabel setText:STRING_VOUCHER];
         [couponLabel sizeToFit];
-        [couponLabel setX:articlesLabel.x];
+        [couponLabel setX:startingX];
         [couponLabel setY:nextYPos];
         [subtotalContentView addSubview:couponLabel];
         
         UILabel *couponValueLabel = [UILabel new];
         couponValueLabel.textAlignment = NSTextAlignmentLeft;
-        [couponValueLabel setFont:[UIFont fontWithName:kFontRegularName size:13.0f]];
-        [couponValueLabel setTextColor:JACouponLabelColor];
+        [couponValueLabel setFont:JABodyFont];
+        [couponValueLabel setTextColor:JABlackColor];
         [couponValueLabel setText:[NSString stringWithFormat:@"- %@", self.cart.couponMoneyValueFormatted]];
         [couponValueLabel sizeToFit];
-        [couponValueLabel setX:CGRectGetMaxX(subtotalContentView.frame) - couponValueLabel.width - 4.f];
+        [couponValueLabel setX:CGRectGetMaxX(subtotalContentView.frame) - couponValueLabel.width - 16.f];
         [couponValueLabel setY:nextYPos];
         [subtotalContentView addSubview:couponValueLabel];
         
-        nextYPos = CGRectGetMaxY(couponLabel.frame);
+        nextYPos = CGRectGetMaxY(couponLabel.frame) + 10.0f;
     }
     
     subtotalContentView.frame = CGRectMake(subtotalContentView.frame.origin.x,
                                            subtotalContentView.frame.origin.y,
                                            subtotalContentView.frame.size.width,
-                                           nextYPos + 10.0f);
+                                           nextYPos);
+    
+    UIView* finalTotalSeparatorView = [UIView new];
+    finalTotalSeparatorView.backgroundColor = JABlack400Color;
+    [subtotalContentView addSubview:finalTotalSeparatorView];
+    finalTotalSeparatorView.frame = CGRectMake(16.0f,
+                                               nextYPos,
+                                               subtotalContentView.frame.size.width - 12.0f,
+                                               1.0f);
+    
+    nextYPos += 10.0f;
     
     UILabel* finalTotalLabel = [UILabel new];
     finalTotalLabel.textAlignment = NSTextAlignmentLeft;
-    finalTotalLabel.font = [UIFont fontWithName:kFontBoldName size:13.0f];
-    finalTotalLabel.textColor = JAGreyColor;
+    finalTotalLabel.font = JATitleFont;
+    finalTotalLabel.textColor = JABlackColor;
     finalTotalLabel.text = STRING_TOTAL;
     [finalTotalLabel sizeToFit];
-    finalTotalLabel.frame = CGRectMake(articlesLabel.x,
-                                       nextYPos + 5.0f,
-                                       articlesLabel.width,
+    finalTotalLabel.frame = CGRectMake(startingX,
+                                       nextYPos,
+                                       labelWidth,
                                        finalTotalLabel.frame.size.height);
     [subtotalContentView addSubview:finalTotalLabel];
     
     UILabel* finalTotalValueLabel = [UILabel new];
     finalTotalValueLabel.textAlignment = NSTextAlignmentRight;
-    finalTotalValueLabel.font = [UIFont fontWithName:kFontBoldName size:13.0f];
-    finalTotalValueLabel.textColor = JAGreyColor;
+    finalTotalValueLabel.font = JATitleFont;
+    finalTotalValueLabel.textColor = JABlackColor;
     finalTotalValueLabel.text = self.cart.cartValueFormatted;
     [finalTotalValueLabel sizeToFit];
-    finalTotalValueLabel.frame = CGRectMake(CGRectGetMaxX(finalTotalLabel.frame),
+    finalTotalValueLabel.frame = CGRectMake(endingX - finalTotalValueLabel.frame.size.width,
                                             finalTotalLabel.frame.origin.y,
-                                            totalLabel.frame.size.width,
+                                            finalTotalValueLabel.frame.size.width,
                                             finalTotalValueLabel.frame.size.height);
     [subtotalContentView addSubview:finalTotalValueLabel];
     
@@ -607,27 +626,34 @@
                                            subtotalContentView.frame.size.width,
                                            CGRectGetMaxY(finalTotalLabel.frame) + 10.0f);
 
-    return subtotalContentView.frame.size.height + 5.0f;
+    return subtotalContentView.frame.size.height;
 }
 
 - (CGFloat)setupShippingAddressView:(UIScrollView*)scrollView atYPostion:(CGFloat)yPosition
 {
     NSString* shippingAddress = [self getAddressStringFromAddress:self.cart.shippingAddress];
-    return [self setupGenericAddressViewWithTitle:STRING_SHIPPING_ADDRESSES address:shippingAddress editButtonSelector:@selector(editButtonForShippingAddress) scrollView:scrollView atYPostion:yPosition];
+    NSString* shippingName = [self getNameStringFromAddress:self.cart.shippingAddress];
+    NSString* shippingPhone = [self getPhoneStringFromAddress:self.cart.shippingAddress];
+    return [self setupGenericAddressViewWithTitle:STRING_SHIPPING_ADDRESSES address:shippingAddress name:shippingName phone:shippingPhone editButtonSelector:@selector(editButtonForShippingAddress) scrollView:scrollView atYPostion:yPosition];
 }
 
 - (CGFloat)setupBillingAddressView:(UIScrollView*)scrollView atYPostion:(CGFloat)yPosition
 {
-    NSString* shippingAddress = [self getAddressStringFromAddress:self.cart.shippingAddress];
     NSString* billingAddress = [self getAddressStringFromAddress:self.cart.billingAddress];
-    if ([billingAddress isEqualToString:shippingAddress]) {
-        billingAddress = STRING_BILLING_SAME_ADDRESSES;
+    NSString* billingName = [self getNameStringFromAddress:self.cart.billingAddress];
+    NSString* billingPhone = [self getPhoneStringFromAddress:self.cart.billingAddress];
+    if ([self.cart.billingAddress.uid isEqualToString:self.cart.shippingAddress.uid]) {
+        billingName = STRING_BILLING_SAME_ADDRESSES;
+        billingAddress = nil;
+        billingPhone = nil;
     }
-    return [self setupGenericAddressViewWithTitle:STRING_BILLING_ADDRESSES address:billingAddress editButtonSelector:@selector(editButtonForBillingAddress) scrollView:scrollView atYPostion:yPosition];
+    return [self setupGenericAddressViewWithTitle:STRING_BILLING_ADDRESSES address:billingAddress name:billingName phone:billingPhone editButtonSelector:@selector(editButtonForBillingAddress) scrollView:scrollView atYPostion:yPosition];
 }
 
 - (CGFloat)setupGenericAddressViewWithTitle:(NSString*)title
                                     address:(NSString*)address
+                                       name:(NSString*)name
+                                      phone:(NSString*)phone
                          editButtonSelector:(SEL)selector
                                  scrollView:(UIScrollView*)scrollView
                                  atYPostion:(CGFloat)yPosition
@@ -636,61 +662,117 @@
     
     [self addEditButtonToContentView:addressContentView withSelector:selector];
     
+    UILabel* nameLabel = [UILabel new];
+    nameLabel.textAlignment = NSTextAlignmentLeft;
+    nameLabel.font = JAListFont;
+    nameLabel.textColor = JABlackColor;
+    nameLabel.text = name;
+    nameLabel.numberOfLines = 0;
+    [nameLabel sizeToFit];
+    nameLabel.frame = CGRectMake(16.0f,
+                                 addressContentView.frame.size.height + 16.0f,
+                                 addressContentView.frame.size.width - 16.0f * 2,
+                                 nameLabel.frame.size.height);
+    [addressContentView addSubview:nameLabel];
+    
     UILabel* addressLabel = [UILabel new];
     addressLabel.textAlignment = NSTextAlignmentLeft;
-    addressLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-    addressLabel.textColor = JAGreyColor;
+    addressLabel.font = JABodyFont;
+    addressLabel.textColor = JABlack800Color;
     addressLabel.text = address;
     addressLabel.numberOfLines = 0;
     [addressLabel sizeToFit];
-    addressLabel.frame = CGRectMake(addressContentView.bounds.origin.x + 6.0f,
-                                    addressContentView.frame.size.height + 10.0f,
+    addressLabel.frame = CGRectMake(16.0f,
+                                    CGRectGetMaxY(nameLabel.frame) + 3.0f,
                                     addressContentView.frame.size.width - 6.0f,
                                     addressLabel.frame.size.height);
     [addressContentView addSubview:addressLabel];
+
+    CGFloat phoneX = 16.0f;
+    
+    if (VALID_NOTEMPTY(phone, NSString)) {
+        UIImage* phoneImage = [UIImage imageNamed:@"phone_icon_small"];
+        UIImageView* phoneImageView = [[UIImageView alloc] initWithImage:phoneImage];
+        phoneImageView.frame = CGRectMake(phoneX,
+                                          CGRectGetMaxY(addressLabel.frame) + 3.0f,
+                                          phoneImage.size.width,
+                                          phoneImage.size.height);
+        [addressContentView addSubview:phoneImageView];
+        
+        phoneX = CGRectGetMaxX(phoneImageView.frame) + 3.0f;
+    }
+    
+    UILabel* phoneLabel = [UILabel new];
+    phoneLabel.textAlignment = NSTextAlignmentLeft;
+    phoneLabel.font = JABodyFont;
+    phoneLabel.textColor = JABlack800Color;
+    phoneLabel.text = phone;
+    phoneLabel.numberOfLines = 0;
+    [phoneLabel sizeToFit];
+    phoneLabel.frame = CGRectMake(phoneX,
+                                  CGRectGetMaxY(addressLabel.frame) + 3.0f,
+                                  addressContentView.frame.size.width - 6.0f,
+                                  phoneLabel.frame.size.height);
+    [addressContentView addSubview:phoneLabel];
+    
+    CGFloat offset = 16.0f;
+    if (ISEMPTY(phone) && ISEMPTY(address)) {
+        offset = 10.0f;
+    }
     
     addressContentView.frame = CGRectMake(addressContentView.frame.origin.x,
                                           addressContentView.frame.origin.y,
                                           addressContentView.frame.size.width,
-                                          CGRectGetMaxY(addressLabel.frame) + 10.0f);
+                                          CGRectGetMaxY(phoneLabel.frame) + offset);
     
-    return addressContentView.frame.size.height + 5.0f;
+    return addressContentView.frame.size.height;
 }
+
+- (NSString*)getNameStringFromAddress:(RIAddress*)address;
+{
+    NSString* nameText = @"";
+    
+    if(VALID_NOTEMPTY(address.firstName, NSString) && VALID_NOTEMPTY(address.lastName, NSString))
+    {
+        nameText = [NSString stringWithFormat:@"%@ %@", address.firstName, address.lastName];
+    }
+    else if(VALID_NOTEMPTY(address.firstName, NSString))
+    {
+        nameText = address.firstName;
+    }
+    else if(VALID_NOTEMPTY(address.lastName, NSString))
+    {
+        nameText = address.lastName;
+    }
+    return nameText;
+}
+
+- (NSString*)getPhoneStringFromAddress:(RIAddress*)address;
+{
+    NSString* phoneText = @"";
+    
+    if(VALID_NOTEMPTY(address.phone, NSString))
+    {
+        phoneText = address.phone;
+    }
+    return phoneText;
+}
+
 
 - (NSString*)getAddressStringFromAddress:(RIAddress*)address;
 {
     NSString* addressText = @"";
     
-    if(VALID_NOTEMPTY(address.firstName, NSString) && VALID_NOTEMPTY(address.lastName, NSString))
-    {
-        addressText = [NSString stringWithFormat:@"%@ %@", address.firstName, address.lastName];
-    }
-    else if(VALID_NOTEMPTY(address.firstName, NSString))
-    {
-        addressText = address.firstName;
-    }
-    else if(VALID_NOTEMPTY(address.lastName, NSString))
-    {
-        addressText = address.lastName;
-    }
-    
     if(VALID_NOTEMPTY(address.address, NSString))
     {
-        if(VALID_NOTEMPTY(addressText, NSString))
-        {
-            addressText = [NSString stringWithFormat:@"%@\n%@",addressText, address.address];
-        }
-        else
-        {
-            addressText = address.address;
-        }
+        addressText = address.address;
     }
     
     if(VALID_NOTEMPTY(address.address2, NSString))
     {
         if(VALID_NOTEMPTY(addressText, NSString))
         {
-            addressText = [NSString stringWithFormat:@"%@\n%@",addressText, address.address2];
+            addressText = [NSString stringWithFormat:@"%@ %@",addressText, address.address2];
         }
         else
         {
@@ -702,7 +784,7 @@
     {
         if(VALID_NOTEMPTY(addressText, NSString))
         {
-            addressText = [NSString stringWithFormat:@"%@\n%@",addressText, address.city];
+            addressText = [NSString stringWithFormat:@"%@ %@",addressText, address.city];
         }
         else
         {
@@ -714,23 +796,11 @@
     {
         if(VALID_NOTEMPTY(addressText, NSString))
         {
-            addressText = [NSString stringWithFormat:@"%@\n%@",addressText, address.postcode];
+            addressText = [NSString stringWithFormat:@"%@ %@",addressText, address.postcode];
         }
         else
         {
             addressText = address.postcode;
-        }
-    }
-    
-    if(VALID_NOTEMPTY(address.phone, NSString))
-    {
-        if(VALID_NOTEMPTY(addressText, NSString))
-        {
-            addressText = [NSString stringWithFormat:@"%@\n%@",addressText, address.phone];
-        }
-        else
-        {
-            addressText = address.phone;
         }
     }
     
@@ -745,13 +815,13 @@
     
     UILabel* shippingMethodLabel = [UILabel new];
     shippingMethodLabel.textAlignment = NSTextAlignmentLeft;
-    shippingMethodLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
-    shippingMethodLabel.textColor = JAGreyColor;
+    shippingMethodLabel.font = JAListFont;
+    shippingMethodLabel.textColor = JABlackColor;
     shippingMethodLabel.text = self.cart.shippingMethod;
     shippingMethodLabel.numberOfLines = 0;
     [shippingMethodLabel sizeToFit];
-    shippingMethodLabel.frame = CGRectMake(shippingContentView.bounds.origin.x + 6.0f,
-                                           shippingContentView.frame.size.height + 10.0f,
+    shippingMethodLabel.frame = CGRectMake(shippingContentView.bounds.origin.x + 16.0f,
+                                           shippingContentView.frame.size.height + 16.0f,
                                            shippingContentView.frame.size.width - 6.0f,
                                            shippingMethodLabel.frame.size.height);
     [shippingContentView addSubview:shippingMethodLabel];
@@ -759,9 +829,9 @@
     shippingContentView.frame = CGRectMake(shippingContentView.frame.origin.x,
                                            shippingContentView.frame.origin.y,
                                            shippingContentView.frame.size.width,
-                                           CGRectGetMaxY(shippingMethodLabel.frame) + 10.0f);
+                                           CGRectGetMaxY(shippingMethodLabel.frame) + 16.0f);
     
-    return shippingContentView.frame.size.height + 5.0f;
+    return shippingContentView.frame.size.height;
 }
 
 - (CGFloat)setupPaymentOptionsView:(UIScrollView*)scrollView atYPostion:(CGFloat)yPosition
@@ -772,13 +842,13 @@
     
     UILabel* paymentTitleLabel = [UILabel new];
     paymentTitleLabel.textAlignment = NSTextAlignmentLeft;
-    paymentTitleLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
-    paymentTitleLabel.textColor = JAGreyColor;
+    paymentTitleLabel.font = JAListFont;
+    paymentTitleLabel.textColor = JABlackColor;
     paymentTitleLabel.text = self.cart.paymentMethod;
     paymentTitleLabel.numberOfLines = 0;
     [paymentTitleLabel sizeToFit];
-    paymentTitleLabel.frame = CGRectMake(paymentContentView.bounds.origin.x + 6.0f,
-                                         paymentContentView.frame.size.height + 10.0f,
+    paymentTitleLabel.frame = CGRectMake(paymentContentView.bounds.origin.x + 16.0f,
+                                         paymentContentView.frame.size.height + 16.0f,
                                          paymentContentView.frame.size.width - 6.0f,
                                          paymentTitleLabel.frame.size.height);
     [paymentContentView addSubview:paymentTitleLabel];
@@ -792,25 +862,25 @@
         
         UILabel* couponTitleLabel = [UILabel new];
         couponTitleLabel.textAlignment = NSTextAlignmentLeft;
-        couponTitleLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
-        couponTitleLabel.textColor = JAGreyColor;
+        couponTitleLabel.font = JABodyFont;
+        couponTitleLabel.textColor = JABlack800Color;
         couponTitleLabel.text = STRING_COUPON;
         couponTitleLabel.numberOfLines = 0;
         [couponTitleLabel sizeToFit];
-        couponTitleLabel.frame = CGRectMake(paymentContentView.bounds.origin.x + 6.0f,
-                                            CGRectGetMaxY(paymentTitleLabel.frame) + 15.0f,
+        couponTitleLabel.frame = CGRectMake(paymentContentView.bounds.origin.x + 16.0f,
+                                            CGRectGetMaxY(paymentTitleLabel.frame) + 10.0f,
                                             paymentContentView.frame.size.width - 6.0f,
                                             couponTitleLabel.frame.size.height);
         [paymentContentView addSubview:couponTitleLabel];
         
         UILabel* couponCodeLabel = [UILabel new];
         couponCodeLabel.textAlignment = NSTextAlignmentLeft;
-        couponCodeLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
-        couponCodeLabel.textColor = JAGreyColor;
+        couponCodeLabel.font = JABodyFont;
+        couponCodeLabel.textColor = JABlack800Color;
         couponCodeLabel.text = self.cart.couponCode;
         couponCodeLabel.numberOfLines = 0;
         [couponCodeLabel sizeToFit];
-        couponCodeLabel.frame = CGRectMake(paymentContentView.bounds.origin.x + 6.0f,
+        couponCodeLabel.frame = CGRectMake(paymentContentView.bounds.origin.x + 16.0f,
                                            CGRectGetMaxY(couponTitleLabel.frame),
                                            paymentContentView.frame.size.width - 6.0f,
                                            couponCodeLabel.frame.size.height);
@@ -826,9 +896,9 @@
     paymentContentView.frame = CGRectMake(paymentContentView.frame.origin.x,
                                           paymentContentView.frame.origin.y,
                                           paymentContentView.frame.size.width,
-                                          paymentContentView.frame.size.height + 10.0f);
+                                          paymentContentView.frame.size.height + 16.0f);
     
-    return paymentContentView.frame.size.height + 5.0f;
+    return paymentContentView.frame.size.height;
 }
 
 - (void)setupConfirmButton
@@ -838,15 +908,17 @@
     {
         newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     }
-
-    [self.bottomView reloadFrame:CGRectMake((self.view.frame.size.width - newWidth) / 2,
-                                            self.viewBounds.size.height - self.bottomView.frame.size.height,
-                                            newWidth,
-                                            self.bottomView.frame.size.height)];
     
-    [self.bottomView addButton:STRING_CONFIRM_ORDER target:self action:@selector(nextStepButtonPressed)];
-    [self.bottomView setHidden:NO];
-    [self.view bringSubviewToFront:self.bottomView];
+    if (!self.bottomButton) {
+        self.bottomButton = [[JAButton alloc] initButtonWithTitle:STRING_CONFIRM_ORDER target:self action:@selector(nextStepButtonPressed)];
+        [self.view addSubview:self.bottomButton];
+    }
+    [self.bottomButton setFrame:CGRectMake(0.0f,
+                                           self.view.frame.size.height - 48.0f,
+                                           self.view.frame.size.width,
+                                           48.0f)];
+    [self.bottomButton setHidden:NO];
+    [self.view bringSubviewToFront:self.bottomButton];
 }
 
 #pragma mark - Content view auxiliary methods
@@ -860,7 +932,6 @@
                                                                    scrollView.frame.size.width,
                                                                    1)];
     contentView.backgroundColor = [UIColor whiteColor];
-    contentView.layer.cornerRadius = 5.0f;
     [contentView setTag:kScrollViewTag];
     [scrollView addSubview:contentView];
     
@@ -874,26 +945,11 @@
 {
     CGFloat currentContentY = contentView.bounds.origin.y;
     
-    UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(contentView.bounds.origin.x + 6.0f,
-                                                                    currentContentY,
-                                                                    contentView.bounds.size.width - 2*6.0f,
-                                                                    26.0f)];
-    titleLabel.textAlignment = NSTextAlignmentLeft;
-    titleLabel.text = title;
-    titleLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
-    titleLabel.textColor = JAButtonTextOrange;
-    [contentView addSubview:titleLabel];
+    JAProductInfoHeaderLine* headerLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0.0f, 0.0f, contentView.frame.size.width, kProductInfoHeaderLineHeight)];
+    [headerLine setTitle:title];
+    [contentView addSubview:headerLine];
     
-    currentContentY += titleLabel.frame.size.height;
-    
-    UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(contentView.bounds.origin.x,
-                                                                contentView.bounds.origin.y + 26.0f,
-                                                                contentView.bounds.size.width,
-                                                                1.0f)];
-    lineView.backgroundColor = JAOrange1Color;
-    [contentView addSubview:lineView];
-    
-    currentContentY += lineView.frame.size.height;
+    currentContentY += headerLine.frame.size.height;
     
     [contentView setFrame:CGRectMake(contentView.frame.origin.x,
                                      contentView.frame.origin.y,
@@ -905,24 +961,16 @@
                       withSelector:(SEL)selector
 {
     if (selector) {
-        UIFont *editFont = [UIFont fontWithName:kFontLightName size:10.0f];
-        UIButton* editButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [editButton setTitle:STRING_EDIT forState:UIControlStateNormal];
-        [editButton setTitleColor:JABlue1Color forState:UIControlStateNormal];
-        [editButton setTitleColor:JAOrange1Color forState:UIControlStateHighlighted];
-        [editButton setTitleColor:JAOrange1Color forState:UIControlStateSelected];
-        [editButton.titleLabel setFont:editFont];
-        [editButton addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
-        [editButton sizeToFit];
-        CGRect editButtonRect = [STRING_EDIT boundingRectWithSize:CGSizeMake(contentView.bounds.size.width, 1000.0f)
-                                                          options:NSStringDrawingUsesLineFragmentOrigin
-                                                       attributes:@{NSFontAttributeName:editFont} context:nil];
         
-        [editButton setFrame:CGRectMake(contentView.bounds.size.width - editButtonRect.size.width - 20.0f,
-                                        contentView.bounds.origin.y,
-                                        editButtonRect.size.width + 20.0f,
-                                        26.0f)];
-        [contentView addSubview:editButton];
+        UIImage* editImage = [UIImage imageNamed:@"editAddress"];
+        JAClickableView* editClickableView = [[JAClickableView alloc] init];
+        [editClickableView setImage:editImage forState:UIControlStateNormal];
+        [editClickableView addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
+        [editClickableView setFrame:CGRectMake(contentView.bounds.size.width - editImage.size.width - 16.0f,
+                                               contentView.bounds.origin.y + 64.0f,
+                                               editImage.size.width,
+                                               editImage.size.height)];
+        [contentView addSubview:editClickableView];
     }
 }
 

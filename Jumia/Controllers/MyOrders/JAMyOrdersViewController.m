@@ -190,14 +190,18 @@ UICollectionViewDelegateFlowLayout>
     [[RITrackingWrapper sharedInstance] trackScreenWithName:self.screenName];
     
     [self.ordersCollectionView registerClass:[JAMyOrderCell class] forCellWithReuseIdentifier:@"myOrderCell"];
-    
-    [self loadOrders];
 }
 
--(void)viewWillLayoutSubviews {
+-(void)onOrientationChanged {
+    [super onOrientationChanged];
     [self setupViews];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self loadOrders];
+}
 
 - (void) loadOrders
 {
@@ -208,6 +212,8 @@ UICollectionViewDelegateFlowLayout>
     [RIOrder getOrdersPage:[NSNumber numberWithInteger:self.currentOrdersPage+1]
                   maxItems:[NSNumber numberWithInteger:kOrdersPerPage]
           withSuccessBlock:^(NSArray *orders, NSInteger ordersTotal) {
+              self.currentOrdersPage++;
+              
               [self.orders addObjectsFromArray:orders];
               
               NSInteger previousOrdersTotal = self.ordersTotal;
@@ -218,11 +224,11 @@ UICollectionViewDelegateFlowLayout>
               [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
               
               if (previousOrdersTotal <= 0) {
+                  self.selectedOrderIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
                   [self setupViews];
-                  if ((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && (ordersTotal > 0)) {
-                      self.selectedOrderIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-                      [self loadOrderDetails];
-                  }
+              }
+              if ([self isIpadLandscape] && (ordersTotal > 0)) {
+                  [self loadOrderDetails];
               }
               [self hideLoading];
               [self.ordersCollectionView reloadData];
@@ -359,6 +365,7 @@ UICollectionViewDelegateFlowLayout>
                 CGRect frame = self.viewBounds;
                 frame.size.width = self.viewBounds.size.width/2;
                 [self.orderDetailsView setupWithOrder:self.trackingOrder frame:frame];
+                [self.view bringSubviewToFront:self.ordersCollectionView];
                 [self.orderDetailsView setHidden:NO];
                 [self.orderDetailsScrollView setContentSize:self.orderDetailsView.frame.size];
             }
@@ -408,7 +415,6 @@ UICollectionViewDelegateFlowLayout>
     {
         if (!self.isLoadingOrders && [self.orders count] < self.ordersTotal && [self.orders count] - 5 <= indexPath.row)
         {
-            self.currentOrdersPage++;
             [self loadOrders];
         }
         

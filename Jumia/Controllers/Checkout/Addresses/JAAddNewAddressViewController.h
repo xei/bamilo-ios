@@ -12,8 +12,6 @@
 
 @interface JAAddNewAddressViewController : JABaseViewController
 
-@property (assign, nonatomic) BOOL isBillingAddress;
-@property (assign, nonatomic) BOOL isShippingAddress;
 @property (assign, nonatomic) BOOL fromCheckout;
 @property (strong, nonatomic) RICart *cart;
 

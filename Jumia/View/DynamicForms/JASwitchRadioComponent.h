@@ -16,8 +16,6 @@
 
 -(void)setupWithField:(RIField*)field;
 
-- (NSDictionary*)getValues;
-
 - (void)forceSelection;
 
 @end

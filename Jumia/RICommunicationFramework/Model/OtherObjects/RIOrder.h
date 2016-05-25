@@ -32,6 +32,7 @@
 @property (strong, nonatomic) NSString *sku;
 @property (strong, nonatomic) NSString *brand;
 @property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSString *size;
 @property (strong, nonatomic) NSNumber *quantity;
 @property (strong, nonatomic) NSString *imageURL;
 @property (strong, nonatomic) NSNumber *total;
@@ -40,12 +41,30 @@
 @property (strong, nonatomic) NSString *statusLabel;
 @property (strong, nonatomic) NSString *statusDate;
 
+@property (strong, nonatomic) NSArray *returns;
+@property (assign, nonatomic) BOOL onlineReturn;
+@property (assign, nonatomic) BOOL callReturn;
+@property (strong, nonatomic) NSString *onlineReturnTargetString;
+@property (strong, nonatomic) NSNumber *returnableQty;
+@property (strong, nonatomic) NSString *callReturnTextBody1;
+@property (strong, nonatomic) NSString *callReturnTextBody2;
+@property (strong, nonatomic) NSString *callReturnTextTitle;
+
 @end
 
 @interface RIStatus : NSObject
 
 @property (nonatomic, strong) NSString *itemStatus;
 @property (nonatomic, strong) NSString *lastChangeStatus;
+
+@end
+
+@interface RIReturnAction : NSObject
+
+@property (nonatomic, strong) NSNumber *items;
+@property (nonatomic, strong) NSString *lastChangeStatus;
+
++ (RIReturnAction *)parseReturnAction:(NSDictionary *)json;
 
 @end
 

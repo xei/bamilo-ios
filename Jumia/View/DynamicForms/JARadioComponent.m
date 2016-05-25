@@ -15,6 +15,7 @@
 @interface JARadioComponent ()
 
 @property (strong, nonatomic) id storedValue;
+@property (strong, nonatomic) id storedText;
 @property (strong, nonatomic) UIView *underLineView;
 @property (strong, nonatomic) UIImageView *dropdownImageView;
 
@@ -37,7 +38,7 @@
 - (UILabel *)requiredSymbol
 {
     if (!VALID_NOTEMPTY(_requiredSymbol, UILabel)) {
-        _requiredSymbol = [[UILabel alloc] initWithFrame:CGRectMake(self.width - 10, self.height - 28, 10, 20)];
+        _requiredSymbol = [[UILabel alloc] initWithFrame:CGRectMake(self.width - 20, self.height - 28, 10, 20)];
         [_requiredSymbol setTextAlignment:NSTextAlignmentCenter];
         [_requiredSymbol setText:@"*"];
         [_requiredSymbol setTextColor:JAOrange1Color];
@@ -62,7 +63,7 @@
     if (!VALID(_dropdownImageView, UIImageView)) {
         UIImage *image = [UIImage imageNamed:@"ic_dropdown"];
         _dropdownImageView = [[UIImageView alloc] initWithImage:image];
-        [_dropdownImageView setXLeftOf:self.requiredSymbol at:0];
+        [_dropdownImageView setXLeftOf:self.requiredSymbol at:3];
         [_dropdownImageView setY:self.textField.y];
         [self addSubview:_dropdownImageView];
     }
@@ -87,9 +88,9 @@
     frame.size.width = width;
     [super setFrame:frame];
     [self.underLineView setFrame:CGRectMake(0, self.height-5, width, 1.f)];
-    [self.requiredSymbol setFrame:CGRectMake(self.width - 10, self.height - 28, 10, 20)];
-    [self.textField setFrame:CGRectMake(0, self.height - 28, width - self.dropdownImageView.width - self.requiredSymbol.width, 20)];
-    [self.dropdownImageView setXLeftOf:self.requiredSymbol at:0];
+    [self.requiredSymbol setFrame:CGRectMake(self.width - 20, self.height - 28, 10, 20)];
+    [self.textField setFrame:CGRectMake(0, self.height - 28, width - self.dropdownImageView.width - self.requiredSymbol.width - 5.0, 20)];
+    [self.dropdownImageView setXLeftOf:self.requiredSymbol at:3];
     [self.dropdownImageView setY:self.textField.y + (self.textField.height - self.dropdownImageView.height)/2];
 //    [self.titleLabel setFrame:CGRectMake(0, 0, self.width, 20)];
     if (self.iconImageView) {
@@ -114,6 +115,7 @@
 -(void)setupWithField:(RIField*)field
 {
     self.storedValue = @"";
+    self.storedText = @"";
     self.hasError = NO;
     self.field = field;
     [self.textField setPlaceholder:field.label];
@@ -126,6 +128,7 @@
     if(VALID_NOTEMPTY(field.value, NSString))
     {
         self.storedValue = field.value;
+        self.storedText = field.value;
         if(![@"list" isEqualToString:field.type])
         {
             [self.textField setText:field.value];
@@ -166,11 +169,6 @@
     }
 }
 
--(BOOL)isComponentWithKey:(NSString*)key
-{
-    return ([key isEqualToString:self.field.key]);
-}
-
 -(NSString*)getFieldName
 {
     return self.field.name;
@@ -181,8 +179,22 @@
     self.storedValue = value;
     if ([value isKindOfClass:[NSNumber class]]) {
         [self.textField setText:[value stringValue]];
-    }else{
+        self.storedText = [value stringValue];
+    } else if ([value isKindOfClass:[RIFieldOption class]]) {
+        RIFieldOption* fieldOption = (RIFieldOption*)value;
+        [self.textField setText:fieldOption.label];
+        self.storedText = fieldOption.label;
+    } else {
+        if (VALID_NOTEMPTY(self.field.options, NSOrderedSet)) {
+            for (RIFieldOption *option in self.field.options) {
+                if ([option.value isEqual:value]) {
+                    [self setValue:option];
+                    return;
+                }
+            }
+        }
         [self.textField setText:value];
+        self.storedText = value;
     }
 }
 
@@ -192,11 +204,13 @@
     {
         self.storedValue = locale.value;
         [self.textField setText:locale.label];
+        self.storedText = locale.label;
     }
     else
     {
         self.storedValue = @"";
         [self.textField setText:@""];
+        self.storedText = @"";
     }
 }
 
@@ -205,7 +219,27 @@
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     if([self.field.required boolValue] || NOT_NIL(self.storedValue))
     {
-        [parameters setValue:self.storedValue forKey:self.field.name];
+        if ([self.storedValue isKindOfClass:[RIFieldOption class]]) {
+            RIFieldOption* fieldOption = (RIFieldOption*)self.storedValue;
+            [parameters setValue:fieldOption.value forKey:self.field.name];
+        } else {
+            [parameters setValue:self.storedValue forKey:self.field.name];
+        }
+    }
+    return parameters;
+}
+
+- (NSDictionary *)getLabels
+{
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    if([self.field.required boolValue] || NOT_NIL(self.storedValue))
+    {
+        if ([self.storedValue isKindOfClass:[RIFieldOption class]]) {
+            RIFieldOption* fieldOption = (RIFieldOption*)self.storedValue;
+            [parameters setValue:fieldOption.label forKey:self.field.name];
+        } else {
+            [parameters setValue:self.storedValue forKey:self.field.name];
+        }
     }
     return parameters;
 }
@@ -276,6 +310,7 @@
         if(![@"list" isEqualToString:self.field.type])
         {
             [self.textField setText:self.field.value];
+            self.storedText = self.field.value;
         }
     }
 }

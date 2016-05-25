@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class RIField;
+@class RIField, RIForm;
 
 @interface RIFieldOption : NSManagedObject
 
@@ -18,6 +18,15 @@
 @property (nonatomic, retain) NSString * value;
 @property (nonatomic, retain) NSNumber * isUserSubscribed;
 @property (nonatomic, retain) RIField *field;
+@property (nonatomic, retain) NSString * text;
+@property (nonatomic, retain) NSString * subtext;
+@property (nonatomic, retain) NSString * linkHTML;
+@property (nonatomic, retain) NSString * linkLabel;
+@property (nonatomic, retain) RIForm* subForm;
+
++ (NSString*)getFieldOptionsForApiCall:(NSString*)apiCall
+                          successBlock:(void (^)(NSArray *))successBlock
+                          failureBlock:(void (^)(RIApiResponse, NSArray *))failureBlock;
 
 + (RIFieldOption *)parseFieldOption:(NSDictionary *)fieldOptionObject;
 

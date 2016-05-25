@@ -94,7 +94,7 @@
 
 "string_reviews" = "%d Avis";
 
-"string_quantity" = "Quantité %@";
+"string_quantity" = "Quantité : %@";
 
 "products_sort_bestrated" = "Mieux Notés";
 
@@ -188,6 +188,8 @@
 
 "voucher_message_hint" = "Entrez votre Code Promotionnel ici";
 
+"voucher_error_message" = "Veuillez saisir un code promotionnel valide";
+
 "call_to_order" = "Appeler";
 
 "string_article" = "1 Produit";
@@ -203,6 +205,8 @@
 "shipping" = "Livraison";
 
 "shipment_of" = "Colis %ld sur %ld";
+
+"shipment_label" = "STATUT :";
 
 "fulfilled_by" = "Expédié par";
 
@@ -464,6 +468,8 @@
 
 "got_it" = "J'ai Compris";
 
+"ok_got_it" = "J'AI COMPRIS";
+
 "home_tip_text" = "Faites défiler vers la gauche ou la droite pour changer de catégorie";
 
 "products_tip_swipe_text" = "Balayer à gauche ou à droite pour changer de classement";
@@ -498,7 +504,7 @@
 
 "welcome" = "Bienvenue";
 
-"new_to_jumia" = "On dirait que vous êtes nouveau à Jumia .\n Nous avons juste besoin d'un peu plus de détails pour créer votre compte .";
+"new_to_jumia" = "Nous avons juste besoin d'un peu plus de détails pour créer votre compte .";
 
 "reviews" = "Avis";
 
@@ -708,4 +714,28 @@
 
 "free_shipping_possible" = "Livraison Gratuite Possible";
 
-"go" = "Découvrir";
+"go" = "DÉCOUVRIR";
+
+"order_return_conditions_title" = "VOUS N'ÊTES PAS SATISFAIT PAR VOTRE ACHAT ?";
+
+"return_label" = "RETOURNER";
+
+"x_items_returned_on" = "%ld article(s) retourné(s) le %@";
+
+"call_return_label" = "RETOUR PAR TÉLÉPHONE";
+
+"question_return_reasons" = "POURQUOI SOUHAITEZ-VOUS RETOURNER VOTRE COMMANDE ?";
+
+"call_now_label" = "J'APPELLE";
+
+"please_call_to" = "APPELLEZ-NOUS AU %@";
+
+"return_method" = "MODE DE RETOUR";
+
+"return_payment_method" = "MODE DE REMBOURSEMENT";
+
+"return_reason" = "RAISON DU RETOUR";
+
+"order_return_finish_title" = "RÉCAPITULATIF DE VOTRE RETOUR";
+
+"everything_looks_good" = "Si les informations ci-dessus vous semblent correctes, cliquez sur \"ENVOYER\".";

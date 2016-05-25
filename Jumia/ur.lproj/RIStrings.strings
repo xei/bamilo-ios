@@ -188,6 +188,8 @@
 
 "voucher_message_hint" = "اپنا کوپن کوڈ یہاں درج کریں";
 
+"voucher_error_message" = "براہِ کرم درست کوپن کوڈ داخل کریں۔";
+
 "call_to_order" = "آرڈر دینے کے لیے فون کریں";
 
 "string_article" = "1 چیز";
@@ -203,6 +205,8 @@
 "shipping" = "شِپنگ";
 
 "shipment_of" = "شِپمینٹ کی l % شناخت";
+
+"shipment_label" = "اسٹیٹس";
 
 "fulfilled_by" = "تکمیل کیا";
 
@@ -224,7 +228,7 @@
 
 "facebook_signup_button_text" = "بذریعہ فیس بک اندراج کروائیں";
 
-"facebook_login_button_text" = "بذریعہ فیس بک داخل ہوں";
+"facebook_login_button_text" = "فیس بُک کے ساتھ لاگ اِن کریں";
 
 "login_incomplete" = "تاریخ پیدائش اور ای میل لاگ ان کے لئے ذروری ھے";
 
@@ -240,7 +244,7 @@
 
 "checkout_label" = "تکمیلِ خرید";
 
-"checkout_header_step_1" = "1۔ آپ کے بارے میں";
+"checkout_header_step_1" = "لاگ اِن کریں";
 
 "next_button" = "اگلا";
 
@@ -252,7 +256,7 @@
 
 "registration_text" = "انراج کروائیں";
 
-"checkout_header_step_2" = "2۔ پتہ";
+"checkout_header_step_2" = "پتہ";
 
 "action_label_add_address" = "نیا پتہ شامل کریں";
 
@@ -276,7 +280,7 @@
 
 "validation_errortext" = "بھیجی گئیں معلومات میں غلطیاں تھیں، براہِ کرم تمام معلوماتی شعبوں کو دوبارہ دیکھیں۔";
 
-"checkout_header_step_3" = "3. شِپنگ";
+"checkout_header_step_3" = "شِپنگ";
 
 "string_city" = "شہر: ";
 
@@ -288,7 +292,7 @@
 
 "order_summary_shipping_fee_label" = "شِپنگ فیس:";
 
-"checkout_header_step_4" = "4. ادائیگی";
+"checkout_header_step_4" = "رقم کی ادائیگی";
 
 "payment" = "ادائیگی";
 
@@ -310,7 +314,7 @@
 
 "string_order_status" = "آرڈر کی صورتِ حال";
 
-"order_no" = "آرڈرN.º %@";
+"order_no" = "آرڈرºn: %@";
 
 "string_loosing_order_title" = "خبردار";
 
@@ -464,6 +468,8 @@
 
 "got_it" = "مل گیا";
 
+"ok_got_it" = "ٹھیک ہے، سمجھ آگیا";
+
 "home_tip_text" = "اقسام تبدیل کرنے کے لیے دائیں یا بائیں پھیریں۔";
 
 "products_tip_swipe_text" = "ترتیب کی قسم تبدیل کرنے کے لیے دائیں یا بائیں پھیریں";
@@ -498,7 +504,7 @@
 
 "welcome" = "خوش آمدید";
 
-"new_to_jumia" = "لگتا ہے آپ دراز میں نئے ہیں۔ ہمیں آپ کے اکاؤنٹ کی تخلیق کے لیے بس تھوڑی سی مزید تفصیلات کی ضرورت ہے ۔";
+"new_to_jumia" = "ہمیں آپ کے اکاؤنٹ کو بنانے کے لیے بس تھوڑی سی مزید تفصیلات کی ضرورت ہے ۔";
 
 "reviews" = "تبصرے";
 
@@ -707,4 +713,30 @@
 "newsletter_preferences" = "نیوز لیٹر کی ترجیحات";
 
 "free_shipping_possible" = "مفت شِپنگ ممکن ہے";
+
+"go" = "جائیے";
+
+"order_return_conditions_title" = "ہمیں افسوس ہے کہ آپ منتخب شدہ مصنوعات کے ساتھ مکمل طور پر مطمئن نہیں";
+
+"return_label" = "ہوم پیج پر واپس جائیں";
+
+"x_items_returned_on" = "% اشیاء کی واپسی کی گئی %@";
+
+"call_return_label" = "واپس کرنے کے لیے ہمیں کال کریں";
+
+"question_return_reasons" = "آپ یہ اشیاء کیوں واپس کرنا چاہتے ہیں؟";
+
+"call_now_label" = "ابھی کال کریں";
+
+"please_call_to" = "ہمیں کال کریں %@";
+
+"return_method" = "طریقہِ واپسی";
+
+"return_payment_method" = "واپسی کی ادائیگی کا طریقہ کار";
+
+"return_reason" = "وجہِ واپسی";
+
+"order_return_finish_title" = "اپنی اشیاء کی واپسی کی درخواست کی تصدیق کریں";
+
+"everything_looks_good" = "اگر سب کچھ ٹھیک لگ رہا ہے تو ٹیپ کریں \"SEND\".";
 

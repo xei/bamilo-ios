@@ -280,7 +280,7 @@
     JARecentlyViewedCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"CellWithLines" forIndexPath:indexPath];
     [cell setHideRating:YES];
     [cell setHideShopFirstLogo:YES];
-    [cell loadWithProduct:product];
+    [cell setProduct:product];
     
     if (1 < product.productSimples.count) {
         [cell.sizeButton setHidden:NO];

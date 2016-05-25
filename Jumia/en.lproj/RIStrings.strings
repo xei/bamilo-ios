@@ -188,6 +188,8 @@
 
 "voucher_message_hint" = "Enter your coupon code here";
 
+"voucher_error_message" = "Please enter a valid coupon code";
+
 "call_to_order" = "Call to Order";
 
 "string_article" = "1 article";
@@ -203,6 +205,8 @@
 "shipping" = "Shipping";
 
 "shipment_of" = "Shipment %ld of %ld";
+
+"shipment_label" = "STATUS:";
 
 "fulfilled_by" = "Fulfillment by";
 
@@ -240,7 +244,7 @@
 
 "checkout_label" = "Checkout";
 
-"checkout_header_step_1" = "1. About you";
+"checkout_header_step_1" = "Login";
 
 "next_button" = "Next";
 
@@ -252,7 +256,7 @@
 
 "registration_text" = "Register";
 
-"checkout_header_step_2" = "2. Address";
+"checkout_header_step_2" = "Address";
 
 "action_label_add_address" = "Add New Address";
 
@@ -276,7 +280,7 @@
 
 "validation_errortext" = "There were errors on the data submited, please check your input fields.";
 
-"checkout_header_step_3" = "3. Shipping";
+"checkout_header_step_3" = "Shipping";
 
 "string_city" = "City: ";
 
@@ -288,7 +292,7 @@
 
 "order_summary_shipping_fee_label" = "Shipping Fee:";
 
-"checkout_header_step_4" = "4. Payment";
+"checkout_header_step_4" = "Payment";
 
 "payment" = "Payment";
 
@@ -310,7 +314,7 @@
 
 "string_order_status" = "Order Status";
 
-"order_no" = "ORDER N.º %@";
+"order_no" = "Order nº: %@";
 
 "string_loosing_order_title" = "Warning";
 
@@ -463,6 +467,8 @@
 "fallback_doorstep" = "AT YOUR DOORSTEP";
 
 "got_it" = "Got it";
+
+"ok_got_it" = "Ok, got it";
 
 "home_tip_text" = "Swipe left or right to change the category";
 
@@ -708,5 +714,30 @@
 
 "free_shipping_possible" = "Free Shipping Possible";
 
-"go" = "Go";
+"go" = "Let's Go!";
 
+"order_return_conditions_title" = "WE ARE SORRY THAT YOU ARE NOT FULLY SATISFIED WITH YOUR PURCHASE";
+
+"return_label" = "return";
+
+"returns_label" = "RETURN:";
+
+"x_items_returned_on" = "%ld item(s) returned on %@";
+
+"call_return_label" = "Call to Return";
+
+"question_return_reasons" = "Why do you want to return your purchase?";
+
+"call_now_label" = "call now";
+
+"please_call_to" = "Call us at %@";
+
+"return_method" = "Return Method";
+
+"return_payment_method" = "Refund Method";
+
+"return_reason" = "Return Reason";
+
+"order_return_finish_title" = "Confirm your return request details";
+
+"everything_looks_good" = "If everything looks good, tap \"SEND\".";

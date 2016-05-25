@@ -169,11 +169,6 @@
     [self addGestureRecognizer:tap];
 }
 
--(BOOL)isComponentWithKey:(NSString*)key
-{
-    return ([key isEqualToString:self.field.key]);
-}
-
 -(NSString*)getFieldName
 {
     return self.field.name;
@@ -181,11 +176,26 @@
 
 -(void)setValue:(NSString*)value
 {
+    [super setValue:value];
     self.storedValue = value;
     [self.textField setText:value];
 }
 
 -(NSDictionary*)getValues
+{
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    if([self.field.required boolValue] || VALID_NOTEMPTY(self.textField.text, NSString))
+    {
+        if(!self.hasError)
+        {
+            self.storedValue = self.textField.text;
+        }
+        [parameters setValue:self.storedValue forKey:self.field.name];
+    }
+    return parameters;
+}
+
+- (NSDictionary *)getLabels
 {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     if([self.field.required boolValue] || VALID_NOTEMPTY(self.textField.text, NSString))

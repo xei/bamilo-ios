@@ -95,7 +95,7 @@
 {
     if (!VALID(_priceLine, JAProductInfoPriceLine)) {
         _priceLine = [[JAProductInfoPriceLine alloc] initWithFrame:CGRectMake(kLateralMargin, CGRectGetMaxY(self.itemsNumberLabel.frame), self.resumeOrderView.width-2*kLateralMargin, 15.f)];
-        [_priceLine setPriceSize:kPriceSizeSmall];
+        [_priceLine setPriceSize:JAPriceSizeSmall];
         [_priceLine setLineContentXOffset:0.f];
     }
     return _priceLine;

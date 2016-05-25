@@ -9,8 +9,7 @@
 #import "JAOrderSummaryView.h"
 #import "RICartItem.h"
 #import "RIAddress.h"
-
-#define JAOrderSummaryViewTextMargin 6.0f
+#import "JAProductInfoHeaderLine.h"
 
 @interface JAOrderSummaryView()
 
@@ -20,6 +19,7 @@
 @property (nonatomic, strong)UIView* billingAddressView;
 @property (nonatomic, strong)UIView* shippingMethodView;
 @property (nonatomic, strong)NSString *extraCosts;
+@property (nonatomic, strong)UIView* verticalSeparator;
 
 @end
 
@@ -33,12 +33,18 @@
 
 - (void)loadWithCart:(RICart *)cart
 {
+    self.backgroundColor = JAWhiteColor;
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
     [self addSubview:self.scrollView];
     
-    CGFloat topMargin = 6.0f;
+    self.verticalSeparator = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                      0.0f,
+                                                                      1.0f,
+                                                                      800)];
+    self.verticalSeparator.backgroundColor = JABlack400Color;
+    [self addSubview:self.verticalSeparator];
     
-    self.backgroundColor = JABackgroundGrey;
+    CGFloat topMargin = 0.0f;
     
     if (VALID_NOTEMPTY(cart, RICart) && VALID_NOTEMPTY(cart.cartItems, NSArray)) {
         
@@ -47,16 +53,18 @@
                                                                  self.scrollView.bounds.size.width,
                                                                  self.scrollView.bounds.size.height)];
         self.cartView.backgroundColor = [UIColor whiteColor];
-        self.cartView.layer.cornerRadius = 5.0f;
         
         CGFloat currentY = [self headerLoad:self.cartView title:STRING_ORDER_SUMMARY selector:nil];
         
         currentY += 9.0f; // Margin between title and products
         
-        UILabel* productsTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.cartView.bounds.origin.x + JAOrderSummaryViewTextMargin,
+        CGFloat startingX = 16.0f;
+        
+        UILabel* productsTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.cartView.bounds.origin.x + startingX,
                                                                                 currentY,
-                                                                                self.cartView.bounds.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                                self.cartView.bounds.size.width - 2*startingX,
                                                                                 26.0f)];
+        productsTitleLabel.textAlignment = NSTextAlignmentLeft;
         productsTitleLabel.text = STRING_PRODUCTS;
         productsTitleLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         productsTitleLabel.textColor = JAButtonTextOrange;
@@ -144,7 +152,7 @@
 
 - (void)loadWithShippingAddress:(RIAddress*)shippingAddress billingAddress:(RIAddress*)billingAddress
 {
-    CGFloat startingY =  self.scrollView.contentSize.height + 6.0f;
+    CGFloat startingY =  self.scrollView.contentSize.height;
     CGFloat currentY = 0.0f;
     
     if(VALID_NOTEMPTY(shippingAddress, RIAddress))
@@ -154,7 +162,6 @@
                                                                             self.scrollView.bounds.size.width,
                                                                             0.0f)];
         self.shippingAddressView.backgroundColor = [UIColor whiteColor];
-        self.shippingAddressView.layer.cornerRadius = 5.0f;
         
         currentY = [self headerLoad:self.shippingAddressView title:STRING_SHIPPING_ADDRESSES selector:@selector(editButtonForShippingAddress)];
         currentY = [self loadAddressInPositionY:currentY address:shippingAddress view:self.shippingAddressView];
@@ -164,7 +171,7 @@
                                                       self.shippingAddressView.frame.size.width,
                                                       currentY)];
         
-        startingY += currentY + 6.0f;
+        startingY += currentY;
         
         if(VALID_NOTEMPTY(billingAddress, RIAddress) && ![[shippingAddress uid] isEqualToString:[billingAddress uid]])
         {
@@ -173,7 +180,6 @@
                                                                                self.scrollView.bounds.size.width,
                                                                                0.0f)];
             self.billingAddressView.backgroundColor = [UIColor whiteColor];
-            self.billingAddressView.layer.cornerRadius = 5.0f;
             
             currentY = [self headerLoad:self.billingAddressView title:STRING_BILLING_ADDRESSES selector:@selector(editButtonForBillingAddress)];
             currentY = [self loadAddressInPositionY:currentY address:billingAddress view:self.billingAddressView];
@@ -182,7 +188,7 @@
                                                          self.billingAddressView.frame.origin.y,
                                                          self.billingAddressView.frame.size.width,
                                                          currentY)];
-            startingY += currentY + 6.0f;
+            startingY += currentY;
         }
     }
     else if(VALID_NOTEMPTY(billingAddress, RIAddress))
@@ -192,7 +198,6 @@
                                                                            self.scrollView.bounds.size.width,
                                                                            0.0f)];
         self.billingAddressView.backgroundColor = [UIColor whiteColor];
-        self.billingAddressView.layer.cornerRadius = 5.0f;
         
         currentY = [self headerLoad:self.billingAddressView title:STRING_BILLING_ADDRESSES selector:@selector(editButtonForBillingAddress)];
         currentY = [self loadAddressInPositionY:currentY address:billingAddress view:self.billingAddressView];
@@ -201,7 +206,7 @@
                                                      self.billingAddressView.frame.origin.y,
                                                      self.billingAddressView.frame.size.width,
                                                      currentY)];
-        startingY += currentY + 6.0f;
+        startingY += currentY;
     }
     
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width,
@@ -217,18 +222,17 @@
                                                                        self.scrollView.bounds.size.width,
                                                                        0.0f)];
     self.shippingMethodView.backgroundColor = [UIColor whiteColor];
-    self.shippingMethodView.layer.cornerRadius = 5.0f;
     
     CGFloat currentY = [self headerLoad:self.shippingMethodView title:STRING_SHIPPING selector:@selector(editButtonForShippingMethod)] + 15.0f;
     
-    currentY += [self addLabelToView:self.shippingMethodView startY:currentY text:shippingMethod] + 10.0f;
+    currentY += [self addLabelToView:self.shippingMethodView startX:16.0f startY:currentY text:shippingMethod font:JABodyFont color:JABlack800Color] + 16.0f;
     
     [self.shippingMethodView setFrame:CGRectMake(self.shippingMethodView.frame.origin.x,
                                                  self.shippingMethodView.frame.origin.y,
                                                  self.shippingMethodView.frame.size.width,
                                                  currentY)];
     
-    startingY += currentY + 6.0f;
+    startingY += currentY;
     
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width,
                                              startingY);
@@ -242,49 +246,27 @@
     
     [self.scrollView addSubview:view];
     
-    CGFloat rightMargin = JAOrderSummaryViewTextMargin;
+    JAProductInfoHeaderLine* headerLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0.0f, 0.0f, view.frame.size.width, kProductInfoHeaderLineHeight)];
+    [headerLine setTitle:title];
+    [view addSubview:headerLine];
+    
+    currentY += headerLine.frame.size.height;
+    
+    CGFloat rightMargin = 16.0f;
     if (selector)
     {
-        UIFont *editFont = [UIFont fontWithName:kFontLightName size:10.0f];
-        UIButton* editButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [editButton setTitle:STRING_EDIT forState:UIControlStateNormal];
-        [editButton setTitleColor:JABlue1Color forState:UIControlStateNormal];
-        [editButton setTitleColor:JAOrange1Color forState:UIControlStateHighlighted];
-        [editButton setTitleColor:JAOrange1Color forState:UIControlStateSelected];
-        [editButton.titleLabel setFont:editFont];
-        [editButton addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
-        [editButton sizeToFit];
-        CGRect editButtonRect = [STRING_EDIT boundingRectWithSize:CGSizeMake(view.bounds.size.width, 1000.0f)
-                                                          options:NSStringDrawingUsesLineFragmentOrigin
-                                                       attributes:@{NSFontAttributeName:editFont} context:nil];
+        UIImage* buttonImage = [UIImage imageNamed:@"editAddress"];
+        JAClickableView* editClickableView = [[JAClickableView alloc] init];
+        [editClickableView setImage:buttonImage forState:UIControlStateNormal];
+        [editClickableView addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
         
-        [editButton setFrame:CGRectMake(view.bounds.size.width - editButtonRect.size.width - 20.0f,
-                                        view.bounds.origin.y,
-                                        editButtonRect.size.width + 20.0f,
-                                        26.0f)];
-        [view addSubview:editButton];
-        rightMargin += editButton.frame.size.width;
+        [editClickableView setFrame:CGRectMake(view.bounds.size.width - buttonImage.size.width - 20.0f,
+                                               view.bounds.origin.y + 10.0f,
+                                               buttonImage.size.width + 20.0f,
+                                               26.0f)];
+        [view addSubview:editClickableView];
+        rightMargin += editClickableView.frame.size.width;
     }
-    
-    UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(view.bounds.origin.x + JAOrderSummaryViewTextMargin,
-                                                                    currentY,
-                                                                    view.bounds.size.width -JAOrderSummaryViewTextMargin - rightMargin,
-                                                                    26.0f)];
-    titleLabel.text = title;
-    titleLabel.font = [UIFont fontWithName:kFontRegularName size:13.0f];
-    titleLabel.textColor = JAButtonTextOrange;
-    [view addSubview:titleLabel];
-    
-    currentY += titleLabel.frame.size.height;
-    
-    UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(view.bounds.origin.x,
-                                                                view.bounds.origin.y + titleLabel.frame.size.height,
-                                                                view.bounds.size.width,
-                                                                1.0f)];
-    lineView.backgroundColor = JAOrange1Color;
-    [view addSubview:lineView];
-    currentY += lineView.frame.size.height;
-    
     
     return currentY;
 }
@@ -294,9 +276,10 @@
                               quantity:(NSInteger)quantity
                                  price:(NSString*)price
 {
-    UILabel* nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+    CGFloat startingX = 16.0f;
+    UILabel* nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(startingX,
                                                                    currentY,
-                                                                   self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                   self.cartView.frame.size.width - 2*startingX,
                                                                    1.0f)];
     nameLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     nameLabel.textColor = JAButtonTextOrange;
@@ -307,9 +290,9 @@
     
     currentY += nameLabel.frame.size.height;
     
-    UILabel* quantityLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+    UILabel* quantityLabel = [[UILabel alloc] initWithFrame:CGRectMake(startingX,
                                                                        currentY,
-                                                                       self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                       self.cartView.frame.size.width - 2*startingX,
                                                                        1.0f)];
     quantityLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     quantityLabel.textColor = JAButtonTextOrange;
@@ -332,9 +315,10 @@
 {
     currentY += 15.0f;
     
-    UILabel* subtotalLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+    CGFloat startingX = 16.0f;
+    UILabel* subtotalLabel = [[UILabel alloc] initWithFrame:CGRectMake(startingX,
                                                                        currentY,
-                                                                       self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                       self.cartView.frame.size.width - 2*startingX,
                                                                        1.0f)];
     subtotalLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     subtotalLabel.textColor = JAButtonTextOrange;
@@ -342,9 +326,9 @@
     [subtotalLabel sizeToFit];
     [self.cartView addSubview:subtotalLabel];
     
-    UILabel* subtotalValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+    UILabel* subtotalValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(startingX,
                                                                             currentY,
-                                                                            self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                            self.cartView.frame.size.width - 2*startingX,
                                                                             subtotalLabel.frame.size.height)];
     subtotalValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
     subtotalValueLabel.textColor = JAButtonTextOrange;
@@ -359,19 +343,19 @@
         for (NSString *ruleKey in priceRules) {
             NSString *ruleValue = [priceRules objectForKey:ruleKey];
             
-            UILabel* priceRuleLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
-                                                                                  currentY,
-                                                                                  self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
-                                                                                  1.0f)];
+            UILabel* priceRuleLabel = [[UILabel alloc] initWithFrame:CGRectMake(startingX,
+                                                                                currentY,
+                                                                                self.cartView.frame.size.width - 2*startingX,
+                                                                                1.0f)];
             priceRuleLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
             priceRuleLabel.textColor = JAButtonTextOrange;
             priceRuleLabel.text = ruleKey;
             [priceRuleLabel sizeToFit];
             [self.cartView addSubview:priceRuleLabel];
             
-            UILabel* priceRuleValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+            UILabel* priceRuleValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(startingX,
                                                                                        currentY,
-                                                                                       self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                                       self.cartView.frame.size.width - 2*startingX,
                                                                                        priceRuleLabel.frame.size.height)];
             priceRuleValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
             priceRuleValueLabel.textColor = JAButtonTextOrange;
@@ -386,9 +370,9 @@
     
     if(![shippingFee isEqualToString:STRING_FREE])
     {
-        UILabel* shippingFeeLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+        UILabel* shippingFeeLabel = [[UILabel alloc] initWithFrame:CGRectMake(startingX,
                                                                               currentY,
-                                                                              self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                              self.cartView.frame.size.width - 2*startingX,
                                                                               1.0f)];
         shippingFeeLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         shippingFeeLabel.textColor = JAButtonTextOrange;
@@ -396,9 +380,9 @@
         [shippingFeeLabel sizeToFit];
         [self.cartView addSubview:shippingFeeLabel];
         
-        UILabel* shippingFeeValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+        UILabel* shippingFeeValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(startingX,
                                                                                    currentY,
-                                                                                   self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                                   self.cartView.frame.size.width - 2*startingX,
                                                                                    shippingFeeLabel.frame.size.height)];
         shippingFeeValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         shippingFeeValueLabel.textColor = JAButtonTextOrange;
@@ -416,9 +400,9 @@
     }
     
     if(![extra isEqualToString:STRING_FREE]){
-        UILabel* extraLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+        UILabel* extraLabel = [[UILabel alloc] initWithFrame:CGRectMake(startingX,
                                                                         currentY,
-                                                                        self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                        self.cartView.frame.size.width - 2*startingX,
                                                                         1.0f)];
         extraLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         extraLabel.textColor = JAButtonTextOrange;
@@ -426,9 +410,9 @@
         [extraLabel sizeToFit];
         [self.cartView addSubview:extraLabel];
         
-        UILabel* extraValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+        UILabel* extraValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(startingX,
                                                                              currentY,
-                                                                             self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                             self.cartView.frame.size.width - 2*startingX,
                                                                              extraLabel.frame.size.height)];
         extraValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         extraValueLabel.textColor = JAButtonTextOrange;
@@ -442,9 +426,9 @@
     
     
     if(![voucher isEqualToString:STRING_FREE]){
-        UILabel* voucherLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+        UILabel* voucherLabel = [[UILabel alloc] initWithFrame:CGRectMake(startingX,
                                                                         currentY,
-                                                                        self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                        self.cartView.frame.size.width - 2*startingX,
                                                                         1.0f)];
         voucherLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         voucherLabel.textColor = JACouponLabelColor;
@@ -452,10 +436,10 @@
         [voucherLabel sizeToFit];
         [self.cartView addSubview:voucherLabel];
         
-        UILabel* voucherValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
-                                                                             currentY,
-                                                                             self.cartView.frame.size.width - 2*JAOrderSummaryViewTextMargin,
-                                                                             voucherLabel.frame.size.height)];
+        UILabel* voucherValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(startingX,
+                                                                               currentY,
+                                                                               self.cartView.frame.size.width - 2*startingX,
+                                                                               voucherLabel.frame.size.height)];
         voucherValueLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
         voucherValueLabel.textColor = JACouponLabelColor;
         voucherValueLabel.text = [NSString stringWithFormat:@"- %@", voucher];
@@ -475,40 +459,37 @@
                           address:(RIAddress*)address
                              view:(UIView*)view
 {
-    currentY += 15.0f;
+    currentY += 10.0f;
     
-    NSString *addressText = @"";
+    NSString *nameText = @"";
     
     if(VALID_NOTEMPTY(address.firstName, NSString) && VALID_NOTEMPTY(address.lastName, NSString))
     {
-        addressText = [NSString stringWithFormat:@"%@ %@", address.firstName, address.lastName];
+        nameText = [NSString stringWithFormat:@"%@ %@", address.firstName, address.lastName];
     }
     else if(VALID_NOTEMPTY(address.firstName, NSString))
     {
-        addressText = address.firstName;
+        nameText = address.firstName;
     }
     else if(VALID_NOTEMPTY(address.lastName, NSString))
     {
-        addressText = address.lastName;
+        nameText = address.lastName;
     }
+    
+    currentY += [self addLabelToView:view startX:16.0f startY:currentY text:nameText font:JAListFont color:JABlackColor] + 6.0f;
+    
+    NSString* addressText = @"";
     
     if(VALID_NOTEMPTY(address.address, NSString))
     {
-        if(VALID_NOTEMPTY(addressText, NSString))
-        {
-            addressText = [NSString stringWithFormat:@"%@\n%@",addressText, address.address];
-        }
-        else
-        {
-            addressText = address.address;
-        }
+        addressText = address.address;
     }
     
     if(VALID_NOTEMPTY(address.address2, NSString))
     {
         if(VALID_NOTEMPTY(addressText, NSString))
         {
-            addressText = [NSString stringWithFormat:@"%@\n%@",addressText, address.address2];
+            addressText = [NSString stringWithFormat:@"%@ %@",addressText, address.address2];
         }
         else
         {
@@ -520,7 +501,7 @@
     {
         if(VALID_NOTEMPTY(addressText, NSString))
         {
-            addressText = [NSString stringWithFormat:@"%@\n%@",addressText, address.city];
+            addressText = [NSString stringWithFormat:@"%@ %@",addressText, address.city];
         }
         else
         {
@@ -532,7 +513,7 @@
     {
         if(VALID_NOTEMPTY(addressText, NSString))
         {
-            addressText = [NSString stringWithFormat:@"%@\n%@",addressText, address.postcode];
+            addressText = [NSString stringWithFormat:@"%@ %@",addressText, address.postcode];
         }
         else
         {
@@ -540,32 +521,29 @@
         }
     }
     
+    currentY += [self addLabelToView:view startX:16.0f startY:currentY text:addressText font:JABodyFont color:JABlack800Color] + 6.0f;
+    
+    NSString* phoneText = @"";
+    
     if(VALID_NOTEMPTY(address.phone, NSString))
     {
-        if(VALID_NOTEMPTY(addressText, NSString))
-        {
-            addressText = [NSString stringWithFormat:@"%@\n%@",addressText, address.phone];
-        }
-        else
-        {
-            addressText = address.phone;
-        }
+        phoneText = address.phone;
     }
     
-    currentY += [self addLabelToView:view startY:currentY text:addressText] + 10.0f;
+    currentY += [self addLabelToView:view startX:16.0f startY:currentY text:phoneText font:JABodyFont color:JABlack800Color] + 10.0f;
     
     return currentY;
 }
 
-- (CGFloat)addLabelToView:(UIView*)view startY:(CGFloat)startY text:(NSString*)text
+- (CGFloat)addLabelToView:(UIView*)view startX:(CGFloat)startX startY:(CGFloat)startY text:(NSString*)text font:(UIFont*)font color:(UIColor*)color
 {
-    UILabel* addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(JAOrderSummaryViewTextMargin,
+    UILabel* addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(startX,
                                                                       startY,
-                                                                      view.frame.size.width - 2*JAOrderSummaryViewTextMargin,
+                                                                      view.frame.size.width - 2*startX,
                                                                       0.0f)];
-    addressLabel.font = [UIFont fontWithName:kFontLightName size:13.0f];
+    addressLabel.font = font;
     addressLabel.numberOfLines = 0;
-    addressLabel.textColor = JAButtonTextOrange;
+    addressLabel.textColor = color;
     addressLabel.text = text;
     [addressLabel sizeToFit];
     [view addSubview:addressLabel];

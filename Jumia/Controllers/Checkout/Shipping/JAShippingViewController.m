@@ -8,7 +8,6 @@
 
 #import "JAShippingViewController.h"
 #import "JAButtonWithBlur.h"
-#import "JACartListHeaderView.h"
 #import "JAShippingCell.h"
 #import "JAShippingInfoCell.h"
 #import "JAPickupStationInfoCell.h"
@@ -22,29 +21,23 @@
 #import "RIShippingMethodForm.h"
 #import "RISellerDelivery.h"
 #import "JASellerDeliveryView.h"
+#import "JAProductInfoHeaderLine.h"
 
 #define kPickupStationKey @"pickupstation"
 
 @interface JAShippingViewController ()
 <
-UICollectionViewDataSource,
-UICollectionViewDelegate,
-UICollectionViewDelegateFlowLayout
+UITableViewDataSource,
+UITableViewDelegate
 >
 {
     // Bottom view
     JACheckoutBottomView *_bottomView;
 }
 
-// Steps
-@property (weak, nonatomic) IBOutlet UIImageView *stepBackground;
-@property (weak, nonatomic) IBOutlet UIView *stepView;
-@property (weak, nonatomic) IBOutlet UIImageView *stepIcon;
-@property (weak, nonatomic) IBOutlet UILabel *stepLabel;
-
 // Shipping methods
 @property (strong, nonatomic) UIScrollView *scrollView;
-@property (strong, nonatomic) UICollectionView *collectionView;
+@property (strong, nonatomic) UITableView *tableView;
 
 // Picker view
 @property (strong, nonatomic) JAPicker *picker;
@@ -63,11 +56,13 @@ UICollectionViewDelegateFlowLayout
 @property (strong, nonatomic) NSMutableArray *pickupStationsForRegion;
 @property (strong, nonatomic) NSMutableArray *pickupStationHeightsForRegion;
 @property (strong, nonatomic) NSString *selectedShippingMethod;
-@property (strong, nonatomic) NSIndexPath *collectionViewIndexSelected;
+@property (strong, nonatomic) NSIndexPath *tableViewIndexSelected;
 @property (strong, nonatomic) NSIndexPath *selectedPickupStationIndexPath;
 @property (strong, nonatomic) NSMutableArray *sellerDeliveryViews;
 
 @property (assign, nonatomic) RIApiResponse apiResponse;
+
+@property (nonatomic, assign) BOOL isLoaded;
 
 @end
 
@@ -91,17 +86,14 @@ UICollectionViewDelegateFlowLayout
     self.navBarLayout.showBackButton = YES;
     self.navBarLayout.showCartButton = NO;
     
+    self.view.backgroundColor = JAWhiteColor;
+    
     self.pickupStationsForRegion = [[NSMutableArray alloc] init];
     self.pickupStationHeightsForRegion = [[NSMutableArray alloc] init];
     
-    self.stepBackground.translatesAutoresizingMaskIntoConstraints = YES;
-    self.stepView.translatesAutoresizingMaskIntoConstraints = YES;
-    self.stepIcon.translatesAutoresizingMaskIntoConstraints = YES;
-    self.stepLabel.translatesAutoresizingMaskIntoConstraints = YES;
-    self.stepLabel.font = [UIFont fontWithName:kFontBoldName size:self.stepLabel.font.pointSize];
-    [self.stepLabel setText:STRING_CHECKOUT_SHIPPING];
-    
     self.sellerDeliveryViews = [NSMutableArray new];
+    
+    self.isLoaded = NO;
     
     [self initViews];
 }
@@ -111,7 +103,7 @@ UICollectionViewDelegateFlowLayout
     [super viewWillAppear:animated];
 
     self.apiResponse = RIApiResponseSuccess;
-
+    self.isLoaded = NO;
     [self continueLoading];
 }
 
@@ -157,65 +149,48 @@ UICollectionViewDelegateFlowLayout
 
 - (void)continueLoading
 {
-    if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
-    {
-        [self showLoading];
+    if (NO == self.isLoaded) {
+        if(self.apiResponse==RIApiResponseMaintenancePage || self.apiResponse == RIApiResponseKickoutView || self.apiResponse == RIApiResponseSuccess)
+        {
+            [self showLoading];
+        }
+        
+        [RICart getMultistepShippingWithSuccessBlock:^(RICart *cart) {
+            self.isLoaded = YES;
+            
+            [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
+            self.cart = cart;
+            self.shippingMethodForm = cart.shippingMethodForm;
+            
+            // LIST OF AVAILABLE SHIPPING METHODS
+            self.shippingMethods = [RIShippingMethodForm getShippingMethods:cart.shippingMethodForm];
+            
+            [self finishedLoadingShippingMethods];
+        } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
+            self.apiResponse = apiResponse;
+            [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(continueLoading) objects:nil];
+            [self hideLoading];
+        }];
     }
-    
-    [RICart getMultistepShippingWithSuccessBlock:^(RICart *cart) {
-        [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-        self.cart = cart;
-        self.shippingMethodForm = cart.shippingMethodForm;
-        
-        // LIST OF AVAILABLE SHIPPING METHODS
-        self.shippingMethods = [RIShippingMethodForm getShippingMethods:cart.shippingMethodForm];
-        
-        [self finishedLoadingShippingMethods];
-    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
-        self.apiResponse = apiResponse;
-        [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(continueLoading) objects:nil];
-        [self hideLoading];
-    }];
 }
 
 - (void) initViews
 {
-    [self setupStepView:self.view.frame.size.width toInterfaceOrientation:self.interfaceOrientation];
-    
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f,
-                                                                     self.stepBackground.frame.size.height,
+                                                                     0.f,
                                                                      self.view.frame.size.width,
-                                                                     self.view.frame.size.height - self.stepBackground.frame.size.height)];
+                                                                     self.view.frame.size.height)];
     
-    UICollectionViewFlowLayout* collectionViewFlowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [collectionViewFlowLayout setMinimumLineSpacing:0.0f];
-    [collectionViewFlowLayout setMinimumInteritemSpacing:0.0f];
-    [collectionViewFlowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-    [collectionViewFlowLayout setItemSize:CGSizeZero];
-    [collectionViewFlowLayout setHeaderReferenceSize:CGSizeZero];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                   0.0f,
+                                                                   self.scrollView.frame.size.width,
+                                                                   27.0f)];
+    [self.tableView setDelegate:self];
+    [self.tableView setDataSource:self];
+    [self.tableView setScrollEnabled:NO];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [self.scrollView addSubview:self.tableView];
     
-    UINib *shippingListHeaderNib = [UINib nibWithNibName:@"JACartListHeaderView" bundle:nil];
-    UINib *shippingListCellNib = [UINib nibWithNibName:@"JAShippingCell" bundle:nil];
-    UINib *shippingInfoCellNib = [UINib nibWithNibName:@"JAShippingInfoCell" bundle:nil];
-    UINib *pickupRegionsCellNib = [UINib nibWithNibName:@"JAPickupRegionsCell" bundle:nil];
-    UINib *pickupStationInfoCellNib = [UINib nibWithNibName:@"JAPickupStationInfoCell" bundle:nil];
-    
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(6.0f,
-                                                                             6.0f,
-                                                                             self.scrollView.frame.size.width - 12.0f,
-                                                                             27.0f) collectionViewLayout:collectionViewFlowLayout];
-    self.collectionView.layer.cornerRadius = 5.0f;
-    [self.collectionView setBackgroundColor:JAWhiteColor];
-    [self.collectionView registerNib:shippingListHeaderNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"shippingListHeader"];
-    [self.collectionView registerNib:shippingListCellNib forCellWithReuseIdentifier:@"shippingListCell"];
-    [self.collectionView registerNib:shippingInfoCellNib forCellWithReuseIdentifier:@"shippingInfoCell"];
-    [self.collectionView registerNib:pickupRegionsCellNib forCellWithReuseIdentifier:@"pickupRegionsCell"];
-    [self.collectionView registerNib:pickupStationInfoCellNib forCellWithReuseIdentifier:@"pickupStationInfoCell"];
-    [self.collectionView setDataSource:self];
-    [self.collectionView setDelegate:self];
-    [self.collectionView setScrollEnabled:NO];
-    
-    [self.scrollView addSubview:self.collectionView];
     [self.view addSubview:self.scrollView];
     
     _bottomView = [[JACheckoutBottomView alloc] initWithFrame:CGRectMake(0.f, self.view.frame.size.height - 56, self.view.frame.size.width, 56) orientation:self.interfaceOrientation];
@@ -223,102 +198,25 @@ UICollectionViewDelegateFlowLayout
     [self.view addSubview:_bottomView];
 }
 
-- (void) setupStepView:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
-    CGFloat stepViewLeftMargin = 130.0f;
-    NSString *stepBackgroundImageName = @"headerCheckoutStep3";
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM())
-    {
-        if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
-        {
-            stepViewLeftMargin =  477.0f;
-            stepBackgroundImageName = @"headerCheckoutStep3Landscape";
-        }
-        else
-        {
-            stepViewLeftMargin = 349.0f;
-            stepBackgroundImageName = @"headerCheckoutStep3Portrait";
-        }
-    }
-    UIImage *stepBackgroundImage = [UIImage imageNamed:stepBackgroundImageName];
-    
-    [self.stepBackground setImage:stepBackgroundImage];
-    [self.stepBackground setFrame:CGRectMake(self.stepBackground.frame.origin.x,
-                                             self.stepBackground.frame.origin.y,
-                                             stepBackgroundImage.size.width,
-                                             stepBackgroundImage.size.height)];
-    
-    [self.stepView setFrame:CGRectMake(stepViewLeftMargin,
-                                       (stepBackgroundImage.size.height - self.stepView.frame.size.height) / 2,
-                                       self.stepView.frame.size.width,
-                                       stepBackgroundImage.size.height)];
-    [self.stepLabel sizeToFit];
-    
-    CGFloat horizontalMargin = 6.0f;
-    CGFloat marginBetweenIconAndLabel = 5.0f;
-    CGFloat realWidth = self.stepIcon.frame.size.width + marginBetweenIconAndLabel + self.stepLabel.frame.size.width - (2 * horizontalMargin);
-    
-    self.stepIcon.image = [UIImage imageNamed:@"headerCheckoutStep3Icon"];
-    
-    if(self.stepView.frame.size.width >= realWidth)
-    {
-        CGFloat xStepIconValue = ((self.stepView.frame.size.width - realWidth) / 2) - horizontalMargin;
-        [self.stepIcon setFrame:CGRectMake(xStepIconValue,
-                                           ceilf(((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2) - 1.0f),
-                                           self.stepIcon.frame.size.width,
-                                           self.stepIcon.frame.size.height)];
-        
-        [self.stepLabel setFrame:CGRectMake(CGRectGetMaxX(self.stepIcon.frame) + marginBetweenIconAndLabel,
-                                            4.0f,
-                                            self.stepLabel.frame.size.width,
-                                            12.0f)];
-    }
-    else
-    {
-        [self.stepIcon setFrame:CGRectMake(horizontalMargin,
-                                           ceilf(((self.stepView.frame.size.height - self.stepIcon.frame.size.height) / 2) - 1.0f),
-                                           self.stepIcon.frame.size.width,
-                                           self.stepIcon.frame.size.height)];
-        
-        [self.stepLabel setFrame:CGRectMake(CGRectGetMaxX(self.stepIcon.frame) + marginBetweenIconAndLabel,
-                                            4.0f,
-                                            (self.stepView.frame.size.width - self.stepIcon.frame.size.width - marginBetweenIconAndLabel - (2 * horizontalMargin)),
-                                            12.0f)];
-    }
-    
-    if(RI_IS_RTL){
-        [self.stepBackground setImage:[stepBackgroundImage flipImageWithOrientation:UIImageOrientationUpMirrored]];
-        [self.stepIcon flipViewImage];
-    }
-}
-
 -(void)finishedLoadingShippingMethods
 {
     if(VALID_NOTEMPTY(self.shippingMethods, NSArray))
     {
-        for (RIShippingMethodFormField *field in [self.shippingMethodForm fields])
-        {
-            if([@"shippingMethodForm[shipping_method]" isEqualToString:[field name]])
-            {
-                self.selectedShippingMethod = [field value];
-                break;
-            }
-        }
+        self.selectedShippingMethod = self.cart.shippingMethod;
         
         if(VALID_NOTEMPTY(self.selectedShippingMethod, NSString))
         {
             for(int i = 0; i < [self.shippingMethods count]; i++)
             {
                 NSDictionary *shippingMethod = [self.shippingMethods objectAtIndex:i];
-                NSArray *shippingMethodKeys = [shippingMethod allKeys];
-                if(VALID_NOTEMPTY(shippingMethodKeys, NSArray))
-                {
-                    if([self.selectedShippingMethod isEqualToString:[shippingMethodKeys objectAtIndex:0]])
-                    {
-                        self.collectionViewIndexSelected = [NSIndexPath indexPathForItem:i inSection:0];
-                        break;
+                [shippingMethod enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+                    if ([obj isKindOfClass:[RIShippingMethod class]]) {
+                        RIShippingMethod* method = (RIShippingMethod*)obj;
+                        if (method.label == self.selectedShippingMethod) {
+                            self.tableViewIndexSelected = [NSIndexPath indexPathForItem:i inSection:0];
+                        }
                     }
-                }
+                }];
             }
         }
         
@@ -330,7 +228,7 @@ UICollectionViewDelegateFlowLayout
         
         [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
         
-        [self collectionView:self.collectionView didSelectItemAtIndexPath:self.collectionViewIndexSelected];
+        [self tableView:self.tableView didSelectRowAtIndexPath:self.tableViewIndexSelected];
     }
     
     if(self.firstLoading)
@@ -357,7 +255,7 @@ UICollectionViewDelegateFlowLayout
     }
     
     if (VALID_NOTEMPTY(self.sellerDeliveryViews, NSMutableArray)) {
-        CGFloat currentY = self.collectionView.frame.origin.y + self.collectionView.frame.size.height + 24.f;
+        CGFloat currentY = self.tableView.frame.origin.y + self.tableView.frame.size.height;
         for (JASellerDeliveryView *sell in self.sellerDeliveryViews) {
             [UIView animateWithDuration:0.5f
                              animations:^{
@@ -372,9 +270,6 @@ UICollectionViewDelegateFlowLayout
 
 - (void) setupViews:(CGFloat)width toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
-    [self setupStepView:width toInterfaceOrientation:toInterfaceOrientation];
-    
-    
     if(VALID_NOTEMPTY(self.orderSummary, JAOrderSummaryView))
     {
         [self.orderSummary removeFromSuperview];
@@ -382,11 +277,11 @@ UICollectionViewDelegateFlowLayout
     
     if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(toInterfaceOrientation)  && (width < self.view.frame.size.width))
     {
-        CGFloat orderSummaryRightMargin = 6.0f;
+        CGFloat orderSummaryRightMargin = 0.0f;
         self.orderSummary = [[JAOrderSummaryView alloc] initWithFrame:CGRectMake(width,
-                                                                                 self.stepBackground.frame.size.height,
+                                                                                 0.f,
                                                                                  self.view.frame.size.width - width - orderSummaryRightMargin,
-                                                                                 self.view.frame.size.height - self.stepBackground.frame.size.height)];
+                                                                                 self.view.frame.size.height)];
         [self.orderSummary loadWithCart:self.cart shippingMethod:NO];
         [self.view addSubview:self.orderSummary];
     }
@@ -399,61 +294,49 @@ UICollectionViewDelegateFlowLayout
     [_bottomView setTotalValue:self.cart.cartValueFormatted];
     
     [self.scrollView setFrame:CGRectMake(0.0f,
-                                         self.stepBackground.frame.size.height,
+                                         0.f,
                                          width,
-                                         self.view.frame.size.height - self.stepBackground.frame.size.height - _bottomView.frame.size.height)];
+                                         self.view.frame.size.height - _bottomView.frame.size.height)];
     
-    [self.collectionView setFrame:CGRectMake(self.collectionView.frame.origin.x,
-                                             self.collectionView.frame.origin.y,
-                                             self.scrollView.frame.size.width - 12.0f,
-                                             self.collectionView.frame.size.height)];
-    [self reloadCollectionView];
+    [self.tableView setFrame:CGRectMake(self.tableView.frame.origin.x,
+                                        self.tableView.frame.origin.y,
+                                        self.scrollView.frame.size.width,
+                                        self.tableView.frame.size.height)];
+    [self reloadTableView];
     
     if (RI_IS_RTL) {
-        [self.view flipAllSubviews];
+        [_bottomView flipViewPositionInsideSuperview];
+        [_bottomView flipAllSubviews];
+        [self.orderSummary flipViewPositionInsideSuperview];
+        [self.orderSummary flipAllSubviews];
+        [self.scrollView flipViewPositionInsideSuperview];
     }
 }
 
-- (void)reloadCollectionView
+- (void)reloadTableView
 {
     if(VALID_NOTEMPTY(self.shippingMethods, NSArray))
     {
-        CGFloat collectionViewHeight = 27.0f + ([self.shippingMethods count] * 44.0f);
-        
-        if(VALID_NOTEMPTY(self.selectedShippingMethod, NSString))
-        {
-            if([kPickupStationKey isEqualToString:[self.selectedShippingMethod lowercaseString]])
-            {
-                collectionViewHeight += 50.0f; // JAShippingCell Height
-                
-                if(VALID_NOTEMPTY(self.pickupStationHeightsForRegion, NSMutableArray))
-                {
-                    for (NSNumber *pickupStationHeight in self.pickupStationHeightsForRegion)
-                    {
-                        collectionViewHeight += [pickupStationHeight floatValue];
-                    }
-                }
-            }
-            else
-            {
-                collectionViewHeight += 70.0f; // JAShippingInfoCell Height
-            }
+        CGFloat tableViewHeight = [self tableView:self.tableView heightForHeaderInSection:0] + 5.0f;
+        NSInteger numberOfRows = [self tableView:self.tableView numberOfRowsInSection:0];
+        for (int i = 0; i < numberOfRows; i++) {
+            tableViewHeight += [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
         }
         
         [UIView animateWithDuration:0.5f
                          animations:^{
-                             [self.collectionView setFrame:CGRectMake(self.collectionView.frame.origin.x,
-                                                                      self.collectionView.frame.origin.y,
-                                                                      self.collectionView.frame.size.width,
-                                                                      collectionViewHeight)];
+                             [self.tableView setFrame:CGRectMake(self.tableView.frame.origin.x,
+                                                                 self.tableView.frame.origin.y,
+                                                                 self.tableView.frame.size.width,
+                                                                 tableViewHeight)];
                          }];
         
         [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
-                                                   self.collectionView.frame.origin.y + collectionViewHeight + _bottomView.frame.size.height + 6.0f)];
+                                                   self.tableView.frame.origin.y + tableViewHeight + _bottomView.frame.size.height + 6.0f)];
         
     }
     
-    [self.collectionView reloadData];
+    [self.tableView reloadData];
     [self setupSellerDelivery:self.scrollView.frame.size.width];
 }
 
@@ -527,7 +410,7 @@ UICollectionViewDelegateFlowLayout
             {
                 [parameters setObject:self.selectedRegionId forKey:@"shippingMethodForm[pickup_station_customer_address_region]"];
                 
-                NSInteger pickupStationIndex = self.selectedPickupStationIndexPath.row - self.collectionViewIndexSelected.row - 2;
+                NSInteger pickupStationIndex = self.selectedPickupStationIndexPath.row - self.tableViewIndexSelected.row - 2;
                 RIShippingMethodPickupStationOption *pickupStation = [self.pickupStationsForRegion objectAtIndex:pickupStationIndex];
                 [parameters setObject:pickupStation.uid forKey:@"shippingMethodForm[pickup_station]"];
                 pickupStationID = pickupStation.uid;
@@ -575,7 +458,7 @@ UICollectionViewDelegateFlowLayout
             self.pickupStationHeightsForRegion = [[NSMutableArray alloc] init];
             for(RIShippingMethodPickupStationOption *pickupStation in self.pickupStationsForRegion)
             {
-                CGFloat size = [JAPickupStationInfoCell getHeightForPickupStation:pickupStation];
+                CGFloat size = [JAPickupStationInfoCell getHeightForPickupStation:pickupStation width:self.tableView.frame.size.width];
                 
                 [self.pickupStationHeightsForRegion addObject:[NSNumber numberWithFloat:size]];
             }
@@ -586,7 +469,7 @@ UICollectionViewDelegateFlowLayout
     
     [self closePicker];
     
-    [self reloadCollectionView];
+    [self reloadTableView];
 }
 
 - (void)closePicker
@@ -603,271 +486,251 @@ UICollectionViewDelegateFlowLayout
                      }];
 }
 
-#pragma mark UICollectionViewDelegateFlowLayout
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+#pragma mark UITableView
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    CGSize sizeForItemAtIndexPath = CGSizeZero;
+    return kProductInfoHeaderLineHeight;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat height = 0.0f;
     
-    if(collectionView == self.collectionView)
+    if(indexPath.row <= self.tableViewIndexSelected.row || indexPath.row > (self.tableViewIndexSelected.row + [self.pickupStationsForRegion count] + 1))
     {
-        if(indexPath.row <= self.collectionViewIndexSelected.row || indexPath.row > (self.collectionViewIndexSelected.row + [self.pickupStationsForRegion count] + 1))
+        // Shipping method title cell
+        height = 40.0f;
+    }
+    else if(indexPath.row == (self.tableViewIndexSelected.row + 1))
+    {
+        // Shipping method info cell
+        if([kPickupStationKey isEqualToString:[self.selectedShippingMethod lowercaseString]])
         {
-            // Shipping method title cell
-            sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, 40.0f);
-        }
-        else if(indexPath.row == (self.collectionViewIndexSelected.row + 1))
-        {
-            // Shipping method info cell
-            if([kPickupStationKey isEqualToString:[self.selectedShippingMethod lowercaseString]])
-            {
-                sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, 50.0f);
-            }
-            else
-            {
-                // JAShippingInfoCell Height
-                sizeForItemAtIndexPath = CGSizeMake(self.collectionView.frame.size.width, 60.0f);
-            }
+            height = 55.0f;
         }
         else
         {
-            // Shipping method option cell
-            if([kPickupStationKey isEqualToString:[self.selectedShippingMethod lowercaseString]])
-            {
-                NSInteger index = indexPath.row - self.collectionViewIndexSelected.row - 2;
-                CGFloat pickupStationInfoCellHeight = [JAPickupStationInfoCell getHeightForPickupStation:[self.pickupStationsForRegion objectAtIndex:index]];
-                
-                return CGSizeMake(self.collectionView.frame.size.width, pickupStationInfoCellHeight);
-            }
-        }
-    }
-    
-    return sizeForItemAtIndexPath;
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
-{
-    CGSize referenceSizeForHeaderInSection = CGSizeZero;
-    if(collectionView == self.collectionView)
-    {
-        referenceSizeForHeaderInSection = CGSizeMake(self.collectionView.frame.size.width, 27.0f);
-    }
-    
-    return referenceSizeForHeaderInSection;
-}
-
-#pragma mark UICollectionViewDataSource
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    return 1;
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    NSInteger numberOfItemsInSection = 0;
-    if(collectionView == self.collectionView && VALID_NOTEMPTY(self.shippingMethods, NSArray))
-    {
-        numberOfItemsInSection = [self.shippingMethods count];
-        
-        // Add options
-        numberOfItemsInSection += [self.pickupStationsForRegion count] + 1;
-    }
-    return numberOfItemsInSection;
-}
-
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    UICollectionViewCell *cell = nil;
-    
-    if(collectionView == self.collectionView && VALID_NOTEMPTY(self.shippingMethods, NSArray))
-    {
-        if(indexPath.row <= self.collectionViewIndexSelected.row || indexPath.row > (self.collectionViewIndexSelected.row + [self.pickupStationsForRegion count] + 1))
-        {
-            // Shipping method title cell
-            NSInteger index = indexPath.row;
-            if(indexPath.row > (self.collectionViewIndexSelected.row + [self.pickupStationsForRegion count] + 1))
-            {
-                index = indexPath.row - ([self.pickupStationsForRegion count] + 1);
-            }
+            // JAShippingInfoCell Height
+            height = 60.0f;
+            NSDictionary *shippingMethodDictionary = [self.shippingMethods objectAtIndex:self.tableViewIndexSelected.row];
             
-            NSDictionary *shippingMethod = [self.shippingMethods objectAtIndex:index];
-            
-            NSArray *shippingMethodKeys = [shippingMethod allKeys];
+            NSArray *shippingMethodKeys = [shippingMethodDictionary allKeys];
             if(VALID_NOTEMPTY(shippingMethodKeys, NSArray))
             {
                 NSString *shippingMethodKey = [shippingMethodKeys objectAtIndex:0];
-                NSString *cellIdentifier = @"shippingListCell";
-                JAShippingCell *shippingCell = (JAShippingCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-                [shippingCell loadWithShippingMethod:[shippingMethod objectForKey:shippingMethodKey]];
-                
-                [shippingCell deselectShippingMethod];
-                if(VALID_NOTEMPTY(self.collectionViewIndexSelected, NSIndexPath) && indexPath.row == self.collectionViewIndexSelected.row)
+                RIShippingMethod *shippingMethod = [shippingMethodDictionary objectForKey:shippingMethodKey];
+                if(VALID_NOTEMPTY(shippingMethod, RIShippingMethod))
                 {
-                    [shippingCell selectShippingMethod];
-                }
-                
-                shippingCell.clickableView.tag = indexPath.row;
-                [shippingCell.clickableView addTarget:self action:@selector(clickViewSelected:) forControlEvents:UIControlEventTouchUpInside];
-                
-                if (([self.shippingMethods count] - 1) == index) {
-                    [shippingCell.separator setHidden:YES];
-                }
-                
-                if(self.collectionViewIndexSelected.row == index)
-                {
-                    [shippingCell.separator setHidden:YES];
-                    shippingCell.clickableView.enabled = NO;
-                } else {
-                    shippingCell.clickableView.enabled = YES;
-                }
-                
-                cell = shippingCell;
-            }
-        }
-        else if(indexPath.row == (self.collectionViewIndexSelected.row + 1))
-        {
-            // Shipping method info cell
-            
-            if([kPickupStationKey isEqualToString:[self.selectedShippingMethod lowercaseString]])
-            {
-                NSString *cellIdentifier = @"pickupRegionsCell";
-                JAShippingInfoCell *shippingInfoCell = (JAShippingInfoCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-                [shippingInfoCell loadWithPickupStation];
-                
-                if(VALID_NOTEMPTY(self.selectedRegion, NSString))
-                {
-                    [shippingInfoCell setPickupStationRegion:self.selectedRegion];
-                }
-                
-                if(([self.shippingMethods count] - 1) == self.collectionViewIndexSelected.row ||
-                   VALID_NOTEMPTY(self.pickupStationsForRegion, NSMutableArray))
-                {
-                    [shippingInfoCell.separator setHidden:YES];
-                }
-                else
-                {
-                    [shippingInfoCell.separator setHidden:NO];
-                }
-                
-                cell = shippingInfoCell;
-            }
-            else
-            {
-                NSString *cellIdentifier = @"shippingInfoCell";
-                JAShippingInfoCell *shippingInfoCell = (JAShippingInfoCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-                NSString *shippingFee = [self.cart shippingValueFormatted];
-                if(0 == [[self.cart shippingValue] integerValue])
-                {
-                    shippingFee = STRING_FREE;
-                }
-                
-                NSDictionary *shippingMethodDictionary = [self.shippingMethods objectAtIndex:self.collectionViewIndexSelected.row];
-                
-                NSArray *shippingMethodKeys = [shippingMethodDictionary allKeys];
-                if(VALID_NOTEMPTY(shippingMethodKeys, NSArray))
-                {
-                    NSString *shippingMethodKey = [shippingMethodKeys objectAtIndex:0];
-                    RIShippingMethod *shippingMethod = [shippingMethodDictionary objectForKey:shippingMethodKey];
-                    if(VALID_NOTEMPTY(shippingMethod, RIShippingMethod))
-                    {
-                        NSString *shippingFeeString = [RICountryConfiguration formatPrice:shippingMethod.shippingFee country:[RICountryConfiguration getCurrentConfiguration]];
-                        if ([shippingMethod.shippingFee isEqualToNumber:[NSNumber numberWithInteger:0]]) {
-                            shippingFeeString = STRING_FREE;
-                        }
-                        [shippingInfoCell loadWithShippingFee:shippingFeeString deliveryTime:shippingMethod.deliveryTime];
+                    if (ISEMPTY(shippingMethod.shippingFee) || [shippingMethod.shippingFee isEqualToNumber:[NSNumber numberWithInteger:0]]) {
+                        height = 40.0f;
                     }
                 }
-                
-                if(([self.shippingMethods count] - 1) == self.collectionViewIndexSelected.row)
-                {
-                    [shippingInfoCell.separator setHidden:YES];
-                }
-                else
-                {
-                    [shippingInfoCell.separator setHidden:NO];
-                }
-                
-                cell = shippingInfoCell;
-            }
-        }
-        else
-        {
-            // Shipping method option cell
-            if([kPickupStationKey isEqualToString:[self.selectedShippingMethod lowercaseString]])
-            {
-                NSString *cellIdentifier = @"pickupStationInfoCell";
-                JAPickupStationInfoCell *pickupStationInfoCell = (JAPickupStationInfoCell*) [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-                
-                if(VALID_NOTEMPTY(self.pickupStationsForRegion, NSMutableArray))
-                {
-                    NSInteger index = indexPath.row - self.collectionViewIndexSelected.row - 2;
-                    [pickupStationInfoCell loadWithPickupStation:[self.pickupStationsForRegion objectAtIndex:index]];
-                    
-                    if(index == ([self.pickupStationsForRegion count] - 1))
-                    {
-                        [pickupStationInfoCell.separator setHidden:YES];
-                        [pickupStationInfoCell.lastSeparator setHidden:NO];
-                    }
-                    else
-                    {
-                        [pickupStationInfoCell.separator setHidden:NO];
-                        [pickupStationInfoCell.lastSeparator setHidden:YES];
-                    }
-                }
-                
-                pickupStationInfoCell.clickableView.tag = indexPath.row;
-                [pickupStationInfoCell.clickableView addTarget:self action:@selector(clickViewSelected:) forControlEvents:UIControlEventTouchUpInside];
-                
-                [pickupStationInfoCell deselectPickupStation];
-                if(indexPath.row == self.selectedPickupStationIndexPath.row)
-                {
-                    [pickupStationInfoCell selectPickupStation];
-                }
-                
-                cell = pickupStationInfoCell;
             }
         }
     }
+    else
+    {
+        // Shipping method option cell
+        if([kPickupStationKey isEqualToString:[self.selectedShippingMethod lowercaseString]])
+        {
+            NSInteger index = indexPath.row - self.tableViewIndexSelected.row - 2;
+            CGFloat pickupStationInfoCellHeight = [JAPickupStationInfoCell getHeightForPickupStation:[self.pickupStationsForRegion objectAtIndex:index] width:self.tableView.frame.size.width];
+            
+            height = pickupStationInfoCellHeight;
+        }
+    }
     
-    return cell;
+    return  height;
 }
 
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UICollectionReusableView *reusableview = [[UICollectionReusableView alloc] init];
+    NSString* title = STRING_SHIPPING;
     
-    if (kind == UICollectionElementKindSectionHeader) {
-        JACartListHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"shippingListHeader" forIndexPath:indexPath];
-        
-        if(collectionView == self.collectionView)
-        {
-            [headerView loadHeaderWithText:STRING_SHIPPING width:self.collectionView.frame.size.width];
-        }
-        reusableview = headerView;
+    UIView* content = [UIView new];
+    [content setFrame:CGRectMake(0.0f, 0.0f, tableView.frame.size.width, kProductInfoHeaderLineHeight)];
+    
+    JAProductInfoHeaderLine* headerLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0.0f, 0.0f, content.frame.size.width, kProductInfoHeaderLineHeight)];
+    [headerLine setTitle:title];
+    
+    if (RI_IS_RTL) {
+        [headerLine flipAllSubviews];
     }
     
-    return reusableview;
+    [content addSubview:headerLine];
+    
+    return content;
 }
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    NSInteger numberOfItemsInSection = [self.shippingMethods count] + 1;
+        
+    // Add options
+    numberOfItemsInSection += [self.pickupStationsForRegion count];
+    
+    return numberOfItemsInSection;
+}
+
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.row <= self.tableViewIndexSelected.row || indexPath.row > (self.tableViewIndexSelected.row + [self.pickupStationsForRegion count] + 1)) {
+        // Shipping method title cell
+        NSInteger index = indexPath.row;
+        if(indexPath.row > (self.tableViewIndexSelected.row + [self.pickupStationsForRegion count] + 1))
+        {
+            index = indexPath.row - ([self.pickupStationsForRegion count] + 1);
+        }
+        
+        NSDictionary *shippingMethod = [self.shippingMethods objectAtIndex:index];
+        
+        NSArray *shippingMethodKeys = [shippingMethod allKeys];
+        if(VALID_NOTEMPTY(shippingMethodKeys, NSArray))
+        {
+            NSString *shippingMethodKey = [shippingMethodKeys objectAtIndex:0];
+            NSString *cellIdentifier = @"shippingListCell";
+            JAShippingCell *shippingCell = (JAShippingCell*) [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            if (ISEMPTY(shippingCell)) {
+                shippingCell = [[JAShippingCell alloc] init];
+                [shippingCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            }
+            [shippingCell loadWithShippingMethod:[shippingMethod objectForKey:shippingMethodKey] width:self.tableView.frame.size.width];
+            
+            [shippingCell deselectShippingMethod];
+            if(VALID_NOTEMPTY(self.tableViewIndexSelected, NSIndexPath) && indexPath.row == self.tableViewIndexSelected.row)
+            {
+                [shippingCell selectShippingMethod];
+            }
+            
+            shippingCell.clickableView.tag = indexPath.row;
+            [shippingCell.clickableView addTarget:self action:@selector(clickViewSelected:) forControlEvents:UIControlEventTouchUpInside];
+            
+            if(self.tableViewIndexSelected.row == index)
+            {
+                shippingCell.clickableView.enabled = NO;
+            } else {
+                shippingCell.clickableView.enabled = YES;
+            }
+            
+            return shippingCell;
+        }
+    } else if(indexPath.row == (self.tableViewIndexSelected.row + 1)) {
+        // Shipping method info cell
+        
+        if([kPickupStationKey isEqualToString:[self.selectedShippingMethod lowercaseString]])
+        {
+            NSString *cellIdentifier = @"pickupRegionsCell";
+            JAShippingInfoCell *shippingInfoCell = (JAShippingInfoCell*) [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            if (ISEMPTY(shippingInfoCell)) {
+                shippingInfoCell = [[JAShippingInfoCell alloc] init];
+                [shippingInfoCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            }
+            [shippingInfoCell loadWithPickupStationWidth:self.tableView.frame.size.width];
+            
+            if(VALID_NOTEMPTY(self.selectedRegion, NSString))
+            {
+                [shippingInfoCell setPickupStationRegion:self.selectedRegion];
+            }
+            
+            return shippingInfoCell;
+            
+        } else {
+            NSString *cellIdentifier = @"shippingInfoCell";
+            JAShippingInfoCell *shippingInfoCell = (JAShippingInfoCell*) [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            if (ISEMPTY(shippingInfoCell)) {
+                shippingInfoCell = [[JAShippingInfoCell alloc] init];
+                [shippingInfoCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            }
+            
+            NSDictionary *shippingMethodDictionary = [self.shippingMethods objectAtIndex:self.tableViewIndexSelected.row];
+            
+            NSArray *shippingMethodKeys = [shippingMethodDictionary allKeys];
+            if(VALID_NOTEMPTY(shippingMethodKeys, NSArray))
+            {
+                NSString *shippingMethodKey = [shippingMethodKeys objectAtIndex:0];
+                RIShippingMethod *shippingMethod = [shippingMethodDictionary objectForKey:shippingMethodKey];
+                if(VALID_NOTEMPTY(shippingMethod, RIShippingMethod))
+                {
+                    NSString *shippingFeeString = [RICountryConfiguration formatPrice:shippingMethod.shippingFee country:[RICountryConfiguration getCurrentConfiguration]];
+                    if (ISEMPTY(shippingMethod.shippingFee) || [shippingMethod.shippingFee isEqualToNumber:[NSNumber numberWithInteger:0]]) {
+                        shippingFeeString = STRING_FREE;
+                    }
+                    [shippingInfoCell loadWithShippingFee:shippingFeeString deliveryTime:shippingMethod.deliveryTime width:self.tableView.frame.size.width];
+                }
+            }
+            
+            return shippingInfoCell;
+        }
+    } else {
+        // Shipping method option cell
+        if([kPickupStationKey isEqualToString:[self.selectedShippingMethod lowercaseString]])
+        {
+            NSString *cellIdentifier = @"pickupStationInfoCell";
+            JAPickupStationInfoCell *pickupStationInfoCell = (JAPickupStationInfoCell*) [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            if (ISEMPTY(pickupStationInfoCell)) {
+                pickupStationInfoCell = [[JAPickupStationInfoCell alloc] init];
+                [pickupStationInfoCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            }
+            
+            if(VALID_NOTEMPTY(self.pickupStationsForRegion, NSMutableArray))
+            {
+                NSInteger index = indexPath.row - self.tableViewIndexSelected.row - 2;
+                [pickupStationInfoCell loadWithPickupStation:[self.pickupStationsForRegion objectAtIndex:index] width:self.tableView.frame.size.width];
+                
+                if(index == ([self.pickupStationsForRegion count] - 1))
+                {
+                    [pickupStationInfoCell.separator setHidden:YES];
+                    [pickupStationInfoCell.lastSeparator setHidden:NO];
+                }
+                else
+                {
+                    [pickupStationInfoCell.separator setHidden:NO];
+                    [pickupStationInfoCell.lastSeparator setHidden:YES];
+                }
+            }
+            
+            pickupStationInfoCell.clickableView.tag = indexPath.row;
+            [pickupStationInfoCell.clickableView addTarget:self action:@selector(clickViewSelected:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [pickupStationInfoCell deselectPickupStation];
+            if(indexPath.row == self.selectedPickupStationIndexPath.row)
+            {
+                [pickupStationInfoCell selectPickupStation];
+            }
+            
+            return pickupStationInfoCell;
+        }
+    }
+    return nil;
+}
+
 
 #pragma mark UICollectionViewDelegate
 
 - (void)clickViewSelected:(UIControl*)sender
 {
-    [self collectionView:self.collectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
+    [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
 }
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(collectionView == self.collectionView && VALID_NOTEMPTY(self.shippingMethods, NSArray))
+    if(tableView == self.tableView && VALID_NOTEMPTY(self.shippingMethods, NSArray))
     {
-        if(indexPath.row <= self.collectionViewIndexSelected.row || indexPath.row > (self.collectionViewIndexSelected.row + [self.pickupStationsForRegion count] + 1))
+        if(indexPath.row <= self.tableViewIndexSelected.row || indexPath.row > (self.tableViewIndexSelected.row + [self.pickupStationsForRegion count] + 1))
         {
             // Shipping method title cell
             NSInteger index = indexPath.row;
-            if(indexPath.row > (self.collectionViewIndexSelected.row + [self.pickupStationsForRegion count] + 1))
+            if(indexPath.row > (self.tableViewIndexSelected.row + [self.pickupStationsForRegion count] + 1))
             {
                 index = indexPath.row - ([self.pickupStationsForRegion count] + 1);
+            }
+            
+            // Shipping method info cell
+            if([kPickupStationKey isEqualToString:[self.selectedShippingMethod lowercaseString]])
+            {
+                self.pickupStationsForRegion = [NSMutableArray new];
+                self.selectedRegion = nil;
             }
             
             NSDictionary *shippingMethod = [self.shippingMethods objectAtIndex:index];
@@ -876,23 +739,23 @@ UICollectionViewDelegateFlowLayout
             {
                 self.selectedShippingMethod = [shippingMethodKeys objectAtIndex:0];
                 
-                if(VALID_NOTEMPTY(self.collectionViewIndexSelected, NSIndexPath))
+                if(VALID_NOTEMPTY(self.tableViewIndexSelected, NSIndexPath))
                 {
-                    JAShippingCell *oldShippingCell = (JAShippingCell*) [collectionView cellForItemAtIndexPath:self.collectionViewIndexSelected];
+                    JAShippingCell *oldShippingCell = (JAShippingCell*) [tableView cellForRowAtIndexPath:self.tableViewIndexSelected];
                     [oldShippingCell deselectShippingMethod];
                 }
-                self.collectionViewIndexSelected = [NSIndexPath indexPathForItem:index inSection:indexPath.section];
+                self.tableViewIndexSelected = [NSIndexPath indexPathForItem:index inSection:indexPath.section];
                 
-                JAShippingCell *shippingCell = (JAShippingCell*)[collectionView cellForItemAtIndexPath:indexPath];
+                JAShippingCell *shippingCell = (JAShippingCell*)[tableView cellForRowAtIndexPath:indexPath];
                 [shippingCell selectShippingMethod];
                 
                 self.pickupStationRegions = [RIShippingMethodForm getRegionsForShippingMethod:self.selectedShippingMethod inForm:self.shippingMethodForm];
                 self.pickerIndexPath = nil;
                 
-                [self reloadCollectionView];
+                [self reloadTableView];
             }
         }
-        else if(indexPath.row == (self.collectionViewIndexSelected.row + 1))
+        else if(indexPath.row == (self.tableViewIndexSelected.row + 1))
         {
             // Shipping method info cell
             if([kPickupStationKey isEqualToString:[self.selectedShippingMethod lowercaseString]])
@@ -906,11 +769,11 @@ UICollectionViewDelegateFlowLayout
             // Shipping method option cell
             if(VALID_NOTEMPTY(self.selectedPickupStationIndexPath, NSIndexPath))
             {
-                JAPickupStationInfoCell *oldPickupStationInfoCell = (JAPickupStationInfoCell*) [collectionView cellForItemAtIndexPath:self.selectedPickupStationIndexPath];
+                JAPickupStationInfoCell *oldPickupStationInfoCell = (JAPickupStationInfoCell*) [tableView cellForRowAtIndexPath:self.selectedPickupStationIndexPath];
                 [oldPickupStationInfoCell deselectPickupStation];
             }
             
-            JAPickupStationInfoCell *pickupStationInfoCell = (JAPickupStationInfoCell*)[collectionView cellForItemAtIndexPath:indexPath];
+            JAPickupStationInfoCell *pickupStationInfoCell = (JAPickupStationInfoCell*)[tableView cellForRowAtIndexPath:indexPath];
             [pickupStationInfoCell selectPickupStation];
             
             self.selectedPickupStationIndexPath = indexPath;

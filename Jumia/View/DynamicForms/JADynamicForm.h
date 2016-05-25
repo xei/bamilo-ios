@@ -11,6 +11,7 @@
 #import "JABirthDateComponent.h"
 #import "JACheckBoxComponent.h"
 #import "JARadioComponent.h"
+#import "JAListNumberComponent.h"
 #import "JACheckBoxWithOptionsComponent.h"
 
 @class RIForm;
@@ -41,6 +42,11 @@
 - (void)openPicker:(JARadioComponent *)radioComponent;
 
 /**
+ * Method that tells if a picker is needed
+ */
+- (void)openNumberPicker:(JAListNumberComponent *)listNumberComponent;
+
+/**
  * Method that tells if we need to download regions and cities
  */
 - (void)downloadLocalesForComponents:(NSDictionary*)componentDictionary;
@@ -55,6 +61,8 @@
 
 - (void)screenRadioWasPressedWithTargetString:(NSString*)targetString;
 
+- (void)openCMSBlock:(NSString*)cmsBlock;
+
 @end
 
 @interface JADynamicForm : NSObject <UITextFieldDelegate>
@@ -64,6 +72,8 @@
 @property (strong, nonatomic) id<JADynamicFormDelegate> delegate;
 @property (assign, nonatomic) BOOL hasFieldNavigation;
 @property (nonatomic, strong) NSString* firstErrorInFields;
+
+- (void)setFormsY:(NSInteger)startingY;
 
 -(id)initWithForm:(RIForm*)form startingPosition:(CGFloat)startingY;
 
@@ -78,7 +88,11 @@
 
 -(BOOL)checkErrors;
 
+-(NSDictionary*)getValuesReplacingPlaceHolder:(NSString *)placeHolder forString:(NSString *)replaceString;
 -(NSDictionary*)getValues;
+
+- (void)setValues:(NSDictionary *)values;
+- (void)setValues:(NSDictionary *)values replacePlaceHolder:(NSString *)placeHolder forString:(NSString *)replaceString;
 
 -(void)resetValues;
 
@@ -91,6 +105,9 @@
 -(void)resignResponder;
 
 - (NSString*)getFieldNameForKey:(NSString*)key;
+
+- (NSDictionary *)getFieldLabels;
+- (NSDictionary *)getFieldLabelsReplacePlaceHolder:(NSString *)placeHolder forString:(NSString *)replaceString;
 
 - (void)unsubscribedNewsletters;
 

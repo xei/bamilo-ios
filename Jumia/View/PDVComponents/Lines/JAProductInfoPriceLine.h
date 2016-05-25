@@ -13,8 +13,9 @@
 @interface JAProductInfoPriceLine : JAProductInfoBaseLine
 
 typedef NS_ENUM(NSInteger, JAPriceSize) {
-    kPriceSizeMedium = 0,
-    kPriceSizeSmall = 1
+    JAPriceSizeMedium = 0,
+    JAPriceSizeSmall = 1,
+    JAPriceSizeTitle = 2
 };
 
 @property (nonatomic) BOOL fashion;
