@@ -101,7 +101,7 @@
             [_itemViewsContentView addSubview:productView];
             
             if (RI_IS_RTL) {
-                [_itemViewsContentView flipAllSubviews];
+                [productView flipAllSubviews];
             }
         }
         [self.scrollView addSubview:_itemViewsContentView];
@@ -250,7 +250,7 @@
     
     [self.itemViewsContentView setFrame:CGRectMake(0.0f,
                                                    CGRectGetMaxY(self.formContentView.frame),
-                                                   self.scrollView.frame.size.height,
+                                                   self.scrollView.frame.size.width,
                                                    self.itemViewsContentView.frame.size.height)];
     
     [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
@@ -299,11 +299,14 @@
     UIView* lastView = [self.dynamicForm.formViews lastObject];
     self.formContentView.height = CGRectGetMaxY(lastView.frame);
     
-    [self.itemViewsContentView removeFromSuperview];
-    self.itemViewsContentView = nil;
-    self.itemViewsArray = nil;
+
+    [self.itemViewsContentView setFrame:CGRectMake(self.itemViewsContentView.frame.origin.x,
+                                                   CGRectGetMaxY(self.formContentView.frame),
+                                                   self.itemViewsContentView.frame.size.width,
+                                                   self.itemViewsContentView.frame.size.height)];
     
-    [self loadSubviews];
+    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width,
+                                               CGRectGetMaxY(self.itemViewsContentView.frame))];
 }
 
 - (void)openCMSBlock:(NSString *)cmsBlock

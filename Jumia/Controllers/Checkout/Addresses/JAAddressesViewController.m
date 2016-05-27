@@ -52,8 +52,6 @@ UITableViewDelegate>
 
 @property (assign, nonatomic) RIApiResponse apiResponse;
 
-@property (nonatomic, assign) BOOL isLoaded;
-
 @end
 
 @implementation JAAddressesViewController
@@ -112,8 +110,6 @@ UITableViewDelegate>
     _bottomView = [[JACheckoutBottomView alloc] initWithFrame:CGRectMake(0.f, self.view.frame.size.height - 56, self.view.frame.size.width, 56) orientation:self.interfaceOrientation];
     [_bottomView setTotalValue:self.cart.cartValueFormatted];
     [self.view addSubview:_bottomView];
-    
-    self.isLoaded = NO;
 }
 
 - (void)viewWillLayoutSubviews
@@ -137,9 +133,8 @@ UITableViewDelegate>
     {
         newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     }
-    if (NO == self.isLoaded) {
-        [self getAddressList];
-    } else {
+    if(VALID_NOTEMPTY(self.addresses, NSDictionary))
+    {
         [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
     }
 }
@@ -162,9 +157,6 @@ UITableViewDelegate>
 {
     [self showLoading];
     [RIAddress getCustomerAddressListWithSuccessBlock:^(id adressList) {
-        self.isLoaded = YES;
-        
-        
         self.addresses = adressList;
         if(VALID_NOTEMPTY(self.addresses, NSDictionary))
         {

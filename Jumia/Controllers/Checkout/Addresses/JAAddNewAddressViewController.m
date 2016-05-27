@@ -386,6 +386,8 @@ JAPickerDelegate>
 
 -(void)createAddressButtonPressed
 {
+    self.hasErrors = NO;
+    
     [self showLoading];
     if ([self.dynamicForm checkErrors]) {
         NSArray* message;
@@ -405,6 +407,7 @@ JAPickerDelegate>
           parameters:parameters
         successBlock:^(id object, NSArray* successMessages)
      {
+         [self hideLoading];
          [self.dynamicForm resetValues];
          if (NOTEMPTY([object valueForKey:@"next_step"])) {
              self.cart.nextStep = [object valueForKey:@"next_step"];
@@ -412,6 +415,7 @@ JAPickerDelegate>
          [self finishedRequests];
      } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject)
      {
+         [self hideLoading];
          self.hasErrors = YES;
          
          if(VALID_NOTEMPTY(errorObject, NSDictionary))

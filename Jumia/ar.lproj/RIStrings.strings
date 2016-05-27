@@ -188,6 +188,8 @@
 
 "voucher_message_hint" = "أدخل رقم الكوبون هنا";
 
+"voucher_error_message" = "يُرجى إدخال رقم قسيمة شراء صحيح";
+
 "call_to_order" = "اتصل للطلب";
 
 "string_article" = "مقال 1";
@@ -203,6 +205,8 @@
 "shipping" = "الشحن";
 
 "shipment_of" = "شحن %ld لـ%ld";
+
+"shipment_label" = "الحالة";
 
 "fulfilled_by" = "تم التوصيل بواسطة";
 
@@ -224,7 +228,7 @@
 
 "facebook_signup_button_text" = "التسجيل من خلال الفيسبوك!";
 
-"facebook_login_button_text" = "تسجيل الدخول من خلال فيسبوك";
+"facebook_login_button_text" = "تسجيل الدخول من خلال Facebook";
 
 "login_incomplete" = "البريد الإلكتروني و تاريخ الميلاد ضروريان للدخول";
 
@@ -240,7 +244,7 @@
 
 "checkout_label" = "انهاء الطلب";
 
-"checkout_header_step_1" = "1. معلومات عنك";
+"checkout_header_step_1" = "تسجيل الدخول";
 
 "next_button" = "التالي";
 
@@ -252,7 +256,7 @@
 
 "registration_text" = "تسجيل حساب";
 
-"checkout_header_step_2" = "2. العنوان";
+"checkout_header_step_2" = "العنوان";
 
 "action_label_add_address" = "إضافة عنوان جديد";
 
@@ -276,7 +280,7 @@
 
 "validation_errortext" = "يوجد أخطاء بالبيانات المدخلة. يُرجى التحقق من البيانات المدخلة.";
 
-"checkout_header_step_3" = "3. الشحن";
+"checkout_header_step_3" = "الشحن";
 
 "string_city" = "المدينة ";
 
@@ -288,7 +292,7 @@
 
 "order_summary_shipping_fee_label" = "رسوم الشحن:";
 
-"checkout_header_step_4" = "4. الدفع";
+"checkout_header_step_4" = "الدفع";
 
 "payment" = "الدفع";
 
@@ -310,7 +314,7 @@
 
 "string_order_status" = "حالة الطلب";
 
-"order_no" = "طلب رقم %@";
+"order_no" = "طلب رقم: %@";
 
 "string_loosing_order_title" = "تحذير";
 
@@ -464,6 +468,8 @@
 
 "got_it" = "احصل عليها";
 
+"ok_got_it" = "نعم, موافق";
+
 "home_tip_text" = "يمكنك التمرير لليمين أو اليسار لتغيير الفئة";
 
 "products_tip_swipe_text" = "تحرك إلى اليمين أو اليسار لتغيير نوع الترتيب";
@@ -498,7 +504,7 @@
 
 "welcome" = "مرحباً";
 
-"new_to_jumia" = "يبدو أنك جديد على جوميا .\n نحن بحاجة إلى بعض من المعلومات لإنشاء حسابك .";
+"new_to_jumia" = "نحن بحاجة إلى التفاصيل فقط أكثر قليلا لإنشاء حسابك.";
 
 "reviews" = "التعليقات";
 
@@ -707,4 +713,30 @@
 "newsletter_preferences" = "تفضيلات الرسالة الإخبارية";
 
 "free_shipping_possible" = "إمكانية الشحن المجاني";
+
+"go" = "نفّذ";
+
+"order_return_conditions_title" = "نحن نأسف أن كنت غير راض تماما مع المنتج الخاص بك";
+
+"return_label" = "إرحاع";
+
+"x_items_returned_on" = "%ld تم إرجاع المنتجات في %@";
+
+"call_return_label" = "اتصل للارجاع";
+
+"question_return_reasons" = "لماذا ترغب في ارجاع المنتج؟";
+
+"call_now_label" = "اتصل الان";
+
+"please_call_to" = "إتصل بنا على %@";
+
+"return_method" = "طريقة الارجاع";
+
+"return_payment_method" = "طريقة الدفع الخاصة بالإرجاع";
+
+"return_reason" = "سبب الارجاع";
+
+"order_return_finish_title" = "تأكيد معلومات ارجاع المنتج";
+
+"everything_looks_good" = "إذا كان كل شيء يبدو جيدا, اضغط \"ارسل\".";
 

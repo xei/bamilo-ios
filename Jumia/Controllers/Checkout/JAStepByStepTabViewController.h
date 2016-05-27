@@ -16,6 +16,6 @@
 @property (nonatomic) BOOL stackIsEmpty;
 
 - (void)goToViewController:(UIViewController *)viewController;
-- (void)sendBack;
+- (BOOL)sendBack;
 
 @end

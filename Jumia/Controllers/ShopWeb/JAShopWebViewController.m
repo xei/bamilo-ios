@@ -55,7 +55,7 @@
             self.htmlShop = htmlShop;
             self.isLoaded = YES;
             [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-            [self.webView loadHTMLString:self.htmlShop.html baseURL:[NSURL URLWithString:[RITarget getURLStringforTargetString:self.targetString]]];
+            [self.webView loadHTMLString:self.htmlShop.html baseURL:[NSURL URLWithString:@"http://"]];
             
         } failureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
             [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(viewWillAppear:) objects:nil];
