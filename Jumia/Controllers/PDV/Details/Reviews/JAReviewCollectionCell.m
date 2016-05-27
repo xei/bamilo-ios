@@ -119,7 +119,6 @@
         [self.clickableArea addSubview:_authorLabel];
     }else if (CGRectEqualToRect(frame, _authorLabel.frame)) {
         frame.size.height = [_authorLabel sizeThatFits:CGSizeMake(self.width - 32, CGFLOAT_MAX)].height;
-        [_authorLabel setTextAlignment:NSTextAlignmentLeft];
         [_authorLabel setFrame:frame];
     }
     return _authorLabel;
@@ -203,7 +202,10 @@
     [self.dateLabel sizeToFit];
     [self.dateLabel setXRightAligned:16.f];
     [self.titleLabel setText:review.title];
+    [self.titleLabel setTextAlignment:NSTextAlignmentLeft];
     [self.authorLabel setText:[NSString stringWithFormat:STRING_BY_SOMEONE, review.userName]];
+    [self.authorLabel setTextAlignment:NSTextAlignmentLeft];
+    [self.descriptionLabel setTextAlignment:NSTextAlignmentLeft];
     [self.descriptionLabel setWidth:[self getDescriptionLabelInitWidth]];
     [self.descriptionLabel setText:review.comment];
     [self.descriptionLabel sizeToFit];
