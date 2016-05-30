@@ -15,6 +15,7 @@
 @property (nonatomic, retain) NSArray *filters;
 @property (nonatomic, retain) NSArray *products;
 @property (nonatomic, retain) NSString *title;
+@property (nonatomic, retain) NSString *sort;
 @property (nonatomic, retain) NSNumber *totalProducts;
 @property (nonatomic, retain) RIBanner *banner;
 

@@ -10,23 +10,9 @@
 #import "RIBanner.h"
 #import "RICatalog.h"
 #import "RIRecentlyViewedProductSku.h"
+#import "RICatalogSorting.h"
 
 @class RIImage, RIProductSimple, RIVariation, RIBundle, RISeller, RIUndefinedSearchTerm;
-
-/*
- * IMPORTANT NOTICE
- * If the order of the catalog sorting changes,
- * we've to change it in the push notifications as well
- */
-typedef NS_ENUM(NSInteger, RICatalogSorting) {
-    RICatalogSortingRating = 0,
-    RICatalogSortingPopularity,
-    RICatalogSortingNewest,
-    RICatalogSortingPriceUp,
-    RICatalogSortingPriceDown,
-    RICatalogSortingName,
-    RICatalogSortingBrand
-};
 
 @interface RIProduct : NSObject
 
@@ -141,7 +127,7 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *  @return a string with the operationID that can be used to cancel the operation
  */
 + (NSString *)getProductsWithCatalogUrl:(NSString*)url
-                          sortingMethod:(RICatalogSorting)sortingMethod
+                          sortingMethod:(RICatalogSortingEnum)sortingMethod
                                    page:(NSInteger)page
                                maxItems:(NSInteger)maxItems
                                 filters:(NSArray*)filters
@@ -222,10 +208,6 @@ typedef NS_ENUM(NSInteger, RICatalogSorting) {
  *  @return the parsed RIProduct
  */
 + (RIProduct *)parseProduct:(NSDictionary *)productJSON country:(RICountryConfiguration*)country;
-
-+ (NSString*)urlComponentForSortingMethod:(RICatalogSorting)sortingMethod;
-
-+ (NSString*)sortingName:(RICatalogSorting)sortingMethod;
 
 + (NSString *)getBundleWithSku:(NSString *)sku
                   successBlock:(void (^)(RIBundle* bundle))successBlock

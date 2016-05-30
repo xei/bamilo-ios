@@ -211,14 +211,14 @@
 + (NSString *)getResultsForSearch:(NSString *)query
                              page:(NSString *)page
                          maxItems:(NSString *)maxItems
-                    sortingMethod:(RICatalogSorting)sortingMethod
+                    sortingMethod:(RICatalogSortingEnum)sortingMethod
                           filters:(NSArray*)filters
                      successBlock:(void (^)(RICatalog *catalog))successBlock
                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
 {
     NSString *tempUrl = [NSString stringWithFormat:@"%@%@search/find/", [RIApi getCountryUrlInUse], RI_API_VERSION];
     
-    NSString *sortingString = [RIProduct urlComponentForSortingMethod:sortingMethod];
+    NSString *sortingString = [RICatalogSorting urlComponentForSortingMethod:sortingMethod];
     
     if (VALID_NOTEMPTY(sortingString, NSString)) {
         sortingString = [NSString stringWithFormat:@"/%@", sortingString];
