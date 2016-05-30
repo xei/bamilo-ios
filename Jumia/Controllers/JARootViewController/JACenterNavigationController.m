@@ -517,6 +517,11 @@
         }
             
         default:
+            if (screenTarget.target.node &&
+                ([screenTarget.target.node containsString:@"itms-apps://"] || [screenTarget.target.node containsString:@"https://app."])) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:screenTarget.target.node]];
+                return YES;
+            }
             return NO;
     }
 }
