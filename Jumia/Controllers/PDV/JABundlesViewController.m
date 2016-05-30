@@ -147,12 +147,11 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
             [_totalSingleLine setFrame:frame];
         }
     }
-    
     if(RI_IS_RTL)
     {
         [_totalSingleLine flipViewPositionInsideSuperview];
-        [_totalSingleLine flipAllSubviews];
     }
+    
     return _totalSingleLine;
 }
 
@@ -187,6 +186,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     [self collectionView];
     [self totalSingleLine];
     [self bottomBar];
+    [self reloadPrice];
 }
 
 - (BOOL)isLandscape
@@ -385,6 +385,11 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
     [self.totalSingleLine setTitle:[NSString stringWithFormat:@"%@: %@",STRING_TOTAL, [RICountryConfiguration formatPrice:[NSNumber numberWithInteger:totalPrice] country:[RICountryConfiguration getCurrentConfiguration]]]];
     [self.totalSingleLine.label sizeToFit];
     [self.totalSingleLine.label setYCenterAligned];
+    
+    if(RI_IS_RTL)
+    {
+        [self.totalSingleLine flipAllSubviews];
+    }
 }
 
 - (void)onBundleSelectionChanged:(void(^)(NSMutableDictionary *selectedSkus))changes
