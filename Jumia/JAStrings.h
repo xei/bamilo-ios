@@ -448,4 +448,7 @@
 
 #define STRING_IF_EVERYTHING_LOOKS_GOOD RILocalizedString(@"everything_looks_good", nil)
 
+#define STRING_INVALID_ADDRESS_BILLING_SHIPPING RILocalizedString(@"invalid_address_shipping_billing", nil)
+#define STRING_INVALID_ADDRESS_OTHER RILocalizedString(@"invalid_address_other", nil)
+
 #endif

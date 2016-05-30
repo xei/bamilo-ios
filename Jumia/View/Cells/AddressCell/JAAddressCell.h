@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JAClickableView.h"
 
-#define kAddressCellHeight 80.0f
+#define kAddressCellHeight 84.0f
 
 @class RIAddress;
 

@@ -741,3 +741,7 @@
 "order_return_finish_title" = "Confirm your return request details";
 
 "everything_looks_good" = "If everything looks good, tap \"SEND\".";
+
+"invalid_address_shipping_billing" = "This address is not correct, please change it.";
+
+"invalid_address_other" = "This address is not correct.";
