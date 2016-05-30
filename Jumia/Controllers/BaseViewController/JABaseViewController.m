@@ -512,7 +512,7 @@
         }
     }else if (showAsMessage) {
         if (VALID_NOTEMPTY(errorMessages, NSArray)) {
-            [self showMessage:[errorMessages componentsJoinedByString:@","] success:NO];
+            [self showMessage:[errorMessages componentsJoinedByString:@", "] success:NO];
         }
     }else{
         [self showErrorView:NO startingY:self.viewBounds.origin.y target:target selector:selector objects:objects];

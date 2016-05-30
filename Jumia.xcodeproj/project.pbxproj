@@ -3707,6 +3707,7 @@
 		FF6BDC9B1CE238F3002BFE11 /* JAORReasonsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAORReasonsViewController.m; path = OnlineReturns/JAORReasonsViewController.m; sourceTree = "<group>"; };
 		FF6BDCA11CE34ACB002BFE11 /* JAListNumberComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAListNumberComponent.h; sourceTree = "<group>"; };
 		FF6BDCA21CE34ACB002BFE11 /* JAListNumberComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAListNumberComponent.m; sourceTree = "<group>"; };
+		FF7363541CFC7A70002264A6 /* Model_1.16.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.16.xcdatamodel; sourceTree = "<group>"; };
 		FF7A88F31C88C42E00E40625 /* Model_1.12.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_1.12.xcdatamodel; sourceTree = "<group>"; };
 		FFB0A36B1C529E0800EF9FE5 /* RIProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIProduct.h; sourceTree = "<group>"; };
 		FFB0A36C1C529E0800EF9FE5 /* RIProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIProduct.m; sourceTree = "<group>"; };
@@ -10539,6 +10540,7 @@
 		B5A3028F19811E9200F71726 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				FF7363541CFC7A70002264A6 /* Model_1.16.xcdatamodel */,
 				FF4465131CEA0B23003A65EA /* Model_1.15.xcdatamodel */,
 				9A08B0EF1CC4EC17003282CB /* Model_1.14.xcdatamodel */,
 				9AE7669A1CB2B22100B63D8E /* Model_1.13.xcdatamodel */,
@@ -10556,7 +10558,7 @@
 				CE73D4FF19E5866D0074F7F3 /* Model_1.1.xcdatamodel */,
 				B5A3029019811E9200F71726 /* Model.xcdatamodel */,
 			);
-			currentVersion = FF4465131CEA0B23003A65EA /* Model_1.15.xcdatamodel */;
+			currentVersion = FF7363541CFC7A70002264A6 /* Model_1.16.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
