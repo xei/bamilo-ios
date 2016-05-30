@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RIProduct.h"
+#import "RICatalogSorting.h"
 
 #define kJASORTINGVIEW_OPTIONS_ARRAY @[STRING_BEST_RATING, STRING_POPULARITY, STRING_NEW_IN, STRING_PRICE_UP, STRING_PRICE_DOWN, STRING_NAME, STRING_BRAND]
 
 @protocol JASortingViewDelegate <NSObject>
 
-- (void)selectedSortingMethod:(RICatalogSorting)catalogSorting;
+- (void)selectedSortingMethod:(RICatalogSortingEnum)catalogSorting;
 
 @end
 
@@ -21,7 +21,7 @@
 
 @property (nonatomic, assign)id<JASortingViewDelegate>delegate;
 - (void)setupWithFrame:(CGRect)frame
-       selectedSorting:(RICatalogSorting)selectedSorting;
+       selectedSorting:(RICatalogSortingEnum)selectedSorting;
 - (void)reloadForFrame:(CGRect)frame;
 - (void)animateIn;
 

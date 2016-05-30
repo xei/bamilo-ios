@@ -34,7 +34,7 @@
 @property (nonatomic, assign) JACatalogCollectionViewCellType cellTypeSelected;
 @property (nonatomic, assign) BOOL filterSelected;
 
-- (void)setSorting:(RICatalogSorting)sorting;
+- (void)setSorting:(RICatalogSortingEnum)sorting;
 - (void)repositionForWidth:(CGFloat)width;
 
 @end

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import "RIProduct.h"
+#import "RICatalogSorting.h"
 
 @interface RISearchType : NSObject
 
@@ -114,7 +115,7 @@
 + (NSString *)getResultsForSearch:(NSString *)query
                              page:(NSString *)page
                          maxItems:(NSString *)maxItems
-                    sortingMethod:(RICatalogSorting)sortingMethod
+                    sortingMethod:(RICatalogSortingEnum)sortingMethod
                           filters:(NSArray*)filters
                      successBlock:(void (^)(RICatalog *catalog))successBlock
                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock;

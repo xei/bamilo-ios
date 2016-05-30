@@ -365,6 +365,11 @@
 		9A0F9BC11B5EAD9700569DF2 /* AQSFacebookMessengerActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A0F9BBE1B5EAD9700569DF2 /* AQSFacebookMessengerActivity.m */; };
 		9A0F9BC21B5EAD9700569DF2 /* AQSFacebookMessengerActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A0F9BBE1B5EAD9700569DF2 /* AQSFacebookMessengerActivity.m */; };
 		9A0F9BC31B5EAD9700569DF2 /* AQSFacebookMessengerActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A0F9BBE1B5EAD9700569DF2 /* AQSFacebookMessengerActivity.m */; };
+		9A1650D01CF8B650005418E0 /* RICatalogSorting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1650CF1CF8B650005418E0 /* RICatalogSorting.m */; };
+		9A1650D11CF8B650005418E0 /* RICatalogSorting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1650CF1CF8B650005418E0 /* RICatalogSorting.m */; };
+		9A1650D21CF8B650005418E0 /* RICatalogSorting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1650CF1CF8B650005418E0 /* RICatalogSorting.m */; };
+		9A1650D31CF8B650005418E0 /* RICatalogSorting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1650CF1CF8B650005418E0 /* RICatalogSorting.m */; };
+		9A1650D41CF8B650005418E0 /* RICatalogSorting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1650CF1CF8B650005418E0 /* RICatalogSorting.m */; };
 		9A17372B1B669B0E004905B4 /* JACheckoutBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */; };
 		9A17372F1B679740004905B4 /* UIImage+WithColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372E1B679740004905B4 /* UIImage+WithColor.m */; };
 		9A1737301B68EBAF004905B4 /* JACheckoutBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */; };
@@ -2877,6 +2882,8 @@
 		9A0F9BAA1B5E7DE600569DF2 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		9A0F9BBD1B5EAD9700569DF2 /* AQSFacebookMessengerActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AQSFacebookMessengerActivity.h; path = Jumia/ExternalFrameworks/AQSFacebookMessengerActivity/AQSFacebookMessengerActivity.h; sourceTree = "<group>"; };
 		9A0F9BBE1B5EAD9700569DF2 /* AQSFacebookMessengerActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AQSFacebookMessengerActivity.m; path = Jumia/ExternalFrameworks/AQSFacebookMessengerActivity/AQSFacebookMessengerActivity.m; sourceTree = "<group>"; };
+		9A1650CE1CF8B650005418E0 /* RICatalogSorting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICatalogSorting.h; sourceTree = "<group>"; };
+		9A1650CF1CF8B650005418E0 /* RICatalogSorting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RICatalogSorting.m; sourceTree = "<group>"; };
 		9A1737291B669B0E004905B4 /* JACheckoutBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACheckoutBottomView.h; path = ../Controllers/Checkout/JACheckoutBottomView.h; sourceTree = "<group>"; };
 		9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACheckoutBottomView.m; path = ../Controllers/Checkout/JACheckoutBottomView.m; sourceTree = "<group>"; };
 		9A17372D1B679740004905B4 /* UIImage+WithColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+WithColor.h"; path = "Categories/UIImage+WithColor.h"; sourceTree = "<group>"; };
@@ -5598,6 +5605,8 @@
 				9AEADDCF1C10B1C40074034A /* RIPhonePrefix.m */,
 				9AED07E61C6DEAD100B5FDF0 /* RIAlgolia.h */,
 				9AED07E71C6DEAD100B5FDF0 /* RIAlgolia.m */,
+				9A1650CE1CF8B650005418E0 /* RICatalogSorting.h */,
+				9A1650CF1CF8B650005418E0 /* RICatalogSorting.m */,
 			);
 			path = OtherObjects;
 			sourceTree = "<group>";
@@ -7565,6 +7574,7 @@
 				477e79c583ecaf47f4e737b6 /* RIStaticBlockIndex.m in Sources */,
 				9A59E7F31C3A8D5100F37D3F /* JASavedListViewController.m in Sources */,
 				9AE766AE1CBBB28E00B63D8E /* JACartProductsView.m in Sources */,
+				9A1650D11CF8B650005418E0 /* RICatalogSorting.m in Sources */,
 				9A6BC0871C4907BB00DD9492 /* JAMessageView.m in Sources */,
 				1e6713adaced26b8b8ad2c86 /* JAShippingViewController.m in Sources */,
 				eff7e3b1020d2863ebc2e153 /* JACheckBoxComponent.m in Sources */,
@@ -7886,6 +7896,7 @@
 				9AEF74111CD20F0C00A5D574 /* JAStepByStepTabViewController.m in Sources */,
 				B5225E1E1989308300C18F1E /* RIPaymentInformation.m in Sources */,
 				4A454F3B199CBF1400B44821 /* RIAddress.m in Sources */,
+				9A1650D01CF8B650005418E0 /* RICatalogSorting.m in Sources */,
 				B578225A1A37516800B4DD8B /* JAGradientLayer.m in Sources */,
 				CEA2A1B31B25D20C00E5973F /* JADynamicField.m in Sources */,
 				FF4465171CEB4FD7003A65EA /* JAORProductView.m in Sources */,
@@ -8248,6 +8259,7 @@
 				9AEF74131CD20F0C00A5D574 /* JAStepByStepTabViewController.m in Sources */,
 				CE9ADB3F1AB34C4600D56481 /* RIPaymentInformation.m in Sources */,
 				CE9ADB411AB34C4600D56481 /* RIAddress.m in Sources */,
+				9A1650D21CF8B650005418E0 /* RICatalogSorting.m in Sources */,
 				CE9ADB421AB34C4600D56481 /* JAGradientLayer.m in Sources */,
 				CEA2A1B51B25D20C00E5973F /* JADynamicField.m in Sources */,
 				FF4465191CEB4FD7003A65EA /* JAORProductView.m in Sources */,
@@ -8600,6 +8612,7 @@
 				9AEF74141CD20F0C00A5D574 /* JAStepByStepTabViewController.m in Sources */,
 				CE9ADD391AB6D6E900D56481 /* RIPaymentInformation.m in Sources */,
 				CE9ADD3B1AB6D6E900D56481 /* RIAddress.m in Sources */,
+				9A1650D31CF8B650005418E0 /* RICatalogSorting.m in Sources */,
 				CE9ADD3C1AB6D6E900D56481 /* JAGradientLayer.m in Sources */,
 				CEA2A1B61B25D20C00E5973F /* JADynamicField.m in Sources */,
 				FF44651A1CEB4FD7003A65EA /* JAORProductView.m in Sources */,
@@ -8952,6 +8965,7 @@
 				9AEF74151CD20F0C00A5D574 /* JAStepByStepTabViewController.m in Sources */,
 				CE9ADF331AB6D78200D56481 /* RIPaymentInformation.m in Sources */,
 				CE9ADF351AB6D78200D56481 /* RIAddress.m in Sources */,
+				9A1650D41CF8B650005418E0 /* RICatalogSorting.m in Sources */,
 				CE9ADF361AB6D78200D56481 /* JAGradientLayer.m in Sources */,
 				CEA2A1B71B25D20C00E5973F /* JADynamicField.m in Sources */,
 				FF44651B1CEB4FD7003A65EA /* JAORProductView.m in Sources */,
