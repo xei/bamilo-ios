@@ -1580,6 +1580,19 @@
 {
     NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
     NSString* title = [notification.userInfo objectForKey:@"name"];
+
+    NSNumber* sorting;
+    NSString* filterPush;
+    
+    NSDictionary *selectedItem = [notification object];
+    if (VALID_NOTEMPTY(selectedItem, NSDictionary)) {
+        NSString* categoryUrlKey = [selectedItem objectForKey:@"category_url_key"];
+        if (VALID_NOTEMPTY(categoryUrlKey, NSString)) {
+            targetString = [NSString stringWithFormat:@"catalog_seller::%@",categoryUrlKey];
+        }
+        sorting = [selectedItem objectForKey:@"sorting"];
+        filterPush = [selectedItem objectForKey:@"filter"];
+    }
     
     if(VALID_NOTEMPTY(targetString, NSString))
     {
@@ -1587,6 +1600,8 @@
         catalog.targetString = targetString;
         catalog.navBarLayout.title = title;
         catalog.navBarLayout.showBackButton = YES;
+        catalog.filterPush = filterPush;
+        catalog.sortingMethodFromPush = sorting;
         
         [self pushViewController:catalog animated:YES];
     }

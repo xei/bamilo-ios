@@ -748,6 +748,48 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 // Catalog view - category id
                 [[NSNotificationCenter defaultCenter] postNotificationName:kMenuDidSelectLeafCategoryNotification object:@{@"category_id":arguments}];
             }
+            else if ([key isEqualToString:@"scbr"] && VALID_NOTEMPTY(arguments, NSString))
+            {
+                // Catalog view sorted by best rating - seller name
+                [categoryDictionary setObject:[NSNumber numberWithInteger:0] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:categoryDictionary];
+            }
+            else if ([key isEqualToString:@"scp"] && VALID_NOTEMPTY(arguments, NSString))
+            {
+                // Catalog view sorted by popularity - seller name
+                [categoryDictionary setObject:[NSNumber numberWithInteger:1] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:categoryDictionary];
+            }
+            else if ([key isEqualToString:@"scin"] && VALID_NOTEMPTY(arguments, NSString))
+            {
+                // Catalog view sorted by new in - seller name
+                [categoryDictionary setObject:[NSNumber numberWithInteger:2] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:categoryDictionary];
+            }
+            else if ([key isEqualToString:@"scpu"] && VALID_NOTEMPTY(arguments, NSString))
+            {
+                // Catalog view sorted by price up - seller name
+                [categoryDictionary setObject:[NSNumber numberWithInteger:3] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:categoryDictionary];
+            }
+            else if ([key isEqualToString:@"scpd"] && VALID_NOTEMPTY(arguments, NSString))
+            {
+                // Catalog view sorted by price down - seller name
+                [categoryDictionary setObject:[NSNumber numberWithInteger:4] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:categoryDictionary];
+            }
+            else if ([key isEqualToString:@"scn"] && VALID_NOTEMPTY(arguments, NSString))
+            {
+                // Catalog view sorted by name - seller name
+                [categoryDictionary setObject:[NSNumber numberWithInteger:5] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:categoryDictionary];
+            }
+            else if ([key isEqualToString:@"scb"] && VALID_NOTEMPTY(arguments, NSString))
+            {
+                // Catalog view sorted by brand - seller name
+                [categoryDictionary setObject:[NSNumber numberWithInteger:6] forKey:@"sorting"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kOpenSellerPage object:categoryDictionary];
+            }
             else if ([key isEqualToString:@"s"] && VALID_NOTEMPTY(arguments, NSString))
             {
                 // Catalog view - search term
