@@ -20,4 +20,6 @@
 
 + (UIImage *)imageWithColor:(UIColor *)color;
 
++ (NSString *)convertToEnglishNumber:(NSString *) string;
+
 @end

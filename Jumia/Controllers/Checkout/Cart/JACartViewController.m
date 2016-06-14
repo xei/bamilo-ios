@@ -269,22 +269,33 @@
 
 - (void)proceedToCall
 {
-    [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
-        NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-        [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
-        [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
-        [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-        [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"Do you want to make a call!" delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
+    alert.delegate = self;
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if(buttonIndex ==0){
         
-        [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCallToOrder]
-                                                  data:[trackingDictionary copy]];
-        
-        NSString *phoneNumber = [@"tel://" stringByAppendingString:configuration.phoneNumber];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
-    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-        [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
-    }];
+    }
+    else{
+        [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+            NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
+            [trackingDictionary setValue:[RICustomer getCustomerId] forKey:kRIEventUserIdKey];
+            [trackingDictionary setValue:[RIApi getCountryIsoInUse] forKey:kRIEventShopCountryKey];
+            [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
+            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+            [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
+            
+            [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCallToOrder]
+                                                      data:[trackingDictionary copy]];
+            
+            NSString *phoneNumber = [@"tel://" stringByAppendingString:[JAUtils convertToEnglishNumber:configuration.phoneNumber]];//tessa
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+            [self onErrorResponse:apiResponse messages:errorMessages showAsMessage:YES selector:nil objects:nil];
+        }];
+    }
 }
 
 - (void)useCoupon

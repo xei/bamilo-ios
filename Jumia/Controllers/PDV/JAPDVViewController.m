@@ -1147,14 +1147,25 @@ JAActivityViewControllerDelegate
 
 - (void)callToOrder
 {
-    [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"Do you want to make a call!" delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
+    alert.delegate = self;
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if(buttonIndex ==0){
         
-        [self trackingEventCallToOrder];
-        
-        NSString *phoneNumber = [@"tel://" stringByAppendingString:configuration.phoneNumber];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
-    } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
-    }];
+    }
+    else{
+        [RICountry getCountryConfigurationWithSuccessBlock:^(RICountryConfiguration *configuration) {
+            
+            [self trackingEventCallToOrder];
+            
+            NSString *phoneNumber = [@"tel://" stringByAppendingString:[JAUtils convertToEnglishNumber:configuration.phoneNumber]];//tessa
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
+        } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessages) {
+        }];
+    }
 }
 
 - (void)showSizePicker
