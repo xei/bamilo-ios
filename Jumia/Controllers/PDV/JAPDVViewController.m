@@ -1147,7 +1147,7 @@ JAActivityViewControllerDelegate
 
 - (void)callToOrder
 {
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"Do you want to make a call!" delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"تماس با تیم خدمات مشتریان بامیلو" delegate:nil cancelButtonTitle:@"لغو" otherButtonTitles:@"تایید", nil];
     alert.delegate = self;
     [alert show];
 }
