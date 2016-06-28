@@ -15,7 +15,6 @@
 @interface JATabBarView()
 
 @property (nonatomic, assign) NSInteger selectedIndex;
-@property (nonatomic, strong) NSMutableArray* tabButtonsArray;
 
 @end
 

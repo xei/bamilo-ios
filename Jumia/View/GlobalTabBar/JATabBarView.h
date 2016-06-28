@@ -12,6 +12,8 @@
 
 @interface JATabBarView : UIView
 
+@property (nonatomic, strong) NSMutableArray* tabButtonsArray;
+
 - (void)initialSetup;
 - (void)selectButtonAtIndex:(NSInteger)index;
 

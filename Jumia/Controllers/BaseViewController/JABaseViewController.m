@@ -30,9 +30,6 @@
 @property (strong, nonatomic) JAMessageView *messageView;
 @property (strong, nonatomic) JAMaintenancePage *maintenancePage;
 @property (strong, nonatomic) JAKickoutView *kickoutView;
-@property (nonatomic, strong) UIView *searchBarBackground;
-@property (nonatomic, strong) UISearchBar *searchBar;
-@property (nonatomic, strong) UIImageView *searchIconImageView;
 @property (nonatomic, strong) UIButton *searchBarBackButton;
 @property (nonatomic) UIInterfaceOrientation orientation;
 

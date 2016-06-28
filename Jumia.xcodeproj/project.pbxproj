@@ -167,8 +167,16 @@
 		7fa37d4ab462805a50e33847 /* JASmallTeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE445874198BD5D800CE7E8D /* JASmallTeaserView.m */; };
 		81a5014f8866dce530164a99 /* JACheckBoxComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B510B00719AE466B00A9754A /* JACheckBoxComponent.xib */; };
 		839e583fc75316c30aa08c95 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3022219811E8A00F71726 /* SDImageCache.m */; };
+		841E81A91D1680F300A35AAF /* MPCoachMarks.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E81A81D1680F300A35AAF /* MPCoachMarks.m */; };
+		841E81AA1D1680F300A35AAF /* MPCoachMarks.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E81A81D1680F300A35AAF /* MPCoachMarks.m */; };
 		842d7c4fad06679139869ced /* RIField.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA4119B4E92B00DE7960 /* RIField.m */; };
 		843c5f5135a7a237f2ebe305 /* RIError.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029719811E9200F71726 /* RIError.m */; };
+		845349E51D1AB724000B97C7 /* Bamilo-No-Reg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 845349DF1D1AB723000B97C7 /* Bamilo-No-Reg.ttf */; };
+		845349E61D1AB724000B97C7 /* BAMILO-SANS BLACK_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 845349E01D1AB723000B97C7 /* BAMILO-SANS BLACK_0.TTF */; };
+		845349E71D1AB724000B97C7 /* BAMILO-SANS BOLD_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 845349E11D1AB724000B97C7 /* BAMILO-SANS BOLD_0.TTF */; };
+		845349E81D1AB724000B97C7 /* BAMILO-SANS LIGHT_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 845349E21D1AB724000B97C7 /* BAMILO-SANS LIGHT_0.TTF */; };
+		845349E91D1AB724000B97C7 /* BAMILO-SANS REG_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 845349E31D1AB724000B97C7 /* BAMILO-SANS REG_0.TTF */; };
+		845349EA1D1AB724000B97C7 /* BAMILO-SANS ULTRA LIGHT_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 845349E41D1AB724000B97C7 /* BAMILO-SANS ULTRA LIGHT_0.TTF */; };
 		8467290c94785ccd3ea64ce6 /* JANavigationBarLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = CE97D2ED19AE1ED50090D01C /* JANavigationBarLayout.m */; };
 		85b61709066677c2f1fcfd1c /* JARadioComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B510B00B19AE466B00A9754A /* JARadioComponent.m */; };
 		876d96c3d745466130991f03 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3022019811E8A00F71726 /* MKAnnotationView+WebCache.m */; };
@@ -2819,6 +2827,14 @@
 		6CF4AE831ADEABBB0024EC34 /* JACatalogBannerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogBannerCell.h; sourceTree = "<group>"; };
 		6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogBannerCell.m; sourceTree = "<group>"; };
 		6af3ca12ac4f2d50fa243e2b /* calabash.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; path = calabash.framework; sourceTree = "<group>"; };
+		841E81A71D1680F300A35AAF /* MPCoachMarks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPCoachMarks.h; path = ../MPCoachMarks.h; sourceTree = "<group>"; };
+		841E81A81D1680F300A35AAF /* MPCoachMarks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPCoachMarks.m; path = ../MPCoachMarks.m; sourceTree = "<group>"; };
+		845349DF1D1AB723000B97C7 /* Bamilo-No-Reg.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Bamilo-No-Reg.ttf"; path = "../Bamilo-No-Reg.ttf"; sourceTree = "<group>"; };
+		845349E01D1AB723000B97C7 /* BAMILO-SANS BLACK_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = "BAMILO-SANS BLACK_0.TTF"; path = "../BAMILO-SANS BLACK_0.TTF"; sourceTree = "<group>"; };
+		845349E11D1AB724000B97C7 /* BAMILO-SANS BOLD_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = "BAMILO-SANS BOLD_0.TTF"; path = "../BAMILO-SANS BOLD_0.TTF"; sourceTree = "<group>"; };
+		845349E21D1AB724000B97C7 /* BAMILO-SANS LIGHT_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = "BAMILO-SANS LIGHT_0.TTF"; path = "../BAMILO-SANS LIGHT_0.TTF"; sourceTree = "<group>"; };
+		845349E31D1AB724000B97C7 /* BAMILO-SANS REG_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = "BAMILO-SANS REG_0.TTF"; path = "../BAMILO-SANS REG_0.TTF"; sourceTree = "<group>"; };
+		845349E41D1AB724000B97C7 /* BAMILO-SANS ULTRA LIGHT_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = "BAMILO-SANS ULTRA LIGHT_0.TTF"; path = "../BAMILO-SANS ULTRA LIGHT_0.TTF"; sourceTree = "<group>"; };
 		892EB9251BC6795800FBF094 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
 		892EB9261BC6795800FBF094 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
 		892EB9271BC6795800FBF094 /* GAIEcommerceFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceFields.h; sourceTree = "<group>"; };
@@ -4120,6 +4136,7 @@
 		4AE242DB198655D900E37C90 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				84A7B54F1D101D9F00CA9754 /* OnBoardingView */,
 				FF4465141CEB4F59003A65EA /* ORProductView */,
 				9A4077491CE61CF700313D20 /* OnlineReturns */,
 				9AE7669B1CB3CF2300B63D8E /* Authentication */,
@@ -4318,6 +4335,15 @@
 				CEED472A1A7B973B006D9CE7 /* JAPDVBundleSingleItem.xib */,
 			);
 			name = Bundles;
+			sourceTree = "<group>";
+		};
+		84A7B54F1D101D9F00CA9754 /* OnBoardingView */ = {
+			isa = PBXGroup;
+			children = (
+				841E81A71D1680F300A35AAF /* MPCoachMarks.h */,
+				841E81A81D1680F300A35AAF /* MPCoachMarks.m */,
+			);
+			name = OnBoardingView;
 			sourceTree = "<group>";
 		};
 		892EB9221BC6795800FBF094 /* GoogleAnalytics */ = {
@@ -6205,6 +6231,12 @@
 		CE9AE1221AB824B700D56481 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				845349DF1D1AB723000B97C7 /* Bamilo-No-Reg.ttf */,
+				845349E01D1AB723000B97C7 /* BAMILO-SANS BLACK_0.TTF */,
+				845349E11D1AB724000B97C7 /* BAMILO-SANS BOLD_0.TTF */,
+				845349E21D1AB724000B97C7 /* BAMILO-SANS LIGHT_0.TTF */,
+				845349E31D1AB724000B97C7 /* BAMILO-SANS REG_0.TTF */,
+				845349E41D1AB724000B97C7 /* BAMILO-SANS ULTRA LIGHT_0.TTF */,
 				CE9AE1251AB8251000D56481 /* zawgyione2008.ttf */,
 				CE9AE1271AB8281400D56481 /* JAFont.h */,
 			);
@@ -7307,6 +7339,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				845349E51D1AB724000B97C7 /* Bamilo-No-Reg.ttf in Resources */,
+				845349E61D1AB724000B97C7 /* BAMILO-SANS BLACK_0.TTF in Resources */,
+				845349E71D1AB724000B97C7 /* BAMILO-SANS BOLD_0.TTF in Resources */,
+				845349E81D1AB724000B97C7 /* BAMILO-SANS LIGHT_0.TTF in Resources */,
+				845349E91D1AB724000B97C7 /* BAMILO-SANS REG_0.TTF in Resources */,
+				845349EA1D1AB724000B97C7 /* BAMILO-SANS ULTRA LIGHT_0.TTF in Resources */,
 				9A0F9B7E1B5E58E900569DF2 /* FBAudienceNetwork.README.txt in Resources */,
 				CE9AE0391AB6D78200D56481 /* 00_choose_country.feature in Resources */,
 				CEDBF8971B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib in Resources */,
@@ -8161,6 +8199,7 @@
 				89C7AF501BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m in Sources */,
 				B5A3025C19811E8A00F71726 /* SDWebImagePrefetcher.m in Sources */,
 				CE3FC5A71990E209003B4A27 /* JAPickerScrollView.m in Sources */,
+				841E81A91D1680F300A35AAF /* MPCoachMarks.m in Sources */,
 				4A39212D19891F6D00B70A9C /* JARecentSearchesViewController.m in Sources */,
 				4A18856419B8A368003337FC /* JAActivityViewController.m in Sources */,
 				9AED07D21C6DEA8800B5FDF0 /* ASExpiringCache.m in Sources */,
@@ -9229,6 +9268,7 @@
 				CE9ADFEB1AB6D78200D56481 /* UIButton+WebCache.m in Sources */,
 				CE9ADFEC1AB6D78200D56481 /* JARatingsViewMedium.m in Sources */,
 				CE9ADFEE1AB6D78200D56481 /* SDWebImagePrefetcher.m in Sources */,
+				841E81AA1D1680F300A35AAF /* MPCoachMarks.m in Sources */,
 				CE9ADFEF1AB6D78200D56481 /* JAPickerScrollView.m in Sources */,
 				CE9ADFF11AB6D78200D56481 /* JARecentSearchesViewController.m in Sources */,
 				CE28A79B1BD9475100B1FADA /* JAMoreMenuViewController.m in Sources */,
