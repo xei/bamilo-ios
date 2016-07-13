@@ -11,6 +11,7 @@
 #import "RIProduct.h"
 #import "RICategory.h"
 #import "JAPDVImageSection.h"
+#import "MPCoachMarks.h"
 
 @interface JAPDVViewController : JABaseViewController <JAPDVImageSectionDelegate>
 

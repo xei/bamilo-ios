@@ -10,6 +10,7 @@
 #import "JAPagedView.h"
 #import "RIImage.h"
 #import "UIImageView+WebCache.h"
+#import "MPCoachMarks.h"
 
 @interface JAPDVGallery ()
 {
@@ -98,6 +99,40 @@
                                      _exitButton.frame.size.height)];
     [_exitButton addTarget:self action:@selector(exitButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_exitButton];
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"FirtTimePDVGallery"])
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirtTimePDVGallery"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self presentCoachMarks];
+    }
+}
+
+-(void)presentCoachMarks{
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")){
+    }
+    else{
+    }
+    
+    // Setup coach marks
+    CGRect coachmark1 = CGRectMake( self.center.x, self.center.y, 35,  35);
+    
+    // Setup coach marks
+    NSArray *coachMarks = @[
+                            @{
+                                @"rect": [NSValue valueWithCGRect:coachmark1],
+                                @"caption": @"بزرگنمایی تصویر کالا",
+                                @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
+                                @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
+                                @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT],
+                                @"showArrow":[NSNumber numberWithBool:YES],
+                                @"PDVGallery":[NSNumber numberWithBool:YES]
+                                },
+                            ];
+    
+    MPCoachMarks *coachMarksView = [[MPCoachMarks alloc] initWithFrame:self.bounds coachMarks:coachMarks];
+    [self addSubview:coachMarksView];
+    [coachMarksView start];
 }
 
 - (void)reloadFrame:(CGRect)frame

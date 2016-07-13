@@ -69,7 +69,9 @@
     }
     else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
     {
-        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"b69eae07b51d81f272e9ae78312967a8"];
+//        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"b69eae07b51d81f272e9ae78312967a8"];
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"2f8bd69b5ea4458c8282b58a33a6d1f9"];
+
     }
     
 #else
@@ -87,7 +89,8 @@
     }
     else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
     {
-        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@""];
+        //empty
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"2f8bd69b5ea4458c8282b58a33a6d1f9"];
     }
 #endif
     [[BITHockeyManager sharedHockeyManager].crashManager setCrashManagerStatus:BITCrashManagerStatusAutoSend];
@@ -117,7 +120,8 @@
     }
     else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
     {
-        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"64935d72b0c34cd51a7a806f7bb70e4a"];
+        //64.....
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"2f8bd69b5ea4458c8282b58a33a6d1f9"];
     }
     [[BITHockeyManager sharedHockeyManager].crashManager setCrashManagerStatus:BITCrashManagerStatusAutoSend];
     [[BITHockeyManager sharedHockeyManager] startManager];

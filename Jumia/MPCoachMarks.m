@@ -133,11 +133,11 @@ NSString *const KOkGotIt = @"متوجه شدم";
     CGFloat height = [UIScreen mainScreen].bounds.size.height + 50;
     
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        maskPath = [UIBezierPath bezierPathWithRect:CGRectMake(-50, -50, width, height)];
+        maskPath = [UIBezierPath bezierPathWithRect:CGRectMake(-25, -25, width, height)];
     }
     else{
     // Define shape
-        maskPath = [UIBezierPath bezierPathWithRect:CGRectMake(-50, -50, width, height)];
+        maskPath = [UIBezierPath bezierPathWithRect:CGRectMake(-25, -25, width, height)];
     }
     
     if (shape == SHAPE_CIRCLE)
@@ -170,11 +170,11 @@ NSString *const KOkGotIt = @"متوجه شدم";
     CGFloat height = [UIScreen mainScreen].bounds.size.height + 50;
     
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        maskPath = [UIBezierPath bezierPathWithRect:CGRectMake(-50, -50, width, height)];
+        maskPath = [UIBezierPath bezierPathWithRect:CGRectMake(-25, -25, width, height)];
     }
     else{
         // Define shape
-        maskPath = [UIBezierPath bezierPathWithRect:CGRectMake(-50, -50, width, height)];
+        maskPath = [UIBezierPath bezierPathWithRect:CGRectMake(-25, -25, width, height)];
     }
     if (shape == SHAPE_CIRCLE)
         cutoutPath = [UIBezierPath bezierPathWithOvalInRect:rect];
@@ -309,31 +309,36 @@ NSString *const KOkGotIt = @"متوجه شدم";
     [self.btnSkipCoach removeFromSuperview];
     [self.verticalImage removeFromSuperview];
     [self.horizontalImage removeFromSuperview];
+    
+    //set showArrow bool value
     BOOL showArrow = NO;
     if( [markDef objectForKey:@"showArrow"])
         showArrow = [[markDef objectForKey:@"showArrow"] boolValue];
     
+    //as its an image remove outerringcircle
     if(showArrow){
-        [self.outerCircleImageView removeFromSuperview];
+        [self.outerCircleImageView setHidden:TRUE];
+    }
+    else{
+        [self.outerCircleImageView setHidden:FALSE];
     }
     
     // Calculate the caption position and size
     self.lblCaption.alpha = 0.0f;
     self.lblCaption.frame = (CGRect){{0.0f, 0.0f}, {self.maxLblWidth, 0.0f}};
     self.lblCaption.text = markCaption;
+    
+    //Bold the below text if substring is found in caption
     NSRange range1 = [self.lblCaption.text rangeOfString:@"جستجو در فروشگاه"];
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:self.lblCaption.text];
-
     [attributedText setAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"Bamilo-Sans-Bold" size:18.0]}range:range1];
-    
     self.lblCaption.attributedText = attributedText;
     [self.lblCaption sizeToFit];
     
     CGFloat y;
     CGFloat x;
     
-    
-    //Label Aligment and Position
+    //Label Aligment and Position, set x value
     switch (labelAlignment) {
         case LABEL_ALIGNMENT_RIGHT:
             x = floorf(self.bounds.size.width - self.lblCaption.frame.size.width - kLabelMargin);
@@ -346,61 +351,64 @@ NSString *const KOkGotIt = @"متوجه شدم";
             break;
     }
     
+    //set y value, sethorizontal and vertical image if showArrow is TRUE
     switch (labelPosition) {
         case LABEL_POSITION_TOP:
         {
-            y = markRect.origin.y - self.lblCaption.frame.size.height - kLabelMargin;
+            y = markRect.origin.y - self.lblCaption.frame.size.height - 20.0f;
+            
             if(showArrow) {
-                //horizontal
+                
                 self.horizontalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"slideFingerVertical_iPhone.png"]];
+                self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"slideFingerHorizontal_iPhone.png"]];
+                
                 if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
                     
+                    //horizontal swipe/scroll
                     CGRect imageViewFrame = self.horizontalImage.frame;
                     imageViewFrame.origin.x = x + 20.0;
                     imageViewFrame.origin.y = y - 50.0;
                     self.horizontalImage.frame = imageViewFrame;
-                    y -= (self.horizontalImage.frame.size.height + kLabelMargin + 20.0);
                     [self addSubview:self.horizontalImage];
                     
-                    //vertical
+                    //setting new value to y
+                    y -= (self.horizontalImage.frame.size.height + kLabelMargin + 20.0);
+                    
+                    //vertical swipe/scroll
                     CGFloat  y2 = markRect.origin.y + markRect.size.height + self.lblSpacing;
-                    CGFloat bottomY = y2 + self.lblCaption.frame.size.height + self.lblSpacing;
-                    if (bottomY > self.bounds.size.height) {
-                        y2 = markRect.origin.y - self.lblSpacing - self.lblCaption.frame.size.height;
-                    }
-                    if(showArrow) {
-                        self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"slideFingerHorizontal_iPhone.png"]];
-                        CGRect imageViewFrame = self.verticalImage.frame;
-                        imageViewFrame.origin.x = x - markRect.size.width/2 - imageViewFrame.size.width/2;
-                        imageViewFrame.origin.y = y2 - kLabelMargin; //self.lblCaption.frame.size.height/2
-                        y2 += imageViewFrame.size.height/2;
-                        self.verticalImage.frame = imageViewFrame;
-                        [self addSubview:self.verticalImage];
-                    }
+                    CGRect verticalImageViewFrame = self.verticalImage.frame;
+                    verticalImageViewFrame.origin.x = x - markRect.size.width/2 - verticalImageViewFrame.size.width/2;
+                    verticalImageViewFrame.origin.y = y2 - kLabelMargin; //self.lblCaption.frame.size.height/2
+                    self.verticalImage.frame = verticalImageViewFrame;
+                    [self addSubview:self.verticalImage];
+                    
+                    //setting new value to y2
+                    y2 += verticalImageViewFrame.size.height/2;
+                    
                 }
                 else{
+                    
+                    //should replace with iPad image
+                    //                    self.horizontalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"slideFingerVertical_iPhone.png"]];
+                    //                    self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"slideFingerHorizontal_iPhone.png"]];
+                    
                     horizontalImage.center = self.center;
                     CGRect continueButtonFrame = horizontalImage.frame;
                     continueButtonFrame.origin.y -= 150;
                     horizontalImage.frame = continueButtonFrame;
                     [self addSubview:self.horizontalImage];
+                    
                     y -= (self.horizontalImage.frame.size.height + kLabelMargin + 120.0);
-
+                    
                     //vertical
                     CGFloat  y2 = markRect.origin.y + markRect.size.height + self.lblSpacing;
-                    CGFloat bottomY = y2 + self.lblCaption.frame.size.height + self.lblSpacing;
-                    if (bottomY > self.bounds.size.height) {
-                        y2 = markRect.origin.y - self.lblSpacing - self.lblCaption.frame.size.height;
-                    }
-                    if(showArrow) {
-                        self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"slideFingerHorizontal_iPhone.png"]];
-                        CGRect imageViewFrame = self.verticalImage.frame;
-                        imageViewFrame.origin.x = self.center.x - 100;
-                        imageViewFrame.origin.y = y2 - kLabelMargin; //self.lblCaption.frame.size.height/2
-                        y2 += imageViewFrame.size.height/2;
-                        self.verticalImage.frame = imageViewFrame;
-                        [self addSubview:self.verticalImage];
-                    }
+                    
+                    CGRect imageViewFrame = self.verticalImage.frame;
+                    imageViewFrame.origin.x = self.center.x - 100;
+                    imageViewFrame.origin.y = y2 - kLabelMargin;
+                    y2 += imageViewFrame.size.height/2;
+                    self.verticalImage.frame = imageViewFrame;
+                    [self addSubview:self.verticalImage];
                 }
             }
         }
@@ -425,7 +433,23 @@ NSString *const KOkGotIt = @"متوجه شدم";
             y = markRect.origin.y + markRect.size.height/2 - self.lblCaption.frame.size.height/2;
             x = markRect.origin.x + markRect.size.width + kLabelMargin;
             if(showArrow) {
+                BOOL pdvGallery = NO;
+                if( [markDef objectForKey:@"PDVGallery"])
+                    pdvGallery = [[markDef objectForKey:@"PDVGallery"] boolValue];
                 
+                if(pdvGallery){
+                    self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"zoom_iPhone.png"]];
+                }
+                else{
+                    self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"tap_iPhone.png"]];
+                }
+            CGRect imageViewFrame = self.verticalImage.frame;
+            imageViewFrame.origin = self.center;
+                imageViewFrame.origin.y -= 40;
+                imageViewFrame.origin.x -= 40;
+            self.verticalImage.frame = imageViewFrame;
+            [self addSubview:self.verticalImage];
+    
             }
         }
             break;
@@ -449,19 +473,35 @@ NSString *const KOkGotIt = @"متوجه شدم";
         }
             break;
         default: {
-            y = markRect.origin.y + markRect.size.height + self.lblSpacing;
-            CGFloat bottomY = y + self.lblCaption.frame.size.height + self.lblSpacing;
+            //vertical
+            CGFloat  y2 = markRect.origin.y + markRect.size.height + self.lblSpacing;
+            CGFloat bottomY = y2 + self.lblCaption.frame.size.height + self.lblSpacing;
             if (bottomY > self.bounds.size.height) {
-                y = markRect.origin.y - self.lblSpacing - self.lblCaption.frame.size.height;
+                y2 = markRect.origin.y - self.lblSpacing - self.lblCaption.frame.size.height;
             }
             if(showArrow) {
-                self.horizontalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"arrow-top"]];
-                CGRect imageViewFrame = self.horizontalImage.frame;
-                imageViewFrame.origin.x = x;
-                imageViewFrame.origin.y = y;
-                self.horizontalImage.frame = imageViewFrame;
-                y += (self.horizontalImage.frame.size.height + kLabelMargin);
-                [self addSubview:self.horizontalImage];
+
+                BOOL productDetailPage = NO;
+                if( [markDef objectForKey:@"productDetailPage"])
+                    productDetailPage = [[markDef objectForKey:@"productDetailPage"] boolValue];
+                
+                if(productDetailPage){
+                    self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"scrollDown_iPhone.png"]];
+                    //                    self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"slideFingerHorizontal_iPhone.png"]];
+                }
+                else{
+                    self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"slideFingerHorizontal_iPhone.png"]];
+                }
+                CGRect imageViewFrame = self.verticalImage.frame;
+                imageViewFrame.origin.x = x - markRect.size.width/2 - imageViewFrame.size.width/2;
+                imageViewFrame.origin.y = y2 - kLabelMargin; //self.lblCaption.frame.size.height/2
+                if(productDetailPage){
+                    imageViewFrame.origin.y = self.center.y;
+                }
+
+                y2 += imageViewFrame.size.height/2;
+                self.verticalImage.frame = imageViewFrame;
+                [self addSubview:self.verticalImage];
             }
         }
             break;
@@ -471,49 +511,73 @@ NSString *const KOkGotIt = @"متوجه شدم";
     self.lblCaption.frame = (CGRect){{x, y}, self.lblCaption.frame.size};
     
     if(showArrow){
+        
+        BOOL pdvGallery = NO;
+        if( [markDef objectForKey:@"PDVGallery"])
+            pdvGallery = [[markDef objectForKey:@"PDVGallery"] boolValue];
+
+        if(pdvGallery){
+            self.lblCaption.center = self.center;
+             CGRect lblCaptionFrame = self.lblCaption.frame;
+            lblCaptionFrame.origin.y -= 80;
+            self.lblCaption.frame = lblCaptionFrame;
+            self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"zoom_iPhone.png"]];
+        }
+        else{
         // Animate the caption label
         self.lblCaption.frame = (CGRect){{self.verticalImage.frame.origin.x, y}, self.lblCaption.frame.size};
-        // Coach mark definition
-        NSDictionary *markDef = [self.coachMarks objectAtIndex:index];
-        NSString *verticalText = [markDef objectForKey:@"caption2"];
-        NSString *verticalText2 = [markDef objectForKey:@"caption3"];
-        
-        self.verticalCaption = [[UILabel alloc] initWithFrame:(CGRect){{0.0f, 0.0f}, {self.maxLblWidth, 0.0f}}];
-        self.verticalCaption.backgroundColor = [UIColor clearColor];
-        self.verticalCaption.textColor = [UIColor whiteColor];
-        self.verticalCaption.font = [UIFont fontWithName:@"Bamilo-Sans" size:12.0f];
-        self.verticalCaption.lineBreakMode = NSLineBreakByWordWrapping;
-        self.verticalCaption.numberOfLines = 0;
-        self.verticalCaption.textAlignment = NSTextAlignmentRight;
-//        self.verticalCaption.alpha = 0.0f;
-        
-        self.verticalCaption.frame = (CGRect){{0.0f, 0.0f}, {self.maxLblWidth, 0.0f}};
-        self.verticalCaption.text = verticalText;
-        [self.verticalCaption sizeToFit];
-        self.verticalCaption.frame = (CGRect){{self.verticalImage.frame.origin.x, y+ 120}, self.lblCaption.frame.size};
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            self.verticalCaption.frame = (CGRect){{self.verticalImage.frame.origin.x, y+ 180}, self.lblCaption.frame.size};
         }
-        [self addSubview:self.verticalCaption];
+        BOOL productDetailPage = NO;
+        if( [markDef objectForKey:@"productDetailPage"])
+            productDetailPage = [[markDef objectForKey:@"productDetailPage"] boolValue];
         
-        self.verticalCaption2 = [[UILabel alloc] initWithFrame:(CGRect){{0.0f, 0.0f}, {self.maxLblWidth, 0.0f}}];
-        self.verticalCaption2.backgroundColor = [UIColor clearColor];
-        self.verticalCaption2.textColor = [UIColor whiteColor];
-        self.verticalCaption2.font = [UIFont fontWithName:@"Bamilo-Sans" size:12.0f];
-        self.verticalCaption2.lineBreakMode = NSLineBreakByWordWrapping;
-        self.verticalCaption2.numberOfLines = 0;
-        self.verticalCaption2.textAlignment = NSTextAlignmentRight;
-        //        self.verticalCaption.alpha = 0.0f;
-        
-        self.verticalCaption2.frame = (CGRect){{0.0f, 0.0f}, {self.maxLblWidth, 0.0f}};
-        self.verticalCaption2.text = verticalText2;
-        [self.verticalCaption2 sizeToFit];
-        self.verticalCaption2.frame = (CGRect){{self.horizontalImage.frame.origin.x, y+ 220}, self.verticalCaption2.frame.size};
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            self.verticalCaption2.frame = (CGRect){{self.horizontalImage.frame.origin.x, y+ 320}, self.verticalCaption2.frame.size};
+        if(productDetailPage){
+            self.lblCaption.center = self.center;
         }
-        [self addSubview:self.verticalCaption2];
+        else{
+            
+            // caption2 and 3 for scroll screen
+            NSDictionary *markDef = [self.coachMarks objectAtIndex:index];
+            NSString *verticalText = [markDef objectForKey:@"caption2"];
+            NSString *verticalText2 = [markDef objectForKey:@"caption3"];
+            
+            self.verticalCaption = [[UILabel alloc] initWithFrame:(CGRect){{0.0f, 0.0f}, {self.maxLblWidth, 0.0f}}];
+            
+            self.verticalCaption.backgroundColor = [UIColor clearColor];
+            self.verticalCaption.textColor = [UIColor whiteColor];
+            self.verticalCaption.font = [UIFont fontWithName:@"Bamilo-Sans" size:12.0f];
+            self.verticalCaption.lineBreakMode = NSLineBreakByWordWrapping;
+            self.verticalCaption.numberOfLines = 0;
+            self.verticalCaption.textAlignment = NSTextAlignmentRight;
+            self.verticalCaption.text = verticalText;
+            [self.verticalCaption sizeToFit];
+            
+            self.verticalCaption.frame = (CGRect){{self.verticalImage.frame.origin.x, y+ 120}, self.lblCaption.frame.size};
+            
+            if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+                self.verticalCaption.frame = (CGRect){{self.verticalImage.frame.origin.x, y+ 180}, self.lblCaption.frame.size};
+            }
+            [self addSubview:self.verticalCaption];
+            
+            self.verticalCaption2 = [[UILabel alloc] initWithFrame:(CGRect){{0.0f, 0.0f}, {self.maxLblWidth, 0.0f}}];
+            self.verticalCaption2.backgroundColor = [UIColor clearColor];
+            self.verticalCaption2.textColor = [UIColor whiteColor];
+            self.verticalCaption2.font = [UIFont fontWithName:@"Bamilo-Sans" size:12.0f];
+            self.verticalCaption2.lineBreakMode = NSLineBreakByWordWrapping;
+            self.verticalCaption2.numberOfLines = 0;
+            self.verticalCaption2.textAlignment = NSTextAlignmentRight;
+            
+            self.verticalCaption2.text = verticalText2;
+            [self.verticalCaption2 sizeToFit];
+            self.verticalCaption2.frame = (CGRect){{self.horizontalImage.frame.origin.x, y+ 220}, self.verticalCaption2.frame.size};
+            
+            if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+                self.verticalCaption2.frame = (CGRect){{self.horizontalImage.frame.origin.x, y+ 320}, self.verticalCaption2.frame.size};
+            }
+            [self addSubview:self.verticalCaption2];
+        }
     }
+    
     [UIView animateWithDuration:0.3f animations:^{
         self.lblCaption.alpha = 1.0f;
     }];
@@ -530,14 +594,22 @@ NSString *const KOkGotIt = @"متوجه شدم";
         [self setCutoutToRect:centerZero withShape:shape];
         [self setOuterCircle:markRect];
     }
-  
+    
+    //as its an image remove outerringcircle
+    if(showArrow){
+        [self.outerCircleImageView setHidden:TRUE];
+    }
+    else{
+        [self.outerCircleImageView setHidden:FALSE];
+    }
+
     CGRect currentRect = CGRectMake(markRect.origin.x-45, markRect.origin.y-45, markRect.size.width+90, markRect.size.height+90);
     // Animate the cutout
     [self animateCutoutToRect:markRect withShape:shape];
     [self animateOuterCircle:previousCircleFrame toPosition:currentRect];
     
     CGFloat lblContinueWidth = 120.0f;
-//    CGFloat btnSkipWidth = self.bounds.size.width - lblContinueWidth;
+    //    CGFloat btnSkipWidth = self.bounds.size.width - lblContinueWidth;
     
     // Show continue lbl if first mark
     if (self.enableContinueLabel) {
@@ -548,11 +620,10 @@ NSString *const KOkGotIt = @"متوجه شدم";
         [lblContinue addTarget:self action:@selector(didClickNextButton:) forControlEvents:UIControlEventTouchUpInside];
         if (markIndex == [coachMarks count]-1){
             self.continueLabelText = KOkGotIt;
-            continueButtonFrame.origin.y += 130.0;
+            continueButtonFrame.origin.y += 110.0;
         }
         lblContinue.frame = continueButtonFrame;
         [lblContinue setTitle: self.continueLabelText forState: UIControlStateNormal];
-
         lblContinue.titleLabel.font = [UIFont fontWithName:@"Bamilo-Sans" size:20.0f];;
         lblContinue.layer.borderWidth = 1.0f;
         lblContinue.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -566,7 +637,7 @@ NSString *const KOkGotIt = @"متوجه شدم";
         [btnSkipCoach addTarget:self action:@selector(skipCoach) forControlEvents:UIControlEventTouchUpInside];
         NSDictionary *attrDict = @{NSFontAttributeName : [UIFont
                                                           fontWithName:@"Bamilo-Sans" size:10.0],NSForegroundColorAttributeName : [UIColor
-                                                                                                                   whiteColor]};
+                                                                                                                                   whiteColor]};
         NSMutableAttributedString *title =[[NSMutableAttributedString alloc] initWithString:self.skipButtonText attributes: attrDict];
         [title addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(0,[title length])];
         [btnSkipCoach setAttributedTitle:title forState:UIControlStateNormal];
@@ -575,9 +646,9 @@ NSString *const KOkGotIt = @"متوجه شدم";
         if (markIndex == [coachMarks count]-1){
             [self.btnSkipCoach removeFromSuperview];
         }
-//        [UIView animateWithDuration:0.3f delay:1.0f options:0 animations:^{
-//            btnSkipCoach.alpha = 1.0f;
-//        } completion:nil];
+        //        [UIView animateWithDuration:0.3f delay:1.0f options:0 animations:^{
+        //            btnSkipCoach.alpha = 1.0f;
+        //        } completion:nil];
     }
 }
 

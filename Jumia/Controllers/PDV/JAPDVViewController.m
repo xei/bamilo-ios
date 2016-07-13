@@ -40,6 +40,7 @@
 #import "JABottomBar.h"
 #import "RISeller.h"
 #import "JACenterNavigationController.h"
+#import "JATabBarButton.h"
 
 typedef void (^ProcessActionBlock)(void);
 
@@ -69,6 +70,7 @@ JAActivityViewControllerDelegate
 @property (strong, nonatomic) JABottomBar *ctaView;
 @property (assign, nonatomic) NSInteger commentsCount;
 @property (assign, nonatomic) BOOL openPickerFromCart;
+@property (assign, nonatomic) BOOL viewLoaded;
 @property (strong, nonatomic) RIProductSimple *currentSimple;
 //$WIZ$
 //@property (nonatomic, strong) JAPDVWizardView* wizardView;
@@ -185,6 +187,62 @@ JAActivityViewControllerDelegate
     }
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kProductChangedNotification object:self.product.sku];
     _needRefreshProduct = NO;
+}
+
+-(void)presentCoachMarks{
+    
+    CGRect wishListButtonFrame = _productImageSection.wishListButton.frame; //search button
+    UIButton *callToOrderButton = [self.ctaView.smallButtonsArray objectAtIndex:1];
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")){
+    }
+    else{
+    }
+    
+    // Setup coach marks
+    CGRect coachmark1 = CGRectMake( wishListButtonFrame.origin.x-15, wishListButtonFrame.origin.y + 44, wishListButtonFrame.size.width +35, wishListButtonFrame.size.height + 35);
+    CGRect coachmark2 = CGRectMake(callToOrderButton.frame.origin.x, self.view.height+15, callToOrderButton.width, callToOrderButton.height+12);
+    CGRect coachmark3 = CGRectMake( self.view.center.x, self.view.center.y,0,0);
+    CGRect coachmark4 = CGRectMake( self.productImageSection.center.x, self.productImageSection.center.y,0,0);
+    
+    // Setup coach marks
+    NSArray *coachMarks = @[
+                            @{
+                                @"rect": [NSValue valueWithCGRect:coachmark4],
+                                @"caption": @"مشاهده گالری تصاویربزرگ کالا",
+                                @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
+                                @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
+                                @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT],
+                                @"showArrow":[NSNumber numberWithBool:YES],
+                                },
+                            @{
+                                @"rect": [NSValue valueWithCGRect:coachmark1],
+                                @"caption": @"افزودن به لیست علاقه مندی ها\n(لیست خریدهای آینده)",
+                                @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
+                                @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
+                                @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT]
+                                },
+                            @{
+                                @"rect": [NSValue valueWithCGRect:coachmark2],
+                                @"caption":@"تماس با خدمات مشتریان بامیلو",
+                                @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
+                                @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
+                                @"position":[NSNumber numberWithInteger:LABEL_POSITION_TOP]
+                                },
+                            @{
+                                @"rect": [NSValue valueWithCGRect:coachmark3],
+                                @"caption": @"حركت عمودي براي مشاهده اطلاعات كالا",
+                                @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
+                                @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
+                                @"position":[NSNumber numberWithInteger:LABEL_POSITION_BOTTOM],
+                                @"showArrow":[NSNumber numberWithBool:YES],
+                                @"productDetailPage":[NSNumber numberWithBool:YES]
+                                }
+                            ];
+    
+    MPCoachMarks *coachMarksView = [[MPCoachMarks alloc] initWithFrame:self.navigationController.view.bounds coachMarks:coachMarks];
+    [self.navigationController.view addSubview:coachMarksView];
+    [coachMarksView start];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -568,10 +626,12 @@ JAActivityViewControllerDelegate
     [RIProduct getBundleWithSku:self.product.sku
                    successBlock:^(RIBundle* bundle) {
                        self.productBundle = bundle;
+                       _viewLoaded = TRUE;
                        [self fillTheViews];
                        [self hideLoading];
                    } andFailureBlock:^(RIApiResponse apiResponse, NSArray *error) {
                        self.productBundle = nil;
+                       _viewLoaded = TRUE;
                        [self fillTheViews];
                        [self.bundleLayout removeFromSuperview];
                        [self hideLoading];
@@ -880,6 +940,15 @@ JAActivityViewControllerDelegate
     if (RI_IS_RTL) {
         [self.view flipAllSubviews];
     }
+    if(_viewLoaded){
+        _viewLoaded = FALSE;
+        if (![[NSUserDefaults standardUserDefaults] boolForKey:@"FirtTimeProductDetailPage"])
+        {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirtTimeProductDetailPage"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [self presentCoachMarks];
+        }
+    }
 }
 
 - (JAPDVRelatedItem *)relatedItemsView
@@ -1049,14 +1118,17 @@ JAActivityViewControllerDelegate
     UIActivity *whatsAppActivity = [[JBWhatsAppActivity alloc] init];
     
     NSArray *objectToShare = @[fbmActivity, whatsAppActivity];;
-    
+    //crash fix on clicking items with name in farsi
+    NSString* webStringURL = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL* urlToBeShared = [NSURL URLWithString:webStringURL];
+
     WhatsAppMessage *whatsappMsg = [[WhatsAppMessage alloc] initWithMessage:[NSString stringWithFormat:@"%@ %@",STRING_SHARE_PRODUCT_MESSAGE, url] forABID:nil];
     
-    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_PRODUCT_MESSAGE, [NSURL URLWithString:url], whatsappMsg] applicationActivities:nil];
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_PRODUCT_MESSAGE, urlToBeShared, whatsappMsg] applicationActivities:nil];
     
     if(!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")){
         
-        activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_PRODUCT_MESSAGE, [NSURL URLWithString:url], whatsappMsg] applicationActivities:objectToShare];
+        activityController = [[UIActivityViewController alloc] initWithActivityItems:@[STRING_SHARE_PRODUCT_MESSAGE, urlToBeShared, whatsappMsg] applicationActivities:objectToShare];
         
     }
     
@@ -1643,6 +1715,26 @@ JAActivityViewControllerDelegate
 
 - (void)trackingEventAddToCart:(RICart *)cart
 {
+    CGRect addToCartEventCoachMark = CGRectMake([JACenterNavigationController sharedInstance].navigationBarView.cartButton.frame.origin.x, [JACenterNavigationController sharedInstance].navigationBarView.cartButton.frame.origin.y+20,35, 35);
+
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"FirtTimeAddToCart"])
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirtTimeAddToCart"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        NSArray *coachMarks = @[
+                                @{
+                                    @"rect": [NSValue valueWithCGRect:addToCartEventCoachMark],
+                                    @"caption": @"مشاهده سبد خرید و تکمیل سفارش",
+                                    @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
+                                    @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
+                                    @"position":[NSNumber numberWithInteger:LABEL_POSITION_RIGHT]
+                                    },
+                                ];
+        MPCoachMarks *coachMarksView = [[MPCoachMarks alloc] initWithFrame:self.navigationController.view.bounds coachMarks:coachMarks];
+        [self.navigationController.view addSubview:coachMarksView];
+        [coachMarksView start];
+    }
+
     NSNumber *price = [self getPrice];
     NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
     [trackingDictionary setValue:((RIProduct *)[self.product.productSimples firstObject]).sku forKey:kRIEventLabelKey];
