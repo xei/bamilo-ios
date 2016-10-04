@@ -581,7 +581,8 @@
         
         for (id currentObject in [radioComponent options]) {
             if (VALID_NOTEMPTY(currentObject, NSString)) {
-                [dataSource addObject:currentObject];
+                NSString *currentStringValue = RILocalizedString((NSString*)currentObject, nil);
+                [dataSource addObject:currentStringValue];
             }
         }
         self.genders = dataSource;
@@ -620,7 +621,14 @@
     if (VALID_NOTEMPTY(self.radioComponent, JARadioComponent)) {
         if ([self.radioComponent isComponentWithKey:@"gender"]) {
             NSString *selectedValue = [self.genders objectAtIndex:selectedRow];
-            [self.radioComponent setValue:selectedValue];
+            if([selectedValue isEqualToString:@"زن"]){
+                [self.radioComponent setValue:@"female"];
+            }
+            else{
+                [self.radioComponent setValue:@"male"];
+            }
+
+//            [self.radioComponent setValue:selectedValue];
             [self.radioComponent.textField setText:selectedValue];
         } else {
             RIPhonePrefix *prefix = (RIPhonePrefix *)[self.phonePrefixes objectAtIndex:selectedRow];
@@ -683,7 +691,8 @@
                 if ([self.radioComponent.field.value isEqualToString:[phonePrefix.value stringValue]]) {
                     [self.radioComponent setValue:[phonePrefix.value stringValue]];
                     [self.radioComponent.textField setText:phonePrefix.label];
-                    [self.radioComponent.textField setEnabled:YES];
+                    [self.radioComponent.textField setEnabled:NO];
+                    [self.radioComponent setHidden:YES];
                     break;
                 }
             }

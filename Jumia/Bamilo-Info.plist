@@ -2,15 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Bamilo-No-Reg.ttf</string>
-		<string>BAMILO-SANS BLACK_0.TTF</string>
-		<string>BAMILO-SANS BOLD_0.TTF</string>
-		<string>BAMILO-SANS LIGHT_0.TTF</string>
-		<string>BAMILO-SANS REG_0.TTF</string>
-		<string>BAMILO-SANS ULTRA LIGHT_0.TTF</string>
-	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -105,6 +96,15 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Bamilo-No-Reg.ttf</string>
+		<string>BAMILO-SANS BLACK_0.TTF</string>
+		<string>BAMILO-SANS BOLD_0.TTF</string>
+		<string>BAMILO-SANS LIGHT_0.TTF</string>
+		<string>BAMILO-SANS REG_0.TTF</string>
+		<string>BAMILO-SANS ULTRA LIGHT_0.TTF</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
@@ -116,6 +116,8 @@
 		<string>armv7</string>
 	</array>
 	<key>UIRequiresFullScreen</key>
+	<true/>
+	<key>UIStatusBarHidden</key>
 	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>

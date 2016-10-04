@@ -9,7 +9,6 @@
 #import "JAGenericMenuCell.h"
 #import "UIImageView+WebCache.h"
 
-#define kLeftAndRightMargin 16.f
 #define kLeftIPadMargin 24.f
 #define kCellLevelOneMargin 50.f
 #define kCellLevelOneIPadMargin 58.f
@@ -18,6 +17,7 @@
 #define kIconImageWidthAndHeight 22.f
 #define kIconImageRightMargin 10.f
 #define kAcessoryImageWidthAndHeight 11.f
+#define kLeftAndRightMargin 16.f
 #define kSeparatorHeight 1.f
 
 @interface JAGenericMenuCell()

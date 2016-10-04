@@ -26,6 +26,8 @@
 
 @implementation JAAppDelegate
 
+//#define SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 //    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RIProduct class])];
@@ -148,6 +150,18 @@
     {
         [[GSDAppIndexing sharedInstance] registerApp:kAppStoreIdBamiloInteger];
     }
+    
+//    if(SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(@"10.0")){
+//        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+//        center.delegate = self;
+//        [center requestAuthorizationWithOptions:(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge) completionHandler:^(BOOL granted, NSError * _Nullable error){
+//            if( !error ){
+//                [[UIApplication sharedApplication] registerForRemoteNotifications];
+//            }
+//        }];
+//    }
+//    
+//    return YES;
 
     
     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
@@ -188,6 +202,23 @@
     
     return YES;
 }
+
+//-(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler{
+//    
+//    //Called when a notification is delivered to a foreground app.
+//    
+//    NSLog(@"Userinfo %@",notification.request.content.userInfo);
+//    
+//    completionHandler(UNNotificationPresentationOptionAlert);
+//}
+//
+//-(void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void(^)())completionHandler{
+//    
+//    //Called to let your app know which action was selected by the user for a given notification.
+//    
+//    NSLog(@"Userinfo %@",response.notification.request.content.userInfo);
+//    
+//}
 
 #ifdef __IPHONE_8_0
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:   (UIUserNotificationSettings *)notificationSettings
@@ -368,6 +399,7 @@
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
+//    NSLog(@"%@", deviceToken);
     [[RITrackingWrapper sharedInstance] applicationDidRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 
@@ -375,6 +407,10 @@
 {
     if(!VALID_NOTEMPTY(application, UIApplication) || UIApplicationStateActive != application.applicationState)
     {
+//        id key;
+//        NSEnumerator* enumerator = [userInfo keyEnumerator];
+//        if (key = [enumerator nextObject])
+//            NSLog(@"key=%@ : value=%@", key, [userInfo objectForKey:key]);
         [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:userInfo];
     }
 }

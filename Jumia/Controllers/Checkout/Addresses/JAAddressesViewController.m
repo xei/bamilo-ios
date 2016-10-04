@@ -30,6 +30,8 @@ UITableViewDelegate>
 {
     // Bottom view
     JACheckoutBottomView *_bottomView;
+    int selectstr;
+
 }
 
 // Addresses
@@ -39,8 +41,8 @@ UITableViewDelegate>
 @property (strong, nonatomic) RIAddress *billingAddress;
 
 @property (strong, nonatomic) UITableView *shippingAddressTableView;
-@property (strong, nonatomic) UITableView *billingAddressTableView;
-@property (strong, nonatomic) UITableView *otherAddressesTableView;
+//@property (strong, nonatomic) UITableView *billingAddressTableView;
+//@property (strong, nonatomic) UITableView *otherAddressesTableView;
 
 @property (nonatomic, assign) BOOL useSameAddressAsBillingAndShipping;
 
@@ -90,19 +92,19 @@ UITableViewDelegate>
     [self.shippingAddressTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.contentScrollView addSubview:self.shippingAddressTableView];
     
-    self.billingAddressTableView = [UITableView new];
-    [self.billingAddressTableView setScrollEnabled:NO];
-    [self.billingAddressTableView setDelegate:self];
-    [self.billingAddressTableView setDataSource:self];
-    [self.billingAddressTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    [self.contentScrollView addSubview:self.billingAddressTableView];
+//    self.billingAddressTableView = [UITableView new];
+//    [self.billingAddressTableView setScrollEnabled:NO];
+//    [self.billingAddressTableView setDelegate:self];
+//    [self.billingAddressTableView setDataSource:self];
+//    [self.billingAddressTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+//    [self.contentScrollView addSubview:self.billingAddressTableView];
     
-    self.otherAddressesTableView = [UITableView new];
-    [self.otherAddressesTableView setScrollEnabled:NO];
-    [self.otherAddressesTableView setDelegate:self];
-    [self.otherAddressesTableView setDataSource:self];
-    [self.otherAddressesTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    [self.contentScrollView addSubview:self.otherAddressesTableView];
+//    self.otherAddressesTableView = [UITableView new];
+//    [self.otherAddressesTableView setScrollEnabled:NO];
+//    [self.otherAddressesTableView setDelegate:self];
+//    [self.otherAddressesTableView setDataSource:self];
+//    [self.otherAddressesTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+//    [self.contentScrollView addSubview:self.otherAddressesTableView];
     
     
     [self.view addSubview:self.contentScrollView];
@@ -259,34 +261,28 @@ UITableViewDelegate>
     CGFloat headerHeight = [self tableView:self.shippingAddressTableView heightForHeaderInSection:0];
     CGFloat footerHeight = [self tableView:self.shippingAddressTableView heightForFooterInSection:0];
     CGFloat totalShippingCollectionViewHeight = headerHeight + cellHeight + footerHeight;
-    [self.shippingAddressTableView setFrame:CGRectMake(0.0f,
-                                                       0.0f,
-                                                       self.contentScrollView.frame.size.width,
-                                                       totalShippingCollectionViewHeight)];
     
     CGFloat totalBillingCollectionViewHeight = totalShippingCollectionViewHeight;
     if (self.useSameAddressAsBillingAndShipping) {
         totalBillingCollectionViewHeight = 0.0f;
     }
-    [self.billingAddressTableView setFrame:CGRectMake(0.0f,
-                                                      CGRectGetMaxY(self.shippingAddressTableView.frame),
-                                                      self.contentScrollView.frame.size.width,
-                                                      totalBillingCollectionViewHeight)];
+//    [self.billingAddressTableView setFrame:CGRectMake(0.0f,
+//                                                      CGRectGetMaxY(self.shippingAddressTableView.frame),
+//                                                      self.contentScrollView.frame.size.width,
+//                                                      totalBillingCollectionViewHeight)];
 
     NSArray* otherAddresses = [self.addresses objectForKey:@"other"];
     CGFloat totalOtherAddressesTableHeight = headerHeight + cellHeight * otherAddresses.count + footerHeight;
     if (0 == otherAddresses.count) {
         totalOtherAddressesTableHeight = 0.0f;
     }
-    [self.otherAddressesTableView setFrame:CGRectMake(0.0f,
-                                                      CGRectGetMaxY(self.billingAddressTableView.frame),
-                                                      self.contentScrollView.frame.size.width,
-                                                      totalOtherAddressesTableHeight)];
+    [self.shippingAddressTableView setFrame:CGRectMake(0.0f,
+                                                       0.0f,
+                                                       self.contentScrollView.frame.size.width,
+                                                       totalShippingCollectionViewHeight+totalOtherAddressesTableHeight)];
     
     
     [self.shippingAddressTableView reloadData];
-    [self.billingAddressTableView reloadData];
-    [self.otherAddressesTableView reloadData];
     
     [_bottomView setFrame:CGRectMake(0.0f,
                                             self.view.frame.size.height - _bottomView.frame.size.height,
@@ -304,7 +300,7 @@ UITableViewDelegate>
     }
     
     
-    [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, CGRectGetMaxY(self.otherAddressesTableView.frame) + _bottomView.frame.size.height + 5.0f)];
+    [self.contentScrollView setContentSize:CGSizeMake(self.contentScrollView.frame.size.width, CGRectGetMaxY(self.shippingAddressTableView.frame) + _bottomView.frame.size.height + 5.0f)];
     
     [self.contentScrollView setHidden:NO];
     
@@ -392,13 +388,10 @@ UITableViewDelegate>
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    CGFloat totalNumberOfAddressesInTableView = 1;
+    CGFloat totalNumberOfAddressesInTableView ;
     
-    if(tableView == self.otherAddressesTableView)
-    {
         NSArray* otherAddresses = [self.addresses objectForKey:@"other"];
-        totalNumberOfAddressesInTableView = [otherAddresses count] + 1;
-    }
+        totalNumberOfAddressesInTableView += [otherAddresses count] + 1;
     
     return totalNumberOfAddressesInTableView;
 }
@@ -406,18 +399,11 @@ UITableViewDelegate>
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     NSString* title;
-    if(tableView == self.shippingAddressTableView)
+    if([NSIndexPath indexPathForRow:0 inSection:0])
     {
-        if(self.useSameAddressAsBillingAndShipping) {
             title = STRING_SHIPPING_BILLING_ADDRESS;
-        } else {
-            title = STRING_SHIPPING_ADDRESSES;
-        }
     }
-    else if(tableView == self.billingAddressTableView)
-    {
-        title = STRING_BILLING_ADDRESSES;
-    } else if(tableView == self.otherAddressesTableView) {
+    else{
         title = STRING_OTHER_ADDRESSES;
     }
     
@@ -431,6 +417,37 @@ UITableViewDelegate>
         [headerLine flipAllSubviews];
     }
     
+    JAClickableView* footerView = [JAClickableView new];
+    [footerView setBackgroundColor:JAWhiteColor];
+    [footerView setFrame:CGRectMake(0.0f, 0.0f, content.frame.size.width, kProductInfoHeaderLineHeight)];
+    
+    UILabel* addNewAddressLabel = [UILabel new];
+    [addNewAddressLabel setFont:JABUTTON2Font];
+    [addNewAddressLabel setTextColor:[UIColor colorWithRed:0.24 green:0.57 blue:0.95 alpha:1.0]];
+    [addNewAddressLabel setTextAlignment:NSTextAlignmentRight];
+    [addNewAddressLabel setText:[STRING_ADD_NEW_ADDRESS uppercaseString]];
+    [addNewAddressLabel sizeToFit];
+    [addNewAddressLabel setFrame:CGRectMake(16.0f,
+                                            0.0f,
+                                            tableView.frame.size.width - 16.0f*2,
+                                            kProductInfoHeaderLineHeight)];
+    [footerView addSubview:addNewAddressLabel];
+    //use this for custom font
+    CGFloat width = ceil([addNewAddressLabel.text sizeWithAttributes:@{NSFontAttributeName:JABUTTON2Font}].width);
+    
+    UIImageView* addNewAddressImage = [UIImageView new];
+    [addNewAddressImage setImage:[UIImage imageNamed:@"addAdressImage.png"]];
+    [addNewAddressImage setFrame:CGRectMake(width + 20.0f, 16.0f, 16.0f, 16.0f)];
+    
+    if (RI_IS_RTL) {
+        [footerView flipAllSubviews];
+    }
+    [footerView addSubview:addNewAddressImage];
+
+    [footerView setBackgroundColor:[UIColor clearColor]];
+    [footerView addTarget:self action:@selector(addAddressCellPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [headerLine addSubview:footerView];
     [content addSubview:headerLine];
     
     return content;
@@ -438,29 +455,7 @@ UITableViewDelegate>
 
 - (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    JAClickableView* footerView = [JAClickableView new];
-    [footerView setBackgroundColor:JAWhiteColor];
-    [footerView setFrame:CGRectMake(0.0f, 0.0f, tableView.frame.size.width, 38.0f)];
-    
-    UILabel* addNewAddressLabel = [UILabel new];
-    [addNewAddressLabel setFont:JABUTTON2Font];
-    [addNewAddressLabel setTextColor:JABlue1Color];
-    [addNewAddressLabel setTextAlignment:NSTextAlignmentRight];
-    [addNewAddressLabel setText:[STRING_ADD_NEW_ADDRESS uppercaseString]];
-    [addNewAddressLabel sizeToFit];
-    [addNewAddressLabel setFrame:CGRectMake(16.0f,
-                                            10.0f,
-                                            tableView.frame.size.width - 16.0f*2,
-                                            addNewAddressLabel.frame.size.height)];
-    [footerView addSubview:addNewAddressLabel];
-
-    if (RI_IS_RTL) {
-        [footerView flipAllSubviews];
-    }
-    
-    [footerView addTarget:self action:@selector(addAddressCellPressed:) forControlEvents:UIControlEventTouchUpInside];
-    
-    return footerView;
+       return nil;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -472,24 +467,23 @@ UITableViewDelegate>
         cell = [[JAAddressCell alloc] init];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
-    
+    if(self.fromCheckout){
+        cell.fromCheckOut = self.fromCheckout;
+    }
+    else{
+        cell.fromCheckOut = self.fromCheckout;
+    }
     RIAddress* address;
     SEL clickMethod;
     
-    if(tableView == self.shippingAddressTableView) {
-        if (0 == indexPath.row) {
-            address = self.shippingAddress;
-            clickMethod = @selector(editShippingAddressPressed);
-        }
-    } else if(tableView == self.billingAddressTableView) {
-        if (0 == indexPath.row) {
-            address = self.billingAddress;
-            clickMethod = @selector(editBillingAddressPressed);
-        }
-    } else {
+    if (0 == indexPath.row) {
+        address = self.shippingAddress;
+        clickMethod = @selector(editShippingAddressPressed);
+    }
+    else {
         NSArray* otherAddresses = [self.addresses objectForKey:@"other"];
-        if (indexPath.row < [otherAddresses count]) {
-            address = [otherAddresses objectAtIndex:indexPath.row];
+        if (indexPath.row < [otherAddresses count]+1) {
+            address = [otherAddresses objectAtIndex:indexPath.row-1];
         }
         clickMethod = @selector(editOtherAddressPressed:);
     }
@@ -497,8 +491,42 @@ UITableViewDelegate>
     [cell loadWithWidth:self.contentScrollView.frame.size.width address:address];
     [cell.editAddressButton setTag:indexPath.row];
     [cell.editAddressButton addTarget:self action:clickMethod forControlEvents:UIControlEventTouchUpInside];
-    
+
+    if(self.fromCheckout){
+        //radio button
+        cell.radioButton.tag = indexPath.row;
+        if (selectstr ==indexPath.row)
+        {
+            [cell.radioButton setImage:[UIImage imageNamed:@"checked.png"] forState:UIControlStateNormal];
+        }
+        else
+        {
+            [cell.radioButton setImage:[UIImage imageNamed:@"unchecked.png"] forState:UIControlStateNormal];
+        }
+        cell.radioButton.adjustsImageWhenHighlighted=NO;
+        [cell.radioButton addTarget:self action:@selector(toggleCheckedMode:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.contentView addSubview:cell.radioButton];
+    }
+    else{
+        [cell.radioButton setHidden:true];
+    }
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+   // selectstr=indexPath.row;
+   // [tableView reloadData];
+    
+}
+
+- (IBAction)toggleCheckedMode:(UIButton*)sender
+{
+    
+    //    [button setImage:[UIImage imageNamed:@"radio_selected.png"] forState:UIControlStateNormal];
+    // here customized for your self
+    selectstr=sender.tag;
+    [self.shippingAddressTableView reloadData];
 }
 
 #pragma mark UICollectionViewDelegate

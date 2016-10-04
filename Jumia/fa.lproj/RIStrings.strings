@@ -42,6 +42,8 @@
 
 "recently_viewed" = "کالاهای اخیرا مشاهده شده";
 
+"contact us" = "تماس با ما ";
+
 "my_account" = "حساب کاربری من ‎";
 
 "nav_track_order" = "رهگیری سفارش من";
@@ -342,9 +344,9 @@
 
 "option3_description" = "مشترک شدن یا لغو اشتراک";
 
-"section_title_notification" = "تنظیمات اطلاعیه ها";
+"section_title_notification" = "با ما در ارتباط باشید";
 
-"notifications" = "اطلاعیه ها";
+"notifications" = "اعلان ها";
 
 "push_notifications" = "اطلاعیه ها";
 
@@ -367,6 +369,12 @@
 "notifications_summary" = "دریافت پیشنهادات اختصاصی و بروزرسانی ها";
 
 "sound" = "صدا";
+
+"male" = "نر";
+
+"female" = "زن";
+
+"Current Password" = "رمز عبور فعلی ";
 
 "sound_summary" = "پخش صدای نمایش پیغام";
 
@@ -508,7 +516,7 @@
 
 "reviews" = "نقدها و بررسی ها";
 
-"more" = "بیشتر";
+"more" = "سایر تنظیمات";
 
 "reviews_empty" = "این کالا هنوز امتیازی دریافت ننموده است!";
 
@@ -670,7 +678,7 @@
 
 "user_reviews" = "نظرات و پیشنهادهای کاربر";
 
-"profile" = "حساب کاربری";
+"profile" = "اطلاعات کاربر";
 
 "favourites_no_saved_items" = "کالای ذخیره‌ شده‌ای وجود ندارد.";
 
@@ -700,7 +708,7 @@
 
 "sign_up_to_our_newsletter_body" = "برای اطلاع از فروش های ویژه، تازه ها و پیشنهادهای بینظیر";
 
-"shipping_billing_address" = "نشانی";
+"shipping_billing_address" = "لطفا آدرس خود را انتخاب کنید.";
 
 "on_label" = "فعال";
 

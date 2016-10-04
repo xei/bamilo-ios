@@ -33,6 +33,7 @@
     [self.view addSubview:self.scrollView];
     
     self.webView = [UIWebView new];
+//    self.webView = [[UIWebView alloc] initWithFrame:self.viewBounds];
     self.webView.delegate = self;
     self.webView.scrollView.scrollEnabled = NO;
     [self.scrollView addSubview:self.webView];
@@ -68,10 +69,26 @@
 
 - (void)loadViews
 {
-    self.webView.frame = CGRectMake(0.0f,
-                                    0.0f,
-                                    self.webView.scrollView.contentSize.width,
-                                    self.webView.scrollView.contentSize.height);
+   CGFloat height = [[self.webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight;"] floatValue];
+    NSUInteger contentHeight = [[self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.body.scrollHeight;"]] intValue];
+    
+    NSString *output = [self.webView
+                        stringByEvaluatingJavaScriptFromString:
+                        @"document.body.offsetHeight;"];
+    NSLog(@"height: %d", [output intValue]);
+
+//    self.webView.frame = CGRectMake(0.0f,
+//                                    0.0f,
+//                                    self.webView.scrollView.contentSize.width,
+//                                    self.webView.scrollView.contentSize.height);
+
+    CGRect frame = self.webView.frame;
+    frame.size.height = 1;
+//    frame.size.width = 1;
+    self.webView.frame = frame;
+    CGSize fittingSize = [self.webView sizeThatFits:CGSizeZero];
+    frame.size = fittingSize;
+    self.webView.frame = frame;
     
     for (JATopSellersTeaserView* topSellersTeaserView in self.topSellerTeaserViewsArray) {
         [topSellersTeaserView removeFromSuperview];

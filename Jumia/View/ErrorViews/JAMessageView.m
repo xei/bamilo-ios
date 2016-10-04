@@ -50,7 +50,7 @@
 {
     if (!VALID(_errorImageView, UIImageView)) {
         _errorImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ico_error_notificationbar"]];
-        [_errorImageView setFrame:CGRectMake(15, 13, 22, 17)];
+        [_errorImageView setFrame:CGRectMake(275, 13, 22, 17)];
     }
     return _errorImageView;
 }

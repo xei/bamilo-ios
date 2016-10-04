@@ -9,13 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "JAClickableView.h"
 
-#define kAddressCellHeight 84.0f
+#define kAddressCellHeight 110.0f
 
 @class RIAddress;
 
 @interface JAAddressCell : UITableViewCell
 
 @property (strong, nonatomic) UIButton *editAddressButton;
+@property (assign, nonatomic) BOOL fromCheckOut;
+@property (strong, nonatomic) UIButton * radioButton;
+@property (strong, nonatomic) UIButton *deleteAddressButton;
 
 -(void)loadWithWidth:(CGFloat)width
              address:(RIAddress*)address;

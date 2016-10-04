@@ -13,8 +13,6 @@
 
 @interface JABottomBar ()
 
-@property (nonatomic) NSMutableArray *buttonsArray;
-
 @end
 
 @implementation JABottomBar

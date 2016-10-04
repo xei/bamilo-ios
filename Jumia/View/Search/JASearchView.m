@@ -87,6 +87,8 @@
         UITextField *textFieldSearch = [self.searchBar valueForKey:@"_searchField"];
         textFieldSearch.font = [UIFont fontWithName:kFontRegularName size:textFieldSearch.font.pointSize];
         textFieldSearch.backgroundColor = JAWhiteColor;
+        textFieldSearch.textAlignment = NSTextAlignmentRight;
+        
         
         [self addSubview:self.searchBar];
         

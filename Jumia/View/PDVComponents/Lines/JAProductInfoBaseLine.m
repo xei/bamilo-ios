@@ -151,7 +151,7 @@
 
 - (void)setTopSeparatorXOffset:(CGFloat)topSeparatorXOffset
 {
-    _topSeparatorXOffset = topSeparatorXOffset;
+    _topSeparatorXOffset = topSeparatorXOffset - 25.0f;
     [self topSeparator];
 }
 

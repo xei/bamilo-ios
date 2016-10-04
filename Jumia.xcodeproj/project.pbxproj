@@ -169,6 +169,22 @@
 		839e583fc75316c30aa08c95 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3022219811E8A00F71726 /* SDImageCache.m */; };
 		841E81A91D1680F300A35AAF /* MPCoachMarks.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E81A81D1680F300A35AAF /* MPCoachMarks.m */; };
 		841E81AA1D1680F300A35AAF /* MPCoachMarks.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E81A81D1680F300A35AAF /* MPCoachMarks.m */; };
+		8426C52B1D62FA200089B4D7 /* announcements-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8426C5221D62FA1F0089B4D7 /* announcements-icon.png */; };
+		8426C52C1D62FA200089B4D7 /* announcements-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8426C5221D62FA1F0089B4D7 /* announcements-icon.png */; };
+		8426C52D1D62FA200089B4D7 /* app-ver-icons.png in Resources */ = {isa = PBXBuildFile; fileRef = 8426C5231D62FA1F0089B4D7 /* app-ver-icons.png */; };
+		8426C52E1D62FA200089B4D7 /* app-ver-icons.png in Resources */ = {isa = PBXBuildFile; fileRef = 8426C5231D62FA1F0089B4D7 /* app-ver-icons.png */; };
+		8426C52F1D62FA200089B4D7 /* my-address-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8426C5241D62FA1F0089B4D7 /* my-address-icon.png */; };
+		8426C5301D62FA200089B4D7 /* my-address-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8426C5241D62FA1F0089B4D7 /* my-address-icon.png */; };
+		8426C5311D62FA200089B4D7 /* newsletter-icons.png in Resources */ = {isa = PBXBuildFile; fileRef = 8426C5251D62FA1F0089B4D7 /* newsletter-icons.png */; };
+		8426C5321D62FA200089B4D7 /* newsletter-icons.png in Resources */ = {isa = PBXBuildFile; fileRef = 8426C5251D62FA1F0089B4D7 /* newsletter-icons.png */; };
+		8426C5351D62FA200089B4D7 /* Privacy-icons.png in Resources */ = {isa = PBXBuildFile; fileRef = 8426C5271D62FA200089B4D7 /* Privacy-icons.png */; };
+		8426C5361D62FA200089B4D7 /* Privacy-icons.png in Resources */ = {isa = PBXBuildFile; fileRef = 8426C5271D62FA200089B4D7 /* Privacy-icons.png */; };
+		8426C5371D62FA200089B4D7 /* rate-icons.png in Resources */ = {isa = PBXBuildFile; fileRef = 8426C5281D62FA200089B4D7 /* rate-icons.png */; };
+		8426C5381D62FA200089B4D7 /* rate-icons.png in Resources */ = {isa = PBXBuildFile; fileRef = 8426C5281D62FA200089B4D7 /* rate-icons.png */; };
+		8426C5391D62FA200089B4D7 /* share-icons.png in Resources */ = {isa = PBXBuildFile; fileRef = 8426C5291D62FA200089B4D7 /* share-icons.png */; };
+		8426C53A1D62FA200089B4D7 /* share-icons.png in Resources */ = {isa = PBXBuildFile; fileRef = 8426C5291D62FA200089B4D7 /* share-icons.png */; };
+		8426C53B1D62FA200089B4D7 /* user-information-icons.png in Resources */ = {isa = PBXBuildFile; fileRef = 8426C52A1D62FA200089B4D7 /* user-information-icons.png */; };
+		8426C53C1D62FA200089B4D7 /* user-information-icons.png in Resources */ = {isa = PBXBuildFile; fileRef = 8426C52A1D62FA200089B4D7 /* user-information-icons.png */; };
 		842d7c4fad06679139869ced /* RIField.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA4119B4E92B00DE7960 /* RIField.m */; };
 		843c5f5135a7a237f2ebe305 /* RIError.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3029719811E9200F71726 /* RIError.m */; };
 		845349E51D1AB724000B97C7 /* Bamilo-No-Reg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 845349DF1D1AB723000B97C7 /* Bamilo-No-Reg.ttf */; };
@@ -177,7 +193,33 @@
 		845349E81D1AB724000B97C7 /* BAMILO-SANS LIGHT_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 845349E21D1AB724000B97C7 /* BAMILO-SANS LIGHT_0.TTF */; };
 		845349E91D1AB724000B97C7 /* BAMILO-SANS REG_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 845349E31D1AB724000B97C7 /* BAMILO-SANS REG_0.TTF */; };
 		845349EA1D1AB724000B97C7 /* BAMILO-SANS ULTRA LIGHT_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 845349E41D1AB724000B97C7 /* BAMILO-SANS ULTRA LIGHT_0.TTF */; };
+		8453EDEC1D7D41EA00830A96 /* call.png in Resources */ = {isa = PBXBuildFile; fileRef = 8453EDEB1D7D41E900830A96 /* call.png */; };
+		8453EDED1D7D41EA00830A96 /* call.png in Resources */ = {isa = PBXBuildFile; fileRef = 8453EDEB1D7D41E900830A96 /* call.png */; };
+		8453EDEF1D7D41F400830A96 /* bug.png in Resources */ = {isa = PBXBuildFile; fileRef = 8453EDEE1D7D41F400830A96 /* bug.png */; };
+		8453EDF01D7D41F400830A96 /* bug.png in Resources */ = {isa = PBXBuildFile; fileRef = 8453EDEE1D7D41F400830A96 /* bug.png */; };
 		8467290c94785ccd3ea64ce6 /* JANavigationBarLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = CE97D2ED19AE1ED50090D01C /* JANavigationBarLayout.m */; };
+		847606B61D77EEE900C54687 /* JAContactUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847606B41D77EEE900C54687 /* JAContactUsViewController.m */; };
+		847606B71D77EEE900C54687 /* JAContactUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847606B41D77EEE900C54687 /* JAContactUsViewController.m */; };
+		84B25D921D7E67480024B476 /* banner.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B25D911D7E67480024B476 /* banner.png */; };
+		84B25D931D7E6CFC0024B476 /* banner.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B25D911D7E67480024B476 /* banner.png */; };
+		84B25D9C1D8048DE0024B476 /* JAContactUsViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B25D9A1D8048DE0024B476 /* JAContactUsViewController~ipad.xib */; };
+		84B25D9D1D8048DF0024B476 /* JAContactUsViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B25D9A1D8048DE0024B476 /* JAContactUsViewController~ipad.xib */; };
+		84B25D9E1D8048DF0024B476 /* JAContactUsViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B25D9B1D8048DE0024B476 /* JAContactUsViewController~iphone.xib */; };
+		84B25D9F1D8048DF0024B476 /* JAContactUsViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B25D9B1D8048DE0024B476 /* JAContactUsViewController~iphone.xib */; };
+		84B4C10B1DA2DFF800342C38 /* checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B4C1071DA2DFF800342C38 /* checked.png */; };
+		84B4C10C1DA2DFF800342C38 /* checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B4C1071DA2DFF800342C38 /* checked.png */; };
+		84B4C10D1DA2DFF800342C38 /* checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B4C1081DA2DFF800342C38 /* checked@2x.png */; };
+		84B4C10E1DA2DFF800342C38 /* checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B4C1081DA2DFF800342C38 /* checked@2x.png */; };
+		84B4C10F1DA2DFF800342C38 /* unchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B4C1091DA2DFF800342C38 /* unchecked.png */; };
+		84B4C1101DA2DFF800342C38 /* unchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B4C1091DA2DFF800342C38 /* unchecked.png */; };
+		84B4C1111DA2DFF800342C38 /* unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B4C10A1DA2DFF800342C38 /* unchecked@2x.png */; };
+		84B4C1121DA2DFF800342C38 /* unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B4C10A1DA2DFF800342C38 /* unchecked@2x.png */; };
+		84B4C1141DA2F3D100342C38 /* editAddress.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B4C1131DA2F3D100342C38 /* editAddress.png */; };
+		84B4C1151DA2F3D100342C38 /* editAddress.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B4C1131DA2F3D100342C38 /* editAddress.png */; };
+		84B4C1171DA2FE7600342C38 /* addAdressImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B4C1161DA2FE7600342C38 /* addAdressImage.png */; };
+		84B4C1181DA2FE7600342C38 /* addAdressImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B4C1161DA2FE7600342C38 /* addAdressImage.png */; };
+		84B4C11A1DA38FB900342C38 /* deleteAddress.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B4C1191DA38FB800342C38 /* deleteAddress.png */; };
+		84B4C11B1DA38FB900342C38 /* deleteAddress.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B4C1191DA38FB800342C38 /* deleteAddress.png */; };
 		85b61709066677c2f1fcfd1c /* JARadioComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B510B00B19AE466B00A9754A /* JARadioComponent.m */; };
 		876d96c3d745466130991f03 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3022019811E8A00F71726 /* MKAnnotationView+WebCache.m */; };
 		886c5fa519e7301d1103b66d /* JAPaymentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DBF3719C0AF9600D4678A /* JAPaymentCell.m */; };
@@ -2829,12 +2871,34 @@
 		6af3ca12ac4f2d50fa243e2b /* calabash.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; path = calabash.framework; sourceTree = "<group>"; };
 		841E81A71D1680F300A35AAF /* MPCoachMarks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPCoachMarks.h; path = ../MPCoachMarks.h; sourceTree = "<group>"; };
 		841E81A81D1680F300A35AAF /* MPCoachMarks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPCoachMarks.m; path = ../MPCoachMarks.m; sourceTree = "<group>"; };
+		8426C5221D62FA1F0089B4D7 /* announcements-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "announcements-icon.png"; sourceTree = "<group>"; };
+		8426C5231D62FA1F0089B4D7 /* app-ver-icons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-ver-icons.png"; sourceTree = "<group>"; };
+		8426C5241D62FA1F0089B4D7 /* my-address-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my-address-icon.png"; sourceTree = "<group>"; };
+		8426C5251D62FA1F0089B4D7 /* newsletter-icons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newsletter-icons.png"; sourceTree = "<group>"; };
+		8426C5271D62FA200089B4D7 /* Privacy-icons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Privacy-icons.png"; sourceTree = "<group>"; };
+		8426C5281D62FA200089B4D7 /* rate-icons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rate-icons.png"; sourceTree = "<group>"; };
+		8426C5291D62FA200089B4D7 /* share-icons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share-icons.png"; sourceTree = "<group>"; };
+		8426C52A1D62FA200089B4D7 /* user-information-icons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user-information-icons.png"; sourceTree = "<group>"; };
 		845349DF1D1AB723000B97C7 /* Bamilo-No-Reg.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Bamilo-No-Reg.ttf"; path = "../Bamilo-No-Reg.ttf"; sourceTree = "<group>"; };
 		845349E01D1AB723000B97C7 /* BAMILO-SANS BLACK_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = "BAMILO-SANS BLACK_0.TTF"; path = "../BAMILO-SANS BLACK_0.TTF"; sourceTree = "<group>"; };
 		845349E11D1AB724000B97C7 /* BAMILO-SANS BOLD_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = "BAMILO-SANS BOLD_0.TTF"; path = "../BAMILO-SANS BOLD_0.TTF"; sourceTree = "<group>"; };
 		845349E21D1AB724000B97C7 /* BAMILO-SANS LIGHT_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = "BAMILO-SANS LIGHT_0.TTF"; path = "../BAMILO-SANS LIGHT_0.TTF"; sourceTree = "<group>"; };
 		845349E31D1AB724000B97C7 /* BAMILO-SANS REG_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = "BAMILO-SANS REG_0.TTF"; path = "../BAMILO-SANS REG_0.TTF"; sourceTree = "<group>"; };
 		845349E41D1AB724000B97C7 /* BAMILO-SANS ULTRA LIGHT_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = "BAMILO-SANS ULTRA LIGHT_0.TTF"; path = "../BAMILO-SANS ULTRA LIGHT_0.TTF"; sourceTree = "<group>"; };
+		8453EDEB1D7D41E900830A96 /* call.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = call.png; sourceTree = "<group>"; };
+		8453EDEE1D7D41F400830A96 /* bug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bug.png; sourceTree = "<group>"; };
+		847606B31D77EEE900C54687 /* JAContactUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAContactUsViewController.h; path = ContactUs/JAContactUsViewController.h; sourceTree = "<group>"; };
+		847606B41D77EEE900C54687 /* JAContactUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAContactUsViewController.m; path = ContactUs/JAContactUsViewController.m; sourceTree = "<group>"; };
+		84B25D911D7E67480024B476 /* banner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = banner.png; sourceTree = "<group>"; };
+		84B25D9A1D8048DE0024B476 /* JAContactUsViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "JAContactUsViewController~ipad.xib"; path = "ContactUs/JAContactUsViewController~ipad.xib"; sourceTree = "<group>"; };
+		84B25D9B1D8048DE0024B476 /* JAContactUsViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "JAContactUsViewController~iphone.xib"; path = "ContactUs/JAContactUsViewController~iphone.xib"; sourceTree = "<group>"; };
+		84B4C1071DA2DFF800342C38 /* checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checked.png; sourceTree = "<group>"; };
+		84B4C1081DA2DFF800342C38 /* checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checked@2x.png"; sourceTree = "<group>"; };
+		84B4C1091DA2DFF800342C38 /* unchecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unchecked.png; sourceTree = "<group>"; };
+		84B4C10A1DA2DFF800342C38 /* unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unchecked@2x.png"; sourceTree = "<group>"; };
+		84B4C1131DA2F3D100342C38 /* editAddress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = editAddress.png; sourceTree = "<group>"; };
+		84B4C1161DA2FE7600342C38 /* addAdressImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addAdressImage.png; sourceTree = "<group>"; };
+		84B4C1191DA38FB800342C38 /* deleteAddress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deleteAddress.png; sourceTree = "<group>"; };
 		892EB9251BC6795800FBF094 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
 		892EB9261BC6795800FBF094 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
 		892EB9271BC6795800FBF094 /* GAIEcommerceFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceFields.h; sourceTree = "<group>"; };
@@ -4337,6 +4401,18 @@
 			name = Bundles;
 			sourceTree = "<group>";
 		};
+		847606B21D77EE7B00C54687 /* ContactUs */ = {
+			isa = PBXGroup;
+			children = (
+				847606B31D77EEE900C54687 /* JAContactUsViewController.h */,
+				847606B41D77EEE900C54687 /* JAContactUsViewController.m */,
+				84B25D9A1D8048DE0024B476 /* JAContactUsViewController~ipad.xib */,
+				84B25D9B1D8048DE0024B476 /* JAContactUsViewController~iphone.xib */,
+			);
+			name = ContactUs;
+			path = Ratings;
+			sourceTree = "<group>";
+		};
 		84A7B54F1D101D9F00CA9754 /* OnBoardingView */ = {
 			isa = PBXGroup;
 			children = (
@@ -5316,6 +5392,24 @@
 		B5A3019F19811D0700F71726 = {
 			isa = PBXGroup;
 			children = (
+				84B4C1191DA38FB800342C38 /* deleteAddress.png */,
+				84B4C1161DA2FE7600342C38 /* addAdressImage.png */,
+				84B4C1131DA2F3D100342C38 /* editAddress.png */,
+				84B4C1071DA2DFF800342C38 /* checked.png */,
+				84B4C1081DA2DFF800342C38 /* checked@2x.png */,
+				84B4C1091DA2DFF800342C38 /* unchecked.png */,
+				84B4C10A1DA2DFF800342C38 /* unchecked@2x.png */,
+				84B25D911D7E67480024B476 /* banner.png */,
+				8426C5221D62FA1F0089B4D7 /* announcements-icon.png */,
+				8426C5231D62FA1F0089B4D7 /* app-ver-icons.png */,
+				8426C5241D62FA1F0089B4D7 /* my-address-icon.png */,
+				8426C5251D62FA1F0089B4D7 /* newsletter-icons.png */,
+				8426C5271D62FA200089B4D7 /* Privacy-icons.png */,
+				8426C5281D62FA200089B4D7 /* rate-icons.png */,
+				8426C5291D62FA200089B4D7 /* share-icons.png */,
+				8426C52A1D62FA200089B4D7 /* user-information-icons.png */,
+				8453EDEB1D7D41E900830A96 /* call.png */,
+				8453EDEE1D7D41F400830A96 /* bug.png */,
 				BBA262C519DB1F7600374CA3 /* features */,
 				B5A301AA19811D0700F71726 /* Jumia */,
 				B5A301C419811D0700F71726 /* JumiaTests */,
@@ -5762,6 +5856,7 @@
 				520A37CA1A48904B0046C8B1 /* MyOrders */,
 				4AE730AF198F88CB000CA1DD /* PDV */,
 				4A944FF2199273E000C02734 /* Ratings */,
+				847606B21D77EE7B00C54687 /* ContactUs */,
 				4A39211D19891F1500B70A9C /* RecentlyViewed */,
 				4A39211E19891F1500B70A9C /* RecentSearches */,
 				4AFC7F8E199BC0B2007D67F4 /* SignInViewController */,
@@ -6587,7 +6682,7 @@
 				TargetAttributes = {
 					B5A301A719811D0700F71726 = {
 						CreatedOnToolsVersion = 6.0;
-						DevelopmentTeam = PYN25BXZ9L;
+						DevelopmentTeam = 3GCCEEQ32X;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -6599,11 +6694,26 @@
 					};
 					B5A301C019811D0700F71726 = {
 						CreatedOnToolsVersion = 6.0;
-						DevelopmentTeam = PYN25BXZ9L;
+						DevelopmentTeam = 3GCCEEQ32X;
 						TestTargetID = B5A301A719811D0700F71726;
 					};
+					CE9ADB331AB34C4600D56481 = {
+						DevelopmentTeam = 3GCCEEQ32X;
+					};
+					CE9ADD2D1AB6D6E900D56481 = {
+						DevelopmentTeam = 3GCCEEQ32X;
+					};
 					CE9ADF271AB6D78200D56481 = {
-						DevelopmentTeam = PYN25BXZ9L;
+						DevelopmentTeam = 3GCCEEQ32X;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 0;
+							};
+						};
+					};
+					ffe4ef9be990e92ee61945b7 = {
+						DevelopmentTeam = 3GCCEEQ32X;
 					};
 				};
 			};
@@ -6811,19 +6921,26 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8426C5371D62FA200089B4D7 /* rate-icons.png in Resources */,
 				9AF49A491B1DE1FF0028105D /* JANoConnectionView.xib in Resources */,
 				9A17D0F41C5F775900851D6E /* BMA4SRichPushWebViewWithToolBar.xib in Resources */,
+				84B25D9C1D8048DE0024B476 /* JAContactUsViewController~ipad.xib in Resources */,
 				BBA707B819EEB93C0094C565 /* 00_choose_country.feature in Resources */,
 				6C18BDAC1A1B4CA300626706 /* JANewsletterComponent~iPad.xib in Resources */,
 				BBBA4CBD19E3F764004271B2 /* 13_related_items.feature in Resources */,
+				84B4C1111DA2DFF800342C38 /* unchecked@2x.png in Resources */,
 				9A17D1351C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-iPad.xib in Resources */,
 				9A17D1671C5F775900851D6E /* BMA4SRichPushWebViewWithToolBar-nobuttons-iPad.xib in Resources */,
 				BBA145B219DC56BF003F0CA7 /* init.rb in Resources */,
 				BBBA4CCD19E4339F004271B2 /* 17_recently_viewed.feature in Resources */,
+				8453EDEC1D7D41EA00830A96 /* call.png in Resources */,
 				CE9AE12F1AB8990500D56481 /* Jumia.xcassets in Resources */,
 				B524312119EC117F001E532C /* JAMaintenancePage.xib in Resources */,
 				CEABEEC11A122BFE000D0CF8 /* JAGenericFiltersView.xib in Resources */,
 				BBA145B319DC56BF003F0CA7 /* keyboard.rb in Resources */,
+				84B25D921D7E67480024B476 /* banner.png in Resources */,
+				8426C52B1D62FA200089B4D7 /* announcements-icon.png in Resources */,
+				84B4C10B1DA2DFF800342C38 /* checked.png in Resources */,
 				9A17D0BD1C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewNotifView-iPad.xib in Resources */,
 				CEDBF88E1B0DF5D00073971A /* JANewsletterComponent_RTL.xib in Resources */,
 				6CF4AE7F1ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */,
@@ -6832,6 +6949,7 @@
 				CEDEB9BA199BA8FA0022BAB5 /* slider-default7-handle@2x.png in Resources */,
 				9A17D0AE1C5F775900851D6E /* BMA4SiPhoneIntersticialTextNotifView-landscape-iPad.xib in Resources */,
 				BBBA4CC119E3F902004271B2 /* 14_side_menu.feature in Resources */,
+				8426C53B1D62FA200089B4D7 /* user-information-icons.png in Resources */,
 				4A862227198FA00D007FD76A /* JAPDVVariations.xib in Resources */,
 				B5210E8619C4863400FDB0D1 /* RIStrings.strings in Resources */,
 				9A17D1211C5F775900851D6E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-iPad.xib in Resources */,
@@ -6839,6 +6957,7 @@
 				BBB12A9819DD874D00656529 /* 08_registration.feature in Resources */,
 				CE88F7A71A1DFFCD00A3A586 /* JAOrangeButtonCell_ipad_portrait.xib in Resources */,
 				BBA145BA19DC56BF003F0CA7 /* 01_launch.rb in Resources */,
+				84B25D9E1D8048DF0024B476 /* JAContactUsViewController~iphone.xib in Resources */,
 				CEDEB9C4199BA8FA0022BAB5 /* slider-metal-handle@2x.png in Resources */,
 				BB128EA719E30B650033514F /* 12_product_details.feature in Resources */,
 				BBA145B519DC56BF003F0CA7 /* my_first_steps.rb in Resources */,
@@ -6856,6 +6975,7 @@
 				CEDEB9B2199BA8FA0022BAB5 /* slider-default-handle@2x.png in Resources */,
 				BBBA4CD819E45799004271B2 /* 20_cart.feature in Resources */,
 				CE9193BF19F5040E00F89840 /* JAFallbackView.xib in Resources */,
+				84B4C1141DA2F3D100342C38 /* editAddress.png in Resources */,
 				BBA145AE19DC56BF003F0CA7 /* 05_user_data.feature in Resources */,
 				9A17D0E01C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */,
 				9A17D1941C5F775900851D6E /* BMA4SiPhoneWebViewNotifView-nobuttons.xib in Resources */,
@@ -6867,6 +6987,7 @@
 				CE88F7B61A1F88FB00A3A586 /* JAGrayButtonCell_ipad_landscape.xib in Resources */,
 				9A17D0A41C5F775900851D6E /* BMA4S.strings in Resources */,
 				9A17D0C21C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewNotifView-landscape-iPad.xib in Resources */,
+				84B4C10F1DA2DFF800342C38 /* unchecked.png in Resources */,
 				9A17D0D11C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-iPad.xib in Resources */,
 				9A17D1301C5F775900851D6E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons.xib in Resources */,
 				BBA145B419DC56BF003F0CA7 /* multi_step.rb in Resources */,
@@ -6877,6 +6998,7 @@
 				9A17D0EF1C5F775900851D6E /* BMA4SRichPushWebViewWithToolBar-iPad.xib in Resources */,
 				9A17D1621C5F775900851D6E /* BMA4SRichPushWebView-nobuttons.xib in Resources */,
 				CEDEB9B0199BA8FA0022BAB5 /* slider-default-handle-highlighted@2x.png in Resources */,
+				8426C5311D62FA200089B4D7 /* newsletter-icons.png in Resources */,
 				9A2036AE1B21DE0F00F36F55 /* JANewRatingViewController.xib in Resources */,
 				9A17D09F1C5F775900851D6E /* BMA4SCloseButton.png in Resources */,
 				CEDEB9C2199BA8FA0022BAB5 /* slider-metal-handle-highlighted@2x.png in Resources */,
@@ -6893,12 +7015,15 @@
 				4A3719BF19C05F5D002D4199 /* JAUndefinedSearchView.xib in Resources */,
 				6C18BD711AB87E0800905FD2 /* Images.xcassets in Resources */,
 				9A17D0CC1C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewNotifView.xib in Resources */,
+				84B4C1171DA2FE7600342C38 /* addAdressImage.png in Resources */,
 				BBA145B919DC56BF003F0CA7 /* wait.rb in Resources */,
 				B542546C19AE9F7500C792FF /* JACartListHeaderView.xib in Resources */,
 				B5007AC419A4E8EC0024035A /* HockeySDKResources.bundle in Resources */,
 				9A564CB11B3411AD00F23057 /* JANewSellerRatingViewController.xib in Resources */,
 				CE06FCBB1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib in Resources */,
+				84B4C10D1DA2DFF800342C38 /* checked@2x.png in Resources */,
 				B5007AC319A4E8EC0024035A /* HockeySDK.xcconfig in Resources */,
+				8426C52D1D62FA200089B4D7 /* app-ver-icons.png in Resources */,
 				BB128EA319E2FA410033514F /* 11_catalog.feature in Resources */,
 				CEDEB9BD199BA8FA0022BAB5 /* slider-default7-trackBackground.png in Resources */,
 				CEDEB9B4199BA8FA0022BAB5 /* slider-default-track@2x.png in Resources */,
@@ -6932,7 +7057,11 @@
 				9A17D0C71C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewNotifView-landscape.xib in Resources */,
 				CEC3F71E19A5FDDA00DE12F6 /* JAOrangeButtonCell.xib in Resources */,
 				CEDEB9C6199BA8FA0022BAB5 /* slider-metal-track@2x.png in Resources */,
+				8426C52F1D62FA200089B4D7 /* my-address-icon.png in Resources */,
+				8426C5351D62FA200089B4D7 /* Privacy-icons.png in Resources */,
 				CEDEB9B1199BA8FA0022BAB5 /* slider-default-handle.png in Resources */,
+				8453EDEF1D7D41F400830A96 /* bug.png in Resources */,
+				8426C5391D62FA200089B4D7 /* share-icons.png in Resources */,
 				CEED47321A7B973B006D9CE7 /* JAPDVBundleSingleItem.xib in Resources */,
 				CE283E6A1A714FD300F3E92D /* JAOtherOffersView_Landscape~iPad.xib in Resources */,
 				9A17D1851C5F775900851D6E /* BMA4SiPhoneWebViewNotifView-nobuttons-iPad.xib in Resources */,
@@ -6974,6 +7103,7 @@
 				CEDEB9B8199BA8FA0022BAB5 /* slider-default_trackBackground@2x.png in Resources */,
 				9A17D1711C5F775900851D6E /* BMA4SiPhoneTextNotifView-nobuttons-iPad.xib in Resources */,
 				CEDEB9BC199BA8FA0022BAB5 /* slider-default7-track@2x.png in Resources */,
+				84B4C11A1DA38FB900342C38 /* deleteAddress.png in Resources */,
 				9A17D0DB1C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape.xib in Resources */,
 				B5A302E019811E9200F71726 /* RITracking_example_JUMIA.plist in Resources */,
 				9A17D11C1C5F775900851D6E /* BMA4SiPhoneWebViewNotifView.xib in Resources */,
@@ -7343,16 +7473,19 @@
 				845349E61D1AB724000B97C7 /* BAMILO-SANS BLACK_0.TTF in Resources */,
 				845349E71D1AB724000B97C7 /* BAMILO-SANS BOLD_0.TTF in Resources */,
 				845349E81D1AB724000B97C7 /* BAMILO-SANS LIGHT_0.TTF in Resources */,
+				8426C5381D62FA200089B4D7 /* rate-icons.png in Resources */,
 				845349E91D1AB724000B97C7 /* BAMILO-SANS REG_0.TTF in Resources */,
 				845349EA1D1AB724000B97C7 /* BAMILO-SANS ULTRA LIGHT_0.TTF in Resources */,
 				9A0F9B7E1B5E58E900569DF2 /* FBAudienceNetwork.README.txt in Resources */,
 				CE9AE0391AB6D78200D56481 /* 00_choose_country.feature in Resources */,
 				CEDBF8971B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib in Resources */,
+				84B4C1101DA2DFF800342C38 /* unchecked.png in Resources */,
 				CE9AE03C1AB6D78200D56481 /* JANewsletterComponent~iPad.xib in Resources */,
 				CE9AE03D1AB6D78200D56481 /* 13_related_items.feature in Resources */,
 				CE9AE03E1AB6D78200D56481 /* init.rb in Resources */,
 				CE9AE03F1AB6D78200D56481 /* 17_recently_viewed.feature in Resources */,
 				9A564CAF1B332FB200F23057 /* JASellerRatingsViewController.xib in Resources */,
+				8426C52E1D62FA200089B4D7 /* app-ver-icons.png in Resources */,
 				9A17D1201C5F775900851D6E /* BMA4SiPhoneWebViewNotifView.xib in Resources */,
 				CE9AE0431AB6D78200D56481 /* JAMaintenancePage.xib in Resources */,
 				9A17D1521C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape-iPad.xib in Resources */,
@@ -7361,6 +7494,7 @@
 				CE9AE0451AB6D78200D56481 /* keyboard.rb in Resources */,
 				6CF4AE821ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */,
 				9A17D1931C5F775900851D6E /* BMA4SiPhoneWebViewNotifView-nobuttons-landscape.xib in Resources */,
+				84B25D9D1D8048DF0024B476 /* JAContactUsViewController~ipad.xib in Resources */,
 				9A0F9B741B5E58E900569DF2 /* FacebookSDKStrings.bundle in Resources */,
 				9A564CBB1B34273800F23057 /* JASellerRatingsViewController~ipad.xib in Resources */,
 				CE9AE0521AB6D78200D56481 /* slider-default7-handle@2x.png in Resources */,
@@ -7383,20 +7517,26 @@
 				CE9AE06B1AB6D78200D56481 /* 06_email_notifications.feature in Resources */,
 				CE9AE06C1AB6D78200D56481 /* 02_pre_stop_hooks.rb in Resources */,
 				CE9AE06D1AB6D78200D56481 /* slider-default-trackBackground.png in Resources */,
+				8426C5321D62FA200089B4D7 /* newsletter-icons.png in Resources */,
 				CE9AE06F1AB6D78200D56481 /* JANewsletterComponent.xib in Resources */,
 				9A17D11B1C5F775900851D6E /* BMA4SiPhoneWebViewNotifView-landscape.xib in Resources */,
 				CE9AE0731AB6D78200D56481 /* slider-default-handle@2x.png in Resources */,
 				CE9AE0741AB6D78200D56481 /* 20_cart.feature in Resources */,
 				CE9AE0751AB6D78200D56481 /* JAFallbackView.xib in Resources */,
 				CE9AE0791AB6D78200D56481 /* 05_user_data.feature in Resources */,
+				8426C53A1D62FA200089B4D7 /* share-icons.png in Resources */,
 				9A17D1251C5F775900851D6E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-iPad.xib in Resources */,
 				9A17D0F81C5F775900851D6E /* BMA4SRichPushWebViewWithToolBar.xib in Resources */,
+				8426C5301D62FA200089B4D7 /* my-address-icon.png in Resources */,
 				CE9AE07C1AB6D78200D56481 /* 16_recent_searches.feature in Resources */,
 				CE9AE07D1AB6D78200D56481 /* touch.rb in Resources */,
+				84B4C11B1DA38FB900342C38 /* deleteAddress.png in Resources */,
+				8426C53C1D62FA200089B4D7 /* user-information-icons.png in Resources */,
 				CE9AE07E1AB6D78200D56481 /* slider-metal-trackBackground.png in Resources */,
 				CE9AE0811AB6D78200D56481 /* JAGrayButtonCell_ipad_landscape.xib in Resources */,
 				CE9AE0841AB6D78200D56481 /* multi_step.rb in Resources */,
 				CE9AE0871AB6D78200D56481 /* 02_logout.feature in Resources */,
+				84B4C1121DA2DFF800342C38 /* unchecked@2x.png in Resources */,
 				CE9AE0881AB6D78200D56481 /* slider-metal-trackBackground@2x.png in Resources */,
 				9A17D09E1C5F775900851D6E /* A4S.bundle in Resources */,
 				9A17D0E91C5F775900851D6E /* BMA4SRichPushWebView-iPad.xib in Resources */,
@@ -7408,21 +7548,25 @@
 				CE9AE08D1AB6D78200D56481 /* navigation.rb in Resources */,
 				9A17D0BC1C5F775900851D6E /* BMA4SiPhoneIntersticialTextNotifView.xib in Resources */,
 				CE9AE08E1AB6D78200D56481 /* slider-default7-handle.png in Resources */,
+				8426C52C1D62FA200089B4D7 /* announcements-icon.png in Resources */,
 				9A17D0DF1C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-landscape.xib in Resources */,
 				9A17D12A1C5F775900851D6E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons-landscape-iPad.xib in Resources */,
 				9A17D1981C5F775900851D6E /* BMA4SiPhoneWebViewNotifView-nobuttons.xib in Resources */,
 				9A17D1661C5F775900851D6E /* BMA4SRichPushWebView-nobuttons.xib in Resources */,
 				9A17D13E1C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-landscape-iPad.xib in Resources */,
+				84B4C10E1DA2DFF800342C38 /* checked@2x.png in Resources */,
 				9A17D0E41C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView.xib in Resources */,
 				9A17D0FD1C5F775900851D6E /* BMA4SiPhoneTextNotifView-iPad.xib in Resources */,
 				9A17D17F1C5F775900851D6E /* BMA4SiPhoneTextNotifView-nobuttons-landscape.xib in Resources */,
 				CE9AE0931AB6D78200D56481 /* JAGrayButtonCell.xib in Resources */,
 				9A17D1391C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-iPad.xib in Resources */,
 				CEA2A1BB1B25D53B00E5973F /* JANewRatingViewController.xib in Resources */,
+				8426C5361D62FA200089B4D7 /* Privacy-icons.png in Resources */,
 				9A17D18E1C5F775900851D6E /* BMA4SiPhoneWebViewNotifView-nobuttons-landscape-iPad.xib in Resources */,
 				9A0F9B971B5E58E900569DF2 /* LICENSE in Resources */,
 				CE9AE0961AB6D78200D56481 /* slider-default7-trackCrossedOver@2x.png in Resources */,
 				9A17D0CB1C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewNotifView-landscape.xib in Resources */,
+				84B25D9F1D8048DF0024B476 /* JAContactUsViewController~iphone.xib in Resources */,
 				9A564CC11B38187100F23057 /* JANewSellerRatingViewController~ipad.xib in Resources */,
 				CE9AE09A1AB6D78200D56481 /* slider-default-trackCrossedOver@2x.png in Resources */,
 				CE9AE09B1AB6D78200D56481 /* JAPaymentCell.xib in Resources */,
@@ -7450,6 +7594,7 @@
 				CE9AE0B31AB6D78200D56481 /* slider-metal-track.png in Resources */,
 				9A17D0D51C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-iPad.xib in Resources */,
 				6C18BD741AB87E0A00905FD2 /* Images.xcassets in Resources */,
+				84B4C1151DA2F3D100342C38 /* editAddress.png in Resources */,
 				CE9AE0B51AB6D78200D56481 /* JACheckBoxComponent.xib in Resources */,
 				9A17D1341C5F775900851D6E /* BMA4SiPhoneIntersticialTextNotifView-nobuttons.xib in Resources */,
 				CE9AE0B71AB6D78200D56481 /* slider-default7-trackCrossedOver.png in Resources */,
@@ -7474,6 +7619,7 @@
 				CE9AE0D91AB6D78200D56481 /* JAOtherOffersView_Landscape~iPad.xib in Resources */,
 				CE9AE0DA1AB6D78200D56481 /* 09_home.feature in Resources */,
 				9A17D17A1C5F775900851D6E /* BMA4SiPhoneTextNotifView-nobuttons-landscape-iPad.xib in Resources */,
+				84B4C1181DA2FE7600342C38 /* addAdressImage.png in Resources */,
 				9A17D0EE1C5F775900851D6E /* BMA4SRichPushWebView.xib in Resources */,
 				CEE5F4E41B1CB6B500556150 /* JARecentSearchesViewController.xib in Resources */,
 				CE9AE0E01AB6D78200D56481 /* JAPDVProductInfo~iPad_Portrait.xib in Resources */,
@@ -7485,11 +7631,13 @@
 				CE9AE0E91AB6D78200D56481 /* slider-default7-track.png in Resources */,
 				CE9AE0EA1AB6D78200D56481 /* JARatingsView.xib in Resources */,
 				9A17D10C1C5F775900851D6E /* BMA4SiPhoneTextNotifView.xib in Resources */,
+				84B25D931D7E6CFC0024B476 /* banner.png in Resources */,
 				9A17D1571C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewWithToolBarNotifView-nobuttons-landscape.xib in Resources */,
 				CE9AE0EF1AB6D78200D56481 /* JARatingsViewMedium.xib in Resources */,
 				CE9AE0F41AB6D78200D56481 /* assert.rb in Resources */,
 				CE9AE0F71AB6D78200D56481 /* 04_my_account.feature in Resources */,
 				9A17D1431C5F775900851D6E /* BMA4SiPhoneIntersticialWebViewNotifView-nobuttons-landscape.xib in Resources */,
+				8453EDF01D7D41F400830A96 /* bug.png in Resources */,
 				9A17D1021C5F775900851D6E /* BMA4SiPhoneTextNotifView-landscape-iPad.xib in Resources */,
 				CE9AE0F81AB6D78200D56481 /* 10_search.feature in Resources */,
 				CE9AE0FC1AB6D78200D56481 /* Main_iPad.storyboard in Resources */,
@@ -7503,6 +7651,8 @@
 				CE9AE1021AB6D78200D56481 /* 19_filters.feature in Resources */,
 				CE9AE1041AB6D78200D56481 /* env.rb in Resources */,
 				9A17D0B71C5F775900851D6E /* BMA4SiPhoneIntersticialTextNotifView-landscape.xib in Resources */,
+				8453EDED1D7D41EA00830A96 /* call.png in Resources */,
+				84B4C10C1DA2DFF800342C38 /* checked.png in Resources */,
 				CE9AE1061AB6D78200D56481 /* slider-default-track.png in Resources */,
 				CE9AE1071AB6D78200D56481 /* JAGrayButtonCell_ipad_portrait.xib in Resources */,
 				CE9AE1081AB6D78200D56481 /* Main.storyboard in Resources */,
@@ -8190,6 +8340,7 @@
 				B5A302E119811E9200F71726 /* RITrackingConfiguration.m in Sources */,
 				CECD059C1ADFF2DB00EC51E3 /* RITeaserComponent.m in Sources */,
 				FF0464C51CA96E9000B82FD2 /* ADJLogger.m in Sources */,
+				847606B61D77EEE900C54687 /* JAContactUsViewController.m in Sources */,
 				B5A302C419811E9200F71726 /* RIFormIndex.m in Sources */,
 				9A17372B1B669B0E004905B4 /* JACheckoutBottomView.m in Sources */,
 				B510B01419AE466B00A9754A /* JADynamicForm.m in Sources */,
@@ -9260,6 +9411,7 @@
 				9A007C801C206920007D99FC /* JAProductInfoSwitchLine.m in Sources */,
 				CE9ADFE71AB6D78200D56481 /* RITrackingConfiguration.m in Sources */,
 				FF0464C91CA96E9000B82FD2 /* ADJLogger.m in Sources */,
+				847606B71D77EEE900C54687 /* JAContactUsViewController.m in Sources */,
 				CECD05A01ADFF2DB00EC51E3 /* RITeaserComponent.m in Sources */,
 				CE9ADFE81AB6D78200D56481 /* RIFormIndex.m in Sources */,
 				CE9ADFE91AB6D78200D56481 /* JADynamicForm.m in Sources */,
@@ -9445,9 +9597,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tessa Joseph (49547NY66S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tessa Joseph (49547NY66S)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -9456,7 +9609,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 					"HOCKEY=1",
-					"STAGING=1",
+					"STAGING=0",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -9468,7 +9621,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
-				PROVISIONING_PROFILE = "32aaad53-f671-47cb-927c-593d64489de2";
+				PROVISIONING_PROFILE = "c38fb13e-6ab3-406a-b945-25987c794a9e";
+				PROVISIONING_PROFILE_SPECIFIER = "Tessa Accengage Profile";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9482,8 +9636,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Jumia/Jumia.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9495,6 +9649,12 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"HOCKEY=1",
+					"STAGING=",
+				);
 				INFOPLIST_FILE = Jumia/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -9509,7 +9669,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7b35917a-2e26-439b-8865-896c1e58fee5";
+				PROVISIONING_PROFILE = "ce9dde9f-9aa9-4b72-81fd-565f84f95610";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9558,9 +9718,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tessa Joseph (49547NY66S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tessa Joseph (49547NY66S)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -9580,7 +9741,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
-				PROVISIONING_PROFILE = "32aaad53-f671-47cb-927c-593d64489de2";
+				PROVISIONING_PROFILE = "c38fb13e-6ab3-406a-b945-25987c794a9e";
+				PROVISIONING_PROFILE_SPECIFIER = "Tessa Accengage Profile";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9594,8 +9756,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Jumia/Jumia.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9621,7 +9783,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7b35917a-2e26-439b-8865-896c1e58fee5";
+				PROVISIONING_PROFILE = "ce9dde9f-9aa9-4b72-81fd-565f84f95610";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9717,9 +9879,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tessa Joseph (49547NY66S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tessa Joseph (49547NY66S)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -9739,7 +9902,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
-				PROVISIONING_PROFILE = "32aaad53-f671-47cb-927c-593d64489de2";
+				PROVISIONING_PROFILE = "c38fb13e-6ab3-406a-b945-25987c794a9e";
+				PROVISIONING_PROFILE_SPECIFIER = "Tessa Accengage Profile";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9763,9 +9927,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tessa Joseph (49547NY66S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tessa Joseph (49547NY66S)";
 				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -9778,7 +9943,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
-				PROVISIONING_PROFILE = "32aaad53-f671-47cb-927c-593d64489de2";
+				PROVISIONING_PROFILE = "c38fb13e-6ab3-406a-b945-25987c794a9e";
+				PROVISIONING_PROFILE_SPECIFIER = "Tessa Accengage Profile";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -9793,8 +9959,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Jumia/Jumia.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9820,7 +9986,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7b35917a-2e26-439b-8865-896c1e58fee5";
+				PROVISIONING_PROFILE = "ce9dde9f-9aa9-4b72-81fd-565f84f95610";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -9834,8 +10000,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Jumia/Jumia.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Silveroak Internet Services Portugal Unipessoal Lda (PYN25BXZ9L)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9861,7 +10027,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7b35917a-2e26-439b-8865-896c1e58fee5";
+				PROVISIONING_PROFILE = "ce9dde9f-9aa9-4b72-81fd-565f84f95610";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
@@ -10237,8 +10403,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tessa Joseph (49547NY66S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tessa Joseph (49547NY66S)";
+				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -10265,8 +10432,10 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios.dev;
 				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "32aaad53-f671-47cb-927c-593d64489de2";
+				PROVISIONING_PROFILE = "c38fb13e-6ab3-406a-b945-25987c794a9e";
+				PROVISIONING_PROFILE_SPECIFIER = "Tessa Accengage Profile";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -10279,8 +10448,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tessa Joseph (49547NY66S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tessa Joseph (49547NY66S)";
+				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -10307,8 +10477,10 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios.dev;
 				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "32aaad53-f671-47cb-927c-593d64489de2";
+				PROVISIONING_PROFILE = "c38fb13e-6ab3-406a-b945-25987c794a9e";
+				PROVISIONING_PROFILE_SPECIFIER = "Tessa Accengage Profile";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -10321,8 +10493,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tessa Joseph (49547NY66S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tessa Joseph (49547NY66S)";
+				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -10349,8 +10522,10 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios.dev;
 				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "32aaad53-f671-47cb-927c-593d64489de2";
+				PROVISIONING_PROFILE = "c38fb13e-6ab3-406a-b945-25987c794a9e";
+				PROVISIONING_PROFILE_SPECIFIER = "Tessa Accengage Profile";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -10363,8 +10538,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tessa Joseph (49547NY66S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tessa Joseph (49547NY66S)";
+				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -10391,8 +10567,10 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios.dev;
 				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "32aaad53-f671-47cb-927c-593d64489de2";
+				PROVISIONING_PROFILE = "c38fb13e-6ab3-406a-b945-25987c794a9e";
+				PROVISIONING_PROFILE_SPECIFIER = "Tessa Accengage Profile";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};

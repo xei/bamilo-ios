@@ -70,6 +70,7 @@
 #import "JAORWaysViewController.h"
 #import "JAORPaymentViewController.h"
 #import "JAORPickupStationWebViewController.h"
+#import "JAContactUsViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -203,6 +204,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showMyOrdersViewController:)
                                                  name:kShowMyOrdersScreenNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showContactUsViewController)
+                                                 name:kShowContactUsScreenNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -941,6 +946,18 @@
         JARecentlyViewedViewController *recentlyViewedViewController = [[JARecentlyViewedViewController alloc]init];
         
         [self pushViewController:recentlyViewedViewController animated:YES];
+    }
+}
+
+#pragma mark ContactUs Screen
+- (void)showContactUsViewController
+{
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JAContactUsViewController class]])
+    {
+        JAContactUsViewController *contactUsViewController = [[JAContactUsViewController alloc]init];
+        
+        [self pushViewController:contactUsViewController animated:YES];
     }
 }
 

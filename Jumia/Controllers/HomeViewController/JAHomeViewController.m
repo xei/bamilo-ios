@@ -107,7 +107,7 @@
     {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        [self presentCoachMarks];
+//        [self presentCoachMarks];
     }
 }
 

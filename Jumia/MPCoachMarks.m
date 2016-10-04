@@ -434,20 +434,30 @@ NSString *const KOkGotIt = @"متوجه شدم";
             x = markRect.origin.x + markRect.size.width + kLabelMargin;
             if(showArrow) {
                 BOOL pdvGallery = NO;
+                
                 if( [markDef objectForKey:@"PDVGallery"])
                     pdvGallery = [[markDef objectForKey:@"PDVGallery"] boolValue];
                 
                 if(pdvGallery){
                     self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"zoom_iPhone.png"]];
                 }
+                else if([markDef objectForKey:@"addToCart"]){
+                    break;
+                }
                 else{
                     self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"tap_iPhone.png"]];
                 }
-            CGRect imageViewFrame = self.verticalImage.frame;
-            imageViewFrame.origin = self.center;
+                CGRect imageViewFrame = self.verticalImage.frame;
+                imageViewFrame.origin = self.center;
                 imageViewFrame.origin.y -= 40;
-                imageViewFrame.origin.x -= 40;
-            self.verticalImage.frame = imageViewFrame;
+                if(pdvGallery){
+                    imageViewFrame.origin.x -= 60;
+                }
+                else{
+                    imageViewFrame.origin.x -= 40;
+                }
+                self.verticalImage.frame = imageViewFrame;
+
             [self addSubview:self.verticalImage];
     
             }
@@ -493,10 +503,11 @@ NSString *const KOkGotIt = @"متوجه شدم";
                     self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"slideFingerHorizontal_iPhone.png"]];
                 }
                 CGRect imageViewFrame = self.verticalImage.frame;
-                imageViewFrame.origin.x = x - markRect.size.width/2 - imageViewFrame.size.width/2;
-                imageViewFrame.origin.y = y2 - kLabelMargin; //self.lblCaption.frame.size.height/2
+                imageViewFrame.origin.x = self.center.x;
+                imageViewFrame.origin.y = self.center.y; //self.lblCaption.frame.size.height/2
                 if(productDetailPage){
                     imageViewFrame.origin.y = self.center.y;
+                    imageViewFrame.origin.x -= 20;
                 }
 
                 y2 += imageViewFrame.size.height/2;
@@ -522,10 +533,14 @@ NSString *const KOkGotIt = @"متوجه شدم";
             lblCaptionFrame.origin.y -= 80;
             self.lblCaption.frame = lblCaptionFrame;
             self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"zoom_iPhone.png"]];
+            self.verticalImage.x -= 30;
+        }
+        else if([markDef objectForKey:@"addToCart"]){
+            self.lblCaption.frame = (CGRect){{20, self.lblCaption.frame.origin.y - 50}, self.lblCaption.frame.size};
         }
         else{
-        // Animate the caption label
-        self.lblCaption.frame = (CGRect){{self.verticalImage.frame.origin.x, y}, self.lblCaption.frame.size};
+            // Animate the caption label
+            self.lblCaption.frame = (CGRect){{self.verticalImage.frame.origin.x, y}, self.lblCaption.frame.size};
         }
         BOOL productDetailPage = NO;
         if( [markDef objectForKey:@"productDetailPage"])
@@ -533,9 +548,11 @@ NSString *const KOkGotIt = @"متوجه شدم";
         
         if(productDetailPage){
             self.lblCaption.center = self.center;
+            CGRect lblCaptionFrame = self.lblCaption.frame;
+            lblCaptionFrame.origin.y -= 60;
+            self.lblCaption.frame = lblCaptionFrame;
         }
         else{
-            
             // caption2 and 3 for scroll screen
             NSDictionary *markDef = [self.coachMarks objectAtIndex:index];
             NSString *verticalText = [markDef objectForKey:@"caption2"];
@@ -618,9 +635,19 @@ NSString *const KOkGotIt = @"متوجه شدم";
         CGRect continueButtonFrame = lblContinue.frame;
         continueButtonFrame.origin.y += 100.0;
         [lblContinue addTarget:self action:@selector(didClickNextButton:) forControlEvents:UIControlEventTouchUpInside];
-        if (markIndex == [coachMarks count]-1){
+        BOOL pdvGallery = NO;
+        if( [markDef objectForKey:@"PDVGallery"])
+            pdvGallery = [[markDef objectForKey:@"PDVGallery"] boolValue];
+        
+        if(!pdvGallery){
+            if (markIndex == [coachMarks count]-1){
+                self.continueLabelText = KOkGotIt;
+                continueButtonFrame.origin.y += 110.0;
+            }
+        }
+        else{
             self.continueLabelText = KOkGotIt;
-            continueButtonFrame.origin.y += 110.0;
+            continueButtonFrame.origin.y += 50.0;
         }
         lblContinue.frame = continueButtonFrame;
         [lblContinue setTitle: self.continueLabelText forState: UIControlStateNormal];
