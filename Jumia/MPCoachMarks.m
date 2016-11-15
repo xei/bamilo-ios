@@ -158,7 +158,7 @@ NSString *const KOkGotIt = @"متوجه شدم";
     CGRect currentRect = CGRectMake(rect.origin.x-45, rect.origin.y-45, rect.size.width+90, rect.size.height+90);
     previousCircleFrame = currentRect;
     self.outerCircleImageView = [[UIImageView alloc]initWithFrame:currentRect];
-    self.outerCircleImageView.image = [UIImage imageNamed:@"ring.png"];
+    self.outerCircleImageView.image = [UIImage imageNamed:@"ring"];
     [self addSubview:self.outerCircleImageView];
 }
 
@@ -359,8 +359,8 @@ NSString *const KOkGotIt = @"متوجه شدم";
             
             if(showArrow) {
                 
-                self.horizontalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"slideFingerVertical_iPhone.png"]];
-                self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"slideFingerHorizontal_iPhone.png"]];
+                self.horizontalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"slideFingerHorizontal"]];
+                self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"slideFingerVertical"]];
                 
                 if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
                     
@@ -379,6 +379,7 @@ NSString *const KOkGotIt = @"متوجه شدم";
                     CGRect verticalImageViewFrame = self.verticalImage.frame;
                     verticalImageViewFrame.origin.x = x - markRect.size.width/2 - verticalImageViewFrame.size.width/2;
                     verticalImageViewFrame.origin.y = y2 - kLabelMargin; //self.lblCaption.frame.size.height/2
+                    verticalImageViewFrame.origin.x -= 10;
                     self.verticalImage.frame = verticalImageViewFrame;
                     [self addSubview:self.verticalImage];
                     
@@ -389,8 +390,8 @@ NSString *const KOkGotIt = @"متوجه شدم";
                 else{
                     
                     //should replace with iPad image
-                    //                    self.horizontalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"slideFingerVertical_iPhone.png"]];
-                    //                    self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"slideFingerHorizontal_iPhone.png"]];
+                    //                    self.horizontalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"slideFingerVertical_iPhone"]];
+                    //                    self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"slideFingerHorizontal_iPhone"]];
                     
                     horizontalImage.center = self.center;
                     CGRect continueButtonFrame = horizontalImage.frame;
@@ -406,6 +407,7 @@ NSString *const KOkGotIt = @"متوجه شدم";
                     CGRect imageViewFrame = self.verticalImage.frame;
                     imageViewFrame.origin.x = self.center.x - 100;
                     imageViewFrame.origin.y = y2 - kLabelMargin;
+                    imageViewFrame.origin.x -= 20;
                     y2 += imageViewFrame.size.height/2;
                     self.verticalImage.frame = imageViewFrame;
                     [self addSubview:self.verticalImage];
@@ -439,13 +441,13 @@ NSString *const KOkGotIt = @"متوجه شدم";
                     pdvGallery = [[markDef objectForKey:@"PDVGallery"] boolValue];
                 
                 if(pdvGallery){
-                    self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"zoom_iPhone.png"]];
+                    self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"zoom"]];
                 }
                 else if([markDef objectForKey:@"addToCart"]){
                     break;
                 }
                 else{
-                    self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"tap_iPhone.png"]];
+                    self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"tap"]];
                 }
                 CGRect imageViewFrame = self.verticalImage.frame;
                 imageViewFrame.origin = self.center;
@@ -496,11 +498,11 @@ NSString *const KOkGotIt = @"متوجه شدم";
                     productDetailPage = [[markDef objectForKey:@"productDetailPage"] boolValue];
                 
                 if(productDetailPage){
-                    self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"scrollDown_iPhone.png"]];
-                    //                    self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"slideFingerHorizontal_iPhone.png"]];
+                    self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"scrollDown"]];
+                    //                    self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"slideFingerHorizontal_iPhone"]];
                 }
                 else{
-                    self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"slideFingerHorizontal_iPhone.png"]];
+                    self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"slideFingerVertical"]];
                 }
                 CGRect imageViewFrame = self.verticalImage.frame;
                 imageViewFrame.origin.x = self.center.x;
@@ -532,15 +534,21 @@ NSString *const KOkGotIt = @"متوجه شدم";
              CGRect lblCaptionFrame = self.lblCaption.frame;
             lblCaptionFrame.origin.y -= 80;
             self.lblCaption.frame = lblCaptionFrame;
-            self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"zoom_iPhone.png"]];
+            self.verticalImage = [[UIImageView alloc] initWithImage:[self fetchImage:@"zoom"]];
             self.verticalImage.x -= 30;
         }
         else if([markDef objectForKey:@"addToCart"]){
             self.lblCaption.frame = (CGRect){{20, self.lblCaption.frame.origin.y - 50}, self.lblCaption.frame.size};
         }
         else{
+            if( ![markDef objectForKey:@"productDetailPage"])
+            {
             // Animate the caption label
-            self.lblCaption.frame = (CGRect){{self.verticalImage.frame.origin.x, y}, self.lblCaption.frame.size};
+            self.lblCaption.frame = (CGRect){{self.verticalImage.frame.origin.x +15, y}, self.lblCaption.frame.size};
+            }
+            else{
+                self.lblCaption.frame = (CGRect){{self.verticalImage.frame.origin.x, y}, self.lblCaption.frame.size};
+            }
         }
         BOOL productDetailPage = NO;
         if( [markDef objectForKey:@"productDetailPage"])
@@ -569,7 +577,12 @@ NSString *const KOkGotIt = @"متوجه شدم";
             self.verticalCaption.text = verticalText;
             [self.verticalCaption sizeToFit];
             
-            self.verticalCaption.frame = (CGRect){{self.verticalImage.frame.origin.x, y+ 120}, self.lblCaption.frame.size};
+            if(pdvGallery){
+                self.verticalCaption.frame = (CGRect){{self.verticalImage.frame.origin.x, y+ 120}, self.lblCaption.frame.size};
+            }
+            else{
+                self.verticalCaption.frame = (CGRect){{self.verticalImage.frame.origin.x+40, y+ 120}, self.verticalCaption.frame.size};
+            }
             
             if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
                 self.verticalCaption.frame = (CGRect){{self.verticalImage.frame.origin.x, y+ 180}, self.lblCaption.frame.size};

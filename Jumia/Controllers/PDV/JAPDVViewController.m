@@ -243,7 +243,7 @@ JAActivityViewControllerDelegate
                             },
                             @{
                                 @"rect": [NSValue valueWithCGRect:coachmark3],
-                                @"caption": @"حركت عمودي براي مشاهده اطلاعات كالا",
+                                @"caption": @"حرکت عمودی برای مشاهده اطلاعات کالا",
                                 @"shape": [NSNumber numberWithInteger:SHAPE_CIRCLE],
                                 @"alignment":[NSNumber numberWithInteger:LABEL_ALIGNMENT_RIGHT],
                                 @"position":[NSNumber numberWithInteger:LABEL_POSITION_BOTTOM],
@@ -405,54 +405,63 @@ JAActivityViewControllerDelegate
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
-    [self fillTheViews];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
+     {
+         UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+         // do whatever
+             [self fillTheViews];
+             
+             //$WIZ$
+             //    if(VALID_NOTEMPTY(self.wizardView, JAPDVWizardView))
+             //    {
+             //        [self.wizardView reloadForFrame:self.view.bounds];
+             //    }
+             
+             if(VALID_NOTEMPTY(self.galleryPaged, JAPDVGallery))
+             {
+                 UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
+                 
+                 CGFloat width = gallerySuperView.frame.size.width;
+                 CGFloat height = gallerySuperView.frame.size.height;
+                 CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+                 
+                 if(UIInterfaceOrientationIsLandscape(orientation))
+                 {
+                     if(width < height)
+                     {
+                         width = gallerySuperView.frame.size.height;
+                         height = gallerySuperView.frame.size.width;
+                     }
+                     if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0"))
+                         statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.width;
+                 }
+                 else
+                 {
+                     if(width > height)
+                     {
+                         width = gallerySuperView.frame.size.height;
+                         height = gallerySuperView.frame.size.width;
+                     }
+                 }
+                 
+                 [self.galleryPaged reloadFrame:CGRectMake(0.0f, statusBarHeight, width, height)];
+                 [self.view bringSubviewToFront:self.galleryPaged];
+             }
+             
+     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
+     {
+         
+     }];
     
-    //$WIZ$
-    //    if(VALID_NOTEMPTY(self.wizardView, JAPDVWizardView))
-    //    {
-    //        [self.wizardView reloadForFrame:self.view.bounds];
-    //    }
-    
-    if(VALID_NOTEMPTY(self.galleryPaged, JAPDVGallery))
-    {
-        UIView *gallerySuperView = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view;
-        
-        CGFloat width = gallerySuperView.frame.size.width;
-        CGFloat height = gallerySuperView.frame.size.height;
-        CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-        
-        if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
-        {
-            if(width < height)
-            {
-                width = gallerySuperView.frame.size.height;
-                height = gallerySuperView.frame.size.width;
-            }
-            if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0"))
-                statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.width;
-        }
-        else
-        {
-            if(width > height)
-            {
-                width = gallerySuperView.frame.size.height;
-                height = gallerySuperView.frame.size.width;
-            }
-        }
-        
-        [self.galleryPaged reloadFrame:CGRectMake(0.0f, statusBarHeight, width, height)];
-        [self.view bringSubviewToFront:self.galleryPaged];
-    }
-    
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
+
 
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
 }
 
 - (void) removeSuperviews
@@ -1464,7 +1473,7 @@ JAActivityViewControllerDelegate
     CGFloat height = gallerySuperView.frame.size.height;
     CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
     
-    if(UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
     {
         if(width < gallerySuperView.frame.size.height)
         {

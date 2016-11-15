@@ -1763,7 +1763,7 @@
                                                         object:nil];
     
     NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
-    NSString* uid = [notification.userInfo objectForKey:@"shop_id"];
+//    NSString* uid = [notification.userInfo objectForKey:@"shop_id"];
 
     JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
     if([notification.userInfo objectForKey:@"show_back_button"])
@@ -1986,6 +1986,7 @@
     {
         [viewController performSelector:@selector(setStateInfoLabels:) withObject:stepByStepViewController.stepByStepModel.stepByStepLabels];
     }
+    [self closeScreensToStackClass:[JAStepByStepTabViewController class] animated:YES];
     JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
     if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[stepByStepViewController.stepByStepModel class]])
     {

@@ -73,8 +73,7 @@
     
     [self loadAllOffers];
     
-    [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0.0f];
-    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+    [self willRotateToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation] duration:0.0f];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -206,15 +205,23 @@
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    
-    if (VALID_NOTEMPTY(self.product, RIProduct)) {
-        [self loadTopView];
-        
-        [self.collectionView reloadData];
-    }
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
+     {
+         UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+         // do whatever
+         if (VALID_NOTEMPTY(self.product, RIProduct)) {
+             [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+
+             [self loadTopView];
+             
+             [self.collectionView reloadData];
+         }
+     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
+     {
+         
+     }];
 }
 
 - (void)setProductOffers:(NSArray *)productOffers {

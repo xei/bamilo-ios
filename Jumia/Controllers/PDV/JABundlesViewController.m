@@ -191,7 +191,7 @@ typedef void (^ProcessBundleChangesBlock)(NSMutableDictionary *);
 
 - (BOOL)isLandscape
 {
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)){
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])){
         return YES;
     }else{
         return NO;

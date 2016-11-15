@@ -16,7 +16,7 @@
 
 @interface JANewsletterSubscriptionViewController : JABaseViewController
 
-@property (nonatomic, strong) NSString* targetString;
+//@property (nonatomic, strong) NSString* targetString;
 @property (nonatomic, assign) id<JANewsletterSubscriptionDelegate>delegate;
 
 @end

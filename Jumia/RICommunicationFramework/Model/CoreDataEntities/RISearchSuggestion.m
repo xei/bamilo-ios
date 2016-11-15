@@ -452,21 +452,21 @@
             undefinedSearchTerm.noticeMessage = [json objectForKey:@"notice_message"];
         }
         
-        if ([json objectForKey:@"search_tips"]) {
-            NSDictionary *searchTipsDic = [json objectForKey:@"search_tips"];
-            
-            RISearchType *searchType = [[RISearchType alloc] init];
-            
-            if ([searchTipsDic objectForKey:@"text"]) {
-                searchType.text = [searchTipsDic objectForKey:@"text"];
-            }
-            
-            if ([searchTipsDic objectForKey:@"title"]) {
-                searchType.title = [searchTipsDic objectForKey:@"title"];
-            }
-            
-            undefinedSearchTerm.searchType = searchType;
-        }
+//        if ([json objectForKey:@"search_tips"]) {
+//            NSDictionary *searchTipsDic = [json objectForKey:@"search_tips"];
+//            
+//            RISearchType *searchType = [[RISearchType alloc] init];
+//            
+//            if ([searchTipsDic objectForKey:@"text"]) {
+//                searchType.text = [searchTipsDic objectForKey:@"text"];
+//            }
+//            
+//            if ([searchTipsDic objectForKey:@"title"]) {
+//                searchType.title = [searchTipsDic objectForKey:@"title"];
+//            }
+//            
+//            undefinedSearchTerm.searchType = searchType;
+//        }
         
         if ([json objectForKey:@"featured_box"]) {
             if ([[json objectForKey:@"featured_box"] isKindOfClass:[NSArray class]]) {

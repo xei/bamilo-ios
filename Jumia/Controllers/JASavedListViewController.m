@@ -666,8 +666,9 @@
         [self hideLoading];
         
     } andFailureBlock:^(RIApiResponse apiResponse,  NSArray *error) {
-        
-        [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:@selector(removeFromSavedList:) objects:@[product]];
+        SEL selector = NSSelectorFromString(@"removeFromSavedList:");
+
+        [self onErrorResponse:apiResponse messages:error showAsMessage:YES selector:selector objects:@[product]];
         
         [self hideLoading];
     }];

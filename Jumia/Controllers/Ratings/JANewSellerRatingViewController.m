@@ -182,7 +182,7 @@ UIAlertViewDelegate
 
 - (BOOL)landscapePopViewController
 {
-    if(UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation || UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)
+    if(UIInterfaceOrientationLandscapeLeft == [[UIApplication sharedApplication] statusBarOrientation] || UIInterfaceOrientationLandscapeRight == [[UIApplication sharedApplication] statusBarOrientation])
     {
         [self hideLoading];
         NSMutableDictionary *userInfo =  [[NSMutableDictionary alloc] init];

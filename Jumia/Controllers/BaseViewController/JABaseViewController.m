@@ -97,7 +97,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.orientation = self.interfaceOrientation;
+    self.orientation = [[UIApplication sharedApplication] statusBarOrientation];
     self.firstLoading = YES;
     
     self.screenName = @"";
@@ -173,10 +173,10 @@
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-    if (self.interfaceOrientation != self.orientation) {
+    if ([[UIApplication sharedApplication] statusBarOrientation] != self.orientation) {
         [self onOrientationChanged];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC/2), dispatch_get_main_queue(), ^{
-            [self setOrientation:self.interfaceOrientation];
+            [self setOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
         });
     }
 }
@@ -186,7 +186,7 @@
     if (self.searchBarIsVisible) {
         [self reloadSearchBar];
     }
-    self.orientation = self.interfaceOrientation;
+    self.orientation = [[UIApplication sharedApplication] statusBarOrientation];
 }
 
 - (void)changeLoadingFrame:(CGRect)frame orientation:(UIInterfaceOrientation)orientation {
@@ -217,32 +217,42 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
+     {
+         UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+         // do whatever
+         CGRect viewFrame = self.view.frame;
+         CGFloat screenWidth = viewFrame.size.width;
+         CGFloat screenHeight = viewFrame.size.height;
+         
+         if (VALID_NOTEMPTY(self.noConnectionView, JANoConnectionView)) {
+             
+             self.noConnectionView.frame = CGRectMake(_noConnectionViewFrame.origin.x,
+                                                      _noConnectionViewFrame.origin.y,
+                                                      screenWidth,
+                                                      screenHeight);
+             [self.noConnectionView reDraw];
+             [self.view bringSubviewToFront:self.noConnectionView];
+         }
+         UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
+         if (VALID_NOTEMPTY(self.maintenancePage, JAMaintenancePage)) {
+             [self.maintenancePage setupMaintenancePage:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height) orientation:orientation];
+         }
+         if (VALID_NOTEMPTY(self.kickoutView, JAKickoutView)) {
+             [self.kickoutView setupKickoutView:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height) orientation:orientation];
+         }
+         if (self.searchBarIsVisible) {
+             [self reloadSearchBar];
+         }
+
+     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
+     {
+         
+     }];
     
-    CGRect viewFrame = self.view.frame;
-    CGFloat screenWidth = viewFrame.size.width;
-    CGFloat screenHeight = viewFrame.size.height;
-    
-    if (VALID_NOTEMPTY(self.noConnectionView, JANoConnectionView)) {
-        
-        self.noConnectionView.frame = CGRectMake(_noConnectionViewFrame.origin.x,
-                                                 _noConnectionViewFrame.origin.y,
-                                                 screenWidth,
-                                                 screenHeight);
-        [self.noConnectionView reDraw];
-        [self.view bringSubviewToFront:self.noConnectionView];
-    }
-    UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
-    if (VALID_NOTEMPTY(self.maintenancePage, JAMaintenancePage)) {
-        [self.maintenancePage setupMaintenancePage:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height) orientation:self.interfaceOrientation];
-    }
-    if (VALID_NOTEMPTY(self.kickoutView, JAKickoutView)) {
-        [self.kickoutView setupKickoutView:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height) orientation:self.interfaceOrientation];
-    }
-    if (self.searchBarIsVisible) {
-        [self reloadSearchBar];
-    }
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -284,7 +294,7 @@
 - (void)sideMenuIsOpening {
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     NSUInteger supportedInterfaceOrientations = UIInterfaceOrientationMaskPortrait;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         supportedInterfaceOrientations = UIInterfaceOrientationMaskAll;
@@ -413,7 +423,7 @@
 - (void)showLoading {
     self.requestNumber++;
     
-    [self changeLoadingFrame:[[UIScreen mainScreen] bounds] orientation:self.interfaceOrientation];
+    [self changeLoadingFrame:[[UIScreen mainScreen] bounds] orientation:[[UIApplication sharedApplication] statusBarOrientation]];
     
     if (1 == self.requestNumber) {
         [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view addSubview:self.loadingView];
@@ -557,7 +567,7 @@
                                         [[UIScreen mainScreen] bounds].size.width,
                                         [[UIScreen mainScreen] bounds].size.height);
     
-    if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
+    if (UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation])) {
         if (_noConnectionViewFrame.size.width > _noConnectionViewFrame.size.height) {
             _noConnectionViewFrame  = CGRectMake(0.0f, startingY, _noConnectionViewFrame.size.height, _noConnectionViewFrame.size.width - startingY);
         }
@@ -624,7 +634,7 @@
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
     
     self.maintenancePage = [JAMaintenancePage getNewJAMaintenancePage];
-    [self.maintenancePage setupMaintenancePage:window.frame orientation:self.interfaceOrientation];
+    [self.maintenancePage setupMaintenancePage:window.frame orientation:[[UIApplication sharedApplication] statusBarOrientation]];
     __block id viewController = target;
     [self.maintenancePage setRetryBlock: ^(BOOL dismiss)
      {
@@ -667,7 +677,7 @@
     UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
     
     self.kickoutView = [[JAKickoutView alloc] init];
-    [self.kickoutView setupKickoutView:window.frame orientation:self.interfaceOrientation];
+    [self.kickoutView setupKickoutView:window.frame orientation:[[UIApplication sharedApplication] statusBarOrientation]];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     __block id viewController = target;
     [self.kickoutView setRetryBlock: ^(BOOL dismiss)
@@ -719,7 +729,7 @@
 
 - (BOOL)isIpadLandscape
 {
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
     {
         return YES;
     }

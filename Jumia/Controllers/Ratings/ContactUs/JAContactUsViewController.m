@@ -25,11 +25,11 @@
     self.navBarLayout.title = STRING_CONTACT_US;
     self.view.backgroundColor = [UIColor whiteColor];
     self.addresslabel.text = @"تهران، میدان ونک، بزرگراه حقانی \n نرسیده به چهارراه جهان کودک \n پلاک ۶۳، طبقه اول و دوم";
-    UIDevice *device = [UIDevice currentDevice];
-    
-    if ([[device model] isEqualToString:@"iPhone"] || [[device model] isEqualToString:@"iPhone Simulator"])
-    {
-    }
+//    UIDevice *device = [UIDevice currentDevice];
+//    
+//    if ([[device model] isEqualToString:@"iPhone"] || [[device model] isEqualToString:@"iPhone Simulator"])
+//    {
+//    }
 //    [self.callToContactUsButton addTarget:self action:@selector(callToContactUs)forControlEvents:UIControlEventTouchUpInside];
     UIImage* currentImage = _arrowImageView1.image;
     
@@ -37,10 +37,17 @@
     _arrowImageView1.image = newImage;
     _arrowImageView2.image = newImage;
     [self.mailForAppFeedbackButton addTarget:self action:@selector(mailForAppFeedback)forControlEvents:UIControlEventTouchUpInside];
-
+    float sizeOfContent = 0;
+//    UIView *lLast = [self.contactUsScreen.subviews lastObject];
+    NSInteger wd = self.mailForAppFeedbackButton.frame.origin.y + 100 ;
+    NSInteger ht = self.mailForAppFeedbackButton.frame.size.height;
+    
+    sizeOfContent = wd+ht;
     // Do any additional setup after loading the view from its nib.
-    [self.contactUsScreen setContentSize:CGSizeMake(self.contactUsScreen.frame.size.width,
-                                                     800)];
+//    [self.contactUsScreen setContentSize:CGSizeMake(self.contactUsScreen.frame.size.width,
+//                                                     800)];
+    [self.contactUsScreen setContentSize:CGSizeMake(self.contactUsScreen.frame.size.width, sizeOfContent)];
+
 }
 
 -(IBAction)callToContactUs:(id)sender
@@ -128,13 +135,24 @@
                           @"iPhone5,4" :@"iPhone 5c",       // (model A1507, A1516, A1526 (China), A1529 | Global)
                           @"iPhone6,1" :@"iPhone 5s",       // (model A1433, A1533 | GSM)
                           @"iPhone6,2" :@"iPhone 5s",       // (model A1457, A1518, A1528 (China), A1530 | Global)
-                          @"iPhone7,2":@"iPhone 6",
-                          @"iPhone7,1": @"iPhone 6 Plus",
-                          @"iPhone8,1":@"iPhone 6s",
+                          @"iPhone7,2" :@"iPhone 6",
+                          @"iPhone7,1" :@"iPhone 6 Plus",
+                          @"iPhone8,1" :@"iPhone 6s",
+                          @"iPhone8,2" :@"iPhone 6S Plus",    //
+                          @"iPhone8,4" :@"iPhone SE",         //
+                          @"iPhone9,1" :@"iPhone 7",          //
+                          @"iPhone9,3" :@"iPhone 7",          //
+                          @"iPhone9,2" :@"iPhone 7 Plus",     //
+                          @"iPhone9,4" :@"iPhone 7 Plus",     //
                           @"iPad4,1"   :@"iPad Air",        // 5th Generation iPad (iPad Air) - Wifi
                           @"iPad4,2"   :@"iPad Air",        // 5th Generation iPad (iPad Air) - Cellular
                           @"iPad4,4"   :@"iPad Mini",       // (2nd Generation iPad Mini - Wifi)
-                          @"iPad4,5"   :@"iPad Mini"        // (2nd Generation iPad Mini - Cellular)
+                          @"iPad4,5"   :@"iPad Mini",       // (2nd Generation iPad Mini - Cellular)
+                          @"iPad4,7"   :@"iPad Mini",         // (3rd Generation iPad Mini - Wifi (model A1599))
+                          @"iPad6,7"   :@"iPad Pro (12.9\")", // iPad Pro 12.9 inches - (model A1584)
+                          @"iPad6,8"   :@"iPad Pro (12.9\")", // iPad Pro 12.9 inches - (model A1652)
+                          @"iPad6,3"   :@"iPad Pro (9.7\")",  // iPad Pro 9.7 inches - (model A1673)
+                          @"iPad6,4"   :@"iPad Pro (9.7\")"   // iPad Pro 9.7 inches - (models A1674 and A1675)
                           };
     
     struct utsname systemInfo;

@@ -320,7 +320,7 @@ typedef void (^ProcessActionBlock)(void);
 //        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJACatalogWizardUserDefaultsKey];
 //    }
     
-    [self changeViewToInterfaceOrientation:self.interfaceOrientation];
+    [self changeViewToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     
     if (VALID_NOTEMPTY(self.undefinedBackup, RIUndefinedSearchTerm)){
         
@@ -1138,7 +1138,7 @@ typedef void (^ProcessActionBlock)(void);
     
     [self.flowLayout resetSizes];
     
-    [self changeViewToInterfaceOrientation:self.interfaceOrientation];
+    [self changeViewToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
 }
 
 - (void)navBarClicked
@@ -1293,7 +1293,7 @@ typedef void (^ProcessActionBlock)(void);
     
     [self.undefinedView setupWithUndefinedSearchResult:undefSearch
                                             searchText:self.searchString
-                                           orientation:self.interfaceOrientation];
+                                           orientation:[[UIApplication sharedApplication] statusBarOrientation]];
     //$WIZ$
 //    [self.view bringSubviewToFront:self.wizardView];
 }

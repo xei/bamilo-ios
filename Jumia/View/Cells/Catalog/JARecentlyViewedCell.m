@@ -23,7 +23,7 @@
 {
     if (!VALID(_addToCartBar, JABottomBar)) {
         _addToCartBar = [[JABottomBar alloc] initWithFrame:CGRectMake(self.width-kButtonWidth-16.f, CGRectGetMaxY(self.discountLabel.frame) + 10.f, kButtonWidth, kBottomDefaultHeight)];
-        self.addToCartButton = [_addToCartBar addButton:STRING_BUY_NOW target:nil action:nil];
+        self.addToCartButton =(UIButton*) [_addToCartBar addButton:STRING_BUY_NOW target:nil action:nil];
     }
     return _addToCartBar;
 }

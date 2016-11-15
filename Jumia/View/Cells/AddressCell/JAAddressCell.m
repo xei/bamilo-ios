@@ -14,12 +14,10 @@
 
 @property (nonatomic, strong) UILabel* nameLabel;
 @property (strong, nonatomic) UILabel *addressLabel;
-@property (nonatomic, strong) UILabel* phoneTitleLabel;
+@property (nonatomic, strong) UIImageView* phoneImageView;
 @property (nonatomic, strong) UILabel* phoneLabel;
 @property (nonatomic, strong) UILabel* invalidLabel;
 @property (strong, nonatomic) UIView *separator;
-@property (strong, nonatomic) UIView *verticalSeparator;
-@property (strong, nonatomic) UIView *horizontalSeparator;
 
 @end
 
@@ -34,28 +32,6 @@
         [_editAddressButton setImage:image forState:UIControlStateNormal];
     }
     return _editAddressButton;
-}
-
-- (UIButton*)deleteAddressButton
-{
-    if (!_deleteAddressButton) {
-        _deleteAddressButton = [UIButton new];
-        UIImage* image = [UIImage imageNamed:@"deleteAddress"];
-        [_deleteAddressButton setFrame:CGRectMake(0.0f, 0.0f, image.size.width, image.size.height)];
-        [_deleteAddressButton setImage:image forState:UIControlStateNormal];
-    }
-    return _deleteAddressButton;
-}
-
-- (UIButton*)radioButton
-{
-    if (!_radioButton) {
-        _radioButton = [UIButton new];
-        UIImage* image = [UIImage imageNamed:@"editAddress"];
-        [_radioButton setFrame:CGRectMake(0.0f, 0.0f, image.size.width, image.size.height)];
-        [_radioButton setImage:image forState:UIControlStateNormal];
-    }
-    return _radioButton;
 }
 
 - (UILabel*)nameLabel
@@ -78,16 +54,14 @@
     return _addressLabel;
 }
 
-- (UILabel*)phoneTitleLabel
+- (UIImageView*)phoneImageView
 {
-    if (!_phoneTitleLabel) {
-        //        UIImage* phoneImage = [UIImage imageNamed:@"phone_icon_small"];
-        _phoneTitleLabel = [UILabel new];
-        [_phoneTitleLabel setText:@"تلفن :"];
-        [_phoneTitleLabel setFont:JAListFont];
-        [_phoneTitleLabel setTextColor:JABlack800Color];
+    if (!_phoneImageView) {
+        UIImage* phoneImage = [UIImage imageNamed:@"phone_icon_small"];
+        _phoneImageView = [[UIImageView alloc] initWithImage:phoneImage];
+        [_phoneImageView setFrame:CGRectMake(0.0f, 0.0f, phoneImage.size.width, phoneImage.size.height)];
     }
-    return _phoneTitleLabel;
+    return _phoneImageView;
 }
 
 - (UILabel*)phoneLabel
@@ -110,29 +84,11 @@
     return _invalidLabel;
 }
 
-- (UIView*)verticalSeparator
-{
-    if (!_verticalSeparator) {
-        _verticalSeparator = [UIView new];
-        [_verticalSeparator setBackgroundColor:[UIColor colorWithWhite:0.94 alpha:1.0]];
-    }
-    return _verticalSeparator;
-}
-
-- (UIView*)horizontalSeparator
-{
-    if (!_horizontalSeparator) {
-        _horizontalSeparator = [UIView new];
-        [_horizontalSeparator setBackgroundColor:[UIColor colorWithWhite:0.85 alpha:1.0]];
-    }
-    return _horizontalSeparator;
-}
-
 - (UIView*)separator
 {
     if (!_separator) {
         _separator = [UIView new];
-        [_separator setBackgroundColor:[UIColor colorWithWhite:0.85 alpha:1.0]];
+        [_separator setBackgroundColor:JABlack300Color];
     }
     return _separator;
 }
@@ -159,18 +115,10 @@
     self.nameLabel.textAlignment = NSTextAlignmentLeft;
     [self.nameLabel setText:nameText];
     [self.nameLabel sizeToFit];
-    if(!self.fromCheckOut){
-        [self.nameLabel setFrame:CGRectMake(16.0f,
-                                            10.0f,
-                                            self.frame.size.width - 16.0f - self.editAddressButton.frame.size.width,
-                                            self.nameLabel.frame.size.height)];
-    }
-    else{
-        [self.nameLabel setFrame:CGRectMake(30.0f,
-                                            10.0f,
-                                            self.frame.size.width - 30.0f - self.editAddressButton.frame.size.width,
-                                            self.nameLabel.frame.size.height)];
-    }
+    [self.nameLabel setFrame:CGRectMake(16.0f,
+                                        10.0f,
+                                        self.frame.size.width - 16.0f - self.editAddressButton.frame.size.width,
+                                        self.nameLabel.frame.size.height)];
     [self addSubview:self.nameLabel];
     
     NSString *addressText = @"";
@@ -208,31 +156,11 @@
     }
     
     [self.addressLabel setText:addressText];
-    self.addressLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    self.addressLabel.numberOfLines = 0;
     [self.addressLabel sizeToFit];
-    if(!self.fromCheckOut){
-        [self.addressLabel setFrame:CGRectMake(16.0f,
-                                               CGRectGetMaxY(self.nameLabel.frame) + 4.0f,
-                                               self.frame.size.width - 16.0f - self.editAddressButton.frame.size.width - 25,
-                                               [self getLabelHeight:self.addressLabel])];
-        
-    }
-    else{
-        [self.addressLabel setFrame:CGRectMake(30.0f,
-                                               CGRectGetMaxY(self.nameLabel.frame) + 4.0f,
-                                               self.frame.size.width - 30.0f - self.editAddressButton.frame.size.width - 25,
-                                               [self getLabelHeight:self.addressLabel])];
-    }
-    CGSize maximumLabelSize = CGSizeMake(296, 500);
-    
-    CGSize expectedLabelSize = [addressText sizeWithFont:self.addressLabel.font constrainedToSize:maximumLabelSize lineBreakMode:self.addressLabel.lineBreakMode];
-    
-    //adjust the label the the new height.
-    CGRect newFrame = self.addressLabel.frame;
-    newFrame.size.height = expectedLabelSize.height;
-    self.addressLabel.frame = newFrame;
-    
+    [self.addressLabel setFrame:CGRectMake(16.0f,
+                                           CGRectGetMaxY(self.nameLabel.frame) + 4.0f,
+                                           self.frame.size.width - 16.0f - self.editAddressButton.frame.size.width,
+                                           self.addressLabel.frame.size.height)];
     self.addressLabel.textAlignment = NSTextAlignmentLeft;
     [self addSubview:self.addressLabel];
     
@@ -241,37 +169,20 @@
                                               self.editAddressButton.frame.size.width,
                                               self.editAddressButton.frame.size.height);
     [self addSubview:self.editAddressButton];
-    self.radioButton.frame = CGRectMake(16.0f,
-                                        self.frame.size.height/2,
-                                        24.0f,
-                                        24.0f);
-    self.radioButton.center = CGPointMake(self.radioButton.frame.origin.x, self.center.y);
-    [self addSubview:self.radioButton];
     
-    [self.phoneTitleLabel sizeToFit];
     
-    if(!self.fromCheckOut){
-        [self.phoneTitleLabel setFrame:CGRectMake(16.0f + 1.0f,
-                                                  CGRectGetMaxY(self.addressLabel.frame) + 4.0f,
-                                                  self.phoneTitleLabel.frame.size.width,
-                                                  self.phoneTitleLabel.frame.size.height)];
-    }
-    else{
-        [self.phoneTitleLabel setFrame:CGRectMake(30.0f + 1.0f,
-                                                  CGRectGetMaxY(self.addressLabel.frame) + 4.0f,
-                                                  self.phoneTitleLabel.frame.size.width,
-                                                  self.phoneTitleLabel.frame.size.height)];
-    }
-    self.phoneTitleLabel.textAlignment = NSTextAlignmentLeft;
-    [self addSubview:self.phoneTitleLabel];
+    [self.phoneImageView setFrame:CGRectMake(16.0f + 1.0f,
+                                             CGRectGetMaxY(self.addressLabel.frame) + 4.0f,
+                                             self.phoneImageView.frame.size.width,
+                                             self.phoneImageView.frame.size.height)];
+    [self addSubview:self.phoneImageView];
     
     self.phoneLabel.textAlignment = NSTextAlignmentLeft;
-    NSString *phoneNumber =[self convertToPersianNumber:address.phone];
-    [self.phoneLabel setText:phoneNumber];
+    [self.phoneLabel setText:address.phone];
     [self.phoneLabel sizeToFit];
-    [self.phoneLabel setFrame:CGRectMake(CGRectGetMaxX(self.phoneTitleLabel.frame) + 4.0f,
-                                         self.phoneTitleLabel.frame.origin.y,
-                                         self.frame.size.width - CGRectGetMaxX(self.phoneTitleLabel.frame),
+    [self.phoneLabel setFrame:CGRectMake(CGRectGetMaxX(self.phoneImageView.frame) + 4.0f,
+                                         self.phoneImageView.frame.origin.y,
+                                         self.frame.size.width - CGRectGetMaxX(self.phoneImageView.frame),
                                          self.phoneLabel.frame.size.height)];
     [self addSubview:self.phoneLabel];
     
@@ -293,49 +204,12 @@
         self.invalidLabel.hidden = NO;
     }
     
-    self.verticalSeparator.frame = CGRectMake(self.frame.size.width - self.editAddressButton.frame.size.width - 25.0f, 1.0f, 1.0f, self.frame.size.height);
     self.separator.frame = CGRectMake(0.0f, kAddressCellHeight - 1.0f, self.frame.size.width, 1.0f);
     [self addSubview:self.separator];
     
-    [self addSubview:self.verticalSeparator];
     if (RI_IS_RTL) {
         [self flipAllSubviews];
     }
-    if(!self.fromCheckOut){
-    self.horizontalSeparator.frame = CGRectMake(0.0f, kAddressCellHeight/2, self.verticalSeparator.frame.origin.x, 1.0f);
-    [self addSubview:self.horizontalSeparator];
-        self.deleteAddressButton.frame = CGRectMake(self.frame.size.width - self.editAddressButton.frame.size.width - 16.0f,
-                                                  self.editAddressButton.frame.origin.y + 4.0f,
-                                                  self.editAddressButton.frame.size.width,
-                                                  self.editAddressButton.frame.size.height);
-        [self addSubview:self.deleteAddressButton];
-    }
-
 }
 
--(NSString *) convertToPersianNumber:(NSString *) string {
-    NSNumberFormatter *formatter = [NSNumberFormatter new];
-    formatter.locale = [NSLocale localeWithLocaleIdentifier:@"fa"];
-    for (NSInteger i = 0; i < 10; i++) {
-        NSNumber *num = @(i);
-        string = [string stringByReplacingOccurrencesOfString:num.stringValue withString:[formatter stringFromNumber:num]];
-    }
-    return string;
-}
-
-- (CGFloat)getLabelHeight:(UILabel*)label
-{
-    CGSize constraint = CGSizeMake(label.frame.size.width, CGFLOAT_MAX);
-    CGSize size;
-    
-    NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
-    CGSize boundingBox = [label.text boundingRectWithSize:constraint
-                                                  options:NSStringDrawingUsesLineFragmentOrigin
-                                               attributes:@{NSFontAttributeName:label.font}
-                                                  context:context].size;
-    
-    size = CGSizeMake(ceil(boundingBox.width), ceil(boundingBox.height));
-    
-    return size.height;
-}
 @end

@@ -64,37 +64,38 @@
     if (!VALID(_mainScrollView, UIScrollView)) {
         _mainScrollView = [[UIScrollView alloc] initWithFrame:self.viewBounds];
         [self.view addSubview:_mainScrollView];
-        [_mainScrollView addSubview:self.accountSettingsHeaderLine];
-        CGFloat accessoryImageWidth = kAcessoryImageWidthAndHeight;
-
+//        [_mainScrollView addSubview:self.accountSettingsHeaderLine];
+        
         //ProfileSingleLine
         [_mainScrollView addSubview:self.profileSingleLine];
         self.accessoryImageView = [UIButton new];
+        UIImage *image = [UIImage imageNamed:@"user-information-icons"];
+        CGSize imageSize = image.size;
         [self.accessoryImageView setFrame:CGRectMake(16.0f,
-                                                     CGRectGetMaxY(self.accountSettingsHeaderLine.frame) + 10,
-                                                     accessoryImageWidth,
-                                                     accessoryImageWidth)];
-        self.accessoryImageView.contentMode = UIViewContentModeScaleAspectFit;
-        [self.accessoryImageView setBackgroundImage:[UIImage imageNamed:@"user-information-icons.png"] forState:UIControlStateNormal];
+                                                     10,
+                                                     imageSize.width,
+                                                     imageSize.height)];
+        [self.accessoryImageView setBackgroundImage:image forState:UIControlStateNormal];
         self.accessoryImageView.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         [_mainScrollView addSubview:self.accessoryImageView];
         
         //addressSingleLine
         [_mainScrollView addSubview:self.myAddressesSingleLine];
         UIButton *accessoryImageView2 = [[UIButton alloc]init];
+        UIImage *image2 = [UIImage imageNamed:@"my-address-icon"];
+        CGSize imageSize2 = image2.size;
         [accessoryImageView2 setFrame:CGRectMake(16.0f,
                                                      CGRectGetMaxY(self.profileSingleLine.frame) + 10,
-                                                     accessoryImageWidth,
-                                                     accessoryImageWidth)];
-        accessoryImageView2.contentMode = UIViewContentModeScaleAspectFit;
-        [accessoryImageView2 setBackgroundImage:[UIImage imageNamed:@"my-address-icon.png"] forState:UIControlStateNormal];
+                                                     imageSize2.width,
+                                                     imageSize2.height)];
+        [accessoryImageView2 setBackgroundImage:image2 forState:UIControlStateNormal];
         accessoryImageView2.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         [_mainScrollView addSubview:accessoryImageView2];
 
         [_mainScrollView addSubview:self.notificationSettingsHeaderLine];
         [_mainScrollView addSubview:self.pushNotificationsSwitchLine];
         [_mainScrollView addSubview:self.emailNotificationsSingleLine];
-        [_mainScrollView addSubview:self.shopSettingsHeaderLine];
+//        [_mainScrollView addSubview:self.shopSettingsHeaderLine];
         [_mainScrollView addSubview:self.countrySubtitleLine];
         [_mainScrollView addSubview:self.languageSubtitleLine];
         [_mainScrollView addSubview:self.moreSettingsHeaderLine];
@@ -122,8 +123,8 @@
 - (JAProductInfoSingleLine *)profileSingleLine
 {
     if (!VALID(_profileSingleLine, JAProductInfoSingleLine)) {
-        _profileSingleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(25, CGRectGetMaxY(self.accountSettingsHeaderLine.frame),  self.mainScrollView.width, kProductInfoSingleLineHeight)];
-        [_profileSingleLine setTopSeparatorVisibility:NO];
+        _profileSingleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(30, 0,  self.mainScrollView.width, kProductInfoSingleLineHeight)];
+//        [_profileSingleLine setTopSeparatorVisibility:NO];
         [_profileSingleLine setTitle:STRING_PROFILE];
         [_profileSingleLine addTarget:self action:@selector(profileSelection) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -133,7 +134,7 @@
 - (JAProductInfoSingleLine *)myAddressesSingleLine
 {
     if (!VALID(_myAddressesSingleLine, JAProductInfoSingleLine)) {
-        _myAddressesSingleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(25, CGRectGetMaxY(self.profileSingleLine.frame), self.mainScrollView.width, kProductInfoSingleLineHeight)];
+        _myAddressesSingleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(self.profileSingleLine.frame), self.mainScrollView.width, kProductInfoSingleLineHeight)];
         [_myAddressesSingleLine setTitle:STRING_MY_ADDRESSES];
         [_myAddressesSingleLine addTarget:self action:@selector(myAddressesSelection) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -143,8 +144,8 @@
 - (JAProductInfoHeaderLine *)notificationSettingsHeaderLine
 {
     if (!VALID(_notificationSettingsHeaderLine, JAProductInfoHeaderLine)) {
-        _notificationSettingsHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.myAddressesSingleLine.frame), self.mainScrollView.width, kProductInfoHeaderLineHeight)];
-        [_notificationSettingsHeaderLine setTitle:[STRING_NOTIFICATIONS_SETTINGS uppercaseString]];
+        _notificationSettingsHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.myAddressesSingleLine.frame), self.mainScrollView.width, 0)];
+//        [_notificationSettingsHeaderLine setTitle:[STRING_NOTIFICATIONS_SETTINGS uppercaseString]];
     }
     return _notificationSettingsHeaderLine;
 }
@@ -152,9 +153,9 @@
 - (JAProductInfoSwitchLine *)pushNotificationsSwitchLine
 {
     if (!VALID(_pushNotificationsSwitchLine, JAProductInfoSwitchLine)) {
-        _pushNotificationsSwitchLine = [[JAProductInfoSwitchLine alloc] initWithFrame:CGRectMake(25, CGRectGetMaxY(self.notificationSettingsHeaderLine.frame), self.mainScrollView.width, kProductInfoSingleLineHeight)];
-        [_pushNotificationsSwitchLine setTopSeparatorVisibility:NO];
-        [_pushNotificationsSwitchLine setTitle:STRING_PUSH_NOTIFICATIONS];
+        _pushNotificationsSwitchLine = [[JAProductInfoSwitchLine alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(self.notificationSettingsHeaderLine.frame), self.mainScrollView.width, kProductInfoSingleLineHeight)];
+//        [_pushNotificationsSwitchLine setTopSeparatorVisibility:NO];
+        [_pushNotificationsSwitchLine setTitle:STRING_NOTIFICATIONS];
         [_pushNotificationsSwitchLine.lineSwitch setAccessibilityLabel:STRING_NOTIFICATIONS];
         [_pushNotificationsSwitchLine.lineSwitch addTarget:self action:@selector(changeNotification) forControlEvents:UIControlEventValueChanged];
     }
@@ -164,7 +165,7 @@
 - (JAProductInfoSingleLine *)emailNotificationsSingleLine
 {
     if (!VALID(_emailNotificationsSingleLine, JAProductInfoSingleLine)) {
-        _emailNotificationsSingleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(25, CGRectGetMaxY(self.pushNotificationsSwitchLine.frame), self.mainScrollView.width, kProductInfoSingleLineHeight)];
+        _emailNotificationsSingleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(self.pushNotificationsSwitchLine.frame), self.mainScrollView.width, kProductInfoSingleLineHeight)];
         [_emailNotificationsSingleLine setTitle:STRING_NEWSLETTER];
         [_emailNotificationsSingleLine addTarget:self action:@selector(emailNotificationSelection) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -183,8 +184,8 @@
 - (JAProductInfoSubtitleLine *)countrySubtitleLine
 {
     if (!VALID(_countrySubtitleLine, JAProductInfoSubtitleLine)) {
-        _countrySubtitleLine = [[JAProductInfoSubtitleLine alloc] initWithFrame:CGRectMake(25, CGRectGetMaxY(self.shopSettingsHeaderLine.frame), self.mainScrollView.width, kProductInfoSubtitleLineHeight)];
-        [_countrySubtitleLine setTopSeparatorVisibility:NO];
+        _countrySubtitleLine = [[JAProductInfoSubtitleLine alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(self.emailNotificationsSingleLine.frame), self.mainScrollView.width, kProductInfoSubtitleLineHeight)];
+//        [_countrySubtitleLine setTopSeparatorVisibility:NO];
         [_countrySubtitleLine setTitle:STRING_COUNTRY];
         [_countrySubtitleLine setSubTitle:@""];
         RICountry* uniqueCountry = [RICountry getUniqueCountry];
@@ -200,7 +201,7 @@
 - (JAProductInfoSubtitleLine *)languageSubtitleLine
 {
     if (!VALID(_languageSubtitleLine, JAProductInfoSubtitleLine)) {
-        _languageSubtitleLine = [[JAProductInfoSubtitleLine alloc] initWithFrame:CGRectMake(25, CGRectGetMaxY(self.countrySubtitleLine.frame), self.mainScrollView.width, kProductInfoSubtitleLineHeight)];
+        _languageSubtitleLine = [[JAProductInfoSubtitleLine alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(self.countrySubtitleLine.frame), self.mainScrollView.width, kProductInfoSubtitleLineHeight)];
         [_languageSubtitleLine setTitle:STRING_LANGUAGE];
         [_languageSubtitleLine setSubTitle:@""];
         [_languageSubtitleLine addTarget:self action:@selector(openLanguagePicker) forControlEvents:UIControlEventTouchUpInside];
@@ -214,8 +215,8 @@
 - (JAProductInfoHeaderLine *)moreSettingsHeaderLine
 {
     if (!VALID(_moreSettingsHeaderLine, JAProductInfoHeaderLine)) {
-        _moreSettingsHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.languageSubtitleLine.frame), self.mainScrollView.width, kProductInfoHeaderLineHeight)];
-        [_moreSettingsHeaderLine setTitle:[STRING_MORE uppercaseString]];
+        _moreSettingsHeaderLine = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.languageSubtitleLine.frame), self.mainScrollView.width, 0)];
+//        [_moreSettingsHeaderLine setTitle:[STRING_MORE uppercaseString]];
     }
     return _moreSettingsHeaderLine;
 }
@@ -223,8 +224,8 @@
 - (JAProductInfoRightSubtitleLine *)appVersionSubtitleLine
 {
     if (!VALID(_appVersionSubtitleLine, JAProductInfoRightSubtitleLine)) {
-        _appVersionSubtitleLine = [[JAProductInfoRightSubtitleLine alloc] initWithFrame:CGRectMake(25, CGRectGetMaxY(self.moreSettingsHeaderLine.frame), self.mainScrollView.width, kProductInfoRightSubtitleLineHeight)];
-        [_appVersionSubtitleLine setTopSeparatorVisibility:NO];
+        _appVersionSubtitleLine = [[JAProductInfoRightSubtitleLine alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(self.moreSettingsHeaderLine.frame), self.mainScrollView.width, kProductInfoRightSubtitleLineHeight)];
+//        [_appVersionSubtitleLine setTopSeparatorVisibility:NO];
         NSNumber* lastVersion = [self isLastVersion];
         if (VALID_NOTEMPTY(lastVersion, NSNumber)) {
             [_appVersionSubtitleLine setHidden:NO];
@@ -262,7 +263,7 @@
 - (JAProductInfoSingleLine *)shareTheAppSingleLine
 {
     if (!VALID(_shareTheAppSingleLine, JAProductInfoSingleLine)) {
-        _shareTheAppSingleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(25, CGRectGetMaxY(self.appSocialHeaderLine.frame), self.mainScrollView.width, kProductInfoSingleLineHeight)];
+        _shareTheAppSingleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(self.appSocialHeaderLine.frame), self.mainScrollView.width, kProductInfoSingleLineHeight)];
 //        [_shareTheAppSingleLine setTopSeparatorVisibility:NO];
         [_shareTheAppSingleLine setTitle:STRING_SHARE_THE_APP];
         [_shareTheAppSingleLine addTarget:self action:@selector(shareTheAppSelection) forControlEvents:UIControlEventTouchUpInside];
@@ -273,7 +274,7 @@
 - (JAProductInfoSingleLine *)rateTheAppSingleLine
 {
     if (!VALID(_rateTheAppSingleLine, JAProductInfoSingleLine)) {
-        _rateTheAppSingleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(25, CGRectGetMaxY(self.shareTheAppSingleLine.frame), self.mainScrollView.width, kProductInfoSingleLineHeight)];
+        _rateTheAppSingleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(self.shareTheAppSingleLine.frame), self.mainScrollView.width, kProductInfoSingleLineHeight)];
         [_rateTheAppSingleLine setTitle:STRING_RATE_THE_APP];
         [_rateTheAppSingleLine addTarget:self action:@selector(rateTheAppSelection) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -352,18 +353,17 @@
 {
     [_reloadLock lock];
     [self.mainScrollView setFrame:self.viewBounds];
-    [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, CGRectGetMaxY(self.rateTheAppSingleLine.frame))];
     
     [self.accountSettingsHeaderLine setWidth:self.mainScrollView.width];
-    [self.profileSingleLine setWidth:self.mainScrollView.width - 25.0f];
-    [self.myAddressesSingleLine setWidth:self.mainScrollView.width - 25.0f];
-    [self.notificationSettingsHeaderLine setWidth:self.mainScrollView.width];
-    [self.pushNotificationsSwitchLine setWidth:self.mainScrollView.width - 25.0f];
-    [self.emailNotificationsSingleLine setWidth:self.mainScrollView.width - 25.0f];
+    [self.profileSingleLine setWidth:self.mainScrollView.width - 30.0f];
+    [self.myAddressesSingleLine setWidth:self.mainScrollView.width - 30.0f];
+//    [self.notificationSettingsHeaderLine setWidth:self.mainScrollView.width];
+    [self.pushNotificationsSwitchLine setWidth:self.mainScrollView.width - 30.0f];
+    [self.emailNotificationsSingleLine setWidth:self.mainScrollView.width - 30.0f];
 
     CGFloat lastYOffset = CGRectGetMaxY(self.emailNotificationsSingleLine.frame);
     
-    [self.shopSettingsHeaderLine setWidth:self.mainScrollView.width];
+//    [self.shopSettingsHeaderLine setWidth:self.mainScrollView.width];
     
     RICountry* uniqueCountry = [RICountry getUniqueCountry];
     if (VALID_NOTEMPTY(uniqueCountry, RICountry)) {
@@ -373,8 +373,8 @@
         lastYOffset = CGRectGetMaxY(self.countrySubtitleLine.frame);
     }
     
-    [self.countrySubtitleLine setWidth:self.mainScrollView.width - 25.0f];
-    [self.languageSubtitleLine setWidth:self.mainScrollView.width - 25.0f];
+    [self.countrySubtitleLine setWidth:self.mainScrollView.width - 30.0f];
+    [self.languageSubtitleLine setWidth:self.mainScrollView.width - 30.0f];
     
     if ([RICountryConfiguration getCurrentConfiguration].languages.count == 1) {
         [self.languageSubtitleLine setHidden:YES];
@@ -382,7 +382,7 @@
         if (self.shopSettingsHeaderLine.hidden) {
             [self.shopSettingsHeaderLine setHidden:NO];
             [self.languageSubtitleLine setY:CGRectGetMaxY(self.shopSettingsHeaderLine.frame)];
-            [self.languageSubtitleLine setTopSeparatorVisibility:NO];
+//            [self.languageSubtitleLine setTopSeparatorVisibility:NO];
         }else{
             [self.languageSubtitleLine setY:CGRectGetMaxY(self.countrySubtitleLine.frame)];
         }
@@ -400,64 +400,71 @@
     [self.appSocialHeaderLine setWidth:self.mainScrollView.width];
 //    lastYOffset = CGRectGetMaxY(self.appSocialHeaderLine.frame);
     [self.shareTheAppSingleLine setY:lastYOffset];
-    [self.shareTheAppSingleLine setWidth:self.mainScrollView.width - 25.0f];
+    [self.shareTheAppSingleLine setWidth:self.mainScrollView.width - 30.0f];
     lastYOffset = CGRectGetMaxY(self.shareTheAppSingleLine.frame);
-    [self.rateTheAppSingleLine setWidth:self.mainScrollView.width - 25.0f];
+    [self.rateTheAppSingleLine setWidth:self.mainScrollView.width - 30.0f];
     [self.rateTheAppSingleLine setY:lastYOffset];
-    CGFloat accessoryImageWidth = kAcessoryImageWidthAndHeight;
-    CGFloat accessoryImageMargin = kLeftAndRightMargin;
-    
+//    CGFloat accessoryImageWidth = kAcessoryImageWidthAndHeight;
+//    CGFloat accessoryImageMargin = kLeftAndRightMargin;
+   
     UIButton *accessoryImageView3 = [[UIButton alloc]init];
+    UIImage *image3 = [UIImage imageNamed:@"app-ver-icons"];
+    CGSize imageSize3 = image3.size;
     [accessoryImageView3 setFrame:CGRectMake(16.0f,
                                              CGRectGetMaxY(self.moreSettingsHeaderLine.frame) + 20,
-                                             accessoryImageWidth,
-                                             accessoryImageWidth)];
-    accessoryImageView3.contentMode = UIViewContentModeScaleAspectFit;
-    [accessoryImageView3 setBackgroundImage:[UIImage imageNamed:@"app-ver-icons.png"] forState:UIControlStateNormal];
+                                             imageSize3.width,
+                                             imageSize3.height)];
+    [accessoryImageView3 setBackgroundImage:image3 forState:UIControlStateNormal];
     accessoryImageView3.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [_mainScrollView addSubview:accessoryImageView3];
-    [self.appVersionSubtitleLine setWidth:self.mainScrollView.width - 25.0f];
+    [self.appVersionSubtitleLine setWidth:self.mainScrollView.width - 30.0f];
 
     
     UIButton *accessoryImageView5 = [[UIButton alloc]init];
+    UIImage *image5 = [UIImage imageNamed:@"share-icons"];
+    CGSize imageSize5 = image5.size;
     [accessoryImageView5 setFrame:CGRectMake(16.0f,
                                                  CGRectGetMaxY(self.appVersionSubtitleLine.frame) + 16,
-                                                 accessoryImageWidth,
-                                                 accessoryImageWidth)];
-    accessoryImageView5.contentMode = UIViewContentModeScaleAspectFit;
-    [accessoryImageView5 setBackgroundImage:[UIImage imageNamed:@"share-icons.png"] forState:UIControlStateNormal];
+                                                 imageSize5.width,
+                                                 imageSize5.height)];
+    [accessoryImageView5 setBackgroundImage:image5 forState:UIControlStateNormal];
     accessoryImageView5.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [_mainScrollView addSubview:accessoryImageView5];
 
     UIButton *accessoryImageView1 = [[UIButton alloc]init];
+    UIImage *image1 = [UIImage imageNamed:@"announcements-icon"];
+    CGSize imageSize1 = image1.size;
+
     [accessoryImageView1 setFrame:CGRectMake(16.0f,
-                                             CGRectGetMaxY(self.notificationSettingsHeaderLine.frame) + 16,
-                                             accessoryImageWidth,
-                                             accessoryImageWidth)];
-    accessoryImageView1.contentMode = UIViewContentModeScaleAspectFit;
-    [accessoryImageView1 setBackgroundImage:[UIImage imageNamed:@"announcements-icon.png"] forState:UIControlStateNormal];
+                                             CGRectGetMaxY(self.myAddressesSingleLine.frame) + 16,
+                                             imageSize1.width,
+                                             imageSize1.height)];
+    [accessoryImageView1 setBackgroundImage:image1 forState:UIControlStateNormal];
     accessoryImageView1.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [_mainScrollView addSubview:accessoryImageView1];
     
     UIButton *accessoryImageView2 = [[UIButton alloc]init];
+    UIImage *image2 = [UIImage imageNamed:@"newsletter-icons"];
+    CGSize imageSize2 = image2.size;
     [accessoryImageView2 setFrame:CGRectMake(16.0f,
                                              CGRectGetMaxY(self.pushNotificationsSwitchLine.frame) + 16,
-                                             accessoryImageWidth,
-                                             accessoryImageWidth)];
-    accessoryImageView2.contentMode = UIViewContentModeScaleAspectFit;
-    [accessoryImageView2 setBackgroundImage:[UIImage imageNamed:@"newsletter-icons.png"] forState:UIControlStateNormal];
+                                             imageSize2.width,
+                                             imageSize2.height)];
+    [accessoryImageView2 setBackgroundImage:image2 forState:UIControlStateNormal];
     accessoryImageView2.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [_mainScrollView addSubview:accessoryImageView2];
     
     UIButton *accessoryImageView4 = [[UIButton alloc]init];
+    UIImage *image4 = [UIImage imageNamed:@"rate-icons"];
+    CGSize imageSize4 = image4.size;
     [accessoryImageView4 setFrame:CGRectMake(16.0f,
                                              CGRectGetMaxY(self.shareTheAppSingleLine.frame) + 16,
-                                             accessoryImageWidth,
-                                             accessoryImageWidth)];
-    accessoryImageView4.contentMode = UIViewContentModeScaleAspectFit;
-    [accessoryImageView4 setBackgroundImage:[UIImage imageNamed:@"rate-icons.png"] forState:UIControlStateNormal];
+                                             imageSize4.width,
+                                             imageSize4.height)];
+    [accessoryImageView4 setBackgroundImage:image4 forState:UIControlStateNormal];
     accessoryImageView4.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [_mainScrollView addSubview:accessoryImageView4];
+    [self.mainScrollView setContentSize:CGSizeMake(self.mainScrollView.width, CGRectGetMaxY(self.rateTheAppSingleLine.frame))];
 
     if (RI_IS_RTL)
     {

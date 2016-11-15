@@ -64,7 +64,7 @@
                                                 self.frame.size.width - margin*2,
                                                 buttonHeight)];
     
-    CGFloat tableHeight = [self tableView:self.tableView numberOfRowsInSection:0] * [self tableView:self.tableView heightForRowAtIndexPath:nil];
+    CGFloat tableHeight = [self tableView:self.tableView numberOfRowsInSection:0] * [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     [self.tableView setFrame:CGRectMake(margin,
                                         self.doneClickableView.frame.origin.y - margin - tableHeight,
                                         self.frame.size.width - margin*2,

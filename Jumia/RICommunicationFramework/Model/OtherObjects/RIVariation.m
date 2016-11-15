@@ -52,7 +52,7 @@
     }
     
     if ([variation objectForKey:@"shop_first"]) {
-        newVariation.shop_first = [variation objectForKey:@"shop_first"];
+        newVariation.shop_first = (BOOL)[variation objectForKey:@"shop_first"];
     }
     
     return newVariation;

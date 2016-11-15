@@ -107,7 +107,7 @@
     {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-//        [self presentCoachMarks];
+        [self presentCoachMarks];
     }
 }
 
@@ -173,7 +173,8 @@
                                 @"caption2":@"حرکت در میان محصولات برگزیده"
                                 }
                             ];
-    
+//    @"caption": @"حرکت در میان رویدادهای جاری",
+
     MPCoachMarks *coachMarksView = [[MPCoachMarks alloc] initWithFrame:self.navigationController.view.bounds coachMarks:coachMarks];
     [self.navigationController.view addSubview:coachMarksView];
     [coachMarksView start];
@@ -221,7 +222,7 @@
     
     if(VALID_NOTEMPTY(self.fallbackView, JAFallbackView) && VALID_NOTEMPTY(self.fallbackView.superview, UIView))
     {
-        [self.fallbackView setupFallbackView:[self viewBounds] orientation:self.interfaceOrientation];
+        [self.fallbackView setupFallbackView:[self viewBounds] orientation:[[UIApplication sharedApplication] statusBarOrientation]];
     }
 }
 
@@ -278,7 +279,7 @@
                 [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(requestTeasers) objects:nil];
             } else {
                 self.fallbackView = [JAFallbackView getNewJAFallbackView];
-                [self.fallbackView setupFallbackView:[self viewBounds] orientation:self.interfaceOrientation];
+                [self.fallbackView setupFallbackView:[self viewBounds] orientation:[[UIApplication sharedApplication] statusBarOrientation]];
                 [self.view addSubview:self.fallbackView];
             }
         }

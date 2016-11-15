@@ -206,7 +206,7 @@ UITableViewDataSource
     
     if(self.requestsDone)
     {
-        [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+//        [self didRotateFromInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     }
     else
     {
@@ -234,13 +234,21 @@ UITableViewDataSource
     
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    [self hideLoading];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
+     {
+         // do whatever
+         [self hideLoading];
+         
+         [self setupViews];
+
+     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
+     {
+         
+     }];
     
-    [self setupViews];
-    
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
 - (void)formRequest
@@ -306,7 +314,7 @@ UITableViewDataSource
     {
         isiPad = YES;
     }
-    if (UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation || UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)
+    if (UIInterfaceOrientationLandscapeLeft == [[UIApplication sharedApplication] statusBarOrientation] || UIInterfaceOrientationLandscapeRight == [[UIApplication sharedApplication] statusBarOrientation])
     {
         isInLandscape = YES;
     }

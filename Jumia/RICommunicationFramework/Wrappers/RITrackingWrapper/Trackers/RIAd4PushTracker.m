@@ -685,7 +685,6 @@ NSString * const kRIAdd4PushDeviceToken = @"kRIAdd4PushDeviceToken";
                 [categoryDictionary setObject:filter forKey:@"filter"];
             }
             
-            //tessa opening home page  if key is empty
             if ([key isEqualToString:@""])
             {
                 // Home

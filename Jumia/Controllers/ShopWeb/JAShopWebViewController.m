@@ -69,13 +69,13 @@
 
 - (void)loadViews
 {
-   CGFloat height = [[self.webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight;"] floatValue];
-    NSUInteger contentHeight = [[self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.body.scrollHeight;"]] intValue];
+//   CGFloat height = [[self.webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight;"] floatValue];
+//    NSUInteger contentHeight = [[self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.body.scrollHeight;"]] intValue];
     
-    NSString *output = [self.webView
-                        stringByEvaluatingJavaScriptFromString:
-                        @"document.body.offsetHeight;"];
-    NSLog(@"height: %d", [output intValue]);
+//    NSString *output = [self.webView
+//                        stringByEvaluatingJavaScriptFromString:
+//                        @"document.body.offsetHeight;"];
+//    NSLog(@"height: %d", [output intValue]);
 
 //    self.webView.frame = CGRectMake(0.0f,
 //                                    0.0f,

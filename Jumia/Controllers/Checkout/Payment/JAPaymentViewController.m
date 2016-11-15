@@ -108,12 +108,12 @@ UITextFieldDelegate>
         [self continueLoading];
     } else {
         CGFloat newWidth = self.view.frame.size.width;
-        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
         {
             newWidth = self.view.frame.size.height + self.view.frame.origin.y;
         }
         
-        [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
+        [self setupViews:newWidth toInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     }
 }
 
@@ -145,7 +145,7 @@ UITextFieldDelegate>
         
         self.checkoutFormForPaymentMethod = [[JACheckoutForms alloc] initWithPaymentMethodForm:cart.paymentMethodForm width:(self.tableView.frame.size.width - [JAPaymentCell xPositionAfterCheckmark] - 6.0f)];
         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
-        [self setupViews:self.view.width toInterfaceOrientation:self.interfaceOrientation];
+        [self setupViews:self.view.width toInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
         [self finishedLoadingPaymentMethods];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
         self.apiResponse = apiResponse;
@@ -210,7 +210,7 @@ UITextFieldDelegate>
     _bottomView = [[JACheckoutBottomView alloc] initWithFrame:CGRectMake(0.0f,
                                                                          self.view.frame.size.height - 64.0f - _bottomView.frame.size.height,
                                                                          self.view.frame.size.width,
-                                                                         _bottomView.frame.size.height) orientation:self.interfaceOrientation];
+                                                                         _bottomView.frame.size.height) orientation:[[UIApplication sharedApplication] statusBarOrientation]];
     
     [self.view addSubview:_bottomView];
 }
@@ -336,12 +336,12 @@ UITextFieldDelegate>
     self.selectedPaymentMethod = [self.paymentMethods objectAtIndex:self.collectionViewIndexSelected.row];
     
     CGFloat newWidth = self.view.frame.size.width;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
     {
         newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     }
     
-    [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
+    [self setupViews:newWidth toInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     
     if(self.firstLoading)
     {

@@ -19,6 +19,4 @@
 @property (weak, nonatomic) IBOutlet UIImageView *arrowImageView1;
 @property (weak, nonatomic) IBOutlet UIImageView *arrowImageView2;
 
-- (void)callToContactUs;
-
 @end
