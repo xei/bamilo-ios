@@ -4761,8 +4761,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tessa Joseph (49547NY66S)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tessa Joseph (49547NY66S)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -4770,7 +4770,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
+					"DEBUG=0",
 					"$(inherited)",
 					"HOCKEY=1",
 					"STAGING=0",
@@ -4785,8 +4785,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
-				PROVISIONING_PROFILE = "c38fb13e-6ab3-406a-b945-25987c794a9e";
-				PROVISIONING_PROFILE_SPECIFIER = "Tessa Accengage Profile";
+				PROVISIONING_PROFILE = "01fbea7f-9a03-4c8d-8245-24e6d3060064";
+				PROVISIONING_PROFILE_SPECIFIER = "Bamilo Live";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -4810,8 +4810,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tessa Joseph (49547NY66S)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tessa Joseph (49547NY66S)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -4819,7 +4819,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
+					"DEBUG=0",
 					"$(inherited)",
 					"HOCKEY=1",
 				);
@@ -4833,8 +4833,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
-				PROVISIONING_PROFILE = "c38fb13e-6ab3-406a-b945-25987c794a9e";
-				PROVISIONING_PROFILE_SPECIFIER = "Tessa Accengage Profile";
+				PROVISIONING_PROFILE = "01fbea7f-9a03-4c8d-8245-24e6d3060064";
+				PROVISIONING_PROFILE_SPECIFIER = "Bamilo Live";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -4858,8 +4858,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tessa Joseph (49547NY66S)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tessa Joseph (49547NY66S)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -4867,7 +4867,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
+					"DEBUG=0",
 					"$(inherited)",
 					"STAGING=0",
 				);
@@ -4881,8 +4881,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
-				PROVISIONING_PROFILE = "c38fb13e-6ab3-406a-b945-25987c794a9e";
-				PROVISIONING_PROFILE_SPECIFIER = "Tessa Accengage Profile";
+				PROVISIONING_PROFILE = "01fbea7f-9a03-4c8d-8245-24e6d3060064";
+				PROVISIONING_PROFILE_SPECIFIER = "Bamilo Live";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -4906,8 +4906,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tessa Joseph (49547NY66S)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tessa Joseph (49547NY66S)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				COPY_PHASE_STRIP = YES;
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -4922,8 +4922,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
-				PROVISIONING_PROFILE = "c38fb13e-6ab3-406a-b945-25987c794a9e";
-				PROVISIONING_PROFILE_SPECIFIER = "Tessa Accengage Profile";
+				PROVISIONING_PROFILE = "01fbea7f-9a03-4c8d-8245-24e6d3060064";
+				PROVISIONING_PROFILE_SPECIFIER = "Bamilo Live";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -4938,8 +4938,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "بامیلو.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tessa Joseph (49547NY66S)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tessa Joseph (49547NY66S)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4966,10 +4966,10 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios.dev;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "c38fb13e-6ab3-406a-b945-25987c794a9e";
-				PROVISIONING_PROFILE_SPECIFIER = "Tessa Accengage Profile";
+				PROVISIONING_PROFILE = "01fbea7f-9a03-4c8d-8245-24e6d3060064";
+				PROVISIONING_PROFILE_SPECIFIER = "Bamilo Live";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -4983,8 +4983,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "بامیلو.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tessa Joseph (49547NY66S)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tessa Joseph (49547NY66S)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5011,10 +5011,10 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios.dev;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "c38fb13e-6ab3-406a-b945-25987c794a9e";
-				PROVISIONING_PROFILE_SPECIFIER = "Tessa Accengage Profile";
+				PROVISIONING_PROFILE = "01fbea7f-9a03-4c8d-8245-24e6d3060064";
+				PROVISIONING_PROFILE_SPECIFIER = "Bamilo Live";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -5028,8 +5028,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "بامیلو.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tessa Joseph (49547NY66S)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tessa Joseph (49547NY66S)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5056,10 +5056,10 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios.dev;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "c38fb13e-6ab3-406a-b945-25987c794a9e";
-				PROVISIONING_PROFILE_SPECIFIER = "Tessa Accengage Profile";
+				PROVISIONING_PROFILE = "01fbea7f-9a03-4c8d-8245-24e6d3060064";
+				PROVISIONING_PROFILE_SPECIFIER = "Bamilo Live";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -5073,8 +5073,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "بامیلو.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tessa Joseph (49547NY66S)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tessa Joseph (49547NY66S)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5101,10 +5101,10 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios.dev;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
 				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "c38fb13e-6ab3-406a-b945-25987c794a9e";
-				PROVISIONING_PROFILE_SPECIFIER = "Tessa Accengage Profile";
+				PROVISIONING_PROFILE = "01fbea7f-9a03-4c8d-8245-24e6d3060064";
+				PROVISIONING_PROFILE_SPECIFIER = "Bamilo Live";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
