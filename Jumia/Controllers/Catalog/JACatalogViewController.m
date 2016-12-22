@@ -77,6 +77,7 @@ typedef void (^ProcessActionBlock)(void);
 @property (nonatomic, strong) JASortingView* sortingView;
 @property (nonatomic, strong) RIBanner *banner;
 @property (nonatomic, strong) UIImageView *bannerImageView;
+@property (nonatomic, strong)NSString *labelName;
 
 @end
 
@@ -217,17 +218,30 @@ typedef void (^ProcessActionBlock)(void);
     
     if (VALID_NOTEMPTY(self.searchString, NSString))
     {
-        self.screenName = @"SearchResults";
+        self.screenName = @"SearchSuggester";
+        self.labelName = [self.searchString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     }
     else
     {
+        NSString* urlToUse = [RITarget getURLStringforTargetString:self.targetString];
+        if (VALID_NOTEMPTY(self.categoryName, NSString)) {
+            urlToUse = [NSString stringWithFormat:@"%@%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_CATALOG_CATEGORY, self.categoryName];
+        }else if (VALID_NOTEMPTY(self.category, RICategory) && VALID_NOTEMPTY(self.category.targetString, NSString)) {
+            urlToUse = [RITarget getURLStringforTargetString:self.category.targetString];
+        }else if (VALID_NOTEMPTY(self.filterCategory, RICategory) && VALID_NOTEMPTY(self.filterCategory.targetString, NSString)) {
+            urlToUse = [RITarget getURLStringforTargetString:self.filterCategory.targetString];
+        }
+
         if(VALID_NOTEMPTY(self.category, RICategory))
         {
+
             self.screenName = [NSString stringWithFormat:@"Catalog / %@", self.category.label];
+            self.labelName = urlToUse;
         }
         else
         {
             self.screenName = @"Catalog";
+            self.labelName = urlToUse;
         }
     }
     
@@ -1466,8 +1480,8 @@ typedef void (^ProcessActionBlock)(void);
 
 - (void)trackingEventLoadingTime
 {
-    NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+    NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
+    [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:_labelName];
 }
 
 - (void)trackingEventScreenName:(NSString *)screenName

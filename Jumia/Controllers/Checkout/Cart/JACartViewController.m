@@ -102,7 +102,8 @@
 {
     [super viewDidLoad];
     self.A4SViewControllerAlias = @"CART";
-    
+    self.screenName = @"Cart";
+
     self.navBarLayout.title = STRING_CART;
     self.navBarLayout.showBackButton = NO;
     self.navBarLayout.showCartButton = NO;
@@ -115,6 +116,13 @@
 {
     [super viewWillAppear:animated];
     [self loadingCart];
+    if (self.firstLoading) {
+        NSMutableDictionary* skusFromTeaserInCart = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:kSkusFromTeaserInCartKey]];
+
+        NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:[NSString stringWithFormat:@"%@", [skusFromTeaserInCart allKeys]]];
+        self.firstLoading = NO;
+    }
 }
 
 - (void)loadingCart

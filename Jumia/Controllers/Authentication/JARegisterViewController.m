@@ -52,6 +52,7 @@ JAAccountServicesProtocol
 @property (strong, nonatomic) JAPicker *picker;
 @property (strong, nonatomic) JADatePicker *datePicker;
 @property (strong, nonatomic) JACheckBoxComponent *checkBoxComponent;
+@property (nonatomic, retain) NSNumber * customerId;
 
 @property (nonatomic, assign)BOOL isOpeningPicker;
 
@@ -319,8 +320,8 @@ JAAccountServicesProtocol
     
     if(self.firstLoading)
     {
-        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+        NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:[_customerId stringValue]];
         self.firstLoading = NO;
     }
     
@@ -457,6 +458,7 @@ JAAccountServicesProtocol
         [trackingDictionary setValue:@"CreateSuccess" forKey:kRIEventActionKey];
         [trackingDictionary setValue:@"Account" forKey:kRIEventCategoryKey];
         [trackingDictionary setValue:customerObject.customerId forKey:kRIEventUserIdKey];
+        _customerId = customerObject.customerId;
         [trackingDictionary setValue:customerObject.firstName forKey:kRIEventUserFirstNameKey];
         [trackingDictionary setValue:customerObject.lastName forKey:kRIEventUserLastNameKey];
         [trackingDictionary setValue:customerObject.gender forKey:kRIEventGenderKey];
