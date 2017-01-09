@@ -237,7 +237,7 @@
 }
 
 + (NSString *)getProductsWithCatalogUrl:(NSString*)url
-                          sortingMethod:(RICatalogSorting)sortingMethod
+                          sortingMethod:(RICatalogSortingEnum)sortingMethod
                                    page:(NSInteger)page
                                maxItems:(NSInteger)maxItems
                                 filters:(NSArray*)filters
@@ -258,7 +258,7 @@
     }
 
     //sometimes the url of the product already has ? in it. yeah...
-    NSString *sortingString = [RIProduct urlComponentForSortingMethod:sortingMethod];
+    NSString *sortingString = [RICatalogSorting urlComponentForSortingMethod:sortingMethod];
     if (VALID_NOTEMPTY(sortingString, NSString)) {
         sortingString = [NSString stringWithFormat:@"/%@", sortingString];
     }
@@ -789,67 +789,6 @@
         return [newRelatedProducts copy];
     }
     return nil;
-}
-
-+ (NSString*)urlComponentForSortingMethod:(RICatalogSorting)sortingMethod
-{
-    NSString* urlComponent = @"";
-    
-    switch (sortingMethod) {
-        case RICatalogSortingRating:
-            urlComponent = @"sort/rating/dir/desc";
-            break;
-        case RICatalogSortingNewest:
-            urlComponent = @"sort/newest/dir/desc";
-            break;
-        case RICatalogSortingPriceUp:
-            urlComponent = @"sort/price/dir/asc";
-            break;
-        case RICatalogSortingPriceDown:
-            urlComponent = @"sort/price/dir/desc";
-            break;
-        case RICatalogSortingName:
-            urlComponent = @"sort/name/dir/asc";
-            break;
-        case RICatalogSortingBrand:
-            urlComponent = @"sort/brand/dir/asc";
-            break;
-        default: //RICatalogSortingPopularity
-            break;
-    }
-    
-    return urlComponent;
-}
-
-+ (NSString*)sortingName:(RICatalogSorting)sortingMethod
-{
-    NSString* sortingName = @"";
-    
-    switch (sortingMethod) {
-        case RICatalogSortingRating:
-            sortingName = @"Rating";
-            break;
-        case RICatalogSortingNewest:
-            sortingName = @"Newest";
-            break;
-        case RICatalogSortingPriceUp:
-            sortingName = @"Price up";
-            break;
-        case RICatalogSortingPriceDown:
-            sortingName = @"Price down";
-            break;
-        case RICatalogSortingName:
-            sortingName = @"Name";
-            break;
-        case RICatalogSortingBrand:
-            sortingName = @"Brand";
-            break;
-        default: //RICatalogSortingPopularity
-            sortingName = @"Popularity";
-            break;
-    }
-    
-    return sortingName;
 }
 
 #pragma mark - Favorites

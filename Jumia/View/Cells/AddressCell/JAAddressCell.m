@@ -16,6 +16,7 @@
 @property (strong, nonatomic) UILabel *addressLabel;
 @property (nonatomic, strong) UIImageView* phoneImageView;
 @property (nonatomic, strong) UILabel* phoneLabel;
+@property (nonatomic, strong) UILabel* invalidLabel;
 @property (strong, nonatomic) UIView *separator;
 
 @end
@@ -71,6 +72,16 @@
         [_phoneLabel setTextColor:JABlack800Color];
     }
     return _phoneLabel;
+}
+
+- (UILabel*)invalidLabel
+{
+    if (!_invalidLabel) {
+        _invalidLabel = [UILabel new];
+        [_invalidLabel setFont:JACaptionFont];
+        [_invalidLabel setTextColor:JARed1Color];
+    }
+    return _invalidLabel;
 }
 
 - (UIView*)separator
@@ -174,6 +185,24 @@
                                          self.frame.size.width - CGRectGetMaxX(self.phoneImageView.frame),
                                          self.phoneLabel.frame.size.height)];
     [self addSubview:self.phoneLabel];
+    
+    self.invalidLabel.textAlignment = NSTextAlignmentLeft;
+    if ([address.isDefaultShipping isEqualToString:@"1"] || [address.isDefaultShipping isEqualToString:@"1"]) {
+        [self.invalidLabel setText:STRING_INVALID_ADDRESS_BILLING_SHIPPING];
+    } else {
+        [self.invalidLabel setText:STRING_INVALID_ADDRESS_OTHER];
+    }
+    [self.invalidLabel sizeToFit];
+    [self.invalidLabel setFrame:CGRectMake(16.0f,
+                                           CGRectGetMaxY(self.phoneLabel.frame) + 4.0f,
+                                           self.frame.size.width - 16.0f - self.editAddressButton.frame.size.width,
+                                           self.invalidLabel.frame.size.height)];
+    [self addSubview:self.invalidLabel];
+    if (VALID_NOTEMPTY(address.isValid, NSString) && [address.isValid isEqualToString:@"1"]) {
+        self.invalidLabel.hidden = YES;
+    } else {
+        self.invalidLabel.hidden = NO;
+    }
     
     self.separator.frame = CGRectMake(0.0f, kAddressCellHeight - 1.0f, self.frame.size.width, 1.0f);
     [self addSubview:self.separator];

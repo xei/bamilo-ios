@@ -11,7 +11,7 @@
 
 @interface JARadioRelatedComponent ()
 
-@property (strong, nonatomic) RIField *field;
+//@property (strong, nonatomic) RIField *field;
 @property (strong, nonatomic) NSString *storedValue;
 
 @end

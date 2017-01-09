@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "JAClickableView.h"
 
+#define kProductInfoSingleLineHeight 48
+
 @interface JAProductInfoBaseLine : JAClickableView
 
 @property (nonatomic) UIImageView *arrow;

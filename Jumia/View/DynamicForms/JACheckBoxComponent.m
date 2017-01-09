@@ -10,7 +10,8 @@
 
 @interface JACheckBoxComponent ()
 
-@property (strong, nonatomic) RIField *field;
+//removing warning as field its already mentioned in Parent class
+//@property (strong, nonatomic) RIField *field;
 @property (strong, nonatomic) NSString *storedValue;
 
 @end

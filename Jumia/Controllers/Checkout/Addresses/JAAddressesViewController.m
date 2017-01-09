@@ -107,7 +107,7 @@ UITableViewDelegate>
     
     [self.view addSubview:self.contentScrollView];
     
-    _bottomView = [[JACheckoutBottomView alloc] initWithFrame:CGRectMake(0.f, self.view.frame.size.height - 56, self.view.frame.size.width, 56) orientation:self.interfaceOrientation];
+    _bottomView = [[JACheckoutBottomView alloc] initWithFrame:CGRectMake(0.f, self.view.frame.size.height - 56, self.view.frame.size.width, 56) orientation:[[UIApplication sharedApplication] statusBarOrientation]];
     [_bottomView setTotalValue:self.cart.cartValueFormatted];
     [self.view addSubview:_bottomView];
 }
@@ -119,7 +119,7 @@ UITableViewDelegate>
     [self setCart:[JACenterNavigationController sharedInstance].cart];
     [_bottomView setTotalValue:self.cart.cartValueFormatted];
     if (self.fromCheckout) {
-        if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+        if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
             [_bottomView setNoTotal:YES];
         }else{
             [_bottomView setNoTotal:NO];
@@ -129,13 +129,13 @@ UITableViewDelegate>
     }
     
     CGFloat newWidth = self.view.frame.size.width;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation) && self.fromCheckout)
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]) && self.fromCheckout)
     {
         newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     }
     if(VALID_NOTEMPTY(self.addresses, NSDictionary))
     {
-        [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
+        [self setupViews:newWidth toInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     }
 }
 
@@ -317,12 +317,12 @@ UITableViewDelegate>
 -(void)finishedLoadingAddresses
 {
     CGFloat newWidth = self.view.frame.size.width;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation) && self.fromCheckout)
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]) && self.fromCheckout)
     {
         newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     }
     
-    [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
+    [self setupViews:newWidth toInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     
     if(self.firstLoading)
     {

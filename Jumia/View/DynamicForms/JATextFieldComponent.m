@@ -82,7 +82,7 @@
         xOffset = self.fixedX;
     }
     [self.underLineView setFrame:CGRectMake(xOffset, self.height-5, self.width - xOffset, 1.f)];
-    [self.requiredSymbol setFrame:CGRectMake(self.width - 20, self.height - 28, 10, 20)];
+    [self.requiredSymbol setFrame:CGRectMake(self.width, self.height - 28, 10, 20)];
     [self.textField setFrame:CGRectMake(xOffset, self.height - 28, self.width - xOffset - 10, 20)];
     [self.titleLabel setFrame:CGRectMake(xOffset, 0, self.width - xOffset - 28 , 20)];
     if (self.iconImageView) {
@@ -99,7 +99,7 @@
     if (RI_IS_RTL) {
         [self.titleLabel flipViewAlignment];
         [self.underLineView flipViewPositionInsideSuperview];
-        [self.requiredSymbol flipViewPositionInsideSuperview];
+//        [self.requiredSymbol flipViewPositionInsideSuperview];
         [self.textField flipViewPositionInsideSuperview];
         [self.textField flipViewAlignment];
     }
@@ -113,6 +113,13 @@
     self.field = field;
     [self.textField setPlaceholder:field.label];
     
+    //PATCH By Tessa
+    if([[field valueForKey:@"label"] isEqualToString:@"Current Password"]){
+        self.textField.placeholder = CURRENT_PASSWORD;
+    }
+    else if ([[field valueForKey:@"label"] isEqualToString:@"رمز عبور"]){
+        self.textField.placeholder = STRING_NEW_PASSWORD;
+    }
     if([field.required boolValue])
     {
         [self.requiredSymbol setHidden:NO];

@@ -50,6 +50,7 @@
     [keyLabel setFont:JABodyFont];
     [keyLabel setTextColor:JABlackColor];
     [keyLabel setText:key];
+    [keyLabel  setTextAlignment:NSTextAlignmentLeft];
     [keyLabel sizeToFit];
     [lineView addSubview:keyLabel];
     
@@ -58,6 +59,7 @@
     [valueLabel setFont:JABodyFont];
     [valueLabel setTextColor:JABlack800Color];
     [valueLabel setText:value];
+    [valueLabel setTextAlignment:NSTextAlignmentLeft];
     [valueLabel sizeToFit];
     [lineView addSubview:valueLabel];
     

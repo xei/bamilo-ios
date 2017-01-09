@@ -30,6 +30,7 @@
 #import "JACatalogPictureCollectionViewCell.h"
 #import "JACollectionSeparator.h"
 #import "JACenterNavigationController.h"
+#import "RICatalogSorting.h"
 
 #define JACatalogGridSelected @"CATALOG_GRID_IS_SELECTED"
 #define JACatalogViewControllerMaxProducts 36
@@ -57,7 +58,7 @@ typedef void (^ProcessActionBlock)(void);
 @property (nonatomic, strong) NSArray* categoriesArray;
 @property (nonatomic, strong) RICategory* filterCategory;
 @property (nonatomic, assign) BOOL loadedEverything;
-@property (nonatomic, assign) RICatalogSorting sortingMethod;
+@property (nonatomic, assign) RICatalogSortingEnum sortingMethod;
 @property (nonatomic, strong) JAUndefinedSearchView *undefinedView;
 @property (nonatomic, strong) RIUndefinedSearchTerm *undefinedBackup;
 @property (assign, nonatomic) BOOL isFirstLoadTracking;
@@ -319,7 +320,7 @@ typedef void (^ProcessActionBlock)(void);
 //        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kJACatalogWizardUserDefaultsKey];
 //    }
     
-    [self changeViewToInterfaceOrientation:self.interfaceOrientation];
+    [self changeViewToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     
     if (VALID_NOTEMPTY(self.undefinedBackup, RIUndefinedSearchTerm)){
         
@@ -383,7 +384,8 @@ typedef void (^ProcessActionBlock)(void);
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     [self.collectionView setCollectionViewLayout:self.flowLayout];
     
-    self.sortingMethod = RICatalogSortingPopularity;
+    self.sortingMethod = -1;
+    [self.catalogTopView setSorting:RICatalogSortingPopularity];
     if (VALID_NOTEMPTY(self.sortingMethodFromPush, NSNumber)) {
         self.sortingMethod = [self.sortingMethodFromPush integerValue];
     }
@@ -555,6 +557,9 @@ typedef void (^ProcessActionBlock)(void);
     
     self.catalogTopView.sortingButton.enabled = YES;
     
+    self.sortingMethod = [RICatalogSorting sortingEnum:catalog.sort];
+    [self.catalogTopView setSorting:self.sortingMethod];
+    
     self.banner = catalog.banner;
     
     if (VALID_NOTEMPTY(self.banner, RIBanner)) {
@@ -565,7 +570,6 @@ typedef void (^ProcessActionBlock)(void);
     if (NOTEMPTY(catalog.categories)) {
         self.categoriesArray = catalog.categories;
     }
-    
     
     NSString *categoryName = @"";
     NSString *subCategoryName = @"";
@@ -1134,7 +1138,7 @@ typedef void (^ProcessActionBlock)(void);
     
     [self.flowLayout resetSizes];
     
-    [self changeViewToInterfaceOrientation:self.interfaceOrientation];
+    [self changeViewToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
 }
 
 - (void)navBarClicked
@@ -1289,7 +1293,7 @@ typedef void (^ProcessActionBlock)(void);
     
     [self.undefinedView setupWithUndefinedSearchResult:undefSearch
                                             searchText:self.searchString
-                                           orientation:self.interfaceOrientation];
+                                           orientation:[[UIApplication sharedApplication] statusBarOrientation]];
     //$WIZ$
 //    [self.view bringSubviewToFront:self.wizardView];
 }
@@ -1392,7 +1396,7 @@ typedef void (^ProcessActionBlock)(void);
 
 #pragma mark - JASortingView
 
-- (void)selectedSortingMethod:(RICatalogSorting)catalogSorting
+- (void)selectedSortingMethod:(RICatalogSortingEnum)catalogSorting
 {
     if (catalogSorting != self.sortingMethod) {
         [self killScroll];
@@ -1623,7 +1627,7 @@ typedef void (^ProcessActionBlock)(void);
     [trackingDictionary setValue:self.title forKey:kRIEventLabelKey];
     [trackingDictionary setValue:@"SortingOnCatalog" forKey:kRIEventActionKey];
     [trackingDictionary setValue:@"Catalog" forKey:kRIEventCategoryKey];
-    [trackingDictionary setValue:[RIProduct sortingName:self.sortingMethod] forKey:kRIEventSortTypeKey];
+    [trackingDictionary setValue:[RICatalogSorting sortingName:self.sortingMethod] forKey:kRIEventSortTypeKey];
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventSort]
                                               data:[trackingDictionary copy]];

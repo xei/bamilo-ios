@@ -2,13 +2,13 @@
   "images" : [
     {
       "idiom" : "ipad",
-      "scale" : "1x",
-      "filename" : "background_fallback_land~ipad.png"
+      "filename" : "background_fallback_land~ipad.png",
+      "scale" : "1x"
     },
     {
       "idiom" : "ipad",
-      "scale" : "2x",
-      "filename" : "background_fallback_land@2x~ipad.png"
+      "filename" : "background_fallback_land@2x~ipad.png",
+      "scale" : "2x"
     }
   ],
   "info" : {

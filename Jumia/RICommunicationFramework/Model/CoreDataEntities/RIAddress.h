@@ -28,6 +28,7 @@
 @property (nonatomic, retain) NSString * customerAddressPostcodeId;
 @property (nonatomic, retain) NSString * isDefaultBilling;
 @property (nonatomic, retain) NSString * isDefaultShipping;
+@property (nonatomic, retain) NSString * isValid;
 @property (nonatomic, retain) NSString * hidden;
 @property (nonatomic, retain) NSString * createdAt;
 @property (nonatomic, retain) NSString * updatedAt;

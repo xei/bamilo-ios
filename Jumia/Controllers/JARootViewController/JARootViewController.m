@@ -140,6 +140,7 @@
         [self setLeftPanel:[self.mainStoryboard instantiateViewControllerWithIdentifier:@"menuViewController"]];
     }
     [self setCenterPanel:[JACenterNavigationController sharedInstance]];
+    [super awakeFromNib];
 }
 
 - (void)updateCountry:(NSNotification*)notification

@@ -12,6 +12,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    [super awakeFromNib];
 }
 
 - (void) loadHeaderWithText:(NSString*)text width:(CGFloat)width

@@ -104,7 +104,7 @@ JAPickerDelegate>
     
     [self initViews];
     
-    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
+//    [self didRotateFromInterfaceOrientation:self.interfaceOrientation];
     
     [self getForms];
 }
@@ -235,21 +235,29 @@ JAPickerDelegate>
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
-    CGFloat newWidth = self.view.frame.size.width;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation) && self.fromCheckout)
-    {
-        newWidth = self.view.frame.size.height + self.view.frame.origin.y;
-    }
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
+     {
+         UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+         // do whatever
+         CGFloat newWidth = self.view.frame.size.width;
+         if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(orientation) && self.fromCheckout)
+         {
+             newWidth = self.view.frame.size.height + self.view.frame.origin.y;
+         }
+         
+         [self setupViews:newWidth toInterfaceOrientation:orientation];
+         
+         [self.dynamicForm resignResponder];
+         
+         [self hideLoading];
+     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
+     {
+         
+     }];
     
-    [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
-    
-    [self.dynamicForm resignResponder];
-    
-    [self hideLoading];
-    
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
 -(void)initViews
@@ -286,12 +294,12 @@ JAPickerDelegate>
 -(void)finishedFormLoading
 {
     CGFloat newWidth = self.view.frame.size.width;
-    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation) && self.fromCheckout)
+    if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]) && self.fromCheckout)
     {
         newWidth = self.view.frame.size.height + self.view.frame.origin.y;
     }
     
-    [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
+    [self setupViews:newWidth toInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     
     [self hideLoading];
     

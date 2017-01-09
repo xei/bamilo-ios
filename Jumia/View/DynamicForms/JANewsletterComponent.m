@@ -10,7 +10,7 @@
 
 @interface JANewsletterComponent ()
 
-@property (strong, nonatomic) RIField *field;
+//@property (strong, nonatomic) RIField *field;
 @property (strong, nonatomic) NSString *storedValue;
 
 @end

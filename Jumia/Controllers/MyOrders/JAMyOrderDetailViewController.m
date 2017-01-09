@@ -117,7 +117,7 @@
 - (void)onOrientationChanged
 {
     [super onOrientationChanged];
-    if ((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+    if ((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         UIViewController *viewController = [[[self.navigationController.viewControllers reverseObjectEnumerator] allObjects] objectAtIndex:1];
         [self.navigationController popViewControllerAnimated:NO];
         if (![viewController isKindOfClass:[JAMyOrdersViewController class]])

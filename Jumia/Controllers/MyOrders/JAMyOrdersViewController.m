@@ -264,7 +264,7 @@ UICollectionViewDelegateFlowLayout>
                           [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
                           [self hideLoading];
                           
-                          if (!((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) && _selectedCellIndex >=0) {
+                          if (!((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) && _selectedCellIndex >=0) {
                               [self gotoDetails:_selectedCellIndex];
                           }
                           
@@ -341,7 +341,7 @@ UICollectionViewDelegateFlowLayout>
     
     CGFloat width = self.viewBounds.size.width;
     
-    if ((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+    if ((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         width = width/2 - 1.f;
     }
     [self.ordersHistoryHeader setWidth:width];
@@ -354,7 +354,7 @@ UICollectionViewDelegateFlowLayout>
 
 -(void) setupMyOrderDetailsView {
     
-    if ((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+    if ((UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         
         if (VALID_NOTEMPTY(self.selectedOrderIndexPath,NSIndexPath)) {
             
@@ -426,7 +426,7 @@ UICollectionViewDelegateFlowLayout>
             
             [myOrderCell.clickableView setTag:indexPath.row];
             [myOrderCell.clickableView addTarget:self action:@selector(selectedOrder:) forControlEvents:UIControlEventTouchUpInside];
-            if ((_selectedCellIndex<0?0:_selectedCellIndex) == indexPath.row && (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+            if ((_selectedCellIndex<0?0:_selectedCellIndex) == indexPath.row && (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
                 [myOrderCell.clickableView setSelected:YES];
             }else{
                 [myOrderCell.clickableView setSelected:NO];
@@ -441,12 +441,12 @@ UICollectionViewDelegateFlowLayout>
 
 - (void)selectedOrder:(UIButton *)sender
 {
-    if (sender.tag == _selectedCellIndex && (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+    if (sender.tag == _selectedCellIndex && (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         return;
     }
     _selectedCellIndex = sender.tag;
     if (self.selectedOrderIndexPath.row == [NSIndexPath indexPathForRow:_selectedCellIndex inSection:0].row) {
-        if (!UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+        if (!UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
             [self gotoDetails:_selectedCellIndex];
         }
         return;

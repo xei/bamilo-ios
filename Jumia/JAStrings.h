@@ -30,6 +30,7 @@
 #define STRING_MY_FAVOURITES RILocalizedString(@"favourites", nil)
 #define STRING_RECENT_SEARCHES RILocalizedString(@"recent_searches", nil)
 #define STRING_RECENTLY_VIEWED RILocalizedString(@"recently_viewed", nil)
+#define STRING_CONTACT_US RILocalizedString(@"contact us", nil)
 #define STRING_MY_ACCOUNT RILocalizedString(@"my_account", nil)
 #define STRING_TRACK_MY_ORDER RILocalizedString(@"nav_track_order", nil)
 #define STRING_CHOOSE_COUNTRY RILocalizedString(@"nav_country", nil)
@@ -219,6 +220,8 @@
 #define STRING_NEW_PASSWORD RILocalizedString(@"new_password_label", nil)
 #define STRING_CHANGED_PASSWORD_SUCCESS RILocalizedString(@"password_changed_success", nil)
 #define STRING_PREFERENCES_UPDATED RILocalizedString(@"preferences_updated", nil)
+#define MALE RILocalizedString(@"male", nil)
+#define FEMALE RILocalizedString(@"female", nil)
 
 #define STRING_THANK_YOU_ORDER_TITLE RILocalizedString(@"thank_you_order_title", nil)
 #define STRING_ORDER_SUCCESS RILocalizedString(@"order_success", nil)
@@ -408,6 +411,7 @@
 #define STRING_CHANGE_PASSWORD RILocalizedString(@"change_password", nil)
 #define STRING_USER_DATA_EDITED_SUCCESS RILocalizedString(@"user_data_edited_with_success", nil)
 #define STRING_PRE_ORDER RILocalizedString(@"pre_order", nil)
+#define CURRENT_PASSWORD RILocalizedString(@"Current Password", nil)
 
 #define STRING_SHIPPING_BILLING_ADDRESS RILocalizedString(@"shipping_billing_address", nil)
 
@@ -447,5 +451,8 @@
 #define STRING_RETURN_FINISH_TITLE RILocalizedString(@"order_return_finish_title", nil)
 
 #define STRING_IF_EVERYTHING_LOOKS_GOOD RILocalizedString(@"everything_looks_good", nil)
+
+#define STRING_INVALID_ADDRESS_BILLING_SHIPPING RILocalizedString(@"invalid_address_shipping_billing", nil)
+#define STRING_INVALID_ADDRESS_OTHER RILocalizedString(@"invalid_address_other", nil)
 
 #endif

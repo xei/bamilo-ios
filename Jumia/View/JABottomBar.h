@@ -11,6 +11,9 @@
 
 @interface JABottomBar : UIView
 
+@property (nonatomic) NSMutableArray *smallButtonsArray;
+@property (nonatomic) NSMutableArray *buttonsArray;
+
 - (UIButton *)addSmallButton:(UIImage *)image target:(id)target action:(SEL)action;
 - (JAButton *)addButton:(NSString*)name target:(id)target action:(SEL)action;
 - (JAButton *)addAlternativeButton:(NSString*)name target:(id)target action:(SEL)action;

@@ -22,6 +22,7 @@
 @property (strong, nonatomic) JAProductInfoSingleLine *loginSingleLine;
 @property (strong, nonatomic) JAProductInfoSingleLine *recentlyViewedSingleLine;
 @property (strong, nonatomic) JAProductInfoSingleLine *trackMyOrderSingleLine;
+@property (strong, nonatomic) JAProductInfoSingleLine *contactUsPageSingleLine;
 
 @end
 
@@ -48,6 +49,17 @@
     return _loginSingleLine;
 }
 
+- (JAProductInfoSingleLine *)contactUsPageSingleLine
+{
+    if (!VALID(_contactUsPageSingleLine, JAProductInfoSingleLine)) {
+        _contactUsPageSingleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.trackMyOrderSingleLine.frame), self.view.width, kProductInfoSingleLineHeight)];
+        [_contactUsPageSingleLine setTopSeparatorVisibility:YES];
+        [_contactUsPageSingleLine setTitle:STRING_CONTACT_US];
+        [_contactUsPageSingleLine addTarget:self action:@selector(contactUsPageSelection) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _contactUsPageSingleLine;
+}
+
 - (JAProductInfoSingleLine *)recentlyViewedSingleLine
 {
     if (!VALID(_recentlyViewedSingleLine, JAProductInfoSingleLine)) {
@@ -62,7 +74,7 @@
 {
     if (!VALID(_trackMyOrderSingleLine, JAProductInfoSingleLine)) {
         _trackMyOrderSingleLine = [[JAProductInfoSingleLine alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.recentlyViewedSingleLine.frame), self.view.width, kProductInfoSingleLineHeight)];
-        [_trackMyOrderSingleLine setBottomSeparatorVisibility:YES];
+        [_trackMyOrderSingleLine setBottomSeparatorVisibility:NO];
         [_trackMyOrderSingleLine setTitle:STRING_TRACK_MY_ORDER];
         [_trackMyOrderSingleLine addTarget:self action:@selector(trackMyOrdersSelection) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -83,6 +95,7 @@
     [self.view addSubview:self.loginSingleLine];
     [self.view addSubview:self.recentlyViewedSingleLine];
     [self.view addSubview:self.trackMyOrderSingleLine];
+    [self.view addSubview:self.contactUsPageSingleLine];
 }
 
 - (void)viewWillLayoutSubviews
@@ -114,6 +127,11 @@
 - (void)recentlyViewedSelection
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kShowRecentlyViewedScreenNotification object:nil];
+}
+
+- (void)contactUsPageSelection
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShowContactUsScreenNotification object:nil];
 }
 
 - (void)trackMyOrdersSelection

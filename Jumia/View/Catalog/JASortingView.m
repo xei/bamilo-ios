@@ -12,7 +12,7 @@
 @interface JASortingView()
 
 @property (nonatomic, strong) UIControl* backgroundControl;
-@property (nonatomic, assign) RICatalogSorting selectedIndex;
+@property (nonatomic, assign) RICatalogSortingEnum selectedIndex;
 @property (nonatomic, strong) UITableView* tableView;
 @property (nonatomic, strong) JAClickableView* doneClickableView;
 
@@ -21,7 +21,7 @@
 @implementation JASortingView
 
 - (void)setupWithFrame:(CGRect)frame
-       selectedSorting:(RICatalogSorting)selectedSorting;
+       selectedSorting:(RICatalogSortingEnum)selectedSorting;
 {
     self.selectedIndex = selectedSorting;
     
@@ -64,7 +64,7 @@
                                                 self.frame.size.width - margin*2,
                                                 buttonHeight)];
     
-    CGFloat tableHeight = [self tableView:self.tableView numberOfRowsInSection:0] * [self tableView:self.tableView heightForRowAtIndexPath:nil];
+    CGFloat tableHeight = [self tableView:self.tableView numberOfRowsInSection:0] * [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     [self.tableView setFrame:CGRectMake(margin,
                                         self.doneClickableView.frame.origin.y - margin - tableHeight,
                                         self.frame.size.width - margin*2,

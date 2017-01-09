@@ -204,9 +204,13 @@
     }
 }
 
-- (void)setSorting:(RICatalogSorting)sorting;
+- (void)setSorting:(RICatalogSortingEnum)sorting;
 {
-    NSString* title = [NSString stringWithFormat:@" %@", [kJASORTINGVIEW_OPTIONS_ARRAY objectAtIndex:sorting]];
+    NSInteger index = sorting;
+    if (sorting < 0 || sorting >= [kJASORTINGVIEW_OPTIONS_ARRAY count]) {
+        index = 0;
+    }
+    NSString* title = [NSString stringWithFormat:@" %@", [kJASORTINGVIEW_OPTIONS_ARRAY objectAtIndex:index]];
     [self.sortingButton setTitle:title forState:UIControlStateNormal];
     if (RI_IS_RTL) {
         [self.sortingButton flipViewAlignment];

@@ -704,6 +704,7 @@ JAAccountServicesProtocol
                     [self.radioComponent setValue:[phonePrefix.value stringValue]];
                     [self.radioComponent.textField setText:phonePrefix.label];
                     [self.radioComponent.textField setEnabled:YES];
+                    [self.radioComponent setHidden:YES];
                 }
             }
             self.phonePrefixes = prefixes;

@@ -211,14 +211,14 @@
 + (NSString *)getResultsForSearch:(NSString *)query
                              page:(NSString *)page
                          maxItems:(NSString *)maxItems
-                    sortingMethod:(RICatalogSorting)sortingMethod
+                    sortingMethod:(RICatalogSortingEnum)sortingMethod
                           filters:(NSArray*)filters
                      successBlock:(void (^)(RICatalog *catalog))successBlock
                   andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages, RIUndefinedSearchTerm *undefSearchTerm))failureBlock
 {
     NSString *tempUrl = [NSString stringWithFormat:@"%@%@search/find/", [RIApi getCountryUrlInUse], RI_API_VERSION];
     
-    NSString *sortingString = [RIProduct urlComponentForSortingMethod:sortingMethod];
+    NSString *sortingString = [RICatalogSorting urlComponentForSortingMethod:sortingMethod];
     
     if (VALID_NOTEMPTY(sortingString, NSString)) {
         sortingString = [NSString stringWithFormat:@"/%@", sortingString];
@@ -452,21 +452,21 @@
             undefinedSearchTerm.noticeMessage = [json objectForKey:@"notice_message"];
         }
         
-        if ([json objectForKey:@"search_tips"]) {
-            NSDictionary *searchTipsDic = [json objectForKey:@"search_tips"];
-            
-            RISearchType *searchType = [[RISearchType alloc] init];
-            
-            if ([searchTipsDic objectForKey:@"text"]) {
-                searchType.text = [searchTipsDic objectForKey:@"text"];
-            }
-            
-            if ([searchTipsDic objectForKey:@"title"]) {
-                searchType.title = [searchTipsDic objectForKey:@"title"];
-            }
-            
-            undefinedSearchTerm.searchType = searchType;
-        }
+//        if ([json objectForKey:@"search_tips"]) {
+//            NSDictionary *searchTipsDic = [json objectForKey:@"search_tips"];
+//            
+//            RISearchType *searchType = [[RISearchType alloc] init];
+//            
+//            if ([searchTipsDic objectForKey:@"text"]) {
+//                searchType.text = [searchTipsDic objectForKey:@"text"];
+//            }
+//            
+//            if ([searchTipsDic objectForKey:@"title"]) {
+//                searchType.title = [searchTipsDic objectForKey:@"title"];
+//            }
+//            
+//            undefinedSearchTerm.searchType = searchType;
+//        }
         
         if ([json objectForKey:@"featured_box"]) {
             if ([[json objectForKey:@"featured_box"] isKindOfClass:[NSArray class]]) {

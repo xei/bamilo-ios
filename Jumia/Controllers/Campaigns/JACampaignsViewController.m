@@ -104,7 +104,7 @@
 {
     [super viewWillLayoutSubviews];
     if (self.isLoaded) {
-        [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
+        [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     } else {
         [self loadCampaigns];
     }
@@ -185,7 +185,7 @@
     if(VALID_NOTEMPTY(self.campaignId, NSString))
     {
         [self createCampaignPageAtX:currentX];
-        [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
+        [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     }
     else if (VALID_NOTEMPTY(self.teaserGrouping, RITeaserGrouping) && VALID_NOTEMPTY(self.teaserGrouping.teaserComponents, NSOrderedSet))
     {
@@ -225,13 +225,13 @@
             }
         }
         
-        [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
+        [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
         
         self.pickerNamesAlreadySet = YES;
     }
     else if (VALID_NOTEMPTY(self.targetString, NSString)) {
         [self createCampaignPageAtX:currentX];
-        [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:self.interfaceOrientation];
+        [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
     }
     
     //this will trigger load methods
@@ -247,7 +247,7 @@
                                                                                             self.scrollView.bounds.origin.y,
                                                                                             self.scrollView.bounds.size.width,
                                                                                             self.scrollView.bounds.size.height)];
-    campaignPage.interfaceOrientation = self.interfaceOrientation;
+    campaignPage.interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
     campaignPage.delegate = self;
     [self.campaignPages addObject:campaignPage];
     [self.scrollView addSubview:campaignPage];

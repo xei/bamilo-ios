@@ -57,6 +57,8 @@
         newCatalog.products = [products copy];
     }
     
+    newCatalog.sort = VALID_NOTEMPTY_VALUE([catalogDictionary objectForKey:@"sort"], NSString);
+    
     return newCatalog;
 }
 

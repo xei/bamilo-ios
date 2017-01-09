@@ -95,7 +95,7 @@
         RIFieldOption *option = [[self.field options] objectAtIndex:tag];
                 
         NSString *fieldKey = [self.field name];
-        fieldKey = [fieldKey stringByReplacingOccurrencesOfString:@"[]" withString:[NSString stringWithFormat:@"[%ld]", tag]];
+        fieldKey = [fieldKey stringByReplacingOccurrencesOfString:@"[]" withString:[NSString stringWithFormat:@"[%ld]", (long)tag]];
         
         if([sender isOn])
         {

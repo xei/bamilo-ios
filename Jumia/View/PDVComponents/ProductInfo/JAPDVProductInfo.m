@@ -319,6 +319,7 @@
         [descriptionContentLabel setFont:JABodyFont];
         descriptionContentLabel.numberOfLines = 5;
         [descriptionContentLabel setText:product.summary];
+        descriptionContentLabel.textAlignment = NSTextAlignmentLeft;
         [descriptionContentLabel sizeToFit];
         [self addSubview:descriptionContentLabel];
         yOffset = CGRectGetMaxY(descriptionContentLabel.frame) + 16.f;

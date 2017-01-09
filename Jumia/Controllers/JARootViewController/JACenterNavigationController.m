@@ -70,6 +70,7 @@
 #import "JAORWaysViewController.h"
 #import "JAORPaymentViewController.h"
 #import "JAORPickupStationWebViewController.h"
+#import "JAContactUsViewController.h"
 
 @interface JACenterNavigationController ()
 
@@ -203,6 +204,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showMyOrdersViewController:)
                                                  name:kShowMyOrdersScreenNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showContactUsViewController)
+                                                 name:kShowContactUsScreenNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -944,6 +949,18 @@
     }
 }
 
+#pragma mark ContactUs Screen
+- (void)showContactUsViewController
+{
+    UIViewController *topViewController = [self topViewController];
+    if (![topViewController isKindOfClass:[JAContactUsViewController class]])
+    {
+        JAContactUsViewController *contactUsViewController = [[JAContactUsViewController alloc]init];
+        
+        [self pushViewController:contactUsViewController animated:YES];
+    }
+}
+
 #pragma mark My Account Screen
 - (void)showMyAccountController
 {
@@ -1580,6 +1597,19 @@
 {
     NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
     NSString* title = [notification.userInfo objectForKey:@"name"];
+
+    NSNumber* sorting;
+    NSString* filterPush;
+    
+    NSDictionary *selectedItem = [notification object];
+    if (VALID_NOTEMPTY(selectedItem, NSDictionary)) {
+        NSString* categoryUrlKey = [selectedItem objectForKey:@"category_url_key"];
+        if (VALID_NOTEMPTY(categoryUrlKey, NSString)) {
+            targetString = [NSString stringWithFormat:@"catalog_seller::%@",categoryUrlKey];
+        }
+        sorting = [selectedItem objectForKey:@"sorting"];
+        filterPush = [selectedItem objectForKey:@"filter"];
+    }
     
     if(VALID_NOTEMPTY(targetString, NSString))
     {
@@ -1587,6 +1617,8 @@
         catalog.targetString = targetString;
         catalog.navBarLayout.title = title;
         catalog.navBarLayout.showBackButton = YES;
+        catalog.filterPush = filterPush;
+        catalog.sortingMethodFromPush = sorting;
         
         [self pushViewController:catalog animated:YES];
     }
@@ -1731,7 +1763,7 @@
                                                         object:nil];
     
     NSString* targetString = [notification.userInfo objectForKey:@"targetString"];
-    NSString* uid = [notification.userInfo objectForKey:@"shop_id"];
+//    NSString* uid = [notification.userInfo objectForKey:@"shop_id"];
 
     JAShopWebViewController* viewController = [[JAShopWebViewController alloc] init];
     if([notification.userInfo objectForKey:@"show_back_button"])
@@ -1954,6 +1986,7 @@
     {
         [viewController performSelector:@selector(setStateInfoLabels:) withObject:stepByStepViewController.stepByStepModel.stepByStepLabels];
     }
+    [self closeScreensToStackClass:[JAStepByStepTabViewController class] animated:YES];
     JAStepByStepTabViewController *stepByStepTabViewController = (JAStepByStepTabViewController *)[self topViewController];
     if ([stepByStepTabViewController isKindOfClass:[JAStepByStepTabViewController class]] && [stepByStepTabViewController.stepByStepModel isKindOfClass:[stepByStepViewController.stepByStepModel class]])
     {

@@ -193,7 +193,7 @@ UITableViewDelegate
     
     [self.view addSubview:self.scrollView];
     
-    _bottomView = [[JACheckoutBottomView alloc] initWithFrame:CGRectMake(0.f, self.view.frame.size.height - 56, self.view.frame.size.width, 56) orientation:self.interfaceOrientation];
+    _bottomView = [[JACheckoutBottomView alloc] initWithFrame:CGRectMake(0.f, self.view.frame.size.height - 56, self.view.frame.size.width, 56) orientation:[[UIApplication sharedApplication] statusBarOrientation]];
     [_bottomView setTotalValue:self.cart.cartValueFormatted];
     [self.view addSubview:_bottomView];
 }
@@ -221,12 +221,12 @@ UITableViewDelegate
         }
         
         CGFloat newWidth = self.view.frame.size.width;
-        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+        if(UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM() && UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]))
         {
             newWidth = self.view.frame.size.height + self.view.frame.origin.y;
         }
         
-        [self setupViews:newWidth toInterfaceOrientation:self.interfaceOrientation];
+        [self setupViews:newWidth toInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
         
         [self tableView:self.tableView didSelectRowAtIndexPath:self.tableViewIndexSelected];
     }

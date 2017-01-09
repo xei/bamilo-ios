@@ -106,4 +106,22 @@
     return image;
 }
 
+// Convert string From Arabic/Persian numbers to English numbers
++ (NSString *)convertToEnglishNumber:(NSString *) string {
+    NSNumberFormatter *formatter = [NSNumberFormatter new];
+    formatter.locale = [NSLocale localeWithLocaleIdentifier:@"fa"];
+    for (NSInteger i = 0; i < 10; i++) {
+        NSNumber *num = @(i);
+        string = [string stringByReplacingOccurrencesOfString:[formatter stringFromNumber:num] withString:num.stringValue];
+    }
+    
+    formatter.locale = [NSLocale localeWithLocaleIdentifier:@"ar"];
+    for (NSInteger i = 0; i < 10; i++) {
+        NSNumber *num = @(i);
+        string = [string stringByReplacingOccurrencesOfString:[formatter stringFromNumber:num] withString:num.stringValue];
+    }
+    
+    return string;
+}
+
 @end

@@ -31,64 +31,21 @@
 //    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RIProduct class])];
     self.startLoadingTime = [NSDate date];
     
-    //fonts
-    if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"]) {
-        [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontRegularNameKey];
-        [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontLightNameKey];
-        [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontBoldNameKey];
-        [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontMediumNameKey];
-        [[NSUserDefaults standardUserDefaults] setObject:@"Zawgyi-One" forKey:kFontItalicNameKey];
-    } else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontRegularNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontLightNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontBoldNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontMediumNameKey];
         [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontItalicNameKey];
-    } else {
-        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue" forKey:kFontRegularNameKey];
-        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue-Light" forKey:kFontLightNameKey];
-        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue-Bold" forKey:kFontBoldNameKey];
-        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue-Medium" forKey:kFontMediumNameKey];
-        [[NSUserDefaults standardUserDefaults] setObject:@"HelveticaNeue-Italic" forKey:kFontItalicNameKey];
-    }
     
 #if defined(DEBUG) && DEBUG
     
 #if defined(STAGING) && STAGING
-    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
-    {
-        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"9e886b9cb1a1dbb18eb575c7582ab3c9"];
-    }
-    else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
-    {
-        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"7275370b79981af6b6437a87d813bafd"];
-    }
-    else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
-    {
-        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"9b9785a49d8763ce4f7d1041e15970cc"];
-    }
-    else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
-    {
-        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"b69eae07b51d81f272e9ae78312967a8"];
-    }
+   //        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"b69eae07b51d81f272e9ae78312967a8"];
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"2f8bd69b5ea4458c8282b58a33a6d1f9"];
     
 #else
-    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
-    {
-        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"3c9ad1f5e09a65331e412821125cc2f2"];
-    }
-    else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
-    {
+        //empty
         [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@""];
-    }
-    else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
-    {
-        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@""];
-    }
-    else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
-    {
-        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@""];
-    }
 #endif
     [[BITHockeyManager sharedHockeyManager].crashManager setCrashManagerStatus:BITCrashManagerStatusAutoSend];
     [[BITHockeyManager sharedHockeyManager] startManager];
@@ -103,22 +60,7 @@
                                                                        launchOptions:launchOptions
                                                                         delegate:self];
 #else
-    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
-    {
-        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"dc297f584830db92a1047ba154dadb9e"];
-    }
-    else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
-    {
-        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"373b0efcd95c82dbfb69a0c2d16c4b51"];
-    }
-    else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
-    {
-        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"d4fd2d8b265e80e20a34fc19ccc55d64"];
-    }
-    else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
-    {
-        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"64935d72b0c34cd51a7a806f7bb70e4a"];
-    }
+    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"64935d72b0c34cd51a7a806f7bb70e4a"];
     [[BITHockeyManager sharedHockeyManager].crashManager setCrashManagerStatus:BITCrashManagerStatusAutoSend];
     [[BITHockeyManager sharedHockeyManager] startManager];
     
@@ -128,23 +70,7 @@
                                                                             delegate:self];
 #endif
     
-    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
-    {
-        [[GSDAppIndexing sharedInstance] registerApp:kAppStoreIdInteger];
-    }
-    else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
-    {
-        [[GSDAppIndexing sharedInstance] registerApp:kAppStoreIdDarazInteger];
-    }
-    else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
-    {
-        [[GSDAppIndexing sharedInstance] registerApp:kAppStoreIdShopInteger];
-    }
-    else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
-    {
-        [[GSDAppIndexing sharedInstance] registerApp:kAppStoreIdBamiloInteger];
-    }
-
+    [[GSDAppIndexing sharedInstance] registerApp:kAppStoreIdBamiloInteger];
     
     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
     
@@ -211,8 +137,6 @@
         NSString* appName = [APP_NAME lowercaseString];
         if ([appName isEqualToString:@"بامیلو"]) {
             appName = @"bamilo";
-        } else if ([appName isEqualToString:@"shop.com.mm"]) {
-            appName = @"shop";
         }
         NSURL * deeplink = [Adjust convertUniversalLink:[userActivity webpageURL] scheme:appName];
         
@@ -328,7 +252,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kAppWillEnterForeground object:nil];
 }
 
-- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
     NSUInteger supportedInterfaceOrientationsForWindow = -1;
     
@@ -418,8 +342,6 @@
     NSString* appName = [APP_NAME lowercaseString];
     if ([appName isEqualToString:@"بامیلو"]) {
         appName = @"bamilo";
-    } else if ([appName isEqualToString:@"shop.com.mm"]) {
-        appName = @"shop";
     }
     if ((urlScheme != nil && [urlScheme isEqualToString:appName]) || (urlScheme != nil && [facebookSchema isEqualToString:urlScheme]))
     {
@@ -542,22 +464,8 @@
         else if(1 == buttonIndex)
         {
             NSURL  *url;
-            if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
-            {
-                url = [NSURL URLWithString:kAppStoreUrl];
-            }
-            else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
-            {
-                url = [NSURL URLWithString:kAppStoreUrlDaraz];
-            }
-            else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
-            {
-                url = [NSURL URLWithString:kAppStoreUrlShop];
-            }
-            else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
-            {
-                url = [NSURL URLWithString:kAppStoreUrlBamilo];
-            }
+            
+            url = [NSURL URLWithString:kAppStoreUrlBamilo];
 
             if([[UIApplication sharedApplication] canOpenURL:url]) {
                 [[UIApplication sharedApplication] openURL:url];
@@ -569,22 +477,7 @@
         if(0 == buttonIndex)
         {
             NSURL  *url;
-            if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
-            {
-                url = [NSURL URLWithString:kAppStoreUrl];
-            }
-            else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
-            {
-                url = [NSURL URLWithString:kAppStoreUrlDaraz];
-            }
-            else if ([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
-            {
-                url = [NSURL URLWithString:kAppStoreUrlShop];
-            }
-            else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"])
-            {
-                url = [NSURL URLWithString:kAppStoreUrlBamilo];
-            }
+            url = [NSURL URLWithString:kAppStoreUrlBamilo];
             if([[UIApplication sharedApplication] canOpenURL:url]) {
                 [[UIApplication sharedApplication] openURL:url];
             }

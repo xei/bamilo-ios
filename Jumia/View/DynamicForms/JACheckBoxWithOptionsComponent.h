@@ -14,7 +14,7 @@
 @property (strong, nonatomic) UILabel *title;
 @property (strong, nonatomic) UIView *separator;
 
-@property (strong, nonatomic) RIField *field;
+//@property (strong, nonatomic) RIField *field;
 
 -(void)setupWithField:(RIField*)field;
 

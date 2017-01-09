@@ -98,7 +98,9 @@
     [self setHeader];
     
     self.dynamicForm = [[JADynamicForm alloc] initWithForm:self.form startingPosition:CGRectGetMaxY(self.headerBodyLabel.frame) widthSize:self.width hasFieldNavigation:NO];
-    [self.dynamicForm setDelegate:self.genderPickerDelegate?:self];
+    
+    //doubt Tessa
+    [self.dynamicForm setDelegate:(JANewsletterTeaserView*)self.genderPickerDelegate?:self];
     for (UIView *view in self.dynamicForm.formViews) {
         if (VALID(view, UIView)) {
             if (VALID(view, JARadioComponent)) {

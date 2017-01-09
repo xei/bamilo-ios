@@ -97,7 +97,8 @@
 {
     [super viewWillAppear:animated];
     
-    CGFloat newSize = self.recentSearches.count * [self tableView:self.recentSearchesTableView heightForRowAtIndexPath:nil];
+    //tessa changed nil to [NSIndexPath indexPathForRow:0 inSection:0]
+    CGFloat newSize = self.recentSearches.count * [self tableView:self.recentSearchesTableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     self.recentSearchesTableView.frame = CGRectMake(self.recentSearchesTableView.frame.origin.x,
                                                     self.recentSearchesTableView.frame.origin.y,
                                                     self.view.frame.size.width - self.recentSearchesTableView.frame.origin.x*2,
@@ -142,7 +143,7 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    CGFloat newSize = self.recentSearches.count * [self tableView:self.recentSearchesTableView heightForRowAtIndexPath:nil];
+    CGFloat newSize = self.recentSearches.count * [self tableView:self.recentSearchesTableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     self.recentSearchesTableView.frame = CGRectMake(self.recentSearchesTableView.frame.origin.x,
                                                     self.recentSearchesTableView.frame.origin.y,
                                                     self.view.frame.size.width - self.recentSearchesTableView.frame.origin.x*2,

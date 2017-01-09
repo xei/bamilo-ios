@@ -42,6 +42,9 @@
     [self.lineSwitch setXRightAligned:16.f];
     [self.lineSwitch setHeight:self.height];
     [self.lineSwitch setYCenterAligned];
+    [self setTopSeparatorVisibility:YES];
+    [self setTopSeparatorXOffset:self.label.x];
+
 }
 
 - (void)setFrame:(CGRect)frame

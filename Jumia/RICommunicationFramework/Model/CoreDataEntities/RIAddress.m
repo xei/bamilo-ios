@@ -27,6 +27,7 @@
 @dynamic customerAddressPostcodeId;
 @dynamic isDefaultBilling;
 @dynamic isDefaultShipping;
+@dynamic isValid;
 @dynamic hidden;
 @dynamic createdAt;
 @dynamic updatedAt;
@@ -197,6 +198,9 @@
     }
     if ([addressJSON objectForKey:@"is_default_shipping"]) {
         newAddress.isDefaultShipping = [NSString stringWithFormat:@"%@", [addressJSON objectForKey:@"is_default_shipping"]];
+    }
+    if ([addressJSON objectForKey:@"is_valid"]) {
+        newAddress.isValid = [NSString stringWithFormat:@"%@", [addressJSON objectForKey:@"is_valid"]];
     }
     if ([addressJSON objectForKey:@"hidden"]) {
         newAddress.hidden = [addressJSON objectForKey:@"hidden"];

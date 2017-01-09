@@ -411,10 +411,10 @@
             if (1 == field.relatedFields.count) {
                 //must be list type
                 
-                CGFloat phoneOffset = 80.f;
-                CGFloat prefixWidth = 70.f;
+//                CGFloat phoneOffset = 80.f;
+                CGFloat prefixWidth = 0.f;
                 
-                [textField setFixedX:phoneOffset];
+//                [textField setFixedX:phoneOffset];
                 
                 JARadioComponent* radioRelated = [[JARadioComponent alloc] initWithFrame:CGRectMake(8.f, 0, prefixWidth, 48.f)];
                 [radioRelated.textField setDelegate:self];
