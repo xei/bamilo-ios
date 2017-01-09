@@ -115,8 +115,8 @@ static RIGoogleAnalyticsTracker *sharedInstance;
     [[GAI sharedInstance].logger setLogLevel:kGAILogLevelNone];// kGAILogLevelVerbose];
     
     // Create tracker instance.
-    [[GAI sharedInstance] trackerWithTrackingId:trackingId];
-        
+    [[GAI sharedInstance] trackerWithTrackingId:@"UA-76304035-1"];
+            
     // Setup the app version
     NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
     [[GAI sharedInstance].defaultTracker set:kGAIAppVersion value:version];
@@ -349,21 +349,21 @@ static RIGoogleAnalyticsTracker *sharedInstance;
 
 #pragma mark - RITrackingTiming implementation
 
--(void)trackTimingInMillis:(NSNumber*)millis reference:(NSString *)reference
+-(void)trackTimingInMillis:(NSNumber*)millis reference:(NSString *)reference label:(NSString*)label
 {
-    RIDebugLog(@"Google Analytics - Tracking timing: %lu %@", (unsigned long)millis, reference);
+    RIDebugLog(@"Google Analytics - Tracking timing: %lu %@ %@", (unsigned long)millis, reference, label);
     
     id tracker = [[GAI sharedInstance] defaultTracker];
     
     if (!ISEMPTY(tracker))
     {
-        NSDictionary *dict = [[[GAIDictionaryBuilder createTimingWithCategory:reference
-                                                                     interval:millis
-                                                                         name:nil
-                                                                        label:nil]
-                               setCampaignParametersFromUrl:self.campaignData] build];
+//        NSDictionary *dict = [[[GAIDictionaryBuilder createTimingWithCategory:reference
+//                                                                     interval:millis
+//                                                                         name:nil
+//                                                                        label:nil]
+//                               setCampaignParametersFromUrl:self.campaignData] build];
         
-        [tracker send:dict];
+        [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:reference interval:millis name:reference label:label] build]];
     }
     else
     {

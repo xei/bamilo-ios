@@ -230,12 +230,26 @@ UICollectionViewDelegateFlowLayout>
               if ([self isIpadLandscape] && (ordersTotal > 0)) {
                   [self loadOrderDetails];
               }
+              else{
+                  if(self.firstLoading)
+                  {
+                      NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
+                      [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
+                      self.firstLoading = NO;
+                  }
+              }
               [self hideLoading];
               [self.ordersCollectionView reloadData];
           }
            andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {
                self.apiResponse = apiResponse;
                self.isLoadingOrders = NO;
+               if(self.firstLoading)
+               {
+                   NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
+                   [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
+                   self.firstLoading = NO;
+               }
                [self onErrorResponse:apiResponse messages:nil showAsMessage:NO selector:@selector(loadOrders) objects:nil];
                [self hideLoading];
            }];
@@ -257,8 +271,8 @@ UICollectionViewDelegateFlowLayout>
                           
                           if(self.firstLoading)
                           {
-                              NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-                              [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                              NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
+                              [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
                               self.firstLoading = NO;
                           }
                           [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
@@ -274,8 +288,8 @@ UICollectionViewDelegateFlowLayout>
                           
                           if(self.firstLoading)
                           {
-                              NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-                              [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+                              NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
+                              [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
                               self.firstLoading = NO;
                           }
                           

@@ -91,6 +91,7 @@
     rightSwipeGesture.direction = (UISwipeGestureRecognizerDirectionRight);
     [self.view addGestureRecognizer:leftSwipeGesture];
     [self.view addGestureRecognizer:rightSwipeGesture];
+    self.screenName = @"Campaignpage";
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -239,6 +240,13 @@
     [self.topTabsView setupWithTabNames:optionList];
     
     self.isLoaded = YES;
+    if(self.firstLoading)
+    {
+        NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
+        self.firstLoading = NO;
+    }
+
 }
 
 - (JACampaignPageView*)createCampaignPageAtX:(CGFloat)xPosition
