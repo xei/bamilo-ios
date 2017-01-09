@@ -34,7 +34,7 @@
             urlComponent = @"sort/brand/dir/asc";
             break;
         case RICatalogSortingPopularity:
-            urlComponent = @"sort/popularity/";
+            urlComponent = @"sort/popularity";
             break;
         default:
             break;
