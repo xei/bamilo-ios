@@ -272,14 +272,14 @@ static dispatch_once_t sharedInstanceToken;
 
 #pragma mark - RITrackingTiming protocol
 
--(void)trackTimingInMillis:(NSNumber*)millis reference:(NSString *)reference
+-(void)trackTimingInMillis:(NSNumber*)millis reference:(NSString *)reference label:(NSString*)label
 {
-    RIDebugLog(@"Tracking timing: %lu %@", (unsigned long)millis, reference);
+    RIDebugLog(@"Tracking timing: %lu %@ %@", (unsigned long)millis, reference, label);
     
     [self RI_callTrackersConformToProtocol:@protocol(RITrackingTiming)
-                                  selector:@selector(trackTimingInMillis:reference:)
+                                  selector:@selector(trackTimingInMillis:reference:label:)
                                  arguments:@[millis,
-                                             reference]];
+                                             reference,label]];
 }
 
 #pragma mark - RILaunchEventTracker protocol

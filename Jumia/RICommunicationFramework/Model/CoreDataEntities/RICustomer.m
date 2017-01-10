@@ -91,12 +91,15 @@
          andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorObject))failureBlock;
 {
     NSString* urlEnding;
-    if (VALID_NOTEMPTY(email, NSString)) {
-        urlEnding = [NSString stringWithFormat:@"customer/emailcheck/?email=%@", email];
+    NSDictionary *parameters;
+    if(VALID_NOTEMPTY(email, NSString))
+    {
+        parameters = [NSDictionary dictionaryWithObject:email forKey:@"email"];
+        urlEnding = [NSString stringWithFormat:@"customer/emailcheck/"];
     }
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, urlEnding]]
-                                                            parameters:nil
-                                                            httpMethod:HttpResponseGet
+                                                            parameters:parameters
+                                                            httpMethod:HttpResponsePost
                                                              cacheType:RIURLCacheNoCache
                                                              cacheTime:RIURLCacheNoTime
                                                     userAgentInjection:[RIApi getCountryUserAgentInjection]

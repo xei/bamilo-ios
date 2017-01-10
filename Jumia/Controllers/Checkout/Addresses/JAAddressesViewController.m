@@ -74,7 +74,7 @@ UITableViewDelegate>
         self.navBarLayout.title = STRING_MY_ADDRESSES;
     }
     
-    self.screenName = @"Address";
+    self.screenName = @"Addresses";
     
     self.view.backgroundColor = JAWhiteColor;
     
@@ -326,8 +326,8 @@ UITableViewDelegate>
     
     if(self.firstLoading)
     {
-        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+        NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:_billingAddress.uid];
         self.firstLoading = NO;
     }
 }

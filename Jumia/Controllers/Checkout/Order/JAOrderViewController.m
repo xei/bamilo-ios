@@ -70,7 +70,7 @@
 {
     [super viewDidLoad];
     
-    self.screenName = @"OrderConfirmation";
+    self.screenName = @"CheckoutConfirmation";
     
     self.navBarLayout.title = STRING_CHECKOUT;
     self.navBarLayout.showCartButton = NO;
@@ -92,12 +92,6 @@
     
     [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventCheckoutOrder]
                                               data:[trackingDictionary copy]];
-    if(self.firstLoading)
-    {
-        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
-        self.firstLoading = NO;
-    }
 }
 
 - (void)loadStep
@@ -108,6 +102,12 @@
     
     [RICart getMultistepFinishWithSuccessBlock:^(RICart *cart) {
         self.cart = cart;
+        if(self.firstLoading)
+        {
+            NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
+            [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:self.cart.orderNr];
+            self.firstLoading = NO;
+        }
         [self setupViews];
         [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
     } andFailureBlock:^(RIApiResponse apiResponse, NSArray *errorMessages) {

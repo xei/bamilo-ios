@@ -52,7 +52,6 @@ JAAccountServicesProtocol
 @property (strong, nonatomic) JAPicker *picker;
 @property (strong, nonatomic) JADatePicker *datePicker;
 @property (strong, nonatomic) JACheckBoxComponent *checkBoxComponent;
-
 @property (nonatomic, assign)BOOL isOpeningPicker;
 
 @property (assign, nonatomic) RIApiResponse apiResponse;
@@ -319,8 +318,8 @@ JAAccountServicesProtocol
     
     if(self.firstLoading)
     {
-        NSNumber *timeInMillis = [NSNumber numberWithInteger:([self.startLoadingTime timeIntervalSinceNow] * -1000)];
-        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName];
+        NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:_authenticationEmail];
         self.firstLoading = NO;
     }
     

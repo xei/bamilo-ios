@@ -46,7 +46,8 @@
     [super viewWillAppear:animated];
     
     [[RITrackingWrapper sharedInstance] trackStaticPage:self.targetString];
-    
+    self.screenName = @"Staticpage";
+
     [self.scrollView setFrame:[self viewBounds]];
     [self.scrollView setBackgroundColor:[UIColor whiteColor]];
     
@@ -136,6 +137,13 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     [self hideLoading];
+    if(self.firstLoading)
+    {
+        NSNumber *timeInMillis =  [NSNumber numberWithInt:(int)([self.startLoadingTime timeIntervalSinceNow]*-1000)];
+        [[RITrackingWrapper sharedInstance] trackTimingInMillis:timeInMillis reference:self.screenName label:@""];
+        self.firstLoading = NO;
+    }
+
     [self.scrollView setFrame:[self viewBounds]];
     [self.webView setFrame:self.scrollView.bounds];
     [self loadViews];

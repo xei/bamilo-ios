@@ -263,7 +263,12 @@
     if (NOTEMPTY(parameters)) {
         if (!method) {
             NSString *urlWithParameters = [NSString stringWithFormat:@"%@?%@", [url absoluteString], [self getParametersString:parameters]];
-            [operation.request setURL:[NSURL URLWithString:urlWithParameters]];
+            if([urlWithParameters containsString:@"email"]){
+                [operation.request setHTTPBody:[[self getParametersString:parameters] dataUsingEncoding:NSUTF8StringEncoding]];
+            }
+            else{
+                [operation.request setURL:[NSURL URLWithString:urlWithParameters]];
+            }
         } else {
             NSError *error = nil;
             

@@ -188,7 +188,7 @@ NSString *kGTMToken = @"kGTMToken";
         }
     }
     
-    self.gaId = gaId;
+    self.gaId = @"UA-76304035-1";
     
     TAGManager *tagManager = [TAGManager instance];
     
