@@ -55,7 +55,7 @@ NSString *const RI_UNIQUE_COUNTRY_ISO_SHOP = @"MM";
 
 NSString *const RI_UNIQUE_COUNTRY_URL_BAMILO = @"http://www.bamilo.com/mobapi/";
 
-NSString *const RI_UNIQUE_COUNTRY_URL_BAMILO_STAGING = @"http://bamilo.com/mobapi/";
+NSString *const RI_UNIQUE_COUNTRY_URL_BAMILO_STAGING = @"http://staging.bamilo.com/mobapi/";
 NSString *const RI_UNIQUE_COUNTRY_URL_BAMILO_INTEGRATION_MOBILE = @"http://integration-mobile-www.bamilo.com/mobapi/";
 NSString *const RI_UNIQUE_COUNTRY_USER_AGENT_INJECTION_BAMILO = @"IRAMZ";
 NSString *const RI_UNIQUE_COUNTRY_USER_AGENT_INJECTION_BAMILO_INTEGRATION_MOBILE = @"M_IRAMZ";

@@ -17,25 +17,25 @@
                           andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock
 {
     NSString *countryListURL;
-    
-    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
-    {
-        countryListURL = RI_COUNTRIES_URL_JUMIA;
-    }
-    else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
-    {
-        countryListURL = RI_COUNTRIES_URL_DARAZ;
-    }
-#if defined(STAGING) && STAGING
-    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
-    {
-        countryListURL = RI_COUNTRIES_URL_JUMIA_STAGING;
-    }
-    else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
-    {
-        countryListURL = RI_COUNTRIES_URL_DARAZ_STAGING;
-    }
-#endif
+//_UNS
+//    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
+//    {
+//        countryListURL = RI_COUNTRIES_URL_JUMIA;
+//    }
+//    else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
+//    {
+//        countryListURL = RI_COUNTRIES_URL_DARAZ;
+//    }
+//#if defined(STAGING) && STAGING
+//    if([[APP_NAME uppercaseString] isEqualToString:@"JUMIA"])
+//    {
+//        countryListURL = RI_COUNTRIES_URL_JUMIA_STAGING;
+//    }
+//    else if ([[APP_NAME uppercaseString] isEqualToString:@"DARAZ"])
+//    {
+//        countryListURL = RI_COUNTRIES_URL_DARAZ_STAGING;
+//    }
+//#endif
     return  [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:countryListURL]
                                                              parameters:nil
                                                              httpMethod:HttpResponseGet
@@ -258,22 +258,24 @@
 + (RICountry*)getUniqueCountry
 {
     RICountry* uniqueCountry = [[RICountry alloc] init];
-    if([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
-    {
-        NSDictionary* languageJSON = @{@"code":@"my_MM",@"default":@1,@"name":@"ျမန္မာ"};
-        RILanguage* language = [RILanguage parseLanguage:languageJSON];
-        uniqueCountry.selectedLanguage = language;
-        uniqueCountry.name = RI_UNIQUE_COUNTRY_NAME_SHOP;
-        uniqueCountry.countryIso = RI_UNIQUE_COUNTRY_ISO_SHOP;
-        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_SHOP;
-        uniqueCountry.isLive = YES;
-#if defined(STAGING) && STAGING
-        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_SHOP_STAGING;
-        uniqueCountry.isLive = NO;
-        uniqueCountry.userAgentInjection = RI_UNIQUE_COUNTRY_USER_AGENT_INJECTION_SHOP;
-#endif
-        return uniqueCountry;
-    } else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
+    
+//_UNS
+//    if([[APP_NAME uppercaseString] isEqualToString:@"SHOP.COM.MM"])
+//    {
+//        NSDictionary* languageJSON = @{@"code":@"my_MM",@"default":@1,@"name":@"ျမန္မာ"};
+//        RILanguage* language = [RILanguage parseLanguage:languageJSON];
+//        uniqueCountry.selectedLanguage = language;
+//        uniqueCountry.name = RI_UNIQUE_COUNTRY_NAME_SHOP;
+//        uniqueCountry.countryIso = RI_UNIQUE_COUNTRY_ISO_SHOP;
+//        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_SHOP;
+//        uniqueCountry.isLive = YES;
+//#if defined(STAGING) && STAGING
+//        uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_SHOP_STAGING;
+//        uniqueCountry.isLive = NO;
+//        uniqueCountry.userAgentInjection = RI_UNIQUE_COUNTRY_USER_AGENT_INJECTION_SHOP;
+//#endif
+//        return uniqueCountry;
+//    } else if ([[APP_NAME uppercaseString] isEqualToString:@"بامیلو"]) {
         NSDictionary* languageJSON = @{@"code":@"fa_IR",@"default":@1,@"name":@"فارسی"};
         RILanguage* language = [RILanguage parseLanguage:languageJSON];
         uniqueCountry.selectedLanguage = language;
@@ -281,15 +283,15 @@
         uniqueCountry.countryIso = RI_UNIQUE_COUNTRY_ISO_BAMILO;
         uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO;
         uniqueCountry.isLive = YES;
-#if defined(STAGING) && STAGING
+#ifdef IS_STAGING
         uniqueCountry.url = RI_UNIQUE_COUNTRY_URL_BAMILO_STAGING;
         uniqueCountry.isLive = NO;
         uniqueCountry.userAgentInjection = RI_UNIQUE_COUNTRY_USER_AGENT_INJECTION_BAMILO_INTEGRATION_MOBILE;
 #endif
         return uniqueCountry;
-    } else {
-        return nil;
-    }
+//    } else {
+//        return nil;
+//    }
 }
 
 + (NSString *)getCountryPhonePrefixesWithSuccessBlock:(void (^)(NSArray *prefixes))successBlock

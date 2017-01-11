@@ -4744,7 +4744,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		B5007ACA19A4F29D0024035A /* Hockey */ = {
+		1C1D85291E265B99006A0278 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -4763,19 +4763,12 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				COPY_PHASE_STRIP = NO;
+				COPY_PHASE_STRIP = YES;
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
+				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=0",
-					"$(inherited)",
-					"HOCKEY=1",
-					"STAGING=0",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = "IS_STAGING=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -4783,63 +4776,59 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				PROVISIONING_PROFILE = "01fbea7f-9a03-4c8d-8245-24e6d3060064";
 				PROVISIONING_PROFILE_SPECIFIER = "Bamilo Live";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
-			name = Hockey;
+			name = AdHoc;
 		};
-		B595F70B19E2E53D00D90F1D /* HockeyLive */ = {
+		1C1D852A1E265B99006A0278 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "بامیلو.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 3GCCEEQ32X;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=0",
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"HOCKEY=1",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/BMA4SSDK",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
+				INFOPLIST_FILE = "Jumia/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
+					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/BMA4SSDK",
+				);
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
+				PRODUCT_NAME = "بامیلو";
 				PROVISIONING_PROFILE = "01fbea7f-9a03-4c8d-8245-24e6d3060064";
 				PROVISIONING_PROFILE_SPECIFIER = "Bamilo Live";
-				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
-			name = HockeyLive;
+			name = AdHoc;
 		};
 		B5A301C919811D0700F71726 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -4866,11 +4855,6 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=0",
-					"$(inherited)",
-					"STAGING=0",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -4953,7 +4937,6 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "Jumia/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -4970,101 +4953,10 @@
 				PRODUCT_NAME = "بامیلو";
 				PROVISIONING_PROFILE = "01fbea7f-9a03-4c8d-8245-24e6d3060064";
 				PROVISIONING_PROFILE_SPECIFIER = "Bamilo Live";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = Debug;
-		};
-		CE9AE11C1AB6D78200D56481 /* Hockey */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "بامیلو.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				DEVELOPMENT_TEAM = 3GCCEEQ32X;
-				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/BMA4SSDK",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
-				INFOPLIST_FILE = "Jumia/Bamilo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/BMA4SSDK",
-				);
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
-				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "01fbea7f-9a03-4c8d-8245-24e6d3060064";
-				PROVISIONING_PROFILE_SPECIFIER = "Bamilo Live";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "armv7 armv7s arm64";
-			};
-			name = Hockey;
-		};
-		CE9AE11D1AB6D78200D56481 /* HockeyLive */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "بامیلو.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: internet rose 1 FZE (3GCCEEQ32X)";
-				DEVELOPMENT_TEAM = 3GCCEEQ32X;
-				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/FacebookSDK",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/HockeySDK.embeddedframework",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAppIndexing/Frameworks",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/BMA4SSDK",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
-				INFOPLIST_FILE = "Jumia/Bamilo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleAnalytics/Libraries",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/GoogleTagManager/Libraries",
-					"$(PROJECT_DIR)/Jumia/ExternalFrameworks/BMA4SSDK",
-				);
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.ios;
-				PRODUCT_NAME = "بامیلو";
-				PROVISIONING_PROFILE = "01fbea7f-9a03-4c8d-8245-24e6d3060064";
-				PROVISIONING_PROFILE_SPECIFIER = "Bamilo Live";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "armv7 armv7s arm64";
-			};
-			name = HockeyLive;
 		};
 		CE9AE11E1AB6D78200D56481 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -5088,7 +4980,6 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jumia/Jumia-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = "Jumia/Bamilo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -5117,9 +5008,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B5A301C919811D0700F71726 /* Debug */,
-				B5007ACA19A4F29D0024035A /* Hockey */,
-				B595F70B19E2E53D00D90F1D /* HockeyLive */,
 				B5A301CA19811D0700F71726 /* Release */,
+				1C1D85291E265B99006A0278 /* AdHoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -5128,9 +5018,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CE9AE11B1AB6D78200D56481 /* Debug */,
-				CE9AE11C1AB6D78200D56481 /* Hockey */,
-				CE9AE11D1AB6D78200D56481 /* HockeyLive */,
 				CE9AE11E1AB6D78200D56481 /* Release */,
+				1C1D852A1E265B99006A0278 /* AdHoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

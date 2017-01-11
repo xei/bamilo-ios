@@ -26,8 +26,7 @@
 
 @implementation JAAppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 //    [[RIDataBaseWrapper sharedInstance] deleteAllEntriesOfType:NSStringFromClass([RIProduct class])];
     self.startLoadingTime = [NSDate date];
     
@@ -39,7 +38,7 @@
     
 #if defined(DEBUG) && DEBUG
     
-#if defined(STAGING) && STAGING
+#ifdef IS_STAGING
    //        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"b69eae07b51d81f272e9ae78312967a8"];
         [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"2f8bd69b5ea4458c8282b58a33a6d1f9"];
     
