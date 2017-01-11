@@ -1054,14 +1054,12 @@ typedef void (^ProcessActionBlock)(void);
 #pragma mark - JACatalogTopViewDelegate
 
 - (void)filterButtonPressed {
-    
-    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
-    [userInfo setObject:self forKey:@"delegate"];
-    
+    JAFiltersViewController* filtersViewController = [[JAFiltersViewController alloc] init];
     if(self.filtersArray) {
-        [userInfo setObject:[RIFilter copyFiltersArray:self.filtersArray] forKey:@"filtersArray"];
+        filtersViewController.filtersArray = self.filtersArray;
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:kShowFiltersScreenNotification object:nil userInfo:userInfo];
+    filtersViewController.delegate = self;
+    [self.navigationController pushViewController:filtersViewController animated:YES];
 }
 
 - (void)sortingButtonPressed;
